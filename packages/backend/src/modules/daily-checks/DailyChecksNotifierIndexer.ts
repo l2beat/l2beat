@@ -69,10 +69,9 @@ export class DailyChecksNotifierIndexer extends ManagedChildIndexer {
   }
 
   private pickResponsibleUser(timestamp: UnixTime): string {
-    // Rotate every 2 workdays.
-    const workdayIndex = this.getWorkdayIndex(UnixTime.toDate(timestamp))
-    const slot = Math.floor(workdayIndex / 2)
-    return this.$.discordUserIds[slot % this.$.discordUserIds.length]
+    // Rotate every week.
+    const weekIndex = this.getWeekIndex(UnixTime.toDate(timestamp))
+    return this.$.discordUserIds[weekIndex % this.$.discordUserIds.length]
   }
 
   private getHourInTimezone(timestamp: UnixTime): number {
@@ -100,7 +99,7 @@ export class DailyChecksNotifierIndexer extends ManagedChildIndexer {
     return weekday.value
   }
 
-  private getWorkdayIndex(date: Date): number {
+  private getWeekIndex(date: Date): number {
     const parts = new Intl.DateTimeFormat('en-GB', {
       timeZone: this.$.timezone,
       year: 'numeric',
@@ -115,9 +114,6 @@ export class DailyChecksNotifierIndexer extends ManagedChildIndexer {
     )
     // 1970-01-05 (epoch day 4) was a Monday.
     const daysSinceMonday = dayNumber - 4
-    const weeks = Math.floor(daysSinceMonday / 7)
-    const dow = daysSinceMonday - weeks * 7
-    const workdaysIntoWeek = Math.min(dow + 1, 5)
-    return weeks * 5 + workdaysIntoWeek - 1
+    return Math.floor(daysSinceMonday / 7)
   }
 }

@@ -2,6 +2,7 @@ import type { LogConfig } from 'kysely'
 import type { PoolConfig } from 'pg'
 import { DatabaseClient } from './kysely'
 import { ActivityRepository } from './repositories/ActivityRepository'
+import { AggregatedInteropDeployedTokenRepository } from './repositories/AggregatedInteropDeployedTokenRepository'
 import { AggregatedInteropTokenRepository } from './repositories/AggregatedInteropTokenRepository'
 import { AggregatedInteropTokensPairRepository } from './repositories/AggregatedInteropTokensPairRepository'
 import { AggregatedInteropTransferRepository } from './repositories/AggregatedInteropTransferRepository'
@@ -9,6 +10,7 @@ import { AggregatedL2CostRepository } from './repositories/AggregatedL2CostRepos
 import { AggregatedLivenessRepository } from './repositories/AggregatedLivenessRepository'
 import { AnomaliesRepository } from './repositories/AnomaliesRepository'
 import { AnomalyStatsRepository } from './repositories/AnomalyStatsRepository'
+import { AppStateRepository } from './repositories/AppStateRepository'
 import { BlobsRepository } from './repositories/BlobsRepository'
 import { CurrentPriceRepository } from './repositories/CurrentPriceRepository'
 import { DaBeatStatsRepository } from './repositories/DaBeatStatsRepository'
@@ -18,6 +20,7 @@ import { EcosystemTokenRepository } from './repositories/EcosystemTokenRepositor
 import { FlatSourcesRepository } from './repositories/FlatSourcesRepository'
 import { IndexerConfigurationRepository } from './repositories/IndexerConfigurationRepository'
 import { IndexerStateRepository } from './repositories/IndexerStateRepository'
+import { InteropAggregateStatusRepository } from './repositories/InteropAggregateStatusRepository'
 import { InteropConfigRepository } from './repositories/InteropConfigRepository'
 import { InteropEventRepository } from './repositories/InteropEventRepository'
 import { InteropMessageRepository } from './repositories/InteropMessageRepository'
@@ -68,7 +71,10 @@ export function createDatabase(
     interopMessage: new InteropMessageRepository(db),
     interopTransfer: new InteropTransferRepository(db),
     aggregatedInteropTransfer: new AggregatedInteropTransferRepository(db),
+    interopAggregateStatus: new InteropAggregateStatusRepository(db),
     aggregatedInteropToken: new AggregatedInteropTokenRepository(db),
+    aggregatedInteropDeployedToken:
+      new AggregatedInteropDeployedTokenRepository(db),
     aggregatedInteropTokensPair: new AggregatedInteropTokensPairRepository(db),
     interopRecentPrices: new InteropRecentPricesRepository(db),
     interopPluginSyncState: new InteropPluginSyncStateRepository(db),
@@ -112,6 +118,7 @@ export function createDatabase(
     realTimeLiveness: new RealTimeLivenessRepository(db),
     syncMetadata: new SyncMetadataRepository(db),
     notifications: new NotificationsRepository(db),
+    appState: new AppStateRepository(db),
     // #endregion
 
     // #region Privacy

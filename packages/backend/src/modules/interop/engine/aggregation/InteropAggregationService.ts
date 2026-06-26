@@ -1,4 +1,5 @@
 import type {
+  AggregatedInteropDeployedTokenRecord,
   AggregatedInteropTokenRecord,
   AggregatedInteropTokensPairRecord,
   AggregatedInteropTransferRecord,
@@ -9,6 +10,7 @@ import type { InteropBridgeType } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import type { InteropAggregationConfig } from '../../../../config/features/interop'
 import {
+  getAggregatedDeployedTokens,
   getAggregatedTokens,
   getAggregatedTokensPairs,
   getAggregatedTransfer,
@@ -17,6 +19,7 @@ import {
 export interface AggregationResult {
   aggregatedTransfers: AggregatedInteropTransferRecord[]
   aggregatedTokens: AggregatedInteropTokenRecord[]
+  aggregatedDeployedTokens: AggregatedInteropDeployedTokenRecord[]
   aggregatedTokensPairs: AggregatedInteropTokensPairRecord[]
 }
 
@@ -30,6 +33,7 @@ export class InteropAggregationService {
   ): AggregationResult {
     const aggregatedTransfers: AggregatedInteropTransferRecord[] = []
     const aggregatedTokens: AggregatedInteropTokenRecord[] = []
+    const aggregatedDeployedTokens: AggregatedInteropDeployedTokenRecord[] = []
     const aggregatedTokensPairs: AggregatedInteropTokensPairRecord[] = []
 
     for (const config of configs) {
@@ -65,6 +69,17 @@ export class InteropAggregationService {
             })),
           )
 
+          aggregatedDeployedTokens.push(
+            ...getAggregatedDeployedTokens(group, {
+              calculateNetMinted: bridgeType === 'lockAndMint',
+            }).map((token) => ({
+              timestamp,
+              id: config.id,
+              bridgeType,
+              ...token,
+            })),
+          )
+
           aggregatedTokensPairs.push(
             ...getAggregatedTokensPairs(group).map((pair) => ({
               timestamp,
@@ -80,6 +95,7 @@ export class InteropAggregationService {
     return {
       aggregatedTransfers,
       aggregatedTokens,
+      aggregatedDeployedTokens,
       aggregatedTokensPairs,
     }
   }

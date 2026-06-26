@@ -1,3 +1,332 @@
+Generated with discovered.json: 0x02f0fa465869e5e623c2d58227a8c68b9eb52aa0
+
+# Diff at Mon, 15 Jun 2026 13:58:14 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@254df558db0f4fcb5b0e269facd77fad1c7d2ddb block: 1780557929
+- current timestamp: 1781531783
+
+## Description
+
+Guardian role on OptimismPortal2, SystemConfig and SuperchainConfig moved from Conduit Multisig 1 to the joint Ronin/Conduit Safe (RoninConduitOwner): SuperchainConfig was re-initialized via the standard StorageSetter→same-impl pattern, bumping `initVersion` 1 → 2 and setting the new guardian address. Conduit Multisig 1 remains challenger in DGF.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      values.$members.4:
+-        "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007"
+      values.$members.8:
+-        "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.multisigThreshold:
+-        "4 of 12 (33%)"
++        "4 of 10 (40%)"
+      receivedPermissions.1:
+-        {"permission":"interact","from":"eth:0xEE552e802A50d855bD08E93dfcc69228FC7B9E2c","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".guardian"}
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      values.guardian:
+-        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xc4f4F908C36C8119f1FBd52CebbDB30C6f2a23C1) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.guardian:
+-        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607"
+    }
+```
+
+```diff
+    contract RoninConduitOwner (eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607) [GnosisSafe] {
+    +++ description: 5-of-6 joint Ronin/Conduit Safe.
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xEE552e802A50d855bD08E93dfcc69228FC7B9E2c","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".guardian"}
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0xEE552e802A50d855bD08E93dfcc69228FC7B9E2c) [opstack/SuperchainConfigFake_expiry] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3mo 1d if left untouched.
+      values.$pastUpgrades.1:
++        ["2026-06-09T07:02:35.000Z","0x7e9202c4d6cb60aa8f0d86f9524f58cc3b5edb505495f61503d9374e3859cdb6",["eth:0x6322C2f2D6a4305Fc033754d486A5A067Ee5F9b1"]]
+      values.$pastUpgrades.2:
++        ["2026-06-09T07:02:35.000Z","0x7e9202c4d6cb60aa8f0d86f9524f58cc3b5edb505495f61503d9374e3859cdb6",["eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"]]
+      values.$upgradeCount:
+-        1
++        3
+      values.guardian:
+-        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607"
+    }
+```
+
+Generated with discovered.json: 0x8ad704aa9cad63433de68fbaa561468f7c9c8ff0
+
+# Diff at Tue, 09 Jun 2026 12:43:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1780557929
+- current timestamp: 1780557929
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780557929 (main branch discovery), not current.
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.1.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x9aA8feACbB42659a806cDD6933ab3982586824F1) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xD379de941E78Ab394d4D4917FcCE1CC45b6cd620) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x42dab6958b58d31079004d1f0f6333426235069a
+
+# Diff at Thu, 04 Jun 2026 20:29:53 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1779399734
+- current timestamp: 1780557929
+
+## Description
+
+Kailua (RISC Zero ZK fault-proof) deployed but not yet active.
+DisputeGameFactory registered game type 1337 → KailuaTreasury (`eth:0xc7EaCDd1…`).
+OptimismPortal2 and AnchorStateRegistry still have respectedGameType = 1 (PermissionedDisputeGame); cutover requires a separate change.
+
+Ronin KailuaTreasury (v1.2.0, `eth:0xc7EaCDd1…`): verifier extracted to a separate `KAILUA_VERIFIER` proxy, bond accounting reworked. Diff vs BOB v0.1.0 baseline: https://disco.l2beat.com/diff/eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336/eth:0x9B3E1661bccAF907893B71e4016c01513ae9263C.
+
+RoninConduitOwner got admin over the KailuaVerifier proxy (`eth:0x6b49976a…`), so the verifier proxy is upgradable along the same path as the other OP Stack contracts.
+
+RiscZeroVerifierRouter (`eth:0x8EaB2D97…`) is the shared RISC Zero verifier-selector router. Owner is a TimelockController (`eth:0x0b144E07…`, 3d delay) governed by Safe `eth:0x2E5bcc…`. Both are shared RISC Zero infrastructure, not Ronin-specific.
+
+## Watched changes
+
+```diff
+    contract DisputeGameFactory (eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game1337:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336"
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853"
+      values.$members.8:
+-        "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+    }
+```
+
+```diff
+    contract RoninConduitOwner (eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607) [GnosisSafe] {
+    +++ description: 5-of-6 joint Ronin/Conduit Safe.
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"eth:0x6b49976a7340D0A3C00d1bEBE0E36E2367D89c7C","role":"admin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController]
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x1efDd13f831ceeEa14940806705A53D3211CD698) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97) [taiko/RiscZeroGroth16Verifier]
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.0.0-rc.3).
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D) [taiko/RiscZeroGroth16Verifier]
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroSetVerifier (eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85) [risc0/RiscZeroSetVerifier]
+    +++ description: Set verifier contract for RISC Zero proofs (version 0.9.0). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97 that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract KailuaVerifier (eth:0x6b49976a7340D0A3C00d1bEBE0E36E2367D89c7C) [N/A]
+    +++ description: Proxy in front of the Kailua proof verifier; routes verification requests to the canonical RiscZeroVerifierRouter and asserts the chain-specific rollup config and FPVM image ID.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter]
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9) [taiko/RiscZeroGroth16Verifier]
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).
+```
+
+```diff
++   Status: CREATED
+    contract KailuaTreasury (eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336) [risc0/KailuaTreasury]
+    +++ description: Kailua (RISC Zero ZK fault-proof) game implementation registered as game type 1337 in the DisputeGameFactory. Deployed but NOT yet active. Bonds confiscated from eliminated proposers are split 1/3 to the prover, 1/3 to the tournament winner, 1/3 burned.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C) [N/A]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../projects/roninnetwork/.flat/KailuaTreasury.sol | 3617 ++++++++++++++++++++
+ .../.flat/KailuaVerifier/KailuaVerifier.sol        |  509 +++
+ .../roninnetwork/.flat/KailuaVerifier/Proxy.p.sol  |  120 +
+ ...:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97.sol | 1767 ++++++++++
+ ...:0x2a098988600d87650Fb061FfAff08B97149Fa84D.sol | 1780 ++++++++++
+ ...:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF.sol | 1779 ++++++++++
+ ...:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9.sol | 1780 ++++++++++
+ ...:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C.sol | 1760 ++++++++++
+ .../roninnetwork/.flat/RiscZeroSetVerifier.sol     |  900 +++++
+ ...:0x1efDd13f831ceeEa14940806705A53D3211CD698.sol |  366 ++
+ ...:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7.sol |  366 ++
+ ...:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3.sol |  366 ++
+ ...:0x844D5f01161E3559d36f23d0Aa9E9620949aF782.sol |  366 ++
+ ...:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696.sol |  366 ++
+ ...:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1.sol |  366 ++
+ .../roninnetwork/.flat/RiscZeroVerifierRouter.sol  |  282 ++
+ .../src/projects/roninnetwork/.flat/Safe/Safe.sol  | 1216 +++++++
+ .../roninnetwork/.flat/Safe/SafeProxy.p.sol        |   42 +
+ .../roninnetwork/.flat/TimelockController.sol      | 1111 ++++++
+ 19 files changed, 18859 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779399734 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      usedTypes.0.arg.621:
++        "AggregateVerifier"
+    }
+```
+
+```diff
+    contract RoninConduitOwner (eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607) [GnosisSafe] {
+    +++ description: 5-of-6 joint Ronin/Conduit Safe.
+      name:
+-        "Safe"
++        "RoninConduitOwner"
+      description:
++        "5-of-6 joint Ronin/Conduit Safe."
+    }
+```
+
 Generated with discovered.json: 0xb249eb2d3cd58c2b0e7671ced0b0d72c1f5a5a21
 
 # Diff at Thu, 21 May 2026 21:43:21 GMT:

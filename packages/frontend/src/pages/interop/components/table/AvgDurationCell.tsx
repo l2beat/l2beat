@@ -65,12 +65,12 @@ function DurationCellItem({
   split: SplitAverageDuration['splits'][number]
 }) {
   return (
-    <div className="flex items-baseline">
+    <div className="flex items-center gap-1 whitespace-nowrap">
       <span className="text-[13px] text-secondary leading-none">
-        {split.label}:{' '}
+        {split.label}:
       </span>
       {split.duration !== null ? (
-        formatSeconds(split.duration)
+        <span className="leading-none">{formatSeconds(split.duration)}</span>
       ) : (
         <Badge type="gray" size="extraSmall">
           N/A

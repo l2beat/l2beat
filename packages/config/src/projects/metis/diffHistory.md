@@ -1,3 +1,79 @@
+Generated with discovered.json: 0x8b99cb76e2ed2a5c7b1fcbfeb228b196df4c23d7
+
+# Diff at Tue, 09 Jun 2026 12:43:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1767796662
+- current timestamp: 1767796662
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1767796662 (main branch discovery), not current.
+
+```diff
+    contract Metis Multisig (eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) [GnosisSafe] {
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+      receivedPermissions.0.description:
++        "Can create new dispute games."
+      receivedPermissions.0.permission:
+-        "metisGameCreator"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xAaaAA9A2e72753cE09915fee7c0AFa6f34745799) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Can create new dispute games."
+      receivedPermissions.0.permission:
+-        "metisGameCreator"
++        "interact"
+    }
+```
+
+```diff
+    contract Metis Security Council Minority (eth:0xAd07701EE9348d2B9e7De061883C10574c543279) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "stateDeleterMetis"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xaE4d46bD9117Cb017C5185844699c51107cB28a9) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xf3CEB4C2ef996CdBc95C4E18c6D0CA988CC09040) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x9285451ba98d6a70f3fcce76ac0169c9af00bb8a
 
 # Diff at Fri, 08 May 2026 07:51:39 GMT:

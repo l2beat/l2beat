@@ -1,12 +1,17 @@
+import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ScrollWithGradient } from '~/components/ScrollWithGradient'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import type { InteropChainWithIcon } from '../../../components/chain-selector/types'
 import type { InteropTokenFramework } from '../../getInteropTokenFrameworksData'
 import { ChainSelect } from './ChainSelect'
+import {
+  TRANSFER_SPEED_DEFAULT_FROM,
+  TRANSFER_SPEED_DEFAULT_TO,
+} from './consts'
 import { FrameworkRow } from './FrameworkRow'
 
 export function FrameworkTransferSpeedWidget({
@@ -16,13 +21,16 @@ export function FrameworkTransferSpeedWidget({
   tokenFrameworks: InteropTokenFramework[]
   interopChains: InteropChainWithIcon[]
 }) {
-  const [src, setSrc] = useState('arbitrum')
-  const [dst, setDst] = useState('base')
+  const trpc = useTRPC()
+  const [src, setSrc] = useState(TRANSFER_SPEED_DEFAULT_FROM)
+  const [dst, setDst] = useState(TRANSFER_SPEED_DEFAULT_TO)
 
-  const { data, isLoading } = api.interop.tokenFrameworks.useQuery({
-    from: [src],
-    to: [dst],
-  })
+  const { data, isLoading } = useQuery(
+    trpc.interop.tokenFrameworks.queryOptions({
+      from: [src],
+      to: [dst],
+    }),
+  )
 
   const frameworksById = new Map(tokenFrameworks.map((f) => [f.id, f]))
   const sorted = [...(data?.frameworkDominance.transfers.entries ?? [])].sort(

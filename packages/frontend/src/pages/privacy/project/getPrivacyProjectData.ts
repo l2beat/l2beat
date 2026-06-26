@@ -1,4 +1,9 @@
-import type { PrivacyAttribute, ProjectRedWarning } from '@l2beat/config'
+import type {
+  PrivacyAttribute,
+  PrivacyExitWindow,
+  PrivacySummaryValue,
+  ProjectRedWarning,
+} from '@l2beat/config'
 import type { InMemoryCache, ProjectId } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ProjectLink } from '~/components/projects/links/types'
@@ -29,7 +34,7 @@ export interface PrivacyProjectEntry {
   description: string
   badges: BadgeWithParams[]
   projectLinks: ProjectLink[]
-  discoveryHref: string
+  discoveryHref?: string
   discoUi: {
     href: string
     images: {
@@ -40,6 +45,9 @@ export interface PrivacyProjectEntry {
   bucketCount: number
   assetsCount: number
   attributes: PrivacyAttribute[]
+  exitWindow: PrivacyExitWindow
+  adminViewingKey: PrivacySummaryValue
+  reproducibility: PrivacySummaryValue
   summary: {
     totalValueLockedUsd: number
     deposits: {
@@ -111,17 +119,6 @@ export async function getPrivacyProjectData(
     return undefined
   }
 
-  await Promise.all([
-    helpers.privacy.flowsChart.prefetch({
-      projectIds: [details.id],
-      range: defaultChartRange,
-    }),
-    helpers.privacy.tvlChart.prefetch({
-      projectIds: [details.id],
-      range: defaultChartRange,
-    }),
-  ])
-
   const permissionsSection = getPermissionsSection(
     {
       id: details.id,
@@ -155,6 +152,26 @@ export async function getPrivacyProjectData(
     },
   }
   const icon = manifest.getUrl(`/icons/${details.slug}.png`)
+  const hasTrackedAssets = details.assets.length > 0
+  const discoveryHref =
+    contractsSection || permissionsSection ? discoUi.href : undefined
+
+  if (hasTrackedAssets) {
+    await Promise.all([
+      helpers.queryClient.prefetchQuery(
+        helpers.trpc.privacy.flowsChart.queryOptions({
+          projectIds: [details.id],
+          range: defaultChartRange,
+        }),
+      ),
+      helpers.queryClient.prefetchQuery(
+        helpers.trpc.privacy.tvlChart.queryOptions({
+          projectIds: [details.id],
+          range: defaultChartRange,
+        }),
+      ),
+    ])
+  }
   const bucketCount = details.assets.reduce(
     (sum, asset) => sum + asset.bucketCount,
     0,
@@ -174,41 +191,43 @@ export async function getPrivacyProjectData(
     })
   }
 
-  const chartProject = {
-    id: details.id,
-    name: details.name,
-    shortName: details.shortName,
-    iconUrl: icon,
+  if (hasTrackedAssets) {
+    const chartProject = {
+      id: details.id,
+      name: details.name,
+      shortName: details.shortName,
+      iconUrl: icon,
+    }
+
+    sections.push({
+      type: 'PrivacyTvlSection',
+      props: {
+        id: 'privacy-tvl',
+        title: 'Value Locked',
+        defaultRange: defaultChartRange,
+        project: chartProject,
+      },
+    })
+
+    sections.push({
+      type: 'PrivacyFlowsSection',
+      props: {
+        id: 'privacy-flows',
+        title: 'Flows',
+        defaultRange: defaultChartRange,
+        project: chartProject,
+      },
+    })
+
+    sections.push({
+      type: 'PrivacyAssetsBreakdownSection',
+      props: {
+        id: 'privacy-assets-breakdown',
+        title: 'Assets Breakdown',
+        assets: details.assets,
+      },
+    })
   }
-
-  sections.push({
-    type: 'PrivacyTvlSection',
-    props: {
-      id: 'privacy-tvl',
-      title: 'Value Locked',
-      defaultRange: defaultChartRange,
-      project: chartProject,
-    },
-  })
-
-  sections.push({
-    type: 'PrivacyFlowsSection',
-    props: {
-      id: 'privacy-flows',
-      title: 'Flows',
-      defaultRange: defaultChartRange,
-      project: chartProject,
-    },
-  })
-
-  sections.push({
-    type: 'PrivacyAssetsBreakdownSection',
-    props: {
-      id: 'privacy-assets-breakdown',
-      title: 'Assets Breakdown',
-      assets: details.assets,
-    },
-  })
 
   if (details.riskSummary) {
     sections.push({
@@ -287,11 +306,14 @@ export async function getPrivacyProjectData(
       return badgeWithParams ? [badgeWithParams] : []
     }),
     projectLinks: getProjectLinks(details.display.links),
-    discoveryHref: discoUi.href,
+    discoveryHref,
     discoUi,
     bucketCount,
     assetsCount: details.assets.length,
     attributes: details.attributes,
+    exitWindow: details.exitWindow,
+    adminViewingKey: details.adminViewingKey,
+    reproducibility: details.reproducibility,
     summary: {
       totalValueLockedUsd: details.summary.totalValueLockedUsd,
       deposits: {

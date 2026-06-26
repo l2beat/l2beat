@@ -1,6 +1,6 @@
 {
   "name": "abstract",
-  "timestamp": 1779442556,
+  "timestamp": 1781777867,
   "configHash": "0xc62590ca731911e0ab93201ff531cc70b2c6677503d1e42095b3df8d40596b2d",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -32,7 +32,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 14,
+        "nonce": 20,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -137,43 +137,43 @@
         "revertedBlocks": [],
         "REVERTER_ROLE": "0x30085792330f3f9ee2ee216aea0321c55a0909b87c51ee9ab49d05ca4a4c2ecb",
         "validatorsVTL": [
-          "eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807",
-          "eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"
+          "eth:0x6be789605b13Edb78749824633b9933D44B582ba",
+          "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
         ],
         "validatorsVTLFullAC": {
           "PRECOMMITTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807",
-              "eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"
+              "eth:0x6be789605b13Edb78749824633b9933D44B582ba",
+              "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
             ]
           },
           "COMMITTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807",
-              "eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"
+              "eth:0x6be789605b13Edb78749824633b9933D44B582ba",
+              "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
             ]
           },
           "REVERTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807",
-              "eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"
+              "eth:0x6be789605b13Edb78749824633b9933D44B582ba",
+              "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
             ]
           },
           "PROVER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807",
-              "eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"
+              "eth:0x6be789605b13Edb78749824633b9933D44B582ba",
+              "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
             ]
           },
           "EXECUTOR_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807",
-              "eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"
+              "eth:0x6be789605b13Edb78749824633b9933D44B582ba",
+              "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
             ]
           }
         }
@@ -451,7 +451,7 @@
           "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119",
           "eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731"
         ],
-        "getFirstUnprocessedPriorityTx": 26304,
+        "getFirstUnprocessedPriorityTx": 26472,
         "getL2BootloaderBytecodeHash": "0x01000911c4db4fe62c98e180cfa7e9b3a22fb15f505905d4bf36192f481551e6",
         "getL2DefaultAccountBytecodeHash": "0x010005f73e7c299ed73db937843643bdc276cbc2cc8596287e1e0cf3afc60252",
         "getL2EvmEmulatorBytecodeHash": "0x01000d8bae37b82f311186426184866498b357f41d7a02ced11f3e3fbfbacd63",
@@ -459,8 +459,8 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 2,
-        "getPriorityTreeRoot": "0x3809101fd55cef0a0dc32bb1bbd1de4719f6d8b33c288ac3282283081c49f4f9",
+        "getPriorityQueueSize": 1,
+        "getPriorityTreeRoot": "0x31bdde3c4832b5761a1c1ae38edde0858a38563238a61394655a75056ca13d50",
         "getPriorityTreeStartIndex": 17183,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 124554051588,
@@ -468,13 +468,13 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 29, 4],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 71871,
-        "getTotalBatchesExecuted": 71755,
-        "getTotalBatchesVerified": 71845,
-        "getTotalBlocksCommitted": 71871,
-        "getTotalBlocksExecuted": 71755,
-        "getTotalBlocksVerified": 71845,
-        "getTotalPriorityTxs": 26306,
+        "getTotalBatchesCommitted": 86349,
+        "getTotalBatchesExecuted": 86340,
+        "getTotalBatchesVerified": 86348,
+        "getTotalBlocksCommitted": 86349,
+        "getTotalBlocksExecuted": 86340,
+        "getTotalBlocksVerified": 86348,
+        "getTotalPriorityTxs": 26473,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45",
         "getVerifierParams": {
@@ -575,7 +575,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 6 (33%)",
-        "nonce": 9,
+        "nonce": 11,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -596,33 +596,9 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
-          "role": ".validatorsVTLFullAC"
-        }
-      ]
-    },
-    {
       "address": "eth:0x438Df339934B6Fb9dA8E0DC6f0Ba0bca22B8A7b5",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
-          "role": ".validatorsVTLFullAC"
-        }
-      ]
     },
     {
       "address": "eth:0x4d64Ff9c7aB6F4Dc6dD7D9438BCBA70e3E094e3E",
@@ -656,7 +632,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 3 (33%)",
-        "nonce": 15,
+        "nonce": 17,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -700,6 +676,19 @@
         "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       },
       "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "address": "eth:0x6be789605b13Edb78749824633b9933D44B582ba",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
+          "role": ".validatorsVTLFullAC"
+        }
+      ]
     },
     {
       "name": "RollupL1DAValidator",
@@ -825,7 +814,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 26,
+        "nonce": 28,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -981,6 +970,19 @@
       "type": "Reference",
       "targetType": "EOA",
       "targetProject": "shared-zk-stack"
+    },
+    {
+      "address": "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
+          "role": ".validatorsVTLFullAC"
+        }
+      ]
     },
     {
       "address": "eth:0xdF28907A6A272fa06333a197d7F0379A0f8f00aa",
@@ -1527,6 +1529,6 @@
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
-  "usedBlockNumbers": { "ethereum": 25149937 },
-  "permissionsConfigHash": "0x25bd988ed98d72ffeab5865506772259d2d5646deeb501f6b6ddad25fbd3ecb8"
+  "usedBlockNumbers": { "ethereum": 25343799 },
+  "permissionsConfigHash": "0xe9f36a8817727413c5b3e8279fa84e8653e57f9a154426d0657309751cf8e27b"
 }

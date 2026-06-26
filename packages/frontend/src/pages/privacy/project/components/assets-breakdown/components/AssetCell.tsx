@@ -10,8 +10,12 @@ export function AssetCell({ row }: { row: Row<PrivacyAsset> }) {
 
   if (!isExpandable) {
     return (
-      <div className="flex items-center gap-2">
-        <span aria-hidden className="size-3 shrink-0" />
+      <div className="flex items-center gap-1.5">
+        <img
+          src={asset.iconUrl}
+          alt={asset.symbol}
+          className="size-5 shrink-0"
+        />
         <span>{asset.symbol}</span>
       </div>
     )
@@ -24,7 +28,7 @@ export function AssetCell({ row }: { row: Row<PrivacyAsset> }) {
       aria-expanded={isExpanded}
       onClick={row.getToggleExpandedHandler()}
     >
-      <div className="flex items-center gap-1.5">
+      <div className="flex shrink-0 items-center gap-1.5">
         <img
           src={asset.iconUrl}
           alt={asset.symbol}

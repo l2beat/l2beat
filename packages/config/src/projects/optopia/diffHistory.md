@@ -1,3 +1,67 @@
+Generated with discovered.json: 0xf8a20af510619be4f74220c4d34b3065fcddc7ff
+
+# Diff at Tue, 09 Jun 2026 12:43:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1768569941
+- current timestamp: 1768569941
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768569941 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x33397410000A219fa5a476c5B51032B367C77e78) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x3D0Bf26E60a689a7Da5EA3ddAD7371F27f7671a5) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"challenge","from":"eth:0xdd80E05004f40815EaEf12ffeE69c2a8A5112aA5","role":".challenger"}
+      receivedPermissions.1:
+-        {"permission":"challenge","from":"eth:0xdd80E05004f40815EaEf12ffeE69c2a8A5112aA5","role":".CHALLENGER"}
+      receivedPermissions.2.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.2.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xdd80E05004f40815EaEf12ffeE69c2a8A5112aA5","description":"Allowed to challenge or delete state roots proposed by a Proposer.","role":".challenger"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xdd80E05004f40815EaEf12ffeE69c2a8A5112aA5","description":"Allowed to challenge or delete state roots proposed by a Proposer.","role":".CHALLENGER"}
+    }
+```
+
 Generated with discovered.json: 0x586b88a5a691e2a23f7ca3d3fb4309ed6a1d6ca1
 
 # Diff at Fri, 16 Jan 2026 13:26:44 GMT:

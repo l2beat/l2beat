@@ -59,6 +59,26 @@ export function SideNavLayout({
               title: 'Risk Analysis',
               shortTitle: 'Risks',
               href: '/scaling/risk',
+              subLinks: [
+                {
+                  title: 'Overview',
+                  href: '/scaling/risk',
+                  exactMatch: true,
+                },
+                {
+                  title: 'State Validation',
+                  href: '/scaling/risk/state-validation',
+                },
+                {
+                  title: 'Data Availability',
+                  shortTitle: 'DA',
+                  href: '/scaling/risk/data-availability',
+                },
+                {
+                  title: 'Sequencing',
+                  href: '/scaling/risk/sequencing',
+                },
+              ],
             },
             {
               title: 'Value Secured',
@@ -68,11 +88,6 @@ export function SideNavLayout({
             {
               title: 'Activity',
               href: '/scaling/activity',
-            },
-            {
-              title: 'Data Availability',
-              shortTitle: 'DA',
-              href: '/scaling/data-availability',
             },
             {
               title: 'Liveness',
@@ -152,7 +167,7 @@ export function SideNavLayout({
             <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
           ),
         },
-        env.CLIENT_SIDE_PRIVACY_ENABLED && {
+        {
           type: 'single',
           title: 'Privacy',
           match: 'privacy',

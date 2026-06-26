@@ -1,6 +1,6 @@
 {
   "name": "forknet",
-  "timestamp": 1777451710,
+  "timestamp": 1781097139,
   "configHash": "0xa0d879612e1ca50943afc8bed7f21bce09a7b99e4d0f6a8bf48b6b9f4a712db3",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
@@ -283,11 +283,6 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "Conduit Multisig 1",
       "address": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "type": "Contract",
@@ -299,8 +294,9 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "guard",
+          "permission": "interact",
           "from": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
           "role": ".guardian"
         },
         {
@@ -420,15 +416,13 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853",
           "eth:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09",
           "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
           "eth:0x2103c69696CB2D3779f5445393808239034E911c",
-          "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
           "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
           "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
-          "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
-          "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "eth:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
           "eth:0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
           "eth:0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
@@ -437,8 +431,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 12 (33%)",
-        "nonce": 259,
+        "multisigThreshold": "4 of 10 (40%)",
+        "nonce": 277,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -642,11 +636,6 @@
       }
     },
     {
-      "address": "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
       "type": "EOA",
       "proxyType": "EOA"
@@ -700,8 +689,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x5D2952EAe032aa33e977c52f810e0089261efB27",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
           "role": ".batcherHash"
         }
       ]
@@ -1035,6 +1025,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "L1ERC721Bridge",
       "address": "eth:0xd1cFFdEF1dc379372CB06f3dEdC6debeF6059E82",
       "type": "Contract",
@@ -1168,6 +1163,7 @@
           "arg": {
             "0": "FaultDisputeGame",
             "1": "PermissionedDisputeGame",
+            "621": "AggregateVerifier",
             "1337": "KailuaGame"
           }
         }
@@ -2319,13 +2315,13 @@
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/OptimismPortal2": "0x33b53e7ec24fad0aacaa78e8233cee4af1f8ea9f611f988f864b2fbe70e371b0",
+    "opstack/OptimismPortal2": "0x1b805f60190e91b935eb0a191e48ecec5e834022adc693965887462bd52e05a9",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "polygon-cdk/AggchainECDSAMultisig": "0x82ecfee4035ce80ca61e973569ea98f7de96585fc446962ce126778d59492772"
   },
-  "usedBlockNumbers": { "ethereum": 24984580 },
-  "permissionsConfigHash": "0x36e9ed8a883af8df6d3829f761cce5fb8fb7cfb135fb612ef7c6e58ebcc51df8"
+  "usedBlockNumbers": { "ethereum": 25287265 },
+  "permissionsConfigHash": "0xfbfa71030bd634666d7e6b9e640f9c9629f23dec65274fa15311dd77cd3fe559"
 }

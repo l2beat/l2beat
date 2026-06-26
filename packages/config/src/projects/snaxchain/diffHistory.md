@@ -1,3 +1,71 @@
+Generated with discovered.json: 0xe2db24a865e239ed5cd04b821f6ca7f45bff1a60
+
+# Diff at Tue, 09 Jun 2026 12:43:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1770983159
+- current timestamp: 1770983159
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1770983159 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x060b915cA4904b56adA63565626b9c97F6CaD212) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.role:
+-        ".challenger"
++        ".guardian"
+      receivedPermissions.0.from:
+-        "eth:0x1B780edfb393CB9f07Dcd7C699CBDF0fd663572b"
++        "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC"
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.1.role:
+-        ".guardian"
++        ".challenger"
+      receivedPermissions.1.from:
+-        "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC"
++        "eth:0x1B780edfb393CB9f07Dcd7C699CBDF0fd663572b"
+      receivedPermissions.1.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x85C73d8F7a3C95667779E0d9b8104982A5C1d04e) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0xa89653d05e9cbd79a2c6eef1d1ace9236efa6d44
 
 # Diff at Fri, 13 Feb 2026 11:47:04 GMT:

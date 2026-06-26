@@ -1,27 +1,31 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
 import partition from 'lodash/partition'
+import { useMemo } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import {
+  EMBEDDED_FLOWS_DOLLARS_PER_PARTICLE,
   MIN_SELECTED_CHAINS,
   MIN_SELECTED_PROTOCOLS,
 } from '~/pages/interop/components/flows/consts'
+import { FlowsCanonicalBridgeButton } from '~/pages/interop/components/flows/FlowsCanonicalBridgeButton'
 import { FlowsChainsSelector } from '~/pages/interop/components/flows/FlowsChainsSelector'
+import { FlowsParticleLegend } from '~/pages/interop/components/flows/FlowsParticleLegend'
+import { FlowsProtocolsSelector } from '~/pages/interop/components/flows/FlowsProtocolsSelector'
 import { FlowsGraphPanel } from '~/pages/interop/components/flows/graph/FlowsGraphPanel'
 import { InactiveChainsDialog } from '~/pages/interop/components/flows/graph/InactiveChainsDialog'
 import { useScaledParticleCounts } from '~/pages/interop/components/flows/graph/utils/useScaledParticleCounts'
-import { MultipleChainsStats } from '~/pages/interop/components/flows/selection-panel/MultipleChainsStats'
-import { SingleChainStats } from '~/pages/interop/components/flows/selection-panel/SingleChainStats'
 import {
   InteropFlowsProvider,
   useInteropFlows,
 } from '~/pages/interop/components/flows/utils/InteropFlowsContext'
 import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
-import { api } from '~/trpc/React'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import { useTRPC } from '~/trpc/React'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 import { ExploreInteropButton } from './ExploreInteropButton'
+import { FlowsStatsPanel } from './FlowsStatsPanel'
+import { InteropBridgeSubsections } from './InteropBridgeSubsections'
 
 export interface InteropFlowsSectionProps extends ProjectSectionProps {
   interopChains: InteropChainWithIcon[]
@@ -30,6 +34,7 @@ export interface InteropFlowsSectionProps extends ProjectSectionProps {
   })[]
   defaultSelectedChains: string[]
   defaultStatsChainId: string
+  canonicalProtocolId?: string
 }
 
 export function InteropFlowsSection({
@@ -37,6 +42,7 @@ export function InteropFlowsSection({
   protocols,
   defaultSelectedChains,
   defaultStatsChainId,
+  canonicalProtocolId,
   ...sectionProps
 }: InteropFlowsSectionProps) {
   return (
@@ -52,7 +58,9 @@ export function InteropFlowsSection({
       >
         <Content
           interopChains={interopChains}
+          protocols={protocols}
           defaultStatsChainId={defaultStatsChainId}
+          canonicalProtocolId={canonicalProtocolId}
         />
       </InteropFlowsProvider>
       <div className="mt-4 md:hidden">
@@ -64,18 +72,26 @@ export function InteropFlowsSection({
 
 function Content({
   interopChains,
+  protocols,
   defaultStatsChainId,
-}: Pick<InteropFlowsSectionProps, 'interopChains' | 'defaultStatsChainId'>) {
+  canonicalProtocolId,
+}: Pick<
+  InteropFlowsSectionProps,
+  'interopChains' | 'protocols' | 'defaultStatsChainId' | 'canonicalProtocolId'
+>) {
+  const trpc = useTRPC()
   const { highlightedChains, selectedChains, selectedProtocols } =
     useInteropFlows()
   const hasEnoughChains = selectedChains.length >= MIN_SELECTED_CHAINS
   const hasEnoughProtocols = selectedProtocols.length >= MIN_SELECTED_PROTOCOLS
-  const { data, isLoading } = api.interop.flows.useQuery(
-    {
-      chains: selectedChains,
-      protocolIds: selectedProtocols,
-    },
-    { enabled: hasEnoughChains && hasEnoughProtocols },
+  const { data, isLoading } = useQuery(
+    trpc.interop.flows.queryOptions(
+      {
+        chains: selectedChains,
+        protocolIds: selectedProtocols,
+      },
+      { enabled: hasEnoughChains && hasEnoughProtocols },
+    ),
   )
   const activeIds = new Set<string>([
     ...(data?.chainData ?? [])
@@ -91,45 +107,40 @@ function Content({
     activeIds.has(chainId),
   )
   const hasGraphSelection = visibleHighlightedChains.length > 0
-  const shouldRenderInactiveChainsInfo = hasEnoughChains && hasEnoughProtocols
-  const shouldShowInactiveChainsInfo =
-    !!data && inactiveChains.length > 0 && !isLoading
+  const showInactiveChainsInfo = !!data && inactiveChains.length > 0
   const { dollarsPerParticle } = useScaledParticleCounts(
     selectedChains,
     data?.chainData,
     data?.flows,
-    25,
+    EMBEDDED_FLOWS_DOLLARS_PER_PARTICLE,
   )
-  const avgValuePerSecond = (data?.stats.totalVolume ?? 0) / UnixTime.DAY
   const statsChainA = visibleHighlightedChains[0] ?? defaultStatsChainId
   const statsChainB = visibleHighlightedChains[1]
   const hasRouteSelection = hasGraphSelection && !!statsChainB
 
+  const detailChains = useMemo(
+    () =>
+      hasRouteSelection && statsChainB
+        ? [statsChainA, statsChainB]
+        : selectedChains,
+    [hasRouteSelection, statsChainB, statsChainA, selectedChains],
+  )
+
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex flex-col justify-between gap-3 md:flex-row md:items-start">
-        <FlowsChainsSelector allChains={interopChains} />
-        {!isLoading && data && (
-          <div className="flex items-center justify-end gap-2 text-right font-medium text-label-value-13 text-secondary">
-            <span>
-              Avg value per second ≈{' '}
-              <span className="font-bold text-brand">
-                {formatCurrency(avgValuePerSecond, 'usd')}
-              </span>
-            </span>
-            {dollarsPerParticle && (
-              <>
-                <span className="text-secondary">|</span>
-                <span className="inline-flex items-center gap-1">
-                  <span className="size-1.5 rounded-full bg-brand" />1 particle
-                  ≈{' '}
-                  <span className="font-bold text-brand">
-                    {formatCurrency(dollarsPerParticle, 'usd')}/s
-                  </span>
-                </span>
-              </>
-            )}
-          </div>
+      <div className="flex flex-col gap-3 md:flex-row md:flex-wrap md:items-start">
+        <div className="flex gap-2 max-md:w-full md:contents">
+          <FlowsChainsSelector allChains={interopChains} />
+          <FlowsProtocolsSelector
+            allProtocols={protocols}
+            canonicalProtocolId={canonicalProtocolId}
+          />
+        </div>
+        {canonicalProtocolId && (
+          <FlowsCanonicalBridgeButton
+            allProtocols={protocols}
+            canonicalProtocolId={canonicalProtocolId}
+          />
         )}
       </div>
       <div className="flex h-full min-w-0 flex-col">
@@ -143,42 +154,42 @@ function Content({
             topChainId={defaultStatsChainId}
           />
         </div>
-        {shouldRenderInactiveChainsInfo && (
-          <div className="mt-3 flex min-h-6 w-full items-center justify-center gap-1 pt-1 max-lg:order-2">
-            {shouldShowInactiveChainsInfo ? (
+        {!isLoading && data && (
+          <FlowsParticleLegend
+            layout="inline"
+            className="mt-2 justify-center text-center text-label-value-13"
+            totalVolume={data.stats.totalVolume}
+            dollarsPerParticle={dollarsPerParticle}
+          />
+        )}
+        {(isLoading || showInactiveChainsInfo) && (
+          <div className="mt-10 flex min-h-6 w-full items-center justify-center gap-1 max-lg:order-2">
+            {isLoading ? (
+              <Skeleton className="h-4 w-40 md:h-5" />
+            ) : (
               <>
                 <span className="font-normal text-secondary text-xs leading-none md:text-base">
                   No transfers detected for
                 </span>
                 <InactiveChainsDialog chains={inactiveChains} />
               </>
-            ) : isLoading ? (
-              <Skeleton className="h-4 w-40 md:h-5" />
-            ) : null}
+            )}
           </div>
         )}
       </div>
-      <div className="rounded-lg bg-surface-secondary p-4 dark:bg-header-secondary">
-        <div className="mb-3 font-bold text-label-value-12 text-secondary uppercase">
-          {hasRouteSelection ? 'Route stats' : 'Chain stats'}
-        </div>
-        <div className="grid grid-cols-1 gap-2 lg:grid-cols-4 lg:[&>*:first-child]:row-span-3 lg:[&>*]:col-span-2">
-          {hasRouteSelection ? (
-            <MultipleChainsStats
-              chainIdA={statsChainA}
-              chainIdB={statsChainB}
-              selectedChains={selectedChains}
-              linkTopProtocols
-            />
-          ) : (
-            <SingleChainStats
-              chainId={statsChainA}
-              selectedChains={selectedChains}
-              linkTopProtocols
-            />
-          )}
-        </div>
-      </div>
+      <FlowsStatsPanel
+        data={data}
+        protocols={protocols}
+        canonicalProtocolId={canonicalProtocolId}
+        statsChainA={statsChainA}
+        statsChainB={statsChainB}
+        hasRouteSelection={hasRouteSelection}
+      />
+      <InteropBridgeSubsections
+        protocolIds={selectedProtocols}
+        chains={detailChains}
+        anchorChain={statsChainA}
+      />
     </div>
   )
 }

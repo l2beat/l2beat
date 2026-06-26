@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import { ChevronLeftIcon, RefreshCwIcon } from 'lucide-react'
 import { Link, useParams } from 'react-router-dom'
 import { Badge } from '~/components/core/Badge'
@@ -5,7 +6,7 @@ import { Button } from '~/components/core/Button'
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { TablePageLayout } from '~/components/table/TablePageLayout'
-import { api } from '~/react-query/trpc'
+import { useBackendTrpc } from '~/react-query/trpc'
 import { EventDetailsTable } from './table/details/EventDetailsTable'
 import type {
   ChainMetadata,
@@ -48,6 +49,7 @@ function getKind(kind: string | undefined): InteropEventKind | undefined {
 }
 
 export function EventDetailsPage() {
+  const trpc = useBackendTrpc()
   const params = useParams<{ kind: string; type: string }>()
   const kind = getKind(params.kind)
   const type = decodeRouteParam(params.type)
@@ -64,9 +66,11 @@ export function EventDetailsPage() {
     isLoading: isEventDetailsLoading,
     isFetching: isEventDetailsFetching,
     refetch: refetchEventDetails,
-  } = api.interop.events.details.useQuery(detailsInput, {
-    enabled: hasValidParams,
-  })
+  } = useQuery(
+    trpc.interop.events.details.queryOptions(detailsInput, {
+      enabled: hasValidParams,
+    }),
+  )
 
   const {
     data: chainsData,
@@ -74,7 +78,7 @@ export function EventDetailsPage() {
     isError: isChainsError,
     isFetching: isChainsFetching,
     refetch: refetchChains,
-  } = api.interop.chains.metadata.useQuery()
+  } = useQuery(trpc.interop.chains.metadata.queryOptions())
 
   const rows: EventDetailsRow[] = eventDetailsData ?? []
   const chains: ChainMetadata[] = chainsData ?? []

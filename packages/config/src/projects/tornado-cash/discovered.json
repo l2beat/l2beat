@@ -1,6 +1,6 @@
 {
   "name": "tornado-cash",
-  "timestamp": 1779439938,
+  "timestamp": 1782391445,
   "configHash": "0x5732b2da696b501e89021574ade0945dd7509e9a4ff41148a59b6f687ef1f3d4",
   "entries": [
     {
@@ -74,13 +74,13 @@
       "sinceBlock": 12066007,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 29,
+        "currentRootIndex": 11,
         "denomination": "10000000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x03b45ff5fa1a53b1606ed41775e6f1f5be49732003d9ea40fd93fabc5fd20437",
+        "getLastRoot": "0x29893ad2db887b2ff5ea76c8b4b5d5088fa5995fff36732258941667b1ebd155",
         "hasher": "eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe",
         "levels": 20,
-        "nextIndex": 3389,
+        "nextIndex": 3401,
         "ROOT_HISTORY_SIZE": 30,
         "token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
@@ -123,12 +123,12 @@
       "sinceBlock": 9162012,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 15,
+        "currentRootIndex": 52,
         "denomination": 1000000000,
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x01e9c2533838a3a48295e45ae2faa428cd03f54fdeb45a6665f78a30243ddf7f",
+        "getLastRoot": "0x1dc3e10885057d1d2c7d8c07a9a680531499c533fd320252e52ce632b3f46448",
         "levels": 20,
-        "nextIndex": 1815,
+        "nextIndex": 1852,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "ROOT_HISTORY_SIZE": 100,
         "token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
@@ -192,13 +192,13 @@
       "sinceBlock": 9116966,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 41,
+        "currentRootIndex": 68,
         "denomination": "100000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x224db9d56e8c349675acc05cd24cd1a9a631b796977e7171a757f96e2ba2d93f",
+        "getLastRoot": "0x2438084087b7261c8063eb445b925abbbae95579fe7334256fd18d094c27b65d",
         "isMigrated": true,
         "levels": 20,
-        "nextIndex": 54997,
+        "nextIndex": 56924,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "ROOT_HISTORY_SIZE": 100,
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
@@ -243,12 +243,12 @@
       "sinceBlock": 9162005,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 21,
+        "currentRootIndex": 47,
         "denomination": 100000000,
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x1471c7d43289e8fe84b512c985e36e8beb886ac0845e2865cd01c287bae7df2a",
+        "getLastRoot": "0x2e604f4750a2ea6a37e449e720edc6da82b9f1882449566f547f613cbce40634",
         "levels": 20,
-        "nextIndex": 821,
+        "nextIndex": 847,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "ROOT_HISTORY_SIZE": 100,
         "token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
@@ -392,13 +392,13 @@
       "sinceBlock": 12066048,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 5,
+        "currentRootIndex": 10,
         "denomination": "100000000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x21dae583c90427cb65456a880e24892fea6992f8a3f1f0e282bfdfa83959350f",
+        "getLastRoot": "0x1dce45c8036c78d2e00fbcea5eae16070b89ed59cc80c39e507780e8b9ffee23",
         "hasher": "eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe",
         "levels": 20,
-        "nextIndex": 4025,
+        "nextIndex": 4030,
         "ROOT_HISTORY_SIZE": 30,
         "token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
@@ -556,12 +556,12 @@
       "sinceBlock": 9161965,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 54,
+        "currentRootIndex": 85,
         "denomination": 1000000000,
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x1d8869ed6758f6b36f147af59c4f6e6bb361b08f7bdec1b9529e057781d0da50",
+        "getLastRoot": "0x080b5822fdc079c06006de526b3283b4a78fdaacfdd1959b73b329e31144a353",
         "levels": 20,
-        "nextIndex": 854,
+        "nextIndex": 885,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "ROOT_HISTORY_SIZE": 100,
         "token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -606,12 +606,12 @@
       "sinceBlock": 9117609,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 27,
+        "currentRootIndex": 5,
         "denomination": "1000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x2072665255967668c5c10f3b2bd80ef2081f54fbd32e60eeafea4bf7f1b751a7",
+        "getLastRoot": "0x0b55af59537b5d93933402fc471f336ec5c8cddaa57602f23aa8d5948018a595",
         "levels": 20,
-        "nextIndex": 83527,
+        "nextIndex": 85605,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "ROOT_HISTORY_SIZE": 100,
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
@@ -1470,7 +1470,7 @@
         "EXECUTION_EXPIRATION": 259200,
         "gasCompensationVault": "eth:0xFA4C1f3f7D5dd7c12a9Adb82Cd7dDA542E3d59ef",
         "PROPOSAL_THRESHOLD": "1000000000000000000000",
-        "proposalCount": 66,
+        "proposalCount": 67,
         "QUORUM_VOTES": "100000000000000000000000",
         "returnMultisigAddress": "eth:0xb04E030140b30C27bcdfaafFFA98C57d80eDa7B4",
         "Staking": "eth:0x5B3f656C80E8ddb9ec01Dd9018815576E9238c29",
@@ -1576,15 +1576,15 @@
           },
           {
             "instance": "eth:0x47CE0C6eD5B0Ce3d3A51fdb1C52DC66a7c3c2936",
-            "deviation": -33
+            "deviation": -2
           },
           {
             "instance": "eth:0x910Cbd523D972eb0a6f4cAe4618aD62622b39DbF",
-            "deviation": -36
+            "deviation": -1
           },
           {
             "instance": "eth:0xA160cdAB225685dA1d56aa342Ad8841c3b53f291",
-            "deviation": -38
+            "deviation": -2
           },
           {
             "instance": "eth:0xD4B88Df4D29F5CedD6857912842cff3b20C8Cfa3",
@@ -1596,11 +1596,11 @@
           },
           {
             "instance": "eth:0x07687e702b410Fa43f4cB4Af7FA097918ffD2730",
-            "deviation": -132
+            "deviation": -50
           },
           {
             "instance": "eth:0x23773E65ed146A459791799d01336DB287f25334",
-            "deviation": 147
+            "deviation": -161
           },
           {
             "instance": "eth:0x22aaA7720ddd5388A3c0A3333430953C68f1849b",
@@ -1636,15 +1636,15 @@
           },
           {
             "instance": "eth:0x178169B423a011fff22B9e3F3abeA13414dDD0F1",
-            "deviation": -288
+            "deviation": -319
           },
           {
             "instance": "eth:0x610B717796ad172B316836AC95a2ffad065CeaB4",
-            "deviation": -289
+            "deviation": -319
           },
           {
             "instance": "eth:0xbB93e510BbCD0B7beb5A853875f9eC60275CF498",
-            "deviation": 519
+            "deviation": 453
           }
         ],
         "governance": "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce",
@@ -1999,12 +1999,12 @@
       "sinceBlock": 9117720,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 31,
+        "currentRootIndex": 76,
         "denomination": "10000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x10bc4ab7a9ea2506352d1c0aac0d1fa420c79a7ae6839a89da558b887974b4eb",
+        "getLastRoot": "0x2e7519a0c07355963a20c6fa5f6bd74b02690ac4f9bb4848dc98ed4ce48f4186",
         "levels": 20,
-        "nextIndex": 71531,
+        "nextIndex": 72776,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "ROOT_HISTORY_SIZE": 100,
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
@@ -2045,12 +2045,12 @@
       "sinceBlock": 9161895,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 36,
+        "currentRootIndex": 3,
         "denomination": "100000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x26d55001027497a266788a905cece054b5d35f5eee7896c27e6fa06344f78375",
+        "getLastRoot": "0x179244b6f01d61aaf0a6e57a50f73d45eb2b0cc272033d5488afbdec11e8052b",
         "levels": 20,
-        "nextIndex": 45936,
+        "nextIndex": 46603,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "ROOT_HISTORY_SIZE": 100,
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
@@ -2524,12 +2524,12 @@
       "sinceBlock": 9117612,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 8,
+        "currentRootIndex": 24,
         "denomination": "100000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x1a645ef12ee5282a6f029b265db278723e37075b3abdbdf479feee5e3db356b4",
+        "getLastRoot": "0x15e74340e3a04a327ee8175c559596fa6be8c1301b0451b8e13b2e7bc430e36e",
         "levels": 20,
-        "nextIndex": 408,
+        "nextIndex": 424,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "ROOT_HISTORY_SIZE": 100,
         "token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
@@ -2628,12 +2628,12 @@
       "sinceBlock": 9161958,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 46,
+        "currentRootIndex": 62,
         "denomination": 100000000,
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x19e4ee9b349b5cb1e1c9a9ee704e808811e656cf121c8e36c1a1699b9362fb89",
+        "getLastRoot": "0x166b58667abc7db83365212d39c163499e68d6c99979666467fcff217cd645d2",
         "levels": 20,
-        "nextIndex": 346,
+        "nextIndex": 362,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "ROOT_HISTORY_SIZE": 100,
         "token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -2715,12 +2715,12 @@
       "sinceBlock": 9161917,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 7,
+        "currentRootIndex": 17,
         "denomination": "1000000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x1da2680cec599f486647e6aee862285d25a2ce65be0b8bef6840606bb1f85598",
+        "getLastRoot": "0x281129ccb07bad75ce90d20dd565cbaef02acfa1ae8b2bcd0078e76154e002e6",
         "levels": 20,
-        "nextIndex": 1307,
+        "nextIndex": 1317,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "ROOT_HISTORY_SIZE": 100,
         "token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
@@ -3825,6 +3825,6 @@
     "tornado-cash/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tornado-cash/WithdrawVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 25149720 },
+  "usedBlockNumbers": { "ethereum": 25394718 },
   "permissionsConfigHash": "0x44bf0b4758492462db07b5908ef81f4531dbedb1013b1aca2fb307274e6c541c"
 }

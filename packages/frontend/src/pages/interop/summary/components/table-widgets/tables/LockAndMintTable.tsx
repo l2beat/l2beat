@@ -11,10 +11,10 @@ export function LockAndMintTable({
 }: {
   entries: LockAndMintProtocolEntry[]
 }) {
-  const { selectionForApi } = useInteropSelectedChains()
+  const { selectedChains } = useInteropSelectedChains()
   const columns = useMemo(
-    () => getLockAndMintColumns(selectionForApi),
-    [selectionForApi],
+    () => getLockAndMintColumns(selectedChains),
+    [selectedChains],
   )
   const table = useTable<LockAndMintProtocolRow>({
     data: entries,

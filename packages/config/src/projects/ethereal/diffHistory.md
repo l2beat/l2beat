@@ -1,3 +1,134 @@
+Generated with discovered.json: 0x6b1193cd40192d42f0c8c272ed83b221486f2213
+
+# Diff at Mon, 15 Jun 2026 08:08:46 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@91b2eba1ff9c1c8341d0eaf6594dac4179405ef6 block: 1780925503
+- current timestamp: 1781510846
+
+## Description
+
+Conduit Multisig 2 dropped one signer.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 2 (arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) [GnosisSafe] {
+    +++ description: None
+      values.$members.4:
+-        "arb1:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007"
+      values.multisigThreshold:
+-        "4 of 11 (36%)"
++        "4 of 10 (40%)"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780925503 (main branch discovery), not current.
+
+```diff
+    EOA  (ethereal:0x98046Bd286715D3B0BC227Dd7a956b83D8978603) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
+```diff
+    contract PythLazer (ethereal:0xACeA761c27A909d4D3895128EBe6370FDE2dF481) [ethereal/PythLazer] {
+    +++ description: Used to verify offchain signed oracle data.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+Generated with discovered.json: 0xc7d4dd2e6c54d4e47f1c28e742912f58b7752db9
+
+# Diff at Tue, 09 Jun 2026 12:43:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1780925503
+- current timestamp: 1780925503
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780925503 (main branch discovery), not current.
+
+```diff
+    EOA  (arb1:0x12473dC3cBefb64337B6c7A772F25f4d2d9b45c3) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0x80e046764185e776100A4f59079C2B00327f279A) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x7cccd5be719e64dbcaeacfb376df705ef75c7d5a
+
+# Diff at Mon, 08 Jun 2026 13:33:31 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@7b249a098f7367cb0ead3d881bbc57b408521134 block: 1780398295
+- current timestamp: 1780925503
+
+## Description
+
+Ethereal SafeL2 (on ethereal chain) rotated one signer.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (ethereal:0x3F93bCc6201558aE2d7528a85575cF07679Bb50e) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "ethereal:0x66096e581863EC2682e4E317Da41B80510a274F6"
+      values.$members.1:
+-        "ethereal:0xFBE49A82CB2BFF6Fa4C2B1F0d165A5E1175Aac83"
+    }
+```
+
+Generated with discovered.json: 0xcb6d73c472180733e09d5b894f0c1b793852608b
+
+# Diff at Tue, 02 Jun 2026 11:08:46 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1778232940
+- current timestamp: 1780398295
+
+## Description
+
+Conduit Multisig 2 rotated one signer (operator key `0x3840…fd5f` → `0xcdC9…4853`); same rotation propagated across Conduit Multisigs 1/2/3 on eth/arb1/base.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 2 (arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "arb1:0xcdC931935768c0562AfE989A366a3Dc4d52F4853"
+      values.$members.8:
+-        "arb1:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+    }
+```
+
 Generated with discovered.json: 0x6517da95ca07737119b50ca2e3f673556c11bd78
 
 # Diff at Fri, 22 May 2026 15:43:25 GMT:

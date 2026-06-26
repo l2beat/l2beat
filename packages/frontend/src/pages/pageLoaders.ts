@@ -13,9 +13,15 @@ export const pageLoaders = {
   ScalingActivityPage: async () =>
     (await import('./scaling/activity/ScalingActivityPage'))
       .ScalingActivityPage,
-  ScalingDataAvailabilityPage: async () =>
-    (await import('./scaling/data-availability/ScalingDataAvailabilityPage'))
-      .ScalingDataAvailabilityPage,
+  ScalingRiskDataAvailabilityPage: async () =>
+    (
+      await import(
+        './scaling/risk/data-availability/ScalingRiskDataAvailabilityPage'
+      )
+    ).ScalingRiskDataAvailabilityPage,
+  ScalingRiskSequencingPage: async () =>
+    (await import('./scaling/risk/sequencing/ScalingRiskSequencingPage'))
+      .ScalingRiskSequencingPage,
   ScalingLivenessPage: async () =>
     (await import('./scaling/liveness/ScalingLivenessPage'))
       .ScalingLivenessPage,
@@ -52,6 +58,8 @@ export const pageLoaders = {
   InteropProtocolPage: async () =>
     (await import('./interop/protocol/InteropProtocolPage'))
       .InteropProtocolPage,
+  InteropTokenPage: async () =>
+    (await import('./interop/token/InteropTokenPage')).InteropTokenPage,
   InteropTokenFrameworksPage: async () =>
     (await import('./interop/token-frameworks/InteropTokenFrameworksPage'))
       .InteropTokenFrameworksPage,

@@ -1,6 +1,6 @@
 {
   "name": "unichain",
-  "timestamp": 1778850530,
+  "timestamp": 1780397664,
   "configHash": "0x2726da714801efa972dff339270441c11094d49d4e2c5f41c7e1fa0043de71f1",
   "entries": [
     {
@@ -93,8 +93,9 @@
       "proxyType": "gnosis safe",
       "directlyReceivedPermissions": [
         {
-          "permission": "guard",
+          "permission": "interact",
           "from": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
           "role": ".guardian"
         }
       ],
@@ -197,7 +198,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 514422,
-          "prevBlockNum": 25100721
+          "prevBlockNum": 25229160
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -227,6 +228,7 @@
           "arg": {
             "0": "FaultDisputeGame",
             "1": "PermissionedDisputeGame",
+            "621": "AggregateVerifier",
             "1337": "KailuaGame"
           }
         }
@@ -268,7 +270,7 @@
         "proxyAdminOwner": "eth:0x6d5B183F538ABB8572F5cD17109c617b994D5833",
         "symbol": "WETH",
         "systemConfig": "eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6",
-        "totalSupply": "20080000000000000000",
+        "totalSupply": "20160000000000000000",
         "version": "1.5.0"
       },
       "implementationNames": {
@@ -401,13 +403,13 @@
         ],
         "$upgradeCount": 3,
         "absolutePrestateFromGame": "0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e",
-        "anchorGame": "eth:0xf9Eba0EE6ff53aaB17756a625eD2A383a44ca4C3",
+        "anchorGame": "eth:0xaa4d1E66bad0E12e740C6F7eFe39428aEB45Bc52",
         "challengePeriodFromOracle": 86400,
         "disputeGameFactory": "eth:0x2F12d621a16e2d3285929C9996f478508951dFe4",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x1f69b69dfcf414d64d3257b28f254e904ef4f117f37f01c87206f3c717db8274",
-          47495434
+          "0x60d51d7fde3c9ad246e1a8dc17b1ea85c60883397291bba4a17e7385cf38f51e",
+          49040118
         ],
         "getStartingAnchorRoot": {
           "root": "0x193781a056643321a32aacffcb9087a6e54a0f858d5ee06f29cd920ada6eeea9",
@@ -502,7 +504,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 13231,
+        "gameCount": 13660,
         "gameImpls": [
           "eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499",
           "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A",
@@ -547,8 +549,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
           "role": ".batcherHash"
         }
       ]
@@ -560,8 +563,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "guard",
+          "permission": "interact",
           "from": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
           "role": ".guardian",
           "via": [
             { "address": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
@@ -932,6 +936,11 @@
         "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A": "GnosisSafeProxy",
         "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
+    },
+    {
+      "address": "eth:0x5b5B0669De777AF0Eb7A73eD46AaEe9711ab01E4",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x5c1f9E9384Ca9fE0499277F6a015a2ac0A317a81",
@@ -1434,8 +1443,9 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "guard",
+          "permission": "interact",
           "from": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
           "role": ".guardian",
           "via": [
             { "address": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
@@ -1513,9 +1523,9 @@
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "eth:0x5b5B0669De777AF0Eb7A73eD46AaEe9711ab01E4",
           "eth:0xc531e0368dc3928E11987D096558dEE7A22ECEE4",
           "eth:0x7D742aD88c6cE2D3dD1B4582b5180423b74cBc4c",
-          "eth:0xFA361ece9724d75B7EdF08B9A238706EAe270d3f",
           "eth:0x31e5EDc2c4cC4AA25349339f96747B54d1624160",
           "eth:0x34d19AC0a7B195359354DB4D5E8aDa7A1f2Cb27C"
         ],
@@ -1524,7 +1534,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 8,
+        "nonce": 9,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1687,7 +1697,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292659201",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292660116",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1822,8 +1832,9 @@
       "description": "A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.",
       "receivedPermissions": [
         {
-          "permission": "guard",
+          "permission": "interact",
           "from": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
           "role": ".guardian",
           "via": [
             { "address": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
@@ -1879,9 +1890,9 @@
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "eth:0xc8C31213545f32230E0327Db76df5538c2836081",
           "eth:0xAC68D69dC0FE6E00BcdABEe391b06d09098804bb",
           "eth:0x34154426ab842AAAeFda28F3f5d103Dd0b0FE37A",
-          "eth:0xf89C1b6e5D65e97c69fbc792f1BcdcB56DcCde91",
           "eth:0xee1cCc7Abd01554d0bB26Cb4548954B57281697C",
           "eth:0xD930FbB04C315C90d0879FC8978BD9BDD57e8449"
         ],
@@ -1892,7 +1903,7 @@
           "eth:0x4B4F1aF8d43C8c140D2355Fea663fC9f762067C2"
         ],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 16,
+        "nonce": 17,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1922,8 +1933,9 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "guard",
+          "permission": "interact",
           "from": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
           "role": ".guardian",
           "via": [
             { "address": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }
@@ -2126,6 +2138,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xc8C31213545f32230E0327Db76df5538c2836081",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xcbC7dCeb857F0b25523618cCa0A03c419a6d7eA6",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2299,16 +2316,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xf89C1b6e5D65e97c69fbc792f1BcdcB56DcCde91",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xFA361ece9724d75B7EdF08B9A238706EAe270d3f",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xFf00000000000000000000000000000000000130",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2366,7 +2373,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "unichain:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292623175",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292623206",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2487,7 +2494,8 @@
       "implementationNames": {
         "unichain:0x4200000000000000000000000000000000000011": "Proxy",
         "unichain:0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011": "SequencerFeeVault"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "name": "OptimismMintableERC20Factory",
@@ -2809,7 +2817,8 @@
       "implementationNames": {
         "unichain:0x4200000000000000000000000000000000000019": "Proxy",
         "unichain:0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019": "BaseFeeVault"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "name": "L1FeeVault",
@@ -2841,7 +2850,8 @@
       "implementationNames": {
         "unichain:0x420000000000000000000000000000000000001A": "Proxy",
         "unichain:0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A": "L1FeeVault"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "name": "SchemaRegistry",
@@ -3006,7 +3016,6 @@
       "address": "unichain:0x7E6c183F538abb8572F5cd17109C617b994d6944",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -4983,13 +4992,13 @@
     "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/OptimismPortal2": "0x33b53e7ec24fad0aacaa78e8233cee4af1f8ea9f611f988f864b2fbe70e371b0",
+    "opstack/OptimismPortal2": "0x1b805f60190e91b935eb0a191e48ecec5e834022adc693965887462bd52e05a9",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "unichain/L1Splitter": "0xf1512f595a0a8fc0981c747d8b7c7b4939bc3136849b90b2bbf68c4b236c93d7"
   },
-  "usedBlockNumbers": { "ethereum": 25100748, "unichain": 48102171 },
-  "permissionsConfigHash": "0x448153d6fecc0d159b6372942954654295800fa730efa388bfe9257107132764"
+  "usedBlockNumbers": { "ethereum": 25229229, "unichain": 49649305 },
+  "permissionsConfigHash": "0x1a6aef7ba3abc40b52c722025648904a00989353266c3a8574c1c6622f4f95fd"
 }

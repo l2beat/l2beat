@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { AreaChart } from 'recharts'
+import type { ChartScale } from '~/components/chart/types'
 import type {
   ChartMeta,
   ChartProject,
@@ -29,6 +30,7 @@ interface Props {
   syncedUntil: number | undefined
   isLoading: boolean
   metric: 'count' | 'value'
+  scale?: ChartScale
   project?: ChartProject
 }
 
@@ -50,6 +52,7 @@ export function PrivacyFlowChart({
   syncedUntil,
   isLoading,
   metric,
+  scale = 'linear',
   project,
 }: Props) {
   const chartData = useMemo(
@@ -84,7 +87,12 @@ export function PrivacyFlowChart({
         onItemClick: toggleDataKey,
       }}
     >
-      <AreaChart responsive data={chartData} margin={{ top: 20 }}>
+      <AreaChart
+        responsive
+        data={chartData}
+        // Without right:1 the chart last point is not hoverable for some reason
+        margin={{ top: 20, right: project ? 0 : 1 }}
+      >
         <defs>
           <CustomFillGradientDef
             id={`privacy-${metric}-deposits-fill`}
@@ -126,6 +134,8 @@ export function PrivacyFlowChart({
           data={chartData}
           isLoading={isLoading}
           yAxis={{
+            scale: scale === 'linear' ? 'auto' : scale,
+            domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
             tickCount: 4,
             tickFormatter: (value) =>
               metric === 'count'

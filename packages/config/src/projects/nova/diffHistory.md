@@ -1,3 +1,337 @@
+Generated with discovered.json: 0x4607eca3ef051a7f1c9cd214316f0db92ac0dea3
+
+# Diff at Tue, 16 Jun 2026 07:36:00 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@254df558db0f4fcb5b0e269facd77fad1c7d2ddb block: 1779719590
+- current timestamp: 1781595260
+
+## Description
+
+Shared L1Timelock (with arbitrum) scheduled a `SpoofL2TxAction` releasing 30,765.617 ETH on arbitrum's L2 — the Constitutional AIP [Approve Release of Frozen ETH](https://forum.arbitrum.foundation/t/constitutional-aip-approve-release-of-frozen-eth/30825). No change to nova's own contracts.
+
+## Watched changes
+
+```diff
+    contract L1Timelock (eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49) [orbitstack/Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      values.scheduledTransactions.103:
++        {"id":"0x3b8c42fc538bca5c6732df90d234ba7450c632c3818dbad104c5e3528cc36d83","decoded":{"chain":"ethereum","contractName":"SpoofL2TxAction","function":"execute","inputs":[{"name":"proxyAdmin","value":"eth:0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"},{"name":"inbox","value":"eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"},{"name":"gasLimit","value":50000},{"name":"maxFeePerGas","value":1000000000000},{"name":"nonce","value":0},{"name":"to","value":"eth:0x3b87db6ded35eBD28EcbF8014fb325eef23f6C07"},{"name":"value","value":"30765617401709008927568"},{"name":"data","value":"0x"},{"name":"from","value":"eth:0x0000000000000000000000000000000000000DA0"}],"address":"eth:0x3d456FCd62f5baBCf3263B72fb4ac8fF8cc5a322","calldata":"0x0a2e5a5b000000000000000000000000554723262467f125ac9e1cdfa9ce15cc53822dbd0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000000000000000000000000000000000000000c350000000000000000000000000000000000000000000000000000000e8d4a5100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003b87db6ded35ebd28ecbf8014fb325eef23f6c07000000000000000000000000000000000000000000000683ceb5c7a099c63b5000000000000000000000000000000000000000000000000000000000000001200000000000000000000000000000000000000000000000000000000000000da00000000000000000000000000000000000000000000000000000000000000000","executor":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},"raw":{"target":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd","value":0,"data":"0x1cff79cd0000000000000000000000003d456fcd62f5babcf3263b72fb4ac8ff8cc5a322000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000001440a2e5a5b000000000000000000000000554723262467f125ac9e1cdfa9ce15cc53822dbd0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000000000000000000000000000000000000000c350000000000000000000000000000000000000000000000000000000e8d4a5100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003b87db6ded35ebd28ecbf8014fb325eef23f6c07000000000000000000000000000000000000000000000683ceb5c7a099c63b5000000000000000000000000000000000000000000000000000000000000001200000000000000000000000000000000000000000000000000000000000000da0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}}
+    }
+```
+
+Generated with discovered.json: 0x962481e8f9418d28c369d80bfb9e94150af8cac3
+
+# Diff at Fri, 12 Jun 2026 10:57:50 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1779719590
+- current timestamp: 1779719590
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779719590 (main branch discovery), not current.
+
+```diff
+    EOA L1Timelock (arb-nova:0xf7951D92B0C345144506576eC13Ecf5103aC905a) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
+```diff
+    contract ValidatorWallet (eth:0x1732BE6738117e9d22A84181AF68C8d09Cd4FF23) [N/A] {
+    +++ description: None
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract ValidatorWallet (eth:0x24Ca61c31C7f9Af3ab104dB6B9A444F28e9071e3) [N/A] {
+    +++ description: None
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract Validator (eth:0x3B0369CAD35d257793F51c28213a4Cf4001397AC) [N/A] {
+    +++ description: None
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract ValidatorWallet (eth:0x658e8123722462F888b6fa01a7dbcEFe1D6DD709) [N/A] {
+    +++ description: None
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+Generated with discovered.json: 0x92dba981a090d1dc811d647108223cfca6fb41ed
+
+# Diff at Tue, 09 Jun 2026 12:43:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1779719590
+- current timestamp: 1779719590
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779719590 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    contract ValidatorWallet (eth:0x1732BE6738117e9d22A84181AF68C8d09Cd4FF23) [N/A] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    contract ValidatorWallet (eth:0x24Ca61c31C7f9Af3ab104dB6B9A444F28e9071e3) [N/A] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    contract Validator (eth:0x3B0369CAD35d257793F51c28213a4Cf4001397AC) [N/A] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    contract ValidatorWallet (eth:0x57004b440Cc4eb2FEd8c4d1865FaC907F9150C76) [N/A] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    contract ValidatorWallet (eth:0x658e8123722462F888b6fa01a7dbcEFe1D6DD709) [N/A] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xDfB23DFE9De7dcC974467195C8B7D5cd21C9d7cB) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    contract ValidatorWallet (eth:0xE27d4Ed355e5273A3D4855c8e11BC4a8d3e39b87) [N/A] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x8c62865edf1740b2ac9cb229da68b886a7851054
+
+# Diff at Tue, 02 Jun 2026 10:46:54 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1779719590
+- current timestamp: 1779719590
+
+## Description
+
+2 SC members tagged (rotated in on 2026-05-15):
+- 0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D: DZack23
+- 0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce: PabloSabbatella-Opsek
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779719590 (main branch discovery), not current.
+
+```diff
+    EOA DZack23 (arb-nova:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D) {
+    +++ description: None
+      name:
++        "DZack23"
+    }
+```
+
+```diff
+    EOA PabloSabbatella-Opsek (arb-nova:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce) {
+    +++ description: None
+      name:
++        "PabloSabbatella-Opsek"
+    }
+```
+
+```diff
+    EOA DZack23 (eth:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D) {
+    +++ description: None
+      name:
++        "DZack23"
+    }
+```
+
+```diff
+    EOA PabloSabbatella-Opsek (eth:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce) {
+    +++ description: None
+      name:
++        "PabloSabbatella-Opsek"
+    }
+```
+
+Generated with discovered.json: 0x0df91c3df1b4518f1b93f59d035ebf6e48e5ab67
+
+# Diff at Mon, 25 May 2026 14:35:01 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@6898129972dbc5b1b4f1389afaf9cb3fb7fd3380 block: 1779399699
+- current timestamp: 1779719590
+
+## Description
+
+Picked up the new `ArbOS v51.1 wasmModuleRoot` label from the globalConfig type map. Config-only — chain's own wasmModuleRoot is unchanged.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779399699 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (eth:0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      usedTypes.0.arg.0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c:
++        "ArbOS v51.1 wasmModuleRoot"
+    }
+```
+
 Generated with discovered.json: 0x9bf4d57f373ac88834ffab67d4cb93c06f560674
 
 # Diff at Thu, 21 May 2026 21:42:44 GMT:

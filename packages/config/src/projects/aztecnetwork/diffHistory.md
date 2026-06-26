@@ -1,3 +1,125 @@
+Generated with discovered.json: 0xa9350ad2e49842d87ba0be3aa01546e51488e5da
+
+# Diff at Mon, 22 Jun 2026 13:58:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@30c3b0611ac82b18f6581a04bed5c63089dcd0a8 block: 1781603826
+- current timestamp: 1782131482
+
+## Description
+
+Execute 'cut the leash' upgrade. This revokes ownership of the current rollup contract. Gov execution delay is reduced to 2d (from 30d). Since gov cannot change the escape hatch or critical configs on the current rollup, Aztec Network is now Stage 2. At the same time, there are known vulnerabilities, which places all escrowed funds at risk.
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e) [aztecnetwork/Governance] {
+    +++ description: DAO contract used for proposals and token voting. Heavily interdependent with the GSE for voting power snapshots.
+      values.getConfiguration.executionDelay:
+-        2592000
++        172800
+      receivedPermissions.3:
+-        {"permission":"interact","from":"eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962","description":"change the escape hatch address and disable the escape hatch, change the slasher address which can slash arbitrary sequencers, change the sequencer queue config and disallow new sequencers joining, set the ejection threshold that exits sequencers from the active set, change various critical fee and reward configurations.","role":".owner"}
+    }
+```
+
+```diff
+    contract Rollup (eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962) [aztecnetwork/Rollup] {
+    +++ description: Core rollup logic contract. It processes checkpoint proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.
+      values.owner:
+-        "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1781603826 (main branch discovery), not current.
+
+```diff
+    contract Governance (eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e) [aztecnetwork/Governance] {
+    +++ description: DAO contract used for proposals and token voting. Heavily interdependent with the GSE for voting power snapshots.
+      receivedPermissions.0.description:
+-        "mint new AZTEC in the bounds of the minting caps and forward the acceptOwnership() call to the eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2"
++        "mint new AZTEC in the bounds of the minting caps"
+      receivedPermissions.2.description:
+-        "add a new rollup address, which automatically triggers all sequencers staked in the bonus address to be migrated to the new rollup."
++        "add a new rollup address, which automatically triggers all sequencers staked in the bonus address to be migrated to the new rollup; change the staking configuration so that no new Sequencers can joing the queue."
+    }
+```
+
+```diff
+    contract ProtocolTreasury (eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a) [aztecnetwork/ProtocolTreasury] {
+    +++ description: Holds the protocol's funds controlled by Governance. It acts as a timelocked executor for spending or relaying transactions approved by the DAO.
+      directlyReceivedPermissions.0.description:
+-        "mint new AZTEC in the bounds of the minting caps and forward the acceptOwnership() call to the eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2"
++        "mint new AZTEC in the bounds of the minting caps"
+    }
+```
+
+Generated with discovered.json: 0x5e549954d76027e6c1f354d135d818ab971a7112
+
+# Diff at Tue, 16 Jun 2026 09:58:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b8fe7ad12211d67626f7d23839b5be1f7ba15bb5 block: 1780405492
+- current timestamp: 1781603826
+
+## Description
+
+Revoker switched back to EOA (see below).
+
+## Watched changes
+
+```diff
+    contract AztecTokenPositionRegistry_ProtocolTreasury (eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80) [aztecnetwork/AztecTokenPositionRegistry] {
+    +++ description: Used to set the time at which AZTEC tokens owned by the ProtocolTreasury are unlocked. Is also used as source of truth for other vesting contracts in the Aztec ecosystem.
+      values.getRevoker:
+-        "eth:0x79E5BD3BD5cfc52C718Fe0f83fEaab31691683cA"
++        "eth:0x92Ba0FD39658105FaC4dF2B9BADE998B5816b350"
+    }
+```
+
+Generated with discovered.json: 0xbff27ec5f49a74e29c33a58cd16868206b55a6fb
+
+# Diff at Tue, 02 Jun 2026 13:18:04 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@63ce779d811ac540efbb445178f952fd5f075eb6 block: 1778677605
+- current timestamp: 1780405492
+
+## Description
+
+Revoker of the vesting contracts registry switched from EOA to a revocation payload. This does not affect the ProtocolTreasury but rather the external vesting contracts, which are not in disco.
+
+## Watched changes
+
+```diff
+    contract AztecTokenPositionRegistry_ProtocolTreasury (eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80) [aztecnetwork/AztecTokenPositionRegistry] {
+    +++ description: Used to set the time at which AZTEC tokens owned by the ProtocolTreasury are unlocked. Is also used as source of truth for other vesting contracts in the Aztec ecosystem.
+      values.getRevoker:
+-        "eth:0x92Ba0FD39658105FaC4dF2B9BADE998B5816b350"
++        "eth:0x79E5BD3BD5cfc52C718Fe0f83fEaab31691683cA"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778677605 (main branch discovery), not current.
+
+```diff
+    contract AztecTokenPositionRegistry_ProtocolTreasury (eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80) [aztecnetwork/AztecTokenPositionRegistry] {
+    +++ description: Used to set the time at which AZTEC tokens owned by the ProtocolTreasury are unlocked. Is also used as source of truth for other vesting contracts in the Aztec ecosystem.
+      description:
+-        "Used to set the time at which AZTEC tokens owned by the ProtocolTreasury are unlocked."
++        "Used to set the time at which AZTEC tokens owned by the ProtocolTreasury are unlocked. Is also used as source of truth for other vesting contracts in the Aztec ecosystem."
+    }
+```
+
 Generated with discovered.json: 0x8d78d8a857ffa3d722259c1c029db1f0aa1eef21
 
 # Diff at Fri, 15 May 2026 12:35:42 GMT:

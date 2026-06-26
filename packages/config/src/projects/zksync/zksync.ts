@@ -186,14 +186,11 @@ export const zksync: ScalingProject = {
       regular: {
         value: formatSeconds(upgradeDelay - forcedWithdrawalDelay),
         sentiment: 'warning',
-      },
-      warning: {
-        value: `Users have ${formatSeconds(
+        description: `Users have ${formatSeconds(
           upgradeDelay - forcedWithdrawalDelay,
         )} to exit funds in case of an unwanted non-emergency upgrade. There is a ${upgradeDelayString} delay before a non-emergency upgrade is applied, and withdrawals can take up to ${formatSeconds(
           forcedWithdrawalDelay,
         )} to be processed.`,
-        sentiment: 'warning',
       },
     },
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(forcedWithdrawalDelay),

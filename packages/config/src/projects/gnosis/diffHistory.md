@@ -1,3 +1,248 @@
+Generated with discovered.json: 0x6241c41af620a04de5fcee4c5ac744920d93c249
+
+# Diff at Thu, 25 Jun 2026 12:51:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8df370c30d58cf2a24a9fe5df1aafba41971f447 block: 1778679690
+- current timestamp: 1782391789
+
+## Description
+
+Swap one validator signer.
+
+## Watched changes
+
+```diff
+    contract XDai Bridge Validators (eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E) [gnosis/BridgeValidators] {
+    +++ description: Validator set contract used by the bridge to require threshold signatures before cross-chain messages can be executed.
++++ description: Array of the signers in the validator multisig
+      values.$members.4:
+-        "eth:0x6236925FF8Aa09f29f1609a9BcD54Af20e4be6B4"
++++ description: Array of the signers in the validator multisig
+      values.$members.6:
++        "eth:0xb54B5572F3C4f70fF3cc8F67C19C8cddb838FBaA"
+    }
+```
+
+```diff
+    contract AMB Validators (eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064) [gnosis/BridgeValidators] {
+    +++ description: Validator set contract used by the bridge to require threshold signatures before cross-chain messages can be executed.
++++ description: Array of the signers in the validator multisig
+      values.$members.4:
+-        "eth:0x6236925FF8Aa09f29f1609a9BcD54Af20e4be6B4"
++++ description: Array of the signers in the validator multisig
+      values.$members.6:
++        "eth:0xb54B5572F3C4f70fF3cc8F67C19C8cddb838FBaA"
+    }
+```
+
+```diff
+    contract HomeAMB Validators (gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008) [gnosis/BridgeValidators] {
+    +++ description: Validator set contract used by the bridge to require threshold signatures before cross-chain messages can be executed.
++++ description: Array of the signers in the validator multisig
+      values.$members.4:
+-        "gno:0x6236925FF8Aa09f29f1609a9BcD54Af20e4be6B4"
++++ description: Array of the signers in the validator multisig
+      values.$members.6:
++        "gno:0xb54B5572F3C4f70fF3cc8F67C19C8cddb838FBaA"
+    }
+```
+
+Generated with discovered.json: 0x6393dac14eaa263787f8e325124afc1383dcad84
+
+# Diff at Tue, 09 Jun 2026 12:43:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1778679690
+- current timestamp: 1778679690
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778679690 (main branch discovery), not current.
+
+```diff
+    EOA Giveth EOA 2 (eth:0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA Safe EOA 1 (eth:0x1312E98995bbCc30fc63Db3cef807e20CDd33dca) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA Safe EOA 2 (eth:0x258667E543C913264388B33328337257aF208a8f) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA Protofire EOA 2 (eth:0x459A3bd49F1ff109bc90b76125533699AaAAf9A6) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA Protofire EOA 1 (eth:0x4D1c96B9A49C4469A0b720a22b74b034EDdFe051) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x6236925FF8Aa09f29f1609a9BcD54Af20e4be6B4) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+      receivedPermissions.1.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x7117F73aFBDec3221bDD50DdCbf73204b3998302) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+      receivedPermissions.1.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA Gnosis DAO EOA 1 (eth:0x97630E2aE609D4104aBdA91F3066C556403182dd) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xAeE7C90Ef0fC461ec63c4d451B12c340642bc656) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA Gnosis DAO EOA 2 (eth:0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA Giveth EOA 1 (eth:0xc073C8E5ED9Aa11CF6776C69b3e13b259Ba9F506) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xCC46a3873BfCaa08a6a946a308bB621535D6E6Dd) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA Giveth EOA 2 (gno:0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA Safe EOA 2 (gno:0x258667E543C913264388B33328337257aF208a8f) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA Protofire EOA 2 (gno:0x459A3bd49F1ff109bc90b76125533699AaAAf9A6) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (gno:0x6236925FF8Aa09f29f1609a9BcD54Af20e4be6B4) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (gno:0x7117F73aFBDec3221bDD50DdCbf73204b3998302) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA Gnosis DAO EOA 2 (gno:0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (gno:0xCC46a3873BfCaa08a6a946a308bB621535D6E6Dd) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0xe89b3ea302e4466d20231b9646b13c96ee3d09ad
 
 # Diff at Fri, 15 May 2026 12:35:57 GMT:

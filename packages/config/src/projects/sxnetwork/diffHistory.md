@@ -1,3 +1,155 @@
+Generated with discovered.json: 0xdbd66f637826fae75ae01f72eb66558ff97f3ce4
+
+# Diff at Tue, 09 Jun 2026 12:43:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1779719759
+- current timestamp: 1779719759
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779719759 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x0181F0f0260Ac4149CA7Abf6c53d3E8053f95715) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x2EA9bb3d1022b8E63366aE3ea48Ada4E2Cd2ac46) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x3648e2c562F00DeEA11B0b335Cf55C5EB2Df3A5F) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x75feC8Bb2d99076D776A5D46D1E3d42686520eF1) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x7D9A25f61865D5A211a8be80a4Ef6bd201112717) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xC410B8657FBB2CdbF0c5c5d5128576974467ba5e) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xC711f8aCC65306D4f16F874Fe88C43eF23504F5c) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "fastconfirm"
++        "interact"
+      receivedPermissions.1.permission:
+-        "validate"
++        "interact"
+      receivedPermissions.2.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xCD795E6003Da105f4a1E11F73fb64b58B5C0f325) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xD19ee3f6Bf22A3A23eCd25B5ED0C655a2a56F65E) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    contract SxNetworkMultisig (eth:0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa) [GnosisSafe] {
+    +++ description: None
+      directlyReceivedPermissions.0.permission:
+-        "fastconfirm"
++        "interact"
+      directlyReceivedPermissions.1.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xe778F5Bf5dDB8614a1ab6321Cc557EDbC90e615f) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0xdd20ba90560c3fae5c592f5e3bd87bdc25d7996e
+
+# Diff at Mon, 25 May 2026 14:37:08 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@6898129972dbc5b1b4f1389afaf9cb3fb7fd3380 block: 1773059569
+- current timestamp: 1779719759
+
+## Description
+
+Picked up the new `ArbOS v51.1 wasmModuleRoot` label from the globalConfig type map. Config-only — chain's own wasmModuleRoot is unchanged.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1773059569 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c:
++        "ArbOS v51.1 wasmModuleRoot"
+    }
+```
+
 Generated with discovered.json: 0x3b3db1149634ebc7b4ccc0d88bbbb4af60aee0fc
 
 # Diff at Fri, 15 May 2026 12:36:56 GMT:

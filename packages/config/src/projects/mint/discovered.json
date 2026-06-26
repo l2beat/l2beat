@@ -118,13 +118,9 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "challenge",
-          "from": "eth:0xC7Ab73aE577650565cE7337b09704570C3e379b7",
-          "role": ".challenger"
-        },
-        {
-          "permission": "guard",
+          "permission": "interact",
           "from": "eth:0x2cF123e0328AF3Ae81c331A029a5f837Dc2231ad",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
           "role": ".guardian"
         },
         {
@@ -132,6 +128,12 @@
           "from": "eth:0x6d4A27F3eb196E4d039a5EE5B510Cc4C89b7eA9a",
           "description": "can pull funds from the contract in case of emergency.",
           "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xC7Ab73aE577650565cE7337b09704570C3e379b7",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challenger"
         },
         {
           "permission": "interact",
@@ -282,8 +284,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0xC975862927797812371A9Fb631f83F8f5e2240D5",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
           "role": ".batcherHash"
         }
       ]
@@ -503,8 +506,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "propose",
+          "permission": "interact",
           "from": "eth:0xC7Ab73aE577650565cE7337b09704570C3e379b7",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
           "role": ".proposer"
         }
       ]
@@ -1901,5 +1905,5 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
   "usedBlockNumbers": { "ethereum": 24950622 },
-  "permissionsConfigHash": "0x4210f098eef4ae95d9c35972050d6b5a1164493c351e987441c14178ce7701d0"
+  "permissionsConfigHash": "0xd7c8274532d6816c5f43bde945a3d6396737a21d5f8a8a30ff5f75f61ccc08bb"
 }

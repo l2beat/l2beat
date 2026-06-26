@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import { StatCard } from '~/components/chart/stats/StatCard'
 import { StatsGrid } from '~/components/chart/stats/StatsGrid'
 import {
@@ -8,7 +9,7 @@ import {
 import { PercentChange } from '~/components/PercentChange'
 import { useTvsDisplayControlsContext } from '~/components/table/display/contexts/TvsDisplayControlsContext'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 type StatType = 'total' | 'rollups' | 'validiumsAndOptimiums' | 'others'
@@ -40,19 +41,22 @@ export function ScalingTvsStats({
     others: ScalingTvsEntry[]
   }
 }) {
+  const trpc = useTRPC()
   const { display } = useTvsDisplayControlsContext()
-  const { data, isLoading } = api.tvs.chartStats.useQuery({
-    filter: {
-      type: 'projects',
-      projectIds: [
-        ...entries.rollups,
-        ...entries.validiumsAndOptimiums,
-        ...entries.others,
-      ].map((entry) => entry.id),
-    },
-    excludeAssociatedTokens: display.excludeAssociatedTokens,
-    excludeRwaRestrictedTokens: display.excludeRwaRestrictedTokens,
-  })
+  const { data, isLoading } = useQuery(
+    trpc.tvs.chartStats.queryOptions({
+      filter: {
+        type: 'projects',
+        projectIds: [
+          ...entries.rollups,
+          ...entries.validiumsAndOptimiums,
+          ...entries.others,
+        ].map((entry) => entry.id),
+      },
+      excludeAssociatedTokens: display.excludeAssociatedTokens,
+      excludeRwaRestrictedTokens: display.excludeRwaRestrictedTokens,
+    }),
+  )
   const stats = data
 
   return (

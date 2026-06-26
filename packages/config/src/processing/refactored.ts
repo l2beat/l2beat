@@ -30,6 +30,7 @@ import { hyperevm } from '../projects/hyperevm/hyperevm'
 import { hyperlaneHwr } from '../projects/hyperlane-hwr/hyperlane-hwr'
 import { intmaxprover } from '../projects/intmaxprover/intmaxprover'
 import { layerzero } from '../projects/layerzero/layerzero'
+import { lifi } from '../projects/lifi/lifi'
 import { lighterprover } from '../projects/lighterprover/lighterprover'
 import { lineaprover } from '../projects/lineaprover/lineaprover'
 import { loopringprover } from '../projects/loopringprover/loopringprover'
@@ -45,9 +46,9 @@ import { relay } from '../projects/relay/relay'
 import { risc0 } from '../projects/risc0/risc0'
 import { sp1hypercube } from '../projects/sp1hypercube/sp1hypercube'
 import { sp1turbo } from '../projects/sp1turbo/sp1turbo'
-import { squid } from '../projects/squid/squid'
 import { stargate } from '../projects/stargate/stargate'
 import { stone } from '../projects/stone/stone'
+import { strk20 } from '../projects/strk20/strk20'
 import { stwo } from '../projects/stwo/stwo'
 import { teeBridge } from '../projects/tee-bridge/tee-bridge'
 import { tempo } from '../projects/tempo/tempo'
@@ -105,10 +106,10 @@ export const refactored: BaseProject[] = [
   cctpv2,
   relay,
   gaszip,
+  lifi,
   layerzero,
   axelar,
   axelarits,
-  squid,
   fusionplus,
   circlegateway,
   wormholeWtt,
@@ -124,5 +125,6 @@ export const refactored: BaseProject[] = [
   // privacy
   privacyPools,
   railgun,
+  strk20,
   tornadoCash,
 ]

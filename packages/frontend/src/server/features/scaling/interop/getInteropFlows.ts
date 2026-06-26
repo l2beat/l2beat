@@ -11,10 +11,12 @@ import { getInteropFlowAggregates } from './utils/getInteropFlowAggregates'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
 import { getSummaryTokensData } from './utils/getSummaryTokensData'
 import { getTopItems, type TopItems } from './utils/getTopItems'
+import { scopeRecordsToToken } from './utils/scopeRecordsToToken'
 
 export interface FlowToken {
   id: string
   symbol: string
+  issuer: string | null
   iconUrl: string
   volume: number
 }
@@ -79,22 +81,30 @@ export type InteropFlowsData = {
   stats: FlowsStats
 }
 
+type GetInteropFlowsParams = InteropFlowsParams & {
+  anchorChain?: string
+}
+
 export async function getInteropFlows(
-  params: InteropFlowsParams,
+  params: GetInteropFlowsParams,
 ): Promise<InteropFlowsData> {
   if (env.MOCK) {
     return getMockInteropFlows()
   }
 
-  const { records } = await getLatestAggregatedInteropTransferWithTokens(
-    {
+  const { records } = await getLatestAggregatedInteropTransferWithTokens({
+    selection: {
       from: params.chains,
       to: params.chains,
     },
-    undefined,
-    params.protocolIds,
-  )
-  if (records.length === 0) {
+    protocolIds: params.protocolIds,
+    anchorChain: params.anchorChain,
+  })
+  const scopedRecords = params.tokenId
+    ? scopeRecordsToToken(records, params.tokenId)
+    : records
+
+  if (scopedRecords.length === 0) {
     return {
       flows: [],
       chainData: [],
@@ -120,10 +130,6 @@ export async function getInteropFlows(
   const subgroupProjects = new Set(
     interopProjects.filter((p) => p.interopConfig.subgroupId).map((p) => p.id),
   )
-  const nonSubgroupRecords = records.filter(
-    (record) => !subgroupProjects.has(record.id as ProjectId),
-  )
-
   const {
     flows,
     chainTopTokens,
@@ -135,11 +141,13 @@ export async function getInteropFlows(
     topToken: topTokenEntry,
     topProtocol: topProtocolEntry,
     tokenIds,
-  } = getInteropFlowAggregates(records, subgroupProjects)
+  } = getInteropFlowAggregates(scopedRecords, subgroupProjects)
 
   const detailsMap = await buildTokensDetailsMap(tokenIds)
   const summaryTokens = getSummaryTokensData(
-    nonSubgroupRecords,
+    scopedRecords.filter(
+      (record) => !subgroupProjects.has(record.id as ProjectId),
+    ),
     detailsMap,
     interopProjects,
   )
@@ -166,6 +174,7 @@ export async function getInteropFlows(
     return {
       id: entry.id,
       symbol: details.symbol,
+      issuer: details.issuer,
       iconUrl: details.iconUrl,
       volume: entry.volume,
     }
@@ -411,6 +420,7 @@ function getMockInteropFlows(): InteropFlowsData {
       topToken: {
         id: 'eth',
         symbol: 'ETH',
+        issuer: 'ethereum',
         iconUrl: '/icons/tokens/ether.png',
         volume: 1_000_000,
       },

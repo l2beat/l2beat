@@ -39,7 +39,6 @@ export { hashJsonStable } from './discovery/config/hashJsonStable'
 export {
   BasePermissionEntries,
   Permission,
-  RolePermissionEntries,
 } from './discovery/config/PermissionConfig'
 export {
   makeEntryStructureConfig,

@@ -16,6 +16,8 @@ export type EditorCallbacks = {
   onLoad?: EditorContentCallback
 }
 
+const FIND_WITH_ARGS_ACTION_ID = 'editor.actions.findWithArgs'
+
 // Session-scoped view state cache: persists folds/cursor/scroll per file URI
 // across Editor instance lifecycles - stable and mainly to help with React's StrictMode double-renders
 const viewStateCache: Map<string, editor.ICodeEditorViewState> = new Map()
@@ -51,6 +53,13 @@ export class Editor extends EditorPluginStore<'code'> {
   }
 
   setFile(file: EditorFile) {
+    // A remount can queue setFile against the previous editor instance, which
+    // is disposed during the same React commit. Driving a disposed Monaco
+    // editor throws "InstantiationService has been disposed". The live editor
+    // re-registers in the store and receives the file on the next render.
+    if (this.disposed) {
+      return
+    }
     this.saveViewState()
     const model = this.getOrCreateFileModel(file)
 
@@ -85,6 +94,16 @@ export class Editor extends EditorPluginStore<'code'> {
     })
 
     return this.trackDisposable(disposable)
+  }
+
+  find(searchString: string) {
+    const model = this.editor.getModel()
+    if (model === null) {
+      return
+    }
+
+    this.editor.focus()
+    this.editor.getAction(FIND_WITH_ARGS_ACTION_ID)?.run({ searchString })
   }
 
   private getOrCreateFileModel(file: EditorFile) {

@@ -17,20 +17,21 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Set up Docker.io mirror
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
         with:
           buildkitd-config-inline: |
             [registry."docker.io"]
               mirrors = ["mirror.gcr.io"]
       - name: Build container
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7
         with:
           push: false
           file: packages/backend/Dockerfile
           build-args: |
             TURBO_TEAM=${{ vars.TURBO_TEAM }}
+          secrets: |
             TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
 
   build-frontend:
@@ -42,15 +43,15 @@ jobs:
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
         name: Install pnpm
         with:
           run_install: false
 
       - name: Install Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: 'pnpm'
@@ -67,7 +68,7 @@ jobs:
       # so we can more easily inspect occasional
       # longer frontend build times
       - name: Preserve frontend build summary
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: frontend-build-summary
           path: .turbo/runs
@@ -81,15 +82,15 @@ jobs:
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
         name: Install pnpm
         with:
           run_install: false
 
       - name: Install Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: 'pnpm'
@@ -109,15 +110,15 @@ jobs:
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
         name: Install pnpm
         with:
           run_install: false
 
       - name: Install Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: 'pnpm'
@@ -137,15 +138,15 @@ jobs:
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
         name: Install pnpm
         with:
           run_install: false
 
       - name: Install Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: 'pnpm'
@@ -162,20 +163,21 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Set up Docker.io mirror
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
         with:
           buildkitd-config-inline: |
             [registry."docker.io"]
               mirrors = ["mirror.gcr.io"]
       - name: Build container
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7
         with:
           push: false
           file: packages/token-backend/Dockerfile
           build-args: |
             TURBO_TEAM=${{ vars.TURBO_TEAM }}
+          secrets: |
             TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
 
   typecheck:
@@ -187,15 +189,15 @@ jobs:
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
         name: Install pnpm
         with:
           run_install: false
 
       - name: Install Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: 'pnpm'
@@ -218,7 +220,7 @@ jobs:
       CONFIG_ALCHEMY_API_KEY: ${{ secrets.CONFIG_ALCHEMY_API_KEY }}
     services:
       postgres:
-        image: mirror.gcr.io/postgres:15
+        image: mirror.gcr.io/postgres:17
         env:
           POSTGRES_PASSWORD: postgres
         options: >-
@@ -230,15 +232,15 @@ jobs:
           - 5432:5432
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
         name: Install pnpm
         with:
           run_install: false
 
       - name: Install Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: 'pnpm'
@@ -249,13 +251,51 @@ jobs:
       - name: Test
         run: pnpm test --reporter min
 
+  test-e2e:
+    name: E2E tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v6
+
+      - uses: pnpm/action-setup@v6
+        name: Install pnpm
+        with:
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Install Playwright browsers
+        run: |
+          cd packages/frontend
+          pnpm exec playwright install --with-deps chromium
+
+      - name: Build dependencies
+        run: pnpm build:dependencies:frontend
+
+      - name: Run e2e tests
+        run: |
+          cd packages/frontend
+          pnpm test:e2e
+
   biome:
     name: Lint & Format
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Biome CLI
         uses: biomejs/setup-biome@v2
@@ -265,45 +305,12 @@ jobs:
       - name: Run Biome
         run: biome ci
 
-  test-all-pages:
-    name: Test All Pages
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    env:
-      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        with:
-          run_install: false
-
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Build dependencies
-        run: pnpm build:dependencies:frontend
-
-      - name: Start mock server and test pages
-        run: |
-          cd packages/frontend 
-          pnpm test-all-pages
-
   test-gha-timeouts:
     name: Test if all GH Action jobs have timeout defined
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Setup yq
         uses: dcarbone/install-yq-action@v1
       - name: Test all workflow manifests

@@ -1,5 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "canActIndependently": false,
+  "description": "Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.",
   "ignoreMethods": ["getTransmitters"],
   "ignoreRelatives": ["getDynamicConfig", "getStaticConfig", "owner"],
   "ignoreInWatchMode": [
@@ -8,7 +10,7 @@
   ],
   "fields": {
     "ocrConfig": {
-      "description": "Latest OCR2 signer and transmitter config for committing Merkle roots on this CommitStore.",
+      "description": "Commit OCR config from ConfigSet. transmit() requires exactly f+1 valid OCR signer signatures, and msg.sender must be one of the transmitters.",
       "handler": {
         "type": "event",
         "select": [
@@ -25,16 +27,12 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore."
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses."
         }
       ]
     },
     "priceRegistry": {
-      "handler": {
-        "type": "call",
-        "args": [],
-        "method": "getDynamicConfig"
-      },
+      "handler": { "type": "call", "args": [], "method": "getDynamicConfig" },
       "edit": ["get", "priceRegistry"],
       "permissions": [
         {
@@ -44,6 +42,7 @@
       ]
     },
     "getStaticConfig": {
+      "description": "Immutable commit lane config: Ethereum destination selector, Arbitrum source selector, trusted Arbitrum OnRamp, and ARM/RMN proxy used for blessing checks.",
       "edit": [
         "pick",
         "chainSelector",
@@ -57,6 +56,12 @@
           "description": "define the trusted source OnRamp and ARM/RMN safety gate for commits accepted by this CommitStore."
         }
       ]
+    },
+    "getDynamicConfig": {
+      "description": "Mutable commit config: PriceRegistry used for price updates included in commit reports."
+    },
+    "latestConfigDetails": {
+      "description": "Digest and config count for the currently accepted commit OCR config. Commit reports must use this digest."
     },
     "owner": {
       "permissions": [

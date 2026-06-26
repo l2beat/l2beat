@@ -24,8 +24,10 @@ interface InteropFlowsContextType {
   toggleProtocolSelection: (protocolId: string) => void
   selectAllProtocols: () => void
   deselectAllProtocols: () => void
+  setSelectedProtocols: (protocolIds: string[]) => void
   highlightedChains: string[]
   toggleHighlightedChain: (chainId: string) => void
+  setHighlightedChainPair: (chainIdA: string, chainIdB: string) => void
 }
 
 export const InteropFlowsContext = createContext<
@@ -176,6 +178,18 @@ export function InteropFlowsProvider({
     setSelectedProtocols([])
   }, [setSelectedProtocols])
 
+  const setHighlightedChainPair = useCallback(
+    (chainIdA: string, chainIdB: string) => {
+      if (!pinnedChainId) {
+        setHighlightedChainIds([chainIdA, chainIdB])
+        return
+      }
+      const other = [chainIdA, chainIdB].find((id) => id !== pinnedChainId)
+      setHighlightedChainIds(other ? [other] : [])
+    },
+    [pinnedChainId],
+  )
+
   const toggleHighlightedChain = useCallback(
     (chainId: string) => {
       setHighlightedChainIds((prev) => {
@@ -216,8 +230,10 @@ export function InteropFlowsProvider({
         toggleProtocolSelection,
         selectAllProtocols,
         deselectAllProtocols,
+        setSelectedProtocols,
         highlightedChains,
         toggleHighlightedChain,
+        setHighlightedChainPair,
       }}
     >
       {children}

@@ -1,0 +1,12 @@
+{
+  "RegistryModuleOwnerCustom_v1_5": {
+    "hash": "0x8101b296e2a61b54456b405c2b82e2d5e792bb88cd5599f096ddeef2d8412e17",
+    "address": "eth:0x13022e3e6C77524308BD56AEd716E88311b2E533",
+    "blockNumber": 20735578
+  },
+  "RegistryModuleOwnerCustom_v1_6": {
+    "hash": "0x87f6b6e3be4201255fca4e8c99cd08b1e7f9d0f5dd9c06e18be7d0210b88cb25",
+    "address": "eth:0x4855174E9479E211337832E109E7721d43A4CA64",
+    "blockNumber": 21789515
+  }
+}

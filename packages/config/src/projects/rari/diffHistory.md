@@ -1,3 +1,65 @@
+Generated with discovered.json: 0x41765d20aedab397d97b7e3c41c60a3a3a291c40
+
+# Diff at Tue, 09 Jun 2026 12:43:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1779719714
+- current timestamp: 1779719714
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779719714 (main branch discovery), not current.
+
+```diff
+    EOA  (arb1:0xeCebCfC101c3a1c4dB99902cE1Df914dCAd50a65) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0xffE86271e68A0365d71B86b101Fc8CA5546E7E77) {
+    +++ description: None
+      receivedPermissions.1.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x9edcce6ca3c48df81c1d97e5955bedd596d703bf
+
+# Diff at Mon, 25 May 2026 14:36:30 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@6898129972dbc5b1b4f1389afaf9cb3fb7fd3380 block: 1779128593
+- current timestamp: 1779719714
+
+## Description
+
+Picked up the new `ArbOS v51.1 wasmModuleRoot` label from the globalConfig type map. Config-only — chain's own wasmModuleRoot is unchanged.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779128593 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (arb1:0x2e988Ea0873C9d712628F0bf38DAFdE754927C89) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c:
++        "ArbOS v51.1 wasmModuleRoot"
+    }
+```
+
 Generated with discovered.json: 0x357d120f5200b799294f990868f434379871f590
 
 # Diff at Mon, 18 May 2026 18:24:20 GMT:

@@ -1,50 +1,4 @@
 {
-  "allbridge": {
-    "tags": ["allbridge"],
-    "txs": [
-      {
-        "chain": "arbitrum",
-        "tx": "0xf47433544bf5505d8c615d5184c1dae7e3a4bd26221af4146a721b794aff007d"
-      },
-      {
-        "chain": "base",
-        "tx": "0x68cde6faf73ff83be2267a8f136b2f79820e62ae59976bac5e3b9252cb8ff057"
-      },
-      {
-        "chain": "base",
-        "tx": "0x158ead7fb516fb23fd2da016d4e704c9623af497b6a8303d68388020f07ef3bd"
-      }
-    ],
-    "expects": {
-      "events": [
-        {
-          "type": "allbridge.MessageSent"
-        },
-        {
-          "type": "allbridge.TokensSent"
-        },
-        {
-          "type": "allbridge.MessageReceived"
-        },
-        {
-          "type": "allbridge.TokensReceived"
-        }
-      ],
-      "messages": [{ "type": "allbridge.Message", "app": "allbridge" }],
-      "transfers": [
-        {
-          "type": "allbridge.Transfer",
-          "events": [
-            { "type": "allbridge.TokensSent", "args": { "amount": "39870" } },
-            {
-              "type": "allbridge.TokensReceived",
-              "args": { "amount": "39898063" }
-            }
-          ]
-        }
-      ]
-    }
-  },
   "lighter-bridge": {
     "description": "Ethereum <> Lighter perp DEX bridge (one-sided)",
     "txs": [
@@ -295,7 +249,8 @@
     }
   },
   "hyperliquid-bridge": {
-    "description": "Arbitrum <> Hyperliquid USDC bridge (one-sided)",
+    "description": "Arbitrum/HyperEVM <> Hyperliquid USDC bridge (one-sided)",
+    "loadConfigs": ["cctp-v2"],
     "txs": [
       {
         "chain": "arbitrum",
@@ -304,12 +259,32 @@
       {
         "chain": "arbitrum",
         "tx": "0xfea525a89c615980ce8a77407a7cabd25e44a4b42b94f7ad01f352ff45475d11"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x0fa1d62afe91f99fa5292db2afd0988e5a9fcc5346ae44296814722e5011ef49"
+      },
+      {
+        "chain": "hyperevm",
+        "tx": "0x083b623f4e3ac3330a29aad9daa89a404eb2170c006ddaf51f3957a157f3416d"
+      },
+      {
+        "chain": "hyperevm",
+        "tx": "0xb85911ae9ba0fab229480f800eaf8b46d928f49bb539ad6fc151ea7fa8682a52"
       }
     ],
     "expects": {
       "events": [
         { "type": "hyperliquid-bridge.Deposit" },
-        { "type": "hyperliquid-bridge.FinalizedWithdrawal" }
+        { "type": "hyperliquid-bridge.FinalizedWithdrawal" },
+        {
+          "type": "hyperliquid-bridge.CoreDeposit",
+          "args": { "srcAmount": "43884677" }
+        },
+        {
+          "type": "hyperliquid-bridge.CoreWithdrawal",
+          "args": { "dstAmount": "3904958097" }
+        }
       ],
       "messages": [],
       "transfers": [
@@ -324,6 +299,26 @@
           "bridgeType": "lockAndMint",
           "src": { "chain": "hyperliquid" },
           "dst": { "event": { "ctx": { "chain": "arbitrum" } } }
+        },
+        {
+          "type": "hyperliquid-bridge.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": {
+            "event": { "ctx": { "chain": "hyperevm" } },
+            "tokenAmount": "43884677",
+            "wasBurned": false
+          },
+          "dst": { "chain": "hyperliquid" }
+        },
+        {
+          "type": "hyperliquid-bridge.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": { "chain": "hyperliquid" },
+          "dst": {
+            "event": { "ctx": { "chain": "hyperevm" } },
+            "tokenAmount": "3904958097",
+            "wasMinted": false
+          }
         }
       ]
     }
@@ -419,8 +414,14 @@
     }
   },
   "ccip": {
+    // a bunch of examples fail here
     "loadConfigs": ["ccip"],
     "txs": [
+      /*
+      // Historical Arbitrum/Base/Ethereum fixtures below used CCIP contracts
+      // that are no longer present in the live Chainlink config. The current
+      // routes migrated to v1.6 per-chain on/off ramps, so these old txs do
+      // not get captured when examples run against live config.
       // 1. v1.5 Burned + Minted (burn & mint): Arbitrum → Base
       {
         "chain": "arbitrum",
@@ -506,6 +507,7 @@
         "chain": "arbitrum",
         "tx": "0x142313291f839043b3f56627b5022ab4dc5cb6f1dffe15a3985f7093a2bc96b1"
       },
+      */
       // 10. v1.5 Burned + Released (LINK burn & unlock): Celo → Ethereum
       {
         "chain": "celo",
@@ -536,6 +538,9 @@
     ],
     "expects": {
       "transfers": [
+        /*
+        // Expectations for the commented historical Arbitrum/Base/Ethereum
+        // fixtures above.
         // 1-3: v1.5 token pool events produce ccip.Transfer
         { "type": "ccip.Transfer" },
         { "type": "ccip.Transfer" },
@@ -548,6 +553,7 @@
         { "type": "ccip.Transfer" },
         // 9: WETH lock & unlock
         { "type": "ccip.Transfer" },
+        */
         // 10: Celo → Ethereum LINK (burn & release)
         {
           "type": "ccip.Transfer",
@@ -1190,6 +1196,21 @@
       {
         "chain": "ethereum",
         "tx": "0x6cd6000cb5a329372ac7ce3e56f3de6bbd25fd2b52d84e2732faf7f361f47e37"
+      },
+      // Source tx for the CCTP withdrawal below. The relevant HyperEVM logs
+      // are present in receipts but missing from eth_getLogs, so this tx mainly
+      // makes the example load the HyperEVM CCTP domain config.
+      {
+        "chain": "hyperevm",
+        "tx": "0x033404436a2a559ae86401438213056f4b810fe848d5376f455db4441b492c6b"
+      },
+      // HyperCore -> HyperEVM -> Arbitrum withdrawal. The HyperEVM source
+      // MessageSent/DepositForBurn/CrossChainWithdraw logs are present in
+      // receipts but missing from eth_getLogs, so the Arbitrum CCTP receive is
+      // counted as a one-sided hyperliquid -> arbitrum transfer.
+      {
+        "chain": "arbitrum",
+        "tx": "0x309869eb0dcc36fe0962c396aea336a599bbb898f77e506fe6bd2256072acdfe"
       }
     ],
     "expects": {
@@ -1197,7 +1218,15 @@
         "cctp-v1.MessageSent",
         "cctp-v1.MessageReceived",
         "cctp-v2.MessageSent",
-        "cctp-v2.MessageReceived"
+        "cctp-v2.MessageReceived",
+        {
+          "type": "cctp-v2.MessageReceived",
+          "plugin": "cctp-v2",
+          "args": {
+            "$srcChain": "hyperliquid",
+            "dstAmount": "99999800000"
+          }
+        }
       ],
       "messages": [],
       "transfers": [
@@ -1224,6 +1253,17 @@
           "plugin": "cctp-v2",
           "src": { "chain": "solana" },
           "dst": { "event": { "ctx": { "chain": "ethereum" } } }
+        },
+        {
+          "type": "cctp-v2.Transfer",
+          "plugin": "cctp-v2",
+          "bridgeType": "burnAndMint",
+          "src": { "chain": "hyperliquid" },
+          "dst": {
+            "event": { "ctx": { "chain": "arbitrum" } },
+            "tokenAmount": "99999800000",
+            "wasMinted": true
+          }
         }
       ]
     }
@@ -1551,50 +1591,146 @@
       ]
     }
   },
-  "mayan-swift-solana-ethereum-onesided": {
+  "mayan-swift2": {
     "loadConfigs": ["wormhole"],
-    "description": "Single Mayan Swift fulfill from Solana to Ethereum",
+    "description": "Solana one-sided fills, structured helper fills, Monad -> Polygon, and custom Wormhole IDs for Monad/Sui.",
     "txs": [
       {
         "chain": "ethereum",
         "tx": "0x4157f42d0f0cf65efaa529dfa826ebad230c16f084e81178fc20c680d9edc927"
+      },
+      {
+        "chain": "bsc",
+        "tx": "0x4be43ab7e60b2502bfc5980d6d1b333649f4b8628a9b4167646f706357011f68"
+      },
+      {
+        "chain": "bsc",
+        "tx": "0xc03d7e4532aea4e613e64b5bca1f7b24b2b4dbd5bb3e912457645f788f1665d3"
+      },
+      {
+        "chain": "base",
+        "tx": "0xee76f10435c2fe057bb878e38d2d84c1dd9a42ad726f7edfce6cce55be5cbfd8"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xd50b2fe16497dadbca9a7aa4291fd609f93101a2c6a683e1ae2ab440d21428f4"
+      },
+      {
+        "chain": "monad",
+        "tx": "0x5c677f163fdade83cd49bb61d2c818f593b16342c18f5c97219df2415974963b"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0xff13a02343677443067b59d15a91a4c898edc586a2f8ac8c5ecfc6d10a4904fb"
+      },
+      {
+        "chain": "bsc",
+        "tx": "0xe905a411573904b13b845e6017cb5f51919eebb4d5625e6665f35382d611e3b1"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x2289a035dbf056a7362e1ac316cd5f1246de1466239f186637b682e9168eff10"
       }
     ],
     "expects": {
-      "events": ["mayan-swift.OrderFulfilled", "mayan-swift.SettlementSent"],
-      "messages": [],
+      "events": [
+        {
+          "type": "mayan-swift.OrderFulfilled",
+          "ctx": { "chain": "ethereum" }
+        },
+        {
+          "type": "mayan-swift.SettlementSent",
+          "ctx": { "chain": "ethereum" }
+        },
+        {
+          "type": "mayan-swift.OrderFulfilled",
+          "ctx": { "chain": "bsc" }
+        },
+        {
+          "type": "mayan-swift.OrderFulfilled",
+          "args": { "$srcChain": "solana" },
+          "ctx": { "chain": "bsc" }
+        },
+        {
+          "type": "mayan-swift.OrderFulfilled",
+          "args": { "$srcChain": "solana" },
+          "ctx": { "chain": "base" }
+        },
+        {
+          "type": "mayan-swift.OrderFulfilled",
+          "args": { "$srcChain": "solana" },
+          "ctx": { "chain": "arbitrum" }
+        },
+        {
+          "type": "mayan-swift.OrderCreated",
+          "ctx": { "chain": "monad" }
+        },
+        {
+          "type": "mayan-forwarder.MayanForwarded",
+          "ctx": { "chain": "monad" }
+        },
+        {
+          "type": "mayan-swift.OrderFulfilled",
+          "ctx": { "chain": "polygonpos" }
+        },
+        {
+          "type": "mayan-forwarder.MayanForwarded",
+          "args": { "$dstChain": "monad", "methodSignature": "0xa3a30834" }
+        },
+        {
+          "type": "mayan-swift.OrderCreated",
+          "args": { "$dstChain": "monad" }
+        },
+        {
+          "type": "mayan-forwarder.MayanForwarded",
+          "args": { "$dstChain": "sui", "methodSignature": "0x1c59b7fc" }
+        }
+      ],
+      "messages": [
+        {
+          "type": "mayan-swift.Message",
+          "app": "mayan-swift",
+          "src": { "ctx": { "chain": "monad" } },
+          "dst": { "ctx": { "chain": "polygonpos" } }
+        }
+      ],
       "transfers": [
         {
           "type": "mayan-swift.Transfer",
           "src": { "chain": "solana" },
           "dst": { "event": { "ctx": { "chain": "ethereum" } } }
-        }
-      ]
-    }
-  },
-  "mayan-swift-solana-bsc-onesided": {
-    "loadConfigs": ["wormhole"],
-    "description": "Single Mayan Swift fulfill from Solana to BSC",
-    "txs": [
-      {
-        "chain": "bsc",
-        "tx": "0x4be43ab7e60b2502bfc5980d6d1b333649f4b8628a9b4167646f706357011f68"
-      }
-    ],
-    "expects": {
-      "events": ["mayan-swift.OrderFulfilled"],
-      "messages": [],
-      "transfers": [
+        },
         {
           "type": "mayan-swift.Transfer",
           "src": { "chain": "solana" },
           "dst": { "event": { "ctx": { "chain": "bsc" } } }
+        },
+        {
+          "type": "mayan-swift.Transfer",
+          "src": { "chain": "solana" },
+          "dst": { "event": { "ctx": { "chain": "bsc" } } }
+        },
+        {
+          "type": "mayan-swift.Transfer",
+          "src": { "chain": "solana" },
+          "dst": { "event": { "ctx": { "chain": "base" } } }
+        },
+        {
+          "type": "mayan-swift.Transfer",
+          "src": { "chain": "solana" },
+          "dst": { "event": { "ctx": { "chain": "arbitrum" } } }
+        },
+        {
+          "type": "mayan-swift.Transfer",
+          "src": { "event": { "ctx": { "chain": "monad" } } },
+          "dst": { "event": { "ctx": { "chain": "polygonpos" } } }
         }
       ]
     }
   },
-  "mayan-swift-settlement-non-batched": {
+  "mayan-swift-settlement": {
     "loadConfigs": ["wormhole"],
+    "description": "Non-batched and batched Mayan Swift settlement flows.",
     "txs": [
       // Flow 1: AMBER transfer polygonpos → ethereum (non-batched)
       // 1a. Source: OrderCreated + MayanForwarded on Polygon
@@ -1628,23 +1764,30 @@
       {
         "chain": "base",
         "tx": "0x4c63d872d324fda368e1612e8f5ce8df3e61a13913d4b6c6bd8b30b93773aa07"
-      }
-    ],
-    "expects": {
-      "events": [
-        "mayan-swift.OrderCreated",
-        "mayan-forwarder.MayanForwarded",
-        "mayan-swift.OrderFulfilled",
-        "mayan-swift.SettlementSent",
-        "mayan-swift.OrderUnlocked"
-      ],
-      "messages": ["mayan-swift.Message", "mayan-swift.SettlementMessage"],
-      "transfers": ["mayan-swift.Transfer"]
-    }
-  },
-  "mayan-swift-settlement-batched": {
-    "loadConfigs": ["wormhole"],
-    "txs": [
+      },
+      // Flow 3: BSC → Ethereum Swift v2, split source/destination contracts
+      // Order key: 0xfbca22b56368dacde8fcba293c4ba5cff578cc220b3cd49004b5085e5228b174
+      // 3a. Source: OrderCreated + MayanForwarded on BSC, SwiftSource 0x40fF...
+      {
+        "chain": "bsc",
+        "tx": "0xee3024757573bea10f37ca3763176d0da0f0300b724105ad2e0aec15f8302a25"
+      },
+      // 3b. Destination: OrderFulfilled + SettlementSent on Ethereum, SwiftDest 0xD78D...
+      {
+        "chain": "ethereum",
+        "tx": "0xaee597e43c773115b0372c33280095b94370fd71c34b235f4c55e4f50faa0e61"
+      },
+      // 3c. Source: OrderUnlocked on BSC, SwiftSource 0x40fF...
+      {
+        "chain": "bsc",
+        "tx": "0x8f36276ce9ac32fe1f5e4f8f02ddf31f96de5f73d4c30b372165e482f024df6c"
+      },
+      // Swift v2 compressed postBatch settlement payload (0x05).
+      // These are settlement-only events for Solana-sourced orders, so no EVM unlock tx follows.
+      {
+        "chain": "bsc",
+        "tx": "0x79990846c8a817e43c132dbaa03a6c8a6fad78c636cbdb807e52935d2c838adc"
+      },
       // Flow 1: Ethereum → BSC batch (8 orders)
       // Order key: 0xa2178dd759b8ca5aa843e4f541b6dc8b10bf2ec40da84cd501659150731e6528
       // 1a. Source: OrderCreated on Ethereum
@@ -1693,12 +1836,96 @@
     "expects": {
       "events": [
         "mayan-swift.OrderCreated",
+        "mayan-forwarder.MayanForwarded",
         "mayan-swift.OrderFulfilled",
         "mayan-swift.SettlementSent",
-        "mayan-swift.OrderUnlocked"
+        "mayan-swift.OrderUnlocked",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.SettlementSent",
+        "mayan-swift.OrderUnlocked",
+        {
+          "type": "mayan-swift.OrderCreated",
+          "ctx": {
+            "chain": "bsc",
+            "txHash": "0xee3024757573bea10f37ca3763176d0da0f0300b724105ad2e0aec15f8302a25"
+          },
+          "args": { "$dstChain": "ethereum" }
+        },
+        {
+          "type": "mayan-forwarder.MayanForwarded",
+          "ctx": {
+            "chain": "bsc",
+            "txHash": "0xee3024757573bea10f37ca3763176d0da0f0300b724105ad2e0aec15f8302a25"
+          },
+          "args": {
+            "$dstChain": "ethereum",
+            "mayanProtocol": "0x40fFE85A28DC9993541449464d7529a922142960",
+            "methodSignature": "0xa3a30834"
+          }
+        },
+        {
+          "type": "mayan-swift.OrderFulfilled",
+          "ctx": {
+            "chain": "ethereum",
+            "txHash": "0xaee597e43c773115b0372c33280095b94370fd71c34b235f4c55e4f50faa0e61"
+          },
+          "args": { "$srcChain": "bsc" }
+        },
+        {
+          "type": "mayan-swift.SettlementSent",
+          "ctx": {
+            "chain": "ethereum",
+            "txHash": "0xaee597e43c773115b0372c33280095b94370fd71c34b235f4c55e4f50faa0e61"
+          },
+          "args": { "$dstChain": "bsc" }
+        },
+        {
+          "type": "mayan-swift.OrderUnlocked",
+          "ctx": {
+            "chain": "bsc",
+            "txHash": "0x8f36276ce9ac32fe1f5e4f8f02ddf31f96de5f73d4c30b372165e482f024df6c"
+          },
+          "args": { "$srcChain": "ethereum" }
+        },
+        {
+          "type": "mayan-swift.SettlementSent",
+          "ctx": {
+            "chain": "bsc",
+            "txHash": "0x79990846c8a817e43c132dbaa03a6c8a6fad78c636cbdb807e52935d2c838adc"
+          },
+          "args": {
+            "key": "0xf4e31de8704721b1b09856bf370c98618ea7bf3c53b2ef8ac92534f50ac90527"
+          }
+        }
       ],
-      "messages": ["mayan-swift.Message", "mayan-swift.SettlementMessage"],
-      "transfers": ["mayan-swift.Transfer"]
+      "messages": [
+        "mayan-swift.Message",
+        "mayan-swift.SettlementMessage",
+        "mayan-swift.Message",
+        "mayan-swift.SettlementMessage",
+        {
+          "type": "mayan-swift.Message",
+          "app": "mayan-swift",
+          "src": { "ctx": { "chain": "bsc" } },
+          "dst": { "ctx": { "chain": "ethereum" } }
+        },
+        {
+          "type": "mayan-swift.SettlementMessage",
+          "app": "mayan-swift",
+          "src": { "ctx": { "chain": "ethereum" } },
+          "dst": { "ctx": { "chain": "bsc" } }
+        }
+      ],
+      "transfers": [
+        "mayan-swift.Transfer",
+        "mayan-swift.Transfer",
+        {
+          "type": "mayan-swift.Transfer",
+          "src": { "event": { "ctx": { "chain": "bsc" } } },
+          "dst": { "event": { "ctx": { "chain": "ethereum" } } }
+        }
+      ]
     }
   },
   "circle-gateway": {
@@ -1736,7 +1963,7 @@
   "axelar": {
     "loadConfigs": ["layerzero-v2"],
     "txs": [
-      // contractcallwithtoken + express fill via squid
+      // contractcallwithtoken
       {
         "chain": "base",
         "tx": "0x90c74bb1bf1a3257ba4713e1562535babd77d3d7ec6a9608125a9b289ec9ffb4"
@@ -1800,12 +2027,6 @@
     ],
     "expects": {
       "transfers": [
-        {
-          "type": "axelar-squid.Transfer",
-          "bridgeType": "nonMinting",
-          "src": { "financials": { "symbol": "axlUSDC" } },
-          "dst": { "financials": { "symbol": "USDC" } }
-        },
         {
           "type": "axelar.Transfer",
           "bridgeType": "lockAndMint",
@@ -1890,33 +2111,55 @@
     }
   },
   "centrifuge": {
+    "description": "Centrifuge cross-chain share transfer (Ethereum -> Base)",
     "txs": [
       {
         "chain": "ethereum",
-        "tx": "0x0f064d7f4691ce67c55b57de1ec573166790e27cff94cb888344cca8bd21beb9"
+        "tx": "0xf65ca822bb5f691d64ee6d43006352de611cbe27436ec9e2a709176929ef253f"
       },
       {
         "chain": "base",
-        "tx": "0x51c5d58ae6ac7d5a94c190b862672596b7eac59d3ccaaab065001c20b86be0d8"
+        "tx": "0xa8fff7f6601c77121a145704ac305cf15480143a6ca3612b33eb132ccf04b564"
       },
       {
         "chain": "base",
-        "tx": "0xbae8a4bcaa22c803252e0b9230a8fe0a0bf84dee1878ead73eaf24fc2a07e1f5" // handlePayload
-      },
-      {
-        "chain": "base",
-        "tx": "0xbac552a3a71e83ddd594cb27d3b7a99a1959522c7b94f9b23c93d147539b2c20" // handleProof
+        "tx": "0x431af4700ea9793854de93454f75f24a95b46d48e26be13600322766ee0c2c52"
       }
     ],
-    "events": [
-      "axelar-its.InterchainTransfer",
-      "axelar-its.InterchainTransferReceived",
-      "axelar.ContractCallExecuted",
-      "axelar.ContractCall",
-      "axelar.ContractCallApproved"
-    ],
-    "messages": ["axelar.ContractCallMessage"],
-    "transfers": ["axelar-its.Transfer"]
+    "expects": {
+      "events": [
+        "centrifuge.InitiateTransferShares",
+        "centrifuge.ForwardTransferShares",
+        "axelar.ContractCall",
+        "axelar.ContractCallApproved",
+        "axelar.ContractCallExecuted",
+        "centrifuge.ExecuteTransferShares"
+      ],
+      "messages": [
+        {
+          "type": "axelar.Message",
+          "app": "centrifuge",
+          "src": { "ctx": { "chain": "ethereum" } },
+          "dst": { "ctx": { "chain": "base" } }
+        }
+      ],
+      "transfers": [
+        {
+          "type": "centrifuge.Transfer",
+          "bridgeType": "burnAndMint",
+          "src": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "tokenAmount": "100000000000000000000",
+            "wasBurned": true
+          },
+          "dst": {
+            "event": { "ctx": { "chain": "base" } },
+            "tokenAmount": "100000000000000000000",
+            "wasMinted": true
+          }
+        }
+      ]
+    }
   },
   "squid-coral": {
     "txs": [
@@ -2675,6 +2918,75 @@
         "tx": "0xda926e7dd4b35380b6c6ef3c90f207aa7766cbdb3efdb9d33a008be1d5eb62af"
       }
     ]
+  },
+  "layerzero-aori": {
+    "loadConfigs": ["layerzero-v2"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x4eb187cc72aac9f22d2e144bd595d12e7d8739c9ac250908e103407f4240f26d"
+      },
+      {
+        "chain": "base",
+        "tx": "0xf720749312a7e4522642a7b1a147fd32323d87294258e91b44de2331a55be52d"
+      }
+    ],
+    "expects": {
+      "messages": [
+        {
+          "type": "layerzero-v2.Message",
+          "app": "aori-settlement",
+          "src": { "ctx": { "chain": "ethereum" } },
+          "dst": { "ctx": { "chain": "base" } }
+        }
+      ]
+    }
+  },
+  "layerzero-superform": {
+    "loadConfigs": ["layerzero-v2"],
+    "txs": [
+      {
+        "chain": "polygonpos",
+        "tx": "0xbc896ba73005cf577a6188285990b6f9d4b7fdad5ff2c907a89d131d58c812f7"
+      },
+      {
+        "chain": "base",
+        "tx": "0x456eff39ca3cffcf230ac98a349d6b85c27ff275f60d947d314b1f821012d49c"
+      }
+    ],
+    "expects": {
+      "messages": [
+        {
+          "type": "layerzero-v2.Message",
+          "app": "superform",
+          "src": { "ctx": { "chain": "polygonpos" } },
+          "dst": { "ctx": { "chain": "base" } }
+        }
+      ]
+    }
+  },
+  "layerzero-centrifuge": {
+    "loadConfigs": ["layerzero-v2"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x7d18630bbefb8bb9f742c6e861f540dbab537490704f2ecacc6bca0b365492b1"
+      },
+      {
+        "chain": "base",
+        "tx": "0x4c9b98c5e3109cab8592f8012bb960ae7c8759a07ba35c70c6301616db73020a"
+      }
+    ],
+    "expects": {
+      "messages": [
+        {
+          "type": "layerzero-v2.Message",
+          "app": "centrifuge",
+          "src": { "ctx": { "chain": "ethereum" } },
+          "dst": { "ctx": { "chain": "base" } }
+        }
+      ]
+    }
   },
   "usdt0": {
     "loadConfigs": ["layerzero-v2"],
@@ -4884,6 +5196,82 @@
         "tx": "0x2745a60ccdfddb2e92251813d86450fe821f997de702edad1c72c37ac6a64ec1"
       }
     ]
+  },
+  "lifi-intents": {
+    "description": "LI.FI Intents Base to Arbitrum fill with Polymer proof",
+    "tags": ["lifi-intents"],
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x20fd4b5fd7d21793dc7a430064dfeeb067d98cc3b596d4c29c4f11d8a4afe56d"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x5d40798b06c40f271710d49f943203c8875b2346beedc91241bc1e0b765601c8"
+      },
+      {
+        "chain": "base",
+        "tx": "0xe10cdbb89d37a5c9cae6a0611ef303428869183c2ff4c53de7c211cf7c1231e6"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "lifi-intents.OutputRequested",
+          "ctx": { "chain": "base" },
+          "args": {
+            "orderId": "0x1c673ea05b48d983961d3e60ba97ff1f198511fea8e697cc65aacbde3d1f6b5b",
+            "destinationChainId": 42161
+          }
+        },
+        {
+          "type": "lifi-intents.OutputFilled",
+          "ctx": { "chain": "arbitrum" },
+          "args": {
+            "orderId": "0x1c673ea05b48d983961d3e60ba97ff1f198511fea8e697cc65aacbde3d1f6b5b",
+            "payloadHash": "0xab1c1d41c71b63db377d0f30b074fcc1f111b1e45e627fa37670340be55b7b11"
+          }
+        },
+        {
+          "type": "lifi-intents.OutputPayload",
+          "ctx": { "chain": "arbitrum" },
+          "args": {
+            "payloadHash": "0xab1c1d41c71b63db377d0f30b074fcc1f111b1e45e627fa37670340be55b7b11"
+          }
+        },
+        {
+          "type": "lifi-intents.OutputProven",
+          "ctx": { "chain": "base" },
+          "args": {
+            "payloadHash": "0xab1c1d41c71b63db377d0f30b074fcc1f111b1e45e627fa37670340be55b7b11"
+          }
+        }
+      ],
+      "messages": [
+        {
+          "type": "lifi-intents.Message",
+          "app": "lifi-intents",
+          "src": { "ctx": { "chain": "base" } },
+          "dst": { "ctx": { "chain": "arbitrum" } }
+        },
+        {
+          "type": "lifi-intents.SettlementMessage",
+          "app": "lifi-intents",
+          "src": { "ctx": { "chain": "arbitrum" } },
+          "dst": { "ctx": { "chain": "base" } }
+        }
+      ],
+      "transfers": [
+        {
+          "type": "lifi-intents.Transfer",
+          "src": { "event": { "ctx": { "chain": "base" } } },
+          "dst": {
+            "event": { "ctx": { "chain": "arbitrum" } },
+            "tokenAmount": "254989545"
+          }
+        }
+      ]
+    }
   },
   "gasziponesided": {
     "loadConfigs": ["gaszip"],

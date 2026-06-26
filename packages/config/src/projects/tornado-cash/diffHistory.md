@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x29e07dffcaf2328a9178fd62c8aceebe29247046
+
+# Diff at Thu, 25 Jun 2026 12:45:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8df370c30d58cf2a24a9fe5df1aafba41971f447 block: 1779439938
+- current timestamp: 1782391445
+
+## Description
+
+New proposal, (yet) unverified and malicious, see https://x.com/pcaversaccio/status/2070125180261896246 .
+
+## Watched changes
+
+```diff
+    contract GovernanceProposalStateUpgrade (eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) [tornado-cash/GovernanceProposalStateUpgrade] {
+    +++ description: Upgradeable Tornado Cash governance contract that manages proposals, voting, execution, and treasury-connected governance modules. If you trust this contract, you trust its upgrade path and proposal rules to change protocol governance behavior.
+      values.proposalCount:
+-        66
++        67
+    }
+```
+
 Generated with discovered.json: 0x925773d2287b4e6481fbbc071a65518ced353c0d
 
 # Diff at Mon, 25 May 2026 09:49:32 GMT:

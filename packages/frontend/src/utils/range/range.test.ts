@@ -15,15 +15,15 @@ describe(rangeToResolution.name, () => {
     time.uninstall()
   })
 
-  it('returns hourly for the exact 7d boundary', () => {
+  it('returns hour for the exact 7d boundary', () => {
     const today = UnixTime.toStartOf(UnixTime.now(), 'day')
 
     const resolution = rangeToResolution([today - 7 * UnixTime.DAY, today])
 
-    expect(resolution).toEqual('hourly')
+    expect(resolution).toEqual('hour')
   })
 
-  it('returns sixHourly for ranges older than 7d', () => {
+  it('returns six hours for ranges older than 7d', () => {
     const today = UnixTime.toStartOf(UnixTime.now(), 'day')
 
     const resolution = rangeToResolution([
@@ -31,18 +31,18 @@ describe(rangeToResolution.name, () => {
       today,
     ])
 
-    expect(resolution).toEqual('sixHourly')
+    expect(resolution).toEqual('six hours')
   })
 
-  it('returns sixHourly for the exact 90d boundary', () => {
+  it('returns six hours for the exact 90d boundary', () => {
     const today = UnixTime.toStartOf(UnixTime.now(), 'day')
 
     const resolution = rangeToResolution([today - 90 * UnixTime.DAY, today])
 
-    expect(resolution).toEqual('sixHourly')
+    expect(resolution).toEqual('six hours')
   })
 
-  it('returns daily for ranges older than 90d', () => {
+  it('returns day for ranges older than 90d', () => {
     const today = UnixTime.toStartOf(UnixTime.now(), 'day')
 
     const resolution = rangeToResolution([
@@ -50,6 +50,6 @@ describe(rangeToResolution.name, () => {
       today,
     ])
 
-    expect(resolution).toEqual('daily')
+    expect(resolution).toEqual('day')
   })
 })

@@ -4,14 +4,13 @@ export const PRIVACY_ATTRIBUTES = {
   upgradeable: {
     id: 'upgradeable',
     label: 'Upgradeable',
-    description:
-      'DAO can vote on upgrades that are executable with a 7d delay.',
+    description: 'Smart contract code can be upgraded.',
   },
   optCompliance: {
     id: 'optCompliance',
     label: 'Opt compliance',
     description:
-      "Optional 'proofs of innocence' (POIs), can disassociate the deposit from a list of flagged addresses.",
+      'Users are not forced to provide compliance data by the core protocol.',
   },
   transfers: {
     id: 'transfers',
@@ -35,26 +34,33 @@ export const PRIVACY_ATTRIBUTES = {
     description:
       'Pre-defined transfer amounts use distinct buckets (anonymity sets).',
   },
-  openSource: {
-    id: 'openSource',
-    label: 'Open source',
+  sourceAvailable: {
+    id: 'sourceAvailable',
+    label: 'Source available',
     description:
-      'There is at least one practical way to use exclusively open source software to interact with this protocol.',
+      'There is at least one practical way to exclusively use auditable, source-available software to interact with this protocol.',
+  },
+  closedSource: {
+    id: 'closedSource',
+    label: 'Closed source',
+    description:
+      'The protocol program or circuit is not open source, so users cannot independently inspect the implementation or know what is verified by the smart contract.',
   },
   immutable: {
     id: 'immutable',
     label: 'Immutable',
     description: 'Core smart contract code cannot be changed.',
   },
-  uncensorable: {
-    id: 'uncensorable',
-    label: 'Uncensorable',
-    description: 'Deposits and withdrawals cannot be censored.',
+  unconditionalPrivacy: {
+    id: 'unconditionalPrivacy',
+    label: 'Unconditional privacy',
+    description:
+      'Deposits and withdrawals cannot be censored or linked by the protocol.',
   },
   enforcedCompliance: {
     id: 'enforcedCompliance',
     label: 'Enforced compliance',
     description:
-      'ASPs (association set providers) can censor any deposits, excluding them from the anonymity set.',
+      'Compliance checks are enforced by the protocol and can restrict privacy set participation.',
   },
 } as const satisfies Record<string, PrivacyAttribute>

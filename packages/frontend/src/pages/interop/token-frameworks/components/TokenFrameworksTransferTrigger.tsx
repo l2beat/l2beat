@@ -1,6 +1,7 @@
 import { ProjectId } from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
 import { type ReactNode, useMemo, useState } from 'react'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { TransferDetailsDialog } from '../../components/table/transfer-count-cell/TransferCountCell'
 import { useTokenFrameworksSelectedChains } from '../utils/TokenFrameworksSelectedChainsContext'
 
@@ -17,16 +18,19 @@ export function TokenFrameworksTransferTrigger({
   className?: string
   children: ReactNode
 }) {
+  const trpc = useTRPC()
   const [isOpen, setIsOpen] = useState(false)
   const { selectedChains } = useTokenFrameworksSelectedChains()
   const dialogSelection = useMemo(
     () => selectionForApi ?? { from: selectedChains, to: selectedChains },
     [selectionForApi, selectedChains],
   )
-  const { data } = api.interop.tokenFrameworks.useQuery({
-    from: selectedChains,
-    to: selectedChains,
-  })
+  const { data } = useQuery(
+    trpc.interop.tokenFrameworks.queryOptions({
+      from: selectedChains,
+      to: selectedChains,
+    }),
+  )
 
   return (
     <>
@@ -42,7 +46,7 @@ export function TokenFrameworksTransferTrigger({
         type={undefined}
         tokenId={tokenId}
         snapshotTimestamp={data?.snapshotTimestamp}
-        selectionForApi={dialogSelection}
+        selectedChains={dialogSelection}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
       />

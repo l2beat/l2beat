@@ -1,3 +1,4 @@
+import type { TokenIngestionQueueRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { TRPCError } from '@trpc/server'
@@ -17,7 +18,14 @@ const QueueEntryAddress = v.object({
 const QueuePageInput = v.object({
   page: v.number(),
   pageSize: v.number(),
+  chains: v.array(v.string()).optional(),
 })
+
+export interface QueuePageRow {
+  entry: TokenIngestionQueueRecord
+  predictedOutcome: IngestionOutcomeView
+  deployedTokenExists: boolean
+}
 
 export const tokenIngestionQueueRouter = router({
   getAll: readOnlyProcedure.query(({ ctx }) => {
@@ -32,20 +40,25 @@ export const tokenIngestionQueueRouter = router({
       const result = await ctx.tokenDb.tokenIngestionQueue.getPage({
         offset: (page - 1) * pageSize,
         limit: pageSize,
+        chains: input.chains,
       })
 
       const transferIndex =
         await ctx.tokenIngestionProcessor.getInteropTransferIndex()
-      const predictedOutcomes: IngestionOutcomeView[] = []
+      const rows: QueuePageRow[] = []
       for (const entry of result.entries) {
         const trace = await ctx.tokenIngestionProcessor.plan(
           entry,
           transferIndex,
         )
-        predictedOutcomes.push(toIngestionOutcomeView(trace.outcome))
+        rows.push({
+          entry,
+          predictedOutcome: toIngestionOutcomeView(trace.outcome),
+          deployedTokenExists: trace.existingDeployedToken !== undefined,
+        })
       }
 
-      return { ...result, predictedOutcomes }
+      return { rows, totalCount: result.totalCount }
     }),
   approve: readWriteProcedure
     .input(QueueEntryAddress)
@@ -55,6 +68,29 @@ export const tokenIngestionQueueRouter = router({
         throw new TRPCError({
           code: 'BAD_REQUEST',
           message: 'Queue entry is not staged',
+        })
+      }
+
+      return { success: true }
+    }),
+  approveMany: readWriteProcedure
+    .input(v.array(QueueEntryAddress))
+    .mutation(async ({ ctx, input }) => {
+      let approved = 0
+      for (const entry of input) {
+        approved += await ctx.tokenDb.tokenIngestionQueue.approve(entry)
+      }
+
+      return { success: true, approved }
+    }),
+  retry: readWriteProcedure
+    .input(QueueEntryAddress)
+    .mutation(async ({ ctx, input }) => {
+      const retried = await ctx.tokenDb.tokenIngestionQueue.retry(input)
+      if (retried !== 1) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Queue entry is not in conflict or error state',
         })
       }
 

@@ -1,10 +1,12 @@
 import { formatAddress, UnixTime } from '@l2beat/shared-pure'
 import type { RouterOutputs } from '@l2beat/token-backend'
+import { useQuery } from '@tanstack/react-query'
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
   EyeIcon,
   HistoryIcon,
+  SearchIcon,
 } from 'lucide-react'
 import type { ReactNode } from 'react'
 import { useEffect, useMemo, useState } from 'react'
@@ -25,6 +27,7 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from '~/components/core/Empty'
+import { Input } from '~/components/core/Input'
 import {
   Sheet,
   SheetContent,
@@ -43,8 +46,9 @@ import {
 import { Diff, ObjectDiff } from '~/components/Diff'
 import { IngestionLog } from '~/components/IngestionLog'
 import { LoadingState } from '~/components/LoadingState'
+import { useDebouncedValue } from '~/hooks/useDebouncedValue'
 import { AppLayout } from '~/layouts/AppLayout'
-import { api } from '~/react-query/trpc'
+import { useTRPC } from '~/react-query/trpc'
 import { diff } from '~/utils/getDiff'
 
 const PAGE_SIZE = 100
@@ -65,17 +69,32 @@ interface AbstractTokenInfo {
 }
 
 export function TokenHistoryPage() {
+  const trpc = useTRPC()
   const [page, setPage] = useState(1)
+  const [search, setSearch] = useState('')
+  const debouncedSearch = useDebouncedValue(search.trim(), 300)
   const [selectedEntry, setSelectedEntry] = useState<HistoryEntry>()
-  const { data: historyPage, isLoading } = api.tokenDbHistory.getPage.useQuery(
-    { page, pageSize: PAGE_SIZE },
-    {
+  const { data: historyPage, isLoading } = useQuery(
+    trpc.tokenDbHistory.getPage.queryOptions(
+      {
+        page,
+        pageSize: PAGE_SIZE,
+        search: debouncedSearch || undefined,
+      },
+      {
+        refetchInterval: 10_000,
+        refetchOnMount: 'always',
+        staleTime: 0,
+      },
+    ),
+  )
+  const { data: abstractTokens } = useQuery(
+    trpc.abstractTokens.getAll.queryOptions(undefined, {
       refetchInterval: 10_000,
       refetchOnMount: 'always',
       staleTime: 0,
-    },
+    }),
   )
-  const { data: abstractTokens } = api.abstractTokens.getAll.useQuery()
   const abstractTokensById = useMemo(
     () =>
       new Map(
@@ -109,35 +128,49 @@ export function TokenHistoryPage() {
               {formatHistoryRange(page, totalCount)}
             </CardDescription>
           )}
-          {historyPage && totalCount > PAGE_SIZE && (
-            <CardAction>
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  disabled={page <= 1}
-                  onClick={() => setPage((page) => Math.max(1, page - 1))}
-                >
-                  <ChevronLeftIcon />
-                  Previous
-                </Button>
-                <div className="whitespace-nowrap text-muted-foreground text-sm tabular-nums">
-                  Page {page} of {pageCount}
-                </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  disabled={page >= pageCount}
-                  onClick={() =>
-                    setPage((page) => Math.min(pageCount, page + 1))
-                  }
-                >
-                  Next
-                  <ChevronRightIcon />
-                </Button>
+          <CardAction>
+            <div className="flex flex-col items-end gap-2">
+              <div className="relative w-64">
+                <SearchIcon className="-translate-y-1/2 pointer-events-none absolute top-1/2 left-2.5 size-4 text-muted-foreground" />
+                <Input
+                  placeholder="Search by token data..."
+                  className="h-8 pl-8"
+                  value={search}
+                  onChange={(e) => {
+                    setSearch(e.target.value)
+                    setPage(1)
+                  }}
+                />
               </div>
-            </CardAction>
-          )}
+              {historyPage && totalCount > PAGE_SIZE && (
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={page <= 1}
+                    onClick={() => setPage((page) => Math.max(1, page - 1))}
+                  >
+                    <ChevronLeftIcon />
+                    Previous
+                  </Button>
+                  <div className="whitespace-nowrap text-muted-foreground text-sm tabular-nums">
+                    Page {page} of {pageCount}
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={page >= pageCount}
+                    onClick={() =>
+                      setPage((page) => Math.min(pageCount, page + 1))
+                    }
+                  >
+                    Next
+                    <ChevronRightIcon />
+                  </Button>
+                </div>
+              )}
+            </div>
+          </CardAction>
         </CardHeader>
         <CardContent className="min-h-0 flex-1 overflow-y-auto">
           {isLoading ? (
@@ -148,7 +181,11 @@ export function TokenHistoryPage() {
                 <EmptyMedia variant="icon">
                   <HistoryIcon />
                 </EmptyMedia>
-                <EmptyTitle>No history entries</EmptyTitle>
+                <EmptyTitle>
+                  {debouncedSearch
+                    ? 'No entries match your search'
+                    : 'No history entries'}
+                </EmptyTitle>
               </EmptyHeader>
             </Empty>
           ) : (

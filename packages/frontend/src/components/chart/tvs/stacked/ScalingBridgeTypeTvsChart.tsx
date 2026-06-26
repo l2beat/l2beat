@@ -1,8 +1,9 @@
 import type { Milestone } from '@l2beat/config'
+import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { useScalingTvsDataKeys } from '~/pages/scaling/tvs/components/ScalingTvsDataKeysContext'
 import type { TvsProjectFilter } from '~/server/features/scaling/tvs/utils/projectFilterUtils'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import type { ChartRange } from '~/utils/range/range'
 import type { ChartUnit } from '../../types'
 import { BridgeTypeTvsChart } from './BridgeTypeTvsChart'
@@ -24,15 +25,18 @@ export function ScalingBridgeTypeTvsChart({
   excludeAssociatedTokens,
   excludeRwaRestrictedTokens,
 }: Props) {
+  const trpc = useTRPC()
   const { tokenBridgeTypeDataKeys, tokenBridgeTypeToggleDataKey } =
     useScalingTvsDataKeys()
 
-  const { data, isLoading } = api.tvs.detailedChart.useQuery({
-    range,
-    excludeAssociatedTokens,
-    filter,
-    excludeRwaRestrictedTokens,
-  })
+  const { data, isLoading } = useQuery(
+    trpc.tvs.detailedChart.queryOptions({
+      range,
+      excludeAssociatedTokens,
+      filter,
+      excludeRwaRestrictedTokens,
+    }),
+  )
 
   const chartData = useMemo(
     () =>

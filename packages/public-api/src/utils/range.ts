@@ -2,9 +2,9 @@ import type { Range, Resolution } from './types'
 
 export function rangeToResolution(range: Range): Resolution {
   const days = rangeToDays(range)
-  if (days && days <= 7) return 'hourly'
-  if (days && days < 180) return 'sixHourly'
-  return 'daily'
+  if (days && days <= 7) return 'hour'
+  if (days && days < 180) return 'six hours'
+  return 'day'
 }
 
 export function rangeToDays(range: Range) {

@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import { RefreshCwIcon } from 'lucide-react'
 import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
@@ -21,13 +22,14 @@ import {
   formatDollars,
   formatTransferTimestamp,
 } from '~/pages/interop/transfers/utils'
-import { api } from '~/react-query/trpc'
+import { useBackendTrpc } from '~/react-query/trpc'
 import { DurationSplitCoverageTable } from './table/DurationSplitCoverageTable'
 import { NotIncludedByPluginTable } from './table/NotIncludedByPluginTable'
 import { NotIncludedTransfersTable } from './table/NotIncludedTransfersTable'
 import type { AggregatesResponse, ChainMetadata } from './types'
 
 export function AggregatesPage() {
+  const trpc = useBackendTrpc()
   const {
     data: aggregatesData,
     error: aggregatesError,
@@ -35,7 +37,7 @@ export function AggregatesPage() {
     isLoading: isAggregatesLoading,
     isFetching: isAggregatesFetching,
     refetch: refetchAggregates,
-  } = api.interop.aggregates.latest.useQuery()
+  } = useQuery(trpc.interop.aggregates.latest.queryOptions())
 
   const {
     data: chainsData,
@@ -43,7 +45,7 @@ export function AggregatesPage() {
     isError: isChainsError,
     isFetching: isChainsFetching,
     refetch: refetchChains,
-  } = api.interop.chains.metadata.useQuery()
+  } = useQuery(trpc.interop.chains.metadata.queryOptions())
 
   const response: AggregatesResponse | undefined = aggregatesData
   const chains: ChainMetadata[] = chainsData ?? []

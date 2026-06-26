@@ -1,6 +1,6 @@
 {
   "name": "privacy-pools",
-  "timestamp": 1779457786,
+  "timestamp": 1779964040,
   "configHash": "0xaba67902f5dbe523b92627de9483b18c6d61e70a41985178c529337284c15e45",
   "entries": [
     {
@@ -112,10 +112,10 @@
           "vettingFeeBPS": 0,
           "maxRelayFeeBPS": 1000
         },
-        "currentRoot": "10419630154203220642538815439119457027154160634330506586247443682571866189297",
-        "currentRootIndex": 2,
+        "currentRoot": "8752569004702280995795457365404191323204180861878026538215078370716699330678",
+        "currentRootIndex": 3,
         "currentTreeDepth": 7,
-        "currentTreeSize": 66,
+        "currentTreeSize": 67,
         "dead": false,
         "ENTRYPOINT": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
         "MAX_TREE_DEPTH": 32,
@@ -219,12 +219,7 @@
       ]
     },
     {
-      "address": "eth:0x42FEdcd80C8C9694DBc3b2ff0fD48BB8651dfC62",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x554c5aF96E9e3c05AEC01ce18221d0DD25975aB4",
+      "address": "eth:0x652E36f8EA937c19417380dCDb48D6e4375d13dA",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -278,7 +273,7 @@
           "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187"
         ],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "latestRoot": "1584512156896721714967404498187650673653718182935138525755255164453931291189",
+        "latestRoot": "6096656183466985331350196054292878567201602338234365770259062909873702167450",
         "ownerRoleMembers": ["eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159"],
         "registeredPools": [
           "eth:0xF241d57C6DebAe225c0F2e6eA1529373C9A9C9fB",
@@ -459,15 +454,15 @@
         "$members": [
           "eth:0xd76eEb2A6fcf55dc80D046FFbc96D1A2B45AB52E",
           "eth:0xb1A1D5b0f3d4E8e89E55daBFEb0B96118cbc16fc",
-          "eth:0x554c5aF96E9e3c05AEC01ce18221d0DD25975aB4",
-          "eth:0x42FEdcd80C8C9694DBc3b2ff0fD48BB8651dfC62"
+          "eth:0x652E36f8EA937c19417380dCDb48D6e4375d13dA",
+          "eth:0xE8A2cC5c2349615D947b9d9fE5D7F144730cAf77"
         ],
         "$threshold": 2,
         "domainSeparator": "0xf282a84b0bf6eade58a219ecc69f1555f4dcd5e4259840fcf40eebc823a2fc3b",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 31,
+        "nonce": 33,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -509,14 +504,14 @@
           "vettingFeeBPS": 50,
           "maxRelayFeeBPS": 1000
         },
-        "currentRoot": "6987542381103021098512346445631441160970277391237911857987355393230495111607",
-        "currentRootIndex": 40,
+        "currentRoot": "16126166472274570494671098226142689525721860361761036868345594827219300146407",
+        "currentRootIndex": 2,
         "currentTreeDepth": 11,
-        "currentTreeSize": 1512,
+        "currentTreeSize": 1602,
         "dead": false,
         "ENTRYPOINT": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
         "MAX_TREE_DEPTH": 32,
-        "nonce": 528,
+        "nonce": 550,
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "16452108168275993030962142353354044100680963945240756716593099151407051066232",
@@ -850,7 +845,7 @@
       "address": "eth:0xd76eEb2A6fcf55dc80D046FFbc96D1A2B45AB52E",
       "type": "EOA",
       "sourceHashes": [
-        "0x6fcf212849ffbf34d907a048df4d05a6c97f876a620c7386a770735262604c54"
+        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
       ],
       "proxyType": "EIP7702 EOA",
       "values": {
@@ -965,14 +960,14 @@
           "vettingFeeBPS": 0,
           "maxRelayFeeBPS": 1000
         },
-        "currentRoot": "14181017306389609323385573222048356175227966719051540056967364280079644821299",
-        "currentRootIndex": 13,
+        "currentRoot": "21339092203824706424604686083399204844561734498994779729258271344388502015957",
+        "currentRootIndex": 29,
         "currentTreeDepth": 9,
-        "currentTreeSize": 397,
+        "currentTreeSize": 413,
         "dead": false,
         "ENTRYPOINT": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
         "MAX_TREE_DEPTH": 32,
-        "nonce": 146,
+        "nonce": 153,
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "15021418340692283880916004685565940332387258944710606800522765380598358159605",
@@ -996,6 +991,11 @@
         "eth:0xe859C0bD25f260BaEE534Fb52e307D3b64D24572": "PrivacyPoolComplex"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0xE8A2cC5c2349615D947b9d9fE5D7F144730cAf77",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "PrivacyPoolETH",
@@ -1026,14 +1026,14 @@
           "vettingFeeBPS": 50,
           "maxRelayFeeBPS": 1000
         },
-        "currentRoot": "312190533071921530849780474919212400411901207255566186192891059794583939462",
-        "currentRootIndex": 2,
+        "currentRoot": "13327081810147443359011052311879530355031684694498004407653281643636341624230",
+        "currentRootIndex": 38,
         "currentTreeDepth": 14,
-        "currentTreeSize": 8194,
+        "currentTreeSize": 8294,
         "dead": false,
         "ENTRYPOINT": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
         "MAX_TREE_DEPTH": 32,
-        "nonce": 4073,
+        "nonce": 4101,
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "4916574638117198869413701114161172350986437430914933850166949084132905299523",
@@ -1087,10 +1087,10 @@
           "vettingFeeBPS": 0,
           "maxRelayFeeBPS": 1000
         },
-        "currentRoot": "11842532075422257344216191867832257174154502193586103933584042589438953749263",
-        "currentRootIndex": 10,
+        "currentRoot": "3365663460340798236697671766843915541609587375364182441129680155804030587084",
+        "currentRootIndex": 11,
         "currentTreeDepth": 4,
-        "currentTreeSize": 10,
+        "currentTreeSize": 11,
         "dead": false,
         "ENTRYPOINT": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
         "MAX_TREE_DEPTH": 32,
@@ -2020,6 +2020,6 @@
     "privacy-pools/PrivacyPoolSimple": "0xd0e9393e828033bd062a089147a4eb32a24f23f58884256bd8c90a7896d25ba3",
     "privacy-pools/WithdrawalVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 25151204 },
-  "permissionsConfigHash": "0xa2fe80a6353c246244e21ef081837feb859c2bddbbf7cf71c645f81ca1528b70"
+  "usedBlockNumbers": { "ethereum": 25193240 },
+  "permissionsConfigHash": "0xb3365335e1f2fefd11a0fb91e3b482c6ce8c3aed603ad7b3dbc5c6fd90b5fc31"
 }

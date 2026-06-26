@@ -345,6 +345,7 @@
       "address": "base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "type": "EOA",
       "proxyType": "EOA",
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -997,6 +998,7 @@
       "address": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "type": "EOA",
       "proxyType": "EOA",
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -2791,6 +2793,7 @@
       "address": "oeth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "type": "EOA",
       "proxyType": "EOA",
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",

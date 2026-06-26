@@ -26,7 +26,7 @@ export class InteropCleanerLoop extends TimeLoop {
       now - 1 * UnixTime.DAY,
     )
     const expiredTransfers = await this.db.interopTransfer.deleteBefore(
-      now - 1 * UnixTime.DAY - 2 * UnixTime.HOUR,
+      now - 7 * UnixTime.DAY,
     )
     const expiredPrices = await this.db.interopRecentPrices.deleteBefore(
       now - 7 * UnixTime.DAY,

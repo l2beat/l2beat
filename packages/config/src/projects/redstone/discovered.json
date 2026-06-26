@@ -51,13 +51,15 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "propose",
+          "permission": "interact",
           "from": "eth:0xa426A052f657AEEefc298b3B5c35a470e4739d69",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
           "role": ".proposer"
         },
         {
-          "permission": "propose",
+          "permission": "interact",
           "from": "eth:0xa426A052f657AEEefc298b3B5c35a470e4739d69",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
           "role": ".PROPOSER"
         }
       ]
@@ -457,8 +459,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x8f2428F7189c0d92D1c4a5358903A8c80Ec6a69D",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
           "role": ".batcherHash"
         }
       ]
@@ -538,29 +541,10 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
-          "from": "eth:0xa426A052f657AEEefc298b3B5c35a470e4739d69",
-          "role": ".challenger"
-        },
-        {
-          "permission": "challenge",
-          "from": "eth:0xa426A052f657AEEefc298b3B5c35a470e4739d69",
-          "role": ".CHALLENGER"
-        },
-        {
-          "permission": "guard",
+          "permission": "interact",
           "from": "eth:0x4b5b41c240173191425F5928bc6bdd0d439331BB",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
           "role": ".guardian"
-        },
-        {
-          "permission": "guard",
-          "from": "eth:0xC7bCb0e8839a28A1cFadd1CF716de9016CdA51ae",
-          "role": ".guardian"
-        },
-        {
-          "permission": "guard",
-          "from": "eth:0xC7bCb0e8839a28A1cFadd1CF716de9016CdA51ae",
-          "role": ".GUARDIAN"
         },
         {
           "permission": "interact",
@@ -573,6 +557,30 @@
           "from": "eth:0x97A2dA87d3439b172e6DD027220e01c9Cb565B80",
           "description": "can upgrade the parameters of DA challenges like the bond size or refund percentages, potentially making challenges infeasable or insecure.",
           "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xa426A052f657AEEefc298b3B5c35a470e4739d69",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challenger"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xa426A052f657AEEefc298b3B5c35a470e4739d69",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".CHALLENGER"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xC7bCb0e8839a28A1cFadd1CF716de9016CdA51ae",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
+          "role": ".guardian"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xC7bCb0e8839a28A1cFadd1CF716de9016CdA51ae",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
+          "role": ".GUARDIAN"
         }
       ]
     },
@@ -1193,5 +1201,5 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
   "usedBlockNumbers": { "ethereum": 22208357 },
-  "permissionsConfigHash": "0x8695e00b0c80683e7c43510dfef3c588f3aea80b45679b8849a8529a6c99350a"
+  "permissionsConfigHash": "0x6c76a18a4daae98f900947337dfa97bf05ff45dd67bf3333256ab4cd95d1743f"
 }

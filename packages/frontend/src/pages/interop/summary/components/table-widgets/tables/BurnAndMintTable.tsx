@@ -11,10 +11,10 @@ export function BurnAndMintTable({
 }: {
   entries: BurnAndMintProtocolEntry[]
 }) {
-  const { selectionForApi } = useInteropSelectedChains()
+  const { selectedChains } = useInteropSelectedChains()
   const columns = useMemo(
-    () => getBurnAndMintColumns(selectionForApi),
-    [selectionForApi],
+    () => getBurnAndMintColumns(selectedChains),
+    [selectedChains],
   )
   const table = useTable<BurnAndMintProtocolRow>({
     data: entries,

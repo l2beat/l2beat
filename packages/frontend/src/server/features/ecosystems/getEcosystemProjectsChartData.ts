@@ -35,7 +35,7 @@ export function getEcosystemProjectsChartData(
       Math.max(minTimestamp, startedAt ?? Number.NEGATIVE_INFINITY),
       UnixTime.toStartOf(UnixTime.now(), 'day'),
     ],
-    'daily',
+    'day',
   )
   const chart = timestamps.map((timestamp) => {
     const projects = getActiveEcosystemProjects(entries, timestamp)

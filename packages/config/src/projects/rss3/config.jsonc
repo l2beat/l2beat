@@ -31,8 +31,22 @@
       "ignoreMethods": ["isOutputFinalized", "balance"],
       "ignoreInWatchMode": ["params"],
       "fields": {
-        "guardian": { "permissions": [{ "type": "guard" }] },
-        "GUARDIAN": { "permissions": [{ "type": "guard" }] },
+        "guardian": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+            }
+          ]
+        },
+        "GUARDIAN": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+            }
+          ]
+        },
         "operator": {
           "permissions": [
             {

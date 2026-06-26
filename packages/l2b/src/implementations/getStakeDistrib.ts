@@ -1,9 +1,10 @@
+import type { ProjectInclusionDelayChartStakeDistribution } from '@l2beat/config'
 import { formatAsAsciiTable } from '@l2beat/shared-pure'
 import fs from 'fs/promises'
 import fetch from 'node-fetch'
 import path from 'path'
 
-export const STAKING_PROJECT_IDS = ['polygon', 'aztec'] as const
+export const STAKING_PROJECT_IDS = ['aztecnetwork', 'polygon-pos'] as const
 
 export type StakingProjectId = (typeof STAKING_PROJECT_IDS)[number]
 export type StakingProjectSelection = StakingProjectId | 'all'
@@ -22,14 +23,9 @@ interface StakingDataset {
   entities: StakingEntity[]
 }
 
-interface ExtractedStakingProjectData {
+interface ExtractedStakingProjectData
+  extends ProjectInclusionDelayChartStakeDistribution {
   project: StakingProjectId
-  stakeToken: string
-  totalStake: number
-  entities: {
-    name: string
-    stake: number
-  }[]
 }
 
 interface PolygonValidator {
@@ -69,12 +65,14 @@ const POLYGON_VALIDATORS_URL =
   'https://staking-api.polygon.technology/api/v2/validators'
 const AZTEC_PROVIDERS_URL = 'https://dashtec.xyz/api/providers'
 const DEFAULT_AZTEC_PAGE_SIZE = 200
+const DEFAULT_OUTPUT_ROOT = 'src/projects'
+const STAKE_DISTRIBUTION_FILE_NAME = 'stake-distribution.json'
 
 export class StakeDistributionFetcher {
   constructor(
     private readonly project: StakingProjectSelection,
     private readonly limit: number,
-    private readonly outputFilePath: string,
+    private readonly outputFilePath?: string,
   ) {}
 
   async fetchAndDisplay(): Promise<void> {
@@ -87,7 +85,7 @@ export class StakeDistributionFetcher {
       this.extractProjectData(dataset),
     )
 
-    await this.writeJsonOutput(extracted)
+    const outputFilePaths = await this.writeJsonOutput(extracted)
 
     for (const dataset of datasets) {
       console.log(`\n${dataset.displayName}`)
@@ -99,7 +97,9 @@ export class StakeDistributionFetcher {
       console.log(this.createConsoleTable(dataset))
     }
 
-    console.log(`\nExtracted staking data saved to ${this.outputFilePath}`)
+    console.log(
+      `\nExtracted staking data saved to ${formatOutputFilePaths(outputFilePaths)}`,
+    )
   }
 
   private getProjectsToFetch(): StakingProjectId[] {
@@ -160,18 +160,77 @@ export class StakeDistributionFetcher {
 
   private async writeJsonOutput(
     data: ExtractedStakingProjectData[],
-  ): Promise<void> {
-    await fs.mkdir(path.dirname(this.outputFilePath), { recursive: true })
-    await fs.writeFile(
-      this.outputFilePath,
-      `${JSON.stringify(data, null, 2)}\n`,
-    )
+  ): Promise<string[]> {
+    if (this.outputFilePath !== undefined) {
+      await writeJsonFile(this.outputFilePath, this.getJsonOutput(data))
+      return [this.outputFilePath]
+    }
+
+    const outputs = data.map(async (projectData) => {
+      const outputFilePath = getDefaultOutputFilePath(projectData.project)
+      await writeJsonFile(
+        outputFilePath,
+        getStakeDistributionOutput(projectData),
+      )
+      return outputFilePath
+    })
+
+    return await Promise.all(outputs)
+  }
+
+  private getJsonOutput(
+    data: ExtractedStakingProjectData[],
+  ):
+    | ExtractedStakingProjectData[]
+    | ProjectInclusionDelayChartStakeDistribution {
+    if (this.project === 'all') {
+      return data
+    }
+
+    const projectData = data[0]
+    if (!projectData) {
+      throw new Error(`No staking data fetched for ${this.project}`)
+    }
+
+    return getStakeDistributionOutput(projectData)
   }
 }
 
+async function writeJsonFile(filePath: string, data: unknown): Promise<void> {
+  await fs.mkdir(path.dirname(filePath), { recursive: true })
+  await fs.writeFile(filePath, `${JSON.stringify(data, null, 2)}\n`)
+}
+
+function getDefaultOutputFilePath(project: StakingProjectId): string {
+  return path.resolve(
+    process.cwd(),
+    DEFAULT_OUTPUT_ROOT,
+    project,
+    STAKE_DISTRIBUTION_FILE_NAME,
+  )
+}
+
+function getStakeDistributionOutput(
+  projectData: ExtractedStakingProjectData,
+): ProjectInclusionDelayChartStakeDistribution {
+  const { project: _, ...stakeDistribution } = projectData
+  return stakeDistribution
+}
+
+function formatOutputFilePaths(outputFilePaths: string[]): string {
+  if (outputFilePaths.length === 1) {
+    return outputFilePaths[0] ?? ''
+  }
+
+  return [
+    '',
+    ...outputFilePaths.map((outputFilePath) => `- ${outputFilePath}`),
+  ].join('\n')
+}
+
 const stakingApiFetchers: Record<StakingProjectId, StakingApiFetcher> = {
-  polygon: fetchPolygonValidators,
-  aztec: fetchAztecProviders,
+  'polygon-pos': fetchPolygonValidators,
+  aztecnetwork: fetchAztecProviders,
 }
 
 async function fetchPolygonValidators(): Promise<StakingDataset> {
@@ -190,7 +249,7 @@ async function fetchPolygonValidators(): Promise<StakingDataset> {
   }))
 
   return {
-    project: 'polygon',
+    project: 'polygon-pos',
     displayName: 'Polygon staking',
     stakeToken: 'POL',
     stakeDecimals: 18,
@@ -238,7 +297,7 @@ async function fetchAztecProviders(): Promise<StakingDataset> {
   }))
 
   return {
-    project: 'aztec',
+    project: 'aztecnetwork',
     displayName: 'Aztec staking',
     stakeToken: 'AZTEC',
     stakeDecimals: 18,

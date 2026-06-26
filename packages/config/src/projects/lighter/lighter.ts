@@ -19,6 +19,7 @@ import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('lighter')
 
@@ -244,7 +245,11 @@ export const lighter: ScalingProject = {
     },
     forceTransactions: {
       name: 'Users can force their transactions on L1',
-      description: `If the centralized operators fail to include user transactions, users can force them themselves through L1. The possible transaction types that users can force are: deposits, withdrawals, order creation, order cancellation, and burning of pool shares. If the operators do not process forced transactions within ${formatSeconds(priorityExpiration)}, the system can be frozen (desert mode) and users can exit using the latest settled state. All open positions are settled using the latest index price.`,
+      description: readProjectMarkdown(
+        'lighter',
+        'technologyForceTransactions',
+        { priorityExpiration: formatSeconds(priorityExpiration) },
+      ),
       risks: [],
       references: [],
     },
@@ -304,7 +309,7 @@ export const lighter: ScalingProject = {
         references: [
           {
             title: 'ZK Lighter verifier verification keys',
-            url: 'https://etherscan.io/address/0xaa76aC5cC406037be638d483d8c1daF2AFDC1A68#code#F1#L54',
+            url: 'https://etherscan.io/address/0xAa0b5b65890162C5C96D82F088822247EC5Df5D6#code#F1#L54',
           },
           {
             title: 'Desert verifier verification keys',
@@ -315,7 +320,9 @@ export const lighter: ScalingProject = {
     ],
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
-  upgradesAndGovernance: `Regular upgrades are initiated by the "network governor" and executed with a ${formatSeconds(upgradeDelay)} delay. The "security council" is allowed to reduce the upgrade delay to zero in case of an emergency. The security council does not currently satisfy the Stage 1 requirements. The network governor also retains the ability to add or remove validators.`,
+  upgradesAndGovernance: {
+    content: `Regular upgrades are initiated by the "network governor" and executed with a ${formatSeconds(upgradeDelay)} delay. The "security council" is allowed to reduce the upgrade delay to zero in case of an emergency. The security council does not currently satisfy the Stage 1 requirements. The network governor also retains the ability to add or remove validators.`,
+  },
   contracts: {
     addresses: {
       ...discovery.getDiscoveredContracts(),

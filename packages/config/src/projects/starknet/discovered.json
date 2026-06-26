@@ -1,7 +1,7 @@
 {
   "name": "starknet",
   "timestamp": 1776761835,
-  "configHash": "0xbe5c64d0d01eeb9842271962a61bc6e5e8d632b5ebcae3221fb17912bec8835a",
+  "configHash": "0x5e6773cf0636f934b0a447f2b5eea93ac6f192fcbfb490eb91d93b06e80e42eb",
   "entries": [
     {
       "name": "Starkware Multisig 2",
@@ -565,15 +565,16 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "governStarknet",
-          "from": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
-          "role": ".$admin"
-        },
-        {
           "permission": "interact",
           "from": "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
           "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
           "role": ".govAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+          "description": "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.",
+          "role": ".$admin"
         },
         {
           "permission": "interact",
@@ -824,8 +825,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "operateStarknet",
+          "permission": "interact",
           "from": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+          "description": "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability.",
           "role": ".operators"
         }
       ]
@@ -1228,8 +1230,9 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "governStarknet",
+          "permission": "interact",
           "from": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+          "description": "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.",
           "role": ".$admin",
           "via": [
             {
@@ -1421,7 +1424,7 @@
         "eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e": "ProxyV5",
         "eth:0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff": "StarknetTokenBridge"
       },
-      "category": { "name": "External Bridges", "priority": 1 }
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "name": "L1DaiGateway",
@@ -1594,7 +1597,7 @@
         "eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10": "ProxyV5",
         "eth:0x205Fef0daB48D83CbA6888C5F050FeE36C4762B7": "StarknetTokenBridge"
       },
-      "category": { "name": "External Bridges", "priority": 1 }
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "address": "eth:0xaDB26E60FA6e326B9Ee444D886B4B62EC7FA38fc",
@@ -2273,8 +2276,9 @@
       "description": "A simple Timelock contract with an immutable delay of 8d. The owner (eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988) can queue transactions.",
       "directlyReceivedPermissions": [
         {
-          "permission": "governStarknet",
+          "permission": "interact",
           "from": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+          "description": "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.",
           "role": ".$admin"
         },
         {
@@ -3076,7 +3080,7 @@
           }
         }
       ],
-      "category": { "name": "External Bridges", "priority": 1 }
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "name": "MultiBridge",
@@ -3437,14 +3441,15 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+          "description": "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability.",
+          "role": ".operators"
+        },
+        {
+          "permission": "interact",
           "from": "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
           "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
           "role": ".secAdminAC"
-        },
-        {
-          "permission": "operateStarknet",
-          "from": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
-          "role": ".operators"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -4970,5 +4975,5 @@
     "starknet/StarknetMultiBridge_haltable": "0xe8353adf6ac366e8437be00a65d081e1d14c386d2b59bbfc9f50dcc2d80299b9"
   },
   "usedBlockNumbers": { "ethereum": 24927241 },
-  "permissionsConfigHash": "0xa4d7d4b4ca08ed468ecc8a9bbfdc82705f284f1b4fc9a694bf9a7859c27002fb"
+  "permissionsConfigHash": "0xc0c917cf5566efd526b3cfc3c0ed92fd9749f28338a7ddaf5abc554a4b7eae0d"
 }

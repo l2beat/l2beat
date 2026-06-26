@@ -1,3 +1,108 @@
+Generated with discovered.json: 0x200f6fc8fe04377b20d583f88c65cab84c58bbac
+
+# Diff at Tue, 09 Jun 2026 12:43:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1779799894
+- current timestamp: 1779799894
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779799894 (main branch discovery), not current.
+
+```diff
+    EOA  (arb-nova:0x28a60eFd283Dc7FC6aa959bA733B5612C9982458) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb-nova:0x465E4E786cF1A6c7B2229181279Eb9479989eAA6) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb-nova:0x8273A6b13Ee8F7eF85bc769E27e4e508f53009Cc) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb-nova:0xE348008Df09D0af01DB19C520aBD8769A4F75A3f) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x7acaf268ef0a62b264ba17cfe9c61a9531157f98
+
+# Diff at Tue, 26 May 2026 12:52:59 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@e7094edf4e66361e569a605db15b357404737bba block: 1779128593
+- current timestamp: 1779799894
+
+## Description
+
+Added validator `arb-nova:0xE348008Df09D0af01DB19C520aBD8769A4F75A3f` to RollupProxy and batch poster `arb-nova:0x465E4E786cF1A6c7B2229181279Eb9479989eAA6` to SequencerInbox. Also picked up the `ArbOS v51.1 wasmModuleRoot` label from globalConfig types.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        5
++        6
+      values.validators.1:
++        "arb-nova:0xE348008Df09D0af01DB19C520aBD8769A4F75A3f"
+    }
+```
+
+```diff
+    contract SequencerInbox (arb-nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.batchPosters.1:
++        "arb-nova:0x465E4E786cF1A6c7B2229181279Eb9479989eAA6"
+      values.setIsBatchPosterCount:
+-        5
++        6
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779128593 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c:
++        "ArbOS v51.1 wasmModuleRoot"
+    }
+```
+
 Generated with discovered.json: 0x3e5f36c0a0fb5a26c51f6c64435425cf7fad28c2
 
 # Diff at Mon, 18 May 2026 18:24:19 GMT:

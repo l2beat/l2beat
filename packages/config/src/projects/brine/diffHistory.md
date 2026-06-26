@@ -1,3 +1,97 @@
+Generated with discovered.json: 0xb3ca3b560b66681ea9ea8d5b39b7e35b7e35ecb4
+
+# Diff at Fri, 12 Jun 2026 12:07:44 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@77f62933d564f65f6ab803a9850a637ea4a77091 block: 1777891418
+- current timestamp: 1777891418
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777891418 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x303775491494a08b07365938787274F742a81F63) {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract."
++        "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), set the default vault withdrawal lock, unfreeze the exchange and manage the governor set."
+    }
+```
+
+Generated with discovered.json: 0x87d3a1e15d8b329e0032ae4fef49660f313eac2a
+
+# Diff at Fri, 12 Jun 2026 10:18:42 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1777891418
+- current timestamp: 1777891418
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777891418 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x303775491494a08b07365938787274F742a81F63) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0x7774fb8b7f26189407a6d213e1b02b1988128d23
+
+# Diff at Tue, 09 Jun 2026 12:43:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1777891418
+- current timestamp: 1777891418
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777891418 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x303775491494a08b07365938787274F742a81F63) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"governStarknet","from":"eth:0x1390f521A79BaBE99b69B37154D63D431da27A07","role":".$admin"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x1390f521A79BaBE99b69B37154D63D431da27A07","description":"Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.","role":".$admin"}
+    }
+```
+
+```diff
+    EOA  (eth:0xc3a27F45015E2c36ce3cC78c662c5f259c26Cf25) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to regularly update the state roots of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains commitments to the data that is itself kept offchain."
+      receivedPermissions.0.permission:
+-        "operateStarkEx"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x0cf520744f3226ae1a186e2d96844709d0d5eb1f
 
 # Diff at Fri, 08 May 2026 07:51:10 GMT:

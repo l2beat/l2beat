@@ -1,0 +1,40 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": ["INIT_BYTECODE_TRANSPARENT_PROXY", "claimedBitMap"],
+  "ignoreInWatchMode": [
+    "depositCount",
+    "lastUpdatedDepositCount",
+    "getRoot",
+    "claimedGlobalIndexHashChain"
+  ],
+  "category": "core",
+  "description": "Agglayer bridge contract. Supports interop with Ethereum and blockchains connected to Agglayer. Escrows all preminted ETH because it cannot mint on the L2. The globalExitRootManager is used as an oracle to validate bridge messages against.",
+  "fields": {
+    "getProxiedTokensManager": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "own and upgrade default L2 token contracts deployed by the bridge."
+        }
+      ]
+    },
+    "bridgeManager": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage token mappings and deployments."
+        }
+      ]
+    },
+    "emergencyBridgePauser": {
+      "permissions": [
+        { "type": "interact", "description": "pause the bridge." }
+      ]
+    },
+    "emergencyBridgeUnpauser": {
+      "permissions": [
+        { "type": "interact", "description": "unpause the bridge." }
+      ]
+    }
+  }
+}

@@ -1,6 +1,6 @@
 {
   "name": "degen",
-  "timestamp": 1778508895,
+  "timestamp": 1781176944,
   "configHash": "0xf6e714f3f16f7d965b942c389576d416e58c3636be7d74e63fecea5fa2a3e4c8",
   "entries": [
     {
@@ -158,7 +158,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "fastconfirm",
+          "permission": "interact",
           "from": "base:0xD34F3a11F10DB069173b32d84F02eDA578709143",
           "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
           "role": ".anyTrustFastConfirmer",
@@ -167,7 +167,7 @@
           ]
         },
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "base:0xD34F3a11F10DB069173b32d84F02eDA578709143",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators",
@@ -176,7 +176,7 @@
           ]
         },
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "base:0xD34F3a11F10DB069173b32d84F02eDA578709143",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
@@ -250,7 +250,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 44136,
+        "batchCount": 44848,
         "batchPosterManager": "base:0x0000000000000000000000000000000000000000",
         "batchPosters": ["base:0xc98A32DdD1b30B3788670C9992f3B18EF83Da491"],
         "bridge": "base:0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C",
@@ -282,7 +282,7 @@
         "rollup": "base:0xD34F3a11F10DB069173b32d84F02eDA578709143",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 148918,
+        "totalDelayedMessagesRead": 148931,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -511,7 +511,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 19,
+        "nonce": 20,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -627,13 +627,13 @@
       "proxyType": "gnosis safe",
       "directlyReceivedPermissions": [
         {
-          "permission": "fastconfirm",
+          "permission": "interact",
           "from": "base:0xD34F3a11F10DB069173b32d84F02eDA578709143",
           "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
           "role": ".anyTrustFastConfirmer"
         },
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "base:0xD34F3a11F10DB069173b32d84F02eDA578709143",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
@@ -652,7 +652,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 11061,
+        "nonce": 11752,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -666,7 +666,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "base:0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -724,7 +724,7 @@
         ],
         "$upgradeCount": 2,
         "anyTrustFastConfirmer": "base:0xc207cbC35DD3CD172059730380A45aE14eb0e403",
-        "arbOsFromWmRoot": "ArbOS v40 wasmModuleRoot",
+        "arbOsFromWmRoot": "ArbOS v51.1 wasmModuleRoot",
         "baseStake": "100000000000000000",
         "bridge": "base:0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C",
         "chainId": 666666666,
@@ -733,13 +733,13 @@
         "confirmPeriodBlocks": 241920,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 13757,
+        "firstUnresolvedNode": 14448,
         "inbox": "base:0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 23492774,
-        "latestConfirmed": 13756,
-        "latestNodeCreated": 13757,
+        "latestConfirmed": 14447,
+        "latestNodeCreated": 14447,
         "loserStakeEscrow": "base:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "base:0xe63ddb12FBb6211a73F12a4367b10dA0834B82da",
@@ -760,7 +760,7 @@
         "validatorUtils": "base:0x23b0348788b96ee1cE4e7DdED4AC2A99de516F51",
         "validatorWalletCreator": "base:0xB546310EA2De84220811a03BCD5CeE96D251fA7D",
         "validatorWhitelistDisabled": false,
-        "wasmModuleRoot": "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a",
+        "wasmModuleRoot": "0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c",
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
@@ -968,7 +968,7 @@
           "base:0xe63ddb12FBb6211a73F12a4367b10dA0834B82da",
           "base:0xDb8E759859058952c34953c8469f464109826e52"
         ],
-        "delayedMessageCount": 148918,
+        "delayedMessageCount": 148931,
         "inboxHistory": [
           "base:0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7",
           "base:0x766DD3A13d17C6D175975C89225bde89F052dBc4",
@@ -982,8 +982,8 @@
         ],
         "rollup": "base:0xD34F3a11F10DB069173b32d84F02eDA578709143",
         "sequencerInbox": "base:0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221",
-        "sequencerMessageCount": 44136,
-        "sequencerReportedSubMessageCount": 26796239
+        "sequencerMessageCount": 44848,
+        "sequencerReportedSubMessageCount": 26849207
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1851,6 +1851,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "base": 45859774 },
-  "permissionsConfigHash": "0x0744e5a32f919b7df0d15636e26e421198ad089f60b1a2b576ccc8bb6c281122"
+  "usedBlockNumbers": { "base": 47193798 },
+  "permissionsConfigHash": "0x6ccdb0aac09ef1dc377a03b4d6a900257e3e2bd5848ef7040573ce98236d5c6b"
 }

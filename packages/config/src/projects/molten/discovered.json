@@ -1,6 +1,6 @@
 {
   "name": "molten",
-  "timestamp": 1779198858,
+  "timestamp": 1780654176,
   "configHash": "0xfd7dd88e42225e13a9c91943c35dd6d53c7270a80461369d28c2b22d2d0dd40f",
   "sharedModules": ["shared-sp1", "blobstream"],
   "entries": [
@@ -33,9 +33,9 @@
         "owner": "arb1:0xf37831515e1ddf6bB30eE612545bf87047946602",
         "rootCert": "0x641a0321a3e244efe456463195d606317ed7cdcc3c1756e09893f3c68f79bb5b",
         "succintZkConfig": {
-          "verifierId": "0x00e874289e8c7f42381b6220f438801d2d1478dc8230f866a31e5ceec6e93322",
-          "aggregatorId": "0x002bb66c60302a81a621d7899e3f6ee1d0db9fb1eae5d1e80e94a33cb1e24922",
-          "zkVerifier": "arb1:0xC513d6E8C8f915B1DA2f6eAC4C6d755ff3d5f21D"
+          "verifierId": "0x00643c7149cf335e7ec9d3f3301e69658a7f0ef2bc7546509c257ed8809f28e1",
+          "aggregatorId": "0x00294928e44f0cdc9c74848c4cafcdb29f733a3bc07408c240be3d5afe750b3e",
+          "zkVerifier": "arb1:0xD9d5C8456a168Dd25561064F47bF116111131B1D"
         }
       },
       "fieldMeta": { "owner": { "severity": "HIGH" } },
@@ -179,6 +179,7 @@
             "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
             "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
             "0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499": "ArbOS v51 wasmModuleRoot",
+            "0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c": "ArbOS v51.1 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
             "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot",
             "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d": "Celestia Nitro ArbOS v40 wasmModuleRoot"
@@ -296,7 +297,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
@@ -399,7 +400,7 @@
       "address": "arb1:0x2E5d207a4C0F7e7C52F6622DCC6EB44bC0fE1A13",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -520,7 +521,7 @@
           "role": ".batchPosterManager"
         },
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "arb1:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -754,7 +755,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 23,
+        "nonce": 26,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1432,28 +1433,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SP1Verifier",
-      "address": "arb1:0xC513d6E8C8f915B1DA2f6eAC4C6d755ff3d5f21D",
-      "type": "Contract",
-      "template": "succinct/SP1Verifier",
-      "sourceHashes": [
-        "0x3430123e1fec5a2451a38fcf0a62fdd0cc482b69740ab632ef580e1a44122702"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifier contract for SP1 proofs (v5.0.0).",
-      "deployerAddress": "arb1:0xf37831515e1ddf6bB30eE612545bf87047946602",
-      "sinceTimestamp": 1774475696,
-      "sinceBlock": 445637098,
-      "values": {
-        "$immutable": true,
-        "VERIFIER_HASH": "0xa4594c59bbc142f3b81c3ecb7f50a7c34bc9af7c4c444b5d48b795427e285913",
-        "VERSION": "v5.0.0"
-      },
-      "implementationNames": {
-        "arb1:0xC513d6E8C8f915B1DA2f6eAC4C6d755ff3d5f21D": "SP1Verifier"
-      }
-    },
-    {
       "address": "arb1:0xD45Aa46e2496dFa1300305a705739FE5023b6f3A",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1467,6 +1446,29 @@
       "address": "arb1:0xd7d94B63F021ebD45d2ADd7E5DABf36C981e5878",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "arb1:0xD9d5C8456a168Dd25561064F47bF116111131B1D",
+      "type": "Contract",
+      "template": "succinct/SP1Verifier",
+      "sourceHashes": [
+        "0xaed0a260d9c0355e7e6fcf19f18136f914582d20027b440b0c04b762e521b2d6"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v6.1.0).",
+      "deployerAddress": "arb1:0xba1E3EFfD2DD8CEb7054FEfb0cee8C4300D82C1a",
+      "sinceTimestamp": 1779890004,
+      "sinceBlock": 467227062,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0x4388a21c687fdd5f218d7e3d13190cac4c5355818d3605fd5fb811df468ee696",
+        "VERSION": "v6.1.0",
+        "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
+      },
+      "implementationNames": {
+        "arb1:0xD9d5C8456a168Dd25561064F47bF116111131B1D": "SP1Verifier"
+      }
     },
     {
       "name": "Bridge",
@@ -2505,19 +2507,6 @@
       "function unpause()",
       "function unsafeCreateRetryableTicket(address to, uint256 l2CallValue, uint256 maxSubmissionCost, address excessFeeRefundAddress, address callValueRefundAddress, uint256 gasLimit, uint256 maxFeePerGas, uint256 tokenTotalFeeAmount, bytes data) returns (uint256)"
     ],
-    "arb1:0xC513d6E8C8f915B1DA2f6eAC4C6d755ff3d5f21D": [
-      "error InvalidProof()",
-      "error ProofInvalid()",
-      "error PublicInputNotInField()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function Verify(uint256[8] proof, uint256[2] input) view",
-      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function verifyCompressedProof(uint256[4] compressedProof, uint256[2] input) view",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
-    ],
     "arb1:0xCa2F31F3C6553c2FD9897f7AA464406a431959A9": [
       "error AlreadyInit()",
       "error AlreadySpent(uint256 index)",
@@ -2555,6 +2544,22 @@
       "function spent(uint256) view returns (bytes32)",
       "function updateRollupAddress()",
       "function updateSendRoot(bytes32 root, bytes32 l2BlockHash)"
+    ],
+    "arb1:0xD9d5C8456a168Dd25561064F47bF116111131B1D": [
+      "error InvalidExitCode()",
+      "error InvalidProof()",
+      "error InvalidVkRoot()",
+      "error ProofInvalid()",
+      "error PublicInputNotInField()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function VK_ROOT() pure returns (bytes32)",
+      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyCompressedProof(uint256[4] compressedProof, uint256[5] input) view",
+      "function verifyProof(uint256[8] proof, uint256[5] input) view",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "arb1:0xE1d32C985825562edAa906fAC39295370Db72195": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -2663,6 +2668,6 @@
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 464480023 },
-  "permissionsConfigHash": "0xd3341955ab62200f15bbf79c1a15e81bb3127ed8d8e5b3777ac6813e3dc4650d"
+  "usedBlockNumbers": { "arbitrum": 470276527 },
+  "permissionsConfigHash": "0xd9bd9af43a43f4c8acbbe0cf56d41d88c4f5997e7f29f2bfd40f2e5d18819bd6"
 }

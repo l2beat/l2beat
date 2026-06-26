@@ -11,6 +11,7 @@ export const silentData: ScalingProject = opStackL2({
   genesisTimestamp: 1753442723, // from https://explorer-mainnet.rollup.silentdata.com/block/0
   capability: 'universal',
   addedAt: UnixTime(1753945535),
+  archivedAt: UnixTime(1779881695), // Wed, 27 May 2026
   overridingPurposes: ['Enterprise'],
   daProvider: PRIVATE_DA_PROVIDER,
   reasonsForBeingOther: [

@@ -10,22 +10,24 @@ import { IconTimelock } from '../icons/IconTimelock'
 import { IconToken } from '../icons/IconToken'
 import { IconUntemplatized } from '../icons/IconUntemplatized'
 
+export const ADDRESS_ICON_COMPONENTS = {
+  EOA: IconEoa,
+  EOAPermissioned: IconEoaPermissioned,
+  Unverified: IconContractUnverified,
+  Token: IconToken,
+  Multisig: IconMultisig,
+  Timelock: IconTimelock,
+  Diamond: IconDiamond,
+  Untemplatized: IconUntemplatized,
+  Contract: IconContract,
+  Unknown: IconContractUnverified,
+}
+
 export function AddressIcon(props: {
   type: ApiAddressType
   className?: string
 }) {
-  const Icon = {
-    EOA: IconEoa,
-    EOAPermissioned: IconEoaPermissioned,
-    Unverified: IconContractUnverified,
-    Token: IconToken,
-    Multisig: IconMultisig,
-    Timelock: IconTimelock,
-    Diamond: IconDiamond,
-    Untemplatized: IconUntemplatized,
-    Contract: IconContract,
-    Unknown: IconContractUnverified,
-  }[props.type]
+  const Icon = ADDRESS_ICON_COMPONENTS[props.type]
 
   return (
     <Icon

@@ -1,3 +1,180 @@
+Generated with discovered.json: 0x2e68006e7c66c49fd5083322f6a937ef8e293f82
+
+# Diff at Tue, 16 Jun 2026 10:18:52 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b8fe7ad12211d67626f7d23839b5be1f7ba15bb5 block: 1779964108
+- current timestamp: 1781604075
+
+## Description
+
+Upgrade CreditMessaging to a new version that allows the owner to increase/decrease credits without LayerZero verification and crosschain messages.
+
+## Watched changes
+
+```diff
+    contract StargatePool (eth:0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D) [stargate/StargatePool] {
+    +++ description: None
+      values.getAddressConfig.creditMessaging:
+-        "eth:0x6b8aD17795d89B283e6D0362A87A403f3544bb9d"
++        "eth:0x9b4D17b45d60B8173a5904b85a7bAaeC291E9173"
+    }
+```
+
+```diff
+    contract StargatePoolNative (eth:0x77b2043768d28E9C9aB44E1aBfC95944bcE57931) [stargate/StargatePoolNative] {
+    +++ description: None
+      values.getAddressConfig.creditMessaging:
+-        "eth:0x6b8aD17795d89B283e6D0362A87A403f3544bb9d"
++        "eth:0x9b4D17b45d60B8173a5904b85a7bAaeC291E9173"
+    }
+```
+
+```diff
+    contract StargatePoolEURC (eth:0x783129E4d7bA0Af0C896c239E57C06DF379aAE8c) [stargate/StargatePool] {
+    +++ description: None
+      values.getAddressConfig.creditMessaging:
+-        "eth:0x6b8aD17795d89B283e6D0362A87A403f3544bb9d"
++        "eth:0x9b4D17b45d60B8173a5904b85a7bAaeC291E9173"
+    }
+```
+
+```diff
+    contract StargatePoolMigratable (eth:0x933597a323Eb81cAe705C5bC29985172fd5A3973) [stargate/StargatePoolMigratable] {
+    +++ description: None
+      values.getAddressConfig.creditMessaging:
+-        "eth:0x6b8aD17795d89B283e6D0362A87A403f3544bb9d"
++        "eth:0x9b4D17b45d60B8173a5904b85a7bAaeC291E9173"
+    }
+```
+
+```diff
+    contract CreditMessagingMintableBurnable (eth:0x9b4D17b45d60B8173a5904b85a7bAaeC291E9173) [stargate/CreditMessagingMintableBurnable] {
+    +++ description: A LayerZero OApp owned by Stargate that is used for the virtual crosschain accounting of available tokens to the local pools. A local pool thus has a record of how many tokens are available when bridging to another remote pool. The permissioned Planner role can move these credits across chains, the owner can increase/decrease them arbitrarily.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "immutable"
+      name:
++        "CreditMessagingMintableBurnable"
+      template:
++        "stargate/CreditMessagingMintableBurnable"
+      sourceHashes:
++        ["0x1c616d3634303eb13f60270383fe34284126053d38d118f279939768d4b6abc3"]
+      description:
++        "A LayerZero OApp owned by Stargate that is used for the virtual crosschain accounting of available tokens to the local pools. A local pool thus has a record of how many tokens are available when bridging to another remote pool. The permissioned Planner role can move these credits across chains, the owner can increase/decrease them arbitrarily."
+      deployerAddress:
++        "eth:0x5e6e4f234c7Ad525700fcF5B7862589950589ed5"
+      sinceTimestamp:
++        1780425035
+      sinceBlock:
++        25231499
+      values:
++        {"$immutable":true,"creditsBurned":[],"creditsMinted":[{"batches":[[2,[[30280,23220000000]]]],"reason":"Recover USDT credits burned during past chain unwires, minting 23,220 credits on Ethereum for Sei path srcEid 30280"},{"batches":[[2,[[30280,231000000]]]],"reason":"Recover USDT credits burned during past chain unwires, minting 231 credits on Ethereum for Sei path srcEid 30280"}],"endpoint":"eth:0x1a44076050125825900e736c501f859c50fE728c","maxAssetId":23,"oApp":"eth:0x9b4D17b45d60B8173a5904b85a7bAaeC291E9173","oAppVersion":{"senderVersion":1,"receiverVersion":2},"owner":"eth:0xBE634B030FEAaB661300667EaF82510a3a025413","planner":"eth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5","pools":["eth:0xc026395860Db2d07ee33e05fE50ed7bD583189C7","eth:0x933597a323Eb81cAe705C5bC29985172fd5A3973","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x77b2043768d28E9C9aB44E1aBfC95944bcE57931","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D","eth:0x783129E4d7bA0Af0C896c239E57C06DF379aAE8c"],"preCrime":"eth:0x0000000000000000000000000000000000000000"}
+      fieldMeta:
++        {"maxAssetId":{"description":"The highest currently registered assetID"},"creditsBurned":{"description":"Credits burned manually by the owner without crosschain messages."},"creditsMinted":{"description":"Credits minted manually by the owner without crosschain messages."}}
+      implementationNames:
++        {"eth:0x9b4D17b45d60B8173a5904b85a7bAaeC291E9173":"CreditMessagingMintableBurnable"}
+    }
+```
+
+```diff
+    contract Stargate Multisig 2 (eth:0xBE634B030FEAaB661300667EaF82510a3a025413) [layerzero/OneSigMultisig] {
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+      receivedPermissions.11:
++        {"permission":"interact","from":"eth:0x9b4D17b45d60B8173a5904b85a7bAaeC291E9173","description":"set OApp delegate, planner, mint and burn credits without validation and other critical configurations.","role":".owner"}
+    }
+```
+
+```diff
+    contract StargatePoolUSDC (eth:0xc026395860Db2d07ee33e05fE50ed7bD583189C7) [stargate/StargatePoolUSDC] {
+    +++ description: None
+      values.getAddressConfig.creditMessaging:
+-        "eth:0x6b8aD17795d89B283e6D0362A87A403f3544bb9d"
++        "eth:0x9b4D17b45d60B8173a5904b85a7bAaeC291E9173"
+    }
+```
+
+```diff
+    contract StargatePool (eth:0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3) [stargate/StargatePool] {
+    +++ description: None
+      values.getAddressConfig.creditMessaging:
+-        "eth:0x6b8aD17795d89B283e6D0362A87A403f3544bb9d"
++        "eth:0x9b4D17b45d60B8173a5904b85a7bAaeC291E9173"
+    }
+```
+
+```diff
+    EOA  (eth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5) {
+    +++ description: None
+      receivedPermissions.5:
++        {"permission":"interact","from":"eth:0x9b4D17b45d60B8173a5904b85a7bAaeC291E9173","description":"send credits (asset claims) from pools on this chain to other pools.","role":".planner"}
+    }
+```
+
+## Source code changes
+
+```diff
+.../.flat/CreditMessagingMintableBurnable.sol      | 3438 ++++++++++++++++++++
+ 1 file changed, 3438 insertions(+)
+```
+
+Generated with discovered.json: 0x1465e96c25af587ce9d28369b12056ecb2bc0989
+
+# Diff at Fri, 12 Jun 2026 10:19:04 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1779964108
+- current timestamp: 1779964108
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779964108 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0x243d5c0a6719b0f3c9854b388d4a2a77f373137b
+
+# Diff at Thu, 28 May 2026 10:29:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@26f05273885d7018b915500a4ca40ac82f676e4c block: 1779355983
+- current timestamp: 1779964108
+
+## Description
+
+two ms members change.
+
+## Watched changes
+
+```diff
+    contract Stargate Multisig 2 (eth:0xBE634B030FEAaB661300667EaF82510a3a025413) [layerzero/OneSigMultisig] {
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+      values.$members.2:
+-        "eth:0x18b3Bf351B161E3DE0d9d47Efa80d9f474bDd5D1"
++        "eth:0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0"
+      values.$members.4:
+-        "eth:0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0"
++        "eth:0x18b3Bf351B161E3DE0d9d47Efa80d9f474bDd5D1"
+    }
+```
+
 Generated with discovered.json: 0x5eae68ae3f69eb45c1dc32fe0027b1a4f4f7a379
 
 # Diff at Thu, 21 May 2026 09:34:26 GMT:

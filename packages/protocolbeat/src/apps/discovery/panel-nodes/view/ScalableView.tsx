@@ -4,7 +4,7 @@ import { type ForwardedRef, forwardRef, type ReactNode } from 'react'
 import { useStore } from '../store/store'
 
 export interface ScalableViewProps {
-  children: ReactNode
+  children?: ReactNode
 }
 
 export const ScalableView = forwardRef(

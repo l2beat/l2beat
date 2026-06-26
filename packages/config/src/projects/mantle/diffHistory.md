@@ -1,3 +1,80 @@
+Generated with discovered.json: 0x0a2cd37661894243afdb6d79238f57e3a0775ccb
+
+# Diff at Wed, 24 Jun 2026 11:02:47 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@de5d8a0f706ed1564e5583609b20d2bf29d3dfd5 block: 1778830889
+- current timestamp: 1782298886
+
+## Description
+
+Upgraded op-succinct programs to v2.2.4-mainnet.4. Hashes reproduced.
+
+## Watched changes
+
+```diff
+    contract OPSuccinctL2OutputOracle (eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) [succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      values.aggregationVkey:
+-        "0x0006e0a9f37edc912bb269856518599d61689c78300c23615b2f90868d0181cf"
++        "0x001db6dc655ffc97e6ec7a2b5c9b1ddf42c2235faa007d8a96d659c68b7c432a"
+      values.rangeVkeyCommitment:
+-        "0x1d1e0ac74bb66ded0388062e779adae47925fd572a49a3424e2684f83d776004"
++        "0x6f0230de6e9b59592b3127f55829c9a766d397903df5c57d557c91634a30b32b"
+    }
+```
+
+Generated with discovered.json: 0x5a9bf86f2822071d1e97f9133b137c9ade472276
+
+# Diff at Tue, 09 Jun 2026 12:43:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1778830889
+- current timestamp: 1778830889
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778830889 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    contract MantleEngineeringMultisig (eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x6667961f5e9C98A76a48767522150889703Ed77D) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0xdb6c0f3a93d4252e1c77dda9eeb9062db0aae162
 
 # Diff at Fri, 15 May 2026 07:43:09 GMT:

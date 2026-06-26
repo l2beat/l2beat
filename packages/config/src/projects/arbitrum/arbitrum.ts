@@ -273,15 +273,17 @@ export const arbitrum: ScalingProject = orbitStackL2({
       { type: 'blockscoutV2', url: 'https://arbitrum.blockscout.com/api/v2' },
     ],
   },
-  upgradesAndGovernance: getNitroGovernance(
-    l2CoreQuorumPercent,
-    l2TimelockDelay,
-    challengeWindowSeconds,
-    l1TimelockDelay,
-    treasuryTimelockDelay,
-    l2TreasuryQuorumPercent,
-    challengeGracePeriodSeconds,
-  ),
+  upgradesAndGovernance: {
+    content: getNitroGovernance(
+      l2CoreQuorumPercent,
+      l2TimelockDelay,
+      challengeWindowSeconds,
+      l1TimelockDelay,
+      treasuryTimelockDelay,
+      l2TreasuryQuorumPercent,
+      challengeGracePeriodSeconds,
+    ),
+  },
   nonTemplateContractRisks: [
     CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_EXCEPTION(
       formatSeconds(totalDelay),
@@ -441,6 +443,14 @@ export const arbitrum: ScalingProject = orbitStackL2({
     ],
   },
   milestones: [
+    {
+      title: 'Bridge emergency upgrade',
+      url: 'https://forum.arbitrum.foundation/t/security-council-emergency-action-24-05-2026/30910',
+      date: '2026-05-24T00:00:00Z',
+      description:
+        'Security Council patches L2->L1 governance-DoS (Bridge renounces PROPOSER_ROLE). No funds at risk.',
+      type: 'incident',
+    },
     {
       title: 'Security Council recovers KelpDAO exploiter funds',
       url: 'https://x.com/arbitrum/status/2046435443680346189',

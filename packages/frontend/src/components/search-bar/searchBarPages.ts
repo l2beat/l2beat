@@ -29,7 +29,19 @@ export const searchBarPages = withIndex([
     category: 'scaling',
     name: 'Data Availability',
     tags: ['pages', 'scaling'],
-    href: '/scaling/data-availability',
+    href: '/scaling/risk/data-availability',
+  },
+  {
+    category: 'scaling',
+    name: 'State Validation',
+    tags: ['pages', 'scaling', 'risks'],
+    href: '/scaling/risk/state-validation',
+  },
+  {
+    category: 'scaling',
+    name: 'Sequencing',
+    tags: ['pages', 'scaling'],
+    href: '/scaling/risk/sequencing',
   },
   {
     category: 'scaling',

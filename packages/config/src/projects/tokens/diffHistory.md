@@ -1,3 +1,275 @@
+Generated with discovered.json: 0xf23d13145e3b923c2d71852464b3fd13177a953b
+
+# Diff at Tue, 16 Jun 2026 10:22:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b233de0ad09a1d940b6496e7ab89fd44654060fb block: 1780406494
+- current timestamp: 1781604125
+
+## Description
+
+Remove tokens that are not lido related.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780406494 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract SafeL2 (arb1:0x7843225BA488cf780A4Fe2c842B5dc2aBCf8A03e) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionManager (arb1:0xa925C217e4c1C82Ee721eBD496d3863D5C2d829A) [tokens/PermissionManager]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Spiko EU T-Bills Money Market Fund Token (arb1:0xCBeb19549054CC0a6257A77736FC78C367216cE7) [tokens/EUTBL]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SafeL2 (base:0x4FF1b9D9ba8558F5EAfCec096318eA0d8b541971) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafeL2 (base:0x92A19381444A001d62cE67BaFF066fA1111d7202) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Wrapped OETH Token (base:0xD8724322f44E5c58D7A815F542036fb17DbbF839) [tokens/Origin/wOETH]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Timelock (base:0xf817cb3092179083c48c014688D98B72fB61464f) [global/Timelock]
+    +++ description: A standard timelock with access control. The current minimum delay is 2d.
+```
+
+```diff
+-   Status: DELETED
+    contract SimpleMultiSig (eth:0x0644Bd0248d5F89e4F6E845a91D15c23591e5D33) [tokens/SimpleMultisig]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SimpleMultiSig (eth:0x38699d04656fF537ef8671b6b595402ebDBdf6f4) [tokens/SimpleMultisig]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Paxos Gold Token (eth:0x45804880De22913dAFE09f4980848ECE6EcbAf78) [tokens/PAXG]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    reference  (eth:0x59232aC80E6d403b6381393e52f4665ECA328558)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (eth:0x909d0CB383Ecc77e44daE5d0146cF476f611f62b) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    reference  (eth:0x955B978F3ee7818dA71fA25c676062E6BC462Fec)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0xB18BB767638Bca324d158B7C7189e1a28aeB9EB4) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StarkNet Token (eth:0xCa14007Eff0dB1f8135f4C25B34De49AB0d42766) [tokens/STRK]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MintManager (eth:0xCa14076A3cec95448BaD179cc19B351A4204B88B) [N/A]
+    +++ description: None
+```
+
+Generated with discovered.json: 0xc619395c6e37184aa9643f40ab7b37f7ef84d9bd
+
+# Diff at Fri, 12 Jun 2026 10:19:06 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1780406494
+- current timestamp: 1780406494
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780406494 (main branch discovery), not current.
+
+```diff
+    contract Paxos Gold Token (eth:0x45804880De22913dAFE09f4980848ECE6EcbAf78) [tokens/PAXG] {
+    +++ description: None
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+Generated with discovered.json: 0x78612c36145f6070d753ab0c7c8862eb18046744
+
+# Diff at Mon, 08 Jun 2026 13:27:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7b249a098f7367cb0ead3d881bbc57b408521134 block: 1780406494
+- current timestamp: 1780406494
+
+## Description
+
+rm circle (moved to shared-circle disco)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780406494 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract TokenMessenger (base:0x1682Ae6375C4E4A97e4B583BC394c861A46D8962) [tokens/circle/TokenMessenger]
+    +++ description: Part of CCTP
+```
+
+```diff
+-   Status: DELETED
+    contract GatewayMinter (base:0x2222222d7164433c4C09B0b0D809a9b52C04C205) [tokens/circle/GatewayMinter]
+    +++ description: Entrypoint or minter of USDC on this chain for the Gateway protocol.
+```
+
+```diff
+-   Status: DELETED
+    contract MasterMinter (base:0x2230393EDAD0299b7E7B59F20AA856cD1bEd52e1) [tokens/circle/MasterMinter]
+    +++ description: Manager contract for minter management [sic].
+```
+
+```diff
+-   Status: DELETED
+    contract TokenMessengerV2 (base:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d) [tokens/circle/TokenMessenger]
+    +++ description: Part of CCTP
+```
+
+```diff
+-   Status: DELETED
+    contract GatewayWallet (base:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE) [tokens/circle/GatewayWallet]
+    +++ description: Exit point or burner of USDC on this chain for the Gateway protocol.
+```
+
+```diff
+-   Status: DELETED
+    contract MessageTransmitterV2 (base:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64) [tokens/circle/MessageTransmitter]
+    +++ description: Part of CCTP
+```
+
+```diff
+-   Status: DELETED
+    contract USD Coin Token (base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913) [tokens/circle/USDC]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MessageTransmitter (base:0xAD09780d193884d503182aD4588450C416D6F9D4) [tokens/circle/MessageTransmitter]
+    +++ description: Part of CCTP
+```
+
+```diff
+-   Status: DELETED
+    contract TokenMinter (base:0xe45B133ddc64bE80252b0e9c75A8E74EF280eEd6) [tokens/circle/TokenMinter]
+    +++ description: Part of CCTP: Used for automated access control for minting.
+```
+
+```diff
+-   Status: DELETED
+    contract TokenMinterV2 (base:0xfd78EE919681417d192449715b2594ab58f5D002) [tokens/circle/TokenMinter]
+    +++ description: Part of CCTP: Used for automated access control for minting.
+```
+
+Generated with discovered.json: 0x9f32bfe92123317754e52ad3a4c4460394568990
+
+# Diff at Tue, 02 Jun 2026 13:23:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@63ce779d811ac540efbb445178f952fd5f075eb6 block: 1779964138
+- current timestamp: 1780406494
+
+## Description
+
+Staking vault unpaused.
+
+## Watched changes
+
+```diff
+    contract StakingVault (eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711) [tokens/Lido/StakingVault] {
+    +++ description: None
+      values.beaconChainDepositsPaused:
+-        true
++        false
+    }
+```
+
+Generated with discovered.json: 0xd1baa7a5b2a9300bcb204a8f92a641c704dbdb61
+
+# Diff at Thu, 28 May 2026 10:32:07 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@26f05273885d7018b915500a4ca40ac82f676e4c block: 1778679898
+- current timestamp: 1779964138
+
+## Description
+
+ms changes.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (eth:0x35921FB43cB92F5Bfef7cBA1e97Eb5A21Fc2d353) [GnosisSafe] {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x0595E2732Fb64297BA65917DD82F4722aC90A69c"
++        "eth:0x1Eec66C76Ed56f73dA0Aaa9965B3751bf3D075DD"
+    }
+```
+
+```diff
+    contract HashConsensus (eth:0x7FaDB6358950c5fAA66Cb5EB8eE5147De3df355a) [tokens/Lido/HashConsensus] {
+    +++ description: None
+      values.accessControl.MANAGE_FRAME_CONFIG_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}
+    }
+```
+
 Generated with discovered.json: 0xf1075f2b86a529f61dc02b8e6a34c63644607867
 
 # Diff at Fri, 15 May 2026 12:37:03 GMT:

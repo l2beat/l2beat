@@ -1,0 +1,141 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "DisputeGameFactory",
+  "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.",
+  "ignoreInWatchMode": [
+    "gameCount",
+    "permissionedGameArgs",
+    "permissionedGamesTotal"
+  ],
+  "ignoreMethods": ["gameAtIndex"],
+  "types": {
+    "ProposerFromArgs": {
+      "typeCaster": "SliceAddress",
+      "arg": { "offset": 124 }
+    },
+    "ChallengerFromArgs": {
+      "typeCaster": "SliceAddress",
+      "arg": { "offset": 144 }
+    },
+    "WethFromArgs": {
+      "typeCaster": "SliceAddress",
+      "arg": { "offset": 72 }
+    }
+  },
+  "fields": {
+    "game1337": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "gameImpls",
+        "args": [1337]
+      }
+    },
+    "game621": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "gameImpls",
+        "args": [621]
+      }
+    },
+    "game42": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "gameImpls",
+        "args": [42]
+      }
+    },
+    "game0": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "gameImpls",
+        "args": [0]
+      }
+    },
+    "game1": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "gameImpls",
+        "args": [1]
+      }
+    },
+    "initBondGame42": {
+      "handler": {
+        "type": "call",
+        "method": "initBonds",
+        "args": [42]
+      }
+    },
+    "initBondGame0": {
+      "handler": {
+        "type": "call",
+        "method": "initBonds",
+        "args": [0]
+      }
+    },
+    "initBondGame1": {
+      "handler": {
+        "type": "call",
+        "method": "initBonds",
+        "args": [1]
+      }
+    },
+    "initBondGame621": {
+      "handler": {
+        "type": "call",
+        "method": "initBonds",
+        "args": [621]
+      }
+    },
+    "permissionedGameArgs": {
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [1],
+        "expectRevert": true
+      }
+    },
+    "proposerFromDGF": {
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [1],
+        "expectRevert": true
+      },
+      "edit": ["format", "ProposerFromArgs"]
+    },
+    "challengerFromDGF": {
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [1],
+        "expectRevert": true
+      },
+      "edit": ["format", "ChallengerFromArgs"]
+    },
+    "wethFromDGF": {
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [1],
+        "expectRevert": true
+      },
+      "edit": ["format", "WethFromArgs"]
+    },
+    "permissionedGamesTotal": {
+      "handler": {
+        "type": "eventCount",
+        "topics": [
+          "0x5b565efe82411da98814f356d0e7bcb8f0219b8d970307c5afb4a6903a8b2e35", //DisputeGameCreated
+          null, // disputeProxy
+          "0x0000000000000000000000000000000000000000000000000000000000000001" // gameType
+        ]
+      }
+    }
+  },
+  "category": "core"
+}

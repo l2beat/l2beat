@@ -31,6 +31,7 @@ import {
   buildAliasToChainMap,
   platformsToChainAddressPairs,
 } from '../trpc/routers/deployedTokens/chainAliases'
+import { formatError } from '../utils/formatError'
 import { formatIngestionTrace } from './formatIngestionTrace'
 import type {
   AbstractTokenRef,
@@ -128,6 +129,7 @@ export class TokenIngestionProcessor {
       return {
         id,
         address: { chain: entry.chain, address: entry.address },
+        existingDeployedToken: undefined,
         steps,
         outcome: { kind: 'skip', reason: 'Address could not be normalized' },
       }
@@ -153,6 +155,7 @@ export class TokenIngestionProcessor {
       return {
         id,
         address,
+        existingDeployedToken: existing,
         steps,
         outcome: { kind: 'conflict', message: resolution.message },
       }
@@ -161,6 +164,7 @@ export class TokenIngestionProcessor {
       return {
         id,
         address,
+        existingDeployedToken: existing,
         steps,
         outcome: {
           kind: 'skip',
@@ -172,6 +176,7 @@ export class TokenIngestionProcessor {
     return {
       id,
       address,
+      existingDeployedToken: existing,
       steps,
       outcome: this.buildPlanOutcome(existing, resolution, transfers, address),
     }
@@ -191,9 +196,15 @@ export class TokenIngestionProcessor {
       abstractTokenId = pending.abstract.token.id
       newAbstractToken = undefined
     } else {
-      newAbstractToken = await this.buildAbstractToken(
-        pending.abstract.coingeckoId,
-      )
+      const result = await this.buildAbstractToken(pending.abstract.coingeckoId)
+      if (result.type === 'error') {
+        return {
+          ...trace,
+          steps,
+          outcome: { kind: 'error', message: result.message },
+        }
+      }
+      newAbstractToken = result.record
       abstractTokenId = newAbstractToken.id
       steps.push({
         kind: 'fetched-coingecko-abstract',
@@ -216,12 +227,17 @@ export class TokenIngestionProcessor {
           outcome: { kind: 'conflict', message: conflict },
         }
       }
+      const finalAbstract = adoptDeployedTokenSymbolCasing(
+        newAbstractToken,
+        pending.existing.symbol,
+        steps,
+      )
       return {
         ...trace,
         steps,
         outcome: {
           kind: 'write',
-          newAbstractToken,
+          newAbstractToken: finalAbstract,
           deployedToken: {
             type: 'update',
             pk: { chain: trace.address.chain, address: trace.address.address },
@@ -251,10 +267,15 @@ export class TokenIngestionProcessor {
       }
     }
 
-    const conflict = getNewCoingeckoSymbolConflict(
-      newAbstractToken,
-      built.record.symbol,
-    )
+    const conflict =
+      getNewCoingeckoSymbolConflict(newAbstractToken, built.record.symbol) ??
+      getTransferAbstractSymbolConflict(
+        pending.proof,
+        pending.abstract.kind === 'existing'
+          ? pending.abstract.token
+          : undefined,
+        built.record.symbol,
+      )
     if (conflict) {
       return {
         ...trace,
@@ -263,12 +284,18 @@ export class TokenIngestionProcessor {
       }
     }
 
+    const finalAbstract = adoptDeployedTokenSymbolCasing(
+      newAbstractToken,
+      built.record.symbol,
+      steps,
+    )
+
     return {
       ...trace,
       steps,
       outcome: {
         kind: 'write',
-        newAbstractToken,
+        newAbstractToken: finalAbstract,
         deployedToken: {
           type: 'insert',
           record: {
@@ -539,6 +566,14 @@ export class TokenIngestionProcessor {
         if (existing.abstractTokenId === resolution.abstractToken.id) {
           return { kind: 'noop', deployedToken: existing }
         }
+        const conflict = getTransferAbstractSymbolConflict(
+          resolution.proof,
+          resolution.abstractToken,
+          existing.symbol,
+        )
+        if (conflict) {
+          return { kind: 'conflict', message: conflict }
+        }
         return {
           kind: 'write',
           newAbstractToken: undefined,
@@ -714,20 +749,36 @@ export class TokenIngestionProcessor {
 
   private async buildAbstractToken(
     coingeckoId: string,
-  ): Promise<AbstractTokenRecord> {
-    const coin = await this.deps.coingeckoClient.getCoinDataById(coingeckoId)
+  ): Promise<
+    | { type: 'ready'; record: AbstractTokenRecord }
+    | { type: 'error'; message: string }
+  > {
+    let coin: Coin
+    try {
+      coin = await this.deps.coingeckoClient.getCoinDataById(coingeckoId)
+    } catch (error) {
+      return {
+        type: 'error',
+        message: `Failed to fetch CoinGecko data for ${coingeckoId}: ${formatError(error)}.`,
+      }
+    }
 
     return {
-      id: await this.generateUniqueAbstractTokenId(),
-      issuer: null,
-      symbol: coin.symbol.toUpperCase(),
-      category: null,
-      iconUrl: coin.image.large,
-      coingeckoId: coin.id,
-      coingeckoListingTimestamp: await this.findCoingeckoListingTimestamp(coin),
-      comment: null,
-      reviewed: false,
-      isPriceUnreliable: false,
+      type: 'ready',
+      record: {
+        id: await this.generateUniqueAbstractTokenId(),
+        issuer: null,
+        symbol: coin.symbol.toUpperCase(),
+        category: null,
+        iconUrl: coin.image.large,
+        coingeckoId: coin.id,
+        coingeckoListingTimestamp: await this.findCoingeckoListingTimestamp(
+          coin.id,
+        ),
+        comment: null,
+        reviewed: false,
+        isPriceUnreliable: false,
+      },
     }
   }
 
@@ -744,11 +795,11 @@ export class TokenIngestionProcessor {
     throw new Error('Could not generate a unique abstract token id')
   }
 
-  private async findCoingeckoListingTimestamp(coin: Coin) {
+  private async findCoingeckoListingTimestamp(coingeckoId: string) {
     try {
       const marketChart =
         await this.deps.coingeckoClient.getCoinMarketChartRange(
-          coin.id,
+          coingeckoId,
           'usd',
           UnixTime.fromDate(new Date('2000-01-01')),
           UnixTime.fromDate(new Date()),
@@ -855,9 +906,67 @@ function getNewCoingeckoSymbolConflict(
   deployedTokenSymbol: string,
 ): string | undefined {
   if (!newAbstractToken) return undefined
-  if (newAbstractToken.symbol === deployedTokenSymbol) return undefined
+  // CoinGecko's /coins/list and /coins/{platform}/contract/{addr} endpoints
+  // return symbols lower-cased (e.g. "susde", "wsteth"), so a casing-only
+  // difference vs. the RPC symbol never reflects a real mismatch. Compare
+  // case-insensitively here; the canonical casing is restored from the
+  // deployed-token symbol in `adoptDeployedTokenSymbolCasing`.
+  if (
+    newAbstractToken.symbol.toLowerCase() === deployedTokenSymbol.toLowerCase()
+  ) {
+    return undefined
+  }
 
   return `CoinGecko would create abstract token ${newAbstractToken.id}:${newAbstractToken.symbol}, but the deployed token symbol is ${deployedTokenSymbol}.`
+}
+
+/**
+ * Counterpart of `getNewCoingeckoSymbolConflict` for abstract tokens resolved
+ * from non-swapping transfers. Called from two places: `buildPlanOutcome()`
+ * for updates of existing deployed tokens (their symbol is already in the DB)
+ * and `fetch()` for inserts (the symbol only arrives with the RPC facts).
+ * Case-insensitive because deployments of the same asset routinely differ in
+ * casing only; unlike the CoinGecko path no casing is adopted — the abstract
+ * token already exists and its symbol stays as-is.
+ */
+function getTransferAbstractSymbolConflict(
+  proof: AbstractTokenAssignmentProof,
+  abstractToken: AbstractTokenRef | undefined,
+  deployedTokenSymbol: string,
+): string | undefined {
+  if (proof.kind !== 'non-swapping-transfer') return undefined
+  if (!abstractToken) return undefined
+  if (
+    abstractToken.symbol.toLowerCase() === deployedTokenSymbol.toLowerCase()
+  ) {
+    return undefined
+  }
+
+  return `Non-swapping transfers point to abstract token ${formatRef(abstractToken)}, but the deployed token symbol is ${deployedTokenSymbol}.`
+}
+
+/**
+ * CoinGecko returns symbols lower-cased, so a brand-new abstract built from a
+ * CoinGecko coin can't carry the correct casing on its own. The deployed
+ * token's symbol — read from RPC for inserts, or already canonical on the
+ * existing record for updates — is the source of truth, so we copy its
+ * casing onto the abstract before the write. The conflict check above has
+ * already proven the two symbols match case-insensitively. No-op when the
+ * casings already agree, so we don't pollute the trace with empty steps.
+ */
+function adoptDeployedTokenSymbolCasing(
+  newAbstractToken: AbstractTokenRecord | undefined,
+  deployedTokenSymbol: string,
+  steps: IngestionStep[],
+): AbstractTokenRecord | undefined {
+  if (!newAbstractToken) return undefined
+  if (newAbstractToken.symbol === deployedTokenSymbol) return newAbstractToken
+  steps.push({
+    kind: 'corrected-coingecko-symbol-casing',
+    from: newAbstractToken.symbol,
+    to: deployedTokenSymbol,
+  })
+  return { ...newAbstractToken, symbol: deployedTokenSymbol }
 }
 
 function generateAbstractTokenId() {

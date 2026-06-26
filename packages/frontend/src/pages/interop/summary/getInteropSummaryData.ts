@@ -1,3 +1,4 @@
+import { chainToProjectId } from '@l2beat/config/build/global/chainMap'
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { ProjectId } from '@l2beat/shared-pure'
 import type { Request } from 'express'
@@ -6,26 +7,20 @@ import { getInteropChains } from '~/server/features/scaling/interop/utils/getInt
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
+import type { RouterOutputs } from '~/trpc/React'
 import { getSsrHelpers } from '~/trpc/server'
 import { type Manifest, manifest } from '~/utils/Manifest'
-import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { MAX_SELECTED_CHAINS } from '../components/flows/consts'
 import type { InteropQuery } from '../InteropRouter'
 import { getInitialInteropSelection } from '../utils/getInitialInteropSelection'
-import { toInteropApiSelection } from '../utils/toInteropApiSelection'
-import type { InteropMode, InteropSelection } from '../utils/types'
-
-interface GetInteropSummaryDataOptions {
-  mode?: InteropMode
-}
+import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
+import type { InteropSelection } from '../utils/types'
 
 export async function getInteropSummaryData(
   req: Request<unknown, unknown, unknown, InteropQuery>,
   manifest: Manifest,
   cache: InMemoryCache,
-  options?: GetInteropSummaryDataOptions,
 ): Promise<RenderData> {
-  const mode = options?.mode ?? 'public'
   const appLayoutProps = await getAppLayoutProps()
   const interopChains = getInteropChains()
   const interopChainsIds = interopChains.map((chain) => chain.id)
@@ -37,13 +32,13 @@ export async function getInteropSummaryData(
     scalingProjects.map((p) => [p.id, p.slug]),
   )
 
-  const interopChainsWithIcons: InteropChainWithIcon[] = interopChains.map(
-    (chain) => ({
-      ...chain,
-      iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
-      href: getInteropChainHref(chain.id, scalingProjectSlugById),
-    }),
-  )
+  const interopChainsWithIcons = mapInteropChainsToWithIcons(
+    manifest,
+    interopChains,
+  ).map((chain) => ({
+    ...chain,
+    href: getInteropChainHref(chain.id, scalingProjectSlugById),
+  }))
 
   const activeInteropChains = interopChainsWithIcons.filter(
     (chain) => !chain.isUpcoming,
@@ -52,7 +47,6 @@ export async function getInteropSummaryData(
   const initialSelection = getInitialInteropSelection({
     query: req.query,
     interopChainsIds,
-    mode,
   })
 
   const queryState = await cache.get(
@@ -60,7 +54,6 @@ export async function getInteropSummaryData(
       key: [
         'interop',
         'summary',
-        mode,
         'prefetch',
         initialSelection.from.join(','),
         initialSelection.to.join(','),
@@ -71,7 +64,6 @@ export async function getInteropSummaryData(
     async () =>
       getCachedData(
         initialSelection,
-        mode,
         activeInteropChains.map((chain) => chain.id),
       ),
   )
@@ -97,14 +89,12 @@ export async function getInteropSummaryData(
         openGraph: {
           image: '/meta-images/interop/summary/opengraph-image.png',
         },
-        excludeFromSearchEngines: mode === 'internal',
       }),
     },
     ssr: {
       page: 'InteropSummaryPage',
       props: {
         ...appLayoutProps,
-        mode,
         ...queryState,
         interopChains: activeInteropChainsSortedByVolume,
         defaultSelectedFlowChains,
@@ -121,38 +111,43 @@ function getInteropChainHref(
   if (chainId === ProjectId.ETHEREUM) {
     return '/data-availability/projects/ethereum/ethereum'
   }
-  const slug = scalingProjectSlugById.get(ProjectId(chainId))
+  const slug = scalingProjectSlugById.get(chainToProjectId(chainId))
   return slug ? `/scaling/projects/${slug}` : undefined
 }
 
 async function getCachedData(
   initialSelection: InteropSelection,
-  mode: InteropMode,
   initialFlowsChains: string[],
 ) {
   const helpers = getSsrHelpers()
-  const apiSelection = toInteropApiSelection(initialSelection, mode)
   const [protocols] = await Promise.all([
     ps.getProjects({
       select: ['interopConfig'],
     }),
-    apiSelection.from.length > 0 && apiSelection.to.length > 0
-      ? helpers.interop.dashboard.prefetch({ ...apiSelection })
+    initialSelection.from.length > 0 && initialSelection.to.length > 0
+      ? helpers.queryClient.prefetchQuery(
+          helpers.trpc.interop.dashboard.queryOptions({ ...initialSelection }),
+        )
       : undefined,
   ])
 
   const shouldPrefetchFlows =
-    mode === 'public' &&
-    apiSelection.from.length === 0 &&
-    apiSelection.to.length === 0
+    initialSelection.from.length === 0 && initialSelection.to.length === 0
 
   let defaultFlowChainOrder = initialFlowsChains
 
   if (shouldPrefetchFlows) {
-    const flowsData = await helpers.interop.flows.fetch({
-      chains: initialFlowsChains,
-      protocolIds: protocols.map((protocol) => protocol.id),
-    })
+    const protocolIds = protocols.map((protocol) => protocol.id)
+    // Determine the volume order across all chains on a throwaway client so the
+    // all-chains query is not dehydrated (the client never requests it).
+    const ordering = getSsrHelpers()
+    const flowsData: RouterOutputs['interop']['flows'] =
+      await ordering.queryClient.fetchQuery(
+        ordering.trpc.interop.flows.queryOptions({
+          chains: initialFlowsChains,
+          protocolIds,
+        }),
+      )
     const chainsByVolume = flowsData.chainData
       .toSorted((a, b) => b.totalVolume - a.totalVolume)
       .map((chain) => chain.chainId)
@@ -160,6 +155,15 @@ async function getCachedData(
     if (chainsByVolume.length > 0) {
       defaultFlowChainOrder = chainsByVolume
     }
+
+    // The client's flows chart defaults to the top chains by volume, so
+    // prefetch that exact query to hydrate it from cache.
+    await helpers.queryClient.prefetchQuery(
+      helpers.trpc.interop.flows.queryOptions({
+        chains: defaultFlowChainOrder.slice(0, MAX_SELECTED_CHAINS),
+        protocolIds,
+      }),
+    )
   }
 
   return {

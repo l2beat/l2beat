@@ -96,6 +96,64 @@ describeDatabase(AggregatedL2CostRepository.name, (db) => {
       })
     },
   )
+
+  describe(
+    AggregatedL2CostRepository.prototype.getFirstTimestampByProjects.name,
+    () => {
+      it('returns the earliest timestamp across the given projects', async () => {
+        await repository.upsertMany([
+          record({ projectId: ProjectId('a'), timestamp: NOW }),
+          record({
+            projectId: ProjectId('a'),
+            timestamp: NOW - 2 * UnixTime.HOUR,
+          }),
+          record({
+            projectId: ProjectId('b'),
+            timestamp: NOW - 5 * UnixTime.HOUR,
+          }),
+        ])
+
+        const result = await repository.getFirstTimestampByProjects([
+          ProjectId('a'),
+          ProjectId('b'),
+        ])
+
+        expect(result).toEqual(NOW - 5 * UnixTime.HOUR)
+      })
+
+      it('is scoped to the given projects', async () => {
+        await repository.upsertMany([
+          record({ projectId: ProjectId('a'), timestamp: NOW }),
+          record({
+            projectId: ProjectId('b'),
+            timestamp: NOW - 5 * UnixTime.HOUR,
+          }),
+        ])
+
+        const result = await repository.getFirstTimestampByProjects([
+          ProjectId('a'),
+        ])
+
+        expect(result).toEqual(NOW)
+      })
+
+      it('returns undefined when there are no matching records', async () => {
+        const result = await repository.getFirstTimestampByProjects([
+          ProjectId('missing'),
+        ])
+
+        expect(result).toEqual(undefined)
+      })
+
+      it('returns undefined for an empty project list', async () => {
+        await repository.upsertMany([record()])
+
+        const result = await repository.getFirstTimestampByProjects([])
+
+        expect(result).toEqual(undefined)
+      })
+    },
+  )
 })
 
 function record(

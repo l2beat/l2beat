@@ -1,3 +1,67 @@
+Generated with discovered.json: 0x36a2c97c11613e02dc5f035917a5199d210f58bc
+
+# Diff at Fri, 12 Jun 2026 10:18:45 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1779461890
+- current timestamp: 1779461890
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779461890 (main branch discovery), not current.
+
+```diff
+    EOA  (arb1:0xe5e3eEC4c5F443B04C5c883384674FD9e3eA93D9) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0x29bd3e018339d3f8b07fcc6d40e089c612a8dbac
+
+# Diff at Tue, 09 Jun 2026 12:43:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1779461890
+- current timestamp: 1779461890
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779461890 (main branch discovery), not current.
+
+```diff
+    EOA  (arb1:0x702a73680122D6EA59c275c6c6978811fD581B2e) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0xe12128A5c958b299c7F033D1D52F90feb12De81D) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0xfb01c4ece3d42f53632430dd2c0e60ecd058e0a8
 
 # Diff at Fri, 22 May 2026 14:59:17 GMT:

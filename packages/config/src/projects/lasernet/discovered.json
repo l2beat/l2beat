@@ -1,6 +1,6 @@
 {
   "name": "lasernet",
-  "timestamp": 1777994270,
+  "timestamp": 1781177084,
   "configHash": "0x1ea47bfd8b0a9bf688c85674205b2a1f69122a3e58d9665ff613f6615417ee50",
   "entries": [
     {
@@ -77,7 +77,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x661b39a5EB200dFcbb436d98453BdBf88Da02AA1",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -125,7 +125,7 @@
           "eth:0xb343522e5663E0cE1060dd50EF04b12820F84890"
         ],
         "allowedOutboxList": ["eth:0xDb5abc57397530DddC1e33BC023F2ef73Db6A86A"],
-        "delayedMessageCount": 394,
+        "delayedMessageCount": 437,
         "inboxHistory": [
           "eth:0xa2809b5f031bf91d2408B3e2464774A28B0F4949",
           "eth:0xb343522e5663E0cE1060dd50EF04b12820F84890"
@@ -135,8 +135,8 @@
         "outboxHistory": ["eth:0xDb5abc57397530DddC1e33BC023F2ef73Db6A86A"],
         "rollup": "eth:0x769b70b6b1fA281ab5c99e9C5A284BE4117e4783",
         "sequencerInbox": "eth:0x661b39a5EB200dFcbb436d98453BdBf88Da02AA1",
-        "sequencerMessageCount": 9815,
-        "sequencerReportedSubMessageCount": 23854091
+        "sequencerMessageCount": 10952,
+        "sequencerReportedSubMessageCount": 28400544
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -191,17 +191,12 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x661b39a5EB200dFcbb436d98453BdBf88Da02AA1",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
         }
       ]
-    },
-    {
-      "address": "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Conduit Multisig 1",
@@ -310,15 +305,13 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853",
           "eth:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09",
           "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
           "eth:0x2103c69696CB2D3779f5445393808239034E911c",
-          "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
           "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
           "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
-          "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
-          "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "eth:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
           "eth:0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
           "eth:0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
@@ -327,8 +320,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 12 (33%)",
-        "nonce": 265,
+        "multisigThreshold": "4 of 10 (40%)",
+        "nonce": 277,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -347,17 +340,12 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x661b39a5EB200dFcbb436d98453BdBf88Da02AA1",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
         }
       ]
-    },
-    {
-      "address": "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "SequencerInbox",
@@ -400,7 +388,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 9815,
+        "batchCount": 10952,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "eth:0x17F187D978664C96ffD655996a45e085c403AD8b",
@@ -450,7 +438,7 @@
         "rollup": "eth:0x769b70b6b1fA281ab5c99e9C5A284BE4117e4783",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 394,
+        "totalDelayedMessagesRead": 437,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -494,7 +482,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x661b39a5EB200dFcbb436d98453BdBf88Da02AA1",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -550,7 +538,7 @@
         "getValidators": ["eth:0x8fbEf9f7554aec9CCf62b88D86aE1C91F1599F7C"],
         "inbox": "eth:0xa2809b5f031bf91d2408B3e2464774A28B0F4949",
         "isPostBoLD": true,
-        "latestConfirmed": "0xc5a4af351e700a49e1cbb9104a0bfbbddcbff4eb521e8463a769374cd1e1f5fb",
+        "latestConfirmed": "0xf05eb01a8baca34a1b6c6e496f25675b18f919c3f40cbefc3e307808e69724ae",
         "loserStakeEscrow": "eth:0x8fbEf9f7554aec9CCf62b88D86aE1C91F1599F7C",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0xDb5abc57397530DddC1e33BC023F2ef73Db6A86A",
@@ -616,6 +604,7 @@
             "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
             "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
             "0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499": "ArbOS v51 wasmModuleRoot",
+            "0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c": "ArbOS v51.1 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
             "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot",
             "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d": "Celestia Nitro ArbOS v40 wasmModuleRoot"
@@ -635,7 +624,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x661b39a5EB200dFcbb436d98453BdBf88Da02AA1",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -648,7 +637,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "eth:0x769b70b6b1fA281ab5c99e9C5A284BE4117e4783",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".getValidators"
@@ -738,17 +727,12 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "address": "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xA4f98Ac0E083C79BAB53A3895082e8a4fbf12CDe",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x661b39a5EB200dFcbb436d98453BdBf88Da02AA1",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -804,7 +788,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x661b39a5EB200dFcbb436d98453BdBf88Da02AA1",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -859,7 +843,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x661b39a5EB200dFcbb436d98453BdBf88Da02AA1",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -867,12 +851,17 @@
       ]
     },
     {
+      "address": "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xCEEAEC6b7e010fE1Ac253Ebd6f93eEBF9249Cd7e",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x661b39a5EB200dFcbb436d98453BdBf88Da02AA1",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -1738,6 +1727,6 @@
     "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "ethereum": 25029647 },
-  "permissionsConfigHash": "0x46608a52125272dfa355d486cc6da7c79a5a6918dc48d197dce7bc13fdc434b1"
+  "usedBlockNumbers": { "ethereum": 25293899 },
+  "permissionsConfigHash": "0x795bc9ccd135b8ad2b98940d65d65b27c699254aae4b15d00c8e88ec5b488d90"
 }

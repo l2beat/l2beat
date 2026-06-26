@@ -1,13 +1,12 @@
+# syntax=docker/dockerfile:1
 ARG ARCH=x86_64
 ARG TURBO_TEAM
-ARG TURBO_TOKEN
 ARG COREPACK_VERSION="^0.31.0"
 
-FROM node:22.22.0 as pruner
+FROM node:22.22.0 AS pruner
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 ARG TURBO_TEAM
-ARG TURBO_TOKEN
 ARG COREPACK_VERSION
 RUN npm i -g corepack@${COREPACK_VERSION} && corepack enable pnpm
 WORKDIR /src/
@@ -15,10 +14,10 @@ COPY . .
 RUN pnpm add -g turbo
 RUN turbo prune --docker @l2beat/token-backend
 
-FROM node:22.22.0 as builder
+FROM node:22.22.0 AS builder
 ARG ARCH
 ARG TURBO_TEAM
-ARG TURBO_TOKEN
+ENV TURBO_TEAM=$TURBO_TEAM
 ARG COREPACK_VERSION
 RUN npm i -g corepack@${COREPACK_VERSION} && corepack enable pnpm
 WORKDIR /src/
@@ -26,7 +25,8 @@ COPY --from=pruner /src/out/json/ .
 RUN pnpm install
 COPY --from=pruner /src/.discovery.json .
 COPY --from=pruner /src/out/full/ ./
-RUN pnpm build:token-backend
+RUN --mount=type=secret,id=TURBO_TOKEN,env=TURBO_TOKEN \
+  pnpm build:token-backend
 
 RUN mkdir /dist/ && \
   cd /dist/ && \
@@ -35,7 +35,7 @@ RUN mkdir /dist/ && \
   rm -f difft-$ARCH-unknown-linux-gnu.tar.gz
 
 
-FROM node:22.22.0-slim as release
+FROM node:22.22.0-slim AS release
 
 # Install curl for healthcheck and create non-root user
 RUN apt update && \
@@ -48,6 +48,7 @@ WORKDIR /app/
 COPY --from=builder --chown=appuser:appgroup /src/ .
 COPY --from=builder --chown=appuser:appgroup /dist/difft /usr/local/bin/difft
 
+WORKDIR /app/packages/token-backend/
 USER appuser
 
-CMD cd packages/token-backend && node build/server.js
+CMD ["node", "build/server.js"]

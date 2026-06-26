@@ -100,7 +100,7 @@ export class PrivacyFlowEventRepository extends BaseRepository {
   async getDailyByProjectIds(
     projectIds: string[],
     fromInclusive: UnixTime | null,
-    toInclusive: UnixTime,
+    toExclusive: UnixTime,
   ): Promise<PrivacyFlowDailyRecord[]> {
     if (projectIds.length === 0) return []
 
@@ -147,7 +147,7 @@ export class PrivacyFlowEventRepository extends BaseRepository {
     }
 
     query = query
-      .where('timestamp', '<=', UnixTime.toDate(toInclusive))
+      .where('timestamp', '<', UnixTime.toDate(toExclusive))
       .groupBy(['projectId', 'bucketId', day])
       .orderBy('timestamp', 'asc')
 
@@ -261,6 +261,20 @@ export class PrivacyFlowEventRepository extends BaseRepository {
       .executeTakeFirst()
 
     return row?.maxTimestamp ? UnixTime.fromDate(row.maxTimestamp) : undefined
+  }
+
+  async getFirstTimestampByProjectIds(
+    projectIds: string[],
+  ): Promise<UnixTime | undefined> {
+    if (projectIds.length === 0) return undefined
+
+    const row = await this.db
+      .selectFrom('PrivacyFlowEvent')
+      .select(this.db.fn.min('timestamp').as('minTimestamp'))
+      .where('projectId', 'in', projectIds)
+      .executeTakeFirst()
+
+    return row?.minTimestamp ? UnixTime.fromDate(row.minTimestamp) : undefined
   }
 
   async getAll(): Promise<PrivacyFlowEventRecord[]> {

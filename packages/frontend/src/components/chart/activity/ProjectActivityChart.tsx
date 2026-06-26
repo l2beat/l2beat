@@ -1,5 +1,6 @@
 import type { Milestone, ProjectScalingCategory } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
@@ -8,7 +9,7 @@ import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPer
 import { ActivityChartRangeControls } from '~/pages/scaling/activity/components/ActivityChartRangeControls'
 import type { ActivityMetric } from '~/pages/scaling/activity/components/ActivityMetricContext'
 import { ActivityMetricControls } from '~/pages/scaling/activity/components/ActivityMetricControls'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { formatInteger } from '~/utils/number-format/formatInteger'
@@ -35,17 +36,20 @@ export function ProjectActivityChart({
   category,
   defaultRange,
 }: Props) {
+  const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const [metric, setMetric] = useState<ActivityMetric>('uops')
   const [scale, setScale] = useState<ChartScale>('linear')
 
-  const { data: chart, isLoading } = api.activity.chart.useQuery({
-    range,
-    filter: {
-      type: 'projects',
-      projectIds: [project.id],
-    },
-  })
+  const { data: chart, isLoading } = useQuery(
+    trpc.activity.chart.queryOptions({
+      range,
+      filter: {
+        type: 'projects',
+        projectIds: [project.id],
+      },
+    }),
+  )
 
   const type = getChartType(category)
 
@@ -79,7 +83,7 @@ export function ProjectActivityChart({
     }))
   }, [chart?.data])
 
-  const timeRange = getChartTimeRangeFromData(chartData)
+  const timeRange = getChartTimeRangeFromData(chartData, { bucket: 'day' })
   const lastRatio = ratioData?.at(-1)?.ratio
   return (
     <div className="flex flex-col">

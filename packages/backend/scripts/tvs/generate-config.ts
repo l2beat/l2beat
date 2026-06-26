@@ -158,7 +158,10 @@ const cmd = command({
 
     for (const regenerated of regeneratedProjects) {
       let newConfig: TvsToken[] = []
-      const filePath = `./../config/src/tvs/json/${regenerated.projectId.replace('=', '').replace(';', '')}.json`
+      const projectPath = regenerated.projectId
+        .replace('=', '')
+        .replace(';', '')
+      const filePath = `./../config/src/projects/${projectPath}/tvs.json`
       const current = readFromFile(filePath)
 
       if (regenerated.tokens.length > 0) {
@@ -311,7 +314,7 @@ function writeToFile(
   nonZeroTokens: TvsToken[],
 ) {
   const wrapper = {
-    $schema: 'schema/tvs-config-schema.json',
+    $schema: '../tvs-config-schema.json',
     projectId: ProjectId(project),
     tokens: nonZeroTokens,
   }

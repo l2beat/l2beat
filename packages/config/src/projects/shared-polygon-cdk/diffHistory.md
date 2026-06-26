@@ -1,3 +1,136 @@
+Generated with discovered.json: 0x95844697bd903f68a260a701bf4651c98ea84eb9
+
+# Diff at Tue, 16 Jun 2026 09:09:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e3be4116cfc279e5c4415ba34f338c2f1d453616 block: 1781095928
+- current timestamp: 1781600877
+
+## Description
+
+Add new vkey for all chains that use AgglayerGW. Switch multisig signer.
+
+## Watched changes
+
+```diff
+    contract AgglayerGateway (eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3) [polygon-cdk/AgglayerGateway] {
+    +++ description: A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.
+      values.routes.0x0000000e:
++        [{"selector":"0x0000000e","verifier":"eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A","pessimisticVKey":"0x00d14f977a6ec393014f300ad78d0761dc29435d3fa1e2626fa466bd3343578e"}]
+    }
+```
+
+```diff
+    contract PolygonAdminMultisig (eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) [GnosisSafe] {
+    +++ description: None
+      values.$members.7:
+-        "eth:0xA0B02B28920812324f1cC3255bd8840867d3f227"
++        "eth:0x21618593F7147235aC8D511d68A547C935F9d417"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A) [shared-sp1/SP1Verifier]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459.sol} |    0
+ ...:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A.sol | 1427 ++++++++++++++++++++
+ 2 files changed, 1427 insertions(+)
+```
+
+Generated with discovered.json: 0x410f6ee81947472db2f44c65363f26bbb0d159a7
+
+# Diff at Wed, 10 Jun 2026 14:35:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9b1a27959a14343aae7c71ebbc397f62f0aab99c block: 1777963087
+- current timestamp: 1781095928
+
+## Description
+
+New aggchain-FEP program (affecting katana, programhash reproduced).
+
+## Watched changes
+
+```diff
+    contract AgglayerGateway (eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3) [polygon-cdk/AgglayerGateway] {
+    +++ description: A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.
+      values.aggchainVKeys.0x000b0001:
++        [{"selector":"0x000b0001","newVKey":"0x679bc13716cdb49416a9ca9e297b10d76390df2c343690d4172676c207517915"}]
+    }
+```
+
+```diff
+    contract Timelock (eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) [polygon-cdk/Timelock] {
+    +++ description: A timelock with access control. In the case of an activated emergency state in the eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.
+      values.scheduledTransactionsDecoded.52:
++        {"target":"eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3","value":"0","function":"addPessimisticVKeyRoute","inputs":{"pessimisticVKeySelector":"0x0000000e","verifier":"eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A","pessimisticVKey":"0x00d14f977a6ec393014f300ad78d0761dc29435d3fa1e2626fa466bd3343578e"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"259200"}
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777963087 (main branch discovery), not current.
+
+```diff
+    contract AgglayerGateway (eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3) [polygon-cdk/AgglayerGateway] {
+    +++ description: A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.
+      fieldMeta.aggchainVKeys.description:
+-        "The aggchainVkey is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP = 1, ECDSA = 0). This map is e.g. used by AggchainFEP.getAggchainVKey()."
++        "The aggchainVkey is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP = 1, ECDSA = 0). This map is e.g. used by AggchainFEP.getAggchainVKey(), which some chains (ECDSA) override and do not call."
+      fieldMeta.routes.description:
+-        "This map is used for routing in verifyPessimisticProof(). The pessimisticVkey is the top level vkey that is used by the onchain verifier. It wraps the aggchainVKey. It is freely chosen by the aggregator from among any of the listed routes."
++        "This map is used for routing in verifyPessimisticProof(). The pessimisticVkey is the top level vkey for all VerifierType 2 (algateway) chains. It wraps the aggchainVKey, which can be FEP or just ECDSA or anything else. It is freely chosen by the aggregator from among any of the listed routes."
+    }
+```
+
+Generated with discovered.json: 0xc1748f5b310167ebbdc6d2609878e4f3d961ae96
+
+# Diff at Tue, 09 Jun 2026 12:43:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1777963087
+- current timestamp: 1777963087
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777963087 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to post new state roots and global exit roots accompanied by ZK proofs."
+      receivedPermissions.0.permission:
+-        "aggregatePolygon"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xD7e6c31750838Ef895fBe0c57f7Fd881a14482Fb) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to post new state roots and global exit roots accompanied by ZK proofs."
+      receivedPermissions.0.permission:
+-        "aggregatePolygon"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x834aa026a65ff043024bc0d9c5be24cd26a0819e
 
 # Diff at Fri, 08 May 2026 07:52:14 GMT:

@@ -1,4 +1,4 @@
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { assert, type TokenCategory, UnixTime } from '@l2beat/shared-pure'
 import type { ExpressionBuilder, Insertable, Selectable } from 'kysely'
 import { sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
@@ -9,7 +9,7 @@ import {
   deleteHourlyUntil,
   deleteSixHourlyUntil,
 } from '../utils/deleteArchivedRecords'
-import type { TokenCategory, TokenSource } from './TokenMetadataRepository'
+import type { TokenSource } from './TokenMetadataRepository'
 
 export interface TokenValueRecord {
   timestamp: UnixTime
@@ -152,6 +152,18 @@ export class TokenValueRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getFirstTimestampByTokenId(
+    tokenId: string,
+  ): Promise<UnixTime | undefined> {
+    const row = await this.db
+      .selectFrom('TokenValue')
+      .select((eb) => eb.fn.min('timestamp').as('timestamp'))
+      .where('tokenId', '=', tokenId)
+      .executeTakeFirst()
+
+    return row?.timestamp ? UnixTime.fromDate(row.timestamp) : undefined
+  }
+
   async getByProjectAtOrBefore(
     project: string,
     timestamp: UnixTime,
@@ -266,9 +278,51 @@ export class TokenValueRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getFirstTimestampByProjects(
+    projectIds: string[],
+  ): Promise<UnixTime | undefined> {
+    if (projectIds.length === 0) return undefined
+    const row = await this.db
+      .selectFrom('TokenValue')
+      .select((eb) => eb.fn.min('timestamp').as('timestamp'))
+      .where('projectId', 'in', projectIds)
+      .executeTakeFirst()
+
+    return row?.timestamp ? UnixTime.fromDate(row.timestamp) : undefined
+  }
+
   async deleteAll(): Promise<number> {
     const result = await this.db.deleteFrom('TokenValue').executeTakeFirst()
     return Number(result.numDeletedRows)
+  }
+
+  async getMaxTimestampAtOrBeforeForProjects(
+    timestamp: UnixTime,
+    projectIds: readonly string[],
+  ): Promise<UnixTime | undefined> {
+    if (projectIds.length === 0) {
+      return undefined
+    }
+
+    const result = await this.db
+      .selectFrom('TokenValue')
+      .select((eb) => eb.fn.max('timestamp').as('max_timestamp'))
+      .where('timestamp', '<=', UnixTime.toDate(timestamp))
+      .where('projectId', 'in', projectIds)
+      .executeTakeFirst()
+    return result?.max_timestamp
+      ? UnixTime.fromDate(result.max_timestamp)
+      : undefined
+  }
+
+  async getByTimestamp(timestamp: UnixTime): Promise<TokenValueRecord[]> {
+    const rows = await this.db
+      .selectFrom('TokenValue')
+      .selectAll()
+      .where('timestamp', '=', UnixTime.toDate(timestamp))
+      .execute()
+
+    return rows.map(toRecord)
   }
 
   async getSummedByTimestampByProjects(

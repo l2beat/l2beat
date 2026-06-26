@@ -8757,5 +8757,21 @@
       "supply": "circulatingSupply",
       "deploymentTimestamp": 1700000000
     }
+  ],
+  "hyperevm": [
+    {
+      "symbol": "USDC",
+      "address": "0xb88339CB7199b77E23DB6E890353E22632Ba630f",
+      "category": "stablecoin",
+      "source": "external",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      },
+      "supply": "zero"
+    }
   ]
 }

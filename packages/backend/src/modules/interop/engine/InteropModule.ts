@@ -21,7 +21,6 @@ import { RelayApiClient } from '../plugins/relay/RelayApiClient'
 import { RelayIndexer, RelayRootIndexer } from '../plugins/relay/relay.indexer'
 import { isPluginResyncable } from '../plugins/types'
 import { InteropAggregatingIndexer } from './aggregation/InteropAggregatingIndexer'
-import { DefaultInteropAggregationAnalyzer } from './aggregation/InteropAggregationAnalyzer'
 import { InteropAggregationService } from './aggregation/InteropAggregationService'
 import { InteropBlockProcessor } from './capture/InteropBlockProcessor'
 import { InteropEventStore } from './capture/InteropEventStore'
@@ -39,6 +38,8 @@ import { InteropRecentPricesIndexer } from './financials/InteropRecentPricesInde
 import { InteropTransferAnalyzer } from './InteropTransferAnalyzer'
 import { InteropMatchingLoop } from './match/InteropMatchingLoop'
 import { InteropNotifier } from './notifications/InteropNotifier'
+import { InteropPromotionService } from './promotion/InteropPromotionService'
+import { maxLaneVolumeRule } from './promotion/rules'
 import { instrumentInteropRpcMetricsRun } from './rpc/interopRpcMetrics'
 import { InteropSyncersManager } from './sync/InteropSyncersManager'
 
@@ -147,12 +148,22 @@ export function createInteropModule({
     aggregationConfigs: config.interop.aggregation
       ? config.interop.aggregation.configs
       : [],
+    aggregationEnabled: config.interop.aggregation !== false,
+    captureEnabled: config.interop.capture.enabled,
     getExplorerUrl: config.interop.dashboard.getExplorerUrl,
     getChainsForPlugin: (pluginName) =>
       syncersManager.getChainsForPlugin(pluginName),
     getPluginSyncStatuses: () => syncersManager.getPluginSyncStatuses(),
     getProcessorStatuses: () => getProcessorsStatus(processors),
     chains: config.interop.capture.chains,
+    cleanerEnabled: config.interop.cleaner,
+    compareEnabled: config.interop.compare.enabled,
+    configSync: config.interop.config,
+    dangerousOperationsEnabled: config.interop.dangerousOperationsEnabled,
+    dashboardEnabled: config.interop.dashboard.enabled,
+    financialsEnabled: config.interop.financials.enabled,
+    matchingEnabled: config.interop.matching,
+    oneSidedChains: config.interop.oneSidedChains,
     tokenDbClient,
   })
 
@@ -180,7 +191,12 @@ export function createInteropModule({
     db,
     tokenDbClient,
     logger,
-    { analyzer: transferAnalyzer },
+    {
+      analyzer: transferAnalyzer,
+      notifier: notificationClient,
+      maxTokenPriceUsd: config.interop.financials.maxTokenPriceUsd,
+      maxTransferValueUsd: config.interop.financials.maxTransferValueUsd,
+    },
   )
 
   const relayApiClient = new RelayApiClient(new HttpClient())
@@ -200,13 +216,20 @@ export function createInteropModule({
   if (config.interop.aggregation) {
     const classifier = new InteropTransferClassifier()
     const aggregationService = new InteropAggregationService(classifier)
-    const aggregationAnalyzer = new DefaultInteropAggregationAnalyzer(db)
+    const promotion = config.interop.aggregation.promotion
+    const promotionService = new InteropPromotionService({
+      statusRepository: db.interopAggregateStatus,
+      rules: [maxLaneVolumeRule(promotion.maxLaneVolumeUsd)],
+      mode: promotion.mode,
+      failClosed: promotion.failClosed,
+      logger,
+    })
     interopAggregatingIndexer = new InteropAggregatingIndexer(
       {
         db,
         configs: config.interop.aggregation.configs,
         aggregationService,
-        aggregationAnalyzer,
+        promotionService,
         indexerService,
         notifier: notificationClient,
         parents: [hourlyIndexer],

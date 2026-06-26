@@ -17,6 +17,7 @@ import { MobileSectionNavigation } from '~/components/section-navigation/MobileS
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import { PrivacyProjectRiskProfile } from './components/PrivacyProjectRiskProfile'
 import { PrivacyProjectStats } from './components/PrivacyProjectStats'
 import type { PrivacyProjectEntry } from './getPrivacyProjectData'
 
@@ -94,8 +95,15 @@ export function PrivacyProjectPage({ entry, queryState, ...props }: Props) {
                         deposits={entry.summary.deposits}
                       />
 
+                      <PrivacyProjectRiskProfile
+                        exitWindow={entry.exitWindow}
+                        adminViewingKey={entry.adminViewingKey}
+                        reproducibility={entry.reproducibility}
+                        className="mt-4"
+                      />
+
                       {entry.attributes.length > 0 && (
-                        <div className="mt-4 flex flex-wrap gap-1 md:mt-2">
+                        <div className="mt-6 flex flex-wrap gap-1 md:mt-4">
                           {entry.attributes.map((attribute) => (
                             <PrivacyAttributeTag
                               key={attribute.id}
