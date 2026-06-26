@@ -523,7 +523,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ProtocolStaking",
+      "name": "Staking (Coprocessor)",
       "address": "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8",
       "type": "Contract",
       "template": "zama/ProtocolStaking",
@@ -685,8 +685,7 @@
       "implementationNames": {
         "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8": "ERC1967Proxy",
         "eth:0xeaBD906bE5E72F1a7949c8DC5E7Fb047Db7E7EAE": "ProtocolStaking"
-      },
-      "category": { "name": "Governance", "priority": 3 }
+      }
     },
     {
       "name": "ConfidentialXAUTWrapper",
@@ -1537,8 +1536,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8",
-          "description": "upgrade the staking implementation.",
-          "role": ".defaultAdmin"
+          "role": "admin"
         },
         {
           "permission": "upgrade",
@@ -1594,8 +1592,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab",
-          "description": "upgrade the staking implementation.",
-          "role": ".defaultAdmin"
+          "role": "admin"
         },
         {
           "permission": "upgrade",
@@ -2133,8 +2130,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8",
-          "description": "upgrade the staking implementation.",
-          "role": ".defaultAdmin",
+          "role": "admin",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
           ]
@@ -2223,8 +2219,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab",
-          "description": "upgrade the staking implementation.",
-          "role": ".defaultAdmin",
+          "role": "admin",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
           ]
@@ -2808,8 +2803,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8",
-          "description": "upgrade the staking implementation.",
-          "role": ".defaultAdmin",
+          "role": "admin",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
           ]
@@ -2898,8 +2892,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab",
-          "description": "upgrade the staking implementation.",
-          "role": ".defaultAdmin",
+          "role": "admin",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
           ]
@@ -3146,7 +3139,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ProtocolStaking",
+      "name": "Staking (KMS)",
       "address": "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab",
       "type": "Contract",
       "template": "zama/ProtocolStaking",
@@ -3324,8 +3317,7 @@
       "implementationNames": {
         "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab": "ERC1967Proxy",
         "eth:0xeaBD906bE5E72F1a7949c8DC5E7Fb047Db7E7EAE": "ProtocolStaking"
-      },
-      "category": { "name": "Governance", "priority": 3 }
+      }
     },
     {
       "address": "eth:0xe9f7ecfF21a2e0Ca58eA26ae869FEF38ab49ed6f",
@@ -4533,5 +4525,5 @@
     "zama/ZamaPauserSet": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 25387852 },
-  "permissionsConfigHash": "0xcb9d66249742cbb2cf9eec861cc92d60f05caf36e6525554645b0d31c7d0173d"
+  "permissionsConfigHash": "0xde5a17f506024487a1fca0d1143849a182bdd058384aa8e6bcf8aefd7f3d9092"
 }

@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x573b9e4c16d0d01f946f945c3c9d3e7072d86928
+Generated with discovered.json: 0x5e691df2696d12d8b8cab1e2b26193cba1b9111f
 
-# Diff at Fri, 26 Jun 2026 14:02:38 GMT:
+# Diff at Fri, 26 Jun 2026 14:10:00 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current timestamp: 1782308700
@@ -49,7 +49,7 @@ Initial discovery.
 
 ```diff
 +   Status: CREATED
-    contract ProtocolStaking (eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8) [zama/ProtocolStaking]
+    contract Staking (Coprocessor) (eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8) [zama/ProtocolStaking]
     +++ description: Staking contract that escrows ZAMA, issues non-transferable staked voting tokens, and mints protocol rewards to eligible stakers at a configurable reward rate.
 ```
 
@@ -169,7 +169,7 @@ Initial discovery.
 
 ```diff
 +   Status: CREATED
-    contract ProtocolStaking (eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab) [zama/ProtocolStaking]
+    contract Staking (KMS) (eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab) [zama/ProtocolStaking]
     +++ description: Staking contract that escrows ZAMA, issues non-transferable staked voting tokens, and mints protocol rewards to eligible stakers at a configurable reward rate.
 ```
 

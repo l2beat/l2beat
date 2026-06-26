@@ -35,6 +35,8 @@
     "eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1": "ConfidentialXAUTWrapper",
     "eth:0xBA4cFF6ED6F7Cb2A58776dECa4E984b498446762": "ConfidentialBbqTGBPWrapper",
     "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458": "ConfidentialSteakcUSDCWrapper",
+    "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8": "Staking (Coprocessor)",
+    "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab": "Staking (KMS)",
     "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C": "ZamaGovMemberDAO",
     "eth:0xE43c73aAb2b6aBBad6d0461997ce1cfea5ABe66f": "ZamaGovMultisigA",
     "eth:0xBc860b6a4C860C5424B84A056E53ACFb2C99a38F": "ZamaGovMultisigB"

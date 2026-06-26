@@ -1,8 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "displayName": "ProtocolStaking",
   "description": "Staking contract that escrows ZAMA, issues non-transferable staked voting tokens, and mints protocol rewards to eligible stakers at a configurable reward rate.",
-  "category": "gov",
   "ignoreInWatchMode": [
     "clock",
     "totalStakedWeight",
@@ -28,10 +26,6 @@
       "severity": "HIGH",
       "type": "PERMISSION",
       "permissions": [
-        {
-          "type": "upgrade",
-          "description": "upgrade the staking implementation."
-        },
         {
           "type": "interact",
           "description": "grant and revoke manager accounts, transfer or renounce the default admin role, and change the default admin transfer delay."
