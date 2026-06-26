@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import type { Node } from '../store/State'
 import { useStore } from '../store/store'
 import { centerLocationsInViewport } from '../store/utils/centerLocationsInViewport'
+import { containerBoxes } from '../store/utils/renderGraph'
 import type { NodeLocations } from '../store/utils/storage'
 import { topLevelByDescendant } from '../store/utils/subnodes'
 import { ControlButton } from './ControlButton'
@@ -13,11 +14,17 @@ export function StackLayoutButton({ className }: { className?: string }) {
   const layout = useStore((state) => state.layout)
   const selected = useStore((state) => state.selected)
   const considerAllNodes = selected.length === 0
-  const visibleNodes = nodes.filter(
-    (node) =>
-      !hiddenNodes.includes(node.id) &&
-      (considerAllNodes || selected.includes(node.id)),
-  )
+  const footprints = containerBoxes(nodes, hiddenNodes)
+  const visibleNodes = nodes
+    .filter(
+      (node) =>
+        !hiddenNodes.includes(node.id) &&
+        (considerAllNodes || selected.includes(node.id)),
+    )
+    .map((node) => {
+      const box = footprints.get(node.id)
+      return box ? { ...node, box } : node
+    })
 
   return (
     <ControlButton

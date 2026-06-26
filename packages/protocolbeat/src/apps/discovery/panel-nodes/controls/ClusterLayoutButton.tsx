@@ -10,6 +10,7 @@ import { cn } from '../../../../utils/cn'
 import type { Node } from '../store/State'
 import { useStore } from '../store/store'
 import { centerLocationsInViewport } from '../store/utils/centerLocationsInViewport'
+import { containerBoxes } from '../store/utils/renderGraph'
 import type { NodeLocations } from '../store/utils/storage'
 import { topLevelByDescendant } from '../store/utils/subnodes'
 import { ControlButton } from './ControlButton'
@@ -31,7 +32,13 @@ export function ClusterLayoutButton({ className }: { className?: string }) {
   const nodes = useStore((state) => state.nodes)
   const hiddenNodes = useStore((state) => state.hidden)
   const selected = useStore((state) => state.selected)
-  const visibleNodes = nodes.filter((node) => !hiddenNodes.includes(node.id))
+  const footprints = containerBoxes(nodes, hiddenNodes)
+  const visibleNodes = nodes
+    .filter((node) => !hiddenNodes.includes(node.id))
+    .map((node) => {
+      const box = footprints.get(node.id)
+      return box ? { ...node, box } : node
+    })
   const simulationNodes =
     selected.length === 0
       ? visibleNodes

@@ -6,6 +6,7 @@ import {
 } from '../utils/constants'
 import { boxContains, intersects, isResizable } from '../utils/containment'
 import { toViewCoordinates } from '../utils/coordinates'
+import { buildRenderGraph } from '../utils/renderGraph'
 import { toContainerCoordinates } from '../utils/toContainerCoordinates'
 import { updateNodePositions } from '../utils/updateNodePositions'
 
@@ -115,15 +116,14 @@ export function onMouseMove(
 
         // Select-box doesn't move any nodes, so skip updateNodePositions —
         // it would rebuild every node and connection per mousemove for no
-        // reason. Only the selection rectangle and selected ids change.
-        const hiddenSet = new Set(state.hidden)
+        // reason. Only the selection rectangle and selected ids change. The
+        // render graph is used so members of opened groups are selectable too.
         const previousSelected =
           state.mouseMoveAction === 'select-add'
             ? new Set(state.selected)
             : undefined
         const selected: string[] = []
-        for (const node of state.nodes) {
-          if (hiddenSet.has(node.id)) continue
+        for (const node of buildRenderGraph(state.nodes, state.hidden).nodes) {
           if (
             intersects(node.box, selection) ||
             previousSelected?.has(node.id)
