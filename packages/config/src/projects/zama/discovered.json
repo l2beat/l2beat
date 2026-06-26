@@ -1,7 +1,7 @@
 {
   "name": "zama",
-  "timestamp": 1782308700,
-  "configHash": "0xadb5724ebb5bffc035dd984fb270a78233b6c2a620c82936a1b9f9f5c7076c10",
+  "timestamp": 1782485499,
+  "configHash": "0xeab413a43b66e6369ed3b4b59cdd3c05681e619d348fb494a25110926be15411",
   "entries": [
     {
       "address": "eth:0x0321a4Ee7E843A83Fa314f4e76E756864CBdE62e",
@@ -364,7 +364,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 277,
+        "nonce": 278,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -462,7 +462,7 @@
         "$upgradeCount": 2,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0x42b9ae51d5c870d9705c82780ca113495837d4444cff00000000000000010500",
+        "confidentialTotalSupply": "0xdf9ac7b7e3d965392836daaee8499064212d4ced38ff00000000000000010500",
         "constructorArgs": [
           "eth:0xAea1d2cc69aF93CA0fdd34426E74Ad7cB19E9745",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000beef00a59b577423653a1526c7009bde103f542b000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000017436f6e666964656e7469616c20737465616b6355534443000000000000000000000000000000000000000000000000000000000000000000000000000000000b63737465616b635553444300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000ae646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c20737465616b6355534443222c2273796d626f6c223a2263737465616b6355534443222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f6620737465616b635553444320736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d000000000000000000000000000000000000"
@@ -476,7 +476,7 @@
           "isSet": false,
           "selector": "0x00000000"
         },
-        "inferredTotalSupply": 3338082768372,
+        "inferredTotalSupply": 9484568707909,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential steakcUSDC",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -657,7 +657,7 @@
             ]
           }
         },
-        "clock": 25387852,
+        "clock": 25402518,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -693,8 +693,8 @@
         "rewardRate": "6970000000000000000",
         "stakingToken": "eth:0xA12CC123ba206d4031D1c7f6223D1C2Ec249f4f3",
         "symbol": "stZAMA-Coprocessor",
-        "totalStakedWeight": 52543331088628,
-        "totalSupply": "553115232022305513499035018",
+        "totalStakedWeight": 53194061177323,
+        "totalSupply": "566682849902703599742996478",
         "unstakeCooldownPeriod": 604800,
         "unstakeCooldownPeriod_fmt": "7d",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -1032,7 +1032,7 @@
         "$upgradeCount": 3,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0x452c695838b170429bdc7efb7e9b6e3d5aed9a8f91ff00000000000000010500",
+        "confidentialTotalSupply": "0x896925615445fd1c0a2dfd39ca5f671ebf0dfaa9dbff00000000000000010500",
         "constructorArgs": [
           "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000a12cc123ba206d4031d1c7f6223d1c2ec249f4f3000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205a414d410000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005635a414d41000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c205a414d41222c2273796d626f6c223a22635a414d41222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205a414d4120736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -1046,7 +1046,7 @@
           "isSet": false,
           "selector": "0x00000000"
         },
-        "inferredTotalSupply": 186239452298691,
+        "inferredTotalSupply": 186239442298691,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential ZAMA",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -1235,7 +1235,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 20,
+        "nonce": 22,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1503,7 +1503,7 @@
         "$upgradeCount": 3,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0x816ca556a7edf712857520d80f28ba79f70a4fec24ff00000000000000010500",
+        "confidentialTotalSupply": "0x16098da4b231417178837dc02facbaae5d07acccf4ff00000000000000010500",
         "constructorArgs": [
           "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000dac17f958d2ee523a2206206994597c13d831ec7000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205553445400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056355534454000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2055534454222c2273796d626f6c223a226355534454222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205553445420736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -1517,7 +1517,7 @@
           "isSet": true,
           "selector": "0x59bf1abe"
         },
-        "inferredTotalSupply": 8110272728887,
+        "inferredTotalSupply": 8112995964074,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential USDT",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -2951,7 +2951,7 @@
         "$upgradeCount": 3,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0xb14fb70c242f08ca24c5a0f912c311b07fad516bd5ff00000000000000010500",
+        "confidentialTotalSupply": "0x080ae53ca14220c64db66458d542bf61ecadaa1f6eff00000000000000010500",
         "constructorArgs": [
           "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205745544800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056357455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2057455448222c2273796d626f6c223a226357455448222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205745544820736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -2965,7 +2965,7 @@
           "isSet": false,
           "selector": "0x00000000"
         },
-        "inferredTotalSupply": 25732464,
+        "inferredTotalSupply": 26001584,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential WETH",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -3575,7 +3575,7 @@
         "$upgradeCount": 3,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0x13b4b0eda60887bee5f1072d6d32ea0cd4061bc438ff00000000000000010500",
+        "confidentialTotalSupply": "0x442f684c57fe812c09ce1152dd947f3698bdb0f489ff00000000000000010500",
         "constructorArgs": [
           "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205553444300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056355534443000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2055534443222c2273796d626f6c223a226355534443222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205553444320736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -3589,7 +3589,7 @@
           "isSet": true,
           "selector": "0xfe575a87"
         },
-        "inferredTotalSupply": 6394267906887,
+        "inferredTotalSupply": 6437289591390,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential USDC",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -3703,7 +3703,7 @@
             ]
           }
         },
-        "clock": 25387852,
+        "clock": 25402518,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -3747,8 +3747,8 @@
         "rewardRate": "10460000000000000000",
         "stakingToken": "eth:0xA12CC123ba206d4031D1c7f6223D1C2Ec249f4f3",
         "symbol": "stZAMA-KMS",
-        "totalStakedWeight": 104033077161884,
-        "totalSupply": "839146475847444218285883997",
+        "totalStakedWeight": 104085157979393,
+        "totalSupply": "839979041183560687823863094",
         "unstakeCooldownPeriod": 604800,
         "unstakeCooldownPeriod_fmt": "7d",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -3970,6 +3970,154 @@
       "address": "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "zama:0x0000000000000000000000000000000000000000",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287",
+          "role": "admin"
+        }
+      ]
+    },
+    {
+      "name": "Decryption",
+      "address": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3",
+        "0xd2e9269a1dc3580af2eaa84178722c052767a5d174734ececeddeea5bacd1929"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "deployerAddress": "zama:0x2D0b9A711A887E8a5678400b2311012fEB9BeBF9",
+      "sinceTimestamp": 1763504841,
+      "sinceBlock": 1524,
+      "values": {
+        "$admin": "zama:0x0000000000000000000000000000000000000000",
+        "$implementation": "zama:0xe691cE3d7a71E2eC9E96AF5bdD263FfEB124F8dE",
+        "$pastUpgrades": [
+          [
+            "2025-11-18T22:27:21.000Z",
+            "0x967e084e69cce0203af66ac59ebea6c1433877322f9c8a01da30b5fbf1ba5cb0",
+            ["zama:0x74adf0e5324Ba67d51872c27A025f1eEC0DaA500"]
+          ],
+          [
+            "2025-11-18T22:28:44.000Z",
+            "0xb69c7b64e7ed4ccacf621edd25059e062d63cdebd71a8a2f1dcc4fbe7dd0b6f4",
+            ["zama:0x99c454f6c59b66C5B39D85DEA99565A78e597b7c"]
+          ],
+          [
+            "2025-12-09T14:39:38.000Z",
+            "0x0dd6bc720fd0c2158c1720e26292d3df770b9ba6613ebcce2c292bfbcc1eff08",
+            ["zama:0xe691cE3d7a71E2eC9E96AF5bdD263FfEB124F8dE"]
+          ]
+        ],
+        "$upgradeCount": 3,
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "Decryption",
+          "version": "1",
+          "chainId": 261131,
+          "verifyingContract": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "getDecryptionConsensusTxSenders": [[], [], [], [], []],
+        "getVersion": "Decryption v0.3.0",
+        "isDecryptionDone": [false, false, false, false, false],
+        "paused": false,
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "errors": {
+        "getDecryptionConsensusTxSenders": "Processing error occurred.",
+        "isDecryptionDone": "Processing error occurred.",
+        "proxiableUUID": "Processing error occurred."
+      },
+      "implementationNames": {
+        "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24": "ERC1967Proxy",
+        "zama:0xe691cE3d7a71E2eC9E96AF5bdD263FfEB124F8dE": "Decryption"
+      }
+    },
+    {
+      "address": "zama:0x373E36A8684A3344E177C5894179845Cbe57AE44",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "InputVerification",
+      "address": "zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3",
+        "0x52c38ce781ecef28b118222541c9b079f2ae7d6402452584e620e84ca347875f"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "deployerAddress": "zama:0x2D0b9A711A887E8a5678400b2311012fEB9BeBF9",
+      "sinceTimestamp": 1763504842,
+      "sinceBlock": 1526,
+      "values": {
+        "$admin": "zama:0x0000000000000000000000000000000000000000",
+        "$implementation": "zama:0xA08c4367eB984945da2dad5BF7d94D1B2863197A",
+        "$pastUpgrades": [
+          [
+            "2025-11-18T22:27:22.000Z",
+            "0x880800809b7723cf723efc897cdeb0f9a560530317f1281a61601851f1ef0449",
+            ["zama:0x74adf0e5324Ba67d51872c27A025f1eEC0DaA500"]
+          ],
+          [
+            "2025-11-18T22:28:39.000Z",
+            "0x8d530fcff93bb112195829d27e90eedf65f122f4262b809a5d57fbd9fcc1ea19",
+            ["zama:0x7bfF0c5aEF31a8AB7116594A492cBEe9a829fF74"]
+          ],
+          [
+            "2025-12-09T14:41:55.000Z",
+            "0x1be878372ad005809903c742e7c3ea908bfcaa1f1e63ebac2eeb0834d499fcc7",
+            ["zama:0xA08c4367eB984945da2dad5BF7d94D1B2863197A"]
+          ]
+        ],
+        "$upgradeCount": 3,
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "InputVerification",
+          "version": "1",
+          "chainId": 261131,
+          "verifyingContract": "zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "getRejectProofConsensusTxSenders": [[], [], [], [], []],
+        "getVerifyProofConsensusTxSenders": [
+          [],
+          ["zama:0x373E36A8684A3344E177C5894179845Cbe57AE44"],
+          ["zama:0x373E36A8684A3344E177C5894179845Cbe57AE44"],
+          ["zama:0x373E36A8684A3344E177C5894179845Cbe57AE44"],
+          ["zama:0x373E36A8684A3344E177C5894179845Cbe57AE44"]
+        ],
+        "getVersion": "InputVerification v0.3.0",
+        "isProofRejected": [false, false, false, false, false],
+        "isProofVerified": [false, true, true, true, true],
+        "paused": false,
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "errors": {
+        "getRejectProofConsensusTxSenders": "Processing error occurred.",
+        "getVerifyProofConsensusTxSenders": "Processing error occurred.",
+        "isProofRejected": "Processing error occurred.",
+        "isProofVerified": "Processing error occurred.",
+        "proxiableUUID": "Processing error occurred."
+      },
+      "implementationNames": {
+        "zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287": "ERC1967Proxy",
+        "zama:0xA08c4367eB984945da2dad5BF7d94D1B2863197A": "InputVerification"
+      }
     }
   ],
   "abis": {
@@ -5022,6 +5170,163 @@
       "error ERC1967NonPayable()",
       "error FailedCall()",
       "event Upgraded(address indexed implementation)"
+    ],
+    "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "zama:0xA08c4367eB984945da2dad5BF7d94D1B2863197A": [
+      "constructor()",
+      "error AddressEmptyCode(address target)",
+      "error CoprocessorAlreadyRejected(uint256 zkProofId, address txSender, address signer)",
+      "error CoprocessorAlreadyVerified(uint256 zkProofId, address txSender, address signer)",
+      "error CoprocessorSignerDoesNotMatchTxSender(address signerAddress, address txSenderAddress)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error FailedCall()",
+      "error HostChainNotRegistered(uint256 chainId)",
+      "error InvalidInitialization()",
+      "error KmsSignerDoesNotMatchTxSender(address signerAddress, address txSenderAddress)",
+      "error NotCoprocessorSigner(address signerAddress)",
+      "error NotCoprocessorTxSender(address txSenderAddress)",
+      "error NotCustodianSigner(address signerAddress)",
+      "error NotCustodianTxSender(address txSenderAddress)",
+      "error NotGatewayOwner(address sender)",
+      "error NotInitializing()",
+      "error NotInitializingFromEmptyProxy()",
+      "error NotKmsSigner(address signerAddress)",
+      "error NotKmsTxSender(address txSenderAddress)",
+      "error NotOwnerOrGatewayConfig(address notOwnerOrGatewayConfig)",
+      "error NotPauserOrGatewayConfig(address notPauserOrGatewayConfig)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "error VerifyProofNotRequested(uint256 zkProofId)",
+      "event EIP712DomainChanged()",
+      "event Initialized(uint64 version)",
+      "event Paused(address account)",
+      "event RejectProofResponse(uint256 indexed zkProofId)",
+      "event RejectProofResponseCall(uint256 indexed zkProofId, bytes extraData)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "event VerifyProofRequest(uint256 indexed zkProofId, uint256 indexed contractChainId, address contractAddress, address userAddress, bytes ciphertextWithZKProof, bytes extraData)",
+      "event VerifyProofResponse(uint256 indexed zkProofId, bytes32[] ctHandles, bytes[] signatures)",
+      "event VerifyProofResponseCall(uint256 indexed zkProofId, bytes32[] ctHandles, bytes signature, address coprocessorTxSender, bytes extraData)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function getRejectProofConsensusTxSenders(uint256 zkProofId) view returns (address[])",
+      "function getVerifyProofConsensusTxSenders(uint256 zkProofId) view returns (address[])",
+      "function getVersion() pure returns (string)",
+      "function initializeFromEmptyProxy()",
+      "function isProofRejected(uint256 zkProofId) view returns (bool)",
+      "function isProofVerified(uint256 zkProofId) view returns (bool)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function reinitializeV3()",
+      "function rejectProofResponse(uint256 zkProofId, bytes extraData)",
+      "function unpause()",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function verifyProofRequest(uint256 contractChainId, address contractAddress, address userAddress, bytes ciphertextWithZKProof, bytes extraData)",
+      "function verifyProofResponse(uint256 zkProofId, bytes32[] ctHandles, bytes signature, bytes extraData)"
+    ],
+    "zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "zama:0xe691cE3d7a71E2eC9E96AF5bdD263FfEB124F8dE": [
+      "constructor()",
+      "error AccountNotAllowedToUseCiphertext(bytes32 ctHandle, address accountAddress)",
+      "error AddressEmptyCode(address target)",
+      "error ContractAddressesMaxLengthExceeded(uint256 maxLength, uint256 actualLength)",
+      "error ContractNotInContractAddresses(address contractAddress, address[] contractAddresses)",
+      "error CoprocessorSignerDoesNotMatchTxSender(address signerAddress, address txSenderAddress)",
+      "error CtHandleChainIdDiffersFromContractChainId(bytes32 ctHandle, uint256 chainId, uint256 contractChainId)",
+      "error DecryptionNotRequested(uint256 decryptionId)",
+      "error DelegatorAddressInContractAddresses(address delegatorAddress, address[] contractAddresses)",
+      "error DifferentKeyIdsNotAllowed(tuple(bytes32 ctHandle, uint256 keyId, bytes32 snsCiphertextDigest, address[] coprocessorTxSenderAddresses) firstSnsCtMaterial, tuple(bytes32 ctHandle, uint256 keyId, bytes32 snsCiphertextDigest, address[] coprocessorTxSenderAddresses) invalidSnsCtMaterial)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error EmptyContractAddresses()",
+      "error EmptyCtHandleContractPairs()",
+      "error EmptyCtHandles()",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error FailedCall()",
+      "error HostChainNotRegistered(uint256 chainId)",
+      "error InvalidFHEType(uint8 fheTypeUint8)",
+      "error InvalidInitialization()",
+      "error InvalidNullDurationDays()",
+      "error InvalidUserSignature(bytes signature)",
+      "error KmsNodeAlreadySigned(uint256 decryptionId, address signer)",
+      "error KmsSignerDoesNotMatchTxSender(address signerAddress, address txSenderAddress)",
+      "error MaxDecryptionRequestBitSizeExceeded(uint256 maxBitSize, uint256 totalBitSize)",
+      "error MaxDurationDaysExceeded(uint256 maxValue, uint256 actualValue)",
+      "error NotCoprocessorSigner(address signerAddress)",
+      "error NotCoprocessorTxSender(address txSenderAddress)",
+      "error NotCustodianSigner(address signerAddress)",
+      "error NotCustodianTxSender(address txSenderAddress)",
+      "error NotGatewayOwner(address sender)",
+      "error NotInitializing()",
+      "error NotInitializingFromEmptyProxy()",
+      "error NotKmsSigner(address signerAddress)",
+      "error NotKmsTxSender(address txSenderAddress)",
+      "error NotOwnerOrGatewayConfig(address notOwnerOrGatewayConfig)",
+      "error NotPauserOrGatewayConfig(address notPauserOrGatewayConfig)",
+      "error PublicDecryptNotAllowed(bytes32 ctHandle)",
+      "error StartTimestampInFuture(uint256 currentTimestamp, uint256 startTimestamp)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "error UnsupportedFHEType(uint8 fheType)",
+      "error UserAddressInContractAddresses(address userAddress, address[] contractAddresses)",
+      "error UserDecryptionNotDelegated(uint256 chainId, address delegator, address delegate, address contractAddress)",
+      "error UserDecryptionRequestExpired(uint256 currentTimestamp, tuple(uint256 startTimestamp, uint256 durationDays) requestValidity)",
+      "event EIP712DomainChanged()",
+      "event Initialized(uint64 version)",
+      "event Paused(address account)",
+      "event PublicDecryptionRequest(uint256 indexed decryptionId, tuple(bytes32 ctHandle, uint256 keyId, bytes32 snsCiphertextDigest, address[] coprocessorTxSenderAddresses)[] snsCtMaterials, bytes extraData)",
+      "event PublicDecryptionResponse(uint256 indexed decryptionId, bytes decryptedResult, bytes[] signatures, bytes extraData)",
+      "event PublicDecryptionResponseCall(uint256 indexed decryptionId, bytes decryptedResult, bytes signature, address kmsTxSender, bytes extraData)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "event UserDecryptionRequest(uint256 indexed decryptionId, tuple(bytes32 ctHandle, uint256 keyId, bytes32 snsCiphertextDigest, address[] coprocessorTxSenderAddresses)[] snsCtMaterials, address userAddress, bytes publicKey, bytes extraData)",
+      "event UserDecryptionResponse(uint256 indexed decryptionId, uint256 indexShare, bytes userDecryptedShare, bytes signature, bytes extraData)",
+      "event UserDecryptionResponseThresholdReached(uint256 indexed decryptionId)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function delegatedUserDecryptionRequest(tuple(bytes32 ctHandle, address contractAddress)[] ctHandleContractPairs, tuple(uint256 startTimestamp, uint256 durationDays) requestValidity, tuple(address delegatorAddress, address delegateAddress) delegationAccounts, tuple(uint256 chainId, address[] addresses) contractsInfo, bytes publicKey, bytes signature, bytes extraData)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function getDecryptionConsensusTxSenders(uint256 decryptionId) view returns (address[])",
+      "function getVersion() pure returns (string)",
+      "function initializeFromEmptyProxy()",
+      "function isDecryptionDone(uint256 decryptionId) view returns (bool)",
+      "function isDelegatedUserDecryptionReady(tuple(address delegatorAddress, address delegateAddress) delegationAccounts, tuple(bytes32 ctHandle, address contractAddress)[] ctHandleContractPairs, bytes) view returns (bool)",
+      "function isPublicDecryptionReady(bytes32[] ctHandles, bytes) view returns (bool)",
+      "function isUserDecryptionReady(address userAddress, tuple(bytes32 ctHandle, address contractAddress)[] ctHandleContractPairs, bytes) view returns (bool)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function publicDecryptionRequest(bytes32[] ctHandles, bytes extraData)",
+      "function publicDecryptionResponse(uint256 decryptionId, bytes decryptedResult, bytes signature, bytes extraData)",
+      "function reinitializeV3()",
+      "function unpause()",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function userDecryptionRequest(tuple(bytes32 ctHandle, address contractAddress)[] ctHandleContractPairs, tuple(uint256 startTimestamp, uint256 durationDays) requestValidity, tuple(uint256 chainId, address[] addresses) contractsInfo, address userAddress, bytes publicKey, bytes signature, bytes extraData)",
+      "function userDecryptionResponse(uint256 decryptionId, bytes userDecryptedShare, bytes signature, bytes extraData)"
     ]
   },
   "usedTemplates": {
@@ -5038,6 +5343,6 @@
     "zama/ZamaKMSVerifier": "0x302263334cd01ab4e2a4fb47c9fe81dacf9faac42d89e3ca63b8c506e90935e7",
     "zama/ZamaPauserSet": "0x1af56cc25e42342b2f464add26e41d36787603eb96bf24f0923abdf7caf5d35f"
   },
-  "usedBlockNumbers": { "ethereum": 25387852 },
-  "permissionsConfigHash": "0xf9999937b98afa4a742a5eec19367546f5999068068ffbda6613e013887037b6"
+  "usedBlockNumbers": { "ethereum": 25402518, "zama": 1858160 },
+  "permissionsConfigHash": "0x7bedae74475415834260667b06f4989f49c71b07a68402331cf5682fd6f4adb6"
 }

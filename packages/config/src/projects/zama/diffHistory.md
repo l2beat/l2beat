@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xafd2cfefa197d0591fe5646ecf12737ff1ad6b0a
+Generated with discovered.json: 0x932de52e6ba4cf577e86c1ff30233783570eb622
 
-# Diff at Fri, 26 Jun 2026 14:38:27 GMT:
+# Diff at Fri, 26 Jun 2026 14:52:53 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current timestamp: 1782308700
+- current timestamp: 1782485499
 
 ## Description
 
@@ -177,4 +177,16 @@ Initial discovery.
 +   Status: CREATED
     contract ConfidentialTokenWrappersRegistry (eth:0xeb5015fF021DB115aCe010f23F55C2591059bBA0) [zama/ConfidentialTokenWrappersRegistry]
     +++ description: Registry for Zama confidential token wrappers.
+```
+
+```diff
++   Status: CREATED
+    contract Decryption (zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract InputVerification (zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287) [N/A]
+    +++ description: None
 ```
