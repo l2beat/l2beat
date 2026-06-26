@@ -52,6 +52,28 @@
         "value": "zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287"
       }
     },
+    "ethereumHostChains": {
+      "description": "Ethereum host-chain endpoints registered in GatewayConfig, derived from getHostChains entries with chainId 1. These are the L1 FHEVMExecutor and ACL contracts whose state is used by the Gateway workflows.",
+      "severity": "HIGH",
+      "type": "EXTERNAL",
+      "handler": {
+        "type": "call",
+        "method": "getHostChains",
+        "args": []
+      },
+      "edit": [
+        "pipe",
+        ["filter", ["pipe", ["get", "chainId"], ["=", 1]]],
+        [
+          "map",
+          [
+            "pipe",
+            ["set", "fhevmExecutorAddress", ["format", "EthereumAddress"]],
+            ["set", "aclAddress", ["format", "EthereumAddress"]]
+          ]
+        ]
+      ]
+    },
     "getKmsTxSenders": {
       "description": "KMS transaction-sender addresses registered for this gateway. These accounts submit KMS responses to gateway contracts.",
       "severity": "HIGH",
@@ -144,7 +166,7 @@
       "type": "RISK_PARAMETER"
     },
     "getHostChains": {
-      "description": "Registered host chains and their host-chain FHEVMExecutor and ACL endpoints. Returned addresses belong to the listed host chain, not to the gateway chain."
+      "description": "Registered host chains and their host-chain FHEVMExecutor and ACL endpoints. Returned addresses belong to the listed host chain, not to the gateway chain; Ethereum entries are exposed as formatted cross-chain references in ethereumHostChains."
     },
     "getProtocolMetadata": {
       "description": "Human-readable gateway protocol metadata."

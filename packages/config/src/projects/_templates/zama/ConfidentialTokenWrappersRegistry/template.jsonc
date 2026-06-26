@@ -1,10 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "ignoreRelatives": [
-    "getTokenConfidentialTokenPair",
-    "getTokenConfidentialTokenPairs"
-  ],
-  "ignoreMethods": ["proxiableUUID"],
+  "ignoreRelatives": ["getTokenConfidentialTokenPairs"],
+  "ignoreMethods": ["proxiableUUID", "getTokenConfidentialTokenPair"],
   "category": "core",
   "description": "Registry for Zama confidential token wrappers.",
   "fields": {

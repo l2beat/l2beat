@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "MultichainACL",
-  "description": "Gateway-side ACL mirror that records coprocessor consensus for public decryption permissions, account handle allowances, and delegated user-decryption access.",
+  "description": "Gateway-side ACL mirror that records coprocessor consensus for host-chain public decryption permissions, account handle allowances, and delegated user-decryption access. For Ethereum, it mirrors ACL events emitted by the L1 ACL contract registered in GatewayConfig.",
   "category": "core",
   "ignoreMethods": [
     "proxiableUUID",

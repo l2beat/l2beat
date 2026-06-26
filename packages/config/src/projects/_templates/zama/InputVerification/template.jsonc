@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "InputVerification",
-  "description": "Gateway contract that receives encrypted input verification requests, collects coprocessor responses, and emits a threshold-signed attestation once coprocessor consensus is reached.",
+  "description": "Gateway contract that receives encrypted input verification requests from registered host chains, collects coprocessor responses, and emits a threshold-signed attestation once coprocessor consensus is reached. Ethereum InputVerifier verifies attestations against this contract's EIP-712 domain.",
   "category": "core",
   "ignoreMethods": [
     "proxiableUUID",
@@ -99,7 +99,7 @@
       "type": "RISK_PARAMETER"
     },
     "eip712Domain": {
-      "description": "EIP-712 domain used when validating coprocessor signatures over encrypted input proof responses."
+      "description": "EIP-712 domain used when validating coprocessor signatures over encrypted input proof responses. Ethereum InputVerifier is configured to verify this same source domain."
     }
   }
 }

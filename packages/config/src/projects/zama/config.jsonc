@@ -2,6 +2,12 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "zama",
   "import": ["../globalConfig.jsonc"],
+  "types": {
+    "ZamaAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": { "prefix": "zama" }
+    }
+  },
   "maxAddresses": 200,
   "initialAddresses": [
     "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8", // kms staking

@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x42599013900bacd0525d80f9d561704659b95177
+Generated with discovered.json: 0x41dee6b8131a27ce82fd93f19eba81072d28bf9a
 
-# Diff at Fri, 26 Jun 2026 15:24:28 GMT:
+# Diff at Fri, 26 Jun 2026 15:55:48 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current timestamp: 1782485499
@@ -62,7 +62,7 @@ Initial discovery.
 ```diff
 +   Status: CREATED
     contract KMSVerifier (eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03) [zama/ZamaKMSVerifier]
-    +++ description: Verifies KMS signatures over public decryption results before those results are accepted onchain.
+    +++ description: Ethereum host-chain verifier for public decryption results produced through the Zama Gateway Decryption contract. Confidential token wrappers use it before accepting decrypted values.
 ```
 
 ```diff
@@ -128,13 +128,13 @@ Initial discovery.
 ```diff
 +   Status: CREATED
     contract ACL (eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6) [zama/ZamaACL]
-    +++ description: Access-control registry for encrypted handles, storing handle allowances and delegation state for ciphertext references.
+    +++ description: Ethereum host-chain access-control registry for encrypted handles, storing handle allowances and delegation state for ciphertext references. Its public-decryption and user-delegation events are mirrored into the Gateway MultichainACL by coprocessor consensus.
 ```
 
 ```diff
 +   Status: CREATED
     contract InputVerifier (eth:0xCe0FC2e05CFff1B719EFF7169f7D80Af770c8EA2) [zama/ZamaInputVerifier]
-    +++ description: Verifies signed encrypted input bundles before they are accepted as ciphertext handles.
+    +++ description: Ethereum host-chain verifier for encrypted input attestations produced by the Zama Gateway InputVerification contract. The FHEVMExecutor calls it before accepting user-provided ciphertext handles.
 ```
 
 ```diff
@@ -182,13 +182,13 @@ Initial discovery.
 ```diff
 +   Status: CREATED
     contract MultichainACL (zama:0x055d9FD50a612A9027716ec8db663E7D68562468) [zama/MultichainACL]
-    +++ description: Gateway-side ACL mirror that records coprocessor consensus for public decryption permissions, account handle allowances, and delegated user-decryption access.
+    +++ description: Gateway-side ACL mirror that records coprocessor consensus for host-chain public decryption permissions, account handle allowances, and delegated user-decryption access. For Ethereum, it mirrors ACL events emitted by the L1 ACL contract registered in GatewayConfig.
 ```
 
 ```diff
 +   Status: CREATED
     contract Decryption (zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24) [zama/Decryption]
-    +++ description: Gateway contract that orchestrates public and user decryption requests, checks Gateway ACL state, collects KMS responses, and emits results once the configured KMS threshold is reached.
+    +++ description: Gateway contract that orchestrates public and user decryption requests, checks mirrored host-chain ACL state, collects KMS responses, and emits results once the configured KMS threshold is reached. Ethereum KMSVerifier verifies public decryption results against this contract's EIP-712 domain.
 ```
 
 ```diff
@@ -218,7 +218,7 @@ Initial discovery.
 ```diff
 +   Status: CREATED
     contract InputVerification (zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287) [zama/InputVerification]
-    +++ description: Gateway contract that receives encrypted input verification requests, collects coprocessor responses, and emits a threshold-signed attestation once coprocessor consensus is reached.
+    +++ description: Gateway contract that receives encrypted input verification requests from registered host chains, collects coprocessor responses, and emits a threshold-signed attestation once coprocessor consensus is reached. Ethereum InputVerifier verifies attestations against this contract's EIP-712 domain.
 ```
 
 ```diff

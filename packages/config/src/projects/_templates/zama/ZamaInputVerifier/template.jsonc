@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "InputVerifier",
-  "description": "Verifies signed encrypted input bundles before they are accepted as ciphertext handles.",
+  "description": "Ethereum host-chain verifier for encrypted input attestations produced by the Zama Gateway InputVerification contract. The FHEVMExecutor calls it before accepting user-provided ciphertext handles.",
   "category": "core",
   "ignoreMethods": ["proxiableUUID"],
   "fields": {
@@ -27,7 +27,7 @@
       ]
     },
     "getCoprocessorSigners": {
-      "description": "Coprocessor signers accepted by InputVerifier. The threshold number of these signers must sign encrypted input bundles before the FHEVMExecutor accepts the resulting ciphertext handles.",
+      "description": "Coprocessor signers accepted by InputVerifier. The threshold number of these signers must sign encrypted input bundles for the Gateway InputVerification EIP-712 domain before the FHEVMExecutor accepts the resulting ciphertext handles.",
       "severity": "HIGH",
       "type": "PERMISSION",
       "permissions": [
@@ -42,8 +42,18 @@
       "severity": "HIGH",
       "type": "RISK_PARAMETER"
     },
+    "gatewayInputVerification": {
+      "description": "Gateway InputVerification contract whose EIP-712 source domain is verified by this Ethereum InputVerifier.",
+      "severity": "HIGH",
+      "type": "L2",
+      "copy": "eip712Domain",
+      "edit": ["pipe", ["get", "verifyingContract"], ["format", "ZamaAddress"]]
+    },
     "eip712Domain": {
-      "description": "EIP-712 domain used when verifying coprocessor signatures over encrypted input bundles."
+      "description": "Cross-chain EIP-712 source domain used when verifying coprocessor signatures over encrypted input bundles. The verifying contract is on the Zama Gateway chain, not on Ethereum.",
+      "severity": "HIGH",
+      "type": "L2",
+      "edit": ["set", "verifyingContract", ["format", "ZamaAddress"]]
     }
   }
 }

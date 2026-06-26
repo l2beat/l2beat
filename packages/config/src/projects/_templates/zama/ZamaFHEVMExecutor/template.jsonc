@@ -31,7 +31,7 @@
       "type": "EXTERNAL"
     },
     "getInputVerifierAddress": {
-      "description": "InputVerifier contract used to verify coprocessor signatures over encrypted input bundles.",
+      "description": "InputVerifier contract used to verify coprocessor signatures over encrypted input bundles against the Zama Gateway InputVerification EIP-712 domain.",
       "type": "EXTERNAL"
     },
     "getHandleVersion": {

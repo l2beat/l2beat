@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "ACL",
-  "description": "Access-control registry for encrypted handles, storing handle allowances and delegation state for ciphertext references.",
+  "description": "Ethereum host-chain access-control registry for encrypted handles, storing handle allowances and delegation state for ciphertext references. Its public-decryption and user-delegation events are mirrored into the Gateway MultichainACL by coprocessor consensus.",
   "category": "core",
   "ignoreMethods": ["proxiableUUID"],
   "fields": {

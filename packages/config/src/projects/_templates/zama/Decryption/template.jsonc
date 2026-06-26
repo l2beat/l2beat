@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "Decryption",
-  "description": "Gateway contract that orchestrates public and user decryption requests, checks Gateway ACL state, collects KMS responses, and emits results once the configured KMS threshold is reached.",
+  "description": "Gateway contract that orchestrates public and user decryption requests, checks mirrored host-chain ACL state, collects KMS responses, and emits results once the configured KMS threshold is reached. Ethereum KMSVerifier verifies public decryption results against this contract's EIP-712 domain.",
   "category": "core",
   "ignoreMethods": [
     "proxiableUUID",
@@ -142,7 +142,7 @@
       "type": "RISK_PARAMETER"
     },
     "eip712Domain": {
-      "description": "EIP-712 domain used when validating KMS signatures and user/delegate decryption request signatures."
+      "description": "EIP-712 domain used when validating KMS signatures and user/delegate decryption request signatures. Ethereum KMSVerifier is configured to verify this same source domain for public decryptions."
     }
   }
 }

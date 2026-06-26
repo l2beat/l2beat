@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "KMSVerifier",
-  "description": "Verifies KMS signatures over public decryption results before those results are accepted onchain.",
+  "description": "Ethereum host-chain verifier for public decryption results produced through the Zama Gateway Decryption contract. Confidential token wrappers use it before accepting decrypted values.",
   "category": "core",
   "ignoreMethods": ["proxiableUUID"],
   "fields": {
@@ -27,7 +27,7 @@
       ]
     },
     "getKmsSigners": {
-      "description": "KMS signers accepted by KMSVerifier. The threshold number of these signers must sign public decryption results before wrappers accept the decrypted values.",
+      "description": "KMS signers accepted by KMSVerifier. The threshold number of these signers must sign public decryption results for the Gateway Decryption EIP-712 domain before wrappers accept the decrypted values.",
       "severity": "HIGH",
       "type": "PERMISSION",
       "permissions": [
@@ -42,8 +42,18 @@
       "severity": "HIGH",
       "type": "RISK_PARAMETER"
     },
+    "gatewayDecryption": {
+      "description": "Gateway Decryption contract whose EIP-712 source domain is verified by this Ethereum KMSVerifier.",
+      "severity": "HIGH",
+      "type": "L2",
+      "copy": "eip712Domain",
+      "edit": ["pipe", ["get", "verifyingContract"], ["format", "ZamaAddress"]]
+    },
     "eip712Domain": {
-      "description": "EIP-712 domain used when verifying KMS signatures over public decryption results."
+      "description": "Cross-chain EIP-712 source domain used when verifying KMS signatures over public decryption results. The verifying contract is on the Zama Gateway chain, not on Ethereum.",
+      "severity": "HIGH",
+      "type": "L2",
+      "edit": ["set", "verifyingContract", ["format", "ZamaAddress"]]
     }
   }
 }
