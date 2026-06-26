@@ -20,6 +20,12 @@ export function PastUpgradesDisplay({ value }: PastUpgradesDisplayProps) {
   const rows = buildPastUpgradeRows(value)
   const [selected, setSelected] = useState<SelectedCell | null>(null)
 
+  const [renderedValue, setRenderedValue] = useState(value)
+  if (value !== renderedValue) {
+    setRenderedValue(value)
+    setSelected(null)
+  }
+
   if (rows.length === 0) {
     return <span className="text-coffee-600">no past upgrades</span>
   }
