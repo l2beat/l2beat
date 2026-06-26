@@ -1,9 +1,14 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "zama",
-  "import": ["../globalConfig.jsonc"],
+  "import": [
+    "../globalConfig.jsonc"
+  ],
   "maxAddresses": 200,
   "initialAddresses": [
+    "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8", // kms staking
+    "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab", // coprocessor staking
+    "eth:0xeb5015fF021DB115aCe010f23F55C2591059bBA0", // registry
     "eth:0xe978F22157048E5DB8E5d07971376e86671672B2", // Confidential USDC wrapper
     "eth:0xAe0207C757Aa2B4019Ad96edD0092ddc63EF0c50", // Confidential USDT wrapper
     "eth:0xda9396b82634Ea99243cE51258B6A5Ae512D4893", // Confidential WETH wrapper
@@ -66,16 +71,28 @@
                 [
                   "=",
                   "0xbf04b4486c9663d805744005c3da000eda93de6e3308a4a7a812eb565327b78d",
-                  ["get", "permissionId"]
+                  [
+                    "get",
+                    "permissionId"
+                  ]
                 ],
                 [
                   "=",
                   "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-                  ["get", "where"]
+                  [
+                    "get",
+                    "where"
+                  ]
                 ]
               ]
             ],
-            ["map", ["get", "who"]]
+            [
+              "map",
+              [
+                "get",
+                "who"
+              ]
+            ]
           ],
           "permissions": [
             {
@@ -98,16 +115,28 @@
                 [
                   "=",
                   "0x815fe80e4b37c8582a3b773d1d7071f983eacfd56b5965db654f3087c25ada33",
-                  ["get", "permissionId"]
+                  [
+                    "get",
+                    "permissionId"
+                  ]
                 ],
                 [
                   "=",
                   "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-                  ["get", "where"]
+                  [
+                    "get",
+                    "where"
+                  ]
                 ]
               ]
             ],
-            ["map", ["get", "who"]]
+            [
+              "map",
+              [
+                "get",
+                "who"
+              ]
+            ]
           ],
           "permissions": [
             {
@@ -130,16 +159,28 @@
                 [
                   "=",
                   "0x1f53edd44352e5d15bad2b29233baa93bcd595e09457780bc7c5445bbbe751cc",
-                  ["get", "permissionId"]
+                  [
+                    "get",
+                    "permissionId"
+                  ]
                 ],
                 [
                   "=",
                   "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-                  ["get", "where"]
+                  [
+                    "get",
+                    "where"
+                  ]
                 ]
               ]
             ],
-            ["map", ["get", "who"]]
+            [
+              "map",
+              [
+                "get",
+                "who"
+              ]
+            ]
           ],
           "permissions": [
             {

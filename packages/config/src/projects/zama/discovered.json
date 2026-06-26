@@ -1,7 +1,7 @@
 {
   "name": "zama",
   "timestamp": 1782308700,
-  "configHash": "0x6f0a6c04e110b9553a4f839556d25e6e84f34e23f969991e6db58e0eac1a78e9",
+  "configHash": "0xadb5724ebb5bffc035dd984fb270a78233b6c2a620c82936a1b9f9f5c7076c10",
   "entries": [
     {
       "address": "eth:0x0321a4Ee7E843A83Fa314f4e76E756864CBdE62e",
@@ -521,6 +521,172 @@
       "address": "eth:0x705380c013c13B4ce62338ab1F012036BAC802b3",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "ProtocolStaking",
+      "address": "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8",
+      "type": "Contract",
+      "template": "zama/ProtocolStaking",
+      "sourceHashes": [
+        "0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3",
+        "0xfaa1abe7363b9250c63a482b849d6e5ef4e42516b4bfa90d9dbdd6497be3f69d"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Staking contract that escrows ZAMA, issues non-transferable staked voting tokens, and mints protocol rewards to eligible stakers at a configurable reward rate.",
+      "ignoreInWatchMode": [
+        "clock",
+        "totalStakedWeight",
+        "totalSupply",
+        "rewardRate"
+      ],
+      "deployerAddress": "eth:0xB15981a567C2c3fF472132505265BBe74576443c",
+      "sinceTimestamp": 1768300679,
+      "sinceBlock": 24225247,
+      "values": {
+        "$admin": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+        "$implementation": "eth:0xeaBD906bE5E72F1a7949c8DC5E7Fb047Db7E7EAE",
+        "$pastUpgrades": [
+          [
+            "2026-01-13T10:37:59.000Z",
+            "0x7d7fb37c635bb8e63cebe6d76e8b5e26a0f08cc4630f792b782d6a19f81a2cf2",
+            ["eth:0xeaBD906bE5E72F1a7949c8DC5E7Fb047Db7E7EAE"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"]
+          },
+          "MANAGER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"]
+          },
+          "ELIGIBLE_ACCOUNT_ROLE": {
+            "adminRole": "MANAGER_ROLE",
+            "members": [
+              "eth:0x5c9401fdA261fDb97188126e130e001DB38F1310",
+              "eth:0x126D6B697aD04228657Ba677c71CfE20A8745b03",
+              "eth:0xdB4FE5977d4f78f251C0F821C18C1F7A16Ad3A5e",
+              "eth:0xf5A0f502C98Df9dC22A4E4f251eC3c75f2aD8098",
+              "eth:0xdD7fA0C796b3ca4fc1654F4eFFea5c4E9fF57a23"
+            ]
+          }
+        },
+        "clock": 25387852,
+        "CLOCK_MODE": "mode=blocknumber&from=default",
+        "decimals": 18,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdmin": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+        "defaultAdminDelay": 0,
+        "defaultAdminDelayIncreaseWait": 432000,
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "Staked ZAMA (Coprocessor)",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "eligibleAccounts": [
+          "eth:0x5c9401fdA261fDb97188126e130e001DB38F1310",
+          "eth:0x126D6B697aD04228657Ba677c71CfE20A8745b03",
+          "eth:0xdB4FE5977d4f78f251C0F821C18C1F7A16Ad3A5e",
+          "eth:0xf5A0f502C98Df9dC22A4E4f251eC3c75f2aD8098",
+          "eth:0xdD7fA0C796b3ca4fc1654F4eFFea5c4E9fF57a23"
+        ],
+        "managerRoleMembers": [
+          "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+        ],
+        "name": "Staked ZAMA (Coprocessor)",
+        "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+        "pendingDefaultAdmin": {
+          "newAdmin": "eth:0x0000000000000000000000000000000000000000",
+          "schedule": 0
+        },
+        "pendingDefaultAdminDelay": { "newDelay": 0, "schedule": 0 },
+        "rewardRate": "6970000000000000000",
+        "stakingToken": "eth:0xA12CC123ba206d4031D1c7f6223D1C2Ec249f4f3",
+        "symbol": "stZAMA-Coprocessor",
+        "totalStakedWeight": 52543331088628,
+        "totalSupply": "553115232022305513499035018",
+        "unstakeCooldownPeriod": 604800,
+        "unstakeCooldownPeriod_fmt": "7d",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "fieldMeta": {
+        "accessControl": {
+          "severity": "HIGH",
+          "description": "Access control map reconstructed from RoleGranted, RoleRevoked, and RoleAdminChanged events. The private ProtocolStaking role hashes are named explicitly."
+        },
+        "defaultAdmin": {
+          "severity": "HIGH",
+          "description": "Current default admin of the staking contract.",
+          "type": "PERMISSION"
+        },
+        "owner": {
+          "description": "ERC-5313 owner alias for the current default admin."
+        },
+        "pendingDefaultAdmin": {
+          "severity": "HIGH",
+          "description": "Pending default admin transfer. If newAdmin is non-zero and schedule has passed, that address can accept the default admin role.",
+          "type": "RISK_PARAMETER"
+        },
+        "defaultAdminDelay": {
+          "severity": "HIGH",
+          "description": "Delay in seconds before a newly scheduled default admin transfer can be accepted.",
+          "type": "RISK_PARAMETER"
+        },
+        "defaultAdminDelayIncreaseWait": {
+          "severity": "HIGH",
+          "description": "Maximum wait applied when scheduling an increase of the default admin transfer delay.",
+          "type": "RISK_PARAMETER"
+        },
+        "pendingDefaultAdminDelay": {
+          "severity": "HIGH",
+          "description": "Pending change to the default admin transfer delay, together with the timestamp when it can take effect.",
+          "type": "RISK_PARAMETER"
+        },
+        "managerRoleMembers": {
+          "severity": "HIGH",
+          "description": "Current members of MANAGER_ROLE.",
+          "type": "PERMISSION"
+        },
+        "eligibleAccounts": {
+          "severity": "LOW",
+          "description": "Accounts currently eligible to earn staking rewards on their staked balance.",
+          "type": "PERMISSION"
+        },
+        "stakingToken": {
+          "description": "ZAMA token escrowed by this staking contract and minted when rewards are claimed.",
+          "type": "EXTERNAL"
+        },
+        "rewardRate": {
+          "severity": "HIGH",
+          "description": "Current reward rate in ZAMA wei minted per second and shared across eligible stakers by weighted stake.",
+          "type": "RISK_PARAMETER"
+        },
+        "unstakeCooldownPeriod": {
+          "severity": "HIGH",
+          "description": "Delay between unstaking and being able to release the underlying ZAMA.",
+          "type": "RISK_PARAMETER"
+        },
+        "totalStakedWeight": {
+          "description": "Current square-root weighted stake total used to allocate rewards among eligible accounts."
+        },
+        "totalSupply": {
+          "description": "Total non-transferable staked-token supply minted against escrowed ZAMA."
+        },
+        "CLOCK_MODE": {
+          "description": "ERC-6372 clock mode used for ERC20Votes snapshots."
+        }
+      },
+      "implementationNames": {
+        "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8": "ERC1967Proxy",
+        "eth:0xeaBD906bE5E72F1a7949c8DC5E7Fb047Db7E7EAE": "ProtocolStaking"
+      },
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "ConfidentialXAUTWrapper",
@@ -1269,6 +1435,18 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8",
+          "description": "grant and revoke manager accounts, transfer or renounce the default admin role, and change the default admin transfer delay.",
+          "role": ".defaultAdmin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8",
+          "description": "set the reward rate, set the unstake cooldown period, and add or remove reward-eligible staking accounts.",
+          "role": ".managerRoleMembers"
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1",
           "description": "block and unblock users, transfer ownership, and authorize implementation upgrades.",
           "role": ".owner"
@@ -1334,9 +1512,33 @@
           "role": ".owner"
         },
         {
+          "permission": "interact",
+          "from": "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab",
+          "description": "grant and revoke manager accounts, transfer or renounce the default admin role, and change the default admin transfer delay.",
+          "role": ".defaultAdmin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab",
+          "description": "set the reward rate, set the unstake cooldown period, and add or remove reward-eligible staking accounts.",
+          "role": ".managerRoleMembers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xeb5015fF021DB115aCe010f23F55C2591059bBA0",
+          "description": "manage addresses in the registry",
+          "role": ".owner"
+        },
+        {
           "permission": "upgrade",
           "from": "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458",
           "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8",
+          "description": "upgrade the staking implementation.",
+          "role": ".defaultAdmin"
         },
         {
           "permission": "upgrade",
@@ -1388,6 +1590,17 @@
           "permission": "upgrade",
           "from": "eth:0xe978F22157048E5DB8E5d07971376e86671672B2",
           "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab",
+          "description": "upgrade the staking implementation.",
+          "role": ".defaultAdmin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xeb5015fF021DB115aCe010f23F55C2591059bBA0",
+          "role": "admin"
         }
       ],
       "deployerAddress": "eth:0xC11f43f0785da3bDd1464C9E5A389B9585A05FAD",
@@ -1755,6 +1968,24 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8",
+          "description": "grant and revoke manager accounts, transfer or renounce the default admin role, and change the default admin transfer delay.",
+          "role": ".defaultAdmin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8",
+          "description": "set the reward rate, set the unstake cooldown period, and add or remove reward-eligible staking accounts.",
+          "role": ".managerRoleMembers",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1",
           "description": "block and unblock users, transfer ownership, and authorize implementation upgrades.",
           "role": ".owner",
@@ -1865,9 +2096,45 @@
           ]
         },
         {
+          "permission": "interact",
+          "from": "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab",
+          "description": "grant and revoke manager accounts, transfer or renounce the default admin role, and change the default admin transfer delay.",
+          "role": ".defaultAdmin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab",
+          "description": "set the reward rate, set the unstake cooldown period, and add or remove reward-eligible staking accounts.",
+          "role": ".managerRoleMembers",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xeb5015fF021DB115aCe010f23F55C2591059bBA0",
+          "description": "manage addresses in the registry",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
           "permission": "upgrade",
           "from": "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458",
           "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8",
+          "description": "upgrade the staking implementation.",
+          "role": ".defaultAdmin",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
           ]
@@ -1949,6 +2216,23 @@
           "permission": "upgrade",
           "from": "eth:0xe978F22157048E5DB8E5d07971376e86671672B2",
           "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab",
+          "description": "upgrade the staking implementation.",
+          "role": ".defaultAdmin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xeb5015fF021DB115aCe010f23F55C2591059bBA0",
+          "role": "admin",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
           ]
@@ -2359,6 +2643,24 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8",
+          "description": "grant and revoke manager accounts, transfer or renounce the default admin role, and change the default admin transfer delay.",
+          "role": ".defaultAdmin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8",
+          "description": "set the reward rate, set the unstake cooldown period, and add or remove reward-eligible staking accounts.",
+          "role": ".managerRoleMembers",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1",
           "description": "block and unblock users, transfer ownership, and authorize implementation upgrades.",
           "role": ".owner",
@@ -2469,9 +2771,45 @@
           ]
         },
         {
+          "permission": "interact",
+          "from": "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab",
+          "description": "grant and revoke manager accounts, transfer or renounce the default admin role, and change the default admin transfer delay.",
+          "role": ".defaultAdmin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab",
+          "description": "set the reward rate, set the unstake cooldown period, and add or remove reward-eligible staking accounts.",
+          "role": ".managerRoleMembers",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xeb5015fF021DB115aCe010f23F55C2591059bBA0",
+          "description": "manage addresses in the registry",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
           "permission": "upgrade",
           "from": "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458",
           "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8",
+          "description": "upgrade the staking implementation.",
+          "role": ".defaultAdmin",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
           ]
@@ -2553,6 +2891,23 @@
           "permission": "upgrade",
           "from": "eth:0xe978F22157048E5DB8E5d07971376e86671672B2",
           "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab",
+          "description": "upgrade the staking implementation.",
+          "role": ".defaultAdmin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xeb5015fF021DB115aCe010f23F55C2591059bBA0",
+          "role": "admin",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
           ]
@@ -2791,9 +3146,304 @@
       "proxyType": "EOA"
     },
     {
+      "name": "ProtocolStaking",
+      "address": "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab",
+      "type": "Contract",
+      "template": "zama/ProtocolStaking",
+      "sourceHashes": [
+        "0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3",
+        "0xfaa1abe7363b9250c63a482b849d6e5ef4e42516b4bfa90d9dbdd6497be3f69d"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Staking contract that escrows ZAMA, issues non-transferable staked voting tokens, and mints protocol rewards to eligible stakers at a configurable reward rate.",
+      "ignoreInWatchMode": [
+        "clock",
+        "totalStakedWeight",
+        "totalSupply",
+        "rewardRate"
+      ],
+      "deployerAddress": "eth:0xB15981a567C2c3fF472132505265BBe74576443c",
+      "sinceTimestamp": 1768300691,
+      "sinceBlock": 24225248,
+      "values": {
+        "$admin": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+        "$implementation": "eth:0xeaBD906bE5E72F1a7949c8DC5E7Fb047Db7E7EAE",
+        "$pastUpgrades": [
+          [
+            "2026-01-13T10:38:11.000Z",
+            "0x049b7dbbe648f4de55b54b2950fadbb205342e8c99b3a9bf73333c8075033be3",
+            ["eth:0xeaBD906bE5E72F1a7949c8DC5E7Fb047Db7E7EAE"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"]
+          },
+          "MANAGER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"]
+          },
+          "ELIGIBLE_ACCOUNT_ROLE": {
+            "adminRole": "MANAGER_ROLE",
+            "members": [
+              "eth:0x8305d7c59886462B04C71Ecc5c5C331520C2a8E4",
+              "eth:0xB9689c08A634B076849E61Ea4E42AB44aE2e5e2d",
+              "eth:0x8a3Bb2a9B28dAD4230a6dfE17124C398eA6416BF",
+              "eth:0xF1BA887932d7559B3b00a58fE92F36CA8D7751d3",
+              "eth:0x80c03b5be1417D18bAe68d5a1F0f2A97457b0C3c",
+              "eth:0xFCAA267679B8364957560d7420E66Bb012013091",
+              "eth:0x9b5Cd13b8eFbB58Dc25A05CF411D8056058aDFfF",
+              "eth:0x78F597F1Dcf5dA536745558368c825654A1A044B",
+              "eth:0xff54739b16576FA5402F211D0b938469Ab9A5f3F",
+              "eth:0xFf021fB13cA64e5354c62c954b949a88cfDEb25E",
+              "eth:0x75355a85c6FB9df5f0C80FF54e8747EEe9a0BF57",
+              "eth:0x93c931278A2aad1916783F952f94276eA5111442",
+              "eth:0x50C271E25Ee953DD21E916311db81E228c9Bdb59"
+            ]
+          }
+        },
+        "clock": 25387852,
+        "CLOCK_MODE": "mode=blocknumber&from=default",
+        "decimals": 18,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdmin": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+        "defaultAdminDelay": 0,
+        "defaultAdminDelayIncreaseWait": 432000,
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "Staked ZAMA (KMS)",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "eligibleAccounts": [
+          "eth:0x8305d7c59886462B04C71Ecc5c5C331520C2a8E4",
+          "eth:0xB9689c08A634B076849E61Ea4E42AB44aE2e5e2d",
+          "eth:0x8a3Bb2a9B28dAD4230a6dfE17124C398eA6416BF",
+          "eth:0xF1BA887932d7559B3b00a58fE92F36CA8D7751d3",
+          "eth:0x80c03b5be1417D18bAe68d5a1F0f2A97457b0C3c",
+          "eth:0xFCAA267679B8364957560d7420E66Bb012013091",
+          "eth:0x9b5Cd13b8eFbB58Dc25A05CF411D8056058aDFfF",
+          "eth:0x78F597F1Dcf5dA536745558368c825654A1A044B",
+          "eth:0xff54739b16576FA5402F211D0b938469Ab9A5f3F",
+          "eth:0xFf021fB13cA64e5354c62c954b949a88cfDEb25E",
+          "eth:0x75355a85c6FB9df5f0C80FF54e8747EEe9a0BF57",
+          "eth:0x93c931278A2aad1916783F952f94276eA5111442",
+          "eth:0x50C271E25Ee953DD21E916311db81E228c9Bdb59"
+        ],
+        "managerRoleMembers": [
+          "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+        ],
+        "name": "Staked ZAMA (KMS)",
+        "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+        "pendingDefaultAdmin": {
+          "newAdmin": "eth:0x0000000000000000000000000000000000000000",
+          "schedule": 0
+        },
+        "pendingDefaultAdminDelay": { "newDelay": 0, "schedule": 0 },
+        "rewardRate": "10460000000000000000",
+        "stakingToken": "eth:0xA12CC123ba206d4031D1c7f6223D1C2Ec249f4f3",
+        "symbol": "stZAMA-KMS",
+        "totalStakedWeight": 104033077161884,
+        "totalSupply": "839146475847444218285883997",
+        "unstakeCooldownPeriod": 604800,
+        "unstakeCooldownPeriod_fmt": "7d",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "fieldMeta": {
+        "accessControl": {
+          "severity": "HIGH",
+          "description": "Access control map reconstructed from RoleGranted, RoleRevoked, and RoleAdminChanged events. The private ProtocolStaking role hashes are named explicitly."
+        },
+        "defaultAdmin": {
+          "severity": "HIGH",
+          "description": "Current default admin of the staking contract.",
+          "type": "PERMISSION"
+        },
+        "owner": {
+          "description": "ERC-5313 owner alias for the current default admin."
+        },
+        "pendingDefaultAdmin": {
+          "severity": "HIGH",
+          "description": "Pending default admin transfer. If newAdmin is non-zero and schedule has passed, that address can accept the default admin role.",
+          "type": "RISK_PARAMETER"
+        },
+        "defaultAdminDelay": {
+          "severity": "HIGH",
+          "description": "Delay in seconds before a newly scheduled default admin transfer can be accepted.",
+          "type": "RISK_PARAMETER"
+        },
+        "defaultAdminDelayIncreaseWait": {
+          "severity": "HIGH",
+          "description": "Maximum wait applied when scheduling an increase of the default admin transfer delay.",
+          "type": "RISK_PARAMETER"
+        },
+        "pendingDefaultAdminDelay": {
+          "severity": "HIGH",
+          "description": "Pending change to the default admin transfer delay, together with the timestamp when it can take effect.",
+          "type": "RISK_PARAMETER"
+        },
+        "managerRoleMembers": {
+          "severity": "HIGH",
+          "description": "Current members of MANAGER_ROLE.",
+          "type": "PERMISSION"
+        },
+        "eligibleAccounts": {
+          "severity": "LOW",
+          "description": "Accounts currently eligible to earn staking rewards on their staked balance.",
+          "type": "PERMISSION"
+        },
+        "stakingToken": {
+          "description": "ZAMA token escrowed by this staking contract and minted when rewards are claimed.",
+          "type": "EXTERNAL"
+        },
+        "rewardRate": {
+          "severity": "HIGH",
+          "description": "Current reward rate in ZAMA wei minted per second and shared across eligible stakers by weighted stake.",
+          "type": "RISK_PARAMETER"
+        },
+        "unstakeCooldownPeriod": {
+          "severity": "HIGH",
+          "description": "Delay between unstaking and being able to release the underlying ZAMA.",
+          "type": "RISK_PARAMETER"
+        },
+        "totalStakedWeight": {
+          "description": "Current square-root weighted stake total used to allocate rewards among eligible accounts."
+        },
+        "totalSupply": {
+          "description": "Total non-transferable staked-token supply minted against escrowed ZAMA."
+        },
+        "CLOCK_MODE": {
+          "description": "ERC-6372 clock mode used for ERC20Votes snapshots."
+        }
+      },
+      "implementationNames": {
+        "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab": "ERC1967Proxy",
+        "eth:0xeaBD906bE5E72F1a7949c8DC5E7Fb047Db7E7EAE": "ProtocolStaking"
+      },
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
       "address": "eth:0xe9f7ecfF21a2e0Ca58eA26ae869FEF38ab49ed6f",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "ConfidentialTokenWrappersRegistry",
+      "address": "eth:0xeb5015fF021DB115aCe010f23F55C2591059bBA0",
+      "type": "Contract",
+      "template": "zama/ConfidentialTokenWrappersRegistry",
+      "sourceHashes": [
+        "0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3",
+        "0x4a1a43caae25ea705d724d7a65ac0ac987ed8f4c492445b372c2bb2369398e2c"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Registry for Zama confidential token wrappers.",
+      "deployerAddress": "eth:0xB15981a567C2c3fF472132505265BBe74576443c",
+      "sinceTimestamp": 1766750315,
+      "sinceBlock": 24096655,
+      "values": {
+        "$admin": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+        "$implementation": "eth:0xA989D32d7348e0Da8145C6282E839dfC4DB8954f",
+        "$pastUpgrades": [
+          [
+            "2025-12-26T11:58:35.000Z",
+            "0x01110836e21dfbb28a25ebf7be8dd6e95b7f09ef006c10f4a108a60ec5cf0f69",
+            ["eth:0xA989D32d7348e0Da8145C6282E839dfC4DB8954f"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "getTokenConfidentialTokenPair": [
+          [
+            "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "eth:0xe978F22157048E5DB8E5d07971376e86671672B2",
+            true
+          ],
+          [
+            "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+            "eth:0xAe0207C757Aa2B4019Ad96edD0092ddc63EF0c50",
+            true
+          ],
+          [
+            "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+            "eth:0xda9396b82634Ea99243cE51258B6A5Ae512D4893",
+            true
+          ],
+          [
+            "eth:0xBA2C598E11eD093079cC324FCa5BbbA99F616E83",
+            "eth:0x85dE671c3bec1aDeD752c3Cea943521181C826bc",
+            true
+          ],
+          [
+            "eth:0xA12CC123ba206d4031D1c7f6223D1C2Ec249f4f3",
+            "eth:0x80CB147Fd86dC6dEe3Eee7e4Cee33d1397d98071",
+            true
+          ]
+        ],
+        "getTokenConfidentialTokenPairs": [
+          {
+            "tokenAddress": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "confidentialTokenAddress": "eth:0xe978F22157048E5DB8E5d07971376e86671672B2",
+            "isValid": true
+          },
+          {
+            "tokenAddress": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+            "confidentialTokenAddress": "eth:0xAe0207C757Aa2B4019Ad96edD0092ddc63EF0c50",
+            "isValid": true
+          },
+          {
+            "tokenAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+            "confidentialTokenAddress": "eth:0xda9396b82634Ea99243cE51258B6A5Ae512D4893",
+            "isValid": true
+          },
+          {
+            "tokenAddress": "eth:0xBA2C598E11eD093079cC324FCa5BbbA99F616E83",
+            "confidentialTokenAddress": "eth:0x85dE671c3bec1aDeD752c3Cea943521181C826bc",
+            "isValid": true
+          },
+          {
+            "tokenAddress": "eth:0xA12CC123ba206d4031D1c7f6223D1C2Ec249f4f3",
+            "confidentialTokenAddress": "eth:0x80CB147Fd86dC6dEe3Eee7e4Cee33d1397d98071",
+            "isValid": true
+          },
+          {
+            "tokenAddress": "eth:0x27f6c8289550fCE67f6B50BeD1F519966aFE5287",
+            "confidentialTokenAddress": "eth:0xa873750ccBafD5ec7Dd13bfD5237d7129832eDD9",
+            "isValid": true
+          },
+          {
+            "tokenAddress": "eth:0x68749665FF8D2d112Fa859AA293F07A622782F38",
+            "confidentialTokenAddress": "eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1",
+            "isValid": true
+          },
+          {
+            "tokenAddress": "eth:0xbeeffABcd0dB09589Dd21854aa760C52aB4bf04F",
+            "confidentialTokenAddress": "eth:0xBA4cFF6ED6F7Cb2A58776dECa4E984b498446762",
+            "isValid": true
+          },
+          {
+            "tokenAddress": "eth:0xbEEF00A59B577423653A1526c7009bdE103F542B",
+            "confidentialTokenAddress": "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458",
+            "isValid": true
+          }
+        ],
+        "getTokenConfidentialTokenPairsLength": 9,
+        "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "errors": {
+        "getTokenConfidentialTokenPair": "Processing error occurred."
+      },
+      "implementationNames": {
+        "eth:0xeb5015fF021DB115aCe010f23F55C2591059bBA0": "ERC1967Proxy",
+        "eth:0xA989D32d7348e0Da8145C6282E839dfC4DB8954f": "ConfidentialTokenWrappersRegistry"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "eth:0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
@@ -3226,6 +3876,14 @@
     "eth:0x69E55790880d0ABa56E48Ee1f7fc3834b0F5c223": [
       "constructor(address _singleton)"
     ],
+    "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
     "eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
@@ -3389,6 +4047,54 @@
       "error ERC1967NonPayable()",
       "error FailedCall()",
       "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xA989D32d7348e0Da8145C6282E839dfC4DB8954f": [
+      "constructor()",
+      "error AddressEmptyCode(address target)",
+      "error ConfidentialTokenAlreadyAssociatedWithToken(address tokenAddress, address existingConfidentialTokenAddress)",
+      "error ConfidentialTokenDoesNotSupportERC165(address confidentialTokenAddress)",
+      "error ConfidentialTokenZeroAddress()",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error FromIndexGreaterOrEqualToIndex(uint256 fromIndex, uint256 toIndex)",
+      "error InvalidInitialization()",
+      "error NoTokenAssociatedWithConfidentialToken(address confidentialTokenAddress)",
+      "error NotERC7984(address confidentialTokenAddress)",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error RevokedConfidentialToken(address confidentialTokenAddress)",
+      "error TokenAlreadyAssociatedWithConfidentialToken(address tokenAddress, address existingConfidentialTokenAddress)",
+      "error TokenNotRegistered(address tokenAddress)",
+      "error TokenZeroAddress()",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event ConfidentialTokenRegistered(address indexed tokenAddress, address indexed confidentialTokenAddress)",
+      "event ConfidentialTokenRevoked(address indexed tokenAddress, address indexed confidentialTokenAddress)",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Upgraded(address indexed implementation)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function acceptOwnership()",
+      "function getConfidentialTokenAddress(address tokenAddress) view returns (bool, address)",
+      "function getTokenAddress(address confidentialTokenAddress) view returns (bool, address)",
+      "function getTokenConfidentialTokenPair(uint256 index) view returns (tuple(address tokenAddress, address confidentialTokenAddress, bool isValid))",
+      "function getTokenConfidentialTokenPairs() view returns (tuple(address tokenAddress, address confidentialTokenAddress, bool isValid)[])",
+      "function getTokenConfidentialTokenPairsLength() view returns (uint256)",
+      "function getTokenConfidentialTokenPairsSlice(uint256 fromIndex, uint256 toIndex) view returns (tuple(address tokenAddress, address confidentialTokenAddress, bool isValid)[])",
+      "function getTokenIndex(address tokenAddress) view returns (uint256)",
+      "function initialize(address initialOwner)",
+      "function isConfidentialTokenValid(address confidentialTokenAddress) view returns (bool)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function registerConfidentialToken(address tokenAddress, address confidentialTokenAddress)",
+      "function renounceOwnership()",
+      "function revokeConfidentialToken(address confidentialTokenAddress)",
+      "function transferOwnership(address newOwner)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "eth:0xAe0207C757Aa2B4019Ad96edD0092ddc63EF0c50": [
       "constructor(address implementation, bytes _data) payable",
@@ -3674,12 +4380,150 @@
       "error ERC1967NonPayable()",
       "error FailedCall()",
       "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xeaBD906bE5E72F1a7949c8DC5E7Fb047Db7E7EAE": [
+      "constructor()",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlEnforcedDefaultAdminDelay(uint48 schedule)",
+      "error AccessControlEnforcedDefaultAdminRules()",
+      "error AccessControlInvalidDefaultAdmin(address defaultAdmin)",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error AddressEmptyCode(address target)",
+      "error CheckpointUnorderedInsertion()",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error ERC20ExceededSafeSupply(uint256 increasedSupply, uint256 cap)",
+      "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
+      "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
+      "error ERC20InvalidApprover(address approver)",
+      "error ERC20InvalidReceiver(address receiver)",
+      "error ERC20InvalidSender(address sender)",
+      "error ERC20InvalidSpender(address spender)",
+      "error ERC5805FutureLookup(uint256 timepoint, uint48 clock)",
+      "error ERC6372InconsistentClock()",
+      "error FailedCall()",
+      "error InvalidAccountNonce(address account, uint256 currentNonce)",
+      "error InvalidEligibleAccount(address account)",
+      "error InvalidInitialization()",
+      "error InvalidUnstakeCooldownPeriod()",
+      "error NotInitializing()",
+      "error SafeCastOverflowedIntToUint(int256 value)",
+      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
+      "error SafeCastOverflowedUintToInt(uint256 value)",
+      "error SafeERC20FailedOperation(address token)",
+      "error TransferDisabled()",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "error VotesExpiredSignature(uint256 expiry)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event DefaultAdminDelayChangeCanceled()",
+      "event DefaultAdminDelayChangeScheduled(uint48 newDelay, uint48 effectSchedule)",
+      "event DefaultAdminTransferCanceled()",
+      "event DefaultAdminTransferScheduled(address indexed newAdmin, uint48 acceptSchedule)",
+      "event DelegateChanged(address indexed delegator, address indexed fromDelegate, address indexed toDelegate)",
+      "event DelegateVotesChanged(address indexed delegate, uint256 previousVotes, uint256 newVotes)",
+      "event EIP712DomainChanged()",
+      "event Initialized(uint64 version)",
+      "event RewardRateSet(uint256 rewardRate)",
+      "event RewardsClaimed(address indexed account, address indexed recipient, uint256 amount)",
+      "event RewardsRecipientSet(address indexed account, address indexed recipient)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event TokensReleased(address indexed recipient, uint256 amount)",
+      "event TokensStaked(address indexed account, uint256 amount)",
+      "event TokensUnstaked(address indexed account, uint256 amount, uint48 releaseTime)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event UnstakeCooldownPeriodSet(uint256 unstakeCooldownPeriod)",
+      "event Upgraded(address indexed implementation)",
+      "function CLOCK_MODE() view returns (string)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function acceptDefaultAdminTransfer()",
+      "function addEligibleAccount(address account)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 value) returns (bool)",
+      "function awaitingRelease(address account) view returns (uint256)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function beginDefaultAdminTransfer(address newAdmin)",
+      "function cancelDefaultAdminTransfer()",
+      "function changeDefaultAdminDelay(uint48 newDelay)",
+      "function checkpoints(address account, uint32 pos) view returns (tuple(uint48 _key, uint208 _value))",
+      "function claimRewards(address account)",
+      "function clock() view returns (uint48)",
+      "function decimals() view returns (uint8)",
+      "function defaultAdmin() view returns (address)",
+      "function defaultAdminDelay() view returns (uint48)",
+      "function defaultAdminDelayIncreaseWait() view returns (uint48)",
+      "function delegate(address delegatee)",
+      "function delegateBySig(address delegatee, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s)",
+      "function delegates(address account) view returns (address)",
+      "function earned(address account) view returns (uint256)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function getPastTotalSupply(uint256 timepoint) view returns (uint256)",
+      "function getPastVotes(address account, uint256 timepoint) view returns (uint256)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getVotes(address account) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(string name, string symbol, string version, address stakingToken_, address governor, address manager, uint48 initialUnstakeCooldownPeriod, uint256 initialRewardRate)",
+      "function isEligibleAccount(address account) view returns (bool)",
+      "function name() view returns (string)",
+      "function nonces(address owner) view returns (uint256)",
+      "function numCheckpoints(address account) view returns (uint32)",
+      "function owner() view returns (address)",
+      "function pendingDefaultAdmin() view returns (address newAdmin, uint48 schedule)",
+      "function pendingDefaultAdminDelay() view returns (uint48 newDelay, uint48 schedule)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function release(address account)",
+      "function removeEligibleAccount(address account)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function rewardRate() view returns (uint256)",
+      "function rewardsRecipient(address account) view returns (address)",
+      "function rollbackDefaultAdminDelay()",
+      "function setRewardRate(uint256 rewardRate_)",
+      "function setRewardsRecipient(address recipient)",
+      "function setUnstakeCooldownPeriod(uint48 unstakeCooldownPeriod_)",
+      "function stake(uint256 amount)",
+      "function stakingToken() view returns (address)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function symbol() view returns (string)",
+      "function totalStakedWeight() view returns (uint256)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 value) returns (bool)",
+      "function transferFrom(address from, address to, uint256 value) returns (bool)",
+      "function unstake(uint256 amount) returns (uint48)",
+      "function unstakeCooldownPeriod() view returns (uint256)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function weight(uint256 amount) pure returns (uint256)"
+    ],
+    "eth:0xeb5015fF021DB115aCe010f23F55C2591059bBA0": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "event Upgraded(address indexed implementation)"
     ]
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "zama/ConfidentialTokenWrappersRegistry": "0xf402c8c3111ccf8f44ac9ab91e67ecac7bbaf83b5a07f02ba76bddf979e5aeb8",
     "zama/ConfidentialWrapperV3": "0x22b31283367296d5a0a663edd2706ff154fd551130ab0f8f8bca3ea7243aa736",
     "zama/Multisig": "0xfacece6ea884ad4d49a3d294d69053b6102e847852204f7f3a65f9980facf297",
+    "zama/ProtocolStaking": "0x5884f0df97651fb8fe7e194b5b33b695d7083e5a4fa5c109c9ac1cee80d193d3",
     "zama/ZamaACL": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "zama/ZamaDAO": "0xfdc0657fce067cffceacf21c2bc38f8c430c7c5ac4ebbe75f97dca7436e0f4b8",
     "zama/ZamaFHEVMExecutor": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
@@ -3689,5 +4533,5 @@
     "zama/ZamaPauserSet": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 25387852 },
-  "permissionsConfigHash": "0x9d4b8c48e122edc29659b42bb5ff83d6802e867c01f1909c997a47421ba8a464"
+  "permissionsConfigHash": "0xcb9d66249742cbb2cf9eec861cc92d60f05caf36e6525554645b0d31c7d0173d"
 }

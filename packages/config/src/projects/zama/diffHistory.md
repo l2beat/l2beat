@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x92d7a36e7912b8d885d7c909a0d0d7e6a42e4066
+Generated with discovered.json: 0x573b9e4c16d0d01f946f945c3c9d3e7072d86928
 
-# Diff at Wed, 24 Jun 2026 13:58:57 GMT:
+# Diff at Fri, 26 Jun 2026 14:02:38 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current timestamp: 1782308700
@@ -45,6 +45,12 @@ Initial discovery.
 +   Status: CREATED
     contract Safe (eth:0x69E55790880d0ABa56E48Ee1f7fc3834b0F5c223) [GnosisSafe]
     +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProtocolStaking (eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8) [zama/ProtocolStaking]
+    +++ description: Staking contract that escrows ZAMA, issues non-transferable staked voting tokens, and mints protocol rewards to eligible stakers at a configurable reward rate.
 ```
 
 ```diff
@@ -159,4 +165,16 @@ Initial discovery.
 +   Status: CREATED
     contract ConfidentialUSDCWrapper (eth:0xe978F22157048E5DB8E5d07971376e86671672B2) [zama/ConfidentialWrapperV3]
     +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.
+```
+
+```diff
++   Status: CREATED
+    contract ProtocolStaking (eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab) [zama/ProtocolStaking]
+    +++ description: Staking contract that escrows ZAMA, issues non-transferable staked voting tokens, and mints protocol rewards to eligible stakers at a configurable reward rate.
+```
+
+```diff
++   Status: CREATED
+    contract ConfidentialTokenWrappersRegistry (eth:0xeb5015fF021DB115aCe010f23F55C2591059bBA0) [zama/ConfidentialTokenWrappersRegistry]
+    +++ description: Registry for Zama confidential token wrappers.
 ```
