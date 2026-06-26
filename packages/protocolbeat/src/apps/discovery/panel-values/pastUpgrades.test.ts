@@ -7,8 +7,6 @@ const A = ChainSpecificAddress.random()
 const B = ChainSpecificAddress.random()
 const C = ChainSpecificAddress.random()
 const D = ChainSpecificAddress.random()
-const E = ChainSpecificAddress.random()
-const F = ChainSpecificAddress.random()
 
 function address(addr: string): AddressFieldValue {
   return { type: 'address', addressType: 'Unknown', address: addr }
@@ -51,7 +49,7 @@ describe('buildPastUpgradeRows', () => {
     expect(buildPastUpgradeRows(value)).toEqual([])
   })
 
-  it('orders rows newest first and diffs against the previous implementation', () => {
+  it('orders rows newest first', () => {
     const value: FieldValue = {
       type: 'array',
       // Intentionally out of order to prove sorting.
@@ -69,12 +67,7 @@ describe('buildPastUpgradeRows', () => {
       '2026-02-10',
       '2025-10-07',
     ])
-    expect(rows.map((r) => r.cells[0]?.address)).toEqual([A, B, C])
-    // Each row diffs against the next (older) implementation.
-    expect(rows[0]?.cells[0]?.diffUrl).toEqual(`/diff/${B}/${A}`)
-    expect(rows[1]?.cells[0]?.diffUrl).toEqual(`/diff/${C}/${B}`)
-    // The oldest entry has no previous implementation to diff against.
-    expect(rows[2]?.cells[0]?.diffUrl).toEqual(undefined)
+    expect(rows.map((r) => r.addresses[0])).toEqual([A, B, C])
   })
 
   it('builds the explorer transaction url from the implementation chain', () => {
@@ -103,7 +96,7 @@ describe('buildPastUpgradeRows', () => {
     expect(row?.txUrl).toEqual(undefined)
   })
 
-  it('exposes one cell per facet for diamond upgrades', () => {
+  it('exposes one address per facet for diamond upgrades', () => {
     const value: FieldValue = {
       type: 'array',
       values: [
@@ -115,29 +108,8 @@ describe('buildPastUpgradeRows', () => {
     const rows = buildPastUpgradeRows(value)
 
     expect(rows.length).toEqual(2)
-    expect(rows[0]?.cells.length).toEqual(2)
-    // Facets are diffed against the same-position facet of the previous upgrade.
-    expect(rows[0]?.cells[0]?.diffUrl).toEqual(`/diff/${B}/${A}`)
-    expect(rows[0]?.cells[1]?.diffUrl).toEqual(`/diff/${C}/${D}`)
-    expect(rows[1]?.cells[0]?.diffUrl).toEqual(undefined)
-    expect(rows[1]?.cells[1]?.diffUrl).toEqual(undefined)
-  })
-
-  it('only emits a diff for facets that changed from the previous snapshot', () => {
-    const value: FieldValue = {
-      type: 'array',
-      values: [
-        // Only the last facet changed; the first two are unchanged.
-        entry('2024-02-01T00:00:00.000Z', '0xnew', [A, B, D]),
-        entry('2024-01-01T00:00:00.000Z', '0xold', [A, B, E]),
-      ],
-    }
-
-    const rows = buildPastUpgradeRows(value)
-
-    expect(rows[0]?.cells[0]?.diffUrl).toEqual(undefined)
-    expect(rows[0]?.cells[1]?.diffUrl).toEqual(undefined)
-    expect(rows[0]?.cells[2]?.diffUrl).toEqual(`/diff/${E}/${D}`)
+    expect(rows[0]?.addresses).toEqual([A, D])
+    expect(rows[1]?.addresses).toEqual([B, C])
   })
 
   it('collapses entries that share a transaction hash and implementation set', () => {
@@ -146,9 +118,9 @@ describe('buildPastUpgradeRows', () => {
       // A diamond emits one DiamondCut event per cut; repeated events within a
       // single tx resolve to the same cumulative facet set.
       values: [
-        entry('2024-01-01T00:00:00.000Z', '0xdeploy', [F]),
-        entry('2024-01-01T00:00:00.000Z', '0xdeploy', [F]),
-        entry('2024-01-01T00:00:00.000Z', '0xdeploy', [F]),
+        entry('2024-01-01T00:00:00.000Z', '0xdeploy', [D]),
+        entry('2024-01-01T00:00:00.000Z', '0xdeploy', [D]),
+        entry('2024-01-01T00:00:00.000Z', '0xdeploy', [D]),
         entry('2024-03-01T00:00:00.000Z', '0xupgrade', [A]),
       ],
     }
@@ -156,9 +128,7 @@ describe('buildPastUpgradeRows', () => {
     const rows = buildPastUpgradeRows(value)
 
     expect(rows.length).toEqual(2)
-    expect(rows.map((r) => r.cells[0]?.address)).toEqual([A, F])
-    expect(rows[0]?.cells[0]?.diffUrl).toEqual(`/diff/${F}/${A}`)
-    expect(rows[1]?.cells[0]?.diffUrl).toEqual(undefined)
+    expect(rows.map((r) => r.addresses[0])).toEqual([A, D])
   })
 
   it('keeps distinct implementations changed within one transaction', () => {
@@ -175,20 +145,17 @@ describe('buildPastUpgradeRows', () => {
     const rows = buildPastUpgradeRows(value)
 
     expect(rows.length).toEqual(3)
-    expect(rows.map((r) => r.cells[0]?.address)).toEqual([A, B, C])
+    expect(rows.map((r) => r.addresses[0])).toEqual([A, B, C])
     expect(rows.map((r) => r.txHash)).toEqual([
       '0xsecond',
       '0xsecond',
       '0xfirst',
     ])
-    expect(rows[0]?.cells[0]?.diffUrl).toEqual(`/diff/${B}/${A}`)
-    expect(rows[1]?.cells[0]?.diffUrl).toEqual(`/diff/${C}/${B}`)
-    expect(rows[2]?.cells[0]?.diffUrl).toEqual(undefined)
   })
 
   it('keeps a snapshot that recurs non-consecutively within one transaction', () => {
     // A -> B -> A in one tx: the two A entries are not adjacent, so neither
-    // collapses and B still diffs against the intra-tx A, not pre-tx C.
+    // collapses.
     const value: FieldValue = {
       type: 'array',
       values: [
@@ -202,21 +169,17 @@ describe('buildPastUpgradeRows', () => {
     const rows = buildPastUpgradeRows(value)
 
     expect(rows.length).toEqual(4)
-    expect(rows.map((r) => r.cells[0]?.address)).toEqual([A, B, A, C])
-    expect(rows[0]?.cells[0]?.diffUrl).toEqual(`/diff/${B}/${A}`)
-    expect(rows[1]?.cells[0]?.diffUrl).toEqual(`/diff/${A}/${B}`)
-    expect(rows[2]?.cells[0]?.diffUrl).toEqual(`/diff/${C}/${A}`)
-    expect(rows[3]?.cells[0]?.diffUrl).toEqual(undefined)
+    expect(rows.map((r) => r.addresses[0])).toEqual([A, B, A, C])
   })
 
   it('still folds three consecutive identical diamond snapshots into one row', () => {
     const value: FieldValue = {
       type: 'array',
       values: [
-        entry('2024-01-01T00:00:00.000Z', '0xdeploy', [F]),
-        entry('2024-01-01T00:00:00.000Z', '0xdeploy', [F]),
-        entry('2024-01-01T00:00:00.000Z', '0xdeploy', [F]),
-        entry('2024-03-01T00:00:00.000Z', '0xreset', [F]),
+        entry('2024-01-01T00:00:00.000Z', '0xdeploy', [D]),
+        entry('2024-01-01T00:00:00.000Z', '0xdeploy', [D]),
+        entry('2024-01-01T00:00:00.000Z', '0xdeploy', [D]),
+        entry('2024-03-01T00:00:00.000Z', '0xreset', [D]),
       ],
     }
 
@@ -224,6 +187,6 @@ describe('buildPastUpgradeRows', () => {
 
     expect(rows.length).toEqual(2)
     expect(rows.map((r) => r.txHash)).toEqual(['0xreset', '0xdeploy'])
-    expect(rows.map((r) => r.cells[0]?.address)).toEqual([F, F])
+    expect(rows.map((r) => r.addresses[0])).toEqual([D, D])
   })
 })
