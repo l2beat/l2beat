@@ -9,8 +9,11 @@ import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('across')
 
-const bondAmountFmt = discovery.getContractValue('HubPool', 'bondAmountFmt')
-const finalizationDelayFmt = discovery.getContractValue(
+const bondAmountFmt = discovery.getContractValue<string>(
+  'HubPool',
+  'bondAmountFmt',
+)
+const finalizationDelayFmt = discovery.getContractValue<string>(
   'HubPool',
   'finalizationDelayFmt',
 )
