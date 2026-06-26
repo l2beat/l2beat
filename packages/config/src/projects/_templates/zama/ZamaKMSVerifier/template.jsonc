@@ -3,5 +3,47 @@
   "displayName": "KMSVerifier",
   "description": "Verifies KMS signatures over public decryption results before those results are accepted onchain.",
   "category": "core",
-  "ignoreMethods": ["proxiableUUID"]
+  "ignoreMethods": ["proxiableUUID"],
+  "fields": {
+    "aclOwner": {
+      "description": "Owner of the Zama ACL contract. This account is authorized by onlyACLOwner to rotate the KMS signer set and threshold.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "call",
+        "method": "function owner() view returns (address)",
+        "args": [],
+        "address": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6"
+      },
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "upgrade the KMSVerifier implementation."
+        },
+        {
+          "type": "interact",
+          "description": "set the KMS signer set and signature threshold used for public decryption verification."
+        }
+      ]
+    },
+    "getKmsSigners": {
+      "description": "KMS signers accepted by KMSVerifier. The threshold number of these signers must sign public decryption results before wrappers accept the decrypted values.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "act",
+          "description": "sign public decryption results accepted by the KMSVerifier."
+        }
+      ]
+    },
+    "getThreshold": {
+      "description": "Minimum number of configured KMS signer signatures required to accept a public decryption result.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "eip712Domain": {
+      "description": "EIP-712 domain used when verifying KMS signatures over public decryption results."
+    }
+  }
 }

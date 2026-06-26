@@ -3,5 +3,47 @@
   "displayName": "InputVerifier",
   "description": "Verifies signed encrypted input bundles before they are accepted as ciphertext handles.",
   "category": "core",
-  "ignoreMethods": ["proxiableUUID"]
+  "ignoreMethods": ["proxiableUUID"],
+  "fields": {
+    "aclOwner": {
+      "description": "Owner of the Zama ACL contract. This account is authorized by onlyACLOwner to rotate the coprocessor signer set and threshold.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "call",
+        "method": "function owner() view returns (address)",
+        "args": [],
+        "address": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6"
+      },
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "upgrade the InputVerifier implementation."
+        },
+        {
+          "type": "interact",
+          "description": "set the coprocessor signer set and signature threshold used for encrypted input verification."
+        }
+      ]
+    },
+    "getCoprocessorSigners": {
+      "description": "Coprocessor signers accepted by InputVerifier. The threshold number of these signers must sign encrypted input bundles before the FHEVMExecutor accepts the resulting ciphertext handles.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "act",
+          "description": "sign encrypted input verification bundles accepted by the InputVerifier."
+        }
+      ]
+    },
+    "getThreshold": {
+      "description": "Minimum number of configured coprocessor signer signatures required to accept an encrypted input bundle.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "eip712Domain": {
+      "description": "EIP-712 domain used when verifying coprocessor signatures over encrypted input bundles."
+    }
+  }
 }

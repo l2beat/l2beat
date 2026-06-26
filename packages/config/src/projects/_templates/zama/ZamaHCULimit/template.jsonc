@@ -3,5 +3,38 @@
   "displayName": "HCULimit",
   "description": "Tracks and enforces homomorphic computation unit limits for FHEVM operation requests.",
   "category": "core",
-  "ignoreMethods": ["proxiableUUID"]
+  "ignoreMethods": ["proxiableUUID"],
+  "fields": {
+    "aclOwner": {
+      "description": "Owner of the Zama ACL contract. This account is authorized by onlyACLOwner for HCULimit administration.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "call",
+        "method": "function owner() view returns (address)",
+        "args": [],
+        "address": "{{ aclAddress }}"
+      },
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "upgrade the HCULimit implementation."
+        }
+      ]
+    },
+    "getFHEVMExecutorAddress": {
+      "description": "FHEVMExecutor contract allowed to report operation HCU usage to this contract.",
+      "type": "EXTERNAL"
+    },
+    "aclAddress": {
+      "description": "ACL contract resolved through FHEVMExecutor and used by onlyACLOwner checks.",
+      "type": "EXTERNAL",
+      "handler": {
+        "type": "call",
+        "method": "function getACLAddress() view returns (address)",
+        "args": [],
+        "address": "{{ getFHEVMExecutorAddress }}"
+      }
+    }
+  }
 }

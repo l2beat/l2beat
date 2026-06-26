@@ -5,15 +5,15 @@
   "category": "core",
   "ignoreMethods": ["proxiableUUID"],
   "fields": {
+    "constructorArgs": { "handler": { "type": "constructorArgs" } },
     "owner": {
       "description": "Current owner of the wrapper.",
       "severity": "HIGH",
       "type": "PERMISSION",
       "permissions": [
-        { "type": "upgrade" },
         {
           "type": "interact",
-          "description": "block and unblock users, transfer ownership, and authorize implementation upgrades."
+          "description": "block and unblock users, and transfer ownership."
         }
       ]
     },
@@ -28,10 +28,7 @@
         }
       ]
     },
-    "underlying": {
-      "description": "ERC-20 token escrowed by this wrapper.",
-      "type": "EXTERNAL"
-    },
+    "underlying": { "description": "ERC-20 token escrowed by this wrapper." },
     "getUnderlyingDenyListSelector": {
       "description": "Underlying-token denylist hook used by the wrapper. If enabled, the wrapper calls this selector on the underlying token before restricted operations.",
       "severity": "HIGH",
@@ -51,26 +48,28 @@
     },
     "fheAcl": {
       "description": "Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles.",
-      "type": "EXTERNAL",
       "handler": {
-        "type": "hardcoded",
-        "value": "0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6"
+        "type": "storage",
+        "slot": "0x9e7b61f58c47dc699ac88507c4f5bb9f121c03808c5676a8078fe583e4649700",
+        "returnType": "address"
       }
     },
     "fheCoprocessor": {
       "description": "Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles.",
-      "type": "EXTERNAL",
       "handler": {
-        "type": "hardcoded",
-        "value": "0xD82385dADa1ae3E969447f20A3164F6213100e75"
+        "type": "storage",
+        "slot": "0x9e7b61f58c47dc699ac88507c4f5bb9f121c03808c5676a8078fe583e4649700",
+        "offset": 1,
+        "returnType": "address"
       }
     },
     "fheKmsVerifier": {
       "description": "Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS.",
-      "type": "EXTERNAL",
       "handler": {
-        "type": "hardcoded",
-        "value": "0x77627828a55156b04Ac0DC0eb30467f1a552BB03"
+        "type": "storage",
+        "slot": "0x9e7b61f58c47dc699ac88507c4f5bb9f121c03808c5676a8078fe583e4649700",
+        "offset": 2,
+        "returnType": "address"
       }
     }
   },

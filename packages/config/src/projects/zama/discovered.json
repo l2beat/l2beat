@@ -216,7 +216,15 @@
     {
       "address": "eth:0x373E36A8684A3344E177C5894179845Cbe57AE44",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xCe0FC2e05CFff1B719EFF7169f7D80Af770c8EA2",
+          "description": "sign encrypted input verification bundles accepted by the InputVerifier.",
+          "role": ".getCoprocessorSigners"
+        }
+      ]
     },
     {
       "name": "HCULimit",
@@ -248,9 +256,26 @@
           ]
         ],
         "$upgradeCount": 2,
+        "aclAddress": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
+        "aclOwner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
         "getFHEVMExecutorAddress": "eth:0xD82385dADa1ae3E969447f20A3164F6213100e75",
         "getVersion": "HCULimit v0.1.0",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "fieldMeta": {
+        "aclOwner": {
+          "severity": "HIGH",
+          "description": "Owner of the Zama ACL contract. This account is authorized by onlyACLOwner for HCULimit administration.",
+          "type": "PERMISSION"
+        },
+        "getFHEVMExecutorAddress": {
+          "description": "FHEVMExecutor contract allowed to report operation HCU usage to this contract.",
+          "type": "EXTERNAL"
+        },
+        "aclAddress": {
+          "description": "ACL contract resolved through FHEVMExecutor and used by onlyACLOwner checks.",
+          "type": "EXTERNAL"
+        }
       },
       "implementationNames": {
         "eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2": "ERC1967Proxy",
@@ -261,7 +286,15 @@
     {
       "address": "eth:0x41b19EB4585450db79ac03ba9503106EC7895905",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
+          "description": "sign public decryption results accepted by the KMSVerifier.",
+          "role": ".getKmsSigners"
+        }
+      ]
     },
     {
       "address": "eth:0x4202860Fa6afAF3e2977cD139Ac693a05e4f9450",
@@ -353,12 +386,28 @@
     {
       "address": "eth:0x5d0e7033774dD43eE546D49b72Bd0B561E52f7C8",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
+          "description": "sign public decryption results accepted by the KMSVerifier.",
+          "role": ".getKmsSigners"
+        }
+      ]
     },
     {
       "address": "eth:0x6016DCA5e91e62826e3FEA1Fb0a763602dc1E385",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
+          "description": "sign public decryption results accepted by the KMSVerifier.",
+          "role": ".getKmsSigners"
+        }
+      ]
     },
     {
       "address": "eth:0x644f248299FA8E1DE46C97A72C36F354Ccdb8a1e",
@@ -368,7 +417,18 @@
     {
       "address": "eth:0x6681101780Fb503591535B36bB3F15781f01EAAF",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xbBfE1680b4a63ED05f7F80CE330BED7C992A586C",
+          "description": "pause the ACL.",
+          "role": ".pausers",
+          "via": [
+            { "address": "eth:0xE53e32a669357Ab0360103d8f294812B914AF9e4" }
+          ]
+        }
+      ]
     },
     {
       "name": "ConfidentialSteakcUSDCWrapper",
@@ -403,6 +463,10 @@
         "blockedUsers": [],
         "confidentialProtocolId": 1,
         "confidentialTotalSupply": "0x42b9ae51d5c870d9705c82780ca113495837d4444cff00000000000000010500",
+        "constructorArgs": [
+          "eth:0xAea1d2cc69aF93CA0fdd34426E74Ad7cB19E9745",
+          "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000beef00a59b577423653a1526c7009bde103f542b000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000017436f6e666964656e7469616c20737465616b6355534443000000000000000000000000000000000000000000000000000000000000000000000000000000000b63737465616b635553444300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000ae646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c20737465616b6355534443222c2273796d626f6c223a2263737465616b6355534443222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f6620737465616b635553444320736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d000000000000000000000000000000000000"
+        ],
         "contractURI": "data:application/json;utf8,{\"name\":\"Confidential steakcUSDC\",\"symbol\":\"csteakcUSDC\",\"description\":\"Confidential wrapper of steakcUSDC shielding it into a confidential token\"}",
         "decimals": 6,
         "fheAcl": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
@@ -434,8 +498,7 @@
           "type": "PERMISSION"
         },
         "underlying": {
-          "description": "ERC-20 token escrowed by this wrapper.",
-          "type": "EXTERNAL"
+          "description": "ERC-20 token escrowed by this wrapper."
         },
         "getUnderlyingDenyListSelector": {
           "severity": "HIGH",
@@ -448,16 +511,13 @@
           "type": "PERMISSION"
         },
         "fheAcl": {
-          "description": "Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles.",
-          "type": "EXTERNAL"
+          "description": "Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."
         },
         "fheCoprocessor": {
-          "description": "Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles.",
-          "type": "EXTERNAL"
+          "description": "Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles."
         },
         "fheKmsVerifier": {
-          "description": "Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS.",
-          "type": "EXTERNAL"
+          "description": "Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS."
         }
       },
       "implementationNames": {
@@ -510,17 +570,41 @@
     {
       "address": "eth:0x6dd470B50BbC1Ec03bf2B13B30c7d864F2025874",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xbBfE1680b4a63ED05f7F80CE330BED7C992A586C",
+          "description": "pause the ACL.",
+          "role": ".pausers"
+        }
+      ]
     },
     {
       "address": "eth:0x6e5f02Cd4B33f0Cf4ED5326ac9eE25e5aA8c4921",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
+          "description": "sign public decryption results accepted by the KMSVerifier.",
+          "role": ".getKmsSigners"
+        }
+      ]
     },
     {
       "address": "eth:0x705380c013c13B4ce62338ab1F012036BAC802b3",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xbBfE1680b4a63ED05f7F80CE330BED7C992A586C",
+          "description": "pause the ACL.",
+          "role": ".pausers"
+        }
+      ]
     },
     {
       "name": "Staking (Coprocessor)",
@@ -725,6 +809,10 @@
         "blockedUsers": [],
         "confidentialProtocolId": 1,
         "confidentialTotalSupply": "0x163b4b774427cc428f959eac3d6319c9916f3b58c0ff00000000000000010500",
+        "constructorArgs": [
+          "eth:0x9CFdA0290EdeF98D0539e5747bea9Bd889a08BaB",
+          "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e0000000000000000000000000000000000000000000000000000000000000012000000000000000000000000068749665ff8d2d112fa859aa293f07a622782f38000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205841557400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056358415574000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2058415574222c2273796d626f6c223a226358415574222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205841557420736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
+        ],
         "contractURI": "data:application/json;utf8,{\"name\":\"Confidential XAUt\",\"symbol\":\"cXAUt\",\"description\":\"Confidential wrapper of XAUt shielding it into a confidential token\"}",
         "decimals": 6,
         "fheAcl": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
@@ -756,8 +844,7 @@
           "type": "PERMISSION"
         },
         "underlying": {
-          "description": "ERC-20 token escrowed by this wrapper.",
-          "type": "EXTERNAL"
+          "description": "ERC-20 token escrowed by this wrapper."
         },
         "getUnderlyingDenyListSelector": {
           "severity": "HIGH",
@@ -770,16 +857,13 @@
           "type": "PERMISSION"
         },
         "fheAcl": {
-          "description": "Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles.",
-          "type": "EXTERNAL"
+          "description": "Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."
         },
         "fheCoprocessor": {
-          "description": "Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles.",
-          "type": "EXTERNAL"
+          "description": "Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles."
         },
         "fheKmsVerifier": {
-          "description": "Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS.",
-          "type": "EXTERNAL"
+          "description": "Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS."
         }
       },
       "implementationNames": {
@@ -818,6 +902,7 @@
           ]
         ],
         "$upgradeCount": 2,
+        "aclOwner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
         "DECRYPTION_RESULT_TYPEHASH": "0x89bac15e5ba205584832145601e359431e80fb9fb331ba5a22058132d525c794",
         "EIP712_PUBLIC_DECRYPT_TYPE": "PublicDecryptVerification(bytes32[] ctHandles,bytes decryptedResult,bytes extraData)",
         "eip712Domain": {
@@ -848,6 +933,26 @@
         "getVersion": "KMSVerifier v0.1.0",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": {
+        "aclOwner": {
+          "severity": "HIGH",
+          "description": "Owner of the Zama ACL contract. This account is authorized by onlyACLOwner to rotate the KMS signer set and threshold.",
+          "type": "PERMISSION"
+        },
+        "getKmsSigners": {
+          "severity": "HIGH",
+          "description": "KMS signers accepted by KMSVerifier. The threshold number of these signers must sign public decryption results before wrappers accept the decrypted values.",
+          "type": "PERMISSION"
+        },
+        "getThreshold": {
+          "severity": "HIGH",
+          "description": "Minimum number of configured KMS signer signatures required to accept a public decryption result.",
+          "type": "RISK_PARAMETER"
+        },
+        "eip712Domain": {
+          "description": "EIP-712 domain used when verifying KMS signatures over public decryption results."
+        }
+      },
       "implementationNames": {
         "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03": "ERC1967Proxy",
         "eth:0x8210A6c69FAc2e9856C7a19Ee70b26cFa3A4F0E2": "KMSVerifier"
@@ -862,12 +967,28 @@
     {
       "address": "eth:0x7C17BE232e5968BDa9516478B798b9E90D013fCC",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
+          "description": "sign public decryption results accepted by the KMSVerifier.",
+          "role": ".getKmsSigners"
+        }
+      ]
     },
     {
       "address": "eth:0x7C5Eeb4D8CED0101799B8Cc212eE874097364F58",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
+          "description": "sign public decryption results accepted by the KMSVerifier.",
+          "role": ".getKmsSigners"
+        }
+      ]
     },
     {
       "address": "eth:0x7df0Fe803832BB3Ca8906a6e49968C2421C1aE9B",
@@ -912,6 +1033,10 @@
         "blockedUsers": [],
         "confidentialProtocolId": 1,
         "confidentialTotalSupply": "0x452c695838b170429bdc7efb7e9b6e3d5aed9a8f91ff00000000000000010500",
+        "constructorArgs": [
+          "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
+          "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000a12cc123ba206d4031d1c7f6223d1c2ec249f4f3000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205a414d410000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005635a414d41000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c205a414d41222c2273796d626f6c223a22635a414d41222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205a414d4120736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
+        ],
         "contractURI": "data:application/json;utf8,{\"name\":\"Confidential ZAMA\",\"symbol\":\"cZAMA\",\"description\":\"Confidential wrapper of ZAMA shielding it into a confidential token\"}",
         "decimals": 6,
         "fheAcl": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
@@ -943,8 +1068,7 @@
           "type": "PERMISSION"
         },
         "underlying": {
-          "description": "ERC-20 token escrowed by this wrapper.",
-          "type": "EXTERNAL"
+          "description": "ERC-20 token escrowed by this wrapper."
         },
         "getUnderlyingDenyListSelector": {
           "severity": "HIGH",
@@ -957,16 +1081,13 @@
           "type": "PERMISSION"
         },
         "fheAcl": {
-          "description": "Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles.",
-          "type": "EXTERNAL"
+          "description": "Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."
         },
         "fheCoprocessor": {
-          "description": "Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles.",
-          "type": "EXTERNAL"
+          "description": "Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles."
         },
         "fheKmsVerifier": {
-          "description": "Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS.",
-          "type": "EXTERNAL"
+          "description": "Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS."
         }
       },
       "implementationNames": {
@@ -1018,6 +1139,10 @@
         "blockedUsers": [],
         "confidentialProtocolId": 1,
         "confidentialTotalSupply": "0x487d028947ece4850efebbb019dd9ef42887cbf4b0ff00000000000000010500",
+        "constructorArgs": [
+          "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
+          "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000ba2c598e11ed093079cc324fca5bbba99f616e83000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c2042524f4e00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056342524f4e000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2042524f4e222c2273796d626f6c223a226342524f4e222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f662042524f4e20736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
+        ],
         "contractURI": "data:application/json;utf8,{\"name\":\"Confidential BRON\",\"symbol\":\"cBRON\",\"description\":\"Confidential wrapper of BRON shielding it into a confidential token\"}",
         "decimals": 6,
         "fheAcl": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
@@ -1049,8 +1174,7 @@
           "type": "PERMISSION"
         },
         "underlying": {
-          "description": "ERC-20 token escrowed by this wrapper.",
-          "type": "EXTERNAL"
+          "description": "ERC-20 token escrowed by this wrapper."
         },
         "getUnderlyingDenyListSelector": {
           "severity": "HIGH",
@@ -1063,16 +1187,13 @@
           "type": "PERMISSION"
         },
         "fheAcl": {
-          "description": "Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles.",
-          "type": "EXTERNAL"
+          "description": "Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."
         },
         "fheCoprocessor": {
-          "description": "Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles.",
-          "type": "EXTERNAL"
+          "description": "Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles."
         },
         "fheKmsVerifier": {
-          "description": "Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS.",
-          "type": "EXTERNAL"
+          "description": "Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS."
         }
       },
       "implementationNames": {
@@ -1126,12 +1247,28 @@
     {
       "address": "eth:0x8edFb885a32C72aF32943D4db13D319181d18CB8",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xbBfE1680b4a63ED05f7F80CE330BED7C992A586C",
+          "description": "pause the ACL.",
+          "role": ".pausers"
+        }
+      ]
     },
     {
       "address": "eth:0x915055c5F05C0d88BCdf1e3DfBA18aBD2a18350f",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
+          "description": "sign public decryption results accepted by the KMSVerifier.",
+          "role": ".getKmsSigners"
+        }
+      ]
     },
     {
       "address": "eth:0x931FB6Ec104dDc9bc556983032b5b85b671db000",
@@ -1141,7 +1278,15 @@
     {
       "address": "eth:0x966188a1f697F6A1B5cfA51495DD8A8A7b5CdB8D",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
+          "description": "sign public decryption results accepted by the KMSVerifier.",
+          "role": ".getKmsSigners"
+        }
+      ]
     },
     {
       "name": "Safe",
@@ -1190,7 +1335,15 @@
     {
       "address": "eth:0x9b828219ad863491eb9b5225aE2d133eEDEa9B71",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xbBfE1680b4a63ED05f7F80CE330BED7C992A586C",
+          "description": "pause the ACL.",
+          "role": ".pausers"
+        }
+      ]
     },
     {
       "address": "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
@@ -1245,6 +1398,10 @@
         "blockedUsers": [],
         "confidentialProtocolId": 1,
         "confidentialTotalSupply": "0xcc3a4e581c35384e70c9c02ff9e71019dd80317094ff00000000000000010500",
+        "constructorArgs": [
+          "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
+          "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e0000000000000000000000000000000000000000000000000000000000000012000000000000000000000000027f6c8289550fce67f6b50bed1f519966afe5287000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c207447425000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056374474250000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2074474250222c2273796d626f6c223a226374474250222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66207447425020736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
+        ],
         "contractURI": "data:application/json;utf8,{\"name\":\"Confidential tGBP\",\"symbol\":\"ctGBP\",\"description\":\"Confidential wrapper of tGBP shielding it into a confidential token\"}",
         "decimals": 6,
         "fheAcl": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
@@ -1276,8 +1433,7 @@
           "type": "PERMISSION"
         },
         "underlying": {
-          "description": "ERC-20 token escrowed by this wrapper.",
-          "type": "EXTERNAL"
+          "description": "ERC-20 token escrowed by this wrapper."
         },
         "getUnderlyingDenyListSelector": {
           "severity": "HIGH",
@@ -1290,16 +1446,13 @@
           "type": "PERMISSION"
         },
         "fheAcl": {
-          "description": "Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles.",
-          "type": "EXTERNAL"
+          "description": "Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."
         },
         "fheCoprocessor": {
-          "description": "Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles.",
-          "type": "EXTERNAL"
+          "description": "Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles."
         },
         "fheKmsVerifier": {
-          "description": "Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS.",
-          "type": "EXTERNAL"
+          "description": "Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS."
         }
       },
       "implementationNames": {
@@ -1351,6 +1504,10 @@
         "blockedUsers": [],
         "confidentialProtocolId": 1,
         "confidentialTotalSupply": "0x816ca556a7edf712857520d80f28ba79f70a4fec24ff00000000000000010500",
+        "constructorArgs": [
+          "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
+          "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000dac17f958d2ee523a2206206994597c13d831ec7000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205553445400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056355534454000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2055534454222c2273796d626f6c223a226355534454222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205553445420736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
+        ],
         "contractURI": "data:application/json;utf8,{\"name\":\"Confidential USDT\",\"symbol\":\"cUSDT\",\"description\":\"Confidential wrapper of USDT shielding it into a confidential token\"}",
         "decimals": 6,
         "fheAcl": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
@@ -1382,8 +1539,7 @@
           "type": "PERMISSION"
         },
         "underlying": {
-          "description": "ERC-20 token escrowed by this wrapper.",
-          "type": "EXTERNAL"
+          "description": "ERC-20 token escrowed by this wrapper."
         },
         "getUnderlyingDenyListSelector": {
           "severity": "HIGH",
@@ -1396,16 +1552,13 @@
           "type": "PERMISSION"
         },
         "fheAcl": {
-          "description": "Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles.",
-          "type": "EXTERNAL"
+          "description": "Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."
         },
         "fheCoprocessor": {
-          "description": "Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles.",
-          "type": "EXTERNAL"
+          "description": "Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles."
         },
         "fheKmsVerifier": {
-          "description": "Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS.",
-          "type": "EXTERNAL"
+          "description": "Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS."
         }
       },
       "implementationNames": {
@@ -1429,7 +1582,7 @@
         {
           "permission": "interact",
           "from": "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458",
-          "description": "block and unblock users, transfer ownership, and authorize implementation upgrades.",
+          "description": "block and unblock users, and transfer ownership.",
           "role": ".owner"
         },
         {
@@ -1447,31 +1600,37 @@
         {
           "permission": "interact",
           "from": "eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1",
-          "description": "block and unblock users, transfer ownership, and authorize implementation upgrades.",
+          "description": "block and unblock users, and transfer ownership.",
           "role": ".owner"
         },
         {
           "permission": "interact",
+          "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
+          "description": "set the KMS signer set and signature threshold used for public decryption verification.",
+          "role": ".aclOwner"
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x80CB147Fd86dC6dEe3Eee7e4Cee33d1397d98071",
-          "description": "block and unblock users, transfer ownership, and authorize implementation upgrades.",
+          "description": "block and unblock users, and transfer ownership.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "eth:0x85dE671c3bec1aDeD752c3Cea943521181C826bc",
-          "description": "block and unblock users, transfer ownership, and authorize implementation upgrades.",
+          "description": "block and unblock users, and transfer ownership.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "eth:0xa873750ccBafD5ec7Dd13bfD5237d7129832eDD9",
-          "description": "block and unblock users, transfer ownership, and authorize implementation upgrades.",
+          "description": "block and unblock users, and transfer ownership.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "eth:0xAe0207C757Aa2B4019Ad96edD0092ddc63EF0c50",
-          "description": "block and unblock users, transfer ownership, and authorize implementation upgrades.",
+          "description": "block and unblock users, and transfer ownership.",
           "role": ".owner"
         },
         {
@@ -1495,19 +1654,37 @@
         {
           "permission": "interact",
           "from": "eth:0xBA4cFF6ED6F7Cb2A58776dECa4E984b498446762",
-          "description": "block and unblock users, transfer ownership, and authorize implementation upgrades.",
+          "description": "block and unblock users, and transfer ownership.",
           "role": ".owner"
         },
         {
           "permission": "interact",
+          "from": "eth:0xbBfE1680b4a63ED05f7F80CE330BED7C992A586C",
+          "description": "add, remove, or swap accounts that can pause the ACL.",
+          "role": ".aclOwner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
+          "description": "transfer ACL ownership, unpause the ACL, block or unblock accounts, manage PauserSet membership, and update Zama verifier signer sets and thresholds.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xCe0FC2e05CFff1B719EFF7169f7D80Af770c8EA2",
+          "description": "set the coprocessor signer set and signature threshold used for encrypted input verification.",
+          "role": ".aclOwner"
+        },
+        {
+          "permission": "interact",
           "from": "eth:0xda9396b82634Ea99243cE51258B6A5Ae512D4893",
-          "description": "block and unblock users, transfer ownership, and authorize implementation upgrades.",
+          "description": "block and unblock users, and transfer ownership.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "eth:0xe978F22157048E5DB8E5d07971376e86671672B2",
-          "description": "block and unblock users, transfer ownership, and authorize implementation upgrades.",
+          "description": "block and unblock users, and transfer ownership.",
           "role": ".owner"
         },
         {
@@ -1530,8 +1707,14 @@
         },
         {
           "permission": "upgrade",
+          "from": "eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2",
+          "description": "upgrade the HCULimit implementation.",
+          "role": ".aclOwner"
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458",
-          "role": ".owner"
+          "role": "admin"
         },
         {
           "permission": "upgrade",
@@ -1541,27 +1724,33 @@
         {
           "permission": "upgrade",
           "from": "eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1",
-          "role": ".owner"
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
+          "description": "upgrade the KMSVerifier implementation.",
+          "role": ".aclOwner"
         },
         {
           "permission": "upgrade",
           "from": "eth:0x80CB147Fd86dC6dEe3Eee7e4Cee33d1397d98071",
-          "role": ".owner"
+          "role": "admin"
         },
         {
           "permission": "upgrade",
           "from": "eth:0x85dE671c3bec1aDeD752c3Cea943521181C826bc",
-          "role": ".owner"
+          "role": "admin"
         },
         {
           "permission": "upgrade",
           "from": "eth:0xa873750ccBafD5ec7Dd13bfD5237d7129832eDD9",
-          "role": ".owner"
+          "role": "admin"
         },
         {
           "permission": "upgrade",
           "from": "eth:0xAe0207C757Aa2B4019Ad96edD0092ddc63EF0c50",
-          "role": ".owner"
+          "role": "admin"
         },
         {
           "permission": "upgrade",
@@ -1572,7 +1761,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0xBA4cFF6ED6F7Cb2A58776dECa4E984b498446762",
-          "role": ".owner"
+          "role": "admin"
         },
         {
           "permission": "upgrade",
@@ -1581,13 +1770,25 @@
         },
         {
           "permission": "upgrade",
+          "from": "eth:0xCe0FC2e05CFff1B719EFF7169f7D80Af770c8EA2",
+          "description": "upgrade the InputVerifier implementation.",
+          "role": ".aclOwner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xD82385dADa1ae3E969447f20A3164F6213100e75",
+          "description": "upgrade the FHEVMExecutor implementation.",
+          "role": ".aclOwner"
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0xda9396b82634Ea99243cE51258B6A5Ae512D4893",
-          "role": ".owner"
+          "role": "admin"
         },
         {
           "permission": "upgrade",
           "from": "eth:0xe978F22157048E5DB8E5d07971376e86671672B2",
-          "role": ".owner"
+          "role": "admin"
         },
         {
           "permission": "upgrade",
@@ -1820,7 +2021,15 @@
     {
       "address": "eth:0xB7978e602D2AF68258dA614AF949E014BF0DE0eb",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
+          "description": "sign public decryption results accepted by the KMSVerifier.",
+          "role": ".getKmsSigners"
+        }
+      ]
     },
     {
       "name": "ConfidentialBbqTGBPWrapper",
@@ -1855,6 +2064,10 @@
         "blockedUsers": [],
         "confidentialProtocolId": 1,
         "confidentialTotalSupply": "0xc16111568d6653739c6127e79797fe3aa220106891ff00000000000000010500",
+        "constructorArgs": [
+          "eth:0xAea1d2cc69aF93CA0fdd34426E74Ad7cB19E9745",
+          "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000beeffabcd0db09589dd21854aa760c52ab4bf04f000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000014436f6e666964656e7469616c20626271544742500000000000000000000000000000000000000000000000000000000000000000000000000000000000000008636262715447425000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a5646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2062627154474250222c2273796d626f6c223a226362627154474250222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66206262715447425020736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d000000000000000000000000000000000000000000000000000000"
+        ],
         "contractURI": "data:application/json;utf8,{\"name\":\"Confidential bbqTGBP\",\"symbol\":\"cbbqTGBP\",\"description\":\"Confidential wrapper of bbqTGBP shielding it into a confidential token\"}",
         "decimals": 6,
         "fheAcl": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
@@ -1886,8 +2099,7 @@
           "type": "PERMISSION"
         },
         "underlying": {
-          "description": "ERC-20 token escrowed by this wrapper.",
-          "type": "EXTERNAL"
+          "description": "ERC-20 token escrowed by this wrapper."
         },
         "getUnderlyingDenyListSelector": {
           "severity": "HIGH",
@@ -1900,16 +2112,13 @@
           "type": "PERMISSION"
         },
         "fheAcl": {
-          "description": "Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles.",
-          "type": "EXTERNAL"
+          "description": "Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."
         },
         "fheCoprocessor": {
-          "description": "Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles.",
-          "type": "EXTERNAL"
+          "description": "Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles."
         },
         "fheKmsVerifier": {
-          "description": "Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS.",
-          "type": "EXTERNAL"
+          "description": "Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS."
         }
       },
       "implementationNames": {
@@ -1936,7 +2145,42 @@
       "deployerAddress": "eth:0xFAa70BBE20b7a7a14E9bb5F162C747cb4B991f91",
       "sinceTimestamp": 1763549567,
       "sinceBlock": 23832655,
-      "values": { "$immutable": true, "getVersion": "PauserSet v0.1.0" },
+      "values": {
+        "$immutable": true,
+        "aclOwner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+        "getVersion": "PauserSet v0.1.0",
+        "pausers": [
+          "eth:0x9436E954345f169De2c2aF25b33fB326249ed827",
+          "eth:0xb2976F1B4f1b2B1966f53b1Ad8c37d68E4Cdb580",
+          "eth:0x32cE587f9813d85A8c334085Ed72A7753Ef260F4",
+          "eth:0x9E56885F687FE5Cf9dEAfD5a513379d1039ca32C",
+          "eth:0x9c613CdBE29e159b8D322C4A4a404CcE967cd68D",
+          "eth:0xc49be86315b95e359E2fefeF7e2592CD800f8cca",
+          "eth:0x2BEc9BE326870B7bCaD1eD6A02ad13148487Cf7A",
+          "eth:0xD9b64fBc004f1733ee49dE59DD9AD3B9F627EC93",
+          "eth:0x0270e7cE4DAaF4809652804D74d4f05133d74fDD",
+          "eth:0xE53e32a669357Ab0360103d8f294812B914AF9e4",
+          "eth:0x6E24940cF0068bD19fcA11711761d3C874c18bE2",
+          "eth:0x94296905225946ff90A621ca767883CA51286Dc1",
+          "eth:0xBDb78474CB8Bbfe7c54cBC108Ae540851E374bed",
+          "eth:0x6dd470B50BbC1Ec03bf2B13B30c7d864F2025874",
+          "eth:0x8edFb885a32C72aF32943D4db13D319181d18CB8",
+          "eth:0x705380c013c13B4ce62338ab1F012036BAC802b3",
+          "eth:0x9b828219ad863491eb9b5225aE2d133eEDEa9B71"
+        ]
+      },
+      "fieldMeta": {
+        "aclOwner": {
+          "severity": "HIGH",
+          "description": "Owner of the Zama ACL contract. This account is authorized by onlyACLOwner to add, remove, or swap pausers.",
+          "type": "PERMISSION"
+        },
+        "pausers": {
+          "severity": "HIGH",
+          "description": "Accounts that can pause the ACL, reconstructed from AddPauser and RemovePauser events.",
+          "type": "PERMISSION"
+        }
+      },
       "implementationNames": {
         "eth:0xbBfE1680b4a63ED05f7F80CE330BED7C992A586C": "PauserSet"
       },
@@ -1957,7 +2201,7 @@
         {
           "permission": "interact",
           "from": "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458",
-          "description": "block and unblock users, transfer ownership, and authorize implementation upgrades.",
+          "description": "block and unblock users, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -1984,7 +2228,7 @@
         {
           "permission": "interact",
           "from": "eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1",
-          "description": "block and unblock users, transfer ownership, and authorize implementation upgrades.",
+          "description": "block and unblock users, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -1992,8 +2236,17 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
+          "description": "set the KMS signer set and signature threshold used for public decryption verification.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x80CB147Fd86dC6dEe3Eee7e4Cee33d1397d98071",
-          "description": "block and unblock users, transfer ownership, and authorize implementation upgrades.",
+          "description": "block and unblock users, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -2002,7 +2255,7 @@
         {
           "permission": "interact",
           "from": "eth:0x85dE671c3bec1aDeD752c3Cea943521181C826bc",
-          "description": "block and unblock users, transfer ownership, and authorize implementation upgrades.",
+          "description": "block and unblock users, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -2011,7 +2264,7 @@
         {
           "permission": "interact",
           "from": "eth:0xa873750ccBafD5ec7Dd13bfD5237d7129832eDD9",
-          "description": "block and unblock users, transfer ownership, and authorize implementation upgrades.",
+          "description": "block and unblock users, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -2020,7 +2273,7 @@
         {
           "permission": "interact",
           "from": "eth:0xAe0207C757Aa2B4019Ad96edD0092ddc63EF0c50",
-          "description": "block and unblock users, transfer ownership, and authorize implementation upgrades.",
+          "description": "block and unblock users, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -2068,7 +2321,7 @@
         {
           "permission": "interact",
           "from": "eth:0xBA4cFF6ED6F7Cb2A58776dECa4E984b498446762",
-          "description": "block and unblock users, transfer ownership, and authorize implementation upgrades.",
+          "description": "block and unblock users, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -2076,8 +2329,35 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0xbBfE1680b4a63ED05f7F80CE330BED7C992A586C",
+          "description": "add, remove, or swap accounts that can pause the ACL.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
+          "description": "transfer ACL ownership, unpause the ACL, block or unblock accounts, manage PauserSet membership, and update Zama verifier signer sets and thresholds.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xCe0FC2e05CFff1B719EFF7169f7D80Af770c8EA2",
+          "description": "set the coprocessor signer set and signature threshold used for encrypted input verification.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "eth:0xda9396b82634Ea99243cE51258B6A5Ae512D4893",
-          "description": "block and unblock users, transfer ownership, and authorize implementation upgrades.",
+          "description": "block and unblock users, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -2086,7 +2366,7 @@
         {
           "permission": "interact",
           "from": "eth:0xe978F22157048E5DB8E5d07971376e86671672B2",
-          "description": "block and unblock users, transfer ownership, and authorize implementation upgrades.",
+          "description": "block and unblock users, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -2121,8 +2401,17 @@
         },
         {
           "permission": "upgrade",
+          "from": "eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2",
+          "description": "upgrade the HCULimit implementation.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458",
-          "role": ".owner",
+          "role": "admin",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
           ]
@@ -2138,7 +2427,16 @@
         {
           "permission": "upgrade",
           "from": "eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1",
-          "role": ".owner",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
+          "description": "upgrade the KMSVerifier implementation.",
+          "role": ".aclOwner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
           ]
@@ -2146,7 +2444,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x80CB147Fd86dC6dEe3Eee7e4Cee33d1397d98071",
-          "role": ".owner",
+          "role": "admin",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
           ]
@@ -2154,7 +2452,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x85dE671c3bec1aDeD752c3Cea943521181C826bc",
-          "role": ".owner",
+          "role": "admin",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
           ]
@@ -2162,7 +2460,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0xa873750ccBafD5ec7Dd13bfD5237d7129832eDD9",
-          "role": ".owner",
+          "role": "admin",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
           ]
@@ -2170,7 +2468,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0xAe0207C757Aa2B4019Ad96edD0092ddc63EF0c50",
-          "role": ".owner",
+          "role": "admin",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
           ]
@@ -2187,7 +2485,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0xBA4cFF6ED6F7Cb2A58776dECa4E984b498446762",
-          "role": ".owner",
+          "role": "admin",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
           ]
@@ -2202,8 +2500,26 @@
         },
         {
           "permission": "upgrade",
+          "from": "eth:0xCe0FC2e05CFff1B719EFF7169f7D80Af770c8EA2",
+          "description": "upgrade the InputVerifier implementation.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xD82385dADa1ae3E969447f20A3164F6213100e75",
+          "description": "upgrade the FHEVMExecutor implementation.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0xda9396b82634Ea99243cE51258B6A5Ae512D4893",
-          "role": ".owner",
+          "role": "admin",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
           ]
@@ -2211,7 +2527,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0xe978F22157048E5DB8E5d07971376e86671672B2",
-          "role": ".owner",
+          "role": "admin",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
           ]
@@ -2315,7 +2631,18 @@
     {
       "address": "eth:0xBdBA7b00A4b2dd3d3382a4217e82C5930791E2aA",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xbBfE1680b4a63ED05f7F80CE330BED7C992A586C",
+          "description": "pause the ACL.",
+          "role": ".pausers",
+          "via": [
+            { "address": "eth:0xE53e32a669357Ab0360103d8f294812B914AF9e4" }
+          ]
+        }
+      ]
     },
     {
       "address": "eth:0xBe8b485D4029253375b11dEaAF506eEA781Bb192",
@@ -2325,7 +2652,15 @@
     {
       "address": "eth:0xbf05c17BEB0BF2F2c78Cd491A53a148e035279C3",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
+          "description": "sign public decryption results accepted by the KMSVerifier.",
+          "role": ".getKmsSigners"
+        }
+      ]
     },
     {
       "address": "eth:0xc2e5960EDa1E8D801b19e96D886B946Dfb4bE709",
@@ -2367,6 +2702,7 @@
           ]
         ],
         "$upgradeCount": 3,
+        "blockedAccounts": [],
         "getFHEVMExecutorAddress": "eth:0xD82385dADa1ae3E969447f20A3164F6213100e75",
         "getPauserSetAddress": "eth:0xbBfE1680b4a63ED05f7F80CE330BED7C992A586C",
         "getVersion": "ACL v0.2.0",
@@ -2374,6 +2710,36 @@
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "fieldMeta": {
+        "owner": {
+          "severity": "HIGH",
+          "description": "Owner of the ACL and host-contract owner checked by onlyACLOwner in the Zama verifier and helper contracts.",
+          "type": "PERMISSION"
+        },
+        "pendingOwner": {
+          "severity": "HIGH",
+          "description": "Pending owner for a two-step ACL ownership transfer.",
+          "type": "PERMISSION"
+        },
+        "paused": {
+          "severity": "HIGH",
+          "description": "Whether ACL operations that require whenNotPaused are currently paused.",
+          "type": "RISK_PARAMETER"
+        },
+        "blockedAccounts": {
+          "severity": "HIGH",
+          "description": "Accounts denied from using ACL operations, reconstructed from BlockedAccount and UnblockedAccount events.",
+          "type": "PERMISSION"
+        },
+        "getFHEVMExecutorAddress": {
+          "description": "FHEVMExecutor contract that may grant transient handle allowances without first being allowed by the caller.",
+          "type": "EXTERNAL"
+        },
+        "getPauserSetAddress": {
+          "description": "PauserSet contract whose members may pause the ACL.",
+          "type": "EXTERNAL"
+        }
       },
       "implementationNames": {
         "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6": "ERC1967Proxy",
@@ -2421,6 +2787,7 @@
           ]
         ],
         "$upgradeCount": 2,
+        "aclOwner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
         "EIP712_INPUT_VERIFICATION_TYPE": "CiphertextVerification(bytes32[] ctHandles,address userAddress,address contractAddress,uint256 contractChainId,bytes extraData)",
         "EIP712_INPUT_VERIFICATION_TYPEHASH": "0x7572bd9d6960146795387efc75c1f9d948f0c5aa786c2bb453b4b150e49801b4",
         "eip712Domain": {
@@ -2439,6 +2806,26 @@
         "getThreshold": 1,
         "getVersion": "InputVerifier v0.2.0",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "fieldMeta": {
+        "aclOwner": {
+          "severity": "HIGH",
+          "description": "Owner of the Zama ACL contract. This account is authorized by onlyACLOwner to rotate the coprocessor signer set and threshold.",
+          "type": "PERMISSION"
+        },
+        "getCoprocessorSigners": {
+          "severity": "HIGH",
+          "description": "Coprocessor signers accepted by InputVerifier. The threshold number of these signers must sign encrypted input bundles before the FHEVMExecutor accepts the resulting ciphertext handles.",
+          "type": "PERMISSION"
+        },
+        "getThreshold": {
+          "severity": "HIGH",
+          "description": "Minimum number of configured coprocessor signer signatures required to accept an encrypted input bundle.",
+          "type": "RISK_PARAMETER"
+        },
+        "eip712Domain": {
+          "description": "EIP-712 domain used when verifying coprocessor signatures over encrypted input bundles."
+        }
       },
       "implementationNames": {
         "eth:0xCe0FC2e05CFff1B719EFF7169f7D80Af770c8EA2": "ERC1967Proxy",
@@ -2481,12 +2868,35 @@
           ]
         ],
         "$upgradeCount": 3,
+        "aclOwner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
         "getACLAddress": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
         "getHandleVersion": 0,
         "getHCULimitAddress": "eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2",
         "getInputVerifierAddress": "eth:0xCe0FC2e05CFff1B719EFF7169f7D80Af770c8EA2",
         "getVersion": "FHEVMExecutor v0.2.0",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "fieldMeta": {
+        "aclOwner": {
+          "severity": "HIGH",
+          "description": "Owner of the Zama ACL contract. This account is authorized by onlyACLOwner for FHEVMExecutor administration.",
+          "type": "PERMISSION"
+        },
+        "getACLAddress": {
+          "description": "ACL contract used to check and grant access to encrypted handles.",
+          "type": "EXTERNAL"
+        },
+        "getHCULimitAddress": {
+          "description": "HCULimit contract used to account for homomorphic computation units consumed by encrypted operations.",
+          "type": "EXTERNAL"
+        },
+        "getInputVerifierAddress": {
+          "description": "InputVerifier contract used to verify coprocessor signatures over encrypted input bundles.",
+          "type": "EXTERNAL"
+        },
+        "getHandleVersion": {
+          "description": "Current ciphertext handle version emitted by the executor."
+        }
       },
       "implementationNames": {
         "eth:0xD82385dADa1ae3E969447f20A3164F6213100e75": "ERC1967Proxy",
@@ -2542,6 +2952,10 @@
         "blockedUsers": [],
         "confidentialProtocolId": 1,
         "confidentialTotalSupply": "0xb14fb70c242f08ca24c5a0f912c311b07fad516bd5ff00000000000000010500",
+        "constructorArgs": [
+          "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
+          "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205745544800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056357455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2057455448222c2273796d626f6c223a226357455448222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205745544820736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
+        ],
         "contractURI": "data:application/json;utf8,{\"name\":\"Confidential WETH\",\"symbol\":\"cWETH\",\"description\":\"Confidential wrapper of WETH shielding it into a confidential token\"}",
         "decimals": 6,
         "fheAcl": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
@@ -2573,8 +2987,7 @@
           "type": "PERMISSION"
         },
         "underlying": {
-          "description": "ERC-20 token escrowed by this wrapper.",
-          "type": "EXTERNAL"
+          "description": "ERC-20 token escrowed by this wrapper."
         },
         "getUnderlyingDenyListSelector": {
           "severity": "HIGH",
@@ -2587,16 +3000,13 @@
           "type": "PERMISSION"
         },
         "fheAcl": {
-          "description": "Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles.",
-          "type": "EXTERNAL"
+          "description": "Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."
         },
         "fheCoprocessor": {
-          "description": "Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles.",
-          "type": "EXTERNAL"
+          "description": "Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles."
         },
         "fheKmsVerifier": {
-          "description": "Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS.",
-          "type": "EXTERNAL"
+          "description": "Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS."
         }
       },
       "implementationNames": {
@@ -2608,12 +3018,28 @@
     {
       "address": "eth:0xdC472efa1642D5afB684aAaa546E22FB24AAB965",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
+          "description": "sign public decryption results accepted by the KMSVerifier.",
+          "role": ".getKmsSigners"
+        }
+      ]
     },
     {
       "address": "eth:0xDFc9Dcb3D206AA164770874f36a4B5AD2EE5194f",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
+          "description": "sign public decryption results accepted by the KMSVerifier.",
+          "role": ".getKmsSigners"
+        }
+      ]
     },
     {
       "name": "ZamaGovMultisigA",
@@ -2630,7 +3056,7 @@
         {
           "permission": "interact",
           "from": "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458",
-          "description": "block and unblock users, transfer ownership, and authorize implementation upgrades.",
+          "description": "block and unblock users, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -2657,7 +3083,7 @@
         {
           "permission": "interact",
           "from": "eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1",
-          "description": "block and unblock users, transfer ownership, and authorize implementation upgrades.",
+          "description": "block and unblock users, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -2665,8 +3091,17 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
+          "description": "set the KMS signer set and signature threshold used for public decryption verification.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x80CB147Fd86dC6dEe3Eee7e4Cee33d1397d98071",
-          "description": "block and unblock users, transfer ownership, and authorize implementation upgrades.",
+          "description": "block and unblock users, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -2675,7 +3110,7 @@
         {
           "permission": "interact",
           "from": "eth:0x85dE671c3bec1aDeD752c3Cea943521181C826bc",
-          "description": "block and unblock users, transfer ownership, and authorize implementation upgrades.",
+          "description": "block and unblock users, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -2684,7 +3119,7 @@
         {
           "permission": "interact",
           "from": "eth:0xa873750ccBafD5ec7Dd13bfD5237d7129832eDD9",
-          "description": "block and unblock users, transfer ownership, and authorize implementation upgrades.",
+          "description": "block and unblock users, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -2693,7 +3128,7 @@
         {
           "permission": "interact",
           "from": "eth:0xAe0207C757Aa2B4019Ad96edD0092ddc63EF0c50",
-          "description": "block and unblock users, transfer ownership, and authorize implementation upgrades.",
+          "description": "block and unblock users, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -2741,7 +3176,7 @@
         {
           "permission": "interact",
           "from": "eth:0xBA4cFF6ED6F7Cb2A58776dECa4E984b498446762",
-          "description": "block and unblock users, transfer ownership, and authorize implementation upgrades.",
+          "description": "block and unblock users, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -2749,8 +3184,35 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0xbBfE1680b4a63ED05f7F80CE330BED7C992A586C",
+          "description": "add, remove, or swap accounts that can pause the ACL.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
+          "description": "transfer ACL ownership, unpause the ACL, block or unblock accounts, manage PauserSet membership, and update Zama verifier signer sets and thresholds.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xCe0FC2e05CFff1B719EFF7169f7D80Af770c8EA2",
+          "description": "set the coprocessor signer set and signature threshold used for encrypted input verification.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "eth:0xda9396b82634Ea99243cE51258B6A5Ae512D4893",
-          "description": "block and unblock users, transfer ownership, and authorize implementation upgrades.",
+          "description": "block and unblock users, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -2759,7 +3221,7 @@
         {
           "permission": "interact",
           "from": "eth:0xe978F22157048E5DB8E5d07971376e86671672B2",
-          "description": "block and unblock users, transfer ownership, and authorize implementation upgrades.",
+          "description": "block and unblock users, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -2794,8 +3256,17 @@
         },
         {
           "permission": "upgrade",
+          "from": "eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2",
+          "description": "upgrade the HCULimit implementation.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458",
-          "role": ".owner",
+          "role": "admin",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
           ]
@@ -2811,7 +3282,16 @@
         {
           "permission": "upgrade",
           "from": "eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1",
-          "role": ".owner",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
+          "description": "upgrade the KMSVerifier implementation.",
+          "role": ".aclOwner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
           ]
@@ -2819,7 +3299,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x80CB147Fd86dC6dEe3Eee7e4Cee33d1397d98071",
-          "role": ".owner",
+          "role": "admin",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
           ]
@@ -2827,7 +3307,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x85dE671c3bec1aDeD752c3Cea943521181C826bc",
-          "role": ".owner",
+          "role": "admin",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
           ]
@@ -2835,7 +3315,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0xa873750ccBafD5ec7Dd13bfD5237d7129832eDD9",
-          "role": ".owner",
+          "role": "admin",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
           ]
@@ -2843,7 +3323,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0xAe0207C757Aa2B4019Ad96edD0092ddc63EF0c50",
-          "role": ".owner",
+          "role": "admin",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
           ]
@@ -2860,7 +3340,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0xBA4cFF6ED6F7Cb2A58776dECa4E984b498446762",
-          "role": ".owner",
+          "role": "admin",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
           ]
@@ -2875,8 +3355,26 @@
         },
         {
           "permission": "upgrade",
+          "from": "eth:0xCe0FC2e05CFff1B719EFF7169f7D80Af770c8EA2",
+          "description": "upgrade the InputVerifier implementation.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xD82385dADa1ae3E969447f20A3164F6213100e75",
+          "description": "upgrade the FHEVMExecutor implementation.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0xda9396b82634Ea99243cE51258B6A5Ae512D4893",
-          "role": ".owner",
+          "role": "admin",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
           ]
@@ -2884,7 +3382,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0xe978F22157048E5DB8E5d07971376e86671672B2",
-          "role": ".owner",
+          "role": "admin",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
           ]
@@ -3007,6 +3505,14 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xbBfE1680b4a63ED05f7F80CE330BED7C992A586C",
+          "description": "pause the ACL.",
+          "role": ".pausers"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xBdBA7b00A4b2dd3d3382a4217e82C5930791E2aA",
       "sinceTimestamp": 1766445107,
@@ -3070,6 +3576,10 @@
         "blockedUsers": [],
         "confidentialProtocolId": 1,
         "confidentialTotalSupply": "0x13b4b0eda60887bee5f1072d6d32ea0cd4061bc438ff00000000000000010500",
+        "constructorArgs": [
+          "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
+          "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205553444300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056355534443000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2055534443222c2273796d626f6c223a226355534443222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205553444320736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
+        ],
         "contractURI": "data:application/json;utf8,{\"name\":\"Confidential USDC\",\"symbol\":\"cUSDC\",\"description\":\"Confidential wrapper of USDC shielding it into a confidential token\"}",
         "decimals": 6,
         "fheAcl": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
@@ -3101,8 +3611,7 @@
           "type": "PERMISSION"
         },
         "underlying": {
-          "description": "ERC-20 token escrowed by this wrapper.",
-          "type": "EXTERNAL"
+          "description": "ERC-20 token escrowed by this wrapper."
         },
         "getUnderlyingDenyListSelector": {
           "severity": "HIGH",
@@ -3115,16 +3624,13 @@
           "type": "PERMISSION"
         },
         "fheAcl": {
-          "description": "Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles.",
-          "type": "EXTERNAL"
+          "description": "Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."
         },
         "fheCoprocessor": {
-          "description": "Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles.",
-          "type": "EXTERNAL"
+          "description": "Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles."
         },
         "fheKmsVerifier": {
-          "description": "Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS.",
-          "type": "EXTERNAL"
+          "description": "Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS."
         }
       },
       "implementationNames": {
@@ -3322,7 +3828,15 @@
     {
       "address": "eth:0xe9f7ecfF21a2e0Ca58eA26ae869FEF38ab49ed6f",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
+          "description": "sign public decryption results accepted by the KMSVerifier.",
+          "role": ".getKmsSigners"
+        }
+      ]
     },
     {
       "name": "ConfidentialTokenWrappersRegistry",
@@ -4513,17 +5027,17 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "zama/ConfidentialTokenWrappersRegistry": "0xf402c8c3111ccf8f44ac9ab91e67ecac7bbaf83b5a07f02ba76bddf979e5aeb8",
-    "zama/ConfidentialWrapperV3": "0x22b31283367296d5a0a663edd2706ff154fd551130ab0f8f8bca3ea7243aa736",
+    "zama/ConfidentialWrapperV3": "0x2af134a4c8d8bac46ae03c385334b08c7674ade2a124f1b2405278aa00a1a287",
     "zama/Multisig": "0xfacece6ea884ad4d49a3d294d69053b6102e847852204f7f3a65f9980facf297",
     "zama/ProtocolStaking": "0x5884f0df97651fb8fe7e194b5b33b695d7083e5a4fa5c109c9ac1cee80d193d3",
-    "zama/ZamaACL": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
+    "zama/ZamaACL": "0x3c18c9d4d1944604ae596d5c1e9de891d569ef45ead3c9ba4e84bc4d5fe54602",
     "zama/ZamaDAO": "0xfdc0657fce067cffceacf21c2bc38f8c430c7c5ac4ebbe75f97dca7436e0f4b8",
-    "zama/ZamaFHEVMExecutor": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
-    "zama/ZamaHCULimit": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
-    "zama/ZamaInputVerifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
-    "zama/ZamaKMSVerifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
-    "zama/ZamaPauserSet": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+    "zama/ZamaFHEVMExecutor": "0x19e0e0c6abc98a3d3155c52e9fe91114df722bb21026ae0222ca38c1262f48b1",
+    "zama/ZamaHCULimit": "0x2af793f85b69ebbbe2c86870f1d4bcc1effab09e2deb9be0dda85a86acef4733",
+    "zama/ZamaInputVerifier": "0x29f14af7297da26e20e06b601f3abcbecbdfb45fc30532f5009778d6b46107d4",
+    "zama/ZamaKMSVerifier": "0x302263334cd01ab4e2a4fb47c9fe81dacf9faac42d89e3ca63b8c506e90935e7",
+    "zama/ZamaPauserSet": "0x1af56cc25e42342b2f464add26e41d36787603eb96bf24f0923abdf7caf5d35f"
   },
   "usedBlockNumbers": { "ethereum": 25387852 },
-  "permissionsConfigHash": "0xde5a17f506024487a1fca0d1143849a182bdd058384aa8e6bcf8aefd7f3d9092"
+  "permissionsConfigHash": "0xf9999937b98afa4a742a5eec19367546f5999068068ffbda6613e013887037b6"
 }
