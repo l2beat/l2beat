@@ -17,11 +17,25 @@ import { NODE_WIDTH } from './store/utils/constants'
 import { topLevelByDescendant } from './store/utils/subnodes'
 import { Viewport } from './view/Viewport'
 
-function recurse(node: Node): string[] {
-  if (node.subnodes.length > 0) {
-    return node.subnodes.flatMap((n) => recurse(n))
+// Leaf ids of every node that is selected or sits inside a selected one, so a
+// member selected inside an opened group still resolves to its address.
+function selectedLeafIds(
+  nodes: readonly Node[],
+  selected: ReadonlySet<string>,
+): string[] {
+  const ids: string[] = []
+  const walk = (list: readonly Node[], underSelected: boolean) => {
+    for (const node of list) {
+      const on = underSelected || selected.has(node.id)
+      if (node.subnodes.length > 0) {
+        walk(node.subnodes, on)
+      } else if (on) {
+        ids.push(node.id)
+      }
+    }
   }
-  return [node.id]
+  walk(nodes, false)
+  return ids
 }
 
 export function NodesPanel() {
@@ -149,9 +163,7 @@ function useSynchronizeSelection() {
 
   useEffect(() => {
     const firstGlobal = selectedGlobal[0]
-    const selectedAddresses = nodes
-      .filter((n) => selectedNodes.includes(n.id))
-      .flatMap((n) => recurse(n))
+    const selectedAddresses = selectedLeafIds(nodes, new Set(selectedNodes))
 
     if (selectedAddresses.length > 0 && !eq(lastSelection, selectedAddresses)) {
       rememberSelection(selectedAddresses)

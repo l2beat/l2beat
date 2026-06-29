@@ -89,16 +89,32 @@ export function applyHistorySnapshot(
 }
 
 function snapshotNodesEqual(left: Node, right: Node): boolean {
-  return (
-    left.id === right.id &&
-    left.name === right.name &&
-    left.color === right.color &&
-    left.box.x === right.box.x &&
-    left.box.y === right.box.y &&
-    left.box.width === right.box.width &&
-    left.box.height === right.box.height &&
-    arraysEqual(left.hiddenFields, right.hiddenFields)
-  )
+  if (
+    left.id !== right.id ||
+    left.name !== right.name ||
+    left.color !== right.color ||
+    left.box.x !== right.box.x ||
+    left.box.y !== right.box.y ||
+    left.box.width !== right.box.width ||
+    left.box.height !== right.box.height ||
+    !arraysEqual(left.hiddenFields, right.hiddenFields) ||
+    left.subnodes.length !== right.subnodes.length
+  ) {
+    return false
+  }
+  // Members of opened groups live nested, so a member drag only shows up here.
+  for (let index = 0; index < left.subnodes.length; index++) {
+    const leftSubnode = left.subnodes[index]
+    const rightSubnode = right.subnodes[index]
+    if (
+      !leftSubnode ||
+      !rightSubnode ||
+      !snapshotNodesEqual(leftSubnode, rightSubnode)
+    ) {
+      return false
+    }
+  }
+  return true
 }
 
 function arraysEqual(
