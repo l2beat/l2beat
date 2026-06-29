@@ -97,10 +97,10 @@ export function collectOutgoingFields(
   const seen = new Set<string>()
   for (const node of subnodes) {
     for (const field of node.fields) {
-      if (internal.has(field.target) || seen.has(field.target)) {
+      if (internal.has(field.target) || seen.has(node.name)) {
         continue
       }
-      seen.add(field.target)
+      seen.add(node.name)
       outgoing.push({ ...field, name: node.name })
     }
   }
