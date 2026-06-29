@@ -190,7 +190,7 @@ export const zama: BaseProject = {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'The smart contracts are source-available, but users also rely on offchain FHE execution and threshold decryption services whose outputs are accepted onchain through signature verification.',
+        'The smart contracts are source-available, but users also rely on offchain FHE execution and threshold decryption services whose outputs are accepted onchain through signature verification. The offchain data cannot currently be fully reproduced.',
     },
     privacy: {
       value: `${kmsThreshold}/${kmsSignerCount} KMS threshold`,
