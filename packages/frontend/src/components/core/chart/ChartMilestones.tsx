@@ -362,8 +362,8 @@ function mapMilestones<T extends { timestamp: number }>(
       bucket = timestamp
     }
     if (bucket === undefined) continue
-    result[bucket] ??= []
-    result[bucket].push(milestone)
+    const bucketMilestones = (result[bucket] ??= [])
+    bucketMilestones.push(milestone)
   }
 
   return result

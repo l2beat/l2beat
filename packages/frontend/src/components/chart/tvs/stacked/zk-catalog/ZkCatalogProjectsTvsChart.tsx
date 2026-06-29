@@ -1,5 +1,5 @@
 import type { Milestone } from '@l2beat/config'
-import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { Area, AreaChart } from 'recharts'
@@ -27,6 +27,7 @@ import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatTimestamp } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generateColors'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import { rangeToResolution } from '~/utils/range/range'
 
 interface ZkCatalogProjectsTvsChartProps {
   project: ChartProject
@@ -67,12 +68,20 @@ export function ZkCatalogProjectsTvsChart({
     )
   }, [projectsForTvs])
 
+  // Round to the active resolution so it matches the data gate in the query
+  // (which floors each project's `sinceTimestamp` to the resolution). Without
+  // this the tooltip would hide a project at its first datapoint, even though
+  // its area is already drawn there.
+  const resolution = rangeToResolution(range)
   const sinceByProjectId = useMemo(
     () =>
       new Map(
-        projectsForTvs.map((p) => [p.projectId.toString(), p.sinceTimestamp]),
+        projectsForTvs.map((p) => [
+          p.projectId.toString(),
+          UnixTime.toStartOf(p.sinceTimestamp, resolution),
+        ]),
       ),
-    [projectsForTvs],
+    [projectsForTvs, resolution],
   )
 
   const colors = useMemo(
