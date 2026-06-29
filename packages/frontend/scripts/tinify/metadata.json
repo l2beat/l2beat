@@ -1564,5 +1564,7 @@
   "static/icons/zama.png": "3f2044dcb036c9a7b74e81cec0db1e8f",
   "static/meta-images/privacy/projects/zama/opengraph-image.png": "7a927a939c55c1ae93da0574ff8206d4",
   "static/images/architecture/zama-pool.png": "750cf1b10c3c7bf32cce3ffafc4ab432",
-  "static/images/architecture/zama.png": "a15c3290912cd368290ea066799d3e72"
+  "static/images/architecture/zama.png": "a15c3290912cd368290ea066799d3e72",
+  "static/icons/zama-cw.png": "6eb93e31316208edbb7a89fa89022868",
+  "static/meta-images/privacy/projects/zama-cw/opengraph-image.png": "f86319a89e02a5365ec857d065c3f85e"
 }

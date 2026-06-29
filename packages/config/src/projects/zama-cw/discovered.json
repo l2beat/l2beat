@@ -1,7 +1,7 @@
 {
-  "name": "zama",
+  "name": "zama-cw",
   "timestamp": 1782485499,
-  "configHash": "0xb79a6738303059eb9f5525e58c6ea079a7a565d5a73320f96b3c432089c1f8d4",
+  "configHash": "0x2de8b851098fee269a3d58b4035085adddb34cb4505e54af33abe952f4fc0b44",
   "entries": [
     {
       "address": "eth:0x0321a4Ee7E843A83Fa314f4e76E756864CBdE62e",

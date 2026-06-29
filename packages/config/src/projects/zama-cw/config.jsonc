@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
-  "name": "zama",
+  "name": "zama-cw",
   "import": ["../globalConfig.jsonc"],
   "types": {
     "ZamaAddress": {

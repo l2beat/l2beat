@@ -57,6 +57,7 @@ import { vector } from '../projects/vector/vector'
 import { wormholeNtt } from '../projects/wormhole-ntt/wormhole-ntt'
 import { wormholeWtt } from '../projects/wormhole-wtt/wormhole-wtt'
 import { zama } from '../projects/zama/zama'
+import { zamaCw } from '../projects/zama-cw/zama-cw'
 import { zkprover } from '../projects/zkprover/zkprover'
 import { zksyncprover } from '../projects/zksyncprover/zksyncprover'
 import type { BaseProject } from '../types'
@@ -99,6 +100,7 @@ export const refactored: BaseProject[] = [
   avalanche,
   monad,
   tempo,
+  zama,
   // interop protocols
   debridgeDln,
   hyperlaneHwr,
@@ -128,5 +130,5 @@ export const refactored: BaseProject[] = [
   railgun,
   strk20,
   tornadoCash,
-  zama,
+  zamaCw,
 ]

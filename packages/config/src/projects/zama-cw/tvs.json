@@ -1,10 +1,10 @@
 {
   "$schema": "../tvs-config-schema.json",
-  "projectId": "zama",
+  "projectId": "zama-cw",
   "tokens": [
     {
       "mode": "auto",
-      "id": "zama-USDC",
+      "id": "zama-cw-USDC",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -23,7 +23,7 @@
     },
     {
       "mode": "auto",
-      "id": "zama-USDT",
+      "id": "zama-cw-USDT",
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
@@ -42,7 +42,7 @@
     },
     {
       "mode": "auto",
-      "id": "zama-WETH",
+      "id": "zama-cw-WETH",
       "priceId": "weth",
       "symbol": "WETH",
       "name": "Wrapped Ether",
@@ -61,7 +61,7 @@
     },
     {
       "mode": "auto",
-      "id": "zama-XAUt",
+      "id": "zama-cw-XAUt",
       "priceId": "tether-gold",
       "symbol": "XAUt",
       "name": "Tether Gold",
