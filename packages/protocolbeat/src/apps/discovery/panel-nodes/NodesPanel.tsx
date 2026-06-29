@@ -244,6 +244,7 @@ const LARGE_ARRAY_THRESHOLD = 10
 function getKeysToHideOnLoad(fields: ApiField[]): string[] {
   const largeArrays = fields.filter(
     (field) =>
+      field.name !== '$members' &&
       field.value.type === 'array' &&
       field.value.values.length > LARGE_ARRAY_THRESHOLD,
   )
