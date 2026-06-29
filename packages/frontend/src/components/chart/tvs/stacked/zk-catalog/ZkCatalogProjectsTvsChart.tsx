@@ -1,5 +1,5 @@
 import type { Milestone } from '@l2beat/config'
-import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { Area, AreaChart } from 'recharts'
@@ -27,7 +27,6 @@ import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatTimestamp } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generateColors'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { rangeToResolution } from '~/utils/range/range'
 
 interface ZkCatalogProjectsTvsChartProps {
   project: ChartProject
@@ -68,25 +67,23 @@ export function ZkCatalogProjectsTvsChart({
     )
   }, [projectsForTvs])
 
-  // Round to the active resolution so it matches the data gate in the query
-  // (which floors each project's `sinceTimestamp` to the resolution). Without
-  // this the tooltip would hide a project at its first datapoint, even though
-  // its area is already drawn there.
-  const resolution = rangeToResolution(range)
+  // `sinceTimestamp` comes from the server already floored to the active
+  // resolution, matching the chart's data gate. Building the tooltip gate from
+  // it (rather than re-rounding here) keeps the two from drifting apart.
   const sinceByProjectId = useMemo(
     () =>
       new Map(
-        projectsForTvs.map((p) => [
+        (data?.projects ?? []).map((p) => [
           p.projectId.toString(),
-          UnixTime.toStartOf(p.sinceTimestamp, resolution),
+          p.sinceTimestamp,
         ]),
       ),
-    [projectsForTvs, resolution],
+    [data?.projects],
   )
 
   const colors = useMemo(
-    () => generateAccessibleColors(data?.projectIds.length ?? 0),
-    [data?.projectIds.length],
+    () => generateAccessibleColors(data?.projects.length ?? 0),
+    [data?.projects.length],
   )
 
   const chartData = useMemo(() => {
@@ -99,7 +96,7 @@ export function ZkCatalogProjectsTvsChart({
         [key: string]: number | null
       } = { timestamp }
 
-      for (const projectId of data.projectIds) {
+      for (const { projectId } of data.projects) {
         const value = projects[projectId] ?? null
         if (value === null) {
           dataPoint[projectId] = null
@@ -119,20 +116,18 @@ export function ZkCatalogProjectsTvsChart({
   // Chart: oldest sinceTimestamp at the bottom, newest at the top
   const chartOrderedIds = useMemo(() => {
     if (!data) return []
-    return [...data.projectIds].sort(
-      (a, b) =>
-        (sinceByProjectId.get(a) ?? Number.POSITIVE_INFINITY) -
-        (sinceByProjectId.get(b) ?? Number.POSITIVE_INFINITY),
-    )
-  }, [data, sinceByProjectId])
+    return [...data.projects]
+      .sort((a, b) => a.sinceTimestamp - b.sinceTimestamp)
+      .map((p) => p.projectId)
+  }, [data])
 
   // Legend: biggest current value first
   const legendOrderedIds = useMemo(() => {
     if (!data) return []
     const lastPoint = chartData?.[chartData.length - 1]
-    return [...data.projectIds].sort(
-      (a, b) => (lastPoint?.[b] ?? 0) - (lastPoint?.[a] ?? 0),
-    )
+    return data.projects
+      .map((p) => p.projectId)
+      .sort((a, b) => (lastPoint?.[b] ?? 0) - (lastPoint?.[a] ?? 0))
   }, [data, chartData])
 
   const chartMeta = useMemo(() => {

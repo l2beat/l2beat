@@ -46,9 +46,15 @@ export type DetailedTvsChartWithProjectRangesDataPoint = [
   projects: Record<string, ProjectTvsChartDataPoint | null>,
 ]
 
+export type ChartProjectRange = {
+  projectId: ProjectId
+  /** Floored to the active resolution, matching the chart's data gate. */
+  sinceTimestamp: number
+}
+
 export type DetailedTvsChartWithProjectsRangesData = {
   chart: DetailedTvsChartWithProjectRangesDataPoint[]
-  projectIds: ProjectId[]
+  projects: ChartProjectRange[]
   syncedUntil: number
 }
 
@@ -72,21 +78,28 @@ export async function getDetailedTvsChartWithProjectsRanges({
   const db = getDb()
 
   if (projects.length === 0) {
-    return { chart: [], projectIds: [], syncedUntil: UnixTime.now() }
+    return { chart: [], projects: [], syncedUntil: UnixTime.now() }
   }
-
-  const groupedProjects = groupBy(projects, (p) => p.projectId)
-  const projectIds = Object.keys(groupedProjects) as ProjectId[]
 
   // Round each project's `sinceTimestamp` down to the active resolution so the
   // TVS bump it produces lands on the same datapoint as its milestone marker.
   // Without this the `>= sinceTimestamp` gate surfaces the value at the *next*
-  // datapoint, one bucket after the start-of-period milestone.
+  // datapoint, one bucket after the start-of-period milestone. The rounded
+  // values are returned to the client so its tooltip gate can't drift from the
+  // data gate computed here.
   const resolution = rangeToResolution(range)
   const roundedProjects = projects.map((p) => ({
     ...p,
     sinceTimestamp: UnixTime.toStartOf(p.sinceTimestamp, resolution),
   }))
+
+  const projectRanges: ChartProjectRange[] = Object.entries(
+    groupBy(roundedProjects, (p) => p.projectId),
+  ).map(([projectId, group]) => ({
+    projectId: projectId as ProjectId,
+    sinceTimestamp: Math.min(...group.map((p) => p.sinceTimestamp)),
+  }))
+  const projectIds = projectRanges.map((p) => p.projectId)
 
   const [ethPrices, values] = await Promise.all([
     getEthPrices(),
@@ -106,13 +119,15 @@ export async function getDetailedTvsChartWithProjectsRanges({
     ...roundedProjects.map((p) => p.sinceTimestamp),
   )
 
-  return getChartData(
+  const { chart, syncedUntil } = getChartData(
     values,
     ethPrices,
     projectIds,
     range,
     firstProjectTimestamp,
   )
+
+  return { chart, projects: projectRanges, syncedUntil }
 }
 
 function getChartData(
@@ -121,11 +136,10 @@ function getChartData(
   projectIds: ProjectId[],
   range: ChartRange,
   firstProjectTimestamp: number,
-): DetailedTvsChartWithProjectsRangesData {
+): Pick<DetailedTvsChartWithProjectsRangesData, 'chart' | 'syncedUntil'> {
   if (values.length === 0) {
     return {
       chart: [],
-      projectIds,
       syncedUntil: 0,
     }
   }
@@ -207,7 +221,6 @@ function getChartData(
 
   return {
     chart,
-    projectIds,
     syncedUntil,
   }
 }
@@ -221,8 +234,16 @@ function getMockDetailedTvsChartWithProjectsRangesData({
     [range[0] ?? 1573776000, range[1]],
     resolution,
   )
-  const groupedProjects = groupBy(projects, (p) => p.projectId)
-  const projectIds = Object.keys(groupedProjects) as ProjectId[]
+  const projectRanges: ChartProjectRange[] = Object.entries(
+    groupBy(projects, (p) => p.projectId),
+  ).map(([projectId, group]) => ({
+    projectId: projectId as ProjectId,
+    sinceTimestamp: UnixTime.toStartOf(
+      Math.min(...group.map((p) => p.sinceTimestamp)),
+      resolution,
+    ),
+  }))
+  const projectIds = projectRanges.map((p) => p.projectId)
 
   return {
     chart: timestamps.map((timestamp) => [
@@ -249,7 +270,7 @@ function getMockDetailedTvsChartWithProjectsRangesData({
         }),
       ),
     ]),
-    projectIds,
+    projects: projectRanges,
     syncedUntil: timestamps[timestamps.length - 1] ?? 0,
   }
 }
