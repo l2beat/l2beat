@@ -3,9 +3,9 @@ import { cn } from '~/utils/cn'
 import { Tooltip, TooltipContent, TooltipTrigger } from './core/tooltip/Tooltip'
 
 const ATTRIBUTE_CLASS_NAMES: Record<string, string> = {
-  fhe: 'text-[#0B3D4A] bg-[#B9EAF5] border-[#3EB4CC]',
-  zk: 'text-[#1E2E6D] bg-[#C4D0FF] border-[#7890E6]',
-  transfers: 'text-[#4B1877] bg-[#D9B4FF] border-[#A45CDB]',
+  fhe: 'text-[#5C3B00] bg-[#FFE8A3] border-[#D9A31A]',
+  zk: 'text-[#6B2D00] bg-[#FFD5A3] border-[#E2872A]',
+  transfers: 'text-[#17452A] bg-[#C8F2D7] border-[#4FB875]',
   defi: 'text-[#5D1163] bg-[#F7B3FF] border-[#D96BE8]',
   anyAmount: 'text-[#3F1E6D] bg-[#C7B8FF] border-[#8D78D9]',
   fixedAmounts: 'text-[#452576] bg-[#D8CEFF] border-[#9B86E6]',

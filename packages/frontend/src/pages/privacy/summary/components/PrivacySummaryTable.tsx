@@ -75,6 +75,30 @@ const columns = [
       headClassName: 'pl-4',
     },
   }),
+  columnHelper.display({
+    id: 'attributes',
+    header: 'Attributes',
+    cell: (ctx) => {
+      const attributes = ctx.row.original.attributes
+
+      if (attributes.length === 0) {
+        return <NoDataBadge />
+      }
+
+      return (
+        <div className="flex max-w-[220px] flex-wrap gap-1">
+          {attributes.map((attribute) => (
+            <PrivacyAttributeTag key={attribute.id} attribute={attribute} />
+          ))}
+        </div>
+      )
+    },
+    enableSorting: false,
+    meta: {
+      cellClassName: 'py-2',
+      tooltip: 'Protocol attributes and capabilities.',
+    },
+  }),
   columnHelper.accessor('totalValueLockedUsd', {
     id: 'totalValueLockedUsd',
     header: 'TVL',
@@ -189,29 +213,6 @@ const columns = [
       align: 'center',
       tooltip:
         'Whether all source code needed to audit the protocol and participate in it is published and can be used locally.',
-    },
-  }),
-  columnHelper.display({
-    id: 'attributes',
-    header: 'Attributes',
-    cell: (ctx) => {
-      const attributes = ctx.row.original.attributes
-
-      if (attributes.length === 0) {
-        return <NoDataBadge />
-      }
-
-      return (
-        <div className="flex max-w-[220px] flex-wrap gap-1">
-          {attributes.map((attribute) => (
-            <PrivacyAttributeTag key={attribute.id} attribute={attribute} />
-          ))}
-        </div>
-      )
-    },
-    enableSorting: false,
-    meta: {
-      tooltip: 'Protocol attributes and capabilities.',
     },
   }),
 ]
