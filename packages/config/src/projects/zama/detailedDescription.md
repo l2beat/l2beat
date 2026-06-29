@@ -14,6 +14,8 @@ The ACL is the onchain access-control registry for encrypted handles. It records
 
 The (T)KMS is the threshold key-management service used for public decryptions. It holds the FHE secret key and functions like a multisig with a threshold ({{kmsThreshold}}/{{kmsSignerCount}}). An unwrap for example burns an encrypted confidential-token amount and asks for that amount to be publicly decrypted; finalization is accepted only after the KMSVerifier checks enough KMS signatures over the threshold-decrypted result.
 
+There are many moving parts and offchain components in the Zama FHE protocol on which the confidential wrappers are built. The Zama Gateway, an L3 on Arbitrum, is currently used to gather signatures and make data available but the authority for asset storage and signature verification remains Ethereum L1.
+
 ### Privacy considerations
 
 Deposits and withdrawals are public privacy boundaries. A `wrap` emits the confidential-token recipient and the rounded clear underlying-token amount. The recipient can be different from the depositor, but that relationship is still visible in the wrapper event. Withdrawals then reveil the recipient and amount.
