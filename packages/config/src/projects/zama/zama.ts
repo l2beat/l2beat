@@ -195,8 +195,7 @@ export const zama: BaseProject = {
     privacy: {
       value: `${kmsThreshold}/${kmsSignerCount} KMS threshold`,
       sentiment: 'warning',
-      description:
-        'Privacy depends on fewer than the KMS threshold of signers to collude or be compromised. Compliance can be enforced by token wrapper owners blocking users and by configured underlying-token denylist hooks during deposits, transfers, unwrap requests, and unwrap finalization.',
+      description: `Privacy depends on fewer than the KMS threshold of signers to collude or be compromised. ${kmsThreshold} colluding signers can decrypt all current and past private balances. Compliance can be enforced by token wrapper owners blocking users and by configured underlying-token denylist hooks during deposits, transfers, unwrap requests, and unwrap finalization.`,
     },
     attributes: [
       PRIVACY_ATTRIBUTES.fhe,
