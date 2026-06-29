@@ -1,5 +1,5 @@
 ## Funds can be stolen if
-1. a malicious upgrade compromises the wrapper or FHEVM contracts with their escrowed underlyiing tokens.
+1. a malicious upgrade compromises the wrapper or FHEVM contracts with their escrowed underlying tokens.
 2. {{kmsThreshold}}/{{kmsSignerCount}} KMS signers attest to an incorrect public decryption during unwrap finalization, allowing more underlying tokens to be released than were burned.
 3. the {{coprocessorThreshold}}/{{coprocessorSignerCount}} coprocessor input verification path accepts invalid encrypted inputs that bypass confidential balance checks.
 <br>
