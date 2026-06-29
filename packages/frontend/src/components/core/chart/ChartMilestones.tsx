@@ -352,17 +352,23 @@ function mapMilestones<T extends { timestamp: number }>(
   // (before the first or after the last datapoint) are omitted.
   const timestamps = data.map((point) => point.timestamp)
   const lastTimestamp = timestamps[timestamps.length - 1]
+  if (lastTimestamp === undefined) return []
+
   for (const milestone of milestones) {
     const milestoneTimestamp = UnixTime.fromDate(new Date(milestone.date))
-    if (lastTimestamp === undefined || milestoneTimestamp > lastTimestamp)
-      continue
+    if (milestoneTimestamp > lastTimestamp) continue
     let bucket: number | undefined
     for (const timestamp of timestamps) {
       if (timestamp > milestoneTimestamp) break
       bucket = timestamp
     }
     if (bucket === undefined) continue
-    const bucketMilestones = (result[bucket] ??= [])
+
+    let bucketMilestones = result[bucket]
+    if (!bucketMilestones) {
+      bucketMilestones = []
+      result[bucket] = bucketMilestones
+    }
     bucketMilestones.push(milestone)
   }
 
