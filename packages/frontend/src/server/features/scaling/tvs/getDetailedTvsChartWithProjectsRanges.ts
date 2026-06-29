@@ -78,10 +78,20 @@ export async function getDetailedTvsChartWithProjectsRanges({
   const groupedProjects = groupBy(projects, (p) => p.projectId)
   const projectIds = Object.keys(groupedProjects) as ProjectId[]
 
+  // Round each project's `sinceTimestamp` down to the active resolution so the
+  // TVS bump it produces lands on the same datapoint as its milestone marker.
+  // Without this the `>= sinceTimestamp` gate surfaces the value at the *next*
+  // datapoint, one bucket after the start-of-period milestone.
+  const resolution = rangeToResolution(range)
+  const roundedProjects = projects.map((p) => ({
+    ...p,
+    sinceTimestamp: UnixTime.toStartOf(p.sinceTimestamp, resolution),
+  }))
+
   const [ethPrices, values] = await Promise.all([
     getEthPrices(),
     db.tvsTokenValue.getSummedByTimestampWithProjectsRangesPerProject(
-      projects,
+      roundedProjects,
       range[0],
       range[1],
       {
@@ -93,7 +103,7 @@ export async function getDetailedTvsChartWithProjectsRanges({
   ])
 
   const firstProjectTimestamp = Math.min(
-    ...projects.map((p) => p.sinceTimestamp),
+    ...roundedProjects.map((p) => p.sinceTimestamp),
   )
 
   return getChartData(

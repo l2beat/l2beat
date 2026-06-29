@@ -326,29 +326,40 @@ function SingleMilestoneIcon({
   }
 }
 
-function getTimestampedMilestones<T extends { timestamp: number }>(
+export function getTimestampedMilestones<T extends { timestamp: number }>(
   data: T[] | undefined,
   milestones: Milestone[],
 ): TimestampedMilestone[] {
   if (!data || data.length < 2) return []
 
-  const mappedMilestones = mapMilestones(milestones)
+  const mappedMilestones = mapMilestones(milestones, data)
   return data.map((point) => ({
     timestamp: point.timestamp,
     milestones: mappedMilestones[point.timestamp] ?? [],
   }))
 }
 
-function mapMilestones(milestones: Milestone[]): Record<number, Milestone[]> {
+function mapMilestones<T extends { timestamp: number }>(
+  milestones: Milestone[],
+  data: T[],
+): Record<number, Milestone[]> {
   const result: Record<number, Milestone[]> = {}
 
+  // Snap each milestone to the largest datapoint at or before its timestamp.
+  // The datapoint grid is resolution-aligned, so this floors the milestone to
+  // the active resolution and keeps the marker on the same bucket as any data
+  // movement it explains, at every zoom level.
+  const timestamps = data.map((point) => point.timestamp)
   for (const milestone of milestones) {
-    const timestamp = UnixTime.toStartOf(
-      UnixTime.fromDate(new Date(milestone.date)),
-      'day',
-    )
-    result[timestamp] ??= []
-    result[timestamp].push(milestone)
+    const milestoneTimestamp = UnixTime.fromDate(new Date(milestone.date))
+    let bucket: number | undefined
+    for (const timestamp of timestamps) {
+      if (timestamp > milestoneTimestamp) break
+      bucket = timestamp
+    }
+    if (bucket === undefined) continue
+    result[bucket] ??= []
+    result[bucket].push(milestone)
   }
 
   return result
