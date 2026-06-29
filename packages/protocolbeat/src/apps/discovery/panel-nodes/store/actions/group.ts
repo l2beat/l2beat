@@ -82,14 +82,14 @@ function createPhantomNode(subnodes: Node[]): Node {
   }
 }
 
-function collectIds(node: Node, into: Set<string>): void {
+export function collectIds(node: Node, into: Set<string>): void {
   into.add(node.id)
   for (const subnode of node.subnodes) {
     collectIds(subnode, into)
   }
 }
 
-function collectOutgoingFields(
+export function collectOutgoingFields(
   subnodes: Node[],
   internal: Set<string>,
 ): Field[] {
