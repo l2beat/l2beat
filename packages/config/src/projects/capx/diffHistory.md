@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xd2c60ea77d88ae6745a435c2d246483f2b93bb25
+
+# Diff at Mon, 29 Jun 2026 15:25:00 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1779719416
+- current timestamp: 1782746615
+
+## Description
+
+Caldera Multisig 3 (shared with appchain, form, oevnetwork, sxt): member rotated.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 3 (eth:0x2bf43034b9559643e986A2fE3cE015a18247b904) [GnosisSafe] {
+    +++ description: None
+      values.$members.2:
+-        "eth:0xEC114946E7213d113c9B9481028271B5E9e09371"
++        "eth:0xFcB26a1DbFafF84b91f1b7D9026DA63007b88D3c"
+    }
+```
+
 Generated with discovered.json: 0xa8e74bedfe5fcf4623b021b14e5408b342af29be
 
 # Diff at Tue, 09 Jun 2026 12:43:32 GMT:
