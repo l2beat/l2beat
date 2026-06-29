@@ -1,18 +1,18 @@
-Zama is an account-based confidential token wrapper system on Ethereum. It is based on [ERC-7984](https://eips.ethereum.org/EIPS/eip-7984). Users deposit regular ERC-20 tokens into asset-specific wrapper escrows and receive confidential wrapper tokens whose balances and internal transfer amounts are represented as encrypted handles.
+Zama CW is an account-based confidential token wrapper system on Ethereum, using the Zama FHE protocol. It is based on [ERC-7984](https://eips.ethereum.org/EIPS/eip-7984). Users deposit regular ERC-20 tokens into asset-specific wrapper escrows and receive confidential wrapper tokens whose balances and internal transfer amounts are represented as encrypted handles.
 
-The wrapper is not a note-based mixer: `from:` and `to:` addresses and transfer timestamps always remain public. Only balances and transfer amounts are hidden.
+'Confidential' here means `from:` and `to:` addresses and transfer timestamps always remain public. Only balances and transfer amounts are hidden.
 
-![Zama pool architecture](/images/architecture/zama-pool.png#center)
+![Zama CW pool architecture](/images/architecture/zama-pool.png#center)
 
 ### Architecture
 
-Zama uses fully homomorphic encryption (FHE) to let smart contracts operate on encrypted values. Balances are stored as encrypted handles instead of plaintext balances, and FHEVM system contracts are called for encrypted arithmetic, comparisons, transfers, minting, or burning, but most of the actuel FHE execution happens offchain.
+The Zama FHE protocol uses fully homomorphic encryption to let smart contracts operate on encrypted values. Balances are stored as encrypted handles instead of plaintext balances, and FHEVM system contracts are called for encrypted arithmetic, comparisons, transfers, minting, or burning, but most of the actual FHE execution happens offchain.
 
 The FHE coprocessor is an offchain service that performs FHE-related work the EVM cannot execute directly. Encrypted user inputs are accepted onchain only after the InputVerifier checks signatures from the coprocessor signer set (currently {{coprocessorThreshold}}/{{coprocessorSignerCount}}). The coprocessor is constrained on what it can commit onchain by the smart contract, but it is not trustless and can affect validity if compromised.
 
 The ACL is the onchain access-control registry for encrypted handles. It records which accounts or contracts are allowed to use a ciphertext handle, which prevents arbitrary users from reusing encrypted values they do not control.
 
-The (T)KMS is the threshold key-management service used for public decryptions. It holds the FHE secret key and functions like a multisig with a threshold ({{kmsThreshold}}/{{kmsSignerCount}}). For example, an unwrap burns an encrypted confidential-token amount and asks for that amount to be publicly decrypted; finalization is accepted only after the KMSVerifier checks enough KMS signatures over the threshold-decrypted result.
+The (T)KMS is the threshold key-management service used for public decryptions. It holds the FHE secret key and functions like a multisig with a threshold ({{kmsThreshold}}/{{kmsSignerCount}}). An unwrap for example burns an encrypted confidential-token amount and asks for that amount to be publicly decrypted; finalization is accepted only after the KMSVerifier checks enough KMS signatures over the threshold-decrypted result.
 
 ### Privacy considerations
 
@@ -36,6 +36,6 @@ Because confidential wrapper tokens are backed by underlying tokens held in wrap
 
 ### Anonymity set
 
-Zama does not use fixed-denomination notes. For a given finalized withdrawal, the set of prior deposits that could have funded the withdrawing account through the public address graph is it's effective anonymity set: deposits credited to the same address, or to addresses that visibly transferred confidential tokens to it before the withdrawal. Amounts are encrypted inside the wrapper, so links within the remaining candidate set can remain ambiguous, but deposits and finalized withdrawals still expose clear boundary amounts and endpoint addresses.
+Zama CW does not use fixed-denomination notes. For a given finalized withdrawal, the set of prior deposits that could have funded the withdrawing account through the public address graph is it's effective anonymity set: deposits credited to the same address, or to addresses that visibly transferred confidential tokens to it before the withdrawal. Amounts are encrypted inside the wrapper, so links within the remaining candidate set can remain ambiguous, but deposits and finalized withdrawals still expose clear boundary amounts and endpoint addresses.
 
 As mentioned in 'Privacy Considerations', the mostly centralized offchain services that cannot be circumvented can corrupt practical privacy, independent of the abstract measurable anonymity set.

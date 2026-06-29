@@ -124,13 +124,12 @@ const privacyTokens: ProjectPrivacyToken[] = trackedWrappers.map(
 export const zama: BaseProject = {
   id: ProjectId('zama'),
   slug: 'zama',
-  name: 'Zama',
+  name: 'Zama CW',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2026-06-24')),
   discoveryInfo: getDiscoveryInfo([discovery]),
   statuses: {
-    yellowWarning:
-      'Privacy depends on an offchain FHE coprocessor and threshold KMS signer set; Ethereum only verifies their signatures.',
+    yellowWarning: undefined,
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
@@ -138,7 +137,7 @@ export const zama: BaseProject = {
   },
   display: {
     description:
-      'An Ethereum confidential token system that wraps ERC-20 assets and hides balances and transfer amounts using Zama FHEVM.',
+      'Zama Confidential Wrapper is an app that wraps ERC-20 assets and hides balances and transfer amounts using Zama FHEVM on Ethereum.',
     detailedDescription: readProjectMarkdown('zama', 'detailedDescription', {
       kmsThreshold,
       kmsSignerCount,
