@@ -17,6 +17,9 @@ export const searchBarCategories = {
   privacy: {
     name: 'Privacy',
   },
+  tokens: {
+    name: 'Tokens',
+  },
   other: {
     name: 'Other',
   },

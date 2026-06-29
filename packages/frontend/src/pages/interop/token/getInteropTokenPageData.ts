@@ -33,10 +33,10 @@ export async function getInteropTokenPageData(
     activeInteropChains,
   )
 
-  const initialSelection = getInitialInteropSelection({
-    query: req.query,
-    interopChainsIds: activeInteropChainIds,
-  })
+  const initialSelection = getInitialInteropTokenSelection(
+    req.query,
+    activeInteropChainIds,
+  )
 
   const data = await cache.get(
     {
@@ -88,6 +88,21 @@ export async function getInteropTokenPageData(
         initialSelection,
       },
     },
+  }
+}
+
+function getInitialInteropTokenSelection(
+  query: InteropQuery,
+  activeInteropChainIds: string[],
+): InteropSelection {
+  const selection = getInitialInteropSelection({
+    query,
+    interopChainsIds: activeInteropChainIds,
+  })
+
+  return {
+    from: query?.from === undefined ? activeInteropChainIds : selection.from,
+    to: query?.to === undefined ? activeInteropChainIds : selection.to,
   }
 }
 

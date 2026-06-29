@@ -20,8 +20,20 @@ export type SearchBarProjectEntry = SearchBarEntry & {
   projectAddresses?: EthereumAddress[]
 }
 
+export type SearchBarTokenEntry = SearchBarEntry & {
+  type: 'token'
+  id: string
+  iconUrl: string
+  issuer: string | null
+}
+
 /** Return type sent to frontend - excludes not needed properties to reduce payload size */
 export type SearchBarProject = Pick<
   SearchBarProjectEntry,
   (typeof SEARCH_BAR_PROJECT_KEYS)[number]
+>
+
+export type SearchBarToken = Pick<
+  SearchBarTokenEntry,
+  'category' | 'name' | 'href' | 'type' | 'id' | 'iconUrl' | 'issuer'
 >

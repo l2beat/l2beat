@@ -1,13 +1,26 @@
 import type { AbstractTokenRecord } from '@l2beat/database'
-import { unique } from '@l2beat/shared-pure'
+import { InMemoryCache, unique } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getTokenDb } from '~/server/tokenDb'
+import { getInteropChains } from '../utils/getInteropChains'
 import { getLatestAggregatedInteropTransferWithTokens } from '../utils/getLatestAggregatedInteropTransferWithTokens'
 
 export type InteropAbstractToken = Pick<
   AbstractTokenRecord,
   'id' | 'symbol' | 'issuer' | 'iconUrl' | 'category'
 >
+
+const interopAbstractTokensCache = new InMemoryCache({})
+
+export function getActiveInteropAbstractTokens(): Promise<
+  InteropAbstractToken[]
+> {
+  const activeInteropChainIds = getInteropChains()
+    .filter((chain) => !chain.isUpcoming)
+    .map((chain) => chain.id)
+
+  return getInteropAbstractTokens(activeInteropChainIds)
+}
 
 export async function getInteropAbstractTokens(
   chainIds: string[],
@@ -16,6 +29,19 @@ export async function getInteropAbstractTokens(
     return MOCK_INTEROP_ABSTRACT_TOKENS
   }
 
+  return await interopAbstractTokensCache.get(
+    {
+      key: ['interop-abstract-tokens', [...chainIds].sort().join(',')],
+      ttl: 60 * 10,
+      staleWhileRevalidate: 60 * 15,
+    },
+    () => getInteropAbstractTokensData(chainIds),
+  )
+}
+
+async function getInteropAbstractTokensData(
+  chainIds: string[],
+): Promise<InteropAbstractToken[]> {
   const { records } = await getLatestAggregatedInteropTransferWithTokens({
     selection: {
       from: chainIds,
