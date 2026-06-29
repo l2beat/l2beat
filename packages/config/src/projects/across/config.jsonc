@@ -2,6 +2,8 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "across",
   "import": ["../globalConfig.jsonc"],
+  "modelCrossChainPermissions": true,
+  "maxAddresses": 75,
   "initialAddresses": [
     "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda", // hubpool
     "eth:0x3B03509645713718B78951126E0A6de6f10043f5" // acrossconfigstore
@@ -11,17 +13,36 @@
     "eth:0x545E43B6eC2f9a44CAa531298699Ff05958670B5": "Ink_Adapter",
     "eth:0x0c9d064523177dBB55CFE52b9D0c485FBFc35FD2": "Soneium_Adapter",
     "eth:0xF039AdCC74936F90fE175e8b3FE0FdC8b8E0c73b": "Lisk_Adapter",
-    "eth:0xC29a3Ba0fBf477F16Fd53d2C438Eade024FD8452": "Monad_Adapter"
+    "eth:0xC29a3Ba0fBf477F16Fd53d2C438Eade024FD8452": "Monad_Adapter",
+    "eth:0x8956eFa31572E1d7ed5c8e36772F214A57DFA0D1": "Unichain_Adapter",
+    "eth:0xE1f04404b74F996A311F13aE291849fC153578Ac": "MegaETH_Adapter",
+    "eth:0xA374585E6062517Ee367ee5044946A6fBe17724f": "ZkSyncEra_Adapter",
+    "eth:0x5e0B7e20a77BDf11812837D30F1326068Bcf24Cf": "Lens_Adapter",
+    "eth:0x0ec70777Ac388774041dD5A1778Cdf3AF3134D2B": "HyperEVM_Adapter",
+    "eth:0x6f1C9d3bcDF51316E7b515a62C02F601500b084b": "BNBSmartChain_Adapter",
+    "eth:0xb47fD69FE25878F4E43aAF2F9ad7D0A3A0B22363": "Plasma_Adapter",
+    "eth:0x4577980eBFCC6fC8ff516aC06dA9e729c40cA57c": "Tempo_Adapter",
+    "eth:0xA1da1A70cc9F27F4aEDff1d515B1a0C47fb6c3Db": "Tron_Adapter"
   },
   "overrides": {
+    "eth:0xB524735356985D2f267FA010D681f061DfF03715": {
+      "category": "gov",
+      "fields": {
+        "GnosisSafe_modules": {
+          // OptimisticGovernor is the only module: its 2d optimistic challenge
+          // window (liveness) is the delay to force the Safe to act.
+          "permissions": [{ "type": "act", "delay": 172800 }]
+        }
+      }
+    },
     "eth:0x0ec70777Ac388774041dD5A1778Cdf3AF3134D2B": {
-      "description": "This adapter can be used to send messages / root bundles to Hyperliquid. It stores calldata in the {{DATA_STORE}} on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP."
+      "description": "This adapter can be used to send messages / root bundles to HyperEVM. It stores calldata in the HubPoolStore on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP."
     },
     "eth:0x6f1C9d3bcDF51316E7b515a62C02F601500b084b": {
-      "description": "This adapter can be used to send messages / root bundles to Binance Smart Chain. It stores calldata in the {{DATA_STORE}} on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero."
+      "description": "This adapter can be used to send messages / root bundles to Binance Smart Chain. It stores calldata in the HubPoolStore on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero."
     },
     "eth:0xb47fD69FE25878F4E43aAF2F9ad7D0A3A0B22363": {
-      "description": "This adapter can be used to send messages / root bundles to Plasma Mainnet. It stores calldata in the {{DATA_STORE}} on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero."
+      "description": "This adapter can be used to send messages / root bundles to Plasma Mainnet. It stores calldata in the HubPoolStore on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero."
     },
     "eth:0xA0Ae6609447e57a42c51B50EAe921D701823FFAe": {
       // unused optimistic oracle v2
@@ -36,13 +57,16 @@
       "ignoreDiscovery": true
     },
     "eth:0x4577980eBFCC6fC8ff516aC06dA9e729c40cA57c": {
-      "description": "This adapter can be used to send messages / root bundles to Tempo. It stores calldata in the {{DATA_STORE}} on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP."
+      "description": "This adapter can be used to send messages / root bundles to Tempo. It stores calldata in the HubPoolStore on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP."
     },
     "eth:0xA1da1A70cc9F27F4aEDff1d515B1a0C47fb6c3Db": {
-      "description": "This adapter can be used to send messages / root bundles to Tron. It stores calldata in the {{DATA_STORE}} on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP."
+      "description": "This adapter can be used to send messages / root bundles to Tron. It stores calldata in the HubPoolStore on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP."
     },
     "eth:0x9F788694934fD2Ed34D5340B9a76EB34f2bFD7B3": {
       "description": "Adapter for Solana. Uses CCTP v1 AMB to relay root bundles to the Solana spokepool."
-    }
+    },
+    // Multisigs use the shared GnosisSafe template, so their per-instance
+    // category can only be set here, not in a template.
+    "eth:0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a": { "category": "shared" }
   }
 }
