@@ -63,7 +63,7 @@ describe('getTimestampedMilestones', () => {
     expect(result.every((p) => p.milestones.length === 0)).toEqual(true)
   })
 
-  it('drops milestones that fall after the last datapoint', () => {
+  it('drops milestones in a bucket after the last datapoint', () => {
     const data = points([
       ts('2024-05-26T00:00:00Z'),
       ts('2024-05-27T00:00:00Z'),
@@ -73,6 +73,20 @@ describe('getTimestampedMilestones', () => {
     ])
 
     expect(result.every((p) => p.milestones.length === 0)).toEqual(true)
+  })
+
+  it('keeps a milestone within the last bucket on the last datapoint', () => {
+    const data = points([
+      ts('2024-05-26T20:00:00Z'),
+      ts('2024-05-26T21:00:00Z'),
+    ])
+    const result = getTimestampedMilestones(data, [
+      milestone('2024-05-26T21:30:00Z'),
+    ])
+
+    const attached = result.filter((p) => p.milestones.length > 0)
+    expect(attached.length).toEqual(1)
+    expect(attached[0]?.timestamp).toEqual(ts('2024-05-26T21:00:00Z'))
   })
 
   it('groups same-day milestones on a daily grid', () => {

@@ -348,15 +348,28 @@ function mapMilestones<T extends { timestamp: number }>(
   // Snap each milestone to the largest datapoint at or before its timestamp.
   // The datapoint grid is resolution-aligned, so this floors the milestone to
   // the active resolution and keeps the marker on the same bucket as any data
-  // movement it explains, at every zoom level. Milestones outside the grid
-  // (before the first or after the last datapoint) are omitted.
+  // movement it explains, at every zoom level. Milestones outside the grid are
+  // omitted: those before the first datapoint, and those in a bucket after the
+  // last datapoint. A milestone within the last bucket still snaps to (and
+  // stays visible on) the last datapoint.
   const timestamps = data.map((point) => point.timestamp)
+  const firstTimestamp = timestamps[0]
+  const secondTimestamp = timestamps[1]
   const lastTimestamp = timestamps[timestamps.length - 1]
-  if (lastTimestamp === undefined) return []
+  if (
+    firstTimestamp === undefined ||
+    secondTimestamp === undefined ||
+    lastTimestamp === undefined
+  ) {
+    return result
+  }
+  // The first two datapoints are always regular grid points, so their spacing
+  // is the resolution period.
+  const period = secondTimestamp - firstTimestamp
 
   for (const milestone of milestones) {
     const milestoneTimestamp = UnixTime.fromDate(new Date(milestone.date))
-    if (milestoneTimestamp > lastTimestamp) continue
+    if (milestoneTimestamp >= lastTimestamp + period) continue
     let bucket: number | undefined
     for (const timestamp of timestamps) {
       if (timestamp > milestoneTimestamp) break
