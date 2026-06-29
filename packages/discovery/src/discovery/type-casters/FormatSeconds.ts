@@ -4,7 +4,14 @@ import type { ArgType, BaseTypeCaster } from './BaseTypeCaster'
 
 export const FormatSeconds: BaseTypeCaster = {
   cast: function (_arg: ArgType, incomingValue: ContractValue): ContractValue {
-    assert(typeof incomingValue === 'number')
-    return formatSeconds(incomingValue)
+    const value = incomingValue as ContractValue | bigint
+    if (typeof value === 'bigint') {
+      if (value > BigInt(Number.MAX_SAFE_INTEGER)) {
+        return `more than ${formatSeconds(Number.MAX_SAFE_INTEGER)}`
+      }
+      return formatSeconds(Number(value))
+    }
+    assert(typeof value === 'number')
+    return formatSeconds(value)
   },
 }
