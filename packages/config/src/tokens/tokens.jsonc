@@ -1,6 +1,10 @@
 {
   "ethereum": [
     {
+      "symbol": "ZAMA",
+      "address": "0xA12CC123ba206d4031D1c7f6223D1C2Ec249f4f3"
+    },
+    {
       "symbol": "RON",
       "address": "0x5f2Db62536dd888AacEa933068384318A02094c0",
       "coingeckoId": "ronin"
