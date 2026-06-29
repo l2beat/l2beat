@@ -33,7 +33,7 @@ function MetricCell({ children }: { children: React.ReactNode }) {
     return <NoDataBadge />
   }
 
-  return <span className="font-medium text-base">{children}</span>
+  return <span className="font-medium text-sm">{children}</span>
 }
 
 const columns = [
@@ -86,7 +86,7 @@ const columns = [
       }
 
       return (
-        <div className="flex max-w-[220px] flex-wrap gap-1">
+        <div className="flex max-w-[176px] flex-wrap gap-1">
           {attributes.map((attribute) => (
             <PrivacyAttributeTag key={attribute.id} attribute={attribute} />
           ))}
@@ -95,7 +95,8 @@ const columns = [
     },
     enableSorting: false,
     meta: {
-      cellClassName: 'py-2',
+      cellClassName: 'w-[176px] max-w-[176px] py-2',
+      headClassName: 'w-[176px] max-w-[176px]',
       tooltip: 'Protocol attributes and capabilities.',
     },
   }),
@@ -118,7 +119,7 @@ const columns = [
     },
   }),
   columnHelper.accessor('totalDeposits', {
-    header: 'Total deposits',
+    header: 'Deposits',
     cell: (ctx) => {
       const value = ctx.getValue()
       return (
@@ -136,7 +137,7 @@ const columns = [
   }),
   columnHelper.accessor('totalValueDeposited30dUsd', {
     id: 'totalValueDeposited30dUsd',
-    header: '30D volume',
+    header: '30D vol.',
     cell: (ctx) => {
       const value = ctx.getValue()
       return (
@@ -154,7 +155,7 @@ const columns = [
   }),
   columnHelper.display({
     id: 'trustedSetup',
-    header: 'Trusted setup',
+    header: 'Setup',
     cell: (ctx) => (
       <PrivacyTrustedSetupCell trustedSetup={ctx.row.original.trustedSetup} />
     ),
@@ -167,7 +168,7 @@ const columns = [
   }),
   columnHelper.accessor((entry) => adjustTableValue(entry.exitWindow), {
     id: 'exitWindow',
-    header: 'Exit window',
+    header: 'Exit',
     cell: (ctx) => (
       <PrivacyAssessmentCell value={ctx.row.original.exitWindow} showValue />
     ),
@@ -198,7 +199,7 @@ const columns = [
   }),
   columnHelper.accessor((entry) => adjustTableValue(entry.reproducibility), {
     id: 'reproducibility',
-    header: 'Reproducibility',
+    header: 'Repro.',
     cell: (ctx) => (
       <PrivacyAssessmentCell
         value={ctx.row.original.reproducibility}
