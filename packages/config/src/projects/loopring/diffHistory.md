@@ -1,3 +1,107 @@
+Generated with discovered.json: 0xd05f8cbfa5a520278fb8233068a4b42606b0184b
+
+# Diff at Mon, 29 Jun 2026 10:52:52 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@5a92950b0f8d677c07c694b39b68081b00e7bf36 block: 1755157592
+- current timestamp: 1782730310
+
+## Description
+
+Stopped normal operation of Loopring exchange.
+
+Upgraded the exchange contract to a simple ProxyAdminExecutor (https://flat.l2beat.com/address/eth:0xB40973B8bffDe1553AE05DE4b298610524E1c37a) that lets the proxy admin (Loopring multisig) to execute arbitrary calls from the context of the proxy. 
+
+Presumably that will be used to distribute tokens locked in the Loopring exchange.
+
+## Watched changes
+
+```diff
+    contract ExchangeV3 (eth:0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x3905bcba44c20ed32e392737f7ef97fd5a9a6cacf6ad39bd81ae701eded88bee"
++        "0xac16617aa5dbef15d7ade7f376b240d9a040b65a8ab552f5408e97e29168fd41"
+      values.$implementation:
+-        "eth:0x26d8Ba776a067C5928841985bCe342f75BAE7E82"
++        "eth:0xB40973B8bffDe1553AE05DE4b298610524E1c37a"
+      values.$pastUpgrades.7:
++        ["2026-06-29T07:46:47.000Z","0x9515d5aeed96ebdc21f10ec4d22c796a3dc752e5731bcfcb4dbe7e33a09cc496",["eth:0x9cFA61e1472f648cd01Ff05E658987A2abA40F1B"]]
+      values.$pastUpgrades.8:
++        ["2026-06-29T10:24:47.000Z","0xecb93127c952956993d2247504aecf504b4e48a26bcd758276242ec10ea35274",["eth:0xB40973B8bffDe1553AE05DE4b298610524E1c37a"]]
+      values.$upgradeCount:
+-        7
++        9
+      values.domainSeparator:
+-        "0xf35e902e19c9d66a100a3d9b39430a988f9b8d41331d6f346f5c540ef8803264"
+      values.getAgentRegistry:
+-        "eth:0x39B9bf169a7e225ba037C443A40460c77438ea14"
+      values.getAmmFeeBips:
+-        20
+      values.getDepositContract:
+-        "eth:0x674bdf20A0F284D710BC40872100128e2d66Bd3f"
+      values.getDomainSeparator:
+-        "0xf35e902e19c9d66a100a3d9b39430a988f9b8d41331d6f346f5c540ef8803264"
+      values.getExchangeStake:
+-        0
+      values.getMaxAgeDepositUntilWithdrawable:
+-        1296000
+      values.implementation:
+-        "eth:0x26d8Ba776a067C5928841985bCe342f75BAE7E82"
++        "eth:0xB40973B8bffDe1553AE05DE4b298610524E1c37a"
+      values.isInWithdrawalMode:
+-        false
+      values.isShutdown:
+-        false
+      values.owner:
+-        "eth:0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512"
+      values.pendingOwner:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.version:
+-        "3.6.0"
+      implementationNames.eth:0x26d8Ba776a067C5928841985bCe342f75BAE7E82:
+-        "ExchangeV3"
+      implementationNames.eth:0xB40973B8bffDe1553AE05DE4b298610524E1c37a:
++        "ProxyAdminExecutor"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract LoopringIOExchangeOwner (eth:0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512) [N/A]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract AgentRegistry (eth:0x39B9bf169a7e225ba037C443A40460c77438ea14) [N/A]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../AgentRegistry.sol => /dev/null                 |  336 -
+ .../ExchangeV3/ExchangeV3.sol => /dev/null         | 8124 --------------------
+ .../.flat/ExchangeV3/ProxyAdminExecutor.sol        |   92 +
+ .../LoopringIOExchangeOwner.sol => /dev/null       | 5477 -------------
+ 4 files changed, 92 insertions(+), 13937 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755157592 (main branch discovery), not current.
+
+```diff
+    contract ExchangeV3 (eth:0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4) [N/A] {
+    +++ description: None
+      values.shutdownTriggered:
+-        []
+    }
+```
+
 Generated with discovered.json: 0x3aed54fa9b7e367edc9498c527d879ef6938b5b5
 
 # Diff at Fri, 08 May 2026 07:51:34 GMT:
