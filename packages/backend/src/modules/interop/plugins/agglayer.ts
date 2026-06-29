@@ -33,6 +33,11 @@ const AGGLAYER_NETWORKS = defineNetworks<AgglayerNetwork>('agglayer', [
     bridge: ChainSpecificAddress(`eth:${BRIDGE_ADDRESS}`),
   },
   {
+    networkId: 3,
+    chain: 'xlayer',
+    bridge: ChainSpecificAddress(`xlayer:${BRIDGE_ADDRESS}`),
+  },
+  {
     networkId: 20,
     chain: 'katana',
     bridge: ChainSpecificAddress(`katana:${BRIDGE_ADDRESS}`),

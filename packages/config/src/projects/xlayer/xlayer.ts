@@ -127,7 +127,7 @@ export const xlayer: ScalingProject = agglayer({
   chainConfig: {
     name: 'xlayer',
     chainId: 196,
-    explorerUrl: 'https://rpc.xlayer.tech',
+    explorerUrl: 'https://web3.okx.com/explorer/x-layer/evm',
     gasTokens: ['OKB'],
     sinceTimestamp: UnixTime(1711782180),
     multicallContracts: [
