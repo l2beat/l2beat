@@ -1,6 +1,6 @@
 {
   "name": "zama-cw",
-  "timestamp": 1782743384,
+  "timestamp": 1782746392,
   "configHash": "0x2de8b851098fee269a3d58b4035085adddb34cb4505e54af33abe952f4fc0b44",
   "entries": [
     {
@@ -212,9 +212,9 @@
       "address": "eth:0x373E36A8684A3344E177C5894179845Cbe57AE44",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "eth:0xCe0FC2e05CFff1B719EFF7169f7D80Af770c8EA2",
           "description": "sign encrypted input verification bundles accepted by the InputVerifier.",
           "role": ".getCoprocessorSigners"
@@ -282,9 +282,9 @@
       "address": "eth:0x41b19EB4585450db79ac03ba9503106EC7895905",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
           "description": "sign public decryption results accepted by the KMSVerifier.",
           "role": ".getKmsSigners"
@@ -382,9 +382,9 @@
       "address": "eth:0x5d0e7033774dD43eE546D49b72Bd0B561E52f7C8",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
           "description": "sign public decryption results accepted by the KMSVerifier.",
           "role": ".getKmsSigners"
@@ -395,9 +395,9 @@
       "address": "eth:0x6016DCA5e91e62826e3FEA1Fb0a763602dc1E385",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
           "description": "sign public decryption results accepted by the KMSVerifier.",
           "role": ".getKmsSigners"
@@ -579,9 +579,9 @@
       "address": "eth:0x6e5f02Cd4B33f0Cf4ED5326ac9eE25e5aA8c4921",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
           "description": "sign public decryption results accepted by the KMSVerifier.",
           "role": ".getKmsSigners"
@@ -652,7 +652,7 @@
             ]
           }
         },
-        "clock": 25423926,
+        "clock": 25424176,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -974,9 +974,9 @@
       "address": "eth:0x7C17BE232e5968BDa9516478B798b9E90D013fCC",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
           "description": "sign public decryption results accepted by the KMSVerifier.",
           "role": ".getKmsSigners"
@@ -987,9 +987,9 @@
       "address": "eth:0x7C5Eeb4D8CED0101799B8Cc212eE874097364F58",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
           "description": "sign public decryption results accepted by the KMSVerifier.",
           "role": ".getKmsSigners"
@@ -1267,9 +1267,9 @@
       "address": "eth:0x915055c5F05C0d88BCdf1e3DfBA18aBD2a18350f",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
           "description": "sign public decryption results accepted by the KMSVerifier.",
           "role": ".getKmsSigners"
@@ -1285,9 +1285,9 @@
       "address": "eth:0x966188a1f697F6A1B5cfA51495DD8A8A7b5CdB8D",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
           "description": "sign public decryption results accepted by the KMSVerifier.",
           "role": ".getKmsSigners"
@@ -2028,9 +2028,9 @@
       "address": "eth:0xB7978e602D2AF68258dA614AF949E014BF0DE0eb",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
           "description": "sign public decryption results accepted by the KMSVerifier.",
           "role": ".getKmsSigners"
@@ -2659,9 +2659,9 @@
       "address": "eth:0xbf05c17BEB0BF2F2c78Cd491A53a148e035279C3",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
           "description": "sign public decryption results accepted by the KMSVerifier.",
           "role": ".getKmsSigners"
@@ -3031,9 +3031,9 @@
       "address": "eth:0xdC472efa1642D5afB684aAaa546E22FB24AAB965",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
           "description": "sign public decryption results accepted by the KMSVerifier.",
           "role": ".getKmsSigners"
@@ -3044,9 +3044,9 @@
       "address": "eth:0xDFc9Dcb3D206AA164770874f36a4B5AD2EE5194f",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
           "description": "sign public decryption results accepted by the KMSVerifier.",
           "role": ".getKmsSigners"
@@ -3587,7 +3587,7 @@
         "$upgradeCount": 3,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0x324cc44f9d9bf1b502afc31eb01311846d42468f5eff00000000000000010500",
+        "confidentialTotalSupply": "0x07a47db6b1fdd3ec0f8b42f0175cfbf596d7ff6ad0ff00000000000000010500",
         "constructorArgs": [
           "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205553444300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056355534443000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2055534443222c2273796d626f6c223a226355534443222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205553444320736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -3601,7 +3601,7 @@
           "isSet": true,
           "selector": "0xfe575a87"
         },
-        "inferredTotalSupply": 5994116580675,
+        "inferredTotalSupply": 5993616580675,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential USDC",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -3715,7 +3715,7 @@
             ]
           }
         },
-        "clock": 25423926,
+        "clock": 25424176,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -3841,9 +3841,9 @@
       "address": "eth:0xe9f7ecfF21a2e0Ca58eA26ae869FEF38ab49ed6f",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
           "description": "sign public decryption results accepted by the KMSVerifier.",
           "role": ".getKmsSigners"
@@ -4000,15 +4000,15 @@
       "address": "zama:0x0000000000000000000000000000000000000001",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
           "description": "participate in gateway key custody workflows.",
           "role": ".getCustodianTxSenders"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
           "description": "sign gateway key custody material.",
           "role": ".getCustodianSigners"
@@ -4090,21 +4090,21 @@
       "address": "zama:0x0e25B8DB74c754C8275C0B219ba2A6CD7c59E31D",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
           "description": "submit KMS decryption responses to Decryption.",
           "role": ".gatewayKmsTxSenders"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
           "description": "submit KMS key-generation and CRS-generation responses to KMSGeneration.",
           "role": ".gatewayKmsTxSenders"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
           "description": "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts.",
           "role": ".getKmsTxSenders"
@@ -4402,39 +4402,39 @@
       "address": "zama:0x373E36A8684A3344E177C5894179845Cbe57AE44",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x055d9FD50a612A9027716ec8db663E7D68562468",
           "description": "submit public-decryption allowances, account handle allowances, and user-decryption delegation or revocation messages to MultichainACL.",
           "role": ".gatewayCoprocessorTxSenders"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287",
           "description": "sign encrypted input proof verification responses accepted by InputVerification.",
           "role": ".gatewayCoprocessorSigners"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287",
           "description": "submit coprocessor proof verification and rejection responses to InputVerification.",
           "role": ".gatewayCoprocessorTxSenders"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0xd82cF70FC102028cd01acB87D0E107780ae4F41F",
           "description": "submit ciphertext and SNS ciphertext digests to CiphertextCommits.",
           "role": ".gatewayCoprocessorTxSenders"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
           "description": "sign encrypted input proof verification responses accepted by the gateway.",
           "role": ".getCoprocessorSigners"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
           "description": "submit coprocessor responses, ACL mirror updates, and ciphertext material commitments to gateway contracts.",
           "role": ".getCoprocessorTxSenders"
@@ -4445,21 +4445,21 @@
       "address": "zama:0x41b19EB4585450db79ac03ba9503106EC7895905",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
           "description": "sign public decryption results and user decryption shares accepted by Decryption.",
           "role": ".gatewayKmsSigners"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
           "description": "sign KMS key-generation and CRS-generation material accepted by KMSGeneration.",
           "role": ".gatewayKmsSigners"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
           "description": "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts.",
           "role": ".getKmsSigners"
@@ -4470,21 +4470,21 @@
       "address": "zama:0x43e4c21cf9d24Dc5b4e00031349EC213A2ba8340",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
           "description": "submit KMS decryption responses to Decryption.",
           "role": ".gatewayKmsTxSenders"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
           "description": "submit KMS key-generation and CRS-generation responses to KMSGeneration.",
           "role": ".gatewayKmsTxSenders"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
           "description": "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts.",
           "role": ".getKmsTxSenders"
@@ -4495,21 +4495,21 @@
       "address": "zama:0x487e41623b7FeB464ff79F7326DCa791c9a1c5EC",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
           "description": "submit KMS decryption responses to Decryption.",
           "role": ".gatewayKmsTxSenders"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
           "description": "submit KMS key-generation and CRS-generation responses to KMSGeneration.",
           "role": ".gatewayKmsTxSenders"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
           "description": "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts.",
           "role": ".getKmsTxSenders"
@@ -4520,21 +4520,21 @@
       "address": "zama:0x4eC7200E392B97913cbD6d8160B011406EB019F1",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
           "description": "submit KMS decryption responses to Decryption.",
           "role": ".gatewayKmsTxSenders"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
           "description": "submit KMS key-generation and CRS-generation responses to KMSGeneration.",
           "role": ".gatewayKmsTxSenders"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
           "description": "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts.",
           "role": ".getKmsTxSenders"
@@ -4604,21 +4604,21 @@
       "address": "zama:0x577Fd21e4BC7D644A4177C4B89146e1Ab394De04",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
           "description": "submit KMS decryption responses to Decryption.",
           "role": ".gatewayKmsTxSenders"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
           "description": "submit KMS key-generation and CRS-generation responses to KMSGeneration.",
           "role": ".gatewayKmsTxSenders"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
           "description": "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts.",
           "role": ".getKmsTxSenders"
@@ -4629,21 +4629,21 @@
       "address": "zama:0x5d0e7033774dD43eE546D49b72Bd0B561E52f7C8",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
           "description": "sign public decryption results and user decryption shares accepted by Decryption.",
           "role": ".gatewayKmsSigners"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
           "description": "sign KMS key-generation and CRS-generation material accepted by KMSGeneration.",
           "role": ".gatewayKmsSigners"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
           "description": "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts.",
           "role": ".getKmsSigners"
@@ -4773,21 +4773,21 @@
       "address": "zama:0x6016DCA5e91e62826e3FEA1Fb0a763602dc1E385",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
           "description": "sign public decryption results and user decryption shares accepted by Decryption.",
           "role": ".gatewayKmsSigners"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
           "description": "sign KMS key-generation and CRS-generation material accepted by KMSGeneration.",
           "role": ".gatewayKmsSigners"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
           "description": "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts.",
           "role": ".getKmsSigners"
@@ -4811,21 +4811,21 @@
       "address": "zama:0x6e5f02Cd4B33f0Cf4ED5326ac9eE25e5aA8c4921",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
           "description": "sign public decryption results and user decryption shares accepted by Decryption.",
           "role": ".gatewayKmsSigners"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
           "description": "sign KMS key-generation and CRS-generation material accepted by KMSGeneration.",
           "role": ".gatewayKmsSigners"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
           "description": "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts.",
           "role": ".getKmsSigners"
@@ -4849,21 +4849,21 @@
       "address": "zama:0x711EBE8aA590f9C9904ff279239E89dB2eFbC890",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
           "description": "submit KMS decryption responses to Decryption.",
           "role": ".gatewayKmsTxSenders"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
           "description": "submit KMS key-generation and CRS-generation responses to KMSGeneration.",
           "role": ".gatewayKmsTxSenders"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
           "description": "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts.",
           "role": ".getKmsTxSenders"
@@ -4874,21 +4874,21 @@
       "address": "zama:0x74a1E2e87a4026b7B8b5252c747E514159515e9a",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
           "description": "submit KMS decryption responses to Decryption.",
           "role": ".gatewayKmsTxSenders"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
           "description": "submit KMS key-generation and CRS-generation responses to KMSGeneration.",
           "role": ".gatewayKmsTxSenders"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
           "description": "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts.",
           "role": ".getKmsTxSenders"
@@ -4899,21 +4899,21 @@
       "address": "zama:0x7C17BE232e5968BDa9516478B798b9E90D013fCC",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
           "description": "sign public decryption results and user decryption shares accepted by Decryption.",
           "role": ".gatewayKmsSigners"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
           "description": "sign KMS key-generation and CRS-generation material accepted by KMSGeneration.",
           "role": ".gatewayKmsSigners"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
           "description": "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts.",
           "role": ".getKmsSigners"
@@ -4924,21 +4924,21 @@
       "address": "zama:0x7C5Eeb4D8CED0101799B8Cc212eE874097364F58",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
           "description": "sign public decryption results and user decryption shares accepted by Decryption.",
           "role": ".gatewayKmsSigners"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
           "description": "sign KMS key-generation and CRS-generation material accepted by KMSGeneration.",
           "role": ".gatewayKmsSigners"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
           "description": "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts.",
           "role": ".getKmsSigners"
@@ -5052,21 +5052,21 @@
       "address": "zama:0x915055c5F05C0d88BCdf1e3DfBA18aBD2a18350f",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
           "description": "sign public decryption results and user decryption shares accepted by Decryption.",
           "role": ".gatewayKmsSigners"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
           "description": "sign KMS key-generation and CRS-generation material accepted by KMSGeneration.",
           "role": ".gatewayKmsSigners"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
           "description": "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts.",
           "role": ".getKmsSigners"
@@ -5077,21 +5077,21 @@
       "address": "zama:0x966188a1f697F6A1B5cfA51495DD8A8A7b5CdB8D",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
           "description": "sign public decryption results and user decryption shares accepted by Decryption.",
           "role": ".gatewayKmsSigners"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
           "description": "sign KMS key-generation and CRS-generation material accepted by KMSGeneration.",
           "role": ".gatewayKmsSigners"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
           "description": "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts.",
           "role": ".getKmsSigners"
@@ -5115,21 +5115,21 @@
       "address": "zama:0xB4CE988D382425F64c99A352375F72A5f1cf6FFB",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
           "description": "submit KMS decryption responses to Decryption.",
           "role": ".gatewayKmsTxSenders"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
           "description": "submit KMS key-generation and CRS-generation responses to KMSGeneration.",
           "role": ".gatewayKmsTxSenders"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
           "description": "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts.",
           "role": ".getKmsTxSenders"
@@ -5140,21 +5140,21 @@
       "address": "zama:0xB7978e602D2AF68258dA614AF949E014BF0DE0eb",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
           "description": "sign public decryption results and user decryption shares accepted by Decryption.",
           "role": ".gatewayKmsSigners"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
           "description": "sign KMS key-generation and CRS-generation material accepted by KMSGeneration.",
           "role": ".gatewayKmsSigners"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
           "description": "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts.",
           "role": ".getKmsSigners"
@@ -5165,21 +5165,21 @@
       "address": "zama:0xbaac6F9DD84bFB303F05B4DE45A88Eec86855BD0",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
           "description": "submit KMS decryption responses to Decryption.",
           "role": ".gatewayKmsTxSenders"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
           "description": "submit KMS key-generation and CRS-generation responses to KMSGeneration.",
           "role": ".gatewayKmsTxSenders"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
           "description": "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts.",
           "role": ".getKmsTxSenders"
@@ -5190,21 +5190,21 @@
       "address": "zama:0xbcF4943A856497FB2345409D35f4d1eae9A0363E",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
           "description": "submit KMS decryption responses to Decryption.",
           "role": ".gatewayKmsTxSenders"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
           "description": "submit KMS key-generation and CRS-generation responses to KMSGeneration.",
           "role": ".gatewayKmsTxSenders"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
           "description": "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts.",
           "role": ".getKmsTxSenders"
@@ -5215,21 +5215,21 @@
       "address": "zama:0xbf05c17BEB0BF2F2c78Cd491A53a148e035279C3",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
           "description": "sign public decryption results and user decryption shares accepted by Decryption.",
           "role": ".gatewayKmsSigners"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
           "description": "sign KMS key-generation and CRS-generation material accepted by KMSGeneration.",
           "role": ".gatewayKmsSigners"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
           "description": "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts.",
           "role": ".getKmsSigners"
@@ -5240,21 +5240,21 @@
       "address": "zama:0xC105B5933446658D226582f7A112F49a70b54364",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
           "description": "submit KMS decryption responses to Decryption.",
           "role": ".gatewayKmsTxSenders"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
           "description": "submit KMS key-generation and CRS-generation responses to KMSGeneration.",
           "role": ".gatewayKmsTxSenders"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
           "description": "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts.",
           "role": ".getKmsTxSenders"
@@ -5367,21 +5367,21 @@
       "address": "zama:0xD227C4B573800EdA3bAdA6DAC872E9134E012e6D",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
           "description": "submit KMS decryption responses to Decryption.",
           "role": ".gatewayKmsTxSenders"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
           "description": "submit KMS key-generation and CRS-generation responses to KMSGeneration.",
           "role": ".gatewayKmsTxSenders"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
           "description": "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts.",
           "role": ".getKmsTxSenders"
@@ -5468,21 +5468,21 @@
       "address": "zama:0xdC472efa1642D5afB684aAaa546E22FB24AAB965",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
           "description": "sign public decryption results and user decryption shares accepted by Decryption.",
           "role": ".gatewayKmsSigners"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
           "description": "sign KMS key-generation and CRS-generation material accepted by KMSGeneration.",
           "role": ".gatewayKmsSigners"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
           "description": "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts.",
           "role": ".getKmsSigners"
@@ -5704,21 +5704,21 @@
       "address": "zama:0xDFc9Dcb3D206AA164770874f36a4B5AD2EE5194f",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
           "description": "sign public decryption results and user decryption shares accepted by Decryption.",
           "role": ".gatewayKmsSigners"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
           "description": "sign KMS key-generation and CRS-generation material accepted by KMSGeneration.",
           "role": ".gatewayKmsSigners"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
           "description": "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts.",
           "role": ".getKmsSigners"
@@ -5729,21 +5729,21 @@
       "address": "zama:0xe9f7ecfF21a2e0Ca58eA26ae869FEF38ab49ed6f",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
           "description": "sign public decryption results and user decryption shares accepted by Decryption.",
           "role": ".gatewayKmsSigners"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
           "description": "sign KMS key-generation and CRS-generation material accepted by KMSGeneration.",
           "role": ".gatewayKmsSigners"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
           "description": "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts.",
           "role": ".getKmsSigners"
@@ -5754,21 +5754,21 @@
       "address": "zama:0xEd1D622bd59d657580aBAc65312b40B4B2dA6236",
       "type": "EOA",
       "proxyType": "EOA",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
           "description": "submit KMS decryption responses to Decryption.",
           "role": ".gatewayKmsTxSenders"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
           "description": "submit KMS key-generation and CRS-generation responses to KMSGeneration.",
           "role": ".gatewayKmsTxSenders"
         },
         {
-          "permission": "act",
+          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
           "description": "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts.",
           "role": ".getKmsTxSenders"
@@ -7419,6 +7419,6 @@
     "zama/ZamaKMSVerifier": "0xb4f0d7aaa3e90b160ffbead289af925e65a0be7405a906362656a983c7719eb8",
     "zama/ZamaPauserSet": "0x1af56cc25e42342b2f464add26e41d36787603eb96bf24f0923abdf7caf5d35f"
   },
-  "usedBlockNumbers": { "ethereum": 25423926, "zama": 1875126 },
-  "permissionsConfigHash": "0x956f5500b4397819e204a6836c27827fe66c9e773daa687029aa927ad8c1b9b3"
+  "usedBlockNumbers": { "ethereum": 25424176, "zama": 1875303 },
+  "permissionsConfigHash": "0x2bb8df921c3e81bfeb65834c107505aa6ce4721ce3a2b18c565bd871e40ed7da"
 }
