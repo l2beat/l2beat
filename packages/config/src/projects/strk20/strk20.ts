@@ -50,7 +50,7 @@ export const strk20: BaseProject = {
       description:
         'The STRK-20 protocol program and the sources for proving stack are not published. Users cannot independently verify the correctness of STRK-20 ZK program. They also cannot generate required ZK proofs locally and are forced to reveal private data to third party - the prover.',
     },
-    adminViewingKey: {
+    privacy: {
       value: 'Use undetectable',
       sentiment: 'bad',
       description:

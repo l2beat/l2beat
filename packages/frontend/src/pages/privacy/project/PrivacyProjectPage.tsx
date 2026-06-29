@@ -97,7 +97,7 @@ export function PrivacyProjectPage({ entry, queryState, ...props }: Props) {
 
                       <PrivacyProjectRiskProfile
                         exitWindow={entry.exitWindow}
-                        adminViewingKey={entry.adminViewingKey}
+                        privacy={entry.privacy}
                         reproducibility={entry.reproducibility}
                         className="mt-4"
                       />

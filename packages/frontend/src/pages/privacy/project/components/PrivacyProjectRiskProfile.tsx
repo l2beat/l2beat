@@ -8,18 +8,19 @@ import { ProjectRiskTooltipContent } from '~/components/projects/ProjectRiskTool
 import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import { TrustedSetupRiskDot } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
 import { cn } from '~/utils/cn'
+import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
 import { sentimentToRiskDot } from '../../sentimentToRiskDot'
 
 interface Props {
   exitWindow: PrivacyExitWindow
-  adminViewingKey: PrivacySummaryValue
+  privacy: PrivacySummaryValue
   reproducibility: PrivacySummaryValue
   className?: string
 }
 
 export function PrivacyProjectRiskProfile({
   exitWindow,
-  adminViewingKey,
+  privacy,
   reproducibility,
   className,
 }: Props) {
@@ -31,9 +32,9 @@ export function PrivacyProjectRiskProfile({
         value={<RiskValue value={exitWindow} />}
       />
       <ProjectSummaryStat
-        title="Privacy"
-        tooltip="What is private and what are the trust assumptions? How is compliance facilitated?"
-        value={<RiskValue value={adminViewingKey} />}
+        title={PRIVACY_ASSESSMENT.title}
+        tooltip={PRIVACY_ASSESSMENT.tooltip}
+        value={<RiskValue value={privacy} />}
       />
       <ProjectSummaryStat
         title="Reproducibility"

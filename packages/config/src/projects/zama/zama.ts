@@ -193,7 +193,7 @@ export const zama: BaseProject = {
       description:
         'The smart contracts are source-available, but users also rely on offchain FHE execution and threshold decryption services whose outputs are accepted onchain through signature verification.',
     },
-    adminViewingKey: {
+    privacy: {
       value: `${kmsThreshold}/${kmsSignerCount} KMS threshold`,
       sentiment: 'warning',
       description:

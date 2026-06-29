@@ -105,7 +105,7 @@ export const privacyPools: BaseProject = {
       description:
         'The contracts, circuits, and supporting software needed to participate in Privacy Pools are publicly available and can be run locally.',
     },
-    adminViewingKey: {
+    privacy: {
       value: 'None',
       sentiment: 'good',
       description:

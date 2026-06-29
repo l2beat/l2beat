@@ -954,7 +954,7 @@ export interface ProjectPrivacyInfo {
   tokens: ProjectPrivacyToken[]
   exitWindow: PrivacyExitWindow
   reproducibility: PrivacySummaryValue
-  adminViewingKey: PrivacySummaryValue
+  privacy: PrivacySummaryValue
   attributes?: PrivacyAttribute[]
   riskSummary?: string
   upgradesAndGovernance?: string

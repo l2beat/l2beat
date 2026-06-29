@@ -22,6 +22,7 @@ import { useTable } from '~/hooks/useTable'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
+import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
 import { PrivacyAssessmentCell } from './PrivacyAssessmentCell'
 import { PrivacyTrustedSetupCell } from './PrivacyTrustedSetupCell'
 
@@ -156,23 +157,19 @@ const columns = [
         'Time users have to withdraw before a malicious upgrade can take effect.',
     },
   }),
-  columnHelper.accessor((entry) => adjustTableValue(entry.adminViewingKey), {
-    id: 'adminViewingKey',
-    header: 'Privacy',
+  columnHelper.accessor((entry) => adjustTableValue(entry.privacy), {
+    id: 'privacy',
+    header: PRIVACY_ASSESSMENT.title,
     cell: (ctx) => (
-      <PrivacyAssessmentCell
-        value={ctx.row.original.adminViewingKey}
-        showValue
-      />
+      <PrivacyAssessmentCell value={ctx.row.original.privacy} showValue />
     ),
     sortDescFirst: true,
     sortUndefined: 'last',
     sortingFn: (a, b) =>
-      sortTableValues(a.original.adminViewingKey, b.original.adminViewingKey),
+      sortTableValues(a.original.privacy, b.original.privacy),
     meta: {
       align: 'center',
-      tooltip:
-        'What is private and what are the trust assumptions? How is compliance facilitated?',
+      tooltip: PRIVACY_ASSESSMENT.tooltip,
     },
   }),
   columnHelper.accessor((entry) => adjustTableValue(entry.reproducibility), {
