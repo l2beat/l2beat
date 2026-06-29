@@ -67,6 +67,7 @@ function Content({
         <>
           <ProjectHeader
             project={projectEntry}
+            versions={projectEntry.versions}
             recentUpdatesCount={projectEntry.header.recentUpdatesCount}
           />
           <ProjectSummaryBars project={projectEntry} />

@@ -1,7 +1,9 @@
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
+import type { ProjectVersionSwitcher as ProjectVersionSwitcherData } from '~/utils/project/projectVersions'
 import { LiveIndicator } from '../LiveIndicator'
 import { SearchBarButton } from '../search-bar/SearchBarButton'
+import { ProjectVersionSwitcher } from './ProjectVersionSwitcher'
 
 interface Project {
   name: string
@@ -14,6 +16,8 @@ interface Props {
   ongoingAnomaly?: 'single' | 'multiple'
   recentUpdatesCount?: number
   secondLine?: string
+  /** Switcher between different versions of the project (e.g. CCTP v1/v2). */
+  versions?: ProjectVersionSwitcherData
   livenessSectionHref?: string
   className?: string
 }
@@ -23,6 +27,7 @@ export function ProjectHeader({
   ongoingAnomaly,
   recentUpdatesCount,
   secondLine,
+  versions,
   livenessSectionHref = '#liveness',
   className,
 }: Props) {
@@ -46,9 +51,7 @@ export function ProjectHeader({
             />
           )}
           <div className="flex flex-col">
-            <span className="text-heading-28 leading-none!">
-              {project.name}
-            </span>
+            <ProjectTitle name={project.name} versions={versions} />
             {secondLine && (
               <span className="font-bold text-label-value-15 text-secondary">
                 {secondLine}
@@ -88,5 +91,40 @@ export function ProjectHeader({
       </div>
       <SearchBarButton className="max-lg:hidden" label="Search projects" />
     </div>
+  )
+}
+
+function ProjectTitle({
+  name,
+  versions,
+}: {
+  name: string
+  versions?: ProjectVersionSwitcherData
+}) {
+  const titleClassName = 'text-heading-28 leading-none!'
+
+  if (!versions) {
+    return <span className={titleClassName}>{name}</span>
+  }
+
+  // Underline the current version's label inside the title and turn it into the
+  // switcher (e.g. "CCTP v1" -> "CCTP " + switchable "v1").
+  const index = name.lastIndexOf(versions.current)
+  if (index === -1) {
+    // Title doesn't contain the label; fall back to appending the switcher.
+    return (
+      <span className={cn(titleClassName, 'inline-flex items-center gap-2')}>
+        {name}
+        <ProjectVersionSwitcher versions={versions} />
+      </span>
+    )
+  }
+
+  return (
+    <span className={titleClassName}>
+      {name.slice(0, index)}
+      <ProjectVersionSwitcher versions={versions} />
+      {name.slice(index + versions.current.length)}
+    </span>
   )
 }

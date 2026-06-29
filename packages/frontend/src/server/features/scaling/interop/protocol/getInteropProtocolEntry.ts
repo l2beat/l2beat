@@ -20,6 +20,10 @@ import { getContractUtils } from '~/utils/project/contracts-and-permissions/getC
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import {
+  getProjectVersionSwitcher,
+  type ProjectVersionSwitcher,
+} from '~/utils/project/projectVersions'
+import {
   getUnderReviewStatus,
   type UnderReviewStatus,
 } from '~/utils/project/underReview'
@@ -31,6 +35,7 @@ export interface InteropProtocolEntry {
   slug: string
   icon: string
   underReviewStatus: UnderReviewStatus
+  versions?: ProjectVersionSwitcher
   header: {
     warning?: string
     redWarning?: ProjectRedWarning
@@ -206,6 +211,10 @@ export async function getInteropProtocolEntry(
       isUnderReview,
       impactfulChange: false,
     }),
+    versions: getProjectVersionSwitcher(
+      project.slug,
+      (slug) => `/interop/protocols/${slug}`,
+    ),
     header,
     sections,
   }
