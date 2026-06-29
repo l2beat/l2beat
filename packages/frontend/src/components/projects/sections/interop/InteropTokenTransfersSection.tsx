@@ -36,9 +36,13 @@ export function InteropTokenTransfersSection({
   ...sectionProps
 }: InteropTokenTransfersSectionProps) {
   const trpc = useTRPC()
-  const { data, apiSelection } = useInteropTokenDashboard()
-  const [selectedFrom, setSelectedFrom] = useState<string[]>(apiSelection.from)
-  const [selectedTo, setSelectedTo] = useState<string[]>(apiSelection.to)
+  const { data } = useInteropTokenDashboard()
+  const allInteropChainIds = useMemo(
+    () => interopChains.map((c) => c.id),
+    [interopChains],
+  )
+  const [selectedFrom, setSelectedFrom] = useState<string[]>(allInteropChainIds)
+  const [selectedTo, setSelectedTo] = useState<string[]>(allInteropChainIds)
 
   const {
     data: transfersData,

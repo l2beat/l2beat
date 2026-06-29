@@ -8,7 +8,6 @@ import { BetweenChainsInfo } from '../../components/BetweenChainsInfo'
 import { SelectedChainsTokensDialog } from '../../components/tokens/TokensDialog'
 import { InteropTopItems } from '../../components/top-items/TopItems'
 import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
-import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 
 export function TokenCount({
   isLoading,
@@ -20,7 +19,6 @@ export function TokenCount({
   topItems: TopItems<TokenData> | undefined
 }) {
   const [isOpen, setIsOpen] = useState(false)
-  const { selectedChains } = useInteropSelectedChains()
   const hasTokens =
     (tokenCount ?? 0) > 0 && !!topItems && topItems.items.length > 0
 
@@ -55,7 +53,7 @@ export function TokenCount({
                     iconUrl: token.iconUrl,
                     volume: token.volume,
                     issuer: token.issuer,
-                    href: getInteropTokenUrl(token, selectedChains),
+                    href: getInteropTokenUrl(token),
                     transferCount: token.transferCount,
                     avgDuration: token.avgDuration,
                     avgValue: token.avgValue,
