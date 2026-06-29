@@ -1,5 +1,5 @@
 import type { EntryParameters, ReceivedPermission } from '@l2beat/discovery'
-import { type ChainSpecificAddress, formatSeconds } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, formatSeconds } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import sum from 'lodash/sum'
 import type { ProjectUpgradeableActor } from '../types'
@@ -37,8 +37,51 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
   getPermissionedEoas(): ChainSpecificAddress[] {
     return this.projectDiscovery
       .getReachableEoas()
-      .filter((e) => e.receivedPermissions !== undefined)
+      .filter(
+        (e) =>
+          e.receivedPermissions !== undefined ||
+          (e.directlyReceivedPermissions ?? []).some(
+            (p) => p.permission === 'act',
+          ),
+      )
       .map((e) => e.address)
+  }
+
+  describeActPermissions(contractOrEoa: EntryParameters) {
+    const actPermissions = [
+      ...(contractOrEoa.receivedPermissions ?? []),
+      ...(contractOrEoa.directlyReceivedPermissions ?? []),
+    ].filter(
+      (p) =>
+        p.permission === 'act' && this.projectDiscovery.isReachable(p.from),
+    )
+
+    const groupedByGiver = groupBy(actPermissions, (p) => p.from)
+
+    return Object.entries(groupedByGiver).map(([from, permissions]) => {
+      const name = this.projectDiscovery.getName(ChainSpecificAddress(from))
+      const permissionsString = Object.entries(
+        groupBy(permissions, (p) => p.description ?? 'act directly'),
+      )
+        .map(([description, permissions]) => {
+          const result = [`  * ${trimTrailingDots(description)}`]
+          const sumTotalDelays = sum(
+            permissions.map((p) => totalPermissionDelay(p)),
+          )
+          if (sumTotalDelays > 0) {
+            result.push(
+              `**${permissions.map((p) => formatPermissionDelay(totalPermissionDelay(p))).join(' or ')}**`,
+            )
+          }
+          const formattedVia = this.formatMultiplePermissionsVia(permissions)
+          if (formattedVia !== '') {
+            result.push(formattedVia)
+          }
+          return result.join(' ')
+        })
+        .join('\n')
+      return `* Can act through ${name}\n${permissionsString}`
+    })
   }
 
   describeUpgradePermissions(contractOrEoa: EntryParameters) {
@@ -166,8 +209,9 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
   ): string {
     const upgrade = this.describeUpgradePermissions(contractOrEoa)
     const interact = this.describeInteractPermissions(contractOrEoa)
+    const act = this.describeActPermissions(contractOrEoa)
     const roles = describeRoles ? this.describeRoles(contractOrEoa) : []
-    return [...upgrade, ...interact, ...roles]
+    return [...upgrade, ...interact, ...act, ...roles]
       .filter((s) => s !== '')
       .join('\n')
   }

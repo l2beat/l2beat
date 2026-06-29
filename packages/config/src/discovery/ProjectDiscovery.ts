@@ -811,12 +811,19 @@ export class ProjectDiscovery {
   }
 
   getPermissionPriority(entry: EntryParameters): number {
-    if (entry.receivedPermissions === undefined) {
+    const permissions = [
+      ...(entry.receivedPermissions ?? []),
+      ...(entry.directlyReceivedPermissions ?? []).filter(
+        (p) => p.permission === 'act',
+      ),
+    ]
+
+    if (permissions.length === 0) {
       return 0
     }
 
-    const permissions = entry.receivedPermissions.map((p) => p.from)
-    const priority = permissions.reduce((acc, permission) => {
+    const permissionSources = permissions.map((p) => p.from)
+    const priority = permissionSources.reduce((acc, permission) => {
       return acc + (this.getEntryByAddress(permission)?.category?.priority ?? 0)
     }, 0)
 
