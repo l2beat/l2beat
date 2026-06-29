@@ -42,7 +42,7 @@ export function buildRenderGraph(
   const rendered: Node[] = []
   const containers: GroupContainer[] = []
   for (const node of visible) {
-    for (const member of expand(node, containers)) {
+    for (const member of expand(node, hiddenSet, containers)) {
       rendered.push(member)
     }
   }
@@ -59,12 +59,18 @@ export function buildRenderGraph(
   return { nodes: laidOut, containers }
 }
 
-function expand(node: Node, containers: GroupContainer[]): Node[] {
+function expand(
+  node: Node,
+  hidden: ReadonlySet<string>,
+  containers: GroupContainer[],
+): Node[] {
   if (node.opened && node.subnodes.length > 0) {
-    const members = node.subnodes.flatMap((subnode) =>
-      expand(subnode, containers),
-    )
-    containers.push(boundary(node, members))
+    const members = node.subnodes
+      .filter((subnode) => !hidden.has(subnode.id))
+      .flatMap((subnode) => expand(subnode, hidden, containers))
+    if (members.length > 0) {
+      containers.push(boundary(node, members))
+    }
     return members
   }
   return [node]
