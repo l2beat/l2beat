@@ -20,7 +20,7 @@ export const mayan: BaseProject = {
         value: 'Request refund',
         sentiment: 'bad',
         description:
-          'Unfulfilled Swift orders can be refunded from the source contract with a Wormhole or refund-verifier message.',
+          'There is no onchain refund option. Unfulfilled Swift orders can be refunded from the source contract with a Wormhole or refund-verifier message.',
       },
       solverAccess: {
         value: 'Permissionless',

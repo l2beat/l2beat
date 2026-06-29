@@ -28,7 +28,7 @@ export const relay: BaseProject = {
         value: 'Request refund',
         sentiment: 'bad',
         description:
-          'No self-serve onchain refund path is exposed; failed transfers depend on Relay-operated recovery.',
+          'There is no onchain refund option. No self-serve onchain refund path is exposed; failed transfers depend on Relay-operated recovery.',
       },
       solverAccess: {
         value: 'Internal',

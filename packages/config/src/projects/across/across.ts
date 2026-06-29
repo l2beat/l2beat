@@ -36,7 +36,7 @@ export const across: BaseProject = {
       userRecovery: {
         value: 'Slow-fill fallback',
         description:
-          'If no relayer fast-fills a deposit, Across can complete it through the protocol slow-fill path.',
+          'If no relayer fast-fills a deposit, Across can complete it through the protocol slow-fill path. Not available for chains that do not have a canonical bridge adapter on Ethereum.',
       },
       solverAccess: {
         value: 'Permissionless',

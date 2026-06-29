@@ -20,7 +20,7 @@ export const cbridge: BaseProject = {
         value: 'Request refund',
         sentiment: 'bad',
         description:
-          'Failed pool transfers can be withdrawn on the source chain using gateway data signed by the Celer SGN.',
+          'There is no onchain refund option. Failed pool transfers can be withdrawn on the source chain using gateway data signed by the Celer SGN.',
       },
       solverAccess: {
         value: 'Internal',

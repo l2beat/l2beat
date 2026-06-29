@@ -19,7 +19,7 @@ export const gaszip: BaseProject = {
         value: 'Request refund',
         sentiment: 'bad',
         description:
-          'No self-serve onchain cancellation or refund path; invalid deposits are handled through Gas.zip support.',
+          'There is no onchain refund option. No self-serve onchain cancellation or refund path; invalid deposits are handled through Gas.zip support.',
       },
       solverAccess: {
         value: 'Internal',

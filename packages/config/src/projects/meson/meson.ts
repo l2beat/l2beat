@@ -19,7 +19,7 @@ export const meson: BaseProject = {
         value: 'Request refund',
         sentiment: 'bad',
         description:
-          'The central liquidity pool implementation source code is unavailable.',
+          'There is no onchain refund option. The central liquidity pool implementation source code is unavailable.',
       },
       solverAccess: {
         value: 'Permissionless',
