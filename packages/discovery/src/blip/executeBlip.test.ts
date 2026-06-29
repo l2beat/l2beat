@@ -716,6 +716,73 @@ describe(executeBlip.name, () => {
     })
   })
 
+  describe('sort operations', () => {
+    it('sorts numbers ascending', () => {
+      expect(executeBlip([3, 1, 2], ['sort'])).toEqual([1, 2, 3])
+    })
+
+    it('sorts strings lexicographically', () => {
+      expect(executeBlip(['0x33', '0x11', '0x22'], ['sort'])).toEqual([
+        '0x11',
+        '0x22',
+        '0x33',
+      ])
+    })
+
+    it('sorts objects by a key expression', () => {
+      expect(
+        executeBlip(
+          [{ id: 'b' }, { id: 'a' }, { id: 'c' }],
+          ['sort', ['get', 'id']],
+        ),
+      ).toEqual([{ id: 'a' }, { id: 'b' }, { id: 'c' }])
+    })
+
+    it('sorts nested arrays by index (e.g. DON nodes by p2pId)', () => {
+      expect(
+        executeBlip(
+          [
+            ['0x22', 'y'],
+            ['0x11', 'x'],
+            ['0x33', 'z'],
+          ],
+          ['sort', ['get', 0]],
+        ),
+      ).toEqual([
+        ['0x11', 'x'],
+        ['0x22', 'y'],
+        ['0x33', 'z'],
+      ])
+    })
+
+    it('is stable for equal keys', () => {
+      expect(
+        executeBlip(
+          [
+            { k: 1, v: 'a' },
+            { k: 1, v: 'b' },
+            { k: 0, v: 'c' },
+          ],
+          ['sort', ['get', 'k']],
+        ),
+      ).toEqual([
+        { k: 0, v: 'c' },
+        { k: 1, v: 'a' },
+        { k: 1, v: 'b' },
+      ])
+    })
+
+    it('handles empty arrays', () => {
+      expect(executeBlip([], ['sort'])).toEqual([])
+    })
+
+    it('throws when input is not an array', () => {
+      expect(() => executeBlip({}, ['sort'])).toThrow(
+        'sort requires an array input',
+      )
+    })
+  })
+
   describe('pipe operations', () => {
     it('applies a sequence of operations to a value', () => {
       const data = { a: 1 }

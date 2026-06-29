@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x0a2cd37661894243afdb6d79238f57e3a0775ccb
+
+# Diff at Wed, 24 Jun 2026 11:02:47 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@de5d8a0f706ed1564e5583609b20d2bf29d3dfd5 block: 1778830889
+- current timestamp: 1782298886
+
+## Description
+
+Upgraded op-succinct programs to v2.2.4-mainnet.4. Hashes reproduced.
+
+## Watched changes
+
+```diff
+    contract OPSuccinctL2OutputOracle (eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) [succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      values.aggregationVkey:
+-        "0x0006e0a9f37edc912bb269856518599d61689c78300c23615b2f90868d0181cf"
++        "0x001db6dc655ffc97e6ec7a2b5c9b1ddf42c2235faa007d8a96d659c68b7c432a"
+      values.rangeVkeyCommitment:
+-        "0x1d1e0ac74bb66ded0388062e779adae47925fd572a49a3424e2684f83d776004"
++        "0x6f0230de6e9b59592b3127f55829c9a766d397903df5c57d557c91634a30b32b"
+    }
+```
+
 Generated with discovered.json: 0x5a9bf86f2822071d1e97f9133b137c9ade472276
 
 # Diff at Tue, 09 Jun 2026 12:43:36 GMT:

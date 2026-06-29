@@ -38,6 +38,10 @@ export function validateBlip(input: unknown): boolean {
       return input.slice(1).every((e) => validateBlip(e)) && notEmpty
     case 'map':
       return input.length === 2 && validateBlip(input[1])
+    case 'sort':
+      return (
+        input.length === 1 || (input.length === 2 && validateBlip(input[1]))
+      )
     case 'pick':
       return input.slice(1).every((e) => validateBlip(e)) && notEmpty
     case 'get':

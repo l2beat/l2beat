@@ -3,12 +3,29 @@
   "description": "The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers.",
   "ignoreMethods": ["rootBundles", "proxiableUUID"],
   "ignoreInWatchMode": ["numberOfDeposits", "getCurrentTime"],
-  "ignoreRelatives": ["wrappedNativeToken"],
+  "ignoreRelatives": [
+    "wrappedNativeToken",
+    "l2Eth",
+    "withdrawalRecipient",
+    "MESSENGER",
+    "cctpTokenMessenger",
+    "usdcToken"
+  ],
   "category": "core",
   "fields": {
-    "owner": {
+    "crossDomainAdmin": {
       "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function crossDomainAdmin() view returns (address)",
+        "args": []
+      },
+      "edit": ["format", "EthereumAddress"],
       "permissions": [
+        {
+          "type": "upgrade",
+          "description": "upgrade the SpokePool implementation. The admin is the HubPool on Ethereum; for L2 SpokePools it acts cross-chain via the canonical messenger."
+        },
         {
           "type": "interact",
           "description": "relay and delete root bundles, pause the contract, manage routes, set the withdrawal recipient (crosschain rebalancing target)."

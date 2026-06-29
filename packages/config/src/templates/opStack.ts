@@ -660,6 +660,23 @@ export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
   }
 }
 
+// A real absolute prestate is exactly 32 non-zero bytes. V2 game implementations
+// return all-zero (the value lives in clone immutable args), the AnchorStateRegistry
+// *FromGame fields resolve to the zero address until a game is anchored, and
+// unresolved handler reads come back as non-hex strings; all must be rejected.
+function isRealPrestate(value: string | undefined): value is string {
+  return value !== undefined && /^0x(?!0+$)[0-9a-f]{64}$/i.test(value)
+}
+
+// The factory's gameArgs[1] is the implementation-args blob it appends to every
+// permissioned game clone; the absolute prestate is its first 32 bytes. The blob
+// is empty ("0x") on chains whose games keep the prestate in the implementation.
+function prestateFromGameArgs(
+  gameArgs: string | undefined,
+): string | undefined {
+  return gameArgs?.startsWith('0x') ? gameArgs.slice(0, 66) : undefined
+}
+
 function getProgramHashes(
   templateVars: OpStackConfigCommon,
 ): ProjectScalingContractsProgramHash[] {
@@ -670,29 +687,33 @@ function getProgramHashes(
       return []
     case 'Permissioned':
     case 'Permissionless': {
-      const absolutePrestate = templateVars.discovery.getContractValue<string>(
-        'PermissionedDisputeGame',
-        'absolutePrestate',
-      )
-      const EMPTY_PRESTATE = '0x' + '0'.repeat(64)
-      // V2 dispute games store params in clone bytecode;
-      // the implementation contract returns zero.
-      // Read from AnchorStateRegistry's game clone instead.
-      if (absolutePrestate === EMPTY_PRESTATE) {
-        const fromAnchor = templateVars.discovery.hasContract(
-          'AnchorStateRegistry',
-        )
+      // V2 dispute games store the prestate in clone immutable args, so the
+      // implementation returns zero. Try the implementation, then the anchored
+      // game clone, then the factory's configured game args (gameArgs[1], which
+      // it bakes into every permissioned game). The anchor stays empty until a
+      // game resolves. Zero / zero-address / empty forms are skipped.
+      const prestateCandidates = [
+        templateVars.discovery.getContractValueOrUndefined<string>(
+          'PermissionedDisputeGame',
+          'absolutePrestate',
+        ),
+        templateVars.discovery.hasContract('AnchorStateRegistry')
           ? templateVars.discovery.getContractValueOrUndefined<string>(
               'AnchorStateRegistry',
               'absolutePrestateFromGame',
             )
-          : undefined
-        if (fromAnchor && fromAnchor !== EMPTY_PRESTATE) {
-          return [PROGRAM_HASHES(fromAnchor)]
-        }
-        return []
-      }
-      return [PROGRAM_HASHES(absolutePrestate)]
+          : undefined,
+        templateVars.discovery.hasContract('DisputeGameFactory')
+          ? prestateFromGameArgs(
+              templateVars.discovery.getContractValueOrUndefined<string>(
+                'DisputeGameFactory',
+                'permissionedGameArgs',
+              ),
+            )
+          : undefined,
+      ]
+      const prestate = prestateCandidates.find(isRealPrestate)
+      return prestate ? [PROGRAM_HASHES(prestate)] : []
     }
     case 'Kailua': {
       const kailuaProgramHash = templateVars.discovery.getContractValue<string>(
@@ -2271,8 +2292,7 @@ function getTrackedTxs(
     }
     case 'Permissioned':
     case 'Permissionless':
-    case 'Kailua':
-    case 'KailuaSoon': {
+    case 'Kailua': {
       const disputeGameFactory =
         templateVars.disputeGameFactory ??
         templateVars.discovery.getContract('DisputeGameFactory')
@@ -2301,6 +2321,38 @@ function getTrackedTxs(
             selector: '0x82ecf2f6',
             functionSignature:
               'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',
+            sinceTimestamp: templateVars.genesisTimestamp,
+          },
+        },
+      ]
+    }
+    case 'KailuaSoon': {
+      const kailuaTreasury =
+        templateVars.discovery.getContract('KailuaTreasury')
+      return [
+        {
+          uses: [
+            { type: 'liveness', subtype: 'batchSubmissions' },
+            { type: 'l2costs', subtype: 'batchSubmissions' },
+          ],
+          query: {
+            formula: 'transfer',
+            from: sequencerAddress,
+            to: sequencerInbox,
+            sinceTimestamp: templateVars.genesisTimestamp,
+          },
+        },
+        {
+          uses: [
+            { type: 'liveness', subtype: 'stateUpdates' },
+            { type: 'l2costs', subtype: 'stateUpdates' },
+          ],
+          query: {
+            formula: 'functionCall',
+            address: ChainSpecificAddress.address(kailuaTreasury.address),
+            selector: '0xca0dc973',
+            functionSignature:
+              'function propose(bytes32 _rootClaim,bytes _extraData)',
             sinceTimestamp: templateVars.genesisTimestamp,
           },
         },

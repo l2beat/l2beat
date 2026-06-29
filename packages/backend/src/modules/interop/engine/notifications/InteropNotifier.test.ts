@@ -59,61 +59,6 @@ describe(InteropNotifier.name, () => {
     expect(sent[1]?.includes('**second** config change')).toEqual(true)
   })
 
-  it('queues and sends suspicious aggregate notifications', async () => {
-    const webhookClient = mockObject<DiscordClient>({
-      sendMessage: async () => '1',
-    })
-    const notifier = new InteropNotifier(webhookClient, Logger.SILENT)
-
-    notifier.notifySuspiciousAggregates(UnixTime(2_000_000), {
-      checkedGroups: 3,
-      suspiciousGroups: [
-        {
-          id: 'stargate',
-          bridgeType: 'nonMinting',
-          srcChain: 'ethereum',
-          dstChain: 'arbitrum',
-          reasons: [
-            'Transfer count spiked (+1900%, 1,000 → 20,000)',
-            'Source volume spiked (+2900%, $2M → $60M)',
-          ],
-          evaluation: {
-            signals: [
-              {
-                metric: 'count',
-                kind: 'ratioSpike',
-                severity: 'severe',
-                baseline: 1_000,
-                current: 20_000,
-                changePercent: 1_900,
-              },
-              {
-                metric: 'srcVolume',
-                kind: 'ratioSpike',
-                severity: 'severe',
-                baseline: 2_000_000,
-                current: 60_000_000,
-                changePercent: 2_900,
-              },
-            ],
-            sideMismatch: null,
-          },
-        },
-      ],
-    })
-    await notifier._TEST_ONLY_waitTillEmpty()
-
-    expect(webhookClient.sendMessage).toHaveBeenCalledTimes(1)
-    const message = webhookClient.sendMessage.calls[0]?.args[0] as string
-
-    expect(message.includes('Interop aggregate analysis flagged')).toEqual(true)
-    expect(message.includes('stargate')).toEqual(true)
-    expect(
-      message.includes('nonMinting transfers on the ethereum -> arbitrum path'),
-    ).toEqual(true)
-    expect(message.includes('Transfer count spiked')).toEqual(true)
-  })
-
   it('queues and sends suspicious transfer notifications', async () => {
     const webhookClient = mockObject<DiscordClient>({
       sendMessage: async () => '1',

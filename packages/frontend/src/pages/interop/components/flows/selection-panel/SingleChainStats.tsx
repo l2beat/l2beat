@@ -7,9 +7,9 @@ import type { InteropFlowsData } from '~/server/features/scaling/interop/getInte
 import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatInteger } from '~/utils/number-format/formatInteger'
 import { getInteropTokenUrl } from '../../../utils/getInteropTokenUrl'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
+import { getChainFlowStatItems } from './getChainFlowStatItems'
 import { TopItemsList } from './TopItemsList'
 
 export function SingleChainStats({
@@ -51,10 +51,7 @@ export function SingleChainStats({
           items={chainData.topTokens.map((t) => ({
             ...t,
             title: t.symbol,
-            href: getInteropTokenUrl(t, {
-              from: selectedChains,
-              to: selectedChains,
-            }),
+            href: getInteropTokenUrl(t),
           }))}
         />
       )}
@@ -86,10 +83,6 @@ function Stats({
     return null
   }
 
-  const totalTransfers = chainData.transfersIn + chainData.transfersOut
-  const avgTransferValue =
-    totalTransfers > 0 ? chainData.totalVolume / totalTransfers : 0
-
   const volumePerSecond = chainData.totalVolume / UnixTime.DAY
 
   return (
@@ -98,46 +91,14 @@ function Stats({
         Stats
       </div>
       <div className="space-y-1.5">
-        <StatRow
-          label="Total volume"
-          value={formatCurrency(chainData.totalVolume, 'usd')}
-          isLoading={isLoading}
-        />
-        <StatRow
-          label="Volume in"
-          value={formatCurrency(chainData.inflow, 'usd')}
-          isLoading={isLoading}
-        />
-        <StatRow
-          label="Volume out"
-          value={formatCurrency(chainData.outflow, 'usd')}
-          isLoading={isLoading}
-        />
-        <StatRow
-          label="Net flow"
-          value={formatCurrency(chainData.netFlow, 'usd')}
-          isLoading={isLoading}
-        />
-        <StatRow
-          label="Total transfers"
-          value={formatInteger(totalTransfers)}
-          isLoading={isLoading}
-        />
-        <StatRow
-          label="Transfers in"
-          value={formatInteger(chainData.transfersIn)}
-          isLoading={isLoading}
-        />
-        <StatRow
-          label="Transfers out"
-          value={formatInteger(chainData.transfersOut)}
-          isLoading={isLoading}
-        />
-        <StatRow
-          label="Avg. transfer value"
-          value={formatCurrency(avgTransferValue, 'usd')}
-          isLoading={isLoading}
-        />
+        {getChainFlowStatItems(chainData).map((item) => (
+          <StatRow
+            key={item.label}
+            label={item.label}
+            value={item.value}
+            isLoading={isLoading}
+          />
+        ))}
         <StatRow
           label="Connected"
           value={`${chainData.connectedChains} chains`}

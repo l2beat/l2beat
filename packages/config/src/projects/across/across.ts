@@ -1,8 +1,22 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import {
+  generateDiscoveryDrivenContracts,
+  generateDiscoveryDrivenPermissions,
+} from '../../templates/generateDiscoveryDrivenSections'
 import type { BaseProject } from '../../types'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
-const _discovery = new ProjectDiscovery('across')
+const discovery = new ProjectDiscovery('across')
+
+const bondAmountFmt = discovery.getContractValue<string>(
+  'HubPool',
+  'bondAmountFmt',
+)
+const finalizationDelayFmt = discovery.getContractValue<string>(
+  'HubPool',
+  'finalizationDelayFmt',
+)
 
 export const across: BaseProject = {
   id: ProjectId('across'),
@@ -34,6 +48,10 @@ export const across: BaseProject = {
           'Relayer repayment is settled through the Across system and can be escalated to token voting via UMA.',
       },
     },
+    detailedDescription: readProjectMarkdown('across', 'detailedDescription', {
+      bondAmountFmt,
+      finalizationDelayFmt,
+    }),
     plugins: [
       {
         plugin: 'across',
@@ -41,5 +59,10 @@ export const across: BaseProject = {
       },
     ],
     type: 'intent',
+    permissions: generateDiscoveryDrivenPermissions([discovery]),
+    contracts: {
+      addresses: generateDiscoveryDrivenContracts([discovery]),
+      risks: [],
+    },
   },
 }

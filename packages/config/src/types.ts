@@ -952,9 +952,20 @@ export interface TrustedSetup {
 export interface ProjectPrivacyInfo {
   trustedSetup: TrustedSetup
   tokens: ProjectPrivacyToken[]
+  exitWindow: PrivacyExitWindow
+  reproducibility: PrivacySummaryValue
+  adminViewingKey: PrivacySummaryValue
   attributes?: PrivacyAttribute[]
   riskSummary?: string
   upgradesAndGovernance?: string
+}
+
+export interface PrivacyExitWindow extends ExitWindowRisk {
+  description: string
+}
+
+export interface PrivacySummaryValue extends TableReadyValue {
+  description: string
 }
 
 export interface PrivacyAttribute {

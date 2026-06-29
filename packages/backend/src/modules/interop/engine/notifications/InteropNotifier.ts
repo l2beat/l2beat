@@ -2,17 +2,16 @@ import type { Logger } from '@l2beat/backend-tools'
 import { DISCORD_MAX_MESSAGE_LENGTH, type DiscordClient } from '@l2beat/shared'
 import { Retries, UnixTime } from '@l2beat/shared-pure'
 import { TaskQueue } from '../../../../tools/queue/TaskQueue'
-import type { InteropAggregationAnalysis } from '../aggregation/InteropAggregationAnalyzer'
 import {
   diffInteropConfig,
   type InteropConfigDiff,
   interopConfigDiffToMarkdown,
   removeMutedInteropConfigDiffEntries,
 } from '../config/InteropConfigDiff'
+import type { RuleViolation } from '../promotion/types'
 
 const MAX_ENTRIES_IN_MESSAGE = 200
-const MAX_SUSPICIOUS_GROUPS_IN_MESSAGE = 20
-const MAX_REASONS_PER_GROUP = 3
+const MAX_BLOCKED_REASONS_IN_MESSAGE = 20
 const MAX_SUSPICIOUS_TRANSFERS_IN_MESSAGE = 6
 const MAX_SKIPPED_VALUATIONS_IN_MESSAGE = 10
 
@@ -90,35 +89,24 @@ export class InteropNotifier {
     this.notifyConfigDiff(filteredDiff)
   }
 
-  notifySuspiciousAggregates(
-    timestamp: UnixTime,
-    analysis: InteropAggregationAnalysis,
-  ): void {
-    if (analysis.suspiciousGroups.length === 0) {
+  notifyBlockedSnapshot(timestamp: UnixTime, reasons: RuleViolation[]): void {
+    if (reasons.length === 0) {
       return
     }
 
-    const renderedGroups = analysis.suspiciousGroups
-      .slice(0, MAX_SUSPICIOUS_GROUPS_IN_MESSAGE)
-      .map((group) => {
-        const reasons = group.reasons.slice(0, MAX_REASONS_PER_GROUP).join('; ')
-        const remainingReasons = group.reasons.length - MAX_REASONS_PER_GROUP
-        const remainingSuffix =
-          remainingReasons > 0 ? `; +${remainingReasons} more` : ''
+    const renderedReasons = reasons
+      .slice(0, MAX_BLOCKED_REASONS_IN_MESSAGE)
+      .map((reason) => `- ${reason.message}`)
 
-        return `- ${group.id} ${group.bridgeType} transfers on the ${group.srcChain} -> ${group.dstChain} path: ${reasons}${remainingSuffix}`
-      })
-
-    const remainingGroups =
-      analysis.suspiciousGroups.length - MAX_SUSPICIOUS_GROUPS_IN_MESSAGE
-    if (remainingGroups > 0) {
-      renderedGroups.push(`- ...and ${remainingGroups} more groups`)
+    const remainingReasons = reasons.length - MAX_BLOCKED_REASONS_IN_MESSAGE
+    if (remainingReasons > 0) {
+      renderedReasons.push(`- ...and ${remainingReasons} more`)
     }
 
     const message = [
-      `🚨 Interop aggregate analysis flagged \`${analysis.suspiciousGroups.length}\` suspicious groups at \`${formatTimestamp(timestamp)}\``,
+      `⛔ Interop snapshot \`${formatTimestamp(timestamp)}\` blocked from promotion - needs manual review`,
       '',
-      ...renderedGroups,
+      ...renderedReasons,
     ].join('\n')
 
     this.messageQueue.addToBack(message)

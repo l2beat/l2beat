@@ -599,8 +599,8 @@ The event handler allows you to query and process blockchain events to track sta
 **Parameters:**
 
 - `type` - the literal: `"event"`
-- `select` - event parameter(s) to extract. Accepts a single string or array of strings (e.g., `"user"` or `["batchIndex", "chainId"]`)
-- `groupBy` - (optional) groups results by the specified event parameter. Returns an object with grouped keys when used.
+- `select` - event parameter(s) to extract. Accepts a single string or array of strings (e.g., `"user"` or `["batchIndex", "chainId"]`). Dot-notation reaches into nested values, e.g. `"config.chainSelector"` for a named field. Note that decoded struct/tuple parameters are positional arrays, so a nested struct field is addressed by its index, e.g. `"config.1"` for the second field of a `config` struct.
+- `groupBy` - (optional) groups results by the specified event parameter. Returns an object with grouped keys when used. Supports the same dot-notation as `select`, e.g. `"config.1"` to group by a field nested inside a struct parameter.
 - `ignoreRelative` - (optional, default: `false`) if set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered.
 - `flatten` - (optional, add/remove only) expands array-valued selected fields into one row per element.
 - `dedupBy` - (optional, add/remove only) field(s) that define row identity; later add/remove match on these while other selected fields stay in the output. Defaults to `select`.
@@ -1030,6 +1030,7 @@ In the first example, `["get", "systemConfig"]` is a filter that extracts the sy
 
 - `pipe`, chains multiple filters sequentially.
 - `map`, applies a filter to each element in an array.
+- `sort`, returns a new array sorted in ascending order, optionally by a computed key.
 - `pick`, selects specific keys from an object.
 - `get`, retrieves a value using a key or index path.
 - `set`, updates a value at a specific key or index path.
@@ -1066,6 +1067,21 @@ The second argument must be a single filter expression that will be applied to e
 - Input: `[1, 2, 3]`
 - Program: `["map", ["=", 2]]`
 - Output: `[false, true, false]`
+
+#### `sort`
+
+Returns a new array sorted in ascending order. The sort is stable and deterministic.
+When called with no arguments the elements are compared directly.
+When given a single filter argument, each element is sorted by the value that filter produces (its sort key).
+Useful for normalizing set-like arrays (e.g. a list of addresses or DON nodes) so that a pure reordering produces no diff.
+
+- Input: `[3, 1, 2]`
+- Program: `["sort"]`
+- Output: `[1, 2, 3]`
+
+- Input: `[{ id: "b" }, { id: "a" }]`
+- Program: `["sort", ["get", "id"]]`
+- Output: `[{ id: "a" }, { id: "b" }]`
 
 #### `pick`
 

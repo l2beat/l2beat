@@ -268,7 +268,7 @@ export const getTopTokensColumns = ({
         )
 
         const tokenUrl = selectedChains
-          ? getInteropTokenUrl(ctx.row.original, selectedChains)
+          ? getInteropTokenUrl(ctx.row.original)
           : undefined
 
         return (
@@ -379,9 +379,7 @@ function TokenPairSymbol({
   token: TokensPairRow['tokenA']
   selectedChains: InteropSelection | undefined
 }) {
-  const tokenUrl = selectedChains
-    ? getInteropTokenUrl(token, selectedChains)
-    : undefined
+  const tokenUrl = selectedChains ? getInteropTokenUrl(token) : undefined
 
   if (!tokenUrl) {
     return <span>{token.symbol}</span>

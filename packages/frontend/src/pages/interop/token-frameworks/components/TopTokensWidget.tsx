@@ -41,8 +41,6 @@ export function TopTokensWidget({
     }),
   )
 
-  const apiSelection = { from: selectedChains, to: selectedChains }
-
   const frameworksById = new Map(tokenFrameworks.map((f) => [f.id, f]))
 
   const items =
@@ -115,7 +113,7 @@ export function TopTokensWidget({
                     token={token}
                     framework={framework}
                     showFrameworkBadge={activeTab === 'all'}
-                    href={getInteropTokenUrl(token, apiSelection)}
+                    href={getInteropTokenUrl(token)}
                   />
                 )
               })}

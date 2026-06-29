@@ -109,7 +109,6 @@ export function FlowsGeneralStats({
                 isLoading={isLoading}
                 tokenCount={data?.stats.tokenCount}
                 topTokens={data?.stats.topTokens}
-                selectedChains={selectedChains}
                 setIsOpen={setIsTokensDialogOpen}
               />
             }
@@ -203,16 +202,7 @@ export function FlowsGeneralStats({
             title="Top token"
             isLoading={isLoading}
             className="border-0 p-0!"
-            value={
-              topToken ? (
-                <TopTokenValue
-                  topToken={topToken}
-                  selectedChains={selectedChains}
-                />
-              ) : (
-                '-'
-              )
-            }
+            value={topToken ? <TopTokenValue topToken={topToken} /> : '-'}
           />
         </div>
       </div>
@@ -235,7 +225,6 @@ export function FlowsGeneralStats({
 
 function TopTokenValue({
   topToken,
-  selectedChains,
 }: {
   topToken: {
     id: string
@@ -244,7 +233,6 @@ function TopTokenValue({
     iconUrl: string
     volume: number
   }
-  selectedChains: string[]
 }) {
   const content = (
     <>
@@ -255,10 +243,7 @@ function TopTokenValue({
       </span>
     </>
   )
-  const href = getInteropTokenUrl(topToken, {
-    from: selectedChains,
-    to: selectedChains,
-  })
+  const href = getInteropTokenUrl(topToken)
 
   if (!href) {
     return <div className="flex items-center gap-1.5">{content}</div>
@@ -275,7 +260,6 @@ function UniqueTokensFooter({
   isLoading,
   tokenCount,
   topTokens,
-  selectedChains,
   setIsOpen,
 }: {
   isLoading: boolean
@@ -292,7 +276,6 @@ function UniqueTokensFooter({
         remainingCount: number
       }
     | undefined
-  selectedChains: string[]
   setIsOpen: (isOpen: boolean) => void
 }) {
   const hasTokens =
@@ -324,10 +307,7 @@ function UniqueTokensFooter({
           issuer: token.issuer,
           iconUrl: token.iconUrl,
           volume: token.volume,
-          href: getInteropTokenUrl(token, {
-            from: selectedChains,
-            to: selectedChains,
-          }),
+          href: getInteropTokenUrl(token),
         })),
         remainingCount: topTokens.remainingCount,
       }}

@@ -1,4 +1,16 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "A helper contract for chain adapters on the hub chain that support OFT messaging. Handles token -> messenger mapping."
+  "category": "core",
+  "description": "A helper contract for chain adapters on the hub chain that support OFT messaging. Handles token -> messenger mapping.",
+  "fields": {
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the token-to-messenger mappings that adapters use to route OFT cross-chain transfers."
+        }
+      ]
+    }
+  }
 }

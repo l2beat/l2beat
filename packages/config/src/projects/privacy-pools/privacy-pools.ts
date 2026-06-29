@@ -92,9 +92,32 @@ export const privacyPools: BaseProject = {
   privacyInfo: {
     trustedSetup: TRUSTED_SETUPS.PrivacyPools,
     tokens: getPrivacyTokens(),
+    exitWindow: {
+      value: 'Infinite',
+      sentiment: 'good',
+      orderHint: Number.MAX_SAFE_INTEGER,
+      description:
+        'Even if the Entrypoint or ASP turns malicious, users can always ragequit (withdraw tokens) from the immutable pool contracts, at the cost of losing privacy.',
+    },
+    reproducibility: {
+      value: 'Reproducible',
+      sentiment: 'good',
+      description:
+        'The contracts, circuits, and supporting software needed to participate in Privacy Pools are publicly available and can be run locally.',
+    },
+    adminViewingKey: {
+      value: 'None',
+      sentiment: 'good',
+      description:
+        "The protocol does not include an auditor viewing key that decrypts users' private balances and transactions.",
+    },
     attributes: [
       PRIVACY_ATTRIBUTES.immutable,
-      PRIVACY_ATTRIBUTES.enforcedCompliance,
+      {
+        ...PRIVACY_ATTRIBUTES.enforcedCompliance,
+        description:
+          'Centralised ASPs (association set providers) can refuse deposits before they are withdrawn and forcibly remove them from the anonymity set.',
+      },
       PRIVACY_ATTRIBUTES.anyAmount,
       PRIVACY_ATTRIBUTES.sourceAvailable,
     ],
