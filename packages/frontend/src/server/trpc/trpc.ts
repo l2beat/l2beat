@@ -6,10 +6,6 @@ export const createTRPCContext = (opts: { headers: Headers }) => {
 }
 
 const t = initTRPC.context<typeof createTRPCContext>().create({
-  transformer: {
-    serialize: JSON.stringify,
-    deserialize: JSON.parse,
-  },
   errorFormatter({ shape, error }) {
     return {
       ...shape,

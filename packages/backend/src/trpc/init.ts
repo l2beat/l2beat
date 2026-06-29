@@ -2,10 +2,6 @@ import { initTRPC } from '@trpc/server'
 import type { BaseContext } from './context'
 
 const t = initTRPC.context<BaseContext>().create({
-  transformer: {
-    serialize: JSON.stringify,
-    deserialize: JSON.parse,
-  },
   errorFormatter({ shape, error }) {
     return {
       ...shape,

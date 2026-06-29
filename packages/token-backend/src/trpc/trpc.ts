@@ -29,10 +29,6 @@ export const createTRPCContext = async (opts: {
 type Context = Awaited<ReturnType<typeof createTRPCContext>>
 
 export const trcpRoot = initTRPC.context<Context>().create({
-  transformer: {
-    serialize: JSON.stringify,
-    deserialize: JSON.parse,
-  },
   errorFormatter({ shape, error }) {
     return {
       ...shape,

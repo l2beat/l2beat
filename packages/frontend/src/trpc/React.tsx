@@ -1,11 +1,7 @@
 import type { QueryClient } from '@tanstack/react-query'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import {
-  createTRPCClient,
-  loggerLink,
-  unstable_httpBatchStreamLink,
-} from '@trpc/client'
+import { createTRPCClient, httpBatchStreamLink, loggerLink } from '@trpc/client'
 import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
 import { createTRPCContext } from '@trpc/tanstack-react-query'
 import type React from 'react'
@@ -53,11 +49,7 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
             env.NODE_ENV === 'development' ||
             (op.direction === 'down' && op.result instanceof Error),
         }),
-        unstable_httpBatchStreamLink({
-          transformer: {
-            serialize: JSON.stringify,
-            deserialize: JSON.parse,
-          },
+        httpBatchStreamLink({
           url: getBaseUrl() + '/api/trpc',
           headers: new Headers({ 'x-trpc-source': 'client' }),
         }),

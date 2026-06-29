@@ -110,10 +110,6 @@ function buildClient(url: string) {
           (op.direction === 'down' && op.result instanceof Error),
       }),
       httpBatchLink({
-        transformer: {
-          serialize: JSON.stringify,
-          deserialize: JSON.parse,
-        },
         url,
         headers: () => {
           const headers = new Headers()

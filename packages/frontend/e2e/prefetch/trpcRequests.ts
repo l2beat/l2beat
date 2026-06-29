@@ -64,8 +64,8 @@ function stableHash(value: unknown): string {
 /**
  * Parses a batched tRPC request URL into its individual (procedure, input)
  * calls, e.g. /api/trpc/privacy.flowsChart,privacy.tvlChart?batch=1&input=...
- * The client uses a JSON.stringify transformer, so each input in the batch's
- * `input` map is itself a JSON string.
+ * With no data transformer configured, the batch's `input` map holds the raw
+ * input value for each index directly.
  */
 function parseCalls(rawUrl: string): TrpcCall[] {
   const url = new URL(rawUrl)
@@ -86,17 +86,7 @@ function parseCalls(rawUrl: string): TrpcCall[] {
     }
   }
 
-  return paths.map((path, index) => {
-    let input = inputMap[index]
-    if (typeof input === 'string') {
-      try {
-        input = JSON.parse(input)
-      } catch {
-        // leave as-is
-      }
-    }
-    return { path, input }
-  })
+  return paths.map((path, index) => ({ path, input: inputMap[index] }))
 }
 
 /**
