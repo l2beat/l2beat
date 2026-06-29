@@ -197,26 +197,12 @@ export const zama: BaseProject = {
       value: `${kmsThreshold}/${kmsSignerCount} KMS threshold`,
       sentiment: 'warning',
       description:
-        'There is no simple single-address viewing key, but public decryptions are accepted when enough KMS signers attest to them. Privacy assumes fewer than the KMS threshold collude or are compromised.',
+        'Privacy depends on fewer than the KMS threshold of signers to collude or be compromised. Compliance can be enforced by token wrapper owners blocking users and by configured underlying-token denylist hooks during deposits, transfers, unwrap requests, and unwrap finalization.',
     },
     attributes: [
-      {
-        ...PRIVACY_ATTRIBUTES.upgradeable,
-        description:
-          'The wrapper, ACL, FHE executor, KMS verifier, input verifier, and DAO components are upgradeable.',
-      },
-      {
-        ...PRIVACY_ATTRIBUTES.enforcedCompliance,
-        description:
-          'Wrapper owners can block users and wrappers can enforce configured underlying-token denylist hooks during deposits, transfers, unwrap requests, and unwrap finalization.',
-      },
-      {
-        ...PRIVACY_ATTRIBUTES.transfers,
-        description:
-          'Privacy is limited to transfer amounts and balances, sender and recipient are public.',
-      },
+      PRIVACY_ATTRIBUTES.fhe,
+      PRIVACY_ATTRIBUTES.privateAmounts,
       PRIVACY_ATTRIBUTES.anyAmount,
-      PRIVACY_ATTRIBUTES.closedSource,
     ],
     riskSummary: readProjectMarkdown('zama', 'riskSummary', {
       kmsThreshold,

@@ -6,6 +6,7 @@ import {
 } from '@tanstack/react-table'
 import { useState } from 'react'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
+import { PrivacyAttributeTag } from '~/components/PrivacyAttributeTag'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BasicTable } from '~/components/table/BasicTable'
 import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
@@ -157,7 +158,7 @@ const columns = [
   }),
   columnHelper.accessor((entry) => adjustTableValue(entry.adminViewingKey), {
     id: 'adminViewingKey',
-    header: 'Admin\nview key',
+    header: 'Privacy',
     cell: (ctx) => (
       <PrivacyAssessmentCell
         value={ctx.row.original.adminViewingKey}
@@ -171,7 +172,7 @@ const columns = [
     meta: {
       align: 'center',
       tooltip:
-        "Whether the protocol has a privilidged admin key that can decrypt users' private transactions, and whether the use of such admin key is auditable by users.",
+        'What is private and what are the trust assumptions? How is compliance facilitated?',
     },
   }),
   columnHelper.accessor((entry) => adjustTableValue(entry.reproducibility), {
@@ -191,6 +192,29 @@ const columns = [
       align: 'center',
       tooltip:
         'Whether all source code needed to audit the protocol and participate in it is published and can be used locally.',
+    },
+  }),
+  columnHelper.display({
+    id: 'attributes',
+    header: 'Attributes',
+    cell: (ctx) => {
+      const attributes = ctx.row.original.attributes
+
+      if (attributes.length === 0) {
+        return <NoDataBadge />
+      }
+
+      return (
+        <div className="flex max-w-[220px] flex-wrap gap-1">
+          {attributes.map((attribute) => (
+            <PrivacyAttributeTag key={attribute.id} attribute={attribute} />
+          ))}
+        </div>
+      )
+    },
+    enableSorting: false,
+    meta: {
+      tooltip: 'Protocol attributes and capabilities.',
     },
   }),
 ]

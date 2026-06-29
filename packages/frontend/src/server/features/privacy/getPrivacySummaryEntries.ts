@@ -1,4 +1,5 @@
 import type {
+  PrivacyAttribute,
   PrivacyExitWindow,
   PrivacySummaryValue,
   TrustedSetup,
@@ -28,6 +29,7 @@ export interface PrivacySummaryEntry {
   exitWindow: PrivacyExitWindow
   reproducibility: PrivacySummaryValue
   adminViewingKey: PrivacySummaryValue
+  attributes: PrivacyAttribute[]
 }
 
 type PrivacySummaryTrackingMetrics = Pick<
@@ -139,6 +141,7 @@ function getPrivacySummaryBaseEntry(
     exitWindow: project.privacyInfo.exitWindow,
     reproducibility: project.privacyInfo.reproducibility,
     adminViewingKey: project.privacyInfo.adminViewingKey,
+    attributes: project.privacyInfo.attributes ?? [],
   }
 }
 

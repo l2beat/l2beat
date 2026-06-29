@@ -31,8 +31,8 @@ export function PrivacyProjectRiskProfile({
         value={<RiskValue value={exitWindow} />}
       />
       <ProjectSummaryStat
-        title="Admin view key"
-        tooltip="Whether the protocol has a privilidged admin key that can decrypt users' private transactions, and whether the use of such admin key is auditable by users."
+        title="Privacy"
+        tooltip="What is private and what are the trust assumptions? How is compliance facilitated?"
         value={<RiskValue value={adminViewingKey} />}
       />
       <ProjectSummaryStat

@@ -54,22 +54,13 @@ export const strk20: BaseProject = {
       value: 'Use undetectable',
       sentiment: 'bad',
       description:
-        'All private actions include auditor-encrypted metadata, so whoever controls the auditor private key can decrypt user activity retroactively. Users can not know whether their privacy was violated.',
+        'All private actions include auditor-encrypted metadata, so whoever controls the auditor private key can decrypt user activity retroactively. Users can not know whether their privacy was violated. Compliance is facilitated by this mandatory auditor-encrypted metadata.',
     },
     attributes: [
-      {
-        ...PRIVACY_ATTRIBUTES.upgradeable,
-        description: 'Smart contract code can be upgraded instantly by an EOA.',
-      },
+      PRIVACY_ATTRIBUTES.zk,
       PRIVACY_ATTRIBUTES.transfers,
       PRIVACY_ATTRIBUTES.defi,
       PRIVACY_ATTRIBUTES.anyAmount,
-      {
-        ...PRIVACY_ATTRIBUTES.enforcedCompliance,
-        description:
-          "A permissioned 'auditor' key can link private transfers at any time, including retroactively.",
-      },
-      PRIVACY_ATTRIBUTES.closedSource,
     ],
     riskSummary: readProjectMarkdown('strk20', 'riskSummary'),
     upgradesAndGovernance: readProjectMarkdown(
