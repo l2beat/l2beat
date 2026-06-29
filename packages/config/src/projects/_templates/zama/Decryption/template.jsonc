@@ -74,7 +74,7 @@
       },
       "permissions": [
         {
-          "type": "act",
+          "type": "interact",
           "description": "submit KMS decryption responses to Decryption."
         }
       ]
@@ -91,7 +91,7 @@
       },
       "permissions": [
         {
-          "type": "act",
+          "type": "interact",
           "description": "sign public decryption results and user decryption shares accepted by Decryption."
         }
       ]

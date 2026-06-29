@@ -32,7 +32,7 @@
       "type": "PERMISSION",
       "permissions": [
         {
-          "type": "act",
+          "type": "interact",
           "description": "sign encrypted input verification bundles accepted by the InputVerifier."
         }
       ]

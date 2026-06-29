@@ -53,7 +53,7 @@
       },
       "permissions": [
         {
-          "type": "act",
+          "type": "interact",
           "description": "submit KMS key-generation and CRS-generation responses to KMSGeneration."
         }
       ]
@@ -70,7 +70,7 @@
       },
       "permissions": [
         {
-          "type": "act",
+          "type": "interact",
           "description": "sign KMS key-generation and CRS-generation material accepted by KMSGeneration."
         }
       ]

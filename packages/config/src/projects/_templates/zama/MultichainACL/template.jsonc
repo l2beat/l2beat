@@ -51,7 +51,7 @@
       },
       "permissions": [
         {
-          "type": "act",
+          "type": "interact",
           "description": "submit public-decryption allowances, account handle allowances, and user-decryption delegation or revocation messages to MultichainACL."
         }
       ]

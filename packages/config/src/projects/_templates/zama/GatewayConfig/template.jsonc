@@ -80,7 +80,7 @@
       "type": "PERMISSION",
       "permissions": [
         {
-          "type": "act",
+          "type": "interact",
           "description": "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts."
         }
       ]
@@ -91,7 +91,7 @@
       "type": "PERMISSION",
       "permissions": [
         {
-          "type": "act",
+          "type": "interact",
           "description": "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts."
         }
       ]
@@ -102,7 +102,7 @@
       "type": "PERMISSION",
       "permissions": [
         {
-          "type": "act",
+          "type": "interact",
           "description": "submit coprocessor responses, ACL mirror updates, and ciphertext material commitments to gateway contracts."
         }
       ]
@@ -113,7 +113,7 @@
       "type": "PERMISSION",
       "permissions": [
         {
-          "type": "act",
+          "type": "interact",
           "description": "sign encrypted input proof verification responses accepted by the gateway."
         }
       ]
@@ -124,7 +124,7 @@
       "type": "PERMISSION",
       "permissions": [
         {
-          "type": "act",
+          "type": "interact",
           "description": "participate in gateway key custody workflows."
         }
       ]
@@ -135,7 +135,7 @@
       "type": "PERMISSION",
       "permissions": [
         {
-          "type": "act",
+          "type": "interact",
           "description": "sign gateway key custody material."
         }
       ]

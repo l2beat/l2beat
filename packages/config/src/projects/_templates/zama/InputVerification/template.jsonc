@@ -60,7 +60,7 @@
       },
       "permissions": [
         {
-          "type": "act",
+          "type": "interact",
           "description": "submit coprocessor proof verification and rejection responses to InputVerification."
         }
       ]
@@ -77,7 +77,7 @@
       },
       "permissions": [
         {
-          "type": "act",
+          "type": "interact",
           "description": "sign encrypted input proof verification responses accepted by InputVerification."
         }
       ]

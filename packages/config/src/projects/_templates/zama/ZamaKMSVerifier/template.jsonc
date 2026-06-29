@@ -32,7 +32,7 @@
       "type": "PERMISSION",
       "permissions": [
         {
-          "type": "act",
+          "type": "interact",
           "description": "sign public decryption results accepted by the KMSVerifier."
         }
       ]

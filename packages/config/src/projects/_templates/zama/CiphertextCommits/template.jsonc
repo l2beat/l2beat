@@ -56,7 +56,7 @@
       },
       "permissions": [
         {
-          "type": "act",
+          "type": "interact",
           "description": "submit ciphertext and SNS ciphertext digests to CiphertextCommits."
         }
       ]
