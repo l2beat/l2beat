@@ -40,14 +40,11 @@ export function ungroupSelected(state: State): Partial<State> {
   })
 }
 
-export function renameSelectedGroup(
+export function renameGroup(
   state: State,
+  id: string,
   name: string,
 ): Partial<State> {
-  if (state.selected.length !== 1) {
-    return {}
-  }
-  const id = state.selected[0]
   const nodes = state.nodes.map((node) =>
     node.id === id && node.subnodes.length > 0 ? { ...node, name } : node,
   )

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { IconGroup } from '../../../../icons/IconGroup'
 import { IconUngroup } from '../../../../icons/IconUngroup'
 import { useStore } from '../store/store'
@@ -39,6 +39,7 @@ export function GroupControls() {
       {selectedGroup && (
         <GroupNameInput
           key={`${selectedGroup.id}-${selectedGroup.name}`}
+          id={selectedGroup.id}
           name={selectedGroup.name}
         />
       )}
@@ -58,28 +59,33 @@ export function GroupControls() {
   )
 }
 
-function GroupNameInput({ name }: { name: string }) {
-  const renameSelectedGroup = useStore((state) => state.renameSelectedGroup)
+function GroupNameInput({ id, name }: { id: string; name: string }) {
+  const renameGroup = useStore((state) => state.renameGroup)
   const [value, setValue] = useState(name)
 
-  function commit() {
+  // Clicking the viewport changes the selection and unmounts this input before
+  // onBlur fires, so commit on unmount too. The ref keeps the cleanup closure
+  // pointed at the latest typed value rather than the value at mount.
+  const commitRef = useRef<() => void>(() => {})
+  commitRef.current = () => {
     const trimmed = value.trim()
     if (trimmed.length > 0 && trimmed !== name) {
-      renameSelectedGroup(trimmed)
+      renameGroup(id, trimmed)
     } else {
       setValue(name)
     }
   }
+  useEffect(() => () => commitRef.current(), [])
 
   return (
     <input
       value={value}
       aria-label="Group name"
       onChange={(event) => setValue(event.target.value)}
-      onBlur={commit}
+      onBlur={() => commitRef.current()}
       onKeyDown={(event) => {
         if (event.key === 'Enter') {
-          commit()
+          commitRef.current()
           event.currentTarget.blur()
         }
       }}
