@@ -199,7 +199,7 @@ const columns = [
   }),
   columnHelper.accessor((entry) => adjustTableValue(entry.reproducibility), {
     id: 'reproducibility',
-    header: 'Repro.',
+    header: 'Repro',
     cell: (ctx) => (
       <PrivacyAssessmentCell
         value={ctx.row.original.reproducibility}
