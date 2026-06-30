@@ -20,6 +20,8 @@ export function BottomBar() {
   const { altKey } = useIsomorphicKeys()
   const setOpen = useSearchStore((state) => state.setOpen)
   const maxReachableDepth = useGlobalSettingsStore((s) => s.maxReachableDepth)
+  const groupSelected = useStore((s) => s.groupSelected)
+  const ungroupSelected = useStore((s) => s.ungroupSelected)
 
   const depthSpecified = maxReachableDepth !== null
 
@@ -60,9 +62,9 @@ export function BottomBar() {
       }
       if (e.code === 'KeyG' && e.altKey) {
         if (e.shiftKey) {
-          useStore.getState().ungroupSelected()
+          ungroupSelected()
         } else {
-          useStore.getState().groupSelected()
+          groupSelected()
         }
       }
     }
