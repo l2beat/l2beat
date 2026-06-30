@@ -920,10 +920,7 @@ function getStateValidation(
       const faultDisputeGame = getFaultDisputeGameName(templateVars)
 
       const permissionlessDisputeGameBonds =
-        templateVars.discovery.getContractValue<number[]>(
-          'DisputeGameFactory',
-          'initBonds',
-        )[0] // 0 is for permissionless games!
+        getPermissionlessGameBond(templateVars)
 
       const maxClockDuration = templateVars.discovery.getContractValue<number>(
         faultDisputeGame,
@@ -1524,12 +1521,7 @@ function getRiskViewStateValidation(
           getExecutionDelay(templateVars),
         ),
         initialBond: {
-          value: formatEther(
-            templateVars.discovery.getContractValue<number[]>(
-              'DisputeGameFactory',
-              'initBonds',
-            )[0], // 0 is for permissionless games!
-          ),
+          value: formatEther(getPermissionlessGameBond(templateVars)),
         },
         permissioned: false,
         // OPFP: bonds scale by `exponentialBondsFactor` (1.09493) per depth,
@@ -2518,6 +2510,28 @@ function ifPostsToEthereum<T>(
   if (postsToEthereum(templateVars)) {
     return value
   }
+}
+
+// The active permissionless game's init bond. Pre-Karst it is initBonds[0] (game
+// type 0). After Karst the respected game is CANNON_KONA (type 8) and initBonds[0]
+// is zeroed, so the bond lives in the per-type initBondGame8 field.
+function getPermissionlessGameBond(templateVars: OpStackConfigCommon): number {
+  const portal = getOptimismPortal(templateVars)
+  const respectedGameType =
+    templateVars.discovery.getContractValueOrUndefined<number>(
+      portal.name ?? portal.address,
+      'respectedGameType',
+    )
+  if (respectedGameType === 8) {
+    return templateVars.discovery.getContractValue<number>(
+      'DisputeGameFactory',
+      'initBondGame8',
+    )
+  }
+  return templateVars.discovery.getContractValue<number[]>(
+    'DisputeGameFactory',
+    'initBonds',
+  )[0]
 }
 
 function getOptimismPortal(templateVars: OpStackConfigCommon): EntryParameters {
