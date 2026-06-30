@@ -6,38 +6,125 @@ import { updateNodePositions } from '../utils/updateNodePositions'
 
 export function groupSelected(state: State): Partial<State> {
   const selectedSet = new Set(state.selected)
-  const subnodes = state.nodes.filter((node) => selectedSet.has(node.id))
-  if (subnodes.length === 0) {
+  const selected: SelectedNode[] = []
+  collectSelected(state.nodes, selectedSet, undefined, selected)
+  if (selected.length === 0) {
     return {}
   }
 
-  const phantom = createPhantomNode(subnodes)
-  const remaining = state.nodes.filter((node) => !selectedSet.has(node.id))
+  const phantom = createPhantomNode(selected.map((member) => member.node))
 
-  return updateNodePositions(state, {
-    nodes: [...remaining, phantom],
-    selected: [phantom.id],
-  })
+  // Nest the group inside the parent the whole selection shares; a selection
+  // spanning parents (or including top-level nodes) puts it at the top level.
+  const parentIds = new Set(selected.map((member) => member.parentId))
+  const parentId = parentIds.size === 1 ? [...parentIds][0] : undefined
+  const rebuilt = regroup(state.nodes, selectedSet, parentId, phantom)
+  const nodes = parentId === undefined ? [...rebuilt, phantom] : rebuilt
+
+  return updateNodePositions(state, { nodes, selected: [phantom.id] })
+}
+
+interface SelectedNode {
+  readonly node: Node
+  readonly parentId: string | undefined
+}
+
+// Members of an opened group are nested under it, so walk the whole tree and
+// remember each selected node's parent to know where the new group can nest.
+function collectSelected(
+  nodes: readonly Node[],
+  selectedSet: ReadonlySet<string>,
+  parentId: string | undefined,
+  into: SelectedNode[],
+): void {
+  for (const node of nodes) {
+    if (selectedSet.has(node.id)) {
+      into.push({ node, parentId })
+    } else if (node.subnodes.length > 0) {
+      collectSelected(node.subnodes, selectedSet, node.id, into)
+    }
+  }
+}
+
+// Remove the selected nodes and drop the new group into parentId's subnodes. A
+// group that changed has its fields recomputed; an emptied one is dropped.
+function regroup(
+  nodes: readonly Node[],
+  selectedSet: ReadonlySet<string>,
+  parentId: string | undefined,
+  phantom: Node,
+): readonly Node[] {
+  let changed = false
+  const result: Node[] = []
+  for (const node of nodes) {
+    if (selectedSet.has(node.id)) {
+      changed = true
+      continue
+    }
+    let subnodes = regroup(node.subnodes, selectedSet, parentId, phantom)
+    if (node.id === parentId) {
+      subnodes = [...subnodes, phantom]
+    }
+    if (subnodes === node.subnodes) {
+      result.push(node)
+      continue
+    }
+    changed = true
+    if (subnodes.length === 0) {
+      continue
+    }
+    result.push({ ...node, subnodes, fields: collectOutgoingFields(subnodes) })
+  }
+  return changed ? result : nodes
 }
 
 export function ungroupSelected(state: State): Partial<State> {
   const selectedSet = new Set(state.selected)
-  const phantoms = state.nodes.filter(
-    (node) => selectedSet.has(node.id) && node.subnodes.length > 0,
-  )
-  if (phantoms.length === 0) {
+  const lifted: string[] = []
+  const dissolved: string[] = []
+  const nodes = ungroupTree(state.nodes, selectedSet, lifted, dissolved)
+  if (dissolved.length === 0) {
     return {}
   }
 
-  const phantomIds = new Set(phantoms.map((node) => node.id))
-  const remaining = state.nodes.filter((node) => !phantomIds.has(node.id))
-  const lifted = phantoms.flatMap((node) => node.subnodes)
-  const keptSelected = state.selected.filter((id) => !phantomIds.has(id))
-
+  const dissolvedSet = new Set(dissolved)
+  const kept = state.selected.filter((id) => !dissolvedSet.has(id))
   return updateNodePositions(state, {
-    nodes: [...remaining, ...lifted],
-    selected: [...keptSelected, ...lifted.map((node) => node.id)],
+    nodes,
+    selected: unique([...kept, ...lifted]),
   })
+}
+
+// Dissolve every selected group wherever it sits, spilling its members into the
+// parent. The absorbing parent has its fields recomputed; a top-level group
+// just spills into the root list.
+function ungroupTree(
+  nodes: readonly Node[],
+  selectedSet: ReadonlySet<string>,
+  lifted: string[],
+  dissolved: string[],
+): readonly Node[] {
+  let changed = false
+  const result: Node[] = []
+  for (const node of nodes) {
+    const subnodes = ungroupTree(node.subnodes, selectedSet, lifted, dissolved)
+    if (selectedSet.has(node.id) && node.subnodes.length > 0) {
+      changed = true
+      dissolved.push(node.id)
+      for (const child of subnodes) {
+        result.push(child)
+        lifted.push(child.id)
+      }
+      continue
+    }
+    if (subnodes === node.subnodes) {
+      result.push(node)
+      continue
+    }
+    changed = true
+    result.push({ ...node, subnodes, fields: collectOutgoingFields(subnodes) })
+  }
+  return changed ? result : nodes
 }
 
 export function renameGroup(
@@ -72,7 +159,6 @@ function createPhantomNode(members: Node[]): Node {
 }
 
 export function makeGroupNode(group: StoredGroup, members: Node[]): Node {
-  const internal = unique(members.flatMap((n) => collectIds(n)))
   return {
     id: group.id,
     address: '',
@@ -80,7 +166,7 @@ export function makeGroupNode(group: StoredGroup, members: Node[]): Node {
     hasTemplate: false,
     addressType: 'Group',
     name: group.name,
-    fields: collectOutgoingFields(members, internal),
+    fields: collectOutgoingFields(members),
     hiddenFields: [],
     box: {
       x: group.box.x,
@@ -101,13 +187,11 @@ export function collectIds(node: Node): string[] {
   return unique([node.id, ...node.subnodes.flatMap((n) => collectIds(n))])
 }
 
-export function collectOutgoingFields(
-  subnodes: Node[],
-  internal: string[],
-): Field[] {
+export function collectOutgoingFields(members: readonly Node[]): Field[] {
+  const internal = unique(members.flatMap((node) => collectIds(node)))
   const outgoing: Field[] = []
   const seenTargets = new Set<string>()
-  for (const node of subnodes) {
+  for (const node of members) {
     for (const field of node.fields) {
       if (internal.includes(field.target) || seenTargets.has(field.target)) {
         continue
