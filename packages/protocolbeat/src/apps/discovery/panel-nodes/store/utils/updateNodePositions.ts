@@ -173,11 +173,11 @@ export function updateNodePositions(
 }
 
 function shiftSubnodes(
-  subnodes: Node[],
+  subnodes: readonly Node[],
   positions: State['positionsBeforeMove'],
   dx: number,
   dy: number,
-): Node[] {
+): readonly Node[] {
   let changed = false
   const next = subnodes.map((node) => {
     const start = positions[node.id]

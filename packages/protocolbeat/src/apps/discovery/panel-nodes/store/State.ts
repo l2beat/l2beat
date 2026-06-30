@@ -59,7 +59,7 @@ export interface Node {
   readonly data: unknown
   readonly isReachable: boolean
   readonly opened: boolean
-  readonly subnodes: Node[]
+  readonly subnodes: readonly Node[]
 }
 
 export interface HistoryState {
