@@ -1901,17 +1901,18 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     ),
   },
   // Active CANNON_KONA (respectedGameType 8) prestate after Upgrade 19 "Karst"
-  // (op-contracts/v7.0.0) on OP Mainnet. notVerified until the kona Docker
-  // reproducibility build is run. While notVerified, programHashesReproducible
-  // is null, so the "program hashes reproducible" Stage 1 requirement is omitted
-  // (neither shown as met nor failing) — reproduce and mark 'successful' to
-  // restore the signal OP had pre-Karst.
+  // (op-contracts/v7.0.0) on OP Mainnet. Reproduced via the kona Docker build at
+  // tag kona-client/v1.6.0-rc.2 (commit d7cea91bc2f555a76b7720bf9c32f46c0b856119).
   '0x0337ecb3604c0b40c352e0c7711beb17a212d583f4fe956fd8d66e29ad5f9025': {
     title: 'OP Kona absolute prestate v1.6.0-rc.2 (cannon64)',
     description:
       'A commitment to the initial state of the OP stack fault proof program of Kona client.',
-    programUrl: 'https://docs.optimism.io/notices/upgrade-19',
-    verificationStatus: 'notVerified',
+    programUrl:
+      'https://github.com/ethereum-optimism/optimism/tree/d7cea91bc2f555a76b7720bf9c32f46c0b856119/kona',
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0x0337ecb3604c0b40c352e0c7711beb17a212d583f4fe956fd8d66e29ad5f9025.md',
+    ),
   },
   '0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6': {
     ...ABSOLUTE_PRESTATE('v1.6.0 (cannon64)'),
