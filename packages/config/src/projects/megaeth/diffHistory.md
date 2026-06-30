@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x76ac381f81dbb8364c6765bd9c063cef8be66b60
+
+# Diff at Tue, 30 Jun 2026 14:31:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8ff611af2376c1818a5ed6611a843b5212373e3d block: 1778535511
+- current timestamp: 1778535511
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778535511 (main branch discovery), not current.
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3) [taiko/RiscZeroGroth16Verifier] {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.0.0-rc.3).
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
 Generated with discovered.json: 0x7272e7ff1107c020da1b9f947f5284fb306f63f2
 
 # Diff at Tue, 09 Jun 2026 12:43:36 GMT:
