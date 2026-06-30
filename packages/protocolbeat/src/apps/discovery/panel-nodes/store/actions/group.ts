@@ -8,7 +8,7 @@ export function groupSelected(state: State): Partial<State> {
   const selectedSet = new Set(state.selected)
   const selected: SelectedNode[] = []
   collectSelected(state.nodes, selectedSet, undefined, selected)
-  if (selected.length === 0) {
+  if (selected.length < 2) {
     return {}
   }
 
