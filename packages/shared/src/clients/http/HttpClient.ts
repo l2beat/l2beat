@@ -42,18 +42,47 @@ const SENSITIVE_PARAMS = [
   'password',
 ]
 
-/** Keeps the URL readable while masking secret query param values. */
+/**
+ * Keeps the URL readable while masking secrets: values of sensitive query
+ * params and high-entropy path segments (e.g. RPC provider keys baked into the
+ * path like `.../v2/<API_KEY>`).
+ */
 export function sanitizeUrl(url: string): string {
   try {
     const parsed = new URL(url)
+
     const sensitive = [...parsed.searchParams.keys()].filter((name) =>
       SENSITIVE_PARAMS.includes(name.toLowerCase()),
     )
     for (const name of sensitive) {
       parsed.searchParams.set(name, 'REDACTED')
     }
+
+    parsed.pathname = parsed.pathname
+      .split('/')
+      .map((segment) => (isSecretLikeSegment(segment) ? 'REDACTED' : segment))
+      .join('/')
+
     return parsed.toString()
   } catch {
     return url
   }
+}
+
+/**
+ * Heuristic for path segments that look like API keys/tokens. Public blockchain
+ * identifiers (0x-prefixed hashes and addresses) are never secrets, so they are
+ * left intact; everything else that is long and mixes letters with digits is
+ * treated as a secret and redacted.
+ */
+function isSecretLikeSegment(segment: string): boolean {
+  if (segment.startsWith('0x')) {
+    return false
+  }
+  return (
+    segment.length >= 24 &&
+    /^[A-Za-z0-9_-]+$/.test(segment) &&
+    /[A-Za-z]/.test(segment) &&
+    /[0-9]/.test(segment)
+  )
 }
