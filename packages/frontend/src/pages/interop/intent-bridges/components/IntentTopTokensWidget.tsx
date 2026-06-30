@@ -41,7 +41,6 @@ export function IntentTopTokensWidget({
     }),
   )
 
-  const apiSelection = { from: selectedChains, to: selectedChains }
   const bridgesById = new Map(
     intentBridges.map((bridge) => [bridge.id, bridge]),
   )
@@ -115,7 +114,7 @@ export function IntentTopTokensWidget({
                     token={token}
                     bridge={bridge}
                     showBridgeBadge={activeTab === 'all'}
-                    href={getInteropTokenUrl(token, apiSelection)}
+                    href={getInteropTokenUrl(token)}
                   />
                 )
               })}

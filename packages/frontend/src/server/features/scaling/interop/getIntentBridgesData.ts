@@ -159,11 +159,10 @@ export async function getIntentBridgesData(
   )
 
   const { records, snapshotTimestamp } =
-    await getLatestAggregatedInteropTransferWithTokens(
-      params,
-      undefined,
-      intentProjectIds,
-    )
+    await getLatestAggregatedInteropTransferWithTokens({
+      selection: params,
+      protocolIds: intentProjectIds,
+    })
 
   const previousProtocolData = await getPreviousProtocolData(
     snapshotTimestamp,
