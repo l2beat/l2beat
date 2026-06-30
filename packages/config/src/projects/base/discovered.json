@@ -1,6 +1,6 @@
 {
   "name": "base",
-  "timestamp": 1782724600,
+  "timestamp": 1782829257,
   "configHash": "0x201da71a82b49559128b2b47d577a98484991839ba4837420f827e63ea6f7ce3",
   "entries": [
     {
@@ -79,7 +79,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "base:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292676889",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292676920",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -302,10 +302,10 @@
           ]
         ],
         "$upgradeCount": 3,
-        "basefee": 82234135,
+        "basefee": 503791279,
         "baseFeeScalar": 2269,
         "batcherHash": "0x0000000000000000000000005050f69a9786f081509234f1a7f4684b5e5b76c9",
-        "blobBaseFee": 4150625,
+        "blobBaseFee": 33936491,
         "blobBaseFeeScalar": 1055762,
         "daFootprintGasScalar": 148,
         "DEPOSITOR_ACCOUNT": "base:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -315,15 +315,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0xa9234cf042754aac928885cc02bd37548dbe419e679874045cfb3ca5f98a065c",
+        "hash": "0xf56402919bc9fe64ededc8c0a09ed3adcd607f6150af231564a37c389a76cafb",
         "isCustomGasToken": false,
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 25422362,
+        "number": 25431046,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 4,
-        "timestamp": 1782724535,
+        "sequenceNumber": 1,
+        "timestamp": 1782829199,
         "version": "1.7.0"
       },
       "implementationNames": {
@@ -1424,7 +1424,8 @@
       },
       "implementationNames": {
         "eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97": "RiscZeroGroth16Verifier"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "eth:0x21C7D1e6A81Daca071bA94839ab74C39A25f851F",
@@ -1459,7 +1460,8 @@
       },
       "implementationNames": {
         "eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D": "RiscZeroGroth16Verifier"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "Safe",
@@ -1689,7 +1691,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
         "game621": "eth:0x1bd8db5139Ba7aC9277684650c15e6E341761919",
-        "gameCount": 16483,
+        "gameCount": 16569,
         "initBondGame0": "80000000000000000",
         "initBondGame1": "80000000000000000",
         "initBondGame42": 0,
@@ -1837,8 +1839,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 720157,
-          "prevBlockNum": 25422357
+          "prevBoughtGas": 1030380,
+          "prevBlockNum": 25431044
         },
         "paused": false,
         "proofMaturityDelaySeconds": 86400,
@@ -1929,10 +1931,12 @@
       "name": "RiscZeroGroth16Verifier",
       "address": "eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF",
       "type": "Contract",
+      "template": "taiko/RiscZeroGroth16Verifier",
       "sourceHashes": [
         "0x81aaa989dd0b4061656a407b0facd27e1d2a5355486422e37dc62d5e1b077032"
       ],
       "proxyType": "immutable",
+      "description": "Verifier contract for RISC Zero Groth16 proofs (version 2.0.3).",
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1747973051,
       "sinceBlock": 22543063,
@@ -1946,7 +1950,8 @@
       },
       "implementationNames": {
         "eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF": "RiscZeroGroth16Verifier"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "PermissionedDisputeGame",
@@ -2768,7 +2773,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293199024",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293199569",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2900,12 +2905,12 @@
           ]
         ],
         "$upgradeCount": 3,
-        "anchorGame": "eth:0x2ba5464dCe2FaA3a725B395ad1d3eF8007afEf76",
+        "anchorGame": "eth:0xBbCe667C1A07a279e4e28e08aF5bD85Ab3B4C226",
         "disputeGameFactory": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
         "disputeGameFinalityDelaySeconds": 0,
         "getAnchorRoot": [
-          "0x67b84cf532a7b49855285c5ab059ad1bf4f1df0f8213cd6802ca57a25b0c8380",
-          47663760
+          "0xc4489f4d5a76f2cba53712bf4367c8e8ffa356eab53849b3c70aa14d7b35e5c8",
+          47716560
         ],
         "getStartingAnchorRoot": {
           "root": "0xc34c9f98b74b2fb85a516e302f86bc9bedcf5623ab078a671d40beac0e120329",
@@ -3181,7 +3186,8 @@
       },
       "implementationNames": {
         "eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9": "RiscZeroGroth16Verifier"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "eth:0xB011a32ED8b4F70D9943A2199F539bbeCd7b62F7",
@@ -3338,7 +3344,7 @@
         "proxyAdminOwner": "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
         "symbol": "WETH",
         "systemConfig": "eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072",
-        "totalSupply": "28900000000000000000",
+        "totalSupply": "28750000000000000000",
         "version": "1.5.0"
       },
       "implementationNames": {
@@ -3459,10 +3465,12 @@
       "name": "RiscZeroGroth16Verifier",
       "address": "eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C",
       "type": "Contract",
+      "template": "taiko/RiscZeroGroth16VerifierLegacy",
       "sourceHashes": [
         "0xa9c21981fb26b1cb946478d0d238ebe97c9eaa52739e43e29ddd18dba6463357"
       ],
       "proxyType": "immutable",
+      "description": "Verifier contract for RISC Zero Groth16 proofs. This older implementation exposes control-root and selector constants but does not expose a VERSION getter.",
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1718237447,
       "sinceBlock": 20079238,
@@ -3475,7 +3483,8 @@
       },
       "implementationNames": {
         "eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C": "RiscZeroGroth16Verifier"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "eth:0xf9e320f3dA12E68af219d9E2A490Dd649f6B177c",
@@ -5446,8 +5455,9 @@
     "risc0/RiscZeroVerifierRouter": "0xb74ea20385c8afa507c773dd57793a9fbf10ce64ed9c17b58dff13665aff9f7a",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c",
-    "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
+    "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
+    "taiko/RiscZeroGroth16VerifierLegacy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "base": 47967626, "ethereum": 25422367 },
+  "usedBlockNumbers": { "base": 48019955, "ethereum": 25431050 },
   "permissionsConfigHash": "0x216504c260d4c01e399d2ddcecd84572a3a45bd55dee4c6667bf5521b6fd2ae3"
 }
