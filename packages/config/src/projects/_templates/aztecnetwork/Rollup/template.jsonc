@@ -44,18 +44,12 @@
     "getProvingCostPerManaInFeeAsset"
   ],
   "fields": {
-    "_epochProofVerifier": {
-      "description": "immutable, defined in constructor",
-      "handler": {
-        "type": "hardcoded",
-        "value": "eth:0x70aEDda427f26480D240bc0f4308ceDec8d31348"
-      }
-    },
     "owner": {
+      "description": "Governance owner of the rollup instance.",
       "permissions": [
         {
           "type": "interact",
-          "description": "change the escape hatch address and disable the escape hatch, change the slasher address which can slash arbitrary sequencers, change the sequencer queue config and disallow new sequencers joining, set the ejection threshold that exits sequencers from the active set, change various critical fee and reward configurations."
+          "description": "change reward distribution parameters, increase the mana target, update proving costs, queue or cancel slasher replacement, change validator entry-queue limits, and set the one-shot escape hatch address."
         }
       ]
     },
@@ -64,7 +58,57 @@
       "description": "number of sequencers flushable per epoch: will move from the entry queue to the active validator set if flushed"
     },
     "getEscapeHatch": {
-      "description": "Address of the EscapeHatch contract used as a fallback for trustless proposal generation if the committee stalls."
+      "description": "Address of the EscapeHatch contract used as a fallback for trustless proposal generation if the committee stalls.",
+      "template": "aztecnetwork/EscapeHatch"
+    },
+    "getEpochProofVerifier": {
+      "description": "The verifier contract used for epoch proof verification.",
+      "template": "aztecnetwork/HonkVerifier"
+    },
+    "getFeeAsset": {
+      "description": "The ERC20 token used to pay L2 fees.",
+      "template": "aztecnetwork/Aztec"
+    },
+    "getFeeAssetPortal": {
+      "description": "The L1 portal escrowing the fee asset for deposits and fee payouts.",
+      "template": "aztecnetwork/FeeJuicePortal"
+    },
+    "getGSE": {
+      "description": "The global staking escrow used by this rollup.",
+      "template": "aztecnetwork/GSE"
+    },
+    "getInbox": {
+      "description": "The canonical L1 to L2 message inbox for this rollup version.",
+      "template": "aztecnetwork/Inbox"
+    },
+    "getOutbox": {
+      "description": "The canonical L2 to L1 message outbox for this rollup version.",
+      "template": "aztecnetwork/Outbox"
+    },
+    "getRewardBooster": {
+      "description": "The reward booster used to calculate prover reward shares.",
+      "handler": {
+        "type": "call",
+        "method": "function getRewardConfig() view returns (tuple(address rewardDistributor, uint32 sequencerBps, address booster, uint96 checkpointReward))",
+        "args": []
+      },
+      "edit": ["get", "booster"],
+      "template": "aztecnetwork/RewardBooster"
+    },
+    "getRewardConfig": {
+      "description": "Reward distribution parameters: distributor, sequencer share, prover booster and checkpoint reward."
+    },
+    "getRewardDistributor": {
+      "description": "Reward distributor used by this rollup.",
+      "template": "aztecnetwork/RewardDistributor"
+    },
+    "getSlasher": {
+      "description": "Slasher contract authorized by this rollup.",
+      "template": "aztecnetwork/Slasher"
+    },
+    "getStakingAsset": {
+      "description": "The ERC20 token staked by validators.",
+      "template": "aztecnetwork/Aztec"
     },
     "getCheckpointReward": {
       "description": "The amount of reward tokens distributed per proven checkpoint."
