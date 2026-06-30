@@ -1,7 +1,7 @@
 {
   "name": "optimism",
-  "timestamp": 1782815602,
-  "configHash": "0x59f583b40acf8d8b4ddedaac7465c8b56e9a4be8bbbbf755f1ad369d3cfad5b8",
+  "timestamp": 1782837046,
+  "configHash": "0xf986bf4eea5f83e4a638e437bc2dc065051164a6edfd768adc066bb362e5ddda",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -167,12 +167,47 @@
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "symbol": "WETH",
         "systemConfig": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
-        "totalSupply": "8560000000000000000",
+        "totalSupply": "9040000000000000000",
         "version": "1.5.1"
       },
       "implementationNames": {
         "eth:0x1B6DBF05EaF22d4E70dC993e8a19dd9F3dcb3162": "Proxy",
         "eth:0xE440CC08A71694C8229323803F59024E3144630e": "DelayedWETH"
+      }
+    },
+    {
+      "name": "PreimageOracle",
+      "address": "eth:0x1E1d73536A081Ef2F355d29794547a9770Aeb1E0",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xda05a58c400dcb5cf23c2575a7383b759a845956f2673724f2879e8ede57efe6"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0xE69104DD872222E1Bd7C1adD47588F8C62ed64C0",
+      "sinceTimestamp": 1778190599,
+      "sinceBlock": 25045956,
+      "values": {
+        "$immutable": true,
+        "challengePeriod": 86400,
+        "KECCAK_TREE_DEPTH": 16,
+        "MAX_LEAF_COUNT": 65535,
+        "MIN_BOND_SIZE": "250000000000000000",
+        "minProposalSize": 126000,
+        "PRECOMPILE_CALL_RESERVED_GAS": 100000,
+        "proposalCount": 0,
+        "proposals": [],
+        "version": "1.1.5",
+        "zeroHashes": [
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0xad3228b676f7d3cd4284a5443f17f1962b36e491b30a40b2405849e597ba5fb5",
+          "0xb4c11951957c6f8f642c4af61cd6b24640fec6dc7fc607ee8206a99e92410d30",
+          "0x21ddb9a356815c3fac1026b6dec5df3124afbadb485c9ba5a3e3398a04b7ba85",
+          "0xe58769b32a1beaf1ea27375a44095a0d1fb664ce2dd358e7fcbfb78c26a19344"
+        ]
+      },
+      "errors": { "zeroHashes": "Processing error occurred." },
+      "implementationNames": {
+        "eth:0x1E1d73536A081Ef2F355d29794547a9770Aeb1E0": "PreimageOracle"
       }
     },
     {
@@ -413,12 +448,12 @@
           ]
         ],
         "$upgradeCount": 5,
-        "anchorGame": "eth:0xb3263a71FE91985c6306e86CFf35Dde7c6cF8871",
+        "anchorGame": "eth:0x38a1705C633De6Ea665394DcA91664D001924CAe",
         "disputeGameFactory": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0xf8b313e371e392320cee49cf0c2aff0211b49eda93eb3dcaad096115b2bf7f20",
-          153304902
+          "0xc983e221fbebdcad0387ced411eb7a4147e1a5c5cafe4a3ded771f754adfc9ce",
+          153315617
         ],
         "getStartingAnchorRoot": {
           "root": "0xfce6d556d11e1662f316ed1408782a3227b1c1dcd8f643c1f563043298822e62",
@@ -482,7 +517,7 @@
       "values": {
         "$immutable": true,
         "safe": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "4d 13h",
+        "timeSinceLastL2beatInteraction": "4d 19h",
         "version": "1.0.0"
       },
       "implementationNames": {
@@ -605,7 +640,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292860387",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292860468",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1799,6 +1834,27 @@
       "proxyType": "EOA"
     },
     {
+      "name": "MIPS64",
+      "address": "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xd50e8efb45d44082a90ec3b26d13c5f61587ced6e71b1bd0a77a26715e7ae899"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0xE69104DD872222E1Bd7C1adD47588F8C62ed64C0",
+      "sinceTimestamp": 1778190599,
+      "sinceBlock": 25045956,
+      "values": {
+        "$immutable": true,
+        "oracle": "eth:0x1E1d73536A081Ef2F355d29794547a9770Aeb1E0",
+        "stateVersion": 8,
+        "version": "1.10.1"
+      },
+      "implementationNames": {
+        "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA": "MIPS64"
+      }
+    },
+    {
       "name": "OptimismPortal2",
       "address": "eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
       "type": "Contract",
@@ -1903,8 +1959,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 516982,
-          "prevBlockNum": 25429874
+          "prevBoughtGas": 517494,
+          "prevBlockNum": 25431692
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -2233,7 +2289,8 @@
         "game621": "eth:0x0000000000000000000000000000000000000000",
         "game8": "eth:0x2DDA3584b51eF5236f7726Dea5A0FB6B3cA94AeC",
         "game8Args": "0x0337ecb3604c0b40c352e0c7711beb17a212d583f4fe956fd8d66e29ad5f9025acc005dcd857b401e4732e6f7837135a22825cfa23b2c62946350f4246f9f9d027e071f0264fd1131b6dbf05eaf22d4e70dc993e8a19dd9f3dcb3162000000000000000000000000000000000000000000000000000000000000000a",
-        "gameCount": 18012,
+        "game8Vm": "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA",
+        "gameCount": 18018,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xe1dFFCBE4e22B813F26d2106D943C102e7cAb87e",
@@ -2272,7 +2329,8 @@
       "usedTypes": [
         { "typeCaster": "SliceAddress", "arg": { "offset": 124 } },
         { "typeCaster": "SliceAddress", "arg": { "offset": 144 } },
-        { "typeCaster": "SliceAddress", "arg": { "offset": 72 } }
+        { "typeCaster": "SliceAddress", "arg": { "offset": 72 } },
+        { "typeCaster": "SliceAddress", "arg": { "offset": 32 } }
       ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -2447,7 +2505,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "oeth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292653584",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292653585",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2506,7 +2564,7 @@
         "$upgradeCount": 4,
         "baseFee": 0,
         "baseFeeScalar": 5227,
-        "blobBaseFee": 3586896,
+        "blobBaseFee": 65779347,
         "blobBaseFeeScalar": 1014213,
         "decimals": 6,
         "DECIMALS": 6,
@@ -2515,7 +2573,7 @@
         "isFjord": true,
         "isIsthmus": true,
         "isJovian": true,
-        "l1BaseFee": 73701186,
+        "l1BaseFee": 1204587813,
         "version": "1.6.0"
       },
       "implementationNames": {
@@ -2717,10 +2775,10 @@
           ]
         ],
         "$upgradeCount": 3,
-        "basefee": 73701186,
+        "basefee": 1204587813,
         "baseFeeScalar": 5227,
         "batcherHash": "0x0000000000000000000000006887246668a3b87f54deb3b94ba47a6f63f32985",
-        "blobBaseFee": 3586896,
+        "blobBaseFee": 65779347,
         "blobBaseFeeScalar": 1014213,
         "daFootprintGasScalar": 400,
         "DEPOSITOR_ACCOUNT": "oeth:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -2730,15 +2788,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0xffeef9ecc6cbf3fe8b094217b6b40b8afd86c2eb0808a9d656c7c5a9d451bb14",
+        "hash": "0x1e62aa5a52ea139db702a250461cb5e8a4d75707a5f1747d8ab40b85f0f3920a",
         "isCustomGasToken": false,
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 25429914,
+        "number": 25431691,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 1,
-        "timestamp": 1782815519,
+        "sequenceNumber": 4,
+        "timestamp": 1782836963,
         "version": "1.7.0"
       },
       "implementationNames": {
@@ -3496,6 +3554,56 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
+    "eth:0x1E1d73536A081Ef2F355d29794547a9770Aeb1E0": [
+      "constructor(uint256 _minProposalSize, uint256 _challengePeriod)",
+      "error ActiveProposal()",
+      "error AlreadyFinalized()",
+      "error AlreadyInitialized()",
+      "error BadProposal()",
+      "error BondTransferFailed()",
+      "error InsufficientBond()",
+      "error InvalidInputSize()",
+      "error InvalidPreimage()",
+      "error InvalidProof()",
+      "error NotEOA()",
+      "error NotInitialized()",
+      "error PartOffsetOOB()",
+      "error PostStateMatches()",
+      "error StatesNotContiguous()",
+      "error TreeSizeOverflow()",
+      "error WrongStartingBlock()",
+      "function KECCAK_TREE_DEPTH() view returns (uint256)",
+      "function MAX_LEAF_COUNT() view returns (uint256)",
+      "function MIN_BOND_SIZE() view returns (uint256)",
+      "function PRECOMPILE_CALL_RESERVED_GAS() view returns (uint256)",
+      "function addLeavesLPP(uint256 _uuid, uint256 _inputStartBlock, bytes _input, bytes32[] _stateCommitments, bool _finalize)",
+      "function challengeFirstLPP(address _claimant, uint256 _uuid, tuple(bytes input, uint256 index, bytes32 stateCommitment) _postState, bytes32[] _postStateProof)",
+      "function challengeLPP(address _claimant, uint256 _uuid, tuple(uint64[25] state) _stateMatrix, tuple(bytes input, uint256 index, bytes32 stateCommitment) _preState, bytes32[] _preStateProof, tuple(bytes input, uint256 index, bytes32 stateCommitment) _postState, bytes32[] _postStateProof)",
+      "function challengePeriod() view returns (uint256 challengePeriod_)",
+      "function getTreeRootLPP(address _owner, uint256 _uuid) view returns (bytes32 treeRoot_)",
+      "function initLPP(uint256 _uuid, uint32 _partOffset, uint32 _claimedSize) payable",
+      "function loadBlobPreimagePart(uint256 _z, uint256 _y, bytes _commitment, bytes _proof, uint256 _partOffset)",
+      "function loadKeccak256PreimagePart(uint256 _partOffset, bytes _preimage)",
+      "function loadLocalData(uint256 _ident, bytes32 _localContext, bytes32 _word, uint256 _size, uint256 _partOffset) returns (bytes32 key_)",
+      "function loadPrecompilePreimagePart(uint256 _partOffset, address _precompile, uint64 _requiredGas, bytes _input)",
+      "function loadSha256PreimagePart(uint256 _partOffset, bytes _preimage)",
+      "function minProposalSize() view returns (uint256 minProposalSize_)",
+      "function preimageLengths(bytes32) view returns (uint256)",
+      "function preimagePartOk(bytes32, uint256) view returns (bool)",
+      "function preimageParts(bytes32, uint256) view returns (bytes32)",
+      "function proposalBlocks(address, uint256, uint256) view returns (uint64)",
+      "function proposalBlocksLen(address _claimant, uint256 _uuid) view returns (uint256 len_)",
+      "function proposalBonds(address, uint256) view returns (uint256)",
+      "function proposalBranches(address, uint256, uint256) view returns (bytes32)",
+      "function proposalCount() view returns (uint256 count_)",
+      "function proposalMetadata(address, uint256) view returns (bytes32)",
+      "function proposalParts(address, uint256) view returns (bytes32)",
+      "function proposals(uint256) view returns (address claimant, uint256 uuid)",
+      "function readPreimage(bytes32 _key, uint256 _offset) view returns (bytes32 dat_, uint256 datLen_)",
+      "function squeezeLPP(address _claimant, uint256 _uuid, tuple(uint64[25] state) _stateMatrix, tuple(bytes input, uint256 index, bytes32 stateCommitment) _preState, bytes32[] _preStateProof, tuple(bytes input, uint256 index, bytes32 stateCommitment) _postState, bytes32[] _postStateProof)",
+      "function version() view returns (string)",
+      "function zeroHashes(uint256) view returns (bytes32)"
+    ],
     "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -4156,6 +4264,19 @@
       "function initialize(address _bridge)",
       "function proxyAdmin() view returns (address)",
       "function proxyAdminOwner() view returns (address)",
+      "function version() view returns (string)"
+    ],
+    "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA": [
+      "constructor(address _oracle, uint256 _stateVersion)",
+      "error InvalidExitedValue()",
+      "error InvalidMemoryProof()",
+      "error InvalidPC()",
+      "error InvalidRMWInstruction()",
+      "error InvalidSecondMemoryProof()",
+      "error UnsupportedStateVersion()",
+      "function oracle() view returns (address oracle_)",
+      "function stateVersion() view returns (uint256 stateVersion_)",
+      "function step(bytes _stateData, bytes _proof, bytes32 _localContext) returns (bytes32 postState_)",
       "function version() view returns (string)"
     ],
     "eth:0xB37a11AadF167B2F0b8dD85372De4bC66CD4A891": [
@@ -5299,6 +5420,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 25429920, "optimism": 153608412 },
-  "permissionsConfigHash": "0xc86160b32f342b29bd9055b2f92574dad077f7659d0758d16ced8ca77a27230f"
+  "usedBlockNumbers": { "ethereum": 25431697, "optimism": 153619134 },
+  "permissionsConfigHash": "0xf3f04d308f5ce0a767e4f6e48fb54e4596bd03091ae60ce770dd810daa04fb58"
 }

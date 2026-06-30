@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xdaf8174f39e12a90d0e1da9f84e184856ac09b56
+Generated with discovered.json: 0x457b80825e2a8dd4f781988f00a75e9a219bf23d
 
-# Diff at Tue, 30 Jun 2026 10:34:32 GMT:
+# Diff at Tue, 30 Jun 2026 16:31:54 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1778851817
-- current timestamp: 1782815602
+- current timestamp: 1782837046
 
 ## Description
 
@@ -390,6 +390,9 @@ A new OPContractsManager (`0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D`) is the u
 +        8
       values.game2000:
 -        "eth:0x0000000000000000000000000000000000000000"
+      values.game8Vm:
+-        "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908"
++        "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA"
       values.gameImpls.0:
 -        "eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499"
 +        "eth:0x0000000000000000000000000000000000000000"
@@ -454,8 +457,20 @@ A new OPContractsManager (`0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D`) is the u
 
 ```diff
 +   Status: CREATED
+    contract PreimageOracle (eth:0x1E1d73536A081Ef2F355d29794547a9770Aeb1E0) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract FaultDisputeGame (eth:0x2DDA3584b51eF5236f7726Dea5A0FB6B3cA94AeC) [opstack/FaultDisputeGame]
     +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
++   Status: CREATED
+    contract MIPS64 (eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA) [N/A]
+    +++ description: None
 ```
 
 ```diff
@@ -467,25 +482,25 @@ A new OPContractsManager (`0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D`) is the u
 ## Source code changes
 
 ```diff
-.../AnchorStateRegistry/AnchorStateRegistry.sol    | 1141 +------
+.../AnchorStateRegistry/AnchorStateRegistry.sol    | 1141 +-------------
  .../DelayedWETH}/DelayedWETH.sol                   |   54 +-
  .../DelayedWETH}/Proxy.p.sol                       |    0
- .../DelayedWETH.sol => /dev/null                   | 1080 -------
- .../Proxy.p.sol => /dev/null                       | 1389 ---------
+ .../DelayedWETH.sol => /dev/null                   | 1080 -------------
+ .../Proxy.p.sol => /dev/null                       | 1389 -----------------
  .../DisputeGameFactory/DisputeGameFactory.sol      |   56 +-
- .../ETHLockbox/ETHLockbox.sol                      | 1227 +-------
- .../FaultDisputeGame.sol                           |  591 ++--
- .../L1CrossDomainMessenger.sol                     | 1619 +++-------
- .../L1ERC721Bridge/L1ERC721Bridge.sol              |  208 +-
- .../L1StandardBridge/L1StandardBridge.sol          |  212 +-
- .../.flat@1778851817/MIPS.sol => /dev/null         | 3274 --------------------
- .../OptimismMintableERC20Factory.sol               |  341 +-
- .../OptimismPortal2/OptimismPortal2.sol            | 1375 +++-----
- .../PermissionedDisputeGame.sol                    |  605 ++--
- .../PreimageOracle.sol => /dev/null                | 1463 ---------
+ .../ETHLockbox/ETHLockbox.sol                      | 1227 +++------------
+ .../FaultDisputeGame.sol                           |  591 ++++---
+ .../L1CrossDomainMessenger.sol                     | 1619 ++++++--------------
+ .../L1ERC721Bridge/L1ERC721Bridge.sol              |  208 ++-
+ .../L1StandardBridge/L1StandardBridge.sol          |  212 ++-
+ .../MIPS.sol => .flat/MIPS64.sol}                  |   43 +-
+ .../OptimismMintableERC20Factory.sol               |  341 ++++-
+ .../OptimismPortal2/OptimismPortal2.sol            | 1375 +++++------------
+ .../PermissionedDisputeGame.sol                    |  605 ++++----
+ .../{.flat@1778851817 => .flat}/PreimageOracle.sol |   20 +-
  .../SuperchainConfig/SuperchainConfig.sol          |   34 +-
- .../SystemConfig/SystemConfig.sol                  | 1580 +++-------
- 18 files changed, 2787 insertions(+), 13462 deletions(-)
+ .../SystemConfig/SystemConfig.sol                  | 1580 +++++--------------
+ 18 files changed, 2812 insertions(+), 8763 deletions(-)
 ```
 
 ## Config/verification related changes
@@ -507,6 +522,16 @@ discovery. Values are for block 1778851817 (main branch discovery), not current.
     +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
       usedTypes.0.arg.8:
 +        "FaultDisputeGame"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.game8Vm:
++        "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908"
+      usedTypes.3:
++        {"typeCaster":"SliceAddress","arg":{"offset":32}}
     }
 ```
 
