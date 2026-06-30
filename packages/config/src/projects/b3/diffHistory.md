@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x19ebdea3009a93feafbe14063fe4e61bf1e33334
+
+# Diff at Mon, 29 Jun 2026 15:22:35 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1771857552
+- current timestamp: 1782746440
+
+## Description
+
+Caldera Multisig 2 (shared with ham, syndicateframe): one signer removed, one rotated. Threshold 3/6 → 3/5.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 2 (base:0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "base:0xEC114946E7213d113c9B9481028271B5E9e09371"
+      values.$members.1:
+-        "base:0xbCDb12b7a5bDe037e342a6BE7fd5582b9D93C232"
++        "base:0xFcB26a1DbFafF84b91f1b7D9026DA63007b88D3c"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 5 (60%)"
+    }
+```
+
 Generated with discovered.json: 0x4341d2f7bbd5f9e2a06ec051478ae1a9daf8e2ea
 
 # Diff at Tue, 09 Jun 2026 12:43:31 GMT:
