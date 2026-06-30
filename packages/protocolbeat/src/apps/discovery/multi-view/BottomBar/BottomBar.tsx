@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { IS_READONLY } from '../../../../config/readonly'
 import { useIsomorphicKeys } from '../../hooks/useIsomorphicKeys'
-import { useStore as useNodesStore } from '../../panel-nodes/store/store'
+import { useStore } from '../../panel-nodes/store/store'
 import { useDiscoveryCommand } from '../../panel-terminal/useDiscoveryCommand'
 import { useSearchStore } from '../../search/store'
 import { useGlobalSettingsStore } from '../../store/global-settings-store'
@@ -60,9 +60,9 @@ export function BottomBar() {
       }
       if (e.code === 'KeyG' && e.altKey) {
         if (e.shiftKey) {
-          useNodesStore.getState().ungroupSelected()
+          useStore.getState().ungroupSelected()
         } else {
-          useNodesStore.getState().groupSelected()
+          useStore.getState().groupSelected()
         }
       }
     }
