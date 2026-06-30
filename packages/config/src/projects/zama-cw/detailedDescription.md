@@ -20,7 +20,7 @@ There are many moving parts and offchain components in the Zama FHE protocol on 
 
 Deposits and withdrawals are public privacy boundaries. A `wrap` emits the confidential-token recipient and the rounded clear underlying-token amount. The recipient can be different from the depositor, but that relationship is still visible in the wrapper event. Withdrawals then reveil the recipient and amount.
 
-Within a confidential wrapper token, holders can make confidential transfers between transparent EVM addresses. These transfers reveal the parties and encrypted ciphertext handles, but not the clear amount or resulting balances. The confidential balances and transfer amounts of users can be decrypted by {{coprocessorThreshold}}/{{coprocessorSignerCount}} KMS signers, including retroactively.
+Within a confidential wrapper token, holders can make confidential transfers between transparent EVM addresses. These transfers reveal the parties and encrypted ciphertext handles, but not the clear amount or resulting balances. The confidential balances and transfer amounts of users can be decrypted by {{kmsThreshold}}/{{kmsSignerCount}} KMS signers, including retroactively.
 
 The smart contracts do not fully validate FHE offchain work, which makes the KMS and coprocessor each trusted for security, privacy and liveness. Encrypted user inputs are accepted through the InputVerifier, which requires {{coprocessorThreshold}}/{{coprocessorSignerCount}} coprocessor signatures. Public decryptions are accepted through the KMSVerifier, which requires {{kmsThreshold}}/{{kmsSignerCount}} KMS signatures. Decentralization of the critical offchain services is announced in the docs but not implemented onchain (e.g. coprocessors, fraud proofs, slashing, zk proofs).
 
