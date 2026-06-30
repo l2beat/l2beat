@@ -2,7 +2,6 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "optimism",
   "import": ["../globalConfig.jsonc"],
-  "maxAddresses": 150,
   "initialAddresses": [
     "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
     "eth:0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f",
@@ -48,24 +47,13 @@
     "eth:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65": {
       "description": "Stores DAI deposited from the attached L1DAITokenBridge."
     },
-    // op-contracts/v7.0.0 (Upgrade 19 "Karst") OPContractsManagerV2 suite. Stateless
+    // op-contracts/v7.0.0 (Upgrade 19 "Karst") OPContractsManagerV2. Stateless
     // deploy/validate tooling that enumerates every implementation address; following
-    // them surfaces bare implementations that match the proxy templates and revert on
-    // calls. Upgrade authority remains with the SuperchainProxyAdminOwner, which is
-    // tracked. Ignored here to keep discovery clean.
+    // it surfaces bare implementations that match the proxy templates and revert on
+    // calls. It is the only entry point to the OPCM suite (via SystemConfig.lastUsedOPCM),
+    // so ignoring it drops the whole suite. Upgrade authority remains with the
+    // SuperchainProxyAdminOwner, which is tracked.
     "eth:0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D": {
-      "ignoreDiscovery": true
-    },
-    "eth:0x54fAbb112956Ef963e4B6c7cf15D8229ac404ad8": {
-      "ignoreDiscovery": true
-    },
-    "eth:0x8D92f589E2380Fd22fc48FE155a72143910f99e4": {
-      "ignoreDiscovery": true
-    },
-    "eth:0x9873d652BdF752a6751d2e6c0ce95188da516c2e": {
-      "ignoreDiscovery": true
-    },
-    "eth:0xB61177c2d8D929A81604650B06abFCAeCAF4FEb9": {
       "ignoreDiscovery": true
     },
     "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": {
@@ -224,12 +212,6 @@
     "eth:0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa": {
       "description": "Collecting sequencer, base- and L1 fees from L2.",
       "ignoreInWatchMode": ["getNextSequenceId"]
-    },
-    "eth:0x1E1d73536A081Ef2F355d29794547a9770Aeb1E0": {
-      // PreimageOracle of the active type-8 game (reached via MIPS64.oracle()).
-      // zeroHashes is a large fixed merkle array discovery can't fully explore;
-      // ignore it (matches the opstack/PreimageOracle template's handling).
-      "ignoreMethods": ["zeroHashes"]
     },
     "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9": {
       "ignoreInWatchMode": ["gameCount"],

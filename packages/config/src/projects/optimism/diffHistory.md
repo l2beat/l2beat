@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xad4c525cbf6af9b26cee23bd19030066b22aefcd
+Generated with discovered.json: 0xa7c47711b18b6fa243dcd039380c3de1b4938d1d
 
-# Diff at Tue, 30 Jun 2026 19:42:59 GMT:
+# Diff at Tue, 30 Jun 2026 20:05:06 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1778851817
-- current timestamp: 1782848510
+- current timestamp: 1782849835
 
 ## Description
 
@@ -457,8 +457,8 @@ A new OPContractsManager (`0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D`) is the u
 
 ```diff
 +   Status: CREATED
-    contract PreimageOracle (eth:0x1E1d73536A081Ef2F355d29794547a9770Aeb1E0) [N/A]
-    +++ description: None
+    contract PreimageOracle (eth:0x1E1d73536A081Ef2F355d29794547a9770Aeb1E0) [opstack/PreimageOracle]
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
 ```
 
 ```diff
@@ -469,8 +469,8 @@ A new OPContractsManager (`0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D`) is the u
 
 ```diff
 +   Status: CREATED
-    contract MIPS64 (eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA) [N/A]
-    +++ description: None
+    contract MIPS (eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA) [opstack/MIPS]
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
 ```
 
 ```diff
@@ -493,7 +493,7 @@ A new OPContractsManager (`0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D`) is the u
  .../L1CrossDomainMessenger.sol                     | 1619 ++++++--------------
  .../L1ERC721Bridge/L1ERC721Bridge.sol              |  208 ++-
  .../L1StandardBridge/L1StandardBridge.sol          |  212 ++-
- .../MIPS.sol => .flat/MIPS64.sol}                  |   43 +-
+ .../optimism/{.flat@1778851817 => .flat}/MIPS.sol  |   43 +-
  .../OptimismMintableERC20Factory.sol               |  341 ++++-
  .../OptimismPortal2/OptimismPortal2.sol            | 1375 +++++------------
  .../PermissionedDisputeGame.sol                    |  605 ++++----
