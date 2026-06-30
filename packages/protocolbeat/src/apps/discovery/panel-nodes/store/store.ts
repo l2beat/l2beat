@@ -104,7 +104,7 @@ export const useStore = create<StoreState>()(
       onMouseDown: wrapHistoryStartAction(set, onMouseDown),
       onMouseUp: wrapHistoryEndAction(set, onMouseUp),
       onMouseMove: wrapAction(set, onMouseMove),
-      onDoubleClick: wrapHistoryStartAction(set, onDoubleClick),
+      onDoubleClick: wrapAction(set, onDoubleClick),
       onWheel: wrapAction(set, onWheel),
     }),
     {
