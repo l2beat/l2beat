@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xa7c47711b18b6fa243dcd039380c3de1b4938d1d
+Generated with discovered.json: 0x289c7abdc63c6968673577d26bff604155668381
 
-# Diff at Tue, 30 Jun 2026 20:05:06 GMT:
+# Diff at Tue, 30 Jun 2026 20:17:14 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1778851817
-- current timestamp: 1782849835
+- current timestamp: 1782850566
 
 ## Description
 
@@ -390,9 +390,6 @@ A new OPContractsManager (`0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D`) is the u
 +        8
       values.game2000:
 -        "eth:0x0000000000000000000000000000000000000000"
-      values.game8Vm:
--        "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908"
-+        "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA"
       values.gameImpls.0:
 -        "eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499"
 +        "eth:0x0000000000000000000000000000000000000000"
@@ -422,6 +419,8 @@ A new OPContractsManager (`0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D`) is the u
 +        "eth:0x2DDA3584b51eF5236f7726Dea5A0FB6B3cA94AeC"
       values.game8Args:
 +        "0x0337ecb3604c0b40c352e0c7711beb17a212d583f4fe956fd8d66e29ad5f9025acc005dcd857b401e4732e6f7837135a22825cfa23b2c62946350f4246f9f9d027e071f0264fd1131b6dbf05eaf22d4e70dc993e8a19dd9f3dcb3162000000000000000000000000000000000000000000000000000000000000000a"
+      values.game8Vm:
++        "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA"
       values.initBondGame0:
 +        0
       values.initBondGame1:
@@ -446,6 +445,8 @@ A new OPContractsManager (`0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D`) is the u
 -        "DisputeGameFactory"
       implementationNames.eth:0x72B971717E088B59F26d4236BE222ADB6ACD393b:
 +        "DisputeGameFactory"
+      usedTypes.0:
++        {"typeCaster":"SliceAddress","arg":{"offset":32}}
     }
 ```
 
@@ -522,16 +523,6 @@ discovery. Values are for block 1778851817 (main branch discovery), not current.
     +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
       usedTypes.0.arg.8:
 +        "FaultDisputeGame"
-    }
-```
-
-```diff
-    contract DisputeGameFactory (eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9) [opstack/DisputeGameFactory] {
-    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
-      values.game8Vm:
-+        "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908"
-      usedTypes.3:
-+        {"typeCaster":"SliceAddress","arg":{"offset":32}}
     }
 ```
 

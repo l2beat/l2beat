@@ -216,28 +216,9 @@
     "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9": {
       "ignoreInWatchMode": ["gameCount"],
       "ignoreMethods": ["gameAtIndex"],
-      "types": {
-        // CANNON_KONA (type 8) game args are: prestate(32) | vm(20) | ...
-        // so the VM address starts at byte offset 32.
-        "VmFromGame8Args": {
-          "typeCaster": "SliceAddress",
-          "arg": { "offset": 32 }
-        }
-      },
       "fields": {
         "gameImpls": { "handler": { "type": "array", "length": 5 } },
         "initBonds": { "handler": { "type": "array", "length": 5 } },
-        // Surface the active type-8 game's VM (MIPS64). The game impl returns
-        // vm()=0 (clone-args), so it is only reachable via the factory game args.
-        "game8Vm": {
-          "handler": {
-            "type": "call",
-            "method": "function gameArgs(uint32) view returns (bytes)",
-            "args": [8],
-            "expectRevert": true
-          },
-          "edit": ["format", "VmFromGame8Args"]
-        },
         "permissionedGamesTotal": {
           "handler": {
             "type": "eventCount",

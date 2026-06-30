@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xa10b9de9cca5a5671077af8605563f053a24e45b
+Generated with discovered.json: 0xf58b65eaa755afabaa1c8eafaa939837bc7461d7
 
-# Diff at Tue, 30 Jun 2026 12:37:06 GMT:
+# Diff at Tue, 30 Jun 2026 20:17:25 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1782377394
-- current timestamp: 1782724600
+- current timestamp: 1782850575
 
 ## Description
 
@@ -40,10 +40,14 @@ discovery. Values are for block 1782377394 (main branch discovery), not current.
 +        "eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499"
       values.game8Args:
 +        "0x0323914d3050e80c3d09da528be54794fde60cd26849cd3410dde0da7cd7d4fa6463dee3828677f6270d83d45408044fc5edb908909f6cf47ed12f010a796527f562bfc26c7f4e722453c1216e49704d84ea98a4dacd95738f2fc8ec0000000000000000000000000000000000000000000000000000000000002105"
+      values.game8Vm:
++        "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908"
       values.initBondGame8:
 +        "80000000000000000"
       fieldMeta.game8:
 +        {"severity":"HIGH"}
+      usedTypes.0:
++        {"typeCaster":"SliceAddress","arg":{"offset":32}}
     }
 ```
 
@@ -61,6 +65,18 @@ discovery. Values are for block 1782377394 (main branch discovery), not current.
       usedTypes.0.arg.8:
 +        "FaultDisputeGame"
     }
+```
+
+```diff
++   Status: CREATED
+    contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3) [opstack/PreimageOracle]
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (eth:0x6463dEE3828677F6270d83d45408044fc5eDB908) [opstack/MIPS]
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
 ```
 
 ```diff

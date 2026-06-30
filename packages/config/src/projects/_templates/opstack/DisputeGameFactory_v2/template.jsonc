@@ -20,6 +20,10 @@
     "WethFromArgs": {
       "typeCaster": "SliceAddress",
       "arg": { "offset": 72 }
+    },
+    "VmFromGame8Args": {
+      "typeCaster": "SliceAddress",
+      "arg": { "offset": 32 }
     }
   },
   "fields": {
@@ -121,6 +125,18 @@
         "args": [8],
         "expectRevert": true
       }
+    },
+    // Active type-8 (CANNON_KONA) game's VM (MIPS64). The game impl returns
+    // vm()=0 (clone-args), so it is only reachable via the factory game args:
+    // prestate(32) | vm(20) | ... -> VM at byte offset 32.
+    "game8Vm": {
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [8],
+        "expectRevert": true
+      },
+      "edit": ["format", "VmFromGame8Args"]
     },
     "proposerFromDGF": {
       "handler": {
