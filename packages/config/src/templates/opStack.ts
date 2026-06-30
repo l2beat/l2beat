@@ -665,15 +665,7 @@ export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
 // *FromGame fields resolve to the zero address until a game is anchored, and
 // unresolved handler reads come back as non-hex strings; all must be rejected.
 function isRealPrestate(value: string | undefined): value is string {
-  return (
-    value !== undefined &&
-    /^0x(?!0+$)[0-9a-f]{64}$/i.test(value) &&
-    // 0xdead0…0 is the op-contracts v7 (Karst) Creator-Pattern sentinel used in
-    // the game args when the absolute prestate is not baked into the clone args;
-    // it is not a real prestate. In v7 the live prestate sits in resolved game
-    // clones (the impls return zero), which discovery does not currently follow.
-    !/^0xdead0*$/i.test(value)
-  )
+  return value !== undefined && /^0x(?!0+$)[0-9a-f]{64}$/i.test(value)
 }
 
 // The factory's gameArgs[1] is the implementation-args blob it appends to every
@@ -695,12 +687,10 @@ function getProgramHashes(
       return []
     case 'Permissioned':
     case 'Permissionless': {
-      // When CANNON_KONA (respectedGameType 8, Upgrade 19 "Karst") is the
-      // respected game, the active prestate lives exclusively in the factory's
-      // type-8 game args (gameArgs[8]); the impls return zero and the type-1
-      // permissioned args are a 0xdead sentinel. Read only that source - falling
-      // back to the op-program / anchor candidates would surface the inactive
-      // type-0 program as if it secured withdrawals.
+      // When CANNON_KONA (respectedGameType 8, Karst) is the respected game, the
+      // active prestate lives only in the factory's type-8 game args (gameArgs[8]);
+      // impls return zero. Read only that - falling back to the op-program / anchor
+      // candidates would surface the inactive type-0 program as if it were live.
       const portal = getOptimismPortal(templateVars)
       const respectedGameType =
         templateVars.discovery.getContractValueOrUndefined<number>(
@@ -2715,9 +2705,8 @@ function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
   if (respectedGameType === 0) {
     return 'Permissionless'
   }
-  // 8 = CANNON_KONA (Upgrade 19 "Karst"): permissionless fault proof running the
-  // kona-client (Rust) program on the Cannon VM instead of op-program. Same trust
-  // model as type 0; the program swap is captured by the absolute prestate.
+  // 8 = CANNON_KONA (Karst): permissionless fault proof, same trust model as
+  // type 0 (kona-client Rust program instead of op-program).
   if (respectedGameType === 8) {
     return 'Permissionless'
   }
