@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x642ce932b3ca698335300929f3e2423280474ebd
+
+# Diff at Tue, 30 Jun 2026 12:23:33 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1778850529
+- current timestamp: 1778850529
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778850529 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (eth:0x0C9fF654bCd0769142Fe70951B0634C5AE19BA3C) [opstack/AnchorStateRegistry_post13] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      usedTypes.0.arg.8:
++        "FaultDisputeGame"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0xB20f99b598E8d888d1887715439851BC68806b22) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      usedTypes.0.arg.8:
++        "FaultDisputeGame"
+    }
+```
+
 Generated with discovered.json: 0x3e1c10b17650fe205d5df6a0e4561a6b1468c612
 
 # Diff at Tue, 09 Jun 2026 12:43:31 GMT:

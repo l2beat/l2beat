@@ -1,3 +1,58 @@
+Generated with discovered.json: 0x73aac0f66ca5b4880ecdb28285d245a415db5fc5
+
+# Diff at Tue, 30 Jun 2026 12:24:15 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1782377394
+- current timestamp: 1782377394
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782377394 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
++++ severity: HIGH
+      values.game8:
++        "eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499"
+      values.game8Args:
++        "0x0323914d3050e80c3d09da528be54794fde60cd26849cd3410dde0da7cd7d4fa6463dee3828677f6270d83d45408044fc5edb908909f6cf47ed12f010a796527f562bfc26c7f4e722453c1216e49704d84ea98a4dacd95738f2fc8ec0000000000000000000000000000000000000000000000000000000000002105"
+      values.initBondGame8:
++        "80000000000000000"
+      fieldMeta.game8:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x49048044D57e1C92A77f79988d21Fa8fAF74E97e) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the AggregateVerifier.
+      usedTypes.0.arg.8:
++        "FaultDisputeGame"
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x909f6cf47ed12f010A796527f562bFc26C7F4E72) [opstack/AnchorStateRegistry_post20] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
+      usedTypes.0.arg.8:
++        "FaultDisputeGame"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499) [opstack/FaultDisputeGame]
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
 Generated with discovered.json: 0x3b9671b4fa92f8a963da506b96a98fb9e02856dd
 
 # Diff at Thu, 25 Jun 2026 10:11:05 GMT:

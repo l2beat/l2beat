@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x5ab21e3d1eaa0102ab36ca274b530326c139ea5d
+
+# Diff at Tue, 30 Jun 2026 12:31:09 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1775561621
+- current timestamp: 1775561621
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1775561621 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (eth:0x000590BB65ab1864a7AD46d6B957cC9a4F2C149d) [opstack/AnchorStateRegistry_post13] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      usedTypes.0.arg.8:
++        "FaultDisputeGame"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x64057ad1DdAc804d0D26A7275b193D9DACa19993) [opstack/OptimismPortal2] {
+    +++ description: Central message and gas token (dOKB) bridge of the OP stack part of this deployment. It allows for permissioned state proposals without public challenges, and forced transactions.
+      usedTypes.0.arg.8:
++        "FaultDisputeGame"
+    }
+```
+
 Generated with discovered.json: 0xec232a029b8ff8e33b7df3434c3bafd32286919d
 
 # Diff at Tue, 09 Jun 2026 12:43:41 GMT:

@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x532c1696d39c362451da177a9f4fd7eb8bdcd50a
+
+# Diff at Tue, 30 Jun 2026 12:25:20 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1781097139
+- current timestamp: 1781097139
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1781097139 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0xD7cF5ce4688663e057E99D9f880599Ce88757695) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract usually is the main entry point to deposit funds from L1 to L2 or for finalizing withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific contract is deployed in the agglayer system context which **disables the depositTransaction() function**, preventing users from sending or forcing any transactions from L1 to L2, including token deposits. It is instead used for configuration and administration of the system.
+      usedTypes.0.arg.8:
++        "FaultDisputeGame"
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0xf9E57a0B702dF449295DEc146eC2bc80339FAAED) [opstack/AnchorStateRegistry_post13] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      usedTypes.0.arg.8:
++        "FaultDisputeGame"
+    }
+```
+
 Generated with discovered.json: 0x2169365b77c71707d6a27b6252a5f362ff11caf8
 
 # Diff at Wed, 10 Jun 2026 13:13:31 GMT:

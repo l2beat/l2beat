@@ -696,32 +696,38 @@ function getProgramHashes(
     case 'Permissioned':
     case 'Permissionless': {
       // When CANNON_KONA (respectedGameType 8, Upgrade 19 "Karst") is the
-      // respected game, the active prestate lives in the factory's type-8 game
-      // args (gameArgs[8]); the impls return zero and the type-1 permissioned
-      // args are a 0xdead sentinel. Prefer it so we read the program actually
-      // securing withdrawals. Gated on respectedGameType so a chain with a
-      // registered-but-not-respected type-8 impl is not surfaced instead.
+      // respected game, the active prestate lives exclusively in the factory's
+      // type-8 game args (gameArgs[8]); the impls return zero and the type-1
+      // permissioned args are a 0xdead sentinel. Read only that source - falling
+      // back to the op-program / anchor candidates would surface the inactive
+      // type-0 program as if it secured withdrawals.
       const portal = getOptimismPortal(templateVars)
       const respectedGameType =
         templateVars.discovery.getContractValueOrUndefined<number>(
           portal.name ?? portal.address,
           'respectedGameType',
         )
-      // V2 dispute games store the prestate in clone immutable args, so the
-      // implementation returns zero. Try the implementation, then the anchored
-      // game clone, then the factory's configured game args (gameArgs[1], which
-      // it bakes into every permissioned game). The anchor stays empty until a
-      // game resolves. Zero / zero-address / empty forms are skipped.
-      const prestateCandidates = [
-        respectedGameType === 8 &&
-        templateVars.discovery.hasContract('DisputeGameFactory')
+      if (respectedGameType === 8) {
+        const konaPrestate = templateVars.discovery.hasContract(
+          'DisputeGameFactory',
+        )
           ? prestateFromGameArgs(
               templateVars.discovery.getContractValueOrUndefined<string>(
                 'DisputeGameFactory',
                 'game8Args',
               ),
             )
-          : undefined,
+          : undefined
+        return isRealPrestate(konaPrestate)
+          ? [PROGRAM_HASHES(konaPrestate)]
+          : []
+      }
+      // V2 dispute games store the prestate in clone immutable args, so the
+      // implementation returns zero. Try the implementation, then the anchored
+      // game clone, then the factory's configured game args (gameArgs[1], which
+      // it bakes into every permissioned game). The anchor stays empty until a
+      // game resolves. Zero / zero-address / empty forms are skipped.
+      const prestateCandidates = [
         templateVars.discovery.getContractValueOrUndefined<string>(
           'PermissionedDisputeGame',
           'absolutePrestate',

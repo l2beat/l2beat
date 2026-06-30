@@ -8,7 +8,7 @@ Generated with discovered.json: 0xdaf8174f39e12a90d0e1da9f84e184856ac09b56
 
 ## Description
 
-Upgrade 19b "Karst" (op-contracts/v7.0.0), executed 2026-06-25 via the new OPContractsManagerV2 (`0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D`, v7.1.17). All core L1 proxies kept their addresses; implementations were swapped.
+Upgrade 19b "Karst" (op-contracts/v7.0.0), executed 2026-06-25 via the new OPContractsManagerV2 (`0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D`, v7.1.17). The main L1 proxies (OptimismPortal2, SystemConfig, DisputeGameFactory, AnchorStateRegistry, the bridges, SuperchainConfig) kept their addresses with swapped implementations; DelayedWETH was redeployed (new permissioned/permissionless instances).
 
 Respected game type changed 0 → 8 (CANNON → CANNON_KONA): the permissionless fault proof now runs the Rust kona-client on the Cannon VM instead of op-program. Trust model is unchanged (still permissionless fault proofs), so the stage stays Stage 1.
 
