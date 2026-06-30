@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xdef64ebc06348fc5d7f484e211ca0d9bfb62c78c
+Generated with discovered.json: 0xa10b9de9cca5a5671077af8605563f053a24e45b
 
-# Diff at Tue, 30 Jun 2026 15:58:55 GMT:
+# Diff at Tue, 30 Jun 2026 12:37:06 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1782377394
-- current timestamp: 1782835065
+- current timestamp: 1782724600
 
 ## Description
 
@@ -61,6 +61,12 @@ discovery. Values are for block 1782377394 (main branch discovery), not current.
       usedTypes.0.arg.8:
 +        "FaultDisputeGame"
     }
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499) [opstack/FaultDisputeGame]
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
 ```
 
 Generated with discovered.json: 0x3b9671b4fa92f8a963da506b96a98fb9e02856dd

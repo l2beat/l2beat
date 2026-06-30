@@ -32,12 +32,6 @@
     "base:0x8cC51c3008b3f03Fe483B28B8Db90e19cF076a6d": "Base Governance Multisig - L2 Alias"
   },
   "overrides": {
-    "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e": {
-      // Base respects the AggregateProof game (type 621). The factory also has a
-      // type-8 (CANNON_KONA) game registered, but it is not the respected game,
-      // so we read its address without pulling the impl in as a contract.
-      "ignoreRelatives": ["game8"]
-    },
     "eth:0x20AcF55A3DCfe07fC4cecaCFa1628F788EC8A4Dd": {
       "references": [
         {
