@@ -26,7 +26,7 @@ import { useSearchStore } from './store'
 interface OpenSearchProps {
   inputRef: React.RefObject<HTMLInputElement | null>
   project: string
-  select: (address: string) => void
+  select: (address: string[]) => void
 }
 
 export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
@@ -34,7 +34,7 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
   const queryClient = useQueryClient()
   const ensureLeaf = useDockingStore((state) => state.ensureLeaf)
   const { setSourceIndex, showRange } = useCodeStore()
-  const selectedAddress = usePanelStore((state) => state.selected)
+  const selectedAddress = usePanelStore((state) => state.selected[0])
   const {
     setOpen,
     searchTerm,
@@ -110,7 +110,7 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
 
         if (entry !== undefined) {
           ensureLeaf('code')
-          select(entry.address)
+          select([entry.address])
           const codeLocation = entry.codeLocation[selectedIndex - runningIndex]
           if (codeLocation !== undefined) {
             setSourceIndex(entry.address, codeLocation.index)
@@ -128,7 +128,7 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
         const result = data.entries[selectedIndex]
 
         if (result !== undefined) {
-          select(result.address)
+          select([result.address])
         }
       }
       setOpen(false)

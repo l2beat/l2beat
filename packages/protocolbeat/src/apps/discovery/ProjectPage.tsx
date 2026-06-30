@@ -14,19 +14,19 @@ export function ProjectPage() {
   }
   const response = useQuery(useProjectQueryOptions(project))
   const select = usePanelStore((state) => state.select)
-  const selectedAddress = usePanelStore((state) => state.selected)
+  const selectedAddresses = usePanelStore((state) => state.selected)
   useEffect(() => {
     if (response.data) {
       const currentlySelectedStillExists = findSelected(
         response.data.entries,
-        selectedAddress,
+        selectedAddresses[0],
       )
       if (!currentlySelectedStillExists) {
         const first = response.data.entries[0]?.initialContracts[0]?.address
-        select(first)
+        select(first ? [first] : [])
       }
     }
-  }, [response.data, select, selectedAddress])
+  }, [response.data, select, selectedAddresses])
 
   return (
     <>
