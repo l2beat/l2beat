@@ -126,9 +126,8 @@
         "expectRevert": true
       }
     },
-    // Active type-8 (CANNON_KONA) game's VM (MIPS64). The game impl returns
-    // vm()=0 (clone-args), so it is only reachable via the factory game args:
-    // prestate(32) | vm(20) | ... -> VM at byte offset 32.
+    // Type-8 game's VM (MIPS64): impl returns vm()=0, so read from game args
+    // (prestate(32) | vm(20) -> offset 32).
     "game8Vm": {
       "handler": {
         "type": "call",

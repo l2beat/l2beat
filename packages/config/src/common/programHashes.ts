@@ -1900,9 +1900,8 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       'common/programHashes/0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e.md',
     ),
   },
-  // Active CANNON_KONA (respectedGameType 8) prestate after Upgrade 19 "Karst"
-  // (op-contracts/v7.0.0) on OP Mainnet. Reproduced via the kona Docker build at
-  // tag kona-client/v1.6.0-rc.2 (commit d7cea91bc2f555a76b7720bf9c32f46c0b856119).
+  // Active CANNON_KONA prestate (Karst). Reproduced via kona Docker build,
+  // tag kona-client/v1.6.0-rc.2 (commit d7cea91b).
   '0x0337ecb3604c0b40c352e0c7711beb17a212d583f4fe956fd8d66e29ad5f9025': {
     title: 'OP Kona absolute prestate v1.6.0-rc.2 (cannon64)',
     description:

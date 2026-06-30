@@ -47,12 +47,8 @@
     "eth:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65": {
       "description": "Stores DAI deposited from the attached L1DAITokenBridge."
     },
-    // op-contracts/v7.0.0 (Upgrade 19 "Karst") OPContractsManagerV2. Stateless
-    // deploy/validate tooling that enumerates every implementation address; following
-    // it surfaces bare implementations that match the proxy templates and revert on
-    // calls. It is the only entry point to the OPCM suite (via SystemConfig.lastUsedOPCM),
-    // so ignoring it drops the whole suite. Upgrade authority remains with the
-    // SuperchainProxyAdminOwner, which is tracked.
+    // OPContractsManagerV2: Karst upgrade tooling. Ignored so discovery doesn't
+    // follow it into bare implementations; authority is the SuperchainProxyAdminOwner.
     "eth:0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D": {
       "ignoreDiscovery": true
     },
