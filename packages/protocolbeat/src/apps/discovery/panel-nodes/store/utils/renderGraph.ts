@@ -29,22 +29,9 @@ export function buildRenderGraph(
   nodes: readonly Node[],
   hidden: readonly string[],
 ): RenderGraph {
-  const hiddenSet = new Set(hidden)
-  const visible = nodes.filter((node) => !hiddenSet.has(node.id))
-
-  const hasOpenGroup = visible.some(
-    (node) => node.opened && node.subnodes.length > 0,
-  )
-  if (!hasOpenGroup) {
-    return { nodes: visible, containers: [] }
-  }
-
-  const rendered: Node[] = []
-  const containers: GroupContainer[] = []
-  for (const node of visible) {
-    for (const member of expand(node, hiddenSet, containers)) {
-      rendered.push(member)
-    }
+  const { nodes: rendered, containers, expanded } = expandGroups(nodes, hidden)
+  if (!expanded) {
+    return { nodes: rendered, containers }
   }
 
   const boxById = new Map<string, Box>()
@@ -57,6 +44,40 @@ export function buildRenderGraph(
 
   const laidOut = rendered.map((node) => layoutFields(node, boxById))
   return { nodes: laidOut, containers }
+}
+
+// Flatten opened groups into their members without laying out fields. Select-box
+// hit-testing only reads node boxes, so it can skip the per-field connection
+// recompute that buildRenderGraph does on every mousemove.
+export function expandedNodes(
+  nodes: readonly Node[],
+  hidden: readonly string[],
+): Node[] {
+  return expandGroups(nodes, hidden).nodes
+}
+
+function expandGroups(
+  nodes: readonly Node[],
+  hidden: readonly string[],
+): { nodes: Node[]; containers: GroupContainer[]; expanded: boolean } {
+  const hiddenSet = new Set(hidden)
+  const visible = nodes.filter((node) => !hiddenSet.has(node.id))
+
+  const hasOpenGroup = visible.some(
+    (node) => node.opened && node.subnodes.length > 0,
+  )
+  if (!hasOpenGroup) {
+    return { nodes: visible, containers: [], expanded: false }
+  }
+
+  const rendered: Node[] = []
+  const containers: GroupContainer[] = []
+  for (const node of visible) {
+    for (const member of expand(node, hiddenSet, containers)) {
+      rendered.push(member)
+    }
+  }
+  return { nodes: rendered, containers, expanded: true }
 }
 
 function expand(
