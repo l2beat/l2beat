@@ -7,7 +7,11 @@
   "types": {
     "DisputeGameMap": {
       "typeCaster": "Mapping",
-      "arg": { "0": "FaultDisputeGame", "1": "PermissionedDisputeGame", "8": "FaultDisputeGame" }
+      "arg": {
+        "0": "FaultDisputeGame",
+        "1": "PermissionedDisputeGame",
+        "8": "FaultDisputeGame"
+      }
     }
   },
   "fields": {

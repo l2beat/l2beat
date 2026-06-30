@@ -53,11 +53,21 @@
     // them surfaces bare implementations that match the proxy templates and revert on
     // calls. Upgrade authority remains with the SuperchainProxyAdminOwner, which is
     // tracked. Ignored here to keep discovery clean.
-    "eth:0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D": { "ignoreDiscovery": true },
-    "eth:0x54fAbb112956Ef963e4B6c7cf15D8229ac404ad8": { "ignoreDiscovery": true },
-    "eth:0x8D92f589E2380Fd22fc48FE155a72143910f99e4": { "ignoreDiscovery": true },
-    "eth:0x9873d652BdF752a6751d2e6c0ce95188da516c2e": { "ignoreDiscovery": true },
-    "eth:0xB61177c2d8D929A81604650B06abFCAeCAF4FEb9": { "ignoreDiscovery": true },
+    "eth:0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x54fAbb112956Ef963e4B6c7cf15D8229ac404ad8": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x8D92f589E2380Fd22fc48FE155a72143910f99e4": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x9873d652BdF752a6751d2e6c0ce95188da516c2e": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xB61177c2d8D929A81604650B06abFCAeCAF4FEb9": {
+      "ignoreDiscovery": true
+    },
     "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": {
       "references": [
         {
