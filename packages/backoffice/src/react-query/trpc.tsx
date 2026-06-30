@@ -1,4 +1,5 @@
 import type { BackendRouter } from '@l2beat/backend/trpc'
+import { trpcTransformer } from '@l2beat/shared-pure'
 import { type QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { createTRPCClient, httpBatchLink, loggerLink } from '@trpc/client'
 import {
@@ -110,10 +111,7 @@ function buildClient(url: string) {
           (op.direction === 'down' && op.result instanceof Error),
       }),
       httpBatchLink({
-        transformer: {
-          serialize: JSON.stringify,
-          deserialize: JSON.parse,
-        },
+        transformer: trpcTransformer,
         url,
         headers: () => {
           const headers = new Headers()
