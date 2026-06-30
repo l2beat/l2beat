@@ -20,6 +20,7 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ChartRange } from '~/utils/range/range'
+import { PrivacyAmountAnalysisSection } from './components/PrivacyAmountAnalysisSection'
 import { PrivacyBreakdownTable } from './components/PrivacyBreakdownTable'
 import { PrivacyChartsSection } from './components/PrivacyChartsSection'
 import { PrivacyProjectStats } from './components/PrivacyProjectStats'
@@ -57,6 +58,9 @@ export function PrivacyProjectPage({
     ? nextOrder()
     : undefined
   const chartsOrder = nextOrder()
+  const amountAnalysisOrder = entry.amountAnalysisEnabled
+    ? nextOrder()
+    : undefined
   const trustedSetupsOrder = nextOrder()
   const permissionsOrder = entry.permissionsSection ? nextOrder() : undefined
   const contractsOrder = entry.contractsSection ? nextOrder() : undefined
@@ -190,6 +194,16 @@ export function PrivacyProjectPage({
                       </div>
                     </ProjectSection>
 
+                    {entry.amountAnalysisEnabled && amountAnalysisOrder && (
+                      <ProjectSection
+                        id="amount-analysis"
+                        title="Amount analysis"
+                        sectionOrder={amountAnalysisOrder}
+                      >
+                        <PrivacyAmountAnalysisSection projectId={entry.id} />
+                      </ProjectSection>
+                    )}
+
                     <TrustedSetupSection
                       id="trusted-setups"
                       title="Trusted setup"
@@ -283,6 +297,14 @@ function getNavigationSections(
       id: 'charts',
       title: 'Value Locked',
     },
+    ...(entry.amountAnalysisEnabled
+      ? [
+          {
+            id: 'amount-analysis',
+            title: 'Amount analysis',
+          },
+        ]
+      : []),
     {
       id: 'trusted-setups',
       title: 'Trusted setup',

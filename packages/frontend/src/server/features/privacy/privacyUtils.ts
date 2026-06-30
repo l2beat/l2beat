@@ -31,6 +31,93 @@ const WETH_INFO = [...NORMALIZED_TICKERS.values()].find(
   (token) => token.ticker === 'WETH',
 )
 
+const NORMALIZED_TICKERS_BY_SYMBOL = new Map<string, TokenInfo>(
+  [...NORMALIZED_TICKERS.values()].map((token) => [
+    token.ticker.toLowerCase(),
+    token,
+  ]),
+)
+
+// Coingecko-style slugs for the demo tokens that exist in `TICKERS`. Used only
+// as a last-resort fallback when neither address nor ticker resolve a row.
+const SLUG_TO_TICKER: Record<string, string> = {
+  ethereum: 'ETH',
+  weth: 'WETH',
+  'usd-coin': 'USDC',
+  tether: 'USDT',
+  dai: 'DAI',
+  cdai: 'cDAI',
+  'wrapped-bitcoin': 'WBTC',
+  'wrapped-steth': 'wstETH',
+  'wrapped-oeth': 'WOETH',
+  'ethena-usde': 'USDe',
+  usds: 'USDS',
+  susds: 'sUSDS',
+  usd1: 'USD1',
+  'frax-share': 'frxUSD',
+  fxusd: 'fxUSD',
+  bold: 'BOLD',
+  near: 'NEAR',
+  rail: 'RAIL',
+  instadapp: 'FLUID',
+  fluid: 'FLUID',
+}
+
+function getEthTokenInfo(): TokenInfo {
+  return { ticker: 'ETH', decimals: 18, price: WETH_INFO?.price ?? null }
+}
+
+export interface PrivacyTokenLookup {
+  /** Ethereum token address (when present in the source row). */
+  address?: string
+  /** Token ticker symbol, e.g. parsed from a bucket id. */
+  ticker?: string
+  /** Coingecko-style slug from the CSV `token` column. */
+  slug?: string
+}
+
+/**
+ * Non-throwing variant of {@link getPrivacyTokenInfo}. Resolves token metadata
+ * by address, then ticker, then coingecko slug, with an ETH special case for
+ * each. Returns `undefined` when the token is unknown so callers can skip the
+ * row instead of throwing.
+ */
+export function tryGetPrivacyTokenInfo(
+  lookup: PrivacyTokenLookup,
+): TokenInfo | undefined {
+  const { address, ticker, slug } = lookup
+
+  if (address && address.trim() !== '') {
+    const byAddress = NORMALIZED_TICKERS.get(address.toLowerCase())
+    if (byAddress) return byAddress
+  }
+
+  if (ticker && ticker.trim() !== '') {
+    const normalized = ticker.toLowerCase()
+    if (normalized === 'eth' || normalized === 'ethereum') {
+      return getEthTokenInfo()
+    }
+    const byTicker = NORMALIZED_TICKERS_BY_SYMBOL.get(normalized)
+    if (byTicker) return byTicker
+  }
+
+  if (slug && slug.trim() !== '') {
+    const normalized = slug.toLowerCase()
+    if (normalized === 'ethereum' || normalized === 'eth') {
+      return getEthTokenInfo()
+    }
+    const mappedTicker = SLUG_TO_TICKER[normalized]
+    if (mappedTicker) {
+      const bySlug = NORMALIZED_TICKERS_BY_SYMBOL.get(
+        mappedTicker.toLowerCase(),
+      )
+      if (bySlug) return bySlug
+    }
+  }
+
+  return undefined
+}
+
 export function getPrivacyBucketKey(
   projectId: string,
   assetKey: string,

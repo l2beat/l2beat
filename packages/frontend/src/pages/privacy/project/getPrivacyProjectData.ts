@@ -4,6 +4,7 @@ import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ContractsSectionProps } from '~/components/projects/sections/contracts/ContractsSection'
 import type { PermissionsSectionProps } from '~/components/projects/sections/permissions/PermissionsSection'
+import { isPrivacyAmountAnalysisProject } from '~/server/features/privacy/getPrivacyProjectAmountAnalysis'
 import { getPrivacySnapshot } from '~/server/features/privacy/getPrivacySnapshot'
 import type { PrivacyAssetSnapshot } from '~/server/features/privacy/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
@@ -62,6 +63,7 @@ export interface PrivacyProjectEntry {
     }
   }
   unpricedAssets: string[]
+  amountAnalysisEnabled: boolean
   isUnderReview: boolean
   warnings: {
     yellow?: string
@@ -122,6 +124,13 @@ export async function getPrivacyProjectData(
     projectId: project.id,
     range: defaultChartRange,
   })
+
+  const amountAnalysisEnabled = isPrivacyAmountAnalysisProject(project.id)
+  if (amountAnalysisEnabled) {
+    await helpers.privacy.projectAmountAnalysis.prefetch({
+      projectId: project.id,
+    })
+  }
 
   const permissionsSection = getPermissionsSection(
     {
@@ -184,6 +193,7 @@ export async function getPrivacyProjectData(
       deposits: project.summary.deposits,
     },
     unpricedAssets: project.unpricedAssets,
+    amountAnalysisEnabled,
     isUnderReview: !!project.statuses.reviewStatus,
     warnings: {
       yellow: project.statuses.yellowWarning,

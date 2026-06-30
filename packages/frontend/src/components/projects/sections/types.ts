@@ -32,6 +32,7 @@ import type { VerifiersSectionProps } from './verifiers/VerifiersSection'
 
 type SectionId =
   | 'charts'
+  | 'amount-analysis'
   | 'tvs'
   | 'activity'
   | 'onchain-costs'

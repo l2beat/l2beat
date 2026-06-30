@@ -1,4 +1,8 @@
 import {
+  getPrivacyProjectAmountAnalysis,
+  PrivacyProjectAmountAnalysisParams,
+} from '~/server/features/privacy/getPrivacyProjectAmountAnalysis'
+import {
   getPrivacyProjectChart,
   PrivacyProjectChartParams,
 } from '~/server/features/privacy/getPrivacyProjectChart'
@@ -10,6 +14,9 @@ export const privacyRouter = router({
   projectChart: procedure
     .input(PrivacyProjectChartParams)
     .query(({ input }) => getPrivacyProjectChart(input)),
+  projectAmountAnalysis: procedure
+    .input(PrivacyProjectAmountAnalysisParams)
+    .query(({ input }) => getPrivacyProjectAmountAnalysis(input)),
   summaryChart: procedure
     .input(PrivacyChartParams)
     .query(({ input }) => getPrivacySummaryChart(input)),
