@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xd89ea64bfd4bcc44166b9013161b5a14385f4af4
+Generated with discovered.json: 0x3317554f8eaea96965fb655c6e55ddebac9dc83b
 
-# Diff at Tue, 30 Jun 2026 12:24:52 GMT:
+# Diff at Tue, 30 Jun 2026 20:24:39 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1781176085
@@ -15,14 +15,6 @@ Discovery rerun on the same block number with only config-related changes.
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1781176085 (main branch discovery), not current.
-
-```diff
-    contract AnchorStateRegistry (eth:0x8fE58d2168b5412Cf1Bd212cE6137f8b7300222d) [opstack/AnchorStateRegistry_post13_opsuccinct] {
-    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the OPSuccinctFaultDisputeGame. Variant for chains using OPSuccinct (SP1) games instead of Cannon, which omits Cannon-specific cross-contract fields (vm, oracle, weth, challengePeriod, absolutePrestate from game).
-      usedTypes.0.arg.8:
-+        "FaultDisputeGame"
-    }
-```
 
 ```diff
     contract OptimismPortal2 (eth:0xc5c5D157928BDBD2ACf6d0777626b6C75a9EAEDC) [opstack/OptimismPortal2] {

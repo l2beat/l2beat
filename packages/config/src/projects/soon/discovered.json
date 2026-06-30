@@ -216,7 +216,6 @@
           "arg": {
             "0": "FaultDisputeGame",
             "1": "PermissionedDisputeGame",
-            "8": "FaultDisputeGame",
             "2000": "KailuaGame"
           }
         }
@@ -1457,7 +1456,7 @@
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge_soon": "0xb2902b94f11fe47993a13e604f0bfcdc4648d040e0409e6e5c24d0ae9a6ebf9e",
-    "opstack/OptimismPortal2_soon": "0x853e99fe52c896c2193f7680d03eea52e06a6bc41a335c5e3f1d08f4578a49e5",
+    "opstack/OptimismPortal2_soon": "0xf6734dbe323c5dbbc774eff181ffd1ab332f7ce3315bb86db8cb6179c940026b",
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "risc0/KailuaGame": "0x249c17fd26bbb0f5400d386b4cfbe2edc478f66aeca6ba5fe90e477d646ae9dd",

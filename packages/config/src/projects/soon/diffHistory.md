@@ -1,29 +1,3 @@
-Generated with discovered.json: 0xeac40ca5205069956fa2d0485a6c5bc3d869dfe2
-
-# Diff at Tue, 30 Jun 2026 12:29:40 GMT:
-
-- author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1769535666
-- current timestamp: 1769535666
-
-## Description
-
-Discovery rerun on the same block number with only config-related changes.
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1769535666 (main branch discovery), not current.
-
-```diff
-    contract OptimismPortal2 (eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07) [opstack/OptimismPortal2_soon] {
-    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It disallows ERC20 token deposits and L1->L2 transactions that would create a contract. Withdrawals can be frozen / blacklisted by a permissioned actor. Has a MIN_BRIDGE_VALUE set to 0.001 ETH.
-      usedTypes.1.arg.8:
-+        "FaultDisputeGame"
-    }
-```
-
 Generated with discovered.json: 0x0604a0b6a01d2d94faca77d685154a7e935ccbc1
 
 # Diff at Tue, 09 Jun 2026 12:43:39 GMT:

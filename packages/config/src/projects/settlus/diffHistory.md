@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xe46e58ede740a8ac9bf9da2a89d6deda847cae7a
+Generated with discovered.json: 0xeef1119d45a274baba36c4908b4bd8993fa02230
 
-# Diff at Tue, 30 Jun 2026 12:28:59 GMT:
+# Diff at Tue, 30 Jun 2026 20:24:44 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1779699347
@@ -15,14 +15,6 @@ Discovery rerun on the same block number with only config-related changes.
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1779699347 (main branch discovery), not current.
-
-```diff
-    contract AnchorStateRegistry (eth:0x63e956115F7618A95Bb968ecEF2E72e99cdBA80F) [opstack/AnchorStateRegistry_post13] {
-    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
-      usedTypes.0.arg.8:
-+        "FaultDisputeGame"
-    }
-```
 
 ```diff
     contract OptimismPortal2 (eth:0xFc1D560eB01443e31B0EB56620703E80e42A7E4e) [opstack/OptimismPortal2] {
