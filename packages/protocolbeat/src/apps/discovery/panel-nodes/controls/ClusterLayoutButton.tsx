@@ -10,7 +10,9 @@ import { cn } from '../../../../utils/cn'
 import type { Node } from '../store/State'
 import { useStore } from '../store/store'
 import { centerLocationsInViewport } from '../store/utils/centerLocationsInViewport'
+import { containerBoxes } from '../store/utils/renderGraph'
 import type { NodeLocations } from '../store/utils/storage'
+import { topLevelByDescendant } from '../store/utils/subnodes'
 import { ControlButton } from './ControlButton'
 import { IconControlCluster } from './icons/IconControlCluster'
 
@@ -30,7 +32,13 @@ export function ClusterLayoutButton({ className }: { className?: string }) {
   const nodes = useStore((state) => state.nodes)
   const hiddenNodes = useStore((state) => state.hidden)
   const selected = useStore((state) => state.selected)
-  const visibleNodes = nodes.filter((node) => !hiddenNodes.includes(node.id))
+  const footprints = containerBoxes(nodes, hiddenNodes)
+  const visibleNodes = nodes
+    .filter((node) => !hiddenNodes.includes(node.id))
+    .map((node) => {
+      const box = footprints.get(node.id)
+      return box ? { ...node, box } : node
+    })
   const simulationNodes =
     selected.length === 0
       ? visibleNodes
@@ -57,11 +65,13 @@ export function ClusterLayoutButton({ className }: { className?: string }) {
       node,
     }))
 
+    const byDescendant = topLevelByDescendant(simulationNodes)
+
     const links = simulationNodes
       .flatMap((node) =>
         node.fields.map((field) => ({
           source: node.id,
-          target: field.target,
+          target: byDescendant.get(field.target)?.id ?? field.target,
         })),
       )
       .filter((l) => simNodes.some((sn) => sn.id === l.target))

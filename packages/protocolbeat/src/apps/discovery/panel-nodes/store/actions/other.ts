@@ -1,4 +1,5 @@
-import type { State } from '../State'
+import type { Node, State } from '../State'
+import { containerBoxes } from '../utils/renderGraph'
 import type { NodeLocations } from '../utils/storage'
 import { updateNodePositions } from '../utils/updateNodePositions'
 
@@ -63,13 +64,28 @@ export function colorSelected(state: State, color: number): Partial<State> {
 }
 
 export function layout(state: State, locations: NodeLocations): Partial<State> {
-  const movedNodes = state.nodes.map((n) => ({
-    ...n,
-    box: {
-      ...n.box,
-      ...locations[n.id],
-    },
-  }))
+  // For an open group the location targets its container footprint, so we
+  // measure the delta from there and move the whole subtree as one unit.
+  const footprints = containerBoxes(state.nodes, state.hidden)
+  const movedNodes = state.nodes.map((node) => {
+    const location = locations[node.id]
+    if (location === undefined) {
+      return node
+    }
+    const origin = footprints.get(node.id) ?? node.box
+    return translateNode(node, location.x - origin.x, location.y - origin.y)
+  })
 
   return updateNodePositions(state, { nodes: movedNodes })
+}
+
+function translateNode(node: Node, dx: number, dy: number): Node {
+  if (dx === 0 && dy === 0) {
+    return node
+  }
+  return {
+    ...node,
+    box: { ...node.box, x: node.box.x + dx, y: node.box.y + dy },
+    subnodes: node.subnodes.map((subnode) => translateNode(subnode, dx, dy)),
+  }
 }

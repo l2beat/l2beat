@@ -10,6 +10,7 @@ export const loopringprover: BaseProject = {
   name: 'Loopring',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2025-07-23')),
+  archivedAt: UnixTime.fromDate(new Date('2026-06-29')),
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,

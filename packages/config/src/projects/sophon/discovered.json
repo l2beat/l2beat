@@ -1,6 +1,6 @@
 {
   "name": "sophon",
-  "timestamp": 1782464947,
+  "timestamp": 1782815274,
   "configHash": "0x839c616f59c8ba2272d40db916653a970b6447f43f6a597dc5e92a68c9d8a1f1",
   "sharedModules": ["shared-zk-stack", "shared-sp1", "vector"],
   "entries": [
@@ -320,7 +320,7 @@
           "eth:0x8f50d93B9955B285f787043B30B5F51D09bE0120",
           "eth:0xf39dE5c61b276391b913cAFB057DC8B9de5d58dA"
         ],
-        "getFirstUnprocessedPriorityTx": 10209,
+        "getFirstUnprocessedPriorityTx": 10210,
         "getL2BootloaderBytecodeHash": "0x01000911c4db4fe62c98e180cfa7e9b3a22fb15f505905d4bf36192f481551e6",
         "getL2DefaultAccountBytecodeHash": "0x010005f73e7c299ed73db937843643bdc276cbc2cc8596287e1e0cf3afc60252",
         "getL2EvmEmulatorBytecodeHash": "0x01000d8bae37b82f311186426184866498b357f41d7a02ced11f3e3fbfbacd63",
@@ -329,7 +329,7 @@
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
         "getPriorityQueueSize": 0,
-        "getPriorityTreeRoot": "0x8a4648e4b47d2b7aeff240eb23a627d73e779a55d96beebcac64ba17ddcf47f8",
+        "getPriorityTreeRoot": "0xf5f9ce9f2428d2338a381633478b1d4aa1564ae494b3f89906017b3f555374f8",
         "getPriorityTreeStartIndex": 4136,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 124554051588,
@@ -337,13 +337,13 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 29, 4],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 38829,
-        "getTotalBatchesExecuted": 38827,
-        "getTotalBatchesVerified": 38829,
-        "getTotalBlocksCommitted": 38829,
-        "getTotalBlocksExecuted": 38827,
-        "getTotalBlocksVerified": 38829,
-        "getTotalPriorityTxs": 10209,
+        "getTotalBatchesCommitted": 38861,
+        "getTotalBatchesExecuted": 38860,
+        "getTotalBatchesVerified": 38861,
+        "getTotalBlocksCommitted": 38861,
+        "getTotalBlocksExecuted": 38860,
+        "getTotalBlocksVerified": 38861,
+        "getTotalPriorityTxs": 10210,
         "getTransactionFilterer": "eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41",
         "getVerifier": "eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45",
         "getVerifierParams": {
@@ -464,43 +464,43 @@
         "revertedBlocks": [],
         "REVERTER_ROLE": "0x30085792330f3f9ee2ee216aea0321c55a0909b87c51ee9ab49d05ca4a4c2ecb",
         "validatorsVTL": [
-          "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA",
-          "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
+          "eth:0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B",
+          "eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3"
         ],
         "validatorsVTLFullAC": {
           "PRECOMMITTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA",
-              "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
+              "eth:0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B",
+              "eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3"
             ]
           },
           "COMMITTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA",
-              "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
+              "eth:0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B",
+              "eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3"
             ]
           },
           "REVERTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA",
-              "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
+              "eth:0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B",
+              "eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3"
             ]
           },
           "PROVER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA",
-              "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
+              "eth:0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B",
+              "eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3"
             ]
           },
           "EXECUTOR_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA",
-              "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
+              "eth:0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B",
+              "eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3"
             ]
           }
         }
@@ -569,19 +569,6 @@
           "from": "eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41",
           "description": "call requestL2Transaction() with any target/calldata (whitelisted superuser sender).",
           "role": ".superuserAC"
-        }
-      ]
-    },
-    {
-      "address": "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
-          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
-          "role": ".validatorsVTLFullAC"
         }
       ]
     },
@@ -663,6 +650,32 @@
       }
     },
     {
+      "address": "eth:0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
+          "role": ".validatorsVTLFullAC"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xB1e2974E81922c1d5923dB4580292fB9954E9E05",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3",
+          "description": "set the conversion factor for gas token deposits.",
+          "role": ".tokenMultiplierSetter"
+        }
+      ]
+    },
+    {
       "address": "eth:0xBaEb92889696217A3A6be2175E5a95dC4cFFC9f7",
       "type": "EOA",
       "proxyType": "EOA",
@@ -688,19 +701,6 @@
       "type": "Reference",
       "targetType": "Contract",
       "targetProject": "shared-zk-stack"
-    },
-    {
-      "address": "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
-          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
-          "role": ".validatorsVTLFullAC"
-        }
-      ]
     },
     {
       "name": "DualVerifier",
@@ -736,19 +736,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xe14828E4405239dD331F194F1B7883eeD73bCBF3",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3",
-          "description": "set the conversion factor for gas token deposits.",
-          "role": ".tokenMultiplierSetter"
-        }
-      ]
-    },
-    {
       "name": "SophonZkEvmAdmin",
       "address": "eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3",
       "type": "Contract",
@@ -779,7 +766,7 @@
         "$immutable": true,
         "owner": "eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "tokenMultiplierSetter": "eth:0xe14828E4405239dD331F194F1B7883eeD73bCBF3",
+        "tokenMultiplierSetter": "eth:0xB1e2974E81922c1d5923dB4580292fB9954E9E05",
         "upgradeTimestamps": [
           { "_protocolVersion": 107374182400, "_upgradeTimestamp": 1738591200 },
           { "_protocolVersion": 111669149696, "_upgradeTimestamp": 1742454000 },
@@ -800,6 +787,19 @@
         "eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3": "ChainAdmin"
       },
       "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "address": "eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
+          "role": ".validatorsVTLFullAC"
+        }
+      ]
     },
     {
       "name": "ProtocolUpgradeHandler",
@@ -865,7 +865,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 39,
+        "nonce": 42,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1437,6 +1437,6 @@
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6",
     "sophon/SophonTransactionFilterer": "0x5af79cc105e47429633fc735f1601adf54bbd92b355c622bdab306600a542b7c"
   },
-  "usedBlockNumbers": { "ethereum": 25400812 },
-  "permissionsConfigHash": "0x82485a7d821e4fabf0bf563fa2f4596580717f7d6f09063581a86e3a59341619"
+  "usedBlockNumbers": { "ethereum": 25429893 },
+  "permissionsConfigHash": "0x3be25ac0b452e8705309395cbb308e498ab73db55aa15e2fc6490d1492f98356"
 }

@@ -138,7 +138,6 @@ import { superseed } from '../projects/superseed/superseed'
 import { swan } from '../projects/swan/swan'
 import { swell } from '../projects/swell/swell'
 import { sxnetwork } from '../projects/sxnetwork/sxnetwork'
-import { sxt } from '../projects/sxt/sxt'
 import { syndicate } from '../projects/syndicate/syndicate'
 import { taiko } from '../projects/taiko/taiko'
 import { termstructure } from '../projects/termstructure/termstructure'
@@ -303,7 +302,6 @@ export const layer2s: ScalingProject[] = [
   swell,
   syndicate,
   sxnetwork,
-  sxt,
   taiko,
   brine,
   termstructure,
