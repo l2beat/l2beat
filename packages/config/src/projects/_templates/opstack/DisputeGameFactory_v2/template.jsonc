@@ -63,6 +63,14 @@
         "args": [1]
       }
     },
+    "game8": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "gameImpls",
+        "args": [8]
+      }
+    },
     "initBondGame42": {
       "handler": {
         "type": "call",
@@ -84,6 +92,13 @@
         "args": [1]
       }
     },
+    "initBondGame8": {
+      "handler": {
+        "type": "call",
+        "method": "initBonds",
+        "args": [8]
+      }
+    },
     "initBondGame621": {
       "handler": {
         "type": "call",
@@ -96,6 +111,14 @@
         "type": "call",
         "method": "function gameArgs(uint32) view returns (bytes)",
         "args": [1],
+        "expectRevert": true
+      }
+    },
+    "game8Args": {
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [8],
         "expectRevert": true
       }
     },

@@ -665,7 +665,15 @@ export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
 // *FromGame fields resolve to the zero address until a game is anchored, and
 // unresolved handler reads come back as non-hex strings; all must be rejected.
 function isRealPrestate(value: string | undefined): value is string {
-  return value !== undefined && /^0x(?!0+$)[0-9a-f]{64}$/i.test(value)
+  return (
+    value !== undefined &&
+    /^0x(?!0+$)[0-9a-f]{64}$/i.test(value) &&
+    // 0xdead0…0 is the op-contracts v7 (Karst) Creator-Pattern sentinel used in
+    // the game args when the absolute prestate is not baked into the clone args;
+    // it is not a real prestate. In v7 the live prestate sits in resolved game
+    // clones (the impls return zero), which discovery does not currently follow.
+    !/^0xdead0*$/i.test(value)
+  )
 }
 
 // The factory's gameArgs[1] is the implementation-args blob it appends to every
@@ -687,12 +695,33 @@ function getProgramHashes(
       return []
     case 'Permissioned':
     case 'Permissionless': {
+      // When CANNON_KONA (respectedGameType 8, Upgrade 19 "Karst") is the
+      // respected game, the active prestate lives in the factory's type-8 game
+      // args (gameArgs[8]); the impls return zero and the type-1 permissioned
+      // args are a 0xdead sentinel. Prefer it so we read the program actually
+      // securing withdrawals. Gated on respectedGameType so a chain with a
+      // registered-but-not-respected type-8 impl is not surfaced instead.
+      const portal = getOptimismPortal(templateVars)
+      const respectedGameType =
+        templateVars.discovery.getContractValueOrUndefined<number>(
+          portal.name ?? portal.address,
+          'respectedGameType',
+        )
       // V2 dispute games store the prestate in clone immutable args, so the
       // implementation returns zero. Try the implementation, then the anchored
       // game clone, then the factory's configured game args (gameArgs[1], which
       // it bakes into every permissioned game). The anchor stays empty until a
       // game resolves. Zero / zero-address / empty forms are skipped.
       const prestateCandidates = [
+        respectedGameType === 8 &&
+        templateVars.discovery.hasContract('DisputeGameFactory')
+          ? prestateFromGameArgs(
+              templateVars.discovery.getContractValueOrUndefined<string>(
+                'DisputeGameFactory',
+                'game8Args',
+              ),
+            )
+          : undefined,
         templateVars.discovery.getContractValueOrUndefined<string>(
           'PermissionedDisputeGame',
           'absolutePrestate',
@@ -2678,6 +2707,12 @@ function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
   )
 
   if (respectedGameType === 0) {
+    return 'Permissionless'
+  }
+  // 8 = CANNON_KONA (Upgrade 19 "Karst"): permissionless fault proof running the
+  // kona-client (Rust) program on the Cannon VM instead of op-program. Same trust
+  // model as type 0; the program swap is captured by the absolute prestate.
+  if (respectedGameType === 8) {
     return 'Permissionless'
   }
   if (respectedGameType === 1) {
