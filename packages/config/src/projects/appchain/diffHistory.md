@@ -226,7 +226,7 @@ Generated with discovered.json: 0x992d4f84d241faf2134ce9039c2f15dd480db7e8
 
 ## Description
 
-Caldera Multisig 3 (shared chain-admin Safe upgrading appchain/capx/form/oevnetwork/sxt) rotated out one member and lowered threshold from 4/7 to 3/6.
+Caldera Multisig 3 (shared chain-admin Safe upgrading appchain/capx/form/oevnetwork) rotated out one member and lowered threshold from 4/7 to 3/6.
 
 ## Watched changes
 
