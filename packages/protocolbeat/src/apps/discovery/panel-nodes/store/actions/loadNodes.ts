@@ -1,3 +1,4 @@
+import { unique } from '@l2beat/shared-pure'
 import { stackAutoLayout } from '../../controls/StackLayoutButton'
 import type { Node, State } from '../State'
 import {
@@ -218,10 +219,7 @@ function reconstructGroups(flat: Node[], groups: StoredGroup[]): Node[] {
 }
 
 function makeGroupNode(group: StoredGroup, members: Node[]): Node {
-  const internal = new Set<string>()
-  for (const member of members) {
-    collectIds(member, internal)
-  }
+  const internal = unique(members.flatMap((n) => collectIds(n)))
   return {
     id: group.id,
     address: '',

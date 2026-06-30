@@ -1,3 +1,4 @@
+import { unique } from '@l2beat/shared-pure'
 import type { Field, Node, State } from '../State'
 import { NODE_WIDTH } from '../utils/constants'
 import { updateNodePositions } from '../utils/updateNodePositions'
@@ -54,10 +55,7 @@ export function renameSelectedGroup(
 
 function createPhantomNode(subnodes: Node[]): Node {
   const anchor = subnodes[0]?.box
-  const internal = new Set<string>()
-  for (const node of subnodes) {
-    collectIds(node, internal)
-  }
+  const internal = unique(subnodes.flatMap((n) => collectIds(n)))
   return {
     id: `group:${crypto.randomUUID()}`,
     address: '',
@@ -82,22 +80,19 @@ function createPhantomNode(subnodes: Node[]): Node {
   }
 }
 
-export function collectIds(node: Node, into: Set<string>): void {
-  into.add(node.id)
-  for (const subnode of node.subnodes) {
-    collectIds(subnode, into)
-  }
+export function collectIds(node: Node): string[] {
+  return unique([node.id, ...node.subnodes.flatMap((n) => collectIds(n))])
 }
 
 export function collectOutgoingFields(
   subnodes: Node[],
-  internal: Set<string>,
+  internal: string[],
 ): Field[] {
   const outgoing: Field[] = []
   const seen = new Set<string>()
   for (const node of subnodes) {
     for (const field of node.fields) {
-      if (internal.has(field.target) || seen.has(node.name)) {
+      if (internal.includes(field.target) || seen.has(node.name)) {
         continue
       }
       seen.add(node.name)
