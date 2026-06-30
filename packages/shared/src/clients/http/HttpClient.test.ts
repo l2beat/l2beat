@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 import nock from 'nock'
-import { HttpClient } from './HttpClient'
+import { HttpClient, sanitizeUrl } from './HttpClient'
 
 describe(HttpClient.name, () => {
   describe(HttpClient.prototype.fetch.name, () => {
@@ -30,6 +30,24 @@ describe(HttpClient.name, () => {
       await expect(
         async () => await http.fetch('https://api', { timeout: 2 }),
       ).toBeRejected()
+    })
+  })
+
+  describe(sanitizeUrl.name, () => {
+    it('redacts sensitive query param values', () => {
+      expect(
+        sanitizeUrl('https://api.starkex.com/v1/blocks?key=secret'),
+      ).toEqual('https://api.starkex.com/v1/blocks?key=REDACTED')
+    })
+
+    it('preserves non-sensitive query params', () => {
+      expect(sanitizeUrl('https://api/feed?from=1&to=2&apiKey=secret')).toEqual(
+        'https://api/feed?from=1&to=2&apiKey=REDACTED',
+      )
+    })
+
+    it('returns the input unchanged when it is not a valid url', () => {
+      expect(sanitizeUrl('not a url')).toEqual('not a url')
     })
   })
 })
