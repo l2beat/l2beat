@@ -20,14 +20,14 @@ export function PrivacyAttributeTag({
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <div
+        <span
           className={cn(
             'inline-flex select-none items-center rounded border px-1.5 py-0.5 font-medium text-xs',
             ATTRIBUTE_CLASS_NAMES[attribute.id],
           )}
         >
           {attribute.label}
-        </div>
+        </span>
       </TooltipTrigger>
       <TooltipContent>
         <p>{attribute.description}</p>

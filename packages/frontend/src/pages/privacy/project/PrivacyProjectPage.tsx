@@ -10,6 +10,7 @@ import { projectDetailsToNavigationSections } from '~/components/projects/naviga
 import { ProjectDetails } from '~/components/projects/ProjectDetails'
 import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
+import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
@@ -103,14 +104,18 @@ export function PrivacyProjectPage({ entry, queryState, ...props }: Props) {
                       />
 
                       {entry.attributes.length > 0 && (
-                        <div className="mt-6 flex flex-wrap gap-1 md:mt-4">
-                          {entry.attributes.map((attribute) => (
+                        <ProjectSummaryStat
+                          className="mt-6 md:mt-4"
+                          title="Attributes"
+                          tooltip="Protocol attributes and capabilities."
+                          valueClassName="flex flex-wrap justify-end gap-1 md:justify-start"
+                          value={entry.attributes.map((attribute) => (
                             <PrivacyAttributeTag
                               key={attribute.id}
                               attribute={attribute}
                             />
                           ))}
-                        </div>
+                        />
                       )}
 
                       <HorizontalSeparator className="my-4 max-md:hidden" />
