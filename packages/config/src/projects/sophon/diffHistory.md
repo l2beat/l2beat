@@ -1,3 +1,68 @@
+Generated with discovered.json: 0xec25e2a06f2b63f4b1350d2b0318d609386f8bd1
+
+# Diff at Tue, 30 Jun 2026 10:28:58 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@ddc641881a6870ab0c9e9ee1c517ed9eb73306bc block: 1782464947
+- current timestamp: 1782815274
+
+## Description
+
+Rotated two validators.
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.validatorsVTL.0:
+-        "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA"
++        "eth:0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B"
+      values.validatorsVTL.1:
+-        "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
++        "eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3"
+      values.validatorsVTLFullAC.PRECOMMITTER_ROLE.members.0:
+-        "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA"
++        "eth:0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B"
+      values.validatorsVTLFullAC.PRECOMMITTER_ROLE.members.1:
+-        "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
++        "eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3"
+      values.validatorsVTLFullAC.COMMITTER_ROLE.members.0:
+-        "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA"
++        "eth:0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B"
+      values.validatorsVTLFullAC.COMMITTER_ROLE.members.1:
+-        "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
++        "eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3"
+      values.validatorsVTLFullAC.REVERTER_ROLE.members.0:
+-        "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA"
++        "eth:0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B"
+      values.validatorsVTLFullAC.REVERTER_ROLE.members.1:
+-        "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
++        "eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3"
+      values.validatorsVTLFullAC.PROVER_ROLE.members.0:
+-        "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA"
++        "eth:0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B"
+      values.validatorsVTLFullAC.PROVER_ROLE.members.1:
+-        "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
++        "eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3"
+      values.validatorsVTLFullAC.EXECUTOR_ROLE.members.0:
+-        "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA"
++        "eth:0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B"
+      values.validatorsVTLFullAC.EXECUTOR_ROLE.members.1:
+-        "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
++        "eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3"
+    }
+```
+
+```diff
+    contract SophonZkEvmAdmin (eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1 act through it.
+      values.tokenMultiplierSetter:
+-        "eth:0xe14828E4405239dD331F194F1B7883eeD73bCBF3"
++        "eth:0xB1e2974E81922c1d5923dB4580292fB9954E9E05"
+    }
+```
+
 Generated with discovered.json: 0x23bfe8ee0208749fd2ecb77ad43a0cb78f83a56c
 
 # Diff at Fri, 26 Jun 2026 09:48:20 GMT:
