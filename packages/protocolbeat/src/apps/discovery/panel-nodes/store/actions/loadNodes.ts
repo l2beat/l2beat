@@ -1,4 +1,3 @@
-import { unique } from '@l2beat/shared-pure'
 import { stackAutoLayout } from '../../controls/StackLayoutButton'
 import type { Node, State } from '../State'
 import {
@@ -16,7 +15,7 @@ import {
   type StoredNodeLayout,
 } from '../utils/storage'
 import { updateNodePositions } from '../utils/updateNodePositions'
-import { collectIds, collectOutgoingFields } from './group'
+import { makeGroupNode } from './group'
 import { layout } from './other'
 
 const NEW_NODE_HORIZONTAL_GAP = 120
@@ -216,32 +215,6 @@ function reconstructGroups(flat: Node[], groups: StoredGroup[]): Node[] {
     }
   }
   return result
-}
-
-function makeGroupNode(group: StoredGroup, members: Node[]): Node {
-  const internal = unique(members.flatMap((n) => collectIds(n)))
-  return {
-    id: group.id,
-    address: '',
-    isInitial: false,
-    hasTemplate: false,
-    addressType: 'Group',
-    name: group.name,
-    fields: collectOutgoingFields(members, internal),
-    hiddenFields: [],
-    box: {
-      x: group.box.x,
-      y: group.box.y,
-      width: group.box.width ?? NODE_WIDTH,
-      height: group.box.height ?? NODE_WIDTH,
-    },
-    color: group.color,
-    hueShift: 0,
-    data: null,
-    isReachable: true,
-    opened: group.opened,
-    subnodes: members,
-  }
 }
 
 function placeNewNodes(
