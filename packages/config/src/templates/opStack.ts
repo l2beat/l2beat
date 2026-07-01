@@ -886,8 +886,7 @@ function getStateValidation(
         'maxClockDuration',
       )
 
-      const permissionedDisputeGameBonds =
-        getPermissionedGameBond(templateVars)
+      const permissionedDisputeGameBonds = getPermissionedGameBond(templateVars)
 
       const permissionedGameClockExtension =
         templateVars.discovery.getContractValue<number>(
