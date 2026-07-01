@@ -31,6 +31,20 @@ const OP_SUCCINCT_FDP_RANGE_EIGENDA = (version: string) => ({
   proverSystemProject: ProjectId('sp1hypercube'),
 })
 
+const OP_SUCCINCT_LITE_AGG_BLOBS = {
+  title: 'Aggregation program of OP Succinct Lite',
+  description:
+    'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client in fault dispute proof mode. Data availability layer is set to Ethereum blobs.',
+  proverSystemProject: ProjectId('sp1hypercube'),
+}
+
+const OP_SUCCINCT_LITE_RANGE_BLOBS = {
+  title: 'Range program of OP Succinct Lite',
+  description:
+    'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks in fault dispute proof mode. Data availability layer is set to Ethereum blobs.',
+  proverSystemProject: ProjectId('sp1hypercube'),
+}
+
 const OP_SUCCINCT_AGG_BLOBS = {
   title: 'Aggregation program of OP Succinct',
   description:
@@ -388,6 +402,14 @@ Verify:
     proverSystemProject: ProjectId('sp1hypercube'),
     verificationStatus: 'successful',
     verificationSteps: OP_SUCCINCT_AGGLAYER_V390_STEPS,
+  },
+  '0x00d9be2980d484ba29aaa1e0d27648b8182df8616a4ec85c3c2b528b29d1a085': {
+    ...OP_SUCCINCT_LITE_AGG_BLOBS,
+    verificationStatus: 'notVerified',
+  },
+  '0x464b1e81672b12e60eb509f54a13aaa877abafda1a015a9339285a381e4146fc': {
+    ...OP_SUCCINCT_LITE_RANGE_BLOBS,
+    verificationStatus: 'notVerified',
   },
   '0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30': {
     ...PESSIMISTIC_PROG('0.3.3-post4'),

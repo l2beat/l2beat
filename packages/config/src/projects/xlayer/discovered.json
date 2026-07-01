@@ -1,7 +1,7 @@
 {
   "name": "xlayer",
-  "timestamp": 1775561621,
-  "configHash": "0xefdaab60903515abad8d6db0d90205707848fa036ab885c90dab2e3b9eeb23b5",
+  "timestamp": 1782899543,
+  "configHash": "0x4902b57bdc462d535831ff9d4c332b0e1f2462d73f974e2601790be8d026e52d",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -13,22 +13,14 @@
       "name": "AnchorStateRegistry",
       "address": "eth:0x000590BB65ab1864a7AD46d6B957cC9a4F2C149d",
       "type": "Contract",
-      "template": "opstack/AnchorStateRegistry_post13",
+      "template": "opstack/AnchorStateRegistry_post13_opsuccinct",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
         "0xf808a203af41f7932eb8e39985e56a7c75c940a260fb17d76d1003a3793281b5"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.",
-      "ignoreInWatchMode": [
-        "anchorGame",
-        "getAnchorRoot",
-        "absolutePrestateFromGame",
-        "vmFromGame",
-        "oracleFromVm",
-        "challengePeriodFromOracle",
-        "wethFromGame"
-      ],
+      "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the OPSuccinctFaultDisputeGame. Variant for chains using OPSuccinct (SP1) games instead of Cannon, which omits Cannon-specific cross-contract fields (vm, oracle, weth, challengePeriod, absolutePrestate from game).",
+      "ignoreInWatchMode": ["anchorGame", "getAnchorRoot"],
       "deployerAddress": "eth:0xAd9bCE315bF77C0Ade22097199953381C6Cc72eE",
       "sinceTimestamp": 1761567143,
       "sinceBlock": 23668700,
@@ -43,30 +35,31 @@
           ]
         ],
         "$upgradeCount": 1,
-        "absolutePrestateFromGame": "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c",
-        "anchorGame": "eth:0xEd638a50619BEe1113E72825fE6c267D01D014f8",
-        "challengePeriodFromOracle": 86400,
+        "anchorGame": "eth:0x09bCE41392DBdf40bFd28CFaA1de74cF53e3676e",
         "disputeGameFactory": "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675",
         "disputeGameFinalityDelaySeconds": 302400,
+        "disputeGameFinalityDelaySeconds_fmt": "3d 12h",
         "getAnchorRoot": [
-          "0x21850e89480bf77d0712d9accc5775617ba7aab0e9ba710af7953db706e39396",
-          56183858
+          "0x59ca44f695f781029f7d62708f5680ffe7ffa28c427ba21680cc33f7a7ad7d48",
+          63520645
         ],
         "initVersion": 1,
-        "oracleFromVm": "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3",
         "paused": false,
         "proxyAdmin": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6",
         "proxyAdminOwner": "eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A",
-        "RespectedGameString": "PermissionedDisputeGame",
-        "respectedGameType": 1,
+        "RespectedGameString": "OPSuccinctFaultDisputeGame",
+        "respectedGameType": 42,
         "retirementTimestamp": 1761567143,
         "superchainConfig": "eth:0x6a95D7aaC3d41761426761Af031C5034B7b347d4",
         "systemConfig": "eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433",
-        "version": "3.5.0",
-        "vmFromGame": "eth:0x305D1C0EED9a0291686f3BfDf1F5E54aaeeF80e4",
-        "wethFromGame": "eth:0x1B8A252A71bC8997d3871aF420895B5845212fC6"
+        "version": "3.5.0"
       },
-      "fieldMeta": { "respectedGameType": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "respectedGameType": { "severity": "HIGH" },
+        "disputeGameFinalityDelaySeconds_fmt": {
+          "description": "Formatted delay after which an unchallenged resolved dispute game can be used for withdrawals."
+        }
+      },
       "implementationNames": {
         "eth:0x000590BB65ab1864a7AD46d6B957cC9a4F2C149d": "Proxy",
         "eth:0xeb69cC681E8D4a557b30DFFBAd85aFfD47a2CF2E": "AnchorStateRegistry"
@@ -77,6 +70,7 @@
           "arg": {
             "0": "FaultDisputeGame",
             "1": "PermissionedDisputeGame",
+            "42": "OPSuccinctFaultDisputeGame",
             "1337": "KailuaGame"
           }
         }
@@ -139,7 +133,7 @@
         "proxyAdminOwner": "eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A",
         "symbol": "WETH",
         "systemConfig": "eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433",
-        "totalSupply": 3830000000000,
+        "totalSupply": 3800000000000,
         "version": "1.5.0"
       },
       "implementationNames": {
@@ -392,6 +386,71 @@
       }
     },
     {
+      "name": "SP1VerifierGateway",
+      "address": "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B",
+      "type": "Contract",
+      "template": "succinct/SP1VerifierGateway",
+      "sourceHashes": [
+        "0xf67f0dc1760fe9589909a16bfef47f76d6dfa71427e034d759a3d8da88a42645"
+      ],
+      "proxyType": "immutable",
+      "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
+      "deployerAddress": "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
+      "sinceTimestamp": 1730486951,
+      "sinceBlock": 21094694,
+      "values": {
+        "$immutable": true,
+        "activeVerifiers": [
+          {
+            "selector": "0xa4594c59",
+            "verifier": "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5"
+          },
+          {
+            "selector": "0x0e78f4db",
+            "verifier": "eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508"
+          },
+          {
+            "selector": "0x4388a21c",
+            "verifier": "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2"
+          }
+        ],
+        "allVerifiers": [
+          {
+            "selector": "0x09069090",
+            "verifier": "eth:0xE780809121774D06aD9B0EEeC620fF4B3913Ced1"
+          },
+          {
+            "selector": "0x11b6a09d",
+            "verifier": "eth:0xa27A057CAb1a4798c6242F6eE5b2416B7Cd45E5D"
+          },
+          {
+            "selector": "0xa4594c59",
+            "verifier": "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5"
+          },
+          {
+            "selector": "0x0e78f4db",
+            "verifier": "eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508"
+          },
+          {
+            "selector": "0x4388a21c",
+            "verifier": "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2"
+          }
+        ],
+        "owner": "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878"
+      },
+      "fieldMeta": {
+        "activeVerifiers": {
+          "description": "Verifiers that are routed to by their selector and not frozen."
+        },
+        "allVerifiers": {
+          "description": "All verifiers that were ever routed to by this gateway."
+        }
+      },
+      "implementationNames": {
+        "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B": "SP1VerifierGateway"
+      }
+    },
+    {
       "address": "eth:0x491619874b866c3cDB7C8553877da223525ead01",
       "type": "EOA",
       "proxyType": "EOA",
@@ -524,6 +583,28 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "name": "SP1Verifier",
+      "address": "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5",
+      "type": "Contract",
+      "template": "succinct/SP1Verifier",
+      "sourceHashes": [
+        "0x3430123e1fec5a2451a38fcf0a62fdd0cc482b69740ab632ef580e1a44122702"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v5.0.0).",
+      "deployerAddress": "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
+      "sinceTimestamp": 1748550083,
+      "sinceBlock": 22590749,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0xa4594c59bbc142f3b81c3ecb7f50a7c34bc9af7c4c444b5d48b795427e285913",
+        "VERSION": "v5.0.0"
+      },
+      "implementationNames": {
+        "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5": "SP1Verifier"
+      }
+    },
+    {
       "name": "AgglayerManager",
       "address": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
       "type": "Reference",
@@ -594,7 +675,7 @@
         "0x7a3a71a263141fd4ab04a1a330dad2499759fa4b7ecdb90da0612d46e94121f6"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Central message and gas token (dOKB) bridge of the OP stack part of this deployment. It allows for permissioned state proposals without public challenges, and forced transactions.",
+      "description": "Central message and gas token (dOKB) bridge of the OP stack part of this deployment. It finalizes withdrawals against the currently respected OP Succinct Lite dispute game and allows forced transactions.",
       "ignoreInWatchMode": ["params", "balance"],
       "deployerAddress": "eth:0xAd9bCE315bF77C0Ade22097199953381C6Cc72eE",
       "sinceTimestamp": 1761567143,
@@ -620,14 +701,14 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 463628,
-          "prevBlockNum": 24822534
+          "prevBlockNum": 25432622
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
         "proxyAdmin": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6",
         "proxyAdminOwner": "eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A",
-        "RespectedGameString": "PermissionedDisputeGame",
-        "respectedGameType": 1,
+        "RespectedGameString": "OPSuccinctFaultDisputeGame",
+        "respectedGameType": 42,
         "respectedGameTypeUpdatedAt": 1761567143,
         "superchainConfig": "eth:0x6a95D7aaC3d41761426761Af031C5034B7b347d4",
         "systemConfig": "eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433",
@@ -650,6 +731,7 @@
           "arg": {
             "0": "FaultDisputeGame",
             "1": "PermissionedDisputeGame",
+            "42": "OPSuccinctFaultDisputeGame",
             "621": "AggregateVerifier",
             "1337": "KailuaGame"
           }
@@ -711,14 +793,31 @@
           "from": "eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
           "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98BA64d8c8Dd33bD75F2154214BFd849d0D5c17B",
+          "description": "Allowed to add or remove proposers and challengers, and transfer ownership of the AccessManager.",
+          "role": ".owner"
         }
       ]
+    },
+    {
+      "address": "eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x736E68Af2CbF2aB0E46E4310fE5Ae568b3642FF6",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98BA64d8c8Dd33bD75F2154214BFd849d0D5c17B",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        },
         {
           "permission": "interact",
           "from": "eth:0xEeDa796a23bc98726e47934ca9B54fDDa5a608e8",
@@ -770,6 +869,89 @@
       }
     },
     {
+      "name": "OPSuccinctFaultDisputeGame",
+      "address": "eth:0x8841FA06099FEdfE7DB6962926C6A281e9E1e607",
+      "type": "Contract",
+      "template": "succinct/OPSuccinct/OPSuccinctFaultDisputeGame",
+      "sourceHashes": [
+        "0xe05c41d31c126227270b4375799c11a4c815d2cf220a37a3879dea11b4402e98"
+      ],
+      "proxyType": "immutable",
+      "description": "Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.",
+      "deployerAddress": "eth:0x8d7c41aa990234b2d7E064Df150A4228ed984648",
+      "sinceTimestamp": 1782788543,
+      "sinceBlock": 25427677,
+      "values": {
+        "$immutable": true,
+        "accessManager": "eth:0x98BA64d8c8Dd33bD75F2154214BFd849d0D5c17B",
+        "aggregationVkey": "0x00d9be2980d484ba29aaa1e0d27648b8182df8616a4ec85c3c2b528b29d1a085",
+        "anchorStateRegistry": "eth:0x000590BB65ab1864a7AD46d6B957cC9a4F2C149d",
+        "bondDistributionMode": 0,
+        "challengerBond": 10000000000,
+        "claimData": {
+          "parentIndex": 0,
+          "counteredBy": "eth:0x0000000000000000000000000000000000000000",
+          "prover": "eth:0x0000000000000000000000000000000000000000",
+          "claim": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "status": 0,
+          "deadline": 0
+        },
+        "createdAt": 0,
+        "disputeGameFactory": "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675",
+        "extraData": "0x000000000000000000000000000000000000000000000000000000000000000000000000",
+        "gameCreator": "eth:0x0000000000000000000000000000000000000000",
+        "gameData": {
+          "gameType_": 42,
+          "rootClaim_": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extraData_": "0x000000000000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "gameOver": true,
+        "gameType": 42,
+        "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "l2BlockNumber": 0,
+        "l2SequenceNumber": 0,
+        "maxChallengeDuration": 3600,
+        "maxChallengeDuration_fmt": "1h",
+        "maxProveDuration": 604800,
+        "maxProveDuration_fmt": "7d",
+        "parentIndex": 0,
+        "rangeVkeyCommitment": "0x464b1e81672b12e60eb509f54a13aaa877abafda1a015a9339285a381e4146fc",
+        "resolvedAt": 0,
+        "rollupConfigHash": "0xb9b8bfe748081bb1b75ba4fddd630fa05b9300e9d367188dc1bcb1c4ad93db07",
+        "rootClaim": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "SP1_VERIFIER": "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B",
+        "sp1Verifier": "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B",
+        "startingBlockNumber": 0,
+        "startingOutputRoot": {
+          "root": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "l2SequenceNumber": 0
+        },
+        "startingRootHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "status": 0,
+        "version": "2.0.0",
+        "wasRespectedGameTypeWhenCreated": false
+      },
+      "fieldMeta": {
+        "maxChallengeDuration_fmt": {
+          "description": "Formatted maximum time after game creation during which a game can be challenged."
+        },
+        "maxProveDuration_fmt": {
+          "description": "Formatted maximum time after a challenge during which the proposal can be proven."
+        },
+        "SP1_VERIFIER": {
+          "description": "The SP1 verifier contract used to verify ZK proofs. Set in constructor."
+        }
+      },
+      "implementationNames": {
+        "eth:0x8841FA06099FEdfE7DB6962926C6A281e9E1e607": "OPSuccinctFaultDisputeGame"
+      }
+    },
+    {
+      "address": "eth:0x9395e83720bf2D8ac6435f9c520b48E289Cb8885",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x98245d0ADF4595C66F0a9Db8E13c44CBFF6be459",
       "type": "EOA",
       "proxyType": "EOA",
@@ -781,6 +963,76 @@
           "role": ".batcherHash"
         }
       ]
+    },
+    {
+      "name": "AccessManager",
+      "address": "eth:0x98BA64d8c8Dd33bD75F2154214BFd849d0D5c17B",
+      "type": "Contract",
+      "template": "succinct/OPSuccinct/AccessManager",
+      "sourceHashes": [
+        "0xe25d5d620d35e0b1752ae46bac31441e95a1fa6fe94fd740a0584c94d704c591"
+      ],
+      "proxyType": "immutable",
+      "description": "Contract managing access control for proposers and challengers in OPSuccinct.",
+      "ignoreInWatchMode": ["getLastProposalTimestamp"],
+      "deployerAddress": "eth:0x8d7c41aa990234b2d7E064Df150A4228ed984648",
+      "sinceTimestamp": 1782788459,
+      "sinceBlock": 25427670,
+      "values": {
+        "$immutable": true,
+        "challengers": ["eth:0x736E68Af2CbF2aB0E46E4310fE5Ae568b3642FF6"],
+        "DEPLOYMENT_TIMESTAMP": 1782788459,
+        "DISPUTE_GAME_FACTORY": "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675",
+        "FALLBACK_TIMEOUT": 31536000000,
+        "FALLBACK_TIMEOUT_fmt": "1000y",
+        "getLastProposalTimestamp": 1782899507,
+        "isProposalPermissionlessMode": false,
+        "owner": "eth:0x6eE7BDa7AF04F61ccf93aB4b8DB2289aBe76C6aA",
+        "proposers": ["eth:0xE43944421681170648E10007f73816e04F74394F"]
+      },
+      "fieldMeta": {
+        "FALLBACK_TIMEOUT_fmt": {
+          "description": "Formatted fallback timeout after which proposing becomes permissionless."
+        },
+        "owner": {
+          "severity": "HIGH",
+          "description": "Address that can update the proposer and challenger allowlists and transfer ownership."
+        },
+        "challengers": {
+          "severity": "HIGH",
+          "description": "Addresses allowed to challenge dispute games."
+        },
+        "proposers": {
+          "severity": "HIGH",
+          "description": "Addresses allowed to propose dispute games."
+        }
+      },
+      "implementationNames": {
+        "eth:0x98BA64d8c8Dd33bD75F2154214BFd849d0D5c17B": "AccessManager"
+      }
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508",
+      "type": "Contract",
+      "template": "succinct/SP1Verifier",
+      "sourceHashes": [
+        "0x42f46686613948c377586d511d315e6d67b9fd747a18225cce7c4cf32d14c7be"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v6.0.0).",
+      "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
+      "sinceTimestamp": 1771375907,
+      "sinceBlock": 24480252,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0x0e78f4db7a6771a3a6a7d9c3b0de6fe73d58781368967a7fe84d87aefffec896",
+        "VERSION": "v6.0.0",
+        "VK_ROOT": "0x008cd56e10c2fe24795cff1e1d1f40d3a324528d315674da45d26afb376e8670"
+      },
+      "implementationNames": {
+        "eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508": "SP1Verifier"
+      }
     },
     {
       "name": "DisputeGameFactory",
@@ -815,8 +1067,8 @@
         "challengerFromDGF": "UNRESOLVED",
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
-        "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 3854,
+        "game42": "eth:0x8841FA06099FEdfE7DB6962926C6A281e9E1e607",
+        "gameCount": 7332,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xEeDa796a23bc98726e47934ca9B54fDDa5a608e8",
@@ -826,12 +1078,12 @@
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000"
         ],
-        "initBondGame42": 0,
+        "initBondGame42": 10000000000,
         "initBonds": [0, 10000000000, 0, 0, 0],
         "initVersion": 1,
         "owner": "eth:0xe58C365Da30c746204022e61482bBE828cAA9091",
         "permissionedGameArgs": "0x",
-        "permissionedGamesTotal": 3854,
+        "permissionedGamesTotal": 5882,
         "proposerFromDGF": "UNRESOLVED",
         "proxyAdmin": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6",
         "proxyAdminOwner": "eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A",
@@ -904,6 +1156,34 @@
         "eth:0xAecF995ABf9E7eDE7ae0CE65E60622C9eD84823a": "L1ChugSplashProxy",
         "eth:0x2978527d5D1372C32fEdC182FDE7559c0471d051": "L1StandardBridge"
       }
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2",
+      "type": "Contract",
+      "template": "succinct/SP1Verifier",
+      "sourceHashes": [
+        "0xaed0a260d9c0355e7e6fcf19f18136f914582d20027b440b0c04b762e521b2d6"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v6.1.0).",
+      "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
+      "sinceTimestamp": 1776172379,
+      "sinceBlock": 24878255,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0x4388a21c687fdd5f218d7e3d13190cac4c5355818d3605fd5fb811df468ee696",
+        "VERSION": "v6.1.0",
+        "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
+      },
+      "implementationNames": {
+        "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2": "SP1Verifier"
+      }
+    },
+    {
+      "address": "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Xlayer Multisig",
@@ -1023,7 +1303,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 1,
+        "nonce": 2,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1061,6 +1341,49 @@
       }
     },
     {
+      "name": "SP1VerifierGatewayMultisig",
+      "address": "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B",
+          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
+          "role": ".owner"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
+      "sinceTimestamp": 1724204135,
+      "sinceBlock": 20573748,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
+          "eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
+          "eth:0x9395e83720bf2D8ac6435f9c520b48E289Cb8885"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x9ce9716cc3ee4040796acdd48cea971343ff05b11468ce9e8d815c2ce3fc8b9e",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 14,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
       "address": "eth:0xD3C6821DE67A5c0345EC5A41e4C83739f7043972",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1070,6 +1393,12 @@
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98BA64d8c8Dd33bD75F2154214BFd849d0D5c17B",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
+          "role": ".proposers"
+        },
         {
           "permission": "interact",
           "from": "eth:0xEeDa796a23bc98726e47934ca9B54fDDa5a608e8",
@@ -1263,7 +1592,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619921",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620012",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1665,6 +1994,25 @@
       "function withdraw(address _guy, uint256 _wad)",
       "function withdrawals(address, address) view returns (uint256 amount, uint256 timestamp)"
     ],
+    "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error RouteAlreadyExists(address verifier)",
+      "error RouteIsFrozen(bytes4 selector)",
+      "error RouteNotFound(bytes4 selector)",
+      "error SelectorCannotBeZero()",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RouteAdded(bytes4 selector, address verifier)",
+      "event RouteFrozen(bytes4 selector, address verifier)",
+      "function addRoute(address verifier)",
+      "function freezeRoute(bytes4 selector)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function routes(bytes4) view returns (address verifier, bool frozen)",
+      "function transferOwnership(address newOwner)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
     "eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1674,6 +2022,19 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5": [
+      "error InvalidProof()",
+      "error ProofInvalid()",
+      "error PublicInputNotInField()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function Verify(uint256[8] proof, uint256[2] input) view",
+      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyCompressedProof(uint256[4] compressedProof, uint256[2] input) view",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "eth:0x62e1Aaeba9A8AA4654980653dB4B21FC82C61c15": [
       "constructor(address _admin)",
@@ -1754,6 +2115,68 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
+    "eth:0x8841FA06099FEdfE7DB6962926C6A281e9E1e607": [
+      "constructor(uint64 _maxChallengeDuration, uint64 _maxProveDuration, address _disputeGameFactory, address _sp1Verifier, bytes32 _rollupConfigHash, bytes32 _aggregationVkey, bytes32 _rangeVkeyCommitment, uint256 _challengerBond, address _anchorStateRegistry, address _accessManager)",
+      "error AlreadyInitialized()",
+      "error BadAuth()",
+      "error BondTransferFailed()",
+      "error ClaimAlreadyChallenged()",
+      "error ClaimAlreadyResolved()",
+      "error GameNotFinalized()",
+      "error GameNotOver()",
+      "error GameOver()",
+      "error IncorrectBondAmount()",
+      "error IncorrectDisputeGameFactory()",
+      "error InvalidBondDistributionMode()",
+      "error InvalidParentGame()",
+      "error InvalidProposalStatus()",
+      "error NoCreditToClaim()",
+      "error ParentGameNotResolved()",
+      "error UnexpectedRootClaim(bytes32 rootClaim)",
+      "event Challenged(address indexed challenger)",
+      "event GameClosed(uint8 bondDistributionMode)",
+      "event Proved(address indexed prover)",
+      "event Resolved(uint8 indexed status)",
+      "function accessManager() view returns (address accessManager_)",
+      "function aggregationVkey() view returns (bytes32 aggregationVkey_)",
+      "function anchorStateRegistry() view returns (address registry_)",
+      "function bondDistributionMode() view returns (uint8)",
+      "function challenge() payable returns (uint8)",
+      "function challengerBond() view returns (uint256 challengerBond_)",
+      "function claimCredit(address _recipient)",
+      "function claimData() view returns (uint32 parentIndex, address counteredBy, address prover, bytes32 claim, uint8 status, uint64 deadline)",
+      "function closeGame()",
+      "function createdAt() view returns (uint64)",
+      "function credit(address _recipient) view returns (uint256 credit_)",
+      "function disputeGameFactory() view returns (address disputeGameFactory_)",
+      "function extraData() pure returns (bytes extraData_)",
+      "function gameCreator() pure returns (address creator_)",
+      "function gameData() view returns (uint32 gameType_, bytes32 rootClaim_, bytes extraData_)",
+      "function gameOver() view returns (bool gameOver_)",
+      "function gameType() view returns (uint32 gameType_)",
+      "function initialize() payable",
+      "function l1Head() pure returns (bytes32 l1Head_)",
+      "function l2BlockNumber() pure returns (uint256 l2BlockNumber_)",
+      "function l2SequenceNumber() pure returns (uint256 l2SequenceNumber_)",
+      "function maxChallengeDuration() view returns (uint64 maxChallengeDuration_)",
+      "function maxProveDuration() view returns (uint64 maxProveDuration_)",
+      "function normalModeCredit(address) view returns (uint256)",
+      "function parentIndex() pure returns (uint32 parentIndex_)",
+      "function prove(bytes proofBytes) returns (uint8)",
+      "function rangeVkeyCommitment() view returns (bytes32 rangeVkeyCommitment_)",
+      "function refundModeCredit(address) view returns (uint256)",
+      "function resolve() returns (uint8)",
+      "function resolvedAt() view returns (uint64)",
+      "function rollupConfigHash() view returns (bytes32 rollupConfigHash_)",
+      "function rootClaim() pure returns (bytes32 rootClaim_)",
+      "function sp1Verifier() view returns (address verifier_)",
+      "function startingBlockNumber() view returns (uint256 startingBlockNumber_)",
+      "function startingOutputRoot() view returns (bytes32 root, uint256 l2SequenceNumber)",
+      "function startingRootHash() view returns (bytes32 startingRootHash_)",
+      "function status() view returns (uint8)",
+      "function version() view returns (string)",
+      "function wasRespectedGameTypeWhenCreated() view returns (bool)"
+    ],
     "eth:0x8ee6fB13c6c9a7e401531168E196Fbf8b05cEabB": [
       "constructor()",
       "event Initialized(uint8 version)",
@@ -1767,6 +2190,42 @@
       "function deployments(address) view returns (address)",
       "function initialize(address _bridge)",
       "function version() view returns (string)"
+    ],
+    "eth:0x98BA64d8c8Dd33bD75F2154214BFd849d0D5c17B": [
+      "constructor(uint256 _fallbackTimeout, address _disputeGameFactory)",
+      "event ChallengerPermissionUpdated(address indexed challenger, bool allowed)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ProposerPermissionUpdated(address indexed proposer, bool allowed)",
+      "function DEPLOYMENT_TIMESTAMP() view returns (uint256)",
+      "function DISPUTE_GAME_FACTORY() view returns (address)",
+      "function FALLBACK_TIMEOUT() view returns (uint256)",
+      "function challengers(address) view returns (bool)",
+      "function getLastProposalTimestamp() view returns (uint256)",
+      "function isAllowedChallenger(address _challenger) view returns (bool allowed_)",
+      "function isAllowedProposer(address _proposer) view returns (bool allowed_)",
+      "function isProposalPermissionlessMode() view returns (bool)",
+      "function owner() view returns (address)",
+      "function proposers(address) view returns (bool)",
+      "function renounceOwnership()",
+      "function setChallenger(address _challenger, bool _allowed)",
+      "function setProposer(address _proposer, bool _allowed)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508": [
+      "error InvalidExitCode()",
+      "error InvalidProof()",
+      "error InvalidVkRoot()",
+      "error ProofInvalid()",
+      "error PublicInputNotInField()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function VK_ROOT() pure returns (bytes32)",
+      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyCompressedProof(uint256[4] compressedProof, uint256[5] input) view",
+      "function verifyProof(uint256[8] proof, uint256[5] input) view",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675": [
       "constructor(address _admin)",
@@ -1904,6 +2363,22 @@
       "function version() view returns (string)",
       "function xDomainMessageSender() view returns (address)"
     ],
+    "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2": [
+      "error InvalidExitCode()",
+      "error InvalidProof()",
+      "error InvalidVkRoot()",
+      "error ProofInvalid()",
+      "error PublicInputNotInField()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function VK_ROOT() pure returns (bytes32)",
+      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyCompressedProof(uint256[4] compressedProof, uint256[5] input) view",
+      "function verifyProof(uint256[8] proof, uint256[5] input) view",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
     "eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A": [
       "constructor(address _singleton)"
     ],
@@ -1927,6 +2402,9 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address _proxy, address _implementation)",
       "function upgradeAndCall(address _proxy, address _implementation, bytes _data) payable"
+    ],
+    "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": [
+      "constructor(address _singleton)"
     ],
     "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
@@ -2282,7 +2760,7 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/AnchorStateRegistry_post13": "0x9888be337c8cfb54afe2910a16e6546f0c5a7d8feed51cca35875140b4e4da1f",
+    "opstack/AnchorStateRegistry_post13_opsuccinct": "0x4b5c1474b93eb86be962d34b95901ef506f1c0d486b52166ceb53cbaeb8a7a68",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
     "opstack/DisputeGameFactory": "0x46746381be2da0435ab1c70360c00f35d9759a505c3f99905e07476b72e8b79c",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
@@ -2295,8 +2773,12 @@
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigNoGuard": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
-    "polygon-cdk/AggchainECDSAMultisig": "0x82ecfee4035ce80ca61e973569ea98f7de96585fc446962ce126778d59492772"
+    "polygon-cdk/AggchainECDSAMultisig": "0x82ecfee4035ce80ca61e973569ea98f7de96585fc446962ce126778d59492772",
+    "succinct/OPSuccinct/AccessManager": "0x4dfa9533d437cf2efb76347ce42e28eaa3a388c509f141d483bf9c9ab7c799b0",
+    "succinct/OPSuccinct/OPSuccinctFaultDisputeGame": "0x941ed16f5158ec2fcfd64540f5eff08a11a298d3514f88b190f9902846dbf225",
+    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 24827537 },
-  "permissionsConfigHash": "0x5557653ea24c03b7ed02291cbb3662bbf27d258d687f74db1d68541a762b0ce0"
+  "usedBlockNumbers": { "ethereum": 25436890 },
+  "permissionsConfigHash": "0xb2b1da0a6f0aca97a8a7b307e68578df2b66e95bfc7d65a128e94af8cbd86650"
 }

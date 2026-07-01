@@ -47,6 +47,7 @@ import type {
   ProjectReviewStatus,
   ProjectRisk,
   ProjectScalingCapability,
+  ProjectScalingContractsProgramHash,
   ProjectScalingProofSystem,
   ProjectScalingPurpose,
   ProjectScalingScopeOfAssessment,
@@ -95,11 +96,14 @@ interface AgglayerBaseConfig {
   chainConfig?: ChainConfig
   stateDerivation?: ProjectScalingStateDerivation
   nonTemplateProofSystem?: ProjectScalingProofSystem
+  nonTemplateRiskView?: Partial<ScalingProject['riskView']>
   nonTemplatePermissions?: Record<string, ProjectPermissions>
   nonTemplateContracts?: ProjectContract[]
   nonTemplateEscrows: ProjectEscrow[]
   nonTemplateTechnology?: Partial<ProjectScalingTechnology>
   nonTemplateTrackedTxs?: Layer2TxConfig[]
+  nonTemplateProgramHashes?: ProjectScalingContractsProgramHash[]
+  nonTemplateZkVerifiers?: ChainSpecificAddress[]
   milestones: Milestone[]
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   stage?: ProjectScalingStage
@@ -270,7 +274,7 @@ export function agglayer(templateInput: AgglayerConfigInput): ScalingProject {
         ...(config.additionalPurposes ?? []),
       ],
       architectureImage: variantSections.architectureImage,
-      stacks: ['Agglayer CDK'],
+      stacks: config.display.stacks ?? ['Agglayer CDK'],
       tvsWarning: config.display.tvsWarning,
     },
     proofSystem: variantSections.proofSystem,
@@ -302,7 +306,10 @@ export function agglayer(templateInput: AgglayerConfigInput): ScalingProject {
       ...(variantSections.programHashes?.length
         ? { programHashes: variantSections.programHashes }
         : {}),
-      zkVerifiers: getAgglayerVerifiers(config.discovery),
+      zkVerifiers: getZkVerifiers(
+        config.discovery,
+        config.nonTemplateZkVerifiers,
+      ),
     },
     upgradesAndGovernance,
     milestones: config.milestones,
@@ -452,6 +459,10 @@ function buildValidiumSections(
     sequencerFailure: SEQUENCER_NO_MECHANISM(context.isForcedBatchDisallowed),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   }
+  const finalRiskView = applyRiskViewOverrides(
+    riskView,
+    config.nonTemplateRiskView,
+  )
 
   const technology: ProjectScalingTechnology = {
     dataAvailability: config.nonTemplateTechnology?.dataAvailability,
@@ -541,7 +552,7 @@ function buildValidiumSections(
 
   return {
     dataAvailability,
-    riskView,
+    riskView: finalRiskView,
     technology,
     stateDerivation,
     stateValidation,
@@ -570,11 +581,21 @@ function buildPessimisticRiskView(
   }
 }
 
+function applyRiskViewOverrides(
+  riskView: ScalingProject['riskView'],
+  overrides: Partial<ScalingProject['riskView']> | undefined,
+): ScalingProject['riskView'] {
+  return overrides ? { ...riskView, ...overrides } : riskView
+}
+
 function buildPessimisticSections(
   config: AgglayerCdkErigonSovereignConfig,
   context: SharedContext,
 ): VariantSections {
-  const riskView = buildPessimisticRiskView(context)
+  const riskView = applyRiskViewOverrides(
+    buildPessimisticRiskView(context),
+    config.nonTemplateRiskView,
+  )
 
   const dataAvailability = {
     layer: DA_LAYERS.NONE,
@@ -607,6 +628,10 @@ function buildPessimisticSections(
   const zkProgramHashes = getPessimisticVKeys(config.discovery).map((el) =>
     PROGRAM_HASHES(el),
   )
+  const programHashes = [
+    ...zkProgramHashes,
+    ...(config.nonTemplateProgramHashes ?? []),
+  ]
 
   const badges = mergeBadges(
     [BADGES.DA.CustomDA],
@@ -628,7 +653,7 @@ function buildPessimisticSections(
       REASON_FOR_BEING_OTHER.NO_PROOFS,
       ...(config.reasonsForBeingOther ?? []),
     ],
-    programHashes: zkProgramHashes,
+    programHashes,
     architectureImage: config.architectureImage ?? 'agglayer-pessimistic',
   }
 }
@@ -638,18 +663,23 @@ function buildOpstackClosedSections(
   context: SharedContext,
 ): VariantSections {
   const baseRiskView = buildPessimisticRiskView(context)
-  const riskView = {
-    ...baseRiskView,
-    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    sequencerFailure: config.discovery.hasContract('OptimismPortal2_neutered')
-      ? RISK_VIEW.SEQUENCER_NO_MECHANISM(true)
-      : {
-          ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
-            HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
-          ),
-          secondLine: formatDelay(HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS),
-        },
-  }
+  const riskView = applyRiskViewOverrides(
+    {
+      ...baseRiskView,
+      dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+      sequencerFailure: config.discovery.hasContract('OptimismPortal2_neutered')
+        ? RISK_VIEW.SEQUENCER_NO_MECHANISM(true)
+        : {
+            ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
+              HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
+            ),
+            secondLine: formatDelay(
+              HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
+            ),
+          },
+    },
+    config.nonTemplateRiskView,
+  )
 
   const usesBlobs = config.usesEthereumBlobs ?? false
   const dataAvailability = {
@@ -685,6 +715,10 @@ function buildOpstackClosedSections(
   const zkProgramHashes = getPessimisticVKeys(config.discovery).map((el) =>
     PROGRAM_HASHES(el),
   )
+  const programHashes = [
+    ...zkProgramHashes,
+    ...(config.nonTemplateProgramHashes ?? []),
+  ]
 
   const badges = mergeBadges(
     [
@@ -705,11 +739,10 @@ function buildOpstackClosedSections(
     contractsRisks,
     customDa: config.customDa,
     badges,
-    reasonsForBeingOther: [
+    reasonsForBeingOther: config.reasonsForBeingOther ?? [
       REASON_FOR_BEING_OTHER.NO_PROOFS,
-      ...(config.reasonsForBeingOther ?? []),
     ],
-    programHashes: zkProgramHashes,
+    programHashes,
     architectureImage: config.architectureImage ?? 'agglayer-opstack_closed',
   }
 }
@@ -901,5 +934,17 @@ export function getAgglayerVerifiers(
       }
     }
   }
+  return Array.from(uniqueVerifierAddresses)
+}
+
+function getZkVerifiers(
+  discovery: ProjectDiscovery,
+  nonTemplateZkVerifiers: ChainSpecificAddress[] | undefined,
+): ChainSpecificAddress[] {
+  const uniqueVerifierAddresses = new Set<ChainSpecificAddress>([
+    ...getAgglayerVerifiers(discovery),
+    ...(nonTemplateZkVerifiers ?? []),
+  ])
+
   return Array.from(uniqueVerifierAddresses)
 }
