@@ -168,6 +168,14 @@ export const INTEROP_CHAINS: InteropChain[] = [
     explorerUrl: 'https://lineascan.build',
   },
   {
+    id: 'xlayer',
+    name: 'X Layer',
+    type: 'evm',
+    display: 'XLAYER',
+    color: '#000000',
+    explorerUrl: 'https://web3.okx.com/explorer/x-layer/evm',
+  },
+  {
     id: 'avalanche',
     name: 'Avalanche',
     type: 'evm',
@@ -235,6 +243,7 @@ export const INTEROP_CHAINS: InteropChain[] = [
 
 export const INTEROP_ONE_SIDED_CHAINS = [
   'solana',
+  'xlayer',
   'plasma',
   'tron',
   'hyperliquid',
