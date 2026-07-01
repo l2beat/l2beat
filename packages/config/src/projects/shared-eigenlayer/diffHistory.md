@@ -1,3 +1,124 @@
+Generated with discovered.json: 0x4c6a4c0798edf7d145f7e184527f2963864efc78
+
+# Diff at Tue, 30 Jun 2026 10:46:49 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1780575163
+- current timestamp: 1782816336
+
+## Description
+
+EigenLayer core upgraded to v1.13.0, adding a slash-resolution delay to the slashing burn/redistribution flow and blocking DurationVault strategy creation for EIGEN/bEIGEN.
+
+StrategyManager: New `SLASH_RESOLUTION_DELAY_BLOCKS = 50400` (~7 days): slashed shares can no longer be burned or sent to the redistribution recipient until the delay elapses after a slash is recorded. Adds `getSlashResolutionBlock()`, the `SlashResolutionBlockSet` event, and a new `PAUSED_BURNING_AND_REDISTRIBUTION` pause flag for clearing burn/redistribution shares. Diff: https://disco.l2beat.com/diff/eth:0x88582996b70FDd7C4f16e3Fde7B53858FcE0d394/eth:0xa7536C85898dC424c6BFe8592F983661f830656A
+
+StrategyFactory: Now exposes `EIGEN()`/`bEIGEN()` getters and prohibits creating DurationVault strategies for EIGEN/bEIGEN instead of checking the blacklist for DurationVault creation. The regular `deployNewStrategy` blacklist check remains. Diff: https://disco.l2beat.com/diff/eth:0x315BCD0f31EF8b1124382f3acab3913f791C09E7/eth:0xbbc4124C74C567396181fBfbaE746b80619D2b76
+
+DurationVaultStrategy beacon implementation removes the deposit-time `strategyFactory.isBlacklisted(underlyingToken)` check, relying on StrategyFactory to block prohibited DurationVault creation. Diff: https://disco.l2beat.com/diff/eth:0xC355123d0a51b4B5185aA7f21150904CEE3EAC97/eth:0xc946787cFd6c155886C673BF9815C841c1718903
+
+ProtocolRegistry: version 1.12.0 → 1.13.0.
+
+## Watched changes
+
+```diff
+    contract UpgradeableBeacon (eth:0x0fCE0A591D96BB76883323eF555867111E2050a9) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0xc946787cFd6c155886C673BF9815C841c1718903. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      description:
+-        "A beacon with an upgradeable implementation currently set as eth:0xC355123d0a51b4B5185aA7f21150904CEE3EAC97. Beacon proxy contracts pointing to this beacon will all use its implementation."
++        "A beacon with an upgradeable implementation currently set as eth:0xc946787cFd6c155886C673BF9815C841c1718903. Beacon proxy contracts pointing to this beacon will all use its implementation."
+      values.implementation:
+-        "eth:0xC355123d0a51b4B5185aA7f21150904CEE3EAC97"
++        "eth:0xc946787cFd6c155886C673BF9815C841c1718903"
+    }
+```
+
+```diff
+    contract ProtocolRegistry (eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129) [eigenlayer/ProtocolRegistry] {
+    +++ description: Admin-controlled on-chain registry that tracks all EigenLayer protocol contract deployments (addresses, names, configs, and versioning) and provides a pauseAll function to pause every registered pausable contract in the protocol.
+      values.version:
+-        "1.12.0"
++        "1.13.0"
+    }
+```
+
+```diff
+    contract StrategyFactory (eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647) [eigenlayer/StrategyFactory] {
+    +++ description: Factory contract for permissionless strategy creation via beacon proxies.
+      sourceHashes.1:
+-        "0x6c8fe2017652e376f87e63411537a85b1d70d09248914a9d1b8f560d9af0f15e"
++        "0x84efd26dd6dea827afe7cca007745bb205c21213b359c931c24f75e451d88644"
+      values.$implementation:
+-        "eth:0x315BCD0f31EF8b1124382f3acab3913f791C09E7"
++        "eth:0xbbc4124C74C567396181fBfbaE746b80619D2b76"
+      values.$pastUpgrades.4:
++        ["2026-06-15T21:17:11.000Z","0x31038718055572d8230555d9929c63496ca7ec520d6af6b9971bbe241f9088e3",["eth:0xbbc4124C74C567396181fBfbaE746b80619D2b76"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.bEIGEN:
++        "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
+      values.EIGEN:
++        "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
+      implementationNames.eth:0x315BCD0f31EF8b1124382f3acab3913f791C09E7:
+-        "StrategyFactory"
+      implementationNames.eth:0xbbc4124C74C567396181fBfbaE746b80619D2b76:
++        "StrategyFactory"
+    }
+```
+
+```diff
+    contract StrategyManager (eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A) [eigenlayer/StrategyManager] {
+    +++ description: The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake.
+      sourceHashes.1:
+-        "0x6549a6827b021dbac39a6289f7c3299e90833c946b67de173e2b13fb3792fac8"
++        "0x733d1aa946e67989cfdacb40dab07592d2680a0d81cef774a547e11a712d8c62"
+      values.$implementation:
+-        "eth:0x88582996b70FDd7C4f16e3Fde7B53858FcE0d394"
++        "eth:0xa7536C85898dC424c6BFe8592F983661f830656A"
+      values.$pastUpgrades.7:
++        ["2026-06-15T21:17:11.000Z","0x31038718055572d8230555d9929c63496ca7ec520d6af6b9971bbe241f9088e3",["eth:0xa7536C85898dC424c6BFe8592F983661f830656A"]]
+      values.$upgradeCount:
+-        7
++        8
+      values.version:
+-        "1.12.0"
++        "1.13.0"
+      values.SLASH_RESOLUTION_DELAY_BLOCKS:
++        50400
+      implementationNames.eth:0x88582996b70FDd7C4f16e3Fde7B53858FcE0d394:
+-        "StrategyManager"
+      implementationNames.eth:0xa7536C85898dC424c6BFe8592F983661f830656A:
++        "StrategyManager"
+      template:
++        "eigenlayer/StrategyManager"
+      description:
++        "The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake."
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DurationVaultStrategy (eth:0xC355123d0a51b4B5185aA7f21150904CEE3EAC97) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DurationVaultStrategy (eth:0xc946787cFd6c155886C673BF9815C841c1718903) [N/A]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../DurationVaultStrategy.sol                      | 48 ++++++++++----
+ .../StrategyFactory/StrategyFactory.sol            | 62 ++++++++++++++----
+ .../StrategyManager/StrategyManager.sol            | 76 ++++++++++++++++++----
+ 3 files changed, 149 insertions(+), 37 deletions(-)
+```
+
 Generated with discovered.json: 0x73d60463058f091d56c155864c9ca93ef94b1031
 
 # Diff at Thu, 04 Jun 2026 12:14:49 GMT:
