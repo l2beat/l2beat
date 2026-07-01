@@ -273,7 +273,8 @@ export function agglayer(templateInput: AgglayerConfigInput): ScalingProject {
         'Universal',
         ...(config.additionalPurposes ?? []),
       ],
-      architectureImage: variantSections.architectureImage,
+      architectureImage:
+        config.display.architectureImage ?? variantSections.architectureImage,
       stacks: config.display.stacks ?? ['Agglayer CDK'],
       tvsWarning: config.display.tvsWarning,
     },

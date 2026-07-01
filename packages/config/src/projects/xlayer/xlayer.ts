@@ -148,6 +148,7 @@ export const xlayer: ScalingProject = agglayer({
   display: {
     name: 'X Layer',
     slug: 'xlayer',
+    architectureImage: 'xlayer',
     description:
       'X Layer is an OP Stack Layer 2 by OKX with seamless integration with OKX products. It is connected to the Agglayer shared bridge.',
     stacks: ['OP Stack', 'Agglayer CDK'],
