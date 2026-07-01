@@ -11,9 +11,11 @@ import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL2 } from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('corn')
+const archivedAt = UnixTime(1782857413) // 2026-06-30T22:10:13Z
 
 export const corn: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1724284800), //2024-08-22
+  archivedAt,
   additionalPurposes: ['Bitcoin DApps'],
   additionalBadges: [BADGES.RaaS.Conduit],
   reasonsForBeingOther: [
@@ -91,6 +93,7 @@ export const corn: ScalingProject = orbitStackL2({
     chainId: 21000000,
     explorerUrl: 'https://maizenet-explorer.usecorn.com',
     sinceTimestamp: UnixTime(1732012151),
+    untilTimestamp: archivedAt,
     gasTokens: ['BTCN'],
     coingeckoPlatform: 'corn',
     multicallContracts: [
