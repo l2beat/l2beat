@@ -1,6 +1,6 @@
 {
   "name": "xlayer",
-  "timestamp": 1782899543,
+  "timestamp": 1782911432,
   "configHash": "0x4902b57bdc462d535831ff9d4c332b0e1f2462d73f974e2601790be8d026e52d",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
@@ -35,13 +35,13 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "eth:0x09bCE41392DBdf40bFd28CFaA1de74cF53e3676e",
+        "anchorGame": "eth:0xb027aC13867839d2bFc236a824681F6BC083F2bD",
         "disputeGameFactory": "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675",
         "disputeGameFinalityDelaySeconds": 302400,
         "disputeGameFinalityDelaySeconds_fmt": "3d 12h",
         "getAnchorRoot": [
-          "0x59ca44f695f781029f7d62708f5680ffe7ffa28c427ba21680cc33f7a7ad7d48",
-          63520645
+          "0x8dfcb2cd1724020cd446860642817df9da505340db72428f6e0ef3b1ea9e97e4",
+          63535105
         ],
         "initVersion": 1,
         "paused": false,
@@ -133,7 +133,7 @@
         "proxyAdminOwner": "eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A",
         "symbol": "WETH",
         "systemConfig": "eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433",
-        "totalSupply": 3800000000000,
+        "totalSupply": 3770000000000,
         "version": "1.5.0"
       },
       "implementationNames": {
@@ -732,6 +732,7 @@
             "0": "FaultDisputeGame",
             "1": "PermissionedDisputeGame",
             "8": "FaultDisputeGame",
+            "42": "OPSuccinctFaultDisputeGame",
             "621": "AggregateVerifier",
             "1337": "KailuaGame"
           }
@@ -985,7 +986,7 @@
         "DISPUTE_GAME_FACTORY": "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675",
         "FALLBACK_TIMEOUT": 31536000000,
         "FALLBACK_TIMEOUT_fmt": "1000y",
-        "getLastProposalTimestamp": 1782899507,
+        "getLastProposalTimestamp": 1782911423,
         "isProposalPermissionlessMode": false,
         "owner": "eth:0x6eE7BDa7AF04F61ccf93aB4b8DB2289aBe76C6aA",
         "proposers": ["eth:0xE43944421681170648E10007f73816e04F74394F"]
@@ -1068,7 +1069,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x8841FA06099FEdfE7DB6962926C6A281e9E1e607",
-        "gameCount": 7332,
+        "gameCount": 7423,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xEeDa796a23bc98726e47934ca9B54fDDa5a608e8",
@@ -2779,6 +2780,6 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 25436890 },
+  "usedBlockNumbers": { "ethereum": 25437874 },
   "permissionsConfigHash": "0xb2b1da0a6f0aca97a8a7b307e68578df2b66e95bfc7d65a128e94af8cbd86650"
 }
