@@ -665,7 +665,13 @@ export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
 // *FromGame fields resolve to the zero address until a game is anchored, and
 // unresolved handler reads come back as non-hex strings; all must be rejected.
 function isRealPrestate(value: string | undefined): value is string {
-  return value !== undefined && /^0x(?!0+$)[0-9a-f]{64}$/i.test(value)
+  return (
+    value !== undefined &&
+    /^0x(?!0+$)[0-9a-f]{64}$/i.test(value) &&
+    // v7 (Karst) game args carry a 0xdead0…0 sentinel in the prestate slot when
+    // the prestate is not baked into the clone args; it is not a real prestate.
+    !/^0xdead0*$/i.test(value)
+  )
 }
 
 // The factory's gameArgs[1] is the implementation-args blob it appends to every
@@ -881,10 +887,7 @@ function getStateValidation(
       )
 
       const permissionedDisputeGameBonds =
-        templateVars.discovery.getContractValue<number[]>(
-          'DisputeGameFactory',
-          'initBonds',
-        )[1] // 1 is for permissioned games!
+        getPermissionedGameBond(templateVars)
 
       const permissionedGameClockExtension =
         templateVars.discovery.getContractValue<number>(
@@ -1503,12 +1506,7 @@ function getRiskViewStateValidation(
           ' Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed.',
         sentiment: 'bad',
         initialBond: {
-          value: formatEther(
-            templateVars.discovery.getContractValue<number[]>(
-              'DisputeGameFactory',
-              'initBonds',
-            )[1], // 1 is for permissioned games!
-          ),
+          value: formatEther(getPermissionedGameBond(templateVars)),
         },
         permissioned: true,
         defenderAdvantage: 'not-applicable',
@@ -2532,6 +2530,20 @@ function getPermissionlessGameBond(templateVars: OpStackConfigCommon): number {
     'DisputeGameFactory',
     'initBonds',
   )[0]
+}
+
+// The permissioned game's init bond. v7 DisputeGameFactory_v2 exposes it per-type
+// as initBondGame1; older factories expose the legacy initBonds array.
+function getPermissionedGameBond(templateVars: OpStackConfigCommon): number {
+  const perType = templateVars.discovery.getContractValueOrUndefined<number>(
+    'DisputeGameFactory',
+    'initBondGame1',
+  )
+  if (perType !== undefined) return perType
+  return templateVars.discovery.getContractValue<number[]>(
+    'DisputeGameFactory',
+    'initBonds',
+  )[1]
 }
 
 function getOptimismPortal(templateVars: OpStackConfigCommon): EntryParameters {
