@@ -6,7 +6,10 @@
   "fields": {
     "owner": {
       "permissions": [
-        { "type": "interact", "description": "update the trusted image ids" }
+        {
+          "type": "interact",
+          "description": "manage trusted RISC Zero image IDs."
+        }
       ]
     },
     "trustedImages": {
