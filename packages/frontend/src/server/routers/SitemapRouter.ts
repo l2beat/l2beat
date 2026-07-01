@@ -21,10 +21,7 @@ export function createSitemapRouter() {
 ${urls}
 </urlset>`
 
-    res
-      .header('Content-Type', 'application/xml')
-      .header('Cache-Control', 'public, max-age=3600')
-      .send(xml)
+    res.header('Content-Type', 'application/xml').send(xml)
   })
 
   return router
