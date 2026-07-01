@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Contains the whitelist of addresses allowed to propose batches on L1 and issue preconfirmations. It dynamically selects a single operator for a given epoch using the Ethereum beacon block root as a source of randomness.",
+  "description": "Contains the whitelist of addresses eligible to propose batches on L1 and issue preconfirmations. It dynamically selects a single active operator for each epoch using a delayed Ethereum beacon block root as randomness. There is no fallback proposer path in this contract: non-selected operators cannot propose for the current epoch.",
   "fields": {
     "operatorMapping": {
       "handler": {
@@ -12,7 +12,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "Allowed to commit transactions from the current layer to the host chain."
+          "description": "eligible to propose batches on L1; only the selected current-epoch operator can successfully propose."
         }
       ]
     },
@@ -23,7 +23,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "pause/unpause, manage operator and ejector roles."
+          "description": "pause/unpause, add or remove operators, and manage ejecter roles."
         }
       ]
     },
@@ -35,7 +35,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "manage the ejecter role"
+          "description": "manage the ejecter role."
         }
       ]
     },
@@ -56,7 +56,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "add/remove operators" // yes also add
+          "description": "add operators after a two-epoch activation delay and remove existing operators immediately."
         }
       ]
     }

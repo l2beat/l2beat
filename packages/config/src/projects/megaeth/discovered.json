@@ -1219,7 +1219,8 @@
       },
       "implementationNames": {
         "eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3": "RiscZeroGroth16Verifier"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "eth:0x44aC63d4e18c0d24d0EDe1C058D5A93Fc2fbB904",

@@ -8,12 +8,12 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "pause and unpause the rollup system."
+          "description": "pause and unpause the rollup system, activate the inbox, and execute the one-time state recovery path."
         }
       ]
     }
   },
   "ignoreInWatchMode": ["getForcedInclusionState", "getCoreState"],
   "category": "core",
-  "description": "The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. It manages bonds, validates batch parameters, and acts as the state machine for the L2."
+  "description": "The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. It manages bonds, validates batch parameters, and acts as the state machine for the L2. Proposals must come from the configured proposer checker, and if the configured prover whitelist is non-empty, proofs from non-whitelisted provers revert."
 }
