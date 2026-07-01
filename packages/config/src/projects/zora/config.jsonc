@@ -7,6 +7,11 @@
     "eth:0x83A4521A3573Ca87f3a971B169C5A0E1d34481c3"
   ],
   "overrides": {
+    // OPContractsManagerV2 (shared Karst upgrade tooling). Ignored so discovery
+    // doesn't follow it into bare implementations; authority is the SuperchainProxyAdminOwner.
+    "eth:0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D": {
+      "ignoreDiscovery": true
+    },
     "eth:0xB0F15106fa1e473Ddb39790f197275BC979Aa37e": {
       "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "fields": {
