@@ -13,5 +13,11 @@
     "hash": "0xf95cf47f99e53e5d7fc6ce33b6086d50847efd7e2ea7109e883136bbd64ea376",
     "address": "eth:0xe78543A6bE59F5561717B69a2AD7c83DA9249572",
     "blockNumber": 23975101
+  },
+  "SuperchainConfig_v2_4_2": {
+    "hash": "0x2cd597b7305a446a1df355e6909cbd75fe38aa045faf4876a8e5496eebc1734f",
+    "address": "eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550",
+    "chain": "ethereum",
+    "blockNumber": 25424438
   }
 }

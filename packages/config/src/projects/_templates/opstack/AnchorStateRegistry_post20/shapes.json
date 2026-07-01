@@ -3,5 +3,11 @@
     "hash": "0x9340bfba7b4bbba23fe6fc74f5da06cee233a4745de93049330a76ef3ce23972",
     "address": "eth:0x4483F964F6711Cb55f633820ED174E780369b99D",
     "blockNumber": 25193152
+  },
+  "AnchorStateRegistry_v3_9_0": {
+    "hash": "0x10f64124093daab87c84d97148854054f9622bf86e09e98d496f123be3368122",
+    "address": "eth:0x8F40Cc98D694AB986F026C5383A181FCc9B6B281",
+    "chain": "ethereum",
+    "blockNumber": 25424438
   }
 }

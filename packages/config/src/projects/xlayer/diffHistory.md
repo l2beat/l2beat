@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x48826798d8592f61e062efc7270a5ebb430c4bf2
+
+# Diff at Tue, 30 Jun 2026 20:24:49 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1775561621
+- current timestamp: 1775561621
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1775561621 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0x64057ad1DdAc804d0D26A7275b193D9DACa19993) [opstack/OptimismPortal2] {
+    +++ description: Central message and gas token (dOKB) bridge of the OP stack part of this deployment. It allows for permissioned state proposals without public challenges, and forced transactions.
+      usedTypes.0.arg.8:
++        "FaultDisputeGame"
+    }
+```
+
 Generated with discovered.json: 0xec232a029b8ff8e33b7df3434c3bafd32286919d
 
 # Diff at Tue, 09 Jun 2026 12:43:41 GMT:

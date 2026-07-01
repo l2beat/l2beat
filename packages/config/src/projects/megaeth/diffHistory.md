@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x54fbc89488e324d7a459d252f0b1cb322d70ed84
+
+# Diff at Tue, 30 Jun 2026 12:27:37 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1778535511
+- current timestamp: 1778535511
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778535511 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0x7f82f57F0Dd546519324392e408b01fcC7D709e8) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.
+      usedTypes.0.arg.8:
++        "FaultDisputeGame"
+    }
+```
+
 Generated with discovered.json: 0x7272e7ff1107c020da1b9f947f5284fb306f63f2
 
 # Diff at Tue, 09 Jun 2026 12:43:36 GMT:

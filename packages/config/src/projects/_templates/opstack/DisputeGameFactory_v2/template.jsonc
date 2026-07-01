@@ -20,6 +20,10 @@
     "WethFromArgs": {
       "typeCaster": "SliceAddress",
       "arg": { "offset": 72 }
+    },
+    "VmFromGame8Args": {
+      "typeCaster": "SliceAddress",
+      "arg": { "offset": 32 }
     }
   },
   "fields": {
@@ -63,6 +67,14 @@
         "args": [1]
       }
     },
+    "game8": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "gameImpls",
+        "args": [8]
+      }
+    },
     "initBondGame42": {
       "handler": {
         "type": "call",
@@ -84,6 +96,13 @@
         "args": [1]
       }
     },
+    "initBondGame8": {
+      "handler": {
+        "type": "call",
+        "method": "initBonds",
+        "args": [8]
+      }
+    },
     "initBondGame621": {
       "handler": {
         "type": "call",
@@ -98,6 +117,25 @@
         "args": [1],
         "expectRevert": true
       }
+    },
+    "game8Args": {
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [8],
+        "expectRevert": true
+      }
+    },
+    // Type-8 game's VM (MIPS64): impl returns vm()=0, so read from game args
+    // (prestate(32) | vm(20) -> offset 32).
+    "game8Vm": {
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [8],
+        "expectRevert": true
+      },
+      "edit": ["format", "VmFromGame8Args"]
     },
     "proposerFromDGF": {
       "handler": {
