@@ -687,6 +687,31 @@ function getProgramHashes(
       return []
     case 'Permissioned':
     case 'Permissionless': {
+      // When CANNON_KONA (respectedGameType 8, Karst) is the respected game, the
+      // active prestate lives only in the factory's type-8 game args (gameArgs[8]);
+      // impls return zero. Read only that - falling back to the op-program / anchor
+      // candidates would surface the inactive type-0 program as if it were live.
+      const portal = getOptimismPortal(templateVars)
+      const respectedGameType =
+        templateVars.discovery.getContractValueOrUndefined<number>(
+          portal.name ?? portal.address,
+          'respectedGameType',
+        )
+      if (respectedGameType === 8) {
+        const konaPrestate = templateVars.discovery.hasContract(
+          'DisputeGameFactory',
+        )
+          ? prestateFromGameArgs(
+              templateVars.discovery.getContractValueOrUndefined<string>(
+                'DisputeGameFactory',
+                'game8Args',
+              ),
+            )
+          : undefined
+        return isRealPrestate(konaPrestate)
+          ? [PROGRAM_HASHES(konaPrestate)]
+          : []
+      }
       // V2 dispute games store the prestate in clone immutable args, so the
       // implementation returns zero. Try the implementation, then the anchored
       // game clone, then the factory's configured game args (gameArgs[1], which
@@ -895,10 +920,7 @@ function getStateValidation(
       const faultDisputeGame = getFaultDisputeGameName(templateVars)
 
       const permissionlessDisputeGameBonds =
-        templateVars.discovery.getContractValue<number[]>(
-          'DisputeGameFactory',
-          'initBonds',
-        )[0] // 0 is for permissionless games!
+        getPermissionlessGameBond(templateVars)
 
       const maxClockDuration = templateVars.discovery.getContractValue<number>(
         faultDisputeGame,
@@ -1499,12 +1521,7 @@ function getRiskViewStateValidation(
           getExecutionDelay(templateVars),
         ),
         initialBond: {
-          value: formatEther(
-            templateVars.discovery.getContractValue<number[]>(
-              'DisputeGameFactory',
-              'initBonds',
-            )[0], // 0 is for permissionless games!
-          ),
+          value: formatEther(getPermissionlessGameBond(templateVars)),
         },
         permissioned: false,
         // OPFP: bonds scale by `exponentialBondsFactor` (1.09493) per depth,
@@ -2495,6 +2512,28 @@ function ifPostsToEthereum<T>(
   }
 }
 
+// The active permissionless game's init bond. Pre-Karst it is initBonds[0] (game
+// type 0). After Karst the respected game is CANNON_KONA (type 8) and initBonds[0]
+// is zeroed, so the bond lives in the per-type initBondGame8 field.
+function getPermissionlessGameBond(templateVars: OpStackConfigCommon): number {
+  const portal = getOptimismPortal(templateVars)
+  const respectedGameType =
+    templateVars.discovery.getContractValueOrUndefined<number>(
+      portal.name ?? portal.address,
+      'respectedGameType',
+    )
+  if (respectedGameType === 8) {
+    return templateVars.discovery.getContractValue<number>(
+      'DisputeGameFactory',
+      'initBondGame8',
+    )
+  }
+  return templateVars.discovery.getContractValue<number[]>(
+    'DisputeGameFactory',
+    'initBonds',
+  )[0]
+}
+
 function getOptimismPortal(templateVars: OpStackConfigCommon): EntryParameters {
   if (templateVars.portal !== undefined) {
     return templateVars.portal
@@ -2678,6 +2717,11 @@ function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
   )
 
   if (respectedGameType === 0) {
+    return 'Permissionless'
+  }
+  // 8 = CANNON_KONA (Karst): permissionless fault proof, same trust model as
+  // type 0 (kona-client Rust program instead of op-program).
+  if (respectedGameType === 8) {
     return 'Permissionless'
   }
   if (respectedGameType === 1) {

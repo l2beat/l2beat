@@ -1,11 +1,18 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Holds the protocol's funds controlled by Governance. It acts as a timelocked executor for spending or relaying transactions approved by the DAO.",
+  "category": "gov",
   "fields": {
     "GOVERNANCE": {
+      "description": "Governance contract allowed to act through the treasury once the gate has opened.",
+      "template": "aztecnetwork/Governance",
       "permissions": [
         { "type": "act", "condition": "the GATED_UNTIL timestamp has passed." }
       ]
+    },
+    "ATP_REGISTRY": {
+      "description": "Registry controlling token unlocks for treasury-held AZTEC positions.",
+      "template": "aztecnetwork/AztecTokenPositionRegistry"
     }
   }
 }

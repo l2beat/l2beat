@@ -1,3 +1,4 @@
+import { trpcTransformer } from '@l2beat/shared-pure'
 import type { AppRouter } from '@l2beat/token-backend'
 import type { QueryClient } from '@tanstack/react-query'
 import { QueryClientProvider } from '@tanstack/react-query'
@@ -44,10 +45,7 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
             (op.direction === 'down' && op.result instanceof Error),
         }),
         httpBatchLink({
-          transformer: {
-            serialize: JSON.stringify,
-            deserialize: JSON.parse,
-          },
+          transformer: trpcTransformer,
           url: '/trpc',
           headers: () => {
             const headers = new Headers()

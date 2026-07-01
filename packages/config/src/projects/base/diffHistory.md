@@ -1,76 +1,10 @@
-Generated with discovered.json: 0xe4055101301ac46ad341acbbd4d480474c291fd2
+Generated with discovered.json: 0xf58b65eaa755afabaa1c8eafaa939837bc7461d7
 
-# Diff at Tue, 30 Jun 2026 14:23:14 GMT:
+# Diff at Tue, 30 Jun 2026 20:17:25 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@8ff611af2376c1818a5ed6611a843b5212373e3d block: 1782724600
-- current timestamp: 1782829257
-
-## Description
-
-config: risc0 template added.
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1782724600 (main branch discovery), not current.
-
-```diff
-    contract RiscZeroGroth16Verifier (eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97) [taiko/RiscZeroGroth16Verifier] {
-    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.0.0-rc.3).
-      category:
-+        {"name":"Local Infrastructure","priority":5}
-    }
-```
-
-```diff
-    contract RiscZeroGroth16Verifier (eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D) [taiko/RiscZeroGroth16Verifier] {
-    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).
-      category:
-+        {"name":"Local Infrastructure","priority":5}
-    }
-```
-
-```diff
-    contract RiscZeroGroth16Verifier (eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF) [taiko/RiscZeroGroth16Verifier] {
-    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.0.3).
-      template:
-+        "taiko/RiscZeroGroth16Verifier"
-      description:
-+        "Verifier contract for RISC Zero Groth16 proofs (version 2.0.3)."
-      category:
-+        {"name":"Local Infrastructure","priority":5}
-    }
-```
-
-```diff
-    contract RiscZeroGroth16Verifier (eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9) [taiko/RiscZeroGroth16Verifier] {
-    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).
-      category:
-+        {"name":"Local Infrastructure","priority":5}
-    }
-```
-
-```diff
-    contract RiscZeroGroth16Verifier (eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C) [taiko/RiscZeroGroth16VerifierLegacy] {
-    +++ description: Verifier contract for RISC Zero Groth16 proofs. This older implementation exposes control-root and selector constants but does not expose a VERSION getter.
-      template:
-+        "taiko/RiscZeroGroth16VerifierLegacy"
-      description:
-+        "Verifier contract for RISC Zero Groth16 proofs. This older implementation exposes control-root and selector constants but does not expose a VERSION getter."
-      category:
-+        {"name":"Local Infrastructure","priority":5}
-    }
-```
-
-Generated with discovered.json: 0x621cc52d5ee9bd2d3fed6a29a1eb40dceeff3edb
-
-# Diff at Mon, 29 Jun 2026 09:17:47 GMT:
-
-- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
-- comparing to: main@5a92950b0f8d677c07c694b39b68081b00e7bf36 block: 1782377394
-- current timestamp: 1782724600
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1782377394
+- current timestamp: 1782850575
 
 ## Description
 
@@ -90,6 +24,65 @@ Rotated TEE signers.
 -        "eth:0x1A095fE4895D142955c36F958be2a9e53c41224f"
 +        "eth:0x0BcBdab1Adf24461682e9DE37AFc0548C462ca10"
     }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782377394 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
++++ severity: HIGH
+      values.game8:
++        "eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499"
+      values.game8Args:
++        "0x0323914d3050e80c3d09da528be54794fde60cd26849cd3410dde0da7cd7d4fa6463dee3828677f6270d83d45408044fc5edb908909f6cf47ed12f010a796527f562bfc26c7f4e722453c1216e49704d84ea98a4dacd95738f2fc8ec0000000000000000000000000000000000000000000000000000000000002105"
+      values.game8Vm:
++        "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908"
+      values.initBondGame8:
++        "80000000000000000"
+      fieldMeta.game8:
++        {"severity":"HIGH"}
+      usedTypes.0:
++        {"typeCaster":"SliceAddress","arg":{"offset":32}}
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x49048044D57e1C92A77f79988d21Fa8fAF74E97e) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the AggregateVerifier.
+      usedTypes.0.arg.8:
++        "FaultDisputeGame"
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x909f6cf47ed12f010A796527f562bFc26C7F4E72) [opstack/AnchorStateRegistry_post20] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
+      usedTypes.0.arg.8:
++        "FaultDisputeGame"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3) [opstack/PreimageOracle]
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (eth:0x6463dEE3828677F6270d83d45408044fc5eDB908) [opstack/MIPS]
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499) [opstack/FaultDisputeGame]
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
 ```
 
 Generated with discovered.json: 0x3b9671b4fa92f8a963da506b96a98fb9e02856dd

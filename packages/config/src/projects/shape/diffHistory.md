@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xa4fd908d52780daf90c92cec752706932eaa7931
+
+# Diff at Tue, 30 Jun 2026 20:24:44 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1779699375
+- current timestamp: 1779699375
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779699375 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0xEB06fFa16011B5628BaB98E29776361c83741dd3) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      usedTypes.0.arg.8:
++        "FaultDisputeGame"
+    }
+```
+
 Generated with discovered.json: 0xebd886e6ed6bf4262a3cb5336221e8f44231eb5f
 
 # Diff at Tue, 09 Jun 2026 12:43:38 GMT:

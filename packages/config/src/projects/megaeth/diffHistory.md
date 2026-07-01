@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x76ac381f81dbb8364c6765bd9c063cef8be66b60
+Generated with discovered.json: 0x54fbc89488e324d7a459d252f0b1cb322d70ed84
 
-# Diff at Tue, 30 Jun 2026 14:31:24 GMT:
+# Diff at Tue, 30 Jun 2026 12:27:37 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@8ff611af2376c1818a5ed6611a843b5212373e3d block: 1778535511
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1778535511
 - current timestamp: 1778535511
 
 ## Description
@@ -17,10 +17,10 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1778535511 (main branch discovery), not current.
 
 ```diff
-    contract RiscZeroGroth16Verifier (eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3) [taiko/RiscZeroGroth16Verifier] {
-    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.0.0-rc.3).
-      category:
-+        {"name":"Local Infrastructure","priority":5}
+    contract OptimismPortal2 (eth:0x7f82f57F0Dd546519324392e408b01fcC7D709e8) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.
+      usedTypes.0.arg.8:
++        "FaultDisputeGame"
     }
 ```
 

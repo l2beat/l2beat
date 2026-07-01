@@ -1,3 +1,199 @@
+Generated with discovered.json: 0x38927102fd474a5cbf38590c58507a407c429a61
+
+# Diff at Tue, 30 Jun 2026 12:55:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@778851047b0739b1e264c41db016cba7b7575eff block: 1782131482
+- current timestamp: 1782824030
+
+## Description
+
+Config: Add new aztec shapes and update descriptions/permissions.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782131482 (main branch discovery), not current.
+
+```diff
+    contract CoinIssuer (eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6) [aztecnetwork/CoinIssuer] {
+    +++ description: Manages the inflation and minting schedule of the Aztec token. It enforces an annual percentage cap and mints new tokens for the budget.
+      fieldMeta:
++        {"ASSET":{"description":"AZTEC token minted by this issuer."}}
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    contract GovernanceProposer (eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef) [aztecnetwork/GovernanceProposer] {
+    +++ description: Intermediary contract that allows the L2 Sequencers operating the canonical rollup (as defined by the Registry) to submit formal proposals to the L1 Governance contract by signalling their support of any smart contract payload on L1 with each checkpoint proposal. A signalling round comprises 1000 checkpoints. 600 signals or more during one round allow submitting the payload as a governance proposal.
+      fieldMeta:
++        {"getGovernance":{"description":"Governance contract to which successful signalling rounds are submitted."},"getInstance":{"description":"Rollup instance whose checkpoint proposers can signal proposals."},"GSE":{"description":"Global staking escrow used to validate sequencer voting power."},"REGISTRY":{"description":"Registry used to resolve the canonical rollup instance."}}
+    }
+```
+
+```diff
+    contract Governance (eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e) [aztecnetwork/Governance] {
+    +++ description: DAO contract used for proposals and token voting. Heavily interdependent with the GSE for voting power snapshots.
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298","description":"register a new canonical rollup version and replace the reward distributor used by the network.","role":".owner"}
+      receivedPermissions.1.description:
+-        "slash sequencers from the active set."
++        "execute slashing payloads directly, bypassing the proposer address but still subject to vetoes and temporary slashing disablement."
+      receivedPermissions.2.description:
+-        "add a new rollup address, which automatically triggers all sequencers staked in the bonus address to be migrated to the new rollup; change the staking configuration so that no new Sequencers can joing the queue."
++        "set governance once, change the proof-of-possession gas limit, and add new rollup addresses that make bonus-instance validators effective on the latest rollup."
+      fieldMeta:
++        {"ASSET":{"description":"AZTEC token used for governance deposits and voting power."},"governanceProposer":{"description":"Address allowed to create proposals after sequencer signalling succeeds."}}
+    }
+```
+
+```diff
+    contract RewardBooster (eth:0x1CbB707Bd7b4Fd2BcED6D96d84372fb428e93D80) [aztecnetwork/RewardBooster] {
+    +++ description: Calculates boosted reward shares for active provers based on a configured curve, incentivizing consistent participation.
+      description:
+-        "Calculates 'boosted' reward shares for active provers based on a configured curve, incentivizing consistent participation."
++        "Calculates boosted reward shares for active provers based on a configured curve, incentivizing consistent participation."
+      fieldMeta:
++        {"ROLLUP":{"description":"Rollup allowed to update prover activity scores and query boosted shares during reward accounting."},"getConfig":{"description":"Reward boost curve parameters used to convert prover activity into reward shares."}}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract Registry (eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298) [aztecnetwork/Registry] {
+    +++ description: Central directory that tracks the current 'canonical' (active) Rollup contract address and key system contracts like the Reward Distributor.
+      fieldMeta:
++        {"owner":{"description":"The governance owner of the registry."},"getCanonicalRollup":{"description":"The latest registered rollup instance, treated as canonical by the Aztec contracts."},"getGovernance":{"description":"The governance contract controlling the registry."},"getRewardDistributor":{"description":"The reward distributor currently used by the canonical rollup."},"numberOfVersions":{"description":"Number of rollup versions registered in the registry."},"getVersion":{"description":"Registered rollup version identifiers in insertion order."}}
+    }
+```
+
+```diff
+    contract RewardDistributor (eth:0x3D6A1B00C830C5f278FC5dFb3f6Ff0b74Db6dfe0) [aztecnetwork/RewardDistributor] {
+    +++ description: Holds tokens allocated for protocol rewards. The canonical Rollup contract, as defined by the Registry, can draw from the implicit reward pool while any address can claim only funds explicitly earmarked to it.
+      description:
+-        "Holds tokens allocated for protocol rewards. The canonical Rollup contract (as defined by the Registry) calls this to distribute payments to sequencers and provers."
++        "Holds tokens allocated for protocol rewards. The canonical Rollup contract, as defined by the Registry, can draw from the implicit reward pool while any address can claim only funds explicitly earmarked to it."
+      fieldMeta:
++        {"ASSET":{"description":"ERC20 token distributed as protocol rewards."},"REGISTRY":{"description":"Registry used to resolve the canonical rollup and governance owner."},"canonicalRollup":{"description":"Current canonical rollup, which can claim from both the implicit reward pool and funds earmarked to it."},"totalEarmarkedBalance":{"description":"Total reward balance reserved for specific recipients rather than the canonical rollup's implicit pool."}}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract Slasher (eth:0x64E6e9Bb9f1E33D319578B9f8a9C719Ca6D46eBb) [aztecnetwork/Slasher] {
+    +++ description: The executor contract for penalties. It receives authorization to slash validator stakes, subject to an execution delay and a vetoer.
+      fieldMeta:
++        {"PROPOSER":{"description":"The slashing proposer allowed to execute accepted slash payloads."},"VETOER":{"description":"Address that can veto slash payloads or temporarily disable slashing."},"GOVERNANCE":{"description":"Governance address with emergency authority to execute slash payloads directly."},"isSlashingEnabled":{"description":"Whether slash payload execution is currently enabled."},"slashingDisabledUntil":{"description":"Timestamp until which slash payload execution is disabled."}}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ProtocolTreasury (eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a) [aztecnetwork/ProtocolTreasury] {
+    +++ description: Holds the protocol's funds controlled by Governance. It acts as a timelocked executor for spending or relaying transactions approved by the DAO.
+      fieldMeta:
++        {"GOVERNANCE":{"description":"Governance contract allowed to act through the treasury once the gate has opened."},"ATP_REGISTRY":{"description":"Registry controlling token unlocks for treasury-held AZTEC positions."}}
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    contract EscapeHatch (eth:0x8c189ead28D5987A48e522162f9225124D50AD1B) [aztecnetwork/EscapeHatch] {
+    +++ description: Provides a fallback mechanism for block production if the primary sequencer committee fails or censors. The committee is circumvented by allowing proposals by anyone who is able to post a large bond of 332,000,000 AZTEC. It maintains a set of bonded candidates and deterministically selects a designated proposer for a given 'hatch' period using RANDAO. If the designated proposer fails to propose and prove, their bond is slashed by 9,600,000 AZTEC. The minimum tax deducted from their bond is 1,660,000 AZTEC, even if the proposal is successful. The escape hatch regularly opens every 112 epochs, given there are any bonded candidates.
+      fieldMeta.getRollup.description:
+-        "The address of the core Rollup contract."
++        "The rollup contract that this escape hatch can fallback-propose for."
+    }
+```
+
+```diff
+    contract Inbox (eth:0x8Dbf0b6ed495baAb6062f5D5365aF3C1B2ed4578) [aztecnetwork/Inbox] {
+    +++ description: Facilitates canonical L1 to L2 communication. It accepts messages (including fee asset deposits) from L1, accumulates them in an append-only frontier tree per checkpoint, and forces the Sequencers and the Rollup contract to sequentially consume the roots of these message trees, ensuring message inclusion.
+      fieldMeta.FEE_ASSET_PORTAL.description:
+-        "The address of the FeeJuicePortal contract used for bridging fee assets to the L2."
++        "The FeeJuicePortal contract used for bridging fee assets to the L2. Messages from this portal are inserted with the canonical fee-asset L2 sender."
+      fieldMeta.VERSION:
++        {"description":"The identifier of the Aztec instance/version to prevent cross-instance message replay."}
+    }
+```
+
+```diff
+    contract AZTEC Token (eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2) [aztecnetwork/Aztec] {
+    +++ description: AZTEC token contract
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    contract TallySlashingProposer (eth:0xa4a38fD0108C00983E75616b638Ff3321FD26958) [aztecnetwork/TallySlashingProposer] {
+    +++ description: Aggregates validator committee votes for slashing. Once a round reaches quorum and the execution delay has passed, it builds a slash payload and asks the Slasher to execute it.
+      description:
+-        "Allows the validator committee to vote on slashing a specific peer. Once a quorum is reached, it proposes a slash action to the Slasher."
++        "Aggregates validator committee votes for slashing. Once a round reaches quorum and the execution delay has passed, it builds a slash payload and asks the Slasher to execute it."
+      fieldMeta:
++        {"INSTANCE":{"description":"Rollup instance whose validator committees vote through this proposer."},"SLASHER":{"description":"Slasher that executes accepted payloads from this proposer."},"SLASH_PAYLOAD_IMPLEMENTATION":{"description":"Cloneable payload implementation used to deploy concrete slashing payloads."},"COMMITTEE_SIZE":{"description":"Number of validators expected in each committee."},"QUORUM":{"description":"Minimum number of validator votes needed to accept a slashing round."},"ROUND_SIZE":{"description":"Number of slots in a slashing voting round."},"ROUND_SIZE_IN_EPOCHS":{"description":"Number of epochs covered by a slashing voting round."},"EXECUTION_DELAY_IN_ROUNDS":{"description":"Number of rounds that must pass before an accepted slashing round can be executed."},"LIFETIME_IN_ROUNDS":{"description":"Number of rounds for which a slashing round remains executable."},"SLASH_AMOUNT_SMALL":{"description":"Small slash amount applied per voted slash unit."},"SLASH_AMOUNT_MEDIUM":{"description":"Medium slash amount applied per voted slash unit."},"SLASH_AMOUNT_LARGE":{"description":"Large slash amount applied per voted slash unit."}}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x64E6e9Bb9f1E33D319578B9f8a9C719Ca6D46eBb","description":"execute slashing payloads that slash validators, unless slashing is currently disabled or the payload has been vetoed.","role":".PROPOSER"}]
+    }
+```
+
+```diff
+    contract GSE (eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f) [aztecnetwork/GSE] {
+    +++ description: Central staking manager independent of Rollup implementations. Sequencers deposit stake here through their chosen Rollup contract. Their stake is then transfered to the Governance contract and activated for voting. The GSE tracks which rollup instance validators are securing, and gives them an option to automatically move to the latest Rollup version.
+      fieldMeta:
++        {"ASSET":{"description":"ERC20 token staked by validators and used for governance voting power."},"getGovernance":{"description":"Governance contract receiving voting power from staked validators."},"getLatestRollup":{"description":"Latest rollup registered in the GSE."},"owner":{"description":"Governance owner of the GSE."}}
+    }
+```
+
+```diff
+    contract Rollup (eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962) [aztecnetwork/Rollup] {
+    +++ description: Core rollup logic contract. It processes checkpoint proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.
+      values._epochProofVerifier:
+-        "eth:0x70aEDda427f26480D240bc0f4308ceDec8d31348"
++++ description: The reward booster used to calculate prover reward shares.
+      values.getRewardBooster:
++        "eth:0x1CbB707Bd7b4Fd2BcED6D96d84372fb428e93D80"
+      fieldMeta._epochProofVerifier:
+-        {"description":"immutable, defined in constructor"}
+      fieldMeta.owner:
++        {"description":"Governance owner of the rollup instance."}
+      fieldMeta.getEpochProofVerifier:
++        {"description":"The verifier contract used for epoch proof verification."}
+      fieldMeta.getFeeAsset:
++        {"description":"The ERC20 token used to pay L2 fees."}
+      fieldMeta.getFeeAssetPortal:
++        {"description":"The L1 portal escrowing the fee asset for deposits and fee payouts."}
+      fieldMeta.getGSE:
++        {"description":"The global staking escrow used by this rollup."}
+      fieldMeta.getInbox:
++        {"description":"The canonical L1 to L2 message inbox for this rollup version."}
+      fieldMeta.getOutbox:
++        {"description":"The canonical L2 to L1 message outbox for this rollup version."}
+      fieldMeta.getRewardBooster:
++        {"description":"The reward booster used to calculate prover reward shares."}
+      fieldMeta.getRewardConfig:
++        {"description":"Reward distribution parameters: distributor, sequencer share, prover booster and checkpoint reward."}
+      fieldMeta.getRewardDistributor:
++        {"description":"Reward distributor used by this rollup."}
+      fieldMeta.getSlasher:
++        {"description":"Slasher contract authorized by this rollup."}
+      fieldMeta.getStakingAsset:
++        {"description":"The ERC20 token staked by validators."}
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x1CbB707Bd7b4Fd2BcED6D96d84372fb428e93D80","description":"update prover activity scores used to calculate boosted prover reward shares.","role":".ROLLUP"},{"permission":"interact","from":"eth:0x2891F8b941067F8B5a3F34545A30Cf71E3E23617","description":"distribute fee-asset funds escrowed in the portal to sequencers and provers.","role":".ROLLUP"},{"permission":"interact","from":"eth:0x3D6A1B00C830C5f278FC5dFb3f6Ff0b74Db6dfe0","description":"claim protocol reward funds and direct them to sequencers and provers.","role":".canonicalRollup"},{"permission":"interact","from":"eth:0x8c189ead28D5987A48e522162f9225124D50AD1B","description":"record submitted archives for designated escape-hatch proposers, which are later used to validate or slash them.","role":".getRollup"},{"permission":"interact","from":"eth:0x8Dbf0b6ed495baAb6062f5D5365aF3C1B2ed4578","description":"consume L1 to L2 message tree roots for checkpoint processing.","role":".ROLLUP"},{"permission":"interact","from":"eth:0xc9698B7AdEf9ee63F3Bf5cFF38086e4E836579f0","description":"insert L2 to L1 message roots that recipients later prove against to consume withdrawals or messages.","role":".ROLLUP"}]
+    }
+```
+
 Generated with discovered.json: 0xa9350ad2e49842d87ba0be3aa01546e51488e5da
 
 # Diff at Mon, 22 Jun 2026 13:58:36 GMT:
