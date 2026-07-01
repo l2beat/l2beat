@@ -144,6 +144,12 @@ export const GASZIP_NETWORKS = defineNetworks<GasZipNetwork>('gaszip', [
     chainId: 59144,
   }),
   gasZipNetwork({
+    chain: 'xlayer',
+    gaszipId: 146,
+    chainId: 196,
+    customGas: true,
+  }),
+  gasZipNetwork({
     chain: 'unichain',
     gaszipId: 362,
     chainId: 130,
