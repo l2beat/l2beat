@@ -33,5 +33,11 @@
     "hash": "0x4b82fc44fb8ad926da28ed0fd3498b0a27057822ac7776bdfdcd9276d1d25db0",
     "address": "eth:0x437c42d7927fe396E54da837d6aC57756cD868e3",
     "blockNumber": 25193152
+  },
+  "DelayedWETH_v1_5_1": {
+    "hash": "0x4261e89f13bbc8c62ec81929edcaffd5d0ce457496741bd4cacc527722a3f5e2",
+    "address": "eth:0xE440CC08A71694C8229323803F59024E3144630e",
+    "chain": "ethereum",
+    "blockNumber": 25424438
   }
 }

@@ -8,12 +8,12 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "can update the program being verified"
+          "description": "manage trusted SP1 program verification keys."
         }
       ]
     },
     "trustedPrograms": {
-      "description": "Program hashes of SP1 programs trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains program hash data within them.",
+      "description": "SP1 program verification keys trusted by this verifier gateway. Only proofs for these programs can be successfully verified.",
       "severity": "HIGH",
       "handler": {
         "type": "event",

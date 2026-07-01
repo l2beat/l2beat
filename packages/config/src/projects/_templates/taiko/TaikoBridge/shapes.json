@@ -3,5 +3,11 @@
     "hash": "0xa98023db33dc6ad6957a1c18e9e67712facad7f801f9437a6b05cf48aca80135",
     "address": "eth:0x2705B12a971dA766A3f9321a743d61ceAD67dA2F",
     "blockNumber": 22297586
+  },
+  "MainnetBridge.sol": {
+    "hash": "0x61b87867a3f041292eb5da7940c9fc5d33aee32c063a7cf1696beb6eafac4a2b",
+    "address": "eth:0x1c94D798CFA08F396E5BA9F81697289c53273381",
+    "chain": "ethereum",
+    "blockNumber": 25430675
   }
 }

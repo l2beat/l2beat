@@ -24,13 +24,10 @@ import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('loopring')
-const forcedWithdrawalDelay = discovery.getContractValue<{
-  [key: string]: number
-}>('ExchangeV3', 'getConstants').MAX_AGE_FORCED_REQUEST_UNTIL_WITHDRAW_MODE
-const maxAgeDepositUntilWithdrawable = discovery.getContractValue<number>(
-  'ExchangeV3',
-  'getMaxAgeDepositUntilWithdrawable',
-)
+const archivedAt = UnixTime(1782728687) // 2026-06-29T10:24:47Z
+// Historical values before ExchangeV3 was upgraded to ProxyAdminExecutor.
+const forcedWithdrawalDelay = 1_296_000
+const maxAgeDepositUntilWithdrawable = 1_296_000
 const forcedWithdrawalFee = discovery.getContractValue<number>(
   'LoopringV3',
   'forcedWithdrawalFee',
@@ -48,10 +45,13 @@ export const loopring: ScalingProject = {
   id: ProjectId('loopring'),
   capability: 'appchain',
   addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  archivedAt,
   badges: [BADGES.VM.AppChain, BADGES.DA.EthereumCalldata],
   display: {
     name: 'Loopring',
     slug: 'loopring',
+    headerWarning:
+      'Loopring DEX was [sunset](https://x.com/loopringorg/status/2071253250725322987) and no longer accepts deposits. The Loopring Team plans to send out deposited assets directly to users.',
     description:
       'Loopring is a ZK Rollup exchange protocol for trading and payments.',
     purposes: ['NFT', 'Exchange'],
@@ -170,6 +170,7 @@ export const loopring: ScalingProject = {
           functionSignature:
             'function submitBlocksWithCallbacks(bool isDataCompressed, bytes calldata data, ((uint16,(uint16,uint16,uint16,bytes)[])[], address[])  calldata config)',
           sinceTimestamp: UnixTime(1616396742),
+          untilTimestamp: archivedAt,
         },
       },
     ],
@@ -246,18 +247,18 @@ export const loopring: ScalingProject = {
     },
     operator: {
       ...OPERATOR.CENTRALIZED_OPERATOR,
-      references: [
-        {
-          title:
-            'ExchangeV3.sol#L315-L322 - Etherscan source code, submitBlocks function',
-          url: 'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L8022',
-        },
-        {
-          title:
-            'LoopringIOExchangeOwner.sol#L123-L126 - Etherscan source code, hasAccessTo function call',
-          url: 'https://etherscan.io/address/0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512#code#L5539',
-        },
-      ],
+      // references: [
+      //   {
+      //     title:
+      //       'ExchangeV3.sol#L315-L322 - Etherscan source code, submitBlocks function',
+      //     url: 'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L8022',
+      //   },
+      //   {
+      //     title:
+      //       'LoopringIOExchangeOwner.sol#L123-L126 - Etherscan source code, hasAccessTo function call',
+      //     url: 'https://etherscan.io/address/0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512#code#L5539',
+      //   },
+      // ],
     },
     forceTransactions: {
       ...FORCE_TRANSACTIONS.WITHDRAW_OR_HALT(),
@@ -289,11 +290,11 @@ export const loopring: ScalingProject = {
             title: 'Forced Request Handling - Loopring design doc',
             url: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#forced-request-handling',
           },
-          {
-            title:
-              'ExchangeV3.sol#L8118 - Loopring source code, forceWithdraw function',
-            url: 'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L8118',
-          },
+          // {
+          //   title:
+          //     'ExchangeV3.sol#L8118 - Loopring source code, forceWithdraw function',
+          //   url: 'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L8118',
+          // },
         ],
       },
       {
@@ -307,11 +308,11 @@ export const loopring: ScalingProject = {
             title: 'Forced Request Handling - Loopring design doc',
             url: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#forced-request-handling',
           },
-          {
-            title:
-              'ExchangeV3.sol#L8159 - Loopring source code, withdrawFromMerkleTree function',
-            url: 'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L8159',
-          },
+          // {
+          //   title:
+          //     'ExchangeV3.sol#L8159 - Loopring source code, withdrawFromMerkleTree function',
+          //   url: 'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L8159',
+          // },
         ],
       },
     ],
@@ -321,21 +322,12 @@ export const loopring: ScalingProject = {
       actors: [
         discovery.getMultisigPermission(
           'LoopringMultisig',
-          'This address is the owner of the following contracts: LoopringIOExchangeOwner, ExchangeV3 (proxy), BlockVerifier, AgentRegistry, LoopringV3. This allows it to grant access to submitting blocks, arbitrarily change the forced withdrawal fee, change the Verifier address and upgrade ExchangeV3 implementation potentially gaining access to all funds in DefaultDepositContract.',
+          'This multisig owns BlockVerifier, ForcedWithdrawalAgent, and LoopringV3, and is the proxy owner of ExchangeV3. This allows it to arbitrarily change the forced withdrawal fee, change the Verifier address, and upgrade ExchangeV3 without delay.',
         ),
         discovery.getPermissionDetails(
-          'Block Submitters',
-          discovery.getPermissionedAccounts(
-            'LoopringIOExchangeOwner',
-            'blockSubmitters',
-          ),
-          'Actors who can submit new blocks, updating the L2 state on L1.',
-        ),
-        discovery.getPermissionDetails(
-          'RollupOwner',
-          discovery.getPermissionedAccounts('ExchangeV3', 'owner'),
-
-          'The rollup owner can submit blocks, set rollup parameters and shutdown the exchange.',
+          'ExchangeV3 Proxy Owner',
+          discovery.getPermissionedAccounts('ExchangeV3', 'proxyOwner'),
+          'The proxy owner can execute arbitrary code from the context of ExchangeV3, including sending tokens to arbitrary addresses.',
         ),
       ],
     },
@@ -344,13 +336,12 @@ export const loopring: ScalingProject = {
     addresses: {
       ethereum: [
         discovery.getContractDetails('ExchangeV3', {
-          description: 'Main Loopring contract.',
+          description:
+            'Main Loopring contract. It was upgraded to the ProxyAdminExecutor implementation on 2026-06-29.',
           ...upgrades,
+          upgradeConsiderations:
+            'The proxy owner can upgrade the implementation without delay. The current ProxyAdminExecutor implementation lets the proxy owner execute arbitrary calls from the context of ExchangeV3, including sending tokens to arbitrary addresses.',
         }),
-        discovery.getContractDetails(
-          'LoopringIOExchangeOwner',
-          'Contract used by the Prover to submit exchange blocks with zkSNARK proofs that are later processed and verified by the BlockVerifier contract. It allows to give or revoke permissions to submit blocks and to open block submission to everyone.',
-        ),
         discovery.getContractDetails(
           'DefaultDepositContract',
           'ERC 20 token basic deposit contract. Handles user deposits and withdrawals.',
@@ -373,10 +364,6 @@ export const loopring: ScalingProject = {
           upgradeConsiderations:
             'The Verifier contract address can be changed by the ProxyOwner.',
         }),
-        discovery.getContractDetails(
-          'AgentRegistry',
-          'Agent registry that is used by all other Loopring contracts. Currently used are FastWithdrawalAgent, ForcedWithdrawalAgent, DestroyableWalletAgent and a number of LoopringAmmPool contracts.',
-        ),
       ],
     },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
@@ -419,6 +406,14 @@ export const loopring: ScalingProject = {
     ],
   },
   milestones: [
+    {
+      title: 'Loopring DEX sunsets',
+      url: 'https://x.com/loopringorg/status/2071253250725322987',
+      date: '2026-06-28T00:00:00Z',
+      description:
+        'Loopring announces the DEX sunset, deposited tokens will be transferred to users.',
+      type: 'general',
+    },
     {
       title: 'DeFi Closure Announcement',
       url: 'https://medium.com/loopring-protocol/loopring-defi-closure-announcement-e9270cccba4d',

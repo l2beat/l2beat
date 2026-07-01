@@ -8335,6 +8335,28 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "USD₮0",
+      "coingeckoId": "usdt0",
+      "address": "0x779Ded0c9e1022225f8E0630b35a9b54bE713736",
+      "symbol": "USD₮0",
+      "decimals": 6,
+      "deploymentTimestamp": 1756441826,
+      "coingeckoListingTimestamp": 1737590400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53705/large/usdt0.jpg?1737086183",
+      "chainId": 196,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "OpenUSDT",
       "coingeckoId": "openusdt",
       "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",

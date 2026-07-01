@@ -2,7 +2,9 @@ import clsx from 'clsx'
 import type { Node } from '../store/State'
 import { useStore } from '../store/store'
 import { centerLocationsInViewport } from '../store/utils/centerLocationsInViewport'
+import { containerBoxes } from '../store/utils/renderGraph'
 import type { NodeLocations } from '../store/utils/storage'
+import { topLevelByDescendant } from '../store/utils/subnodes'
 import { ControlButton } from './ControlButton'
 import { IconControlStack } from './icons/IconControlStack'
 
@@ -12,11 +14,17 @@ export function StackLayoutButton({ className }: { className?: string }) {
   const layout = useStore((state) => state.layout)
   const selected = useStore((state) => state.selected)
   const considerAllNodes = selected.length === 0
-  const visibleNodes = nodes.filter(
-    (node) =>
-      !hiddenNodes.includes(node.id) &&
-      (considerAllNodes || selected.includes(node.id)),
-  )
+  const footprints = containerBoxes(nodes, hiddenNodes)
+  const visibleNodes = nodes
+    .filter(
+      (node) =>
+        !hiddenNodes.includes(node.id) &&
+        (considerAllNodes || selected.includes(node.id)),
+    )
+    .map((node) => {
+      const box = footprints.get(node.id)
+      return box ? { ...node, box } : node
+    })
 
   return (
     <ControlButton
@@ -120,13 +128,15 @@ function toLayoutNodes(baseNodes: readonly Node[]) {
     }),
   )
 
-  const byId = new Map(nodes.map((x) => [x.id, x]))
+  const byId = new Map(nodes.map((node) => [node.id, node]))
+  const topLevelByAddress = topLevelByDescendant(baseNodes)
 
   for (const node of nodes) {
-    const chainA = getChain(node.base.id)
+    const chainA = nodeChain(node.base)
     for (const field of node.base.fields) {
-      const other = byId.get(field.target)
-      if (other && other !== node && getChain(other.base.id) === chainA) {
+      const topLevel = topLevelByAddress.get(field.target)
+      const other = topLevel ? byId.get(topLevel.id) : undefined
+      if (other && other !== node && nodeChain(other.base) === chainA) {
         if (!node.connectionsOut.includes(other)) {
           node.connectionsOut.push(other)
         }
@@ -138,6 +148,14 @@ function toLayoutNodes(baseNodes: readonly Node[]) {
   }
 
   return nodes
+}
+
+function nodeChain(node: Node): string {
+  const first = node.subnodes[0]
+  if (first === undefined) {
+    return getChain(node.id)
+  }
+  return nodeChain(first)
 }
 
 function clusterNodes(nodes: LayoutNode[]) {

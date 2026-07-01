@@ -14,6 +14,7 @@ import {
   DA_LAYERS,
   DA_MODES,
   DATA_ON_CHAIN,
+  FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
@@ -47,19 +48,12 @@ interface MainnetInboxConfig extends Record<string, ContractValue> {
   minBond: number
   livenessBond: number
   provingWindow: number
-  permissionlessProvingDelay: number
-  forcedInclusionDelay: number
-  permissionlessInclusionMultiplier: number
 }
 
 const mainnetInboxConfig = discovery.getContractValue<MainnetInboxConfig>(
   'MainnetInbox',
   'getConfig',
 )
-
-const forcedInclusionPermissionlessDelay =
-  mainnetInboxConfig.forcedInclusionDelay *
-  mainnetInboxConfig.permissionlessInclusionMultiplier
 
 const whitelistedOperatorsCount = discovery.getContractValue<number>(
   'PreconfWhitelist',
@@ -120,7 +114,7 @@ export const taiko: ScalingProject = {
     slug: 'taiko',
     stacks: ['Taiko'],
     headerWarning: isPostHackState
-      ? 'Deposits and withdrawals via ETH-Bridge and ERC-20 bridges are paused. Forced transactions and permissionless proving fallback are disabled as emergency responses to the hack.'
+      ? 'Deposits and withdrawals via ETH-Bridge and ERC-20 bridges are paused. Forced transactions, permissionless proposal fallback, and permissionless proving fallback are disabled as emergency responses to the hack.'
       : undefined,
     description:
       'Taiko Alethia is an Ethereum-equivalent rollup on the Ethereum network. Taiko aims at combining based sequencing and a multi-proof system through SP1, RISC0 and TEEs.',
@@ -375,7 +369,7 @@ export const taiko: ScalingProject = {
   type: 'layer2',
   riskView: {
     stateValidation: {
-      description: `A multi-proof system is used. There are four verifiers available: SGX (Geth), SGX (Reth), SP1 and RISC0. Two of them must be used to prove a proposal range, and SGX (Geth) is mandatory. The end state root is supplied during the \`prove\` call and is checked against the accompanying SGX/zkVM proof. Proving is currently gated by ProverWhitelist, which has ${whitelistedProverCount} whitelisted prover${proverPlural} in discovery, and becomes permissionless only after an unproven proposal is > ${formatSeconds(mainnetInboxConfig.permissionlessProvingDelay)} old.`,
+      description: `A multi-proof system is used. There are four verifiers available: SGX (Geth), SGX (Reth), SP1 and RISC0. Two of them must be used to prove a proposal range, and SGX (Geth) is mandatory. The end state root is supplied during the \`prove\` call and is checked against the accompanying SGX/zkVM proof. Proving is currently gated by ProverWhitelist, which has ${whitelistedProverCount} whitelisted prover${proverPlural} in discovery. While the whitelist is non-empty, non-whitelisted actors cannot submit proofs.`,
       sentiment: 'bad',
       value: 'Multi-proofs',
       executionDelay: 0,
@@ -389,14 +383,17 @@ export const taiko: ScalingProject = {
       sentiment: 'bad',
       value: 'None',
     },
-    sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
-      forcedInclusionPermissionlessDelay,
-    ),
+    sequencerFailure: {
+      ...RISK_VIEW.SEQUENCER_NO_MECHANISM(true),
+      description:
+        RISK_VIEW.SEQUENCER_NO_MECHANISM(true).description +
+        ' Forced inclusions are disabled in the current MainnetInbox implementation, so sequencer failure or censorship leads to non-inclusion.',
+    },
     proposerFailure: {
-      ...RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
-        mainnetInboxConfig.permissionlessProvingDelay,
-      ),
-      description: `Anyone can propose after ${formatSeconds(forcedInclusionPermissionlessDelay)} if forced inclusions are ignored, and proving becomes permissionless after ${formatSeconds(mainnetInboxConfig.permissionlessProvingDelay)} if a proposal remains unproven.`,
+      ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+      description:
+        RISK_VIEW.PROPOSER_CANNOT_WITHDRAW.description +
+        ' Proposing is gated by PreconfWhitelist, which selects a single active operator for the current epoch and has no fallback proposer path.',
     },
   },
   stage: getRollupStage(
@@ -440,9 +437,6 @@ export const taiko: ScalingProject = {
             provingWindow: formatSeconds(mainnetInboxConfig.provingWindow),
             whitelistedProverCount,
             proverPlural,
-            permissionlessProvingDelay: formatSeconds(
-              mainnetInboxConfig.permissionlessProvingDelay,
-            ),
             minBond: mainnetInboxConfig.minBond,
             livenessBond: mainnetInboxConfig.livenessBond,
           },
@@ -493,17 +487,8 @@ export const taiko: ScalingProject = {
       name: 'The system uses whitelist-based sequencing and proving',
       description: readProjectMarkdown('taiko', 'technologyOperator', {
         whitelistedOperatorsCount,
-        forcedInclusionDelay: formatSeconds(
-          mainnetInboxConfig.forcedInclusionDelay,
-        ),
-        forcedInclusionPermissionlessDelay: formatSeconds(
-          forcedInclusionPermissionlessDelay,
-        ),
         whitelistedProverCount,
         proverPlural,
-        permissionlessProvingDelay: formatSeconds(
-          mainnetInboxConfig.permissionlessProvingDelay,
-        ),
         minBond: mainnetInboxConfig.minBond,
         livenessBond: mainnetInboxConfig.livenessBond,
       }),
@@ -528,15 +513,8 @@ export const taiko: ScalingProject = {
       risks: [FRONTRUNNING_RISK],
     },
     forceTransactions: {
-      name: 'Users can force any transaction via L1',
-      description: readProjectMarkdown('taiko', 'technologyForceTransactions', {
-        forcedInclusionDelay: formatSeconds(
-          mainnetInboxConfig.forcedInclusionDelay,
-        ),
-        forcedInclusionPermissionlessDelay: formatSeconds(
-          forcedInclusionPermissionlessDelay,
-        ),
-      }),
+      ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
+      description: readProjectMarkdown('taiko', 'technologyForceTransactions'),
       references: [
         {
           title:
@@ -548,7 +526,6 @@ export const taiko: ScalingProject = {
           url: mainnetInboxSourceUrl,
         },
       ],
-      risks: [],
     },
     exitMechanisms: [
       // TODO: double check exit mechanism

@@ -64,8 +64,9 @@ function stableHash(value: unknown): string {
 /**
  * Parses a batched tRPC request URL into its individual (procedure, input)
  * calls, e.g. /api/trpc/privacy.flowsChart,privacy.tvlChart?batch=1&input=...
- * The client uses a JSON.stringify transformer, so each input in the batch's
- * `input` map is itself a JSON string.
+ * The shared tRPC transformer leaves inputs unchanged, so each entry in the
+ * batch's `input` map is usually the real input object. Older requests used
+ * JSON.stringify as the transformer, so we still accept string-wrapped inputs.
  */
 function parseCalls(rawUrl: string): TrpcCall[] {
   const url = new URL(rawUrl)

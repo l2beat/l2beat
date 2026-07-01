@@ -14,6 +14,7 @@ export type DesktopControls = {
     event: MouseEvent,
     opts?: { disableSelection?: boolean },
   ) => void
+  onDoubleClick: (event: MouseEvent) => void
   onKeyDown: (event: KeyboardEvent) => void
   onKeyUp: (event: KeyboardEvent) => void
   onMouseUp: (event: MouseEvent) => void
@@ -31,6 +32,7 @@ export function useDesktopControls({
   const onKeyUp = useStore((state) => state.onKeyUp)
   const onMouseDown = useStore((state) => state.onMouseDown)
   const onMouseMove = useStore((state) => state.onMouseMove)
+  const onDoubleClick = useStore((state) => state.onDoubleClick)
   const onMouseUp = useStore((state) => state.onMouseUp)
   const onWheel = useStore((state) => state.onWheel)
   const undo = useStore((state) => state.undo)
@@ -59,6 +61,11 @@ export function useDesktopControls({
     onMouseMove(event, containerRef.current, opts)
   }
 
+  function handleDoubleClick(event: MouseEvent) {
+    if (!containerRef.current) return
+    onDoubleClick(event, containerRef.current)
+  }
+
   function handleKeyDown(event: KeyboardEvent) {
     if (!shouldCapture) return
 
@@ -83,6 +90,7 @@ export function useDesktopControls({
     onWheel: handleWheel,
     onMouseDown: handleMouseDown,
     onMouseMove: handleMouseMove,
+    onDoubleClick: handleDoubleClick,
     onKeyDown: handleKeyDown,
     onKeyUp: onKeyUp,
     onMouseUp: onMouseUp,

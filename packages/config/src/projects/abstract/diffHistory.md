@@ -1,3 +1,114 @@
+Generated with discovered.json: 0x043479a2ac516f12307ac0e6de186b401659a519
+
+# Diff at Tue, 30 Jun 2026 09:03:50 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@ddc641881a6870ab0c9e9ee1c517ed9eb73306bc block: 1781777867
+- current timestamp: 1782810164
+
+## Description
+
+Moved two validator EOAs into a 1/2 validator multisig. 
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.validatorsVTL.0:
+-        "eth:0x6be789605b13Edb78749824633b9933D44B582ba"
+      values.validatorsVTL.1:
+-        "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
++        "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83"
+      values.validatorsVTLFullAC.PRECOMMITTER_ROLE.members.0:
+-        "eth:0x6be789605b13Edb78749824633b9933D44B582ba"
+      values.validatorsVTLFullAC.PRECOMMITTER_ROLE.members.1:
+-        "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
++        "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83"
+      values.validatorsVTLFullAC.COMMITTER_ROLE.members.0:
+-        "eth:0x6be789605b13Edb78749824633b9933D44B582ba"
+      values.validatorsVTLFullAC.COMMITTER_ROLE.members.1:
+-        "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
++        "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83"
+      values.validatorsVTLFullAC.REVERTER_ROLE.members.0:
+-        "eth:0x6be789605b13Edb78749824633b9933D44B582ba"
+      values.validatorsVTLFullAC.REVERTER_ROLE.members.1:
+-        "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
++        "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83"
+      values.validatorsVTLFullAC.PROVER_ROLE.members.0:
+-        "eth:0x6be789605b13Edb78749824633b9933D44B582ba"
+      values.validatorsVTLFullAC.PROVER_ROLE.members.1:
+-        "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
++        "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83"
+      values.validatorsVTLFullAC.EXECUTOR_ROLE.members.0:
+-        "eth:0x6be789605b13Edb78749824633b9933D44B582ba"
+      values.validatorsVTLFullAC.EXECUTOR_ROLE.members.1:
+-        "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
++        "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83"
+    }
+```
+
+```diff
+    EOA  (eth:0x6be789605b13Edb78749824633b9933D44B582ba) {
+    +++ description: None
+      receivedPermissions.0.role:
+-        ".validatorsVTLFullAC"
++        ".executor"
+      receivedPermissions.0.description:
+-        "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract."
++        "initiate batch execution on L1 if approved by enough Validator Multisig members."
+      receivedPermissions.0.from:
+-        "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776"
++        "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83"
+    }
+```
+
+```diff
+    contract Abstract Multisig (eth:0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"upgrade","from":"eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83","role":"admin","via":[{"address":"eth:0x9B9256E7D5b696F7BD7525F42238Ba3d9BBD9cDA"}]}
+      directlyReceivedPermissions.0:
++        {"permission":"act","from":"eth:0x9B9256E7D5b696F7BD7525F42238Ba3d9BBD9cDA","role":".owner"}
+    }
+```
+
+```diff
+    EOA  (eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8) {
+    +++ description: None
+      receivedPermissions.0.role:
+-        ".validatorsVTLFullAC"
++        ".executor"
+      receivedPermissions.0.description:
+-        "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract."
++        "initiate batch execution on L1 if approved by enough Validator Multisig members."
+      receivedPermissions.0.from:
+-        "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776"
++        "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0x9B9256E7D5b696F7BD7525F42238Ba3d9BBD9cDA) [global/ProxyAdmin]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EraMultisigValidator (eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83) [shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable]
+    +++ description: A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.
+```
+
+## Source code changes
+
+```diff
+.../EraMultisigValidator/EraMultisigValidator.sol  | 5790 ++++++++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              | 1038 ++++
+ .../src/projects/abstract/.flat/ProxyAdmin.sol     |  189 +
+ 3 files changed, 7017 insertions(+)
+```
+
 Generated with discovered.json: 0xb7e1c0894385979f2d5d34e35b542258721afd83
 
 # Diff at Thu, 18 Jun 2026 10:18:53 GMT:

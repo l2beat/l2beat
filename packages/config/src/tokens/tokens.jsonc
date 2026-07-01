@@ -8773,5 +8773,23 @@
       },
       "supply": "zero"
     }
+  ],
+  "xlayer": [
+    {
+      "symbol": "USD₮0",
+      "address": "0x779ded0c9e1022225f8e0630b35a9b54be713736",
+      "coingeckoId": "usdt0",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    }
   ]
 }

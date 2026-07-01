@@ -2,6 +2,7 @@ import { AlignControls } from './AlignControls'
 import { ClusterLayoutButton } from './ClusterLayoutButton'
 import { ColorButton } from './ColorButton'
 import { ControlGroup } from './ControlGroup'
+import { GroupControls } from './GroupControls'
 import { HideButton } from './HideButton'
 import { HideNodesButton } from './HideNodesButton'
 import { LayoutLibrary } from './LayoutLibrary'
@@ -28,6 +29,7 @@ export function Controls() {
           <HideNodesButton />
         </ControlGroup>
         <ControlGroup>
+          <GroupControls />
           <HideButton />
           <ColorButton />
           <ValuesButton />
