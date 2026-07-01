@@ -3,5 +3,10 @@
     "hash": "0xa60bb5f8f4c3654fa6cc8d33bfde2b72af58a55740d815a0c52832dca5ec3a57",
     "address": "eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962",
     "blockNumber": 24590324
+  },
+  "Rollup_v5.sol": {
+    "hash": "0xa150a0954b457e9c8594701d6b693bfd6f82e5ae7ba92810be900dc69d54b844",
+    "address": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
+    "blockNumber": 25428902
   }
 }

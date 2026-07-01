@@ -91,7 +91,14 @@ export const openvmprover: BaseProject = {
             ),
           },
         ],
-        verificationStatus: 'notVerified',
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'openvmprover',
+          'verificationSteps-0x6a74f16c',
+        ),
+        description:
+          'Custom verifier ID: solidity codehash of the verifier smart contract, i.e. keccak256 of the EVM bytecode.',
       },
       {
         hash: '0x30af8474d8e13b8ce6a96eae63293310e7c1072b890bde77f96786497a9e5f4b',

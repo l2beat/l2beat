@@ -5,11 +5,24 @@
   "ignoreInWatchMode": ["totalSupply"],
   "category": "gov",
   "fields": {
+    "ASSET": {
+      "description": "ERC20 token staked by validators and used for governance voting power.",
+      "template": "aztecnetwork/Aztec"
+    },
+    "getGovernance": {
+      "description": "Governance contract receiving voting power from staked validators.",
+      "template": "aztecnetwork/Governance"
+    },
+    "getLatestRollup": {
+      "description": "Latest rollup registered in the GSE.",
+      "template": "aztecnetwork/Rollup"
+    },
     "owner": {
+      "description": "Governance owner of the GSE.",
       "permissions": [
         {
           "type": "interact",
-          "description": "add a new rollup address, which automatically triggers all sequencers staked in the bonus address to be migrated to the new rollup; change the staking configuration so that no new Sequencers can joing the queue."
+          "description": "set governance once, change the proof-of-possession gas limit, and add new rollup addresses that make bonus-instance validators effective on the latest rollup."
         }
       ]
     }

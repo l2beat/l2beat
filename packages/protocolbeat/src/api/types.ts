@@ -180,6 +180,7 @@ export type ApiAddressType =
   | 'Timelock'
   | 'Untemplatized'
   | 'Contract'
+  | 'Group'
   | 'Unknown'
 
 export interface ApiAddressEntry {

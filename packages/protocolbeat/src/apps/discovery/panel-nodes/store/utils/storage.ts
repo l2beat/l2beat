@@ -1,15 +1,16 @@
-import type { State } from '../State'
+import type { Node, State } from '../State'
 import {
   CURRENT_LAYOUT_VERSION,
   type Layout,
   type LayoutMetadata,
   LayoutSchema,
   migrateLayout,
+  type StoredGroup,
 } from './layout'
 
 export const StoredNodeLayout = LayoutSchema
 export type StoredNodeLayout = Layout
-export type { NodeLocations } from './layout'
+export type { NodeLocations, StoredGroup } from './layout'
 
 export function reconcileHiddenFields(
   fieldNames: readonly string[],
@@ -33,18 +34,41 @@ export function buildStoredNodeLayout(
   state: State,
   metadata?: LayoutMetadata,
 ): StoredNodeLayout {
+  // Walk the whole tree so nested members keep their positions, and record one
+  // entry per group so the group structure can be rebuilt after a data reload.
+  const all: Node[] = []
+  const groups: StoredGroup[] = []
+  const walk = (nodes: readonly Node[]) => {
+    for (const node of nodes) {
+      all.push(node)
+      if (node.subnodes.length > 0) {
+        groups.push({
+          id: node.id,
+          name: node.name,
+          color: node.color,
+          opened: node.opened,
+          box: node.box,
+          members: node.subnodes.map((subnode) => subnode.id),
+        })
+        walk(node.subnodes)
+      }
+    }
+  }
+  walk(state.nodes)
+
   return {
     version: CURRENT_LAYOUT_VERSION,
     projectId: state.projectId,
     metadata,
-    locations: Object.fromEntries(state.nodes.map((n) => [n.id, n.box])),
-    colors: Object.fromEntries(state.nodes.map((n) => [n.id, n.color])),
+    locations: Object.fromEntries(all.map((n) => [n.id, n.box])),
+    colors: Object.fromEntries(all.map((n) => [n.id, n.color])),
     hiddenFields: Object.fromEntries(
-      state.nodes
+      all
         .filter((n) => n.hiddenFields.length > 0)
         .map((n) => [n.id, n.hiddenFields]),
     ),
     hiddenNodes: [...state.hidden],
+    groups: groups.length > 0 ? groups : undefined,
   }
 }
 

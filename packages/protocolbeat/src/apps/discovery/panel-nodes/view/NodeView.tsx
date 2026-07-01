@@ -33,6 +33,7 @@ function NodeViewImpl(props: NodeViewProps) {
 
   const fullHeight =
     props.node.addressType === 'EOA' && props.node.fields.length === 0
+  const isGroup = props.node.subnodes.length > 0
 
   return (
     <>
@@ -48,14 +49,16 @@ function NodeViewImpl(props: NodeViewProps) {
         }}
         className={clsx(
           'absolute bg-black',
-          fullHeight ? 'rounded-2xl' : 'rounded',
-          props.isSelected && 'outline outline-4 outline-autumn-300',
+          fullHeight ? 'rounded-2xl' : isGroup ? 'rounded-xl' : 'rounded',
+          props.isSelected
+            ? 'outline outline-4 outline-autumn-300'
+            : isGroup && 'outline outline-dashed outline-2 outline-coffee-200',
         )}
       >
         <div
           className={clsx(
             'mb-1 flex w-full items-center justify-between gap-1 px-2 font-medium text-sm',
-            fullHeight ? 'rounded-2xl' : 'rounded-t',
+            fullHeight ? 'rounded-2xl' : isGroup ? 'rounded-t-xl' : 'rounded-t',
             isDark ? 'text-coffee-200' : 'text-black',
           )}
           style={{
