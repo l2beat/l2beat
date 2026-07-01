@@ -1542,6 +1542,7 @@
         "anchorGame": "eth:0xD84FcF0916523c546f542F79fDCA0666D7559C5c",
         "disputeGameFactory": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "disputeGameFinalityDelaySeconds": 302400,
+        "disputeGameFinalityDelaySeconds_fmt": "3d 12h",
         "getAnchorRoot": [
           "0x428b0efae436b6c0787c279010872920d70052bd6b50efe299a75c90df209d52",
           68666898
@@ -1557,7 +1558,12 @@
         "systemConfig": "eth:0x89E31965D844a309231B1f17759Ccaf1b7c09861",
         "version": "3.5.0"
       },
-      "fieldMeta": { "respectedGameType": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "respectedGameType": { "severity": "HIGH" },
+        "disputeGameFinalityDelaySeconds_fmt": {
+          "description": "Formatted delay after which an unchallenged resolved dispute game can be used for withdrawals."
+        }
+      },
       "implementationNames": {
         "eth:0x8fE58d2168b5412Cf1Bd212cE6137f8b7300222d": "Proxy",
         "eth:0xeb69cC681E8D4a557b30DFFBAd85aFfD47a2CF2E": "AnchorStateRegistry"
@@ -1741,6 +1747,12 @@
           "permission": "interact",
           "from": "eth:0x89E31965D844a309231B1f17759Ccaf1b7c09861",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816",
+          "description": "Allowed to add or remove proposers and challengers, and transfer ownership of the AccessManager.",
           "role": ".owner"
         }
       ],
@@ -2420,6 +2432,7 @@
         "DEPLOYMENT_TIMESTAMP": 1764689339,
         "DISPUTE_GAME_FACTORY": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "FALLBACK_TIMEOUT": 1209600,
+        "FALLBACK_TIMEOUT_fmt": "14d",
         "getLastProposalTimestamp": 1781176007,
         "isProposalPermissionlessMode": false,
         "owner": "eth:0x9Eb44Da23433b5cAA1c87e35594D15FcEb08D34d",
@@ -2429,6 +2442,13 @@
         ]
       },
       "fieldMeta": {
+        "FALLBACK_TIMEOUT_fmt": {
+          "description": "Formatted fallback timeout after which proposing becomes permissionless."
+        },
+        "owner": {
+          "severity": "HIGH",
+          "description": "Address that can update the proposer and challenger allowlists and transfer ownership."
+        },
         "challengers": {
           "severity": "HIGH",
           "description": "Addresses allowed to challenge dispute games."
@@ -2578,7 +2598,9 @@
         "l2BlockNumber": 0,
         "l2SequenceNumber": 0,
         "maxChallengeDuration": 302400,
+        "maxChallengeDuration_fmt": "3d 12h",
         "maxProveDuration": 86400,
+        "maxProveDuration_fmt": "1d",
         "parentIndex": 0,
         "rangeVkeyCommitment": "0x1dd60be45aa2e74722e16f3a7c2d3b0a3339c1b72dc4e5b513487da3528e5c94",
         "resolvedAt": 0,
@@ -2597,6 +2619,12 @@
         "wasRespectedGameTypeWhenCreated": false
       },
       "fieldMeta": {
+        "maxChallengeDuration_fmt": {
+          "description": "Formatted maximum time after game creation during which a game can be challenged."
+        },
+        "maxProveDuration_fmt": {
+          "description": "Formatted maximum time after a challenge during which the proposal can be proven."
+        },
         "SP1_VERIFIER": {
           "description": "The SP1 verifier contract used to verify ZK proofs. Set in constructor."
         }
@@ -3911,7 +3939,7 @@
     "gnosisSafeModules/LivenessModule": "0xac067257223dd2f2f28705a485f0423251aa6b65656bde88b7c2b121b2221a84",
     "gnosisSafeModules/SaferSafes": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/AnchorStateRegistry_post13_opsuccinct": "0x57251e1ef1f7fa58d5f83ab797eaed6cb14ee882b9a6eca56d6588ac9cac5d2a",
+    "opstack/AnchorStateRegistry_post13_opsuccinct": "0x4b5c1474b93eb86be962d34b95901ef506f1c0d486b52166ceb53cbaeb8a7a68",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
     "opstack/DeputyPauseModule": "0xe46d6b875d0718adfa6f3783ee2f33a13279377fe7a4db0cc72891b0bce55e9a",
     "opstack/DisputeGameFactory": "0x46746381be2da0435ab1c70360c00f35d9759a505c3f99905e07476b72e8b79c",
@@ -3927,12 +3955,12 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "shared-sp1/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "succinct/OPSuccinct/AccessManager": "0x57aa4b6b7430cf6f540cc3ea3f53a2addf4348c8fc64b0bf9c34b7f4dae2f74b",
-    "succinct/OPSuccinct/OPSuccinctFaultDisputeGame": "0xd43e10bdf24f9a99590fd00cd3f1d135a25ebad1d8fa81943db21c274c6b634a",
+    "succinct/OPSuccinct/AccessManager": "0x4dfa9533d437cf2efb76347ce42e28eaa3a388c509f141d483bf9c9ab7c799b0",
+    "succinct/OPSuccinct/OPSuccinctFaultDisputeGame": "0x941ed16f5158ec2fcfd64540f5eff08a11a298d3514f88b190f9902846dbf225",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c",
     "tokens/CELO": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 25293816 },
-  "permissionsConfigHash": "0xb01e10b4875263d971f72e92935023401fe319b2e0a78037ebe0ecf582b6a8d7"
+  "permissionsConfigHash": "0x2b50cb2475b8d8e59334ebdff11adf173ea16d0e7aec04c05e5130e79894c33b"
 }
