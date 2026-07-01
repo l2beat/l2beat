@@ -8,7 +8,7 @@ Generated with discovered.json: 0x1af00b854840a6585d7adc17156e01a11e3c43f2
 
 ## Description
 
-Upgrade 19b "Karst" (op-contracts/v7.0.0): core L1 contracts upgraded to their v7 implementations (OptimismPortal2, SystemConfig, DisputeGameFactory, AnchorStateRegistry, bridges, etc.). The chain remains on permissioned fault proofs (respected game type 1); it did not move to CANNON_KONA. The new OPContractsManagerV2 (`0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D`) is ignored in discovery as stateless upgrade tooling.
+Upgrade 19b "Karst" (op-contracts/v7.0.0): core L1 contracts upgraded to their v7 implementations (OptimismPortal2, SystemConfig, DisputeGameFactory, AnchorStateRegistry, bridges, etc.). The chain remains on permissioned fault proofs (respected game type 1); it did not move to CANNON_KONA.
 
 ## Watched changes
 

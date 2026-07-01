@@ -8,7 +8,7 @@ Generated with discovered.json: 0x425868473716f76bc790723d6c153819a0dfa4a0
 
 ## Description
 
-Upgrade 19b "Karst" (op-contracts/v7.0.0): core L1 contracts upgraded to their v7 implementations and the respected game type changed 0 → 8 (CANNON → CANNON_KONA) — the permissionless fault proof now runs the Rust kona-client on the Cannon VM instead of op-program. Uses the shared Superchain deployment (same kona prestate `0x0337ecb3604c0b40c352e0c7711beb17a212d583f4fe956fd8d66e29ad5f9025` as OP Mainnet, verified); trust model unchanged. The new OPContractsManagerV2 (`0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D`) is ignored in discovery as stateless upgrade tooling.
+Upgrade 19b "Karst" (op-contracts/v7.0.0): core L1 contracts upgraded to their v7 implementations and the respected game type changed 0 → 8 (CANNON → CANNON_KONA) — the permissionless fault proof now runs the Rust kona-client on the Cannon VM instead of op-program. Uses the shared Superchain deployment (same kona prestate `0x0337ecb3604c0b40c352e0c7711beb17a212d583f4fe956fd8d66e29ad5f9025` as OP Mainnet, verified); trust model unchanged.
 
 ## Watched changes
 
