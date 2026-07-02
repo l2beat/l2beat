@@ -8,9 +8,8 @@ import type {
   TokenIngestionQueueRecord,
   TokenIngestionQueueState,
 } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
+import { type InteropBridgeType, UnixTime } from '@l2beat/shared-pure'
 import { randomUUID } from 'crypto'
-import { InteropTransferClassifier } from '../../../shared/build'
 import { Chain } from '../chains/Chain'
 import type { CoingeckoClient } from '../chains/clients/coingecko/CoingeckoClient'
 import type {
@@ -101,8 +100,8 @@ export class TokenIngestionProcessor {
   }
 
   async refreshInteropTransferIndex(): Promise<InteropTransferIndex> {
-    const transfers = await this.deps.db.interopTransfer.getAll()
-    const index = buildInteropTransferIndex(transfers)
+    const routes = await this.deps.db.interopTransfer.getTokenRoutes()
+    const index = buildInteropTransferIndex(routes)
     this.interopTransferIndex = index
     return index
   }
@@ -415,7 +414,8 @@ export class TokenIngestionProcessor {
   > {
     const usableNonSwapping = transfers.filter(
       (match): match is InteropTransferMatch & { otherToken: TokenAddress } =>
-        isNonSwappingTransfer(match.transfer) && match.otherToken !== undefined,
+        isNonSwappingBridgeType(match.bridgeType) &&
+        match.otherToken !== undefined,
     )
     const otherTokens = uniqueTokenAddresses(
       usableNonSwapping.map((match) => match.otherToken),
@@ -453,8 +453,8 @@ export class TokenIngestionProcessor {
 
     steps.push({
       kind: 'transfer-evidence',
-      total: transfers.length,
-      nonSwapping: usableNonSwapping.length,
+      total: sumTransferCounts(transfers),
+      nonSwapping: sumTransferCounts(usableNonSwapping),
       abstractTokens: transferRefs,
     })
 
@@ -478,8 +478,8 @@ export class TokenIngestionProcessor {
       }
     }
 
-    const supportingTransfer = transferAbstract
-      ? supportingTransferFor(
+    const supportingMatch = transferAbstract
+      ? supportingMatchFor(
           transferAbstract.id,
           usableNonSwapping,
           otherDeployedTokenMap,
@@ -489,8 +489,29 @@ export class TokenIngestionProcessor {
     return {
       type: 'resolved',
       abstractToken: transferAbstract,
-      supportingTransfer,
+      supportingTransfer: supportingMatch
+        ? await this.fetchSupportingTransfer(supportingMatch)
+        : undefined,
     }
+  }
+
+  /**
+   * The index only carries a sample transfer id per route, so the full
+   * transfer row used as assignment proof is fetched by primary key here —
+   * only when a plan actually resolves from transfers.
+   */
+  private async fetchSupportingTransfer(
+    match: InteropTransferMatch,
+  ): Promise<InteropTransferRecord> {
+    const transfer = await this.deps.db.interopTransfer.findByTransferId(
+      match.sampleTransferId,
+    )
+    if (!transfer) {
+      throw new Error(
+        `Supporting transfer ${match.sampleTransferId} no longer exists; the interop transfer index is stale`,
+      )
+    }
+    return transfer
   }
 
   private async resolveAbstractFromCoingecko(
@@ -860,18 +881,16 @@ function buildWriteCommands(
   return commands
 }
 
-function supportingTransferFor(
+function supportingMatchFor(
   abstractTokenId: string,
   usableNonSwapping: (InteropTransferMatch & { otherToken: TokenAddress })[],
   otherDeployedTokenMap: Map<string, DeployedTokenRecord>,
-): InteropTransferRecord | undefined {
-  for (const match of usableNonSwapping) {
-    const other = otherDeployedTokenMap.get(getTokenKey(match.otherToken))
-    if (other?.abstractTokenId === abstractTokenId) {
-      return match.transfer
-    }
-  }
-  return undefined
+): InteropTransferMatch | undefined {
+  return usableNonSwapping.find(
+    (match) =>
+      otherDeployedTokenMap.get(getTokenKey(match.otherToken))
+        ?.abstractTokenId === abstractTokenId,
+  )
 }
 
 function collectTransferNeighbors(
@@ -890,11 +909,12 @@ function collectTransferNeighbors(
   return Array.from(seen.values())
 }
 
-function isNonSwappingTransfer(transfer: InteropTransferRecord) {
-  const bridgeType =
-    transfer.bridgeType ?? InteropTransferClassifier.inferBridgeType(transfer)
-
+function isNonSwappingBridgeType(bridgeType: InteropBridgeType) {
   return bridgeType === 'lockAndMint' || bridgeType === 'burnAndMint'
+}
+
+function sumTransferCounts(matches: InteropTransferMatch[]) {
+  return matches.reduce((sum, match) => sum + match.transferCount, 0)
 }
 
 function formatRef(ref: AbstractTokenRef) {

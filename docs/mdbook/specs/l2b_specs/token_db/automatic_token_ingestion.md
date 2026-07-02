@@ -268,7 +268,7 @@ alone. Setting `abstractTokenId` to `null` clears the proof.
 - `{ kind: 'non-swapping-transfer'; transfer }` — ingestion resolved
   from non-swapping transfer evidence. The proof carries the *full*
   transfer row, not just an id, because the interop transfer table is a
-  sliding 24h window — by the time someone reviews the assignment, the
+  sliding 7-day window — by the time someone reviews the assignment, the
   row may already be gone. Because the proof is stored as JSON, BigInt
   raw amounts in that transfer are persisted as decimal strings.
 
@@ -326,11 +326,21 @@ ping-pong cycles between two stable tokens.
 
 ## Reading the interop transfer table
 
-For each tick, the drain loads the full interop transfer table once and
-builds an in-memory index keyed by normalized `(chain, address)`. Each
-processed entry looks up its own transfers from this index — no per-entry
-DB queries for transfers. This is cheap because the interop table only
-retains the last ~24 hours.
+For each tick, the drain builds an in-memory index keyed by normalized
+`(chain, address)` from a SQL aggregation over the interop transfer table:
+one row per unique group of `(src token, dst token, bridge-type evidence)`,
+carrying the group's transfer count and a sample transfer id. Each
+processed entry looks up its own routes from this index — no per-entry DB
+queries for transfer evidence. Aggregating in SQL keeps the index size
+proportional to the number of distinct bridged token pairs, not to
+transfer volume — the table retains ~7 days of transfers, and loading full
+rows for all of them (as an earlier version of this index did) caused
+out-of-memory crashes when retention grew from one day to seven.
+
+The one consumer that needs a full transfer row — the
+`non-swapping-transfer` assignment proof — fetches the group's sample
+transfer by primary key, only when a plan actually resolves an abstract
+token from transfer evidence.
 
 The drain refresh happens immediately after the pre-step and immediately
 before processing the queue. Do not replace it with a stale cached read:
@@ -447,5 +457,5 @@ changed and *who* changed it. The next step, if needed, is persisting the
 full `IngestionTrace` next to write events so the *reasoning* (every
 decision step) is queryable too — useful when a researcher wants to
 understand why a particular abstract was chosen long after the interop
-transfer that justified it has rolled out of the 24h window. The trace
+transfer that justified it has rolled out of the 7-day window. The trace
 already exists at `apply` time, so this is a low-cost follow-up.

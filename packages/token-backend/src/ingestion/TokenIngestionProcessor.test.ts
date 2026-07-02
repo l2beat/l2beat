@@ -1,5 +1,6 @@
 import type {
   Database,
+  InteropTokenRouteRecord,
   InteropTransferRecord,
   TokenDatabase,
   TokenIngestionQueueRecord,
@@ -37,7 +38,7 @@ describe(TokenIngestionProcessor.name, () => {
       const trace = await processor.plan(
         queueEntry(address),
         buildInteropTransferIndex([
-          transfer({
+          route({
             srcChain: address.chain,
             srcTokenAddress: `0x${address.address.slice(2).padStart(64, '0')}`,
             dstChain: 'base',
@@ -112,6 +113,21 @@ describe(TokenIngestionProcessor.name, () => {
       const findByName = mockFn().resolvesTo(undefined)
 
       const processor = createProcessor({
+        db: mockObject<Database>({
+          interopTransfer: mockObject<Database['interopTransfer']>({
+            findByTransferId: mockFn().resolvesTo(
+              transfer({
+                srcChain: address.chain,
+                srcTokenAddress: address.address,
+                srcRawAmount: 0n,
+                dstChain: otherAddress.chain,
+                dstTokenAddress: otherAddress.address,
+                dstRawAmount: 123n,
+                bridgeType: 'lockAndMint',
+              }),
+            ),
+          }),
+        }),
         tokenDb: mockObject<TokenDatabase>({
           deployedToken: mockObject<TokenDatabase['deployedToken']>({
             findByChainAndAddress: mockFn().resolvesTo(undefined),
@@ -140,13 +156,11 @@ describe(TokenIngestionProcessor.name, () => {
       const trace = await processor.plan(
         queueEntry(address),
         buildInteropTransferIndex([
-          transfer({
+          route({
             srcChain: address.chain,
             srcTokenAddress: address.address,
-            srcRawAmount: 0n,
             dstChain: otherAddress.chain,
             dstTokenAddress: otherAddress.address,
-            dstRawAmount: 123n,
             bridgeType: 'lockAndMint',
           }),
         ]),
@@ -173,12 +187,20 @@ describe(TokenIngestionProcessor.name, () => {
       expect(findByName).toHaveBeenCalledTimes(0)
     })
 
-    it('records the first supporting transfer as proof and ignores transfers whose other side has no abstract', async () => {
+    it('records a sample transfer of the first supporting route as proof and ignores routes whose other side has no abstract', async () => {
       const address = token('ethereum', '0xaaa')
       const knownOther = token('base', '0xbbb')
       const unknownOther = token('arbitrum', '0xccc')
+      const findByTransferId = mockFn().executes(async (id: string) =>
+        transfer({ transferId: id }),
+      )
 
       const processor = createProcessor({
+        db: mockObject<Database>({
+          interopTransfer: mockObject<Database['interopTransfer']>({
+            findByTransferId,
+          }),
+        }),
         tokenDb: mockObject<TokenDatabase>({
           deployedToken: mockObject<TokenDatabase['deployedToken']>({
             findByChainAndAddress: mockFn().resolvesTo(undefined),
@@ -208,24 +230,24 @@ describe(TokenIngestionProcessor.name, () => {
       const trace = await processor.plan(
         queueEntry(address),
         buildInteropTransferIndex([
-          transfer({
-            transferId: 'transfer-known-1',
+          route({
+            sampleTransferId: 'transfer-known-1',
             srcChain: address.chain,
             srcTokenAddress: address.address,
             dstChain: knownOther.chain,
             dstTokenAddress: knownOther.address,
             bridgeType: 'lockAndMint',
           }),
-          transfer({
-            transferId: 'transfer-known-2',
+          route({
+            sampleTransferId: 'transfer-known-2',
             srcChain: address.chain,
             srcTokenAddress: address.address,
             dstChain: knownOther.chain,
             dstTokenAddress: knownOther.address,
             bridgeType: 'burnAndMint',
           }),
-          transfer({
-            transferId: 'transfer-unknown',
+          route({
+            sampleTransferId: 'transfer-unknown',
             srcChain: address.chain,
             srcTokenAddress: address.address,
             dstChain: unknownOther.chain,
@@ -242,6 +264,7 @@ describe(TokenIngestionProcessor.name, () => {
       expect(trace.outcome.proof.transfer.transferId).toEqual(
         'transfer-known-1',
       )
+      expect(findByTransferId).toHaveBeenOnlyCalledWith('transfer-known-1')
     })
 
     it('downgrades a transfer-driven update of an existing token to conflict when symbols differ', async () => {
@@ -249,6 +272,13 @@ describe(TokenIngestionProcessor.name, () => {
       const otherAddress = token('base', '0xbbb')
 
       const processor = createProcessor({
+        db: mockObject<Database>({
+          interopTransfer: mockObject<Database['interopTransfer']>({
+            findByTransferId: mockFn().resolvesTo(
+              transfer({ bridgeType: 'lockAndMint' }),
+            ),
+          }),
+        }),
         tokenDb: mockObject<TokenDatabase>({
           deployedToken: mockObject<TokenDatabase['deployedToken']>({
             findByChainAndAddress: mockFn().resolvesTo({
@@ -283,7 +313,7 @@ describe(TokenIngestionProcessor.name, () => {
       const trace = await processor.plan(
         queueEntry(address),
         buildInteropTransferIndex([
-          transfer({
+          route({
             srcChain: address.chain,
             srcTokenAddress: address.address,
             dstChain: otherAddress.chain,
@@ -305,6 +335,13 @@ describe(TokenIngestionProcessor.name, () => {
       const otherAddress = token('base', '0xbbb')
 
       const processor = createProcessor({
+        db: mockObject<Database>({
+          interopTransfer: mockObject<Database['interopTransfer']>({
+            findByTransferId: mockFn().resolvesTo(
+              transfer({ bridgeType: 'lockAndMint' }),
+            ),
+          }),
+        }),
         tokenDb: mockObject<TokenDatabase>({
           deployedToken: mockObject<TokenDatabase['deployedToken']>({
             findByChainAndAddress: mockFn().resolvesTo({
@@ -339,7 +376,7 @@ describe(TokenIngestionProcessor.name, () => {
       const trace = await processor.plan(
         queueEntry(address),
         buildInteropTransferIndex([
-          transfer({
+          route({
             srcChain: address.chain,
             srcTokenAddress: address.address,
             dstChain: otherAddress.chain,
@@ -1097,8 +1134,8 @@ describe(TokenIngestionProcessor.name, () => {
     () => {
       it('builds the interop transfer index on first use and reuses it', async () => {
         const address = token('ethereum', '0xaaa')
-        const getAll = mockFn().resolvesTo([
-          transfer({
+        const getTokenRoutes = mockFn().resolvesTo([
+          route({
             srcChain: address.chain,
             srcTokenAddress: address.address,
           }),
@@ -1106,7 +1143,7 @@ describe(TokenIngestionProcessor.name, () => {
         const processor = createProcessor({
           db: mockObject<Database>({
             interopTransfer: mockObject<Database['interopTransfer']>({
-              getAll,
+              getTokenRoutes,
             }),
           }),
         })
@@ -1116,21 +1153,21 @@ describe(TokenIngestionProcessor.name, () => {
 
         expect(first.findInvolving(address).length).toEqual(1)
         expect(second.findInvolving(address).length).toEqual(1)
-        expect(getAll).toHaveBeenCalledTimes(1)
+        expect(getTokenRoutes).toHaveBeenCalledTimes(1)
       })
 
       it('refreshes the cached interop transfer index from the database', async () => {
         const firstAddress = token('ethereum', '0xaaa')
         const secondAddress = token('base', '0xbbb')
-        const getAll = mockFn()
+        const getTokenRoutes = mockFn()
           .resolvesToOnce([
-            transfer({
+            route({
               srcChain: firstAddress.chain,
               srcTokenAddress: firstAddress.address,
             }),
           ])
           .resolvesToOnce([
-            transfer({
+            route({
               srcChain: secondAddress.chain,
               srcTokenAddress: secondAddress.address,
             }),
@@ -1138,7 +1175,7 @@ describe(TokenIngestionProcessor.name, () => {
         const processor = createProcessor({
           db: mockObject<Database>({
             interopTransfer: mockObject<Database['interopTransfer']>({
-              getAll,
+              getTokenRoutes,
             }),
           }),
         })
@@ -1148,7 +1185,7 @@ describe(TokenIngestionProcessor.name, () => {
 
         expect(refreshed.findInvolving(firstAddress).length).toEqual(0)
         expect(refreshed.findInvolving(secondAddress).length).toEqual(1)
-        expect(getAll).toHaveBeenCalledTimes(2)
+        expect(getTokenRoutes).toHaveBeenCalledTimes(2)
       })
     },
   )
@@ -1215,6 +1252,23 @@ function nonSwappingProof() {
       srcRawAmount: '1',
       dstRawAmount: '1',
     },
+  }
+}
+
+function route(
+  overrides: Partial<InteropTokenRouteRecord>,
+): InteropTokenRouteRecord {
+  return {
+    srcChain: 'ethereum',
+    srcTokenAddress: undefined,
+    dstChain: 'base',
+    dstTokenAddress: undefined,
+    bridgeType: undefined,
+    srcWasBurned: false,
+    dstWasMinted: true,
+    transferCount: 1,
+    sampleTransferId: 'transfer-id',
+    ...overrides,
   }
 }
 

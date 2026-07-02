@@ -98,6 +98,25 @@ export interface InteropTransferTokenAddressBatch {
   tokenAddresses: InteropTransferTokenAddress[]
 }
 
+/**
+ * One row per unique combination of token pair and bridge-type evidence,
+ * aggregated over all retained transfers. `sampleTransferId` is the id of an
+ * arbitrary transfer belonging to the group, so callers that need a full
+ * transfer row as evidence can fetch exactly one by primary key instead of
+ * holding every transfer in memory.
+ */
+export interface InteropTokenRouteRecord {
+  srcChain: string
+  srcTokenAddress: string | undefined
+  dstChain: string
+  dstTokenAddress: string | undefined
+  bridgeType: KnownInteropBridgeType | undefined
+  srcWasBurned: boolean | undefined
+  dstWasMinted: boolean | undefined
+  transferCount: number
+  sampleTransferId: string
+}
+
 interface PartialAbstractTokenFilter {
   chain: string
   address: Address32
@@ -239,6 +258,63 @@ export class InteropTransferRepository extends BaseRepository {
       .execute()
 
     return rows.map(toRecord)
+  }
+
+  async getTokenRoutes(): Promise<InteropTokenRouteRecord[]> {
+    const groupColumns = [
+      'srcChain',
+      'srcTokenAddress',
+      'dstChain',
+      'dstTokenAddress',
+      'bridgeType',
+      'srcWasBurned',
+      'dstWasMinted',
+    ] as const
+
+    const rows = await this.db
+      .selectFrom('InteropTransfer')
+      .select((eb) => [
+        ...groupColumns,
+        eb.fn.countAll().as('transferCount'),
+        eb.fn.max('transferId').as('sampleTransferId'),
+      ])
+      .groupBy([...groupColumns])
+      .execute()
+
+    return rows.map((row) => {
+      if (row.bridgeType !== null && !isInteropBridgeType(row.bridgeType)) {
+        throw new Error(
+          `Invalid interop transfer bridge type: ${row.bridgeType} for transfer ${row.sampleTransferId}`,
+        )
+      }
+
+      return {
+        srcChain: row.srcChain,
+        srcTokenAddress: row.srcTokenAddress ?? undefined,
+        dstChain: row.dstChain,
+        dstTokenAddress: row.dstTokenAddress ?? undefined,
+        bridgeType:
+          row.bridgeType === null
+            ? undefined
+            : (row.bridgeType as KnownInteropBridgeType),
+        srcWasBurned: row.srcWasBurned ?? undefined,
+        dstWasMinted: row.dstWasMinted ?? undefined,
+        transferCount: Number(row.transferCount),
+        sampleTransferId: row.sampleTransferId,
+      }
+    })
+  }
+
+  async findByTransferId(
+    transferId: string,
+  ): Promise<InteropTransferRecord | undefined> {
+    const row = await this.db
+      .selectFrom('InteropTransfer')
+      .selectAll()
+      .where('transferId', '=', transferId)
+      .executeTakeFirst()
+
+    return row ? toRecord(row) : undefined
   }
 
   async getByRange(
