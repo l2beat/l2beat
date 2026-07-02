@@ -46,6 +46,23 @@ export const robinhood: ScalingProject = orbitStackL2({
         sinceTimestamp: genesisTimestamp,
       },
     },
+    {
+      // SequencerInbox has isDelayBufferable=true, so batches can also be posted
+      // via the delay-proof blob path; track it too to avoid undercounting
+      // liveness/l2costs (mirrors the Arbitrum One config).
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: ChainSpecificAddress.address(sequencerInbox.address),
+        selector: '0x917cf8ac',
+        functionSignature:
+          'function addSequencerL2BatchFromBlobsDelayProof(uint256 sequenceNumber, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
+        sinceTimestamp: genesisTimestamp,
+      },
+    },
   ],
   chainConfig: {
     name: 'robinhood',
