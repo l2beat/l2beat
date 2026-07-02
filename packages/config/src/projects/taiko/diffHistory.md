@@ -1,3 +1,68 @@
+Generated with discovered.json: 0xc1e626bc3cfeac450c7b7a901cc355aad349f7c6
+
+# Diff at Thu, 02 Jul 2026 08:00:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e15d715b5b794a557213ead3257fef40c4d33c1b block: 1782824701
+- current timestamp: 1782979130
+
+## Description
+
+Bridges unpaused. Taiko is live again, without forced transactions or proposer fallback.
+
+## Watched changes
+
+```diff
+    contract SignerList (Security Council) (eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2) [taiko/SignerList] {
+    +++ description: A signer list for storing multisig members and their agents, stores the addresses of the Multisigs that use this signer list. Each signer delegates their permissions to their agent address that they can configure here.
+      values.$members.4:
+-        "eth:0x4236f57E9dBc238878EFac4AeF0A16D4dD06DC1A"
++        "eth:0xbC40317A69CB1D1aF2CBcfE32C8B7a6840Dc287a"
+    }
+```
+
+```diff
+    contract EmergencyMultisig (eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd) [taiko/EmergencyMultisig] {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).
++++ description: total count of encrypted emergency proposals created.
++++ severity: HIGH
+      values.proposalCount:
+-        34
++        35
+    }
+```
+
+```diff
+    contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) [taiko/OptimisticTokenVotingPlugin] {
+    +++ description: An optimistic governance module. Standard proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d. Emergency proposals can be executed without delay.
+      values.proposalCount:
+-        35
++        36
+      values.proposalIds.35:
++        "606707631305171219093581685850458871248271179811"
+    }
+```
+
+```diff
+    contract MainnetERC20Vault (eth:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab) [taiko/SharedERC20Vault] {
+    +++ description: Shared vault for Taiko chains for bridged ERC20 tokens. Pausing stops token sends, message-triggered releases, and recalls. Released or minted tokens are subject to the configured quota manager.
++++ severity: HIGH
+      values.paused:
+-        true
++        false
+    }
+```
+
+```diff
+    contract MainnetBridge (eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC) [taiko/TaikoBridge] {
+    +++ description: Shared bridge escrow for Taiko chains for bridged ETH and arbitrary bridge messages. Pausing stops sending, processing, recalling, retrying, and failing messages. ETH released from the bridge is subject to the configured quota manager.
++++ severity: HIGH
+      values.paused:
+-        true
++        false
+    }
+```
+
 Generated with discovered.json: 0xbc030317f7a67f8a2862bfc60378abf9caebf3c2
 
 # Diff at Tue, 30 Jun 2026 14:13:09 GMT:
