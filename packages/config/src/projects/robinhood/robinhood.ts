@@ -31,6 +31,26 @@ export const robinhood: ScalingProject = orbitStackL2({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox,
+  nonTemplateEscrows: [
+    discovery.getEscrowDetails({
+      address: ChainSpecificAddress(
+        'eth:0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0',
+      ),
+      name: 'L1ERC20Gateway',
+      description:
+        'Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.',
+      tokens: '*',
+    }),
+    discovery.getEscrowDetails({
+      address: ChainSpecificAddress(
+        'eth:0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B',
+      ),
+      name: 'L1WethGateway',
+      description:
+        'Escrows WETH deposited through the canonical Bridge, minting a wrapped representation at the destination.',
+      tokens: '*',
+    }),
+  ],
   additionalTrackedTxs: [
     {
       uses: [

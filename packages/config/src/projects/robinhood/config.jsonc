@@ -5,12 +5,18 @@
   "initialAddresses": [
     "eth:0xDf8755334ce7A73cCF6b581C02eA649AE3E864b3",
     "eth:0x23A19d23e89166adedbDcB432518AB01e4272D94",
-    "eth:0xBd0D173EEb87D57A09521c24388a12789F33ba96"
+    "eth:0xBd0D173EEb87D57A09521c24388a12789F33ba96",
+    "eth:0x6a2E3a1e16FC29f27Ce61429746D558d656975bB",
+    "eth:0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0",
+    "eth:0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B"
   ],
   "names": {
     "eth:0xDf8755334ce7A73cCF6b581C02eA649AE3E864b3": "Bridge",
     "eth:0x23A19d23e89166adedbDcB432518AB01e4272D94": "RollupProxy",
     "eth:0xBd0D173EEb87D57A09521c24388a12789F33ba96": "SequencerInbox",
+    "eth:0x6a2E3a1e16FC29f27Ce61429746D558d656975bB": "L1GatewayRouter",
+    "eth:0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0": "L1ERC20Gateway",
+    "eth:0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B": "L1WethGateway",
     // Unverified ProxyAdmin (owned by the UpgradeExecutor) that is the admin of
     // the core proxies (Inbox, Bridge, Outbox, SequencerInbox, RollupEventInbox,
     // EdgeChallengeManager, UpgradeExecutor). No source published -> untemplatized.

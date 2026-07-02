@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x5f4eaba927cd929293ad8608c5f0561d44e6389b
+Generated with discovered.json: 0x2c1745b43c2422d989b78335e3a9218864c2a226
 
-# Diff at Thu, 02 Jul 2026 09:13:52 GMT:
+# Diff at Thu, 02 Jul 2026 10:38:22 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- current timestamp: 1782983567
+- current timestamp: 1782988636
 
 ## Description
 
@@ -84,6 +84,12 @@ Robinhood implementation vs the closest existing template shape (impl-to-impl):
 
 ```diff
 +   Status: CREATED
+    contract L1GatewayRouter (eth:0x6a2E3a1e16FC29f27Ce61429746D558d656975bB) [orbitstack/GatewayRouter]
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+```
+
+```diff
++   Status: CREATED
     contract EdgeChallengeManager (eth:0x6f38FC91105Fc9a43931DcA33450ab3315E3D4Fa) [orbitstack/EdgeChallengeManager]
     +++ description: Contract that implements the main challenge protocol logic of the fraud proof system.
 ```
@@ -96,8 +102,20 @@ Robinhood implementation vs the closest existing template shape (impl-to-impl):
 
 ```diff
 +   Status: CREATED
+    contract L1ERC20Gateway (eth:0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0) [orbitstack/ERC20Gateway]
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+```
+
+```diff
++   Status: CREATED
     contract SequencerInbox (eth:0xBd0D173EEb87D57A09521c24388a12789F33ba96) [orbitstack/SequencerInbox]
     +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+```
+
+```diff
++   Status: CREATED
+    contract Wrapped Ether Token (eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2) [N/A]
+    +++ description: None
 ```
 
 ```diff
@@ -122,4 +140,10 @@ Robinhood implementation vs the closest existing template shape (impl-to-impl):
 +   Status: CREATED
     contract Outbox (eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9) [orbitstack/Outbox]
     +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+```
+
+```diff
++   Status: CREATED
+    contract L1WethGateway (eth:0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B) [N/A]
+    +++ description: None
 ```
