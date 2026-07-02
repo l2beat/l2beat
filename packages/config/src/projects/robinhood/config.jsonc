@@ -17,9 +17,6 @@
     "eth:0x6a2E3a1e16FC29f27Ce61429746D558d656975bB": "L1GatewayRouter",
     "eth:0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0": "L1ERC20Gateway",
     "eth:0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B": "L1WethGateway",
-    // Unverified ProxyAdmin (owned by the UpgradeExecutor) that is the admin of
-    // the core proxies (Inbox, Bridge, Outbox, SequencerInbox, RollupEventInbox,
-    // EdgeChallengeManager, UpgradeExecutor). No source published -> untemplatized.
     "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD": "ProxyAdmin"
   },
   "overrides": {
