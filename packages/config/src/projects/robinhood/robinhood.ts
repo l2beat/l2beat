@@ -13,6 +13,7 @@ const genesisTimestamp = UnixTime(sequencerInbox.sinceTimestamp)
 export const robinhood: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1782864000), // 2026-07-01T00:00:00Z
   discovery,
+  additionalPurposes: ['RWA'],
   // validator whitelist is enabled on-chain (validatorWhitelistDisabled: false),
   // so the fraud proof system is permissioned -> classified as Other, not Rollup
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
