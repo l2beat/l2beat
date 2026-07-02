@@ -9,9 +9,7 @@ Generated with discovered.json: 0x2c1745b43c2422d989b78335e3a9218864c2a226
 
 Initial discovery.
 
-The ArbOS 61 core contracts are newer builds of standard Orbit contracts, so their
-shapes were registered on the shared `orbitstack` templates. Code diff of each
-Robinhood implementation vs the closest existing template shape (impl-to-impl):
+The chain uses ArbOS 61 core contracts, newer builds of standard Orbit contracts.
 
 - **SequencerInbox** — [diff](https://disco.l2beat.com/diff/eth:0x98a58ADAb0f8A66A1BF4544d804bc0475dff32c7/eth:0xb015D78fb9B890e96FD3E23819b2C8D9fffA3cC5)
   Adds a fee-token pricer, a custom-DA header flag (`0x01`) and delay-proof paths; batchPoster/owner privileged surface is unchanged.
