@@ -45,6 +45,7 @@ export const NON_DISCOVERY_DRIVEN_PROJECTS: string[] = [
   'polygonzkevm',
   'reya',
   'deversifi',
+  'robinhood',
   'scroll',
   'silicon',
   'sophon',
