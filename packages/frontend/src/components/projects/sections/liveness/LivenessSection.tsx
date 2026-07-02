@@ -26,6 +26,10 @@ export interface LivenessSectionProps extends ProjectSectionProps {
   anomalies: LivenessAnomaly[]
   hasTrackedContractsChanged: boolean
   trackedTransactions: TrackedTransactionsByType
+  duplicateData?: {
+    from: TrackedTxsConfigSubtype
+    to: TrackedTxsConfigSubtype
+  }
   milestones: Milestone[]
   defaultRange: ChartRange
   isArchived: boolean
@@ -39,6 +43,7 @@ export function LivenessSection({
   anomalies,
   hasTrackedContractsChanged,
   trackedTransactions,
+  duplicateData,
   milestones,
   defaultRange,
   isArchived,
@@ -75,7 +80,10 @@ export function LivenessSection({
         hideSubtypeSwitch={hideSubtypeSwitch}
       />
       <div className="mt-4">
-        <TrackedTransactions {...trackedTransactions} />
+        <TrackedTransactions
+          {...trackedTransactions}
+          duplicateData={duplicateData}
+        />
       </div>
       {!isArchived && (
         <>
