@@ -100,4 +100,25 @@ export const robinhood: ScalingProject = orbitStackL2({
     ],
   },
   usesEthereumBlobs: true,
+  milestones: [
+    {
+      // L1 contracts were deployed earlier (2026-04-30) while the chain was
+      // private behind a transaction-access whitelist; this marks the public
+      // launch (whitelist removed) on 2026-07-01. Pinned to T00:00:00Z because
+      // the milestone date must be a full day.
+      title: 'Mainnet launch',
+      url: 'https://robinhood.com/chain/',
+      date: '2026-07-01T00:00:00Z',
+      description:
+        'Robinhood Chain opens to the public, removing the transaction-access whitelist.',
+      type: 'general',
+    },
+    {
+      title: 'Public testnet launch',
+      url: 'https://robinhood.com/us/en/newsroom/robinhood-chain-launches-public-testnet/',
+      date: '2026-02-10T00:00:00Z',
+      description: 'Robinhood Chain opens its public testnet.',
+      type: 'general',
+    },
+  ],
 })
