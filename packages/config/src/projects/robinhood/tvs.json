@@ -20,6 +20,24 @@
       "category": "ether",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-USDG",
+      "priceId": "global-dollar",
+      "symbol": "USDG",
+      "name": "Global Dollar",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/51281/large/GDN_USDG_Token_200x200.png?1730484111",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168",
+        "chain": "robinhood",
+        "decimals": 6,
+        "sinceTimestamp": 1778003991
+      },
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
     }
   ]
 }

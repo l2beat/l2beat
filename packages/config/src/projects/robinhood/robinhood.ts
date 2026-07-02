@@ -68,6 +68,8 @@ export const robinhood: ScalingProject = orbitStackL2({
     name: 'robinhood',
     chainId: 4663,
     explorerUrl: 'https://robinhoodchain.blockscout.com',
+    // L2 genesis (block 1); tokens/escrows tracked from chain launch.
+    sinceTimestamp: UnixTime(1777567931),
     apis: [
       {
         type: 'rpc',
