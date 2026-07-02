@@ -20,7 +20,7 @@ export const robinhood: ScalingProject = orbitStackL2({
     name: 'Robinhood Chain',
     slug: 'robinhood',
     description:
-      "Robinhood Chain is a permissionless, Ethereum-compatible Layer-2 blockchain built to support a new era of onchain financial infrastructure — one that brings traditional markets, crypto, and real-world assets together on a fast, efficient, and open network.\n\nRobinhood Chain is part of Robinhood's broader mission to democratize access to global financial markets and to empower users and developers with modern blockchain tools. It is designed to enable the seamless transfer, access, and management of digital assets anywhere in the world, without intermediaries or platform lock-in.",
+      "Robinhood Chain is an Arbitrum Orbit Layer 2 operated by Robinhood, focused on tokenized real-world assets (such as stocks and ETFs) and onchain financial services including 24/7 trading, lending, and borrowing.\n\nRobinhood Chain is part of Robinhood's broader mission to democratize access to global financial markets and to empower users and developers with modern blockchain tools.",
     links: {
       websites: ['https://robinhood.com/chain/'],
       documentation: ['https://docs.robinhood.com/chain'],
