@@ -1,3 +1,4 @@
+import type { ProjectLivenessConfig, ProjectRiskView } from '@l2beat/config'
 import type {
   AggregatedLivenessRecord,
   AnomalyRecord,
@@ -24,6 +25,7 @@ import type {
   LivenessProject,
   LivenessResponse,
 } from './types'
+import { getAnomalyFailureMechanism } from './utils/getAnomalyFailureMechanism'
 
 export async function getLiveness(projectId?: ProjectId) {
   if (env.MOCK) {
@@ -41,7 +43,7 @@ async function getLivenessData(projectId?: ProjectId) {
     db.indexerConfiguration.getByIndexerId('tracked_txs_indexer'),
     ps.getProjects({
       select: ['trackedTxsConfig'],
-      optional: ['livenessConfig'],
+      optional: ['livenessConfig', 'scalingRisks'],
       whereNot: ['archivedAt'],
     }),
   ])
@@ -101,9 +103,10 @@ async function getLivenessData(projectId?: ProjectId) {
   )
 
   for (const trackedTxProject of trackedTxsProjects) {
-    const livenessConfig = livenessProjects.find(
-      (p) => p.id === trackedTxProject.id,
-    )?.livenessConfig
+    const project = livenessProjects.find((p) => p.id === trackedTxProject.id)
+    const livenessConfig = project?.livenessConfig
+    const riskView =
+      project?.scalingRisks?.stacked ?? project?.scalingRisks?.self
 
     const project30Days = groupedLast30Days?.[trackedTxProject.id]
     const project90Days = groupedLast90Days?.[trackedTxProject.id]
@@ -150,7 +153,13 @@ async function getLivenessData(projectId?: ProjectId) {
         anomalies,
         targetTimestamp,
       ),
-      anomalies: getAnomalies(anomalies, realTimeAnomalies, project30Days),
+      anomalies: getAnomalies(
+        anomalies,
+        realTimeAnomalies,
+        project30Days,
+        riskView,
+        livenessConfig,
+      ),
     }
     // duplicate data from one subtype to another if configured
     if (livenessConfig) {
@@ -260,6 +269,8 @@ function getAnomalies(
   project30Days:
     | Omit<AggregatedLivenessRecord, 'timestamp' | 'numberOfRecords'>[]
     | undefined,
+  riskView: ProjectRiskView | undefined,
+  livenessConfig: ProjectLivenessConfig | undefined,
 ): LivenessAnomaly[] {
   if (!project30Days) {
     return []
@@ -297,6 +308,11 @@ function getAnomalies(
         subtype: a.subtype,
         avgInterval,
         isApproved: false,
+        failureMechanism: getAnomalyFailureMechanism(
+          a.subtype,
+          riskView,
+          livenessConfig,
+        ),
       }
     }),
     ...realTimeAnomalies.map((a): LivenessAnomaly => {
@@ -313,6 +329,11 @@ function getAnomalies(
         subtype: a.subtype,
         avgInterval,
         isApproved: true,
+        failureMechanism: getAnomalyFailureMechanism(
+          a.subtype,
+          riskView,
+          livenessConfig,
+        ),
       }
     }),
   ].sort(sortAnomalies)
@@ -471,6 +492,7 @@ function generateAnomalies(): LivenessAnomaly[] {
           durationInSeconds: isOngoing ? UnixTime.now() - start : end - start,
           avgInterval: generateRandomTime(),
           isApproved: isOngoing,
+          failureMechanism: undefined,
         } as const
       })
     : []

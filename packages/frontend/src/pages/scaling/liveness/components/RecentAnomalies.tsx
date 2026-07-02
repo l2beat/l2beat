@@ -1,3 +1,4 @@
+import type { TableReadyValue } from '@l2beat/config'
 import { Button } from '~/components/core/Button'
 import {
   Collapsible,
@@ -5,12 +6,20 @@ import {
   CollapsibleTrigger,
 } from '~/components/core/Collapsible'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import { LiveIndicator } from '~/components/LiveIndicator'
+import { Markdown } from '~/components/markdown/Markdown'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ChevronIcon } from '~/icons/Chevron'
+import { InfoIcon } from '~/icons/Info'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import { cn } from '~/utils/cn'
 import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
+import { sentimentToTextColor } from '~/utils/sentiment'
 import { AnomalyText } from './AnomalyText'
 import { NoAnomaliesState } from './NoRecentAnomaliesState'
 
@@ -126,6 +135,12 @@ function AnomalyCollapsible({
                   </span>
                 )}
                 <AnomalyText anomaly={anomaly} />
+                {anomaly.failureMechanism && (
+                  <FailureMechanism
+                    failureMechanism={anomaly.failureMechanism}
+                    slug={projectWithAnomalies.slug}
+                  />
+                )}
               </div>
             )
           })}
@@ -137,5 +152,42 @@ function AnomalyCollapsible({
         </Button>
       </CollapsibleContent>
     </Collapsible>
+  )
+}
+
+function FailureMechanism({
+  failureMechanism,
+  slug,
+}: {
+  failureMechanism: TableReadyValue
+  slug: string
+}) {
+  return (
+    <div className="mt-2 flex flex-wrap items-center gap-x-1.5 gap-y-1">
+      <span className="text-secondary text-subtitle-10 uppercase leading-none">
+        Failure mechanism
+      </span>
+      <a
+        href={`/scaling/projects/${slug}#operator`}
+        className={cn(
+          'font-medium text-paragraph-13 underline decoration-dotted underline-offset-2 hover:decoration-solid',
+          sentimentToTextColor(failureMechanism.sentiment ?? 'neutral', {
+            vibrant: true,
+          }),
+        )}
+      >
+        {failureMechanism.value}
+      </a>
+      {failureMechanism.description && (
+        <Tooltip>
+          <TooltipTrigger className="size-3">
+            <InfoIcon className="size-3" variant="gray" />
+          </TooltipTrigger>
+          <TooltipContent>
+            <Markdown>{failureMechanism.description}</Markdown>
+          </TooltipContent>
+        </Tooltip>
+      )}
+    </div>
   )
 }
