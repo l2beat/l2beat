@@ -11162,6 +11162,28 @@
       "supply": "totalSupply"
     },
     {
+      "name": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "symbol": "USDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1780403342,
+      "coingeckoListingTimestamp": 1702512000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33613/large/usde.png?1733810059",
+      "chainId": 4663,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargate"
+          }
+        ]
+      }
+    },
+    {
       "name": "Catizen",
       "coingeckoId": "catizen",
       "address": "0x1Bdd8878252DaddD3Af2ba30628813271294eDc0",

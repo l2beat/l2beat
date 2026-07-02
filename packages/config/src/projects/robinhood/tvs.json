@@ -23,6 +23,32 @@
     },
     {
       "mode": "auto",
+      "id": "robinhood-USDe",
+      "priceId": "ethena-usde",
+      "symbol": "USDe",
+      "name": "USDe",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33613/large/usde.png?1733810059",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1780403342
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargate"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "robinhood-USDG",
       "priceId": "global-dollar",
       "symbol": "USDG",
