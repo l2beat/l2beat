@@ -10,6 +10,10 @@
       "ecosystemId": "arbitrum-orbit",
       "news": [
         {
+          "title": "Robinhood Launches AI Native Layer 2 Chain Powered by Arbitrum",
+          "content": "Robinhood Crypto [announced](https://x.com/RobinhoodCrypto/status/2072389650543411633) the mainnet launch of Robinhood Chain, an Ethereum Layer 2 network built using Arbitrum scaling technology. Engineered as an optimized financial infrastructure, the platform delivers high speed execution alongside predictable transaction ordering. The newly deployed AI native blockchain focuses heavily on onboarding and scaling real world assets like traditional equities and exchange traded funds directly onchain. By utilizing a customized dedicated ledger, Robinhood secures complete control over its economic properties and compliance frameworks. The network successfully bridges retail finance with decentralized networks, allowing developers to build scalable applications. Robinhood positioned the launch as a landmark milestone for digital fintech, expanding the utility of decentralized financial primitives to millions of global users.."
+        },
+        {
           "title": "Mastercard Selects Arbitrum for Global Stablecoin Settlement",
           "content": "Arbitrum [announced](https://x.com/arbitrum/status/2062278922939633692) that Mastercard is leveraging its network to power the next generation of global stablecoin settlement and programmable payments. The integration routes regulated stablecoins through Arbitrum to enable continuous 24/7 settlement for Mastercard's network of issuers and acquirers.\n\nBy utilizing Arbitrum's deep liquidity and high-performance infrastructure, the initiative provides near-instant cross-border velocity outside traditional banking hours. Arbitrum positioned the development as a major milestone for the programmable economy, demonstrating that public Layer 2 infrastructure has reached the maturity required for institutional-scale financial operations."
         },
