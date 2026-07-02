@@ -14,12 +14,11 @@ import {
 import { LiveIndicator } from '~/components/LiveIndicator'
 import { Markdown } from '~/components/markdown/Markdown'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { SentimentText } from '~/components/SentimentText'
 import { ChevronIcon } from '~/icons/Chevron'
-import { InfoIcon } from '~/icons/Info'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import { cn } from '~/utils/cn'
 import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
-import { sentimentToTextColor } from '~/utils/sentiment'
 import { AnomalyText } from './AnomalyText'
 import { NoAnomaliesState } from './NoRecentAnomaliesState'
 
@@ -162,31 +161,33 @@ function FailureMechanism({
   failureMechanism: TableReadyValue
   slug: string
 }) {
+  const link = (
+    <a href={`/scaling/projects/${slug}#operator`}>
+      <SentimentText
+        sentiment={failureMechanism.sentiment ?? 'neutral'}
+        vibrant
+        className="font-medium text-paragraph-13 underline decoration-dotted underline-offset-2 hover:decoration-solid"
+      >
+        {failureMechanism.value}
+      </SentimentText>
+    </a>
+  )
   return (
-    <div className="mt-2 flex flex-wrap items-center gap-x-1.5 gap-y-1">
+    <div className="mt-1 flex flex-wrap items-baseline gap-x-1.5">
       <span className="text-secondary text-subtitle-10 uppercase leading-none">
         Failure mechanism
       </span>
-      <a
-        href={`/scaling/projects/${slug}#operator`}
-        className={cn(
-          'font-medium text-paragraph-13 underline decoration-dotted underline-offset-2 hover:decoration-solid',
-          sentimentToTextColor(failureMechanism.sentiment ?? 'neutral', {
-            vibrant: true,
-          }),
-        )}
-      >
-        {failureMechanism.value}
-      </a>
-      {failureMechanism.description && (
+      {failureMechanism.description ? (
         <Tooltip>
-          <TooltipTrigger className="size-3">
-            <InfoIcon className="size-3" variant="gray" />
+          <TooltipTrigger asChild disabledOnMobile>
+            {link}
           </TooltipTrigger>
           <TooltipContent>
             <Markdown>{failureMechanism.description}</Markdown>
           </TooltipContent>
         </Tooltip>
+      ) : (
+        link
       )}
     </div>
   )
