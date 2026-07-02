@@ -12,7 +12,7 @@ Initial discovery.
 The chain uses ArbOS 61 core contracts, newer builds of standard Orbit contracts.
 
 - **SequencerInbox** — [diff](https://disco.l2beat.com/diff/eth:0x98a58ADAb0f8A66A1BF4544d804bc0475dff32c7/eth:0xb015D78fb9B890e96FD3E23819b2C8D9fffA3cC5)
-  Adds a fee-token pricer, a custom-DA header flag (`0x01`) and delay-proof paths; batchPoster/owner privileged surface is unchanged.
+  Adds an owner-only `setFeeTokenPricer` (inert here: `isUsingFeeToken=false`, `feeTokenPricer=0x0`), a custom-DA header flag (`0x01`, unused — chain posts blobs), and delay-proof paths. No new actors beyond the existing owner/batchPoster.
 - **RollupProxy (RollupAdminLogic)** — [diff](https://disco.l2beat.com/diff/eth:0x7FC126FF51183a78C5E0437467f325f661D8Df17/eth:0xAb7A44CE7e66963d2116dCe74AB63eeF88266C82)
   ArbOS 61 admin logic; all setters (allowlist, fee-token, batch-poster mgr, AFK-whitelist) stay owner-gated — covered by the template `owner` permission.
 - **RollupProxy (RollupUserLogic)** — [diff](https://disco.l2beat.com/diff/eth:0x6490bA0a60Cc7d3a59C9eeE135D9eeD24553a60d/eth:0xedC23dFC7D1e57EC07eA5ff7419634DbAe08Ed2C)
@@ -20,7 +20,7 @@ The chain uses ArbOS 61 core contracts, newer builds of standard Orbit contracts
 - **RollupEventInbox** — [diff](https://disco.l2beat.com/diff/eth:0x6D576E220Cb44C3E8eF75D0EfBeb1Ff041e2E4A5/eth:0x796FeE4adceD1cb47a3e3d1B6925472F8fC8f1f9)
   BoLD event inbox; only `initialize` is rollup-gated, no standing permissions.
 - **OneStepProofEntry** — [diff](https://disco.l2beat.com/diff/eth:0x8Faa21891B0b928afEbd5314D1D313f8f7B34DaC/eth:0x5087a6fD526eFD5c6770d94D0c325de0e2A2c44D)
-  Stateless proof dispatcher, ArbOS 61 opcode set; no state, no permissions.
+  Proof dispatcher (ArbOS 61 opcode set); immutable constructor-set prover addresses, no mutable state, no permissions.
 - **OneStepProver0** — [diff](https://disco.l2beat.com/diff/eth:0x2dCCAbE89cF76132619a9B18e9F9e48E837222b5/eth:0x6fE84aC811EBEcd888Eca93757fEa378Bb03b00c)
   Stateless one-step WASM verifier; ArbOS 61 opcode updates only, no state/permissions.
 - **OneStepProverMath** — [diff](https://disco.l2beat.com/diff/eth:0xCf4b98cFF2976E4eb579B9498f398b5bd279A6eD/eth:0x4B15E064d5d55705E89080bDEA4BFe4cF20D6114)
@@ -28,7 +28,7 @@ The chain uses ArbOS 61 core contracts, newer builds of standard Orbit contracts
 - **OneStepProverMemory** — [diff](https://disco.l2beat.com/diff/eth:0x1cD76B9C33b2e3b04D7B181399d492B3e49AD7fB/eth:0x665CEA1cA6C36aB701f4C6AE895b156f79C51c35)
   Stateless memory-opcode verifier; ArbOS 61 opcode updates only, no state/permissions.
 - **OneStepProverHostIo** — [diff](https://disco.l2beat.com/diff/eth:0x0003A96B27ce73505b43ea1b71a5aB06bec568C4/eth:0xe1aAfAfBde42f043495B39d1a15a58E91c894Fbf)
-  Stateless host-io verifier; ArbOS 61 host-io/opcode updates only, no state/permissions.
+  Host-io verifier (ArbOS 61 host-io/opcode updates); immutable `customDAValidator` (`0x0` here, so custom-DA proof paths revert), no mutable state, no permissions.
 
 ## Initial discovery
 
