@@ -339,8 +339,9 @@ out-of-memory crashes when retention grew from one day to seven.
 
 The one consumer that needs a full transfer row — the
 `non-swapping-transfer` assignment proof — fetches the group's sample
-transfer by primary key, only when a plan actually resolves an abstract
-token from transfer evidence.
+transfer by primary key, and only for outcomes that persist the proof
+(`write` and `pending`). Plans that end in `noop` or `conflict` — the
+common steady-state outcomes — never pay the lookup.
 
 The drain refresh happens immediately after the pre-step and immediately
 before processing the queue. Do not replace it with a stale cached read:

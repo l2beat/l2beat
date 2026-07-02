@@ -270,13 +270,14 @@ describe(TokenIngestionProcessor.name, () => {
     it('downgrades a transfer-driven update of an existing token to conflict when symbols differ', async () => {
       const address = token('ethereum', '0xaaa')
       const otherAddress = token('base', '0xbbb')
+      const findByTransferId = mockFn().resolvesTo(
+        transfer({ bridgeType: 'lockAndMint' }),
+      )
 
       const processor = createProcessor({
         db: mockObject<Database>({
           interopTransfer: mockObject<Database['interopTransfer']>({
-            findByTransferId: mockFn().resolvesTo(
-              transfer({ bridgeType: 'lockAndMint' }),
-            ),
+            findByTransferId,
           }),
         }),
         tokenDb: mockObject<TokenDatabase>({
@@ -328,6 +329,69 @@ describe(TokenIngestionProcessor.name, () => {
         message:
           'Non-swapping transfers point to abstract token USDC01:USDC, but the deployed token symbol is WETH.',
       })
+      expect(findByTransferId).toHaveBeenCalledTimes(0)
+    })
+
+    it('does not fetch the proof transfer when transfers agree with the existing assignment', async () => {
+      const address = token('ethereum', '0xaaa')
+      const otherAddress = token('base', '0xbbb')
+      const existing = {
+        ...address,
+        abstractTokenId: 'USDC01',
+        symbol: 'USDC',
+        comment: null,
+        decimals: 6,
+        deploymentTimestamp: UnixTime(1),
+        metadata: null,
+      }
+      const findByTransferId = mockFn().resolvesTo(
+        transfer({ bridgeType: 'lockAndMint' }),
+      )
+
+      const processor = createProcessor({
+        db: mockObject<Database>({
+          interopTransfer: mockObject<Database['interopTransfer']>({
+            findByTransferId,
+          }),
+        }),
+        tokenDb: mockObject<TokenDatabase>({
+          deployedToken: mockObject<TokenDatabase['deployedToken']>({
+            findByChainAndAddress: mockFn().resolvesTo(existing),
+            getByPrimaryKeys: mockFn().resolvesTo([
+              {
+                ...otherAddress,
+                abstractTokenId: 'USDC01',
+                symbol: 'USDC',
+                comment: null,
+                decimals: 6,
+                deploymentTimestamp: UnixTime(1),
+                metadata: null,
+              },
+            ]),
+          }),
+          abstractToken: mockObject<TokenDatabase['abstractToken']>({
+            getByIds: mockFn().resolvesTo([
+              abstractTokenRecord('USDC01', 'USDC'),
+            ]),
+          }),
+        }),
+      })
+
+      const trace = await processor.plan(
+        queueEntry(address),
+        buildInteropTransferIndex([
+          route({
+            srcChain: address.chain,
+            srcTokenAddress: address.address,
+            dstChain: otherAddress.chain,
+            dstTokenAddress: otherAddress.address,
+            bridgeType: 'lockAndMint',
+          }),
+        ]),
+      )
+
+      expect(trace.outcome).toEqual({ kind: 'noop', deployedToken: existing })
+      expect(findByTransferId).toHaveBeenCalledTimes(0)
     })
 
     it('updates an existing token from a transfer when symbols match case-insensitively', async () => {
