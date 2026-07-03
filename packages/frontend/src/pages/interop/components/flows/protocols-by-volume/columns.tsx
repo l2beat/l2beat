@@ -8,6 +8,7 @@ import type { ProtocolEntry } from '~/server/features/scaling/interop/types'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import type { InteropSelection } from '../../../utils/types'
+import { BridgeTypeBadge } from '../../table/BridgeTypeBadge'
 import { TopRouteCell } from './TopRouteCell'
 
 export type ProtocolByVolumeRow = ProtocolEntry &
@@ -71,6 +72,26 @@ export function getProtocolsByVolumeColumns(apiSelection: InteropSelection) {
           {ctx.row.original.type}
         </div>
       ),
+      meta: {
+        headClassName: 'text-2xs',
+      },
+    }),
+    columnHelper.accessor('bridgeTypes', {
+      header: 'Transfer types',
+      enableSorting: false,
+      cell: (ctx) => {
+        return (
+          <div className="flex items-center gap-1" key={ctx.row.original.id}>
+            {ctx.row.original.bridgeTypes.map((bridgeType) => (
+              <BridgeTypeBadge
+                size="extraSmall"
+                key={bridgeType}
+                bridgeType={bridgeType}
+              />
+            ))}
+          </div>
+        )
+      },
       meta: {
         headClassName: 'text-2xs',
       },

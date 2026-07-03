@@ -140,9 +140,20 @@ export function getAllProtocolsColumns(
       size: 44,
     }),
     ...commonColumns,
+    columnHelper.accessor('type', {
+      header: 'Category',
+      cell: (ctx) => (
+        <div className="whitespace-nowrap font-medium text-xs capitalize leading-[15px] md:text-sm md:leading-[1.2]">
+          {ctx.row.original.type}
+        </div>
+      ),
+      meta: {
+        headClassName: 'text-2xs',
+      },
+    }),
     !hideTypeColumn &&
       columnHelper.accessor('bridgeTypes', {
-        header: 'Type',
+        header: 'Transfer types',
         enableSorting: false,
         cell: (ctx) => {
           return (
