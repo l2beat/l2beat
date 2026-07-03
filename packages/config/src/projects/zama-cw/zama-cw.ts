@@ -188,6 +188,7 @@ export const zamaCw: BaseProject = {
       PRIVACY_ATTRIBUTES.fhe,
       PRIVACY_ATTRIBUTES.privateAmounts,
       PRIVACY_ATTRIBUTES.anyAmount,
+      PRIVACY_ATTRIBUTES.defi,
     ],
     riskSummary: readProjectMarkdown('zama-cw', 'riskSummary', {
       kmsThreshold,
