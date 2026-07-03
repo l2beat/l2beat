@@ -320,6 +320,8 @@ export function getProjectsUsedIn(
         url = `/data-availability/projects/${layer?.slug}/${project.slug}`
       } else if (project.daLayer) {
         url = `/data-availability/projects/${project.slug}/no-bridge`
+      } else if ('privacyInfo' in project && project.privacyInfo) {
+        url = `/privacy/projects/${project.slug}`
       }
 
       return {

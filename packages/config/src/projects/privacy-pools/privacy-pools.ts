@@ -6,6 +6,8 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
+import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
+import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
@@ -91,6 +93,35 @@ export const privacyPools: BaseProject = {
   },
   privacyInfo: {
     trustedSetup: TRUSTED_SETUPS.PrivacyPools,
+    verifierHashes: [
+      {
+        hash: 'Privacy Pools Withdrawal and Ragequit verifiers 03.07.2026',
+        name: 'Privacy Pools verifiers v1.2.1',
+        sourceLink:
+          'https://github.com/0xbow-io/privacy-pools-core/tree/v1.2.1/packages/circuits',
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6',
+            ),
+          },
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d',
+            ),
+          },
+        ],
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'privacy-pools',
+          'verificationSteps-03.07.2026',
+        ),
+      },
+    ],
     tokens: getPrivacyTokens(),
     exitWindow: {
       value: 'Infinite',

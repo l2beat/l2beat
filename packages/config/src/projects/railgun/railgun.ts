@@ -7,6 +7,8 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
+import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
+import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
@@ -169,6 +171,29 @@ export const railgun: BaseProject = {
   },
   privacyInfo: {
     trustedSetup: TRUSTED_SETUPS.Railgun,
+    verifierHashes: [
+      {
+        hash: 'Railgun 91 circuit verifier 03.07.2026',
+        name: 'Railgun verifier',
+        sourceLink:
+          'https://github.com/Railgun-Privacy/circuits-v2/tree/0aa2d13763a9fcfbb7b7ea9c02e004e71f1394bb/src/library',
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9',
+            ),
+          },
+        ],
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'railgun',
+          'verificationSteps-03.07.2026',
+        ),
+      },
+    ],
     tokens: privacyTokens,
     exitWindow: {
       value: formatSeconds(executionStartOffset),

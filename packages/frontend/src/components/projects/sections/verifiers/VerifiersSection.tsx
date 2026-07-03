@@ -14,6 +14,9 @@ import type { ProjectSectionProps } from '../types'
 import { VerifiersTable } from './table/VerifiersTable'
 
 export interface VerifiersSectionProps extends ProjectSectionProps {
+  introText?: string
+  showProofSystemTag?: boolean
+  collapsible?: boolean
   proofSystemVerifiers: {
     proofSystem: ZkCatalogTag
     verifierHashes: {
@@ -41,28 +44,34 @@ export interface VerifiersSectionProps extends ProjectSectionProps {
 
 export function VerifiersSection({
   proofSystemVerifiers,
+  introText = 'List of different onchain verifiers for this proving system. Unique ID distinguishes differents deployments of the same verifier from different verifiers (e.g. different versions).',
+  showProofSystemTag = true,
+  collapsible = true,
   as = 'section',
   ...sectionProps
 }: VerifiersSectionProps) {
   return (
     <ProjectSection {...sectionProps} as={as} className="space-y-6">
-      <p className="text-paragraph-15 md:text-paragraph-16">
-        List of different onchain verifiers for this proving system. Unique ID
-        distinguishes differents deployments of the same verifier from different
-        verifiers (e.g. different versions).
-      </p>
+      {introText && (
+        <p className="text-paragraph-15 md:text-paragraph-16">{introText}</p>
+      )}
       {proofSystemVerifiers.map(({ proofSystem, verifierHashes }) => (
         <div key={proofSystem.id + proofSystem.type}>
-          <TechStackTag
-            className="mb-2 w-fit"
-            tag={proofSystem}
-            displayType="typeAndName"
-          />
-          <p className="text-paragraph-14 text-secondary">
-            {proofSystem.description ??
-              'Verifier ID as recorded by the verifier smart contract.'}
-          </p>
+          {showProofSystemTag && (
+            <>
+              <TechStackTag
+                className="mb-2 w-fit"
+                tag={proofSystem}
+                displayType="typeAndName"
+              />
+              <p className="text-paragraph-14 text-secondary">
+                {proofSystem.description ??
+                  'Verifier ID as recorded by the verifier smart contract.'}
+              </p>
+            </>
+          )}
           <VerifiersTable
+            collapsible={collapsible}
             entries={verifierHashes.map((verifierHash) => ({
               ...verifierHash,
               proofSystem,

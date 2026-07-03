@@ -12,6 +12,7 @@ import type { ProjectDetailsSection } from '~/components/projects/sections/types
 import { getPrivacyProjectDetails } from '~/server/features/privacy/getPrivacyProjectDetails'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
+import { get7dTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getProjectMetadataDescription } from '~/ssr/head/getProjectMetadataDescription'
@@ -23,6 +24,7 @@ import { getContractUtils } from '~/utils/project/contracts-and-permissions/getC
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
+import { getVerifiersSection } from '~/utils/project/getVerifiersSection'
 import { optionToRange } from '~/utils/range/range'
 
 export interface PrivacyProjectEntry {
@@ -95,6 +97,8 @@ export async function getPrivacyProjectData(
     details,
     contractUtils,
     allProjectsWithContracts,
+    allProjects,
+    tvs,
     zkCatalogProjects,
   ] = await Promise.all([
     getAppLayoutProps(),
@@ -110,6 +114,16 @@ export async function getPrivacyProjectData(
     ps.getProjects({
       select: ['contracts'],
     }),
+    ps.getProjects({
+      optional: [
+        'display',
+        'daBridge',
+        'scalingInfo',
+        'daLayer',
+        'privacyInfo',
+      ],
+    }),
+    get7dTvsBreakdown({ type: 'all' }),
     ps.getProjects({
       select: ['zkCatalogInfo'],
     }),
@@ -269,6 +283,31 @@ export async function getPrivacyProjectData(
       ],
     },
   })
+
+  if (details.verifierHashes && details.verifierHashes.length > 0) {
+    const verifiersSection = await getVerifiersSection(
+      {
+        projectId: details.id,
+        verifierHashes: details.verifierHashes,
+        includeCurrentProject: true,
+      },
+      contractUtils,
+      allProjects,
+      tvs,
+    )
+
+    sections.push({
+      type: 'VerifiersSection',
+      props: {
+        id: 'verifiers',
+        title: 'Verifier IDs',
+        introText: undefined,
+        showProofSystemTag: false,
+        collapsible: false,
+        ...verifiersSection,
+      },
+    })
+  }
 
   if (permissionsSection) {
     sections.push({

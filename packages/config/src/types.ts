@@ -951,6 +951,7 @@ export interface TrustedSetup {
 
 export interface ProjectPrivacyInfo {
   trustedSetup: TrustedSetup
+  verifierHashes?: ProjectZkCatalogInfo['verifierHashes']
   tokens: ProjectPrivacyToken[]
   exitWindow: PrivacyExitWindow
   reproducibility: PrivacySummaryValue

@@ -6,6 +6,7 @@ import type {
   ProjectDisplay,
   ProjectPermissions,
   ProjectStatuses,
+  ProjectZkCatalogInfo,
 } from '@l2beat/config'
 import type {
   PrivacyFlowBucketTotalRecord,
@@ -45,6 +46,7 @@ export interface PrivacyProjectDetails {
   exitWindow: PrivacyExitWindow
   adminViewingKey: PrivacySummaryValue
   reproducibility: PrivacySummaryValue
+  verifierHashes?: ProjectZkCatalogInfo['verifierHashes']
   riskSummary?: string
   upgradesAndGovernance?: string
   attributes: PrivacyAttribute[]
@@ -258,6 +260,7 @@ export async function getPrivacyProjectDetails(
     permissions: project.permissions,
     statuses: project.statuses,
     trustedSetup: project.privacyInfo.trustedSetup,
+    verifierHashes: project.privacyInfo.verifierHashes,
     exitWindow: project.privacyInfo.exitWindow,
     adminViewingKey: project.privacyInfo.adminViewingKey,
     reproducibility: project.privacyInfo.reproducibility,

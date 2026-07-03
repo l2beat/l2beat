@@ -9,6 +9,8 @@ import {
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
+import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
+import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
@@ -118,6 +120,29 @@ export const tornadoCash: BaseProject = {
   },
   privacyInfo: {
     trustedSetup: TRUSTED_SETUPS.TornadoCash,
+    verifierHashes: [
+      {
+        hash: 'Tornado Cash verifier 03.07.2026',
+        name: 'Tornado Cash verifier v2.1',
+        sourceLink:
+          'https://github.com/tornadocash/tornado-core/tree/v2.1/circuits',
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0xce172ce1F20EC0B3728c9965470eaf994A03557A',
+            ),
+          },
+        ],
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'tornado-cash',
+          'verificationSteps-03.07.2026',
+        ),
+      },
+    ],
     tokens: getPrivacyTokens(),
     exitWindow: {
       value: 'Infinite',
