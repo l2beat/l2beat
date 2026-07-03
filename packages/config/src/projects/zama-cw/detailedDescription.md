@@ -1,8 +1,8 @@
 Zama CW is an account-based confidential token wrapper system on Ethereum, using the Zama FHE protocol. It is based on [ERC-7984](https://eips.ethereum.org/EIPS/eip-7984). Users deposit regular ERC-20 tokens into asset-specific wrapper escrows and receive confidential wrapper tokens whose balances and internal transfer amounts are represented as encrypted handles.
 
-'Confidential' here means `from:` and `to:` addresses and transfer timestamps always remain public. Only balances and transfer amounts are hidden.
+'Confidential' here means `from:` and `to:` addresses and transfer timestamps always remain public. Only balances and transfer amounts are hidden. Each confidential token aggregates encrypted balances for a single underlying asset, so the hidden state is the amount and balance data, not the public address graph.
 
-![Zama CW pool architecture](/images/architecture/zama-pool.png#center)
+![Zama CW architecture](/images/architecture/zama.png#center)
 
 ### Architecture
 
@@ -18,7 +18,7 @@ There are many moving parts and offchain components in the Zama FHE protocol on 
 
 ### Privacy considerations
 
-Deposits and withdrawals are public privacy boundaries. A `wrap` emits the confidential-token recipient and the rounded clear underlying-token amount. The recipient can be different from the depositor, but that relationship is still visible in the wrapper event. Withdrawals then reveil the recipient and amount.
+Deposits and withdrawals are public privacy boundaries. A `wrap` emits the confidential-token recipient and the rounded clear underlying-token amount. The recipient can be different from the depositor, but that relationship is still visible in the wrapper event. Withdrawals then reveal the recipient and amount.
 
 Within a confidential wrapper token, holders can make confidential transfers between transparent EVM addresses. These transfers reveal the parties and encrypted ciphertext handles, but not the clear amount or resulting balances. The confidential balances and transfer amounts of users can be decrypted by {{kmsThreshold}}/{{kmsSignerCount}} KMS signers, including retroactively.
 
@@ -28,7 +28,7 @@ Practical privacy also depends on timing, amounts, address reuse, wallet/RPC pro
 
 ### Fees
 
-There currently is no protocol fee. Users still pay Ethereum gas for each action, including the ones inside the pool, and may pay costs charged by external wallets, relayers, or services used to create or submit transactions.
+There currently is no protocol fee. Users still pay Ethereum gas for each action, including confidential token transfers, and may pay costs charged by external wallets, relayers, or services used to create or submit transactions.
 
 ### Compliance
 
@@ -38,6 +38,6 @@ Because confidential wrapper tokens are backed by underlying tokens held in wrap
 
 ### Anonymity set
 
-Zama CW does not use fixed-denomination notes. For a given finalized withdrawal, the set of prior deposits that could have funded the withdrawing account through the public address graph is it's effective anonymity set: deposits credited to the same address, or to addresses that visibly transferred confidential tokens to it before the withdrawal. Amounts are encrypted inside the wrapper, so links within the remaining candidate set can remain ambiguous, but deposits and finalized withdrawals still expose clear boundary amounts and endpoint addresses.
+Zama CW does not use fixed-denomination notes. For a given finalized withdrawal, the set of prior deposits that could have funded the withdrawing account through the public address graph is its effective anonymity set: deposits credited to the same address, or to addresses that visibly transferred confidential tokens to it before the withdrawal. Amounts are private inside the wrapper, so links within the remaining candidate set can remain ambiguous, but deposits and finalized withdrawals expose each boundary amount and endpoint address. Integration with DeFi and its use from inside the wrapper increases the anonymity set.
 
 As mentioned in 'Privacy Considerations', the mostly centralized offchain services that cannot be circumvented can corrupt practical privacy, independent of the abstract measurable anonymity set.
