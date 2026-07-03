@@ -145,7 +145,9 @@ function getDaSummaryEntry(
             : projectsChangeReport.getChanges(b.id).impactfulChange
               ? 'impactful-change'
               : undefined,
-        ongoingAnomaly: bridgeLiveness?.anomalies.some(isAnomalyOngoing),
+        ongoingAnomaly: bridgeLiveness?.anomalies.some(
+          (anomaly) => isAnomalyOngoing(anomaly) && anomaly.isApproved,
+        ),
       },
       tvs: getTvs(b.daBridge.usedIn.map((project) => project.id)),
       risks: mapBridgeRisksToRosetteValues(b.daBridge.risks),
