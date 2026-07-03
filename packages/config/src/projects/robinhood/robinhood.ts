@@ -85,6 +85,47 @@ export const robinhood: ScalingProject = orbitStackL2({
       },
     },
   ],
+  interopConfig: {
+    name: 'Robinhood Chain Canonical',
+    durationSplit: {
+      lockAndMint: [
+        {
+          label: 'L1 -> L2',
+          transferTypes: [
+            'orbitstack.L1ToL2Transfer',
+            'orbitstack-standardgateway.L1ToL2Transfer',
+            'orbitstack-wethgateway.L1ToL2Transfer',
+          ],
+        },
+        {
+          label: 'L2 -> L1',
+          transferTypes: [
+            'orbitstack.L2ToL1Transfer',
+            'orbitstack-standardgateway.L2ToL1Transfer',
+            'orbitstack-wethgateway.L2ToL1Transfer',
+          ],
+        },
+      ],
+    },
+    plugins: [
+      {
+        chain: 'robinhood',
+        plugin: 'orbitstack',
+        bridgeType: 'lockAndMint',
+      },
+      {
+        chain: 'robinhood',
+        plugin: 'orbitstack-standardgateway',
+        bridgeType: 'lockAndMint',
+      },
+      {
+        chain: 'robinhood',
+        plugin: 'orbitstack-wethgateway',
+        bridgeType: 'lockAndMint',
+      },
+    ],
+    type: 'canonical',
+  },
   chainConfig: {
     name: 'robinhood',
     chainId: 4663,
