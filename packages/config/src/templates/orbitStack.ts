@@ -52,6 +52,7 @@ import type {
   ProjectCustomDa,
   ProjectDaTrackingConfig,
   ProjectEscrow,
+  ProjectReviewStatus,
   ProjectRisk,
   ProjectScalingCapability,
   ProjectScalingContractsProgramHash,
@@ -159,6 +160,7 @@ interface OrbitStackConfigCommon {
   additionalPurposes?: ProjectScalingPurpose[]
   overridingPurposes?: ProjectScalingPurpose[]
   archivedAt?: UnixTime
+  reviewStatus?: ProjectReviewStatus
   /** Gas tokens that are applicable yet cannot be added to tokens.jsonc for some reason (e.g. lack of CG support) */
   untrackedGasTokens?: string[]
   customDa?: ProjectCustomDa
@@ -470,6 +472,7 @@ function orbitStackCommon(
     addedAt: templateVars.addedAt,
     capability: templateVars.capability ?? 'universal',
     archivedAt: templateVars.archivedAt ?? undefined,
+    reviewStatus: templateVars.reviewStatus,
     display: {
       architectureImage,
       stateValidationImage: isPostBoLD ? 'bold' : 'orbit',
