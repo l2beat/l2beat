@@ -136,15 +136,9 @@ function getMockInteropTokenData({
     transferCount: 1000,
     avgDuration: getAverageDuration(
       {
-        volume: 10_000_000,
-        transferCount: 1000,
         transfersWithDurationCount: 1000,
         totalDurationSum: 100_000_000,
         transferTypeStats: undefined,
-        minTransferValueUsd: 100,
-        maxTransferValueUsd: 100_000,
-        mintedValueUsd: undefined,
-        burnedValueUsd: undefined,
       },
       undefined,
     ),
