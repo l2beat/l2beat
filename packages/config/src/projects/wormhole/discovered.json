@@ -1,13 +1,13 @@
 {
   "name": "wormhole",
   "timestamp": 1778499359,
-  "configHash": "0x50b45a5283822994d13cf82376e24d515a64c38343dee356136063d83ad15811",
+  "configHash": "0x17690043724ad3b36f101b161be0caf180807ca10e88440a5d4b53f0682c3471",
   "entries": [
     {
       "address": "eth:0x000aC0076727b35FBea2dAc28fEE5cCB0fEA768e",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -65,7 +65,7 @@
       "address": "eth:0x107A0086b32d7A0977926A205131d8731D39cbEB",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -86,7 +86,7 @@
       "address": "eth:0x114De8460193bdf3A2fCf81f86a09765F4762fD1",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -107,7 +107,7 @@
       "address": "eth:0x178e21ad2E77AE06711549CFBB1f9c7a9d8096e8",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -128,7 +128,7 @@
       "address": "eth:0x18e41674CcF26329cD111406C1D05C6c80b23EdC",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -304,7 +304,7 @@
       "address": "eth:0x3F851Ad586A47ceF8d04748f33ab0D71395f06b4",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -325,7 +325,7 @@
       "address": "eth:0x42579bFFbCF4276E290aB8E4C162bd4052b97970",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -346,7 +346,7 @@
       "address": "eth:0x5893B5A76c3f739645648885bDCcC06cd70a3Cd3",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -367,7 +367,7 @@
       "address": "eth:0x6FbEBc898F403E4773E95feB15E80C9A99c8348d",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -388,7 +388,7 @@
       "address": "eth:0x7899cEAB1DC961Dae9defDB7A4f521269a5448FC",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -409,7 +409,7 @@
       "address": "eth:0x8C82B2fd82FaeD2711d59AF0F2499D16e726f6b2",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -430,7 +430,7 @@
       "address": "eth:0x938f104AEb5581293216ce97d771e0CB721221B1",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -601,7 +601,7 @@
       "address": "eth:0x9D16870160e703324D057c3361c34C5beFBa2c34",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -622,7 +622,7 @@
       "address": "eth:0xAF45Ced136b9D9e24903464AE889F5C8a723FC14",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -643,7 +643,7 @@
       "address": "eth:0xD1F64e26238811de5553C40f64af41eE1B6057Cc",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -664,7 +664,7 @@
       "address": "eth:0xD2CC37A4dc036a8D232b48f62cDD4731412f4890",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -803,7 +803,7 @@
       "address": "eth:0xDA798F6896A3331F64b48c12D1D57Fd9cbe70811",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -829,7 +829,7 @@
       "address": "eth:0xf93124b7c738843CBB89E864c862c38cddCccF95",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -850,7 +850,7 @@
       "address": "eth:0xfF6CB952589BDE862c25Ef4392132fb9D4A42157",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",

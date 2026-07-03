@@ -1,4 +1,44 @@
-Generated with discovered.json: 0xe82b7a74fcaf05a374da520c9e37e89f41573d09
+Generated with discovered.json: 0x31a0eae7cb0e697cc6a8dec5f51a5631f90c329a
+
+# Diff at Tue, 09 Jun 2026 12:43:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1775212321
+- current timestamp: 1775212321
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1775212321 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0xe8437B66E834B7CdC90cC5D98B8DD6e636b37D7a) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Can store and serve both unencoded blobs as well as encoded chunks."
+      receivedPermissions.0.permission:
+-        "relayDA"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xF3d7C0D52fF8f4CF74A3CD9C53778516f4235bE9) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Can disperse EigenDA blobs to the EigenDA node operators."
+      receivedPermissions.0.permission:
+-        "disperse"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x9ee182dedce979ec23c57de88a1158fdbdf98722
 
 # Diff at Fri, 08 May 2026 07:51:17 GMT:
 

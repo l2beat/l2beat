@@ -1,3 +1,112 @@
+Generated with discovered.json: 0x7c2a32d897ada84be95fa8c3342b05a5dc245697
+
+# Diff at Tue, 09 Jun 2026 12:43:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1777390951
+- current timestamp: 1777390951
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777390951 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x43Ca061Ea80FBB4A2b5515F4be4e953b191147aF) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    contract Gelato Multisig (eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"challenge","from":"eth:0x0eB331B615030819464225Ecd373e5FFBE502DC4","role":".challenger"}
+      receivedPermissions.1.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.1.role:
+-        ".CHALLENGER"
++        ".challenger"
+      receivedPermissions.1.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.2.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.2.role:
+-        ".guardian"
++        ".CHALLENGER"
+      receivedPermissions.2.from:
+-        "eth:0x14B768F93f256Ad8D2d018930DBdAe61306c4752"
++        "eth:0x0eB331B615030819464225Ecd373e5FFBE502DC4"
+      receivedPermissions.2.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.3.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.3.from:
+-        "eth:0xDA29f0B4da6c23f6c1aF273945c290C0268c4ea9"
++        "eth:0x14B768F93f256Ad8D2d018930DBdAe61306c4752"
+      receivedPermissions.3.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.5:
++        {"permission":"interact","from":"eth:0xDA29f0B4da6c23f6c1aF273945c290C0268c4ea9","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".guardian"}
+    }
+```
+
+```diff
+    EOA  (eth:0xF49212F977986347b73345D382a811e148751eED) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0xa27f206440e2c59083397012005f9188425ac1bd
+
+# Diff at Fri, 15 May 2026 12:35:53 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1777390951
+- current timestamp: 1777390951
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777390951 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x6a0A93Cd6d6FB7a36bF6234ef4650Bf9474e7682) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x6fcf212849ffbf34d907a048df4d05a6c97f876a620c7386a770735262604c54"
++        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
+    }
+```
+
 Generated with discovered.json: 0xe151369bff3ad0ce74ed8e0b4941a062cc758165
 
 # Diff at Fri, 08 May 2026 07:51:18 GMT:

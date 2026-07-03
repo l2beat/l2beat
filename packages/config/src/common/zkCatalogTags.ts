@@ -222,6 +222,18 @@ export const zkCatalogTags = [
       'Consensys implementation of Groth16 proving system written in Go.',
   },
   {
+    id: 'SP1_v6_0_0',
+    type: ZkCatalogTagType.Groth16,
+    name: 'SP1 v6.0.0',
+    description: "Succinct's Groth16 final wrap circuit for SP1 zkVM v6.0.0",
+  },
+  {
+    id: 'SP1_v6_1_0',
+    type: ZkCatalogTagType.Groth16,
+    name: 'SP1 v6.1.0',
+    description: "Succinct's Groth16 final wrap circuit for SP1 zkVM v6.1.0",
+  },
+  {
     id: 'Snarkjs',
     type: ZkCatalogTagType.Groth16,
     name: 'Snarkjs',

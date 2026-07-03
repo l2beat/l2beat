@@ -1,7 +1,7 @@
 {
   "name": "jovay",
   "timestamp": 1762443722,
-  "configHash": "0x81e0bd7020fa7519e8264de66319184b8f53b723994303a54089c169cbc6e064",
+  "configHash": "0xe9658509362dc22f96663fb2977ba48c373e2761dea67695dd22b78dcc311c20",
   "entries": [
     {
       "name": "DcapAttestationRouter",
@@ -346,13 +346,15 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "propose",
+          "permission": "interact",
           "from": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
           "role": ".relayer"
         },
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
           "role": ".relayer"
         }
       ]
@@ -363,13 +365,15 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "propose",
+          "permission": "interact",
           "from": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
           "role": ".relayer"
         },
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
           "role": ".relayer"
         }
       ]
@@ -854,5 +858,5 @@
     "jovay/TEEVerifierProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23741202 },
-  "permissionsConfigHash": "0x3ae77442a3678b2feb4ae2f62257b5cd846233fcb0253cfac3363d1907044de5"
+  "permissionsConfigHash": "0x99138f5142542eb410a1492561394edbbc6be57d6b25748a71d69e2c82e16604"
 }

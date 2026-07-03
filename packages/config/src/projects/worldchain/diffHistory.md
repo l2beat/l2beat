@@ -1,3 +1,444 @@
+Generated with discovered.json: 0xb5893d428eb9704c68ef650c939b2462fa085eeb
+
+# Diff at Tue, 30 Jun 2026 20:24:48 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1782209813
+- current timestamp: 1782209813
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782209813 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0xd5ec14a83B7d95BE1E2Ac12523e2dEE12Cbeea6C) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      usedTypes.0.arg.8:
++        "FaultDisputeGame"
+    }
+```
+
+Generated with discovered.json: 0xd1197aa467ce00e971013d13c2ee12503f30b2ab
+
+# Diff at Tue, 23 Jun 2026 10:18:22 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@0e360eee2a54a17c6634ebce656a966ffe743da7 block: 1780925494
+- current timestamp: 1782209813
+
+## Description
+
+Increased 1559 elasticity.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.eip1559Elasticity:
+-        16
++        22
+    }
+```
+
+Generated with discovered.json: 0xfcb76c808959dd3bb9fdc2fabe6bd674c68a6aa9
+
+# Diff at Tue, 09 Jun 2026 12:43:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1780925494
+- current timestamp: 1780925494
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780925494 (main branch discovery), not current.
+
+```diff
+    contract Optimism Guardian Multisig (eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) [GnosisSafe] {
+    +++ description: None
+      directlyReceivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      directlyReceivedPermissions.0.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    EOA Optimism EOA 1 (eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a) [gnosisSafeModules/SaferSafes] {
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xdBBE3D8c2d2b22A2611c5A94A9a12C2fCD49Eb29) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x8f0f2d5a451801caba6e405988be9f2c4bc5b6bd
+
+# Diff at Mon, 08 Jun 2026 13:32:42 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@7b249a098f7367cb0ead3d881bbc57b408521134 block: 1779699385
+- current timestamp: 1780925494
+
+## Description
+
+SystemConfig `eip1559Denominator` 250 → 100 and `eip1559Elasticity` 2 → 16 — faster L2 base-fee response, higher per-block gas elasticity.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: volatility param: lower denominator -> quicker fee changes on L2
+      values.eip1559Denominator:
+-        250
++        100
+      values.eip1559Elasticity:
+-        2
++        16
+    }
+```
+
+Generated with discovered.json: 0x972a3548891844faf22ac20f54f2c3997a379412
+
+# Diff at Thu, 04 Jun 2026 17:46:22 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1779699385
+- current timestamp: 1779699385
+
+## Description
+
+New game name (aggregateVerifier) added to portal.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779699385 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0xd5ec14a83B7d95BE1E2Ac12523e2dEE12Cbeea6C) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      usedTypes.0.arg.621:
++        "AggregateVerifier"
+    }
+```
+
+Generated with discovered.json: 0x21d433553d66fb68359aeb98fd57de25750ff9a8
+
+# Diff at Mon, 25 May 2026 08:57:59 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1b7024bc804124af9b25421eca5fac952454cb09 block: 1778850530
+- current timestamp: 1779699385
+
+## Description
+
+**OP Contracts v5.2 upgrade**: `PermissionedDisputeGame` migrated to a shared implementation via CWIA clones. No permissions change.
+
+Executed 2026-05-18 by Alchemy Multisig 1 (chain operator); same upgrade applied to `settlus` and `shape`.
+
+Implementation rotations:
+- **OptimismPortal2** `5.1.1` → `5.2.0` — [diff](https://disco.l2beat.com/diff/eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202/eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B)
+- **SystemConfig** `3.11.0` → `3.13.1` — [diff](https://disco.l2beat.com/diff/eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED/eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2) — adds `DELAYED_WETH_SLOT` (zero, not active) and `isCustomGasToken()` getter.
+- **DisputeGameFactory** `1.3.0` → `1.4.0` — [diff](https://disco.l2beat.com/diff/eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50/eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c) — clone bytecode now embeds gameType + chain-specific args; `*FromDGF` getters expose existing challenger/proposer/weth (new visibility, not new permissions).
+- **AnchorStateRegistry** `3.5.0` → `3.7.0` — [diff](https://disco.l2beat.com/diff/eth:0xeb69cC681E8D4a557b30DFFBAd85aFfD47a2CF2E/eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5) — adds `getStartingAnchorRoot`.
+
+`gameImpls[1]` now points to shared **PermissionedDisputeGameV2** `eth:0x58bf355C…` (deployed 2025-12-22). Shared **MIPS** FPVM `eth:0x6463dEE3…` appears in discovery because the new V2 references it.
+
+`L1CrossDomainMessenger`, `L1StandardBridge`, `L1ERC721Bridge`, `OptimismMintableERC20Factory`, `DelayedWETH`: `upgradeToAndCall` re-init only, no rotation.
+
+## Watched changes
+
+```diff
+    contract DisputeGameFactory (eth:0x069c4c579671f8c120b1327a73217D01Ea2EC5ea) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      sourceHashes.1:
+-        "0x7daf6049672fd2ab7dc8dd3b6287e1d0a40958346c5e2857c4616a73dcac4da6"
++        "0x8f21dbc160582c568a2a925ddad1b2bb889a9f72bac2067c6e72d43b662ef538"
+      values.$implementation:
+-        "eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50"
++        "eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c"
+      values.$pastUpgrades.4:
++        ["2026-05-18T17:45:23.000Z","0x06b2e41f133e2a063365960d69efd4fddfc30acbe63f903dc19ab2b1c47fa78b",["eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.challengerFromDGF:
+-        "UNRESOLVED"
++        "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d"
++++ severity: HIGH
+      values.gameImpls.1:
+-        "eth:0xb42Dc014FD85994eCeD29430a5eFe887f4228398"
++        "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A"
+      values.permissionedGameArgs:
+-        "0x"
++        "0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e6463dee3828677f6270d83d45408044fc5edb90890bb48fe3310499db36437dcae642f721e32d094b705030703bf8ff4300bd6fbd8de63ce8492f57500000000000000000000000000000000000000000000000000000000000001e02307278fc8ab0005974a6ded2fa6d1187333a223a4fb12d15eb85dc9284a7df0adbc8b696edbbf1d"
+      values.proposerFromDGF:
+-        "UNRESOLVED"
++        "eth:0x2307278fC8aB0005974A6DeD2FA6d1187333a223"
+      values.version:
+-        "1.3.0"
++        "1.4.0"
+      values.wethFromDGF:
+-        "UNRESOLVED"
++        "eth:0xb705030703Bf8ff4300bd6FBD8dE63CE8492f575"
+      implementationNames.eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50:
+-        "DisputeGameFactory"
+      implementationNames.eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c:
++        "DisputeGameFactory"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x1Df436AfDb2fBB40F1fE8bEd4Fc89A0D0990a8E9) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.$pastUpgrades.7:
++        ["2026-05-18T17:45:23.000Z","0x06b2e41f133e2a063365960d69efd4fddfc30acbe63f903dc19ab2b1c47fa78b",["eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9"]]
+      values.$upgradeCount:
+-        7
++        8
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0xaa1b3bedab4e63198240e9dea4503f0e615e4d18a545961c9f11b72143279fbc"
++        "0x703fe68eeb3d5454a8ef012933846f1ff1433fc2df39c0c94f2a550d8325f085"
+      values.$implementation:
+-        "eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED"
++        "eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2"
+      values.$pastUpgrades.9:
++        ["2026-05-18T17:45:23.000Z","0x06b2e41f133e2a063365960d69efd4fddfc30acbe63f903dc19ab2b1c47fa78b",["eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2"]]
+      values.$upgradeCount:
+-        9
++        10
+      values.getAddresses.delayedWETH:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.version:
+-        "3.11.0"
++        "3.13.1"
+      values.DELAYED_WETH_SLOT:
++        "0x51547f31a231e1007dca33017faa3da20d959b95087c588a7768bfb922fd58ff"
+      values.delayedWETH:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.isCustomGasToken:
++        false
+      implementationNames.eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED:
+-        "SystemConfig"
+      implementationNames.eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2:
++        "SystemConfig"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0x82Cb528466cF22412d89bdBE9bCF04856790dD0e) [opstack/OptimismMintableERC20Factory] {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      values.$pastUpgrades.4:
++        ["2026-05-18T17:45:23.000Z","0x06b2e41f133e2a063365960d69efd4fddfc30acbe63f903dc19ab2b1c47fa78b",["eth:0x8ee6fB13c6c9a7e401531168E196Fbf8b05cEabB"]]
+      values.$upgradeCount:
+-        4
++        5
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x90BB48fe3310499Db36437dCAE642F721e32d094) [opstack/AnchorStateRegistry_post13] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      sourceHashes.1:
+-        "0xf808a203af41f7932eb8e39985e56a7c75c940a260fb17d76d1003a3793281b5"
++        "0xfdabc8b9b4db9b7aa78227b26e936abaf24f058502b96e8d9a293d49b1e89b47"
+      values.$implementation:
+-        "eth:0xeb69cC681E8D4a557b30DFFBAd85aFfD47a2CF2E"
++        "eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5"
+      values.$pastUpgrades.1:
++        ["2026-05-18T17:45:23.000Z","0x06b2e41f133e2a063365960d69efd4fddfc30acbe63f903dc19ab2b1c47fa78b",["eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.version:
+-        "3.5.0"
++        "3.7.0"
+      values.getStartingAnchorRoot:
++        {"root":"0x38aaaf5c7910fd15e77a8e4ba903896b55bf5562770ca1268b666a01ba5cfb6b","l2SequenceNumber":22046345}
+      implementationNames.eth:0xeb69cC681E8D4a557b30DFFBAd85aFfD47a2CF2E:
+-        "AnchorStateRegistry"
+      implementationNames.eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5:
++        "AnchorStateRegistry"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (eth:0xb42Dc014FD85994eCeD29430a5eFe887f4228398) [opstack/PermissionedDisputeGame]
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
+    contract OptimismPortal2 (eth:0xd5ec14a83B7d95BE1E2Ac12523e2dEE12Cbeea6C) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      sourceHashes.1:
+-        "0x3e7e2cb08ba995795937c9c2e8ea9d0e4d2e2de852f389055073384d5f79c59d"
++        "0x7883f2d27d696b1fa6259a97c561d651493c2c1324e9646e04dba10adcfd8a21"
+      values.$implementation:
+-        "eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202"
++        "eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B"
+      values.$pastUpgrades.7:
++        ["2026-05-18T17:45:23.000Z","0x06b2e41f133e2a063365960d69efd4fddfc30acbe63f903dc19ab2b1c47fa78b",["eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B"]]
+      values.$upgradeCount:
+-        7
++        8
+      values.version:
+-        "5.1.1"
++        "5.2.0"
+      implementationNames.eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202:
+-        "OptimismPortal2"
+      implementationNames.eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B:
++        "OptimismPortal2"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0xf931a81D18B1766d15695ffc7c1920a62b7e710a) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$pastUpgrades.7:
++        ["2026-05-18T17:45:23.000Z","0x06b2e41f133e2a063365960d69efd4fddfc30acbe63f903dc19ab2b1c47fa78b",["eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0"]]
+      values.$upgradeCount:
+-        7
++        8
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A) [opstack/PermissionedDisputeGame]
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+## Source code changes
+
+```diff
+.../AnchorStateRegistry/AnchorStateRegistry.sol    |   58 +-
+ .../DisputeGameFactory/DisputeGameFactory.sol      |   56 +-
+ .../OptimismPortal2/OptimismPortal2.sol            |   75 +-
+ .../PermissionedDisputeGame.sol                    | 4435 ++++++++++----------
+ .../SystemConfig/SystemConfig.sol                  |   71 +-
+ 5 files changed, 2425 insertions(+), 2270 deletions(-)
+```
+
+Generated with discovered.json: 0x24cae3ee12caab8259c315675e4b19131cd5cf35
+
+# Diff at Fri, 15 May 2026 13:11:07 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@da451cba8e944a28754be7e17bcb7555d857f312 block: 1778233046
+- current timestamp: 1778850530
+
+## Description
+
+Scheduled signer-key rotation on shared OP Stack governance contracts (no threshold or permission changes):
+- DeputyPauseModule (`0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754`): `deputy` rotated from `0x352f1defB49718e7Ea411687E850aA8d6299F7aC` to `0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c`. Executed via [superchain-ops eth/052](https://github.com/ethereum-optimism/superchain-ops/pull/1399); the [DeputyPauseModule spec](https://specs.optimism.io/protocol/deputy-pause-module.html) specifies that this is a regular rotation.
+- OpFoundationUpgradeSafe: Member rotated.
+
+## Watched changes
+
+```diff
+    contract DeputyPauseModule (eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754) [opstack/DeputyPauseModule] {
+    +++ description: Allows eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module.
+      description:
+-        "Allows eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module."
++        "Allows eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module."
+      values.deputy:
+-        "eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC"
++        "eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c"
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) [GnosisSafe] {
+    +++ description: None
+      values.$members.6:
+-        "eth:0xc222ab08333109243B1f4E2a80e3D0A190714AB5"
++        "eth:0xa2A58E31C03C59e34ab4d996d811DA0C035BfDea"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778233046 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC) {
+    +++ description: None
+      name:
+-        "Optimism EOA 1"
+    }
+```
+
 Generated with discovered.json: 0x102f292b75d131e831c50c714a8d2933e3c9f0d1
 
 # Diff at Fri, 08 May 2026 09:38:32 GMT:

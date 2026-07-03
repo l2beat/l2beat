@@ -3,10 +3,34 @@
   "description": "Contract managing access control for proposers and challengers in OPSuccinct.",
   "ignoreInWatchMode": ["getLastProposalTimestamp"],
   "fields": {
+    "FALLBACK_TIMEOUT_fmt": {
+      "handler": {
+        "type": "call",
+        "method": "FALLBACK_TIMEOUT",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"],
+      "description": "Formatted fallback timeout after which proposing becomes permissionless."
+    },
+    "owner": {
+      "description": "Address that can update the proposer and challenger allowlists and transfer ownership.",
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Allowed to add or remove proposers and challengers, and transfer ownership of the AccessManager."
+        }
+      ]
+    },
     "challengers": {
       "description": "Addresses allowed to challenge dispute games.",
       "severity": "HIGH",
-      "permissions": [{ "type": "challenge" }],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer."
+        }
+      ],
       "handler": {
         "type": "event",
         "select": "challenger",
@@ -23,7 +47,12 @@
     "proposers": {
       "description": "Addresses allowed to propose dispute games.",
       "severity": "HIGH",
-      "permissions": [{ "type": "propose" }],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Allowed to post new state roots of the current layer to the host chain."
+        }
+      ],
       "handler": {
         "type": "event",
         "select": "proposer",

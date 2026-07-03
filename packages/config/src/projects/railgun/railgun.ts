@@ -1,5 +1,4 @@
 import {
-  assert,
   ChainSpecificAddress,
   EthereumAddress,
   formatLargeNumber,
@@ -7,12 +6,17 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
-import { getTokenByAddress } from '../../tokens/getTokenByAddress'
+import {
+  getTokenByAddress,
+  getTokenBySymbol,
+} from '../../tokens/getTokenByAddress'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('railgun')
 
@@ -29,9 +33,24 @@ const TRACKED_TOKENS = [
   { address: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599', symbol: 'WBTC' },
   { address: '0x85F17Cf997934a597031b2E18a9aB6ebD4B9f6a4', symbol: 'NEAR' },
   { address: '0x6f40d4A6237C257fff2dB00FA0510DeEECd303eb', symbol: 'FLUID' },
+  { address: '0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D', symbol: 'RAIL' },
 ]
 
+const RAIL_TOKEN = getTokenBySymbol('RAIL')
+
 const railgunCore = discovery.getContract('RailgunSmartWallet')
+const shieldFee = discovery.getContractValue<number>(
+  'RailgunSmartWallet',
+  'shieldFee',
+)
+const unshieldFee = discovery.getContractValue<number>(
+  'RailgunSmartWallet',
+  'unshieldFee',
+)
+const nftFee = discovery.getContractValue<number>(
+  'RailgunSmartWallet',
+  'nftFee',
+)
 const stakeLocktime = discovery.getContractValue<number>(
   'Staking',
   'STAKE_LOCKTIME',
@@ -66,13 +85,17 @@ const executionEndOffset = discovery.getContractValue<number>(
 )
 const quorum = discovery.getContractValueBigInt('Voting', 'QUORUM')
 
+function formatBasisPoints(value: number): string {
+  return `${Number((value / 100).toFixed(4))}%`
+}
+
 const privacyTokens: ProjectPrivacyToken[] = TRACKED_TOKENS.map((token) => {
   const resolved = getTokenByAddress(token.address)
-  assert(resolved, `Unknown token ${token.address}`)
 
   return {
     token: {
       address: EthereumAddress(token.address),
+      iconUrl: resolved.iconUrl,
       symbol: resolved.symbol,
       decimals: resolved.decimals,
       priceId: resolved.coingeckoId,
@@ -124,6 +147,11 @@ export const railgun: BaseProject = {
   display: {
     description:
       'An onchain privacy system for Ethereum based on encrypted UTXO-style private balances and zk-proven DeFi interactions.',
+    detailedDescription: readProjectMarkdown('railgun', 'detailedDescription', {
+      shieldFee: formatBasisPoints(shieldFee),
+      unshieldFee: formatBasisPoints(unshieldFee),
+      nftFee,
+    }),
     links: {
       websites: ['https://railgun.org'],
     },
@@ -136,28 +164,64 @@ export const railgun: BaseProject = {
     tokens: [token.symbol],
   })),
   tvsInfo: {
-    associatedTokens: [],
+    associatedTokens: [{ symbol: RAIL_TOKEN.symbol, icon: RAIL_TOKEN.iconUrl }],
     warnings: [],
   },
   privacyInfo: {
     trustedSetup: TRUSTED_SETUPS.Railgun,
     tokens: privacyTokens,
-    riskSummary: `## Funds can be lost if
-1. the zk proof system is broken, allowing invalid spends or withdrawals.
-2. the [trusted setup](#trusted-setups) is compromised or all ceremony participants collude, allowing invalid spends or withdrawals.
-3. a user loses the private keys required to control their private balance.
-4. the DAO passes a malicious [upgrade](#upgrades-and-governance) and users do not react before the 7-day execution delay expires.
-<br>
-## Privacy can be lost if
-1. no broadcaster is available and transactions must be sent from a public address that can be linked to the user.`,
-    upgradesAndGovernance: `Railgun features an omnipotent DAO governed by the stakers of RAIL token. DAO has the authority to change ZK circuit logic on the core Railgun contract, effectively arbitrarily changing the rules for shielded tokens; as well as manage blacklisted tokens, mint RAIL tokens and manage governance rewards. See docs here: <https://docs.railgun.org/wiki/rail-token/protocol-governance>
-
-## Governance flow
-
-1. Users stake RAIL token in the Staking contract ([0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20](https://etherscan.io/address/0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20)). Voting power is proportional to the staked amount and could be delegated to another address. Unstaking has ${formatSeconds(stakeLocktime)} delay.
-2. Anyone can create a new proposal with an IPFS link and onchain calldata on the Voting contract ([0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC](https://etherscan.io/address/0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC)). It enters Sponsorship stage of ${formatSeconds(sponsorWindow)}, where it has to be supported by ${formatLargeNumber(Number(proposalSponsorThreshold / 10n ** 18n))} RAIL stake.
-3. After a ${formatSeconds(votingStartOffset)} delay, actual vote starts. "Yay" votes need to be cast within ${formatSeconds(votingYayEndOffset)}, "Nay" have ${formatSeconds(votingNayEndOffset)}. Proposal needs to reach the quorum of ${formatLargeNumber(Number(quorum / 10n ** 18n))} RAIL.
-4. A passed proposal (simple majority) waits for ${formatSeconds(executionStartOffset)} before execution and then must be executed within ${formatSeconds(executionEndOffset)} by anyone. Execution goes via the Delegator smart contract ([0xB6d513f6222Ee92Fff975E901bd792E2513fB53B](https://etherscan.io/address/0xB6d513f6222Ee92Fff975E901bd792E2513fB53B)), which actually has permissions to modify the Railgun protocol values.`,
+    exitWindow: {
+      value: formatSeconds(executionStartOffset),
+      sentiment: 'warning',
+      orderHint: executionStartOffset,
+      description: `DAO-approved upgrades wait ${formatSeconds(executionStartOffset)} before they can execute, giving users time to unshield funds if they do not approve the change.`,
+    },
+    reproducibility: {
+      value: 'Reproducible',
+      sentiment: 'good',
+      description:
+        'The contracts, circuits, and supporting software needed to participate in the protocol are publicly available and can be run locally.',
+    },
+    adminViewingKey: {
+      value: 'None',
+      sentiment: 'good',
+      description:
+        "The protocol does not include an auditor viewing key that decrypts users' private balances and transactions.",
+    },
+    attributes: [
+      {
+        ...PRIVACY_ATTRIBUTES.upgradeable,
+        description:
+          'DAO can vote on upgrades that are executable with a 7d delay.',
+      },
+      {
+        ...PRIVACY_ATTRIBUTES.optCompliance,
+        description:
+          "Optional 'proofs of innocence' (POIs), can disassociate a deposit from a list of flagged addresses. They are not enforced by the protocol but can be enforced by relayers.",
+      },
+      PRIVACY_ATTRIBUTES.transfers,
+      PRIVACY_ATTRIBUTES.defi,
+      PRIVACY_ATTRIBUTES.anyAmount,
+      PRIVACY_ATTRIBUTES.sourceAvailable,
+    ],
+    riskSummary: readProjectMarkdown('railgun', 'riskSummary'),
+    upgradesAndGovernance: readProjectMarkdown(
+      'railgun',
+      'upgradesAndGovernance',
+      {
+        stakeLocktime: formatSeconds(stakeLocktime),
+        sponsorWindow: formatSeconds(sponsorWindow),
+        proposalSponsorThreshold: formatLargeNumber(
+          Number(proposalSponsorThreshold / 10n ** 18n),
+        ),
+        votingStartOffset: formatSeconds(votingStartOffset),
+        votingYayEndOffset: formatSeconds(votingYayEndOffset),
+        votingNayEndOffset: formatSeconds(votingNayEndOffset),
+        quorum: formatLargeNumber(Number(quorum / 10n ** 18n)),
+        executionStartOffset: formatSeconds(executionStartOffset),
+        executionEndOffset: formatSeconds(executionEndOffset),
+      },
+    ),
   },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {

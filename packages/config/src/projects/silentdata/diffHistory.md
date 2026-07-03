@@ -1,4 +1,66 @@
-Generated with discovered.json: 0x1ad32d04b1339edda49db648d7c951cb11090d2a
+Generated with discovered.json: 0x871210b01eed285873bd5d7563e1f0c58c776ab4
+
+# Diff at Tue, 09 Jun 2026 12:43:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1765551112
+- current timestamp: 1765551112
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765551112 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x3e3F6b6010237678723a33aE227d167B55888C20) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    contract Safe (eth:0x90f72cB63E608dD6c63793b7d90804963b478ccd) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xCa4c95A5A1660D14df8EC6C53537964f9c5367C7) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xD04464568a8a8A5da8c9218714e6d9f4BD40DF65) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x159d9662481823da946d2fbaded2b2570ec0e630
 
 # Diff at Fri, 08 May 2026 07:52:21 GMT:
 

@@ -1,7 +1,7 @@
 {
   "name": "nillion",
-  "timestamp": 1777994269,
-  "configHash": "0x233db7b6ce5df40fdca7f52d3d2af95d51f411af4dbebb73627596308e57d541",
+  "timestamp": 1781176827,
+  "configHash": "0x9a5c1c9bfcf9d774aca076987c91c00bc40df68d53472649a8149edd0eae7180",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -70,8 +70,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x8a502d8EEa2Ed3e89c4D52DE51364688590cE591",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
           "role": ".batcherHash"
         }
       ]
@@ -111,11 +112,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "Conduit Multisig 1",
       "address": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "type": "Contract",
@@ -127,14 +123,16 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "challenge",
-          "from": "eth:0x64A42dB261E1a19a56C51E541F45b42139a4488a",
-          "role": ".challenger"
+          "permission": "interact",
+          "from": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
+          "role": ".guardian"
         },
         {
-          "permission": "guard",
-          "from": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
-          "role": ".guardian"
+          "permission": "interact",
+          "from": "eth:0x64A42dB261E1a19a56C51E541F45b42139a4488a",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challenger"
         },
         {
           "permission": "interact",
@@ -253,15 +251,13 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853",
           "eth:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09",
           "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
           "eth:0x2103c69696CB2D3779f5445393808239034E911c",
-          "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
           "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
           "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
-          "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
-          "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "eth:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
           "eth:0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
           "eth:0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
@@ -270,8 +266,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 12 (33%)",
-        "nonce": 265,
+        "multisigThreshold": "4 of 10 (40%)",
+        "nonce": 277,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -371,7 +367,11 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
-      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
+      "ignoreInWatchMode": [
+        "permissionedGamesTotal",
+        "gameCount",
+        "permissionedGamesTotal"
+      ],
       "deployerAddress": "eth:0x58Cb6D59Cf449f2fF149cCac1746aD9D9F3c55dc",
       "sinceTimestamp": 1765911287,
       "sinceBlock": 24027092,
@@ -400,7 +400,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 280,
+        "gameCount": 354,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x64A42dB261E1a19a56C51E541F45b42139a4488a",
@@ -415,7 +415,7 @@
         "initVersion": 1,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "permissionedGameArgs": "0x",
-        "permissionedGamesTotal": 280,
+        "permissionedGamesTotal": 354,
         "proposerFromDGF": "UNRESOLVED",
         "proxyAdmin": "eth:0x5306B2A086d477eCc7302447519dA688f9176e3D",
         "proxyAdminOwner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
@@ -484,8 +484,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "propose",
+          "permission": "interact",
           "from": "eth:0x64A42dB261E1a19a56C51E541F45b42139a4488a",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
           "role": ".proposer"
         }
       ]
@@ -658,11 +659,6 @@
       ]
     },
     {
-      "address": "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
       "type": "EOA",
       "proxyType": "EOA"
@@ -708,7 +704,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620279",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620384",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -781,8 +777,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 516470,
-          "prevBlockNum": 25026024
+          "prevBoughtGas": 517494,
+          "prevBlockNum": 25282540
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -812,6 +808,8 @@
           "arg": {
             "0": "FaultDisputeGame",
             "1": "PermissionedDisputeGame",
+            "8": "FaultDisputeGame",
+            "621": "AggregateVerifier",
             "1337": "KailuaGame"
           }
         }
@@ -972,13 +970,13 @@
         ],
         "$upgradeCount": 1,
         "absolutePrestateFromGame": "0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6",
-        "anchorGame": "eth:0xF4e21A6638049f2526fF94809e30DDDCB3bfFEB5",
+        "anchorGame": "eth:0x85f62F25EdFe4542c90FfF3E72e02072A4D48cba",
         "challengePeriodFromOracle": 86400,
         "disputeGameFactory": "eth:0x5931f05809932a43C2A6c86f3F9BC2788f840b1C",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x7ca46e86da98750a403860551ed203a53feb72e9fbafb8834459f13cf50396f8",
-          5726399
+          "0x54117cc02c3560972064757c3c2590432de93ff16c476865d7acdf85566c7a00",
+          7325944
         ],
         "initVersion": 1,
         "oracleFromVm": "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3",
@@ -1021,11 +1019,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1061,6 +1054,11 @@
     },
     {
       "address": "eth:0xB7e75bae78215De4DEae279036ed318712C5123d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1984,18 +1982,18 @@
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry_post13": "0x9888be337c8cfb54afe2910a16e6546f0c5a7d8feed51cca35875140b4e4da1f",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
-    "opstack/DisputeGameFactory": "0x8e238948fd295fbbcd65a82d3723114f83cf0e8358b0b50126a80c68748d8920",
+    "opstack/DisputeGameFactory": "0x46746381be2da0435ab1c70360c00f35d9759a505c3f99905e07476b72e8b79c",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/OptimismPortal2": "0x33b53e7ec24fad0aacaa78e8233cee4af1f8ea9f611f988f864b2fbe70e371b0",
+    "opstack/OptimismPortal2": "0x52ecd41211faad3599bd32ca82e2af9561910cce6d33f93242e9bf13a426018c",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 25029647 },
-  "permissionsConfigHash": "0x108801e8afab6683de63b97808b9e8af74c090d226bde6b0cc656423c7b68c2d"
+  "usedBlockNumbers": { "ethereum": 25293878 },
+  "permissionsConfigHash": "0x592723df51aa84ecefdc3d4c8e5ee945b009499072e0e2239339db93a1541f23"
 }

@@ -5,12 +5,14 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { getTokenByAddress } from '../../tokens/getTokenByAddress'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('privacy-pools')
 
@@ -19,17 +21,36 @@ const PRIVACY_POOLS_DEPOSIT_EVENT =
 const PRIVACY_POOLS_WITHDRAWAL_EVENT =
   '0x75e161b3e824b114fc1a33274bd7091918dd4e639cede50b78b15a4eea956a21'
 
+function formatBasisPoints(value: number): string {
+  return `${Number((value / 100).toFixed(4))}%`
+}
+
+interface PrivacyPoolsAssetConfig {
+  minimumDepositAmount: string | number
+  vettingFeeBPS: number
+  maxRelayFeeBPS: number
+}
+
 interface PrivacyPoolBucket {
   id: string
   address: ChainSpecificAddress
   tokenAddress: EthereumAddress
-  tokenInfo: { symbol: string; decimals: number; priceId: string }
+  tokenInfo: {
+    symbol: string
+    decimals: number
+    priceId: string
+    iconUrl: string | undefined
+  }
   sinceTimestamp: UnixTime
+  feeConfig: PrivacyPoolsAssetConfig
   depositEvent: string
   withdrawalEvent: string
 }
 
 const BUCKETS = getPrivacyPoolBuckets()
+
+const multisigStats = discovery.getMultisigStats('Privacy Pools Multisig')
+const feeSummary = formatPrivacyPoolsFeeSummary()
 
 export const privacyPools: BaseProject = {
   id: ProjectId('privacy-pools'),
@@ -48,8 +69,13 @@ export const privacyPools: BaseProject = {
   display: {
     description:
       'A selective-disclosure privacy system for Ethereum that adds compliance-aware association sets.',
+    detailedDescription: readProjectMarkdown(
+      'privacy-pools',
+      'detailedDescription',
+      { multisigStats, feeSummary },
+    ),
     links: {
-      websites: ['https://www.privacypools.com'],
+      websites: ['https://privacypools.com'],
     },
     badges: [],
   },
@@ -66,20 +92,41 @@ export const privacyPools: BaseProject = {
   privacyInfo: {
     trustedSetup: TRUSTED_SETUPS.PrivacyPools,
     tokens: getPrivacyTokens(),
-    riskSummary: `## Funds can be lost if
-1. the zk proof system is broken, allowing invalid withdrawals.
-2. the [trusted setup](#trusted-setups) is compromised or all ceremony participants collude, allowing invalid withdrawals.
-3. a user loses the secret and nullifier required to spend their deposit.
-4. the Entrypoint owner deploys a malicious [upgrade](#upgrades-and-governance) that steals new deposits.
-<br>
-## Privacy can be lost if
-1. no relayer is available and the withdrawal must be submitted from an address that can be linked to the user.
-2. the ASP manager refuses to whitelist a deposit, forcing the user to either wait or exit publicly through ragequit.`,
-    upgradesAndGovernance: `Privacy pools Entrypoint contract is owned by a 2/4 Multisig ([0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159](https://etherscan.io/address/0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159)). 
-    
-    It is a powerful role that has the authority to upgrade the Entrypoint contract, through which all deposits go. It can also manage minimum deposit amount, deposit fee, disable deposits on pools and manage ASP postman address that manages whitelisted privacy pools deposits.
-    
-    Entrypoint owner cannot prevent private or public withdrawals from the pools.`,
+    exitWindow: {
+      value: 'Infinite',
+      sentiment: 'good',
+      orderHint: Number.MAX_SAFE_INTEGER,
+      description:
+        'Even if the Entrypoint or ASP turns malicious, users can always ragequit (withdraw tokens) from the immutable pool contracts, at the cost of losing privacy.',
+    },
+    reproducibility: {
+      value: 'Reproducible',
+      sentiment: 'good',
+      description:
+        'The contracts, circuits, and supporting software needed to participate in Privacy Pools are publicly available and can be run locally.',
+    },
+    adminViewingKey: {
+      value: 'None',
+      sentiment: 'good',
+      description:
+        "The protocol does not include an auditor viewing key that decrypts users' private balances and transactions.",
+    },
+    attributes: [
+      PRIVACY_ATTRIBUTES.immutable,
+      {
+        ...PRIVACY_ATTRIBUTES.enforcedCompliance,
+        description:
+          'Centralised ASPs (association set providers) can refuse deposits before they are withdrawn and forcibly remove them from the anonymity set.',
+      },
+      PRIVACY_ATTRIBUTES.anyAmount,
+      PRIVACY_ATTRIBUTES.sourceAvailable,
+    ],
+    riskSummary: readProjectMarkdown('privacy-pools', 'riskSummary'),
+    upgradesAndGovernance: readProjectMarkdown(
+      'privacy-pools',
+      'upgradesAndGovernance',
+      { multisigStats },
+    ),
   },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
@@ -97,6 +144,7 @@ function getPrivacyTokens(): ProjectPrivacyToken[] {
       token = {
         token: {
           address: bucket.tokenAddress,
+          iconUrl: bucket.tokenInfo.iconUrl,
           symbol: bucket.tokenInfo.symbol,
           decimals: bucket.tokenInfo.decimals,
           priceId: bucket.tokenInfo.priceId,
@@ -157,6 +205,9 @@ function getPrivacyPoolBuckets(): PrivacyPoolBucket[] {
         )
     const resolved = getTokenByAddress(tokenAddress.toString())
     assert(resolved, `Unknown asset ${asset}`)
+    const feeConfig = pool.values
+      ?.assetConfigFromEntrypoint as unknown as PrivacyPoolsAssetConfig
+    assert(feeConfig, `Missing fee config for ${pool.name}`)
 
     return {
       id: `privacy-pools-${resolved.symbol}`,
@@ -166,10 +217,36 @@ function getPrivacyPoolBuckets(): PrivacyPoolBucket[] {
         symbol: resolved.symbol,
         decimals: resolved.decimals,
         priceId: resolved.coingeckoId,
+        iconUrl: resolved.iconUrl,
       },
       sinceTimestamp: UnixTime(pool.sinceTimestamp ?? 0),
+      feeConfig,
       depositEvent: PRIVACY_POOLS_DEPOSIT_EVENT,
       withdrawalEvent: PRIVACY_POOLS_WITHDRAWAL_EVENT,
     }
   })
+}
+
+function formatPrivacyPoolsFeeSummary(): string {
+  const grouped = new Map<string, string[]>()
+
+  for (const bucket of BUCKETS) {
+    const key = `${formatBasisPoints(
+      bucket.feeConfig.vettingFeeBPS,
+    )} vetting fee, ${formatBasisPoints(
+      bucket.feeConfig.maxRelayFeeBPS,
+    )} maximum relayer fee`
+    const symbols = grouped.get(key) ?? []
+    symbols.push(bucket.tokenInfo.symbol)
+    grouped.set(key, symbols)
+  }
+
+  return Array.from(grouped.entries())
+    .map(([key, symbols]) => {
+      const sortedSymbols = symbols.sort((a, b) =>
+        a.localeCompare(b, undefined, { numeric: true }),
+      )
+      return `- ${key}: ${sortedSymbols.join(', ')}.`
+    })
+    .join('\n')
 }

@@ -1,4 +1,54 @@
-Generated with discovered.json: 0x37d7d0500519fdf10d1c118150ab0165869c029a
+Generated with discovered.json: 0x87ffc56196062cb9887933803e60cdd0db6cdbf4
+
+# Diff at Tue, 09 Jun 2026 12:43:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1762443722
+- current timestamp: 1762443722
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762443722 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0xA217ee134CB95B1ab56eF83a33956E5A979bf6e7) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.1.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xAe13Ce4Cd416cb4598865aa5aC8d13532bd3Cd99) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.1.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0xe6e553e99a21c7cb259651f637f486b00e9e6f5d
 
 # Diff at Fri, 08 May 2026 07:51:29 GMT:
 

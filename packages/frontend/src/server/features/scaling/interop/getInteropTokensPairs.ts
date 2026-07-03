@@ -1,6 +1,7 @@
-import { assert, InMemoryCache, unique } from '@l2beat/shared-pure'
+import { assert, unique } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
+import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import { manifest } from '~/utils/Manifest'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import { INTEROP_PAIR_SEPARATOR } from './consts'
@@ -33,7 +34,9 @@ type TokensPairInteropData = CommonInteropData & {
 }
 
 const PAGE_SIZE = 100
-const interopTokensPairsCache = new InMemoryCache({})
+const interopTokensPairsCache = new FrontendInMemoryCache(
+  'getInteropTokensPairsInfinite',
+)
 
 export async function getInteropTokensPairsInfinite({
   cursor,
@@ -180,8 +183,18 @@ async function getInteropTokensPairsData({
       if (pairId === 'unknown') {
         return {
           id: pairId,
-          tokenA: { symbol: 'Unknown', iconUrl: TOKEN_PLACEHOLDER_ICON_URL },
-          tokenB: { symbol: 'Unknown', iconUrl: TOKEN_PLACEHOLDER_ICON_URL },
+          tokenA: {
+            id: 'unknown',
+            symbol: 'Unknown',
+            issuer: null,
+            iconUrl: TOKEN_PLACEHOLDER_ICON_URL,
+          },
+          tokenB: {
+            id: 'unknown',
+            symbol: 'Unknown',
+            issuer: null,
+            iconUrl: TOKEN_PLACEHOLDER_ICON_URL,
+          },
           topProtocol: undefined,
           volume: null,
           transferCount: data.transferCount,
@@ -195,17 +208,21 @@ async function getInteropTokensPairsData({
       }
 
       const parts = pairId.split(INTEROP_PAIR_SEPARATOR)
-      const tokenA = parts[0] ? tokensDetailsMap.get(parts[0]) : undefined
-      const tokenB = parts[1] ? tokensDetailsMap.get(parts[1]) : undefined
+      const [tokenAId, tokenBId] = parts
+      const tokenA = tokenAId ? tokensDetailsMap.get(tokenAId) : undefined
+      const tokenB = tokenBId ? tokensDetailsMap.get(tokenBId) : undefined
 
-      assert(tokenA && tokenB, `Tokens not found: ${pairId}`)
+      assert(
+        tokenAId && tokenBId && tokenA && tokenB,
+        `Tokens not found: ${pairId}`,
+      )
 
       const avgDuration = getAverageDuration(data, durationSplit)
 
       return {
         id: pairId,
-        tokenA,
-        tokenB,
+        tokenA: { id: tokenAId, ...tokenA },
+        tokenB: { id: tokenBId, ...tokenB },
         topProtocol: getTopProtocolDisplay(data.protocols, projectsById),
         volume: data.volume,
         transferCount: data.transferCount,

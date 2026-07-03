@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Defines withdrawal limits per token.",
+  "description": "Defines withdrawal quotas for ETH and ERC20 releases from the shared bridge. A token quota of zero means unlimited withdrawals for that token.",
   "ignoreMethods": ["proxiableUUID"],
   "types": {
     "TokenAddressToName": {
@@ -15,7 +15,38 @@
     }
   },
   "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "update token withdrawal quotas and the quota refill period."
+        }
+      ]
+    },
+    "bridge": {
+      "description": "Bridge contract allowed to consume ETH withdrawal quota.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "consume ETH withdrawal quota when ETH leaves the bridge."
+        }
+      ]
+    },
+    "erc20Vault": {
+      "description": "ERC20 vault allowed to consume token withdrawal quota.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "consume ERC20 withdrawal quota when tokens leave the vault."
+        }
+      ]
+    },
+    "quotaPeriod": {
+      "description": "Time in seconds for consumed quota to fully refill."
+    },
     "tokenQuotas": {
+      "description": "Configured withdrawal quotas per refill period. Missing or zero quotas are treated as unlimited.",
+      "severity": "HIGH",
       "handler": {
         "type": "event",
         "select": "newQuota",
@@ -47,5 +78,6 @@
         ]
       ]
     }
-  }
+  },
+  "category": "shared"
 }

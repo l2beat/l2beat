@@ -221,16 +221,34 @@ export interface NotificationsConfig {
         discordWebhookUrl: string
       }
     | false
+  readonly dailyChecks:
+    | {
+        discordWebhookUrl: string
+        discordUserIds: string[]
+        timezone: string
+        hour: number
+      }
+    | false
 }
 
 export interface AnomaliesConfig {
   readonly anomaliesMinDuration: number
 }
 
+export interface InteropPromotionConfig {
+  /** 'off' = always promote; 'shadow' = evaluate + record, never block/alert; 'enforce' = live gate. */
+  mode: 'off' | 'shadow' | 'enforce'
+  /** On engine error: block (true) or promote anyway (false). */
+  failClosed: boolean
+  /** A single lane's volume may not exceed this. */
+  maxLaneVolumeUsd: number
+}
+
 export interface InteropFeatureConfig {
   aggregation:
     | {
         configs: InteropAggregationConfig[]
+        promotion: InteropPromotionConfig
       }
     | false
   capture: {
@@ -254,6 +272,8 @@ export interface InteropFeatureConfig {
     enabled: boolean
     tokenDbApiUrl: string
     tokenDbAuthToken?: string
+    maxTokenPriceUsd: number
+    maxTransferValueUsd: number
   }
   config: {
     enabled: boolean

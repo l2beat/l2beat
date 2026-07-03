@@ -30,6 +30,19 @@ export interface PrivacyFlowDailyRecord {
   withdrawalCount: number
   depositAmount: bigint
   withdrawalAmount: bigint
+  depositValueUsd: number
+  withdrawalValueUsd: number
+}
+
+export interface PrivacyFlowBucketTotalRecord {
+  projectId: string
+  bucketId: string
+  depositCount: number
+  withdrawalCount: number
+  depositAmount: bigint
+  withdrawalAmount: bigint
+  depositValueUsd: number
+  withdrawalValueUsd: number
 }
 
 export function toRecord(
@@ -86,39 +99,59 @@ export class PrivacyFlowEventRepository extends BaseRepository {
 
   async getDailyByProjectIds(
     projectIds: string[],
-    fromInclusive: UnixTime,
-    toInclusive: UnixTime,
+    fromInclusive: UnixTime | null,
+    toExclusive: UnixTime,
   ): Promise<PrivacyFlowDailyRecord[]> {
     if (projectIds.length === 0) return []
 
     const day = sql<Date>`date_trunc('day', "timestamp")`
-    const rows = await this.db
+    let query = this.db
       .selectFrom('PrivacyFlowEvent')
       .select((eb) => [
         'projectId',
         'bucketId',
         day.as('timestamp'),
         eb.fn
-          .sum<number>('count')
+          .sum('count')
           .filterWhere('direction', '=', 'deposit')
           .as('depositCount'),
         eb.fn
-          .sum<number>('count')
+          .sum('count')
           .filterWhere('direction', '=', 'withdrawal')
           .as('withdrawalCount'),
-        sql<string>`COALESCE(SUM("amount") FILTER (WHERE "direction" = 'deposit'), 0)`.as(
-          'depositAmount',
-        ),
-        sql<string>`COALESCE(SUM("amount") FILTER (WHERE "direction" = 'withdrawal'), 0)`.as(
-          'withdrawalAmount',
-        ),
+        eb.fn
+          .coalesce(
+            eb.fn.sum('amount').filterWhere('direction', '=', 'deposit'),
+            sql<string>`'0'`,
+          )
+          .as('depositAmount'),
+        eb.fn
+          .coalesce(
+            eb.fn.sum('amount').filterWhere('direction', '=', 'withdrawal'),
+            sql<string>`'0'`,
+          )
+          .as('withdrawalAmount'),
+        eb.fn
+          .sum('valueUsd')
+          .filterWhere('direction', '=', 'deposit')
+          .as('depositValueUsd'),
+        eb.fn
+          .sum('valueUsd')
+          .filterWhere('direction', '=', 'withdrawal')
+          .as('withdrawalValueUsd'),
       ])
       .where('projectId', 'in', projectIds)
-      .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
-      .where('timestamp', '<=', UnixTime.toDate(toInclusive))
+
+    if (fromInclusive !== null) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+    }
+
+    query = query
+      .where('timestamp', '<', UnixTime.toDate(toExclusive))
       .groupBy(['projectId', 'bucketId', day])
       .orderBy('timestamp', 'asc')
-      .execute()
+
+    const rows = await query.execute()
 
     return rows.map((row) => ({
       projectId: row.projectId,
@@ -128,6 +161,8 @@ export class PrivacyFlowEventRepository extends BaseRepository {
       withdrawalCount: Number(row.withdrawalCount ?? 0),
       depositAmount: BigInt(row.depositAmount),
       withdrawalAmount: BigInt(row.withdrawalAmount),
+      depositValueUsd: Number(row.depositValueUsd ?? 0),
+      withdrawalValueUsd: Number(row.withdrawalValueUsd ?? 0),
     }))
   }
 
@@ -157,6 +192,89 @@ export class PrivacyFlowEventRepository extends BaseRepository {
       .where('timestamp', '<=', UnixTime.toDate(toInclusive))
       .executeTakeFirst()
     return Number(result.numDeletedRows)
+  }
+
+  async getBucketTotalsByProjectIds(
+    projectIds: string[],
+  ): Promise<PrivacyFlowBucketTotalRecord[]> {
+    if (projectIds.length === 0) return []
+
+    const rows = await this.db
+      .selectFrom('PrivacyFlowEvent')
+      .select((eb) => [
+        'projectId',
+        'bucketId',
+        eb.fn
+          .sum('count')
+          .filterWhere('direction', '=', 'deposit')
+          .as('depositCount'),
+        eb.fn
+          .sum('count')
+          .filterWhere('direction', '=', 'withdrawal')
+          .as('withdrawalCount'),
+        eb.fn
+          .coalesce(
+            eb.fn.sum('amount').filterWhere('direction', '=', 'deposit'),
+            sql<string>`'0'`,
+          )
+          .as('depositAmount'),
+        eb.fn
+          .coalesce(
+            eb.fn.sum('amount').filterWhere('direction', '=', 'withdrawal'),
+            sql<string>`0`,
+          )
+          .as('withdrawalAmount'),
+        eb.fn
+          .sum('valueUsd')
+          .filterWhere('direction', '=', 'deposit')
+          .as('depositValueUsd'),
+        eb.fn
+          .sum('valueUsd')
+          .filterWhere('direction', '=', 'withdrawal')
+          .as('withdrawalValueUsd'),
+      ])
+      .where('projectId', 'in', projectIds)
+      .groupBy(['projectId', 'bucketId'])
+      .execute()
+
+    return rows.map((row) => ({
+      projectId: row.projectId,
+      bucketId: row.bucketId,
+      depositCount: Number(row.depositCount ?? 0),
+      withdrawalCount: Number(row.withdrawalCount ?? 0),
+      depositAmount: BigInt(row.depositAmount),
+      withdrawalAmount: BigInt(row.withdrawalAmount),
+      depositValueUsd: Number(row.depositValueUsd ?? 0),
+      withdrawalValueUsd: Number(row.withdrawalValueUsd ?? 0),
+    }))
+  }
+
+  async getLatestTimestampByProjectIds(
+    projectIds: string[],
+  ): Promise<UnixTime | undefined> {
+    if (projectIds.length === 0) return undefined
+
+    const row = await this.db
+      .selectFrom('PrivacyFlowEvent')
+      .select(this.db.fn.max('timestamp').as('maxTimestamp'))
+      .where('projectId', 'in', projectIds)
+      .executeTakeFirst()
+
+    return row?.maxTimestamp ? UnixTime.fromDate(row.maxTimestamp) : undefined
+  }
+
+  async getFirstTimestampByProjectIds(
+    projectIds: string[],
+  ): Promise<UnixTime | undefined> {
+    if (projectIds.length === 0) return undefined
+
+    const row = await this.db
+      .selectFrom('PrivacyFlowEvent')
+      .select(this.db.fn.min('timestamp').as('minTimestamp'))
+      .where('projectId', 'in', projectIds)
+      .executeTakeFirst()
+
+    return row?.minTimestamp ? UnixTime.fromDate(row.minTimestamp) : undefined
   }
 
   async getAll(): Promise<PrivacyFlowEventRecord[]> {

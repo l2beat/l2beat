@@ -16,6 +16,7 @@ interface FlowsGraphPanelProps {
   hasEnoughProtocols: boolean
   isLoading: boolean
   baseDollarsPerParticle?: number
+  topChainId?: string
 }
 
 export function FlowsGraphPanel({
@@ -25,16 +26,18 @@ export function FlowsGraphPanel({
   hasEnoughProtocols,
   isLoading,
   baseDollarsPerParticle,
+  topChainId,
 }: FlowsGraphPanelProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const { width, height } = useResizeObserver({ ref: containerRef })
+
   const size =
     width && height ? getSteppedSize(Math.min(width, height)) : undefined
   const isSmallScreen = size ? size <= 500 : false
 
   return (
-    <div className="flex min-h-0 w-full flex-1 flex-col items-center max-lg:order-2">
-      <div className="flex min-h-0 w-full min-w-0 flex-1 items-center justify-center pb-6">
+    <div className="flex min-h-0 w-full flex-1 flex-col items-center pb-10 max-lg:order-2">
+      <div className="flex min-h-0 w-full min-w-0 flex-1 items-center justify-center">
         <div
           id="flows-graph"
           className="flex aspect-square max-h-full min-h-0 w-full min-w-0 max-w-[min(70svh,calc(100svh-20rem))] items-center justify-center"
@@ -60,6 +63,7 @@ export function FlowsGraphPanel({
               size={size}
               isSmallScreen={isSmallScreen}
               baseDollarsPerParticle={baseDollarsPerParticle}
+              topChainId={topChainId}
             />
           )}
         </div>

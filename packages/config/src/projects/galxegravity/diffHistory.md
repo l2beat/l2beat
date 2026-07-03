@@ -1,3 +1,251 @@
+Generated with discovered.json: 0x02c4c70e2bcc5f38da0d233127077754930446d2
+
+# Diff at Thu, 11 Jun 2026 11:25:43 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@91b2eba1ff9c1c8341d0eaf6594dac4179405ef6 block: 1780398467
+- current timestamp: 1781177053
+
+## Description
+
+Conduit Multisig 1 dropped two signers.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      values.$members.4:
+-        "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007"
+      values.$members.8:
+-        "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.multisigThreshold:
+-        "4 of 12 (33%)"
++        "4 of 10 (40%)"
+    }
+```
+
+Generated with discovered.json: 0xe41b5887a38c341635f2971490ea773f5a5b2165
+
+# Diff at Tue, 09 Jun 2026 12:43:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1780398467
+- current timestamp: 1780398467
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780398467 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x16C1D3b4aDB6f0F468FCE7b802cE5AA0A2B06d03) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x17F187D978664C96ffD655996a45e085c403AD8b) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x2E8C0869C173cC07c58186E9DeEA74314635b1E2) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x4ed0f98FB4c331e672653E832c55E0f9F402C228) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x74a0d46BA4F69cAB77A459f8B12dc531c7DaBf3C) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x85e70D857F6Fad7AD4ffc3fC95FD0fd8C396A09D) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xA4f98Ac0E083C79BAB53A3895082e8a4fbf12CDe) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xb9B2AeAe8D160a5bF9cb7FE7B2c8B58c0293FD5e) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xc7ef93FE91D4658bb422B11C5f8Ae17ae3B86D36) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xCEEAEC6b7e010fE1Ac253Ebd6f93eEBF9249Cd7e) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0xbd98fd7ab31a2129e64ccd927c2ab3783aaa8d2e
+
+# Diff at Tue, 02 Jun 2026 11:09:09 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1777994321
+- current timestamp: 1780398467
+
+## Description
+
+Conduit Multisig 1 rotated one signer (operator key `0x3840…fd5f` → `0xcdC9…4853`); same rotation propagated across Conduit Multisigs 1/2/3 on eth/arb1/base.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853"
+      values.$members.8:
+-        "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+    }
+```
+
+Generated with discovered.json: 0x047684141a3b40394a52d956f7277a2cc4cf92f0
+
+# Diff at Fri, 22 May 2026 15:45:28 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1b7024bc804124af9b25421eca5fac952454cb09 block: 1777994321
+- current timestamp: 1777994321
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777994321 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (eth:0x2807B1d5d94ca823ca7d8642A5F5DDac120ce48f) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      usedTypes.0.arg.0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c:
++        "ArbOS v51.1 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0xdb90d3381b66459e76102ad54f1ca2d4fa325148
+
+# Diff at Fri, 15 May 2026 12:35:56 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1777994321
+- current timestamp: 1777994321
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777994321 (main branch discovery), not current.
+
+```diff
+    contract EdgeChallengeManager (eth:0x0B7F24F67a889211eb266f1D413Fe0fD96532D83) [orbitstack/EdgeChallengeManager] {
+    +++ description: Contract that implements the main challenge protocol logic of the fraud proof system.
+      sourceHashes.1:
+-        "0x38a98fd3246d8aa8d3efab5b6fe60b4369399691b395325bcea9f939a52fddc5"
++        "0xe3bfba89667a59af2f558ead22d7fe0c142232b464bdae0f9e4b03555c7699f2"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (eth:0x29efff3EfE3E01A3F69011a054C33410edFc2283) [orbitstack/OneStepProverMemory] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xd6db03371959751fe7d2023d543e1842bb9200ff391a235ea6f7a6eba3b5ace6"
++        "0xa7a92329b6a7a74a22b00e80ded5f76b2d46cddfc3fef149bd93c941f577388b"
+    }
+```
+
+```diff
+    contract OneStepProver0 (eth:0x7368F782E109518fD3914e8b315eE45E51C15835) [orbitstack/OneStepProver0] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xb54274c3341eb7cf840d05f3da649b35db6e4f7cd4e76f3e4a8f2f6d171dcd66"
++        "0x165bc2eea08646ff24d665db74c1cd2deedc703052ceccac716f25eea2c23d80"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (eth:0x91cB57F200Bd5F897E41C164425Ab4DB0991A64f) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xd5ebe4d74cb7850108973c618f80d9f0c18624f45c9e8cfc3ffa07197ca1423d"
++        "0x8342918a09a9fc42d1b623e96c5f3ba476a095f6fb99d619383113945b1aee41"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (eth:0xDdaD5E59D056078A4E67a9d42e21Ce8057F22D60) [orbitstack/OneStepProverHostIo] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x77205826da8d9f9fc88c16ff5e5d19f15f0dc037b43c41a051418acf0a8bbc3a"
++        "0x130f30b3e9318970d22dad0a549e532b9a19290ebaaad3a0ce20352ff33cc104"
+    }
+```
+
 Generated with discovered.json: 0x897cc6f3d3611632fb94345c0aff24a88d6cc654
 
 # Diff at Fri, 08 May 2026 07:51:21 GMT:

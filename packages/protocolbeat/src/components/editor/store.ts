@@ -25,7 +25,7 @@ interface CodeState {
 
   setEditor: (key: string, editor: Editor) => void
   getEditor: (key: string) => Editor | undefined
-  removeEditor: (key: string) => void
+  removeEditor: (key: string, editor?: Editor) => void
   setDiffEditor: (key: string, editor: DiffEditor) => void
   getDiffEditor: (key: string) => DiffEditor | undefined
   removeDiffEditor: (key: string) => void
@@ -68,8 +68,11 @@ export const useCodeStore = create<CodeState>((set, get) => ({
   getEditor: (editorId: string) => {
     return get().editors[editorId]
   },
-  removeEditor: (editorId: string) =>
+  removeEditor: (editorId: string, editor?: Editor) =>
     set((state) => {
+      if (editor !== undefined && state.editors[editorId] !== editor) {
+        return state
+      }
       const { [editorId]: _, ...editors } = state.editors
       return { editors }
     }),

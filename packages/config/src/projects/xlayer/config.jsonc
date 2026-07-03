@@ -13,15 +13,41 @@
   "sharedModules": ["shared-polygon-cdk"],
   "overrides": {
     "eth:0x64057ad1DdAc804d0D26A7275b193D9DACa19993": {
-      "description": "Central message and gas token (dOKB) bridge of the OP stack part of this deployment. It allows for permissioned state proposals without public challenges, and forced transactions."
+      "description": "Central message and gas token (dOKB) bridge of the OP stack part of this deployment. It finalizes withdrawals against the currently respected OP Succinct Lite dispute game and allows forced transactions.",
+      "types": {
+        "DisputeGameMap": {
+          "typeCaster": "Mapping",
+          "arg": {
+            "0": "FaultDisputeGame",
+            "1": "PermissionedDisputeGame",
+            "42": "OPSuccinctFaultDisputeGame",
+            "621": "AggregateVerifier",
+            "1337": "KailuaGame"
+          }
+        }
+      }
     },
     "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675": {
       "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
     },
     "eth:0xEeDa796a23bc98726e47934ca9B54fDDa5a608e8": {
       "fields": {
-        "proposer": { "permissions": [{ "type": "propose" }] },
-        "challenger": { "permissions": [{ "type": "challenge" }] }
+        "proposer": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Allowed to post new state roots of the current layer to the host chain."
+            }
+          ]
+        },
+        "challenger": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Allowed to challenge or delete state roots proposed by a Proposer."
+            }
+          ]
+        }
       }
     }
   }

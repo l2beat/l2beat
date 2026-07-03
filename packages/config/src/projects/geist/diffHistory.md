@@ -1,3 +1,95 @@
+Generated with discovered.json: 0xb3c0a79481b487180db0a02ee931755c8c71feab
+
+# Diff at Fri, 12 Jun 2026 10:18:49 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1772656794
+- current timestamp: 1772656794
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772656794 (main branch discovery), not current.
+
+```diff
+    EOA  (base:0x01F010a5e001fe9d6940758EA5e8c777885E351e) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA  (base:0xfb6A52Ac0fe3d60895518e393243e5d1F2f43cB7) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0x93d989ab3f12dcde40c4124fe8d3abc1a03e1725
+
+# Diff at Tue, 09 Jun 2026 12:43:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1772656794
+- current timestamp: 1772656794
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772656794 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafeL2 (base:0x327b96a94763c50D5EC56D79a0324f5eb9527306) [GnosisSafe] {
+    +++ description: None
+      directlyReceivedPermissions.0.permission:
+-        "fastconfirm"
++        "interact"
+      directlyReceivedPermissions.1.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (base:0x97B942C591C484bBdDBb1cd04560924cf8a8fe3f) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "fastconfirm"
++        "interact"
+      receivedPermissions.1.permission:
+-        "validate"
++        "interact"
+      receivedPermissions.2.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (base:0xDbc9207a27aD463f0C383c05fC03AeDf1b3D90b1) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x288b2490d9d52710245c670da56344cb3c2e5034
 
 # Diff at Wed, 04 Mar 2026 20:42:24 GMT:

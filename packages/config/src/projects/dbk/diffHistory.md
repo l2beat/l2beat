@@ -1,4 +1,75 @@
-Generated with discovered.json: 0x8f1e0451778c7618e6296700940baa8db672eb3f
+Generated with discovered.json: 0xcb8cfc9431cb96f6ffc3b4dc1c2504f8282a67ae
+
+# Diff at Tue, 09 Jun 2026 12:43:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1726837979
+- current timestamp: 1726837979
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1726837979 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x322C9a45368FdcdF358a4Ba340f88073Dc239e24) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x7aB7da0C3117D7Dfe0ABfAA8d8D33883f8477C74) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xfdA4cCC8dCE3f4b9ACE21d030Ed345e975b8a7B8) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.1.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.2.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.2.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.3.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.3.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x31d10b5d2a5e6ee98f08a41fbed5723816f39787
 
 # Diff at Fri, 08 May 2026 07:51:14 GMT:
 

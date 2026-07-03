@@ -1,7 +1,7 @@
 {
   "name": "automata",
-  "timestamp": 1773160400,
-  "configHash": "0x9a5f529603689785f67d98d3639f6aeb0070a49d18aebaf20478aee96492ce91",
+  "timestamp": 1780925461,
+  "configHash": "0xf506dd7683b8b7b4d9d8aba7efc40753977eae921be3937af7d6653fcaaa1686",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -166,7 +166,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 21,
+        "nonce": 23,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -222,21 +222,23 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "eth:0x12a593227Efb69EA634e2169E2c0A8246BB0B1B3",
+      "address": "eth:0x1f8F34d0A3e8D721f8a05980Af19a7ba2E9Ec510",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
-          "from": "eth:0x72934D7AEDC1A2d889ca89Aaf064CD9455E64d00",
-          "role": ".batcherHash"
+          "permission": "interact",
+          "from": "eth:0xdbf381984c4515Fe3285D3C55fDfb3054C52c261",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
+          "role": ".proposer"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xdbf381984c4515Fe3285D3C55fDfb3054C52c261",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
+          "role": ".PROPOSER"
         }
       ]
-    },
-    {
-      "address": "eth:0x373771221e39e1Ca16e981179CEcF1bE38ac70d9",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0x49eC5Bd8C9cC35Ce26b87E534d2E36980621dDD2",
@@ -252,19 +254,15 @@
       ]
     },
     {
-      "address": "eth:0x5B08eCA5C0cc5Ea1EBF03881c30EbF800f76F5a6",
+      "address": "eth:0x5a5C3c981AE9299e080EF1647a781b1F3FbBdf63",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "propose",
-          "from": "eth:0xdbf381984c4515Fe3285D3C55fDfb3054C52c261",
-          "role": ".proposer"
-        },
-        {
-          "permission": "propose",
-          "from": "eth:0xdbf381984c4515Fe3285D3C55fDfb3054C52c261",
-          "role": ".PROPOSER"
+          "permission": "interact",
+          "from": "eth:0x72934D7AEDC1A2d889ca89Aaf064CD9455E64d00",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
+          "role": ".batcherHash"
         }
       ]
     },
@@ -304,7 +302,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 5,
+        "nonce": 7,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -340,7 +338,7 @@
         "$upgradeCount": 1,
         "basefeeScalar": 56000000,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
-        "batcherHash": "eth:0x12a593227Efb69EA634e2169E2c0A8246BB0B1B3",
+        "batcherHash": "eth:0x5a5C3c981AE9299e080EF1647a781b1F3FbBdf63",
         "batchInbox": "eth:0xff00000000000000000000000000000001111111",
         "blobbasefeeScalar": 0,
         "DISPUTE_GAME_FACTORY_SLOT": "0x52322a25d9f59ea17656545543306b7aef62bc0cc53a0e65ccfa0c75b97aa906",
@@ -385,7 +383,7 @@
         "START_BLOCK_SLOT": "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f",
         "startBlock": 20323430,
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
-        "unsafeBlockSigner": "eth:0x373771221e39e1Ca16e981179CEcF1bE38ac70d9",
+        "unsafeBlockSigner": "eth:0xB08d817CfC56c76e6c09425602f04De68D63b993",
         "version": "2.3.0-beta.2",
         "VERSION": 0
       },
@@ -534,18 +532,39 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "address": "eth:0xa1237f7a46d407000ED5Fa07A5f17eE42Cc3392c",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xdbf381984c4515Fe3285D3C55fDfb3054C52c261",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challenger"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xdbf381984c4515Fe3285D3C55fDfb3054C52c261",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".CHALLENGER"
+        }
+      ]
+    },
+    {
       "address": "eth:0xa5822fb7E3Fb516E518e2629E6786e93858e41F4",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "guard",
+          "permission": "interact",
           "from": "eth:0xD52ba64CBE1e3B44167f810622fBef36bE24d95c",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
           "role": ".guardian"
         },
         {
-          "permission": "guard",
+          "permission": "interact",
           "from": "eth:0xDf87154Ed6cF332931b70014bA3d9dF423074FfF",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
           "role": ".guardian"
         }
       ]
@@ -597,27 +616,15 @@
       "proxyType": "EOA"
     },
     {
-      "name": "AltLayer 2",
-      "address": "eth:0xB5b01E638CEF6AE50462A487d70005D6fe85eCf2",
+      "address": "eth:0xB08d817CfC56c76e6c09425602f04De68D63b993",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xC3515A4bb0028E7548819df04160e2248d86eDE8",
+      "name": "AltLayer 2",
+      "address": "eth:0xB5b01E638CEF6AE50462A487d70005D6fe85eCf2",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "eth:0xdbf381984c4515Fe3285D3C55fDfb3054C52c261",
-          "role": ".challenger"
-        },
-        {
-          "permission": "challenge",
-          "from": "eth:0xdbf381984c4515Fe3285D3C55fDfb3054C52c261",
-          "role": ".CHALLENGER"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "OptimismPortal",
@@ -651,7 +658,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 100000,
-          "prevBlockNum": 24483657
+          "prevBlockNum": 25166280
         },
         "paused": false,
         "superchainConfig": "eth:0xDf87154Ed6cF332931b70014bA3d9dF423074FfF",
@@ -702,22 +709,32 @@
             "2025-04-05T09:19:11.000Z",
             "0xbd8864ebf2f77f87a58470897b837b3003f982efa5d088b49a1373038e3da0df",
             ["eth:0xf31575705C047eC4D3Eb05F0917B9aA404179e3A"]
+          ],
+          [
+            "2026-06-08T03:16:11.000Z",
+            "0xa003ca066fdb6598a79aa97e782de066ec62723c27f34bca0664528f25e39b43",
+            ["eth:0xA9D78F579f1B30194F3c2Ca1987A9B91A33BDF08"]
+          ],
+          [
+            "2026-06-08T03:30:23.000Z",
+            "0x7c21d591fa80314fa93e0ae49c7af1d899267c941acc19a2a682723f09312305",
+            ["eth:0xf31575705C047eC4D3Eb05F0917B9aA404179e3A"]
           ]
         ],
-        "$upgradeCount": 3,
-        "challenger": "eth:0xC3515A4bb0028E7548819df04160e2248d86eDE8",
-        "CHALLENGER": "eth:0xC3515A4bb0028E7548819df04160e2248d86eDE8",
+        "$upgradeCount": 5,
+        "challenger": "eth:0xa1237f7a46d407000ED5Fa07A5f17eE42Cc3392c",
+        "CHALLENGER": "eth:0xa1237f7a46d407000ED5Fa07A5f17eE42Cc3392c",
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 25963200,
-        "latestOutputIndex": 7211,
-        "nextBlockNumber": 25966800,
-        "nextOutputIndex": 7212,
-        "proposer": "eth:0x5B08eCA5C0cc5Ea1EBF03881c30EbF800f76F5a6",
-        "PROPOSER": "eth:0x5B08eCA5C0cc5Ea1EBF03881c30EbF800f76F5a6",
+        "latestBlockNumber": 29613600,
+        "latestOutputIndex": 8225,
+        "nextBlockNumber": 29617200,
+        "nextOutputIndex": 8226,
+        "proposer": "eth:0x1f8F34d0A3e8D721f8a05980Af19a7ba2E9Ec510",
+        "PROPOSER": "eth:0x1f8F34d0A3e8D721f8a05980Af19a7ba2E9Ec510",
         "startingBlockNumber": 0,
         "startingTimestamp": 1721183063,
         "SUBMISSION_INTERVAL": 3600,
@@ -1345,6 +1362,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 24628283 },
-  "permissionsConfigHash": "0x872afb272dab8e402e36e9b1f21ac8e4678738399847acb8174aa92bd331f0a6"
+  "usedBlockNumbers": { "ethereum": 25273006 },
+  "permissionsConfigHash": "0x5804c06855b5cc2dd21a22601d066c0cb84c408604b40e8f03faecc7468fb7d0"
 }

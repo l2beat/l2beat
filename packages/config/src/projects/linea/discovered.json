@@ -1,7 +1,7 @@
 {
   "name": "linea",
   "timestamp": 1777891456,
-  "configHash": "0x5d65359f0dc679f9293b57d3bb52529c793b7e887a7ae8757ae7bf79d07f4836",
+  "configHash": "0x10510d871259b31f8e1dd3f12f788557df175e0331ff9a4914cb070771e562b9",
   "entries": [
     {
       "name": "TokenBridge",
@@ -385,8 +385,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "operateLinea",
+          "permission": "interact",
           "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "description": "Allowed to prove blocks and post the corresponding transaction data.",
           "role": ".Operators"
         }
       ]
@@ -475,8 +476,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "operateLinea",
+          "permission": "interact",
           "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "description": "Allowed to prove blocks and post the corresponding transaction data.",
           "role": ".Operators"
         }
       ]
@@ -4109,5 +4111,5 @@
     "linea/YieldManager": "0xd2e14da483a48105a5200c246ccaf5b00f9e781f312953ee46daabb7a9055b35"
   },
   "usedBlockNumbers": { "ethereum": 25021113, "linea": 30500668 },
-  "permissionsConfigHash": "0xfc442b4a847e8aedc89b76899334a8b66380e874e06377642f0519a798da0cea"
+  "permissionsConfigHash": "0x214372ae3e204c26e2b319bd5a042cd3432c9238eac4ee9c265b3f9c5d9e3836"
 }

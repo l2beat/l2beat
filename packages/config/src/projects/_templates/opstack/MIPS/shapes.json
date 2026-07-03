@@ -38,5 +38,11 @@
     "hash": "0x4a578c18a0b50fb7778c6a6b805dcb18427478d4002c8f7f28c2146dcfbf3a33",
     "address": "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908",
     "blockNumber": 23881654
+  },
+  "MIPS64_v1_10_1": {
+    "hash": "0xd50e8efb45d44082a90ec3b26d13c5f61587ced6e71b1bd0a77a26715e7ae899",
+    "address": "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA",
+    "chain": "ethereum",
+    "blockNumber": 25432649
   }
 }

@@ -13,7 +13,6 @@ import {
   UPGRADE_MECHANISM,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { getAltDaStage } from '../../common/stages/getAltDaStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { DAC } from '../../templates/dac-template'
@@ -22,6 +21,7 @@ import {
   orbitStackL2,
   WASMVM_OTHER_CONSIDERATIONS,
 } from '../../templates/orbitStack'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('nova')
 const discovery_arbitrum = new ProjectDiscovery('arbitrum') // needed for governance section
@@ -119,53 +119,30 @@ export const nova: ScalingProject = orbitStackL2({
   ],
   discovery,
   hasAtLeastFiveExternalChallengers: true,
+  usersHave7DaysToExit: true,
+  hasProperSecurityCouncil: true,
   associatedTokens: ['ARB'],
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  stage: getAltDaStage(
-    {
-      stage0: {
-        callsItselfValidiumOrOptimium: true,
-        stateRootsPostedToL1: true,
-        stateVerificationOnL1: true,
-        daAttestedByIndependentParty: true,
-        nodeSourceAvailable: true,
-        fraudProofSystemAtLeast5Outsiders: true,
-      },
-      stage1: {
-        principle: false,
-        usersCanExitWithoutCooperation: true,
-        usersHave7DaysToExit: true,
-        securityCouncilProperlySetUp: true,
-        daVerifierSecureOnL1: true,
-        daVerifier7DayExitWindow: true,
-        daCommitteeDecentralized: true,
-        noRedTrustedSetups: null,
-        proverSourcePublished: null,
-        verifierContractsReproducible: null,
-        programHashesReproducible: null,
-      },
-      stage2: {
-        fraudProofSystemIsPermissionless: false,
-        delayWith30DExitWindow: false,
-        proofSystemOverriddenOnlyInCaseOfABug: false,
-        daVerifier30DayExitWindow: false,
-        daMechanismEconomicSecurity: false,
-      },
-    },
-    {
-      nodeSourceLink: 'https://github.com/OffchainLabs/nitro',
-      securityCouncilReference:
-        'https://docs.arbitrum.foundation/security-council-members',
-      stage1PrincipleDescription:
-        'The Security Council is properly set up (9/12), but BoLD fraud proof submission on Nova is restricted to a whitelist of 10 validators (validatorWhitelistDisabled = false on the RollupProxy). The whitelisted validators colluding to push a malicious assertion without external challenge is a residual attack path beyond Security Council compromise or sequencer+DAC collusion.',
-    },
-  ),
+  isNodeAvailable: true,
+  nodeSourceLink: 'https://github.com/OffchainLabs/nitro',
+  stage1Principle: false,
+  daAttestedByIndependentParty: true,
+  daVerifierSecureOnL1: true,
+  daVerifier7DayExitWindow: true,
+  daCommitteeDecentralized: true,
+  daVerifier30DayExitWindow: false,
+  daMechanismEconomicSecurity: false,
+  securityCouncilReference:
+    'https://docs.arbitrum.foundation/security-council-members',
+  stage1PrincipleDescription:
+    'The Security Council is properly set up (9/12), but BoLD fraud proof submission on Nova is restricted to a whitelist of 10 validators (validatorWhitelistDisabled = false on the RollupProxy). The whitelisted validators colluding to push a malicious assertion without external challenge is a residual attack path beyond Security Council compromise or sequencer+DAC collusion.',
   display: {
     name: 'Arbitrum Nova',
     slug: 'nova',
-    warning: undefined,
+    headerWarning:
+      'The Arbitrum DAO voted to minimize Arbitrum Nova and transition it to maintenance state. Developers and users are encouraged to migrate to Arbitrum One. See the [Minimizing Arbitrum Nova FAQs](https://forum.arbitrum.foundation/t/minimizing-arbitrum-nova-faqs/30955) for details.',
     description:
       'Arbitrum Nova is an AnyTrust Optimium, differing from Arbitrum One by not posting transaction data onchain.',
     links: {
@@ -226,15 +203,17 @@ export const nova: ScalingProject = orbitStackL2({
     name: 'BoLD',
     challengeProtocol: 'Interactive',
   },
-  upgradesAndGovernance: getNitroGovernance(
-    l2CoreQuorumPercent,
-    l2TimelockDelay,
-    challengeWindowSeconds,
-    l1TimelockDelay,
-    treasuryTimelockDelay,
-    l2TreasuryQuorumPercent,
-    challengeGracePeriodSeconds,
-  ),
+  upgradesAndGovernance: {
+    content: getNitroGovernance(
+      l2CoreQuorumPercent,
+      l2TimelockDelay,
+      challengeWindowSeconds,
+      l1TimelockDelay,
+      treasuryTimelockDelay,
+      l2TreasuryQuorumPercent,
+      challengeGracePeriodSeconds,
+    ),
+  },
   nonTemplateRiskView: {
     exitWindow: RISK_VIEW.EXIT_WINDOW_NITRO(
       l2TimelockDelay,
@@ -251,10 +230,13 @@ export const nova: ScalingProject = orbitStackL2({
         true,
         challengeWindowSeconds,
         challengeGracePeriodSeconds,
+        'if-challenged',
       ),
-      initialBond: formatEther(
-        discovery.getContractValue<number>('RollupProxy', 'baseStake'),
-      ),
+      initialBond: {
+        value: formatEther(
+          discovery.getContractValue<number>('RollupProxy', 'baseStake'),
+        ),
+      },
     },
   },
   nonTemplateEscrows: [
@@ -334,41 +316,7 @@ export const nova: ScalingProject = orbitStackL2({
   ],
   customDa: DAC({
     technology: {
-      description: `
-## Architecture
-![Nova architecture](/images/da-layer-technology/nova/architecture.png#center)
-
-Nova is a data availability solution for Arbitrum rollups built on the AnyTrust protocol. It is composed of the following components:
-- **Sequencer Inbox**: Main entry point for the Sequencer submitting transaction batches.
-- **Data Availability Committee (DAC)**: A group of members responsible for storing and providing data on demand.
-- **Data Availability Certificate (DACert)**: A commitment ensuring that data blobs are available without needing full data posting on the L1 chain. 
-
-Committee members run servers that support APIs for storing and retrieving data blobs. 
-The Sequencer API allows the rollup Sequencer to submit data blobs for storage, while the REST API enables anyone to fetch data by hash. 
-When the Sequencer produces a data batch, it sends the batch along with an expiration time to Committee members, who store it and sign it. 
-Once enough signatures are collected, the Sequencer aggregates them into a valid DACert and posts it to the L1 chain inbox. 
-If the Sequencer fails to collect enough signatures, it falls back to posting the full data to the L1 chain as calldata. \n
-
-A DACert includes a hash of the data block, an expiration time, and proof that the required threshold of Committee members have signed off on the data. 
-The proof consists of a hash of the Keyset used in signing, a bitmap indicating which members signed, and a BLS aggregated signature. 
-L2 nodes reading from the sequencer inbox verify the certificate’s validity by checking the number of signers, the aggregated signature, and that the expiration time is at least two weeks ahead of the L2 timestamp. 
-If the DACert is valid, it provides a proof that the corresponding data is available from honest committee members.
-
-## DA Bridge Architecture
-![Nova bridge architecture](/images/da-bridge-technology/nova/architecture.png#center)
-
-In Nova architecture, the DA commitments are posted to the L1 through the sequencer inbox, using the inbox as a DA bridge.
-The DA commitment consists of Data Availability Certificate (DACert), including a hash of the data block, an expiration time, and a proof that the required threshold of Committee members have signed off on the data.
-The sequencer distributes the data and collects signatures from Committee members offchain. Only the DACert is posted by the sequencer to the L1 chain inbox (the DA bridge), achieving L2 transaction ordering finality in a single onchain transaction.
-
-## DA Bridge Upgradeability
-![Nova bridge architecture](/images/upgrades-and-governance/nova.png#center)
-
-The Arbitrum DAO controls Arbitrum Nova through upgrades and modifications to their smart contracts on Layer 1 Ethereum and the Layer 2s. 
-Regular upgrades, Admin- and Owner actions originate from either the Arbitrum DAO or the non-emergency (proposer-) Security Council on Arbitrum One and pass through multiple delays and timelocks before being executed at their destination. Contrarily, the three Emergency Security Council multisigs (one on each chain: Arbitrum One, Ethereum, Arbitrum Nova) can skip delays and directly access all admin- and upgrade functions of all smart contracts. These two general paths have the same destination: the respective UpgradeExecutor smart contract.
-Regular upgrades are scheduled in the L2 Timelock. The proposer Security Council can do this directly and the Arbitrum DAO (ARB token holders and delegates) must meet a CoreGovernor-enforced 5% threshold of the votable tokens. The L2 Timelock queues the transaction for a 3d delay and then sends it to the Outbox contract on Ethereum. This incurs another delay (the challenge period) of 6d 8h. When that has passed, the L1 Timelock delays for additional 3d. Both timelocks serve as delays during which the transparent transaction contents can be audited, and even cancelled by the Emergency Security Council. Finally, the transaction can be executed, calling Admin- or Owner functions of the respective destination smart contracts through the UpgradeExecutor on Ethereum. If the predefined transaction destination is Arbitrum One or -Nova, this last call is executed on L2 through the canonical bridge and the aliased address of the L1 Timelock.
-Operator roles like the Sequencers and Validators are managed using the same paths. Sequencer changes can be delegated to a Batch Poster Manager.
-`,
+      description: readProjectMarkdown('nova', 'customDaTechnology'),
     },
     dac: {
       requiredMembers: requiredSignatures,

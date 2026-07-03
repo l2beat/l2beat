@@ -16,6 +16,7 @@ describe(EventHandler.name, () => {
     'event Remove(address user)',
     'event AddMany(address[] users)',
     'event RemoveMany(address[] users)',
+    'event ConfigLike(bytes32 digest, (uint256 chainId, uint256 value) config)',
   ]
 
   const abi = new utils.Interface(stringABI)
@@ -39,6 +40,7 @@ describe(EventHandler.name, () => {
   const Remove = event<[ChainSpecificAddress]>('Remove')
   const AddMany = event<[ChainSpecificAddress[]]>('AddMany')
   const RemoveMany = event<[ChainSpecificAddress[]]>('RemoveMany')
+  const ConfigLike = event<[string, [number, number]]>('ConfigLike')
 
   const ADDRESS = ChainSpecificAddress.random()
 
@@ -194,6 +196,38 @@ describe(EventHandler.name, () => {
       const result = await handler.execute(provider, ADDRESS)
 
       expect(result.value).toEqual([ChainSpecificAddress.address(U2)])
+    })
+
+    it('dedupBy lets dedup by one field while keeping others in the output', async () => {
+      const U1 = ChainSpecificAddress.random()
+      const U2 = ChainSpecificAddress.random()
+      const provider = mockObject<IProvider>({
+        chain: 'ethereum',
+        getLogs: getLogsStub([
+          Update(U1, true),
+          Update(U2, true),
+          Update(U1, false),
+        ]),
+      })
+
+      const handler = new EventHandler(
+        'field',
+        {
+          type: 'event',
+          select: ['user', 'added'],
+          dedupBy: 'user',
+          add: { event: 'Update' },
+        },
+        stringABI,
+      )
+
+      const result = await handler.execute(provider, ADDRESS)
+      // Without dedupBy, three different (user, added) tuples → three rows.
+      // With dedupBy=user, latest per user wins → U1's added=false, U2's added=true.
+      expect(result.value).toEqual([
+        { user: ChainSpecificAddress.address(U1), added: false },
+        { user: ChainSpecificAddress.address(U2), added: true },
+      ])
     })
 
     it('flattens selected event arrays before adding and removing', async () => {
@@ -398,6 +432,39 @@ describe(EventHandler.name, () => {
       const result = await handler.execute(provider, ADDRESS)
 
       expect(result.value).toEqual({ 1: 1, 3: 3 })
+    })
+
+    it('groups by and filters on a nested struct field via dot-notation index', async () => {
+      const D1 = `0x${'11'.repeat(32)}`
+      const D2 = `0x${'22'.repeat(32)}`
+      const D3 = `0x${'33'.repeat(32)}`
+      const provider = mockObject<IProvider>({
+        chain: 'ethereum',
+        getLogs: getLogsStub([
+          ConfigLike(D1, [1, 100]),
+          ConfigLike(D2, [2, 100]),
+          ConfigLike(D3, [1, 999]),
+        ]),
+      })
+
+      const handler = new EventHandler(
+        'field',
+        {
+          type: 'event',
+          // group by config.chainId (index 0), keep only config.value (index 1) === 100
+          select: ['digest'],
+          set: {
+            event: 'ConfigLike',
+            where: ['=', ['get', 'config', 1], 100],
+          },
+          groupBy: 'config.0',
+        },
+        stringABI,
+      )
+
+      const result = await handler.execute(provider, ADDRESS)
+
+      expect(result.value).toEqual({ 1: D1, 2: D2 })
     })
 
     it('works on semi-compatible events', async () => {

@@ -10,9 +10,12 @@ import {
 import {
   type NodeLocations,
   recallNodeLayout,
+  reconcileHiddenFields,
+  type StoredGroup,
   type StoredNodeLayout,
 } from '../utils/storage'
 import { updateNodePositions } from '../utils/updateNodePositions'
+import { makeGroupNode } from './group'
 import { layout } from './other'
 
 const NEW_NODE_HORIZONTAL_GAP = 120
@@ -49,13 +52,17 @@ export function loadNodes(
     const width = box?.width ?? NODE_WIDTH
     const hiddenFieldsHeight =
       hiddenFields.length > 0 ? HIDDEN_FIELDS_FOOTER_HEIGHT : 0
+    const visibleFieldsCount = Math.max(
+      0,
+      node.fields.length - hiddenFields.length,
+    )
     const height =
       HEADER_HEIGHT +
-      (node.fields.length - hiddenFields.length) * FIELD_HEIGHT +
+      visibleFieldsCount * FIELD_HEIGHT +
       BOTTOM_PADDING +
       hiddenFieldsHeight
     const savedColor = saved?.colors?.[node.id]
-    const color = typeof savedColor === 'number' ? savedColor : node.color
+    const color = savedColor ?? node.color
 
     if (!box) {
       nodesWithoutSavedLayout.add(node.id)
@@ -69,8 +76,13 @@ export function loadNodes(
     }
   })
 
-  const allNodes = existing.concat(added)
-  const allNodeIds = new Set(allNodes.map((node) => node.id))
+  const flatNodes = existing.concat(added)
+  // Rebuild user-created groups from the saved layout, re-nesting the freshly
+  // loaded contracts. Members live nested, so ids are gathered from the tree.
+  const allNodes = saved?.groups?.length
+    ? reconstructGroups(flatNodes, saved.groups)
+    : flatNodes
+  const allNodeIds = collectAllIds(allNodes)
 
   const savedHiddenNodes = saved?.hiddenNodes ?? []
   const shouldReuseCurrentHidden = state.projectId === projectId
@@ -133,7 +145,76 @@ function combinedHiddenFields(
 ): string[] {
   const recalledHiddenFields = saved?.hiddenFields?.[node.id] ?? []
   const defaultHiddenFields = node.hiddenFields
-  return [...new Set([...recalledHiddenFields, ...defaultHiddenFields])]
+  const fieldNames = node.fields.map((f) => f.name)
+  return reconcileHiddenFields(fieldNames, [
+    ...recalledHiddenFields,
+    ...defaultHiddenFields,
+  ])
+}
+
+function collectAllIds(nodes: readonly Node[]): Set<string> {
+  const ids = new Set<string>()
+  const walk = (list: readonly Node[]) => {
+    for (const node of list) {
+      ids.add(node.id)
+      walk(node.subnodes)
+    }
+  }
+  walk(nodes)
+  return ids
+}
+
+// Re-nest the flat contracts into their saved groups. Built bottom-up so a
+// nested group is ready before its parent; a group whose members all vanished
+// (e.g. the contract is gone from the API) is dropped.
+function reconstructGroups(flat: Node[], groups: StoredGroup[]): Node[] {
+  const byId = new Map(flat.map((node) => [node.id, node]))
+  const groupIds = new Set(groups.map((group) => group.id))
+  const built = new Set<string>()
+  const consumed = new Set<string>()
+
+  let progressed = true
+  while (progressed) {
+    progressed = false
+    for (const group of groups) {
+      if (built.has(group.id)) {
+        continue
+      }
+      const childGroups = group.members.filter((id) => groupIds.has(id))
+      if (!childGroups.every((id) => built.has(id))) {
+        continue
+      }
+      built.add(group.id)
+      progressed = true
+      const members = group.members
+        .map((id) => byId.get(id))
+        .filter((node): node is Node => node !== undefined)
+      if (members.length === 0) {
+        continue
+      }
+      for (const member of members) {
+        consumed.add(member.id)
+      }
+      byId.set(group.id, makeGroupNode(group, members))
+    }
+  }
+
+  const result: Node[] = []
+  for (const node of flat) {
+    if (!consumed.has(node.id)) {
+      result.push(node)
+    }
+  }
+  for (const group of groups) {
+    if (consumed.has(group.id)) {
+      continue
+    }
+    const node = byId.get(group.id)
+    if (node) {
+      result.push(node)
+    }
+  }
+  return result
 }
 
 function placeNewNodes(

@@ -9,6 +9,11 @@
     "address": "eth:0xE99AF5F4C60E06Beb3827F4ffdD06E88c55fB895",
     "blockNumber": 24537231
   },
+  "KailuaTreasury_v5withVerifier": {
+    "hash": "0xf5a7c7ac441165b26526d65aee55070adb438e0b29658447e1d24955d1a26648",
+    "address": "eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336",
+    "blockNumber": 25198521
+  },
   "KailuaTreasury_v1_2": {
     "hash": "0xf5a7c7ac441165b26526d65aee55070adb438e0b29658447e1d24955d1a26648",
     "address": "eth:0x9937033Cc967eED9d753e31c77D2F146d002ae53",

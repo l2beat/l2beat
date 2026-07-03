@@ -1,18 +1,15 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "Miner",
-  "description": "Mining and reward-distribution contract for Tornado anonymity mining. It verifies reward and withdrawal proofs, maintains account roots, and routes TORN rewards through the swap contract.",
-  "category": "core",
+  "description": "Anonymity Mining - Mining and reward-distribution contract for Tornado anonymity mining. It verifies reward and withdrawal proofs, maintains account roots, and routes TORN rewards through the swap contract.",
+  "category": "bridge-external",
   "ignoreMethods": ["accountRoots"],
   "fields": {
     "governance": {
       "description": "Governance address controlling reward parameters and verifier wiring.",
       "severity": "HIGH",
       "permissions": [
-        {
-          "type": "interact",
-          "description": "set mining reward rates."
-        },
+        { "type": "interact", "description": "set mining reward rates." },
         {
           "type": "interact",
           "description": "replace the reward, withdrawal, and tree-update verifiers."

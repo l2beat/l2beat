@@ -57,7 +57,15 @@ export function getTokenFrameworkBridgeType({
     return
   }
 
-  // chainspecificaddress does not support 'native' so we make do without the abstract map
+  if (srcWasBurned && dstWasMinted) {
+    return 'burnAndMint'
+  }
+  if (srcWasBurned || dstWasMinted) {
+    return 'lockAndMint'
+  }
+
+  // ChainSpecificAddress does not support native tokens. With no burn or mint,
+  // native-involved transfers are liquidity moves.
   if (
     srcTokenAddress === Address32.NATIVE &&
     dstTokenAddress === Address32.NATIVE
@@ -68,14 +76,7 @@ export function getTokenFrameworkBridgeType({
     srcTokenAddress === Address32.NATIVE ||
     dstTokenAddress === Address32.NATIVE
   ) {
-    return 'lockAndMint'
-  }
-
-  if (srcWasBurned && dstWasMinted) {
-    return 'burnAndMint'
-  }
-  if (srcWasBurned || dstWasMinted) {
-    return 'lockAndMint'
+    return 'nonMinting'
   }
 
   const srcAbstractToken = tokenMap.get(

@@ -1,7 +1,12 @@
 {
   "RewardDistributor.sol": {
-    "hash": "0x6070cf13583054dcdcdff5ca9834c0822f5b19bbc4cc3dcbbed27f849c768cff",
+    "hash": "0xdc25555be83a4afb19d53051d224785fb0fb7eeab2471ece49c3f4b103239cb9",
     "address": "eth:0x3D6A1B00C830C5f278FC5dFb3f6Ff0b74Db6dfe0",
     "blockNumber": 23834069
+  },
+  "RewardDistributor_v5.sol": {
+    "hash": "0x459d15c998a2f749c51abcd10cdcdaa0f4617a23f664ddb2414bfcbb4e960475",
+    "address": "eth:0x555bAAc4757A89f1CE0c84fA35afE9dD7aa8E1d3",
+    "blockNumber": 25428902
   }
 }

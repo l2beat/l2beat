@@ -21,12 +21,20 @@
         },
         "pickRoleMembers": "MONITOR_ROLE"
       },
-      "permissions": [{ "type": "guard" }]
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+        }
+      ]
     },
     "defaultAdmin": {
       // weird superchain fake with accesscontrol and custom roles
       "permissions": [
-        { "type": "guard" },
+        {
+          "type": "interact",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+        },
         {
           "type": "interact",
           "description": "manage roles including the guardian role."

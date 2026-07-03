@@ -1,3 +1,183 @@
+Generated with discovered.json: 0xea66b9e52ab9b77112622562356158d5bbf122f8
+
+# Diff at Thu, 11 Jun 2026 11:23:53 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@91b2eba1ff9c1c8341d0eaf6594dac4179405ef6 block: 1778508895
+- current timestamp: 1781176944
+
+## Description
+
+RollupProxy `wasmModuleRoot` updated to ArbOS v51.1.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (base:0xD34F3a11F10DB069173b32d84F02eDA578709143) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
++++ description: ArbOS version derived from known wasmModuleRoots.
+      values.arbOsFromWmRoot:
+-        "ArbOS v40 wasmModuleRoot"
++        "ArbOS v51.1 wasmModuleRoot"
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a"
++        "0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c"
+    }
+```
+
+Generated with discovered.json: 0x2dfdb66434ab1779cb2c11dcd8ede3805fc6ba28
+
+# Diff at Tue, 09 Jun 2026 12:43:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1778508895
+- current timestamp: 1778508895
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778508895 (main branch discovery), not current.
+
+```diff
+    EOA  (base:0x3cAF7ceF6B2aECA72102E8835325B26BF99FE9E0) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "fastconfirm"
++        "interact"
+      receivedPermissions.1.permission:
+-        "validate"
++        "interact"
+      receivedPermissions.2.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    contract DegenFastConfirmerMultisig (base:0xc207cbC35DD3CD172059730380A45aE14eb0e403) [GnosisSafe] {
+    +++ description: None
+      directlyReceivedPermissions.0.permission:
+-        "fastconfirm"
++        "interact"
+      directlyReceivedPermissions.1.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (base:0xc98A32DdD1b30B3788670C9992f3B18EF83Da491) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x4b5c2134bddbc823ee4cc7ecc6fc59d931e1f387
+
+# Diff at Fri, 22 May 2026 15:40:52 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1b7024bc804124af9b25421eca5fac952454cb09 block: 1778508895
+- current timestamp: 1778508895
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778508895 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (base:0xD34F3a11F10DB069173b32d84F02eDA578709143) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c:
++        "ArbOS v51.1 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0x9c77686dae2a246b0cce567a73a2992df5f38244
+
+# Diff at Fri, 15 May 2026 12:35:49 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1778508895
+- current timestamp: 1778508895
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778508895 (main branch discovery), not current.
+
+```diff
+    contract OneStepProofEntry (base:0x15D2a9A14de6Ea03AADE944641eAb497a3A4c9DF) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xb926f057e4fad7ff5b169aeec58691133fd46de25932d8356d3dc28e4e793d3a"
++        "0x294155e99018f1d390be420f29ef940f9843f3ce54ed4e515d998653e2ce4293"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (base:0x173FCB92df1854c3B78dC8696C23B1c88437b892) [orbitstack/OneStepProverMemory] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xa163417851e926098130f55736a5b43084164e0070f9647198131e57b45a947d"
++        "0x9e22e05e7953684e6f00507684bb902908d6d4383b2e82ecdce789027bebc33a"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (base:0x320e29bc3f34bc6B8834bBD2B6b013ef6620E69F) [orbitstack/OneStepProverHostIo] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xd64745a0edbb2ada69b81d849f2737d7c082d18ca14a715c23c4165e4eecc637"
++        "0x081875b93df655e91ec23245390ad21db0990c12125dad497f1cbf118501ccc2"
+    }
+```
+
+```diff
+    contract ChallengeManager (base:0x67812161Bbb6aCF891aA6028BC614a660961ceD8) [orbitstack/ChallengeManager] {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      sourceHashes.1:
+-        "0x8a2753d8b3f1ce86250bd4a4e7e502d04dd36a5a670b519b7510af6b33618693"
++        "0x1eba00857f5477dbcd075b48ce8af9c74d5cb4f93a5e714dd27b3df498737e54"
+    }
+```
+
+```diff
+    contract OneStepProver0 (base:0x97ba9522f2e5D67e96FeA6B612e794dc96637AAc) [orbitstack/OneStepProver0] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xdec29538ea8b9a7f83edc119a9fbd3761ab24c5e0b512ecfdecc46dcdefccdc1"
++        "0x063a1b3c4451e69f827acd833c42e986c2c617bfaabb13884fb438185b192407"
+    }
+```
+
+```diff
+    contract RollupProxy (base:0xD34F3a11F10DB069173b32d84F02eDA578709143) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      sourceHashes.1:
+-        "0x689a6510e734cb5e6032f5fca6ce6cb72b6e3af01d74b228d9d2cfd926a25b66"
++        "0x6639f412df425cd0592b0ca4cf5e4ad9d39436f0e7255e83726bb7ac6a9e37b4"
+    }
+```
+
 Generated with discovered.json: 0x571dcb51b6f58e7eb44e7f205a3967e8cd7c11f9
 
 # Diff at Mon, 11 May 2026 14:16:24 GMT:

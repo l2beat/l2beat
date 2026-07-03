@@ -14,7 +14,7 @@ export async function getScalingTvsData(
     unknown,
     unknown,
     unknown,
-    { tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed' }
+    { tab: 'rollups' | 'validiumsAndOptimiums' | 'others' }
   >,
   manifest: Manifest,
   cache: InMemoryCache,
@@ -57,7 +57,7 @@ export async function getScalingTvsData(
 
 async function getCachedData(
   cache: InMemoryCache,
-  tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed',
+  tab: 'rollups' | 'validiumsAndOptimiums' | 'others',
 ) {
   const entries = await getScalingTvsEntries()
 
@@ -77,42 +77,44 @@ async function getCachedData(
 }
 
 async function getQueryState(
-  tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed',
+  tab: 'rollups' | 'validiumsAndOptimiums' | 'others',
   entries: Awaited<ReturnType<typeof getScalingTvsEntries>>,
 ) {
   const helpers = getSsrHelpers()
 
-  // Skip prefetching for underReview tab as it doesn't have chart data
-  if (tab === 'notReviewed') {
-    return helpers.dehydrate()
-  }
-
   await Promise.all([
-    helpers.tvs.detailedChart.prefetch({
-      filter: {
+    helpers.queryClient.prefetchQuery(
+      helpers.trpc.tvs.detailedChart.queryOptions({
+        filter: {
+          type: 'projects',
+          projectIds: entries[tab].map((entry) => entry.id),
+        },
+        range: optionToRange('1y'),
+        excludeAssociatedTokens: false,
+        excludeRwaRestrictedTokens: true,
+      }),
+    ),
+    helpers.queryClient.prefetchQuery(
+      helpers.trpc.tvs.table.queryOptions({
         type: tab,
-      },
-      range: optionToRange('1y'),
-      excludeAssociatedTokens: false,
-      excludeRwaRestrictedTokens: true,
-    }),
-    helpers.tvs.table.prefetch({
-      type: tab,
-      excludeAssociatedTokens: false,
-      excludeRwaRestrictedTokens: true,
-    }),
-    helpers.tvs.chartStats.prefetch({
-      filter: {
-        type: 'projects',
-        projectIds: [
-          ...entries.rollups,
-          ...entries.validiumsAndOptimiums,
-          ...entries.others,
-        ].map((entry) => entry.id),
-      },
-      excludeAssociatedTokens: false,
-      excludeRwaRestrictedTokens: true,
-    }),
+        excludeAssociatedTokens: false,
+        excludeRwaRestrictedTokens: true,
+      }),
+    ),
+    helpers.queryClient.prefetchQuery(
+      helpers.trpc.tvs.chartStats.queryOptions({
+        filter: {
+          type: 'projects',
+          projectIds: [
+            ...entries.rollups,
+            ...entries.validiumsAndOptimiums,
+            ...entries.others,
+          ].map((entry) => entry.id),
+        },
+        excludeAssociatedTokens: false,
+        excludeRwaRestrictedTokens: true,
+      }),
+    ),
   ])
   return helpers.dehydrate()
 }

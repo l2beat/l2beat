@@ -1,0 +1,13 @@
+# Architecture
+Circle's Cross-Chain Transfer Protocol (CCTP) is a centralized burn-and-mint bridge for USDC and, underneath it, a generalized message-passing protocol. A source-chain `TokenMessenger` burns USDC through the local `TokenMinter` and asks the `MessageTransmitter` to emit a message for the destination domain. Circle's offchain Iris attestation service observes the source transaction and acts as the oracle / attester at the destination. Anyone with the message and attestation can call `receiveMessage` on the destination `MessageTransmitter`; the contract verifies the attester signatures, prevents nonce replay, dispatches the message to the destination `TokenMessenger`, and mints the same amount of native USDC to the requested recipient.
+
+# CCTP v1 and v2
+CCTP v1 and v2 use the same high-level flow and both can carry arbitrary message bodies. In the Ethereum discovery, v1's `MessageTransmitter` and `TokenMessenger` are immutable contracts. [CCTP v1](https://developers.circle.com/cctp/v1) only supports 'Standard Transfer': Circle waits for a certain amount of block confirmations on the source chain before attesting.
+
+CCTP v2 uses `MessageTransmitterV2` and `TokenMessengerV2`, adds finality thresholds, destination mint fees, and optional hook data. The new 'Fast Transfer' feature lets Iris attest much faster as long as Circle's global 'Fast Transfer' allowance is available. Hooks are metadata passed with the burn message and are interpreted by app-level integrators rather than executed by CCTP core.
+
+# Crosschain oracle and validation
+CCTP does not validate source-chain state on the destination chain. The destination `MessageTransmitter` verifies signatures from Circle-controlled attesters, so security depends on Circle's offchain attestation service signing only valid source messages and protecting its signing keys. CCTP v1 is configured with a {{cctpV1AttesterThreshold}}/{{cctpV1AttesterCount}} attester threshold, while v2 is configured with a {{cctpV2AttesterThreshold}}/{{cctpV2AttesterCount}} threshold. The attester manager can change enabled attesters and thresholds, and the owner can change the attester manager.
+
+# Upgradeability
+The v1 Ethereum contracts in discovery are immutable, but critical permissions like ownership, minters, pausing, rescuer, token-controller, and attester-manager roles govern protocol operation. V2 introduces proxied contracts; their proxy admins can replace implementations with no onchain delay. CCTP is deployed per Circle domain, so a complete risk assessment must include the corresponding contracts, signer configuration, and permissions on every supported source and destination chain.

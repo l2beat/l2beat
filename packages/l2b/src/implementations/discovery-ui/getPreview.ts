@@ -2,7 +2,7 @@ import type { ProjectContract, ProjectPermissions } from '@l2beat/config'
 import { ProjectDiscovery } from '@l2beat/config/build/discovery/ProjectDiscovery'
 import type { ConfigReader } from '@l2beat/discovery'
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { getAllProjectDiscoveries } from './getDiscoveries'
+import { getProjectDiscoveries } from '../discovery/getProjectDiscoveries'
 import { type ContractsMeta, getMeta } from './getMeta'
 import type {
   AddressFieldValue,
@@ -15,7 +15,7 @@ export function getPreview(
   configReader: ConfigReader,
   projectId: string,
 ): ApiPreviewResponse {
-  const discoveries = getAllProjectDiscoveries(configReader, projectId)
+  const discoveries = getProjectDiscoveries(configReader, projectId)
 
   const permissionsPerChain: {
     chain: string

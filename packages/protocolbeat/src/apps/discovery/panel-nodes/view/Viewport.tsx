@@ -1,15 +1,30 @@
 import clsx from 'clsx'
 import { useEffect, useRef } from 'react'
-import { useMultiViewStore } from '../../multi-view/store'
+import { useDockingStore } from '../../multi-view/store'
 import { useSearchStore } from '../../search/store'
 import { useStore } from '../store/store'
 import { useDesktopControls } from './hooks/useDesktopControls'
 import { useTouchControls } from './hooks/useTouchControls'
 import { MouseSelection } from './MouseSelection'
 import { NodesAndConnections } from './NodesAndConnections'
+import { NodesAndConnectionsWebGL } from './NodesAndConnectionsWebGL'
 import { ScalableView } from './ScalableView'
 
-export function Viewport() {
+export type ViewportRenderer = 'dom' | 'webgl'
+
+export interface ViewportProps {
+  // When omitted (the normal case) the renderer is chosen from
+  // userPreferences.useExperimentalRenderer. Passed explicitly only by the
+  // bench page so it can A/B test independently of the user setting.
+  renderer?: ViewportRenderer
+}
+
+export function Viewport({ renderer: rendererOverride }: ViewportProps = {}) {
+  const useExperimentalRenderer = useStore(
+    (state) => state.userPreferences.useExperimentalRenderer === true,
+  )
+  const renderer: ViewportRenderer =
+    rendererOverride ?? (useExperimentalRenderer ? 'webgl' : 'dom')
   const containerRef = useRef<HTMLDivElement>(null)
   const viewRef = useRef<HTMLDivElement>(null)
   const registerViewportContainer = useStore(
@@ -27,7 +42,7 @@ export function Viewport() {
     desktopControls,
   })
 
-  const currentPanel = useMultiViewStore((state) => state.active)
+  const currentPanel = useDockingStore((state) => state.activeLeaf)
   const searchOpened = useSearchStore((state) => state.opened)
   // Always capture if we're not in panel mode, or if we're in nodes panel
   const shouldCapture =
@@ -46,6 +61,7 @@ export function Viewport() {
       passive: false,
     })
     target?.addEventListener('mousedown', desktopControls.onMouseDown)
+    target?.addEventListener('dblclick', desktopControls.onDoubleClick)
     target?.addEventListener('touchstart', touchControls.onTouchStart, {
       passive: false,
     })
@@ -70,6 +86,7 @@ export function Viewport() {
     return () => {
       target?.removeEventListener('wheel', desktopControls.onWheel)
       target?.removeEventListener('mousedown', desktopControls.onMouseDown)
+      target?.removeEventListener('dblclick', desktopControls.onDoubleClick)
       target?.removeEventListener('touchstart', touchControls.onTouchStart)
       target?.removeEventListener('touchmove', touchControls.onTouchMove)
       target?.removeEventListener('touchend', touchControls.onTouchEnd)
@@ -92,9 +109,16 @@ export function Viewport() {
         desktopControls.isResizing && 'cursor-col-resize',
       )}
     >
-      <ScalableView ref={viewRef}>
-        <NodesAndConnections />
-      </ScalableView>
+      {renderer === 'dom' ? (
+        <ScalableView ref={viewRef}>
+          <NodesAndConnections />
+        </ScalableView>
+      ) : (
+        <>
+          <ScalableView ref={viewRef} />
+          <NodesAndConnectionsWebGL />
+        </>
+      )}
       <MouseSelection />
     </div>
   )

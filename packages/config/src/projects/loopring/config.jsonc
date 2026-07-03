@@ -33,13 +33,6 @@
       "fields": {
         "loopringV3": {
           "handler": { "type": "storage", "slot": 5, "returnType": "address" }
-        },
-        "shutdownTriggered": {
-          "handler": {
-            "type": "event",
-            "select": "timestamp",
-            "add": { "event": "Shutdown" }
-          }
         }
       }
     },

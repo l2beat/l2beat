@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "Voting",
-  "description": "Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator; if you trust this contract, you trust RAIL voting power governed by these rules to change connected Railgun components.",
+  "description": "Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.",
   "category": "gov",
   "ignoreMethods": ["getActions", "proposals", "proposalsLength"],
   "fields": {

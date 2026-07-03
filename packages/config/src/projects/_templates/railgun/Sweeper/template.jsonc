@@ -1,8 +1,8 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "Sweeper",
-  "description": "Upgradeable helper that forwards all ETH or ERC20 balances it holds to a fixed receiver. If you trust this contract, you trust its proxy admin to upgrade, pause, or retarget the sweep behavior.",
-  "category": "gov",
+  "description": "Helper that forwards all ETH or ERC20 balances it holds to a fixed receiver.",
+  "category": "bridge-external",
   "fields": {
     "$admin": {
       "description": "Direct proxy admin of the Sweeper proxy.",

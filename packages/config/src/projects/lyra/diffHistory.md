@@ -1,4 +1,137 @@
-Generated with discovered.json: 0x82f32300f714c205e9f44179b3085da6062930b3
+Generated with discovered.json: 0xb71480fb86097a0aac266b74dd26c7ff9a15eddd
+
+# Diff at Tue, 30 Jun 2026 20:24:41 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1781176725
+- current timestamp: 1781176725
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1781176725 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0x85eA9c11cf3D4786027F7FD08F4406b15777e5f8) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      usedTypes.0.arg.8:
++        "FaultDisputeGame"
+    }
+```
+
+Generated with discovered.json: 0x111b7e27297e03f85d31771637209134c17b75e9
+
+# Diff at Thu, 11 Jun 2026 11:20:05 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@91b2eba1ff9c1c8341d0eaf6594dac4179405ef6 block: 1780397534
+- current timestamp: 1781176725
+
+## Description
+
+Conduit Multisig 1 dropped two signers.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      values.$members.4:
+-        "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007"
+      values.$members.8:
+-        "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.multisigThreshold:
+-        "4 of 12 (33%)"
++        "4 of 10 (40%)"
+    }
+```
+
+Generated with discovered.json: 0x668564df94ed0eeab0050068e59af26f181af062
+
+# Diff at Tue, 09 Jun 2026 12:43:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1780397534
+- current timestamp: 1780397534
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780397534 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x14e4E97bDc195d399Ad8E7FC14451C279FE04c8e) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x1aa4387b5970c109f1162a5759d0251a0c132c51
+
+# Diff at Thu, 04 Jun 2026 17:41:34 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1777994286
+- current timestamp: 1780397534
+
+## Description
+
+Conduit Multisig 1 rotated one signer (operator key `0x3840…fd5f` → `0xcdC9…4853`); same rotation propagated across Conduit Multisigs 1/2/3 on eth/arb1/base.
+
+New game name (aggregateVerifier) added to portal.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853"
+      values.$members.8:
+-        "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777994286 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0x85eA9c11cf3D4786027F7FD08F4406b15777e5f8) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      usedTypes.0.arg.621:
++        "AggregateVerifier"
+    }
+```
+
+Generated with discovered.json: 0xcdebc7434f0dd7e40d219bb1c6929f09dd0dfcd9
 
 # Diff at Fri, 08 May 2026 07:51:34 GMT:
 

@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import { ArrowRightIcon, CoinsIcon, ListPlusIcon, PlusIcon } from 'lucide-react'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
@@ -28,8 +29,13 @@ import {
 import { ExplorerLink } from '~/components/ExplorerLink'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
-import { api } from '~/react-query/trpc'
+import { useTRPC } from '~/react-query/trpc'
 import { buildUrlWithParams } from '~/utils/buildUrlWithParams'
+
+const LIVE_SUGGESTIONS_QUERY_OPTIONS = {
+  refetchOnMount: 'always',
+  staleTime: 0,
+} as const
 
 export function TokenSuggestionsPage() {
   return (
@@ -43,9 +49,14 @@ export function TokenSuggestionsPage() {
 }
 
 function ByMatchingAbstractTokensCard() {
+  const trpc = useTRPC()
   const navigate = useNavigate()
-  const { data: suggestions, isLoading } =
-    api.deployedTokens.getSuggestionsByPartialTransfers.useQuery()
+  const { data: suggestions, isLoading } = useQuery(
+    trpc.deployedTokens.getSuggestionsByPartialTransfers.queryOptions(
+      undefined,
+      LIVE_SUGGESTIONS_QUERY_OPTIONS,
+    ),
+  )
 
   return (
     <Card className="flex min-h-0 flex-1 flex-col">
@@ -165,10 +176,15 @@ function ByMatchingAbstractTokensCard() {
 }
 
 function FromCoingeckoCard() {
+  const trpc = useTRPC()
   const navigate = useNavigate()
   const [interopOnly, setInteropOnly] = useState(false)
-  const { data: suggestions, isLoading } =
-    api.deployedTokens.getCoingeckoSuggestions.useQuery()
+  const { data: suggestions, isLoading } = useQuery(
+    trpc.deployedTokens.getCoingeckoSuggestions.queryOptions(
+      undefined,
+      LIVE_SUGGESTIONS_QUERY_OPTIONS,
+    ),
+  )
 
   const filteredSuggestions = (suggestions ?? [])
     .filter((suggestion) => !interopOnly || suggestion.isInterop)

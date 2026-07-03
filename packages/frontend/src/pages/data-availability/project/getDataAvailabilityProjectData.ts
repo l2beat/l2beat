@@ -63,7 +63,6 @@ async function getProjectEntry(
     slug: params.layer,
     select: ['daLayer', 'display', 'statuses'],
     optional: [
-      'isUpcoming',
       'milestones',
       'archivedAt',
       'colors',

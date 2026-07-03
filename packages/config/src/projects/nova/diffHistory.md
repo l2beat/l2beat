@@ -1,3 +1,443 @@
+Generated with discovered.json: 0x4607eca3ef051a7f1c9cd214316f0db92ac0dea3
+
+# Diff at Tue, 16 Jun 2026 07:36:00 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@254df558db0f4fcb5b0e269facd77fad1c7d2ddb block: 1779719590
+- current timestamp: 1781595260
+
+## Description
+
+Shared L1Timelock (with arbitrum) scheduled a `SpoofL2TxAction` releasing 30,765.617 ETH on arbitrum's L2 — the Constitutional AIP [Approve Release of Frozen ETH](https://forum.arbitrum.foundation/t/constitutional-aip-approve-release-of-frozen-eth/30825). No change to nova's own contracts.
+
+## Watched changes
+
+```diff
+    contract L1Timelock (eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49) [orbitstack/Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      values.scheduledTransactions.103:
++        {"id":"0x3b8c42fc538bca5c6732df90d234ba7450c632c3818dbad104c5e3528cc36d83","decoded":{"chain":"ethereum","contractName":"SpoofL2TxAction","function":"execute","inputs":[{"name":"proxyAdmin","value":"eth:0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"},{"name":"inbox","value":"eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"},{"name":"gasLimit","value":50000},{"name":"maxFeePerGas","value":1000000000000},{"name":"nonce","value":0},{"name":"to","value":"eth:0x3b87db6ded35eBD28EcbF8014fb325eef23f6C07"},{"name":"value","value":"30765617401709008927568"},{"name":"data","value":"0x"},{"name":"from","value":"eth:0x0000000000000000000000000000000000000DA0"}],"address":"eth:0x3d456FCd62f5baBCf3263B72fb4ac8fF8cc5a322","calldata":"0x0a2e5a5b000000000000000000000000554723262467f125ac9e1cdfa9ce15cc53822dbd0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000000000000000000000000000000000000000c350000000000000000000000000000000000000000000000000000000e8d4a5100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003b87db6ded35ebd28ecbf8014fb325eef23f6c07000000000000000000000000000000000000000000000683ceb5c7a099c63b5000000000000000000000000000000000000000000000000000000000000001200000000000000000000000000000000000000000000000000000000000000da00000000000000000000000000000000000000000000000000000000000000000","executor":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},"raw":{"target":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd","value":0,"data":"0x1cff79cd0000000000000000000000003d456fcd62f5babcf3263b72fb4ac8ff8cc5a322000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000001440a2e5a5b000000000000000000000000554723262467f125ac9e1cdfa9ce15cc53822dbd0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000000000000000000000000000000000000000c350000000000000000000000000000000000000000000000000000000e8d4a5100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003b87db6ded35ebd28ecbf8014fb325eef23f6c07000000000000000000000000000000000000000000000683ceb5c7a099c63b5000000000000000000000000000000000000000000000000000000000000001200000000000000000000000000000000000000000000000000000000000000da0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}}
+    }
+```
+
+Generated with discovered.json: 0x962481e8f9418d28c369d80bfb9e94150af8cac3
+
+# Diff at Fri, 12 Jun 2026 10:57:50 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1779719590
+- current timestamp: 1779719590
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779719590 (main branch discovery), not current.
+
+```diff
+    EOA L1Timelock (arb-nova:0xf7951D92B0C345144506576eC13Ecf5103aC905a) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
+```diff
+    contract ValidatorWallet (eth:0x1732BE6738117e9d22A84181AF68C8d09Cd4FF23) [N/A] {
+    +++ description: None
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract ValidatorWallet (eth:0x24Ca61c31C7f9Af3ab104dB6B9A444F28e9071e3) [N/A] {
+    +++ description: None
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract Validator (eth:0x3B0369CAD35d257793F51c28213a4Cf4001397AC) [N/A] {
+    +++ description: None
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract ValidatorWallet (eth:0x658e8123722462F888b6fa01a7dbcEFe1D6DD709) [N/A] {
+    +++ description: None
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+Generated with discovered.json: 0x92dba981a090d1dc811d647108223cfca6fb41ed
+
+# Diff at Tue, 09 Jun 2026 12:43:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1779719590
+- current timestamp: 1779719590
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779719590 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    contract ValidatorWallet (eth:0x1732BE6738117e9d22A84181AF68C8d09Cd4FF23) [N/A] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    contract ValidatorWallet (eth:0x24Ca61c31C7f9Af3ab104dB6B9A444F28e9071e3) [N/A] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    contract Validator (eth:0x3B0369CAD35d257793F51c28213a4Cf4001397AC) [N/A] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    contract ValidatorWallet (eth:0x57004b440Cc4eb2FEd8c4d1865FaC907F9150C76) [N/A] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    contract ValidatorWallet (eth:0x658e8123722462F888b6fa01a7dbcEFe1D6DD709) [N/A] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xDfB23DFE9De7dcC974467195C8B7D5cd21C9d7cB) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    contract ValidatorWallet (eth:0xE27d4Ed355e5273A3D4855c8e11BC4a8d3e39b87) [N/A] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x8c62865edf1740b2ac9cb229da68b886a7851054
+
+# Diff at Tue, 02 Jun 2026 10:46:54 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1779719590
+- current timestamp: 1779719590
+
+## Description
+
+2 SC members tagged (rotated in on 2026-05-15):
+- 0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D: DZack23
+- 0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce: PabloSabbatella-Opsek
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779719590 (main branch discovery), not current.
+
+```diff
+    EOA DZack23 (arb-nova:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D) {
+    +++ description: None
+      name:
++        "DZack23"
+    }
+```
+
+```diff
+    EOA PabloSabbatella-Opsek (arb-nova:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce) {
+    +++ description: None
+      name:
++        "PabloSabbatella-Opsek"
+    }
+```
+
+```diff
+    EOA DZack23 (eth:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D) {
+    +++ description: None
+      name:
++        "DZack23"
+    }
+```
+
+```diff
+    EOA PabloSabbatella-Opsek (eth:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce) {
+    +++ description: None
+      name:
++        "PabloSabbatella-Opsek"
+    }
+```
+
+Generated with discovered.json: 0x0df91c3df1b4518f1b93f59d035ebf6e48e5ab67
+
+# Diff at Mon, 25 May 2026 14:35:01 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@6898129972dbc5b1b4f1389afaf9cb3fb7fd3380 block: 1779399699
+- current timestamp: 1779719590
+
+## Description
+
+Picked up the new `ArbOS v51.1 wasmModuleRoot` label from the globalConfig type map. Config-only — chain's own wasmModuleRoot is unchanged.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779399699 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (eth:0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      usedTypes.0.arg.0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c:
++        "ArbOS v51.1 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0x9bf4d57f373ac88834ffab67d4cb93c06f560674
+
+# Diff at Thu, 21 May 2026 21:42:44 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@af480cdcac217110f9e99ef400ba0185c35a6c55 block: 1779129417
+- current timestamp: 1779399699
+
+## Description
+
+Arbitrum DAO Security Council member sync executed: 2 members added, 2 removed (fred-Arbitrum-2, StevenThornton-OpenZeppelin) on the L1 `SecurityCouncil` and Nova's `L2SecurityCouncilEmergency`. Same change tracked on the `arbitrum` daily.
+
+## Watched changes
+
+```diff
+    contract L2SecurityCouncilEmergency (arb-nova:0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3) [orbitstack/layer2/L2SecurityCouncilEmergency] {
+    +++ description: None
+      values.$members.0:
++        "arb-nova:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D"
+      values.$members.1:
++        "arb-nova:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce"
+      values.$members.3:
+-        "arb-nova:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
+      values.$members.9:
+-        "arb-nova:0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
+    }
+```
+
+```diff
+    contract SecurityCouncil (eth:0xF06E95eF589D9c38af242a8AAee8375f14023F85) [orbitstack/SecurityCouncil] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D"
+      values.$members.1:
++        "eth:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce"
+      values.$members.3:
+-        "eth:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
+      values.$members.9:
+-        "eth:0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
+    }
+```
+
+Generated with discovered.json: 0xb41ca0c4308f1ee46a6cbb5b8488c72cb2d8c9da
+
+# Diff at Mon, 18 May 2026 18:38:02 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b70f892b88d1263a724194cd3b4ec927d71a6fd9 block: 1777299200
+- current timestamp: 1779129417
+
+## Description
+
+L1Timelock — 4 scheduled `SecurityCouncilMemberSyncAction.perform()` calls (nonce 16, 3-day delay) to sync the new 12-member SC across L1 Arbitrum Security Council, L2SecurityCouncilEmergency, L2SecurityCouncilPropose, and the Nova SC. Routine sync from the March 2026 Arbitrum DAO Security Council election. Same change appears on the `arbitrum` daily — both projects share this timelock.
+
+## Watched changes
+
+```diff
+    contract L1Timelock (eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49) [orbitstack/Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      values.scheduledTransactions.99:
++        {"id":"0xa9a886a37bc90d00ec2d25b39cfd046fab5e314e1c968d5802bb855907c19656","decoded":{"chain":"ethereum","contractName":"SecurityCouncilMemberSyncAction","function":"perform","inputs":[{"name":"_securityCouncil","value":"eth:0xF06E95eF589D9c38af242a8AAee8375f14023F85"},{"name":"_updatedMembers","value":["eth:0x0cd9e52891A0a48d45b0C61A31086be8361Ef157","eth:0x875573B973F7E9Ca54eb34a59180C70eE1128208","eth:0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33","eth:0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93","eth:0x882c6FCb3D358b9d70B97c6999159cea64168B6F","eth:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67","eth:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce","eth:0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae","eth:0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D","eth:0x475816ca2a31D601B4e336f5c2418A67978aBf09","eth:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D","eth:0xBBD2E01eFB88ce00F8f5b6B9a696966070089392"]},{"name":"_nonce","value":16}],"address":"eth:0x9BF7b8884Fa381a45f8CB2525905fb36C996297a","calldata":"0x536d8944000000000000000000000000f06e95ef589d9c38af242a8aaee8375f14023f8500000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000cd9e52891a0a48d45b0c61a31086be8361ef157000000000000000000000000875573b973f7e9ca54eb34a59180c70ee1128208000000000000000000000000e2e9d5b97d8c0457b1cf80bc93802bce4df03e3300000000000000000000000033ddb82e68940f0e4c1050885bce8faf5ddd1b93000000000000000000000000882c6fcb3d358b9d70b97c6999159cea64168b6f00000000000000000000000078bb97d2f3811256d7f0041e81aaf4b426ef3b67000000000000000000000000913af9a61d1a59aa5d21ce9bbf7fd44ed61db4ce0000000000000000000000000275b3d54a5ddbf8205a75984796efe8b7357bae000000000000000000000000eee3fb3b792c7ddbb6aef0c440fbc621f4d6fe2d000000000000000000000000475816ca2a31d601b4e336f5c2418a67978abf0900000000000000000000000009bdaf6be43cd6ff378e9cc785cd7a667b64668d000000000000000000000000bbd2e01efb88ce00f8f5b6b9a696966070089392","executor":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},"raw":{"target":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd","value":0,"data":"0x1cff79cd0000000000000000000000009bf7b8884fa381a45f8cb2525905fb36c996297a00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000204536d8944000000000000000000000000f06e95ef589d9c38af242a8aaee8375f14023f8500000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000cd9e52891a0a48d45b0c61a31086be8361ef157000000000000000000000000875573b973f7e9ca54eb34a59180c70ee1128208000000000000000000000000e2e9d5b97d8c0457b1cf80bc93802bce4df03e3300000000000000000000000033ddb82e68940f0e4c1050885bce8faf5ddd1b93000000000000000000000000882c6fcb3d358b9d70b97c6999159cea64168b6f00000000000000000000000078bb97d2f3811256d7f0041e81aaf4b426ef3b67000000000000000000000000913af9a61d1a59aa5d21ce9bbf7fd44ed61db4ce0000000000000000000000000275b3d54a5ddbf8205a75984796efe8b7357bae000000000000000000000000eee3fb3b792c7ddbb6aef0c440fbc621f4d6fe2d000000000000000000000000475816ca2a31d601b4e336f5c2418a67978abf0900000000000000000000000009bdaf6be43cd6ff378e9cc785cd7a667b64668d000000000000000000000000bbd2e01efb88ce00f8f5b6b9a69696607008939200000000000000000000000000000000000000000000000000000000","delay":259200}}
+      values.scheduledTransactions.100:
++        {"id":"0xa9a886a37bc90d00ec2d25b39cfd046fab5e314e1c968d5802bb855907c19656","decoded":{"chain":"arbitrum","contractName":"SecurityCouncilMemberSyncAction","function":"perform","inputs":[{"name":"_securityCouncil","value":"eth:0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"},{"name":"_updatedMembers","value":["eth:0x0cd9e52891A0a48d45b0C61A31086be8361Ef157","eth:0x875573B973F7E9Ca54eb34a59180C70eE1128208","eth:0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33","eth:0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93","eth:0x882c6FCb3D358b9d70B97c6999159cea64168B6F","eth:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67","eth:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce","eth:0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae","eth:0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D","eth:0x475816ca2a31D601B4e336f5c2418A67978aBf09","eth:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D","eth:0xBBD2E01eFB88ce00F8f5b6B9a696966070089392"]},{"name":"_nonce","value":16}],"address":"arb1:0x9BF7b8884Fa381a45f8CB2525905fb36C996297a","calldata":"0x536d8944000000000000000000000000423552c0f05baccac5bfa91c6dcf1dc53a0a164100000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000cd9e52891a0a48d45b0c61a31086be8361ef157000000000000000000000000875573b973f7e9ca54eb34a59180c70ee1128208000000000000000000000000e2e9d5b97d8c0457b1cf80bc93802bce4df03e3300000000000000000000000033ddb82e68940f0e4c1050885bce8faf5ddd1b93000000000000000000000000882c6fcb3d358b9d70b97c6999159cea64168b6f00000000000000000000000078bb97d2f3811256d7f0041e81aaf4b426ef3b67000000000000000000000000913af9a61d1a59aa5d21ce9bbf7fd44ed61db4ce0000000000000000000000000275b3d54a5ddbf8205a75984796efe8b7357bae000000000000000000000000eee3fb3b792c7ddbb6aef0c440fbc621f4d6fe2d000000000000000000000000475816ca2a31d601b4e336f5c2418a67978abf0900000000000000000000000009bdaf6be43cd6ff378e9cc785cd7a667b64668d000000000000000000000000bbd2e01efb88ce00f8f5b6b9a696966070089392","executor":"eth:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827","inboxOnEthereum":"eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"},"raw":{"target":"eth:0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000002841cff79cd0000000000000000000000009bf7b8884fa381a45f8cb2525905fb36c996297a00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000204536d8944000000000000000000000000423552c0f05baccac5bfa91c6dcf1dc53a0a164100000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000cd9e52891a0a48d45b0c61a31086be8361ef157000000000000000000000000875573b973f7e9ca54eb34a59180c70ee1128208000000000000000000000000e2e9d5b97d8c0457b1cf80bc93802bce4df03e3300000000000000000000000033ddb82e68940f0e4c1050885bce8faf5ddd1b93000000000000000000000000882c6fcb3d358b9d70b97c6999159cea64168b6f00000000000000000000000078bb97d2f3811256d7f0041e81aaf4b426ef3b67000000000000000000000000913af9a61d1a59aa5d21ce9bbf7fd44ed61db4ce0000000000000000000000000275b3d54a5ddbf8205a75984796efe8b7357bae000000000000000000000000eee3fb3b792c7ddbb6aef0c440fbc621f4d6fe2d000000000000000000000000475816ca2a31d601b4e336f5c2418a67978abf0900000000000000000000000009bdaf6be43cd6ff378e9cc785cd7a667b64668d000000000000000000000000bbd2e01efb88ce00f8f5b6b9a6969660700893920000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}}
+      values.scheduledTransactions.101:
++        {"id":"0xa9a886a37bc90d00ec2d25b39cfd046fab5e314e1c968d5802bb855907c19656","decoded":{"chain":"nova","address":"eth:0x9BF7b8884Fa381a45f8CB2525905fb36C996297a","calldata":"0x536d8944000000000000000000000000c232ee726e3c51b86778bb4dbe61c52cc07a60f300000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000cd9e52891a0a48d45b0c61a31086be8361ef157000000000000000000000000875573b973f7e9ca54eb34a59180c70ee1128208000000000000000000000000e2e9d5b97d8c0457b1cf80bc93802bce4df03e3300000000000000000000000033ddb82e68940f0e4c1050885bce8faf5ddd1b93000000000000000000000000882c6fcb3d358b9d70b97c6999159cea64168b6f00000000000000000000000078bb97d2f3811256d7f0041e81aaf4b426ef3b67000000000000000000000000913af9a61d1a59aa5d21ce9bbf7fd44ed61db4ce0000000000000000000000000275b3d54a5ddbf8205a75984796efe8b7357bae000000000000000000000000eee3fb3b792c7ddbb6aef0c440fbc621f4d6fe2d000000000000000000000000475816ca2a31d601b4e336f5c2418a67978abf0900000000000000000000000009bdaf6be43cd6ff378e9cc785cd7a667b64668d000000000000000000000000bbd2e01efb88ce00f8f5b6b9a696966070089392","executor":"eth:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482","inboxOnEthereum":"eth:0xc4448b71118c9071Bcb9734A0EAc55D18A153949"},"raw":{"target":"eth:0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x000000000000000000000000c4448b71118c9071bcb9734a0eac55d18a15394900000000000000000000000086a02dd71363c440b21f4c0e5b2ad01ffe1a748200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000002841cff79cd0000000000000000000000009bf7b8884fa381a45f8cb2525905fb36c996297a00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000204536d8944000000000000000000000000c232ee726e3c51b86778bb4dbe61c52cc07a60f300000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000cd9e52891a0a48d45b0c61a31086be8361ef157000000000000000000000000875573b973f7e9ca54eb34a59180c70ee1128208000000000000000000000000e2e9d5b97d8c0457b1cf80bc93802bce4df03e3300000000000000000000000033ddb82e68940f0e4c1050885bce8faf5ddd1b93000000000000000000000000882c6fcb3d358b9d70b97c6999159cea64168b6f00000000000000000000000078bb97d2f3811256d7f0041e81aaf4b426ef3b67000000000000000000000000913af9a61d1a59aa5d21ce9bbf7fd44ed61db4ce0000000000000000000000000275b3d54a5ddbf8205a75984796efe8b7357bae000000000000000000000000eee3fb3b792c7ddbb6aef0c440fbc621f4d6fe2d000000000000000000000000475816ca2a31d601b4e336f5c2418a67978abf0900000000000000000000000009bdaf6be43cd6ff378e9cc785cd7a667b64668d000000000000000000000000bbd2e01efb88ce00f8f5b6b9a6969660700893920000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}}
+      values.scheduledTransactions.102:
++        {"id":"0xa9a886a37bc90d00ec2d25b39cfd046fab5e314e1c968d5802bb855907c19656","decoded":{"chain":"arbitrum","contractName":"SecurityCouncilMemberSyncAction","function":"perform","inputs":[{"name":"_securityCouncil","value":"eth:0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"},{"name":"_updatedMembers","value":["eth:0x0cd9e52891A0a48d45b0C61A31086be8361Ef157","eth:0x875573B973F7E9Ca54eb34a59180C70eE1128208","eth:0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33","eth:0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93","eth:0x882c6FCb3D358b9d70B97c6999159cea64168B6F","eth:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67","eth:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce","eth:0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae","eth:0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D","eth:0x475816ca2a31D601B4e336f5c2418A67978aBf09","eth:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D","eth:0xBBD2E01eFB88ce00F8f5b6B9a696966070089392"]},{"name":"_nonce","value":16}],"address":"arb1:0x9BF7b8884Fa381a45f8CB2525905fb36C996297a","calldata":"0x536d8944000000000000000000000000add68bcb0f66878ab9d37a447c7b9067c5dfa94100000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000cd9e52891a0a48d45b0c61a31086be8361ef157000000000000000000000000875573b973f7e9ca54eb34a59180c70ee1128208000000000000000000000000e2e9d5b97d8c0457b1cf80bc93802bce4df03e3300000000000000000000000033ddb82e68940f0e4c1050885bce8faf5ddd1b93000000000000000000000000882c6fcb3d358b9d70b97c6999159cea64168b6f00000000000000000000000078bb97d2f3811256d7f0041e81aaf4b426ef3b67000000000000000000000000913af9a61d1a59aa5d21ce9bbf7fd44ed61db4ce0000000000000000000000000275b3d54a5ddbf8205a75984796efe8b7357bae000000000000000000000000eee3fb3b792c7ddbb6aef0c440fbc621f4d6fe2d000000000000000000000000475816ca2a31d601b4e336f5c2418a67978abf0900000000000000000000000009bdaf6be43cd6ff378e9cc785cd7a667b64668d000000000000000000000000bbd2e01efb88ce00f8f5b6b9a696966070089392","executor":"eth:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827","inboxOnEthereum":"eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"},"raw":{"target":"eth:0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000002841cff79cd0000000000000000000000009bf7b8884fa381a45f8cb2525905fb36c996297a00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000204536d8944000000000000000000000000add68bcb0f66878ab9d37a447c7b9067c5dfa94100000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000cd9e52891a0a48d45b0c61a31086be8361ef157000000000000000000000000875573b973f7e9ca54eb34a59180c70ee1128208000000000000000000000000e2e9d5b97d8c0457b1cf80bc93802bce4df03e3300000000000000000000000033ddb82e68940f0e4c1050885bce8faf5ddd1b93000000000000000000000000882c6fcb3d358b9d70b97c6999159cea64168b6f00000000000000000000000078bb97d2f3811256d7f0041e81aaf4b426ef3b67000000000000000000000000913af9a61d1a59aa5d21ce9bbf7fd44ed61db4ce0000000000000000000000000275b3d54a5ddbf8205a75984796efe8b7357bae000000000000000000000000eee3fb3b792c7ddbb6aef0c440fbc621f4d6fe2d000000000000000000000000475816ca2a31d601b4e336f5c2418a67978abf0900000000000000000000000009bdaf6be43cd6ff378e9cc785cd7a667b64668d000000000000000000000000bbd2e01efb88ce00f8f5b6b9a6969660700893920000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}}
+    }
+```
+
+Generated with discovered.json: 0x8658b3f397dbb661c8176b8a0c5abb4068f3b703
+
+# Diff at Fri, 15 May 2026 12:36:13 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1777299200
+- current timestamp: 1777299200
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777299200 (main branch discovery), not current.
+
+```diff
+    contract OneStepProofEntry (eth:0x4397fE1E959Ba81B9D5f1A9679Ddd891955A42d6) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xd5ebe4d74cb7850108973c618f80d9f0c18624f45c9e8cfc3ffa07197ca1423d"
++        "0x8342918a09a9fc42d1b623e96c5f3ba476a095f6fb99d619383113945b1aee41"
+    }
+```
+
+```diff
+    contract EdgeChallengeManager (eth:0xFE66b18Ef1B943F8594A2710376Af4B01AcfA688) [orbitstack/EdgeChallengeManager] {
+    +++ description: Contract that implements the main challenge protocol logic of the fraud proof system.
+      sourceHashes.1:
+-        "0x38a98fd3246d8aa8d3efab5b6fe60b4369399691b395325bcea9f939a52fddc5"
++        "0xe3bfba89667a59af2f558ead22d7fe0c142232b464bdae0f9e4b03555c7699f2"
+    }
+```
+
 Generated with discovered.json: 0x2705c4571b8e4bf77eebb447940c60e5c484ffe7
 
 # Diff at Fri, 08 May 2026 07:51:42 GMT:

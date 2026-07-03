@@ -1,3 +1,207 @@
+Generated with discovered.json: 0xe7a7b5dfd1167507be380e508515052476a7a63e
+
+# Diff at Wed, 01 Jul 2026 10:34:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cfafbf3de953d9f519656c89c622fe51a04d547a block: 1778535511
+- current timestamp: 1778535511
+
+## Description
+
+Config: small template adjustments
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778535511 (main branch discovery), not current.
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3) [taiko/RiscZeroGroth16Verifier] {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.0.0-rc.3).
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+Generated with discovered.json: 0x54fbc89488e324d7a459d252f0b1cb322d70ed84
+
+# Diff at Tue, 30 Jun 2026 12:27:37 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1778535511
+- current timestamp: 1778535511
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778535511 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0x7f82f57F0Dd546519324392e408b01fcC7D709e8) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.
+      usedTypes.0.arg.8:
++        "FaultDisputeGame"
+    }
+```
+
+Generated with discovered.json: 0x7272e7ff1107c020da1b9f947f5284fb306f63f2
+
+# Diff at Tue, 09 Jun 2026 12:43:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1778535511
+- current timestamp: 1778535511
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778535511 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    contract Safe (eth:0xB2A9EB0c7b729c3EC704e843eF260084B3caE67F) [GnosisSafe] {
+    +++ description: None
+      directlyReceivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      directlyReceivedPermissions.0.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xB98c6b1A805b96707A43e1F1ACFa163B68098FA6) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xe8437B66E834B7CdC90cC5D98B8DD6e636b37D7a) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Can store and serve both unencoded blobs as well as encoded chunks."
+      receivedPermissions.0.permission:
+-        "relayDA"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xF3d7C0D52fF8f4CF74A3CD9C53778516f4235bE9) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Can disperse EigenDA blobs to the EigenDA node operators."
+      receivedPermissions.0.permission:
+-        "disperse"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0xb5d6cffbd6eedf37cab2e8b8316dc2d287eca5c0
+
+# Diff at Thu, 04 Jun 2026 17:41:35 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1778535511
+- current timestamp: 1778535511
+
+## Description
+
+New game name (aggregateVerifier) added to portal.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778535511 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0x7f82f57F0Dd546519324392e408b01fcC7D709e8) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.
+      usedTypes.0.arg.621:
++        "AggregateVerifier"
+    }
+```
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x910b159F79288DD706789ec7768E979d4D88C057) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97).
++++ severity: HIGH
+      values.verifier_242f9d5b:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.verifier_310fe598:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.verifier_73c457ba:
++        "eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3"
++++ severity: HIGH
+      values.verifier_9f39696c:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.verifier_bb001d44:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.verifier_f536085a:
++        "eth:0x0000000000000000000000000000000000000000"
+      fieldMeta:
++        {"verifier_310fe598":{"severity":"HIGH"},"verifier_9f39696c":{"severity":"HIGH"},"verifier_f536085a":{"severity":"HIGH"},"verifier_bb001d44":{"severity":"HIGH"},"verifier_73c457ba":{"severity":"HIGH"},"verifier_242f9d5b":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0x3b07aa1050cf1fb1a8df421493705e7bb5f329a6
+
+# Diff at Fri, 15 May 2026 12:36:09 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1778535511
+- current timestamp: 1778535511
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778535511 (main branch discovery), not current.
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3) [taiko/RiscZeroGroth16Verifier] {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.0.0-rc.3).
+      sourceHashes.0:
+-        "0x19c3fbedf93ee852d83096519dd22f26409f70fc13f7843307acaecb508981d6"
++        "0x20f30107695bee36a63acac61a5ba93d47cbb8ad79df70f6dd9b16d15db66ad3"
+    }
+```
+
 Generated with discovered.json: 0xd6fb873eb77a64098e57a7eecd575d5b753f84fc
 
 # Diff at Mon, 11 May 2026 21:39:47 GMT:

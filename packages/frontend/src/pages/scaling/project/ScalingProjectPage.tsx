@@ -77,6 +77,7 @@ export function ScalingProjectPage({
                   <ProjectHeader
                     project={projectEntry}
                     ongoingAnomaly={projectEntry.header.ongoingAnomaly}
+                    recentUpdatesCount={projectEntry.header.recentUpdatesCount}
                   />
                   <ProjectSummaryBars project={projectEntry} />
                   {projectEntry.header.badges && (

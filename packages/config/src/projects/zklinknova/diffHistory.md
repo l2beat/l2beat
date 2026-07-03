@@ -1,3 +1,75 @@
+Generated with discovered.json: 0x367455f29b4075d43cf3c8f97404718d953f3a91
+
+# Diff at Fri, 12 Jun 2026 10:31:31 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1753687799
+- current timestamp: 1753687799
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753687799 (main branch discovery), not current.
+
+```diff
+    EOA  (base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9) {
+    +++ description: None
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA  (eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9) {
+    +++ description: None
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA  (oeth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9) {
+    +++ description: None
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0xc5bad0cd4982c3101ab5036eaad22e81331f1512
+
+# Diff at Fri, 15 May 2026 12:37:18 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1753687799
+- current timestamp: 1753687799
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753687799 (main branch discovery), not current.
+
+```diff
+    contract ScrollOwner (scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
++        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff"
+      implementationNames.scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77:
+-        "GnosisSafeL2"
++        "GnosisSafeProxy"
+    }
+```
+
 Generated with discovered.json: 0x0e6d5884e45832eebdb25818b6fce190628ff986
 
 # Diff at Fri, 08 May 2026 07:52:54 GMT:

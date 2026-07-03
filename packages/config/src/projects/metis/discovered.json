@@ -1,7 +1,7 @@
 {
   "name": "metis",
   "timestamp": 1767796662,
-  "configHash": "0xdc31177b0f5e95d424c001b522ab0d46e73dca6bb2f080d05edd9803ded9c9cf",
+  "configHash": "0x47094efd57bdc5d6ca30267d1d3986cf5289e8b03dd3860d3cc33fe9af489f31",
   "entries": [
     {
       "address": "eth:0x001088E383A00ff4ab36F37f7021Cb6d7B415751",
@@ -455,8 +455,9 @@
       "description": "Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.",
       "receivedPermissions": [
         {
-          "permission": "metisGameCreator",
+          "permission": "interact",
           "from": "eth:0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3",
+          "description": "Can create new dispute games.",
           "role": ".gameCreator"
         }
       ],
@@ -939,8 +940,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "metisGameCreator",
+          "permission": "interact",
           "from": "eth:0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3",
+          "description": "Can create new dispute games.",
           "role": ".gameCreator"
         }
       ]
@@ -957,7 +959,7 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "stateDeleterMetis",
+          "permission": "interact",
           "from": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
           "description": "Can delete batches from the StateCommitmentChain.",
           "role": ".1088_MVM_FraudVerifier"
@@ -999,8 +1001,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x8b0d1D3557aF524351FCd09eE8E7a48adcB712e0",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
           "role": ".blobBatcher"
         }
       ]
@@ -1298,13 +1301,15 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "propose",
+          "permission": "interact",
           "from": "eth:0x5669d0C8C28B7E2c3d10eD246bEb042bDdd12E18",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
           "role": ".proposer"
         },
         {
-          "permission": "propose",
+          "permission": "interact",
           "from": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
           "role": "._1088_MVM_Proposer"
         }
       ]
@@ -2668,5 +2673,5 @@
     "opstack/Layer2/L2StandardBridge": "0xa3a1bc50117017a509d0dbef8f13b9b8e3bae9146504b23939e69814c6f31060"
   },
   "usedBlockNumbers": { "ethereum": 24183445, "metis": 21929673 },
-  "permissionsConfigHash": "0xe9dbaf23bc09033cf4f6e1ff53ba9c47d3cba348345f0472202e28783e85125c"
+  "permissionsConfigHash": "0xafc753cc81faab912b675b49578495b536112e27cc9293eb3a75913d79593abb"
 }

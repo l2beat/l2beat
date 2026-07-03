@@ -1,4 +1,44 @@
-Generated with discovered.json: 0x83436472d2882246848bca17f2eb1140b43b3551
+Generated with discovered.json: 0x0f25d1441482987af549abc9b4d5fa1563054146
+
+# Diff at Tue, 09 Jun 2026 12:43:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1777891456
+- current timestamp: 1777891456
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777891456 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x46d2F319fd42165D4318F099E143dEA8124E9E3e) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to prove blocks and post the corresponding transaction data."
+      receivedPermissions.0.permission:
+-        "operateLinea"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to prove blocks and post the corresponding transaction data."
+      receivedPermissions.0.permission:
+-        "operateLinea"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0xde4305153fcded99391871bc9021bf3433e48b83
 
 # Diff at Fri, 08 May 2026 07:51:33 GMT:
 

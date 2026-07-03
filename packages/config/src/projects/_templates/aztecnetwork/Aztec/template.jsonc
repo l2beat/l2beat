@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "AZTEC token contract",
+  "category": "gov",
   "ignoreInWatchMode": ["totalSupply"],
   "fields": {
     "owner": {

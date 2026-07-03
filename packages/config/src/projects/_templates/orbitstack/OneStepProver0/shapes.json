@@ -1,16 +1,16 @@
 {
   "OneStepProver0": {
-    "hash": "0x54de2f4235d51d7719ea8044febaf7e234d756cf0a99d08891d228e9e9577722",
+    "hash": "0x40fa649159c7f695ddbdf6201ca7c6b1d8bb8b3b294e5cfac30cd8551ec996eb",
     "address": "eth:0x72B166070781a552D7b95a907eF59ca05d3D5a62",
     "blockNumber": 22188285
   },
   "OneStepProver0_BoLD": {
-    "hash": "0xb54274c3341eb7cf840d05f3da649b35db6e4f7cd4e76f3e4a8f2f6d171dcd66",
+    "hash": "0x165bc2eea08646ff24d665db74c1cd2deedc703052ceccac716f25eea2c23d80",
     "address": "eth:0x35FBC5F03d86E88973B06Fb9C5a913D54AbdF731",
     "blockNumber": 22188285
   },
   "OneStepProver0_v32": {
-    "hash": "0xdec29538ea8b9a7f83edc119a9fbd3761ab24c5e0b512ecfdecc46dcdefccdc1",
+    "hash": "0x063a1b3c4451e69f827acd833c42e986c2c617bfaabb13884fb438185b192407",
     "address": "eth:0x2dCCAbE89cF76132619a9B18e9F9e48E837222b5",
     "blockNumber": 22188285
   }

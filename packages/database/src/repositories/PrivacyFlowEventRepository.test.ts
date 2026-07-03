@@ -60,10 +60,10 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
     () => {
       it('aggregates daily deposits and withdrawals', async () => {
         const records = [
-          flowEvent('proj-a', START, 100, 'deposit', 1, 100n),
-          flowEvent('proj-a', START, 101, 'deposit', 2, 200n),
-          flowEvent('proj-a', START, 102, 'withdrawal', 1, 50n),
-          flowEvent('proj-b', START, 103, 'deposit', 1, 300n),
+          flowEvent('proj-a', START, 100, 'deposit', 1, 100n, 100),
+          flowEvent('proj-a', START, 101, 'deposit', 2, 200n, 200),
+          flowEvent('proj-a', START, 102, 'withdrawal', 1, 50n, 50),
+          flowEvent('proj-b', START, 103, 'deposit', 1, 300n, 300),
         ]
 
         await repository.upsertMany(records)
@@ -71,7 +71,7 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
         const result = await repository.getDailyByProjectIds(
           ['proj-a'],
           START,
-          START,
+          START + UnixTime.DAY,
         )
 
         expect(result).toEqualUnsorted([
@@ -83,6 +83,8 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
             withdrawalCount: 1,
             depositAmount: 300n,
             withdrawalAmount: 50n,
+            depositValueUsd: 300,
+            withdrawalValueUsd: 50,
           },
         ])
       })
@@ -169,6 +171,143 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
     },
   )
 
+  describe(
+    PrivacyFlowEventRepository.prototype.getBucketTotalsByProjectIds.name,
+    () => {
+      it('aggregates totals by bucket', async () => {
+        const records = [
+          flowEvent('proj-a', START, 100, 'deposit', 1, 100n, 100),
+          flowEvent('proj-a', START, 101, 'deposit', 2, 200n, 200),
+          flowEvent('proj-a', START, 102, 'withdrawal', 1, 50n, 50),
+          flowEvent(
+            'proj-a',
+            START,
+            103,
+            'deposit',
+            1,
+            300n,
+            300,
+            'a'.repeat(12),
+            0,
+            'bucket-2',
+          ),
+          flowEvent('proj-b', START, 104, 'deposit', 1, 400n, 400),
+        ]
+
+        await repository.upsertMany(records)
+
+        const result = await repository.getBucketTotalsByProjectIds(['proj-a'])
+
+        expect(result).toEqualUnsorted([
+          {
+            projectId: 'proj-a',
+            bucketId: 'bucket',
+            depositCount: 3,
+            withdrawalCount: 1,
+            depositAmount: 300n,
+            withdrawalAmount: 50n,
+            depositValueUsd: 300,
+            withdrawalValueUsd: 50,
+          },
+          {
+            projectId: 'proj-a',
+            bucketId: 'bucket-2',
+            depositCount: 1,
+            withdrawalCount: 0,
+            depositAmount: 300n,
+            withdrawalAmount: 0n,
+            depositValueUsd: 300,
+            withdrawalValueUsd: 0,
+          },
+        ])
+      })
+
+      it('returns empty array when projectIds is empty', async () => {
+        const result = await repository.getBucketTotalsByProjectIds([])
+        expect(result).toEqual([])
+      })
+    },
+  )
+
+  describe(
+    PrivacyFlowEventRepository.prototype.getLatestTimestampByProjectIds.name,
+    () => {
+      it('returns latest timestamp', async () => {
+        const records = [
+          flowEvent('proj-a', START, 100, 'deposit', 1, 100n),
+          flowEvent('proj-a', UnixTime(START + 1), 101, 'deposit', 1, 100n),
+        ]
+
+        await repository.upsertMany(records)
+
+        const result = await repository.getLatestTimestampByProjectIds([
+          'proj-a',
+        ])
+
+        expect(result).toEqual(UnixTime(START + 1))
+      })
+
+      it('returns undefined when no data', async () => {
+        const result = await repository.getLatestTimestampByProjectIds([
+          'proj-a',
+        ])
+        expect(result).toEqual(undefined)
+      })
+
+      it('returns undefined when projectIds is empty', async () => {
+        const result = await repository.getLatestTimestampByProjectIds([])
+        expect(result).toEqual(undefined)
+      })
+    },
+  )
+
+  describe(
+    PrivacyFlowEventRepository.prototype.getFirstTimestampByProjectIds.name,
+    () => {
+      it('returns the earliest timestamp for the project', async () => {
+        await repository.upsertMany([
+          flowEvent('proj-a', UnixTime(START + 1), 101, 'deposit', 1, 100n),
+          flowEvent('proj-a', START, 100, 'deposit', 1, 100n),
+        ])
+
+        const result = await repository.getFirstTimestampByProjectIds([
+          'proj-a',
+        ])
+
+        expect(result).toEqual(START)
+      })
+
+      it('considers all given projects', async () => {
+        await repository.upsertMany([
+          flowEvent('proj-a', START, 100, 'deposit', 1, 100n),
+          flowEvent('proj-b', UnixTime(START - 5), 99, 'deposit', 1, 100n),
+        ])
+
+        const result = await repository.getFirstTimestampByProjectIds([
+          'proj-a',
+          'proj-b',
+        ])
+
+        expect(result).toEqual(UnixTime(START - 5))
+      })
+
+      it('returns undefined when no data', async () => {
+        const result = await repository.getFirstTimestampByProjectIds([
+          'proj-a',
+        ])
+        expect(result).toEqual(undefined)
+      })
+
+      it('returns undefined when projectIds is empty', async () => {
+        await repository.upsertMany([
+          flowEvent('proj-a', START, 100, 'deposit', 1, 100n),
+        ])
+        const result = await repository.getFirstTimestampByProjectIds([])
+        expect(result).toEqual(undefined)
+      })
+    },
+  )
+
   describe(PrivacyFlowEventRepository.prototype.deleteAll.name, () => {
     it('deletes all rows', async () => {
       await repository.upsertMany([
@@ -196,11 +335,12 @@ function flowEvent(
   valueUsd = 0,
   configurationId = 'a'.repeat(12),
   logIndex?: number,
+  bucketId = 'bucket',
 ): PrivacyFlowEventRecord {
   return {
     configurationId,
     projectId,
-    bucketId: 'bucket',
+    bucketId,
     chain: 'ethereum',
     direction,
     timestamp,

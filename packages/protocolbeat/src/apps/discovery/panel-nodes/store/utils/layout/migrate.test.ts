@@ -1,0 +1,134 @@
+import { expect } from 'earl'
+import { CURRENT_LAYOUT_VERSION, migrateLayout } from './migrate'
+
+describe(migrateLayout.name, () => {
+  it('accepts current-version payload as-is', () => {
+    const input = {
+      version: 4 as const,
+      projectId: 'p',
+      metadata: {
+        description: 'Useful for audits.',
+      },
+      locations: { a: { x: 1, y: 2 } },
+      colors: { a: 3 },
+      hiddenFields: { a: ['f'] },
+      hiddenNodes: ['b'],
+      groups: [
+        {
+          id: 'group:1',
+          name: 'Group',
+          color: 0,
+          opened: false,
+          box: { x: 0, y: 0 },
+          members: ['a'],
+        },
+      ],
+    }
+    const result = migrateLayout(input)
+    if (!result.ok) throw new Error('expected success')
+    expect(result.layout).toEqual(input)
+    expect(result.migratedFrom).toEqual(4)
+  })
+
+  it('migrates v3 payloads to current with no groups', () => {
+    const result = migrateLayout({
+      version: 3,
+      projectId: 'p',
+      locations: { a: { x: 0, y: 0 } },
+    })
+    if (!result.ok) throw new Error('expected success')
+    expect(result.migratedFrom).toEqual(3)
+    expect(result.layout.version).toEqual(CURRENT_LAYOUT_VERSION)
+    expect(result.layout.groups).toEqual(undefined)
+  })
+
+  it('treats unversioned payload as v1 and migrates to current', () => {
+    const result = migrateLayout({
+      projectId: 'p',
+      locations: { a: { x: 0, y: 0 } },
+    })
+    if (!result.ok) throw new Error('expected success')
+    expect(result.migratedFrom).toEqual(1)
+    expect(result.layout.version).toEqual(CURRENT_LAYOUT_VERSION)
+    expect(result.layout.projectId).toEqual('p')
+  })
+
+  it('drops legacy oklch color objects instead of forcing squash color 0', () => {
+    const result = migrateLayout({
+      projectId: 'p',
+      locations: { a: { x: 0, y: 0 }, b: { x: 1, y: 1 } },
+      colors: { a: { l: 0.5, c: 0.1, h: 200 }, b: 4 },
+    })
+    if (!result.ok) throw new Error('expected success')
+    expect(result.layout.colors).toEqual({ b: 4 })
+  })
+
+  it('omits colors when a v1 layout only contains legacy color objects', () => {
+    const result = migrateLayout({
+      projectId: 'p',
+      locations: { a: { x: 0, y: 0 } },
+      colors: { a: { l: 0.5, c: 0.1, h: 200 } },
+    })
+    if (!result.ok) throw new Error('expected success')
+    expect(result.layout.colors).toEqual(undefined)
+  })
+
+  it('migrates v2 payloads to current without inventing metadata', () => {
+    const result = migrateLayout({
+      version: 2,
+      projectId: 'p',
+      locations: { a: { x: 0, y: 0 } },
+      colors: { a: 1 },
+    })
+    if (!result.ok) throw new Error('expected success')
+    expect(result.migratedFrom).toEqual(2)
+    expect(result.layout.version).toEqual(CURRENT_LAYOUT_VERSION)
+    expect(result.layout.metadata).toEqual(undefined)
+    expect(result.layout.colors).toEqual({ a: 1 })
+  })
+
+  it('refuses payloads from a newer version with too-new reason', () => {
+    const result = migrateLayout({
+      version: CURRENT_LAYOUT_VERSION + 1,
+      projectId: 'p',
+      locations: {},
+    })
+    if (result.ok) throw new Error('expected failure')
+    expect(result.reason).toEqual('too-new')
+  })
+
+  it('refuses payloads that do not match any version schema', () => {
+    const result = migrateLayout({ projectId: 'p' })
+    if (result.ok) throw new Error('expected failure')
+    expect(result.reason).toEqual('invalid')
+  })
+
+  it('refuses non-object input', () => {
+    expect(migrateLayout(null).ok).toEqual(false)
+    expect(migrateLayout('not-a-layout').ok).toEqual(false)
+    expect(migrateLayout(42).ok).toEqual(false)
+  })
+
+  it('refuses non-integer version values', () => {
+    const result = migrateLayout({
+      version: 1.5,
+      projectId: 'p',
+      locations: {},
+    })
+    if (result.ok) throw new Error('expected failure')
+    expect(result.reason).toEqual('invalid')
+  })
+
+  it('preserves locations, hiddenFields, hiddenNodes through migration', () => {
+    const result = migrateLayout({
+      projectId: 'p',
+      locations: { a: { x: 1, y: 2, width: 100 } },
+      hiddenFields: { a: ['f1', 'f2'] },
+      hiddenNodes: ['z'],
+    })
+    if (!result.ok) throw new Error('expected success')
+    expect(result.layout.locations).toEqual({ a: { x: 1, y: 2, width: 100 } })
+    expect(result.layout.hiddenFields).toEqual({ a: ['f1', 'f2'] })
+    expect(result.layout.hiddenNodes).toEqual(['z'])
+  })
+})

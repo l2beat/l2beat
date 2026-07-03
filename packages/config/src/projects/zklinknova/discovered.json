@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "timestamp": 1753687799,
-  "configHash": "0x8a288837bccb6a304f2b91a93bb34a42962862d9bed6c647f59d3c2d80427c6f",
+  "configHash": "0xa727f824187fb86671a611e1f8a7ab7b5ff494920fb01638134336e65745651e",
   "entries": [
     {
       "address": "arb1:0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
@@ -345,6 +345,7 @@
       "address": "base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "type": "EOA",
       "proxyType": "EOA",
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -997,6 +998,7 @@
       "address": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "type": "EOA",
       "proxyType": "EOA",
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -2791,6 +2793,7 @@
       "address": "oeth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "type": "EOA",
       "proxyType": "EOA",
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -3220,7 +3223,7 @@
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
-        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd",
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
         "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
@@ -3276,7 +3279,7 @@
         "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77": "GnosisSafeL2",
+        "scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77": "GnosisSafeProxy",
         "scr:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
       }
     },
@@ -5790,54 +5793,7 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77": [
-      "event AddedOwner(address owner)",
-      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
-      "event ChangedFallbackHandler(address handler)",
-      "event ChangedGuard(address guard)",
-      "event ChangedThreshold(uint256 threshold)",
-      "event DisabledModule(address module)",
-      "event EnabledModule(address module)",
-      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
-      "event ExecutionFromModuleFailure(address indexed module)",
-      "event ExecutionFromModuleSuccess(address indexed module)",
-      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
-      "event RemovedOwner(address owner)",
-      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
-      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
-      "event SafeReceived(address indexed sender, uint256 value)",
-      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
-      "event SignMsg(bytes32 indexed msgHash)",
-      "function VERSION() view returns (string)",
-      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
-      "function approveHash(bytes32 hashToApprove)",
-      "function approvedHashes(address, bytes32) view returns (uint256)",
-      "function changeThreshold(uint256 _threshold)",
-      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
-      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
-      "function disableModule(address prevModule, address module)",
-      "function domainSeparator() view returns (bytes32)",
-      "function enableModule(address module)",
-      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
-      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
-      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
-      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
-      "function getChainId() view returns (uint256)",
-      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
-      "function getOwners() view returns (address[])",
-      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
-      "function getThreshold() view returns (uint256)",
-      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
-      "function isModuleEnabled(address module) view returns (bool)",
-      "function isOwner(address owner) view returns (bool)",
-      "function nonce() view returns (uint256)",
-      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
-      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
-      "function setFallbackHandler(address handler)",
-      "function setGuard(address guard)",
-      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
-      "function signedMessages(bytes32) view returns (uint256)",
-      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
-      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+      "constructor(address _singleton)"
     ],
     "zksync:0x1727c2c531cf966f902E5927b98490fDFb3b2b70": [
       "event AddedOwner(address owner)",

@@ -1,7 +1,10 @@
+import clsx from 'clsx'
 import { useMemo } from 'react'
+import { AddressIcon } from '../../../../components/AddressIcon'
 import { useGlobalSettingsStore } from '../../store/global-settings-store'
 import type { Node } from '../store/State'
 import { useStore } from '../store/store'
+import { buildRenderGraph } from '../store/utils/renderGraph'
 import { Connection, type ConnectionProps } from './Connection'
 import { NodeView } from './NodeView'
 
@@ -13,6 +16,7 @@ interface NodeFlags {
   isSelected: boolean
   isDimmed: boolean
   isGrayedOut: boolean
+  isOverlapping: boolean
   fieldHighlightedMask: string
   fieldTargetHiddenMask: string
 }
@@ -22,7 +26,6 @@ interface DerivedView {
   connections: ConnectionView[]
   flags: Map<string, NodeFlags>
   bounds: { minX: number; minY: number; width: number; height: number } | null
-  fieldCount: number
 }
 
 export function NodesAndConnections() {
@@ -32,14 +35,33 @@ export function NodesAndConnections() {
   const enableDimming = useStore(
     ({ userPreferences }) => userPreferences.enableDimming,
   )
+  const highlightOverlapping = useStore(
+    ({ userPreferences }) => userPreferences.highlightOverlapping !== false,
+  )
   const markUnreachableEntries = useGlobalSettingsStore(
     (s) => s.markUnreachableEntries,
   )
 
+  const graph = useMemo(() => buildRenderGraph(nodes, hidden), [nodes, hidden])
+
   const view = useMemo<DerivedView>(
     () =>
-      buildView(nodes, hidden, selected, enableDimming, markUnreachableEntries),
-    [nodes, hidden, selected, enableDimming, markUnreachableEntries],
+      buildView(
+        graph.nodes,
+        hidden,
+        selected,
+        enableDimming,
+        highlightOverlapping,
+        markUnreachableEntries,
+      ),
+    [
+      graph,
+      hidden,
+      selected,
+      enableDimming,
+      highlightOverlapping,
+      markUnreachableEntries,
+    ],
   )
 
   const bounds = view.bounds
@@ -63,6 +85,32 @@ export function NodesAndConnections() {
 
   return (
     <>
+      {graph.containers.map((container) => {
+        const isSelected = selected.includes(container.id)
+        return (
+          <div
+            key={container.id}
+            className={clsx(
+              'pointer-events-none absolute rounded-xl border-2 border-coffee-200/60 border-dashed bg-coffee-200/5',
+              isSelected && 'outline outline-4 outline-autumn-300',
+            )}
+            style={{
+              left: container.box.x,
+              top: container.box.y,
+              width: container.box.width,
+              height: container.box.height,
+            }}
+          >
+            <div
+              className="absolute top-0 right-0 left-0 flex items-center gap-1 rounded-t-lg bg-coffee-600 px-2 font-medium text-coffee-200 text-xs"
+              style={{ height: container.headerBox.height }}
+            >
+              <AddressIcon type="Group" />
+              <span className="truncate">{container.name}</span>
+            </div>
+          </div>
+        )
+      })}
       {svg}
       {view.visible.map((node) => {
         const flags = view.flags.get(node.id) as NodeFlags
@@ -73,6 +121,7 @@ export function NodesAndConnections() {
             isSelected={flags.isSelected}
             isDimmed={flags.isDimmed}
             isGrayedOut={flags.isGrayedOut}
+            isOverlapping={flags.isOverlapping}
             fieldHighlightedMask={flags.fieldHighlightedMask}
             fieldTargetHiddenMask={flags.fieldTargetHiddenMask}
           />
@@ -82,25 +131,68 @@ export function NodesAndConnections() {
   )
 }
 
+// Sweep-line on the x-axis: sort by left edge, maintain an `active` set of
+// nodes whose right edge hasn't passed the current node's left edge, and only
+// check those for y-overlap. Sort dominates at O(n log n); the sweep is near
+// linear when node widths are small relative to the canvas. Worst case is
+// still O(n²) if every node spans the full x-range.
+function computeOverlappingIds(nodes: readonly Node[]): Set<string> {
+  const overlapping = new Set<string>()
+  if (nodes.length < 2) return overlapping
+
+  const sorted = nodes.slice().sort((a, b) => a.box.x - b.box.x)
+  const active: Node[] = []
+
+  for (const node of sorted) {
+    const left = node.box.x
+    const top = node.box.y
+    const bottom = top + node.box.height
+
+    for (let k = active.length - 1; k >= 0; k--) {
+      const candidate = active[k]
+      if (!candidate) continue
+      if (candidate.box.x + candidate.box.width <= left) {
+        active[k] = active[active.length - 1] as Node
+        active.pop()
+        continue
+      }
+      if (
+        candidate.box.y < bottom &&
+        candidate.box.y + candidate.box.height > top
+      ) {
+        overlapping.add(node.id)
+        overlapping.add(candidate.id)
+      }
+    }
+    active.push(node)
+  }
+
+  return overlapping
+}
+
 function buildView(
   nodes: readonly Node[],
   hidden: readonly string[],
   selected: readonly string[],
   enableDimming: boolean,
+  highlightOverlapping: boolean,
   markUnreachableEntries: boolean,
 ): DerivedView {
   const hiddenSet = new Set(hidden)
   const selectedSet = new Set(selected)
   const visible: Node[] = []
   const visibleById = new Map<string, Node>()
-  let fieldCount = 0
+
   for (const node of nodes) {
-    fieldCount += node.fields.length
     if (!hiddenSet.has(node.id)) {
       visible.push(node)
       visibleById.set(node.id, node)
     }
   }
+
+  const overlappingIds = highlightOverlapping
+    ? computeOverlappingIds(visible)
+    : new Set<string>()
 
   // Highlight set: selected nodes plus, when dimming is on, every node either
   // pointed-at by a selected node or pointing at a selected node through a
@@ -142,6 +234,7 @@ function buildView(
     const isDimmed =
       enableDimming && selected.length > 0 && !highlightedSet.has(node.id)
     const isGrayedOut = markUnreachableEntries && !node.isReachable
+    const isOverlapping = overlappingIds.has(node.id)
 
     const hiddenFieldsSet =
       node.hiddenFields.length > 0 ? new Set(node.hiddenFields) : undefined
@@ -201,6 +294,7 @@ function buildView(
       isSelected,
       isDimmed,
       isGrayedOut,
+      isOverlapping,
       fieldHighlightedMask,
       fieldTargetHiddenMask,
     })
@@ -216,5 +310,5 @@ function buildView(
         }
       : null
 
-  return { visible, connections, flags, bounds, fieldCount }
+  return { visible, connections, flags, bounds }
 }

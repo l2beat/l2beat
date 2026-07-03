@@ -92,7 +92,7 @@ export class AggregatedInteropTokenRepository extends BaseRepository {
     timestamp: UnixTime,
     sourceChains: string[],
     destinationChains: string[],
-    type?: InteropBridgeType,
+    types?: InteropBridgeType[],
     protocolIds?: string[],
     options?: {
       includeSameChainTransfers?: boolean
@@ -101,7 +101,8 @@ export class AggregatedInteropTokenRepository extends BaseRepository {
     if (
       sourceChains.length === 0 ||
       destinationChains.length === 0 ||
-      protocolIds?.length === 0
+      protocolIds?.length === 0 ||
+      types?.length === 0
     ) {
       return []
     }
@@ -121,8 +122,8 @@ export class AggregatedInteropTokenRepository extends BaseRepository {
       query = query.whereRef('srcChain', '!=', 'dstChain')
     }
 
-    if (type) {
-      query = query.where('bridgeType', '=', type)
+    if (types) {
+      query = query.where('bridgeType', 'in', types)
     }
 
     const rows = await query.execute()
@@ -195,5 +196,17 @@ export class AggregatedInteropTokenRepository extends BaseRepository {
       .deleteFrom('AggregatedInteropToken')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
+  }
+
+  async getByTimestamp(
+    timestamp: UnixTime,
+  ): Promise<AggregatedInteropTokenRecord[]> {
+    const rows = await this.db
+      .selectFrom('AggregatedInteropToken')
+      .selectAll()
+      .where('timestamp', '=', UnixTime.toDate(timestamp))
+      .execute()
+
+    return rows.map(toRecord)
   }
 }

@@ -18,6 +18,7 @@ export function OptimisticProofSystemCell({
   proofSystem,
   slug,
   zkCatalog,
+  permissioned,
 }: ScalingRiskStateValidationOptimisticEntry) {
   const hasSuccessful = zkCatalog && zkCatalog.successful.count > 0
   const hasUnsuccessful = zkCatalog && zkCatalog.unsuccessful.count > 0
@@ -28,93 +29,100 @@ export function OptimisticProofSystemCell({
     (hasUnsuccessful && hasNotVerified)
 
   return (
-    <div className="flex h-full items-center gap-4">
-      <ProofSystemCell proofSystem={proofSystem} slug={slug} hideType />
-      <div className="flex items-center gap-1.5">
-        {zkCatalog && (
-          <Tooltip>
-            <TooltipTrigger>
-              <a href={`/zk-catalog?highlight=${zkCatalog.id}`}>
-                <Badge
-                  type={
-                    isMixed || hasNotVerified
-                      ? 'gray'
-                      : hasSuccessful
-                        ? 'green'
+    <div className="flex h-full flex-col justify-center gap-0.5">
+      <div className="flex items-center gap-4">
+        <ProofSystemCell proofSystem={proofSystem} slug={slug} hideType />
+        <div className="flex items-center gap-1.5">
+          {zkCatalog && (
+            <Tooltip>
+              <TooltipTrigger>
+                <a href={`/zk-catalog?highlight=${zkCatalog.id}`}>
+                  <Badge
+                    type={
+                      isMixed || hasNotVerified
+                        ? 'gray'
+                        : hasSuccessful
+                          ? 'green'
+                          : hasUnsuccessful
+                            ? 'error'
+                            : null
+                    }
+                    className={cn(
+                      'flex items-center gap-1',
+                      isMixed || hasNotVerified
+                        ? 'border-divider! bg-surface-secondary! text-primary'
                         : hasUnsuccessful
-                          ? 'error'
-                          : null
-                  }
-                  className={cn(
-                    'flex items-center gap-1',
-                    isMixed || hasNotVerified
-                      ? 'border-divider! bg-surface-secondary! text-primary'
-                      : hasUnsuccessful
-                        ? 'border border-negative'
-                        : null,
+                          ? 'border border-negative'
+                          : null,
+                    )}
+                  >
+                    {zkCatalog.name}
+                    {hasSuccessful && <VerifiedIcon className="size-4" />}
+                    {hasNotVerified && (
+                      <CircleQuestionMarkIcon className="size-4" />
+                    )}
+                    {hasUnsuccessful && <UnverifiedIcon className="size-4" />}
+                  </Badge>
+                </a>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p className="text-label-value-15 md:text-label-value-16">
+                  The project uses {zkCatalog.name} prover.
+                </p>
+                <div className="mt-2 flex flex-col gap-2">
+                  {hasSuccessful && (
+                    <Callout
+                      color="green"
+                      small
+                      icon={<VerifiedIcon className="mt-px size-4" />}
+                      className="p-2"
+                      body={getSuccessfulText(zkCatalog.successful)}
+                    />
                   )}
-                >
-                  {zkCatalog.name}
-                  {hasSuccessful && <VerifiedIcon className="size-4" />}
                   {hasNotVerified && (
-                    <CircleQuestionMarkIcon className="size-4" />
+                    <Callout
+                      color="gray"
+                      small
+                      className="p-2"
+                      icon={<CircleQuestionMarkIcon className="mt-px size-4" />}
+                      body={getNotVerifiedText(zkCatalog.notVerified)}
+                    />
                   )}
-                  {hasUnsuccessful && <UnverifiedIcon className="size-4" />}
+                  {hasUnsuccessful && (
+                    <Callout
+                      color="red"
+                      small
+                      className="p-2"
+                      icon={<UnverifiedIcon className="mt-px size-4" />}
+                      body={getUnsuccessfulText(zkCatalog.unsuccessful)}
+                    />
+                  )}
+                </div>
+                <p className="mt-2 text-label-value-13 text-secondary">
+                  Click to view details
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          )}
+          {proofSystem?.challengeProtocol && (
+            <Tooltip>
+              <TooltipTrigger>
+                <Badge type="blue" className="block h-5 md:h-6">
+                  {proofSystem.challengeProtocol}
                 </Badge>
-              </a>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p className="text-label-value-15 md:text-label-value-16">
-                The project uses {zkCatalog.name} prover.
-              </p>
-              <div className="mt-2 flex flex-col gap-2">
-                {hasSuccessful && (
-                  <Callout
-                    color="green"
-                    small
-                    icon={<VerifiedIcon className="mt-px size-4" />}
-                    className="p-2"
-                    body={getSuccessfulText(zkCatalog.successful)}
-                  />
-                )}
-                {hasNotVerified && (
-                  <Callout
-                    color="gray"
-                    small
-                    className="p-2"
-                    icon={<CircleQuestionMarkIcon className="mt-px size-4" />}
-                    body={getNotVerifiedText(zkCatalog.notVerified)}
-                  />
-                )}
-                {hasUnsuccessful && (
-                  <Callout
-                    color="red"
-                    small
-                    className="p-2"
-                    icon={<UnverifiedIcon className="mt-px size-4" />}
-                    body={getUnsuccessfulText(zkCatalog.unsuccessful)}
-                  />
-                )}
-              </div>
-              <p className="mt-2 text-label-value-13 text-secondary">
-                Click to view details
-              </p>
-            </TooltipContent>
-          </Tooltip>
-        )}
-        {proofSystem?.challengeProtocol && (
-          <Tooltip>
-            <TooltipTrigger>
-              <Badge type="blue" className="block h-5 md:h-6">
-                {proofSystem.challengeProtocol}
-              </Badge>
-            </TooltipTrigger>
-            <TooltipContent>
-              {challengeToDescription(proofSystem.challengeProtocol)}
-            </TooltipContent>
-          </Tooltip>
-        )}
+              </TooltipTrigger>
+              <TooltipContent>
+                {challengeToDescription(proofSystem.challengeProtocol)}
+              </TooltipContent>
+            </Tooltip>
+          )}
+        </div>
       </div>
+      {permissioned !== undefined && (
+        <div className="text-[13px] text-secondary leading-[14px] md:text-xs md:leading-[15px]">
+          {permissioned ? 'Permissioned' : 'Permissionless'}
+        </div>
+      )}
     </div>
   )
 }

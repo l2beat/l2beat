@@ -11,6 +11,8 @@ export type BlipSexp =
   | ['and', ...BlipSexp[]]
   | ['pipe', ...BlipSexp[]]
   | ['map', BlipSexp]
+  | ['sort']
+  | ['sort', BlipSexp]
   | ['pick', ...BlipSexp[]]
   | ['get', ...(string | number)[]]
   | ['set', ArrayOrT<string | number>, BlipSexp]

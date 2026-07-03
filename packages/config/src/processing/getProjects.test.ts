@@ -139,7 +139,6 @@ describe('getProjects', () => {
       // It can be squashed, but it's more readable this way
       const target = [...layer2s, ...layer3s].filter(
         (project) =>
-          !project.isUpcoming &&
           !project.reviewStatus &&
           !project.archivedAt &&
           // It makes no sense to list them on the DA-BEAT
@@ -215,6 +214,24 @@ describe('getProjects', () => {
 
   describe('zk catalog', async () => {
     const usageMap = getUsageMap(projects)
+    const currentZkCatalogsByTvsProject = new Map<ProjectId, ProjectId[]>()
+
+    for (const project of projects) {
+      if (!project.zkCatalogInfo) continue
+
+      for (const tvsProject of project.zkCatalogInfo.projectsForTvs ?? []) {
+        if (tvsProject.untilTimestamp) continue
+
+        const zkCatalogs = currentZkCatalogsByTvsProject.get(
+          tvsProject.projectId,
+        )
+        if (zkCatalogs) {
+          zkCatalogs.push(project.id)
+        } else {
+          currentZkCatalogsByTvsProject.set(tvsProject.projectId, [project.id])
+        }
+      }
+    }
 
     for (const project of projects) {
       describe(project.id, () => {
@@ -231,7 +248,21 @@ describe('getProjects', () => {
               (d) => d.overrideUsedIn ?? usageMap.get(`${d.address}`),
             ),
           ),
-        ).filter((p) => p !== undefined)
+        ).filter((p): p is ProjectId => {
+          if (p === undefined) return false
+
+          // Archived projects can keep historical verifier deployments, but
+          // they do not have to be listed as current TVS projects. Shared
+          // verifier deployments can also be attributed to another current
+          // zk catalog entry.
+          if (projectsById.get(p)?.archivedAt !== undefined) return false
+
+          const currentZkCatalogs = currentZkCatalogsByTvsProject.get(p)
+          return (
+            currentZkCatalogs === undefined ||
+            currentZkCatalogs.includes(project.id)
+          )
+        })
         const usedInVerifiersSet = new Set(usedInVerifiers)
 
         for (const usedIn of usedInVerifiers) {
@@ -738,9 +769,7 @@ describe('getProjects', () => {
 
   describe('all new projects are discovery driven', () => {
     const isNormalProject = (p: BaseProject) => {
-      return (
-        p.scalingInfo && p.archivedAt === undefined && p.isUpcoming !== true
-      )
+      return p.scalingInfo && p.archivedAt === undefined
     }
 
     const filteredProjects = projects.filter(

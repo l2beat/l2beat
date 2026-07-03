@@ -27,6 +27,7 @@ import {
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { getSP1Verifiers } from '../../templates/opStack'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('fluent')
 
@@ -73,17 +74,16 @@ export const fluent: ScalingProject = {
       ],
     },
   },
-  proofSystem: {
-    type: 'Optimistic',
-    name: 'SP1',
-    zkCatalogId: ProjectId('sp1turbo'),
-    challengeProtocol: 'Single-step',
-  },
+  proofSystem: undefined,
   stage: {
     stage: 'NotApplicable',
   },
   config: {
     associatedTokens: ['BLEND'],
+    activityConfig: {
+      type: 'block',
+      startBlock: 1,
+    },
     escrows: [
       // L1FluentBridge holds bridged ETH (gateways forward ETH here on deposit).
       discovery.getEscrowDetails({
@@ -180,11 +180,14 @@ export const fluent: ScalingProject = {
     categories: [
       {
         title: 'Challenges',
-        description: `Fluent runs an optimistic batch lifecycle backed by SP1 ZK proofs for dispute resolution. (1) the sequencer commits a batch root via \`commitBatch\`; (2) EIP-4844 blob hashes are pinned via \`submitBlobs\`; (3) an AWS Nitro Enclave preconfirms the batch with an ECDSA signature whose key was admitted onchain only after an SP1 proof verified AWS's attestation document for that key and that the document's PCR0 (a fingerprint of the enclave image) matches the expected (audited) value; (4) within ${formatSeconds(challengeWindow)} of acceptance, addresses with the \`CHALLENGER_ROLE\` can dispute via \`challengeBatchRoot\` or \`challengeBlock\` and the prover must resolve each challenge with an SP1 proof before the same window closes; (5) batches finalize either after a ${formatSeconds(finalizationDelay)} L1 delay (\`finalizeBatches\`, no proof needed in the happy path) or immediately once all challenged blocks are proven (\`finalizeWithProofs\`).
-
-Currently \`CHALLENGER_ROLE\` has no holders, so \`challengeBatchRoot\` and \`challengeBlock\` cannot be invoked. Because \`_provenBlocks\` is only populated inside \`resolveBlockChallenge\` (which itself requires an active challenge), no SP1 proof can be submitted onchain in this state and \`finalizeWithProofs\` reverts. Every batch therefore finalizes purely through the time-based path, and effective security reduces to trust the TEE plus the ${formatSeconds(finalizationDelay)} delay until the admin grants the role.
-
-The \`PROVER\`, \`EMERGENCY\`, and \`CHALLENGER\` roles on the Rollup are gated by access control; see the Permissions section for the current holders.`,
+        description: readProjectMarkdown(
+          'fluent',
+          'stateValidationChallenges',
+          {
+            challengeWindow: formatSeconds(challengeWindow),
+            finalizationDelay: formatSeconds(finalizationDelay),
+          },
+        ),
         references: [
           {
             title: 'Fluent Rollup Architecture',
@@ -235,19 +238,14 @@ The \`PROVER\`, \`EMERGENCY\`, and \`CHALLENGER\` roles on the Rollup are gated 
         ...EXITS.REGULAR_WITHDRAWAL('zk', finalizationDelay),
         description:
           EXITS.REGULAR_WITHDRAWAL('zk', finalizationDelay).description +
-          " On Fluent, the message hash enters the block's withdrawal root which becomes part of the next batch root; once the batch is finalized, an address with RELAYER_ROLE delivers the message on L1 via receiveMessageWithProof with two Merkle proofs (block-against-batch and message-against-block). First delivery is permissioned, so withdrawals progress only when the relayer acts; if a delivered message's L1-side execution reverts, anyone can retry via the permissionless receiveFailedMessage.",
+          " On Fluent, the message hash enters the block's withdrawal root which becomes part of the next batch root; once the batch is finalized, anyone can deliver the message on L1 via receiveMessageWithProof with two Merkle proofs (block-against-batch and message-against-block).",
         references: [
           {
             title: 'Fluent Bridge Architecture',
             url: 'https://docs.fluent.xyz/system-architecture/bridge',
           },
         ],
-        risks: [
-          {
-            category: 'Funds can be frozen if',
-            text: 'the RELAYER_ROLE holder stops delivering L2->L1 messages on L1, since first delivery is permissioned and there is no user-initiated bypass.',
-          },
-        ],
+        risks: [],
       },
       {
         name: 'Optimistic (preconfirmed) fast withdrawals',

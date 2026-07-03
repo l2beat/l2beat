@@ -3,7 +3,8 @@
   "name": "hyperliquid",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
-    "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7"
+    "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+    "hyperevm:0x6B9E773128f453f5c2C60935Ee2DE2CBc5390A24"
     // "arb1:0xef2364db5db6f5539aa0bc111771a94ee47637fc", // hot validator 1
     // "arb1:0xda6816df552c3f9e0fb64979fb357800d690d79b", // hot validator 2
     // "arb1:0x58e1b0e63c905d5982324fcd9108582623b8132e", // hot validator 3
@@ -35,7 +36,8 @@
           "description": "The hot valis can also change the cold valis by adding a finalizer they control and then proposing, finalizing a validator set update.",
           "permissions": [
             {
-              "type": "hotValidatorHyperliquid"
+              "type": "interact",
+              "description": "Can request withdrawals, start a validator set change, add lockers and finalizers (Can also change cold validators by adding a finalizer and proposing/finalizing a new validator set)."
             }
           ]
         },
@@ -51,7 +53,8 @@
           },
           "permissions": [
             {
-              "type": "coldValidatorHyperliquid"
+              "type": "interact",
+              "description": "Can change the dispute period, block duration and locker threshold. Can also invalidate withdrawals, emergencyUnlock (unpause and change the validator set), remove lockers and finalizers."
             }
           ]
         }

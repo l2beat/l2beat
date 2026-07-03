@@ -9,19 +9,26 @@ import type { TopItems } from '~/server/features/scaling/interop/utils/getTopIte
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
-type TopItem = {
+export type TopItem = {
   id?: string
   displayName: string
   issuer?: string | null
   iconUrl: string
   volume: number | null
+  href?: string
 }
 
-type InteropTopItemsCellProps = {
-  topItems: TopItems<TopItem>
-  setIsOpen: (isOpen: boolean) => void
-  hideDialog?: boolean
-}
+type InteropTopItemsCellProps =
+  | {
+      topItems: TopItems<TopItem>
+      hideDialog: true
+      setIsOpen?: never
+    }
+  | {
+      topItems: TopItems<TopItem>
+      hideDialog?: false
+      setIsOpen: (isOpen: boolean) => void
+    }
 
 const buttonVariants = cva('group/dialog-trigger flex items-center', {
   variants: {
@@ -75,6 +82,7 @@ export function InteropTopItems({
             item={item}
             index={i}
             type={type}
+            href={item.href}
             className={cn(i !== topItems.items.length - 1 && '-mr-1.5')}
           />
         ))}
@@ -124,22 +132,28 @@ function ItemIconWithTooltip({
   item,
   index,
   type,
+  href,
   className,
 }: {
   item: TopItem
   index: number
+  href?: string
   className?: string
 } & VariantProps<typeof iconVariants>) {
+  const icon = (
+    <img
+      key={item.id}
+      src={item.iconUrl}
+      alt={item.displayName}
+      className={iconVariants({ type, className })}
+      style={{ zIndex: 5 - index }}
+    />
+  )
+
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <img
-          key={item.id}
-          src={item.iconUrl}
-          alt={item.displayName}
-          className={iconVariants({ type, className })}
-          style={{ zIndex: 5 - index }}
-        />
+        {href ? <a href={href}>{icon}</a> : icon}
       </TooltipTrigger>
       <TooltipContent>
         <p className="font-bold text-label-value-15">{item.displayName}</p>

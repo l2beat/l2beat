@@ -1,7 +1,7 @@
 {
   "name": "syndicate",
-  "timestamp": 1775599220,
-  "configHash": "0x0e3923dbaf7703860e05a0efcee6e419ea7c9ad303b96a94b125bd351d88ed88",
+  "timestamp": 1781595301,
+  "configHash": "0x578958c25a2082e0e0b2e01bdfaa66adc61f21093bdcb8e40002a0a41633efcf",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
     {
@@ -361,17 +361,10 @@
           "0x475ca3b08b5861bb0f8e49ebc14775847cf531c6c16a1473d4610d6f609f179c",
           "0xb5dd0e179a31ff0dcd1db1362118aab11586e8e42c713e154295a9effa4ab738",
           "0xaa2854f59d446537e7b349ca80646985c4bc296ee0a6ef4ae2e7ce2cfc6476e2",
-          "0x866c3fdff1b88bb54fb06b8eb5d6222fa0389cd008471a141334aed0eb171878",
-          "0x11120449cb50d85ed6e420a0a94dc8eecfc3da3ce9de99ef46dc0ee0e9f0669a",
           "0x8d4e5576c75115b4f0206d4af8bcbf5fb807607b9ad204a0884ad269981132f3",
           "0x0058fc08ccd6efbfa1b28be52f2f97a34e2168217f144bbb680a537d2ca18111",
-          "0x0ceb3306c4166f83984b224c6046136f85df1bcb09da0605a5131736d5e40a77",
           "0x2d92999b9b651916f60c7d28934b9b91d9c43c7a4474861340ccc09cadc29750",
-          "0x61a037630ed03eba219a0c1b99e744f25072c3ec2040d50091664182b1feee43",
           "0xd0ee55b8e193f2dc21c140d4212079a5b78c3df1ac953f7d4f0dd7ed3c7316d6",
-          "0x9e6f62da5509519a81e7ce9549000fa7991483cb9053221968351252b70a1fb9",
-          "0x3e004bd28aa1b94a6f7a19d48007bb8211d9f7edb4a655653d8db5e1784fd76d",
-          "0x3f6034d69a0aca29b330208a3946345f238844578025d459262ce882bec85ed9",
           "0x05532d1781804b53a8614009f79ced98a4474294984d19e793780a3b8c286a98",
           "0x29ef6b67feaaa31f210c9a7b8ef073a3fb35eeb5f6fe063f5e75247b884abd0a",
           "0xd1bfc317efb9f0d3ae5a0bd8c3a6c1948d10e63cebd06250aa7d2d20fec2f851",
@@ -380,13 +373,10 @@
           "0x2e8be17a9566a25a30c37aaaa57a870a922d9713833cd401a0d59d9e67fa9dcc",
           "0x6b9d91f76e2c7d4fa17b0c498144cc857b43c1488f6f7a0cc7ed4a5f4c1fed5a",
           "0x832c0fae231eb044c5f7ceb2f72a77caef174f46e60c8c257aab5160603b05b3",
-          "0x13cb0150a640902f3d32e152e340384441e1c0bcfd3b34cf17b3f76c6030ab82",
           "0xfcc1afb1aadb7986d6482feb6cf5542fcca50d8bc92bf5e481a94d27374d24e2",
-          "0xdc504cf506e8b0562bf55d13e75704869c2e80b2c17ce834840e7baaf1ffed7a",
           "0x960dc057a3b0c24385c25845f5eebe1fafcc4739a94351b4550cb0d0e53d3655",
           "0xfcaffb0c80a3202d233f2b2b037a17528706afb73b1ac21194b3708177c8f301",
           "0x442a057849f7fa68f8c34dc8b9475c6f8e50ee48b1f7e83e0229833761a7d6e3",
-          "0x8758fc175c5617a10d5c8c432d3c61dea5aef3a949d3ffcf259a35daa4921871",
           "0xab5716b1b46c8c1d6eef9e2ba828f33fbbee735966f0d0e449c77727808154ba",
           "0xe8f5cbf6ef8179b14b6378206d1006a38d9f749351955d4738cd515aa8559e5e",
           "0x2aa77dfcccd51126c0affefa1235a2c53905fe864fccfd93ffe4d8d4f8912a8a",
@@ -395,11 +385,6 @@
           "0x4b4c68dd8324d92c733fd9e8571b59a88e28f417b8e8d90a580c8d70eac650d0",
           "0x0824ab32bfcda7b4e253823f2421891fe791cc95e3de2e55a310de6f4b2b1269",
           "0x0955e7dff023cbc1818fb1439e69caf4647d504851f58ed09552eae3393e58a1",
-          "0x80dd3e365a5a50175acbb28eb1f931b1369d50e76560adb038baff9d30bf334a",
-          "0xc69ab28996c80f2e5cb7016ab8f3f8bf029d8135646b645813020da86f432bcf",
-          "0xc7800d34420e0bfdb5db29ea545899f1ec5e9a03aab96506aaf6d8724ba8c915",
-          "0xf84c9f0d23474947e24701dbc71c1247d7c90b146219cfef6231402cf454c14c",
-          "0x14757e958213cdbf483e550491aa16c7446eaf64ac2894e33c823a60e9045f0a",
           "0x3278d7a1fc5f9f6a342007f6efd5fba9f8713169ed4c448f39884925422552f7",
           "0xf3879d1954d75c69f17b02216d7495d82be50c7ab0be425c2a6dc94a74a7cf06",
           "0x043b00fe2b0b7af45acf2778eaf4fcd396c8549cb0876cc257f6c11e54ec6635",
@@ -418,10 +403,20 @@
           "0x6bcf80c24889dce79c2b7c281d9e9a116df2e31b38066875709f44261919b086",
           "0xc07a06bef2237cb01b3714510ea2d7e2b0f056081e8fe0ace4c8f3e00f1c2697",
           "0x4776a2a65d4c3b3a25603e2d581837dded443b840bad2406642d5457d90afc2b",
-          "0x6c44dee76ef91585c58c16f5dc19694fc94a31fc65808cc7e6a08f4ee209e7db",
           "0xec7f32b9be7f5385bc3bb4683cf03d41f53c317d833776da1cdb54f32a52db77",
           "0x4237db2359e8736fb9987c4c34707454ab3b0089c8ae1bd363decfa693d66c15",
-          "0xd91c7c8888da9062e48e92d20813dfa8ce7f581d327b36237040354c5159db0e"
+          "0xd91c7c8888da9062e48e92d20813dfa8ce7f581d327b36237040354c5159db0e",
+          "0x2a5ccd8075a6e252f1448cd3fdbcde296d2f56aaf2d757c5863db608ae41b02e",
+          "0x0a65b09f4cc1527b6dcf4dbf071cd42b941a1aa634d1a02c6a47c5324b345654",
+          "0xe5f9b527a2b5ace562d7ad9e3e8ed8baa162ae5bd92ea66cdf7215c6b1b19759",
+          "0x195e5fe48195d84c6c32642c2b25f50299ac6b067ab3c52a833149e3dd357a9c",
+          "0x02ec809f7c2f0a87e7c911de414416230e2f2aef9526b1efb32e4f8d16bdbce8",
+          "0x2cb71ecfdae8149ef5d3c5ed547674e78fb0f4ee2c507da5153f618fd1ff0d1d",
+          "0xc7c25d381c30da55ef484168d1f79238c119baf2c77f2b5dea18bb92140020df",
+          "0x630472e82487862e241b1d1f8e26c62caf3497086c9bbbb8b917a4b9c215b1db",
+          "0x5a3cb349f8416f06020994e9d0288283b70b432b049ddc0d6cd88823a1238f54",
+          "0x88507c7e04a4995594d3c4c7ff7c798fc23807dce3fbb8de41ec641036d7d3b4",
+          "0x62fd7709add808809511fe2d3a230cd9cb7321cc2f47e2c35fd959d0449be8ee"
         ],
         "registries": [
           "eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
@@ -522,7 +517,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 6556,
+        "batchCount": 8064,
         "batchPosterManager": "eth:0x9A64b61bdfb2375d43A90e7BbF09EFe18bd6CADC",
         "batchPosters": ["eth:0x54dD1659c232DEC31386C52507982a4983D9BCb8"],
         "bridge": "eth:0x3C8cF0ae6E89AC0796f29B3a58e7dEa1cD072277",
@@ -541,12 +536,12 @@
         "isUsingFeeToken": true,
         "keySetUpdates": 0,
         "maxDataSize": 117964,
-        "maxTimeVariation": [28800, 300, 345600, 3600],
+        "maxTimeVariation": [288000, 300, 3456000, 3600],
         "postsBlobs": true,
         "reader4844": "eth:0x1a6Ad03B2468aaF9DeB70Add19bccFDC0A141168",
         "rollup": "eth:0x451bD7813909B899DA6EbEC55E8fF823c057e14A",
         "sequencerVersion": "0x00",
-        "totalDelayedMessagesRead": 31,
+        "totalDelayedMessagesRead": 35,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -697,7 +692,7 @@
         "$immutable": true,
         "AIRDROP_MANAGER_ROLE": "0x84fe74c71a28b69aa960486ca0e8c1418c86e9ea2cd6b5849b95e2c8f407a674",
         "BRIDGE_MANAGER_ROLE": "0xcce296b040332a080e6df13515a3ec2869e21cd20f7344af0987ddb938d8bd21",
-        "clock": 24830658,
+        "clock": 25328619,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -716,7 +711,7 @@
         "getAllBridges": [],
         "getBridgeAtIndex": [],
         "getBridgeCount": 0,
-        "getCurrentTotalSupply": "929999999999999999999999996",
+        "getCurrentTotalSupply": "933333333333333333333333328",
         "getRemainingLockTime": 0,
         "INITIAL_MINT_SUPPLY": "920000000000000000000000000",
         "MAX_LOCK_DURATION": 10368000,
@@ -724,7 +719,7 @@
         "name": "Syndicate",
         "symbol": "SYND",
         "TOTAL_SUPPLY": "1000000000000000000000000000",
-        "totalSupply": "929999999999999999999999996",
+        "totalSupply": "933333333333333333333333328",
         "transfersLocked": false,
         "unlockTimestamp": 1758153600
       },
@@ -738,7 +733,7 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProver0",
       "sourceHashes": [
-        "0xdec29538ea8b9a7f83edc119a9fbd3761ab24c5e0b512ecfdecc46dcdefccdc1"
+        "0x063a1b3c4451e69f827acd833c42e986c2c617bfaabb13884fb438185b192407"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
@@ -756,7 +751,7 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProverMemory",
       "sourceHashes": [
-        "0xa163417851e926098130f55736a5b43084164e0070f9647198131e57b45a947d"
+        "0x9e22e05e7953684e6f00507684bb902908d6d4383b2e82ecdce789027bebc33a"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
@@ -875,13 +870,13 @@
           "eth:0x82E761873714cDe47C594aA6F23E6b1844CD98dB"
         ],
         "allowedOutboxList": ["eth:0xf555Bc86D1C953414F676479Bf7C979b1A737E8C"],
-        "delayedMessageCount": 31,
+        "delayedMessageCount": 35,
         "nativeToken": "eth:0x1bAB804803159aD84b8854581AA53AC72455614E",
         "nativeTokenDecimals": 18,
         "rollup": "eth:0x451bD7813909B899DA6EbEC55E8fF823c057e14A",
         "sequencerInbox": "eth:0x12ad349e5d72B582856290736e0f13FE5fA57Aa4",
-        "sequencerMessageCount": 6556,
-        "sequencerReportedSubMessageCount": 1705887
+        "sequencerMessageCount": 8064,
+        "sequencerReportedSubMessageCount": 1971520
       },
       "implementationNames": {
         "eth:0x3C8cF0ae6E89AC0796f29B3a58e7dEa1cD072277": "",
@@ -939,12 +934,12 @@
         "confirmPeriodBlocks": 50400,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 5643,
+        "firstUnresolvedNode": 7255,
         "inbox": "eth:0x5EA55Fd41D42Eb307D281bdE78E4e7572A35ea13",
         "isPostBoLD": false,
         "lastStakeBlock": 23028349,
-        "latestConfirmed": 5642,
-        "latestNodeCreated": 5808,
+        "latestConfirmed": 7254,
+        "latestNodeCreated": 7292,
         "loserStakeEscrow": "eth:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0xf555Bc86D1C953414F676479Bf7C979b1A737E8C",
@@ -1107,7 +1102,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x12ad349e5d72B582856290736e0f13FE5fA57Aa4",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -1256,7 +1251,7 @@
       "address": "eth:0x6D25E739016f42B70885E63629C7356C2E29a2D7",
       "type": "Contract",
       "sourceHashes": [
-        "0x90744f5ef4ff8b3eef422b08ec15bbdb0aefe2599d0d0cd4010c7f35b05ef145"
+        "0x9eae78e35e5c868cd5e3de5bdfb2bef13871657ad2b01fbdf5f384035290f16f"
       ],
       "proxyType": "immutable",
       "deployerAddress": "eth:0x5a4aB7307C4480d64eF06F49d65666d9EFe99BC9",
@@ -1496,6 +1491,7 @@
       "address": "eth:0x85C2AE9B88baDf751228e307Ae9ab76B74d84f5c",
       "type": "EOA",
       "proxyType": "EOA",
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -1693,6 +1689,7 @@
       "address": "eth:0x9A64b61bdfb2375d43A90e7BbF09EFe18bd6CADC",
       "type": "EOA",
       "proxyType": "EOA",
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -1780,7 +1777,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 46,
+        "nonce": 54,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1794,7 +1791,7 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProofEntry",
       "sourceHashes": [
-        "0xb926f057e4fad7ff5b169aeec58691133fd46de25932d8356d3dc28e4e793d3a"
+        "0x294155e99018f1d390be420f29ef940f9843f3ce54ed4e515d998653e2ce4293"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
@@ -1889,7 +1886,7 @@
       "template": "orbitstack/ChallengeManager",
       "sourceHashes": [
         null,
-        "0x8a2753d8b3f1ce86250bd4a4e7e502d04dd36a5a670b519b7510af6b33618693"
+        "0x1eba00857f5477dbcd075b48ce8af9c74d5cb4f93a5e714dd27b3df498737e54"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.",
@@ -1970,7 +1967,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "eth:0x451bD7813909B899DA6EbEC55E8fF823c057e14A",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
@@ -2164,8 +2161,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "relayDA",
+          "permission": "interact",
           "from": "eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B",
+          "description": "Can store and serve both unencoded blobs as well as encoded chunks.",
           "role": ".relayers"
         }
       ]
@@ -2181,8 +2179,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "disperse",
+          "permission": "interact",
           "from": "eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad",
+          "description": "Can disperse EigenDA blobs to the EigenDA node operators.",
           "role": ".dispersers"
         }
       ]
@@ -3582,6 +3581,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24830658 },
-  "permissionsConfigHash": "0xa33505d4d6505e0657515cc992277f55aa2b896e2ce476779cfd6f6998d32ab0"
+  "usedBlockNumbers": { "ethereum": 25328619 },
+  "permissionsConfigHash": "0x9f6ab30a90c666c6efcc0a9afc3c5249087795cb101f2c12fc371aea915dfe43"
 }

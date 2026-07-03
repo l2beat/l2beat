@@ -1,30 +1,39 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import type { InteropFlowsData } from '~/server/features/scaling/interop/getInteropFlows'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
+import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatInteger } from '~/utils/number-format/formatInteger'
+import { getInteropTokenUrl } from '../../../utils/getInteropTokenUrl'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
+import { getChainFlowStatItems } from './getChainFlowStatItems'
 import { TopItemsList } from './TopItemsList'
 
 export function SingleChainStats({
   chainId,
   selectedChains,
+  tokenId,
   linkTopProtocols,
   hideTopProtocols,
 }: {
   chainId: string
   selectedChains: string[]
+  tokenId?: string
   linkTopProtocols?: boolean
   hideTopProtocols?: boolean
 }) {
+  const trpc = useTRPC()
   const { selectedProtocols } = useInteropFlows()
-  const { data, isLoading } = api.interop.flows.useQuery({
-    chains: selectedChains,
-    protocolIds: selectedProtocols,
-  })
+  const { data, isLoading } = useQuery(
+    trpc.interop.flows.queryOptions({
+      chains: selectedChains,
+      protocolIds: selectedProtocols,
+      tokenId,
+    }),
+  )
 
   if (!data || isLoading) {
     return null
@@ -42,6 +51,7 @@ export function SingleChainStats({
           items={chainData.topTokens.map((t) => ({
             ...t,
             title: t.symbol,
+            href: getInteropTokenUrl(t),
           }))}
         />
       )}
@@ -73,10 +83,6 @@ function Stats({
     return null
   }
 
-  const totalTransfers = chainData.transfersIn + chainData.transfersOut
-  const avgTransferValue =
-    totalTransfers > 0 ? chainData.totalVolume / totalTransfers : 0
-
   const volumePerSecond = chainData.totalVolume / UnixTime.DAY
 
   return (
@@ -85,46 +91,14 @@ function Stats({
         Stats
       </div>
       <div className="space-y-1.5">
-        <StatRow
-          label="Total volume"
-          value={formatCurrency(chainData.totalVolume, 'usd')}
-          isLoading={isLoading}
-        />
-        <StatRow
-          label="Volume in"
-          value={formatCurrency(chainData.inflow, 'usd')}
-          isLoading={isLoading}
-        />
-        <StatRow
-          label="Volume out"
-          value={formatCurrency(chainData.outflow, 'usd')}
-          isLoading={isLoading}
-        />
-        <StatRow
-          label="Net flow"
-          value={formatCurrency(chainData.netFlow, 'usd')}
-          isLoading={isLoading}
-        />
-        <StatRow
-          label="Total transfers"
-          value={formatInteger(totalTransfers)}
-          isLoading={isLoading}
-        />
-        <StatRow
-          label="Transfers in"
-          value={formatInteger(chainData.transfersIn)}
-          isLoading={isLoading}
-        />
-        <StatRow
-          label="Transfers out"
-          value={formatInteger(chainData.transfersOut)}
-          isLoading={isLoading}
-        />
-        <StatRow
-          label="Avg. transfer value"
-          value={formatCurrency(avgTransferValue, 'usd')}
-          isLoading={isLoading}
-        />
+        {getChainFlowStatItems(chainData).map((item) => (
+          <StatRow
+            key={item.label}
+            label={item.label}
+            value={item.value}
+            isLoading={isLoading}
+          />
+        ))}
         <StatRow
           label="Connected"
           value={`${chainData.connectedChains} chains`}
@@ -149,7 +123,7 @@ function TopRoutes({
   isLoading: boolean
   chainId: string
 }) {
-  const { allChains } = useInteropFlows()
+  const { allChains, setHighlightedChainPair } = useInteropFlows()
 
   const flows = data?.flows
     .filter((cv) => cv.srcChain === chainId || cv.dstChain === chainId)
@@ -172,6 +146,9 @@ function TopRoutes({
           return (
             <StatRow
               key={`${flow.srcChain}-${flow.dstChain}`}
+              onClick={() =>
+                setHighlightedChainPair(flow.srcChain, flow.dstChain)
+              }
               label={
                 <span className="flex items-center gap-1">
                   {srcChain && (
@@ -205,19 +182,42 @@ function StatRow({
   label,
   value,
   isLoading,
+  onClick,
 }: {
   label: ReactNode
   value: string
   isLoading: boolean
+  onClick?: () => void
 }) {
-  return (
-    <div className="flex items-center justify-between gap-2 text-[13px]">
-      <span className="font-medium text-secondary leading-none">{label}</span>
+  const baseClassName =
+    'flex w-full items-start justify-between gap-2 text-[13px]'
+  const content = (
+    <>
+      <span className="whitespace-nowrap font-medium text-secondary leading-none">
+        {label}
+      </span>
       {isLoading ? (
         <Skeleton className="h-4 w-16" />
       ) : (
-        <span className="font-semibold leading-[1.15]">{value}</span>
+        <span className="text-right font-semibold leading-[1.15]">{value}</span>
       )}
-    </div>
+    </>
   )
+
+  if (onClick) {
+    return (
+      <button
+        type="button"
+        onClick={onClick}
+        className={cn(
+          baseClassName,
+          'rounded transition-opacity hover:opacity-80',
+        )}
+      >
+        {content}
+      </button>
+    )
+  }
+
+  return <div className={baseClassName}>{content}</div>
 }

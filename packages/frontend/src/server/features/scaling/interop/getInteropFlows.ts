@@ -11,9 +11,12 @@ import { getInteropFlowAggregates } from './utils/getInteropFlowAggregates'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
 import { getSummaryTokensData } from './utils/getSummaryTokensData'
 import { getTopItems, type TopItems } from './utils/getTopItems'
+import { scopeRecordsToToken } from './utils/scopeRecordsToToken'
 
 export interface FlowToken {
+  id: string
   symbol: string
+  issuer: string | null
   iconUrl: string
   volume: number
 }
@@ -47,6 +50,8 @@ export interface ChainData {
   transfersIn: number
   transfersOut: number
   connectedChains: number
+  tokenCount: number
+  protocolCount: number
   topTokens: FlowToken[]
   topProtocols: FlowProtocol[]
 }
@@ -76,22 +81,30 @@ export type InteropFlowsData = {
   stats: FlowsStats
 }
 
+type GetInteropFlowsParams = InteropFlowsParams & {
+  anchorChain?: string
+}
+
 export async function getInteropFlows(
-  params: InteropFlowsParams,
+  params: GetInteropFlowsParams,
 ): Promise<InteropFlowsData> {
   if (env.MOCK) {
     return getMockInteropFlows()
   }
 
-  const { records } = await getLatestAggregatedInteropTransferWithTokens(
-    {
+  const { records } = await getLatestAggregatedInteropTransferWithTokens({
+    selection: {
       from: params.chains,
       to: params.chains,
     },
-    undefined,
-    params.protocolIds,
-  )
-  if (records.length === 0) {
+    protocolIds: params.protocolIds,
+    anchorChain: params.anchorChain,
+  })
+  const scopedRecords = params.tokenId
+    ? scopeRecordsToToken(records, params.tokenId)
+    : records
+
+  if (scopedRecords.length === 0) {
     return {
       flows: [],
       chainData: [],
@@ -117,24 +130,24 @@ export async function getInteropFlows(
   const subgroupProjects = new Set(
     interopProjects.filter((p) => p.interopConfig.subgroupId).map((p) => p.id),
   )
-  const nonSubgroupRecords = records.filter(
-    (record) => !subgroupProjects.has(record.id as ProjectId),
-  )
-
   const {
     flows,
     chainTopTokens,
     chainPairTopTokens,
     chainTopProtocols,
     chainPairTopProtocols,
+    chainTokenCounts,
+    chainProtocolCounts,
     topToken: topTokenEntry,
     topProtocol: topProtocolEntry,
     tokenIds,
-  } = getInteropFlowAggregates(records, subgroupProjects)
+  } = getInteropFlowAggregates(scopedRecords, subgroupProjects)
 
   const detailsMap = await buildTokensDetailsMap(tokenIds)
   const summaryTokens = getSummaryTokensData(
-    nonSubgroupRecords,
+    scopedRecords.filter(
+      (record) => !subgroupProjects.has(record.id as ProjectId),
+    ),
     detailsMap,
     interopProjects,
   )
@@ -159,7 +172,9 @@ export async function getInteropFlows(
     const details = detailsMap.get(entry.id)
     if (!details) return undefined
     return {
+      id: entry.id,
       symbol: details.symbol,
+      issuer: details.issuer,
       iconUrl: details.iconUrl,
       volume: entry.volume,
     }
@@ -218,6 +233,8 @@ export async function getInteropFlows(
     params.chains,
     resolvedChainTokens,
     resolvedChainProtocols,
+    chainTokenCounts,
+    chainProtocolCounts,
   )
 
   const topChain = chainData.reduce<ChainData | undefined>((max, chain) => {
@@ -265,6 +282,8 @@ function computeChainsData(
   chainIds: string[],
   chainTopTokens: Map<string, FlowToken[]>,
   chainTopProtocols: Map<string, FlowProtocol[]>,
+  chainTokenCounts: Map<string, number>,
+  chainProtocolCounts: Map<string, number>,
 ): ChainData[] {
   const chains = new Map<
     string,
@@ -317,6 +336,8 @@ function computeChainsData(
       transfersIn: data?.transfersIn ?? 0,
       transfersOut: data?.transfersOut ?? 0,
       connectedChains: data?.connected.size ?? 0,
+      tokenCount: chainTokenCounts.get(chainId) ?? 0,
+      protocolCount: chainProtocolCounts.get(chainId) ?? 0,
       topTokens: chainTopTokens.get(chainId) ?? [],
       topProtocols: chainTopProtocols.get(chainId) ?? [],
     }
@@ -334,7 +355,14 @@ function getMockInteropFlows(): InteropFlowsData {
     }
   }
 
-  const chainData = computeChainsData(flows, chainIds, new Map(), new Map())
+  const chainData = computeChainsData(
+    flows,
+    chainIds,
+    new Map(),
+    new Map(),
+    new Map(),
+    new Map(),
+  )
 
   return {
     flows,
@@ -390,7 +418,9 @@ function getMockInteropFlows(): InteropFlowsData {
           }
         : undefined,
       topToken: {
+        id: 'eth',
         symbol: 'ETH',
+        issuer: 'ethereum',
         iconUrl: '/icons/tokens/ether.png',
         volume: 1_000_000,
       },

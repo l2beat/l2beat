@@ -410,6 +410,8 @@ model InteropMessage {
 }
 
 model InteropTransfer {
+  serialId BigInt @default(autoincrement()) @db.BigInt
+
   plugin     String   @db.VarChar(64)
   transferId String   @db.VarChar(40)
   type       String   @db.VarChar(64)
@@ -451,6 +453,7 @@ model InteropTransfer {
   isProcessed Boolean
 
   @@id([transferId])
+  @@unique([serialId])
   @@index([type])
   @@index([isProcessed])
   @@index([isProcessed, srcValueUsd, dstValueUsd])
@@ -484,6 +487,7 @@ model AbstractToken {
   coingeckoListingTimestamp DateTime? @db.Timestamp(6)
   comment                   String?   @db.Text
   reviewed                  Boolean   @default(false)
+  isPriceUnreliable         Boolean   @default(false)
 
   deployedTokens DeployedToken[]
 
@@ -492,14 +496,15 @@ model AbstractToken {
 }
 
 model DeployedToken {
-  chain               String   @db.VarChar(32)
-  address             String   @db.VarChar(255)
-  abstractTokenId     String?  @db.Char(6)
-  symbol              String   @db.VarChar(255)
-  decimals            Int
-  deploymentTimestamp DateTime @db.Timestamp(6)
-  comment             String?  @db.Text
-  metadata            Json?
+  chain                        String   @db.VarChar(32)
+  address                      String   @db.VarChar(255)
+  abstractTokenId              String?  @db.Char(6)
+  symbol                       String   @db.VarChar(255)
+  decimals                     Int
+  deploymentTimestamp          DateTime @db.Timestamp(6)
+  comment                      String?  @db.Text
+  metadata                     Json?
+  abstractTokenAssignmentProof Json?
 
   chainRelation   Chain?            @relation(fields: [chain], references: [name], onDelete: Restrict)
   abstractToken   AbstractToken?    @relation(fields: [abstractTokenId], references: [id], onDelete: Restrict)
@@ -508,6 +513,39 @@ model DeployedToken {
 
   @@id([chain, address])
   @@index([abstractTokenId])
+}
+
+model TokenIngestionQueue {
+  chain     String   @db.VarChar(32)
+  address   String   @db.VarChar(255)
+  state     String   @default("pending") @db.VarChar(32)
+  message   String?  @db.Text
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @db.Timestamp(6)
+
+  @@id([chain, address])
+  @@index([state, updatedAt])
+}
+
+model TokenDbSettings {
+  key       String   @db.VarChar(255)
+  value     String   @db.Text
+  updatedAt DateTime @db.Timestamp(6)
+
+  @@id([key])
+}
+
+model TokenDbHistory {
+  id           BigInt   @id @default(autoincrement())
+  timestamp    DateTime @db.Timestamp(6)
+  source       String   @db.VarChar(32)
+  userEmail    String?  @db.VarChar(255)
+  commandType  String   @db.VarChar(64)
+  command      Json
+  ingestionLog String?  @db.Text
+
+  @@index([timestamp])
+  @@index([commandType, timestamp])
 }
 
 model TokenConnection {
@@ -624,6 +662,29 @@ model AggregatedInteropToken {
   @@index([timestamp, srcChain, dstChain, id, bridgeType])
 }
 
+model AggregatedInteropDeployedToken {
+  timestamp                  DateTime @db.Timestamp(6)
+  id                         String   @db.VarChar(255)
+  srcChain                   String   @db.VarChar(255)
+  dstChain                   String   @db.VarChar(255)
+  bridgeType                 String   @default("unknown") @db.VarChar(255)
+  tokenChain                 String   @db.VarChar(255)
+  tokenAddress               String   @db.VarChar(255)
+  transferTypeStats          Json?
+  mintedValueUsd             Float?   @db.Real
+  burnedValueUsd             Float?   @db.Real
+  transferCount              Int
+  transfersWithDurationCount Int      @default(0)
+  totalDurationSum           Int
+  volume                     Float    @db.Real
+  minTransferValueUsd        Float?   @db.Real
+  maxTransferValueUsd        Float?   @db.Real
+
+  @@id([timestamp, srcChain, dstChain, bridgeType, id, tokenChain, tokenAddress])
+  @@index([timestamp, srcChain, dstChain, id, bridgeType])
+  @@index([timestamp, tokenChain, tokenAddress])
+}
+
 model TokenFactInput {
   id        Int    @id @default(autoincrement())
   name      String @db.VarChar(255)
@@ -651,4 +712,20 @@ model AggregatedInteropTokensPair {
 
   @@id([timestamp, srcChain, dstChain, bridgeType, id, tokenA, tokenB])
   @@index([timestamp, srcChain, dstChain, id, bridgeType])
+}
+
+model InteropAggregateStatus {
+  timestamp  DateTime @id @db.Timestamp(6) // = aggregate snapshot `to`
+  status     String   @db.VarChar(16) // 'promoted' | 'blocked'
+  promotedBy String?  @db.VarChar(255) // 'auto' (engine/backfill) | operator email
+  reasons    String?  @db.Text // RuleViolation[] as JSON text (blocked only)
+  checkedAt  DateTime @db.Timestamp(6)
+  updatedAt  DateTime @db.Timestamp(6)
+}
+
+model AppState {
+  key       String   @id @db.VarChar(255)
+  value     String   @db.Text
+  updatedAt DateTime @db.Timestamp(6)
+  updatedBy String   @db.VarChar(255)
 }

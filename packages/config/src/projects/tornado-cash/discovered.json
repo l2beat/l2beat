@@ -1,10 +1,10 @@
 {
   "name": "tornado-cash",
-  "timestamp": 1777548282,
-  "configHash": "0x1ad3915cb82859eb5d6ab2c73bf936897df73f72b596a72bfd5169a79623d3c1",
+  "timestamp": 1782391445,
+  "configHash": "0x5732b2da696b501e89021574ade0945dd7509e9a4ff41148a59b6f687ef1f3d4",
   "entries": [
     {
-      "name": "cTornado",
+      "name": "Pool_50K_cDAI",
       "address": "eth:0x03893a7c7463AE47D46bc7f091665f1893656003",
       "type": "Contract",
       "template": "tornado-cash/cTornado",
@@ -12,7 +12,7 @@
         "0x3595897ef0046fd4c32c4e501fcbd40cc3ce12673aee48ec5a351e35e361eeb2"
       ],
       "proxyType": "immutable",
-      "description": "Fixed-denomination cToken-based mixer pool. Anyone can sweep accrued COMP rewards, but the claimed COMP is always sent to the governance address.",
+      "description": "Fixed-denomination Tornado Cash pool for 50K cDAI deposits.",
       "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"],
       "deployerAddress": "eth:0x2Ab13b86b8c56F97995B0b7b54dDC7Fc30403A0B",
       "sinceTimestamp": 1616155055,
@@ -59,7 +59,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "ERC20Tornado",
+      "name": "Pool_10K_DAI",
       "address": "eth:0x07687e702b410Fa43f4cB4Af7FA097918ffD2730",
       "type": "Contract",
       "template": "tornado-cash/ERC20Tornado",
@@ -67,20 +67,20 @@
         "0x12c6ad9449010bcc6706bf48e4e7ff827c6af9cd2a4ecf2723d9c7ebd79271da"
       ],
       "proxyType": "immutable",
-      "description": "Fixed-denomination ERC20 mixer pool from the newer Tornado Cash pool generation. Funds are governed by the withdrawal verifier and the immutable verifier/hasher pair configured at deployment.",
+      "description": "Fixed-denomination Tornado Cash pool for 10K DAI deposits.",
       "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"],
       "deployerAddress": "eth:0x645D7F28eC6E41B6f6f6A42b49fAe503762B9551",
       "sinceTimestamp": 1616114822,
       "sinceBlock": 12066007,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 26,
+        "currentRootIndex": 11,
         "denomination": "10000000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x13502d71f434efc05c3367839b8aec987b8f8a9acca1a786c9712182ad8d9daf",
+        "getLastRoot": "0x29893ad2db887b2ff5ea76c8b4b5d5088fa5995fff36732258941667b1ebd155",
         "hasher": "eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe",
         "levels": 20,
-        "nextIndex": 3386,
+        "nextIndex": 3401,
         "ROOT_HISTORY_SIZE": 30,
         "token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
@@ -108,27 +108,27 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "TornadoCash_erc20",
+      "name": "Pool_1000_USDT",
       "address": "eth:0x0836222F2B2B24A3F36f98668Ed8F0B38D1a872f",
       "type": "Contract",
-      "template": "tornado-cash/TornadoCash_erc20",
+      "template": "tornado-cash/TornadoCash_erc20_v1",
       "sourceHashes": [
         "0xb7cd104e33e4e698596b88be297029b5a3285517f6c200c6c21625dbfe935ae1"
       ],
       "proxyType": "immutable",
-      "description": "Legacy fixed-denomination ERC20 mixer from the original Tornado Cash pool generation. It retains an operator role that can replace the withdrawal verifier until renounced.",
+      "description": "Fixed-denomination Tornado Cash pool for 1000 USDT deposits.",
       "ignoreInWatchMode": ["getLastRoot", "currentRootIndex", "nextIndex"],
       "deployerAddress": "eth:0x8589427373D6D84E98730D7795D8f6f8731FDA16",
       "sinceTimestamp": 1577298985,
       "sinceBlock": 9162012,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 88,
+        "currentRootIndex": 52,
         "denomination": 1000000000,
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x0b22ba735d8989e613fc05aaf1d861e7607155424d6bf943450d300918dcbcb9",
+        "getLastRoot": "0x1dc3e10885057d1d2c7d8c07a9a680531499c533fd320252e52ce632b3f46448",
         "levels": 20,
-        "nextIndex": 1788,
+        "nextIndex": 1852,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "ROOT_HISTORY_SIZE": 100,
         "token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
@@ -166,17 +166,18 @@
         "0x471af6734a7255a9302685bbf915dec3f3ad10ec2babece6ccfb102241e03af9"
       ],
       "proxyType": "immutable",
-      "description": "Verifier contract for Tornado anonymity-mining withdrawal proofs.",
+      "description": "Anonymity Mining - Verifier contract for Tornado anonymity-mining withdrawal proofs.",
       "deployerAddress": "eth:0x4e7B3769921C8DFBdb3d1B4c73558db079A180c7",
       "sinceTimestamp": 1608261940,
       "sinceBlock": 11474705,
       "values": { "$immutable": true },
       "implementationNames": {
         "eth:0x09193888b3f38C82dEdfda55259A82C0E7De875E": "WithdrawVerifier"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "name": "TornadoCash_Eth_01",
+      "name": "Pool_0.1_ETH",
       "address": "eth:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc",
       "type": "Contract",
       "template": "tornado-cash/TornadoCash_Eth_01",
@@ -184,20 +185,20 @@
         "0x91a886957e3ef7c9535bebca9bb03c531cad68939e97b09ba97127e311ea5b4e"
       ],
       "proxyType": "immutable",
-      "description": "Legacy fixed-denomination ETH mixer for 0.1 ETH deposits. This older pool generation keeps an operator role that can replace the withdrawal verifier and, for this instance, perform a one-time state migration.",
+      "description": "Fixed-denomination Tornado Cash pool for 0.1 ETH deposits.",
       "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"],
       "deployerAddress": "eth:0x8589427373D6D84E98730D7795D8f6f8731FDA16",
       "sinceTimestamp": 1576523323,
       "sinceBlock": 9116966,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 54,
+        "currentRootIndex": 68,
         "denomination": "100000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x219de8be6b7b82c0a2185eb5b7424a4fe255d29a696dc7ef6e198ad683976938",
+        "getLastRoot": "0x2438084087b7261c8063eb445b925abbbae95579fe7334256fd18d094c27b65d",
         "isMigrated": true,
         "levels": 20,
-        "nextIndex": 53710,
+        "nextIndex": 56924,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "ROOT_HISTORY_SIZE": 100,
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
@@ -217,8 +218,8 @@
           "description": "zkSNARK verifier used to authorize withdrawals from the pool."
         },
         "isMigrated": {
-          "severity": "LOW",
-          "description": "Whether the one-time legacy state migration path has already been used."
+          "severity": "HIGH",
+          "description": "Whether the one-time legacy state migration path has already been used. If true, this pool behaves like the ones without this function."
         }
       },
       "implementationNames": {
@@ -227,27 +228,27 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "TornadoCash_erc20",
+      "name": "Pool_100_USDT",
       "address": "eth:0x169AD27A470D064DEDE56a2D3ff727986b15D52B",
       "type": "Contract",
-      "template": "tornado-cash/TornadoCash_erc20",
+      "template": "tornado-cash/TornadoCash_erc20_v1",
       "sourceHashes": [
         "0xb7cd104e33e4e698596b88be297029b5a3285517f6c200c6c21625dbfe935ae1"
       ],
       "proxyType": "immutable",
-      "description": "Legacy fixed-denomination ERC20 mixer from the original Tornado Cash pool generation. It retains an operator role that can replace the withdrawal verifier until renounced.",
+      "description": "Fixed-denomination Tornado Cash pool for 100 USDT deposits.",
       "ignoreInWatchMode": ["getLastRoot", "currentRootIndex", "nextIndex"],
       "deployerAddress": "eth:0x8589427373D6D84E98730D7795D8f6f8731FDA16",
       "sinceTimestamp": 1577298900,
       "sinceBlock": 9162005,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 0,
+        "currentRootIndex": 47,
         "denomination": 100000000,
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x20f05fa45d06f881e617699611e355a9569bccbafe22505afe05c7e5fadcbd0a",
+        "getLastRoot": "0x2e604f4750a2ea6a37e449e720edc6da82b9f1882449566f547f613cbce40634",
         "levels": 20,
-        "nextIndex": 800,
+        "nextIndex": 847,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "ROOT_HISTORY_SIZE": 100,
         "token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
@@ -277,7 +278,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "ERC20Tornado",
+      "name": "Pool_0.1_WBTC",
       "address": "eth:0x178169B423a011fff22B9e3F3abeA13414dDD0F1",
       "type": "Contract",
       "template": "tornado-cash/ERC20Tornado",
@@ -285,7 +286,7 @@
         "0x12c6ad9449010bcc6706bf48e4e7ff827c6af9cd2a4ecf2723d9c7ebd79271da"
       ],
       "proxyType": "immutable",
-      "description": "Fixed-denomination ERC20 mixer pool from the newer Tornado Cash pool generation. Funds are governed by the withdrawal verifier and the immutable verifier/hasher pair configured at deployment.",
+      "description": "Fixed-denomination Tornado Cash pool for 0.1 WBTC deposits.",
       "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"],
       "deployerAddress": "eth:0x6D03A79fe92e6F0378025BBFe81Cfc27caF67F6c",
       "sinceTimestamp": 1616134868,
@@ -326,15 +327,15 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "TornadoCash_erc20",
+      "name": "Pool_5K_cDAI",
       "address": "eth:0x22aaA7720ddd5388A3c0A3333430953C68f1849b",
       "type": "Contract",
-      "template": "tornado-cash/TornadoCash_erc20",
+      "template": "tornado-cash/TornadoCash_erc20_v1",
       "sourceHashes": [
         "0xb7cd104e33e4e698596b88be297029b5a3285517f6c200c6c21625dbfe935ae1"
       ],
       "proxyType": "immutable",
-      "description": "Legacy fixed-denomination ERC20 mixer from the original Tornado Cash pool generation. It retains an operator role that can replace the withdrawal verifier until renounced.",
+      "description": "Fixed-denomination Tornado Cash pool for 5K cDAI deposits.",
       "ignoreInWatchMode": ["getLastRoot", "currentRootIndex", "nextIndex"],
       "deployerAddress": "eth:0x8589427373D6D84E98730D7795D8f6f8731FDA16",
       "sinceTimestamp": 1577297782,
@@ -376,7 +377,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "ERC20Tornado",
+      "name": "Pool_100K_DAI",
       "address": "eth:0x23773E65ed146A459791799d01336DB287f25334",
       "type": "Contract",
       "template": "tornado-cash/ERC20Tornado",
@@ -384,20 +385,20 @@
         "0x12c6ad9449010bcc6706bf48e4e7ff827c6af9cd2a4ecf2723d9c7ebd79271da"
       ],
       "proxyType": "immutable",
-      "description": "Fixed-denomination ERC20 mixer pool from the newer Tornado Cash pool generation. Funds are governed by the withdrawal verifier and the immutable verifier/hasher pair configured at deployment.",
+      "description": "Fixed-denomination Tornado Cash pool for 100K DAI deposits.",
       "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"],
       "deployerAddress": "eth:0xA66510177b4aF4e00F2908dfe1317166Deca1853",
       "sinceTimestamp": 1616115387,
       "sinceBlock": 12066048,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 5,
+        "currentRootIndex": 10,
         "denomination": "100000000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x21dae583c90427cb65456a880e24892fea6992f8a3f1f0e282bfdfa83959350f",
+        "getLastRoot": "0x1dce45c8036c78d2e00fbcea5eae16070b89ed59cc80c39e507780e8b9ffee23",
         "hasher": "eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe",
         "levels": 20,
-        "nextIndex": 4025,
+        "nextIndex": 4030,
         "ROOT_HISTORY_SIZE": 30,
         "token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
@@ -425,7 +426,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "cTornado",
+      "name": "Pool_500K_cDAI",
       "address": "eth:0x2717c5e28cf931547B621a5dddb772Ab6A35B701",
       "type": "Contract",
       "template": "tornado-cash/cTornado",
@@ -433,7 +434,7 @@
         "0x3595897ef0046fd4c32c4e501fcbd40cc3ce12673aee48ec5a351e35e361eeb2"
       ],
       "proxyType": "immutable",
-      "description": "Fixed-denomination cToken-based mixer pool. Anyone can sweep accrued COMP rewards, but the claimed COMP is always sent to the governance address.",
+      "description": "Fixed-denomination Tornado Cash pool for 500K cDAI deposits.",
       "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"],
       "deployerAddress": "eth:0x6D03A79fe92e6F0378025BBFe81Cfc27caF67F6c",
       "sinceTimestamp": 1616135923,
@@ -488,7 +489,7 @@
         "0x2c4d82f1db9eb433527603a82e8324dd2aa08001c5eb7974967ef1e11c0e09f1"
       ],
       "proxyType": "immutable",
-      "description": "Vault that escrows locked TORN on behalf of governance users and serves withdrawals initiated by the governance contract.",
+      "description": "Vault that escrows locked TORN of governance participants who wish to receive voting rights.",
       "deployerAddress": "eth:0x9923bb2390Ab5bf92CD440c1f61e45aF44a68d1b",
       "sinceTimestamp": 1634397582,
       "sinceBlock": 13429786,
@@ -506,18 +507,15 @@
         "0xa851eda83278615e06c3388fec789807ce7ae088627181e0cb8c9bd92bf5ea68"
       ],
       "proxyType": "immutable",
-      "description": "Legacy Tornado Trees contract that records deposit and withdrawal leaves from TornadoProxyV1 and maintains the roots later consumed by migration and mining logic.",
+      "description": "Anonymity Mining - Legacy Tornado Trees contract that records deposit and withdrawal leaves from TornadoProxyV1 and maintains the roots later consumed by migration and mining logic.",
       "deployerAddress": "eth:0x4e7B3769921C8DFBdb3d1B4c73558db079A180c7",
       "sinceTimestamp": 1608262112,
       "sinceBlock": 11474714,
       "values": {
         "$immutable": true,
-        "blockNumber": 24992607,
         "depositRoot": "0x1f4316c2ae0e374ddda53ccea8d6ba623a99aec06e805f20daa5e7a9914fb1bd",
         "depositTree": "eth:0x6234c4C2734D2B246AE074492F402D8f58ff3226",
         "hasher": "eth:0xD82ed8786D7c69DC7e052F7A542AB047971E73d2",
-        "lastProcessedDepositLeaf": 6144,
-        "lastProcessedWithdrawalLeaf": 5632,
         "tornadoProxy": "eth:0x905b63Fff465B9fFBF41DeA908CEb12478ec7601",
         "withdrawalRoot": "0x03e0f40772e1d8a3972de5434e0987db86b409e16f61cf995ef6f290ac935022",
         "withdrawalTree": "eth:0xbFA347D89Ac54F7C2De2433458cb98A85fc03CEd"
@@ -540,30 +538,30 @@
       "implementationNames": {
         "eth:0x43a3bE4Ae954d9869836702AFd10393D3a7Ea417": "TornadoTrees"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "name": "TornadoCash_erc20",
+      "name": "Pool_1000_USDC",
       "address": "eth:0x4736dCf1b7A3d580672CcE6E7c65cd5cc9cFBa9D",
       "type": "Contract",
-      "template": "tornado-cash/TornadoCash_erc20",
+      "template": "tornado-cash/TornadoCash_erc20_v1",
       "sourceHashes": [
         "0xb7cd104e33e4e698596b88be297029b5a3285517f6c200c6c21625dbfe935ae1"
       ],
       "proxyType": "immutable",
-      "description": "Legacy fixed-denomination ERC20 mixer from the original Tornado Cash pool generation. It retains an operator role that can replace the withdrawal verifier until renounced.",
+      "description": "Fixed-denomination Tornado Cash pool for 1000 USDC deposits.",
       "ignoreInWatchMode": ["getLastRoot", "currentRootIndex", "nextIndex"],
       "deployerAddress": "eth:0x8589427373D6D84E98730D7795D8f6f8731FDA16",
       "sinceTimestamp": 1577298155,
       "sinceBlock": 9161965,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 54,
+        "currentRootIndex": 85,
         "denomination": 1000000000,
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x1d8869ed6758f6b36f147af59c4f6e6bb361b08f7bdec1b9529e057781d0da50",
+        "getLastRoot": "0x080b5822fdc079c06006de526b3283b4a78fdaacfdd1959b73b329e31144a353",
         "levels": 20,
-        "nextIndex": 854,
+        "nextIndex": 885,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "ROOT_HISTORY_SIZE": 100,
         "token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -593,7 +591,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "TornadoCash_eth",
+      "name": "Pool_1_ETH",
       "address": "eth:0x47CE0C6eD5B0Ce3d3A51fdb1C52DC66a7c3c2936",
       "type": "Contract",
       "template": "tornado-cash/TornadoCash_eth",
@@ -601,19 +599,19 @@
         "0xb9f259b7c2f71a46e05fabbe6115a88fae883d7fb1fbf41c56bcfe7757bc6bf4"
       ],
       "proxyType": "immutable",
-      "description": "Legacy fixed-denomination ETH mixer from the original Tornado Cash pool generation. It retains an operator role that can replace the withdrawal verifier until renounced.",
+      "description": "Fixed-denomination Tornado Cash pool for 1 ETH deposits.",
       "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"],
       "deployerAddress": "eth:0x8589427373D6D84E98730D7795D8f6f8731FDA16",
       "sinceTimestamp": 1576534673,
       "sinceBlock": 9117609,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 28,
+        "currentRootIndex": 5,
         "denomination": "1000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x15f41e84d37c4ed4aa2cce48fa94928d4eb822b9b353332c25d9551d2f1e2e23",
+        "getLastRoot": "0x0b55af59537b5d93933402fc471f336ec5c8cddaa57602f23aa8d5948018a595",
         "levels": 20,
-        "nextIndex": 82528,
+        "nextIndex": 85605,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "ROOT_HISTORY_SIZE": 100,
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
@@ -647,7 +645,7 @@
         "0xdc8f034743e60e596fcdb7e3e2c904582718c8a12e0470e689e7b0a2344890c9"
       ],
       "proxyType": "immutable",
-      "description": "One-off governance proposal payload that deployed the newer Tornado Trees and proxy wiring, migrated legacy tree state, and disabled old mineable instances on the legacy proxy.",
+      "description": "Anonymity Mining - One-off governance proposal payload that deployed the newer Tornado Trees and proxy wiring, migrated legacy tree state, and disabled old mineable instances on the legacy proxy.",
       "deployerAddress": "eth:0x8589427373D6D84E98730D7795D8f6f8731FDA16",
       "sinceTimestamp": 1616689228,
       "sinceBlock": 12109112,
@@ -843,7 +841,7 @@
       "implementationNames": {
         "eth:0x4B6C07B8940a7602fE4332AFa915b366e56eAce5": "Proposal"
       },
-      "category": { "name": "Governance", "priority": 3 }
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "TornadoTreesV2",
@@ -855,7 +853,7 @@
         "0xc49b0b5aa0f02540b54e6e3708b03edf46fee78ec46d9a1a5b10d2119a82dbbe"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Upgradeable batch-based Tornado Trees contract that reuses legacy tree state, queues new leaves from the newer proxy, and accepts batched root updates proven by a verifier.",
+      "description": "Anonymity Mining - Upgradeable batch-based Tornado Trees contract that reuses legacy tree state, queues new leaves from the newer proxy, and accepts batched root updates proven by a verifier.",
       "deployerAddress": "eth:0x21C30d17D9e61Ce139DFd2A3d167C5752246b938",
       "sinceTimestamp": 1617148388,
       "sinceBlock": 12143762,
@@ -864,26 +862,19 @@
         "$implementation": "eth:0x200a79068d8141924B511bC78CB55Dca89cF5C2E",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
-        "blockNumber": 24992607,
         "BYTES_SIZE": 14404,
         "CHUNK_SIZE": 256,
         "CHUNK_TREE_HEIGHT": 8,
         "depositRoot": "0x16576daa2795f1f48ae74552c11b77195eabf1c7be13c354b413eecf8e72fb50",
-        "depositsLength": 92895,
-        "depositsV1Length": 22008,
         "governance": "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce",
         "ITEM_SIZE": 56,
-        "lastProcessedDepositLeaf": 70656,
-        "lastProcessedWithdrawalLeaf": 74752,
         "previousDepositRoot": "0x0f2d466d9e5e8acf38922d168e7a1dcd8eee6c7d20bd5bc669d41174c8a02317",
         "previousWithdrawalRoot": "0x2816b4a8a53e47c41b5899c40936cef5af3d4362a5d955848646a642c2f499b1",
         "SNARK_FIELD": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
         "tornadoProxy": "eth:0x722122dF12D4e14e13Ac3b6895a86e84145b6967",
         "tornadoTreesV1": "eth:0x43a3bE4Ae954d9869836702AFd10393D3a7Ea417",
         "treeUpdateVerifier": "eth:0xEd3B00B651c4c7AF77c2fDdce4a388de84b507C6",
-        "withdrawalRoot": "0x0648b4bb8eebcf794b0d5ac32d209967d456b8521702d0b829c9aebd8f48a6ff",
-        "withdrawalsLength": 85961,
-        "withdrawalsV1Length": 14884
+        "withdrawalRoot": "0x0648b4bb8eebcf794b0d5ac32d209967d456b8521702d0b829c9aebd8f48a6ff"
       },
       "fieldMeta": {
         "$admin": {
@@ -923,7 +914,7 @@
         "eth:0x527653eA119F3E6a1F5BD18fbF4714081D7B31ce": "AdminUpgradeableProxy",
         "eth:0x200a79068d8141924B511bC78CB55Dca89cF5C2E": "TornadoTrees"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "RelayerRegistry",
@@ -935,7 +926,7 @@
         "0x3b83e58df28ddb8b3c8ec82a36cdb845f53b946878e15d2772fc52ac728f6796"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Upgradeable registry that tracks registered relayers, their worker addresses, and their staked TORN balances used to service withdrawals.",
+      "description": "Upgradeable registry that tracks registered relayers, their worker addresses, and their staked TORN balances used to service withdrawals. Relayers registered here could be queried by a tornadocash frontend to facilitate discovery for users, but users are free to use any (unregistered) relayer at withdrawal time.",
       "ignoreInWatchMode": ["registeredRelayers"],
       "deployerAddress": "eth:0x48dd5eAFCaeB05854D4cDFE365719Aac83E4754F",
       "sinceTimestamp": 1644426412,
@@ -1125,7 +1116,8 @@
         "0xeb3520419e6cf8d6df8e6f4374eb73fe72bd07e2300b7d5968153f7721f641e8"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Upgradeable staking rewards contract that holds relayer stake, distributes burn-derived rewards to locked TORN holders, and lets governance recover TORN from the contract.",
+      "description": "Staking contract that escrows TORN staked by relayers. With time, their stake is subtracted from for being officially registered as relayers and receiving fees from each withdrawal, and is redirected as TORN rewards for governance participants who are locking their TORN for voting/staking.",
+      "ignoreInWatchMode": ["accumulatedRewardPerTorn"],
       "deployerAddress": "eth:0x9Ff3C1Bea9ffB56a78824FE29f457F066257DD58",
       "sinceTimestamp": 1685278127,
       "sinceBlock": 17357618,
@@ -1140,7 +1132,6 @@
           ]
         ],
         "$upgradeCount": 1,
-        "accumulatedRewardPerTorn": "11550937357781978189369086",
         "Governance": "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce",
         "ratioConstant": "9999997526814999108992673",
         "relayerRegistry": "eth:0x58E8dCC13BE9780fC42E8723D8EaD4CF46943dF2",
@@ -1190,14 +1181,13 @@
         "0x6cf43bdf6d325f58e50aa37428a9912539a19a6f759cae8f9f62654a06fb7758"
       ],
       "proxyType": "immutable",
-      "description": "Liquidity schedule that pays out TORN rewards for anonymity mining. Only the Miner contract can draw from it or adjust the reward weight.",
+      "description": "Anonymity Mining - Liquidity schedule that pays out TORN rewards for anonymity mining. Only the Miner contract can draw from it or adjust the reward weight.",
       "deployerAddress": "eth:0x4e7B3769921C8DFBdb3d1B4c73558db079A180c7",
       "sinceTimestamp": 1608262063,
       "sinceBlock": 11474710,
       "values": {
         "$immutable": true,
         "DURATION": 31536000,
-        "getTimestamp": 1777548275,
         "initialLiquidity": "25000000000000000000000",
         "liquidity": "975000000000000000000000",
         "miner": "eth:0x746Aebc06D2aE31B71ac51429A19D54E797878E9",
@@ -1233,7 +1223,7 @@
       "implementationNames": {
         "eth:0x5cab7692D4E94096462119ab7bF57319726Eed2A": "RewardSwap"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "GovernanceProposalStateUpgrade",
@@ -1480,7 +1470,7 @@
         "EXECUTION_EXPIRATION": 259200,
         "gasCompensationVault": "eth:0xFA4C1f3f7D5dd7c12a9Adb82Cd7dDA542E3d59ef",
         "PROPOSAL_THRESHOLD": "1000000000000000000000",
-        "proposalCount": 66,
+        "proposalCount": 67,
         "QUORUM_VOTES": "100000000000000000000000",
         "returnMultisigAddress": "eth:0xb04E030140b30C27bcdfaafFFA98C57d80eDa7B4",
         "Staking": "eth:0x5B3f656C80E8ddb9ec01Dd9018815576E9238c29",
@@ -1570,6 +1560,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Upgradeable fee manager that derives relayer burn fees for each Tornado instance from registry settings and Uniswap TWAP data.",
+      "ignoreInWatchMode": ["feeDeviations"],
       "deployerAddress": "eth:0x48dd5eAFCaeB05854D4cDFE365719Aac83E4754F",
       "sinceTimestamp": 1644426401,
       "sinceBlock": 14173128,
@@ -1589,11 +1580,11 @@
           },
           {
             "instance": "eth:0x910Cbd523D972eb0a6f4cAe4618aD62622b39DbF",
-            "deviation": -6
+            "deviation": -1
           },
           {
             "instance": "eth:0xA160cdAB225685dA1d56aa342Ad8841c3b53f291",
-            "deviation": -4
+            "deviation": -2
           },
           {
             "instance": "eth:0xD4B88Df4D29F5CedD6857912842cff3b20C8Cfa3",
@@ -1605,11 +1596,11 @@
           },
           {
             "instance": "eth:0x07687e702b410Fa43f4cB4Af7FA097918ffD2730",
-            "deviation": -7
+            "deviation": -50
           },
           {
             "instance": "eth:0x23773E65ed146A459791799d01336DB287f25334",
-            "deviation": -7
+            "deviation": -161
           },
           {
             "instance": "eth:0x22aaA7720ddd5388A3c0A3333430953C68f1849b",
@@ -1645,15 +1636,15 @@
           },
           {
             "instance": "eth:0x178169B423a011fff22B9e3F3abeA13414dDD0F1",
-            "deviation": -154
+            "deviation": -319
           },
           {
             "instance": "eth:0x610B717796ad172B316836AC95a2ffad065CeaB4",
-            "deviation": -155
+            "deviation": -319
           },
           {
             "instance": "eth:0xbB93e510BbCD0B7beb5A853875f9eC60275CF498",
-            "deviation": 804
+            "deviation": 453
           }
         ],
         "governance": "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce",
@@ -1710,7 +1701,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "ERC20Tornado",
+      "name": "Pool_1_WBTC",
       "address": "eth:0x610B717796ad172B316836AC95a2ffad065CeaB4",
       "type": "Contract",
       "template": "tornado-cash/ERC20Tornado",
@@ -1718,7 +1709,7 @@
         "0x12c6ad9449010bcc6706bf48e4e7ff827c6af9cd2a4ecf2723d9c7ebd79271da"
       ],
       "proxyType": "immutable",
-      "description": "Fixed-denomination ERC20 mixer pool from the newer Tornado Cash pool generation. Funds are governed by the withdrawal verifier and the immutable verifier/hasher pair configured at deployment.",
+      "description": "Fixed-denomination Tornado Cash pool for 1 WBTC deposits.",
       "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"],
       "deployerAddress": "eth:0x463a35BF59618E6e7EE0696E6c274896a3e6a3Ff",
       "sinceTimestamp": 1616123193,
@@ -1782,14 +1773,15 @@
         "0x25283a09ac43a485a1b24118f5bc17cf0866e4ff70044655eaaadde560412f3d"
       ],
       "proxyType": "immutable",
-      "description": "Verifier contract for Tornado mining account-tree update proofs.",
+      "description": "Anonymity Mining - Verifier contract for Tornado mining account-tree update proofs.",
       "deployerAddress": "eth:0x4e7B3769921C8DFBdb3d1B4c73558db079A180c7",
       "sinceTimestamp": 1608261963,
       "sinceBlock": 11474706,
       "values": { "$immutable": true },
       "implementationNames": {
         "eth:0x653477c392c16b0765603074f157314Cc4f40c32": "TreeUpdateVerifier"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "TornadoProxyV2",
@@ -1800,7 +1792,7 @@
         "0x94c0d6f1b0684e653aa34db54a42ff01a22e669c6f0cdf51b8ad4adf2890eac1"
       ],
       "proxyType": "immutable",
-      "description": "Newer immutable Tornado proxy that routes deposits and withdrawals to supported pool instances and records them in the upgraded Tornado Trees contract.",
+      "description": "Anonymity Mining - Newer immutable Tornado proxy that routes deposits and withdrawals to supported pool instances and records them in the upgraded Tornado Trees contract.",
       "deployerAddress": "eth:0x21C30d17D9e61Ce139DFd2A3d167C5752246b938",
       "sinceTimestamp": 1617148388,
       "sinceBlock": 12143762,
@@ -1822,7 +1814,7 @@
       "implementationNames": {
         "eth:0x722122dF12D4e14e13Ac3b6895a86e84145b6967": "TornadoProxy"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "Miner",
@@ -1833,7 +1825,7 @@
         "0xa087c1bc5ea33b7ecefcd706e2a2fe0d817bbd7cca015119dbeb0f5f5bc799a4"
       ],
       "proxyType": "immutable",
-      "description": "Mining and reward-distribution contract for Tornado anonymity mining. It verifies reward and withdrawal proofs, maintains account roots, and routes TORN rewards through the swap contract.",
+      "description": "Anonymity Mining - Mining and reward-distribution contract for Tornado anonymity mining. It verifies reward and withdrawal proofs, maintains account roots, and routes TORN rewards through the swap contract.",
       "deployerAddress": "eth:0x4e7B3769921C8DFBdb3d1B4c73558db079A180c7",
       "sinceTimestamp": 1608262157,
       "sinceBlock": 11474718,
@@ -1878,7 +1870,7 @@
       "implementationNames": {
         "eth:0x746Aebc06D2aE31B71ac51429A19D54E797878E9": "Miner"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "TORN",
@@ -1895,7 +1887,6 @@
       "sinceBlock": 11474599,
       "values": {
         "$immutable": true,
-        "blockTimestamp": 1777548275,
         "canUnpauseAfter": 1612148437,
         "chainID": 1,
         "decimals": 18,
@@ -1915,7 +1906,7 @@
           "description": "Whether ordinary TORN transfers are currently paused."
         },
         "canUnpauseAfter": {
-          "severity": "LOW",
+          "severity": "HIGH",
           "description": "Earliest timestamp after which governance may change the paused state."
         }
       },
@@ -1930,14 +1921,15 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
-      "description": "Unverified MiMC hasher used by newer Tornado pool generations for commitment-tree operations.",
+      "description": "Unverified MiMC hasher used by newer Tornado pool generations for commitment-tree operations. If this contract were malicious or had a backdoor, all pools using it would be compromised.",
       "deployerAddress": "eth:0x8589427373D6D84E98730D7795D8f6f8731FDA16",
       "sinceTimestamp": 1576523275,
       "sinceBlock": 9116962,
       "values": { "$immutable": true },
       "implementationNames": {
         "eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe": ""
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "RewardVerifier",
@@ -1948,14 +1940,15 @@
         "0x83e039b0306c52cc1c22fdb814b34b0711c46affb6ec74c060db08918a1935f2"
       ],
       "proxyType": "immutable",
-      "description": "Verifier contract for Tornado anonymity-mining reward proofs.",
+      "description": "Anonymity Mining - Verifier contract for Tornado anonymity-mining reward proofs.",
       "deployerAddress": "eth:0x4e7B3769921C8DFBdb3d1B4c73558db079A180c7",
       "sinceTimestamp": 1608261918,
       "sinceBlock": 11474704,
       "values": { "$immutable": true },
       "implementationNames": {
         "eth:0x88fd245fEdeC4A936e700f9173454D1931B4C307": "RewardVerifier"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "TornadoProxyV1",
@@ -1966,7 +1959,7 @@
         "0x302bb18483135d35894b2721a9b27704994889737e7f251923a1e255d5851e47"
       ],
       "proxyType": "immutable",
-      "description": "Legacy immutable Tornado proxy that routes deposits and withdrawals to pool instances and records them in the legacy Tornado Trees contract.",
+      "description": "Anonymity Mining - Legacy immutable Tornado proxy that routes deposits and withdrawals to pool instances and records them in the legacy Tornado Trees contract.",
       "deployerAddress": "eth:0x4e7B3769921C8DFBdb3d1B4c73558db079A180c7",
       "sinceTimestamp": 1608262097,
       "sinceBlock": 11474712,
@@ -1988,10 +1981,10 @@
       "implementationNames": {
         "eth:0x905b63Fff465B9fFBF41DeA908CEb12478ec7601": "TornadoProxy"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "name": "TornadoCash_eth",
+      "name": "Pool_10_ETH",
       "address": "eth:0x910Cbd523D972eb0a6f4cAe4618aD62622b39DbF",
       "type": "Contract",
       "template": "tornado-cash/TornadoCash_eth",
@@ -1999,19 +1992,19 @@
         "0xb9f259b7c2f71a46e05fabbe6115a88fae883d7fb1fbf41c56bcfe7757bc6bf4"
       ],
       "proxyType": "immutable",
-      "description": "Legacy fixed-denomination ETH mixer from the original Tornado Cash pool generation. It retains an operator role that can replace the withdrawal verifier until renounced.",
+      "description": "Fixed-denomination Tornado Cash pool for 10 ETH deposits.",
       "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"],
       "deployerAddress": "eth:0x8589427373D6D84E98730D7795D8f6f8731FDA16",
       "sinceTimestamp": 1576536415,
       "sinceBlock": 9117720,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 33,
+        "currentRootIndex": 76,
         "denomination": "10000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x069c527f490bcbe4a207748ce9eac9a4871341262d33d157aba0a826efa60e14",
+        "getLastRoot": "0x2e7519a0c07355963a20c6fa5f6bd74b02690ac4f9bb4848dc98ed4ce48f4186",
         "levels": 20,
-        "nextIndex": 70733,
+        "nextIndex": 72776,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "ROOT_HISTORY_SIZE": 100,
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
@@ -2037,7 +2030,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "TornadoCash_eth",
+      "name": "Pool_100_ETH",
       "address": "eth:0xA160cdAB225685dA1d56aa342Ad8841c3b53f291",
       "type": "Contract",
       "template": "tornado-cash/TornadoCash_eth",
@@ -2045,19 +2038,19 @@
         "0xb9f259b7c2f71a46e05fabbe6115a88fae883d7fb1fbf41c56bcfe7757bc6bf4"
       ],
       "proxyType": "immutable",
-      "description": "Legacy fixed-denomination ETH mixer from the original Tornado Cash pool generation. It retains an operator role that can replace the withdrawal verifier until renounced.",
+      "description": "Fixed-denomination Tornado Cash pool for 100 ETH deposits.",
       "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"],
       "deployerAddress": "eth:0x8589427373D6D84E98730D7795D8f6f8731FDA16",
       "sinceTimestamp": 1577296976,
       "sinceBlock": 9161895,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 1,
+        "currentRootIndex": 3,
         "denomination": "100000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x1e3be8fb5549e9e0edd2cecba424d8daa8446ac8f562f907baa34fda8268f910",
+        "getLastRoot": "0x179244b6f01d61aaf0a6e57a50f73d45eb2b0cc272033d5488afbdec11e8052b",
         "levels": 20,
-        "nextIndex": 45601,
+        "nextIndex": 46603,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "ROOT_HISTORY_SIZE": 100,
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
@@ -2379,7 +2372,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "ERC20Tornado",
+      "name": "Pool_10_WBTC",
       "address": "eth:0xbB93e510BbCD0B7beb5A853875f9eC60275CF498",
       "type": "Contract",
       "template": "tornado-cash/ERC20Tornado",
@@ -2387,7 +2380,7 @@
         "0x12c6ad9449010bcc6706bf48e4e7ff827c6af9cd2a4ecf2723d9c7ebd79271da"
       ],
       "proxyType": "immutable",
-      "description": "Fixed-denomination ERC20 mixer pool from the newer Tornado Cash pool generation. Funds are governed by the withdrawal verifier and the immutable verifier/hasher pair configured at deployment.",
+      "description": "Fixed-denomination Tornado Cash pool for 10 WBTC deposits.",
       "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"],
       "deployerAddress": "eth:0x6D03A79fe92e6F0378025BBFe81Cfc27caF67F6c",
       "sinceTimestamp": 1616135758,
@@ -2461,7 +2454,7 @@
       }
     },
     {
-      "name": "cTornado",
+      "name": "Pool_5M_cDAI",
       "address": "eth:0xD21be7248e0197Ee08E0c20D4a96DEBdaC3D20Af",
       "type": "Contract",
       "template": "tornado-cash/cTornado",
@@ -2469,7 +2462,7 @@
         "0x3595897ef0046fd4c32c4e501fcbd40cc3ce12673aee48ec5a351e35e361eeb2"
       ],
       "proxyType": "immutable",
-      "description": "Fixed-denomination cToken-based mixer pool. Anyone can sweep accrued COMP rewards, but the claimed COMP is always sent to the governance address.",
+      "description": "Fixed-denomination Tornado Cash pool for 5M cDAI deposits.",
       "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"],
       "deployerAddress": "eth:0xA66510177b4aF4e00F2908dfe1317166Deca1853",
       "sinceTimestamp": 1616115450,
@@ -2516,27 +2509,27 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "TornadoCash_erc20",
+      "name": "Pool_100_DAI",
       "address": "eth:0xD4B88Df4D29F5CedD6857912842cff3b20C8Cfa3",
       "type": "Contract",
-      "template": "tornado-cash/TornadoCash_erc20",
+      "template": "tornado-cash/TornadoCash_erc20_v1",
       "sourceHashes": [
         "0xb7cd104e33e4e698596b88be297029b5a3285517f6c200c6c21625dbfe935ae1"
       ],
       "proxyType": "immutable",
-      "description": "Legacy fixed-denomination ERC20 mixer from the original Tornado Cash pool generation. It retains an operator role that can replace the withdrawal verifier until renounced.",
+      "description": "Fixed-denomination Tornado Cash pool for 100 DAI deposits.",
       "ignoreInWatchMode": ["getLastRoot", "currentRootIndex", "nextIndex"],
       "deployerAddress": "eth:0x8589427373D6D84E98730D7795D8f6f8731FDA16",
       "sinceTimestamp": 1576534688,
       "sinceBlock": 9117612,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 89,
+        "currentRootIndex": 24,
         "denomination": "100000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x0b04af3bb8066704d061c81d0750c9b0d650b256ac8b3b4e5ac58a3d57c6fdd9",
+        "getLastRoot": "0x15e74340e3a04a327ee8175c559596fa6be8c1301b0451b8e13b2e7bc430e36e",
         "levels": 20,
-        "nextIndex": 389,
+        "nextIndex": 424,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "ROOT_HISTORY_SIZE": 100,
         "token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
@@ -2571,14 +2564,15 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
-      "description": "Unverified Poseidon hasher used by the legacy Tornado Trees merkle trees.",
+      "description": "Anonymity Mining - Unverified Poseidon hasher used by the legacy Tornado Trees merkle trees.",
       "deployerAddress": "eth:0x4e7B3769921C8DFBdb3d1B4c73558db079A180c7",
       "sinceTimestamp": 1608262097,
       "sinceBlock": 11474712,
       "values": { "$immutable": true },
       "implementationNames": {
         "eth:0xD82ed8786D7c69DC7e052F7A542AB047971E73d2": ""
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "TornadoRouter",
@@ -2589,7 +2583,7 @@
         "0xa2b7bf6932c052821b9c3de74b314b12e6e78893edfeb967c72493a31e46f3f2"
       ],
       "proxyType": "immutable",
-      "description": "Router contract that validates supported instances, forwards deposits and withdrawals, and burns relayer stake through the relayer registry during withdrawals.",
+      "description": "Router contract that validates supported instances, forwards deposits and withdrawals, and subtracts from relayer stake through the relayer registry during withdrawals.",
       "deployerAddress": "eth:0x48dd5eAFCaeB05854D4cDFE365719Aac83E4754F",
       "sinceTimestamp": 1644426390,
       "sinceBlock": 14173127,
@@ -2619,27 +2613,27 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "TornadoCash_erc20",
+      "name": "Pool_100_USDC",
       "address": "eth:0xd96f2B1c14Db8458374d9Aca76E26c3D18364307",
       "type": "Contract",
-      "template": "tornado-cash/TornadoCash_erc20",
+      "template": "tornado-cash/TornadoCash_erc20_v1",
       "sourceHashes": [
         "0xb7cd104e33e4e698596b88be297029b5a3285517f6c200c6c21625dbfe935ae1"
       ],
       "proxyType": "immutable",
-      "description": "Legacy fixed-denomination ERC20 mixer from the original Tornado Cash pool generation. It retains an operator role that can replace the withdrawal verifier until renounced.",
+      "description": "Fixed-denomination Tornado Cash pool for 100 USDC deposits.",
       "ignoreInWatchMode": ["getLastRoot", "currentRootIndex", "nextIndex"],
       "deployerAddress": "eth:0x8589427373D6D84E98730D7795D8f6f8731FDA16",
       "sinceTimestamp": 1577298068,
       "sinceBlock": 9161958,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 34,
+        "currentRootIndex": 62,
         "denomination": 100000000,
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x1443229685977945314a75c18791a419f11f4fe5b6b80397c476b97fbeab9d11",
+        "getLastRoot": "0x166b58667abc7db83365212d39c163499e68d6c99979666467fcff217cd645d2",
         "levels": 20,
-        "nextIndex": 334,
+        "nextIndex": 362,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "ROOT_HISTORY_SIZE": 100,
         "token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -2677,14 +2671,15 @@
         "0xc856486a747bd2513fc7d3e40390b4cab2a3401d75bd44dd9d5750bdf33f1dd2"
       ],
       "proxyType": "immutable",
-      "description": "Verifier contract for batched Tornado Trees root updates.",
+      "description": "Anonymity Mining - Verifier contract for batched Tornado Trees root updates.",
       "deployerAddress": "eth:0x8589427373D6D84E98730D7795D8f6f8731FDA16",
       "sinceTimestamp": 1616688852,
       "sinceBlock": 12109083,
       "values": { "$immutable": true },
       "implementationNames": {
         "eth:0xEd3B00B651c4c7AF77c2fDdce4a388de84b507C6": "BatchTreeUpdateVerifier"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "GasCompensationVault",
@@ -2705,27 +2700,27 @@
       }
     },
     {
-      "name": "TornadoCash_erc20",
+      "name": "Pool_1000_DAI",
       "address": "eth:0xFD8610d20aA15b7B2E3Be39B396a1bC3516c7144",
       "type": "Contract",
-      "template": "tornado-cash/TornadoCash_erc20",
+      "template": "tornado-cash/TornadoCash_erc20_v1",
       "sourceHashes": [
         "0xb7cd104e33e4e698596b88be297029b5a3285517f6c200c6c21625dbfe935ae1"
       ],
       "proxyType": "immutable",
-      "description": "Legacy fixed-denomination ERC20 mixer from the original Tornado Cash pool generation. It retains an operator role that can replace the withdrawal verifier until renounced.",
+      "description": "Fixed-denomination Tornado Cash pool for 1000 DAI deposits.",
       "ignoreInWatchMode": ["getLastRoot", "currentRootIndex", "nextIndex"],
       "deployerAddress": "eth:0x8589427373D6D84E98730D7795D8f6f8731FDA16",
       "sinceTimestamp": 1577297383,
       "sinceBlock": 9161917,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 6,
+        "currentRootIndex": 17,
         "denomination": "1000000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x2fecb781eb267bba03a21d2f112b7dec5137bb07e181304616f715623315c154",
+        "getLastRoot": "0x281129ccb07bad75ce90d20dd565cbaef02acfa1ae8b2bcd0078e76154e002e6",
         "levels": 20,
-        "nextIndex": 1306,
+        "nextIndex": 1317,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "ROOT_HISTORY_SIZE": 100,
         "token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
@@ -3806,30 +3801,30 @@
     "tornado-cash/BatchTreeUpdateVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tornado-cash/cTornado": "0xf70f97503d431f536e2a42630ca421e90af6a8a9c03f85dda650fa8af6a93162",
     "tornado-cash/ERC20Tornado": "0x706711f265615d631ed936a2b0e21f75b7516a3c0cfc989932625e0a511b5d2e",
-    "tornado-cash/FeeManager": "0x8832fe5219d03f729db76b430cae79ac8c644c00a3769a83927d9c7df28e9863",
+    "tornado-cash/FeeManager": "0x2d14cdb76f10301881976bdd0e73118dd9470c62127b4fa0f756c1d4f6436b1b",
     "tornado-cash/GasCompensationVault": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tornado-cash/GovernanceProposalStateUpgrade": "0x5ef7d5bcb5b1f194dce583d85f696e249f44e85360486fbb3ede97ded1f604ce",
     "tornado-cash/InstanceRegistry": "0xe4adfe1b395d68b67ff6c83a2964386a9813cf4c8739d2b6e65f5c1f5756a160",
     "tornado-cash/Miner": "0xe77c3ae97ad6368c8457e5442f79fefa5211b0e0528233a22f9f9710750b957d",
     "tornado-cash/Proposal": "0x21857196f327a8eadf42591631adb24d788318246f12110fe95bbc8b3821338f",
     "tornado-cash/RelayerRegistry": "0xc40b94bab076de47092f25dac3d0d5fef608fbb1fd70b70212a58f6d0bd54c70",
-    "tornado-cash/RewardSwap": "0xef14fcf3380d21fb0c028bd057958dbd309eea212e07a42ce8ebe94273eec0b9",
+    "tornado-cash/RewardSwap": "0xcc6aee41984fae78ee9c1aa1b37ad1f6664922687dbbdd7cc90ad4dfee1b624f",
     "tornado-cash/RewardVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "tornado-cash/TORN": "0x7fb503c9789227b3607d28cb75e676283471c8c460bf34369cb8eb84aed1b2d1",
-    "tornado-cash/TornadoCash_erc20": "0xbd01742b42c5092f0e5a9837fda78719a752063c0c2591d102dd8b3335f6b634",
+    "tornado-cash/TORN": "0x554c6a53c007d3542f21c3068e63eea96830df9e7c161374c46f4ee91d4fc4ec",
+    "tornado-cash/TornadoCash_erc20_v1": "0xbd01742b42c5092f0e5a9837fda78719a752063c0c2591d102dd8b3335f6b634",
     "tornado-cash/TornadoCash_eth": "0x9d350fb63a66cf62964068043a506e772cf638233d1e56c75e0ebfef72b018c5",
     "tornado-cash/TornadoCash_Eth_01": "0x4759bd467651b7b1304a609bb4951beefce756e12774737806bf52af7598b3e8",
     "tornado-cash/TornadoProxyV1": "0x0f148b32f12372e1a61b14e5dd4d7bd7acbf68cfa07316c9b7378ec2d77639e4",
     "tornado-cash/TornadoProxyV2": "0x0f148b32f12372e1a61b14e5dd4d7bd7acbf68cfa07316c9b7378ec2d77639e4",
     "tornado-cash/TornadoRouter": "0xbd7ca9f14700f43719f103ce5e04ecf9d73d4310646eca040b347d637aa16006",
-    "tornado-cash/TornadoStakingRewards": "0x0e7c6583397b78fc4adae61ae1f6faad2f831a8724b467e3fee31c171c8263f1",
-    "tornado-cash/TornadoTreesV1": "0x9e672e6b9efac15b5a1edbb99c536048b2dabf9e7a9acaa1ae69b6f0e8c9bd20",
-    "tornado-cash/TornadoTreesV2": "0xc06b8a648e22777cc0e6c7aed7c1a08793f0a4e535fe20c8f53ebf5237dcf98b",
+    "tornado-cash/TornadoStakingRewards": "0xb124ea92c7b402984584d879e0c46522f1d0c2951a14a546a5093d8a56677d1f",
+    "tornado-cash/TornadoTreesV1": "0xce9776830aa69762cea76fb26a81549086cd437558a918ad7335b0a840bb1b4e",
+    "tornado-cash/TornadoTreesV2": "0xbc25f893cb79475b64b22a551019f57c4829214af384ce0054c7d9de631ee8c6",
     "tornado-cash/TornadoVault": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tornado-cash/TreeUpdateVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tornado-cash/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tornado-cash/WithdrawVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24992607 },
-  "permissionsConfigHash": "0xc057faed93482a1c52189bc8a84d38418edb267728820050734023716d27acc5"
+  "usedBlockNumbers": { "ethereum": 25394718 },
+  "permissionsConfigHash": "0x44bf0b4758492462db07b5908ef81f4531dbedb1013b1aca2fb307274e6c541c"
 }

@@ -47,6 +47,28 @@
         "method": "getStaticConfig"
       },
       "edit": ["pick", "chainSelector", "destChainSelector"]
+    },
+    "feeTokenConfig": {
+      "description": "Current per-fee-token config (networkFee, gas/premium multipliers, enabled flag), reconstructed from FeeConfigSet event history. The s_feeTokenConfig mapping is internal and the only public getter is per-token, so the event log is replayed; if the same token has been reconfigured multiple times each distinct config emitted will appear as a separate entry.",
+      "handler": {
+        "type": "event",
+        "select": "feeConfig",
+        "flatten": true,
+        "add": {
+          "event": "event FeeConfigSet((address token, uint32 networkFeeUSDCents, uint64 gasMultiplierWeiPerEth, uint64 premiumMultiplierWeiPerEth, bool enabled)[] feeConfig)"
+        }
+      },
+      "edit": [
+        "map",
+        [
+          "shape",
+          "token",
+          "networkFeeUSDCents",
+          "gasMultiplierWeiPerEth",
+          "premiumMultiplierWeiPerEth",
+          "enabled"
+        ]
+      ]
     }
   }
 }

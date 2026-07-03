@@ -1,3 +1,261 @@
+Generated with discovered.json: 0x58323aa0ff363e7439d73266fe89761ab19dca2f
+
+# Diff at Mon, 29 Jun 2026 15:29:07 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1780654176
+- current timestamp: 1782746641
+
+## Description
+
+Caldera Multisig 1 (shared with blessnet, inevm, rari): member rotated.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 1 (arb1:0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) [GnosisSafe] {
+    +++ description: None
+      values.$members.4:
+-        "arb1:0xEC114946E7213d113c9B9481028271B5E9e09371"
++        "arb1:0xFcB26a1DbFafF84b91f1b7D9026DA63007b88D3c"
+    }
+```
+
+Generated with discovered.json: 0xc57abece6053f7e812d4a86bb12da9c260b2fd8b
+
+# Diff at Fri, 12 Jun 2026 10:18:55 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1780654176
+- current timestamp: 1780654176
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780654176 (main branch discovery), not current.
+
+```diff
+    EOA  (arb1:0x2E5d207a4C0F7e7C52F6622DCC6EB44bC0fE1A13) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0x777435225bb5fb65a1099b7fb61d09a2bc571e68
+
+# Diff at Tue, 09 Jun 2026 12:43:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1780654176
+- current timestamp: 1780654176
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780654176 (main branch discovery), not current.
+
+```diff
+    EOA  (arb1:0x152FFeF04881BD1390D2A52009f42d56EaC7AA03) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0x30ea093b14364f21Dd74D7Bd43e2FAB1279D3738) {
+    +++ description: None
+      receivedPermissions.1.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x6870ab4bd4c113ef385349199edad6d6e4d5de41
+
+# Diff at Fri, 05 Jun 2026 10:11:37 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@3501d14787f111a20580bca1fdb97e32abfb1f2c block: 1779719447
+- current timestamp: 1780654176
+
+## Description
+
+Molten changed to reproducible TEE verification SP1 programs, also upgraded to SP1 v6.1.0.
+
+## Watched changes
+
+```diff
+    contract NitroEnclaveVerifier (arb1:0x0d4cD6C0E9a0f2e744C83547f22Caf03414A3B22) [espresso/Sequencing/NitroEnclaveVerifier] {
+    +++ description: ZK-backed verifier for AWS Nitro enclave attestations. Verifies ZK proofs (RiscZero, Succinct SP1 or Pico) that attest AWS Nitro cert chain validation was executed correctly off-chain.
+      values.succintZkConfig.verifierId:
+-        "0x00e874289e8c7f42381b6220f438801d2d1478dc8230f866a31e5ceec6e93322"
++        "0x00643c7149cf335e7ec9d3f3301e69658a7f0ef2bc7546509c257ed8809f28e1"
+      values.succintZkConfig.aggregatorId:
+-        "0x002bb66c60302a81a621d7899e3f6ee1d0db9fb1eae5d1e80e94a33cb1e24922"
++        "0x00294928e44f0cdc9c74848c4cafcdb29f733a3bc07408c240be3d5afe750b3e"
+      values.succintZkConfig.zkVerifier:
+-        "arb1:0xC513d6E8C8f915B1DA2f6eAC4C6d755ff3d5f21D"
++        "arb1:0xD9d5C8456a168Dd25561064F47bF116111131B1D"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (arb1:0xC513d6E8C8f915B1DA2f6eAC4C6d755ff3d5f21D) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (arb1:0xD9d5C8456a168Dd25561064F47bF116111131B1D) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+```
+
+## Source code changes
+
+```diff
+.../{.flat@1779719447 => .flat}/SP1Verifier.sol    | 114 +++++++++++++++------
+ 1 file changed, 82 insertions(+), 32 deletions(-)
+```
+
+Generated with discovered.json: 0xc4133f2ab037b45c02e16f7dad7dda9d35b8b01e
+
+# Diff at Mon, 25 May 2026 14:33:27 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@6898129972dbc5b1b4f1389afaf9cb3fb7fd3380 block: 1779198858
+- current timestamp: 1779719447
+
+## Description
+
+Picked up the new `ArbOS v51.1 wasmModuleRoot` label from the globalConfig type map. Config-only — chain's own wasmModuleRoot is unchanged.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779198858 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c:
++        "ArbOS v51.1 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0x83bbc4faf9f265527dcb0f36b54b14b253076ed2
+
+# Diff at Tue, 19 May 2026 13:56:37 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@307f5c3dfdab6a4f88448861a0bb75f0043b762b block: 1778232916
+- current timestamp: 1779198858
+
+## Description
+
+Caldera Multisig 1 signer removed. Included even though the project is archived (#11869) because it still appears on the discovery status dashboard.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 1 (arb1:0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "arb1:0xbCDb12b7a5bDe037e342a6BE7fd5582b9D93C232"
+      values.multisigThreshold:
+-        "3 of 8 (38%)"
++        "3 of 7 (43%)"
+    }
+```
+
+Generated with discovered.json: 0xdebc655d6f44a749101c6ac5a976c4d6408ca02d
+
+# Diff at Fri, 15 May 2026 12:36:11 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1778232916
+- current timestamp: 1778232916
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778232916 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      sourceHashes.1:
+-        "0x689a6510e734cb5e6032f5fca6ce6cb72b6e3af01d74b228d9d2cfd926a25b66"
++        "0x6639f412df425cd0592b0ca4cf5e4ad9d39436f0e7255e83726bb7ac6a9e37b4"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (arb1:0x23b7734232dA19D2Cf73010a25C8Ffc4eBfc2f5f) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xb926f057e4fad7ff5b169aeec58691133fd46de25932d8356d3dc28e4e793d3a"
++        "0x294155e99018f1d390be420f29ef940f9843f3ce54ed4e515d998653e2ce4293"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (arb1:0x59CDE86f1a538a7a2329269d3704CA302DF23736) [orbitstack/OneStepProverMemory] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xa163417851e926098130f55736a5b43084164e0070f9647198131e57b45a947d"
++        "0x9e22e05e7953684e6f00507684bb902908d6d4383b2e82ecdce789027bebc33a"
+    }
+```
+
+```diff
+    contract ChallengeManager (arb1:0x7BB97862CA342B5fbe2AE2cF2E954F6327f587b1) [orbitstack/ChallengeManager] {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      sourceHashes.1:
+-        "0x8a2753d8b3f1ce86250bd4a4e7e502d04dd36a5a670b519b7510af6b33618693"
++        "0x1eba00857f5477dbcd075b48ce8af9c74d5cb4f93a5e714dd27b3df498737e54"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (arb1:0x7d46570d3Cd9D8F5e01bad3144141a031a94d7B8) [orbitstack/OneStepProverHostIo_Celestia] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine. This version uses the Blobstream DA bridge (arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) as source of truth for the DA referenced by the fault proof.
+      sourceHashes.0:
+-        "0xa7c3a1f78e84574d1701344ee35b627f4f00d0fbf73f1e7a2ae8aeaeb15007d8"
++        "0x75ce118e7fcc2ffbfdf5d8f1e027174a2e1dffbed589ff660d8ad7d7b12ac8b5"
+    }
+```
+
+```diff
+    contract OneStepProver0 (arb1:0xe3b13e7b160aE4b799A7B3F9877316e717706291) [orbitstack/OneStepProver0] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xdec29538ea8b9a7f83edc119a9fbd3761ab24c5e0b512ecfdecc46dcdefccdc1"
++        "0x063a1b3c4451e69f827acd833c42e986c2c617bfaabb13884fb438185b192407"
+    }
+```
+
 Generated with discovered.json: 0x69d379ff55e8cfba7e1f25ec28f34ff95d149517
 
 # Diff at Fri, 08 May 2026 09:37:24 GMT:

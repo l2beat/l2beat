@@ -8,5 +8,11 @@
     "hash": "0xa445fc3be07624967bd4cb9792e42018303744e20dc788527e19f17d83b6373d",
     "address": "ink:0xC0D3c0D3C0d3c0D3c0D3C0D3c0D3c0d3c0d30021",
     "blockNumber": 10183769
+  },
+  "EAS_katana": {
+    "hash": "0x565fcc3b9d0821e7893d6c738d9eafe13dc0e30795042c019bb419f2d6e32c78",
+    "address": "katana:0xC0D3c0D3C0d3c0D3c0D3C0D3c0D3c0d3c0d30021",
+    "chain": "katana",
+    "blockNumber": 33142393
   }
 }

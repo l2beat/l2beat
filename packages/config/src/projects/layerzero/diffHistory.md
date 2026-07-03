@@ -1,4 +1,56 @@
-Generated with discovered.json: 0xcc4eb089ba2674c1a5c6e1da1dc49e67e5fd45ac
+Generated with discovered.json: 0x4a58a3500fa2244c29fda481586d2a127c8f7207
+
+# Diff at Tue, 16 Jun 2026 10:00:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b8fe7ad12211d67626f7d23839b5be1f7ba15bb5 block: 1777285916
+- current timestamp: 1781603942
+
+## Description
+
+Unichain peer blocked in ethereum rsETH OApp.
+
+## Watched changes
+
+```diff
+    contract RsETHOFTAdapter (eth:0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3) [layerzero/OFTAdapter] {
+    +++ description: An OApp in the LayerZero protocol that adapts an existing ERC20 token into the OFT standard. Its owner can configure peers and LayerZero security settings for connected routes.
++++ description: The configured peer for the rsETH OFT route from Unichain.
+      values.peerUnichain:
+-        "unichain:0xc3eACf0612346366Db554C991D7858716db09f58"
++        "unichain:0x0000000000000000000000000000000000000000"
+    }
+```
+
+Generated with discovered.json: 0x9921aa9eaabd740f707a49d2755d084d0b189441
+
+# Diff at Fri, 12 Jun 2026 10:18:53 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1777285916
+- current timestamp: 1777285916
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777285916 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0xfcde0409fb986436d88dc3c24c25b3f1d0cff1fd
 
 # Diff at Mon, 11 May 2026 11:10:28 GMT:
 

@@ -8,5 +8,10 @@
     "hash": "0x6ee63fad782cceddadfaea5bec5034e5650b11c28070d4ece5dd60daede8f636",
     "address": "eth:0xE7bd695d6A17970A2D9dB55cfeF7F2024d630aE1",
     "blockNumber": 24783311
+  },
+  "OPSuccinctFaultDisputeGame_celo_v2.1.0.sol": {
+    "hash": "0xe05c41d31c126227270b4375799c11a4c815d2cf220a37a3879dea11b4402e98",
+    "address": "eth:0xfF1caC738a5263736AF258e4b3D6a4970C6351FF",
+    "blockNumber": 25122972
   }
 }

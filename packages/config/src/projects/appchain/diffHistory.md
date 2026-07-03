@@ -1,3 +1,370 @@
+Generated with discovered.json: 0x03762e08679b5cb95ab80dff5490f3d21cd77cfb
+
+# Diff at Mon, 29 Jun 2026 15:24:34 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1780654139
+- current timestamp: 1782746581
+
+## Description
+
+Caldera Multisig 3 (shared with capx, form, oevnetwork, sxt): member rotated.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 3 (eth:0x2bf43034b9559643e986A2fE3cE015a18247b904) [GnosisSafe] {
+    +++ description: None
+      values.$members.2:
+-        "eth:0xEC114946E7213d113c9B9481028271B5E9e09371"
++        "eth:0xFcB26a1DbFafF84b91f1b7D9026DA63007b88D3c"
+    }
+```
+
+Generated with discovered.json: 0x70598007ac9aab81f908fedc1052b815a10004cc
+
+# Diff at Fri, 12 Jun 2026 10:18:40 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1780654139
+- current timestamp: 1780654139
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780654139 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0xDA8E38FEf4d5cF1997061e51945775a393E4965B) {
+    +++ description: None
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0xc1f28bb545e9326e60e3103d76cbb7eb263fc8d6
+
+# Diff at Tue, 09 Jun 2026 12:43:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1780654139
+- current timestamp: 1780654139
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780654139 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0xC5dD640885cE582464e2fCa7b169581417822e6C) {
+    +++ description: None
+      receivedPermissions.1.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xef6Ef32bcC96B9D94f50A51A42dB4825D6337780) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x094080cb6b6973e34da8222d04ef150e4b839eb3
+
+# Diff at Fri, 05 Jun 2026 10:10:05 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@3501d14787f111a20580bca1fdb97e32abfb1f2c block: 1779719407
+- current timestamp: 1780654139
+
+## Description
+
+Changes in `EspressoTEEVerifier` (high-level gateway): https://disco.l2beat.com/diff/eth:0xcC758349CBd99bAA7fAD0558634dAaB176c777D0/eth:0x51835Bbc68679Dd236cC7ed333d1F52a181975e0. Summary:
+
+- Removed Intel SGX TEE support (only Nitro TEE attestations now)
+- Migrated to upgradeable TEE verifier
+- Added some admin / owner functions: `setNitroEnclaveVerifier`, `deleteEnclaveHashes`, `setEnclaveHash`, `setEspressoNitroTEEVerifier`
+
+Changes in `EspressoNitroTEEVerifier`: https://disco.l2beat.com/diff/eth:0x9E490ce0203d191Cae0ABF5614D561cC6fdc771f/eth:0x4e98A1a038831B7D756ea9214508C4b34f4e4D3a. Summary:
+
+- Removed explicit owner address, now this role is taken by `EspressoTEEVerifier` contract.
+- Refactored, e.g. added `TEEHelper`.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract NitroEnclaveVerifier (eth:0x0d1AD56885440A92799dC766D65B5C8377c60A35) [espresso/Sequencing/NitroEnclaveVerifier]
+    +++ description: ZK-backed verifier for AWS Nitro enclave attestations. Verifies ZK proofs (RiscZero, Succinct SP1 or Pico) that attest AWS Nitro cert chain validation was executed correctly off-chain.
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (eth:0x294a1Ee119C4B2510530572481A6a50892A9ae9f) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
+    contract Safe (eth:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"interact","from":"eth:0x98206aBE6bdB21765458f27F199fd813343a3C3b","description":"set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers.","role":".owner"}
+      receivedPermissions.1.description:
+-        "set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers."
++        "add, remove or disable supported enclave hashes."
+      receivedPermissions.1.from:
+-        "eth:0x9E490ce0203d191Cae0ABF5614D561cC6fdc771f"
++        "eth:0x5BE313094a4d35b1dB233D640176B4DD11F79b67"
+      receivedPermissions.2.description:
+-        "change the modular TEE verifier contracts."
++        "change the TEE verifier contract."
+      receivedPermissions.2.from:
+-        "eth:0xcC758349CBd99bAA7fAD0558634dAaB176c777D0"
++        "eth:0x5BE313094a4d35b1dB233D640176B4DD11F79b67"
+    }
+```
+
+```diff
+    contract SequencerInbox (eth:0x8045B2aa6b823CbA8f99ef3D3404F711619d3473) [orbitstack/SequencerInbox_Espresso] {
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.espressoTEEVerifier:
+-        "eth:0xcC758349CBd99bAA7fAD0558634dAaB176c777D0"
++        "eth:0x5BE313094a4d35b1dB233D640176B4DD11F79b67"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract QuoteVerifier (eth:0x816ADa3B63F3c643fb04152eA32B58Db89aadd89) [espresso/Sequencing/QuoteVerifier]
+    +++ description: The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (eth:0xe20C4d54afBbea5123728d5b7dAcD9CB3c65C39a), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified.
+```
+
+```diff
+-   Status: DELETED
+    contract EspressoSGXTEEVerifier (eth:0x98206aBE6bdB21765458f27F199fd813343a3C3b) [espresso/Sequencing/EspressoSGXTEEVerifier]
+    +++ description: Verifies attestations of an Intel SGX TEE.
+```
+
+```diff
+-   Status: DELETED
+    contract EspressoNitroTEEVerifier (eth:0x9E490ce0203d191Cae0ABF5614D561cC6fdc771f) [espresso/Sequencing/EspressoNitroTEEVerifier]
+    +++ description: Verifies attestations of an AWS Nitro TEE. 
+Note: currently only Succinct proofs are used.
+```
+
+```diff
+-   Status: DELETED
+    contract EspressoTEEVerifier (eth:0xcC758349CBd99bAA7fAD0558634dAaB176c777D0) [espresso/Sequencing/EspressoTEEVerifier_gateway]
+    +++ description: TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports both Intel SGX and AWS Nitro TEEs through modular contracts.
+```
+
+```diff
+    EOA  (eth:0xDA8E38FEf4d5cF1997061e51945775a393E4965B) {
+    +++ description: None
+      receivedPermissions.0.via:
++        [{"address":"eth:0x546F30e936B1D01f8df1c356fa68833B9AFba99f"}]
+      receivedPermissions.0.role:
+-        ".owner"
++        "admin"
+      receivedPermissions.0.description:
+-        "set the root certificate, add/remove ZK verifier routes, update verifier and aggregator program IDs, and change the ZK coprocessor configuration."
+      receivedPermissions.0.from:
+-        "eth:0x0d1AD56885440A92799dC766D65B5C8377c60A35"
++        "eth:0x5BE313094a4d35b1dB233D640176B4DD11F79b67"
+      receivedPermissions.0.permission:
+-        "interact"
++        "upgrade"
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x546F30e936B1D01f8df1c356fa68833B9AFba99f","role":".owner"}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract NitroEnclaveVerifier (eth:0x1b467761E7a125381c4f654e11B397023Fc53DD8) [espresso/Sequencing/NitroEnclaveVerifier]
+    +++ description: ZK-backed verifier for AWS Nitro enclave attestations. Verifies ZK proofs (RiscZero, Succinct SP1 or Pico) that attest AWS Nitro cert chain validation was executed correctly off-chain.
+```
+
+```diff
++   Status: CREATED
+    contract EspressoNitroTEEVerifier (eth:0x4e98A1a038831B7D756ea9214508C4b34f4e4D3a) [espresso/Sequencing/EspressoNitroTEEVerifier_WithServices]
+    +++ description: Verifies attestations of an AWS Nitro TEE. 
+Note: currently only Succinct proofs are used.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0x546F30e936B1D01f8df1c356fa68833B9AFba99f) [global/ProxyAdmin]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EspressoTEEVerifier (eth:0x5BE313094a4d35b1dB233D640176B4DD11F79b67) [espresso/Sequencing/EspressoTEEVerifier_onlyNitro]
+    +++ description: TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports AWS Nitro TEEs through modular contracts.
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (eth:0xD9d5C8456a168Dd25561064F47bF116111131B1D) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+```
+
+## Source code changes
+
+```diff
+.../EspressoNitroTEEVerifier.sol                   |  809 ++-
+ .../EspressoSGXTEEVerifier.sol => /dev/null        | 4167 ------------
+ .../EspressoTEEVerifier/EspressoTEEVerifier.sol    | 7047 ++++++++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              | 1038 +++
+ .../EspressoTEEVerifier.sol => /dev/null           | 1030 ---
+ ...:0x546F30e936B1D01f8df1c356fa68833B9AFba99f.sol |  189 +
+ ...0xF025D25aE360D0D33a275dF74863CCc6600E6f8E.sol} |    0
+ .../QuoteVerifier.sol => /dev/null                 | 4107 ------------
+ .../{.flat@1779719407 => .flat}/SP1Verifier.sol    |  112 +-
+ 9 files changed, 8914 insertions(+), 9585 deletions(-)
+```
+
+Generated with discovered.json: 0x992d4f84d241faf2134ce9039c2f15dd480db7e8
+
+# Diff at Mon, 25 May 2026 14:31:14 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@6898129972dbc5b1b4f1389afaf9cb3fb7fd3380 block: 1778232916
+- current timestamp: 1779719407
+
+## Description
+
+Caldera Multisig 3 (shared chain-admin Safe upgrading appchain/capx/form/oevnetwork/sxt) rotated out one member and lowered threshold from 4/7 to 3/6.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 3 (eth:0x2bf43034b9559643e986A2fE3cE015a18247b904) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xbCDb12b7a5bDe037e342a6BE7fd5582b9D93C232"
+      values.$threshold:
+-        4
++        3
+      values.multisigThreshold:
+-        "4 of 7 (57%)"
++        "3 of 6 (50%)"
+    }
+```
+
+Generated with discovered.json: 0x60e99331dff89be8e82323c78103f142ef764be0
+
+# Diff at Fri, 22 May 2026 15:38:11 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1b7024bc804124af9b25421eca5fac952454cb09 block: 1778232916
+- current timestamp: 1778232916
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778232916 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (eth:0x28293c7855797B0441000EF144119727f3cBCA9B) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c:
++        "ArbOS v51.1 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0xadb6c8a1061da2462a868d5816e4568c6eca51d7
+
+# Diff at Fri, 15 May 2026 12:35:39 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1778232916
+- current timestamp: 1778232916
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778232916 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (eth:0x28293c7855797B0441000EF144119727f3cBCA9B) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      sourceHashes.1:
+-        "0x689a6510e734cb5e6032f5fca6ce6cb72b6e3af01d74b228d9d2cfd926a25b66"
++        "0x6639f412df425cd0592b0ca4cf5e4ad9d39436f0e7255e83726bb7ac6a9e37b4"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (eth:0x5F8FE936F629AF71e7af6C7844692f98019d6163) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xb926f057e4fad7ff5b169aeec58691133fd46de25932d8356d3dc28e4e793d3a"
++        "0x294155e99018f1d390be420f29ef940f9843f3ce54ed4e515d998653e2ce4293"
+    }
+```
+
+```diff
+    contract ChallengeManager (eth:0xB9B007aE55B81dd1498Bc500a54ad9Ae53234c9C) [orbitstack/ChallengeManager] {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      sourceHashes.1:
+-        "0x8a2753d8b3f1ce86250bd4a4e7e502d04dd36a5a670b519b7510af6b33618693"
++        "0x1eba00857f5477dbcd075b48ce8af9c74d5cb4f93a5e714dd27b3df498737e54"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (eth:0xd79fd59b73c814D9607aB93C4A1aDCea06F91692) [orbitstack/OneStepProverHostIo] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xd64745a0edbb2ada69b81d849f2737d7c082d18ca14a715c23c4165e4eecc637"
++        "0x081875b93df655e91ec23245390ad21db0990c12125dad497f1cbf118501ccc2"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (eth:0xf6a307A5868eB9c4a00F5efbD1EF8462AC63783f) [orbitstack/OneStepProverMemory] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xa163417851e926098130f55736a5b43084164e0070f9647198131e57b45a947d"
++        "0x9e22e05e7953684e6f00507684bb902908d6d4383b2e82ecdce789027bebc33a"
+    }
+```
+
+```diff
+    contract OneStepProver0 (eth:0xFe95b1f7cf7D7D14E9e38dEE0EFE1c9D3AaA3e69) [orbitstack/OneStepProver0] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xdec29538ea8b9a7f83edc119a9fbd3761ab24c5e0b512ecfdecc46dcdefccdc1"
++        "0x063a1b3c4451e69f827acd833c42e986c2c617bfaabb13884fb438185b192407"
+    }
+```
+
 Generated with discovered.json: 0xf031b5d8dcf40925bf2791d377a2c99b64e07519
 
 # Diff at Fri, 08 May 2026 09:36:21 GMT:

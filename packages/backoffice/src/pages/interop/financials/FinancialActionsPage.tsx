@@ -1,3 +1,4 @@
+import { useMutation } from '@tanstack/react-query'
 import { RefreshCwIcon } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '~/components/core/Button'
@@ -10,21 +11,24 @@ import {
 } from '~/components/core/Card'
 import { ErrorState } from '~/components/ErrorState'
 import { AppLayout } from '~/layouts/AppLayout'
-import { api } from '~/react-query/trpc'
+import { useBackendTrpc } from '~/react-query/trpc'
 
 export function FinancialActionsPage() {
-  const refreshFinancials = api.interop.financials.refresh.useMutation({
-    onSuccess: (data) => {
-      toast.success('Financials refresh requested', {
-        description: `${data.updatedTransfers} transfers marked as unprocessed.`,
-      })
-    },
-    onError: (error) => {
-      toast.error('Financials refresh failed', {
-        description: error.message,
-      })
-    },
-  })
+  const trpc = useBackendTrpc()
+  const refreshFinancials = useMutation(
+    trpc.interop.financials.refresh.mutationOptions({
+      onSuccess: (data) => {
+        toast.success('Financials refresh requested', {
+          description: `${data.updatedTransfers} transfers marked as unprocessed.`,
+        })
+      },
+      onError: (error) => {
+        toast.error('Financials refresh failed', {
+          description: error.message,
+        })
+      },
+    }),
+  )
 
   return (
     <AppLayout>

@@ -34,6 +34,7 @@ export const worldchain = opStackL2({
       explorers: [
         'https://worldscan.org',
         'https://worldchain-mainnet.explorer.alchemy.com/',
+        'https://worldplorer.com/',
       ],
       repositories: ['https://github.com/worldcoin'],
       socialMedia: [
@@ -48,6 +49,40 @@ export const worldchain = opStackL2({
         'https://growthepie.com/chains/worldchain',
       ],
     },
+  },
+  interopConfig: {
+    name: 'World Chain Canonical',
+    durationSplit: {
+      lockAndMint: [
+        {
+          label: 'L1 -> L2',
+          transferTypes: [
+            'opstack.L1ToL2Transfer',
+            'opstack-standardbridge.L1ToL2Transfer',
+          ],
+        },
+        {
+          label: 'L2 -> L1',
+          transferTypes: [
+            'opstack.L2ToL1Transfer',
+            'opstack-standardbridge.L2ToL1Transfer',
+          ],
+        },
+      ],
+    },
+    plugins: [
+      {
+        chain: 'worldchain',
+        plugin: 'opstack',
+        bridgeType: 'lockAndMint',
+      },
+      {
+        chain: 'worldchain',
+        plugin: 'opstack-standardbridge',
+        bridgeType: 'lockAndMint',
+      },
+    ],
+    type: 'canonical',
   },
   associatedTokens: ['WLD'],
   chainConfig: {

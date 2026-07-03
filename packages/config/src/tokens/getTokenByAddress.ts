@@ -1,4 +1,4 @@
-import type { UnixTime } from '@l2beat/shared-pure'
+import { assert, type UnixTime } from '@l2beat/shared-pure'
 import generated from './generated.json'
 import { GeneratedToken } from './types'
 
@@ -7,6 +7,7 @@ interface TokenInfo {
   decimals: number
   coingeckoId: string
   coingeckoListingTimestamp: UnixTime
+  iconUrl: string | undefined
   address?: string
   chainId: number
 }
@@ -21,6 +22,7 @@ for (const raw of generated.tokens) {
     decimals: parsed.decimals,
     coingeckoId: parsed.coingeckoId.toString(),
     coingeckoListingTimestamp: parsed.coingeckoListingTimestamp,
+    iconUrl: parsed.iconUrl,
     address: parsed.address?.toString(),
     chainId: Number(parsed.chainId),
   }
@@ -39,22 +41,19 @@ for (const raw of generated.tokens) {
 
 const ETH_SENTINEL = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
 
-export function getTokenByAddress(
-  address: string,
-  chainId = 1,
-): TokenInfo | undefined {
+export function getTokenByAddress(address: string, chainId = 1): TokenInfo {
   if (address.toLowerCase() === ETH_SENTINEL) {
     return getTokenBySymbol('ETH')
   }
   const token = TOKEN_BY_ADDRESS.get(`${chainId}:${address.toLowerCase()}`)
+  assert(token, `Unknown token ${address} on chain ${chainId}`)
   return token
 }
 
-export function getTokenBySymbol(
-  symbol: string,
-  chainId = 1,
-): TokenInfo | undefined {
+export function getTokenBySymbol(symbol: string, chainId = 1): TokenInfo {
   const tokens = TOKENS_BY_SYMBOL.get(symbol)
-  if (!tokens) return undefined
-  return tokens.find((t) => t.chainId === chainId)
+
+  const token = tokens?.find((t) => t.chainId === chainId)
+  assert(token, `Unknown token ${symbol} on chain ${chainId}`)
+  return token
 }

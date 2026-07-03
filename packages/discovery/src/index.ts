@@ -39,7 +39,6 @@ export { hashJsonStable } from './discovery/config/hashJsonStable'
 export {
   BasePermissionEntries,
   Permission,
-  RolePermissionEntries,
 } from './discovery/config/PermissionConfig'
 export {
   makeEntryStructureConfig,
@@ -115,7 +114,10 @@ export { generateEntrypoints } from './discovery/shared-modules/generateEntrypoi
 export { deduplicateAbi } from './discovery/source/deduplicateAbi'
 export { SourceCodeService } from './discovery/source/SourceCodeService'
 export { asStructured } from './discovery/type-casters/asStructured'
-export { get$Implementations } from './discovery/utils/extractors'
+export {
+  get$Implementations,
+  toAddressArray,
+} from './discovery/utils/extractors'
 export { getContractField } from './discovery/utils/metaGetters'
 export { normalizeDiffPath } from './discovery/utils/normalizeDiffPath'
 export { getReachableEntries } from './discovery/utils/reachable'

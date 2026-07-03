@@ -1,4 +1,137 @@
-Generated with discovered.json: 0x11ad73f25e28b9b05a0177b9a1a74a1f18498108
+Generated with discovered.json: 0x22e67b931a29d84ae95e2f936e117c9c07216869
+
+# Diff at Tue, 30 Jun 2026 20:24:39 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1781097139
+- current timestamp: 1781097139
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1781097139 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0xD7cF5ce4688663e057E99D9f880599Ce88757695) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract usually is the main entry point to deposit funds from L1 to L2 or for finalizing withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific contract is deployed in the agglayer system context which **disables the depositTransaction() function**, preventing users from sending or forcing any transactions from L1 to L2, including token deposits. It is instead used for configuration and administration of the system.
+      usedTypes.0.arg.8:
++        "FaultDisputeGame"
+    }
+```
+
+Generated with discovered.json: 0x2169365b77c71707d6a27b6252a5f362ff11caf8
+
+# Diff at Wed, 10 Jun 2026 13:13:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9b1a27959a14343aae7c71ebbc397f62f0aab99c block: 1780405336
+- current timestamp: 1781097139
+
+## Description
+
+Two conduit ms members removed.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      values.$members.4:
+-        "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007"
+      values.$members.8:
+-        "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.multisigThreshold:
+-        "4 of 12 (33%)"
++        "4 of 10 (40%)"
+    }
+```
+
+Generated with discovered.json: 0xcb5cb4a5a2335f055f1528f786172647ec52bf67
+
+# Diff at Tue, 09 Jun 2026 12:43:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1780405336
+- current timestamp: 1780405336
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780405336 (main branch discovery), not current.
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x8839E742fd56ebC0d31d11DD5A2cA25aA61c54DA) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x6a58592b0cae775bd8ce918dcab8a93c13d01384
+
+# Diff at Thu, 04 Jun 2026 17:39:47 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1777451710
+- current timestamp: 1780405336
+
+## Description
+
+Conduit ms changes.
+
+New game name (aggregateVerifier) added to portal.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853"
+      values.$members.8:
+-        "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777451710 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0xD7cF5ce4688663e057E99D9f880599Ce88757695) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract usually is the main entry point to deposit funds from L1 to L2 or for finalizing withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific contract is deployed in the agglayer system context which **disables the depositTransaction() function**, preventing users from sending or forcing any transactions from L1 to L2, including token deposits. It is instead used for configuration and administration of the system.
+      usedTypes.0.arg.621:
++        "AggregateVerifier"
+    }
+```
+
+Generated with discovered.json: 0xb8fd7c296f689407dc873a8f885933b56ba1f447
 
 # Diff at Fri, 08 May 2026 07:51:20 GMT:
 

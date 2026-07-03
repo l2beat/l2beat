@@ -1,7 +1,7 @@
 {
   "name": "gnosis",
-  "timestamp": 1778679690,
-  "configHash": "0x87f756310eea083eeadab5f213d3a7bba344ac01bd1f61ecdcb483208ed7aadf",
+  "timestamp": 1782391789,
+  "configHash": "0x06988e7a709b8ccfa128bce502190c656212826342721cd1fbb7ce9031a00736",
   "entries": [
     {
       "name": "Giveth EOA 2",
@@ -10,7 +10,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
           "description": "can sign bridge messages between Ethereum and Gnosis.",
           "role": ".$members"
@@ -29,7 +29,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
           "description": "can sign bridge messages between Ethereum and Gnosis.",
           "role": ".$members"
@@ -43,7 +43,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
           "description": "can sign bridge messages between Ethereum and Gnosis.",
           "role": ".$members"
@@ -202,7 +202,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "8 of 15 (53%)",
-        "nonce": 90,
+        "nonce": 91,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -217,7 +217,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
           "description": "can sign bridge messages between Ethereum and Gnosis.",
           "role": ".$members"
@@ -312,17 +312,17 @@
         "gasPrice": 100000000000,
         "getBridgeInterfacesVersion": { "major": 6, "minor": 1, "patch": 0 },
         "getBridgeMode": "0x18762d46",
-        "getCurrentDay": 20586,
+        "getCurrentDay": 20629,
         "getTrustedForwarder": "eth:0x0000000000000000000000000000000000000000",
         "HASHI_IS_ENABLED": true,
         "HASHI_IS_MANDATORY": false,
         "hashiManager": "eth:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD",
         "implementation": "eth:0x257bDD093Cab1Bd39eBF837dCB60f33d031d7d49",
         "isInitialized": true,
-        "maxAvailablePerTx": "9905223877087721536150703",
+        "maxAvailablePerTx": "9969191021626829844715265",
         "maxPerTx": "9999999000000000000000000",
         "minPerTx": 5000000000000000,
-        "nonce": 5589,
+        "nonce": 6072,
         "owner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "proxyOwner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "requiredBlockConfirmations": 20,
@@ -381,7 +381,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 28,
+        "nonce": 29,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -491,7 +491,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
           "description": "can sign bridge messages between Ethereum and Gnosis.",
           "role": ".$members"
@@ -519,37 +519,18 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x6236925FF8Aa09f29f1609a9BcD54Af20e4be6B4",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validate",
-          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        },
-        {
-          "permission": "validate",
-          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        }
-      ]
-    },
-    {
       "address": "eth:0x7117F73aFBDec3221bDD50DdCbf73204b3998302",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
           "description": "can sign bridge messages between Ethereum and Gnosis.",
           "role": ".$members"
         },
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
           "description": "can sign bridge messages between Ethereum and Gnosis.",
           "role": ".$members"
@@ -595,7 +576,7 @@
       "address": "eth:0x839395e20bbB182fa440d08F850E6c7A8f6F0780",
       "type": "EOA",
       "sourceHashes": [
-        "0x6fcf212849ffbf34d907a048df4d05a6c97f876a620c7386a770735262604c54"
+        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
       ],
       "proxyType": "EIP7702 EOA",
       "values": {
@@ -674,7 +655,7 @@
         "bridgeContract": "eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
         "getBridgeInterfacesVersion": { "major": 3, "minor": 3, "patch": 1 },
         "getBridgeMode": "0xb1516c26",
-        "getCurrentDay": 20586,
+        "getCurrentDay": 20629,
         "implementation": "eth:0x8eB3b7D8498a6716904577b2579e1c313d48E347",
         "isInitialized": true,
         "mediatorContractOnOtherSide": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
@@ -718,7 +699,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
           "description": "can sign bridge messages between Ethereum and Gnosis.",
           "role": ".$members"
@@ -828,7 +809,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
           "description": "can sign bridge messages between Ethereum and Gnosis.",
           "role": ".$members"
@@ -839,6 +820,25 @@
       "address": "eth:0xb2a33ae0E07fD2ca8DBdE9545F6ce0b3234dc4e8",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xb54B5572F3C4f70fF3cc8F67C19C8cddb838FBaA",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
     },
     {
       "address": "eth:0xB646B8b5Fe6cBc7770578B7679208337ef747ae4",
@@ -852,7 +852,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
           "description": "can sign bridge messages between Ethereum and Gnosis.",
           "role": ".$members"
@@ -866,7 +866,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
           "description": "can sign bridge messages between Ethereum and Gnosis.",
           "role": ".$members"
@@ -884,7 +884,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
           "description": "can sign bridge messages between Ethereum and Gnosis.",
           "role": ".$members"
@@ -961,9 +961,9 @@
           "eth:0xc073C8E5ED9Aa11CF6776C69b3e13b259Ba9F506",
           "eth:0x1312E98995bbCc30fc63Db3cef807e20CDd33dca",
           "eth:0x97630E2aE609D4104aBdA91F3066C556403182dd",
-          "eth:0x6236925FF8Aa09f29f1609a9BcD54Af20e4be6B4",
           "eth:0x7117F73aFBDec3221bDD50DdCbf73204b3998302",
-          "eth:0xAeE7C90Ef0fC461ec63c4d451B12c340642bc656"
+          "eth:0xAeE7C90Ef0fC461ec63c4d451B12c340642bc656",
+          "eth:0xb54B5572F3C4f70fF3cc8F67C19C8cddb838FBaA"
         ],
         "$pastUpgrades": [
           [
@@ -1026,9 +1026,9 @@
           "eth:0x459A3bd49F1ff109bc90b76125533699AaAAf9A6",
           "eth:0x258667E543C913264388B33328337257aF208a8f",
           "eth:0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe",
-          "eth:0x6236925FF8Aa09f29f1609a9BcD54Af20e4be6B4",
           "eth:0x7117F73aFBDec3221bDD50DdCbf73204b3998302",
-          "eth:0xCC46a3873BfCaa08a6a946a308bB621535D6E6Dd"
+          "eth:0xCC46a3873BfCaa08a6a946a308bB621535D6E6Dd",
+          "eth:0xb54B5572F3C4f70fF3cc8F67C19C8cddb838FBaA"
         ],
         "$pastUpgrades": [
           [
@@ -1117,8 +1117,8 @@
         ],
         "$upgradeCount": 3,
         "admin": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
-        "get_deposit_count": "0x8992080000000000",
-        "get_deposit_root": "0x3d20c8c003e0360c1b617821f0e305f29e5a1c657f21228649ecb1c0de57d99f",
+        "get_deposit_count": "0x9e95080000000000",
+        "get_deposit_root": "0x75746c6a438c44a4890b6921ccb58a98fe92f77a37f25a00e6513d8f6eaa98f0",
         "implementation": "gno:0x49dE1aced385334F1a66d86Db363264eB5b6A708",
         "paused": false,
         "stake_token": "gno:0x9C58BAcC331c9aa871AFD802DB6379a98e80CEdb"
@@ -1141,7 +1141,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
           "description": "can sign bridge messages between Ethereum and Gnosis.",
           "role": ".$members"
@@ -1165,7 +1165,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
           "description": "can sign bridge messages between Ethereum and Gnosis.",
           "role": ".$members"
@@ -1184,7 +1184,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
           "description": "can sign bridge messages between Ethereum and Gnosis.",
           "role": ".$members"
@@ -1254,19 +1254,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "gno:0x6236925FF8Aa09f29f1609a9BcD54Af20e4be6B4",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validate",
-          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        }
-      ]
-    },
-    {
       "name": "HomeOmnibridge Gas Limit Manager",
       "address": "gno:0x68A3674028a785A8BCE19bA81B9ab7c9942BA3ED",
       "type": "Contract",
@@ -1307,7 +1294,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
           "description": "can sign bridge messages between Ethereum and Gnosis.",
           "role": ".$members"
@@ -1581,7 +1568,7 @@
         "getChainId": 100,
         "GnosisSafe_modules": [],
         "multisigThreshold": "8 of 15 (53%)",
-        "nonce": 99,
+        "nonce": 102,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1636,7 +1623,7 @@
         "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
         "PERMIT_TYPEHASH_LEGACY": "0xea2aa0a1be11a07ed86d755c93467f4f82362b452371d1ba94d1715123511acb",
         "symbol": "GNO",
-        "totalSupply": "1401719269345213988380283",
+        "totalSupply": "1394735926908239107081122",
         "version": "1"
       },
       "fieldMeta": {
@@ -1706,9 +1693,9 @@
           "gno:0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d",
           "gno:0x258667E543C913264388B33328337257aF208a8f",
           "gno:0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe",
-          "gno:0x6236925FF8Aa09f29f1609a9BcD54Af20e4be6B4",
           "gno:0x7117F73aFBDec3221bDD50DdCbf73204b3998302",
-          "gno:0xCC46a3873BfCaa08a6a946a308bB621535D6E6Dd"
+          "gno:0xCC46a3873BfCaa08a6a946a308bB621535D6E6Dd",
+          "gno:0xb54B5572F3C4f70fF3cc8F67C19C8cddb838FBaA"
         ],
         "$pastUpgrades": [
           [
@@ -1760,6 +1747,19 @@
       "proxyType": "EOA"
     },
     {
+      "address": "gno:0xb54B5572F3C4f70fF3cc8F67C19C8cddb838FBaA",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
+    },
+    {
       "address": "gno:0xB646B8b5Fe6cBc7770578B7679208337ef747ae4",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1776,7 +1776,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
           "description": "can sign bridge messages between Ethereum and Gnosis.",
           "role": ".$members"
@@ -1794,7 +1794,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
           "description": "can sign bridge messages between Ethereum and Gnosis.",
           "role": ".$members"
@@ -1916,7 +1916,7 @@
         "getChainId": 100,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 35,
+        "nonce": 38,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2004,7 +2004,7 @@
         "gasLimitManager": "gno:0x68A3674028a785A8BCE19bA81B9ab7c9942BA3ED",
         "getBridgeInterfacesVersion": { "major": 3, "minor": 3, "patch": 1 },
         "getBridgeMode": "0xb1516c26",
-        "getCurrentDay": 20586,
+        "getCurrentDay": 20629,
         "implementation": "gno:0x2dbdCC6CAd1a5a11FD6337244407bC06162aAf92",
         "isInitialized": true,
         "mediatorContractOnOtherSide": "eth:0x88ad09518695c6c3712AC10a214bE5109a655671",
@@ -2942,6 +2942,6 @@
     "gnosis/XDaiForeignBridge": "0xe172edcbd5dbeedf492f5d9b45aa14b91e5f43f51e3341e6f45b62e46b2bc33a",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 25086578, "gnosis": 46154333 },
-  "permissionsConfigHash": "0xa84dff35ebb5f4165369438224509d53c20e90f12fa4bb5561ac893486f8c89d"
+  "usedBlockNumbers": { "ethereum": 25394747, "gnosis": 46878193 },
+  "permissionsConfigHash": "0x376b7bfccb55b5290c1326ed131f9f94cf6f93c99e50eb630214a45b3e2bf65a"
 }

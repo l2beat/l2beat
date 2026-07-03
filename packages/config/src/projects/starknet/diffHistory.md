@@ -1,4 +1,129 @@
-Generated with discovered.json: 0x190a2e331c19088a1fe0957f2e85f8002bc00d9c
+Generated with discovered.json: 0x87cb70c631d2ef726a94fec4da7aa4ad4e378f7c
+
+# Diff at Fri, 12 Jun 2026 10:54:23 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1776761835
+- current timestamp: 1776761835
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1776761835 (main branch discovery), not current.
+
+```diff
+    contract LBTCBridge (eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e) [starknet/StarknetMultiBridge] {
+    +++ description: Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually.
+      category.name:
+-        "External Bridges"
++        "Non-Critical"
+      category.priority:
+-        1
++        0
+    }
+```
+
+```diff
+    contract SolvBTCBridge (eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10) [starknet/StarknetMultiBridge_haltable] {
+    +++ description: Haltable version of the Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually. Deposits for a particular token can be halted by app governor, halt must be finalized in the second transaction that also sweeps all funds into a clrearing address. There is no logic to resume bridging after the halt.
+      category.name:
+-        "External Bridges"
++        "Non-Critical"
+      category.priority:
+-        1
++        0
+    }
+```
+
+```diff
+    contract LUSDBridge (eth:0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      category.name:
+-        "External Bridges"
++        "Non-Critical"
+      category.priority:
+-        1
++        0
+    }
+```
+
+Generated with discovered.json: 0x99a96398dfd272a91251ee65645b5cbdd513d864
+
+# Diff at Tue, 09 Jun 2026 12:43:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1776761835
+- current timestamp: 1776761835
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1776761835 (main branch discovery), not current.
+
+```diff
+    contract Starkware Security Council (eth:0x15e8c684FD095d4796A0c0CF678554F4c1C7C361) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"governStarknet","from":"eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4","role":".$admin"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4","description":"Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.","role":".$admin"}
+    }
+```
+
+```diff
+    EOA  (eth:0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability."
+      receivedPermissions.0.permission:
+-        "operateStarknet"
++        "interact"
+    }
+```
+
+```diff
+    contract Starkware Multisig 1 (eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract."
+      receivedPermissions.0.permission:
+-        "governStarknet"
++        "interact"
+    }
+```
+
+```diff
+    contract DelayedExecutor (eth:0xCA112018fEB729458b628AadC8f996f9deCbCa0c) [starknet/DelayedExecutor] {
+    +++ description: A simple Timelock contract with an immutable delay of 8d. The owner (eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988) can queue transactions.
+      directlyReceivedPermissions.0.description:
++        "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract."
+      directlyReceivedPermissions.0.permission:
+-        "governStarknet"
++        "interact"
+    }
+```
+
+```diff
+    contract Starkware SCMinority Multisig (eth:0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4","description":"Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability.","role":".operators"}
+      receivedPermissions.2:
+-        {"permission":"operateStarknet","from":"eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4","role":".operators"}
+    }
+```
+
+Generated with discovered.json: 0x17173875387aaeee142713ae9deb6391c6639f8a
 
 # Diff at Fri, 08 May 2026 07:52:25 GMT:
 

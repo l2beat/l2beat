@@ -53,5 +53,11 @@
     "hash": "0xc36a2d08c78e94899e169e68b8ae59394b021eb370f8b104550c3892e4ca8cad",
     "address": "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A",
     "blockNumber": 24069615
+  },
+  "PermissionedDisputeGame_v2_4_0": {
+    "hash": "0x1fe878990858cb08a23e6037667b2c5a56504ca4e7b5506522c9bf705e1691bd",
+    "address": "eth:0xe1dFFCBE4e22B813F26d2106D943C102e7cAb87e",
+    "chain": "ethereum",
+    "blockNumber": 25424438
   }
 }

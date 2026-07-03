@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import { RefreshCwIcon } from 'lucide-react'
 import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
@@ -6,14 +7,16 @@ import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { TablePageSummaryCard } from '~/components/table/TablePageSummaryCard'
 import { AppLayout } from '~/layouts/AppLayout'
-import { api } from '~/react-query/trpc'
+import { useBackendTrpc } from '~/react-query/trpc'
 import { TransfersTable } from './table/TransfersTable'
 import type { TransferStatsRow } from './types'
 import { formatDollars } from './utils'
 
 export function TransfersPage() {
-  const { data, error, isError, isLoading, isFetching, refetch } =
-    api.interop.transfers.stats.useQuery()
+  const trpc = useBackendTrpc()
+  const { data, error, isError, isLoading, isFetching, refetch } = useQuery(
+    trpc.interop.transfers.stats.queryOptions(),
+  )
 
   const rows: TransferStatsRow[] = data ?? []
   const totalTransfers = rows.reduce((sum, row) => sum + row.count, 0)

@@ -1,7 +1,7 @@
 {
   "name": "soon",
   "timestamp": 1769535666,
-  "configHash": "0x01f6fd21ecaccba5c489841d3323008b6a5ba32d3d18cd5e28c4c4c681c3b0a1",
+  "configHash": "0xff8b17e7971c637e4311a2bfcb70bce47479c466d619699839754da789363bc8",
   "entries": [
     {
       "name": "SystemConfig",
@@ -345,19 +345,21 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "guard",
+          "permission": "interact",
           "from": "eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07",
-          "role": ".guardian"
-        },
-        {
-          "permission": "guard",
-          "from": "eth:0xD02631b334FfDCD5674217e57fe524c44B341DD4",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
           "role": ".guardian"
         },
         {
           "permission": "interact",
           "from": "eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07",
           "description": "freeze specific withdrawals.",
+          "role": ".guardian"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xD02631b334FfDCD5674217e57fe524c44B341DD4",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
           "role": ".guardian"
         }
       ]
@@ -470,8 +472,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
           "role": ".batcherHash"
         }
       ]
@@ -540,7 +543,11 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
-      "ignoreInWatchMode": ["gameCount", "permissionedGameArgs"],
+      "ignoreInWatchMode": [
+        "gameCount",
+        "permissionedGameArgs",
+        "permissionedGamesTotal"
+      ],
       "deployerAddress": "eth:0x7b4d0e4d7C961CF967e88f600399d610736DeE51",
       "sinceTimestamp": 1735877375,
       "sinceBlock": 21541473,
@@ -1445,7 +1452,7 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/DisputeGameFactory": "0x8e238948fd295fbbcd65a82d3723114f83cf0e8358b0b50126a80c68748d8920",
+    "opstack/DisputeGameFactory": "0x46746381be2da0435ab1c70360c00f35d9759a505c3f99905e07476b72e8b79c",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge_soon": "0xb2902b94f11fe47993a13e604f0bfcdc4648d040e0409e6e5c24d0ae9a6ebf9e",
@@ -1456,5 +1463,5 @@
     "risc0/KailuaTreasury_soon": "0xf44268b8e01e5036fb2fc2a573c604cad73f80450b22966e227dc0f37bb903b6"
   },
   "usedBlockNumbers": { "ethereum": 24327726 },
-  "permissionsConfigHash": "0xa936f68315d80f3176f8eb05b56de1fd9c084c5a67769c770d92a8a2b7c34a35"
+  "permissionsConfigHash": "0xef1c2805f40b3d40578ebbf979adb1b110b67a6f35172f3f9656d63475bf8d08"
 }

@@ -1,4 +1,61 @@
-Generated with discovered.json: 0x0c241c81a06e57e085e84142adc84fabe91b5bda
+Generated with discovered.json: 0xce2d0c6e8fefe675a91387d3710dec1227bbc399
+
+# Diff at Fri, 12 Jun 2026 10:19:06 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1768816541
+- current timestamp: 1768816541
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768816541 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x49015545B46B07082bd7faf2633643eae87710EC) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0xf8397d9de8deeb756369933f81c34ea312c0031a
+
+# Diff at Tue, 09 Jun 2026 12:43:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1768816541
+- current timestamp: 1768816541
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768816541 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0xA2Ce8D246889Db0F1Cb615E2E1231790cd5244A7) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0xe07d24705a596fd881042e6e76c8230166ef260e
 
 # Diff at Fri, 08 May 2026 07:52:33 GMT:
 

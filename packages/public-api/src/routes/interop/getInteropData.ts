@@ -30,7 +30,7 @@ export async function getInteropChainsData(
 
 async function getLatestAggregatedInteropTransfers(db: Database) {
   const latestTimestamp =
-    await db.aggregatedInteropTransfer.getLatestTimestamp()
+    await db.interopAggregateStatus.getLatestPromotedTimestamp()
   if (!latestTimestamp) {
     return []
   }

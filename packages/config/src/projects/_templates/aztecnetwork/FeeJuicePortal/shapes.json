@@ -1,7 +1,12 @@
 {
   "FeeJuicePortal.sol": {
-    "hash": "0xefcc58eb6e18ab3015db23e7b5ca1f48f5332955771faa13269730f8f16b5a21",
+    "hash": "0xc7593f2bfd237067a4f9c2e0235082023defc4aec53c7f075d4c0e0d30c12557",
     "address": "eth:0x2891F8b941067F8B5a3F34545A30Cf71E3E23617",
     "blockNumber": 24590324
+  },
+  "FeeJuicePortal_v5.sol": {
+    "hash": "0x5f3748714c9334f8e282209a459470fc66e65bf29e0044b63e84d0349bd2b113",
+    "address": "eth:0xaf73Dd51D1eb8a079BB097f39c832cDD00ac691c",
+    "blockNumber": 25428902
   }
 }

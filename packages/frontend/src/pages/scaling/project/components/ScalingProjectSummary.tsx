@@ -24,8 +24,11 @@ import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLin
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
+import { InteropTopItems } from '~/pages/interop/components/top-items/TopItems'
 import type { ProjectScalingEntry } from '~/server/features/scaling/project/getScalingProjectEntry'
 import { cn } from '~/utils/cn'
+import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
+import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { ProjectScalingRosette } from './ScalingProjectRosette'
 import { ProjectScalingStats } from './ScalingProjectStats'
 
@@ -206,6 +209,12 @@ export function ProjectScalingSummary({ project }: Props) {
               </CustomLink>
             </div>
           </div>
+          {project.header.interop && (
+            <>
+              <HorizontalSeparator className="mt-5 mb-4" />
+              <InteropMetrics interop={project.header.interop} />
+            </>
+          )}
         </div>
         <VerticalSeparator className="mr-8 ml-12 h-[unset] self-stretch max-lg:hidden" />
 
@@ -242,6 +251,94 @@ export function ProjectScalingSummary({ project }: Props) {
         </div>
       </div>
     </section>
+  )
+}
+
+function InteropMetrics({
+  interop,
+}: {
+  interop: NonNullable<ProjectScalingEntry['header']['interop']>
+}) {
+  const headlineStats = [
+    { label: 'Last 24h volume', value: formatCurrency(interop.volume, 'usd') },
+    {
+      label: 'Last 24h transfer count',
+      value: formatActivityCount(interop.transferCount),
+    },
+  ]
+
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="grid gap-x-10 gap-y-4 md:grid-cols-2">
+        {headlineStats.map((stat) => (
+          <div
+            key={stat.label}
+            className="flex max-md:items-center max-md:justify-between md:flex-col md:gap-1.5"
+          >
+            <span className="font-medium text-label-value-12 text-secondary">
+              {stat.label}
+            </span>
+            <span className="font-bold text-label-value-16">{stat.value}</span>
+          </div>
+        ))}
+      </div>
+      <HorizontalSeparator />
+      <div className="grid gap-x-10 gap-y-4 md:grid-cols-2">
+        <InteropMetric
+          title="Interop protocols used"
+          items={{
+            items: interop.protocols.items.map((protocol) => ({
+              id: protocol.id,
+              displayName: protocol.name,
+              iconUrl: protocol.iconUrl,
+              volume: protocol.volume,
+            })),
+            remainingCount: interop.protocols.remainingCount,
+          }}
+        />
+        <InteropMetric
+          title="Tokens by volume"
+          items={{
+            items: interop.tokens.items.map((token) => ({
+              id: token.id,
+              displayName: token.symbol,
+              iconUrl: token.iconUrl,
+              volume: token.volume,
+            })),
+            remainingCount: interop.tokens.remainingCount,
+          }}
+        />
+      </div>
+    </div>
+  )
+}
+
+function InteropMetric({
+  title,
+  items,
+}: {
+  title: string
+  items: {
+    items: {
+      id: string
+      displayName: string
+      iconUrl: string
+      volume: number
+    }[]
+    remainingCount: number
+  }
+}) {
+  if (items.items.length === 0) {
+    return null
+  }
+
+  return (
+    <div>
+      <p className="mb-2 font-medium text-label-value-12 text-secondary">
+        {title}
+      </p>
+      <InteropTopItems topItems={items} hideDialog />
+    </div>
   )
 }
 

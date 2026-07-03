@@ -1,4 +1,212 @@
-Generated with discovered.json: 0x4b7add61aad7c3e8f86582a87f54a9d58cfeb5da
+Generated with discovered.json: 0xf2e5719f92c069eef5098bc0342c44a100d24fb7
+
+# Diff at Fri, 12 Jun 2026 10:19:08 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1778499359
+- current timestamp: 1778499359
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778499359 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x000aC0076727b35FBea2dAc28fEE5cCB0fEA768e) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA  (eth:0x107A0086b32d7A0977926A205131d8731D39cbEB) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA  (eth:0x114De8460193bdf3A2fCf81f86a09765F4762fD1) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA  (eth:0x178e21ad2E77AE06711549CFBB1f9c7a9d8096e8) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA  (eth:0x18e41674CcF26329cD111406C1D05C6c80b23EdC) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA  (eth:0x3F851Ad586A47ceF8d04748f33ab0D71395f06b4) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA  (eth:0x42579bFFbCF4276E290aB8E4C162bd4052b97970) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA  (eth:0x5893B5A76c3f739645648885bDCcC06cd70a3Cd3) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA  (eth:0x6FbEBc898F403E4773E95feB15E80C9A99c8348d) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA  (eth:0x7899cEAB1DC961Dae9defDB7A4f521269a5448FC) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA  (eth:0x8C82B2fd82FaeD2711d59AF0F2499D16e726f6b2) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA  (eth:0x938f104AEb5581293216ce97d771e0CB721221B1) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA  (eth:0x9D16870160e703324D057c3361c34C5beFBa2c34) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA  (eth:0xAF45Ced136b9D9e24903464AE889F5C8a723FC14) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA  (eth:0xD1F64e26238811de5553C40f64af41eE1B6057Cc) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA  (eth:0xD2CC37A4dc036a8D232b48f62cDD4731412f4890) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA  (eth:0xDA798F6896A3331F64b48c12D1D57Fd9cbe70811) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA  (eth:0xf93124b7c738843CBB89E864c862c38cddCccF95) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA  (eth:0xfF6CB952589BDE862c25Ef4392132fb9D4A42157) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0xa706d3fd7d9117e4514ad06ec5dcb3352bfb3311
 
 # Diff at Mon, 11 May 2026 11:44:11 GMT:
 

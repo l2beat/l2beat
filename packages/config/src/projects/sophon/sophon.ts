@@ -11,7 +11,6 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { getAltDaStage } from '../../common/stages/getAltDaStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { zkStackL2 } from '../../templates/zkStack'
@@ -23,62 +22,25 @@ const v26UpgradeTS = UnixTime(1743095267)
 const v29UpgradeTS = UnixTime(1761612755)
 const diamond = discovery.getContract('Diamond')
 const bridge = discovery.getContract('L1NativeTokenVault')
-const isL2AssetRouterWhitelisted =
-  discovery.getContractValue<ChainSpecificAddress[]>(
-    'SophonTransactionFilterer',
-    'whitelistedContractsAC',
-  )[0] ===
-  ChainSpecificAddress('eth:0x0000000000000000000000000000000000010003')
-const assetBridgingWhitelistedText = isL2AssetRouterWhitelisted
-  ? ' The L2AssetRouter contract is currently whitelisted as a target in the TransactionFilterer which allows users to queue withdrawals that use the canonical bridge from L1.'
-  : ''
 
 export const sophon: ScalingProject = zkStackL2({
   chainId,
   discovery,
   additionalBadges: [BADGES.DA.AvailVector],
   addedAt: UnixTime(1734480000), // 2024-12-18T00:00:00Z
-  stage: getAltDaStage(
-    {
-      stage0: {
-        callsItselfValidiumOrOptimium: true,
-        stateRootsPostedToL1: true,
-        stateVerificationOnL1: true,
-        daAttestedByIndependentParty: true,
-        nodeSourceAvailable: true,
-        fraudProofSystemAtLeast5Outsiders: null,
-      },
-      stage1: {
-        principle: false,
-        usersCanExitWithoutCooperation: false,
-        usersHave7DaysToExit: false,
-        securityCouncilProperlySetUp: false,
-        daVerifierSecureOnL1: true,
-        daVerifier7DayExitWindow: true,
-        daCommitteeDecentralized: true,
-        noRedTrustedSetups: true,
-        proverSourcePublished: true,
-        verifierContractsReproducible: null,
-        programHashesReproducible: true,
-      },
-      stage2: {
-        fraudProofSystemIsPermissionless: null,
-        delayWith30DExitWindow: false,
-        proofSystemOverriddenOnlyInCaseOfABug: false,
-        daVerifier30DayExitWindow: true,
-        daMechanismEconomicSecurity: false,
-      },
-    },
-    {
-      nodeSourceLink: 'https://github.com/matter-labs/zksync-era',
-      daVerifierLink:
-        'https://etherscan.io/address/0x8f50d93B9955B285f787043B30B5F51D09bE0120#code',
-    },
-  ),
+  daAttestedByIndependentParty: true,
+  daVerifier7DayExitWindow: true,
+  daCommitteeDecentralized: true,
+  daVerifier30DayExitWindow: false,
+  daMechanismEconomicSecurity: false,
+  daVerifierLink:
+    'https://etherscan.io/address/0x8f50d93B9955B285f787043B30B5F51D09bE0120#code',
   display: {
     name: 'Sophon',
     slug: 'sophon',
     architectureImage: 'zkstack-validium-vector',
+    headerWarning:
+      'Sophon will be sunsetting in late 2026. See the [announcement](https://x.com/sophon/status/2070192257295335800) and the [migration guide](https://sophon.com/content/) for details.',
     description:
       'Sophon is a consumer-centric ecosystem on a ZK Stack Validium L2, designed to bring onchain benefits to everyday lifestyle and entertainment applications.',
     links: {
@@ -171,7 +133,7 @@ export const sophon: ScalingProject = zkStackL2({
     sequencerFailure: {
       value: 'No mechanism',
       description:
-        'There is no mechanism to have transactions be included if the sequencer is down or censoring. The Operator actively uses a TransactionFilterer contract, which requires accounts that enqueue or force transactions from L1 OR their targets on L2, to be whitelisted.',
+        'There is no mechanism to have transactions be included if the sequencer is down or censoring. The Operator actively uses a TransactionFilterer contract, which requires accounts that enqueue or force transactions from L1 to be whitelisted.',
       sentiment: 'bad',
     },
   },
@@ -179,9 +141,7 @@ export const sophon: ScalingProject = zkStackL2({
     forceTransactions: {
       name: "Users can't force all transactions",
       description:
-        'If a user is censored by the L2 Sequencer, they cannot by default force their transaction via the L1 queue. An active TransactionFilterer contract which allows only whitelisted accounts to enqueue, prevents it. Even if a user was specifically whitelisted, there is no mechanism that forces the L2 Sequencer to include\
-            transactions from the queue in an L2 block, as they have the choice to process the queue in order or not at all.' +
-        assetBridgingWhitelistedText,
+        'If a user is censored by the L2 Sequencer, they cannot by default force their transaction via the L1 queue. The active TransactionFilterer only allows whitelisted accounts to enqueue L1 to L2 transactions. Even if a user were specifically whitelisted, there is no mechanism that forces the L2 Sequencer to include transactions from the queue in an L2 block, as they have the choice to process the queue in order or not at all.',
       risks: [
         {
           category: 'Users can be censored if',
@@ -203,7 +163,7 @@ export const sophon: ScalingProject = zkStackL2({
         },
         {
           title: 'TransactionFilterer',
-          url: 'https://etherscan.io/address/0x9D06B34adc3026eF876e4DABb859C424DbDA3063#code#F1#L34',
+          url: 'https://etherscan.io/address/0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41#code#F1#L26',
         },
       ],
     },
@@ -355,6 +315,13 @@ export const sophon: ScalingProject = zkStackL2({
     },
   ],
   milestones: [
+    {
+      title: 'Sophon initiates L2 sunset',
+      url: 'https://x.com/sophon/status/2070192257295335800',
+      date: '2026-06-25T00:00:00.00Z',
+      description: 'Sophon announces sunsetting the L2 and stops new deposits.',
+      type: 'incident',
+    },
     {
       title: 'SOPH TGE',
       url: 'https://x.com/sophon/status/1927697463655219692', // TODO better announcement link

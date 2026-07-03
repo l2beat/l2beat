@@ -54,6 +54,7 @@ const addAndRemoveSchema = v.object({
   ...common,
   set: v.undefined().optional(),
   flatten: v.boolean().optional(),
+  dedupBy: oneOrMany(v.string()).optional(),
   add: oneOrMany(EventHandlerAction),
   remove: oneOrMany(EventHandlerAction).optional(),
 })
@@ -165,12 +166,19 @@ export class EventHandler implements Handler {
         logRows = flattenSelectedLogRows(logRows, select)
       }
 
+      // `dedupBy`, when set, is the row identity (what makes two logs "the same").
+      // When omitted, the dedup key falls back to `select` (legacy behavior).
+      const dedupBy =
+        this.definition.dedupBy !== undefined
+          ? ensureArray(this.definition.dedupBy)
+          : select
+
       logRows = this.executeAddRemove(
         longChain,
         logRows,
         addActions,
         removeActions,
-        select,
+        dedupBy,
       )
     }
 
@@ -214,7 +222,7 @@ export class EventHandler implements Handler {
     logs: LogRow[],
     addActions: EventHandlerAction[],
     removeActions: EventHandlerAction[],
-    select: string[],
+    dedupBy: string[],
   ): LogRow[] {
     const result: Map<string, LogRow> = new Map()
 
@@ -236,9 +244,9 @@ export class EventHandler implements Handler {
           '  3. Make sure that remove where clause is opposite to add one',
       )
 
-      const value =
-        select.length > 0 ? extractKeys(entry.value, select) : entry.value
-      const string = JSON.stringify(value)
+      const keyValue =
+        dedupBy.length > 0 ? extractKeys(entry.value, dedupBy) : entry.value
+      const string = JSON.stringify(keyValue)
 
       if (add) {
         result.set(string, entry)
@@ -322,12 +330,25 @@ function extractKeys(
   return result
 }
 
+// Supports dot-notation for reaching into nested values, e.g.
+// "config.chainSelector" for a named object or "config.1" for a tuple/struct
+// (decoded structs are positional arrays, so a nested struct field is addressed
+// by its index). Plain keys (no dot) behave as before. Safe because Solidity
+// parameter names cannot contain a dot.
 function extractKey(value: ContractValue, key: string): ContractValue {
-  assert(typeof value === 'object' && !Array.isArray(value), 'Extract keys')
-
-  const result = value[key]
-  assert(result !== undefined, `Invalid extraction key [${key}], not defined`)
-  return result
+  let current: ContractValue = value
+  for (const part of key.split('.')) {
+    assert(
+      typeof current === 'object' && current !== null,
+      `Cannot extract [${part}] from a non-object while resolving [${key}]`,
+    )
+    const next: ContractValue | undefined = Array.isArray(current)
+      ? current[Number(part)]
+      : current[part]
+    assert(next !== undefined, `Invalid extraction key [${key}], not defined`)
+    current = next
+  }
+  return current
 }
 
 function ensureArray<T>(v: T | T[]): T[] {

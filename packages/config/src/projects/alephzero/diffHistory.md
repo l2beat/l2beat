@@ -1,3 +1,129 @@
+Generated with discovered.json: 0x97cdcf74debd5bf8a5e77cab51586231d97900f4
+
+# Diff at Tue, 09 Jun 2026 12:43:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1765795407
+- current timestamp: 1765795407
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765795407 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x0181F0f0260Ac4149CA7Abf6c53d3E8053f95715) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x262711cA4DA6409Da795D8af9E18DDaF47397f80) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x3648e2c562F00DeEA11B0b335Cf55C5EB2Df3A5F) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x75feC8Bb2d99076D776A5D46D1E3d42686520eF1) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x7D9A25f61865D5A211a8be80a4Ef6bd201112717) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xC410B8657FBB2CdbF0c5c5d5128576974467ba5e) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xCD795E6003Da105f4a1E11F73fb64b58B5C0f325) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xD19ee3f6Bf22A3A23eCd25B5ED0C655a2a56F65E) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "fastconfirm"
++        "interact"
+      receivedPermissions.1.permission:
+-        "validate"
++        "interact"
+      receivedPermissions.2.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xe778F5Bf5dDB8614a1ab6321Cc557EDbC90e615f) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    contract AlephZeroMultisig (eth:0xeC475675629B38E42d4aC5d40761618268E7Ed21) [GnosisSafe] {
+    +++ description: None
+      directlyReceivedPermissions.0.permission:
+-        "fastconfirm"
++        "interact"
+      directlyReceivedPermissions.1.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xf244224843657bb59A6456754992Ea973655D918) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x2fd55171e53f2bddcbf02c632075c9f0023f27a8
 
 # Diff at Mon, 05 Jan 2026 17:43:56 GMT:

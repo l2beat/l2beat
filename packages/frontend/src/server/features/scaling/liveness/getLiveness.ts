@@ -42,7 +42,7 @@ async function getLivenessData(projectId?: ProjectId) {
     ps.getProjects({
       select: ['trackedTxsConfig'],
       optional: ['livenessConfig'],
-      whereNot: ['isUpcoming', 'archivedAt'],
+      whereNot: ['archivedAt'],
     }),
   ])
 
@@ -277,7 +277,7 @@ function getAnomalies(
   })
 
   return [
-    ...filteredAnomalies.map((a) => {
+    ...filteredAnomalies.map((a): LivenessAnomaly => {
       const avgInterval = project30Days.find(
         (r) => r.subtype === a.subtype,
       )?.avg
@@ -293,12 +293,13 @@ function getAnomalies(
           ? UnixTime.now() - a.timestamp
           : a.duration,
         end: isOngoing ? undefined : computedEnd,
+        status: isOngoing ? 'ongoing' : 'recovered',
         subtype: a.subtype,
         avgInterval,
         isApproved: false,
       }
     }),
-    ...realTimeAnomalies.map((a) => {
+    ...realTimeAnomalies.map((a): LivenessAnomaly => {
       const avgInterval = project30Days.find(
         (r) => r.subtype === a.subtype,
       )?.avg
@@ -308,6 +309,7 @@ function getAnomalies(
         start: a.start,
         end: a.end,
         durationInSeconds: a.end ? a.end - a.start : UnixTime.now() - a.start,
+        status: a.status,
         subtype: a.subtype,
         avgInterval,
         isApproved: true,
@@ -317,16 +319,16 @@ function getAnomalies(
 }
 
 function sortAnomalies(a: LivenessAnomaly, b: LivenessAnomaly) {
-  if (a.end === undefined && b.end === undefined) {
+  if (a.status === 'ongoing' && b.status === 'ongoing') {
     return b.start - a.start
   }
-  if (a.end === undefined) {
+  if (a.status === 'ongoing') {
     return -1
   }
-  if (b.end === undefined) {
+  if (b.status === 'ongoing') {
     return 1
   }
-  return b.end - a.end
+  return (b.end ?? b.start) - (a.end ?? a.start)
 }
 
 function getMockLivenessData(): LivenessResponse {
@@ -465,6 +467,7 @@ function generateAnomalies(): LivenessAnomaly[] {
           subtype: Math.random() > 0.5 ? 'batchSubmissions' : 'stateUpdates',
           start,
           end: isOngoing ? undefined : end,
+          status: isOngoing ? 'ongoing' : 'recovered',
           durationInSeconds: isOngoing ? UnixTime.now() - start : end - start,
           avgInterval: generateRandomTime(),
           isApproved: isOngoing,

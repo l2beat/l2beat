@@ -68,7 +68,7 @@ export async function getDetailedTvsChart({
 
   const projectsFilter = createTvsProjectsFilter(filter)
   const tvsProjects = await getTvsProjects(projectsFilter, {
-    withoutArchivedAndUpcoming: forSummary,
+    withoutArchived: forSummary,
   })
   if (tvsProjects.length === 0) {
     return { chart: [], syncedUntil: UnixTime.now() }

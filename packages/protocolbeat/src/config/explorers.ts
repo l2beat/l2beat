@@ -23,10 +23,23 @@ export const EXPLORER_URLS: Record<string, string> = {
   blastmainnet: 'https://blastscan.io/address',
   kinto: 'https://explorer.kinto.xyz/address',
   unichain: 'https://uniscan.xyz/address',
+  hyperevm: 'https://hyperevmscan.io/address',
   ink: 'https://explorer.inkonchain.com/address',
   everclear: 'https://scan.everclear.org/address',
   taiko: 'https://taikoscan.io/address',
   gateway: 'https://gateway.explorer.zksync.io/address',
   ethereal: 'https://explorer.ethereal.trade/address',
   jovay: 'https://explorer.jovay.io/l2/address',
+  katana: 'https://katanascan.com',
+}
+
+export function getExplorerTxUrl(chain: string): string | undefined {
+  const base = EXPLORER_URLS[chain]
+  if (!base) {
+    return undefined
+  }
+  if (/\/address$/.test(base)) {
+    return base.replace(/\/address$/, '/tx')
+  }
+  return `${base.replace(/\/$/, '')}/tx`
 }

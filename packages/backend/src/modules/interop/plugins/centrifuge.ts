@@ -1,196 +1,453 @@
-/* Assuming Axelar is used for sending Proofs and Wormhole for sending Payloads
-On SRC:
-- WormholeCore: LogMessagePublished
-- WormholeRelayer: SendEvent
-- MultiAdapter: SendPayLoad
-
-- AxelarGateway: ContractCall
-- MultiAdapter: SendProof
-On DST: (Axelar Approve)
-- AxelarGateway: ContractCallApproved
-On DST: (Axelar Execute)
-- AxelarGateway: ContractCallExecuted
-- MultiAdapter: HandleProof
-On DST: (Wormhole Delivery)
-- MultiAdapter: HandlePayLoad
-- WormholeRelayer: Delivery
-*/
-
 import {
-  ContractCall,
-  ContractCallApproved,
-  ContractCallExecuted,
-} from './axelar'
+  Address32,
+  ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
+import type { TokenMap } from '../engine/match/TokenMap'
+import { findBestTransferLogByExactAmount } from './logScan'
+import {
+  getBestEffortTokenFrameworkBridgeType,
+  getTokenFrameworkBridgeType,
+} from './tokenFrameworkBridgeTyping'
 import {
   createEventParser,
   createInteropEventType,
+  type DataRequest,
   type InteropEvent,
   type InteropEventDb,
-  type InteropPlugin,
+  type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
   Result,
 } from './types'
-import { LogMessagePublished } from './wormhole/wormhole.plugin'
-import { Delivery } from './wormhole-relayer'
 
-const parseSendPayload = createEventParser(
-  'event SendPayload(uint16 indexed centrifugeId, bytes32 indexed payloadId, bytes payload, address adapter, bytes32 adapterData, address refund)',
+// centrifuge uses Layerzero, Axelar, CCIP and Wormhole for messaging
+
+const spokeAddress = EthereumAddress(
+  '0xEC3582fcDc34078a4B7a8c75a5a3AE46f48525aB',
+)
+const hubHandlerAddress = EthereumAddress(
+  '0x0dEFb429B1663698da4bAe3278393F6844c3392C',
 )
 
-const parseSendProof = createEventParser(
-  'event SendProof(uint16 indexed centrifugeId, bytes32 indexed payloadId, bytes32 payloadHash, address adapter, bytes32 adapterData)',
-)
+const spokeAddress32 = Address32.from(spokeAddress)
 
-const parseHandlePayload = createEventParser(
-  'event HandlePayload(uint16 indexed centrifugeId, bytes32 indexed payloadId, bytes payload, address adapter)',
-)
+const initiateTransferSharesLog =
+  'event InitiateTransferShares(uint16 centrifugeId, uint64 indexed poolId, bytes16 indexed scId, address indexed sender, bytes32 destinationAddress, uint128 amount)'
+const forwardTransferSharesLog =
+  'event ForwardTransferShares(uint16 indexed fromCentrifugeId, uint16 indexed toCentrifugeId, uint64 indexed poolId, bytes16 scId, bytes32 receiver, uint128 amount)'
+const executeTransferSharesLog =
+  'event ExecuteTransferShares(uint64 indexed poolId, bytes16 indexed scId, address indexed receiver, uint128 amount)'
+const transferLog =
+  'event Transfer(address indexed from, address indexed to, uint256 value)'
 
-const parseHandleProof = createEventParser(
-  'event HandleProof(uint16 indexed centrifugeId, bytes32 indexed payloadId, bytes32 payloadHash, address adapter)',
-)
+const parseInitiateTransferShares = createEventParser(initiateTransferSharesLog)
+const parseForwardTransferShares = createEventParser(forwardTransferSharesLog)
+const parseExecuteTransferShares = createEventParser(executeTransferSharesLog)
+const parseTransfer = createEventParser(transferLog)
 
-export const SendPayLoad = createInteropEventType<{
-  payloadId: string
-  adapter: string
-}>('centrifuge.SendPayLoad')
+const CENTRIFUGE_NETWORKS = [
+  { chain: 'ethereum', centrifugeId: 1 },
+  { chain: 'base', centrifugeId: 2 },
+  { chain: 'arbitrum', centrifugeId: 3 },
+  { chain: 'plumenetwork', centrifugeId: 4 },
+  { chain: 'avalanche', centrifugeId: 5 },
+  { chain: 'bsc', centrifugeId: 6 },
+  { chain: 'solana', centrifugeId: 7 },
+  { chain: 'stellar', centrifugeId: 8 },
+  { chain: 'hyperevm', centrifugeId: 9 },
+  { chain: 'optimism', centrifugeId: 10 },
+  { chain: 'monad', centrifugeId: 11 },
+  { chain: 'pharos', centrifugeId: 12 },
+] as const
 
-export const SendProof = createInteropEventType<{
-  payloadId: string
-  adapter: string
-}>('centrifuge.SendProof')
+export const InitiateTransferShares = createInteropEventType<{
+  $dstChain: string
+  srcCentrifugeId?: number
+  dstCentrifugeId: number
+  poolId: bigint
+  scId: string
+  sender: EthereumAddress
+  receiver: string
+  amount: bigint
+  srcTokenAddress?: Address32
+  srcWasBurned?: boolean
+}>('centrifuge.InitiateTransferShares', { direction: 'outgoing' })
 
-export const HandlePayLoad = createInteropEventType<{
-  payloadId: string
-  adapter: string
-}>('centrifuge.HandlePayLoad')
+export const ForwardTransferShares = createInteropEventType<{
+  $srcChain: string
+  $dstChain: string
+  srcCentrifugeId: number
+  dstCentrifugeId: number
+  poolId: bigint
+  scId: string
+  receiver: string
+  amount: bigint
+}>('centrifuge.ForwardTransferShares')
 
-export const HandleProof = createInteropEventType<{
-  payloadId: string
-  adapter: string
-}>('centrifuge.HandleProof')
+export const ExecuteTransferShares = createInteropEventType<{
+  poolId: bigint
+  scId: string
+  receiver: string
+  amount: bigint
+  dstTokenAddress?: Address32
+  dstWasMinted?: boolean
+}>('centrifuge.ExecuteTransferShares', { direction: 'incoming' })
 
-export class CentriFugePlugin implements InteropPlugin {
+export class CentriFugePlugin implements InteropPluginResyncable {
   readonly name = 'centrifuge'
 
+  constructor(private oneSidedChains: string[] = []) {}
+
+  getDataRequests(): DataRequest[] {
+    return [
+      {
+        type: 'event',
+        signature: initiateTransferSharesLog,
+        includeTxEvents: [transferLog],
+        addresses: getAddresses(spokeAddress),
+      },
+      {
+        type: 'event',
+        signature: forwardTransferSharesLog,
+        addresses: getAddresses(hubHandlerAddress),
+      },
+      {
+        type: 'event',
+        signature: executeTransferSharesLog,
+        includeTxEvents: [transferLog],
+        addresses: getAddresses(spokeAddress),
+      },
+    ]
+  }
+
   capture(input: LogToCapture) {
-    const parsedSendPayload = parseSendPayload(input.log, null)
-    if (parsedSendPayload) {
+    const initiateTransferShares = parseInitiateTransferShares(input.log, [
+      spokeAddress,
+    ])
+    if (initiateTransferShares) {
+      const transferMatch = findBestTransferLogByExactAmount(
+        input.txLogs,
+        initiateTransferShares.amount,
+        input.log.logIndex ?? -1,
+        (log) => parseTransfer(log, null),
+        (transfer) =>
+          transfer.from === spokeAddress32 && transfer.to === Address32.ZERO,
+      )
+
       return [
-        SendPayLoad.create(input, {
-          payloadId: parsedSendPayload.payloadId,
-          adapter: parsedSendPayload.adapter,
+        InitiateTransferShares.create(input, {
+          $dstChain: findCentrifugeChain(initiateTransferShares.centrifugeId),
+          srcCentrifugeId: findCentrifugeId(input.chain),
+          dstCentrifugeId: initiateTransferShares.centrifugeId,
+          poolId: initiateTransferShares.poolId,
+          scId: normalizeBytes(initiateTransferShares.scId),
+          sender: EthereumAddress(initiateTransferShares.sender),
+          receiver: normalizeBytes(initiateTransferShares.destinationAddress),
+          amount: initiateTransferShares.amount,
+          srcTokenAddress: transferMatch.transfer?.logAddress,
+          srcWasBurned: transferMatch.transfer
+            ? transferMatch.transfer.to === Address32.ZERO
+            : undefined,
         }),
       ]
     }
 
-    const parsedSendProof = parseSendProof(input.log, null)
-    if (parsedSendProof) {
+    const forwardTransferShares = parseForwardTransferShares(input.log, [
+      hubHandlerAddress,
+    ])
+    if (forwardTransferShares) {
       return [
-        SendProof.create(input, {
-          payloadId: parsedSendProof.payloadId,
-          adapter: parsedSendProof.adapter,
+        ForwardTransferShares.create(input, {
+          $srcChain: findCentrifugeChain(
+            forwardTransferShares.fromCentrifugeId,
+          ),
+          $dstChain: findCentrifugeChain(forwardTransferShares.toCentrifugeId),
+          srcCentrifugeId: forwardTransferShares.fromCentrifugeId,
+          dstCentrifugeId: forwardTransferShares.toCentrifugeId,
+          poolId: forwardTransferShares.poolId,
+          scId: normalizeBytes(forwardTransferShares.scId),
+          receiver: normalizeBytes(forwardTransferShares.receiver),
+          amount: forwardTransferShares.amount,
         }),
       ]
     }
 
-    const parsedHandlePayload = parseHandlePayload(input.log, null)
-    if (parsedHandlePayload) {
-      return [
-        HandlePayLoad.create(input, {
-          payloadId: parsedHandlePayload.payloadId,
-          adapter: parsedHandlePayload.adapter,
-        }),
-      ]
-    }
+    const executeTransferShares = parseExecuteTransferShares(input.log, [
+      spokeAddress,
+    ])
+    if (executeTransferShares) {
+      const transferMatch = findBestTransferLogByExactAmount(
+        input.txLogs,
+        executeTransferShares.amount,
+        input.log.logIndex ?? -1,
+        (log) => parseTransfer(log, null),
+        (transfer) =>
+          transfer.from === Address32.ZERO && transfer.to === spokeAddress32,
+      )
 
-    const parsedHandleProof = parseHandleProof(input.log, null)
-    if (parsedHandleProof) {
       return [
-        HandleProof.create(input, {
-          payloadId: parsedHandleProof.payloadId,
-          adapter: parsedHandleProof.adapter,
+        ExecuteTransferShares.create(input, {
+          poolId: executeTransferShares.poolId,
+          scId: normalizeBytes(executeTransferShares.scId),
+          receiver: evmAddressToCentrifugeBytes32(
+            executeTransferShares.receiver,
+          ),
+          amount: executeTransferShares.amount,
+          dstTokenAddress: transferMatch.transfer?.logAddress,
+          dstWasMinted: transferMatch.transfer
+            ? transferMatch.transfer.from === Address32.ZERO
+            : undefined,
         }),
       ]
     }
   }
 
-  /* Matching algorithm:
-    1. Start with HandleProof on DST chain
-    2. Find ContractCallExecuted with the same transaction
-    3. Find ContractCallApproved with the same commandId
-    4. Find SendProof on SRC chain with the same payloadId
-    5. Find ContractCall on SRC chain
+  matchTypes = [ExecuteTransferShares, InitiateTransferShares]
 
-    1. Start with HandlePayload on DST chain
-    2. Find Delivery with the same transaction
-    3. Find SendPayload on SRC chain with the same payloadId
-    4. Find ContractCall on SRC chain with the same txHash as in step 2
-
-    TODO: What if other adapters are used ?
-    TODO: Add $srChain and $dstChain to Centrifuge events if possible (depending on adapter used)
-  */
-
-  matchTypes = [HandleProof, HandlePayLoad]
   match(
-    handleProofOrPayload: InteropEvent,
+    event: InteropEvent,
+    db: InteropEventDb,
+    tokenMap: TokenMap,
+  ): MatchResult | undefined {
+    if (ExecuteTransferShares.checkType(event)) {
+      return this.matchExecuted(event, db, tokenMap)
+    }
+
+    if (InitiateTransferShares.checkType(event)) {
+      return this.matchOneSidedInitiate(event, db)
+    }
+  }
+
+  private matchExecuted(
+    executeTransferShares: InteropEvent<{
+      poolId: bigint
+      scId: string
+      receiver: string
+      amount: bigint
+      dstTokenAddress?: Address32
+      dstWasMinted?: boolean
+    }>,
+    db: InteropEventDb,
+    tokenMap: TokenMap,
+  ): MatchResult | undefined {
+    const forwardTransferShares = findBestForwardForExecute(
+      executeTransferShares,
+      db,
+    )
+    if (!forwardTransferShares) return
+
+    const initiateTransferShares = findBestInitiateForForward(
+      forwardTransferShares,
+      db,
+    )
+    if (!initiateTransferShares) {
+      const srcChain = forwardTransferShares.args.$srcChain
+      if (!this.oneSidedChains.includes(srcChain)) return
+
+      return [
+        Result.Transfer('centrifuge.Transfer', {
+          srcChain,
+          dstEvent: executeTransferShares,
+          dstAmount: executeTransferShares.args.amount,
+          dstTokenAddress: executeTransferShares.args.dstTokenAddress,
+          dstWasMinted: executeTransferShares.args.dstWasMinted,
+          bridgeType: getBestEffortTokenFrameworkBridgeType({
+            srcWasBurned: undefined,
+            dstWasMinted: executeTransferShares.args.dstWasMinted,
+          }),
+          extraEvents: [forwardTransferShares],
+        }),
+      ]
+    }
+
+    return [
+      Result.Transfer('centrifuge.Transfer', {
+        srcEvent: initiateTransferShares,
+        srcAmount: initiateTransferShares.args.amount,
+        srcTokenAddress: initiateTransferShares.args.srcTokenAddress,
+        srcWasBurned: initiateTransferShares.args.srcWasBurned,
+        dstEvent: executeTransferShares,
+        dstAmount: executeTransferShares.args.amount,
+        dstTokenAddress: executeTransferShares.args.dstTokenAddress,
+        dstWasMinted: executeTransferShares.args.dstWasMinted,
+        bridgeType: getTokenFrameworkBridgeType({
+          srcTokenAddress: initiateTransferShares.args.srcTokenAddress,
+          dstTokenAddress: executeTransferShares.args.dstTokenAddress,
+          srcWasBurned: initiateTransferShares.args.srcWasBurned,
+          dstWasMinted: executeTransferShares.args.dstWasMinted,
+          srcChain: initiateTransferShares.ctx.chain,
+          dstChain: executeTransferShares.ctx.chain,
+          tokenMap,
+        }),
+        extraEvents: [forwardTransferShares],
+      }),
+    ]
+  }
+
+  private matchOneSidedInitiate(
+    initiateTransferShares: InteropEvent<{
+      $dstChain: string
+      dstCentrifugeId: number
+      poolId: bigint
+      scId: string
+      receiver: string
+      amount: bigint
+      srcTokenAddress?: Address32
+      srcWasBurned?: boolean
+    }>,
     db: InteropEventDb,
   ): MatchResult | undefined {
-    if (HandleProof.checkType(handleProofOrPayload)) {
-      const contractCallExecuted = db.find(ContractCallExecuted, {
-        sameTxBefore: handleProofOrPayload,
-      })
-      if (!contractCallExecuted) return
+    const dstChain = initiateTransferShares.args.$dstChain
+    if (!this.oneSidedChains.includes(dstChain)) return
 
-      const contractCallApproved = db.find(ContractCallApproved, {
-        commandId: contractCallExecuted.args.commandId,
-      })
-      if (!contractCallApproved) return
+    const forwardTransferShares = findBestForwardForInitiate(
+      initiateTransferShares,
+      db,
+    )
+    if (!forwardTransferShares) return
 
-      const sendProof = db.find(SendProof, {
-        payloadId: handleProofOrPayload.args.payloadId,
-      })
-      if (!sendProof) return
+    const hasCounterpart = db.find(ExecuteTransferShares, {
+      poolId: forwardTransferShares.args.poolId,
+      scId: forwardTransferShares.args.scId,
+      receiver: forwardTransferShares.args.receiver,
+      amount: forwardTransferShares.args.amount,
+      ctx: { chain: dstChain },
+    })
+    if (hasCounterpart) return
 
-      const contractCall = db.find(ContractCall, {
-        sameTxBefore: sendProof,
-      })
-      if (!contractCall) return
-
-      return [
-        Result.Message('axelar.Message', {
-          app: 'centrifuge',
-          srcEvent: contractCall,
-          dstEvent: contractCallApproved,
-          extraEvents: [sendProof, handleProofOrPayload, contractCallExecuted],
+    return [
+      Result.Transfer('centrifuge.Transfer', {
+        srcEvent: initiateTransferShares,
+        dstChain,
+        srcAmount: initiateTransferShares.args.amount,
+        srcTokenAddress: initiateTransferShares.args.srcTokenAddress,
+        srcWasBurned: initiateTransferShares.args.srcWasBurned,
+        bridgeType: getBestEffortTokenFrameworkBridgeType({
+          srcWasBurned: initiateTransferShares.args.srcWasBurned,
+          dstWasMinted: undefined,
         }),
-      ]
-    }
+        extraEvents: [forwardTransferShares],
+      }),
+    ]
+  }
+}
 
-    if (HandlePayLoad.checkType(handleProofOrPayload)) {
-      const delivery = db.find(Delivery, {
-        sameTxAfter: handleProofOrPayload,
-      })
-      if (!delivery) return
+function findBestForwardForExecute(
+  executeTransferShares: InteropEvent<{
+    poolId: bigint
+    scId: string
+    receiver: string
+    amount: bigint
+  }>,
+  db: InteropEventDb,
+) {
+  return closestByTimestamp(
+    db.findAll(ForwardTransferShares, {
+      $dstChain: executeTransferShares.ctx.chain,
+      poolId: executeTransferShares.args.poolId,
+      scId: executeTransferShares.args.scId,
+      receiver: executeTransferShares.args.receiver,
+      amount: executeTransferShares.args.amount,
+    }),
+    executeTransferShares.ctx.timestamp,
+  )
+}
 
-      const sendPayload = db.find(SendPayLoad, {
-        payloadId: handleProofOrPayload.args.payloadId,
-      })
-      if (!sendPayload) return
+function findBestInitiateForForward(
+  forwardTransferShares: InteropEvent<{
+    $srcChain: string
+    $dstChain: string
+    dstCentrifugeId: number
+    poolId: bigint
+    scId: string
+    receiver: string
+    amount: bigint
+  }>,
+  db: InteropEventDb,
+) {
+  return closestByTimestamp(
+    db.findAll(InitiateTransferShares, {
+      $dstChain: forwardTransferShares.args.$dstChain,
+      dstCentrifugeId: forwardTransferShares.args.dstCentrifugeId,
+      poolId: forwardTransferShares.args.poolId,
+      scId: forwardTransferShares.args.scId,
+      receiver: forwardTransferShares.args.receiver,
+      amount: forwardTransferShares.args.amount,
+      ctx: { chain: forwardTransferShares.args.$srcChain },
+    }),
+    forwardTransferShares.ctx.timestamp,
+  )
+}
 
-      const logMessagePublished = db.find(LogMessagePublished, {
-        sameTxBefore: sendPayload,
-      })
-      if (!logMessagePublished) return
+function findBestForwardForInitiate(
+  initiateTransferShares: InteropEvent<{
+    $dstChain: string
+    dstCentrifugeId: number
+    poolId: bigint
+    scId: string
+    receiver: string
+    amount: bigint
+  }>,
+  db: InteropEventDb,
+) {
+  return closestByTimestamp(
+    db.findAll(ForwardTransferShares, {
+      $srcChain: initiateTransferShares.ctx.chain,
+      $dstChain: initiateTransferShares.args.$dstChain,
+      dstCentrifugeId: initiateTransferShares.args.dstCentrifugeId,
+      poolId: initiateTransferShares.args.poolId,
+      scId: initiateTransferShares.args.scId,
+      receiver: initiateTransferShares.args.receiver,
+      amount: initiateTransferShares.args.amount,
+    }),
+    initiateTransferShares.ctx.timestamp,
+  )
+}
 
-      return [
-        Result.Message('wormhole.Message', {
-          app: 'centrifuge',
-          srcEvent: logMessagePublished,
-          dstEvent: delivery,
-          extraEvents: [sendPayload, handleProofOrPayload],
-        }),
-      ]
+function closestByTimestamp<T extends InteropEvent>(
+  events: T[],
+  targetTimestamp: number,
+): T | undefined {
+  let best: T | undefined
+  let bestDelta = Number.POSITIVE_INFINITY
+  for (const event of events) {
+    const delta = Math.abs(event.ctx.timestamp - targetTimestamp)
+    if (delta < bestDelta) {
+      best = event
+      bestDelta = delta
     }
   }
+  return best
+}
+
+function getAddresses(address: EthereumAddress) {
+  const addresses: ChainSpecificAddress[] = []
+  for (const network of CENTRIFUGE_NETWORKS) {
+    try {
+      addresses.push(ChainSpecificAddress.fromLong(network.chain, address))
+    } catch {
+      // Chain not supported by ChainSpecificAddress, skip capture.
+    }
+  }
+  return addresses
+}
+
+function findCentrifugeChain(centrifugeId: number) {
+  return (
+    CENTRIFUGE_NETWORKS.find((n) => n.centrifugeId === centrifugeId)?.chain ??
+    `Unknown_${centrifugeId}`
+  )
+}
+
+function findCentrifugeId(chain: string) {
+  return CENTRIFUGE_NETWORKS.find((n) => n.chain === chain)?.centrifugeId
+}
+
+function normalizeBytes(value: string) {
+  return value.toLowerCase()
+}
+
+function evmAddressToCentrifugeBytes32(address: string) {
+  return `0x${address.slice(2).toLowerCase().padEnd(64, '0')}`
 }

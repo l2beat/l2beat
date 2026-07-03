@@ -1,4 +1,51 @@
-Generated with discovered.json: 0xc09a681a3dd9a160e805dffea51b9bdb72b1ba41
+Generated with discovered.json: 0x0604a0b6a01d2d94faca77d685154a7e935ccbc1
+
+# Diff at Tue, 09 Jun 2026 12:43:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1769535666
+- current timestamp: 1769535666
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769535666 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x7fFB604c57FAFbAeaE6587DF035a0DB032301593) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"guard","from":"eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07","role":".guardian"}
+      receivedPermissions.1.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.1.from:
+-        "eth:0xD02631b334FfDCD5674217e57fe524c44B341DD4"
++        "eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07"
+      receivedPermissions.1.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xD02631b334FfDCD5674217e57fe524c44B341DD4","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".guardian"}
+    }
+```
+
+```diff
+    EOA  (eth:0xae0Fbdd7CEC6036F3364000eE6d2a60BdAbb10c6) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0xf06a0ab8d66e1bc56f045ca88bb9deb7ff93253f
 
 # Diff at Fri, 08 May 2026 07:52:23 GMT:
 

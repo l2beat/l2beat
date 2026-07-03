@@ -97,26 +97,6 @@ describe('layer2s', () => {
       }
     })
 
-    it('every escrow of upcoming project has isUpcoming flag', () => {
-      for (const layer2 of layer2s) {
-        if (!layer2.isUpcoming) continue
-
-        for (const escrow of layer2.config.escrows) {
-          expect(escrow.isUpcoming).toEqual(true)
-        }
-      }
-    })
-
-    it('every not upcoming project does not have isUpcoming flag', () => {
-      for (const layer2 of layer2s) {
-        if (layer2.isUpcoming) continue
-
-        for (const escrow of layer2.config.escrows) {
-          expect([false, undefined]).toInclude(escrow.isUpcoming)
-        }
-      }
-    })
-
     describe('every escrow sinceTimestamp is greater or equal to chains sinceTimestamp', () => {
       for (const layer2 of layer2s) {
         for (const escrow of layer2.config.escrows) {
@@ -379,11 +359,7 @@ describe('layer2s', () => {
 
     describe('live projects without proof system have reasons for being other', () => {
       const liveProjectsWithoutProofSystem = layer2s.filter(
-        (layer2) =>
-          !layer2.isUpcoming &&
-          !layer2.archivedAt &&
-          !layer2.proofSystem &&
-          layer2.reviewStatus !== 'initialReview',
+        (layer2) => !layer2.archivedAt && !layer2.proofSystem,
       )
 
       for (const layer2 of liveProjectsWithoutProofSystem) {

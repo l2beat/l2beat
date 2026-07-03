@@ -6,11 +6,20 @@ import {
   type InteropConfig,
   type ProjectService,
 } from '@l2beat/config'
-import type { InteropFeatureConfig } from '../Config'
+import type { InteropFeatureConfig, InteropPromotionConfig } from '../Config'
 import type { FeatureFlags } from '../FeatureFlags'
 
 export interface InteropAggregationConfig extends InteropConfig {
   id: string
+}
+
+function parsePromotionMode(value: string): InteropPromotionConfig['mode'] {
+  if (value === 'off' || value === 'shadow' || value === 'enforce') {
+    return value
+  }
+  throw new Error(
+    `Invalid INTEROP_PROMOTION_MODE "${value}" (expected off | shadow | enforce)`,
+  )
 }
 
 export async function getInteropFeatureConfig(
@@ -26,7 +35,19 @@ export async function getInteropFeatureConfig(
 
   return {
     aggregation: flags.isEnabled('interop', 'aggregation')
-      ? { configs: await getInteropAggregationConfigs(ps) }
+      ? {
+          configs: await getInteropAggregationConfigs(ps),
+          promotion: {
+            mode: parsePromotionMode(
+              env.string('INTEROP_PROMOTION_MODE', 'shadow'),
+            ),
+            failClosed: env.boolean('INTEROP_PROMOTION_FAIL_CLOSED', true),
+            maxLaneVolumeUsd: env.integer(
+              'INTEROP_PROMOTION_MAX_LANE_VOLUME_USD',
+              1_000_000_000,
+            ),
+          },
+        }
       : false,
     capture: {
       enabled: flags.isEnabled('interop', 'capture'),
@@ -56,6 +77,14 @@ export async function getInteropFeatureConfig(
       enabled: flags.isEnabled('interop', 'financials'),
       tokenDbApiUrl: env.string('TOKEN_BACKEND_TRPC_URL'),
       tokenDbAuthToken: env.optionalString('TOKEN_BACKEND_CF_TOKEN'),
+      maxTokenPriceUsd: env.integer(
+        'INTEROP_FINANCIALS_MAX_TOKEN_PRICE_USD',
+        1_000_000,
+      ),
+      maxTransferValueUsd: env.integer(
+        'INTEROP_FINANCIALS_MAX_TRANSFER_VALUE_USD',
+        1_000_000_000,
+      ),
     },
     config: {
       enabled: flags.isEnabled('interop', 'config'),

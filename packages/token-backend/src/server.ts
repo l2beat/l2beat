@@ -3,6 +3,9 @@ import express from 'express'
 import { CoingeckoClient } from './chains/clients/coingecko/CoingeckoClient'
 import { getConfig } from './config'
 import { getDb, getTokenDb } from './database/db'
+import { TokenIngestionLoop } from './ingestion/TokenIngestionLoop'
+import { TokenIngestionProcessor } from './ingestion/TokenIngestionProcessor'
+import { getLogger } from './logger'
 import { createTrpcRouter } from './server/routers/TrpcRouter'
 
 dotenv()
@@ -12,11 +15,22 @@ function main() {
   const config = getConfig()
   const tokenDb = getTokenDb(config)
   const db = getDb(config)
+  const logger = getLogger()
 
   app.use(express.json({ limit: `${config.jsonBodyLimitMb}mb` }))
 
   const coingeckoClient = new CoingeckoClient({
     apiKey: config.coingeckoApiKey,
+    callsPerMinute: config.coingeckoCallsPerMinute,
+  })
+
+  const newQueueState = config.tokenIngestion.autoApprove ? 'pending' : 'staged'
+  const tokenIngestionProcessor = new TokenIngestionProcessor({
+    db,
+    tokenDb,
+    coingeckoClient,
+    etherscanApiKey: config.etherscanApiKey,
+    newQueueState,
   })
 
   app.get('/health', (_, res) => {
@@ -31,8 +45,18 @@ function main() {
       tokenDb,
       coingeckoClient,
       etherscanApiKey: config.etherscanApiKey,
+      tokenIngestionProcessor,
     }),
   )
+
+  const tokenIngestionLoop = config.tokenIngestion.enabled
+    ? new TokenIngestionLoop(db, tokenDb, tokenIngestionProcessor, logger, {
+        intervalMs: config.tokenIngestion.intervalMs,
+        newQueueState,
+        maxProcessedPerRun: config.tokenIngestion.maxProcessedPerRun,
+      })
+    : undefined
+  tokenIngestionLoop?.start()
 
   const port = Number.parseInt(process.env['PORT'] ?? '3000', 10)
   const server = app.listen(port, () => {
@@ -41,9 +65,9 @@ function main() {
 
   function shutdown(signal: NodeJS.Signals) {
     console.log(`Received ${signal}, shutting down...`)
+    tokenIngestionLoop?.stop()
     server.close(() => {
-      tokenDb
-        .close()
+      Promise.all([tokenDb.close(), db.close()])
         .then(() => {
           process.exit(0)
         })

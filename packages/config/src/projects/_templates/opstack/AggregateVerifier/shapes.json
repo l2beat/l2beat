@@ -1,0 +1,13 @@
+{
+  "AggregateVerifier_v0_1_0_base": {
+    "hash": "0x1dfaf165ce43dee003094670410bce5e6bd1760f44803bba16ee5a90263fcf4b",
+    "address": "eth:0x4c0DAF5d9ABe92e8A26a60698a657B03538a3028",
+    "blockNumber": 25193152
+  },
+  "AggregateVerifier_v0.1.0_base_5d": {
+    "hash": "0x3fb3f2905c51272c4f77809543c14a5e40084d66a8e0251aef45516674940a64",
+    "address": "eth:0x1bd8db5139Ba7aC9277684650c15e6E341761919",
+    "chain": "ethereum",
+    "blockNumber": 25393552
+  }
+}

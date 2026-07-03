@@ -1,7 +1,7 @@
 {
   "name": "superposition",
-  "timestamp": 1777390996,
-  "configHash": "0x62338da5d493e7fc626d34eebd6b3f8deca6589090d0541725e5bccfe0515cb2",
+  "timestamp": 1781177218,
+  "configHash": "0x1647d2d22303b240cedfe4da9064af0475c7d61f76e37c40a44c45ab18ede624",
   "entries": [
     {
       "name": "OneStepProverHostIo",
@@ -9,7 +9,7 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProverHostIo",
       "sourceHashes": [
-        "0x77205826da8d9f9fc88c16ff5e5d19f15f0dc037b43c41a051418acf0a8bbc3a"
+        "0x130f30b3e9318970d22dad0a549e532b9a19290ebaaad3a0ce20352ff33cc104"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
@@ -44,7 +44,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 9751,
+        "nonce": 10870,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -149,17 +149,12 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "arb1:0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
         }
       ]
-    },
-    {
-      "address": "arb1:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "UpgradeExecutor",
@@ -240,7 +235,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "arb1:0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -253,7 +248,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "arb1:0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -266,7 +261,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "arb1:0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -284,7 +279,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "arb1:0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -297,7 +292,7 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProverMemory",
       "sourceHashes": [
-        "0xd6db03371959751fe7d2023d543e1842bb9200ff391a235ea6f7a6eba3b5ace6"
+        "0xa7a92329b6a7a74a22b00e80ded5f76b2d46cddfc3fef149bd93c941f577388b"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
@@ -315,7 +310,7 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProofEntry",
       "sourceHashes": [
-        "0xd5ebe4d74cb7850108973c618f80d9f0c18624f45c9e8cfc3ffa07197ca1423d"
+        "0x8342918a09a9fc42d1b623e96c5f3ba476a095f6fb99d619383113945b1aee41"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
@@ -372,18 +367,13 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "address": "arb1:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "EdgeChallengeManager",
       "address": "arb1:0x6aD424c3eBB11502FC72876106D9b3a562A64e7d",
       "type": "Contract",
       "template": "orbitstack/EdgeChallengeManager",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x38a98fd3246d8aa8d3efab5b6fe60b4369399691b395325bcea9f939a52fddc5"
+        "0xe3bfba89667a59af2f558ead22d7fe0c142232b464bdae0f9e4b03555c7699f2"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that implements the main challenge protocol logic of the fraud proof system.",
@@ -434,7 +424,7 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProver0",
       "sourceHashes": [
-        "0xb54274c3341eb7cf840d05f3da649b35db6e4f7cd4e76f3e4a8f2f6d171dcd66"
+        "0x165bc2eea08646ff24d665db74c1cd2deedc703052ceccac716f25eea2c23d80"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
@@ -571,15 +561,14 @@
         "$immutable": false,
         "$implementation": "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
+          "arb1:0xcdC931935768c0562AfE989A366a3Dc4d52F4853",
           "arb1:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09",
           "arb1:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
           "arb1:0x2103c69696CB2D3779f5445393808239034E911c",
-          "arb1:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
           "arb1:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
           "arb1:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "arb1:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
           "arb1:0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
-          "arb1:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "arb1:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
           "arb1:0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
         ],
@@ -587,8 +576,8 @@
         "domainSeparator": "0x8e983e66cfd245a874ba795dfb67eec98f9f6261d8eed2360f67db156c7d3a86",
         "getChainId": 42161,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 132,
+        "multisigThreshold": "4 of 10 (40%)",
+        "nonce": 139,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -602,7 +591,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "arb1:0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -615,7 +604,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "arb1:0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -705,7 +694,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "arb1:0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -812,7 +801,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "arb1:0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -848,7 +837,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "arb1:0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -856,12 +845,17 @@
       ]
     },
     {
+      "address": "arb1:0xcdC931935768c0562AfE989A366a3Dc4d52F4853",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "arb1:0xCe957F6aFadFFA08dAa90cE5b47208C02a9b9B4F",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "arb1:0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -874,7 +868,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "arb1:0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -887,7 +881,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "arb1:0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -900,7 +894,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "arb1:0xf3C4a84a948658D012C915Ad4bb4b501F6C3c075",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".getValidators"
@@ -948,7 +942,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 14510,
+        "batchCount": 15894,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "arb1:0x336dD5a1aB948058E4c699fD7732c2AA78C10d90",
@@ -1003,7 +997,7 @@
         "rollup": "arb1:0xf3C4a84a948658D012C915Ad4bb4b501F6C3c075",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 51552,
+        "totalDelayedMessagesRead": 53095,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1024,7 +1018,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "arb1:0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -1074,7 +1068,7 @@
         "allowedOutboxList": [
           "arb1:0xa4b3B4D5f7976a8D283864ea83f1Bb3D815b1798"
         ],
-        "delayedMessageCount": 51553,
+        "delayedMessageCount": 53096,
         "inboxHistory": [
           "arb1:0x2EAf07A964c6601c4fAefd6D8969DF0B84f65e55",
           "arb1:0x31F535A566FE1Ef994858cf4D97b1207fC7388A8"
@@ -1082,8 +1076,8 @@
         "outboxHistory": ["arb1:0xa4b3B4D5f7976a8D283864ea83f1Bb3D815b1798"],
         "rollup": "arb1:0xf3C4a84a948658D012C915Ad4bb4b501F6C3c075",
         "sequencerInbox": "arb1:0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
-        "sequencerMessageCount": 14510,
-        "sequencerReportedSubMessageCount": 3049123
+        "sequencerMessageCount": 15894,
+        "sequencerReportedSubMessageCount": 3209715
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1168,7 +1162,7 @@
         "getValidators": ["arb1:0xd76a3aCEd4115B017301C54C211EC36aA5E37e05"],
         "inbox": "arb1:0x2EAf07A964c6601c4fAefd6D8969DF0B84f65e55",
         "isPostBoLD": true,
-        "latestConfirmed": "0x29057023ab5b2b4cc13ff506aee559dc3ddcc54eafcc6c85e7c870dcbcf0064f",
+        "latestConfirmed": "0xeb4777c7f48ab483313e8311f7d875020f25838f030744e956718e5bc07d354b",
         "loserStakeEscrow": "arb1:0xd76a3aCEd4115B017301C54C211EC36aA5E37e05",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0xa4b3B4D5f7976a8D283864ea83f1Bb3D815b1798",
@@ -1234,6 +1228,7 @@
             "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
             "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
             "0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499": "ArbOS v51 wasmModuleRoot",
+            "0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c": "ArbOS v51.1 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
             "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot",
             "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d": "Celestia Nitro ArbOS v40 wasmModuleRoot"
@@ -2075,6 +2070,6 @@
     "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "arbitrum": 457277035 },
-  "permissionsConfigHash": "0x833d179253d14a340b3fbd9f02c7e94bbe478d15c9f3c0bf0b80092ed79e8c30"
+  "usedBlockNumbers": { "arbitrum": 472359581 },
+  "permissionsConfigHash": "0xce922e003f78e30c303d3a996860ab7d798f03f0b0c0403e463921b06165842b"
 }

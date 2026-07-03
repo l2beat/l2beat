@@ -52,6 +52,7 @@ export const ManualProxyType = v.enum([
   'LightLink proxy',
   'Everclear proxy',
   'TaikoFork proxy',
+  'NXV proxy',
   'immutable',
 ])
 
@@ -63,7 +64,7 @@ export const _StructureContract = {
   proxyType: ManualProxyType.optional(),
   ignoreInWatchMode: v.array(v.string()).optional(),
   ignoreMethods: v.array(v.string()).default([]),
-  ignoreRelatives: v.array(v.string()).default([]),
+  ignoreRelatives: v.union([v.array(v.string()), v.literal(true)]).default([]),
   fields: v.record(v.string(), StructureContractField).default({}),
   methods: v.record(v.string(), v.string()).default({}),
   manualSourcePaths: v.record(v.string(), v.string()).default({}),

@@ -1,7 +1,7 @@
 {
   "name": "myria",
-  "timestamp": 1777891434,
-  "configHash": "0x2faaf2da24c57f1cadf6ac511a56d8da395293aa33308eed7330d411ef33d985",
+  "timestamp": 1779099631,
+  "configHash": "0xf8df50865c3a26beaffa84ea292fb8743fa61ac3a83ff9f21e43ae43e0cf9a38",
   "entries": [
     {
       "name": "DACommittee",
@@ -138,7 +138,7 @@
         "getValidiumTreeHeight": 31,
         "getValidiumVaultRoot": "2836643187968786902994714112811533015427861233654430505700269597006389819357",
         "implementation": "eth:0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
-        "isFrozen": false,
+        "isFrozen": true,
         "isNotFinalized": true,
         "isStrictVaultBalancePolicy": false,
         "MAIN_GOVERNANCE_INFO_TAG": "StarkEx.Main.2019.GovernorsInformation",
@@ -293,17 +293,18 @@
       "address": "eth:0xc49Ec6Bb817E17a9Ca5B738ca330db403cc74245",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
-          "permission": "governStarknet",
+          "permission": "interact",
           "from": "eth:0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7",
+          "description": "manage the token admin role.",
           "role": ".$admin"
         },
         {
           "permission": "interact",
           "from": "eth:0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7",
-          "description": "manage the token admin role.",
+          "description": "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), set the default vault withdrawal lock, unfreeze the exchange and manage the governor set.",
           "role": ".$admin"
         },
         {
@@ -325,8 +326,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "operateStarkEx",
+          "permission": "interact",
           "from": "eth:0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7",
+          "description": "Permissioned to regularly update the state roots of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains commitments to the data that is itself kept offchain.",
           "role": ".operators"
         }
       ]
@@ -699,6 +701,6 @@
     "starkex/OrderRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
   },
-  "usedBlockNumbers": { "ethereum": 25021111 },
-  "permissionsConfigHash": "0x13539b2d31e14624324e158e2f105b4c4add7621d9dc722ca6967d27eedb134c"
+  "usedBlockNumbers": { "ethereum": 25121451 },
+  "permissionsConfigHash": "0x73a8d057089b01eb7b0d95a56329661442989d7927b00c7d2f09e3a57646e11a"
 }

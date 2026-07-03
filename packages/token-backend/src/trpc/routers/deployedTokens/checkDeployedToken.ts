@@ -1,13 +1,14 @@
 import type {
   AbstractTokenRecord,
+  ChainRecord,
   Database,
   TokenDatabase,
 } from '@l2beat/database'
-import type { ChainRecord } from '@l2beat/database/dist/repositories/ChainRepository'
-import { Address32, type UnixTime } from '@l2beat/shared-pure'
+import { Address32 } from '@l2beat/shared-pure'
 import { Chain } from '../../../chains/Chain'
 import type { CoingeckoClient } from '../../../chains/clients/coingecko/CoingeckoClient'
-import { getDeploymentTimestampFromRpc } from '../../../chains/clients/rpc/getDeploymentTimestampFromRpc'
+import { fetchDeployedTokenFacts } from '../../../chains/fetchDeployedTokenFacts'
+import { formatError } from '../../../utils/formatError'
 import {
   buildAliasToChainMap,
   findUnregisteredPlatformTokens,
@@ -72,9 +73,9 @@ export async function checkDeployedToken(
 
   const warnings: AutofillWarning[] = []
 
-  const contractCodeStatus = await fetchContractCodeStatus(chain, input.address)
-  warnings.push(...contractCodeStatus.warnings)
-  if (contractCodeStatus.isContract === false) {
+  const facts = await fetchDeployedTokenFacts(chain, input.address)
+  warnings.push(...facts.warnings)
+  if (facts.isContract === false) {
     return {
       error: {
         type: 'not-a-token' as const,
@@ -86,14 +87,7 @@ export async function checkDeployedToken(
     }
   }
 
-  const [metadata, deploymentTimestampResult] = await Promise.all([
-    fetchTokenMetadata(chain, input.address),
-    fetchDeploymentTimestamp(chain, input.address),
-  ])
-  warnings.push(...metadata.warnings, ...deploymentTimestampResult.warnings)
-
-  const { decimals, symbol, symbolSource } = metadata
-  const { deploymentTimestamp } = deploymentTimestampResult
+  const { decimals, symbol, symbolSource, deploymentTimestamp } = facts
 
   const coinResult = await getCoinByChainAndAddress(
     coingeckoClient,
@@ -168,145 +162,6 @@ export async function checkDeployedToken(
     warnings: filterWarningsForAutofilledFields(warnings, {
       symbol: symbol ?? coin.symbol,
     }),
-  }
-}
-
-async function fetchTokenMetadata(
-  chain: Chain,
-  address: string,
-): Promise<{
-  decimals: number | undefined
-  symbol: string | undefined
-  symbolSource: 'rpc' | undefined
-  warnings: AutofillWarning[]
-}> {
-  if (!chain.rpc) {
-    return {
-      decimals: undefined,
-      symbol: undefined,
-      symbolSource: undefined,
-      warnings: [
-        {
-          field: 'decimals',
-          message: `No RPC configured for ${chain.name}, so decimals were not autofilled.`,
-        },
-        {
-          field: 'symbol',
-          message: `No RPC configured for ${chain.name}, so symbol was not autofilled.`,
-        },
-      ],
-    }
-  }
-
-  const warnings: AutofillWarning[] = []
-  const [decimalsResult, symbolResult] = await Promise.allSettled([
-    chain.rpc.getDecimals(address),
-    chain.rpc.getSymbol(address),
-  ])
-
-  const decimals =
-    decimalsResult.status === 'fulfilled' ? decimalsResult.value : undefined
-  if (decimalsResult.status === 'rejected') {
-    warnings.push({
-      field: 'decimals',
-      message: `RPC decimals lookup failed: ${formatError(decimalsResult.reason)}.`,
-    })
-  }
-
-  const symbol =
-    symbolResult.status === 'fulfilled' ? symbolResult.value : undefined
-  if (symbolResult.status === 'rejected') {
-    warnings.push({
-      field: 'symbol',
-      message: `RPC symbol lookup failed: ${formatError(symbolResult.reason)}.`,
-    })
-  }
-
-  return {
-    decimals,
-    symbol,
-    symbolSource: symbol ? 'rpc' : undefined,
-    warnings,
-  }
-}
-
-async function fetchDeploymentTimestamp(
-  chain: Chain,
-  address: string,
-): Promise<{
-  deploymentTimestamp: UnixTime | undefined
-  warnings: AutofillWarning[]
-}> {
-  const failureMessages: string[] = []
-
-  if (chain.etherscan) {
-    try {
-      const contractCreation =
-        await chain.etherscan.getContractCreation(address)
-      if (!contractCreation[0]) {
-        throw new Error('contract creation response was empty')
-      }
-      if (contractCreation[0].timestamp === undefined) {
-        throw new Error('contract creation timestamp was empty')
-      }
-      return {
-        deploymentTimestamp: contractCreation[0].timestamp,
-        warnings: [],
-      }
-    } catch (error) {
-      failureMessages.push(`Etherscan lookup failed: ${formatError(error)}.`)
-    }
-  }
-
-  if (chain.blockscout) {
-    try {
-      const contractCreation =
-        await chain.blockscout.getContractCreation(address)
-      if (!contractCreation[0]) {
-        throw new Error('contract creation response was empty')
-      }
-      const txHash = contractCreation[0].txHash
-      const txInfo = await chain.blockscout.getTransactionInfo(txHash)
-      if (txInfo.timeStamp === undefined) {
-        throw new Error('transaction timestamp was empty')
-      }
-      return { deploymentTimestamp: txInfo.timeStamp, warnings: [] }
-    } catch (error) {
-      failureMessages.push(`Blockscout lookup failed: ${formatError(error)}.`)
-    }
-  }
-
-  if (chain.rpc) {
-    try {
-      const deploymentTimestamp = await getDeploymentTimestampFromRpc(
-        chain.rpc,
-        address,
-      )
-      if (deploymentTimestamp !== undefined) {
-        return {
-          deploymentTimestamp,
-          warnings: [],
-        }
-      }
-      failureMessages.push('RPC lookup returned no value.')
-    } catch (error) {
-      failureMessages.push(`RPC lookup failed: ${formatError(error)}.`)
-    }
-  }
-
-  const message =
-    failureMessages.length > 0
-      ? failureMessages.join(' ')
-      : `No Etherscan, Blockscout, or RPC configured for ${chain.name}.`
-
-  return {
-    deploymentTimestamp: undefined,
-    warnings: [
-      {
-        field: 'deploymentTimestamp',
-        message: `${message} Deployment timestamp was not autofilled.`,
-      },
-    ],
   }
 }
 
@@ -390,33 +245,6 @@ async function getCoinByChainAndAddress(
   }
 }
 
-async function fetchContractCodeStatus(
-  chain: Chain,
-  address: string,
-): Promise<{
-  isContract: boolean | undefined
-  warnings: AutofillWarning[]
-}> {
-  if (!chain.rpc) {
-    return { isContract: undefined, warnings: [] }
-  }
-
-  try {
-    const code = await chain.rpc.getCode(address, 'latest')
-    return { isContract: code !== '0x', warnings: [] }
-  } catch (error) {
-    return {
-      isContract: undefined,
-      warnings: [
-        {
-          field: 'contractCode',
-          message: `RPC contract code lookup failed: ${formatError(error)}.`,
-        },
-      ],
-    }
-  }
-}
-
 type AutofillWarning = {
   field:
     | 'symbol'
@@ -442,13 +270,6 @@ function mapTransferSuggestionsToAbstractTokenSuggestions(
     symbol: suggestion.abstractToken.symbol,
     issuer: suggestion.abstractToken.issuer,
   }))
-}
-
-function formatError(error: unknown): string {
-  if (error instanceof Error) {
-    return error.message
-  }
-  return String(error)
 }
 
 function filterWarningsForAutofilledFields(

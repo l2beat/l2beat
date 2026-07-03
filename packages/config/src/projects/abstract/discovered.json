@@ -1,7 +1,7 @@
 {
   "name": "abstract",
-  "timestamp": 1771250356,
-  "configHash": "0x716ccec87a46949325e140be028cdb47122f837d6964f15794f41e19995637e8",
+  "timestamp": 1782810164,
+  "configHash": "0xc62590ca731911e0ab93201ff531cc70b2c6677503d1e42095b3df8d40596b2d",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -32,7 +32,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 14,
+        "nonce": 24,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -55,7 +55,7 @@
       "address": "eth:0x277D26a45Add5775F21256159F089769892CEa5B",
       "type": "EOA",
       "sourceHashes": [
-        "0x6fcf212849ffbf34d907a048df4d05a6c97f876a620c7386a770735262604c54"
+        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
       ],
       "proxyType": "EIP7702 EOA",
       "values": {
@@ -136,45 +136,27 @@
         "PROVER_ROLE": "0x60044782a422109ac08a415e44260ad5d3bad63d96ebe1fac0363399642ee3f2",
         "revertedBlocks": [],
         "REVERTER_ROLE": "0x30085792330f3f9ee2ee216aea0321c55a0909b87c51ee9ab49d05ca4a4c2ecb",
-        "validatorsVTL": [
-          "eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807",
-          "eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"
-        ],
+        "validatorsVTL": ["eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83"],
         "validatorsVTLFullAC": {
           "PRECOMMITTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807",
-              "eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"
-            ]
+            "members": ["eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83"]
           },
           "COMMITTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807",
-              "eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"
-            ]
+            "members": ["eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83"]
           },
           "REVERTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807",
-              "eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"
-            ]
+            "members": ["eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83"]
           },
           "PROVER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807",
-              "eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"
-            ]
+            "members": ["eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83"]
           },
           "EXECUTOR_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807",
-              "eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"
-            ]
+            "members": ["eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83"]
           }
         }
       },
@@ -451,7 +433,7 @@
           "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119",
           "eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731"
         ],
-        "getFirstUnprocessedPriorityTx": 25578,
+        "getFirstUnprocessedPriorityTx": 26517,
         "getL2BootloaderBytecodeHash": "0x01000911c4db4fe62c98e180cfa7e9b3a22fb15f505905d4bf36192f481551e6",
         "getL2DefaultAccountBytecodeHash": "0x010005f73e7c299ed73db937843643bdc276cbc2cc8596287e1e0cf3afc60252",
         "getL2EvmEmulatorBytecodeHash": "0x01000d8bae37b82f311186426184866498b357f41d7a02ced11f3e3fbfbacd63",
@@ -459,8 +441,8 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 2,
-        "getPriorityTreeRoot": "0x7976e49b500a96959481ddbab224d431ae9b362abfc8b70e717b028ecb117c80",
+        "getPriorityQueueSize": 0,
+        "getPriorityTreeRoot": "0xc8926769be799958aa25562be4c397168dd28721e2dd2cf287640d5487afaf9b",
         "getPriorityTreeStartIndex": 17183,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 124554051588,
@@ -468,13 +450,13 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 29, 4],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 50291,
-        "getTotalBatchesExecuted": 50282,
-        "getTotalBatchesVerified": 50288,
-        "getTotalBlocksCommitted": 50291,
-        "getTotalBlocksExecuted": 50282,
-        "getTotalBlocksVerified": 50288,
-        "getTotalPriorityTxs": 25580,
+        "getTotalBatchesCommitted": 87051,
+        "getTotalBatchesExecuted": 87040,
+        "getTotalBatchesVerified": 87050,
+        "getTotalBlocksCommitted": 87051,
+        "getTotalBlocksExecuted": 87040,
+        "getTotalBlocksVerified": 87050,
+        "getTotalPriorityTxs": 26517,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45",
         "getVerifierParams": {
@@ -575,7 +557,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 6 (33%)",
-        "nonce": 9,
+        "nonce": 13,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -596,34 +578,9 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
-          "role": ".validatorsVTLFullAC"
-        }
-      ]
-    },
-    {
       "address": "eth:0x438Df339934B6Fb9dA8E0DC6f0Ba0bca22B8A7b5",
-      "type": "Reference",
-      "targetType": "EOA",
-      "targetProject": "shared-zk-stack"
-    },
-    {
-      "address": "eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
-          "role": ".validatorsVTLFullAC"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x4d64Ff9c7aB6F4Dc6dD7D9438BCBA70e3E094e3E",
@@ -657,7 +614,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 3 (33%)",
-        "nonce": 15,
+        "nonce": 17,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -693,7 +650,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 3 (33%)",
-        "nonce": 11,
+        "nonce": 13,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -701,6 +658,19 @@
         "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       },
       "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "address": "eth:0x6be789605b13Edb78749824633b9933D44B582ba",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83",
+          "description": "initiate batch execution on L1 if approved by enough Validator Multisig members.",
+          "role": ".executor"
+        }
+      ]
     },
     {
       "name": "RollupL1DAValidator",
@@ -795,9 +765,22 @@
           "via": [
             { "address": "eth:0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661" }
           ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x9B9256E7D5b696F7BD7525F42238Ba3d9BBD9cDA" }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x9B9256E7D5b696F7BD7525F42238Ba3d9BBD9cDA",
+          "role": ".owner"
+        },
         {
           "permission": "act",
           "from": "eth:0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661",
@@ -826,12 +809,45 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 26,
+        "nonce": 30,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
         "eth:0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063": "SafeProxy",
         "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
+      "address": "eth:0x8C84654F387e1c6b75B5ECF6A786997da2e8037a",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0x9B9256E7D5b696F7BD7525F42238Ba3d9BBD9cDA",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "proxyType": "immutable",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83",
+          "role": "admin"
+        }
+      ],
+      "deployerAddress": "eth:0x6f6426a9b93a7567fCCcBfE5d0d6F26c1085999b",
+      "sinceTimestamp": 1778529191,
+      "sinceBlock": 25074077,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "implementationNames": {
+        "eth:0x9B9256E7D5b696F7BD7525F42238Ba3d9BBD9cDA": "ProxyAdmin"
       }
     },
     {
@@ -920,6 +936,11 @@
       "targetProject": "shared-zk-stack"
     },
     {
+      "address": "eth:0xb279092b5D7637e22617178f31f08229bf4FCB42",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xbB943Cf3c5b90f2eD04F53658CCA49286601e808",
       "type": "EOA",
       "proxyType": "EOA"
@@ -942,6 +963,96 @@
       "type": "Reference",
       "targetType": "Contract",
       "targetProject": "shared-zk-stack"
+    },
+    {
+      "name": "EraMultisigValidator",
+      "address": "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83",
+      "type": "Contract",
+      "template": "shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable",
+      "sourceHashes": [
+        "0x3dba0a8d6ee0f10809e376b272f6019a7f88eecc3080236beeb9bd3c61c21bbc",
+        "0xd4d6269e74829bb11c2c10f4c282a21faebdb85c8ef7571790e37712c876c5bb"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
+          "role": ".validatorsVTLFullAC"
+        }
+      ],
+      "deployerAddress": "eth:0x6f6426a9b93a7567fCCcBfE5d0d6F26c1085999b",
+      "sinceTimestamp": 1778529191,
+      "sinceBlock": 25074077,
+      "values": {
+        "$admin": "eth:0x9B9256E7D5b696F7BD7525F42238Ba3d9BBD9cDA",
+        "$implementation": "eth:0xc954B4D51031870624f3e779Ead14C57249C111D",
+        "$members": [
+          "eth:0x8C84654F387e1c6b75B5ECF6A786997da2e8037a",
+          "eth:0xb279092b5D7637e22617178f31f08229bf4FCB42"
+        ],
+        "$pastUpgrades": [
+          [
+            "2026-05-11T19:53:11.000Z",
+            "0x5393fab05348340e956637b7bb1f001ed4f2c8d2464050784b43dda9ce491435",
+            ["eth:0xc954B4D51031870624f3e779Ead14C57249C111D"]
+          ]
+        ],
+        "$threshold": 1,
+        "$upgradeCount": 1,
+        "BRIDGE_HUB": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+        "COMMITTER_ROLE": "0x0b60b5d7f7e737e4561eecda7c6a01e19e626c495c26e6f45e5b255f76a20106",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "EraMultisigValidator",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "executionDelay": 10800,
+        "executionDelay_fmt": "3h",
+        "executor": {
+          "eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9": [
+            "eth:0x6be789605b13Edb78749824633b9933D44B582ba",
+            "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
+          ]
+        },
+        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "getName": "ValidatorTimelock",
+        "multisigMembers": [
+          "eth:0x8C84654F387e1c6b75B5ECF6A786997da2e8037a",
+          "eth:0xb279092b5D7637e22617178f31f08229bf4FCB42"
+        ],
+        "OPTIONAL_COMMITTER_ADMIN_ROLE": "0x764da40dc482d3b385909d7a072df3207fef1d443f7a2633f4e7f1c0bb574ee0",
+        "OPTIONAL_EXECUTOR_ADMIN_ROLE": "0xc77a7447d79c15063f9229278e1e1165208fb21eb078a86552a94a992151cc28",
+        "OPTIONAL_PRECOMMITTER_ADMIN_ROLE": "0x03e138bd3674247b3c2730aba459026fc3de55a6c40e11b30be5d7afdb726d7d",
+        "OPTIONAL_PROVER_ADMIN_ROLE": "0xd596cfca9f98786bbbcc61c1506316fd2ff44c96f6a4771a1e13e2cf7df55318",
+        "OPTIONAL_REVERTER_ADMIN_ROLE": "0x5db23a41c9125bb814d45889d5f3f62adb67c27242e6ad726210a337aa8d65b7",
+        "OPTIONAL_UPGRADER_ADMIN_ROLE": "0xa1426e789273bde4307f3302768d8e4eb615f0f4dea304f29cccd58ff644d640",
+        "owner": "eth:0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "PRECOMMITTER_ROLE": "0x3353dfbbf9a3ed2a5be49cd3bd3a51ee03c3751d409cccac7723c4907332afee",
+        "PROVER_ROLE": "0x60044782a422109ac08a415e44260ad5d3bad63d96ebe1fac0363399642ee3f2",
+        "revertedBlocks": [],
+        "REVERTER_ROLE": "0x30085792330f3f9ee2ee216aea0321c55a0909b87c51ee9ab49d05ca4a4c2ecb",
+        "threshold": 1,
+        "UPGRADER_ROLE": "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3",
+        "validatorTimelock": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776"
+      },
+      "fieldMeta": {
+        "multisigMembers": { "severity": "HIGH" },
+        "threshold": { "severity": "HIGH" }
+      },
+      "implementationNames": {
+        "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83": "TransparentUpgradeableProxy",
+        "eth:0xc954B4D51031870624f3e779Ead14C57249C111D": "EraMultisigValidator"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "DualVerifier",
@@ -982,6 +1093,19 @@
       "type": "Reference",
       "targetType": "EOA",
       "targetProject": "shared-zk-stack"
+    },
+    {
+      "address": "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83",
+          "description": "initiate batch execution on L1 if approved by enough Validator Multisig members.",
+          "role": ".executor"
+        }
+      ]
     },
     {
       "address": "eth:0xdF28907A6A272fa06333a197d7F0379A0f8f00aa",
@@ -1482,6 +1606,17 @@
     "eth:0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063": [
       "constructor(address _singleton)"
     ],
+    "eth:0x9B9256E7D5b696F7BD7525F42238Ba3d9BBD9cDA": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
     "eth:0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661": [
       "constructor(address _initialOwner, address _initialTokenMultiplierSetter)",
       "error NoCallsProvided()",
@@ -1508,6 +1643,104 @@
       "function verificationKeyHash() pure returns (bytes32)",
       "function verify(uint256[], uint256[]) view returns (bool)"
     ],
+    "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error ERC1967ProxyUninitialized()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xc954B4D51031870624f3e779Ead14C57249C111D": [
+      "constructor(address _bridgeHub)",
+      "error AddressHasNoCode(address)",
+      "error AlreadySigned()",
+      "error DefaultAdminTransferNotAllowed()",
+      "error InitializeNotAvailable()",
+      "error MemberAlreadyExists(address member)",
+      "error MemberDoesNotExist(address member)",
+      "error NotAZKChain(address addr)",
+      "error NotEnoughSignatures()",
+      "error NotSigner()",
+      "error RoleAccessDenied(address chainAddress, bytes32 role, address account)",
+      "event BatchPrecommitmentSet(uint256 indexed batchNumber, uint256 indexed untrustedLastL2BlockNumberHint, bytes32 precommitment)",
+      "event BlockCommit(uint256 indexed batchNumber, bytes32 indexed batchHash, bytes32 indexed commitment)",
+      "event BlockExecution(uint256 indexed batchNumber, bytes32 indexed batchHash, bytes32 indexed commitment)",
+      "event BlocksRevert(uint256 totalBatchesCommitted, uint256 totalBatchesVerified, uint256 totalBatchesExecuted)",
+      "event BlocksVerification(uint256 indexed previousLastVerifiedBatch, uint256 indexed currentLastVerifiedBatch)",
+      "event EIP712DomainChanged()",
+      "event HashApproved(address indexed member, bytes32 indexed hash)",
+      "event Initialized(uint8 version)",
+      "event MultisigMemberChanged(address indexed member, bool isMember)",
+      "event NewExecutionDelay(uint256 _newExecutionDelay)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ReportCommittedBatchRangeZKsyncOS(uint64 indexed batchNumber, uint64 indexed firstBlockNumber, uint64 indexed lastBlockNumber)",
+      "event RoleAdminChanged(address indexed chainAddress, bytes32 indexed role, bytes32 previousAdminRole, bytes32 newAdminRole)",
+      "event RoleGranted(address indexed chainAddress, bytes32 indexed role, address indexed account)",
+      "event RoleRevoked(address indexed chainAddress, bytes32 indexed role, address indexed account)",
+      "event ThresholdChanged(uint256 newThreshold)",
+      "function BRIDGE_HUB() view returns (address)",
+      "function COMMITTER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function EXECUTOR_ROLE() view returns (bytes32)",
+      "function OPTIONAL_COMMITTER_ADMIN_ROLE() view returns (bytes32)",
+      "function OPTIONAL_EXECUTOR_ADMIN_ROLE() view returns (bytes32)",
+      "function OPTIONAL_PRECOMMITTER_ADMIN_ROLE() view returns (bytes32)",
+      "function OPTIONAL_PROVER_ADMIN_ROLE() view returns (bytes32)",
+      "function OPTIONAL_REVERTER_ADMIN_ROLE() view returns (bytes32)",
+      "function OPTIONAL_UPGRADER_ADMIN_ROLE() view returns (bytes32)",
+      "function PRECOMMITTER_ROLE() view returns (bytes32)",
+      "function PROVER_ROLE() view returns (bytes32)",
+      "function REVERTER_ROLE() view returns (bytes32)",
+      "function UPGRADER_ROLE() view returns (bytes32)",
+      "function acceptOwnership()",
+      "function addValidator(address _chainAddress, address _validator)",
+      "function addValidatorForChainId(uint256 _chainId, address _validator)",
+      "function addValidatorRoles(address _chainAddress, address _validator, tuple(bool rotatePrecommitterRole, bool rotateCommitterRole, bool rotateReverterRole, bool rotateProverRole, bool rotateExecutorRole, bool rotateUpgraderRole) params)",
+      "function approveHash(bytes32 _hash)",
+      "function calculateHash(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes _batchData) view returns (bytes32)",
+      "function changeExecutionMultisigMember(address[] _addressesToAdd, address[] _addressesToRemove)",
+      "function changeThreshold(uint256 _newThreshold)",
+      "function commitBatchesSharedBridge(address _chainAddress, uint256, uint256, bytes)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function executeBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes _batchData)",
+      "function executionDelay() view returns (uint32)",
+      "function executionMultisigMember(address) view returns (bool)",
+      "function getApprovals(bytes32 _hash) view returns (uint256)",
+      "function getCommittedBatchTimestamp(address _chainAddress, uint256 _l2BatchNumber) view returns (uint256)",
+      "function getName() view returns (string)",
+      "function getRoleAdmin(address _chainAddress, bytes32 _role) view returns (bytes32)",
+      "function getRoleMember(address _chainAddress, bytes32 _role, uint256 _index) view returns (address)",
+      "function getRoleMemberCount(address _chainAddress, bytes32 _role) view returns (uint256)",
+      "function grantRole(address _chainAddress, bytes32 _role, address _account)",
+      "function hasRole(address _chainAddress, bytes32 _role, address _account) view returns (bool)",
+      "function hasRoleForChainId(uint256 _chainId, bytes32 _role, address _address) view returns (bool)",
+      "function individualApprovals(address, bytes32) view returns (bool)",
+      "function initialize(address _initialOwner, uint32 _initialExecutionDelay, address _validatorTimelock)",
+      "function initialize(address, uint32) pure",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function precommitSharedBridge(address _chainAddress, uint256, bytes)",
+      "function proveBatchesSharedBridge(address _chainAddress, uint256, uint256, bytes)",
+      "function removeValidator(address _chainAddress, address _validator)",
+      "function removeValidatorForChainId(uint256 _chainId, address _validator)",
+      "function removeValidatorRoles(address _chainAddress, address _validator, tuple(bool rotatePrecommitterRole, bool rotateCommitterRole, bool rotateReverterRole, bool rotateProverRole, bool rotateExecutorRole, bool rotateUpgraderRole) params)",
+      "function renounceOwnership()",
+      "function renounceRole(address _chainAddress, bytes32 _role)",
+      "function revertBatchesSharedBridge(address _chainAddress, uint256)",
+      "function revokeRole(address _chainAddress, bytes32 _role, address _account)",
+      "function setExecutionDelay(uint32 _executionDelay)",
+      "function setRoleAdmin(address _chainAddress, bytes32 _role, bytes32 _adminRole)",
+      "function threshold() view returns (uint256)",
+      "function transferOwnership(address newOwner)",
+      "function upgradeChainFromVersion(address _chainAddress, uint256, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata))",
+      "function validatorTimelock() view returns (address)"
+    ],
     "eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45": [
       "constructor(address _fflonkVerifier, address _plonkVerifier)",
       "error EmptyProofLength()",
@@ -1520,14 +1753,16 @@
     ]
   },
   "usedTemplates": {
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",
     "shared-zk-stack/Diamond": "0xf58468847183a89ea73709ca00dc1bd45baad858f179c87fa0b9a9a3099edb25",
     "shared-zk-stack/DualVerifier": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
+    "shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable": "0x55d204472e25f4714e0b26d4449b39099a93ef829660099d6504ef808f61138e",
     "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
-  "usedBlockNumbers": { "ethereum": 24469834 },
-  "permissionsConfigHash": "0x733ec81285b6a70d8b6a13e2c1b09a5cd96541b7bcd259f9085e81f9c5758d8e"
+  "usedBlockNumbers": { "ethereum": 25429469 },
+  "permissionsConfigHash": "0xc394b9338a4dd99e66a5bf453505908de37e1e93cb364ff87a6ecb0edec97394"
 }

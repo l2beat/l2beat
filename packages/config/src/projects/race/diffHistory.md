@@ -1,4 +1,104 @@
-Generated with discovered.json: 0x9153e0fdaf7e91812b5d0682edd340438c0976e4
+Generated with discovered.json: 0x4bb939f37ebc6423cda890571d0c3f25614c1b78
+
+# Diff at Tue, 09 Jun 2026 12:43:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1745587139
+- current timestamp: 1745587139
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1745587139 (main branch discovery), not current.
+
+```diff
+    contract Race Multisig 2 (eth:0x2E7B9465B25C081c07274A31DbD05C6146f67961) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.role:
+-        ".challenger"
++        ".guardian"
+      receivedPermissions.0.from:
+-        "eth:0x8bF8442d49d52377d735a90F19657a29f29aA83c"
++        "eth:0x0485Ca8A73682B3D3f5ae98cdca1E5b512E728e9"
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.1.role:
+-        ".CHALLENGER"
++        ".GUARDIAN"
+      receivedPermissions.1.from:
+-        "eth:0x8bF8442d49d52377d735a90F19657a29f29aA83c"
++        "eth:0x0485Ca8A73682B3D3f5ae98cdca1E5b512E728e9"
+      receivedPermissions.1.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.2.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.2.role:
+-        ".guardian"
++        ".challenger"
+      receivedPermissions.2.from:
+-        "eth:0x0485Ca8A73682B3D3f5ae98cdca1E5b512E728e9"
++        "eth:0x8bF8442d49d52377d735a90F19657a29f29aA83c"
+      receivedPermissions.2.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.3.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.3.role:
+-        ".GUARDIAN"
++        ".CHALLENGER"
+      receivedPermissions.3.from:
+-        "eth:0x0485Ca8A73682B3D3f5ae98cdca1E5b512E728e9"
++        "eth:0x8bF8442d49d52377d735a90F19657a29f29aA83c"
+      receivedPermissions.3.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.4.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.4.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x88D58BFbCD70c25409b67117fC1CDfeFDA113a78) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x8CDa8351236199AF7532baD53D683Ddd9B275d89) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0xa09cf6288907f39340728841f2c10d293eb0a432
 
 # Diff at Fri, 08 May 2026 07:51:50 GMT:
 

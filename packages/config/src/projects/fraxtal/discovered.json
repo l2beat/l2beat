@@ -1,7 +1,7 @@
 {
   "name": "fraxtal",
   "timestamp": 1758702279,
-  "configHash": "0x69742988f7316dece2af9849f16856e5717c9d2dba9b4656332c470c42adb585",
+  "configHash": "0x478679fd500cb44edd4ca7bd3e7722c5c24b6675de86f51073788befe2b9c3e9",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -592,8 +592,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
           "role": ".batcherHash"
         }
       ]
@@ -1167,30 +1168,34 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "challenge",
-          "from": "eth:0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
-          "role": ".challenger"
-        },
-        {
-          "permission": "challenge",
-          "from": "eth:0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
-          "role": ".CHALLENGER"
-        },
-        {
-          "permission": "guard",
-          "from": "eth:0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D",
-          "role": ".guardian"
-        },
-        {
-          "permission": "guard",
-          "from": "eth:0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
-          "role": ".guardian"
-        },
-        {
           "permission": "interact",
           "from": "eth:0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
           "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
+          "role": ".guardian"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
+          "role": ".guardian"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challenger"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".CHALLENGER"
         },
         {
           "permission": "interact",
@@ -1307,13 +1312,15 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "propose",
+          "permission": "interact",
           "from": "eth:0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
           "role": ".proposer"
         },
         {
-          "permission": "propose",
+          "permission": "interact",
           "from": "eth:0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
           "role": ".PROPOSER"
         }
       ]
@@ -2073,5 +2080,5 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
   "usedBlockNumbers": { "ethereum": 23431685 },
-  "permissionsConfigHash": "0xe7c4df6965362c4c121b359295eaa42ee187dfa2908be2e5cc5366e3b04eb7bf"
+  "permissionsConfigHash": "0xed97184eba61fecae655695fb9fbce318e6963c9c511be11c991ede6ce4ae8ac"
 }

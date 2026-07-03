@@ -1,7 +1,7 @@
 {
   "name": "megaeth",
   "timestamp": 1778535511,
-  "configHash": "0x41ebe06aeb510eda130b32372516b66d975a6bf8b017740e4c327a31672c52f9",
+  "configHash": "0x9b9994487e9254dc545ccfde5416f80b79bc3d7c3638ff7521b015674f73bec3",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
     {
@@ -378,8 +378,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "guard",
+          "permission": "interact",
           "from": "eth:0x5d0Ff601BC8580D8682c0462df55343Cb0b99285",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
           "role": ".guardian",
           "via": [
             { "address": "eth:0xB2A9EB0c7b729c3EC704e843eF260084B3caE67F" }
@@ -1201,7 +1202,7 @@
       "type": "Contract",
       "template": "taiko/RiscZeroGroth16Verifier",
       "sourceHashes": [
-        "0x19c3fbedf93ee852d83096519dd22f26409f70fc13f7843307acaecb508981d6"
+        "0x20f30107695bee36a63acac61a5ba93d47cbb8ad79df70f6dd9b16d15db66ad3"
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for RISC Zero Groth16 proofs (version 2.0.0-rc.3).",
@@ -1218,7 +1219,8 @@
       },
       "implementationNames": {
         "eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3": "RiscZeroGroth16Verifier"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "eth:0x44aC63d4e18c0d24d0EDe1C058D5A93Fc2fbB904",
@@ -1602,6 +1604,8 @@
           "arg": {
             "0": "FaultDisputeGame",
             "1": "PermissionedDisputeGame",
+            "8": "FaultDisputeGame",
+            "621": "AggregateVerifier",
             "1337": "KailuaGame"
           }
         }
@@ -1696,7 +1700,11 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
-      "ignoreInWatchMode": ["gameCount", "permissionedGameArgs"],
+      "ignoreInWatchMode": [
+        "gameCount",
+        "permissionedGameArgs",
+        "permissionedGamesTotal"
+      ],
       "deployerAddress": "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64",
       "sinceTimestamp": 1762796999,
       "sinceBlock": 23770457,
@@ -2037,7 +2045,21 @@
         "$immutable": true,
         "owner": "eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "verifier": "eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3"
+        "verifier": "eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3",
+        "verifier_242f9d5b": "eth:0x0000000000000000000000000000000000000000",
+        "verifier_310fe598": "eth:0x0000000000000000000000000000000000000000",
+        "verifier_73c457ba": "eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3",
+        "verifier_9f39696c": "eth:0x0000000000000000000000000000000000000000",
+        "verifier_bb001d44": "eth:0x0000000000000000000000000000000000000000",
+        "verifier_f536085a": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "fieldMeta": {
+        "verifier_310fe598": { "severity": "HIGH" },
+        "verifier_9f39696c": { "severity": "HIGH" },
+        "verifier_f536085a": { "severity": "HIGH" },
+        "verifier_bb001d44": { "severity": "HIGH" },
+        "verifier_73c457ba": { "severity": "HIGH" },
+        "verifier_242f9d5b": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x910b159F79288DD706789ec7768E979d4D88C057": "RiscZeroVerifierRouter"
@@ -2334,8 +2356,9 @@
       "proxyType": "gnosis safe",
       "directlyReceivedPermissions": [
         {
-          "permission": "guard",
+          "permission": "interact",
           "from": "eth:0x5d0Ff601BC8580D8682c0462df55343Cb0b99285",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
           "role": ".guardian"
         }
       ],
@@ -2506,8 +2529,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x1ED92E1bc9A2735216540EDdD0191144681cb77E",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
           "role": ".batcherHash"
         }
       ]
@@ -2787,8 +2811,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "relayDA",
+          "permission": "interact",
           "from": "eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B",
+          "description": "Can store and serve both unencoded blobs as well as encoded chunks.",
           "role": ".relayers"
         }
       ]
@@ -2873,8 +2898,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "disperse",
+          "permission": "interact",
           "from": "eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad",
+          "description": "Can disperse EigenDA blobs to the EigenDA node operators.",
           "role": ".dispersers"
         }
       ]
@@ -4541,21 +4567,21 @@
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry": "0x0745ad704a222adcc2bfc1e083729a31e749ccc5465e0adb2995f87981c21fba",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
-    "opstack/DisputeGameFactory": "0x8e238948fd295fbbcd65a82d3723114f83cf0e8358b0b50126a80c68748d8920",
+    "opstack/DisputeGameFactory": "0x46746381be2da0435ab1c70360c00f35d9759a505c3f99905e07476b72e8b79c",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/OptimismPortal2": "0x33b53e7ec24fad0aacaa78e8233cee4af1f8ea9f611f988f864b2fbe70e371b0",
+    "opstack/OptimismPortal2": "0x52ecd41211faad3599bd32ca82e2af9561910cce6d33f93242e9bf13a426018c",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "risc0/KailuaGame": "0x249c17fd26bbb0f5400d386b4cfbe2edc478f66aeca6ba5fe90e477d646ae9dd",
-    "risc0/RiscZeroVerifierRouter": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "risc0/RiscZeroVerifierRouter": "0xb74ea20385c8afa507c773dd57793a9fbf10ce64ed9c17b58dff13665aff9f7a",
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
   "usedBlockNumbers": { "ethereum": 25074600 },
-  "permissionsConfigHash": "0xd2c911e243f425a68fbccb15db08e6324289c6ea9341df52191da5050ebea211"
+  "permissionsConfigHash": "0x30247efeb57504d44ab2eeb2a4bda91423dc9905a9eb0e41a5a2a31e88af0d3e"
 }

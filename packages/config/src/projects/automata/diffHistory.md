@@ -1,4 +1,134 @@
-Generated with discovered.json: 0xc67b395b396abbcc6b2189149b6310a4edc30a91
+Generated with discovered.json: 0xcde17bc23fd36a2571e374e48bb831701ab89829
+
+# Diff at Tue, 09 Jun 2026 12:43:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1780925461
+- current timestamp: 1780925461
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780925461 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x1f8F34d0A3e8D721f8a05980Af19a7ba2E9Ec510) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x5a5C3c981AE9299e080EF1647a781b1F3FbBdf63) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xa1237f7a46d407000ED5Fa07A5f17eE42Cc3392c) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.1.permission:
+-        "challenge"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xa5822fb7E3Fb516E518e2629E6786e93858e41F4) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.1.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0xfd978756fb2253329b85d1cb0ceb0df1d10750d4
+
+# Diff at Mon, 08 Jun 2026 13:32:04 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@7b249a098f7367cb0ead3d881bbc57b408521134 block: 1773160400
+- current timestamp: 1780925461
+
+## Description
+
+All four operator roles rotated: SystemConfig `batcherHash` + `unsafeBlockSigner`, L2OutputOracle `proposer` + `challenger`. Impl upgraded to `AltL2OutputOracle` (`0xA9D7…BDF08`) — a one-function extension that exposes `updateProposerAndChallenger(address,address)` gated by `msg.sender == proposer`, the only writable path for those slots in that impl — then reverted to standard `L2OutputOracle` (`0xf315…9e3A`).
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x72934D7AEDC1A2d889ca89Aaf064CD9455E64d00) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.batcherHash:
+-        "eth:0x12a593227Efb69EA634e2169E2c0A8246BB0B1B3"
++        "eth:0x5a5C3c981AE9299e080EF1647a781b1F3FbBdf63"
+      values.unsafeBlockSigner:
+-        "eth:0x373771221e39e1Ca16e981179CEcF1bE38ac70d9"
++        "eth:0xB08d817CfC56c76e6c09425602f04De68D63b993"
+    }
+```
+
+```diff
+    contract L2OutputOracle (eth:0xdbf381984c4515Fe3285D3C55fDfb3054C52c261) [opstack/L2OutputOracle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      values.$pastUpgrades.3:
++        ["2026-06-08T03:16:11.000Z","0xa003ca066fdb6598a79aa97e782de066ec62723c27f34bca0664528f25e39b43",["eth:0xA9D78F579f1B30194F3c2Ca1987A9B91A33BDF08"]]
+      values.$pastUpgrades.4:
++        ["2026-06-08T03:30:23.000Z","0x7c21d591fa80314fa93e0ae49c7af1d899267c941acc19a2a682723f09312305",["eth:0xf31575705C047eC4D3Eb05F0917B9aA404179e3A"]]
+      values.$upgradeCount:
+-        3
++        5
++++ severity: HIGH
+      values.challenger:
+-        "eth:0xC3515A4bb0028E7548819df04160e2248d86eDE8"
++        "eth:0xa1237f7a46d407000ED5Fa07A5f17eE42Cc3392c"
+      values.CHALLENGER:
+-        "eth:0xC3515A4bb0028E7548819df04160e2248d86eDE8"
++        "eth:0xa1237f7a46d407000ED5Fa07A5f17eE42Cc3392c"
++++ severity: HIGH
+      values.proposer:
+-        "eth:0x5B08eCA5C0cc5Ea1EBF03881c30EbF800f76F5a6"
++        "eth:0x1f8F34d0A3e8D721f8a05980Af19a7ba2E9Ec510"
+      values.PROPOSER:
+-        "eth:0x5B08eCA5C0cc5Ea1EBF03881c30EbF800f76F5a6"
++        "eth:0x1f8F34d0A3e8D721f8a05980Af19a7ba2E9Ec510"
+    }
+```
+
+Generated with discovered.json: 0x825c9d030d02541cc96e6ece06499cb6ba8d6d67
 
 # Diff at Fri, 08 May 2026 07:51:05 GMT:
 

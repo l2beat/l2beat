@@ -1,3 +1,422 @@
+Generated with discovered.json: 0xd4524a91cb3bb7b6cd752a31935cda037b6f15c6
+
+# Diff at Wed, 01 Jul 2026 13:13:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@87787fbfe5dbbfa8f87f19557e7045da182d3d21 block: 1781176085
+- current timestamp: 1781176085
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1781176085 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (eth:0x8fE58d2168b5412Cf1Bd212cE6137f8b7300222d) [opstack/AnchorStateRegistry_post13_opsuccinct] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the OPSuccinctFaultDisputeGame. Variant for chains using OPSuccinct (SP1) games instead of Cannon, which omits Cannon-specific cross-contract fields (vm, oracle, weth, challengePeriod, absolutePrestate from game).
++++ description: Formatted delay after which an unchallenged resolved dispute game can be used for withdrawals.
+      values.disputeGameFinalityDelaySeconds_fmt:
++        "3d 12h"
+      fieldMeta.disputeGameFinalityDelaySeconds_fmt:
++        {"description":"Formatted delay after which an unchallenged resolved dispute game can be used for withdrawals."}
+    }
+```
+
+```diff
+    contract Celo cLabs Multisig (eth:0x9Eb44Da23433b5cAA1c87e35594D15FcEb08D34d) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816","description":"Allowed to add or remove proposers and challengers, and transfer ownership of the AccessManager.","role":".owner"}
+    }
+```
+
+```diff
+    contract AccessManager (eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816) [succinct/OPSuccinct/AccessManager] {
+    +++ description: Contract managing access control for proposers and challengers in OPSuccinct.
++++ description: Formatted fallback timeout after which proposing becomes permissionless.
+      values.FALLBACK_TIMEOUT_fmt:
++        "14d"
+      fieldMeta.FALLBACK_TIMEOUT_fmt:
++        {"description":"Formatted fallback timeout after which proposing becomes permissionless."}
+      fieldMeta.owner:
++        {"severity":"HIGH","description":"Address that can update the proposer and challenger allowlists and transfer ownership."}
+    }
+```
+
+```diff
+    contract OPSuccinctFaultDisputeGame (eth:0xfF1caC738a5263736AF258e4b3D6a4970C6351FF) [succinct/OPSuccinct/OPSuccinctFaultDisputeGame] {
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
++++ description: Formatted maximum time after game creation during which a game can be challenged.
+      values.maxChallengeDuration_fmt:
++        "3d 12h"
++++ description: Formatted maximum time after a challenge during which the proposal can be proven.
+      values.maxProveDuration_fmt:
++        "1d"
+      fieldMeta.maxChallengeDuration_fmt:
++        {"description":"Formatted maximum time after game creation during which a game can be challenged."}
+      fieldMeta.maxProveDuration_fmt:
++        {"description":"Formatted maximum time after a challenge during which the proposal can be proven."}
+    }
+```
+
+Generated with discovered.json: 0x3317554f8eaea96965fb655c6e55ddebac9dc83b
+
+# Diff at Tue, 30 Jun 2026 20:24:39 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1781176085
+- current timestamp: 1781176085
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1781176085 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0xc5c5D157928BDBD2ACf6d0777626b6C75a9EAEDC) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the 42.
+      usedTypes.0.arg.8:
++        "FaultDisputeGame"
+    }
+```
+
+Generated with discovered.json: 0x81d7690decaa79791e524fbd949d3190192f415e
+
+# Diff at Thu, 11 Jun 2026 11:09:14 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@91b2eba1ff9c1c8341d0eaf6594dac4179405ef6 block: 1777038237
+- current timestamp: 1781176085
+
+## Description
+
+OPSuccinct fault-proof upgrade to `celo/v2.1.0` (SP1 Hypercube).
+
+The respected dispute game implementation (game type 42) was swapped on the
+DisputeGameFactory from `0xE7bd695…` to a new `0xfF1caC738…`,
+rotating the program verification keys:
+- aggregationVkey: `0x004f4bbc…0377` -> `0x00b04647…4be4`
+- rangeVkeyCommitment: `0x1fffeb5a…7c2c` -> `0x1dd60be4…5c94`
+
+Both new vkeys reproduce from the `celo/v2.1.0` source (verified; steps in common/programHashes.ts).
+On-chain game code change is small and confined to anchoring:
+the starting output root now reads `ANCHOR_STATE_REGISTRY.getAnchorRoot()` instead of the deprecated
+`anchors(GAME_TYPE)`, and a new invariant requires a parent game's L2 block to be ahead of the anchor
+(handles game-type-switch / retirement recovery; prevents duplicate or stale-parent games). The proof
+system and proposer/challenger access control are unchanged.
+diff: https://disco.l2beat.com/diff/eth:0xE7bd695d6A17970A2D9dB55cfeF7F2024d630aE1/eth:0xfF1caC738a5263736AF258e4b3D6a4970C6351FF
+
+SystemConfig minBaseFee raised 0.1 -> 0.2 gwei.
+
+Routine shared OP governance rotations (not Celo-specific, tracked across OP Stack chains):
+- DeputyPauseModule deputy: `0x352f1de…` -> `0x2fA1503…`. Scheduled key hygiene.
+- OpFoundationUpgradeSafe member[6]: `0xc222ab08…` -> `0xa2A58E31…`. Member rotated.
+- Optimism Security Council member[12]: `0x9282722…` -> `0xcbC7dCe…`. Member rotated.
+
+## Watched changes
+
+```diff
+    contract DeputyPauseModule (eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754) [opstack/DeputyPauseModule] {
+    +++ description: Allows eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module.
+      description:
+-        "Allows eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module."
++        "Allows eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module."
+      values.deputy:
+-        "eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC"
++        "eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c"
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) [GnosisSafe] {
+    +++ description: None
+      values.$members.6:
+-        "eth:0xc222ab08333109243B1f4E2a80e3D0A190714AB5"
++        "eth:0xa2A58E31C03C59e34ab4d996d811DA0C035BfDea"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x89E31965D844a309231B1f17759Ccaf1b7c09861) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.minBaseFee:
+-        100000000000
++        200000000000
+    }
+```
+
+```diff
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) [GnosisSafe] {
+    +++ description: None
+      values.$members.12:
+-        "eth:0x92827223f6b397CE9F208eE352bacA710765cACb"
++        "eth:0xcbC7dCeb857F0b25523618cCa0A03c419a6d7eA6"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OPSuccinctFaultDisputeGame (eth:0xE7bd695d6A17970A2D9dB55cfeF7F2024d630aE1) [succinct/OPSuccinct/OPSuccinctFaultDisputeGame]
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game42:
+-        "eth:0xE7bd695d6A17970A2D9dB55cfeF7F2024d630aE1"
++        "eth:0xfF1caC738a5263736AF258e4b3D6a4970C6351FF"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OPSuccinctFaultDisputeGame (eth:0xfF1caC738a5263736AF258e4b3D6a4970C6351FF) [succinct/OPSuccinct/OPSuccinctFaultDisputeGame]
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+## Source code changes
+
+```diff
+.../OPSuccinctFaultDisputeGame.sol                      | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
+```
+
+Generated with discovered.json: 0xd6730e8ba3571bc547007e55c3c8829f07bbd9ba
+
+# Diff at Tue, 09 Jun 2026 12:43:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1777038237
+- current timestamp: 1777038237
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777038237 (main branch discovery), not current.
+
+```diff
+    contract Optimism Guardian Multisig (eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) [GnosisSafe] {
+    +++ description: None
+      directlyReceivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      directlyReceivedPermissions.0.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x0B7de3F505AD7Fc9b38207CD8E2Adc7a604BFe62) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x0cd08c7f7A96AA9635f761b49216B9eA74C5cA60) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x53E8EEAAE0731CCc888513695eC1Bd792ec975Ca) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x56966549e0953e8d6E17Fcd3278b003d81f58cA8) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x7247204E46B381149d99acF88b318713fE12c32f) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x77E831A0A6a680335BB54937E085fF625dfE3f6F) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x79D14553D6B3484F5612272B43c219A882415d33) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a) [gnosisSafeModules/SaferSafes] {
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xc6E6836CaCB6fF0a843050DB7F64bb2ab864C463) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xe4ce4999b1C4C60C384AC96f370F00796ae9eC78) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0xbd21cc5cfa33526df047419ddf800f703b567c44
+
+# Diff at Thu, 04 Jun 2026 17:39:03 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1777038237
+- current timestamp: 1777038237
+
+## Description
+
+New game name (aggregateVerifier) added to portal.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777038237 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0xc5c5D157928BDBD2ACf6d0777626b6C75a9EAEDC) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the 42.
+      usedTypes.0.arg.621:
++        "AggregateVerifier"
+    }
+```
+
+Generated with discovered.json: 0xd168b645a93608ec49545d4b3d93c2a304577e65
+
+# Diff at Tue, 19 May 2026 11:27:14 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1d630d9c64f2d9431ff75a101bb6e0338cdffc9e block: 1777038237
+- current timestamp: 1777038237
+
+## Description
+
+All shapes have to be defined on an implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777038237 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC) {
+    +++ description: None
+      name:
+-        "Optimism EOA 1"
+    }
+```
+
 Generated with discovered.json: 0x3732dbc8e83d77670b40d3a445e235e402992d02
 
 # Diff at Fri, 08 May 2026 07:51:12 GMT:

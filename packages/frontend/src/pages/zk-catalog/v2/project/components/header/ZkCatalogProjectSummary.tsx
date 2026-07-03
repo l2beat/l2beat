@@ -427,6 +427,7 @@ function TechStackSection({
 function TvsStat({ value, change }: { value: number; change: number }) {
   return (
     <ProjectSummaryStat
+      titleAsChild
       title={
         <div className="font-semibold text-subtitle-12">
           <span className="md:hidden">Total Value Secured</span>

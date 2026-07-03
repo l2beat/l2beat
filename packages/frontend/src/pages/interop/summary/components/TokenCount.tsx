@@ -7,6 +7,7 @@ import { formatInteger } from '~/utils/number-format/formatInteger'
 import { BetweenChainsInfo } from '../../components/BetweenChainsInfo'
 import { SelectedChainsTokensDialog } from '../../components/tokens/TokensDialog'
 import { InteropTopItems } from '../../components/top-items/TopItems'
+import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
 
 export function TokenCount({
   isLoading,
@@ -52,6 +53,7 @@ export function TokenCount({
                     iconUrl: token.iconUrl,
                     volume: token.volume,
                     issuer: token.issuer,
+                    href: getInteropTokenUrl(token),
                     transferCount: token.transferCount,
                     avgDuration: token.avgDuration,
                     avgValue: token.avgValue,

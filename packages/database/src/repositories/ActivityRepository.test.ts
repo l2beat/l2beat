@@ -50,6 +50,37 @@ describeDatabase(ActivityRepository.name, (db) => {
     })
   })
 
+  describe(
+    ActivityRepository.prototype.getMaxTimestampAtOrBeforeForProjects.name,
+    () => {
+      it('returns latest timestamp for provided projects', async () => {
+        await repository.upsertMany([
+          record('a', START),
+          record('a', START + 1 * UnixTime.DAY),
+          record('b', START + 2 * UnixTime.DAY),
+        ])
+
+        const result = await repository.getMaxTimestampAtOrBeforeForProjects(
+          START + 2 * UnixTime.DAY,
+          ['a'],
+        )
+
+        expect(result).toEqual(START + 1 * UnixTime.DAY)
+      })
+
+      it('returns undefined for empty project list', async () => {
+        await repository.upsertMany([record('a', START)])
+
+        const result = await repository.getMaxTimestampAtOrBeforeForProjects(
+          START,
+          [],
+        )
+
+        expect(result).toEqual(undefined)
+      })
+    },
+  )
+
   describe(ActivityRepository.prototype.deleteByProjectIdFrom.name, () => {
     it('should delete all rows after a given timestamp and projectId', async () => {
       await repository.upsertMany([

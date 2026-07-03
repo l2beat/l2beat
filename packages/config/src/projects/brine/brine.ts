@@ -58,6 +58,7 @@ export const brine: ScalingProject = {
   id: ProjectId('brine'),
   capability: 'appchain',
   addedAt: UnixTime(1690545663), // 2023-07-28T12:01:03Z
+  archivedAt: UnixTime(1779090374), // Mon, 18 May 2026 07:46:13 GMT
   badges: [
     BADGES.VM.AppChain,
     BADGES.DA.DAC,
@@ -65,10 +66,6 @@ export const brine: ScalingProject = {
     BADGES.Infra.SHARP,
   ],
   display: {
-    redWarning: {
-      text: 'Critical contract references can be changed by an EOA which could result in the loss of all funds.',
-      detailAnchor: 'permissions',
-    },
     architectureImage: 'starkex',
     name: 'tanX',
     slug: 'tanx',
@@ -131,6 +128,7 @@ export const brine: ScalingProject = {
     name: 'brine',
     chainId: undefined,
     apis: [{ type: 'starkex', product: ['brine'] }],
+    untilTimestamp: UnixTime(1779090374), // Mon, 18 May 2026 07:46:13 GMT
   },
   config: {
     escrows: [
@@ -160,7 +158,10 @@ export const brine: ScalingProject = {
     mode: DA_MODES.STATE_DIFFS,
   },
   riskView: {
-    stateValidation: RISK_VIEW.STATE_ZKP_ST,
+    stateValidation: {
+      ...RISK_VIEW.STATE_ZKP_ST,
+      executionDelay: 0,
+    },
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC({
       membersCount: committeePermission.accounts.length,
       requiredSignatures: minSigners,

@@ -33,6 +33,7 @@ export function ProjectScalingStats({ project, className }: Props) {
   const stats = compact([
     <ProjectSummaryStat
       key="tvs"
+      titleAsChild
       title={
         <div>
           <span className="lg:max-xl:hidden">Total Value Secured</span>
@@ -70,6 +71,7 @@ export function ProjectScalingStats({ project, className }: Props) {
     />,
     <ProjectSummaryStat
       key="ops-count"
+      titleAsChild
       title={
         <div>
           <span className="lg:max-xl:hidden">Past day UOPS</span>

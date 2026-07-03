@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x05801ec653fe387ddca0c81e18608b518d7e3c67
+
+# Diff at Thu, 04 Jun 2026 15:18:00 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@b3061d13527867199a7f8470f738f778234b8a4e block: 1775809516
+- current timestamp: 1780586199
+
+## Description
+
+Owner of L1NativeTokenVault and L1Nullifier changed from an EOA to a multisig.
+
+## Watched changes
+
+```diff
+    contract L1NativeTokenVault (eth:0x0A0F8912162Ff83A036883dbaDA42efF647a3065) [shared-zk-stack/L1NativeTokenVault] {
+    +++ description: Canonical central asset escrow for all ZK stack chains.
+      values.owner:
+-        "eth:0x59Be28DE6eFb1f78802E96188d2b7907059Be59f"
++        "eth:0xdE4781a08Cc75D4E1b07fb3909840AE685960711"
+    }
+```
+
+```diff
+    EOA  (eth:0x59Be28DE6eFb1f78802E96188d2b7907059Be59f) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x0A0F8912162Ff83A036883dbaDA42efF647a3065","description":"pause / unpause the bridge.","role":".owner"}]
+    }
+```
+
+```diff
+    contract L1Nullifier (eth:0x5E5a72077dFB354Dfe61200b8f31fa491F9B9Cea) [shared-zk-stack/L1Nullifier] {
+    +++ description: Contract responsible for bookkeeping L1 bridging transactions. Used to finalize withdrawals and reclaim failed deposits. Does not escrow funds.
+      values.owner:
+-        "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985"
++        "eth:0xdE4781a08Cc75D4E1b07fb3909840AE685960711"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0xdE4781a08Cc75D4E1b07fb3909840AE685960711) [GnosisSafe]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../null => ./src/projects/adi/.flat/Safe/Safe.sol | 1216 ++++++++++++++++++++
+ .../src/projects/adi/.flat/Safe/SafeProxy.p.sol    |   42 +
+ 2 files changed, 1258 insertions(+)
+```
+
 Generated with discovered.json: 0x69dc8b432eace59302b3aaea362a1bd6e95db2b8
 
 # Diff at Fri, 08 May 2026 07:51:01 GMT:

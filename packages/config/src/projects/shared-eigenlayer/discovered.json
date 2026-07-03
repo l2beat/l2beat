@@ -1,7 +1,7 @@
 {
   "name": "shared-eigenlayer",
-  "timestamp": 1777451880,
-  "configHash": "0x1460d23a16aad0250c3606bbe963d48dbbba5472a0f390cce0d163362287f6a8",
+  "timestamp": 1782816336,
+  "configHash": "0x1b39a18e2ee06cc366d7523836ee434d139d189ff82d6e13349e5c5d261a0411",
   "entries": [
     {
       "address": "eth:0x00000000000000000000000000000000000E16E4",
@@ -66,13 +66,13 @@
         "0xd9cf0eec93e95085d5fac84bb3d87285b88caaf45ae89a67943a17d1f76cc73a"
       ],
       "proxyType": "immutable",
-      "description": "A beacon with an upgradeable implementation currently set as eth:0xC355123d0a51b4B5185aA7f21150904CEE3EAC97. Beacon proxy contracts pointing to this beacon will all use its implementation.",
+      "description": "A beacon with an upgradeable implementation currently set as eth:0xc946787cFd6c155886C673BF9815C841c1718903. Beacon proxy contracts pointing to this beacon will all use its implementation.",
       "deployerAddress": "eth:0x9B0098A38548b8B71473B0123A38B90bd882d49E",
       "sinceTimestamp": 1772480855,
       "sinceBlock": 24571946,
       "values": {
         "$immutable": true,
-        "implementation": "eth:0xC355123d0a51b4B5185aA7f21150904CEE3EAC97",
+        "implementation": "eth:0xc946787cFd6c155886C673BF9815C841c1718903",
         "owner": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
       },
       "implementationNames": {
@@ -135,7 +135,7 @@
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
         "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "8710914640518922926634",
+        "totalShares": "6821721442723030290141",
         "underlyingToken": "eth:0xf951E335afb289353dc249e82926178EaC7DEd78"
       },
       "fieldMeta": {
@@ -160,6 +160,11 @@
         "eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230": "StrategyBaseTVLLimits"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "address": "eth:0x10d6CE86113D00CcF071D02C5289e420a14C963F",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "TaskMailbox",
@@ -399,7 +404,7 @@
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
         "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "675363058800775618334",
+        "totalShares": "476497344078781816926",
         "underlyingToken": "eth:0xE95A203B1a91a908F9B9CE46459d101078c2c3cb"
       },
       "fieldMeta": {
@@ -486,7 +491,7 @@
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
         "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "4874202894244003034290",
+        "totalShares": "4030394971640946832067",
         "underlyingToken": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393"
       },
       "fieldMeta": {
@@ -748,7 +753,7 @@
         "majorVersion": "1",
         "PAUSER_ROLE": "0x0100000000000000000000000000000000000000000000000000000000000000",
         "totalDeployments": 36,
-        "version": "1.12.0"
+        "version": "1.13.0"
       },
       "implementationNames": {
         "eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129": "TransparentUpgradeableProxy",
@@ -817,7 +822,7 @@
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
         "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "62048459174028307756175",
+        "totalShares": "1148433029407300086680",
         "underlyingToken": "eth:0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa"
       },
       "fieldMeta": {
@@ -907,7 +912,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 30,
+        "nonce": 31,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -985,11 +990,6 @@
     },
     {
       "address": "eth:0x3a7a62A4274Da0A5D0E4ba9278aEb1CC19a34154",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x3e89Ef7435d4A3e0b52b70B1176f849b351953eE",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1559,14 +1559,14 @@
           "eth:0x9229C290F60F303884073F28EB8E81F9B82506d5",
           "eth:0xC6F9BDEEdEf78c2Cd146cdA31C82F76ca14A2927",
           "eth:0xc5280E368648b0e192b355c7d8330593bA7af700",
-          "eth:0x3e89Ef7435d4A3e0b52b70B1176f849b351953eE"
+          "eth:0x10d6CE86113D00CcF071D02C5289e420a14C963F"
         ],
         "$threshold": 3,
         "domainSeparator": "0x61ee3be2a1999f4d0139ce35b0a2142d8ad067c74102210278661869542d9630",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 17,
+        "nonce": 19,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1719,7 +1719,7 @@
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
         "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "1751831682171063450424",
+        "totalShares": "1491476839997536006902",
         "underlyingToken": "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
       },
       "fieldMeta": {
@@ -1842,8 +1842,8 @@
           "maxStalenessPeriod": 0
         },
         "getGeneratorReferenceTimestamp": 1,
-        "getLatestReferenceBlockNumber": 24971837,
-        "getLatestReferenceTimestamp": 1777298411,
+        "getLatestReferenceBlockNumber": 24995362,
+        "getLatestReferenceTimestamp": 1777581527,
         "GLOBAL_TABLE_ROOT_CERT_TYPEHASH": "0x4491f5ee91595f938885ef73c9a1fa8a6d14ff9b9dab4aa24b8802bbb9bfc1cc",
         "globalRootConfirmationThreshold": 10000,
         "MAX_BPS": 10000,
@@ -1925,7 +1925,7 @@
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
         "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "4272305798263884569766",
+        "totalShares": "2619226812046446895449",
         "underlyingToken": "eth:0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38"
       },
       "fieldMeta": {
@@ -1986,7 +1986,7 @@
       "template": "eigenlayer/StrategyFactory",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x6c8fe2017652e376f87e63411537a85b1d70d09248914a9d1b8f560d9af0f15e"
+        "0x84efd26dd6dea827afe7cca007745bb205c21213b359c931c24f75e451d88644"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Factory contract for permissionless strategy creation via beacon proxies.",
@@ -1995,7 +1995,7 @@
       "sinceBlock": 20493178,
       "values": {
         "$admin": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
-        "$implementation": "eth:0x315BCD0f31EF8b1124382f3acab3913f791C09E7",
+        "$implementation": "eth:0xbbc4124C74C567396181fBfbaE746b80619D2b76",
         "$pastUpgrades": [
           [
             "2024-08-09T19:37:23.000Z",
@@ -2016,10 +2016,17 @@
             "2026-03-12T20:49:23.000Z",
             "0x1a0f6a0330a783146ebeb8c81a23b18f945fc3c3bdcbdd8d3f7ea4d88761e94a",
             ["eth:0x315BCD0f31EF8b1124382f3acab3913f791C09E7"]
+          ],
+          [
+            "2026-06-15T21:17:11.000Z",
+            "0x31038718055572d8230555d9929c63496ca7ec520d6af6b9971bbe241f9088e3",
+            ["eth:0xbbc4124C74C567396181fBfbaE746b80619D2b76"]
           ]
         ],
-        "$upgradeCount": 4,
+        "$upgradeCount": 5,
+        "bEIGEN": "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
         "durationVaultBeacon": "eth:0x0fCE0A591D96BB76883323eF555867111E2050a9",
+        "EIGEN": "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
         "owner": "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90",
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
@@ -2028,7 +2035,7 @@
       },
       "implementationNames": {
         "eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647": "TransparentUpgradeableProxy",
-        "eth:0x315BCD0f31EF8b1124382f3acab3913f791C09E7": "StrategyFactory"
+        "eth:0xbbc4124C74C567396181fBfbaE746b80619D2b76": "StrategyFactory"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
@@ -2076,7 +2083,7 @@
         "EMISSIONS_EPOCH_LENGTH": 604800,
         "EMISSIONS_INFLATION_RATE": "2356969864211533000000000",
         "EMISSIONS_START_TIME": 1773878400,
-        "getCurrentEpoch": 5,
+        "getCurrentEpoch": 14,
         "getDistribution": [
           [
             1428,
@@ -2160,9 +2167,9 @@
         "getTotalProcessableDistributions": 2,
         "incentiveCouncil": "eth:0x218B5eC7482e072F6D47feb0463B3297eFb4bA56",
         "isButtonPressable": false,
-        "lastTimeButtonPressable": 1776902400,
+        "lastTimeButtonPressable": 1782345600,
         "MAX_TOTAL_WEIGHT": 10000,
-        "nextTimeButtonPressable": 1777507200,
+        "nextTimeButtonPressable": 1782950400,
         "owner": "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90",
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
@@ -2384,7 +2391,7 @@
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
         "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "1383925787977346559425",
+        "totalShares": "428309426883111301295",
         "underlyingToken": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1"
       },
       "fieldMeta": {
@@ -2489,7 +2496,7 @@
         "name": "Backing Eigen",
         "owner": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "symbol": "bEIGEN",
-        "totalSupply": "1813181898699949779147668696",
+        "totalSupply": "1834394627477853576147668696",
         "transferRestrictionsDisabledAfter": 0
       },
       "fieldMeta": {
@@ -2508,17 +2515,19 @@
       "name": "StrategyManager",
       "address": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
       "type": "Contract",
+      "template": "eigenlayer/StrategyManager",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x6549a6827b021dbac39a6289f7c3299e90833c946b67de173e2b13fb3792fac8"
+        "0x733d1aa946e67989cfdacb40dab07592d2680a0d81cef774a547e11a712d8c62"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake.",
       "deployerAddress": "eth:0x4eF221F76F046f3cFA3f739c9dcD368D59df99DA",
       "sinceTimestamp": 1686348947,
       "sinceBlock": 17445564,
       "values": {
         "$admin": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
-        "$implementation": "eth:0x88582996b70FDd7C4f16e3Fde7B53858FcE0d394",
+        "$implementation": "eth:0xa7536C85898dC424c6BFe8592F983661f830656A",
         "$pastUpgrades": [
           [
             "2023-06-09T22:15:47.000Z",
@@ -2554,9 +2563,14 @@
             "2026-03-12T20:49:23.000Z",
             "0x1a0f6a0330a783146ebeb8c81a23b18f945fc3c3bdcbdd8d3f7ea4d88761e94a",
             ["eth:0x88582996b70FDd7C4f16e3Fde7B53858FcE0d394"]
+          ],
+          [
+            "2026-06-15T21:17:11.000Z",
+            "0x31038718055572d8230555d9929c63496ca7ec520d6af6b9971bbe241f9088e3",
+            ["eth:0xa7536C85898dC424c6BFe8592F983661f830656A"]
           ]
         ],
-        "$upgradeCount": 7,
+        "$upgradeCount": 8,
         "allocationManager": "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39",
         "DEFAULT_BURN_ADDRESS": "eth:0x00000000000000000000000000000000000E16E4",
         "delegation": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
@@ -2567,13 +2581,15 @@
         "owner": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
+        "SLASH_RESOLUTION_DELAY_BLOCKS": 50400,
         "strategyWhitelister": "eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647",
-        "version": "1.12.0"
+        "version": "1.13.0"
       },
       "implementationNames": {
         "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A": "TransparentUpgradeableProxy",
-        "eth:0x88582996b70FDd7C4f16e3Fde7B53858FcE0d394": "StrategyManager"
-      }
+        "eth:0xa7536C85898dC424c6BFe8592F983661f830656A": "StrategyManager"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "EigenLayerProxyAdmin",
@@ -2808,7 +2824,7 @@
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
         "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "2583242947946462540944",
+        "totalShares": "2460419001232256006688",
         "underlyingToken": "eth:0xac3E018457B222d93114458476f3E3416Abbe38F"
       },
       "fieldMeta": {
@@ -2937,7 +2953,7 @@
         "delegationManager": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "eigenPodBeacon": "eth:0x5a2a4F2F3C18f09179B6703e63D9eDD165909073",
         "ethPOS": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
-        "numPods": 34653,
+        "numPods": 34689,
         "owner": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
@@ -3072,7 +3088,7 @@
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
         "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "511292058550580762484050",
+        "totalShares": "313729562202052380618510",
         "underlyingToken": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
       },
       "fieldMeta": {
@@ -3271,7 +3287,7 @@
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
         "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "86194113743688002844567",
+        "totalShares": "48922799690096292479821",
         "underlyingToken": "eth:0xA35b1B31Ce002FBF2058D22F30f95D405200A15b"
       },
       "fieldMeta": {
@@ -3353,7 +3369,7 @@
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
         "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "1491759879701629442712",
+        "totalShares": "1485383578980443374081",
         "underlyingToken": "eth:0x856c4Efb76C1D1AE02e20CEB03A2A6a08b0b8dC3"
       },
       "fieldMeta": {
@@ -3439,7 +3455,7 @@
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
         "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "411196574633527055008135619",
+        "totalShares": "296457712791522006383526470",
         "underlyingToken": "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
       },
       "fieldMeta": {
@@ -3526,7 +3542,7 @@
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
         "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "8242494291469273026820",
+        "totalShares": "8242435684204982094217",
         "underlyingToken": "eth:0x8c1BEd5b9a0928467c9B1341Da1D7BD5e10b6549"
       },
       "fieldMeta": {
@@ -4077,7 +4093,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 83,
+        "nonce": 84,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -4152,16 +4168,26 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
+      "address": "eth:0xc5280E368648b0e192b355c7d8330593bA7af700",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xC6F9BDEEdEf78c2Cd146cdA31C82F76ca14A2927",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "DurationVaultStrategy",
-      "address": "eth:0xC355123d0a51b4B5185aA7f21150904CEE3EAC97",
+      "address": "eth:0xc946787cFd6c155886C673BF9815C841c1718903",
       "type": "Contract",
       "sourceHashes": [
-        "0x57b6af6f97e4423299b8600bcc20ec74936cf7e6a8955a08d4c73bb7c5bf5bd2"
+        "0xb5ed4d8d613208626f6a6393ab8454683b9149503d786fb480cc19ba01b770a0"
       ],
       "proxyType": "immutable",
       "deployerAddress": "eth:0x9B0098A38548b8B71473B0123A38B90bd882d49E",
-      "sinceTimestamp": 1772480843,
-      "sinceBlock": 24571945,
+      "sinceTimestamp": 1780689239,
+      "sinceBlock": 25253395,
       "values": {
         "$immutable": true,
         "allocationManager": "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39",
@@ -4204,18 +4230,8 @@
         "withdrawalsOpen": true
       },
       "implementationNames": {
-        "eth:0xC355123d0a51b4B5185aA7f21150904CEE3EAC97": "DurationVaultStrategy"
+        "eth:0xc946787cFd6c155886C673BF9815C841c1718903": "DurationVaultStrategy"
       }
-    },
-    {
-      "address": "eth:0xc5280E368648b0e192b355c7d8330593bA7af700",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xC6F9BDEEdEf78c2Cd146cdA31C82F76ca14A2927",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "ECDSACertificateVerifier",
@@ -4400,7 +4416,7 @@
         "name": "Eigen",
         "owner": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "symbol": "EIGEN",
-        "totalSupply": "1813181898699949779147668696",
+        "totalSupply": "1834394627477853576147668696",
         "transferRestrictionsDisabledAfter": 0,
         "version": "1.6.0"
       },
@@ -5229,46 +5245,6 @@
       "function verifyCertificateProportion(tuple(address avs, uint32 id) operatorSet, tuple(uint32 referenceTimestamp, bytes32 messageHash, bytes sig) cert, uint16[] totalStakeProportionThresholds) view returns (bool, address[])",
       "function version() view returns (string)"
     ],
-    "eth:0x315BCD0f31EF8b1124382f3acab3913f791C09E7": [
-      "constructor(address _strategyManager, address _pauserRegistry, address _strategyBeacon, address _durationVaultBeacon)",
-      "error AlreadyBlacklisted()",
-      "error BlacklistedToken()",
-      "error CurrentlyPaused()",
-      "error InputAddressZero()",
-      "error InvalidNewPausedStatus()",
-      "error OnlyPauser()",
-      "error OnlyUnpauser()",
-      "error StrategyAlreadyExists()",
-      "event DurationVaultDeployed(address indexed vault, address indexed underlyingToken, address indexed vaultAdmin, uint32 duration, uint256 maxPerDeposit, uint256 stakeCap, string metadataURI, address operatorSetAVS, uint32 operatorSetId)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address indexed account, uint256 newPausedStatus)",
-      "event StrategySetForToken(address token, address strategy)",
-      "event TokenBlacklisted(address token)",
-      "event Unpaused(address indexed account, uint256 newPausedStatus)",
-      "function blacklistTokens(address[] tokens)",
-      "function deployDurationVaultStrategy(tuple(address underlyingToken, address vaultAdmin, address arbitrator, uint32 duration, uint256 maxPerDeposit, uint256 stakeCap, string metadataURI, tuple(address avs, uint32 id) operatorSet, bytes operatorSetRegistrationData, address delegationApprover, string operatorMetadataURI) config) returns (address newVault)",
-      "function deployNewStrategy(address token) returns (address newStrategy)",
-      "function deployedStrategies(address) view returns (address)",
-      "function durationVaultBeacon() view returns (address)",
-      "function durationVaultsByToken(address, uint256) view returns (address)",
-      "function getDurationVaults(address token) view returns (address[])",
-      "function initialize(address _initialOwner, uint256 _initialPausedStatus)",
-      "function isBlacklisted(address) view returns (bool)",
-      "function owner() view returns (address)",
-      "function pause(uint256 newPausedStatus)",
-      "function pauseAll()",
-      "function paused(uint8 index) view returns (bool)",
-      "function paused() view returns (uint256)",
-      "function pauserRegistry() view returns (address)",
-      "function removeStrategiesFromWhitelist(address[] strategiesToRemoveFromWhitelist)",
-      "function renounceOwnership()",
-      "function strategyBeacon() view returns (address)",
-      "function strategyManager() view returns (address)",
-      "function transferOwnership(address newOwner)",
-      "function unpause(uint256 newPausedStatus)",
-      "function whitelistStrategies(address[] strategiesToWhitelist)"
-    ],
     "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111": [
       "constructor(address _singleton)"
     ],
@@ -5687,82 +5663,6 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "eth:0x88582996b70FDd7C4f16e3Fde7B53858FcE0d394": [
-      "constructor(address _allocationManager, address _delegation, address _pauserRegistry, string _version)",
-      "error CurrentlyPaused()",
-      "error InputAddressZero()",
-      "error InvalidNewPausedStatus()",
-      "error InvalidShortString()",
-      "error InvalidSignature()",
-      "error MaxStrategiesExceeded()",
-      "error OnlyDelegationManager()",
-      "error OnlyPauser()",
-      "error OnlyStrategyWhitelister()",
-      "error OnlyUnpauser()",
-      "error SharesAmountTooHigh()",
-      "error SharesAmountZero()",
-      "error SignatureExpired()",
-      "error StakerAddressZero()",
-      "error StrategyAlreadyInSlash()",
-      "error StrategyNotFound()",
-      "error StrategyNotWhitelisted()",
-      "error StringTooLong(string str)",
-      "event BurnOrRedistributableSharesDecreased(tuple(address avs, uint32 id) operatorSet, uint256 slashId, address strategy, uint256 shares)",
-      "event BurnOrRedistributableSharesIncreased(tuple(address avs, uint32 id) operatorSet, uint256 slashId, address strategy, uint256 shares)",
-      "event BurnableSharesDecreased(address strategy, uint256 shares)",
-      "event Deposit(address staker, address strategy, uint256 shares)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address indexed account, uint256 newPausedStatus)",
-      "event StrategyAddedToDepositWhitelist(address strategy)",
-      "event StrategyRemovedFromDepositWhitelist(address strategy)",
-      "event StrategyWhitelisterChanged(address previousAddress, address newAddress)",
-      "event Unpaused(address indexed account, uint256 newPausedStatus)",
-      "function DEFAULT_BURN_ADDRESS() view returns (address)",
-      "function DEPOSIT_TYPEHASH() view returns (bytes32)",
-      "function addShares(address staker, address strategy, uint256 shares) returns (uint256, uint256)",
-      "function addStrategiesToDepositWhitelist(address[] strategiesToWhitelist)",
-      "function allocationManager() view returns (address)",
-      "function burnShares(address strategy)",
-      "function calculateStrategyDepositDigestHash(address staker, address strategy, address token, uint256 amount, uint256 nonce, uint256 expiry) view returns (bytes32)",
-      "function clearBurnOrRedistributableShares(tuple(address avs, uint32 id) operatorSet, uint256 slashId) returns (uint256[])",
-      "function clearBurnOrRedistributableSharesByStrategy(tuple(address avs, uint32 id) operatorSet, uint256 slashId, address strategy) returns (uint256)",
-      "function delegation() view returns (address)",
-      "function depositIntoStrategy(address strategy, address token, uint256 amount) returns (uint256 depositShares)",
-      "function depositIntoStrategyWithSignature(address strategy, address token, uint256 amount, address staker, uint256 expiry, bytes signature) returns (uint256 depositShares)",
-      "function domainSeparator() view returns (bytes32)",
-      "function getBurnOrRedistributableCount(tuple(address avs, uint32 id) operatorSet, uint256 slashId) view returns (uint256)",
-      "function getBurnOrRedistributableShares(tuple(address avs, uint32 id) operatorSet, uint256 slashId) view returns (address[], uint256[])",
-      "function getBurnOrRedistributableShares(tuple(address avs, uint32 id) operatorSet, uint256 slashId, address strategy) view returns (uint256)",
-      "function getBurnableShares(address strategy) view returns (uint256)",
-      "function getDeposits(address staker) view returns (address[], uint256[])",
-      "function getPendingOperatorSets() view returns (tuple(address avs, uint32 id)[])",
-      "function getPendingSlashIds(tuple(address avs, uint32 id) operatorSet) view returns (uint256[])",
-      "function getStakerStrategyList(address staker) view returns (address[])",
-      "function getStrategiesWithBurnableShares() view returns (address[], uint256[])",
-      "function increaseBurnOrRedistributableShares(tuple(address avs, uint32 id) operatorSet, uint256 slashId, address strategy, uint256 sharesToBurn)",
-      "function initialize(address initialOwner, address initialStrategyWhitelister, uint256 initialPausedStatus)",
-      "function nonces(address signer) view returns (uint256 nonce)",
-      "function owner() view returns (address)",
-      "function pause(uint256 newPausedStatus)",
-      "function pauseAll()",
-      "function paused(uint8 index) view returns (bool)",
-      "function paused() view returns (uint256)",
-      "function pauserRegistry() view returns (address)",
-      "function removeDepositShares(address staker, address strategy, uint256 depositSharesToRemove) returns (uint256)",
-      "function removeStrategiesFromDepositWhitelist(address[] strategiesToRemoveFromWhitelist)",
-      "function renounceOwnership()",
-      "function setStrategyWhitelister(address newStrategyWhitelister)",
-      "function stakerDepositShares(address staker, address strategy) view returns (uint256 shares)",
-      "function stakerStrategyList(address staker, uint256) view returns (address strategies)",
-      "function stakerStrategyListLength(address staker) view returns (uint256)",
-      "function strategyIsWhitelistedForDeposit(address strategy) view returns (bool whitelisted)",
-      "function strategyWhitelister() view returns (address)",
-      "function transferOwnership(address newOwner)",
-      "function unpause(uint256 newPausedStatus)",
-      "function version() view returns (string)",
-      "function withdrawSharesAsTokens(address staker, address strategy, address token, uint256 shares)"
     ],
     "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -6201,6 +6101,86 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "eth:0xa7536C85898dC424c6BFe8592F983661f830656A": [
+      "constructor(address _allocationManager, address _delegation, address _pauserRegistry, string _version)",
+      "error CurrentlyPaused()",
+      "error InputAddressZero()",
+      "error InvalidNewPausedStatus()",
+      "error InvalidShortString()",
+      "error InvalidSignature()",
+      "error MaxStrategiesExceeded()",
+      "error OnlyDelegationManager()",
+      "error OnlyPauser()",
+      "error OnlyStrategyWhitelister()",
+      "error OnlyUnpauser()",
+      "error SharesAmountTooHigh()",
+      "error SharesAmountZero()",
+      "error SignatureExpired()",
+      "error SlashResolutionDelayNotElapsed()",
+      "error StakerAddressZero()",
+      "error StrategyAlreadyInSlash()",
+      "error StrategyNotFound()",
+      "error StrategyNotWhitelisted()",
+      "error StringTooLong(string str)",
+      "event BurnOrRedistributableSharesDecreased(tuple(address avs, uint32 id) operatorSet, uint256 slashId, address strategy, uint256 shares)",
+      "event BurnOrRedistributableSharesIncreased(tuple(address avs, uint32 id) operatorSet, uint256 slashId, address strategy, uint256 shares)",
+      "event BurnableSharesDecreased(address strategy, uint256 shares)",
+      "event Deposit(address staker, address strategy, uint256 shares)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address indexed account, uint256 newPausedStatus)",
+      "event SlashResolutionBlockSet(tuple(address avs, uint32 id) operatorSet, uint256 slashId, uint32 resolutionBlock)",
+      "event StrategyAddedToDepositWhitelist(address strategy)",
+      "event StrategyRemovedFromDepositWhitelist(address strategy)",
+      "event StrategyWhitelisterChanged(address previousAddress, address newAddress)",
+      "event Unpaused(address indexed account, uint256 newPausedStatus)",
+      "function DEFAULT_BURN_ADDRESS() view returns (address)",
+      "function DEPOSIT_TYPEHASH() view returns (bytes32)",
+      "function SLASH_RESOLUTION_DELAY_BLOCKS() view returns (uint32)",
+      "function addShares(address staker, address strategy, uint256 shares) returns (uint256, uint256)",
+      "function addStrategiesToDepositWhitelist(address[] strategiesToWhitelist)",
+      "function allocationManager() view returns (address)",
+      "function burnShares(address strategy)",
+      "function calculateStrategyDepositDigestHash(address staker, address strategy, address token, uint256 amount, uint256 nonce, uint256 expiry) view returns (bytes32)",
+      "function clearBurnOrRedistributableShares(tuple(address avs, uint32 id) operatorSet, uint256 slashId) returns (uint256[])",
+      "function clearBurnOrRedistributableSharesByStrategy(tuple(address avs, uint32 id) operatorSet, uint256 slashId, address strategy) returns (uint256)",
+      "function delegation() view returns (address)",
+      "function depositIntoStrategy(address strategy, address token, uint256 amount) returns (uint256 depositShares)",
+      "function depositIntoStrategyWithSignature(address strategy, address token, uint256 amount, address staker, uint256 expiry, bytes signature) returns (uint256 depositShares)",
+      "function domainSeparator() view returns (bytes32)",
+      "function getBurnOrRedistributableCount(tuple(address avs, uint32 id) operatorSet, uint256 slashId) view returns (uint256)",
+      "function getBurnOrRedistributableShares(tuple(address avs, uint32 id) operatorSet, uint256 slashId) view returns (address[], uint256[])",
+      "function getBurnOrRedistributableShares(tuple(address avs, uint32 id) operatorSet, uint256 slashId, address strategy) view returns (uint256)",
+      "function getBurnableShares(address strategy) view returns (uint256)",
+      "function getDeposits(address staker) view returns (address[], uint256[])",
+      "function getPendingOperatorSets() view returns (tuple(address avs, uint32 id)[])",
+      "function getPendingSlashIds(tuple(address avs, uint32 id) operatorSet) view returns (uint256[])",
+      "function getSlashResolutionBlock(tuple(address avs, uint32 id) operatorSet, uint256 slashId) view returns (uint32)",
+      "function getStakerStrategyList(address staker) view returns (address[])",
+      "function getStrategiesWithBurnableShares() view returns (address[], uint256[])",
+      "function increaseBurnOrRedistributableShares(tuple(address avs, uint32 id) operatorSet, uint256 slashId, address strategy, uint256 sharesToBurn)",
+      "function initialize(address initialOwner, address initialStrategyWhitelister, uint256 initialPausedStatus)",
+      "function nonces(address signer) view returns (uint256 nonce)",
+      "function owner() view returns (address)",
+      "function pause(uint256 newPausedStatus)",
+      "function pauseAll()",
+      "function paused(uint8 index) view returns (bool)",
+      "function paused() view returns (uint256)",
+      "function pauserRegistry() view returns (address)",
+      "function removeDepositShares(address staker, address strategy, uint256 depositSharesToRemove) returns (uint256)",
+      "function removeStrategiesFromDepositWhitelist(address[] strategiesToRemoveFromWhitelist)",
+      "function renounceOwnership()",
+      "function setStrategyWhitelister(address newStrategyWhitelister)",
+      "function stakerDepositShares(address staker, address strategy) view returns (uint256 shares)",
+      "function stakerStrategyList(address staker, uint256) view returns (address strategies)",
+      "function stakerStrategyListLength(address staker) view returns (uint256)",
+      "function strategyIsWhitelistedForDeposit(address strategy) view returns (bool whitelisted)",
+      "function strategyWhitelister() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function unpause(uint256 newPausedStatus)",
+      "function version() view returns (string)",
+      "function withdrawSharesAsTokens(address staker, address strategy, address token, uint256 shares)"
+    ],
     "eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -6278,6 +6258,49 @@
       "function setUnpauser(address newUnpauser)",
       "function unpauser() view returns (address)"
     ],
+    "eth:0xbbc4124C74C567396181fBfbaE746b80619D2b76": [
+      "constructor(address _strategyManager, address _pauserRegistry, address _strategyBeacon, address _durationVaultBeacon, address _EIGEN, address _bEIGEN)",
+      "error AlreadyBlacklisted()",
+      "error BlacklistedToken()",
+      "error CurrentlyPaused()",
+      "error InputAddressZero()",
+      "error InvalidNewPausedStatus()",
+      "error OnlyPauser()",
+      "error OnlyUnpauser()",
+      "error ProhibitedDurationVaultToken()",
+      "error StrategyAlreadyExists()",
+      "event DurationVaultDeployed(address indexed vault, address indexed underlyingToken, address indexed vaultAdmin, uint32 duration, uint256 maxPerDeposit, uint256 stakeCap, string metadataURI, address operatorSetAVS, uint32 operatorSetId)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address indexed account, uint256 newPausedStatus)",
+      "event StrategySetForToken(address token, address strategy)",
+      "event TokenBlacklisted(address token)",
+      "event Unpaused(address indexed account, uint256 newPausedStatus)",
+      "function EIGEN() view returns (address)",
+      "function bEIGEN() view returns (address)",
+      "function blacklistTokens(address[] tokens)",
+      "function deployDurationVaultStrategy(tuple(address underlyingToken, address vaultAdmin, address arbitrator, uint32 duration, uint256 maxPerDeposit, uint256 stakeCap, string metadataURI, tuple(address avs, uint32 id) operatorSet, bytes operatorSetRegistrationData, address delegationApprover, string operatorMetadataURI) config) returns (address newVault)",
+      "function deployNewStrategy(address token) returns (address newStrategy)",
+      "function deployedStrategies(address) view returns (address)",
+      "function durationVaultBeacon() view returns (address)",
+      "function durationVaultsByToken(address, uint256) view returns (address)",
+      "function getDurationVaults(address token) view returns (address[])",
+      "function initialize(address _initialOwner, uint256 _initialPausedStatus)",
+      "function isBlacklisted(address) view returns (bool)",
+      "function owner() view returns (address)",
+      "function pause(uint256 newPausedStatus)",
+      "function pauseAll()",
+      "function paused(uint8 index) view returns (bool)",
+      "function paused() view returns (uint256)",
+      "function pauserRegistry() view returns (address)",
+      "function removeStrategiesFromWhitelist(address[] strategiesToRemoveFromWhitelist)",
+      "function renounceOwnership()",
+      "function strategyBeacon() view returns (address)",
+      "function strategyManager() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function unpause(uint256 newPausedStatus)",
+      "function whitelistStrategies(address[] strategiesToWhitelist)"
+    ],
     "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90": [
       "constructor(address _singleton)"
     ],
@@ -6319,7 +6342,7 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateDelay(uint256 newDelay)"
     ],
-    "eth:0xC355123d0a51b4B5185aA7f21150904CEE3EAC97": [
+    "eth:0xc946787cFd6c155886C673BF9815C841c1718903": [
       "constructor(address _strategyManager, address _pauserRegistry, address _delegationManager, address _allocationManager, address _rewardsCoordinator, address _strategyFactory)",
       "error BalanceExceedsMaxTotalDeposits()",
       "error CurrentlyPaused()",
@@ -6345,7 +6368,6 @@
       "error PendingAllocation()",
       "error StrategyNotSupportedByOperatorSet()",
       "error TotalSharesExceedsMax()",
-      "error UnderlyingTokenBlacklisted()",
       "error VaultAlreadyLocked()",
       "error VaultNotLocked()",
       "error WithdrawalAmountExceedsTotalDeposits()",
@@ -6969,12 +6991,13 @@
     "eigenlayer/StrategiesBeacon": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenlayer/Strategy": "0x5b542b237664461cc9425426a34e0cf216d43947d261781837a5c00bbebfbc9b",
     "eigenlayer/StrategyFactory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "eigenlayer/StrategyManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenlayer/TaskMailbox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenlayer/TimelockControllerOwning": "0xaf1ebe8a6cc93d2ab3ea744cf16dd3a829de773907808c85af29327d02934811",
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "global/UpgradeableBeacon": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 24984595 },
-  "permissionsConfigHash": "0x391661594324fe0e05815de0fd1d167f42bd4978540cdede203c3cc6990de307"
+  "usedBlockNumbers": { "ethereum": 25429982 },
+  "permissionsConfigHash": "0x0fa1185b422c31d2e4933963533cd07de0e11f29d1feb25e475feadf51f3c474"
 }

@@ -1,25 +1,37 @@
-import type { KnownInteropBridgeType, UnixTime } from '@l2beat/shared-pure'
+import type { InteropBridgeType, UnixTime } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import type {
   AggregatedInteropTransferWithTokens,
   InteropSelectionInput,
 } from '../types'
 import { getAggregatedInteropSnapshotTimestamp } from './getAggregatedInteropTimestamp'
+import { transferTouchesChain } from './transferTouchesChain'
 
 interface AggregatedInteropTransferWithTokensResult {
   records: AggregatedInteropTransferWithTokens[]
   snapshotTimestamp: UnixTime | undefined
 }
 
-export async function getLatestAggregatedInteropTransferWithTokens(
-  selection: InteropSelectionInput,
-  type?: KnownInteropBridgeType,
-  protocolIds?: string[],
-): Promise<AggregatedInteropTransferWithTokensResult> {
+export async function getLatestAggregatedInteropTransferWithTokens({
+  selection,
+  types,
+  protocolIds,
+  anchorChain,
+}: {
+  selection: InteropSelectionInput
+  types?: InteropBridgeType[]
+  protocolIds?: string[]
+  anchorChain?: string
+}): Promise<AggregatedInteropTransferWithTokensResult> {
   const db = getDb()
 
   const { from, to } = selection
-  if (from.length === 0 || to.length === 0 || protocolIds?.length === 0) {
+  if (
+    from.length === 0 ||
+    to.length === 0 ||
+    protocolIds?.length === 0 ||
+    types?.length === 0
+  ) {
     return { records: [], snapshotTimestamp: undefined }
   }
 
@@ -33,19 +45,23 @@ export async function getLatestAggregatedInteropTransferWithTokens(
       snapshotTimestamp,
       selection.from,
       selection.to,
-      type,
+      types,
       protocolIds,
     ),
     db.aggregatedInteropToken.getByChainsAndTimestamp(
       snapshotTimestamp,
       selection.from,
       selection.to,
-      type,
+      types,
       protocolIds,
     ),
   ])
 
-  const records = transfers.map((transfer) => ({
+  const anchoredTransfers = transfers.filter((transfer) =>
+    transferTouchesChain(transfer, anchorChain),
+  )
+
+  const records = anchoredTransfers.map((transfer) => ({
     ...transfer,
     tokens: tokens
       .filter(

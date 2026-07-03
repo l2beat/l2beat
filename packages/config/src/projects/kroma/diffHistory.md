@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x0a30fa2634bae43b46cc18abf3b67036decb1486
+
+# Diff at Tue, 09 Jun 2026 12:43:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1752575723
+- current timestamp: 1752575723
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1752575723 (main branch discovery), not current.
+
+```diff
+    contract KromaSecurityCouncil (eth:0x3de211088dF516da72efe68D386b561BEE256Ec4) [N/A] {
+    +++ description: Custom Multisig contract in which each signer is identified by a token. The threshold is 8 and the token contract is called SecurityCouncilToken.
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0xc283cd839656df37ec1e1b9f4b7681e5c0af0a7f
 
 # Diff at Wed, 03 Sep 2025 15:52:14 GMT:

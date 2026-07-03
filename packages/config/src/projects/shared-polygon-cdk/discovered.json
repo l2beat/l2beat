@@ -1,7 +1,7 @@
 {
   "name": "shared-polygon-cdk",
-  "timestamp": 1777963087,
-  "configHash": "0x934720a7c40bc5be49c63e385d21b232a3346e4be45c3c7e8f662422a67783c9",
+  "timestamp": 1781600877,
+  "configHash": "0x4f0f68aa1dcb12de04354a0e4d95d35ae84a82445a02904096e8caa21463ae5d",
   "entries": [
     {
       "name": "SP1Verifier",
@@ -107,6 +107,12 @@
               "selector": "0x000a0001",
               "newVKey": "0x7767a8330ce68dac35265ba15d9eec6722b943cf00dc3b733779e1ae55696f70"
             }
+          ],
+          "0x000b0001": [
+            {
+              "selector": "0x000b0001",
+              "newVKey": "0x679bc13716cdb49416a9ca9e297b10d76390df2c343690d4172676c207517915"
+            }
           ]
         },
         "aggchainVKeysUpdated": {},
@@ -141,20 +147,27 @@
               "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
               "pessimisticVKey": "0x000055f14384bdb5bb092fd7e5152ec31856321c5a30306ab95836bdf5cdb639"
             }
+          ],
+          "0x0000000e": [
+            {
+              "selector": "0x0000000e",
+              "verifier": "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A",
+              "pessimisticVKey": "0x00d14f977a6ec393014f300ad78d0761dc29435d3fa1e2626fa466bd3343578e"
+            }
           ]
         },
         "version": "v1.1.0"
       },
       "fieldMeta": {
         "aggchainVKeys": {
-          "description": "The aggchainVkey is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP = 1, ECDSA = 0). This map is e.g. used by AggchainFEP.getAggchainVKey()."
+          "description": "The aggchainVkey is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP = 1, ECDSA = 0). This map is e.g. used by AggchainFEP.getAggchainVKey(), which some chains (ECDSA) override and do not call."
         },
         "aggchainVKeysUpdated": {
           "description": "emitted when an existing aggchainVKey in `aggchainVKeys` is updated."
         },
         "routes": {
           "severity": "HIGH",
-          "description": "This map is used for routing in verifyPessimisticProof(). The pessimisticVkey is the top level vkey that is used by the onchain verifier. It wraps the aggchainVKey. It is freely chosen by the aggregator from among any of the listed routes."
+          "description": "This map is used for routing in verifyPessimisticProof(). The pessimisticVkey is the top level vkey for all VerifierType 2 (algateway) chains. It wraps the aggchainVKey, which can be FEP or just ECDSA or anything else. It is freely chosen by the aggregator from among any of the listed routes."
         },
         "aggchainMultisigHash": { "severity": "HIGH" }
       },
@@ -212,11 +225,17 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "aggregatePolygon",
+          "permission": "interact",
           "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "Permissioned to post new state roots and global exit roots accompanied by ZK proofs.",
           "role": ".trustedAggregatorAC"
         }
       ]
+    },
+    {
+      "address": "eth:0x21618593F7147235aC8D511d68A547C935F9d417",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x21887c89368bf918346c62460e0c339113801C28",
@@ -403,7 +422,7 @@
           "eth:0xffbfc0c8331C5fc912DDA3C6D4A86eEB80203238",
           "eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37",
           "eth:0x516eEcfb38aA308c5f1878497108c7d054fd46B7",
-          "eth:0xA0B02B28920812324f1cC3255bd8840867d3f227",
+          "eth:0x21618593F7147235aC8D511d68A547C935F9d417",
           "eth:0x8B9F18bcDD5838bB1bd4B3d6410e45DF813b782B"
         ],
         "$threshold": 5,
@@ -411,7 +430,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 9 (56%)",
-        "nonce": 100,
+        "nonce": 103,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -466,7 +485,7 @@
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
         "getProxiedTokensManager": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-        "getRoot": "0xfb49d8196f4e50aa13eeaa1f9a503cfcb33d748c05cb3e37558e4f8b071bab80",
+        "getRoot": "0xd1dd18b809e85f11611e284345f72ed9c38839747abbb8f9c48db69a69521f7c",
         "getWrappedTokenBridgeImplementation": "eth:0x83D7B775de608e6e5566E86a307AE65548F341F4",
         "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
@@ -728,10 +747,10 @@
         ],
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0x2bd01cc5aadf0896f77935ef8a579af2e21efdeaeab2f7fbe5aead343fd19331",
+        "getRollupExitRoot": "0xf84a77a1e03aba5c073ad07964615724d2e801f72ba3b2ba8516b83e09855a4a",
         "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
-        "lastAggregationTimestamp": 1777962659,
+        "lastAggregationTimestamp": 1781599787,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "pessimisticProofSenders": [
           14, 17, 18, 19, 20, 3, 21, 22, 23, 7, 24, 26, 1, 16
@@ -1099,8 +1118,8 @@
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           }
         ],
-        "totalSequencedBatches": 873539,
-        "totalVerifiedBatches": 873036,
+        "totalSequencedBatches": 880623,
+        "totalVerifiedBatches": 880153,
         "trustedAggregatorAC": [
           "eth:0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE",
           "eth:0xD7e6c31750838Ef895fBe0c57f7Fd881a14482Fb"
@@ -1182,9 +1201,9 @@
         ],
         "$upgradeCount": 5,
         "bridgeAddress": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 104701,
+        "depositCount": 116985,
         "GER_VERSION": "v1.0.0",
-        "getRoot": "0xe2d85900bff79b4db6d9389b9a6c8f3603290a60efeed2f7b4394cd5736345aa",
+        "getRoot": "0x51641006855360a5bee6f178f382e19ab9acdbc1f9ea0cd0242fee7e988e997d",
         "rollupManager": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "version": "v1.0.0"
       },
@@ -1205,11 +1224,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xA0B02B28920812324f1cC3255bd8840867d3f227",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xAb3506507449bF1880f3337825efd19ac89E235E",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1223,6 +1237,28 @@
       "address": "eth:0xBDc235cC9d6Baa641c5ae306bc83962475A5FEFf",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A",
+      "type": "Contract",
+      "template": "shared-sp1/SP1Verifier",
+      "sourceHashes": [
+        "0x841e49c8753878bb522d9e0f0d5276aa39929d0cb7d6bd23ca0d5032537b8536"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
+      "sinceTimestamp": 1776172415,
+      "sinceBlock": 24878258,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0x5a093a2fcb46394f5cadfe55c44d4d572fad9cec7aeb38026b0278322ef07fac",
+        "VERSION": "v6.1.0",
+        "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
+      },
+      "implementationNames": {
+        "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A": "SP1Verifier"
+      }
     },
     {
       "name": "PolygonCreateRollupMultisig",
@@ -1275,8 +1311,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "aggregatePolygon",
+          "permission": "interact",
           "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "Permissioned to post new state roots and global exit roots accompanied by ZK proofs.",
           "role": ".trustedAggregatorAC"
         }
       ]
@@ -2057,6 +2094,18 @@
             },
             "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
             "delay": "259200"
+          },
+          {
+            "target": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+            "value": "0",
+            "function": "addPessimisticVKeyRoute",
+            "inputs": {
+              "pessimisticVKeySelector": "0x0000000e",
+              "verifier": "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A",
+              "pessimisticVKey": "0x00d14f977a6ec393014f300ad78d0761dc29435d3fa1e2626fa466bd3343578e"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "259200"
           }
         ],
         "timelockAdminAC": [
@@ -2429,6 +2478,18 @@
       "function verifyMerkleProof(bytes32 leafHash, bytes32[32] smtProof, uint32 index, bytes32 root) pure returns (bool)",
       "function version() pure returns (string)"
     ],
+    "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A": [
+      "error InvalidExitCode()",
+      "error InvalidProof()",
+      "error InvalidVkRoot()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function VK_ROOT() pure returns (bytes32)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
     "eth:0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB": [
       "constructor(address _singleton)"
     ],
@@ -2599,8 +2660,9 @@
     "polygon-cdk/AgglayerManager": "0x3c5b4cb44f69f247050cec379ef9c049f6c8bd7fca6aabab3b5159c190daa867",
     "polygon-cdk/BridgeLib": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "polygon-cdk/Timelock": "0x4278a10a23e0bf9d6e28d2f5699bcf08d530c06aa0d05cb0a60ec017fcd1b2cb",
+    "shared-sp1/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 25027059 },
-  "permissionsConfigHash": "0x9eb29e5f133bc51998ce999ef857b10bb5193d840210fa50d898a8da2ef355da"
+  "usedBlockNumbers": { "ethereum": 25329082 },
+  "permissionsConfigHash": "0x876afafbefe218d1fd4cbd9bfedb2e572986192c5cae4ef4893bee5da51fbf52"
 }

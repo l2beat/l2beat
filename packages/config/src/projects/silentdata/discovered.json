@@ -1,7 +1,7 @@
 {
   "name": "silentdata",
   "timestamp": 1765551112,
-  "configHash": "0x703a30f443fd54bcaf63fef3f6b009d6f95e99ea397fa75000ede468048936d6",
+  "configHash": "0x5f4e5e277aa9792ec52f295a425e156129a4b2e4c1856cc26675f0e3541cf7fe",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -63,7 +63,11 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
-      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
+      "ignoreInWatchMode": [
+        "permissionedGamesTotal",
+        "gameCount",
+        "permissionedGamesTotal"
+      ],
       "deployerAddress": "eth:0xF29a1335F914bf355D4f5cB5366a2BB1EA575e86",
       "sinceTimestamp": 1753442903,
       "sinceBlock": 22995864,
@@ -387,8 +391,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "propose",
+          "permission": "interact",
           "from": "eth:0x1B99b322085dA031e68C1202fdB756b3FFbaC7A6",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
           "role": ".proposer"
         }
       ]
@@ -635,8 +640,9 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "guard",
+          "permission": "interact",
           "from": "eth:0x50F08E501f8A9D124eaB4990b057fDEfE3F6ae3E",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
           "role": ".guardian"
         }
       ],
@@ -729,8 +735,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x5c3Efe3cA554816E9960C02AE3B4EB3A9a8D2E16",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
           "role": ".batcherHash"
         }
       ]
@@ -813,8 +820,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x1B99b322085dA031e68C1202fdB756b3FFbaC7A6",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challenger"
         }
       ]
@@ -1779,7 +1787,7 @@
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry": "0x0745ad704a222adcc2bfc1e083729a31e749ccc5465e0adb2995f87981c21fba",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
-    "opstack/DisputeGameFactory": "0x8e238948fd295fbbcd65a82d3723114f83cf0e8358b0b50126a80c68748d8920",
+    "opstack/DisputeGameFactory": "0x46746381be2da0435ab1c70360c00f35d9759a505c3f99905e07476b72e8b79c",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
@@ -1792,5 +1800,5 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
   "usedBlockNumbers": { "ethereum": 23997251 },
-  "permissionsConfigHash": "0xf670895bf0b2c45f556b34115f3f50c4158642ca387d8a5513e22b9d47151c69"
+  "permissionsConfigHash": "0x750b640d3626d5a8bf1268037ff8ad6f3042b06cd923a5f589d7661e55824077"
 }

@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import type {
+  AggregatedInteropDeployedTokenRecord,
   AggregatedInteropTokenRecord,
   AggregatedInteropTokensPairRecord,
   AggregatedInteropTransferRecord,
@@ -13,12 +14,12 @@ import { mockDatabase } from '../../../../test/database'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../../tools/uif/ids'
 import type { InteropNotifier } from '../notifications/InteropNotifier'
+import type {
+  InteropPromotionService,
+  ReconcileResult,
+} from '../promotion/InteropPromotionService'
 import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
 import { InteropAggregatingIndexer } from './InteropAggregatingIndexer'
-import {
-  DefaultInteropAggregationAnalyzer,
-  type InteropAggregationAnalyzer,
-} from './InteropAggregationAnalyzer'
 import type { InteropAggregationService } from './InteropAggregationService'
 
 describe(InteropAggregatingIndexer.name, () => {
@@ -97,6 +98,27 @@ describe(InteropAggregatingIndexer.name, () => {
         },
       ]
 
+      const aggregatedDeployedTokens: AggregatedInteropDeployedTokenRecord[] = [
+        {
+          timestamp: to,
+          id: 'config1',
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          tokenChain: 'arbitrum',
+          tokenAddress: '0xarb',
+          transferCount: 1,
+          transfersWithDurationCount: 1,
+          transferTypeStats: undefined,
+          totalDurationSum: 5000,
+          volume: 2000,
+          minTransferValueUsd: 2000,
+          maxTransferValueUsd: 2000,
+          bridgeType: 'lockAndMint',
+          mintedValueUsd: 2000,
+          burnedValueUsd: 0,
+        },
+      ]
+
       const aggregatedTokensPairs: AggregatedInteropTokensPairRecord[] = [
         {
           timestamp: to,
@@ -134,12 +156,25 @@ describe(InteropAggregatingIndexer.name, () => {
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(1),
       })
+      const aggregatedInteropDeployedToken = mockObject<
+        Database['aggregatedInteropDeployedToken']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(0),
+      })
       const aggregatedInteropTokensPair = mockObject<
         Database['aggregatedInteropTokensPair']
       >({
         deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(1),
+      })
+
+      const interopAggregateStatus = mockObject<
+        Database['interopAggregateStatus']
+      >({
+        deleteOrphaned: mockFn().resolvesTo(0),
       })
 
       const transaction = mockFn(async (fn: any) => await fn())
@@ -149,16 +184,19 @@ describe(InteropAggregatingIndexer.name, () => {
         interopTransfer,
         aggregatedInteropTransfer,
         aggregatedInteropToken,
+        aggregatedInteropDeployedToken,
         aggregatedInteropTokensPair,
+        interopAggregateStatus,
       })
       const syncersManager = mockObject<InteropSyncersManager>({
-        areAllSyncersFollowing: mockFn().returns(true),
+        areSyncersFreshEnough: mockFn().resolvesTo(true),
       })
 
       const aggregationService = mockObject<InteropAggregationService>({
         aggregate: mockFn().returns({
           aggregatedTransfers,
           aggregatedTokens,
+          aggregatedDeployedTokens,
           aggregatedTokensPairs,
           warnings: [],
         }),
@@ -171,6 +209,7 @@ describe(InteropAggregatingIndexer.name, () => {
           aggregationService,
           syncersManager,
           parents: [],
+          promotionService: mockPromotionService(),
           indexerService: mockObject<IndexerService>({}),
           minHeight: 0,
         },
@@ -204,6 +243,15 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregatedInteropToken.deleteAllButEarliestPerDayBefore,
       ).toHaveBeenCalledWith(retentionCutoff)
       expect(aggregatedInteropToken.deleteByTimestamp).toHaveBeenCalledWith(to)
+      expect(aggregatedInteropDeployedToken.insertMany).toHaveBeenCalledWith(
+        aggregatedDeployedTokens,
+      )
+      expect(
+        aggregatedInteropDeployedToken.deleteAllButEarliestPerDayBefore,
+      ).toHaveBeenCalledWith(retentionCutoff)
+      expect(
+        aggregatedInteropDeployedToken.deleteByTimestamp,
+      ).toHaveBeenCalledWith(to)
       expect(aggregatedInteropTokensPair.insertMany).toHaveBeenCalledWith(
         aggregatedTokensPairs,
       )
@@ -213,6 +261,105 @@ describe(InteropAggregatingIndexer.name, () => {
       expect(
         aggregatedInteropTokensPair.deleteByTimestamp,
       ).toHaveBeenCalledWith(to)
+      expect(interopAggregateStatus.deleteOrphaned).toHaveBeenCalledTimes(1)
+    })
+
+    it('reconciles promotion and notifies when the snapshot is blocked', async () => {
+      const interopTransfer = mockObject<Database['interopTransfer']>({
+        getByRange: mockFn().resolvesTo([]),
+      })
+      const aggregatedInteropTransfer = mockObject<
+        Database['aggregatedInteropTransfer']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(0),
+      })
+      const aggregatedInteropToken = mockObject<
+        Database['aggregatedInteropToken']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(0),
+      })
+      const aggregatedInteropDeployedToken = mockObject<
+        Database['aggregatedInteropDeployedToken']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(0),
+      })
+      const aggregatedInteropTokensPair = mockObject<
+        Database['aggregatedInteropTokensPair']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(0),
+      })
+
+      const db = mockDatabase({
+        transaction: mockFn(async (fn: any) => await fn()),
+        interopTransfer,
+        aggregatedInteropTransfer,
+        aggregatedInteropToken,
+        aggregatedInteropDeployedToken,
+        aggregatedInteropTokensPair,
+        interopAggregateStatus: mockObject<Database['interopAggregateStatus']>({
+          deleteOrphaned: mockFn().resolvesTo(0),
+        }),
+      })
+      const syncersManager = mockObject<InteropSyncersManager>({
+        areSyncersFreshEnough: mockFn().resolvesTo(true),
+      })
+      const aggregationService = mockObject<InteropAggregationService>({
+        aggregate: mockFn().returns({
+          aggregatedTransfers: [],
+          aggregatedTokens: [],
+          aggregatedDeployedTokens: [],
+          aggregatedTokensPairs: [],
+          warnings: [],
+        }),
+      })
+
+      const reasons = [
+        {
+          rule: 'maxLaneVolume',
+          scope: 'p|nonMinting|ethereum|base',
+          message: 'lane volume exceeds threshold',
+        },
+      ]
+      const promotionService = mockPromotionService({
+        status: 'blocked',
+        reasons,
+        notify: true,
+      })
+      const notifier = mockObject<InteropNotifier>({
+        notifyBlockedSnapshot: mockFn().returns(undefined),
+      })
+
+      const indexer = new InteropAggregatingIndexer(
+        {
+          db,
+          configs: [],
+          aggregationService,
+          promotionService,
+          notifier,
+          syncersManager,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+          minHeight: 0,
+        },
+        Logger.SILENT,
+      )
+
+      await indexer.update(from, to)
+
+      expect(promotionService.reconcile).toHaveBeenCalledWith({
+        timestamp: to,
+        transfers: [],
+        tokens: [],
+      })
+      expect(notifier.notifyBlockedSnapshot).toHaveBeenCalledWith(to, reasons)
     })
 
     it('handles empty transfers correctly', async () => {
@@ -244,12 +391,24 @@ describe(InteropAggregatingIndexer.name, () => {
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(0),
       })
+      const aggregatedInteropDeployedToken = mockObject<
+        Database['aggregatedInteropDeployedToken']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(0),
+      })
       const aggregatedInteropTokensPair = mockObject<
         Database['aggregatedInteropTokensPair']
       >({
         deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(0),
+      })
+      const interopAggregateStatus = mockObject<
+        Database['interopAggregateStatus']
+      >({
+        deleteOrphaned: mockFn().resolvesTo(0),
       })
 
       const transaction = mockFn(async (fn: any) => await fn())
@@ -259,16 +418,19 @@ describe(InteropAggregatingIndexer.name, () => {
         interopTransfer,
         aggregatedInteropTransfer,
         aggregatedInteropToken,
+        aggregatedInteropDeployedToken,
         aggregatedInteropTokensPair,
+        interopAggregateStatus,
       })
       const syncersManager = mockObject<InteropSyncersManager>({
-        areAllSyncersFollowing: mockFn().returns(true),
+        areSyncersFreshEnough: mockFn().resolvesTo(true),
       })
 
       const aggregationService = mockObject<InteropAggregationService>({
         aggregate: mockFn().returns({
           aggregatedTransfers: [],
           aggregatedTokens: [],
+          aggregatedDeployedTokens: [],
           aggregatedTokensPairs: [],
           warnings: [],
         }),
@@ -281,6 +443,7 @@ describe(InteropAggregatingIndexer.name, () => {
           aggregationService,
           syncersManager,
           parents: [],
+          promotionService: mockPromotionService(),
           indexerService: mockObject<IndexerService>({}),
           minHeight: 0,
         },
@@ -297,10 +460,11 @@ describe(InteropAggregatingIndexer.name, () => {
       )
       expect(aggregatedInteropTransfer.insertMany).toHaveBeenCalledWith([])
       expect(aggregatedInteropToken.insertMany).toHaveBeenCalledWith([])
+      expect(aggregatedInteropDeployedToken.insertMany).toHaveBeenCalledWith([])
       expect(aggregatedInteropTokensPair.insertMany).toHaveBeenCalledWith([])
     })
 
-    it('skips aggregation when not all syncers are following', async () => {
+    it('skips aggregation when syncers captured data is not fresh enough', async () => {
       const interopTransfer = mockObject<Database['interopTransfer']>({
         getByRange: mockFn().resolvesTo([]),
       })
@@ -318,21 +482,30 @@ describe(InteropAggregatingIndexer.name, () => {
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(0),
       })
+      const aggregatedInteropDeployedToken = mockObject<
+        Database['aggregatedInteropDeployedToken']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(0),
+      })
       const transaction = mockFn(async (fn: any) => await fn())
       const db = mockDatabase({
         transaction,
         interopTransfer,
         aggregatedInteropTransfer,
         aggregatedInteropToken,
+        aggregatedInteropDeployedToken,
       })
       const syncersManager = mockObject<InteropSyncersManager>({
-        areAllSyncersFollowing: mockFn().returns(false),
+        areSyncersFreshEnough: mockFn().resolvesTo(false),
       })
 
       const aggregationService = mockObject<InteropAggregationService>({
         aggregate: mockFn().returns({
           aggregatedTransfers: [],
           aggregatedTokens: [],
+          aggregatedDeployedTokens: [],
           aggregatedTokensPairs: [],
           warnings: [],
         }),
@@ -345,6 +518,7 @@ describe(InteropAggregatingIndexer.name, () => {
           aggregationService,
           syncersManager,
           parents: [],
+          promotionService: mockPromotionService(),
           indexerService: mockObject<IndexerService>({}),
           minHeight: 0,
         },
@@ -382,6 +556,13 @@ describe(InteropAggregatingIndexer.name, () => {
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(0),
       })
+      const aggregatedInteropDeployedToken = mockObject<
+        Database['aggregatedInteropDeployedToken']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(0),
+      })
       const aggregatedInteropTokensPair = mockObject<
         Database['aggregatedInteropTokensPair']
       >({
@@ -389,22 +570,31 @@ describe(InteropAggregatingIndexer.name, () => {
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(0),
       })
+      const interopAggregateStatus = mockObject<
+        Database['interopAggregateStatus']
+      >({
+        deleteOrphaned: mockFn().resolvesTo(0),
+      })
+
       const transaction = mockFn(async (fn: any) => await fn())
       const db = mockDatabase({
         transaction,
         interopTransfer,
         aggregatedInteropTransfer,
         aggregatedInteropToken,
+        aggregatedInteropDeployedToken,
         aggregatedInteropTokensPair,
+        interopAggregateStatus,
       })
       const syncersManager = mockObject<InteropSyncersManager>({
-        areAllSyncersFollowing: mockFn().returnsOnce(false).returns(true),
+        areSyncersFreshEnough: mockFn().resolvesToOnce(false).resolvesTo(true),
       })
 
       const aggregationService = mockObject<InteropAggregationService>({
         aggregate: mockFn().returns({
           aggregatedTransfers: [],
           aggregatedTokens: [],
+          aggregatedDeployedTokens: [],
           aggregatedTokensPairs: [],
           warnings: [],
         }),
@@ -417,6 +607,7 @@ describe(InteropAggregatingIndexer.name, () => {
           aggregationService,
           syncersManager,
           parents: [],
+          promotionService: mockPromotionService(),
           indexerService: mockObject<IndexerService>({}),
           minHeight: 0,
         },
@@ -445,290 +636,6 @@ describe(InteropAggregatingIndexer.name, () => {
       expect(
         aggregatedInteropTokensPair.deleteByTimestamp,
       ).toHaveBeenCalledWith(nextTo)
-    })
-
-    it('notifies when aggregate analysis finds suspicious groups', async () => {
-      const transfers: InteropTransferRecord[] = []
-
-      const interopTransfer = mockObject<Database['interopTransfer']>({
-        getByRange: mockFn().resolvesTo(transfers),
-      })
-      const aggregatedInteropTransfer = mockObject<
-        Database['aggregatedInteropTransfer']
-      >({
-        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
-        deleteByTimestamp: mockFn().resolvesTo(0),
-        insertMany: mockFn().resolvesTo(0),
-      })
-      const aggregatedInteropToken = mockObject<
-        Database['aggregatedInteropToken']
-      >({
-        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
-        deleteByTimestamp: mockFn().resolvesTo(0),
-        insertMany: mockFn().resolvesTo(0),
-      })
-      const aggregatedInteropTokensPair = mockObject<
-        Database['aggregatedInteropTokensPair']
-      >({
-        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
-        deleteByTimestamp: mockFn().resolvesTo(0),
-        insertMany: mockFn().resolvesTo(0),
-      })
-      const transaction = mockFn(async (fn: any) => await fn())
-
-      const db = mockDatabase({
-        transaction,
-        interopTransfer,
-        aggregatedInteropTransfer,
-        aggregatedInteropToken,
-        aggregatedInteropTokensPair,
-      })
-      const syncersManager = mockObject<InteropSyncersManager>({
-        areAllSyncersFollowing: mockFn().returns(true),
-      })
-      const aggregationService = mockObject<InteropAggregationService>({
-        aggregate: mockFn().returns({
-          aggregatedTransfers: [],
-          aggregatedTokens: [],
-          aggregatedTokensPairs: [],
-          warnings: [],
-        }),
-      })
-      const aggregationAnalyzer = mockObject<InteropAggregationAnalyzer>({
-        analyze: mockFn().resolvesTo({
-          checkedGroups: 2,
-          suspiciousGroups: [
-            {
-              id: 'stargate',
-              bridgeType: 'nonMinting',
-              srcChain: 'ethereum',
-              dstChain: 'arbitrum',
-              reasons: [
-                'significant increase in transfer count (1900.00%, from 1,000 to 20,000)',
-              ],
-            },
-          ],
-        }),
-      })
-      const notifier = mockObject<
-        Pick<InteropNotifier, 'notifySuspiciousAggregates'>
-      >({
-        notifySuspiciousAggregates: mockFn().returns(undefined),
-      })
-
-      const indexer = new InteropAggregatingIndexer(
-        {
-          db,
-          configs: [],
-          aggregationAnalyzer,
-          aggregationService,
-          notifier,
-          syncersManager,
-          parents: [],
-          indexerService: mockObject<IndexerService>({}),
-          minHeight: 0,
-        },
-        Logger.SILENT,
-      )
-
-      await indexer.update(from, to)
-
-      expect(aggregationAnalyzer.analyze).toHaveBeenCalledWith(to, [])
-      expect(notifier.notifySuspiciousAggregates).toHaveBeenCalledWith(to, {
-        checkedGroups: 2,
-        suspiciousGroups: [
-          {
-            id: 'stargate',
-            bridgeType: 'nonMinting',
-            srcChain: 'ethereum',
-            dstChain: 'arbitrum',
-            reasons: [
-              'significant increase in transfer count (1900.00%, from 1,000 to 20,000)',
-            ],
-          },
-        ],
-      })
-    })
-
-    it('notifies when a historically active group drops to zero in the current snapshot', async () => {
-      const transfers: InteropTransferRecord[] = []
-      const candidateDay = UnixTime.toStartOf(to, 'day')
-
-      const interopTransfer = mockObject<Database['interopTransfer']>({
-        getByRange: mockFn().resolvesTo(transfers),
-      })
-      const aggregatedInteropTransfer = mockObject<
-        Database['aggregatedInteropTransfer']
-      >({
-        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
-        deleteByTimestamp: mockFn().resolvesTo(0),
-        insertMany: mockFn().resolvesTo(0),
-        getGroupsWithStatsInTimeRange: mockFn().resolvesTo([
-          {
-            id: 'stargate',
-            bridgeType: 'nonMinting',
-            srcChain: 'ethereum',
-            dstChain: 'arbitrum',
-          },
-        ]),
-        getDailyStatsForGroupInTimeRange: mockFn().resolvesTo(
-          baselineHistoryForAnalyzer(to),
-        ),
-      })
-      const aggregatedInteropToken = mockObject<
-        Database['aggregatedInteropToken']
-      >({
-        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
-        deleteByTimestamp: mockFn().resolvesTo(0),
-        insertMany: mockFn().resolvesTo(0),
-      })
-      const aggregatedInteropTokensPair = mockObject<
-        Database['aggregatedInteropTokensPair']
-      >({
-        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
-        deleteByTimestamp: mockFn().resolvesTo(0),
-        insertMany: mockFn().resolvesTo(0),
-      })
-      const transaction = mockFn(async (fn) => await fn())
-
-      const db = mockDatabase({
-        transaction,
-        interopTransfer,
-        aggregatedInteropTransfer,
-        aggregatedInteropToken,
-        aggregatedInteropTokensPair,
-      })
-      const syncersManager = mockObject<InteropSyncersManager>({
-        areAllSyncersFollowing: mockFn().returns(true),
-      })
-      const aggregationService = mockObject<InteropAggregationService>({
-        aggregate: mockFn().returns({
-          aggregatedTransfers: [],
-          aggregatedTokens: [],
-          aggregatedTokensPairs: [],
-          warnings: [],
-        }),
-      })
-      const notifier = mockObject<InteropNotifier>({
-        notifySuspiciousAggregates: mockFn().returns(undefined),
-      })
-
-      const indexer = new InteropAggregatingIndexer(
-        {
-          db,
-          configs: [],
-          aggregationAnalyzer: new DefaultInteropAggregationAnalyzer(db),
-          aggregationService,
-          notifier,
-          syncersManager,
-          parents: [],
-          indexerService: mockObject<IndexerService>({}),
-          minHeight: 0,
-        },
-        Logger.SILENT,
-      )
-
-      await indexer.update(from, to)
-
-      expect(
-        aggregatedInteropTransfer.getGroupsWithStatsInTimeRange,
-      ).toHaveBeenCalledWith(candidateDay - 13 * UnixTime.DAY, candidateDay)
-      expect(
-        aggregatedInteropTransfer.getDailyStatsForGroupInTimeRange,
-      ).toHaveBeenCalledWith(
-        'stargate',
-        'nonMinting',
-        'ethereum',
-        'arbitrum',
-        candidateDay - 13 * UnixTime.DAY,
-        candidateDay,
-      )
-      expect(notifier.notifySuspiciousAggregates).toHaveBeenCalledTimes(1)
-
-      const analysis = notifier.notifySuspiciousAggregates.calls[0]?.args[1]
-      expect(analysis?.checkedGroups).toEqual(1)
-      expect(analysis?.suspiciousGroups).toHaveLength(1)
-      expect(analysis?.suspiciousGroups[0]?.id).toEqual('stargate')
-      expect(
-        analysis?.suspiciousGroups[0]?.reasons.some((reason) =>
-          reason.includes('significant decrease in transfer count'),
-        ),
-      ).toEqual(true)
-    })
-
-    it('still persists aggregates when analysis fails', async () => {
-      const transfers: InteropTransferRecord[] = []
-
-      const interopTransfer = mockObject<Database['interopTransfer']>({
-        getByRange: mockFn().resolvesTo(transfers),
-      })
-      const aggregatedInteropTransfer = mockObject<
-        Database['aggregatedInteropTransfer']
-      >({
-        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
-        deleteByTimestamp: mockFn().resolvesTo(0),
-        insertMany: mockFn().resolvesTo(0),
-      })
-      const aggregatedInteropToken = mockObject<
-        Database['aggregatedInteropToken']
-      >({
-        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
-        deleteByTimestamp: mockFn().resolvesTo(0),
-        insertMany: mockFn().resolvesTo(0),
-      })
-      const aggregatedInteropTokensPair = mockObject<
-        Database['aggregatedInteropTokensPair']
-      >({
-        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
-        deleteByTimestamp: mockFn().resolvesTo(0),
-        insertMany: mockFn().resolvesTo(0),
-      })
-      const transaction = mockFn(async (fn: any) => await fn())
-
-      const db = mockDatabase({
-        transaction,
-        interopTransfer,
-        aggregatedInteropTransfer,
-        aggregatedInteropToken,
-        aggregatedInteropTokensPair,
-      })
-      const syncersManager = mockObject<InteropSyncersManager>({
-        areAllSyncersFollowing: mockFn().returns(true),
-      })
-      const aggregationService = mockObject<InteropAggregationService>({
-        aggregate: mockFn().returns({
-          aggregatedTransfers: [],
-          aggregatedTokens: [],
-          aggregatedTokensPairs: [],
-          warnings: [],
-        }),
-      })
-      const aggregationAnalyzer = mockObject<InteropAggregationAnalyzer>({
-        analyze: mockFn().rejectsWith(new Error('db unavailable')),
-      })
-
-      const indexer = new InteropAggregatingIndexer(
-        {
-          db,
-          configs: [],
-          aggregationAnalyzer,
-          aggregationService,
-          syncersManager,
-          parents: [],
-          indexerService: mockObject<IndexerService>({}),
-          minHeight: 0,
-        },
-        Logger.SILENT,
-      )
-
-      const result = await indexer.update(from, to)
-
-      expect(result).toEqual(to)
-      expect(aggregationAnalyzer.analyze).toHaveBeenCalledWith(to, [])
-      expect(transaction).toHaveBeenCalledTimes(1)
-      expect(aggregatedInteropTransfer.insertMany).toHaveBeenCalledWith([])
-      expect(aggregatedInteropToken.insertMany).toHaveBeenCalledWith([])
-      expect(aggregatedInteropTokensPair.insertMany).toHaveBeenCalledWith([])
     })
   })
 })
@@ -787,106 +694,10 @@ function createTransfer(
   }
 }
 
-function baselineHistoryForAnalyzer(candidateTimestamp: UnixTime) {
-  return [
-    historyPointAt(candidateTimestamp, -13, {
-      transferCount: 900,
-      identifiedCount: 860,
-      srcVolumeUsd: 1_900_000,
-      dstVolumeUsd: 1_940_000,
-    }),
-    historyPointAt(candidateTimestamp, -12, {
-      transferCount: 980,
-      identifiedCount: 940,
-      srcVolumeUsd: 2_050_000,
-      dstVolumeUsd: 2_020_000,
-    }),
-    historyPointAt(candidateTimestamp, -11, {
-      transferCount: 1_040,
-      identifiedCount: 980,
-      srcVolumeUsd: 2_150_000,
-      dstVolumeUsd: 2_110_000,
-    }),
-    historyPointAt(candidateTimestamp, -10, {
-      transferCount: 1_000,
-      identifiedCount: 960,
-      srcVolumeUsd: 2_000_000,
-      dstVolumeUsd: 2_030_000,
-    }),
-    historyPointAt(candidateTimestamp, -9, {
-      transferCount: 1_100,
-      identifiedCount: 1_040,
-      srcVolumeUsd: 2_120_000,
-      dstVolumeUsd: 2_140_000,
-    }),
-    historyPointAt(candidateTimestamp, -8, {
-      transferCount: 950,
-      identifiedCount: 900,
-      srcVolumeUsd: 1_970_000,
-      dstVolumeUsd: 1_980_000,
-    }),
-    historyPointAt(candidateTimestamp, -7, {
-      transferCount: 1_020,
-      identifiedCount: 980,
-      srcVolumeUsd: 2_010_000,
-      dstVolumeUsd: 1_990_000,
-    }),
-    historyPointAt(candidateTimestamp, -6, {
-      transferCount: 995,
-      identifiedCount: 950,
-      srcVolumeUsd: 1_995_000,
-      dstVolumeUsd: 2_005_000,
-    }),
-    historyPointAt(candidateTimestamp, -5, {
-      transferCount: 1_015,
-      identifiedCount: 970,
-      srcVolumeUsd: 2_025_000,
-      dstVolumeUsd: 2_010_000,
-    }),
-    historyPointAt(candidateTimestamp, -4, {
-      transferCount: 990,
-      identifiedCount: 945,
-      srcVolumeUsd: 1_980_000,
-      dstVolumeUsd: 1_970_000,
-    }),
-    historyPointAt(candidateTimestamp, -3, {
-      transferCount: 1_030,
-      identifiedCount: 985,
-      srcVolumeUsd: 2_040_000,
-      dstVolumeUsd: 2_020_000,
-    }),
-    historyPointAt(candidateTimestamp, -2, {
-      transferCount: 1_005,
-      identifiedCount: 960,
-      srcVolumeUsd: 2_000_000,
-      dstVolumeUsd: 1_995_000,
-    }),
-    historyPointAt(candidateTimestamp, -1, {
-      transferCount: 985,
-      identifiedCount: 940,
-      srcVolumeUsd: 1_990_000,
-      dstVolumeUsd: 1_985_000,
-    }),
-  ]
-}
-
-function historyPointAt(
-  candidateTimestamp: UnixTime,
-  offsetDays: number,
-  overrides: Partial<{
-    transferCount: number
-    identifiedCount: number
-    srcVolumeUsd: number
-    dstVolumeUsd: number
-  }> = {},
-) {
-  return {
-    timestamp:
-      UnixTime.toStartOf(candidateTimestamp, 'day') + offsetDays * UnixTime.DAY,
-    transferCount: 1_000,
-    identifiedCount: 950,
-    srcVolumeUsd: 2_000_000,
-    dstVolumeUsd: 2_000_000,
-    ...overrides,
-  }
+function mockPromotionService(result?: ReconcileResult) {
+  return mockObject<InteropPromotionService>({
+    reconcile: mockFn().resolvesTo(
+      result ?? { status: 'promoted', reasons: [], notify: false },
+    ),
+  })
 }
