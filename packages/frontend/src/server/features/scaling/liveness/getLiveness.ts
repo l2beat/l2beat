@@ -1,4 +1,4 @@
-import type { ProjectLivenessConfig, ProjectRiskView } from '@l2beat/config'
+import type { ProjectRiskView } from '@l2beat/config'
 import type {
   AggregatedLivenessRecord,
   AnomalyRecord,
@@ -158,7 +158,6 @@ async function getLivenessData(projectId?: ProjectId) {
         realTimeAnomalies,
         project30Days,
         riskView,
-        livenessConfig,
       ),
     }
     // duplicate data from one subtype to another if configured
@@ -270,7 +269,6 @@ function getAnomalies(
     | Omit<AggregatedLivenessRecord, 'timestamp' | 'numberOfRecords'>[]
     | undefined,
   riskView: ProjectRiskView | undefined,
-  livenessConfig: ProjectLivenessConfig | undefined,
 ): LivenessAnomaly[] {
   if (!project30Days) {
     return []
@@ -308,11 +306,7 @@ function getAnomalies(
         subtype: a.subtype,
         avgInterval,
         isApproved: false,
-        failureMechanism: getAnomalyFailureMechanism(
-          a.subtype,
-          riskView,
-          livenessConfig,
-        ),
+        failureMechanism: getAnomalyFailureMechanism(a.subtype, riskView),
       }
     }),
     ...realTimeAnomalies.map((a): LivenessAnomaly => {
@@ -329,11 +323,7 @@ function getAnomalies(
         subtype: a.subtype,
         avgInterval,
         isApproved: true,
-        failureMechanism: getAnomalyFailureMechanism(
-          a.subtype,
-          riskView,
-          livenessConfig,
-        ),
+        failureMechanism: getAnomalyFailureMechanism(a.subtype, riskView),
       }
     }),
   ].sort(sortAnomalies)

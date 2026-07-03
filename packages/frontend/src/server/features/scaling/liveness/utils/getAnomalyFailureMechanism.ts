@@ -1,27 +1,17 @@
-import type {
-  ProjectLivenessConfig,
-  ProjectRiskView,
-  TableReadyValue,
-} from '@l2beat/config'
+import type { ProjectRiskView, TableReadyValue } from '@l2beat/config'
 import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 
 export function getAnomalyFailureMechanism(
   subtype: TrackedTxsConfigSubtype,
   riskView: ProjectRiskView | undefined,
-  livenessConfig: ProjectLivenessConfig | undefined,
 ): TableReadyValue | undefined {
-  const effectiveSubtype =
-    subtype === 'proofSubmissions' &&
-    livenessConfig?.duplicateData.to === 'proofSubmissions'
-      ? livenessConfig.duplicateData.from
-      : subtype
-
-  switch (effectiveSubtype) {
+  switch (subtype) {
     case 'batchSubmissions':
       return riskView?.sequencerFailure
     case 'stateUpdates':
-      return riskView?.proposerFailure
+    // state updates are not finalized until proven, so stalled proofs freeze
+    // withdrawals just like stalled state updates - proposerFailure covers both
     case 'proofSubmissions':
-      return undefined
+      return riskView?.proposerFailure
   }
 }
