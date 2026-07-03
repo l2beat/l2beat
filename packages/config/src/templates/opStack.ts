@@ -182,6 +182,12 @@ interface DAProvider {
   fallback?: DaProjectTableValue
 }
 
+const CLOSED_CHALLENGER_STATE_ROOT_RISK: ProjectRisk = {
+  category: 'Funds can be stolen if',
+  text: 'no whitelisted challenger disputes an invalid state root before the challenge window expires.',
+  isCritical: true,
+}
+
 interface OpStackConfigCommon {
   capability?: ProjectScalingCapability
   architectureImage?: string
@@ -1297,6 +1303,7 @@ function getStateValidation(
                 category: 'Funds can be stolen if',
                 text: 'the validity proof cryptography is broken or implemented incorrectly.',
               },
+              CLOSED_CHALLENGER_STATE_ROOT_RISK,
               {
                 category: 'Funds can be stolen if',
                 text: 'the proposer routes proof verification through a malicious or faulty verifier.',
@@ -1426,6 +1433,7 @@ function describeOPFP({
             url: 'https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#fault-dispute-game',
           },
         ],
+        risks: isPermissionless ? [] : [CLOSED_CHALLENGER_STATE_ROOT_RISK],
       },
       {
         title: 'Challenges',

@@ -34,6 +34,14 @@ export const INTEROP_CHAINS: InteropChain[] = [
     explorerUrl: 'https://basescan.org',
   },
   {
+    id: 'robinhood',
+    name: 'Robinhood Chain',
+    type: 'evm',
+    display: 'RH',
+    color: '#00C805',
+    explorerUrl: 'https://robinhoodchain.blockscout.com',
+  },
+  {
     id: 'optimism',
     name: 'OP Mainnet',
     iconSlug: 'op-mainnet',
