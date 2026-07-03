@@ -58,6 +58,7 @@ const CHAINLINK_TO_L2BEAT: Record<string, string> = {
   'ethereum-mainnet-polygon-zkevm-1': 'polygonzkevm',
   'ethereum-mainnet-taiko-1': 'taiko',
   'ethereum-mainnet-xlayer-1': 'xlayer',
+  'robinhood-mainnet': 'robinhood',
   // Other L1s
   'avalanche-mainnet': 'avalanche',
   'bsc-mainnet': 'bsc',
