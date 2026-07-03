@@ -1,3 +1,36 @@
+Generated with discovered.json: 0x757a65684bafe278143f918b51bbfbb15873ed73
+
+# Diff at Fri, 03 Jul 2026 08:58:07 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5c2c1f8c2ecc3435b5c793f216a30d876a29ac0a block: 1782391445
+- current timestamp: 1783068981
+
+## Description
+
+Manually verified the Tornado Cash MiMC hasher against the pinned Tornado circomlib MiMC sponge generator and deployment bytecode.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782391445 (main branch discovery), not current.
+
+```diff
+    contract MiMCHasher (eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe) [N/A] {
+    +++ description: MiMC hasher used by newer Tornado pool generations for commitment-tree operations, manually verified against the pinned Tornado circomlib generator.
+      unverified:
+-        true
+      description:
+-        "Unverified MiMC hasher used by newer Tornado pool generations for commitment-tree operations. If this contract were malicious or had a backdoor, all pools using it would be compromised."
++        "MiMC hasher used by newer Tornado pool generations for commitment-tree operations, manually verified against the pinned Tornado circomlib generator."
+      sourceHashes:
++        ["0x96acbaf2288d4cc44cf8e9634da42d922960c005a6982e0b54a84823be2776f2"]
+      references:
++        [{"text":"Tornado Cash hasher build script","href":"https://github.com/tornadocash/tornado-core/blob/master/scripts/compileHasher.js"},{"text":"Source Code","href":"https://github.com/tornadocash/circomlib/blob/c372f14d324d57339c88451834bf2824e73bbdbc/src/mimcsponge_gencontract.js"}]
+    }
+```
+
 Generated with discovered.json: 0x29e07dffcaf2328a9178fd62c8aceebe29247046
 
 # Diff at Thu, 25 Jun 2026 12:45:24 GMT:
