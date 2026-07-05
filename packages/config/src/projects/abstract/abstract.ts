@@ -11,11 +11,15 @@ import { zkStackL2 } from '../../templates/zkStack'
 const genesisTimestamp = UnixTime(1729881083)
 const v26UpgradeTS = UnixTime(1742940287)
 const v29UpgradeTS = UnixTime(1761601727)
+const eraMultisigValidatorTs = UnixTime(1782741239)
 const chainId = 2741
 const discovery = new ProjectDiscovery('abstract')
 
 const bridge = discovery.getContract('L1NativeTokenVault')
 const diamond = discovery.getContract('Diamond')
+const eraValidatorMsAddress = ChainSpecificAddress.address(
+  discovery.getContract('EraMultisigValidator').address,
+)
 
 export const abstract: ScalingProject = zkStackL2({
   addedAt: UnixTime(1737936000), // 2025-01-27T00:00:00Z
@@ -207,6 +211,22 @@ export const abstract: ScalingProject = zkStackL2({
         functionSignature:
           'function proveBatchesSharedBridge(address _chainAddress, uint256, uint256, bytes)',
         sinceTimestamp: v29UpgradeTS,
+        untilTimestamp: eraMultisigValidatorTs,
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'proofSubmissions' },
+        { type: 'l2costs', subtype: 'proofSubmissions' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: ChainSpecificAddress.address(diamond.address),
+        address: eraValidatorMsAddress,
+        selector: '0x9271e450',
+        functionSignature:
+          'function proveBatchesSharedBridge(address _chainAddress, uint256, uint256, bytes)',
+        sinceTimestamp: eraMultisigValidatorTs,
       },
     },
     {
@@ -238,6 +258,22 @@ export const abstract: ScalingProject = zkStackL2({
         functionSignature:
           'function executeBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
         sinceTimestamp: v29UpgradeTS,
+        untilTimestamp: eraMultisigValidatorTs,
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: ChainSpecificAddress.address(diamond.address),
+        address: eraValidatorMsAddress,
+        selector: '0xa085344d',
+        functionSignature:
+          'function executeBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
+        sinceTimestamp: eraMultisigValidatorTs,
       },
     },
   ],

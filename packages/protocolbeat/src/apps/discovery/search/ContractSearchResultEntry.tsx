@@ -5,7 +5,7 @@ import { HighlightedText } from './HighlightedText'
 import { useSearchStore } from './store'
 
 interface ContractSearchEntryProps {
-  select: (address: string) => void
+  select: (address: string[]) => void
   entries: ApiAddressEntry[]
 }
 
@@ -28,7 +28,7 @@ export function ContractSearchResultEntry({
               : 'text-coffee-200 hover:bg-coffee-700',
           )}
           onClick={() => {
-            select(result.address)
+            select([result.address])
             setOpen(false)
           }}
         >

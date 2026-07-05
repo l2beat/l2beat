@@ -31,6 +31,20 @@ const OP_SUCCINCT_FDP_RANGE_EIGENDA = (version: string) => ({
   proverSystemProject: ProjectId('sp1hypercube'),
 })
 
+const OP_SUCCINCT_LITE_AGG_BLOBS = {
+  title: 'Aggregation program of OP Succinct Lite',
+  description:
+    'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client in fault dispute proof mode. Data availability layer is set to Ethereum blobs.',
+  proverSystemProject: ProjectId('sp1hypercube'),
+}
+
+const OP_SUCCINCT_LITE_RANGE_BLOBS = {
+  title: 'Range program of OP Succinct Lite',
+  description:
+    'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks in fault dispute proof mode. Data availability layer is set to Ethereum blobs.',
+  proverSystemProject: ProjectId('sp1hypercube'),
+}
+
 const OP_SUCCINCT_AGG_BLOBS = {
   title: 'Aggregation program of OP Succinct',
   description:
@@ -388,6 +402,14 @@ Verify:
     proverSystemProject: ProjectId('sp1hypercube'),
     verificationStatus: 'successful',
     verificationSteps: OP_SUCCINCT_AGGLAYER_V390_STEPS,
+  },
+  '0x00d9be2980d484ba29aaa1e0d27648b8182df8616a4ec85c3c2b528b29d1a085': {
+    ...OP_SUCCINCT_LITE_AGG_BLOBS,
+    verificationStatus: 'notVerified',
+  },
+  '0x464b1e81672b12e60eb509f54a13aaa877abafda1a015a9339285a381e4146fc': {
+    ...OP_SUCCINCT_LITE_RANGE_BLOBS,
+    verificationStatus: 'notVerified',
   },
   '0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30': {
     ...PESSIMISTIC_PROG('0.3.3-post4'),
@@ -1850,6 +1872,10 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     ...WASM_MODULE_ROOT('Syndicate'),
     verificationStatus: 'notVerified',
   },
+  '0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97': {
+    ...WASM_MODULE_ROOT('v61'),
+    verificationStatus: 'notVerified',
+  },
   '0xa18d6266cef250802c3cb2bfefe947ea1aa9a32dd30a8d1dfc4568a8714d3a7a': {
     ...WASM_MODULE_ROOT('v41'),
     programUrl:
@@ -1898,6 +1924,19 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     verificationStatus: 'successful',
     verificationSteps: readMarkdown(
       'common/programHashes/0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e.md',
+    ),
+  },
+  // Active CANNON_KONA prestate (Karst). Reproduced via kona Docker build,
+  // tag kona-client/v1.6.0-rc.2 (commit d7cea91b).
+  '0x0337ecb3604c0b40c352e0c7711beb17a212d583f4fe956fd8d66e29ad5f9025': {
+    title: 'OP Kona absolute prestate v1.6.0-rc.2 (cannon64)',
+    description:
+      'A commitment to the initial state of the OP stack fault proof program of Kona client.',
+    programUrl:
+      'https://github.com/ethereum-optimism/optimism/tree/d7cea91bc2f555a76b7720bf9c32f46c0b856119/kona',
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0x0337ecb3604c0b40c352e0c7711beb17a212d583f4fe956fd8d66e29ad5f9025.md',
     ),
   },
   '0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6': {
@@ -2025,7 +2064,7 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     ),
   },
   '0x0085924e73e2b0d0e2626c592825fe092d3cfb63b108757965b2a6c06c8c311b': {
-    title: 'Fluent Nitro TEE verifier',
+    title: 'Fluent Nitro TEE verifier v1.0.0',
     proverSystemProject: ProjectId('sp1hypercube'),
     programUrl:
       'https://github.com/fluentlabs-xyz/fluent-stf/tree/v1.0.0/bin/aws-nitro-validator',
@@ -2034,6 +2073,18 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     verificationStatus: 'successful',
     verificationSteps: readMarkdown(
       'common/programHashes/0x0085924e73e2b0d0e2626c592825fe092d3cfb63b108757965b2a6c06c8c311b.md',
+    ),
+  },
+  '0x00fb9ae7af3b4852bd4524789cb15dbf188ee47b1d3838bdd39062821c6182e6': {
+    title: 'Fluent Nitro TEE verifier v1.0.3',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/fluentlabs-xyz/fluent-stf/tree/v1.0.3/bin/aws-nitro-validator',
+    description:
+      'Verifies correctness of a single TEE attestation for executing Fluent STF within a trusted enclave on AWS cloud.',
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0x00fb9ae7af3b4852bd4524789cb15dbf188ee47b1d3838bdd39062821c6182e6.md',
     ),
   },
   '0x00e34107e4c5284bd4ecc4269c650671038c1e85d9dacb931b534e984f607334': {

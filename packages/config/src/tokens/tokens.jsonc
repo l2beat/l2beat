@@ -2159,6 +2159,42 @@
       "coingeckoId": "renzo-restaked-lst"
     }
   ],
+  "robinhood": [
+    {
+      // Natively minted on Robinhood Chain (no L1 escrow, no LayerZero/OFT, not
+      // bridged); off-chain-backed by Paxos reserves. Robinhood is a founding
+      // Global Dollar Network member. Per-chain amount via on-chain totalSupply.
+      "symbol": "USDG",
+      "address": "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168",
+      "coingeckoId": "global-dollar",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "stablecoin",
+      // manual override: robinhood public RPC is non-archival, so the
+      // deployment-block binary search fails. Creation tx at block 57.
+      "deploymentTimestamp": 1778003991
+    },
+    {
+      // Bridged in via LayerZero OFT (same deterministic Ethena address as on
+      // base/arbitrum/etc.) -> external, matching every other chain's USDe entry.
+      "symbol": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargate"
+          }
+        ]
+      },
+      // manual override: robinhood public RPC is non-archival. Creation block 29380.
+      "deploymentTimestamp": 1780403342
+    }
+  ],
   "galxegravity": [
     {
       "symbol": "atETH",

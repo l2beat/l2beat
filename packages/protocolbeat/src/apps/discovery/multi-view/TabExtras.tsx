@@ -12,7 +12,7 @@ const COPYABLE_PANELS: PanelId[] = ['code', 'values', 'list', 'nodes']
 
 export function TabExtras(props: { id: PanelId }) {
   const { project } = useParams()
-  const selectedAddress = usePanelStore((state) => state.selected)
+  const selectedAddress = usePanelStore((state) => state.selected[0])
   const highlighted = usePanelStore((state) => state.highlighted)
 
   if (!COPYABLE_PANELS.includes(props.id)) {

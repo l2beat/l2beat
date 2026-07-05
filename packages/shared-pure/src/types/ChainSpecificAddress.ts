@@ -60,6 +60,8 @@ const SHORT_TO_LONG_CHAIN_NAMES = {
   tempo: 'tempo',
   mon: 'monad',
   plasma: 'plasma',
+  xlayer: 'xlayer',
+  robinhood: 'robinhood',
 } as const
 
 const LONG_TO_SHORT_CHAIN_NAMES = Object.fromEntries(

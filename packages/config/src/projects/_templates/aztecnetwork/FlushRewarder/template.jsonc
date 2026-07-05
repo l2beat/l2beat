@@ -1,7 +1,25 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Incentivizes 'flushing' of the sequencer join queue. Flushing is needed to add sequencers to the active set at a preset rate limit and incurs gas costs. Adding one sequencer is rewarded by {{rewardPerInsertionFmt}} AZTEC as long as supply lasts.",
+  "category": "core",
   "fields": {
+    "owner": {
+      "description": "Owner of the flush rewarder.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the reward paid per validator insertion and recover unallocated funds from the rewarder."
+        }
+      ]
+    },
+    "ROLLUP": {
+      "description": "Rollup whose validator entry queue this rewarder flushes.",
+      "template": "aztecnetwork/Rollup"
+    },
+    "REWARD_ASSET": {
+      "description": "ERC20 token paid to accounts that flush the validator entry queue.",
+      "template": "aztecnetwork/Aztec"
+    },
     "rewardPerInsertionFmt": {
       "handler": {
         "type": "call",
@@ -9,6 +27,9 @@
         "args": []
       },
       "edit": ["format", "Undecimal18"]
+    },
+    "rewardsAvailable": {
+      "description": "Reward asset balance still available for future flush rewards."
     }
   },
   "ignoreInWatchMode": ["rewardsAvailable"]

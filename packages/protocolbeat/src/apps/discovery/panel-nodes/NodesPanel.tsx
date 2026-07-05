@@ -14,7 +14,29 @@ import { Controls } from './controls/Controls'
 import type { Field, Node } from './store/State'
 import { useStore as useNodeStore, useStore } from './store/store'
 import { NODE_WIDTH } from './store/utils/constants'
+import { topLevelByDescendant } from './store/utils/subnodes'
 import { Viewport } from './view/Viewport'
+
+// Leaf ids of every node that is selected or sits inside a selected one, so a
+// member selected inside an opened group still resolves to its address.
+function selectedLeafIds(
+  nodes: readonly Node[],
+  selected: ReadonlySet<string>,
+): string[] {
+  const ids: string[] = []
+  const walk = (list: readonly Node[], underSelected: boolean) => {
+    for (const node of list) {
+      const on = underSelected || selected.has(node.id)
+      if (node.subnodes.length > 0) {
+        walk(node.subnodes, on)
+      } else if (on) {
+        ids.push(node.id)
+      }
+    }
+  }
+  walk(nodes, false)
+  return ids
+}
 
 export function NodesPanel() {
   const { project } = useParams()
@@ -85,6 +107,8 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
           data: null,
           fields: toNodeFields(contract.fields),
           hiddenFields: keysToHideOnLoad,
+          opened: false,
+          subnodes: [],
         }
         nodes.push(node)
       }
@@ -105,6 +129,8 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
           data: null,
           fields: [],
           hiddenFields: [],
+          opened: false,
+          subnodes: [],
         }
         nodes.push(node)
       }
@@ -124,6 +150,7 @@ function useSynchronizeSelection() {
   const highlightGlobal = usePanelStore((state) => state.highlight)
   const selectGlobal = usePanelStore((state) => state.select)
   const selectedNodes = useStore((state) => state.selected)
+  const nodes = useStore((state) => state.nodes)
   const hiddenNodes = useStore((state) => state.hidden)
   const selectAndFocus = useStore((state) => state.selectAndFocus)
 
@@ -135,16 +162,22 @@ function useSynchronizeSelection() {
   }, [selectedNodes, hiddenNodes, highlightGlobal])
 
   useEffect(() => {
-    if (selectedNodes.length > 0 && !eq(lastSelection, selectedNodes)) {
-      rememberSelection(selectedNodes)
-      selectGlobal(selectedNodes[0])
+    const firstGlobal = selectedGlobal[0]
+    const selectedAddresses = selectedLeafIds(nodes, new Set(selectedNodes))
+
+    if (selectedAddresses.length > 0 && !eq(lastSelection, selectedAddresses)) {
+      rememberSelection(selectedAddresses)
+      selectGlobal(selectedAddresses)
     } else if (
-      selectedGlobal &&
-      !lastSelection.includes(selectedGlobal) &&
+      firstGlobal !== undefined &&
+      !lastSelection.includes(firstGlobal) &&
       loaded
     ) {
-      rememberSelection([selectedGlobal])
-      selectAndFocus(selectedGlobal)
+      const containing = topLevelByDescendant(nodes).get(firstGlobal)
+      rememberSelection(selectedGlobal)
+      if (containing) {
+        selectAndFocus(containing.id)
+      }
     }
   }, [
     lastSelection,
@@ -244,6 +277,7 @@ const LARGE_ARRAY_THRESHOLD = 10
 function getKeysToHideOnLoad(fields: ApiField[]): string[] {
   const largeArrays = fields.filter(
     (field) =>
+      field.name !== '$members' &&
       field.value.type === 'array' &&
       field.value.values.length > LARGE_ARRAY_THRESHOLD,
   )

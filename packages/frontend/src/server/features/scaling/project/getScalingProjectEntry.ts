@@ -217,7 +217,9 @@ export async function getScalingProjectEntry(
     ? getDiscoveryUpdates(project.id)
     : []
 
-  const ongoingAnomalies = projectLiveness?.anomalies.filter(isAnomalyOngoing)
+  const ongoingAnomalies = projectLiveness?.anomalies.filter(
+    (anomaly) => isAnomalyOngoing(anomaly) && anomaly.isApproved,
+  )
 
   const tvsProjectStats = tvsStats.projects[project.id]
   const interopData = await getProjectInteropData(

@@ -1,3 +1,34 @@
+Generated with discovered.json: 0x87ce9c1aa1fbd06398e6e14b8f6ecdae0bc8a6a8
+
+# Diff at Wed, 01 Jul 2026 10:22:19 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2bbeat.com>)
+- comparing to: main@ddc641881a6870ab0c9e9ee1c517ed9eb73306bc block: 1782118472
+- current timestamp: 1782901273
+
+## Description
+
+Removed one member of Matter Labs ms, decreased the threshold by one.
+
+## Watched changes
+
+```diff
+    contract Matter Labs Multisig (eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x4A333c167Ce76C46149c6B0197977ae02aaeC929"
++        "eth:0xEE7d66B84175cc423900595d1807A0371D66dE46"
+      values.$members.4:
+-        "eth:0x702caCafA54B88e9c54449563Fb2e496e85c78b7"
+      values.$threshold:
+-        5
++        4
+      values.multisigThreshold:
+-        "5 of 8 (63%)"
++        "4 of 7 (57%)"
+    }
+```
+
 Generated with discovered.json: 0x1269e2ea41e76e44fc2bbf4e32d995374482f607
 
 # Diff at Mon, 22 Jun 2026 08:55:38 GMT:

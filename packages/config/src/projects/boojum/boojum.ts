@@ -104,10 +104,6 @@ export const boojum: BaseProject = {
         projectId: ProjectId('lachain'),
         sinceTimestamp: UnixTime(1747692000),
       },
-      {
-        projectId: ProjectId('sxt'),
-        sinceTimestamp: UnixTime(1746741600),
-      },
     ],
     verifierHashes: [
       //       {

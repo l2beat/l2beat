@@ -1,3 +1,95 @@
+Generated with discovered.json: 0xd4524a91cb3bb7b6cd752a31935cda037b6f15c6
+
+# Diff at Wed, 01 Jul 2026 13:13:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@87787fbfe5dbbfa8f87f19557e7045da182d3d21 block: 1781176085
+- current timestamp: 1781176085
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1781176085 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (eth:0x8fE58d2168b5412Cf1Bd212cE6137f8b7300222d) [opstack/AnchorStateRegistry_post13_opsuccinct] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the OPSuccinctFaultDisputeGame. Variant for chains using OPSuccinct (SP1) games instead of Cannon, which omits Cannon-specific cross-contract fields (vm, oracle, weth, challengePeriod, absolutePrestate from game).
++++ description: Formatted delay after which an unchallenged resolved dispute game can be used for withdrawals.
+      values.disputeGameFinalityDelaySeconds_fmt:
++        "3d 12h"
+      fieldMeta.disputeGameFinalityDelaySeconds_fmt:
++        {"description":"Formatted delay after which an unchallenged resolved dispute game can be used for withdrawals."}
+    }
+```
+
+```diff
+    contract Celo cLabs Multisig (eth:0x9Eb44Da23433b5cAA1c87e35594D15FcEb08D34d) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816","description":"Allowed to add or remove proposers and challengers, and transfer ownership of the AccessManager.","role":".owner"}
+    }
+```
+
+```diff
+    contract AccessManager (eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816) [succinct/OPSuccinct/AccessManager] {
+    +++ description: Contract managing access control for proposers and challengers in OPSuccinct.
++++ description: Formatted fallback timeout after which proposing becomes permissionless.
+      values.FALLBACK_TIMEOUT_fmt:
++        "14d"
+      fieldMeta.FALLBACK_TIMEOUT_fmt:
++        {"description":"Formatted fallback timeout after which proposing becomes permissionless."}
+      fieldMeta.owner:
++        {"severity":"HIGH","description":"Address that can update the proposer and challenger allowlists and transfer ownership."}
+    }
+```
+
+```diff
+    contract OPSuccinctFaultDisputeGame (eth:0xfF1caC738a5263736AF258e4b3D6a4970C6351FF) [succinct/OPSuccinct/OPSuccinctFaultDisputeGame] {
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
++++ description: Formatted maximum time after game creation during which a game can be challenged.
+      values.maxChallengeDuration_fmt:
++        "3d 12h"
++++ description: Formatted maximum time after a challenge during which the proposal can be proven.
+      values.maxProveDuration_fmt:
++        "1d"
+      fieldMeta.maxChallengeDuration_fmt:
++        {"description":"Formatted maximum time after game creation during which a game can be challenged."}
+      fieldMeta.maxProveDuration_fmt:
++        {"description":"Formatted maximum time after a challenge during which the proposal can be proven."}
+    }
+```
+
+Generated with discovered.json: 0x3317554f8eaea96965fb655c6e55ddebac9dc83b
+
+# Diff at Tue, 30 Jun 2026 20:24:39 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1781176085
+- current timestamp: 1781176085
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1781176085 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0xc5c5D157928BDBD2ACf6d0777626b6C75a9EAEDC) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the 42.
+      usedTypes.0.arg.8:
++        "FaultDisputeGame"
+    }
+```
+
 Generated with discovered.json: 0x81d7690decaa79791e524fbd949d3190192f415e
 
 # Diff at Thu, 11 Jun 2026 11:09:14 GMT:

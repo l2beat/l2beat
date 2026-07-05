@@ -1,0 +1,83 @@
+{
+  "$schema": "../tvs-config-schema.json",
+  "projectId": "robinhood",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "robinhood-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0xDf8755334ce7A73cCF6b581C02eA649AE3E864b3",
+            "decimals": 18,
+            "sinceTimestamp": 1777567919
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-USDG",
+      "priceId": "global-dollar",
+      "symbol": "USDG",
+      "name": "Global Dollar",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/51281/large/GDN_USDG_Token_200x200.png?1730484111",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168",
+        "chain": "robinhood",
+        "decimals": 6,
+        "sinceTimestamp": 1778003991
+      },
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-USDe",
+      "priceId": "ethena-usde",
+      "symbol": "USDe",
+      "name": "USDe",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33613/large/usde.png?1733810059",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1780403342
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    }
+  ]
+}
