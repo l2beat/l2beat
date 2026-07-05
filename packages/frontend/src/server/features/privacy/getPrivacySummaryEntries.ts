@@ -25,6 +25,7 @@ export interface PrivacySummaryEntry {
   totalDeposits?: number
   totalValueDeposited30dUsd?: number
   isUnderReview: boolean
+  summaryTrackedItemName: string
   trustedSetup: TrustedSetup
   exitWindow: PrivacyExitWindow
   reproducibility: PrivacySummaryValue
@@ -137,6 +138,8 @@ function getPrivacySummaryBaseEntry(
     href: `/privacy/projects/${project.slug}`,
     description: project.display.description,
     isUnderReview: !!project.statuses.reviewStatus,
+    summaryTrackedItemName:
+      project.privacyInfo.summaryTrackedItemName ?? 'pool',
     trustedSetup: project.privacyInfo.trustedSetup,
     exitWindow: project.privacyInfo.exitWindow,
     reproducibility: project.privacyInfo.reproducibility,

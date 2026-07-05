@@ -101,7 +101,7 @@ const privacyTokens: ProjectPrivacyToken[] = trackedWrappers.map(
       {
         id: `zama-cw-${wrapperSymbol}`,
         type: 'pool',
-        label: `${wrapperSymbol} wrapper`,
+        label: `${wrapperSymbol} token`,
         address: wrapper.address,
         sinceTimestamp: wrapperSinceTimestamp,
         deposit: {
@@ -124,7 +124,7 @@ const privacyTokens: ProjectPrivacyToken[] = trackedWrappers.map(
 export const zamaCw: BaseProject = {
   id: ProjectId('zama-cw'),
   slug: 'zama-cw',
-  name: 'Zama CW',
+  name: 'Zama CT',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2026-06-24')),
   discoveryInfo: getDiscoveryInfo([discovery]),
@@ -137,7 +137,7 @@ export const zamaCw: BaseProject = {
   },
   display: {
     description:
-      'Zama Confidential Wrapper is an app that wraps ERC-20 assets and hides balances and transfer amounts using Zama FHEVM on Ethereum.',
+      'Zama Confidential Tokens is an app that wraps ERC-20 assets into confidential tokens and hides balances and transfer amounts using Zama FHEVM on Ethereum.',
     detailedDescription: readProjectMarkdown('zama-cw', 'detailedDescription', {
       kmsThreshold,
       kmsSignerCount,
@@ -166,12 +166,13 @@ export const zamaCw: BaseProject = {
   privacyInfo: {
     trustedSetup: TRUSTED_SETUPS.TransparentSetup,
     tokens: privacyTokens,
+    summaryTrackedItemName: 'token',
     exitWindow: {
       value: 'None',
       sentiment: 'bad',
       orderHint: 0,
       description:
-        'The wrapper and system contracts are upgradeable without an onchain delay, so users do not get a guaranteed withdrawal window before changes take effect.',
+        'The confidential token contracts and system contracts are upgradeable without an onchain delay, so users do not get a guaranteed withdrawal window before changes take effect.',
     },
     reproducibility: {
       value: 'Partially reproducible',
@@ -182,13 +183,17 @@ export const zamaCw: BaseProject = {
     privacy: {
       value: `${kmsThreshold}/${kmsSignerCount} KMS threshold`,
       sentiment: 'warning',
-      description: `Privacy depends on fewer than the KMS threshold of signers to collude and be compromised. Each KMS signer is running inside a TEE. ${kmsThreshold} compromised signers can decrypt all current and past private balances. Compliance can be enforced by token wrapper owners blocking users and by configured underlying-token denylist hooks during deposits, transfers, unwrap requests, and unwrap finalization.`,
+      description: `Privacy depends on fewer than the KMS threshold of signers to collude and be compromised. Each KMS signer is running inside a TEE. ${kmsThreshold} compromised signers can decrypt all current and past private balances. Compliance can be enforced by confidential token owners blocking users and by configured underlying-token denylist hooks during deposits, transfers, unwrap requests, and unwrap finalization.`,
     },
     attributes: [
       PRIVACY_ATTRIBUTES.fhe,
       PRIVACY_ATTRIBUTES.privateAmounts,
       PRIVACY_ATTRIBUTES.anyAmount,
-      PRIVACY_ATTRIBUTES.defi,
+      {
+        ...PRIVACY_ATTRIBUTES.defi,
+        description:
+          'Interop with DeFi (swaps, vaults) from within the confidential token.',
+      },
     ],
     riskSummary: readProjectMarkdown('zama-cw', 'riskSummary', {
       kmsThreshold,

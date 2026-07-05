@@ -1,3 +1,4 @@
+import { pluralize } from '@l2beat/shared-pure'
 import {
   createColumnHelper,
   getCoreRowModel,
@@ -63,7 +64,10 @@ const columns = [
           </TwoRowCell.First>
           <TwoRowCell.Second>
             {ctx.row.original.isTracked
-              ? `${formatInteger(ctx.row.original.poolsTracked)} pools tracked`
+              ? `${formatInteger(ctx.row.original.poolsTracked)} ${pluralize(
+                  ctx.row.original.poolsTracked,
+                  ctx.row.original.summaryTrackedItemName,
+                )} tracked`
               : 'Not tracked'}
           </TwoRowCell.Second>
         </TwoRowCell>
