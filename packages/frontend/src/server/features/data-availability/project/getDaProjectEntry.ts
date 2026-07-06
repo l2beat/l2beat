@@ -147,7 +147,9 @@ export async function getDaProjectEntry(
 
   const projectLiveness =
     selected && liveness ? liveness[selected.id] : undefined
-  const ongoingAnomalies = projectLiveness?.anomalies.filter(isAnomalyOngoing)
+  const ongoingAnomalies = projectLiveness?.anomalies.filter(
+    (anomaly) => isAnomalyOngoing(anomaly) && anomaly.isApproved,
+  )
 
   const layerTvs = tvsPerProject.reduce((acc, value) => acc + value.tvs, 0)
 
