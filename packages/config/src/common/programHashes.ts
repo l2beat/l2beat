@@ -1184,6 +1184,10 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     ...KAILUA_FP('BOB', 'This version adds op-contracts v5 compatibility.'),
     verificationStatus: 'notVerified',
   },
+  '0xd3c097dfec583bb305eefcb5dcddc313b072e372cee66e13492c37fb50e6a90b': {
+    ...KAILUA_FP('Ronin', 'This version adds op-contracts v5 compatibility.'),
+    verificationStatus: 'notVerified',
+  },
   '0xf0ce5d15fa89991210ca2667b7f7a8bb740ce551c0f2b20cc76f9debc55d22c2': {
     ...KAILUA_FP('MegaETH'),
     verificationStatus: 'unsuccessful',

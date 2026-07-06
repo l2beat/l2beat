@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xc650ae2b45a166153851d223a6d90d522cbf71fc
+Generated with discovered.json: 0x3e6247f7c354f1b9671aaa3adfcf3fd24e665a9e
 
-# Diff at Fri, 03 Jul 2026 10:22:33 GMT:
+# Diff at Mon, 06 Jul 2026 08:53:30 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@4572e5b954c85d78517dc66fc4a82b8ddc679e2a block: 1781531783
-- current timestamp: 1783074080
+- current timestamp: 1783327943
 
 ## Description
 
@@ -86,7 +86,7 @@ KailuaTreasury economic parameters now live: `participationBond` = 0.5 ETH, `van
 
 ```diff
     contract KailuaTreasury (eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336) [risc0/KailuaTreasury] {
-    +++ description: Kailua (RISC Zero ZK fault-proof) game implementation registered as game type 1337 in the DisputeGameFactory. Deployed but NOT yet active. Bonds confiscated from eliminated proposers are split 1/3 to the prover, 1/3 to the tournament winner, 1/3 burned.
+    +++ description: Kailua (RISC Zero ZK fault-proof) treasury: holds participation bonds, mints KailuaGame clones, and defines the vanguard proposer economics. Bonds confiscated from eliminated proposers are split 1/3 to the prover, 1/3 to the tournament winner, 1/3 burned.
       values.participationBond:
 -        0
 +        "500000000000000000"
@@ -124,6 +124,21 @@ KailuaTreasury economic parameters now live: `participationBond` = 0.5 ETH, `van
 ```diff
 .../src/projects/roninnetwork/.flat/KailuaGame.sol | 3874 ++++++++++++++++++++
  1 file changed, 3874 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1781531783 (main branch discovery), not current.
+
+```diff
+    contract KailuaTreasury (eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336) [risc0/KailuaTreasury] {
+    +++ description: Kailua (RISC Zero ZK fault-proof) treasury: holds participation bonds, mints KailuaGame clones, and defines the vanguard proposer economics. Bonds confiscated from eliminated proposers are split 1/3 to the prover, 1/3 to the tournament winner, 1/3 burned.
+      description:
+-        "Kailua (RISC Zero ZK fault-proof) game implementation registered as game type 1337 in the DisputeGameFactory. Deployed but NOT yet active. Bonds confiscated from eliminated proposers are split 1/3 to the prover, 1/3 to the tournament winner, 1/3 burned."
++        "Kailua (RISC Zero ZK fault-proof) treasury: holds participation bonds, mints KailuaGame clones, and defines the vanguard proposer economics. Bonds confiscated from eliminated proposers are split 1/3 to the prover, 1/3 to the tournament winner, 1/3 burned."
+    }
 ```
 
 Generated with discovered.json: 0x81fe96904ec3c6d1b6424554954cfd9180db1366
