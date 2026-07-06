@@ -1162,8 +1162,7 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     verificationStatus: 'notVerified',
   },
   '0x3768ea4f0e0d940f69c4cc5bd39a9e2772bfe3cb57818ce526bbe68033ee5934': {
-    ...KAILUA_FP('Kailua v1.2.0'),
-    programUrl: 'https://github.com/boundless-xyz/kailua/releases/tag/v1.2.0',
+    ...KAILUA_FP('BOB'),
     verificationStatus: 'notVerified',
   },
   '0xf176eb82fbbb5d2d281a9cce459062bcdbe65f93d7156829b174fae2b4690c23': {
