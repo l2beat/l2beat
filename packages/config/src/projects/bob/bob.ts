@@ -1,11 +1,29 @@
 import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION } from '../../common'
 import { BADGES } from '../../common/badges'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('bob')
+
+const respectedGameType = discovery.getContractValue<number>(
+  'OptimismPortal2',
+  'respectedGameType',
+)
+const activeKailuaGame = discovery.getContractValue<ChainSpecificAddress>(
+  'DisputeGameFactory',
+  `game${respectedGameType}`,
+)
+const activeKailuaTreasury = discovery.getContractValue<ChainSpecificAddress>(
+  activeKailuaGame,
+  'KAILUA_TREASURY',
+)
+const activeKailuaVerifier = discovery.getContractValue<ChainSpecificAddress>(
+  activeKailuaTreasury,
+  'KAILUA_VERIFIER',
+)
 
 export const bob: ScalingProject = opStackL2({
   ecosystemInfo: {
@@ -102,28 +120,10 @@ export const bob: ScalingProject = opStackL2({
       { type: 'blockscout', url: 'https://explorer.gobob.xyz/api' },
     ],
   },
-  nonTemplateZkVerifiers: getVerifiers(),
+  nonTemplateZkVerifiers: [activeKailuaVerifier],
+  nonTemplateProgramHashes: [
+    PROGRAM_HASHES(
+      discovery.getContractValue<string>(activeKailuaVerifier, 'FPVM_IMAGE_ID'),
+    ),
+  ],
 })
-
-function getVerifiers(): ChainSpecificAddress[] {
-  const verifierNames = [
-    'verifier5Manual',
-    'verifier6Manual',
-    // 'verifier7Manual', // this is set verifier, not an actual RiscZero verifier smart contract
-  ]
-  const result: ChainSpecificAddress[] = []
-  for (const verifierName of verifierNames) {
-    const emergencyStopContract =
-      discovery.getContractValue<ChainSpecificAddress>(
-        'RiscZeroVerifierRouter',
-        verifierName,
-      )
-    result.push(
-      discovery.getContractValue<ChainSpecificAddress>(
-        emergencyStopContract,
-        'verifier',
-      ),
-    )
-  }
-  return result
-}

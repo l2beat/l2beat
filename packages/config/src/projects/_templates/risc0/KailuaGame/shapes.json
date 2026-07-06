@@ -18,5 +18,11 @@
     "hash": "0x2fff6bf0317a3b34756de7dced53f7f7e195c41e47cbe901e13e290dc64a3643",
     "address": "eth:0x8c0Ed8Dd0CcF6d596e321d81eD895ad51fE30B84",
     "blockNumber": 25040000
+  },
+  "KailuaGame_v1_2": {
+    "hash": "0x4be72063aaae30394371dec5e9714bcd8fdff8900cc76d8d657e180c7ab83742",
+    "address": "eth:0xD37b0BEdD9094988a31dBbB6BF77dC97269E742b",
+    "chain": "ethereum",
+    "blockNumber": 22961594
   }
 }
