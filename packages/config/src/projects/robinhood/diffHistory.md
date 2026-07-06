@@ -1,34 +1,37 @@
-Generated with discovered.json: 0xb1ce12ca7ea0d0a508a9a90125f1f0bf873d0861
+Generated with discovered.json: 0x58ee45b51f8ed7616cbb15f8ec7f0b4f2150f48b
 
-# Diff at Mon, 06 Jul 2026 10:56:19 GMT:
+# Diff at Mon, 06 Jul 2026 11:12:55 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- current timestamp: 1783335379
+- current timestamp: 1783336375
 
 ## Description
 
-Adds L2 (robinhood chain) discovery to track the ArbOS 61 transaction-filtering
-precompile, its authorized filterers, and how many transactions have been
-censored.
+Adds L2 (robinhood chain) discovery of the ArbOS 61 transaction-filtering
+mechanism, its authorized filterers, how many transactions have been censored,
+and the L2-side governance that controls it.
 
 - **ArbFilteredTransactionsManager** (`robinhood:0x…74`) — the ArbOS 61
   transaction-filtering precompile. Its `FilteredTransactionAdded` /
   `FilteredTransactionDeleted` events are counted: `filteredTransactionsAdded = 2`,
   `filteredTransactionsDeleted = 0` — i.e. **two transactions are currently on
-  the censored list**. When a filtered transaction is executed (including one
-  force-included via the L1 delayed inbox), the state transition function
-  forcibly fails it, without delay. These counts are watched, so any new
-  censoring will surface in a future diff.
-- **L2UpgradeExecutor** (`robinhood:0x2A15…5C09`) — the sole ArbOS chain owner
-  (`getAllChainOwners` returns only itself). Its `getAllTransactionFilterers` set
-  has one member, **TransactionFilterer** (`robinhood:0xebDc…24b7`), the address
-  authorized to register/remove entries in the precompile above.
+  the censored list**. The state transition function forcibly fails a filtered
+  transaction (including one force-included via the L1 delayed inbox), without
+  delay. The counts are watched, so any new censoring surfaces in a future diff.
+- **L2UpgradeExecutor** (`robinhood:0x2A15…5C09`) — the sole ArbOS chain owner,
+  templatized as `orbitstack/UpgradeExecutor` (its L2 build's implementation
+  shape was added to that template). The description is overridden here because
+  this instance also governs transaction filtering: its
+  `getAllTransactionFilterers` set has one member, **TransactionFilterer**
+  (`robinhood:0xebDc…24b7`), authorized to add/remove entries in the precompile
+  above.
+- **SafeL2** (`robinhood:0x1F3B…31C5`) — the 2-of-3 Gnosis Safe that holds
+  `EXECUTOR_ROLE` on the L2UpgradeExecutor (same address as the L1 governance
+  Safe), now discovered on the L2 side too, with its three signers.
 - **TransactionFilterer** (`robinhood:0xebDc…24b7`) — EOA holding the filterer role.
 - **ProxyAdmin** (`robinhood:0xa3Ac…67dF`) — admin of the L2UpgradeExecutor proxy.
-
-The governance that controls the filterer role (the 2-of-3 Safe
-`0x1F3Bdec…31C5` and the L1 UpgradeExecutor) is already captured by the L1
-discovery — the Safe is the same address on L1 and L2.
+- The L1 UpgradeExecutor's L2 alias (`robinhood:0x6637…C5D0`) and the Safe
+  signers are discovered as EOAs.
 
 ## Changes
 
@@ -40,7 +43,13 @@ discovery — the Safe is the same address on L1 and L2.
 
 ```diff
 +   Status: CREATED
-    contract L2UpgradeExecutor (robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09) [N/A]
+    contract SafeL2 (robinhood:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2UpgradeExecutor (robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09) [orbitstack/UpgradeExecutor]
     +++ description: ArbOS chain owner (UpgradeExecutor). Manages the ArbOwner chain-owner set and the transaction-filterer set, and can upgrade ArbOS configuration without delay.
 ```
 
