@@ -123,9 +123,9 @@ const privacyTokens: ProjectPrivacyToken[] = trackedWrappers.map(
 
 export const zamaCw: BaseProject = {
   id: ProjectId('zama-cw'),
-  slug: 'zama-cw',
-  name: 'Zama CT',
-  shortName: undefined,
+  slug: 'zama-confidential-tokens',
+  name: 'Zama Confidential Tokens',
+  shortName: 'Zama Conf. Tokens',
   addedAt: UnixTime.fromDate(new Date('2026-06-24')),
   discoveryInfo: getDiscoveryInfo([discovery]),
   statuses: {
