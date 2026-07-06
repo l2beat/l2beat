@@ -1,3 +1,4 @@
+import type { InteropDurationSplit, Project } from '@l2beat/config'
 import { assert, notUndefined, type ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
@@ -162,16 +163,6 @@ export async function getInteropFlows(
         getRelevantBridgeTypes(selectedProject, undefined),
       )
     : undefined
-  const resolveAvgDuration = (
-    duration: DurationData | undefined,
-  ): AverageDuration | null => {
-    if (!duration) return null
-    if (selectedProject?.interopConfig.transfersTimeMode === 'unknown') {
-      return { type: 'unknown' }
-    }
-    return getAverageDuration(duration, durationSplit)
-  }
-
   const detailsMap = await buildTokensDetailsMap(tokenIds)
   const summaryTokens = getSummaryTokensData(
     scopedRecords.filter(
@@ -246,7 +237,11 @@ export async function getInteropFlows(
       chains: [chainA, chainB],
       topTokens: resolvedPairTokens.get(pairKey) ?? [],
       topProtocols: resolvedPairProtocols.get(pairKey) ?? [],
-      avgDuration: resolveAvgDuration(chainPairDurations.get(pairKey)),
+      avgDuration: resolveAvgDuration(
+        chainPairDurations.get(pairKey),
+        selectedProject,
+        durationSplit,
+      ),
     })
   }
 
@@ -271,7 +266,8 @@ export async function getInteropFlows(
     chainTokenCounts,
     chainProtocolCounts,
     chainDurations,
-    resolveAvgDuration,
+    selectedProject,
+    durationSplit,
   )
 
   const topChain = chainData.reduce<ChainData | undefined>((max, chain) => {
@@ -303,6 +299,18 @@ export async function getInteropFlows(
   }
 }
 
+function resolveAvgDuration(
+  duration: DurationData | undefined,
+  selectedProject: Project<'interopConfig'> | undefined,
+  durationSplit: InteropDurationSplit | undefined,
+): AverageDuration | null {
+  if (!duration) return null
+  if (selectedProject?.interopConfig.transfersTimeMode === 'unknown') {
+    return { type: 'unknown' }
+  }
+  return getAverageDuration(duration, durationSplit)
+}
+
 function resolveEntries<T>(
   map: Map<string, TopEntry[]>,
   resolve: (entry: TopEntry) => T | undefined,
@@ -322,9 +330,8 @@ function computeChainsData(
   chainTokenCounts: Map<string, number>,
   chainProtocolCounts: Map<string, number>,
   chainDurations: Map<string, DurationData>,
-  resolveAvgDuration: (
-    duration: DurationData | undefined,
-  ) => AverageDuration | null,
+  selectedProject: Project<'interopConfig'> | undefined,
+  durationSplit: InteropDurationSplit | undefined,
 ): ChainData[] {
   const chains = new Map<
     string,
@@ -381,7 +388,11 @@ function computeChainsData(
       protocolCount: chainProtocolCounts.get(chainId) ?? 0,
       topTokens: chainTopTokens.get(chainId) ?? [],
       topProtocols: chainTopProtocols.get(chainId) ?? [],
-      avgDuration: resolveAvgDuration(chainDurations.get(chainId)),
+      avgDuration: resolveAvgDuration(
+        chainDurations.get(chainId),
+        selectedProject,
+        durationSplit,
+      ),
     }
   })
 }
@@ -405,7 +416,8 @@ function getMockInteropFlows(): InteropFlowsData {
     new Map(),
     new Map(),
     new Map(),
-    () => null,
+    undefined,
+    undefined,
   )
 
   return {
