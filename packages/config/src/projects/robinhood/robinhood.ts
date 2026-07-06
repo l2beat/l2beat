@@ -30,6 +30,48 @@ export const robinhood: ScalingProject = orbitStackL2({
       socialMedia: ['https://x.com/RobinhoodApp'],
     },
   },
+  // The Orbit template rates sequencer failure as "Self sequence" (users can
+  // force-include via the L1 delayed inbox). That guarantee does not hold here:
+  // the chain runs ArbOS 61 transaction filtering. An authorized filterer can
+  // register any transaction hash in the ArbFilteredTransactionsManager
+  // precompile (0x00..74), after which the state transition function forcibly
+  // fails that transaction -- including one force-included via L1 -- without
+  // delay. A TransactionFilterer role is currently active on-chain, so L1
+  // force-inclusion is not a reliable censorship escape hatch.
+  nonTemplateRiskView: {
+    sequencerFailure: {
+      value: 'No mechanism',
+      description:
+        'There is no guaranteed mechanism to have transactions included if the sequencer is down or censoring. Although users can enqueue messages in the L1 delayed inbox and call forceInclusion on the SequencerInbox, the chain runs ArbOS 61 transaction filtering: an authorized filterer can register any transaction hash in the ArbFilteredTransactionsManager precompile (0x00…0074), after which the state transition function forcibly fails that transaction, including force-included ones, without delay.',
+      sentiment: 'bad',
+    },
+  },
+  nonTemplateTechnology: {
+    // The Orbit template's default forceTransactions text says anyone can
+    // force-include via the SequencerInbox. That does not hold here: ArbOS 61
+    // transaction filtering lets the operator nullify a force-included tx.
+    forceTransactions: {
+      name: 'Force inclusion can be nullified by transaction filtering',
+      description:
+        'Users can enqueue messages in the L1 delayed inbox and, after the sequencing delay, call forceInclusion on the SequencerInbox to include them. However, the chain runs ArbOS 61 transaction filtering: an authorized filterer can register any transaction hash in the ArbFilteredTransactionsManager precompile (0x00…0074), after which the state transition function forcibly fails that transaction, including one force-included via L1, without delay. Force inclusion is therefore not a reliable censorship escape hatch.',
+      risks: [
+        {
+          category: 'Users can be censored if',
+          text: 'the operator registers their transaction hash in the ArbFilteredTransactionsManager precompile, causing the state transition function to fail it even when it is force-included via the L1 delayed inbox.',
+        },
+      ],
+      references: [
+        {
+          title: 'Transaction screening - Robinhood Chain documentation',
+          url: 'https://docs.robinhood.com/chain/differences-from-ethereum/#transaction-screening',
+        },
+        {
+          title: "Sequencer Isn't Doing Its Job - Arbitrum documentation",
+          url: 'https://docs.arbitrum.io/how-arbitrum-works/sequencer#unhappyuncommon-case-sequencer-isnt-doing-its-job',
+        },
+      ],
+    },
+  },
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox,

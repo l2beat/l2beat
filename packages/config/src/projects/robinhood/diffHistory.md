@@ -1,4 +1,62 @@
-Generated with discovered.json: 0x2c1745b43c2422d989b78335e3a9218864c2a226
+Generated with discovered.json: 0x1e2edb2d1a274576e1bfa40dd36649d8608e749a
+
+# Diff at Mon, 06 Jul 2026 12:22:14 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- current timestamp: 1783340534
+
+## Description
+
+Adds L2 (robinhood chain) discovery of the ArbOS 61 transaction-filtering
+mechanism, its authorized filterers, and the L2-side governance that controls it.
+
+- **ArbFilteredTransactionsManager** (`robinhood:0x…74`) — the ArbOS 61
+  transaction-filtering precompile. `filteredTransactionsAdded = 2`,
+  `filteredTransactionsDeleted = 0`: two transactions are currently on the
+  censored list. The state transition function forcibly fails a filtered
+  transaction, including one force-included via the L1 delayed inbox, without
+  delay. Its `transactionFilterers` set holds the addresses authorized to
+  register/remove entries here. Precompiles have no verifiable on-chain
+  bytecode, so its source is pointed at the Nitro implementation.
+- **TransactionFilterer** (`robinhood:0xebDc…24b7`) — EOA authorized to
+  register/remove transaction hashes in the precompile above.
+- **L2UpgradeExecutor** (`robinhood:0x2A15…5C09`) — the sole ArbOS chain owner,
+  which can add or remove transaction filterers.
+- **SafeL2** (`robinhood:0x1F3B…31C5`) — the 2-of-3 Gnosis Safe holding
+  `EXECUTOR_ROLE` on the L2UpgradeExecutor (same address as the L1 governance Safe).
+- **ProxyAdmin** (`robinhood:0xa3Ac…67dF`) — admin of the L2UpgradeExecutor proxy.
+
+## Changes
+
+```diff
++   Status: CREATED
+    contract ArbFilteredTransactionsManager (robinhood:0x0000000000000000000000000000000000000074) [N/A]
+    +++ description: ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (robinhood:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2UpgradeExecutor (robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09) [orbitstack/UpgradeExecutor]
+    +++ description: ArbOS chain owner (UpgradeExecutor). Manages the ArbOwner chain-owner set and the transaction-filterer set, and can upgrade ArbOS configuration without delay.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (robinhood:0xa3Acd31AFb851B4eB9DAD00F5204c01D924267dF) [global/ProxyAdmin]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    EOA TransactionFilterer (robinhood:0xebDc18A1F5C42fC25552eA233fAcf4054DF224b7)
+    +++ description: None
+```
 
 # Diff at Thu, 02 Jul 2026 10:38:22 GMT:
 

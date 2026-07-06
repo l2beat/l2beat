@@ -8,7 +8,9 @@
     "eth:0xBd0D173EEb87D57A09521c24388a12789F33ba96",
     "eth:0x6a2E3a1e16FC29f27Ce61429746D558d656975bB",
     "eth:0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0",
-    "eth:0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B"
+    "eth:0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B",
+    "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09",
+    "robinhood:0x0000000000000000000000000000000000000074"
   ],
   "names": {
     "eth:0xDf8755334ce7A73cCF6b581C02eA649AE3E864b3": "Bridge",
@@ -17,9 +19,84 @@
     "eth:0x6a2E3a1e16FC29f27Ce61429746D558d656975bB": "L1GatewayRouter",
     "eth:0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0": "L1ERC20Gateway",
     "eth:0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B": "L1WethGateway",
-    "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD": "ProxyAdmin"
+    "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD": "ProxyAdmin",
+    "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09": "L2UpgradeExecutor",
+    "robinhood:0x0000000000000000000000000000000000000074": "ArbFilteredTransactionsManager",
+    "robinhood:0xebDc18A1F5C42fC25552eA233fAcf4054DF224b7": "TransactionFilterer"
   },
   "overrides": {
+    "robinhood:0x0000000000000000000000000000000000000074": {
+      "description": "ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.",
+      // Precompiles have no verifiable on-chain bytecode (a 0xfe stub); their
+      // logic lives in the Nitro node and is covered by the fraud-proof
+      // wasmModuleRoot. Point at the implementation source so the contract is
+      // treated as verified instead of flagged "unverified / may contain
+      // malicious code".
+      "manualSourcePaths": {
+        "robinhood:0x0000000000000000000000000000000000000074": "https://github.com/OffchainLabs/nitro/blob/v3.11.0/precompiles/ArbFilteredTransactionsManager.go"
+      },
+      "fields": {
+        // Number of transactions ever added to the censored list
+        // (FilteredTransactionAdded(bytes32)). A non-zero, growing value means
+        // the operator is actively censoring transactions.
+        "filteredTransactionsAdded": {
+          "handler": {
+            "type": "eventCount",
+            "topics": [
+              "0xde91070c821fde128c9ad6c14fac600aa5d701f4f74997eb997cd5591414426f"
+            ]
+          }
+        },
+        // Number of transactions removed from the censored list
+        // (FilteredTransactionDeleted(bytes32)).
+        "filteredTransactionsDeleted": {
+          "handler": {
+            "type": "eventCount",
+            "topics": [
+              "0xdb54a829e2a086557fb16aeb8950816c19960c430bf7d36c791c0f8382b66d22"
+            ]
+          }
+        },
+        // The authorized transaction filterers (ArbOwnerPublic.getAllTransaction
+        // Filterers, read cross-address off 0x..6b). They act on this precompile,
+        // so the actor/permission is attached here rather than on the chain owner.
+        "transactionFilterers": {
+          "handler": {
+            "type": "call",
+            "method": "function getAllTransactionFilterers() view returns (address[])",
+            "args": [],
+            "address": "robinhood:0x000000000000000000000000000000000000006b"
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Can register/remove transaction hashes in the ArbFilteredTransactionsManager precompile, causing the state transition function to forcibly fail those transactions, including force-included ones, without delay."
+            }
+          ]
+        }
+      }
+    },
+    "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09": {
+      "description": "ArbOS chain owner (UpgradeExecutor). Manages the ArbOwner chain-owner set and the transaction-filterer set, and can upgrade ArbOS configuration without delay.",
+      "fields": {
+        // The set of ArbOS chain owners (ArbOwnerPublic.getAllChainOwners).
+        // Read cross-address off the ArbOwnerPublic precompile (0x..6b).
+        "chainOwners": {
+          "handler": {
+            "type": "call",
+            "method": "function getAllChainOwners() view returns (address[])",
+            "args": [],
+            "address": "robinhood:0x000000000000000000000000000000000000006b"
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay."
+            }
+          ]
+        }
+      }
+    },
     "eth:0xBd0D173EEb87D57A09521c24388a12789F33ba96": {
       "fields": {
         // 0x00 = posts to Ethereum (rollup, DAC disabled). Hardcoded to avoid a
