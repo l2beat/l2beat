@@ -32,6 +32,10 @@ const activeKailuaVerifier = discovery.getContractValue<ChainSpecificAddress>(
   activeKailuaTreasury,
   'KAILUA_VERIFIER',
 )
+const kailuaSetBuilderProgramHash = discovery.getContractValue<string[]>(
+  'RiscZeroSetVerifier',
+  'imageInfo',
+)[0]
 
 // Selectors of the RiscZero verifier versions the Kailua guest actually calls
 // through the RiscZeroVerifierRouter. Kept in sync with BOB's selection.
@@ -223,6 +227,7 @@ export const roninNetwork: ScalingProject = opStackL2({
     PROGRAM_HASHES(
       discovery.getContractValue<string>(activeKailuaVerifier, 'FPVM_IMAGE_ID'),
     ),
+    PROGRAM_HASHES(kailuaSetBuilderProgramHash),
   ],
   activityConfig: {
     type: 'block',
