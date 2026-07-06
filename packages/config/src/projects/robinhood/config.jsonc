@@ -48,6 +48,23 @@
               "0xdb54a829e2a086557fb16aeb8950816c19960c430bf7d36c791c0f8382b66d22"
             ]
           }
+        },
+        // The authorized transaction filterers (ArbOwnerPublic.getAllTransaction
+        // Filterers, read cross-address off 0x..6b). They act on this precompile,
+        // so the actor/permission is attached here rather than on the chain owner.
+        "transactionFilterers": {
+          "handler": {
+            "type": "call",
+            "method": "function getAllTransactionFilterers() view returns (address[])",
+            "args": [],
+            "address": "robinhood:0x000000000000000000000000000000000000006b"
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Can register/remove transaction hashes in the ArbFilteredTransactionsManager precompile, causing the state transition function to forcibly fail those transactions, including force-included ones, without delay."
+            }
+          ]
         }
       }
     },
@@ -67,25 +84,6 @@
             {
               "type": "interact",
               "description": "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay."
-            }
-          ]
-        },
-        // The set of authorized transaction filterers
-        // (ArbOwnerPublic.getAllTransactionFilterers). Each member can register
-        // any tx hash in the ArbFilteredTransactionsManager precompile (0x..74),
-        // after which the state transition function forcibly fails that
-        // transaction -- including one force-included via the L1 delayed inbox.
-        "transactionFilterers": {
-          "handler": {
-            "type": "call",
-            "method": "function getAllTransactionFilterers() view returns (address[])",
-            "args": [],
-            "address": "robinhood:0x000000000000000000000000000000000000006b"
-          },
-          "permissions": [
-            {
-              "type": "interact",
-              "description": "Can register/remove transaction hashes in the ArbFilteredTransactionsManager precompile (0x..74), causing the state transition function to forcibly fail those transactions, including force-included ones, without delay."
             }
           ]
         }

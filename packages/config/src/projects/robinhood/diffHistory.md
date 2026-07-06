@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x58ee45b51f8ed7616cbb15f8ec7f0b4f2150f48b
+Generated with discovered.json: 0x3ddb158b013898ff063089be2cceff2097479f10
 
-# Diff at Mon, 06 Jul 2026 11:12:55 GMT:
+# Diff at Mon, 06 Jul 2026 11:46:50 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- current timestamp: 1783336375
+- current timestamp: 1783338410
 
 ## Description
 
@@ -15,14 +15,14 @@ mechanism, its authorized filterers, and the L2-side governance that controls it
   `filteredTransactionsDeleted = 0`: two transactions are currently on the
   censored list. The state transition function forcibly fails a filtered
   transaction, including one force-included via the L1 delayed inbox, without
-  delay.
-- **L2UpgradeExecutor** (`robinhood:0x2A15…5C09`) — the sole ArbOS chain owner.
-  Its `getAllTransactionFilterers` set has one member, **TransactionFilterer**
-  (`robinhood:0xebDc…24b7`), authorized to add/remove entries in the precompile
-  above.
+  delay. Its `transactionFilterers` set holds the addresses authorized to
+  register/remove entries here.
+- **TransactionFilterer** (`robinhood:0xebDc…24b7`) — EOA authorized to
+  register/remove transaction hashes in the precompile above.
+- **L2UpgradeExecutor** (`robinhood:0x2A15…5C09`) — the sole ArbOS chain owner,
+  which can add or remove transaction filterers.
 - **SafeL2** (`robinhood:0x1F3B…31C5`) — the 2-of-3 Gnosis Safe holding
   `EXECUTOR_ROLE` on the L2UpgradeExecutor (same address as the L1 governance Safe).
-- **TransactionFilterer** (`robinhood:0xebDc…24b7`) — EOA holding the filterer role.
 - **ProxyAdmin** (`robinhood:0xa3Ac…67dF`) — admin of the L2UpgradeExecutor proxy.
 
 ## Changes

@@ -37,9 +37,7 @@ export const robinhood: ScalingProject = orbitStackL2({
   // precompile (0x00..74), after which the state transition function forcibly
   // fails that transaction -- including one force-included via L1 -- without
   // delay. A TransactionFilterer role is currently active on-chain, so L1
-  // force-inclusion is not a reliable censorship escape hatch. Mirrors the
-  // "No mechanism" rating used for zkSync-stack chains with an active
-  // TransactionFilterer (GRVT, Sophon).
+  // force-inclusion is not a reliable censorship escape hatch.
   nonTemplateRiskView: {
     sequencerFailure: {
       value: 'No mechanism',
