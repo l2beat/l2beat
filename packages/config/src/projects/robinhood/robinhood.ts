@@ -42,7 +42,7 @@ export const robinhood: ScalingProject = orbitStackL2({
     sequencerFailure: {
       value: 'No mechanism',
       description:
-        'There is no guaranteed mechanism to have transactions included if the sequencer is down or censoring. Although users can enqueue messages in the L1 delayed inbox and call forceInclusion on the SequencerInbox, the chain runs ArbOS 61 transaction filtering: an authorized filterer can register any transaction hash in the ArbFilteredTransactionsManager precompile (0x0000000000000000000000000000000000000074), after which the state transition function forcibly fails that transaction, including force-included ones, without delay.',
+        'There is no guaranteed mechanism to have transactions included if the sequencer is down or censoring. Although users can enqueue messages in the L1 delayed inbox and call forceInclusion on the SequencerInbox, the chain runs ArbOS 61 transaction filtering: an authorized filterer can register any transaction hash in the ArbFilteredTransactionsManager precompile (0x00…0074), after which the state transition function forcibly fails that transaction, including force-included ones, without delay.',
       sentiment: 'bad',
     },
   },
