@@ -30,6 +30,24 @@ export const robinhood: ScalingProject = orbitStackL2({
       socialMedia: ['https://x.com/RobinhoodApp'],
     },
   },
+  // The Orbit template rates sequencer failure as "Self sequence" (users can
+  // force-include via the L1 delayed inbox). That guarantee does not hold here:
+  // the chain runs ArbOS 61 transaction filtering. An authorized filterer can
+  // register any transaction hash in the ArbFilteredTransactionsManager
+  // precompile (0x00..74), after which the state transition function forcibly
+  // fails that transaction -- including one force-included via L1 -- without
+  // delay. A TransactionFilterer role is currently active on-chain, so L1
+  // force-inclusion is not a reliable censorship escape hatch. Mirrors the
+  // "No mechanism" rating used for zkSync-stack chains with an active
+  // TransactionFilterer (GRVT, Sophon).
+  nonTemplateRiskView: {
+    sequencerFailure: {
+      value: 'No mechanism',
+      description:
+        'There is no guaranteed mechanism to have transactions included if the sequencer is down or censoring. Although users can enqueue messages in the L1 delayed inbox and call forceInclusion on the SequencerInbox, the chain runs ArbOS 61 transaction filtering: an authorized filterer can register any transaction hash in the ArbFilteredTransactionsManager precompile (0x0000000000000000000000000000000000000074), after which the state transition function forcibly fails that transaction, including force-included ones, without delay.',
+      sentiment: 'bad',
+    },
+  },
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox,
