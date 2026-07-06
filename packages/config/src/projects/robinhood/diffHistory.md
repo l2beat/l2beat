@@ -1,4 +1,60 @@
-Generated with discovered.json: 0x2c1745b43c2422d989b78335e3a9218864c2a226
+Generated with discovered.json: 0xb1ce12ca7ea0d0a508a9a90125f1f0bf873d0861
+
+# Diff at Mon, 06 Jul 2026 10:56:19 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- current timestamp: 1783335379
+
+## Description
+
+Adds L2 (robinhood chain) discovery to track the ArbOS 61 transaction-filtering
+precompile, its authorized filterers, and how many transactions have been
+censored.
+
+- **ArbFilteredTransactionsManager** (`robinhood:0x…74`) — the ArbOS 61
+  transaction-filtering precompile. Its `FilteredTransactionAdded` /
+  `FilteredTransactionDeleted` events are counted: `filteredTransactionsAdded = 2`,
+  `filteredTransactionsDeleted = 0` — i.e. **two transactions are currently on
+  the censored list**. When a filtered transaction is executed (including one
+  force-included via the L1 delayed inbox), the state transition function
+  forcibly fails it, without delay. These counts are watched, so any new
+  censoring will surface in a future diff.
+- **L2UpgradeExecutor** (`robinhood:0x2A15…5C09`) — the sole ArbOS chain owner
+  (`getAllChainOwners` returns only itself). Its `getAllTransactionFilterers` set
+  has one member, **TransactionFilterer** (`robinhood:0xebDc…24b7`), the address
+  authorized to register/remove entries in the precompile above.
+- **TransactionFilterer** (`robinhood:0xebDc…24b7`) — EOA holding the filterer role.
+- **ProxyAdmin** (`robinhood:0xa3Ac…67dF`) — admin of the L2UpgradeExecutor proxy.
+
+The governance that controls the filterer role (the 2-of-3 Safe
+`0x1F3Bdec…31C5` and the L1 UpgradeExecutor) is already captured by the L1
+discovery — the Safe is the same address on L1 and L2.
+
+## Changes
+
+```diff
++   Status: CREATED
+    contract ArbFilteredTransactionsManager (robinhood:0x0000000000000000000000000000000000000074) [N/A]
+    +++ description: ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.
+```
+
+```diff
++   Status: CREATED
+    contract L2UpgradeExecutor (robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09) [N/A]
+    +++ description: ArbOS chain owner (UpgradeExecutor). Manages the ArbOwner chain-owner set and the transaction-filterer set, and can upgrade ArbOS configuration without delay.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (robinhood:0xa3Acd31AFb851B4eB9DAD00F5204c01D924267dF) [global/ProxyAdmin]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    EOA TransactionFilterer (robinhood:0xebDc18A1F5C42fC25552eA233fAcf4054DF224b7)
+    +++ description: None
+```
 
 # Diff at Thu, 02 Jul 2026 10:38:22 GMT:
 
