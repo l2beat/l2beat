@@ -1,7 +1,7 @@
 {
   "name": "robinhood",
-  "timestamp": 1783338410,
-  "configHash": "0xd3190eef2f2d83b206700bc62feee55efff33d3f9ade6ed6038b8a3edeec4bd1",
+  "timestamp": 1783340534,
+  "configHash": "0x8672fb0ff14808666f1b387b16b1ee6adb315e9f7a1ebcfbbfe6ec765e988e99",
   "entries": [
     {
       "address": "eth:0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73",
@@ -331,7 +331,7 @@
         ],
         "inbox": "eth:0x1A07cc4BD17E0118BdB54D70990D2158AbAD7a2D",
         "isPostBoLD": true,
-        "latestConfirmed": "0xfcdbafe38a86488e93401da3781e5e76ab873376d7189bc2296ddd745174f7df",
+        "latestConfirmed": "0x23cd0709e3ebfa8565c47e89f03a180cc6e1a272c266b1d308b80dbb275249bf",
         "loserStakeEscrow": "eth:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9",
@@ -742,7 +742,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 5354,
+        "batchCount": 5359,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": ["eth:0xDaa526086787d9DEbE1D7F3FFdb1fE50cf8687F4"],
         "bridge": "eth:0xDf8755334ce7A73cCF6b581C02eA649AE3E864b3",
@@ -781,7 +781,7 @@
         "rollup": "eth:0x23A19d23e89166adedbDcB432518AB01e4272D94",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 7249,
+        "totalDelayedMessagesRead": 7254,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -812,7 +812,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2409768081789633253605678"
+        "totalSupply": "2418507144926339988791464"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -910,7 +910,7 @@
           "eth:0xc34f4907822d1cDC6aE3038Be22e6f12DEa35bd4"
         ],
         "allowedOutboxList": ["eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9"],
-        "delayedMessageCount": 7251,
+        "delayedMessageCount": 7256,
         "inboxHistory": [
           "eth:0x1A07cc4BD17E0118BdB54D70990D2158AbAD7a2D",
           "eth:0xc34f4907822d1cDC6aE3038Be22e6f12DEa35bd4"
@@ -918,8 +918,8 @@
         "outboxHistory": ["eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9"],
         "rollup": "eth:0x23A19d23e89166adedbDcB432518AB01e4272D94",
         "sequencerInbox": "eth:0xBd0D173EEb87D57A09521c24388a12789F33ba96",
-        "sequencerMessageCount": 5354,
-        "sequencerReportedSubMessageCount": 3097604
+        "sequencerMessageCount": 5359,
+        "sequencerReportedSubMessageCount": 3109948
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1050,7 +1050,9 @@
       "name": "ArbFilteredTransactionsManager",
       "address": "robinhood:0x0000000000000000000000000000000000000074",
       "type": "Contract",
-      "unverified": true,
+      "sourceHashes": [
+        "0xc92ac7c82ac0ae6811eb5889bb19d300f3f59cc6c21e25d1be2dcc6c4a9db41a"
+      ],
       "proxyType": "immutable",
       "description": "ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.",
       "deployerAddress": "robinhood:0x0000000000000000000000000000000000000000",
@@ -1066,7 +1068,13 @@
       },
       "implementationNames": {
         "robinhood:0x0000000000000000000000000000000000000074": ""
-      }
+      },
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://github.com/OffchainLabs/nitro/blob/v3.11.0/precompiles/ArbFilteredTransactionsManager.go"
+        }
+      ]
     },
     {
       "name": "SafeL2",
@@ -1222,7 +1230,6 @@
       "address": "robinhood:0x663703B4bC1F5e896Af2854548d6380F45F1C5D0",
       "type": "EOA",
       "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -2266,6 +2273,6 @@
     "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "ethereum": 25473286, "robinhood": 3099898 },
+  "usedBlockNumbers": { "ethereum": 25473463, "robinhood": 3111664 },
   "permissionsConfigHash": "0x5fee83d598f3339893459f1b2001639f6f3780cee622d2e5d39f2d7926cd7832"
 }

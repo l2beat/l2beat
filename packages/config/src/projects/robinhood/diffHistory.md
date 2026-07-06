@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x3ddb158b013898ff063089be2cceff2097479f10
+Generated with discovered.json: 0x1e2edb2d1a274576e1bfa40dd36649d8608e749a
 
-# Diff at Mon, 06 Jul 2026 11:46:50 GMT:
+# Diff at Mon, 06 Jul 2026 12:22:14 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- current timestamp: 1783338410
+- current timestamp: 1783340534
 
 ## Description
 
@@ -16,7 +16,8 @@ mechanism, its authorized filterers, and the L2-side governance that controls it
   censored list. The state transition function forcibly fails a filtered
   transaction, including one force-included via the L1 delayed inbox, without
   delay. Its `transactionFilterers` set holds the addresses authorized to
-  register/remove entries here.
+  register/remove entries here. Precompiles have no verifiable on-chain
+  bytecode, so its source is pointed at the Nitro implementation.
 - **TransactionFilterer** (`robinhood:0xebDc…24b7`) — EOA authorized to
   register/remove transaction hashes in the precompile above.
 - **L2UpgradeExecutor** (`robinhood:0x2A15…5C09`) — the sole ArbOS chain owner,

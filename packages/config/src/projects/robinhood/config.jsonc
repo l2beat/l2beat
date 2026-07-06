@@ -27,6 +27,14 @@
   "overrides": {
     "robinhood:0x0000000000000000000000000000000000000074": {
       "description": "ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.",
+      // Precompiles have no verifiable on-chain bytecode (a 0xfe stub); their
+      // logic lives in the Nitro node and is covered by the fraud-proof
+      // wasmModuleRoot. Point at the implementation source so the contract is
+      // treated as verified instead of flagged "unverified / may contain
+      // malicious code".
+      "manualSourcePaths": {
+        "robinhood:0x0000000000000000000000000000000000000074": "https://github.com/OffchainLabs/nitro/blob/v3.11.0/precompiles/ArbFilteredTransactionsManager.go"
+      },
       "fields": {
         // Number of transactions ever added to the censored list
         // (FilteredTransactionAdded(bytes32)). A non-zero, growing value means
