@@ -41,4 +41,5 @@ export const EXPLORER_URLS: Record<string, string> = {
   ethscriptions: 'https://explorer.ethscriptions.com',
   sepolia: 'https://sepolia.etherscan.io',
   katana: 'https://katanascan.com',
+  robinhood: 'https://robinhoodchain.blockscout.com',
 }
