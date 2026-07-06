@@ -1,6 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { ReactNode } from 'react'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
+import { AvgDurationStatValue } from '~/pages/interop/components/flows/selection-panel/AvgDurationStatValue'
 import { getChainFlowStatItems } from '~/pages/interop/components/flows/selection-panel/getChainFlowStatItems'
 import { useInteropFlows } from '~/pages/interop/components/flows/utils/InteropFlowsContext'
 import type { InteropFlowsData } from '~/server/features/scaling/interop/getInteropFlows'
@@ -32,6 +33,14 @@ export function BridgeFlowStats({
 
   const items: StatItem[] = [
     ...getChainFlowStatItems(chainData),
+    ...(chainData.avgDuration
+      ? [
+          {
+            label: 'Avg. transfer time',
+            value: <AvgDurationStatValue avgDuration={chainData.avgDuration} />,
+          },
+        ]
+      : []),
     {
       label: 'Avg. value per second',
       value: `${formatCurrency(chainData.totalVolume / UnixTime.DAY, 'usd')}/s`,
@@ -83,7 +92,7 @@ function StatRow({ item }: { item: StatItem }) {
       <span className="font-medium text-secondary leading-none">
         {item.label}
       </span>
-      <span className="font-semibold leading-[1.15]">{item.value}</span>
+      <div className="font-semibold leading-[1.15]">{item.value}</div>
     </>
   )
   const className = 'flex items-center justify-between gap-2 text-[13px]'
