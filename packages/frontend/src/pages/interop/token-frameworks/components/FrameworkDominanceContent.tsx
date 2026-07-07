@@ -22,8 +22,8 @@ import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
+import { Last24HoursBadge } from '../../components/Last24HoursBadge'
 import type { InteropTokenFramework } from '../getInteropTokenFrameworksData'
-import { Last24HoursBadge } from './Last24HoursBadge'
 
 type Metric = 'volume' | 'transfers'
 

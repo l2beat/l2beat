@@ -1,8 +1,7 @@
-import { ProjectId } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
-import { type ReactNode, useMemo, useState } from 'react'
+import type { ReactNode } from 'react'
 import { useTRPC } from '~/trpc/React'
-import { TransferDetailsDialog } from '../../components/table/transfer-count-cell/TransferCountCell'
+import { InteropTransferDetailsTrigger } from '../../components/InteropTransferDetailsTrigger'
 import { useTokenFrameworksSelectedChains } from '../utils/TokenFrameworksSelectedChainsContext'
 
 export function TokenFrameworksTransferTrigger({
@@ -19,12 +18,7 @@ export function TokenFrameworksTransferTrigger({
   children: ReactNode
 }) {
   const trpc = useTRPC()
-  const [isOpen, setIsOpen] = useState(false)
   const { selectedChains } = useTokenFrameworksSelectedChains()
-  const dialogSelection = useMemo(
-    () => selectionForApi ?? { from: selectedChains, to: selectedChains },
-    [selectionForApi, selectedChains],
-  )
   const { data } = useQuery(
     trpc.interop.tokenFrameworks.queryOptions({
       from: selectedChains,
@@ -33,23 +27,16 @@ export function TokenFrameworksTransferTrigger({
   )
 
   return (
-    <>
-      <button
-        type="button"
-        onClick={() => setIsOpen(true)}
-        className={className}
-      >
-        {children}
-      </button>
-      <TransferDetailsDialog
-        protocol={{ ...protocol, id: ProjectId(protocol.id) }}
-        type={undefined}
-        tokenId={tokenId}
-        snapshotTimestamp={data?.snapshotTimestamp}
-        selectedChains={dialogSelection}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-      />
-    </>
+    <InteropTransferDetailsTrigger
+      protocol={protocol}
+      tokenId={tokenId}
+      selection={
+        selectionForApi ?? { from: selectedChains, to: selectedChains }
+      }
+      snapshotTimestamp={data?.snapshotTimestamp}
+      className={className}
+    >
+      {children}
+    </InteropTransferDetailsTrigger>
   )
 }
