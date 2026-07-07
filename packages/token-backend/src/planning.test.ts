@@ -169,16 +169,166 @@ describe('planning proof stamping', () => {
       ])
     })
   })
+
+  describe('TokenRelation intents', () => {
+    it('adds a token relation when both endpoints exist and the relation is new', async () => {
+      const tokenFrom = deployedRecord('ethereum', '0xaaa', 'USDC01')
+      const tokenTo = deployedRecord('arbitrum', '0xbbb', 'USDC01')
+      const relation = tokenRelation(tokenFrom, tokenTo)
+      const db = mockDb({
+        deployedByPk: {
+          [`${tokenFrom.chain}:${tokenFrom.address}`]: tokenFrom,
+          [`${tokenTo.chain}:${tokenTo.address}`]: tokenTo,
+        },
+      })
+
+      const result = await generatePlan(
+        db,
+        { type: 'AddTokenRelationIntent', record: relation },
+        { user: USER, skipLogs: true },
+      )
+
+      assertSuccess(result)
+      expect(result.plan.commands).toEqual([
+        {
+          type: 'AddTokenRelationCommand',
+          record: relation,
+        },
+      ])
+    })
+
+    it('updates an existing token relation', async () => {
+      const existing = tokenRelation(
+        deployedRecord('ethereum', '0xaaa', 'USDC01'),
+        deployedRecord('arbitrum', '0xbbb', 'USDC01'),
+      )
+      const db = mockDb({ existingRelation: existing })
+
+      const result = await generatePlan(
+        db,
+        {
+          type: 'UpdateTokenRelationIntent',
+          pk: relationPk(existing),
+          update: { bridgeType: 'lockAndMint' },
+        },
+        { user: USER, skipLogs: true },
+      )
+
+      assertSuccess(result)
+      expect(result.plan.commands).toEqual([
+        {
+          type: 'UpdateTokenRelationCommand',
+          pk: relationPk(existing),
+          existing,
+          update: { bridgeType: 'lockAndMint' },
+        },
+      ])
+    })
+
+    it('deletes an existing token relation', async () => {
+      const existing = tokenRelation(
+        deployedRecord('ethereum', '0xaaa', 'USDC01'),
+        deployedRecord('arbitrum', '0xbbb', 'USDC01'),
+      )
+      const db = mockDb({ existingRelation: existing })
+
+      const result = await generatePlan(
+        db,
+        { type: 'DeleteTokenRelationIntent', pk: relationPk(existing) },
+        { user: USER, skipLogs: true },
+      )
+
+      assertSuccess(result)
+      expect(result.plan.commands).toEqual([
+        {
+          type: 'DeleteTokenRelationCommand',
+          pk: relationPk(existing),
+          existing,
+        },
+      ])
+    })
+  })
+
+  describe('DeleteDeployedTokenIntent', () => {
+    it('deletes touching token relations before deleting the token', async () => {
+      const existing = deployedRecord('ethereum', '0xaaa', 'USDC01')
+      const relation = tokenRelation(
+        existing,
+        deployedRecord('arbitrum', '0xbbb', 'USDC01'),
+      )
+      const db = mockDb({
+        existingDeployed: existing,
+        touchingRelations: [relation],
+      })
+
+      const result = await generatePlan(
+        db,
+        {
+          type: 'DeleteDeployedTokenIntent',
+          pk: { chain: existing.chain, address: existing.address },
+        },
+        { user: USER, skipLogs: true },
+      )
+
+      assertSuccess(result)
+      expect(result.plan.commands).toEqual([
+        {
+          type: 'DeleteTokenRelationCommand',
+          pk: relationPk(relation),
+          existing: relation,
+        },
+        {
+          type: 'DeleteDeployedTokenCommand',
+          pk: { chain: existing.chain, address: existing.address },
+          existing,
+        },
+      ])
+    })
+  })
 })
 
 function mockDb(opts: {
   existingDeployed?: DeployedTokenRecord
+  deployedByPk?: Record<string, DeployedTokenRecord>
+  existingRelation?: {
+    tokenFromChain: string
+    tokenFromAddress: string
+    tokenToChain: string
+    tokenToAddress: string
+    plugin: string
+    sourceWasBurned: boolean
+    destinationWasMinted: boolean
+    bridgeType: string | null
+    transfer: unknown
+  }
+  touchingRelations?: {
+    tokenFromChain: string
+    tokenFromAddress: string
+    tokenToChain: string
+    tokenToAddress: string
+    plugin: string
+    sourceWasBurned: boolean
+    destinationWasMinted: boolean
+    bridgeType: string | null
+    transfer: unknown
+  }[]
 }): TokenDatabase {
+  const findDeployed = mockFn().executes(async (pk: { chain: string; address: string }) => {
+    return (
+      opts.deployedByPk?.[`${pk.chain}:${pk.address.toLowerCase()}`] ??
+      opts.existingDeployed
+    )
+  })
+
   return mockObject<TokenDatabase>({
     deployedToken: mockObject<TokenDatabase['deployedToken']>({
-      findByChainAndAddress: mockFn().resolvesTo(opts.existingDeployed),
+      findByChainAndAddress: findDeployed,
     }),
     abstractToken: mockObject<TokenDatabase['abstractToken']>({}),
+    tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
+      findByPrimaryKey: mockFn().resolvesTo(opts.existingRelation),
+      getRelationsFromOrTo: mockFn().resolvesTo(opts.touchingRelations ?? []),
+    }),
   })
 }
 
@@ -196,6 +346,35 @@ function deployedRecord(
     deploymentTimestamp: UnixTime(1),
     comment: null,
     metadata: null,
+  }
+}
+
+function tokenRelation(
+  tokenFrom: Pick<DeployedTokenRecord, 'chain' | 'address'>,
+  tokenTo: Pick<DeployedTokenRecord, 'chain' | 'address'>,
+) {
+  return {
+    tokenFromChain: tokenFrom.chain,
+    tokenFromAddress: tokenFrom.address,
+    tokenToChain: tokenTo.chain,
+    tokenToAddress: tokenTo.address,
+    plugin: 'superbridge',
+    sourceWasBurned: true,
+    destinationWasMinted: true,
+    bridgeType: 'burnAndMint' as const,
+    transfer: { transferId: 'transfer-1' },
+  }
+}
+
+function relationPk(relation: ReturnType<typeof tokenRelation>) {
+  return {
+    tokenFromChain: relation.tokenFromChain,
+    tokenFromAddress: relation.tokenFromAddress,
+    tokenToChain: relation.tokenToChain,
+    tokenToAddress: relation.tokenToAddress,
+    plugin: relation.plugin,
+    sourceWasBurned: relation.sourceWasBurned,
+    destinationWasMinted: relation.destinationWasMinted,
   }
 }
 

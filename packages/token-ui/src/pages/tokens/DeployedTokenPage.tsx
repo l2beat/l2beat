@@ -1,10 +1,10 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Plan } from '@l2beat/token-backend'
+import type { Plan, RouterOutputs } from '@l2beat/token-backend'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { TrashIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Navigate, useParams } from 'react-router-dom'
+import { Link, Navigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import {
@@ -13,6 +13,20 @@ import {
   CardHeader,
   CardTitle,
 } from '~/components/core/Card'
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '~/components/core/Tabs'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '~/components/core/Table'
 import {
   DeployedTokenForm,
   DeployedTokenSchema,
@@ -77,6 +91,12 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
 
   const { data: abstractTokens, isLoading: areAbstractTokensLoading } =
     useQuery(trpc.abstractTokens.getAll.queryOptions())
+  const { data: relations, isLoading: areRelationsLoading } = useQuery(
+    trpc.deployedTokens.getRelations.queryOptions({
+      chain: token.chain,
+      address: token.address,
+    }),
+  )
 
   useEffect(() => {
     if (abstractTokenId) {
@@ -176,71 +196,184 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
           form.reset(form.getValues())
         }}
       />
-      <div className="mx-auto flex w-full max-w-3xl gap-2">
-        <Card className="w-full">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              Deployed Token
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <DeployedTokenForm
-              form={form}
-              onSubmit={onSubmit}
-              isFormDisabled={isPending}
-              tokenDetails={{
-                data: deployedTokenExists
-                  ? {
-                      error: {
-                        type: 'already-exists',
-                        message:
-                          'Deployed token with given address and chain already exists',
-                      },
-                      data: undefined,
-                      warnings: [],
+      <Tabs defaultValue="details" className="mx-auto w-full max-w-5xl gap-4">
+        <TabsList>
+          <TabsTrigger value="details">Details</TabsTrigger>
+          <TabsTrigger value="relations">Relations</TabsTrigger>
+        </TabsList>
+        <TabsContent value="details">
+          <div className="flex w-full gap-2">
+            <Card className="w-full">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  Deployed Token
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <DeployedTokenForm
+                  form={form}
+                  onSubmit={onSubmit}
+                  isFormDisabled={isPending}
+                  tokenDetails={{
+                    data: deployedTokenExists
+                      ? {
+                          error: {
+                            type: 'already-exists',
+                            message:
+                              'Deployed token with given address and chain already exists',
+                          },
+                          data: undefined,
+                          warnings: [],
+                        }
+                      : undefined,
+                    loading: deployedTokenExistsLoading,
+                  }}
+                  abstractTokens={{
+                    data: abstractTokens,
+                    loading: areAbstractTokensLoading,
+                  }}
+                  chains={{
+                    data: chains,
+                    loading: isLoadingChains,
+                  }}
+                  autofill={undefined}
+                >
+                  <ButtonWithSpinner
+                    isLoading={isPending}
+                    disabled={
+                      Object.keys(form.formState.dirtyFields).length === 0
                     }
-                  : undefined,
-                loading: deployedTokenExistsLoading,
+                    className="w-full"
+                    type="submit"
+                  >
+                    Update
+                  </ButtonWithSpinner>
+                </DeployedTokenForm>
+              </CardContent>
+            </Card>
+            <ButtonWithSpinner
+              variant="destructive"
+              className="mt-2"
+              size="icon"
+              onClick={() => {
+                planMutate({
+                  type: 'DeleteDeployedTokenIntent',
+                  pk: {
+                    address: token.address,
+                    chain: token.chain,
+                  },
+                })
               }}
-              abstractTokens={{
-                data: abstractTokens,
-                loading: areAbstractTokensLoading,
-              }}
-              chains={{
-                data: chains,
-                loading: isLoadingChains,
-              }}
-              autofill={undefined}
+              isLoading={isPending}
             >
-              <ButtonWithSpinner
-                isLoading={isPending}
-                disabled={Object.keys(form.formState.dirtyFields).length === 0}
-                className="w-full"
-                type="submit"
-              >
-                Update
-              </ButtonWithSpinner>
-            </DeployedTokenForm>
-          </CardContent>
-        </Card>
-        <ButtonWithSpinner
-          variant="destructive"
-          className="mt-2"
-          size="icon"
-          onClick={() => {
-            planMutate({
-              type: 'DeleteDeployedTokenIntent',
-              pk: {
-                address: token.address,
-                chain: token.chain,
-              },
-            })
-          }}
-          isLoading={isPending}
-        >
-          <TrashIcon />
-        </ButtonWithSpinner>
-      </div>
+              <TrashIcon />
+            </ButtonWithSpinner>
+          </div>
+        </TabsContent>
+        <TabsContent value="relations">
+          <div className="grid gap-4 lg:grid-cols-2">
+            <TokenRelationsSection
+              title="Outgoing"
+              entries={relations?.outgoing ?? []}
+              loading={areRelationsLoading}
+            />
+            <TokenRelationsSection
+              title="Incoming"
+              entries={relations?.incoming ?? []}
+              loading={areRelationsLoading}
+            />
+          </div>
+        </TabsContent>
+      </Tabs>
     </>
+  )
+}
+
+type TokenRelationsResponse = RouterOutputs['deployedTokens']['getRelations']
+type TokenRelationEntry = TokenRelationsResponse['incoming'][number]
+
+function TokenRelationsSection({
+  title,
+  entries,
+  loading,
+}: {
+  title: string
+  entries: TokenRelationEntry[]
+  loading: boolean
+}) {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>{title} Relations</CardTitle>
+      </CardHeader>
+      <CardContent>
+        {loading ? (
+          <LoadingState className="h-48" />
+        ) : entries.length === 0 ? (
+          <div className="text-muted-foreground text-sm">No relations.</div>
+        ) : (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Other token</TableHead>
+                <TableHead>Plugin</TableHead>
+                <TableHead>Flags</TableHead>
+                <TableHead>Bridge type</TableHead>
+                <TableHead>Transfer</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {entries.map(({ relation, otherToken }) => (
+                <TableRow
+                  key={[
+                    relation.tokenFromChain,
+                    relation.tokenFromAddress,
+                    relation.tokenToChain,
+                    relation.tokenToAddress,
+                    relation.plugin,
+                    String(relation.sourceWasBurned),
+                    String(relation.destinationWasMinted),
+                  ].join(':')}
+                >
+                  <TableCell className="whitespace-normal align-top">
+                    {otherToken ? (
+                      <Link
+                        to={`/tokens/${otherToken.chain}/${otherToken.address}`}
+                        className="font-medium underline"
+                      >
+                        {otherToken.symbol} on {otherToken.chain}
+                      </Link>
+                    ) : (
+                      <span className="font-medium">Missing token</span>
+                    )}
+                    <div className="break-all text-muted-foreground text-xs">
+                      {otherToken
+                        ? otherToken.address
+                        : `${relation.tokenFromChain}:${relation.tokenFromAddress}`}
+                    </div>
+                  </TableCell>
+                  <TableCell>{relation.plugin}</TableCell>
+                  <TableCell>
+                    burn={String(relation.sourceWasBurned)} mint=
+                    {String(relation.destinationWasMinted)}
+                  </TableCell>
+                  <TableCell>{relation.bridgeType ?? 'none'}</TableCell>
+                  <TableCell className="whitespace-normal align-top">
+                    <details>
+                      <summary className="cursor-pointer text-muted-foreground text-xs">
+                        JSON
+                      </summary>
+                      <pre className="mt-2 max-h-64 overflow-auto rounded-md bg-muted p-2 text-xs">
+                        {JSON.stringify(relation.transfer, null, 2)}
+                      </pre>
+                    </details>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
+      </CardContent>
+    </Card>
   )
 }

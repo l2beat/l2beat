@@ -72,6 +72,11 @@ export function describeIngestionStep(step: IngestionStep): string {
         .join('; ')
       return `${base} Warnings: ${warnings}.`
     }
+    case 'relations-discovered':
+      if (step.relations.length === 0) {
+        return 'No missing token relations were discovered from transfer evidence.'
+      }
+      return `Will add ${step.relations.length} token relation(s): ${step.relations.map((relation) => `${relation.tokenFromChain}:${relation.tokenFromAddress} -> ${relation.tokenToChain}:${relation.tokenToAddress} via ${relation.plugin}`).join(', ')}.`
     default:
       assertUnreachable(step)
   }
@@ -95,12 +100,19 @@ export function describeIngestionOutcome(outcome: IngestionOutcome): string {
       return `pending ${outcome.operation} — abstract ${target}.`
     }
     case 'write': {
+      const relationSummary =
+        outcome.tokenRelations.length === 0
+          ? ''
+          : ` Add ${outcome.tokenRelations.length} token relation(s).`
       const dt = outcome.deployedToken
+      if (!dt) {
+        return `write — no deployed-token changes.${relationSummary}`.trim()
+      }
       if (dt.type === 'insert') {
-        return `write — insert deployed token ${dt.record.chain}:${dt.record.address} (abstract: ${dt.record.abstractTokenId ?? 'none'}).`
+        return `write — insert deployed token ${dt.record.chain}:${dt.record.address} (abstract: ${dt.record.abstractTokenId ?? 'none'}).${relationSummary}`
       }
       const fields = Object.keys(dt.update).join(', ') || '(no fields)'
-      return `write — update deployed token ${dt.pk.chain}:${dt.pk.address}; fields: ${fields}.`
+      return `write — update deployed token ${dt.pk.chain}:${dt.pk.address}; fields: ${fields}.${relationSummary}`
     }
     default:
       assertUnreachable(outcome)

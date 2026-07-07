@@ -32,16 +32,22 @@ export type AbstractTokenAssignmentProofTransfer = Omit<
   dstRawAmount: string | undefined
 }
 
+export function serializeInteropTransferRecord(
+  transfer: InteropTransferRecord,
+): AbstractTokenAssignmentProofTransfer {
+  return {
+    ...transfer,
+    srcRawAmount: transfer.srcRawAmount?.toString(),
+    dstRawAmount: transfer.dstRawAmount?.toString(),
+  }
+}
+
 export function nonSwappingTransferProof(
   transfer: InteropTransferRecord,
 ): AbstractTokenAssignmentProof {
   return {
     kind: 'non-swapping-transfer',
-    transfer: {
-      ...transfer,
-      srcRawAmount: transfer.srcRawAmount?.toString(),
-      dstRawAmount: transfer.dstRawAmount?.toString(),
-    },
+    transfer: serializeInteropTransferRecord(transfer),
   }
 }
 
@@ -101,6 +107,15 @@ async function executeCommand(tokenDb: TokenDatabase, command: Command) {
       break
     case 'DeleteDeployedTokenCommand':
       await tokenDb.deployedToken.deleteByPrimaryKey(command.pk)
+      break
+    case 'AddTokenRelationCommand':
+      await tokenDb.tokenRelation.insert(command.record)
+      break
+    case 'UpdateTokenRelationCommand':
+      await tokenDb.tokenRelation.updateByPrimaryKey(command.pk, command.update)
+      break
+    case 'DeleteTokenRelationCommand':
+      await tokenDb.tokenRelation.deleteByPrimaryKey(command.pk)
       break
     default:
       assertUnreachable(command)

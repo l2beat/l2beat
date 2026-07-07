@@ -8,11 +8,16 @@ export interface TokenAddress {
 }
 
 export interface InteropTransferMatch {
+  plugin: string
   bridgeType: InteropBridgeType
+  sourceWasBurned: boolean
+  destinationWasMinted: boolean
   transferCount: number
   sampleTransferId: string
   token: TokenAddress
   otherToken: TokenAddress | undefined
+  sourceToken: TokenAddress | undefined
+  destinationToken: TokenAddress | undefined
 }
 
 export interface InteropTransferIndex {
@@ -28,10 +33,15 @@ export function buildInteropTransferIndex(
     const src = normalizeTransferSide(route.srcChain, route.srcTokenAddress)
     const dst = normalizeTransferSide(route.dstChain, route.dstTokenAddress)
     const base = {
+      plugin: route.plugin,
       bridgeType:
         route.bridgeType ?? InteropTransferClassifier.inferBridgeType(route),
+      sourceWasBurned: route.srcWasBurned ?? false,
+      destinationWasMinted: route.dstWasMinted ?? false,
       transferCount: route.transferCount,
       sampleTransferId: route.sampleTransferId,
+      sourceToken: src,
+      destinationToken: dst,
     }
 
     if (src) addMatch(map, src, { ...base, token: src, otherToken: dst })

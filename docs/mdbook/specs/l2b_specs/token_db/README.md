@@ -11,7 +11,7 @@
 TokenDB is the system that holds L2BEAT's canonical token catalogue —
 **Abstract Tokens** (the asset, e.g. "USDC") and **Deployed Tokens**
 (individual `(chain, address)` instances of an asset), plus the
-connections between them. It is served by the `token-backend` package and
+relations between deployed tokens. It is served by the `token-backend` package and
 edited through the `token-ui` package.
 
 The docs in this folder describe how TokenDB is kept correct:
@@ -19,7 +19,8 @@ The docs in this folder describe how TokenDB is kept correct:
 - [Automatic token ingestion](./automatic_token_ingestion.md) — the
   background loop that discovers new deployed tokens from interop
   transfers, links them to abstract tokens (via transfer evidence and
-  CoinGecko), and surfaces conflicts/errors to humans.
+  CoinGecko), materializes token relations from interop transfer evidence,
+  and surfaces conflicts/errors to humans.
 - [Intent / Plan / Execute](./intent_plan_execute.md) — the
   intent → plan → commands pipeline behind every human-driven write
   from token-UI, and why it exists (visible blast radius + concurrency
@@ -59,7 +60,8 @@ the **write boundary** below them: the `Command` primitives and a single
 Both pipelines translate their work into `Command[]` and funnel it
 through this helper. That means:
 
-- There is exactly one place that writes to TokenDB's two tables.
+- There is exactly one place that writes to TokenDB's three core tables
+  (`AbstractToken`, `DeployedToken`, `TokenRelation`).
 - Future cross-cutting concerns (history, audit log, write proofs) plug
   in here once and cover both pipelines automatically.
 - Each pipeline still owns its own concurrency story (the intent

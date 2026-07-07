@@ -123,14 +123,15 @@ function OutcomeView({ outcome }: { outcome: IngestionOutcomeView }) {
               </pre>
             </div>
           )}
-          {outcome.deployedToken.type === 'insert' ? (
+          {outcome.deployedToken?.type === 'insert' && (
             <div className="min-w-0 space-y-1">
               <h4 className="font-medium">New deployed token</h4>
               <pre className="max-w-full overflow-x-auto rounded bg-muted p-2 text-xs">
                 {JSON.stringify(outcome.deployedToken.record, null, 2)}
               </pre>
             </div>
-          ) : (
+          )}
+          {outcome.deployedToken?.type === 'update' && (
             <div className="min-w-0 space-y-1">
               <h4 className="font-medium">Deployed token update</h4>
               <Diff
@@ -139,6 +140,14 @@ function OutcomeView({ outcome }: { outcome: IngestionOutcomeView }) {
                   ...outcome.deployedToken.update,
                 })}
               />
+            </div>
+          )}
+          {outcome.tokenRelations.length > 0 && (
+            <div className="min-w-0 space-y-1">
+              <h4 className="font-medium">Token relations</h4>
+              <pre className="max-w-full overflow-x-auto rounded bg-muted p-2 text-xs">
+                {JSON.stringify(outcome.tokenRelations, null, 2)}
+              </pre>
             </div>
           )}
           {outcome.neighborsToEnqueue.length > 0 && (

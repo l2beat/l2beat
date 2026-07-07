@@ -31,6 +31,54 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) =>
         ctx.tokenDb.deployedToken.getByChainAndAddress(input),
       ),
 
+    getRelations: readOnlyProcedure
+      .input(v.object({ chain: v.string(), address: v.string() }))
+      .query(async ({ ctx, input }) => {
+        const [outgoing, incoming] = await Promise.all([
+          ctx.tokenDb.tokenRelation.getRelationsFrom(input),
+          ctx.tokenDb.tokenRelation.getRelationsTo(input),
+        ])
+
+        const otherTokenKeys = uniqueTokenKeys([
+          ...outgoing.map((relation) => ({
+            chain: relation.tokenToChain,
+            address: relation.tokenToAddress,
+          })),
+          ...incoming.map((relation) => ({
+            chain: relation.tokenFromChain,
+            address: relation.tokenFromAddress,
+          })),
+        ])
+        const otherTokens =
+          await ctx.tokenDb.deployedToken.getByPrimaryKeys(otherTokenKeys)
+        const otherTokenMap = new Map(
+          otherTokens.map((token) => [tokenKey(token), token]),
+        )
+
+        return {
+          outgoing: sortRelations(outgoing).map((relation) => ({
+            relation,
+            otherToken:
+              otherTokenMap.get(
+                tokenKey({
+                  chain: relation.tokenToChain,
+                  address: relation.tokenToAddress,
+                }),
+              ) ?? null,
+          })),
+          incoming: sortRelations(incoming).map((relation) => ({
+            relation,
+            otherToken:
+              otherTokenMap.get(
+                tokenKey({
+                  chain: relation.tokenFromChain,
+                  address: relation.tokenFromAddress,
+                }),
+              ) ?? null,
+          })),
+        }
+      }),
+
     checks: readOnlyProcedure
       .input(v.object({ chain: v.string(), address: v.string() }))
       .query(({ ctx, input }) =>
@@ -51,3 +99,43 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) =>
       getSuggestionsByPartialTransfers(ctx.db, ctx.tokenDb),
     ),
   })
+
+function sortRelations<
+  T extends {
+    tokenFromChain: string
+    tokenFromAddress: string
+    tokenToChain: string
+    tokenToAddress: string
+    plugin: string
+  },
+>(relations: T[]) {
+  return [...relations].sort((a, b) =>
+    [
+      a.plugin,
+      a.tokenFromChain,
+      a.tokenFromAddress,
+      a.tokenToChain,
+      a.tokenToAddress,
+    ]
+      .join(':')
+      .localeCompare(
+        [
+          b.plugin,
+          b.tokenFromChain,
+          b.tokenFromAddress,
+          b.tokenToChain,
+          b.tokenToAddress,
+        ].join(':'),
+      ),
+  )
+}
+
+function uniqueTokenKeys(tokens: { chain: string; address: string }[]) {
+  return Array.from(
+    new Map(tokens.map((token) => [tokenKey(token), token])).values(),
+  )
+}
+
+function tokenKey(token: { chain: string; address: string }) {
+  return `${token.chain}:${token.address.toLowerCase()}`
+}

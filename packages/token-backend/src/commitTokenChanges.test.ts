@@ -3,6 +3,7 @@ import type {
   DeployedTokenRecord,
   TokenDatabase,
   TokenDbHistoryEntryInsert,
+  TokenRelationRecord,
 } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
@@ -21,14 +22,21 @@ describe(commitTokenChanges.name, () => {
       updateByChainAndAddress: mockFn().resolvesTo(undefined),
       deleteByPrimaryKey: mockFn().resolvesTo(undefined),
     })
+    const tokenRelation = mockObject<TokenDatabase['tokenRelation']>({
+      insert: mockFn().resolvesTo(undefined),
+      updateByPrimaryKey: mockFn().resolvesTo(undefined),
+      deleteByPrimaryKey: mockFn().resolvesTo(undefined),
+    })
     const tokenDb = mockObject<TokenDatabase>({
       abstractToken,
       deployedToken,
+      tokenRelation,
       tokenDbHistory: mockHistory(),
     })
 
     const abstract = abstractRecord('USDC01', 'USDC')
     const deployed = deployedRecord('ethereum', '0xaaa', 'USDC01')
+    const relation = tokenRelationRecord(deployed, deployedRecord('arbitrum', '0xbbb', 'USDC01'))
 
     const commands: Command[] = [
       { type: 'AddAbstractTokenCommand', record: abstract },
@@ -55,6 +63,18 @@ describe(commitTokenChanges.name, () => {
         pk: { chain: deployed.chain, address: deployed.address },
         existing: deployed,
       },
+      { type: 'AddTokenRelationCommand', record: relation },
+      {
+        type: 'UpdateTokenRelationCommand',
+        pk: relationPk(relation),
+        existing: relation,
+        update: { bridgeType: 'lockAndMint' },
+      },
+      {
+        type: 'DeleteTokenRelationCommand',
+        pk: relationPk(relation),
+        existing: relation,
+      },
     ]
 
     await commitTokenChanges(tokenDb, commands, {
@@ -76,6 +96,14 @@ describe(commitTokenChanges.name, () => {
       chain: deployed.chain,
       address: deployed.address,
     })
+    expect(tokenRelation.insert).toHaveBeenOnlyCalledWith(relation)
+    expect(tokenRelation.updateByPrimaryKey).toHaveBeenOnlyCalledWith(
+      relationPk(relation),
+      { bridgeType: 'lockAndMint' },
+    )
+    expect(tokenRelation.deleteByPrimaryKey).toHaveBeenOnlyCalledWith(
+      relationPk(relation),
+    )
   })
 
   it('passes deployed-token commands through verbatim, including any proof field', async () => {
@@ -278,5 +306,34 @@ function deployedRecord(
     deploymentTimestamp: UnixTime(1),
     comment: null,
     metadata: null,
+  }
+}
+
+function tokenRelationRecord(
+  tokenFrom: Pick<DeployedTokenRecord, 'chain' | 'address'>,
+  tokenTo: Pick<DeployedTokenRecord, 'chain' | 'address'>,
+): TokenRelationRecord {
+  return {
+    tokenFromChain: tokenFrom.chain,
+    tokenFromAddress: tokenFrom.address,
+    tokenToChain: tokenTo.chain,
+    tokenToAddress: tokenTo.address,
+    plugin: 'superbridge',
+    sourceWasBurned: true,
+    destinationWasMinted: true,
+    bridgeType: 'burnAndMint',
+    transfer: { transferId: 'transfer-1' },
+  }
+}
+
+function relationPk(relation: TokenRelationRecord) {
+  return {
+    tokenFromChain: relation.tokenFromChain,
+    tokenFromAddress: relation.tokenFromAddress,
+    tokenToChain: relation.tokenToChain,
+    tokenToAddress: relation.tokenToAddress,
+    plugin: relation.plugin,
+    sourceWasBurned: relation.sourceWasBurned,
+    destinationWasMinted: relation.destinationWasMinted,
   }
 }

@@ -11,7 +11,7 @@ FEATURES_TABLES=(
     "IndexerState IndexerConfiguration AnomalyStats RealTimeLiveness RealTimeAnomaly"
     "IndexerState IndexerConfiguration InteropEvent InteropMessage InteropTransfer InteropConfig InteropRecentPrices InteropPluginSyncState InteropPluginSyncedRange"
     "IndexerState IndexerConfiguration AggregatedInteropTransfer AggregatedInteropToken InteropAggregateStatus"
-    "AbstractToken DeployedToken TokenConnection Chain"
+    "AbstractToken DeployedToken TokenRelation Chain"
     "IndexerState IndexerConfiguration L2Cost Liveness AggregatedL2Cost AggregatedLiveness"
     "IndexerState IndexerConfiguration PrivacyBlockTimestamp PrivacyFlowEvent PrivacyPrice"
 )

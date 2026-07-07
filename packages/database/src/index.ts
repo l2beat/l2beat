@@ -106,10 +106,11 @@ export type {
   SyncMetadataRecord,
 } from './repositories/SyncMetadataRepository'
 export type {
-  TokenConnectionPrimaryKey,
-  TokenConnectionRecord,
-  TokenConnectionUpdateable,
-} from './repositories/TokenConnectionRepository'
+  JsonValue,
+  TokenRelationPrimaryKey,
+  TokenRelationRecord,
+  TokenRelationUpdateable,
+} from './repositories/TokenRelationRepository'
 export type {
   TokenDbHistoryEntryInsert,
   TokenDbHistoryEntryRecord,

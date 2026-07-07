@@ -390,8 +390,11 @@ describe(TokenIngestionProcessor.name, () => {
         ]),
       )
 
-      expect(trace.outcome).toEqual({ kind: 'noop', deployedToken: existing })
-      expect(findByTransferId).toHaveBeenCalledTimes(0)
+      expect(trace.outcome.kind).toEqual('write')
+      if (trace.outcome.kind !== 'write') return
+      expect(trace.outcome.deployedToken).toEqual(undefined)
+      expect(trace.outcome.tokenRelations).toHaveLength(1)
+      expect(findByTransferId).toHaveBeenOnlyCalledWith('transfer-id')
     })
 
     it('updates an existing token from a transfer when symbols match case-insensitively', async () => {
@@ -452,7 +455,8 @@ describe(TokenIngestionProcessor.name, () => {
 
       expect(trace.outcome.kind).toEqual('write')
       if (trace.outcome.kind !== 'write') return
-      expect(trace.outcome.deployedToken.type).toEqual('update')
+      expect(trace.outcome.deployedToken?.type).toEqual('update')
+      if (!trace.outcome.deployedToken) return
       if (trace.outcome.deployedToken.type !== 'update') return
       expect(trace.outcome.deployedToken.update.abstractTokenId).toEqual(
         'USDC01',
@@ -514,6 +518,7 @@ describe(TokenIngestionProcessor.name, () => {
           symbol: 'usdc',
         },
         symbolFallback: 'USDC',
+        tokenRelations: [],
         neighborsToEnqueue: [],
         proof: { kind: 'coingecko' },
       })
@@ -576,6 +581,7 @@ describe(TokenIngestionProcessor.name, () => {
             token: { id: 'USDC01', symbol: 'USDC' },
           },
           symbolFallback: undefined,
+          tokenRelations: [],
           neighborsToEnqueue: [],
           proof: { kind: 'coingecko' },
         },
@@ -597,6 +603,7 @@ describe(TokenIngestionProcessor.name, () => {
             abstractTokenAssignmentProof: { kind: 'coingecko' },
           },
         },
+        tokenRelations: [],
         neighborsToEnqueue: [],
       })
     })
@@ -658,6 +665,7 @@ describe(TokenIngestionProcessor.name, () => {
             symbol: 'usdc',
           },
           symbolFallback: 'USDC',
+          tokenRelations: [],
           neighborsToEnqueue: [],
           proof: { kind: 'coingecko' },
         },
@@ -726,6 +734,7 @@ describe(TokenIngestionProcessor.name, () => {
             symbol: 'susde',
           },
           symbolFallback: 'SUSDE',
+          tokenRelations: [],
           neighborsToEnqueue: [],
           proof: { kind: 'coingecko' },
         },
@@ -734,10 +743,10 @@ describe(TokenIngestionProcessor.name, () => {
       expect(result.outcome.kind).toEqual('write')
       if (result.outcome.kind !== 'write') return
       expect(result.outcome.newAbstractToken?.symbol).toEqual('sUSDe')
-      expect(
-        result.outcome.deployedToken.type === 'insert' &&
-          result.outcome.deployedToken.record.symbol,
-      ).toEqual('sUSDe')
+      expect(result.outcome.deployedToken?.type).toEqual('insert')
+      if (!result.outcome.deployedToken) return
+      if (result.outcome.deployedToken.type !== 'insert') return
+      expect(result.outcome.deployedToken.record.symbol).toEqual('sUSDe')
       const correctionStep = result.steps.find(
         (step) => step.kind === 'corrected-coingecko-symbol-casing',
       )
@@ -804,6 +813,7 @@ describe(TokenIngestionProcessor.name, () => {
             symbol: 'usdc',
           },
           symbolFallback: 'USDC',
+          tokenRelations: [],
           neighborsToEnqueue: [],
           proof: { kind: 'coingecko' },
         },
@@ -861,6 +871,7 @@ describe(TokenIngestionProcessor.name, () => {
             token: { id: 'USDC01', symbol: 'USDC' },
           },
           symbolFallback: undefined,
+          tokenRelations: [],
           neighborsToEnqueue: [],
           proof: nonSwappingProof(),
         },
@@ -915,6 +926,7 @@ describe(TokenIngestionProcessor.name, () => {
             token: { id: 'SUSDE1', symbol: 'sUSDe' },
           },
           symbolFallback: undefined,
+          tokenRelations: [],
           neighborsToEnqueue: [],
           proof: nonSwappingProof(),
         },
@@ -923,10 +935,10 @@ describe(TokenIngestionProcessor.name, () => {
       expect(result.outcome.kind).toEqual('write')
       if (result.outcome.kind !== 'write') return
       expect(result.outcome.newAbstractToken).toEqual(undefined)
-      expect(
-        result.outcome.deployedToken.type === 'insert' &&
-          result.outcome.deployedToken.record.symbol,
-      ).toEqual('SUSDE')
+      expect(result.outcome.deployedToken?.type).toEqual('insert')
+      if (!result.outcome.deployedToken) return
+      if (result.outcome.deployedToken.type !== 'insert') return
+      expect(result.outcome.deployedToken.record.symbol).toEqual('SUSDE')
       expect(
         result.steps.some(
           (step) => step.kind === 'corrected-coingecko-symbol-casing',
@@ -990,6 +1002,7 @@ describe(TokenIngestionProcessor.name, () => {
             symbol: 'usdc',
           },
           symbolFallback: 'USDC',
+          tokenRelations: [],
           neighborsToEnqueue: [],
           proof: { kind: 'coingecko' },
         },
@@ -1050,6 +1063,7 @@ describe(TokenIngestionProcessor.name, () => {
             symbol: 'usdc',
           },
           symbolFallback: 'USDC',
+          tokenRelations: [],
           neighborsToEnqueue: [],
           proof: { kind: 'coingecko' },
         },
@@ -1100,6 +1114,7 @@ describe(TokenIngestionProcessor.name, () => {
             token: { id: 'USDC01', symbol: 'USDC' },
           },
           symbolFallback: undefined,
+          tokenRelations: [],
           neighborsToEnqueue: [],
           proof: { kind: 'coingecko' },
         },
@@ -1156,6 +1171,7 @@ describe(TokenIngestionProcessor.name, () => {
               abstractTokenAssignmentProof: { kind: 'coingecko' },
             },
           },
+          tokenRelations: [],
           neighborsToEnqueue: [neighbor],
         },
       }
@@ -1183,6 +1199,7 @@ describe(TokenIngestionProcessor.name, () => {
             token: { id: 'USDC01', symbol: 'USDC' },
           },
           symbolFallback: undefined,
+          tokenRelations: [],
           neighborsToEnqueue: [],
           proof: { kind: 'coingecko' },
         },
@@ -1266,8 +1283,23 @@ function createProcessor(deps: {
   generateAbstractTokenId?: () => string
 }) {
   return new TokenIngestionProcessor({
-    db: deps.db ?? mockObject<Database>({}),
-    tokenDb: deps.tokenDb ?? mockObject<TokenDatabase>({}),
+    db: mockObject<Database>({
+      interopTransfer: mockObject<Database['interopTransfer']>({
+        findByTransferId: mockFn().executes(async (transferId: string) =>
+          transfer({ transferId }),
+        ),
+      }),
+      ...deps.db,
+    }),
+    tokenDb: mockObject<TokenDatabase>({
+      tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
+        getByPrimaryKeys: mockFn().resolvesTo([]),
+        insert: mockFn().resolvesTo(undefined),
+        updateByPrimaryKey: mockFn().resolvesTo(0),
+        deleteByPrimaryKey: mockFn().resolvesTo(0),
+      }),
+      ...deps.tokenDb,
+    }),
     coingeckoClient: deps.coingeckoClient ?? mockObject<CoingeckoClient>({}),
     etherscanApiKey: undefined,
     fetchDeployedTokenFacts: deps.fetchDeployedTokenFacts,
@@ -1323,6 +1355,7 @@ function route(
   overrides: Partial<InteropTokenRouteRecord>,
 ): InteropTokenRouteRecord {
   return {
+    plugin: 'test',
     srcChain: 'ethereum',
     srcTokenAddress: undefined,
     dstChain: 'base',

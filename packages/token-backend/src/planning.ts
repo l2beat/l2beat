@@ -6,14 +6,18 @@ import { manualProof } from './commitTokenChanges'
 import {
   type AddAbstractTokenIntent,
   type AddDeployedTokenIntent,
+  type AddTokenRelationIntent,
   type DeleteAbstractTokenIntent,
   type DeleteDeployedTokenIntent,
+  type DeleteTokenRelationIntent,
   Intent,
   type UpdateAbstractTokenIntent,
   type UpdateDeployedTokenIntent,
+  type UpdateTokenRelationIntent,
 } from './intents'
 import { getLogger } from './logger'
 import type { DeployedTokenUpdateable } from './schemas/DeployedToken'
+import type { TokenRelationPrimaryKey } from './schemas/TokenRelation'
 
 export type Plan = v.infer<typeof Plan>
 export const Plan = v.object({
@@ -77,6 +81,15 @@ export async function generatePlan(
 
       case 'DeleteDeployedTokenIntent':
         commands = await planDeleteDeployedToken(db, intent)
+        break
+      case 'AddTokenRelationIntent':
+        commands = await planAddTokenRelation(db, intent)
+        break
+      case 'UpdateTokenRelationIntent':
+        commands = await planUpdateTokenRelation(db, intent)
+        break
+      case 'DeleteTokenRelationIntent':
+        commands = await planDeleteTokenRelation(db, intent)
         break
       default:
         assertUnreachable(intent)
@@ -217,13 +230,139 @@ async function planDeleteDeployedToken(
       `DeployedToken ${intent.pk.chain}+${intent.pk.address} doesn't exist`,
     )
   }
+  const touchingRelations = await db.tokenRelation.getRelationsFromOrTo(intent.pk)
   return [
+    ...touchingRelations.map((relation) => ({
+      type: 'DeleteTokenRelationCommand' as const,
+      pk: toTokenRelationPrimaryKey(relation),
+      existing: relation,
+    })),
     {
       type: 'DeleteDeployedTokenCommand',
       pk: intent.pk,
       existing,
     },
   ]
+}
+
+async function planAddTokenRelation(
+  db: TokenDatabase,
+  intent: AddTokenRelationIntent,
+): Promise<Command[]> {
+  await assertRelationEndpointsExist(db, intent.record)
+
+  const existing = await db.tokenRelation.findByPrimaryKey(
+    toTokenRelationPrimaryKey(intent.record),
+  )
+  if (existing !== undefined) {
+    throw new PlanningError(
+      `TokenRelation ${formatTokenRelationPrimaryKey(intent.record)} already exists`,
+    )
+  }
+
+  return [
+    {
+      type: 'AddTokenRelationCommand',
+      record: intent.record,
+    },
+  ]
+}
+
+async function planUpdateTokenRelation(
+  db: TokenDatabase,
+  intent: UpdateTokenRelationIntent,
+): Promise<Command[]> {
+  const existing = await db.tokenRelation.findByPrimaryKey(intent.pk)
+  if (existing === undefined) {
+    throw new PlanningError(
+      `TokenRelation ${formatTokenRelationPrimaryKey(intent.pk)} doesn't exist`,
+    )
+  }
+
+  return [
+    {
+      type: 'UpdateTokenRelationCommand',
+      pk: intent.pk,
+      existing,
+      update: intent.update,
+    },
+  ]
+}
+
+async function planDeleteTokenRelation(
+  db: TokenDatabase,
+  intent: DeleteTokenRelationIntent,
+): Promise<Command[]> {
+  const existing = await db.tokenRelation.findByPrimaryKey(intent.pk)
+  if (existing === undefined) {
+    throw new PlanningError(
+      `TokenRelation ${formatTokenRelationPrimaryKey(intent.pk)} doesn't exist`,
+    )
+  }
+
+  return [
+    {
+      type: 'DeleteTokenRelationCommand',
+      pk: intent.pk,
+      existing,
+    },
+  ]
+}
+
+async function assertRelationEndpointsExist(
+  db: TokenDatabase,
+  relation: {
+    tokenFromChain: string
+    tokenFromAddress: string
+    tokenToChain: string
+    tokenToAddress: string
+  },
+): Promise<void> {
+  const [tokenFrom, tokenTo] = await Promise.all([
+    db.deployedToken.findByChainAndAddress({
+      chain: relation.tokenFromChain,
+      address: relation.tokenFromAddress,
+    }),
+    db.deployedToken.findByChainAndAddress({
+      chain: relation.tokenToChain,
+      address: relation.tokenToAddress,
+    }),
+  ])
+
+  if (tokenFrom === undefined) {
+    throw new PlanningError(
+      `DeployedToken ${relation.tokenFromChain}+${relation.tokenFromAddress} doesn't exist`,
+    )
+  }
+  if (tokenTo === undefined) {
+    throw new PlanningError(
+      `DeployedToken ${relation.tokenToChain}+${relation.tokenToAddress} doesn't exist`,
+    )
+  }
+}
+
+function toTokenRelationPrimaryKey(relation: {
+  tokenFromChain: string
+  tokenFromAddress: string
+  tokenToChain: string
+  tokenToAddress: string
+  plugin: string
+  sourceWasBurned: boolean
+  destinationWasMinted: boolean
+}): TokenRelationPrimaryKey {
+  return {
+    tokenFromChain: relation.tokenFromChain,
+    tokenFromAddress: relation.tokenFromAddress,
+    tokenToChain: relation.tokenToChain,
+    tokenToAddress: relation.tokenToAddress,
+    plugin: relation.plugin,
+    sourceWasBurned: relation.sourceWasBurned,
+    destinationWasMinted: relation.destinationWasMinted,
+  }
+}
+
+function formatTokenRelationPrimaryKey(pk: TokenRelationPrimaryKey): string {
+  return `${pk.tokenFromChain}+${pk.tokenFromAddress} -> ${pk.tokenToChain}+${pk.tokenToAddress} via ${pk.plugin} (${pk.sourceWasBurned}/${pk.destinationWasMinted})`
 }
 
 function stampInsertProof(

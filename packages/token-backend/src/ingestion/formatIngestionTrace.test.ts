@@ -38,6 +38,7 @@ describe(formatIngestionTrace.name, () => {
             metadata: null,
           },
         },
+        tokenRelations: [],
         neighborsToEnqueue: [],
       },
     }

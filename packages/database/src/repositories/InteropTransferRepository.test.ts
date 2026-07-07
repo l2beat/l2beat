@@ -199,6 +199,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
 
       expect(routes).toEqualUnsorted([
         {
+          plugin: 'plugin1',
           srcChain: 'ethereum',
           srcTokenAddress: srcToken,
           dstChain: 'arbitrum',
@@ -210,6 +211,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           sampleTransferId: 'transfer2',
         },
         {
+          plugin: 'plugin1',
           srcChain: 'ethereum',
           srcTokenAddress: srcToken,
           dstChain: 'arbitrum',

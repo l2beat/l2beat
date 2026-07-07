@@ -445,7 +445,11 @@ function PredictedOutcome({ outcome }: { outcome: IngestionOutcome }) {
     case 'write':
       return (
         <Badge>
-          {outcome.deployedToken.type === 'insert' ? 'Add token' : 'Update'}
+          {outcome.deployedToken?.type === 'insert'
+            ? 'Add token'
+            : outcome.deployedToken?.type === 'update'
+              ? 'Update'
+              : 'Add relation'}
         </Badge>
       )
     case 'pending':

@@ -959,28 +959,35 @@ function createLoop(deps: {
   ) => Promise<DeployedTokenFacts>
   generateAbstractTokenId?: () => string
 }) {
-  const db =
-    deps.db ??
-    mockObject<Database>({
-      interopTransfer: mockObject<Database['interopTransfer']>({
-        getTokenAddressesAfterSerialId: mockFn().resolvesTo({
-          latestSerialId: undefined,
-          transferCount: 0,
-          tokenAddresses: [],
-        }),
-        getTokenRoutes: mockFn().resolvesTo([]),
+  const db = mockObject<Database>({
+    interopTransfer: mockObject<Database['interopTransfer']>({
+      getTokenAddressesAfterSerialId: mockFn().resolvesTo({
+        latestSerialId: undefined,
+        transferCount: 0,
+        tokenAddresses: [],
       }),
-    })
-  const tokenDb =
-    deps.tokenDb ??
-    mockObject<TokenDatabase>({
-      tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
-        get: mockFn().resolvesTo(undefined),
-      }),
-      tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>({
-        findNextPending: mockFn().resolvesTo(undefined),
-      }),
-    })
+      getTokenRoutes: mockFn().resolvesTo([]),
+      findByTransferId: mockFn().executes(async (transferId: string) =>
+        transfer({ transferId }),
+      ),
+    }),
+    ...deps.db,
+  })
+  const tokenDb = mockObject<TokenDatabase>({
+    tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
+      get: mockFn().resolvesTo(undefined),
+    }),
+    tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>({
+      findNextPending: mockFn().resolvesTo(undefined),
+    }),
+    tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
+      getByPrimaryKeys: mockFn().resolvesTo([]),
+      insert: mockFn().resolvesTo(undefined),
+      updateByPrimaryKey: mockFn().resolvesTo(0),
+      deleteByPrimaryKey: mockFn().resolvesTo(0),
+    }),
+    ...deps.tokenDb,
+  })
   const coingeckoClient =
     deps.coingeckoClient ?? mockObject<CoingeckoClient>({})
   const processor = new TokenIngestionProcessor({
@@ -1062,6 +1069,7 @@ function route(
   overrides: Partial<InteropTokenRouteRecord>,
 ): InteropTokenRouteRecord {
   return {
+    plugin: 'test',
     srcChain: 'ethereum',
     srcTokenAddress: token('ethereum', '0xaaa').address,
     dstChain: 'base',

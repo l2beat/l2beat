@@ -106,6 +106,7 @@ export interface InteropTransferTokenAddressBatch {
  * holding every transfer in memory.
  */
 export interface InteropTokenRouteRecord {
+  plugin: string
   srcChain: string
   srcTokenAddress: string | undefined
   dstChain: string
@@ -262,6 +263,7 @@ export class InteropTransferRepository extends BaseRepository {
 
   async getTokenRoutes(): Promise<InteropTokenRouteRecord[]> {
     const groupColumns = [
+      'plugin',
       'srcChain',
       'srcTokenAddress',
       'dstChain',
@@ -289,6 +291,7 @@ export class InteropTransferRepository extends BaseRepository {
       }
 
       return {
+        plugin: row.plugin,
         srcChain: row.srcChain,
         srcTokenAddress: row.srcTokenAddress ?? undefined,
         dstChain: row.dstChain,

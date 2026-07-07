@@ -506,10 +506,10 @@ model DeployedToken {
   metadata                     Json?
   abstractTokenAssignmentProof Json?
 
-  chainRelation   Chain?            @relation(fields: [chain], references: [name], onDelete: Restrict)
-  abstractToken   AbstractToken?    @relation(fields: [abstractTokenId], references: [id], onDelete: Restrict)
-  connectionsFrom TokenConnection[] @relation("TokenConnection_tokenFrom")
-  connectionsTo   TokenConnection[] @relation("TokenConnection_tokenTo")
+  chainRelation Chain?         @relation(fields: [chain], references: [name], onDelete: Restrict)
+  abstractToken AbstractToken? @relation(fields: [abstractTokenId], references: [id], onDelete: Restrict)
+  relationsFrom TokenRelation[] @relation("TokenRelation_tokenFrom")
+  relationsTo   TokenRelation[] @relation("TokenRelation_tokenTo")
 
   @@id([chain, address])
   @@index([abstractTokenId])
@@ -548,19 +548,21 @@ model TokenDbHistory {
   @@index([commandType, timestamp])
 }
 
-model TokenConnection {
-  tokenFromChain   String  @db.VarChar(32)
-  tokenFromAddress String  @db.VarChar(255)
-  tokenToChain     String  @db.VarChar(32)
-  tokenToAddress   String  @db.VarChar(255)
-  type             String  @db.VarChar(32)
-  params           Json?
-  comment          String? @db.Text
+model TokenRelation {
+  tokenFromChain        String  @db.VarChar(32)
+  tokenFromAddress      String  @db.VarChar(255)
+  tokenToChain          String  @db.VarChar(32)
+  tokenToAddress        String  @db.VarChar(255)
+  plugin                String  @db.VarChar(64)
+  sourceWasBurned       Boolean
+  destinationWasMinted  Boolean
+  bridgeType            String? @db.VarChar(32)
+  transfer              Json
 
-  tokenFrom DeployedToken @relation("TokenConnection_tokenFrom", fields: [tokenFromChain, tokenFromAddress], references: [chain, address], onDelete: Restrict)
-  tokenTo   DeployedToken @relation("TokenConnection_tokenTo", fields: [tokenToChain, tokenToAddress], references: [chain, address], onDelete: Restrict)
+  tokenFrom DeployedToken @relation("TokenRelation_tokenFrom", fields: [tokenFromChain, tokenFromAddress], references: [chain, address], onDelete: Restrict)
+  tokenTo   DeployedToken @relation("TokenRelation_tokenTo", fields: [tokenToChain, tokenToAddress], references: [chain, address], onDelete: Restrict)
 
-  @@id([tokenFromChain, tokenFromAddress, tokenToChain, tokenToAddress, type])
+  @@id([tokenFromChain, tokenFromAddress, tokenToChain, tokenToAddress, plugin, sourceWasBurned, destinationWasMinted])
   @@index([tokenFromChain, tokenFromAddress])
   @@index([tokenToChain, tokenToAddress])
 }

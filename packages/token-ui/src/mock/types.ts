@@ -11,10 +11,14 @@ export type AbstractTokenWithDeployedTokens = AbstractToken & {
 
 export type DeployedToken = DeployedTokenRecord
 
-export type TokenConnection = {
-  tokenFromId: string
-  tokenToId: string
-  type: string
-  params?: Record<string, unknown>
-  comment?: string
+export type TokenRelation = {
+  tokenFromChain: string
+  tokenFromAddress: string
+  tokenToChain: string
+  tokenToAddress: string
+  plugin: string
+  sourceWasBurned: boolean
+  destinationWasMinted: boolean
+  bridgeType: string | null
+  transfer: unknown
 }
