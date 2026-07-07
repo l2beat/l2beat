@@ -208,6 +208,7 @@ describe(InMemoryCache.name, () => {
         const logger = {
           info: mockFn(),
           warn: mockFn(),
+          debug: mockFn(),
           for: () => undefined as never,
         }
         const cache = new InMemoryCache({ initialCache, logger })

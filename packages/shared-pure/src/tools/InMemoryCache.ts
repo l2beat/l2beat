@@ -5,6 +5,7 @@ const PROMISE_TIMEOUT = 30
 type Logger = {
   info: (...args: unknown[]) => void
   warn: (...args: unknown[]) => void
+  debug: (...args: unknown[]) => void
   for: (object: object) => Logger
 }
 
@@ -49,7 +50,7 @@ export class InMemoryCache {
       return fallback()
     }
 
-    this.logger?.info('Getting cache key', { key: options.key })
+    this.logger?.debug('Getting cache key', { key: options.key })
     const key = this.getKey(options.key.filter(Boolean) as string[])
     const now = UnixTime.now()
     const maxLifetime = options.ttl + (options.staleWhileRevalidate ?? 0)
