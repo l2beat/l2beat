@@ -1,6 +1,6 @@
 {
   "name": "ethereal",
-  "timestamp": 1783073629,
+  "timestamp": 1783426843,
   "configHash": "0xba8f8978f4790b0eeb2eec7328f631dddceaae928dea8639d615ba5fb1df33a2",
   "entries": [
     {
@@ -39,7 +39,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 6658,
+        "batchCount": 6755,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
         "batchPosters": ["arb1:0x12473dC3cBefb64337B6c7A772F25f4d2d9b45c3"],
         "bridge": "arb1:0xd86f5ad3fa5becbB07e565DbD4b70DBd817A43A8",
@@ -79,7 +79,7 @@
         "rollup": "arb1:0x75c070fe237817Bd027d402327069e9cd07De078",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 162,
+        "totalDelayedMessagesRead": 167,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -398,7 +398,7 @@
         "getValidators": ["arb1:0x80e046764185e776100A4f59079C2B00327f279A"],
         "inbox": "arb1:0x574b121c469583c3a46cd88bBCC9Ac5c8C907d06",
         "isPostBoLD": true,
-        "latestConfirmed": "0xae64018493bd35caf389265f07b48f890b0fd697bbdc3d544271861017ec1a35",
+        "latestConfirmed": "0x26acca2d779dcc86ee888a5c5c2a2dafe867f7cab46e334b38fb6e25ca39d242",
         "loserStakeEscrow": "arb1:0x80e046764185e776100A4f59079C2B00327f279A",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0xA2A5DCA414e3AaBD48B9CA97426f7e3Fba967492",
@@ -883,7 +883,7 @@
           "arb1:0xA2A5DCA414e3AaBD48B9CA97426f7e3Fba967492",
           "arb1:0x3515ad5D3D904Cb2731A7d6E5DB9f35D6CAFEB14"
         ],
-        "delayedMessageCount": 162,
+        "delayedMessageCount": 167,
         "inboxHistory": [
           "arb1:0x574b121c469583c3a46cd88bBCC9Ac5c8C907d06",
           "arb1:0x5D6bec85F093Eb49bD6913aCe7e9A081c41aed8F"
@@ -896,8 +896,8 @@
         ],
         "rollup": "arb1:0x75c070fe237817Bd027d402327069e9cd07De078",
         "sequencerInbox": "arb1:0x0E2480384E3703FDf84c7A0448658E8C7543b3a8",
-        "sequencerMessageCount": 6658,
-        "sequencerReportedSubMessageCount": 5296405
+        "sequencerMessageCount": 6755,
+        "sequencerReportedSubMessageCount": 5338872
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1176,7 +1176,7 @@
         "getChainId": 5064014,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 132,
+        "nonce": 136,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1353,7 +1353,7 @@
         {
           "permission": "interact",
           "from": "ethereal:0xB3cDC82035C495c484C9fF11eD5f3Ff6d342e3cc",
-          "description": "take over liquidated accounts.",
+          "description": "take over liquidated accounts, then settle funding and PnL on the resulting positions via the PerpEngine.",
           "role": ".getLiquidator"
         }
       ]
@@ -2845,6 +2845,6 @@
     "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "arbitrum": 479929040, "ethereal": 5296405 },
-  "permissionsConfigHash": "0x43540353c9bfd0a86e68ea2aa9cdc3992c444f0d32305866fedeee08eb5d01e3"
+  "usedBlockNumbers": { "arbitrum": 481341792, "ethereal": 5339100 },
+  "permissionsConfigHash": "0xa5c955cfbfac284107f28693bfc81b861b190754fce879ab83bd45869695307d"
 }

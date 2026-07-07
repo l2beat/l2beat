@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xbb2ce5fc5e0e97efc739dfe75042d5d4384b365e
+Generated with discovered.json: 0xde471847ba5617227c432c687847e031ebf01e81
 
-# Diff at Fri, 03 Jul 2026 10:15:53 GMT:
+# Diff at Tue, 07 Jul 2026 12:22:00 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@4572e5b954c85d78517dc66fc4a82b8ddc679e2a block: 1781510846
-- current timestamp: 1783073629
+- comparing to: main@1fd9d39064602bc28714717ec6eae23c740b472b block: 1781510846
+- current timestamp: 1783426843
 
 ## Description
 
@@ -51,6 +51,21 @@ ExchangeGateway upgraded; source unchanged. PerpEngine redeployed and rewired vi
 .../ExchangeGateway/ExchangeGateway.sol            |  1 +
  .../{.flat@1781510846 => .flat}/PerpEngine.sol     | 79 +++++++++++++++++-----
  2 files changed, 63 insertions(+), 17 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1781510846 (main branch discovery), not current.
+
+```diff
+    EOA  (ethereal:0x9D4F46b2595F596fC826Db2e5A6c32bCfE8BdDA5) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "take over liquidated accounts."
++        "take over liquidated accounts, then settle funding and PnL on the resulting positions via the PerpEngine."
+    }
 ```
 
 Generated with discovered.json: 0x6b1193cd40192d42f0c8c272ed83b221486f2213
