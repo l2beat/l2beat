@@ -187,6 +187,9 @@ export interface BaseProject {
   // privacy data
   privacyInfo?: ProjectPrivacyInfo
 
+  // defi data
+  defiInfo?: ProjectDefiInfo
+
   // feature configs
   tvsInfo?: ProjectTvsInfo
   tvsConfig?: TvsToken[]
@@ -958,6 +961,11 @@ export interface ProjectPrivacyInfo {
   attributes?: PrivacyAttribute[]
   riskSummary?: string
   upgradesAndGovernance?: string
+}
+
+export interface ProjectDefiInfo {
+  /** Short category label shown in the DeFi table, e.g. "CDP / Stablecoin". */
+  category: string
 }
 
 export interface PrivacyExitWindow extends ExitWindowRisk {

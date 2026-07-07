@@ -235,7 +235,7 @@
         "0xd912ef195da3732a17ca667884c3832e1a3cd9dbc3eefae4625937c65911da7d"
       ],
       "proxyType": "immutable",
-      "description": "User-facing entry point of a single collateral branch: borrowers open, adjust, and close troves through it (depositing or withdrawing collateral and drawing or repaying BOLD), set or delegate their interest rate, and join or leave interest-rate batches. In the process it mints and burns BOLD and enforces the branch's per-trove and system collateral-ratio and minimum-debt requirements. It has no owner or admin: its wired addresses and risk parameters are immutable, read once from the AddressesRegistry at construction. shutdown() is permissionless but only succeeds once the branch's total collateral ratio has fallen below its SCR, while shutdownFromOracleFailure() is restricted to the PriceFeed.",
+      "description": "User-facing entry point of a single collateral branch. Borrowers open, adjust, and close troves here (depositing or withdrawing collateral and drawing or repaying BOLD), set their interest rate directly or by joining an interest-rate batch, and delegate trove management. It mints and burns BOLD as debt is drawn and repaid, and enforces the branch's collateral-ratio rules. A trove becomes liquidatable once its individual collateral ratio falls below the Minimum Collateral Ratio (MCR, 110%); troves managed by an interest-rate batch are held to the stronger MCR plus Batch Collateral Ratio buffer (BCR, 10%). While the branch's total collateral ratio is below the Critical Collateral Ratio (CCR, 150%) the branch is in restricted mode and borrowing operations that would lower it further are blocked. Anyone can shut the branch down once its total collateral ratio falls below the Shutdown Collateral Ratio (SCR, 110%), and it also shuts down automatically if the price feed reports a failure of one of its oracles. The contract has no owner or admin, and its wired addresses and risk parameters are set at construction from the AddressesRegistry and cannot be changed afterward.",
       "ignoreInCoverage": [
         "addManagerOf",
         "interestBatchManagerOf",
@@ -313,6 +313,7 @@
         "0xffe40a8f84a61ecad0d9b18bc9b9b4a3c288ee814b430a8ddb8d40988c3c61df"
       ],
       "proxyType": "immutable",
+      "description": "The branch's collateral vault and interest engine. It custodies the collateral of every active trove on this branch and tracks the branch's aggregate BOLD debt. Collateral only moves in or out on instruction from the branch's own contracts (the BorrowerOperations, TroveManager, StabilityPool, and DefaultPool); there is no permissionless or admin path to move it. It is also where borrower interest is realized: when the branch's aggregate interest is settled, the newly accrued amount is minted as fresh BOLD and split, with 75% going to the StabilityPool as depositor yield and the remaining 25% to the InterestRouter. The contract has no owner or admin, and its wired addresses are read from the AddressesRegistry at construction and cannot be changed afterward.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646663,
       "sinceBlock": 22516101,
@@ -345,14 +346,28 @@
       }
     },
     {
-      "name": "EACAggregatorProxy",
+      "name": "Chainlink_rETH_ETH",
       "address": "eth:0x536218f9E9Eb48863970252233c8F271f554C2d0",
       "type": "Contract",
       "sourceHashes": [
         "0x056d4c6b4a8b2539822536f963ddff40d7327819b0a088b558d678ba5f38e984"
       ],
       "proxyType": "immutable",
-      "description": "Chainlink rETH/ETH aggregator used by the rETH PriceFeed. External oracle: discovered but its relatives are not walked.",
+      "description": "Chainlink rETH/ETH price feed.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B",
+          "description": "Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.",
+          "role": ".rEthEthOracle"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B",
+          "description": "Supplies the rETH price this PriceFeed reads.",
+          "role": ".rEthEthOracle"
+        }
+      ],
       "deployerAddress": "eth:0x536Ee6348B3790EC74c21FCbe3D990066E9B8eC7",
       "sinceTimestamp": 1677265283,
       "sinceBlock": 16700133,
@@ -390,6 +405,7 @@
         "0x1e7cfda26e94142780a4842c5715b0364d98333268e7585b3d9885a1622d0b34"
       ],
       "proxyType": "immutable",
+      "description": "The branch's liquidation backstop. Anyone can deposit BOLD here, and those deposits are the first resource used to absorb liquidations: when a trove on this branch is liquidated, the pool burns BOLD to cancel an equal amount of that trove's debt and receives the corresponding collateral in return. Because that collateral is worth more than the debt cancelled, depositors generally come out ahead on each liquidation, and they also earn a share of the interest that branch borrowers pay. Deposits can be withdrawn at any time with no lock-up, as long as a small minimum is left so the pool can never be fully emptied. The contract has no owner or admin: its wired addresses are set at construction from the AddressesRegistry and cannot be changed afterward.",
       "ignoreInCoverage": ["deposits", "depositSnapshots", "stashedColl"],
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646411,
@@ -433,6 +449,7 @@
         "0xa65617ba575ecd14fe2ae717c82c2feff2da018b2a42498f1d1323a0829e9d87"
       ],
       "proxyType": "immutable",
+      "description": "The counterpart to the ActivePool that holds only what is pending redistribution. When a liquidation cannot be fully covered by the StabilityPool, the liquidated trove's collateral and debt are spread across the remaining troves, and until each of those troves actually realizes its share this pool holds it: the redistributed collateral as real tokens, and the redistributed debt as a bookkeeping figure (no BOLD is kept here). When a trove is next touched and its pending share is applied, that collateral and debt move out of here into the ActivePool. Only the branch's TroveManager (which adjusts the recorded debt and moves collateral out to the ActivePool) and the ActivePool (which moves collateral in) can touch it; there is no permissionless or admin path. The contract has no owner or admin, and its wired addresses are read from the AddressesRegistry at construction and cannot be changed afterward.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646903,
       "sinceBlock": 22516121,
@@ -464,14 +481,52 @@
       }
     },
     {
-      "name": "EACAggregatorProxy",
+      "name": "Chainlink_ETH_USD",
       "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
       "type": "Contract",
       "sourceHashes": [
         "0x6817c1bb5c0e498f52adbdf85688dd550e05aefc265a30f95ee83a2185ac8b8f"
       ],
       "proxyType": "immutable",
-      "description": "Chainlink ETH/USD aggregator used by the branch PriceFeeds. External oracle: discovered but its relatives are not walked.",
+      "description": "Chainlink ETH/USD price feed.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B",
+          "description": "Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.",
+          "role": ".ethUsdOracle"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B",
+          "description": "Supplies the ETH price this PriceFeed reads.",
+          "role": ".ethUsdOracle"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xCC5F8102eb670c89a4a3c567C13851260303c24F",
+          "description": "Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.",
+          "role": ".ethUsdOracle"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xCC5F8102eb670c89a4a3c567C13851260303c24F",
+          "description": "Supplies the ETH price this PriceFeed reads.",
+          "role": ".ethUsdOracle"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E",
+          "description": "Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.",
+          "role": ".ethUsdOracle"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E",
+          "description": "Supplies the ETH price this PriceFeed reads.",
+          "role": ".ethUsdOracle"
+        }
+      ],
       "deployerAddress": "eth:0x71C05a4eA5E9d5b1Ac87Bf962a043f5265d4Bdc8",
       "sinceTimestamp": 1596720671,
       "sinceBlock": 10606501,
@@ -715,6 +770,7 @@
         "0xc9d6f44af9c5528d817ecb926770bd146fd944d0892b3fd066b2a7abb8fb1091"
       ],
       "proxyType": "immutable",
+      "description": "The branch's ledger and enforcement engine. It holds the canonical record of every trove on this collateral branch (debt, collateral, stake, interest rate, and accounting snapshots) and is where BorrowerOperations persists changes when owners open, adjust, or close their troves. It also carries out the two things that happen to a trove without its owner. Liquidation is permissionless: once a trove's collateral ratio falls below the branch minimum, anyone can liquidate it, and its collateral (up to the debt plus a liquidation penalty) is either absorbed by the StabilityPool or redistributed across the remaining troves, with any surplus returned to the owner. Redemption is driven by the CollateralRegistry, which exchanges BOLD for collateral at face value against the lowest-interest-rate troves first, letting BOLD holders defend the peg. The contract has no owner or admin, and its wired addresses and risk parameters are set at construction from the AddressesRegistry and cannot be changed afterward.",
       "ignoreInCoverage": ["Troves", "batchIds", "batches"],
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646387,
@@ -994,6 +1050,7 @@
         "0xffe40a8f84a61ecad0d9b18bc9b9b4a3c288ee814b430a8ddb8d40988c3c61df"
       ],
       "proxyType": "immutable",
+      "description": "The branch's collateral vault and interest engine. It custodies the collateral of every active trove on this branch and tracks the branch's aggregate BOLD debt. Collateral only moves in or out on instruction from the branch's own contracts (the BorrowerOperations, TroveManager, StabilityPool, and DefaultPool); there is no permissionless or admin path to move it. It is also where borrower interest is realized: when the branch's aggregate interest is settled, the newly accrued amount is minted as fresh BOLD and split, with 75% going to the StabilityPool as depositor yield and the remaining 25% to the InterestRouter. The contract has no owner or admin, and its wired addresses are read from the AddressesRegistry at construction and cannot be changed afterward.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646891,
       "sinceBlock": 22516120,
@@ -1034,6 +1091,7 @@
         "0x1e7cfda26e94142780a4842c5715b0364d98333268e7585b3d9885a1622d0b34"
       ],
       "proxyType": "immutable",
+      "description": "The branch's liquidation backstop. Anyone can deposit BOLD here, and those deposits are the first resource used to absorb liquidations: when a trove on this branch is liquidated, the pool burns BOLD to cancel an equal amount of that trove's debt and receives the corresponding collateral in return. Because that collateral is worth more than the debt cancelled, depositors generally come out ahead on each liquidation, and they also earn a share of the interest that branch borrowers pay. Deposits can be withdrawn at any time with no lock-up, as long as a small minimum is left so the pool can never be fully emptied. The contract has no owner or admin: its wired addresses are set at construction from the AddressesRegistry and cannot be changed afterward.",
       "ignoreInCoverage": ["deposits", "depositSnapshots", "stashedColl"],
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646651,
@@ -1123,6 +1181,7 @@
         "0xc9d6f44af9c5528d817ecb926770bd146fd944d0892b3fd066b2a7abb8fb1091"
       ],
       "proxyType": "immutable",
+      "description": "The branch's ledger and enforcement engine. It holds the canonical record of every trove on this collateral branch (debt, collateral, stake, interest rate, and accounting snapshots) and is where BorrowerOperations persists changes when owners open, adjust, or close their troves. It also carries out the two things that happen to a trove without its owner. Liquidation is permissionless: once a trove's collateral ratio falls below the branch minimum, anyone can liquidate it, and its collateral (up to the debt plus a liquidation penalty) is either absorbed by the StabilityPool or redistributed across the remaining troves, with any surplus returned to the owner. Redemption is driven by the CollateralRegistry, which exchanges BOLD for collateral at face value against the lowest-interest-rate troves first, letting BOLD holders defend the peg. The contract has no owner or admin, and its wired addresses and risk parameters are set at construction from the AddressesRegistry and cannot be changed afterward.",
       "ignoreInCoverage": ["Troves", "batchIds", "batches"],
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646627,
@@ -1188,7 +1247,7 @@
         "0xd912ef195da3732a17ca667884c3832e1a3cd9dbc3eefae4625937c65911da7d"
       ],
       "proxyType": "immutable",
-      "description": "User-facing entry point of a single collateral branch: borrowers open, adjust, and close troves through it (depositing or withdrawing collateral and drawing or repaying BOLD), set or delegate their interest rate, and join or leave interest-rate batches. In the process it mints and burns BOLD and enforces the branch's per-trove and system collateral-ratio and minimum-debt requirements. It has no owner or admin: its wired addresses and risk parameters are immutable, read once from the AddressesRegistry at construction. shutdown() is permissionless but only succeeds once the branch's total collateral ratio has fallen below its SCR, while shutdownFromOracleFailure() is restricted to the PriceFeed.",
+      "description": "User-facing entry point of a single collateral branch. Borrowers open, adjust, and close troves here (depositing or withdrawing collateral and drawing or repaying BOLD), set their interest rate directly or by joining an interest-rate batch, and delegate trove management. It mints and burns BOLD as debt is drawn and repaid, and enforces the branch's collateral-ratio rules. A trove becomes liquidatable once its individual collateral ratio falls below the Minimum Collateral Ratio (MCR, 120%); troves managed by an interest-rate batch are held to the stronger MCR plus Batch Collateral Ratio buffer (BCR, 10%). While the branch's total collateral ratio is below the Critical Collateral Ratio (CCR, 160%) the branch is in restricted mode and borrowing operations that would lower it further are blocked. Anyone can shut the branch down once its total collateral ratio falls below the Shutdown Collateral Ratio (SCR, 120%), and it also shuts down automatically if the price feed reports a failure of one of its oracles. The contract has no owner or admin, and its wired addresses and risk parameters are set at construction from the AddressesRegistry and cannot be changed afterward.",
       "ignoreInCoverage": [
         "addManagerOf",
         "interestBatchManagerOf",
@@ -1250,6 +1309,7 @@
         "0xc9d6f44af9c5528d817ecb926770bd146fd944d0892b3fd066b2a7abb8fb1091"
       ],
       "proxyType": "immutable",
+      "description": "The branch's ledger and enforcement engine. It holds the canonical record of every trove on this collateral branch (debt, collateral, stake, interest rate, and accounting snapshots) and is where BorrowerOperations persists changes when owners open, adjust, or close their troves. It also carries out the two things that happen to a trove without its owner. Liquidation is permissionless: once a trove's collateral ratio falls below the branch minimum, anyone can liquidate it, and its collateral (up to the debt plus a liquidation penalty) is either absorbed by the StabilityPool or redistributed across the remaining troves, with any surplus returned to the owner. Redemption is driven by the CollateralRegistry, which exchanges BOLD for collateral at face value against the lowest-interest-rate troves first, letting BOLD holders defend the peg. The contract has no owner or admin, and its wired addresses and risk parameters are set at construction from the AddressesRegistry and cannot be changed afterward.",
       "ignoreInCoverage": ["Troves", "batchIds", "batches"],
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646855,
@@ -1364,14 +1424,28 @@
       }
     },
     {
-      "name": "EACAggregatorProxy",
+      "name": "Chainlink_stETH_USD",
       "address": "eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8",
       "type": "Contract",
       "sourceHashes": [
         "0x056d4c6b4a8b2539822536f963ddff40d7327819b0a088b558d678ba5f38e984"
       ],
       "proxyType": "immutable",
-      "description": "Chainlink stETH/USD aggregator used by the wstETH PriceFeed. External oracle: discovered but its relatives are not walked.",
+      "description": "Chainlink stETH/USD price feed.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E",
+          "description": "Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.",
+          "role": ".stEthUsdOracle"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E",
+          "description": "Supplies the stETH price this PriceFeed reads.",
+          "role": ".stEthUsdOracle"
+        }
+      ],
       "deployerAddress": "eth:0x536Ee6348B3790EC74c21FCbe3D990066E9B8eC7",
       "sinceTimestamp": 1629828389,
       "sinceBlock": 13089591,
@@ -1409,6 +1483,7 @@
         "0x1e7cfda26e94142780a4842c5715b0364d98333268e7585b3d9885a1622d0b34"
       ],
       "proxyType": "immutable",
+      "description": "The branch's liquidation backstop. Anyone can deposit BOLD here, and those deposits are the first resource used to absorb liquidations: when a trove on this branch is liquidated, the pool burns BOLD to cancel an equal amount of that trove's debt and receives the corresponding collateral in return. Because that collateral is worth more than the debt cancelled, depositors generally come out ahead on each liquidation, and they also earn a share of the interest that branch borrowers pay. Deposits can be withdrawn at any time with no lock-up, as long as a small minimum is left so the pool can never be fully emptied. The contract has no owner or admin: its wired addresses are set at construction from the AddressesRegistry and cannot be changed afterward.",
       "ignoreInCoverage": ["deposits", "depositSnapshots", "stashedColl"],
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646879,
@@ -1452,6 +1527,7 @@
         "0xa65617ba575ecd14fe2ae717c82c2feff2da018b2a42498f1d1323a0829e9d87"
       ],
       "proxyType": "immutable",
+      "description": "The counterpart to the ActivePool that holds only what is pending redistribution. When a liquidation cannot be fully covered by the StabilityPool, the liquidated trove's collateral and debt are spread across the remaining troves, and until each of those troves actually realizes its share this pool holds it: the redistributed collateral as real tokens, and the redistributed debt as a bookkeeping figure (no BOLD is kept here). When a trove is next touched and its pending share is applied, that collateral and debt move out of here into the ActivePool. Only the branch's TroveManager (which adjusts the recorded debt and moves collateral out to the ActivePool) and the ActivePool (which moves collateral in) can touch it; there is no permissionless or admin path. The contract has no owner or admin, and its wired addresses are read from the AddressesRegistry at construction and cannot be changed afterward.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646435,
       "sinceBlock": 22516082,
@@ -1477,6 +1553,7 @@
         "0xa65617ba575ecd14fe2ae717c82c2feff2da018b2a42498f1d1323a0829e9d87"
       ],
       "proxyType": "immutable",
+      "description": "The counterpart to the ActivePool that holds only what is pending redistribution. When a liquidation cannot be fully covered by the StabilityPool, the liquidated trove's collateral and debt are spread across the remaining troves, and until each of those troves actually realizes its share this pool holds it: the redistributed collateral as real tokens, and the redistributed debt as a bookkeeping figure (no BOLD is kept here). When a trove is next touched and its pending share is applied, that collateral and debt move out of here into the ActivePool. Only the branch's TroveManager (which adjusts the recorded debt and moves collateral out to the ActivePool) and the ActivePool (which moves collateral in) can touch it; there is no permissionless or admin path. The contract has no owner or admin, and its wired addresses are read from the AddressesRegistry at construction and cannot be changed afterward.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646675,
       "sinceBlock": 22516102,
@@ -1544,7 +1621,7 @@
         "0xd912ef195da3732a17ca667884c3832e1a3cd9dbc3eefae4625937c65911da7d"
       ],
       "proxyType": "immutable",
-      "description": "User-facing entry point of a single collateral branch: borrowers open, adjust, and close troves through it (depositing or withdrawing collateral and drawing or repaying BOLD), set or delegate their interest rate, and join or leave interest-rate batches. In the process it mints and burns BOLD and enforces the branch's per-trove and system collateral-ratio and minimum-debt requirements. It has no owner or admin: its wired addresses and risk parameters are immutable, read once from the AddressesRegistry at construction. shutdown() is permissionless but only succeeds once the branch's total collateral ratio has fallen below its SCR, while shutdownFromOracleFailure() is restricted to the PriceFeed.",
+      "description": "User-facing entry point of a single collateral branch. Borrowers open, adjust, and close troves here (depositing or withdrawing collateral and drawing or repaying BOLD), set their interest rate directly or by joining an interest-rate batch, and delegate trove management. It mints and burns BOLD as debt is drawn and repaid, and enforces the branch's collateral-ratio rules. A trove becomes liquidatable once its individual collateral ratio falls below the Minimum Collateral Ratio (MCR, 120%); troves managed by an interest-rate batch are held to the stronger MCR plus Batch Collateral Ratio buffer (BCR, 10%). While the branch's total collateral ratio is below the Critical Collateral Ratio (CCR, 160%) the branch is in restricted mode and borrowing operations that would lower it further are blocked. Anyone can shut the branch down once its total collateral ratio falls below the Shutdown Collateral Ratio (SCR, 120%), and it also shuts down automatically if the price feed reports a failure of one of its oracles. The contract has no owner or admin, and its wired addresses and risk parameters are set at construction from the AddressesRegistry and cannot be changed afterward.",
       "ignoreInCoverage": [
         "addManagerOf",
         "interestBatchManagerOf",
@@ -1606,6 +1683,7 @@
         "0xffe40a8f84a61ecad0d9b18bc9b9b4a3c288ee814b430a8ddb8d40988c3c61df"
       ],
       "proxyType": "immutable",
+      "description": "The branch's collateral vault and interest engine. It custodies the collateral of every active trove on this branch and tracks the branch's aggregate BOLD debt. Collateral only moves in or out on instruction from the branch's own contracts (the BorrowerOperations, TroveManager, StabilityPool, and DefaultPool); there is no permissionless or admin path to move it. It is also where borrower interest is realized: when the branch's aggregate interest is settled, the newly accrued amount is minted as fresh BOLD and split, with 75% going to the StabilityPool as depositor yield and the remaining 25% to the InterestRouter. The contract has no owner or admin, and its wired addresses are read from the AddressesRegistry at construction and cannot be changed afterward.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646423,
       "sinceBlock": 22516081,
@@ -3291,15 +3369,15 @@
     "liquityv2/CollSurplusPool": "0x6684ffbbf8dc46d947e5b66d6287a08379c0ea50e85d4095693bce55e87c8784",
     "liquityv2/DefaultPool": "0xf76544a2d96f34f8558006a2796043cf6480a50fe6796cb3430971a69d07f033",
     "liquityv2/Governance": "0x58a62670b1b5ac1f65f6541bfcd0f70cacc7a4eb28d2e8f6f430096bdd6ff446",
-    "liquityv2/RETHPriceFeed": "0x123f80c6bf5c2706944ecc3789d8cd1f4fe9909f41fd29262f4b11936787eeb7",
+    "liquityv2/RETHPriceFeed": "0xc41b282901cfe548ef934ef56f7b3e6bc4b0b89c3ff08cd7810b343f0167cf5c",
     "liquityv2/SortedTroves": "0xf293f74be45106d609814c95b63ca8ad04c5a5635075c1248f36508f2c468bf9",
     "liquityv2/StabilityPool": "0x14d6c8f51a09720083f6e5fb4903344e584819dac8b4e321694f6029e651d416",
     "liquityv2/TroveManager": "0x86616ddf43f9a5c18001a4dc7426eaffe9b7658724fe4f58087be651ab68682d",
     "liquityv2/TroveNFT": "0x3168d31b447cb5348fe6021d098550105dc8a4f5c53da1e489528b0285e63b67",
     "liquityv2/UserProxy": "0x76c1139858057493e9d67b62aaf9bf39fe368ce27ecbde05d644d94d1db2fbcf",
-    "liquityv2/WETHPriceFeed": "0xb58238401cb9b88b63d8279dcbadb38dd95ee5d3f77b2a9a0a28f3297aa38290",
-    "liquityv2/WSTETHPriceFeed": "0x123f80c6bf5c2706944ecc3789d8cd1f4fe9909f41fd29262f4b11936787eeb7"
+    "liquityv2/WETHPriceFeed": "0x361894a2d93e618766cca1f5551f98d785e16db05088e0cd1e86c12e4dc8ac4b",
+    "liquityv2/WSTETHPriceFeed": "0x092ccc44a6b14e7893838ae5171ee4343beac3c8dd3091f335153db3647aaf09"
   },
   "usedBlockNumbers": { "ethereum": 25359156 },
-  "permissionsConfigHash": "0x2a44e2deb1e730e8eed925bd18ee7fd1faa6efe556c1af6dd3c2ae8ba7d90a4d"
+  "permissionsConfigHash": "0x548965044a2b91d51f0018e60ce0c0331a564bcb87897499efeb7c2624490ada"
 }

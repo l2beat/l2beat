@@ -43,21 +43,24 @@
     "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386": "SortedTroves_rETH",
     "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695": "StabilityPool_rETH",
     "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e": "TroveManager_rETH",
-    "eth:0x7ae430E25b67f19B431e1D1Dc048a5BCF24C0873": "TroveNFT_rETH"
+    "eth:0x7ae430E25b67f19B431e1D1Dc048a5BCF24C0873": "TroveNFT_rETH",
+    "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419": "Chainlink_ETH_USD",
+    "eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8": "Chainlink_stETH_USD",
+    "eth:0x536218f9E9Eb48863970252233c8F271f554C2d0": "Chainlink_rETH_ETH"
   },
   "overrides": {
     "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419": {
-      "description": "Chainlink ETH/USD aggregator used by the branch PriceFeeds. External oracle: discovered but its relatives are not walked.",
+      "description": "Chainlink ETH/USD price feed.",
       "ignoreRelatives": true,
       "ignoreMethods": ["getAnswer", "getTimestamp", "proposedLatestRoundData"]
     },
     "eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8": {
-      "description": "Chainlink stETH/USD aggregator used by the wstETH PriceFeed. External oracle: discovered but its relatives are not walked.",
+      "description": "Chainlink stETH/USD price feed.",
       "ignoreRelatives": true,
       "ignoreMethods": ["getAnswer", "getTimestamp", "proposedLatestRoundData"]
     },
     "eth:0x536218f9E9Eb48863970252233c8F271f554C2d0": {
-      "description": "Chainlink rETH/ETH aggregator used by the rETH PriceFeed. External oracle: discovered but its relatives are not walked.",
+      "description": "Chainlink rETH/ETH price feed.",
       "ignoreRelatives": true,
       "ignoreMethods": ["getAnswer", "getTimestamp", "proposedLatestRoundData"]
     },

@@ -9,6 +9,30 @@
     "borrowerOperations": {
       "copy": "constructorArgs",
       "edit": ["get", "_borrowerOperationsAddress"]
+    },
+    "ethUsdOracle": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Supplies the ETH price this PriceFeed reads."
+        },
+        {
+          "type": "interact",
+          "description": "Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions."
+        }
+      ]
+    },
+    "stEthUsdOracle": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Supplies the stETH price this PriceFeed reads."
+        },
+        {
+          "type": "interact",
+          "description": "Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions."
+        }
+      ]
     }
   }
 }

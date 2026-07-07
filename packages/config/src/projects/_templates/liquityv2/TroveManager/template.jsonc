@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "TroveManager",
+  "description": "The branch's ledger and enforcement engine. It holds the canonical record of every trove on this collateral branch (debt, collateral, stake, interest rate, and accounting snapshots) and is where BorrowerOperations persists changes when owners open, adjust, or close their troves. It also carries out the two things that happen to a trove without its owner. Liquidation is permissionless: once a trove's collateral ratio falls below the branch minimum, anyone can liquidate it, and its collateral (up to the debt plus a liquidation penalty) is either absorbed by the StabilityPool or redistributed across the remaining troves, with any surplus returned to the owner. Redemption is driven by the CollateralRegistry, which exchanges BOLD for collateral at face value against the lowest-interest-rate troves first, letting BOLD holders defend the peg. The contract has no owner or admin, and its wired addresses and risk parameters are set at construction from the AddressesRegistry and cannot be changed afterward.",
   "ignoreMethods": [
     "batchIds",
     "getLatestTroveData",

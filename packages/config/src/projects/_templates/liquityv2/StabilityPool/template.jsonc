@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "StabilityPool",
+  "description": "The branch's liquidation backstop. Anyone can deposit BOLD here, and those deposits are the first resource used to absorb liquidations: when a trove on this branch is liquidated, the pool burns BOLD to cancel an equal amount of that trove's debt and receives the corresponding collateral in return. Because that collateral is worth more than the debt cancelled, depositors generally come out ahead on each liquidation, and they also earn a share of the interest that branch borrowers pay. Deposits can be withdrawn at any time with no lock-up, as long as a small minimum is left so the pool can never be fully emptied. The contract has no owner or admin: its wired addresses are set at construction from the AddressesRegistry and cannot be changed afterward.",
   "ignoreMethods": ["scaleToB", "scaleToS"],
   "ignoreRelatives": ["collToken"],
   "ignoreInCoverage": ["deposits", "depositSnapshots", "stashedColl"],

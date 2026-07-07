@@ -27,6 +27,7 @@ export const STATIC_PAGE_PATHS = [
   '/data-availability/liveness',
   '/data-availability/archived',
   '/privacy/summary',
+  '/defi/summary',
   '/zk-catalog',
   '/governance',
   '/governance/ethereum-connect',
@@ -55,6 +56,7 @@ async function getDynamicPagePaths(): Promise<PagePath[]> {
     daLayers,
     daBridges,
     privacyProjects,
+    defiProjects,
   ] = await Promise.all([
     ps.getProjects({
       where: ['scalingInfo'],
@@ -66,6 +68,7 @@ async function getDynamicPagePaths(): Promise<PagePath[]> {
     ps.getProjects({ select: ['daLayer'], whereNot: ['archivedAt'] }),
     ps.getProjects({ select: ['daBridge'] }),
     ps.getProjects({ where: ['privacyInfo'] }),
+    ps.getProjects({ where: ['defiInfo'] }),
   ])
 
   const paths: PagePath[] = []
@@ -87,6 +90,10 @@ async function getDynamicPagePaths(): Promise<PagePath[]> {
 
   for (const project of privacyProjects) {
     paths.push(`/privacy/projects/${project.slug}`)
+  }
+
+  for (const project of defiProjects) {
+    paths.push(`/defi/projects/${project.slug}`)
   }
 
   for (const layer of daLayers) {

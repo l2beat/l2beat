@@ -38,6 +38,7 @@ import { mayan } from '../projects/mayan/mayan'
 import { memo } from '../projects/memo/memo'
 import { meson } from '../projects/meson/meson'
 import { monad } from '../projects/monad/monad'
+import { liquityv2 } from '../projects/liquityv2/liquityv2'
 import { near } from '../projects/near/near-da'
 import { openvmprover } from '../projects/openvmprover/openvmprover'
 import { privacyPools } from '../projects/privacy-pools/privacy-pools'
@@ -122,6 +123,8 @@ export const refactored: BaseProject[] = [
   cbridge,
   hyperevm,
   freetunnel,
+  // defi
+  liquityv2,
   // privacy
   privacyPools,
   railgun,
