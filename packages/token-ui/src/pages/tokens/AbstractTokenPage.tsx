@@ -174,14 +174,17 @@ function AbstractTokenView({
         isLoading={areAbstractTokensLoading}
         isPending={isPending}
         onMerge={() => {
-          if (!mergeTargetId) {
+          const target = (abstractTokens ?? []).find(
+            (t) => t.id === mergeTargetId,
+          )
+          if (!target) {
             toast.error('Select target abstract token')
             return
           }
           planMutate({
             type: 'MergeAbstractTokenIntent',
-            sourceId: token.id,
-            targetId: mergeTargetId,
+            sourceId: getAbstractTokenDisplayId(token),
+            targetId: getAbstractTokenDisplayId(target),
           })
         }}
       />

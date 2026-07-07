@@ -289,8 +289,10 @@ describe('MergeAbstractTokenIntent', () => {
       db,
       {
         type: 'MergeAbstractTokenIntent',
-        sourceId: source.id,
-        targetId: target.id,
+        // The UI sends display ids (`<id>:<issuer>:<symbol>`); planning must
+        // extract the unique identifier prefix.
+        sourceId: `${source.id}:${source.issuer}:${source.symbol}`,
+        targetId: `${target.id}:${target.issuer}:${target.symbol}`,
       },
       { user: USER, skipLogs: true },
     )

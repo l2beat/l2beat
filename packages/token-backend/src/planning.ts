@@ -176,21 +176,26 @@ async function planMergeAbstractToken(
   intent: MergeAbstractTokenIntent,
   opts: PlanOptions,
 ): Promise<Command[]> {
-  if (intent.sourceId === intent.targetId) {
+  // The intent carries display ids (`<id>:<issuer>:<symbol>`) for readability
+  // in the history table; here we only need the unique identifier prefix.
+  const sourceId = extractAbstractTokenId(intent.sourceId)
+  const targetId = extractAbstractTokenId(intent.targetId)
+
+  if (sourceId === targetId) {
     throw new PlanningError('Cannot merge an abstract token into itself')
   }
 
   const [source, target, deployedTokens] = await Promise.all([
-    db.abstractToken.findById(intent.sourceId),
-    db.abstractToken.findById(intent.targetId),
-    db.deployedToken.getByAbstractTokenId(intent.sourceId),
+    db.abstractToken.findById(sourceId),
+    db.abstractToken.findById(targetId),
+    db.deployedToken.getByAbstractTokenId(sourceId),
   ])
 
   if (source === undefined) {
-    throw new PlanningError(`AbstractToken ${intent.sourceId} doesn't exist`)
+    throw new PlanningError(`AbstractToken ${sourceId} doesn't exist`)
   }
   if (target === undefined) {
-    throw new PlanningError(`AbstractToken ${intent.targetId} doesn't exist`)
+    throw new PlanningError(`AbstractToken ${targetId} doesn't exist`)
   }
 
   const commands: Command[] = []
@@ -346,6 +351,14 @@ function sourceCoingeckoEntries(source: {
 
 function compareDeployedTokens(a: DeployedTokenRecord, b: DeployedTokenRecord) {
   return a.chain.localeCompare(b.chain) || a.address.localeCompare(b.address)
+}
+
+/**
+ * Abstract token display ids have the shape `<id>:<issuer>:<symbol>`. Only the
+ * `<id>` prefix is the unique identifier used to look tokens up.
+ */
+function extractAbstractTokenId(displayId: string): string {
+  return displayId.split(':')[0]
 }
 
 function stampInsertProof(
