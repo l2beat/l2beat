@@ -89,18 +89,26 @@ const columns = [
         return <NoDataBadge />
       }
 
+      const half = Math.ceil(attributes.length / 2)
+      const rows = [attributes.slice(0, half), attributes.slice(half)].filter(
+        (row) => row.length > 0,
+      )
+
       return (
-        <div className="flex max-w-[176px] flex-wrap gap-1">
-          {attributes.map((attribute) => (
-            <PrivacyAttributeTag key={attribute.id} attribute={attribute} />
+        <div className="flex w-max flex-col gap-1">
+          {rows.map((row, index) => (
+            <div key={index} className="flex gap-1">
+              {row.map((attribute) => (
+                <PrivacyAttributeTag key={attribute.id} attribute={attribute} />
+              ))}
+            </div>
           ))}
         </div>
       )
     },
     enableSorting: false,
     meta: {
-      cellClassName: 'w-[176px] max-w-[176px] py-2',
-      headClassName: 'w-[176px] max-w-[176px]',
+      cellClassName: 'py-2',
       tooltip: 'Protocol attributes and capabilities.',
     },
   }),
