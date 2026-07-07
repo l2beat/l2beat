@@ -1,7 +1,7 @@
 {
   "name": "liquityv2",
   "timestamp": 1781962796,
-  "configHash": "0x02dec344b27408a799817642a4ac8d7f5d44a10c4fb55d2b50e4829a1487ef7e",
+  "configHash": "0xbb5abc25ad5a2acc9594c765b1c912723a69c3ff7cf8a9fff89181b692f61080",
   "entries": [
     {
       "name": "SortedTroves_rETH",
@@ -78,10 +78,10 @@
       "values": {
         "$immutable": true,
         "activePool": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
-        "BCR": "100000000000000000",
+        "BCR": "10",
         "boldToken": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
         "borrowerOperations": "eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65",
-        "CCR": "1500000000000000000",
+        "CCR": "150",
         "collateralRegistry": "eth:0xf949982B91C8c61e952B3bA942cbbfaef5386684",
         "collSurplusPool": "eth:0xedbE2509E502c0320D2e7f8b6746a49b4B50E2bF",
         "collToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -92,21 +92,34 @@
         "isOwner": false,
         "LIQUIDATION_PENALTY_REDISTRIBUTION": "100000000000000000",
         "LIQUIDATION_PENALTY_SP": "50000000000000000",
-        "MCR": "1100000000000000000",
+        "MCR": "110",
         "metadataNFT": "eth:0x9B36C3B16299D68c79F174df7e728E35b6AF4A12",
         "multiTroveGetter": "eth:0xFA61dB085510C64B83056Db3A7Acf3b6f631D235",
         "owner": "eth:0x0000000000000000000000000000000000000000",
         "priceFeed": "eth:0xCC5F8102eb670c89a4a3c567C13851260303c24F",
-        "SCR": "1100000000000000000",
+        "SCR": "110",
         "sortedTroves": "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4",
         "stabilityPool": "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF",
         "troveManager": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
         "troveNFT": "eth:0x1A0FC0b843aFD9140267D25d4E575Cb37a838013",
         "WETH": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
+      "fieldMeta": {
+        "SCR": {
+          "description": "Shutdown Collateral Ratio (%). The branch can be shut down if its total collateral ratio (TCR) drops below this."
+        },
+        "CCR": { "description": "Critical Collateral Ratio (%)." },
+        "MCR": {
+          "description": "Minimum Collateral Ratio (%). Troves below it can be liquidated."
+        },
+        "BCR": {
+          "description": "Batch Collateral Ratio buffer (%). Batched troves must stay above MCR + BCR."
+        }
+      },
       "implementationNames": {
         "eth:0x20F7C9ad66983F6523a0881d0f82406541417526": "AddressesRegistry"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 16 } }]
     },
     {
       "name": "MetadataNFT_rETH",
@@ -222,6 +235,7 @@
         "0xd912ef195da3732a17ca667884c3832e1a3cd9dbc3eefae4625937c65911da7d"
       ],
       "proxyType": "immutable",
+      "description": "User-facing entry point of a single collateral branch: borrowers open, adjust, and close troves through it (depositing or withdrawing collateral and drawing or repaying BOLD), set or delegate their interest rate, and join or leave interest-rate batches. In the process it mints and burns BOLD and enforces the branch's per-trove and system collateral-ratio and minimum-debt requirements. It has no owner or admin: its wired addresses and risk parameters are immutable, read once from the AddressesRegistry at construction. shutdown() is permissionless but only succeeds once the branch's total collateral ratio has fallen below its SCR, while shutdownFromOracleFailure() is restricted to the PriceFeed.",
       "ignoreInCoverage": [
         "addManagerOf",
         "interestBatchManagerOf",
@@ -236,9 +250,9 @@
         "$immutable": true,
         "activePool": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
         "addressesRegistry": "eth:0x20F7C9ad66983F6523a0881d0f82406541417526",
-        "BCR": "100000000000000000",
+        "BCR": "10",
         "boldToken": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
-        "CCR": "1500000000000000000",
+        "CCR": "150",
         "collSurplusPool": "eth:0xedbE2509E502c0320D2e7f8b6746a49b4B50E2bF",
         "collToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "constructorArgs": {
@@ -249,17 +263,30 @@
         "getEntireBranchColl": "7862256312845847446516",
         "getEntireBranchDebt": "8032407482842554494569922",
         "hasBeenShutDown": false,
-        "MCR": "1100000000000000000",
+        "MCR": "110",
         "priceFeed": "eth:0xCC5F8102eb670c89a4a3c567C13851260303c24F",
-        "SCR": "1100000000000000000",
+        "SCR": "110",
         "sortedTroves": "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4",
         "troveManager": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
         "troveNFT": "eth:0x1A0FC0b843aFD9140267D25d4E575Cb37a838013",
         "WETH": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
+      "fieldMeta": {
+        "SCR": {
+          "description": "Shutdown Collateral Ratio (%). The branch can be shut down if its total collateral ratio (TCR) drops below this."
+        },
+        "CCR": { "description": "Critical Collateral Ratio (%)." },
+        "MCR": {
+          "description": "Minimum Collateral Ratio (%). Troves below it can be liquidated."
+        },
+        "BCR": {
+          "description": "Batch Collateral Ratio buffer (%). Batched troves must stay above MCR + BCR."
+        }
+      },
       "implementationNames": {
         "eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65": "BorrowerOperations"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 16 } }]
     },
     {
       "name": "GasPool_rETH",
@@ -315,6 +342,43 @@
       },
       "implementationNames": {
         "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0": "ActivePool"
+      }
+    },
+    {
+      "name": "EACAggregatorProxy",
+      "address": "eth:0x536218f9E9Eb48863970252233c8F271f554C2d0",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x056d4c6b4a8b2539822536f963ddff40d7327819b0a088b558d678ba5f38e984"
+      ],
+      "proxyType": "immutable",
+      "description": "Chainlink rETH/ETH aggregator used by the rETH PriceFeed. External oracle: discovered but its relatives are not walked.",
+      "deployerAddress": "eth:0x536Ee6348B3790EC74c21FCbe3D990066E9B8eC7",
+      "sinceTimestamp": 1677265283,
+      "sinceBlock": 16700133,
+      "values": {
+        "$immutable": true,
+        "accessController": "eth:0x0000000000000000000000000000000000000000",
+        "aggregator": "eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d",
+        "decimals": 18,
+        "description": "RETH / ETH",
+        "latestAnswer": "1165898859871155700",
+        "latestRound": "36893488147419103949",
+        "latestRoundData": {
+          "roundId": "36893488147419103949",
+          "answer": "1165898859871155700",
+          "startedAt": 1781896576,
+          "updatedAt": 1781896595,
+          "answeredInRound": "36893488147419103949"
+        },
+        "latestTimestamp": 1781896595,
+        "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
+        "phaseId": 2,
+        "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
+        "version": 6
+      },
+      "implementationNames": {
+        "eth:0x536218f9E9Eb48863970252233c8F271f554C2d0": "EACAggregatorProxy"
       }
     },
     {
@@ -400,6 +464,43 @@
       }
     },
     {
+      "name": "EACAggregatorProxy",
+      "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x6817c1bb5c0e498f52adbdf85688dd550e05aefc265a30f95ee83a2185ac8b8f"
+      ],
+      "proxyType": "immutable",
+      "description": "Chainlink ETH/USD aggregator used by the branch PriceFeeds. External oracle: discovered but its relatives are not walked.",
+      "deployerAddress": "eth:0x71C05a4eA5E9d5b1Ac87Bf962a043f5265d4Bdc8",
+      "sinceTimestamp": 1596720671,
+      "sinceBlock": 10606501,
+      "values": {
+        "$immutable": true,
+        "accessController": "eth:0x0000000000000000000000000000000000000000",
+        "aggregator": "eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5",
+        "decimals": 8,
+        "description": "ETH / USD",
+        "latestAnswer": 171480000000,
+        "latestRound": "129127208515966891934",
+        "latestRoundData": {
+          "roundId": "129127208515966891934",
+          "answer": 171480000000,
+          "startedAt": 1781961869,
+          "updatedAt": 1781961887,
+          "answeredInRound": "129127208515966891934"
+        },
+        "latestTimestamp": 1781961887,
+        "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
+        "phaseId": 7,
+        "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
+        "version": 6
+      },
+      "implementationNames": {
+        "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419": "EACAggregatorProxy"
+      }
+    },
+    {
       "name": "AddressesRegistry_rETH",
       "address": "eth:0x6106046F031a22713697e04C08B330dDaf3e8789",
       "type": "Contract",
@@ -414,10 +515,10 @@
       "values": {
         "$immutable": true,
         "activePool": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
-        "BCR": "100000000000000000",
+        "BCR": "10",
         "boldToken": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
         "borrowerOperations": "eth:0xe8119fC02953B27a1b48D2573855738485A17329",
-        "CCR": "1600000000000000000",
+        "CCR": "160",
         "collateralRegistry": "eth:0xf949982B91C8c61e952B3bA942cbbfaef5386684",
         "collSurplusPool": "eth:0xba4A2bD8b76DF84CaC98eBa3f4b967D8423192bF",
         "collToken": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393",
@@ -428,21 +529,34 @@
         "isOwner": false,
         "LIQUIDATION_PENALTY_REDISTRIBUTION": "200000000000000000",
         "LIQUIDATION_PENALTY_SP": "50000000000000000",
-        "MCR": "1200000000000000000",
+        "MCR": "120",
         "metadataNFT": "eth:0x3400874305E1547020fb8e80eAF1308B757171Af",
         "multiTroveGetter": "eth:0xFA61dB085510C64B83056Db3A7Acf3b6f631D235",
         "owner": "eth:0x0000000000000000000000000000000000000000",
         "priceFeed": "eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B",
-        "SCR": "1200000000000000000",
+        "SCR": "120",
         "sortedTroves": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
         "stabilityPool": "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695",
         "troveManager": "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e",
         "troveNFT": "eth:0x7ae430E25b67f19B431e1D1Dc048a5BCF24C0873",
         "WETH": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
+      "fieldMeta": {
+        "SCR": {
+          "description": "Shutdown Collateral Ratio (%). The branch can be shut down if its total collateral ratio (TCR) drops below this."
+        },
+        "CCR": { "description": "Critical Collateral Ratio (%)." },
+        "MCR": {
+          "description": "Minimum Collateral Ratio (%). Troves below it can be liquidated."
+        },
+        "BCR": {
+          "description": "Batch Collateral Ratio buffer (%). Batched troves must stay above MCR + BCR."
+        }
+      },
       "implementationNames": {
         "eth:0x6106046F031a22713697e04C08B330dDaf3e8789": "AddressesRegistry"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 16 } }]
     },
     {
       "name": "BOLD Stablecoin Token",
@@ -611,7 +725,7 @@
         "addressesRegistry": "eth:0x20F7C9ad66983F6523a0881d0f82406541417526",
         "boldToken": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
         "borrowerOperations": "eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65",
-        "CCR": "1500000000000000000",
+        "CCR": "150",
         "collateralRegistry": "eth:0xf949982B91C8c61e952B3bA942cbbfaef5386684",
         "collSurplusPool": "eth:0xedbE2509E502c0320D2e7f8b6746a49b4B50E2bF",
         "constructorArgs": {
@@ -630,9 +744,13 @@
         "troveNFT": "eth:0x1A0FC0b843aFD9140267D25d4E575Cb37a838013",
         "WETH": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
+      "fieldMeta": {
+        "CCR": { "description": "Critical Collateral Ratio (%)." }
+      },
       "implementationNames": {
         "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A": "TroveManager"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 16 } }]
     },
     {
       "name": "Governance",
@@ -824,10 +942,10 @@
       "values": {
         "$immutable": true,
         "activePool": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
-        "BCR": "100000000000000000",
+        "BCR": "10",
         "boldToken": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
         "borrowerOperations": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
-        "CCR": "1600000000000000000",
+        "CCR": "160",
         "collateralRegistry": "eth:0xf949982B91C8c61e952B3bA942cbbfaef5386684",
         "collSurplusPool": "eth:0x36e6CBdf68f64CF00fC3a6c634A25be32Dd0A235",
         "collToken": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
@@ -838,21 +956,34 @@
         "isOwner": false,
         "LIQUIDATION_PENALTY_REDISTRIBUTION": "200000000000000000",
         "LIQUIDATION_PENALTY_SP": "50000000000000000",
-        "MCR": "1200000000000000000",
+        "MCR": "120",
         "metadataNFT": "eth:0x362f822dF79790C8077e61110484Fffa48F682A1",
         "multiTroveGetter": "eth:0xFA61dB085510C64B83056Db3A7Acf3b6f631D235",
         "owner": "eth:0x0000000000000000000000000000000000000000",
         "priceFeed": "eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E",
-        "SCR": "1200000000000000000",
+        "SCR": "120",
         "sortedTroves": "eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1",
         "stabilityPool": "eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B",
         "troveManager": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22",
         "troveNFT": "eth:0x857aECeBF75f1012DC18E15020C97096aeA31b04",
         "WETH": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
+      "fieldMeta": {
+        "SCR": {
+          "description": "Shutdown Collateral Ratio (%). The branch can be shut down if its total collateral ratio (TCR) drops below this."
+        },
+        "CCR": { "description": "Critical Collateral Ratio (%)." },
+        "MCR": {
+          "description": "Minimum Collateral Ratio (%). Troves below it can be liquidated."
+        },
+        "BCR": {
+          "description": "Batch Collateral Ratio buffer (%). Batched troves must stay above MCR + BCR."
+        }
+      },
       "implementationNames": {
         "eth:0x8d733F7ea7c23Cbea7C613B6eBd845d46d3aAc54": "AddressesRegistry"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 16 } }]
     },
     {
       "name": "ActivePool_rETH",
@@ -1002,7 +1133,7 @@
         "addressesRegistry": "eth:0x8d733F7ea7c23Cbea7C613B6eBd845d46d3aAc54",
         "boldToken": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
         "borrowerOperations": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
-        "CCR": "1600000000000000000",
+        "CCR": "160",
         "collateralRegistry": "eth:0xf949982B91C8c61e952B3bA942cbbfaef5386684",
         "collSurplusPool": "eth:0x36e6CBdf68f64CF00fC3a6c634A25be32Dd0A235",
         "constructorArgs": {
@@ -1021,9 +1152,13 @@
         "troveNFT": "eth:0x857aECeBF75f1012DC18E15020C97096aeA31b04",
         "WETH": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
+      "fieldMeta": {
+        "CCR": { "description": "Critical Collateral Ratio (%)." }
+      },
       "implementationNames": {
         "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22": "TroveManager"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 16 } }]
     },
     {
       "name": "FixedAssetReader_wstETH",
@@ -1053,6 +1188,7 @@
         "0xd912ef195da3732a17ca667884c3832e1a3cd9dbc3eefae4625937c65911da7d"
       ],
       "proxyType": "immutable",
+      "description": "User-facing entry point of a single collateral branch: borrowers open, adjust, and close troves through it (depositing or withdrawing collateral and drawing or repaying BOLD), set or delegate their interest rate, and join or leave interest-rate batches. In the process it mints and burns BOLD and enforces the branch's per-trove and system collateral-ratio and minimum-debt requirements. It has no owner or admin: its wired addresses and risk parameters are immutable, read once from the AddressesRegistry at construction. shutdown() is permissionless but only succeeds once the branch's total collateral ratio has fallen below its SCR, while shutdownFromOracleFailure() is restricted to the PriceFeed.",
       "ignoreInCoverage": [
         "addManagerOf",
         "interestBatchManagerOf",
@@ -1067,9 +1203,9 @@
         "$immutable": true,
         "activePool": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
         "addressesRegistry": "eth:0x8d733F7ea7c23Cbea7C613B6eBd845d46d3aAc54",
-        "BCR": "100000000000000000",
+        "BCR": "10",
         "boldToken": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
-        "CCR": "1600000000000000000",
+        "CCR": "160",
         "collSurplusPool": "eth:0x36e6CBdf68f64CF00fC3a6c634A25be32Dd0A235",
         "collToken": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
         "constructorArgs": {
@@ -1080,17 +1216,30 @@
         "getEntireBranchColl": "22734303224289153439858",
         "getEntireBranchDebt": "19782667450133726381311178",
         "hasBeenShutDown": false,
-        "MCR": "1200000000000000000",
+        "MCR": "120",
         "priceFeed": "eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E",
-        "SCR": "1200000000000000000",
+        "SCR": "120",
         "sortedTroves": "eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1",
         "troveManager": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22",
         "troveNFT": "eth:0x857aECeBF75f1012DC18E15020C97096aeA31b04",
         "WETH": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
+      "fieldMeta": {
+        "SCR": {
+          "description": "Shutdown Collateral Ratio (%). The branch can be shut down if its total collateral ratio (TCR) drops below this."
+        },
+        "CCR": { "description": "Critical Collateral Ratio (%)." },
+        "MCR": {
+          "description": "Minimum Collateral Ratio (%). Troves below it can be liquidated."
+        },
+        "BCR": {
+          "description": "Batch Collateral Ratio buffer (%). Batched troves must stay above MCR + BCR."
+        }
+      },
       "implementationNames": {
         "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3": "BorrowerOperations"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 16 } }]
     },
     {
       "name": "TroveManager_rETH",
@@ -1111,7 +1260,7 @@
         "addressesRegistry": "eth:0x6106046F031a22713697e04C08B330dDaf3e8789",
         "boldToken": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
         "borrowerOperations": "eth:0xe8119fC02953B27a1b48D2573855738485A17329",
-        "CCR": "1600000000000000000",
+        "CCR": "160",
         "collateralRegistry": "eth:0xf949982B91C8c61e952B3bA942cbbfaef5386684",
         "collSurplusPool": "eth:0xba4A2bD8b76DF84CaC98eBa3f4b967D8423192bF",
         "constructorArgs": {
@@ -1130,9 +1279,13 @@
         "troveNFT": "eth:0x7ae430E25b67f19B431e1D1Dc048a5BCF24C0873",
         "WETH": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
+      "fieldMeta": {
+        "CCR": { "description": "Critical Collateral Ratio (%)." }
+      },
       "implementationNames": {
         "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e": "TroveManager"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 16 } }]
     },
     {
       "name": "CollSurplusPool_rETH",
@@ -1208,6 +1361,43 @@
       },
       "implementationNames": {
         "eth:0xcC77baf5706BDf7CFA7FefD5337833e2e1fd0d8e": "FixedAssetReader"
+      }
+    },
+    {
+      "name": "EACAggregatorProxy",
+      "address": "eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x056d4c6b4a8b2539822536f963ddff40d7327819b0a088b558d678ba5f38e984"
+      ],
+      "proxyType": "immutable",
+      "description": "Chainlink stETH/USD aggregator used by the wstETH PriceFeed. External oracle: discovered but its relatives are not walked.",
+      "deployerAddress": "eth:0x536Ee6348B3790EC74c21FCbe3D990066E9B8eC7",
+      "sinceTimestamp": 1629828389,
+      "sinceBlock": 13089591,
+      "values": {
+        "$immutable": true,
+        "accessController": "eth:0x0000000000000000000000000000000000000000",
+        "aggregator": "eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f",
+        "decimals": 8,
+        "description": "STETH / USD",
+        "latestAnswer": 172286740000,
+        "latestRound": "36893488147419123089",
+        "latestRoundData": {
+          "roundId": "36893488147419123089",
+          "answer": 172286740000,
+          "startedAt": 1781961422,
+          "updatedAt": 1781961443,
+          "answeredInRound": "36893488147419123089"
+        },
+        "latestTimestamp": 1781961443,
+        "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
+        "phaseId": 2,
+        "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
+        "version": 6
+      },
+      "implementationNames": {
+        "eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8": "EACAggregatorProxy"
       }
     },
     {
@@ -1354,6 +1544,7 @@
         "0xd912ef195da3732a17ca667884c3832e1a3cd9dbc3eefae4625937c65911da7d"
       ],
       "proxyType": "immutable",
+      "description": "User-facing entry point of a single collateral branch: borrowers open, adjust, and close troves through it (depositing or withdrawing collateral and drawing or repaying BOLD), set or delegate their interest rate, and join or leave interest-rate batches. In the process it mints and burns BOLD and enforces the branch's per-trove and system collateral-ratio and minimum-debt requirements. It has no owner or admin: its wired addresses and risk parameters are immutable, read once from the AddressesRegistry at construction. shutdown() is permissionless but only succeeds once the branch's total collateral ratio has fallen below its SCR, while shutdownFromOracleFailure() is restricted to the PriceFeed.",
       "ignoreInCoverage": [
         "addManagerOf",
         "interestBatchManagerOf",
@@ -1368,9 +1559,9 @@
         "$immutable": true,
         "activePool": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
         "addressesRegistry": "eth:0x6106046F031a22713697e04C08B330dDaf3e8789",
-        "BCR": "100000000000000000",
+        "BCR": "10",
         "boldToken": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
-        "CCR": "1600000000000000000",
+        "CCR": "160",
         "collSurplusPool": "eth:0xba4A2bD8b76DF84CaC98eBa3f4b967D8423192bF",
         "collToken": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393",
         "constructorArgs": {
@@ -1381,17 +1572,30 @@
         "getEntireBranchColl": "5959787354283343567479",
         "getEntireBranchDebt": "4194897977456767410468621",
         "hasBeenShutDown": false,
-        "MCR": "1200000000000000000",
+        "MCR": "120",
         "priceFeed": "eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B",
-        "SCR": "1200000000000000000",
+        "SCR": "120",
         "sortedTroves": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
         "troveManager": "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e",
         "troveNFT": "eth:0x7ae430E25b67f19B431e1D1Dc048a5BCF24C0873",
         "WETH": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
+      "fieldMeta": {
+        "SCR": {
+          "description": "Shutdown Collateral Ratio (%). The branch can be shut down if its total collateral ratio (TCR) drops below this."
+        },
+        "CCR": { "description": "Critical Collateral Ratio (%)." },
+        "MCR": {
+          "description": "Minimum Collateral Ratio (%). Troves below it can be liquidated."
+        },
+        "BCR": {
+          "description": "Batch Collateral Ratio buffer (%). Batched troves must stay above MCR + BCR."
+        }
+      },
       "implementationNames": {
         "eth:0xe8119fC02953B27a1b48D2573855738485A17329": "BorrowerOperations"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 16 } }]
     },
     {
       "name": "ActivePool_WETH",
@@ -1858,6 +2062,36 @@
       "function stabilityPool() view returns (address)",
       "function troveManagerAddress() view returns (address)"
     ],
+    "eth:0x536218f9E9Eb48863970252233c8F271f554C2d0": [
+      "constructor(address _aggregator, address _accessController)",
+      "event AnswerUpdated(int256 indexed current, uint256 indexed roundId, uint256 updatedAt)",
+      "event NewRound(uint256 indexed roundId, address indexed startedBy, uint256 startedAt)",
+      "event OwnershipTransferRequested(address indexed from, address indexed to)",
+      "event OwnershipTransferred(address indexed from, address indexed to)",
+      "function acceptOwnership()",
+      "function accessController() view returns (address)",
+      "function aggregator() view returns (address)",
+      "function confirmAggregator(address _aggregator)",
+      "function decimals() view returns (uint8)",
+      "function description() view returns (string)",
+      "function getAnswer(uint256 _roundId) view returns (int256)",
+      "function getRoundData(uint80 _roundId) view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function getTimestamp(uint256 _roundId) view returns (uint256)",
+      "function latestAnswer() view returns (int256)",
+      "function latestRound() view returns (uint256)",
+      "function latestRoundData() view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function latestTimestamp() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function phaseAggregators(uint16) view returns (address)",
+      "function phaseId() view returns (uint16)",
+      "function proposeAggregator(address _aggregator)",
+      "function proposedAggregator() view returns (address)",
+      "function proposedGetRoundData(uint80 _roundId) view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function proposedLatestRoundData() view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function setController(address _accessController)",
+      "function transferOwnership(address _to)",
+      "function version() view returns (uint256)"
+    ],
     "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF": [
       "constructor(address _addressesRegistry)",
       "event ActivePoolAddressChanged(address _newActivePoolAddress)",
@@ -1922,6 +2156,36 @@
       "function receiveColl(uint256 _amount)",
       "function sendCollToActivePool(uint256 _amount)",
       "function troveManagerAddress() view returns (address)"
+    ],
+    "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419": [
+      "constructor(address _aggregator, address _accessController)",
+      "event AnswerUpdated(int256 indexed current, uint256 indexed roundId, uint256 updatedAt)",
+      "event NewRound(uint256 indexed roundId, address indexed startedBy, uint256 startedAt)",
+      "event OwnershipTransferRequested(address indexed from, address indexed to)",
+      "event OwnershipTransferred(address indexed from, address indexed to)",
+      "function acceptOwnership()",
+      "function accessController() view returns (address)",
+      "function aggregator() view returns (address)",
+      "function confirmAggregator(address _aggregator)",
+      "function decimals() view returns (uint8)",
+      "function description() view returns (string)",
+      "function getAnswer(uint256 _roundId) view returns (int256)",
+      "function getRoundData(uint80 _roundId) view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function getTimestamp(uint256 _roundId) view returns (uint256)",
+      "function latestAnswer() view returns (int256)",
+      "function latestRound() view returns (uint256)",
+      "function latestRoundData() view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function latestTimestamp() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function phaseAggregators(uint16) view returns (address)",
+      "function phaseId() view returns (uint16)",
+      "function proposeAggregator(address _aggregator)",
+      "function proposedAggregator() view returns (address)",
+      "function proposedGetRoundData(uint80 _roundId) view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function proposedLatestRoundData() view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function setController(address _accessController)",
+      "function transferOwnership(address _to)",
+      "function version() view returns (uint256)"
     ],
     "eth:0x6106046F031a22713697e04C08B330dDaf3e8789": [
       "constructor(address _owner, uint256 _ccr, uint256 _mcr, uint256 _bcr, uint256 _scr, uint256 _liquidationPenaltySP, uint256 _liquidationPenaltyRedistribution)",
@@ -2703,6 +2967,36 @@
       "function pointer() view returns (address)",
       "function readAsset(bytes4 _sig) view returns (string)"
     ],
+    "eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8": [
+      "constructor(address _aggregator, address _accessController)",
+      "event AnswerUpdated(int256 indexed current, uint256 indexed roundId, uint256 updatedAt)",
+      "event NewRound(uint256 indexed roundId, address indexed startedBy, uint256 startedAt)",
+      "event OwnershipTransferRequested(address indexed from, address indexed to)",
+      "event OwnershipTransferred(address indexed from, address indexed to)",
+      "function acceptOwnership()",
+      "function accessController() view returns (address)",
+      "function aggregator() view returns (address)",
+      "function confirmAggregator(address _aggregator)",
+      "function decimals() view returns (uint8)",
+      "function description() view returns (string)",
+      "function getAnswer(uint256 _roundId) view returns (int256)",
+      "function getRoundData(uint80 _roundId) view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function getTimestamp(uint256 _roundId) view returns (uint256)",
+      "function latestAnswer() view returns (int256)",
+      "function latestRound() view returns (uint256)",
+      "function latestRoundData() view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function latestTimestamp() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function phaseAggregators(uint16) view returns (address)",
+      "function phaseId() view returns (uint16)",
+      "function proposeAggregator(address _aggregator)",
+      "function proposedAggregator() view returns (address)",
+      "function proposedGetRoundData(uint80 _roundId) view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function proposedLatestRoundData() view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function setController(address _accessController)",
+      "function transferOwnership(address _to)",
+      "function version() view returns (uint256)"
+    ],
     "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695": [
       "constructor(address _addressesRegistry)",
       "event ActivePoolAddressChanged(address _newActivePoolAddress)",
@@ -2990,22 +3284,22 @@
   },
   "usedTemplates": {
     "liquityv2/ActivePool": "0xa03de504b0e25900a097612746f737802a3b9b706d86d99a41247b7f32043f7e",
-    "liquityv2/AddressesRegistry": "0x8db2c918a2e42d73cbb59d6757fa772d488d6f3d9bd22b2ed943f836e2ba78fd",
+    "liquityv2/AddressesRegistry": "0x4057078646dbe0858012bd2ff2ae0137ee7af70c682f66fb06e825df19eb622d",
     "liquityv2/BoldToken": "0x96b7f5e8109e92144b009c45c30075f8ec5a0830b138d15b06b2ff950a4445f9",
-    "liquityv2/BorrowerOperations": "0xa12cc1033c36f4ede0cd1db0b10535b6dd8d50eac88f0138a90a4bfa17f5194c",
+    "liquityv2/BorrowerOperations": "0xd1e24c0556fdef3a9c8a610c2d62e6905402610f9c508087c62155c7074fe791",
     "liquityv2/CollateralRegistry": "0xdb1284f537acceb4b2d8fd91c683c82ced83969cd6c76f0990817ee455c8ac35",
     "liquityv2/CollSurplusPool": "0x6684ffbbf8dc46d947e5b66d6287a08379c0ea50e85d4095693bce55e87c8784",
     "liquityv2/DefaultPool": "0xf76544a2d96f34f8558006a2796043cf6480a50fe6796cb3430971a69d07f033",
     "liquityv2/Governance": "0x58a62670b1b5ac1f65f6541bfcd0f70cacc7a4eb28d2e8f6f430096bdd6ff446",
-    "liquityv2/RETHPriceFeed": "0xdb9e910c17c7cf47058e4d4f3a9231ae1437903e27109ce6a4069393586cf38a",
+    "liquityv2/RETHPriceFeed": "0x123f80c6bf5c2706944ecc3789d8cd1f4fe9909f41fd29262f4b11936787eeb7",
     "liquityv2/SortedTroves": "0xf293f74be45106d609814c95b63ca8ad04c5a5635075c1248f36508f2c468bf9",
     "liquityv2/StabilityPool": "0x14d6c8f51a09720083f6e5fb4903344e584819dac8b4e321694f6029e651d416",
-    "liquityv2/TroveManager": "0x4984a1f8d153a5fa26dcb7debc39f305d8455ba1161a41e8fa7b6f026816426f",
+    "liquityv2/TroveManager": "0x86616ddf43f9a5c18001a4dc7426eaffe9b7658724fe4f58087be651ab68682d",
     "liquityv2/TroveNFT": "0x3168d31b447cb5348fe6021d098550105dc8a4f5c53da1e489528b0285e63b67",
     "liquityv2/UserProxy": "0x76c1139858057493e9d67b62aaf9bf39fe368ce27ecbde05d644d94d1db2fbcf",
-    "liquityv2/WETHPriceFeed": "0x85930b98dbfc603015722ab9c72a605f386c39c92758f040200da86c3aca19c6",
-    "liquityv2/WSTETHPriceFeed": "0xdc26275a801895b3260e54c61633f157a559f4578df78ccc7da4b2e875478314"
+    "liquityv2/WETHPriceFeed": "0xb58238401cb9b88b63d8279dcbadb38dd95ee5d3f77b2a9a0a28f3297aa38290",
+    "liquityv2/WSTETHPriceFeed": "0x123f80c6bf5c2706944ecc3789d8cd1f4fe9909f41fd29262f4b11936787eeb7"
   },
   "usedBlockNumbers": { "ethereum": 25359156 },
-  "permissionsConfigHash": "0x99d13ba50e849b0d0bb99836b7cbd36203e68c900ac2b6db34dd32168bafa894"
+  "permissionsConfigHash": "0x2a44e2deb1e730e8eed925bd18ee7fd1faa6efe556c1af6dd3c2ae8ba7d90a4d"
 }

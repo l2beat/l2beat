@@ -1,5 +1,23 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "AddressesRegistry",
-  "ignoreRelatives": ["collToken", "WETH"]
+  "ignoreRelatives": ["collToken", "WETH"],
+  "fields": {
+    "SCR": {
+      "edit": ["format", "Undecimal16"],
+      "description": "Shutdown Collateral Ratio (%). The branch can be shut down if its total collateral ratio (TCR) drops below this."
+    },
+    "CCR": {
+      "edit": ["format", "Undecimal16"],
+      "description": "Critical Collateral Ratio (%)."
+    },
+    "MCR": {
+      "edit": ["format", "Undecimal16"],
+      "description": "Minimum Collateral Ratio (%). Troves below it can be liquidated."
+    },
+    "BCR": {
+      "edit": ["format", "Undecimal16"],
+      "description": "Batch Collateral Ratio buffer (%). Batched troves must stay above MCR + BCR."
+    }
+  }
 }

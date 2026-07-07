@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "RETHPriceFeed",
-  "ignoreRelatives": ["ethUsdOracle", "rEthEthOracle", "rateProviderAddress"],
+  "ignoreRelatives": ["rateProviderAddress"],
   "fields": {
     "constructorArgs": {
       "handler": { "type": "constructorArgs", "nameArgs": true, "ignoreRelative": true }

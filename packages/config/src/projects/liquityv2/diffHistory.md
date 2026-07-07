@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x3809f088dfed6baf9224b909caa19dc9df918ffd
+Generated with discovered.json: 0x0f9fa59f8c9b9b766711f66571d436bad6652984
 
-# Diff at Wed, 24 Jun 2026 15:11:37 GMT:
+# Diff at Tue, 07 Jul 2026 10:20:43 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - current timestamp: 1781962796
@@ -56,7 +56,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract BorrowerOperations_WETH (eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65) [liquityv2/BorrowerOperations]
-    +++ description: None
+    +++ description: User-facing entry point of a single collateral branch: borrowers open, adjust, and close troves through it (depositing or withdrawing collateral and drawing or repaying BOLD), set or delegate their interest rate, and join or leave interest-rate batches. In the process it mints and burns BOLD and enforces the branch's per-trove and system collateral-ratio and minimum-debt requirements. It has no owner or admin: its wired addresses and risk parameters are immutable, read once from the AddressesRegistry at construction. shutdown() is permissionless but only succeeds once the branch's total collateral ratio has fallen below its SCR, while shutdownFromOracleFailure() is restricted to the PriceFeed.
 ```
 
 ```diff
@@ -69,6 +69,12 @@ Discovery rerun on the same block number with only config-related changes.
 +   Status: CREATED
     contract ActivePool_wstETH (eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0) [liquityv2/ActivePool]
     +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EACAggregatorProxy (eth:0x536218f9E9Eb48863970252233c8F271f554C2d0) [N/A]
+    +++ description: Chainlink rETH/ETH aggregator used by the rETH PriceFeed. External oracle: discovered but its relatives are not walked.
 ```
 
 ```diff
@@ -87,6 +93,12 @@ Discovery rerun on the same block number with only config-related changes.
 +   Status: CREATED
     contract FixedAssetData_WETH (eth:0x5CcA549ca706C39D68156e5E0a72CcBC95f563d0) [N/A]
     +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EACAggregatorProxy (eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419) [N/A]
+    +++ description: Chainlink ETH/USD aggregator used by the branch PriceFeeds. External oracle: discovered but its relatives are not walked.
 ```
 
 ```diff
@@ -206,7 +218,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract BorrowerOperations_wstETH (eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3) [liquityv2/BorrowerOperations]
-    +++ description: None
+    +++ description: User-facing entry point of a single collateral branch: borrowers open, adjust, and close troves through it (depositing or withdrawing collateral and drawing or repaying BOLD), set or delegate their interest rate, and join or leave interest-rate batches. In the process it mints and burns BOLD and enforces the branch's per-trove and system collateral-ratio and minimum-debt requirements. It has no owner or admin: its wired addresses and risk parameters are immutable, read once from the AddressesRegistry at construction. shutdown() is permissionless but only succeeds once the branch's total collateral ratio has fallen below its SCR, while shutdownFromOracleFailure() is restricted to the PriceFeed.
 ```
 
 ```diff
@@ -231,6 +243,12 @@ Discovery rerun on the same block number with only config-related changes.
 +   Status: CREATED
     contract FixedAssetReader_rETH (eth:0xcC77baf5706BDf7CFA7FefD5337833e2e1fd0d8e) [N/A]
     +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EACAggregatorProxy (eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8) [N/A]
+    +++ description: Chainlink stETH/USD aggregator used by the wstETH PriceFeed. External oracle: discovered but its relatives are not walked.
 ```
 
 ```diff
@@ -260,7 +278,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract BorrowerOperations_rETH (eth:0xe8119fC02953B27a1b48D2573855738485A17329) [liquityv2/BorrowerOperations]
-    +++ description: None
+    +++ description: User-facing entry point of a single collateral branch: borrowers open, adjust, and close troves through it (depositing or withdrawing collateral and drawing or repaying BOLD), set or delegate their interest rate, and join or leave interest-rate batches. In the process it mints and burns BOLD and enforces the branch's per-trove and system collateral-ratio and minimum-debt requirements. It has no owner or admin: its wired addresses and risk parameters are immutable, read once from the AddressesRegistry at construction. shutdown() is permissionless but only succeeds once the branch's total collateral ratio has fallen below its SCR, while shutdownFromOracleFailure() is restricted to the PriceFeed.
 ```
 
 ```diff

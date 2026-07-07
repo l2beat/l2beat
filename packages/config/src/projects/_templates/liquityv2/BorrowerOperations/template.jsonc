@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "BorrowerOperations",
+  "description": "User-facing entry point of a single collateral branch: borrowers open, adjust, and close troves through it (depositing or withdrawing collateral and drawing or repaying BOLD), set or delegate their interest rate, and join or leave interest-rate batches. In the process it mints and burns BOLD and enforces the branch's per-trove and system collateral-ratio and minimum-debt requirements. It has no owner or admin: its wired addresses and risk parameters are immutable, read once from the AddressesRegistry at construction. shutdown() is permissionless but only succeeds once the branch's total collateral ratio has fallen below its SCR, while shutdownFromOracleFailure() is restricted to the PriceFeed.",
   "ignoreMethods": [
     "addManagerOf",
     "getInterestIndividualDelegateOf",
@@ -46,6 +47,22 @@
     },
     "troveNFT": {
       "handler": { "type": "event", "select": "_newTroveNFTAddress", "set": { "event": "TroveNFTAddressChanged" } }
+    },
+    "SCR": {
+      "edit": ["format", "Undecimal16"],
+      "description": "Shutdown Collateral Ratio (%). The branch can be shut down if its total collateral ratio (TCR) drops below this."
+    },
+    "CCR": {
+      "edit": ["format", "Undecimal16"],
+      "description": "Critical Collateral Ratio (%)."
+    },
+    "MCR": {
+      "edit": ["format", "Undecimal16"],
+      "description": "Minimum Collateral Ratio (%). Troves below it can be liquidated."
+    },
+    "BCR": {
+      "edit": ["format", "Undecimal16"],
+      "description": "Batch Collateral Ratio buffer (%). Batched troves must stay above MCR + BCR."
     }
   }
 }

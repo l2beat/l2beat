@@ -310,6 +310,12 @@
         "decimals": 2
       }
     },
+    "Undecimal16": {
+      "typeCaster": "Undecimal",
+      "arg": {
+        "decimals": 16
+      }
+    },
     "Undecimal18": {
       "typeCaster": "Undecimal",
       "arg": {

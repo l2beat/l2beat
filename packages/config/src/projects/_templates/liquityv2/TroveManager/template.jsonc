@@ -37,6 +37,10 @@
     },
     "defaultPool": {
       "handler": { "type": "event", "select": "_newDefaultPoolAddress", "set": { "event": "DefaultPoolAddressChanged" } }
+    },
+    "CCR": {
+      "edit": ["format", "Undecimal16"],
+      "description": "Critical Collateral Ratio (%)."
     }
   }
 }
