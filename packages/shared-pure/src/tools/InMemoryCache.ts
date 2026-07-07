@@ -4,6 +4,7 @@ const PROMISE_TIMEOUT = 30
 
 type Logger = {
   info: (...args: unknown[]) => void
+  warn: (...args: unknown[]) => void
   for: (object: object) => Logger
 }
 
@@ -130,8 +131,12 @@ export class InMemoryCache {
         timestamp: UnixTime.now(),
         maxLifetime,
       })
-    } catch {
+    } catch (error) {
       // If revalidation fails, we keep the stale data
+      this.logger?.warn('Cache revalidation failed', {
+        key,
+        error,
+      })
     }
   }
 

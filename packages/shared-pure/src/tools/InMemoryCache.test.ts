@@ -205,7 +205,12 @@ describe(InMemoryCache.name, () => {
         const initialCache = new Map([
           ['key', { result: 'stale', timestamp: now - 2000 }],
         ])
-        const cache = new InMemoryCache({ initialCache })
+        const logger = {
+          info: mockFn(),
+          warn: mockFn(),
+          for: () => undefined as never,
+        }
+        const cache = new InMemoryCache({ initialCache, logger })
         const fallback = mockFn().rejectsWith(new Error('Revalidation failed'))
 
         // First call should return stale data and trigger revalidation
@@ -219,6 +224,15 @@ describe(InMemoryCache.name, () => {
 
         // Wait for background revalidation to fail
         await new Promise((resolve) => setTimeout(resolve, 10))
+
+        expect(logger.warn).toHaveBeenCalledTimes(1)
+
+        const [message, parameters] = logger.warn.calls[0]?.args ?? []
+        expect(message).toEqual('Cache revalidation failed')
+        expect((parameters as { key: string }).key).toEqual('key')
+        expect((parameters as { error: Error }).error.message).toEqual(
+          'Revalidation failed',
+        )
 
         // Next request should still get stale data since revalidation failed
         const result2 = await cache.get(
