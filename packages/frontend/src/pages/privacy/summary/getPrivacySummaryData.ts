@@ -59,7 +59,13 @@ async function getCachedData() {
     await ps.getProjects({
       where: ['privacyInfo'],
       select: ['display', 'privacyInfo', 'statuses'],
-      optional: ['tvsConfig', 'contracts', 'permissions', 'discoveryInfo'],
+      optional: [
+        'tvsConfig',
+        'contracts',
+        'permissions',
+        'discoveryInfo',
+        'zkCatalogInfo',
+      ],
     })
   ).sort((a, b) => a.slug.localeCompare(b.slug))
 

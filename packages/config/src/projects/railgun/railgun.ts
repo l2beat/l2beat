@@ -86,6 +86,7 @@ const executionEndOffset = discovery.getContractValue<number>(
   'EXECUTION_END_OFFSET',
 )
 const quorum = discovery.getContractValueBigInt('Voting', 'QUORUM')
+const RAILGUN_SINCE_TIMESTAMP = UnixTime(railgunCore.sinceTimestamp ?? 0)
 
 function formatBasisPoints(value: number): string {
   return `${Number((value / 100).toFixed(4))}%`
@@ -169,8 +170,24 @@ export const railgun: BaseProject = {
     associatedTokens: [{ symbol: RAIL_TOKEN.symbol, icon: RAIL_TOKEN.iconUrl }],
     warnings: [],
   },
-  privacyInfo: {
-    trustedSetup: TRUSTED_SETUPS.Railgun,
+  zkCatalogInfo: {
+    creator: 'Railgun',
+    techStack: {
+      zkVM: [ZK_CATALOG_TAGS.curve.BN254, ZK_CATALOG_TAGS.Groth16.Snarkjs],
+    },
+    proofSystemInfo: '',
+    trustedSetups: [
+      {
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+        ...TRUSTED_SETUPS.Railgun,
+      },
+    ],
+    projectsForTvs: [
+      {
+        projectId: ProjectId('railgun'),
+        sinceTimestamp: RAILGUN_SINCE_TIMESTAMP,
+      },
+    ],
     verifierHashes: [
       {
         hash: 'Railgun 91 circuit verifier 03.07.2026',
@@ -194,6 +211,8 @@ export const railgun: BaseProject = {
         ),
       },
     ],
+  },
+  privacyInfo: {
     tokens: privacyTokens,
     exitWindow: {
       value: formatSeconds(executionStartOffset),

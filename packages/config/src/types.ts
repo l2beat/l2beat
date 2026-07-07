@@ -950,8 +950,6 @@ export interface TrustedSetup {
 // #region privacy data
 
 export interface ProjectPrivacyInfo {
-  trustedSetup: TrustedSetup
-  verifierHashes?: ProjectZkCatalogInfo['verifierHashes']
   tokens: ProjectPrivacyToken[]
   summaryTrackedItemName?: string
   exitWindow: PrivacyExitWindow

@@ -205,7 +205,7 @@ export async function getScalingProjectEntry(
     }),
     ps.getProjects({
       select: ['display'],
-      optional: ['daBridge', 'scalingInfo', 'daLayer'],
+      optional: ['daBridge', 'scalingInfo', 'daLayer', 'privacyInfo'],
     }),
     ps.getProjects({
       select: ['interopConfig'],

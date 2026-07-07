@@ -24,6 +24,7 @@ import { getContractUtils } from '~/utils/project/contracts-and-permissions/getC
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
+import { getTrustedSetupsSectionFromTrustedSetups } from '~/utils/project/getTrustedSetupsSection'
 import { getVerifiersSection } from '~/utils/project/getVerifiersSection'
 import { optionToRange } from '~/utils/range/range'
 
@@ -273,22 +274,32 @@ export async function getPrivacyProjectData(
     props: {
       id: 'trusted-setups',
       title: 'Trusted setup',
-      trustedSetups: [
-        {
-          name: details.trustedSetup.name,
-          risk: details.trustedSetup.risk,
-          description: details.trustedSetup.longDescription,
-          proofSystems: [],
-        },
-      ],
+      ...(details.zkCatalogInfo &&
+      details.zkCatalogInfo.trustedSetups.length > 0
+        ? getTrustedSetupsSectionFromTrustedSetups(
+            details.zkCatalogInfo.trustedSetups,
+          )
+        : {
+            trustedSetups: [
+              {
+                name: details.trustedSetup.name,
+                risk: details.trustedSetup.risk,
+                description: details.trustedSetup.longDescription,
+                proofSystems: [],
+              },
+            ],
+          }),
     },
   })
 
-  if (details.verifierHashes && details.verifierHashes.length > 0) {
+  if (
+    details.zkCatalogInfo?.verifierHashes &&
+    details.zkCatalogInfo.verifierHashes.length > 0
+  ) {
     const verifiersSection = await getVerifiersSection(
       {
         projectId: details.id,
-        verifierHashes: details.verifierHashes,
+        verifierHashes: details.zkCatalogInfo.verifierHashes,
         includeCurrentProject: true,
       },
       contractUtils,

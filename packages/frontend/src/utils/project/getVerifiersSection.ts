@@ -31,7 +31,7 @@ export async function getVerifiersSection(
   contractUtils: ContractUtils,
   allProjects: Project<
     never,
-    'display' | 'daBridge' | 'scalingInfo' | 'daLayer'
+    'display' | 'daBridge' | 'scalingInfo' | 'daLayer' | 'privacyInfo'
   >[],
   tvs: SevenDayTvsBreakdown,
 ): Promise<Omit<VerifiersSectionProps, keyof ProjectSectionProps>> {

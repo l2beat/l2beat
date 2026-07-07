@@ -81,6 +81,9 @@ interface TornadoBucket {
 }
 
 const BUCKETS = getTornadoBuckets()
+const TORNADO_CASH_SINCE_TIMESTAMP = UnixTime(
+  Math.min(...BUCKETS.map((bucket) => bucket.sinceTimestamp)),
+)
 
 export const tornadoCash: BaseProject = {
   id: ProjectId('tornado-cash'),
@@ -118,15 +121,31 @@ export const tornadoCash: BaseProject = {
     associatedTokens: [],
     warnings: [],
   },
-  privacyInfo: {
-    trustedSetup: TRUSTED_SETUPS.TornadoCash,
+  zkCatalogInfo: {
+    creator: 'Tornado Cash',
+    techStack: {
+      zkVM: [ZK_CATALOG_TAGS.curve.BN254, ZK_CATALOG_TAGS.Groth16.websnark],
+    },
+    proofSystemInfo: '',
+    trustedSetups: [
+      {
+        proofSystem: ZK_CATALOG_TAGS.Groth16.websnark,
+        ...TRUSTED_SETUPS.TornadoCash,
+      },
+    ],
+    projectsForTvs: [
+      {
+        projectId: ProjectId('tornado-cash'),
+        sinceTimestamp: TORNADO_CASH_SINCE_TIMESTAMP,
+      },
+    ],
     verifierHashes: [
       {
         hash: 'Tornado Cash verifier 03.07.2026',
         name: 'Tornado Cash verifier v2.1',
         sourceLink:
           'https://github.com/tornadocash/tornado-core/tree/v2.1/circuits',
-        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+        proofSystem: ZK_CATALOG_TAGS.Groth16.websnark,
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(
@@ -143,6 +162,8 @@ export const tornadoCash: BaseProject = {
         ),
       },
     ],
+  },
+  privacyInfo: {
     tokens: getPrivacyTokens(),
     exitWindow: {
       value: 'Infinite',

@@ -178,6 +178,7 @@ export const zkCatalogColumns = [
         <TechStackCell
           tags={ctx.row.original.techStack.finalWrap ?? []}
           className="md:min-w-[180px]"
+          emptyText="No final wrap"
         />
       )
     },

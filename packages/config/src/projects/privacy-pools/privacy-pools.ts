@@ -50,6 +50,9 @@ interface PrivacyPoolBucket {
 }
 
 const BUCKETS = getPrivacyPoolBuckets()
+const PRIVACY_POOLS_SINCE_TIMESTAMP = UnixTime(
+  Math.min(...BUCKETS.map((bucket) => bucket.sinceTimestamp)),
+)
 
 const multisigStats = discovery.getMultisigStats('Privacy Pools Multisig')
 const feeSummary = formatPrivacyPoolsFeeSummary()
@@ -91,8 +94,24 @@ export const privacyPools: BaseProject = {
     associatedTokens: [],
     warnings: [],
   },
-  privacyInfo: {
-    trustedSetup: TRUSTED_SETUPS.PrivacyPools,
+  zkCatalogInfo: {
+    creator: '0xbow',
+    techStack: {
+      zkVM: [ZK_CATALOG_TAGS.curve.BN254, ZK_CATALOG_TAGS.Groth16.Snarkjs],
+    },
+    proofSystemInfo: '',
+    trustedSetups: [
+      {
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+        ...TRUSTED_SETUPS.PrivacyPools,
+      },
+    ],
+    projectsForTvs: [
+      {
+        projectId: ProjectId('privacy-pools'),
+        sinceTimestamp: PRIVACY_POOLS_SINCE_TIMESTAMP,
+      },
+    ],
     verifierHashes: [
       {
         hash: 'Privacy Pools Withdrawal and Ragequit verifiers 03.07.2026',
@@ -122,6 +141,8 @@ export const privacyPools: BaseProject = {
         ),
       },
     ],
+  },
+  privacyInfo: {
     tokens: getPrivacyTokens(),
     exitWindow: {
       value: 'Infinite',

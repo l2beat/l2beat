@@ -7,6 +7,7 @@ import type {
   ProjectPermissions,
   ProjectStatuses,
   ProjectZkCatalogInfo,
+  TrustedSetup,
 } from '@l2beat/config'
 import type {
   PrivacyFlowBucketTotalRecord,
@@ -20,6 +21,7 @@ import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type { PrivacyAsset, PrivacyBucket, PrivacyProject } from './types'
+import { getPrivacyTrustedSetup } from './utils/getPrivacyTrustedSetup'
 
 interface PrivacyProjectFlowData {
   totals: PrivacyFlowBucketTotalRecord[]
@@ -36,17 +38,11 @@ export interface PrivacyProjectDetails {
   contracts?: ProjectContracts
   permissions?: Record<string, ProjectPermissions>
   statuses: ProjectStatuses
-  trustedSetup: {
-    name: string
-    risk: 'green' | 'yellow' | 'red' | 'N/A'
-    shortDescription: string
-    longDescription: string
-    participantCount?: number
-  }
+  trustedSetup: TrustedSetup
+  zkCatalogInfo?: ProjectZkCatalogInfo
   exitWindow: PrivacyExitWindow
   privacy: PrivacySummaryValue
   reproducibility: PrivacySummaryValue
-  verifierHashes?: ProjectZkCatalogInfo['verifierHashes']
   riskSummary?: string
   upgradesAndGovernance?: string
   attributes: PrivacyAttribute[]
@@ -74,7 +70,13 @@ export async function getPrivacyProjectDetails(
     slug,
     where: ['privacyInfo'],
     select: ['display', 'privacyInfo', 'statuses'],
-    optional: ['tvsConfig', 'contracts', 'permissions', 'discoveryInfo'],
+    optional: [
+      'tvsConfig',
+      'contracts',
+      'permissions',
+      'discoveryInfo',
+      'zkCatalogInfo',
+    ],
   })
   if (!project) {
     return undefined
@@ -259,8 +261,8 @@ export async function getPrivacyProjectDetails(
     contracts: project.contracts,
     permissions: project.permissions,
     statuses: project.statuses,
-    trustedSetup: project.privacyInfo.trustedSetup,
-    verifierHashes: project.privacyInfo.verifierHashes,
+    trustedSetup: getPrivacyTrustedSetup(project.zkCatalogInfo),
+    zkCatalogInfo: project.zkCatalogInfo,
     exitWindow: project.privacyInfo.exitWindow,
     privacy: project.privacyInfo.privacy,
     reproducibility: project.privacyInfo.reproducibility,
