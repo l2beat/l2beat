@@ -9,7 +9,7 @@ import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { InteropTokenOnchainDeploymentsRow } from './InteropTokenOnchainDeploymentsSection'
 
 const UNSUPPORTED_CHAIN_TOOLTIP =
-  "The information is not available as this deployment is on a chain we don't fully support yet."
+  "The information is not available as this deployment is on a chain we don't fully support."
 const NO_TRANSFER_TIME_TOOLTIP =
   'There is no transfer time data for this deployment from the past 24 hours.'
 
