@@ -13,9 +13,11 @@ import {
 } from '../ClientCore'
 import type { MulticallV3Client } from './multicall/MulticallV3Client'
 import type { RpcMetricsRecorder } from './RpcMetricsAggregator'
+import { isRevertErrorMessage } from './revert'
 import {
   BlockNumberResponse,
   type CallParameters,
+  type CallResult,
   EVMBalanceResponse,
   EVMBlock,
   EVMBlockResponse,
@@ -261,6 +263,22 @@ export class RpcClient extends ClientCore implements IRpcClient {
     }
 
     return Bytes.fromHex(callResult.data.result)
+  }
+
+  async tryCall(
+    callParams: CallParameters,
+    blockNumber: number | 'latest',
+  ): Promise<CallResult> {
+    let data: Bytes
+    try {
+      data = await this.call(callParams, blockNumber)
+    } catch (e) {
+      if (e instanceof Error && isRevertErrorMessage(e.message)) {
+        return { reverted: true }
+      }
+      throw e
+    }
+    return { reverted: false, data }
   }
 
   isMulticallDeployed(blockNumber: number) {

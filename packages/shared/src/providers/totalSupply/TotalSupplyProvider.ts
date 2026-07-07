@@ -30,7 +30,7 @@ export class TotalSupplyProvider {
             if (r.success === false) {
               this.logger
                 .tag({ chain })
-                .warn('Issue with totalSupply fetching', {
+                .warn('totalSupply call reverted, assuming 0', {
                   token: tokens[i],
                   blockNumber,
                 })
@@ -39,20 +39,20 @@ export class TotalSupplyProvider {
             return BigInt(r.data.toString())
           })
         }
-        return Promise.all(
+        return await Promise.all(
           calls.map(async (c, i) => {
-            try {
-              const res = await client.call(c, blockNumber)
-              return res.toString() === '0x' ? 0n : BigInt(res.toString())
-            } catch {
+            const res = await client.tryCall(c, blockNumber)
+            if (res.reverted) {
               this.logger
                 .tag({ chain })
-                .warn('Issue with totalSupply fetching', {
+                .warn('totalSupply call reverted, assuming 0', {
                   token: tokens[i],
                   blockNumber,
                 })
               return 0n
             }
+            const data = res.data.toString()
+            return data === '0x' ? 0n : BigInt(data)
           }),
         )
       } catch (error) {

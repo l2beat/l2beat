@@ -87,9 +87,9 @@ describe(BalanceProvider.name, () => {
       const rpc = mockObject<RpcClient>({
         isMulticallDeployed: () => false,
         getBalance: mockFn().resolvesToOnce(Bytes.fromNumber(123_456)),
-        call: mockFn()
-          .resolvesToOnce(Bytes.fromNumber(654_321))
-          .rejectsWithOnce('error'),
+        tryCall: mockFn()
+          .resolvesToOnce({ reverted: false, data: Bytes.fromNumber(654_321) })
+          .resolvesToOnce({ reverted: true }),
         chain: CHAIN,
       })
 
@@ -101,8 +101,8 @@ describe(BalanceProvider.name, () => {
       const result = await balanceProvider.getBalances(QUERIES, BLOCK, CHAIN)
 
       expect(rpc.getBalance).toHaveBeenOnlyCalledWith(QUERIES[0].holder, BLOCK)
-      expect(rpc.call).toHaveBeenCalledTimes(2)
-      expect(rpc.call).toHaveBeenNthCalledWith(
+      expect(rpc.tryCall).toHaveBeenCalledTimes(2)
+      expect(rpc.tryCall).toHaveBeenNthCalledWith(
         1,
         encodeErc20Balance(
           QUERIES[1].token as EthereumAddress,
@@ -110,7 +110,7 @@ describe(BalanceProvider.name, () => {
         ),
         BLOCK,
       )
-      expect(rpc.call).toHaveBeenNthCalledWith(
+      expect(rpc.tryCall).toHaveBeenNthCalledWith(
         2,
         encodeErc20Balance(
           QUERIES[2].token as EthereumAddress,
@@ -119,6 +119,40 @@ describe(BalanceProvider.name, () => {
         BLOCK,
       )
       expect(result).toEqual([123_456n, 654_321n, 0n])
+    })
+
+    it('throws on transport error from erc20 call when no client left', async () => {
+      const rpc = mockObject<RpcClient>({
+        isMulticallDeployed: () => false,
+        getBalance: mockFn().resolvesToOnce(Bytes.fromNumber(123_456)),
+        tryCall: mockFn()
+          .resolvesToOnce({ reverted: false, data: Bytes.fromNumber(654_321) })
+          .rejectsWithOnce(new Error('missing trie node')),
+        chain: CHAIN,
+      })
+
+      const balanceProvider = new BalanceProvider([rpc], Logger.SILENT)
+
+      await expect(
+        balanceProvider.getBalances(QUERIES, BLOCK, CHAIN),
+      ).toBeRejectedWith('missing trie node')
+    })
+
+    it('throws on native balance error when no client left', async () => {
+      const rpc = mockObject<RpcClient>({
+        isMulticallDeployed: () => false,
+        getBalance: mockFn().rejectsWithOnce(new Error('missing trie node')),
+        tryCall: mockFn()
+          .resolvesToOnce({ reverted: false, data: Bytes.fromNumber(654_321) })
+          .resolvesToOnce({ reverted: false, data: Bytes.fromNumber(123_456) }),
+        chain: CHAIN,
+      })
+
+      const balanceProvider = new BalanceProvider([rpc], Logger.SILENT)
+
+      await expect(
+        balanceProvider.getBalances(QUERIES, BLOCK, CHAIN),
+      ).toBeRejectedWith('missing trie node')
     })
 
     it('tries next RPC client if first one fails', async () => {

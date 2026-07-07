@@ -466,6 +466,53 @@ describe(RpcClient.name, () => {
     })
   })
 
+  describe(RpcClient.prototype.tryCall.name, () => {
+    const CALL_PARAMS = {
+      to: EthereumAddress('0x1234567890123456789012345678901234567890'),
+      input: Bytes.fromHex('0x'),
+    }
+
+    it('returns data when the call succeeds', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({ result: '0x123abc' }),
+      })
+      const rpc = mockClient({ http })
+
+      const result = await rpc.tryCall(CALL_PARAMS, 'latest')
+
+      expect(result).toEqual({
+        reverted: false,
+        data: Bytes.fromHex('0x123abc'),
+      })
+    })
+
+    it('returns reverted result when the call reverts', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({
+          error: { code: 3, message: 'execution reverted' },
+        }),
+      })
+      const rpc = mockClient({ http })
+
+      const result = await rpc.tryCall(CALL_PARAMS, 'latest')
+
+      expect(result).toEqual({ reverted: true })
+    })
+
+    it('rethrows transport errors as-is', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({
+          error: { code: -32000, message: 'missing trie node abc' },
+        }),
+      })
+      const rpc = mockClient({ http })
+
+      await expect(rpc.tryCall(CALL_PARAMS, 'latest')).toBeRejectedWith(
+        'missing trie node abc',
+      )
+    })
+  })
+
   describe(RpcClient.prototype.isMulticallDeployed.name, () => {
     it('returns true when multicall client is configured and block number is after deployment', () => {
       const multicallClient = new MulticallV3Client(
