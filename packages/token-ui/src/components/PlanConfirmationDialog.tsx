@@ -104,6 +104,11 @@ export function PlanConfirmationDialog({
             invalidateAbstractTokenQueries()
             navigate('/')
             break
+          case 'MergeAbstractTokenIntent':
+            toast.success('Abstract token merged successfully')
+            invalidateDeployedTokenQueries()
+            navigate(`/tokens/${plan.intent.targetId}`)
+            break
           case 'DeleteDeployedTokenIntent':
             toast.success('Deployed token deleted successfully')
             invalidateDeployedTokenQueries()

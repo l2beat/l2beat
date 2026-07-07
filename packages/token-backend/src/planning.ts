@@ -9,10 +9,12 @@ import {
   type DeleteAbstractTokenIntent,
   type DeleteDeployedTokenIntent,
   Intent,
+  type MergeAbstractTokenIntent,
   type UpdateAbstractTokenIntent,
   type UpdateDeployedTokenIntent,
 } from './intents'
 import { getLogger } from './logger'
+import type { CoingeckoEntry } from './schemas/AbstractToken'
 import type { DeployedTokenUpdateable } from './schemas/DeployedToken'
 
 export type Plan = v.infer<typeof Plan>
@@ -67,6 +69,9 @@ export async function generatePlan(
         break
       case 'DeleteAbstractTokenIntent':
         commands = await planDeleteAbstractToken(db, intent)
+        break
+      case 'MergeAbstractTokenIntent':
+        commands = await planMergeAbstractToken(db, intent, opts)
         break
       case 'AddDeployedTokenIntent':
         commands = await planAddDeployedToken(db, intent, opts)
@@ -166,6 +171,70 @@ async function planDeleteAbstractToken(
   ]
 }
 
+async function planMergeAbstractToken(
+  db: TokenDatabase,
+  intent: MergeAbstractTokenIntent,
+  opts: PlanOptions,
+): Promise<Command[]> {
+  if (intent.sourceId === intent.targetId) {
+    throw new PlanningError('Cannot merge an abstract token into itself')
+  }
+
+  const [source, target, deployedTokens] = await Promise.all([
+    db.abstractToken.findById(intent.sourceId),
+    db.abstractToken.findById(intent.targetId),
+    db.deployedToken.getByAbstractTokenId(intent.sourceId),
+  ])
+
+  if (source === undefined) {
+    throw new PlanningError(`AbstractToken ${intent.sourceId} doesn't exist`)
+  }
+  if (target === undefined) {
+    throw new PlanningError(`AbstractToken ${intent.targetId} doesn't exist`)
+  }
+
+  const commands: Command[] = []
+  const additionalCoingeckoEntries = mergeAdditionalCoingeckoEntries(
+    target,
+    source,
+  )
+  if (
+    JSON.stringify(additionalCoingeckoEntries) !==
+    JSON.stringify(target.additionalCoingeckoEntries ?? [])
+  ) {
+    commands.push({
+      type: 'UpdateAbstractTokenCommand',
+      existing: target,
+      id: target.id,
+      update: { additionalCoingeckoEntries },
+    })
+  }
+
+  for (const deployedToken of [...deployedTokens].sort(compareDeployedTokens)) {
+    commands.push({
+      type: 'UpdateDeployedTokenCommand',
+      existing: deployedToken,
+      pk: {
+        chain: deployedToken.chain,
+        address: deployedToken.address,
+      },
+      update: stampUpdateProof(
+        { abstractTokenId: target.id },
+        deployedToken,
+        opts.user,
+      ),
+    })
+  }
+
+  commands.push({
+    type: 'DeleteAbstractTokenCommand',
+    id: source.id,
+    existing: source,
+  })
+
+  return commands
+}
+
 async function planAddDeployedToken(
   db: TokenDatabase,
   intent: AddDeployedTokenIntent,
@@ -224,6 +293,59 @@ async function planDeleteDeployedToken(
       existing,
     },
   ]
+}
+
+function mergeAdditionalCoingeckoEntries(
+  target: {
+    coingeckoId: string | null
+    additionalCoingeckoEntries: CoingeckoEntry[] | null
+  },
+  source: {
+    coingeckoId: string | null
+    coingeckoListingTimestamp: number | null
+    iconUrl: string | null
+    additionalCoingeckoEntries: CoingeckoEntry[] | null
+  },
+): CoingeckoEntry[] {
+  const entries = [...(target.additionalCoingeckoEntries ?? [])]
+  const seen = new Set(entries.map((entry) => entry.coingeckoId))
+  if (target.coingeckoId) {
+    seen.add(target.coingeckoId)
+  }
+
+  for (const entry of sourceCoingeckoEntries(source)) {
+    if (seen.has(entry.coingeckoId)) {
+      continue
+    }
+    entries.push(entry)
+    seen.add(entry.coingeckoId)
+  }
+
+  return entries
+}
+
+function sourceCoingeckoEntries(source: {
+  coingeckoId: string | null
+  coingeckoListingTimestamp: number | null
+  iconUrl: string | null
+  additionalCoingeckoEntries: CoingeckoEntry[] | null
+}): CoingeckoEntry[] {
+  return [
+    ...(source.coingeckoId
+      ? [
+          {
+            coingeckoId: source.coingeckoId,
+            coingeckoListingTimestamp: source.coingeckoListingTimestamp,
+            iconUrl: source.iconUrl,
+          },
+        ]
+      : []),
+    ...(source.additionalCoingeckoEntries ?? []),
+  ]
+}
+
+function compareDeployedTokens(a: DeployedTokenRecord, b: DeployedTokenRecord) {
+  return a.chain.localeCompare(b.chain) || a.address.localeCompare(b.address)
 }
 
 function stampInsertProof(
