@@ -45,6 +45,7 @@ const SHORT_TO_LONG_CHAIN_NAMES = {
   taiko: 'taiko',
   facet: 'facet',
   gateway: 'gateway',
+  zama: 'zama',
   ethereal: 'ethereal',
   jovay: 'jovay',
   ethscr: 'ethscriptions',
@@ -60,6 +61,7 @@ const SHORT_TO_LONG_CHAIN_NAMES = {
   mon: 'monad',
   plasma: 'plasma',
   xlayer: 'xlayer',
+  robinhood: 'robinhood',
 } as const
 
 const LONG_TO_SHORT_CHAIN_NAMES = Object.fromEntries(

@@ -14,6 +14,11 @@ describe(getInteropFlowAggregates.name, () => {
           transferCount: 2,
           srcValueUsd: 100,
           dstValueUsd: 90,
+          totalDurationSum: 200,
+          transfersWithDurationCount: 2,
+          transferTypeStats: {
+            deposit: { transferCount: 2, totalDurationSum: 200 },
+          },
           tokens: [
             { id: 'eth', volume: 10 },
             { id: 'usdc', volume: 5 },
@@ -27,6 +32,11 @@ describe(getInteropFlowAggregates.name, () => {
           transferCount: 3,
           srcValueUsd: 45,
           dstValueUsd: 50,
+          totalDurationSum: 900,
+          transfersWithDurationCount: 3,
+          transferTypeStats: {
+            withdrawal: { transferCount: 3, totalDurationSum: 900 },
+          },
           tokens: [
             { id: 'eth', volume: 20 },
             { id: 'usdt', volume: 30 },
@@ -39,6 +49,11 @@ describe(getInteropFlowAggregates.name, () => {
           transferCount: 100,
           srcValueUsd: 1_000,
           dstValueUsd: 1_000,
+          totalDurationSum: 10_000,
+          transfersWithDurationCount: 100,
+          transferTypeStats: {
+            deposit: { transferCount: 100, totalDurationSum: 10_000 },
+          },
           tokens: [{ id: 'btc', volume: 1_000 }],
         }),
       ],
@@ -75,6 +90,22 @@ describe(getInteropFlowAggregates.name, () => {
       { id: 'usdt', volume: 30 },
       { id: 'usdc', volume: 5 },
     ])
+    expect(result.chainDurations.get('chain-a')).toEqual({
+      totalDurationSum: 1100,
+      transfersWithDurationCount: 5,
+      transferTypeStats: {
+        deposit: { transferCount: 2, totalDurationSum: 200 },
+        withdrawal: { transferCount: 3, totalDurationSum: 900 },
+      },
+    })
+    expect(result.chainPairDurations.get('chain-a::chain-b')).toEqual({
+      totalDurationSum: 1100,
+      transfersWithDurationCount: 5,
+      transferTypeStats: {
+        deposit: { transferCount: 2, totalDurationSum: 200 },
+        withdrawal: { transferCount: 3, totalDurationSum: 900 },
+      },
+    })
     expect(result.topToken).toEqual({ id: 'eth', volume: 30 })
     expect(result.topProtocol).toEqual({ id: 'main', volume: 150 })
     expect(result.tokenIds.toSorted()).toEqual(['dai', 'eth', 'usdc', 'usdt'])
@@ -88,6 +119,9 @@ function record({
   transferCount,
   srcValueUsd,
   dstValueUsd,
+  totalDurationSum,
+  transfersWithDurationCount,
+  transferTypeStats,
   tokens,
 }: {
   projectId: string
@@ -96,6 +130,9 @@ function record({
   transferCount: number
   srcValueUsd: number
   dstValueUsd: number
+  totalDurationSum: number
+  transfersWithDurationCount: number
+  transferTypeStats: AggregatedInteropTransferWithTokens['transferTypeStats']
   tokens: { id: string; volume: number }[]
 }): AggregatedInteropTransferWithTokens {
   return {
@@ -105,6 +142,9 @@ function record({
     transferCount,
     srcValueUsd,
     dstValueUsd,
+    totalDurationSum,
+    transfersWithDurationCount,
+    transferTypeStats,
     tokens: tokens.map((token) => ({
       abstractTokenId: token.id,
       transferCount: 0,

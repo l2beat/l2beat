@@ -11,7 +11,7 @@ import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL2 } from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('corn')
-const archivedAt = UnixTime(1782857413) // 2026-06-30T22:10:13Z
+const archivedAt = UnixTime(1782850213) // 2026-06-30T20:10:13Z
 
 export const corn: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1724284800), //2024-08-22

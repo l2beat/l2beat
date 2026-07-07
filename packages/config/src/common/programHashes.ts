@@ -1161,6 +1161,10 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     ...KAILUA_FP('Risc0 v3.0.3'),
     verificationStatus: 'notVerified',
   },
+  '0x3768ea4f0e0d940f69c4cc5bd39a9e2772bfe3cb57818ce526bbe68033ee5934': {
+    ...KAILUA_FP('BOB'),
+    verificationStatus: 'notVerified',
+  },
   '0xf176eb82fbbb5d2d281a9cce459062bcdbe65f93d7156829b174fae2b4690c23': {
     // https://github.com/boundless-xyz/kailua/blob/dead453517c48240a221845640493b232255c907/book/src/setup.md
     ...KAILUA_FP('Risc0 v3.0.4, Kailua v1.1.8'),
@@ -1870,6 +1874,10 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
   },
   '0x2c9a9d645ae56304c483709fc710a58a0935ed43893179fe4b275e1400503ea7': {
     ...WASM_MODULE_ROOT('Syndicate'),
+    verificationStatus: 'notVerified',
+  },
+  '0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97': {
+    ...WASM_MODULE_ROOT('v61'),
     verificationStatus: 'notVerified',
   },
   '0xa18d6266cef250802c3cb2bfefe947ea1aa9a32dd30a8d1dfc4568a8714d3a7a': {

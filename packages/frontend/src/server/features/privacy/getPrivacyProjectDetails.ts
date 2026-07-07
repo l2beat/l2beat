@@ -44,7 +44,7 @@ export interface PrivacyProjectDetails {
     participantCount?: number
   }
   exitWindow: PrivacyExitWindow
-  adminViewingKey: PrivacySummaryValue
+  privacy: PrivacySummaryValue
   reproducibility: PrivacySummaryValue
   verifierHashes?: ProjectZkCatalogInfo['verifierHashes']
   riskSummary?: string
@@ -262,7 +262,7 @@ export async function getPrivacyProjectDetails(
     trustedSetup: project.privacyInfo.trustedSetup,
     verifierHashes: project.privacyInfo.verifierHashes,
     exitWindow: project.privacyInfo.exitWindow,
-    adminViewingKey: project.privacyInfo.adminViewingKey,
+    privacy: project.privacyInfo.privacy,
     reproducibility: project.privacyInfo.reproducibility,
     riskSummary: project.privacyInfo.riskSummary,
     upgradesAndGovernance: project.privacyInfo.upgradesAndGovernance,

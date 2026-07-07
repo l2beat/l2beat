@@ -1,0 +1,132 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "DAO",
+  "description": "Aragon DAO that stores governance state and executes proposal action batches.",
+  "category": "gov",
+  "ignoreMethods": ["proxiableUUID"],
+  "ignoreRelatives": [
+    "$activePermissions",
+    "multisigSettingsAdmins",
+    "multisigTargetConfigAdmins",
+    "publicProposalCreators",
+    "publicProposalExecutors"
+  ],
+  "fields": {
+    "$activePermissions": {
+      "description": "Active Aragon grants reconstructed from Granted and Revoked events. The permissionId, target contract (where), grantee (who), and optional condition are preserved.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "event",
+        "select": ["permissionId", "where", "who", "condition"],
+        "dedupBy": ["permissionId", "where", "who"],
+        "add": {
+          "event": "event Granted(bytes32 indexed permissionId, address indexed here, address where, address indexed who, address condition)"
+        },
+        "remove": {
+          "event": "event Revoked(bytes32 indexed permissionId, address indexed here, address where, address indexed who)"
+        }
+      }
+    },
+    "multisigSettingsAdmins": {
+      "description": "Current multisig-settings grantees derived from Aragon grant/revoke events.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "copy": "$activePermissions",
+      "edit": [
+        "pipe",
+        [
+          "filter",
+          [
+            "=",
+            "0xb1750e46d35a0069c8465b8643e7838d2149a842a2db8ee233d9835590040cad",
+            ["get", "permissionId"]
+          ]
+        ],
+        ["map", ["pick", "#where", "#who"]]
+      ],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change multisig plugin settings."
+        }
+      ]
+    },
+    "multisigTargetConfigAdmins": {
+      "description": "Current multisig target-configuration grantees derived from Aragon grant/revoke events.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "copy": "$activePermissions",
+      "edit": [
+        "pipe",
+        [
+          "filter",
+          [
+            "=",
+            "0x568cc693d84eb1901f8bcecba154cbdef23ca3cf67efc0a0b698528a06c660f7",
+            ["get", "permissionId"]
+          ]
+        ],
+        ["map", ["pick", "#where", "#who"]]
+      ],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change multisig plugin target execution configuration."
+        }
+      ]
+    },
+    "publicProposalCreators": {
+      "description": "Multisig plugins with public proposal creation configured through Aragon grant/revoke events.",
+      "severity": "LOW",
+      "type": "PERMISSION",
+      "copy": "$activePermissions",
+      "edit": [
+        "pipe",
+        [
+          "filter",
+          [
+            "and",
+            [
+              "=",
+              "0x8c433a4cd6b51969eca37f974940894297b9fcf4b282a213fea5cd8f85289c90",
+              ["get", "permissionId"]
+            ],
+            [
+              "=",
+              "eth:0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF",
+              ["get", "who"]
+            ]
+          ]
+        ],
+        ["map", ["get", "where"]]
+      ]
+    },
+    "publicProposalExecutors": {
+      "description": "Multisig plugins with public proposal execution configured through Aragon grant/revoke events.",
+      "severity": "LOW",
+      "type": "PERMISSION",
+      "copy": "$activePermissions",
+      "edit": [
+        "pipe",
+        [
+          "filter",
+          [
+            "and",
+            [
+              "=",
+              "0xf281525e53675515a6ba7cc7bea8a81e649b3608423ee2d73be1752cea887889",
+              ["get", "permissionId"]
+            ],
+            [
+              "=",
+              "eth:0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF",
+              ["get", "who"]
+            ]
+          ]
+        ],
+        ["map", ["get", "where"]]
+      ]
+    }
+  }
+}

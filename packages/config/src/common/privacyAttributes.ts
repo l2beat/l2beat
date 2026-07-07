@@ -1,16 +1,17 @@
 import type { PrivacyAttribute } from '../types'
 
 export const PRIVACY_ATTRIBUTES = {
-  upgradeable: {
-    id: 'upgradeable',
-    label: 'Upgradeable',
-    description: 'Smart contract code can be upgraded.',
-  },
-  optCompliance: {
-    id: 'optCompliance',
-    label: 'Opt compliance',
+  fhe: {
+    id: 'fhe',
+    label: 'FHE',
     description:
-      'Users are not forced to provide compliance data by the core protocol.',
+      'Uses fully homomorphic encryption for private computation over encrypted values.',
+  },
+  zk: {
+    id: 'zk',
+    label: 'ZK',
+    description:
+      'Uses zero-knowledge proofs to prove private actions without revealing private data.',
   },
   transfers: {
     id: 'transfers',
@@ -34,33 +35,10 @@ export const PRIVACY_ATTRIBUTES = {
     description:
       'Pre-defined transfer amounts use distinct buckets (anonymity sets).',
   },
-  sourceAvailable: {
-    id: 'sourceAvailable',
-    label: 'Source available',
+  privateAmounts: {
+    id: 'privateAmounts',
+    label: 'Private amounts',
     description:
-      'There is at least one practical way to exclusively use auditable, source-available software to interact with this protocol.',
-  },
-  closedSource: {
-    id: 'closedSource',
-    label: 'Closed source',
-    description:
-      'The protocol program or circuit is not open source, so users cannot independently inspect the implementation or know what is verified by the smart contract.',
-  },
-  immutable: {
-    id: 'immutable',
-    label: 'Immutable',
-    description: 'Core smart contract code cannot be changed.',
-  },
-  unconditionalPrivacy: {
-    id: 'unconditionalPrivacy',
-    label: 'Unconditional privacy',
-    description:
-      'Deposits and withdrawals cannot be censored or linked by the protocol.',
-  },
-  enforcedCompliance: {
-    id: 'enforcedCompliance',
-    label: 'Enforced compliance',
-    description:
-      'Compliance checks are enforced by the protocol and can restrict privacy set participation.',
+      'Transfer amounts are private, while sender and recipient addresses remain public.',
   },
 } as const satisfies Record<string, PrivacyAttribute>

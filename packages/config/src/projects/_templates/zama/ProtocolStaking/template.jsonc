@@ -1,0 +1,112 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Staking contract that escrows ZAMA, issues non-transferable staked voting tokens, and mints protocol rewards to eligible stakers at a configurable reward rate.",
+  "ignoreInWatchMode": [
+    "clock",
+    "totalStakedWeight",
+    "totalSupply",
+    "rewardRate"
+  ],
+  "ignoreMethods": ["getPastTotalSupply", "proxiableUUID", "weight"],
+  "ignoreRelatives": ["accessControl", "managerRoleMembers", "stakingToken"],
+  "fields": {
+    "accessControl": {
+      "description": "Access control map reconstructed from RoleGranted, RoleRevoked, and RoleAdminChanged events. The private ProtocolStaking role hashes are named explicitly.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08": "MANAGER_ROLE",
+          "0xe3fe16999f8ea5aa3a9d205938a525dc68552933a5d5226196280b3489c75219": "ELIGIBLE_ACCOUNT_ROLE"
+        }
+      }
+    },
+    "defaultAdmin": {
+      "description": "Current default admin of the staking contract.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant and revoke manager accounts, transfer or renounce the default admin role, and change the default admin transfer delay."
+        }
+      ]
+    },
+    "owner": {
+      "description": "ERC-5313 owner alias for the current default admin."
+    },
+    "pendingDefaultAdmin": {
+      "description": "Pending default admin transfer. If newAdmin is non-zero and schedule has passed, that address can accept the default admin role.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "defaultAdminDelay": {
+      "description": "Delay in seconds before a newly scheduled default admin transfer can be accepted.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "defaultAdminDelayIncreaseWait": {
+      "description": "Maximum wait applied when scheduling an increase of the default admin transfer delay.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "pendingDefaultAdminDelay": {
+      "description": "Pending change to the default admin transfer delay, together with the timestamp when it can take effect.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "managerRoleMembers": {
+      "description": "Current members of MANAGER_ROLE.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "copy": "accessControl",
+      "edit": ["get", "MANAGER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the reward rate, set the unstake cooldown period, and add or remove reward-eligible staking accounts."
+        }
+      ]
+    },
+    "eligibleAccounts": {
+      "description": "Accounts currently eligible to earn staking rewards on their staked balance.",
+      "severity": "LOW",
+      "type": "PERMISSION",
+      "copy": "accessControl",
+      "edit": ["get", "ELIGIBLE_ACCOUNT_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "earn protocol staking rewards and claim newly minted ZAMA rewards for their stake."
+        }
+      ]
+    },
+    "stakingToken": {
+      "description": "ZAMA token escrowed by this staking contract and minted when rewards are claimed.",
+      "type": "EXTERNAL"
+    },
+    "rewardRate": {
+      "description": "Current reward rate in ZAMA wei minted per second and shared across eligible stakers by weighted stake.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "unstakeCooldownPeriod": {
+      "description": "Delay between unstaking and being able to release the underlying ZAMA.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "unstakeCooldownPeriod_fmt": {
+      "copy": "unstakeCooldownPeriod",
+      "edit": ["format", "FormatSeconds"]
+    },
+    "totalStakedWeight": {
+      "description": "Current square-root weighted stake total used to allocate rewards among eligible accounts."
+    },
+    "totalSupply": {
+      "description": "Total non-transferable staked-token supply minted against escrowed ZAMA."
+    },
+    "CLOCK_MODE": {
+      "description": "ERC-6372 clock mode used for ERC20Votes snapshots."
+    }
+  }
+}

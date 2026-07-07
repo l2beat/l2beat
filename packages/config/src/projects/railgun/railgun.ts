@@ -207,27 +207,17 @@ export const railgun: BaseProject = {
       description:
         'The contracts, circuits, and supporting software needed to participate in the protocol are publicly available and can be run locally.',
     },
-    adminViewingKey: {
+    privacy: {
       value: 'None',
       sentiment: 'good',
       description:
-        "The protocol does not include an auditor viewing key that decrypts users' private balances and transactions.",
+        'Compliance is optional at the core protocol level: users can create proofs of innocence to disassociate deposits from flagged addresses, and relayers can choose to require them.',
     },
     attributes: [
-      {
-        ...PRIVACY_ATTRIBUTES.upgradeable,
-        description:
-          'DAO can vote on upgrades that are executable with a 7d delay.',
-      },
-      {
-        ...PRIVACY_ATTRIBUTES.optCompliance,
-        description:
-          "Optional 'proofs of innocence' (POIs), can disassociate a deposit from a list of flagged addresses. They are not enforced by the protocol but can be enforced by relayers.",
-      },
+      PRIVACY_ATTRIBUTES.zk,
       PRIVACY_ATTRIBUTES.transfers,
       PRIVACY_ATTRIBUTES.defi,
       PRIVACY_ATTRIBUTES.anyAmount,
-      PRIVACY_ATTRIBUTES.sourceAvailable,
     ],
     riskSummary: readProjectMarkdown('railgun', 'riskSummary'),
     upgradesAndGovernance: readProjectMarkdown(

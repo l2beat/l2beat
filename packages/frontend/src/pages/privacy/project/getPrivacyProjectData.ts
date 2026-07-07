@@ -48,7 +48,7 @@ export interface PrivacyProjectEntry {
   assetsCount: number
   attributes: PrivacyAttribute[]
   exitWindow: PrivacyExitWindow
-  adminViewingKey: PrivacySummaryValue
+  privacy: PrivacySummaryValue
   reproducibility: PrivacySummaryValue
   summary: {
     totalValueLockedUsd: number
@@ -351,7 +351,7 @@ export async function getPrivacyProjectData(
     assetsCount: details.assets.length,
     attributes: details.attributes,
     exitWindow: details.exitWindow,
-    adminViewingKey: details.adminViewingKey,
+    privacy: details.privacy,
     reproducibility: details.reproducibility,
     summary: {
       totalValueLockedUsd: details.summary.totalValueLockedUsd,
