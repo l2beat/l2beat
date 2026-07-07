@@ -46,17 +46,17 @@ export function PromotionPage() {
   const blockedCount = rows.filter((row) => row.status === 'blocked').length
 
   // Scroll to and highlight a deep-linked snapshot row once the list has loaded.
-  const scrolledRef = useRef(false)
+  const scrolledToRef = useRef<string | undefined>(undefined)
   // biome-ignore lint/correctness/useExhaustiveDependencies: `rows` re-triggers this effect after the list loads
   useEffect(() => {
-    if (!highlightTimestamp || scrolledRef.current) {
+    if (!highlightTimestamp || scrolledToRef.current === highlightTimestamp) {
       return
     }
     const element = document.getElementById(
       `promotion-snapshot-${highlightTimestamp}`,
     )
     if (element) {
-      scrolledRef.current = true
+      scrolledToRef.current = highlightTimestamp
       element.scrollIntoView({ block: 'center' })
     }
   }, [highlightTimestamp, rows])
