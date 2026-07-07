@@ -1,4 +1,5 @@
 import type {
+  PrivacyAttribute,
   PrivacyExitWindow,
   PrivacySummaryValue,
   TrustedSetup,
@@ -24,10 +25,12 @@ export interface PrivacySummaryEntry {
   totalDeposits?: number
   totalValueDeposited30dUsd?: number
   isUnderReview: boolean
+  summaryTrackedItemName: string
   trustedSetup: TrustedSetup
   exitWindow: PrivacyExitWindow
   reproducibility: PrivacySummaryValue
-  adminViewingKey: PrivacySummaryValue
+  privacy: PrivacySummaryValue
+  attributes: PrivacyAttribute[]
 }
 
 type PrivacySummaryTrackingMetrics = Pick<
@@ -135,10 +138,13 @@ function getPrivacySummaryBaseEntry(
     href: `/privacy/projects/${project.slug}`,
     description: project.display.description,
     isUnderReview: !!project.statuses.reviewStatus,
+    summaryTrackedItemName:
+      project.privacyInfo.summaryTrackedItemName ?? 'pool',
     trustedSetup: project.privacyInfo.trustedSetup,
     exitWindow: project.privacyInfo.exitWindow,
     reproducibility: project.privacyInfo.reproducibility,
-    adminViewingKey: project.privacyInfo.adminViewingKey,
+    privacy: project.privacyInfo.privacy,
+    attributes: project.privacyInfo.attributes ?? [],
   }
 }
 

@@ -43,7 +43,7 @@ export interface PrivacyProjectDetails {
     participantCount?: number
   }
   exitWindow: PrivacyExitWindow
-  adminViewingKey: PrivacySummaryValue
+  privacy: PrivacySummaryValue
   reproducibility: PrivacySummaryValue
   riskSummary?: string
   upgradesAndGovernance?: string
@@ -259,7 +259,7 @@ export async function getPrivacyProjectDetails(
     statuses: project.statuses,
     trustedSetup: project.privacyInfo.trustedSetup,
     exitWindow: project.privacyInfo.exitWindow,
-    adminViewingKey: project.privacyInfo.adminViewingKey,
+    privacy: project.privacyInfo.privacy,
     reproducibility: project.privacyInfo.reproducibility,
     riskSummary: project.privacyInfo.riskSummary,
     upgradesAndGovernance: project.privacyInfo.upgradesAndGovernance,

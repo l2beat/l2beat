@@ -1,0 +1,86 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ProtocolPayment",
+  "description": "Gateway fee contract that charges ZAMA fees for encrypted input verification, public decryption, and user decryption requests, then forwards the collected fees to the configured fee burner sender.",
+  "category": "core",
+  "ignoreMethods": ["proxiableUUID"],
+  "ignoreRelatives": ["feesSenderToBurner", "zamaOFT"],
+  "fields": {
+    "gatewayConfig": {
+      "description": "GatewayConfig contract used as the source of truth for the gateway owner.",
+      "type": "EXTERNAL",
+      "handler": {
+        "type": "hardcoded",
+        "value": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab"
+      }
+    },
+    "gatewayOwner": {
+      "description": "Owner of GatewayConfig. This account authorizes ProtocolPayment upgrades and fee price changes.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "call",
+        "method": "function owner() view returns (address)",
+        "args": [],
+        "address": "{{ gatewayConfig }}"
+      },
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "upgrade the ProtocolPayment implementation."
+        },
+        {
+          "type": "interact",
+          "description": "set gateway fee prices for input verification, public decryption, and user decryption."
+        }
+      ]
+    },
+    "decryption": {
+      "description": "Only this Decryption contract can collect public and user decryption fees through ProtocolPayment.",
+      "type": "EXTERNAL",
+      "handler": {
+        "type": "hardcoded",
+        "value": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24"
+      }
+    },
+    "inputVerification": {
+      "description": "Only this InputVerification contract can collect encrypted input verification fees through ProtocolPayment.",
+      "type": "EXTERNAL",
+      "handler": {
+        "type": "hardcoded",
+        "value": "zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287"
+      }
+    },
+    "feesSenderToBurner": {
+      "description": "Contract that receives ZAMA fees collected by ProtocolPayment for forwarding or burning.",
+      "type": "EXTERNAL",
+      "handler": {
+        "type": "hardcoded",
+        "value": "zama:0xd9c00DbE2d5e3f64950a1258DABBC3e75697022A"
+      }
+    },
+    "zamaOFT": {
+      "description": "ZAMA OFT token charged for gateway protocol fees.",
+      "type": "EXTERNAL",
+      "handler": {
+        "type": "hardcoded",
+        "value": "zama:0xcE762c7FDaac795D31a266B9247F8958c159c6d4"
+      }
+    },
+    "getInputVerificationPrice": {
+      "description": "Fee charged in ZAMA wei for an encrypted input verification request.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "getPublicDecryptionPrice": {
+      "description": "Fee charged in ZAMA wei for a public decryption request.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "getUserDecryptionPrice": {
+      "description": "Fee charged in ZAMA wei for a user decryption request.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    }
+  }
+}

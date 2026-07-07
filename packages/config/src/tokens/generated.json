@@ -6921,6 +6921,20 @@
       "supply": "zero"
     },
     {
+      "name": "Zama",
+      "coingeckoId": "zama",
+      "address": "0xA12CC123ba206d4031D1c7f6223D1C2Ec249f4f3",
+      "symbol": "ZAMA",
+      "decimals": 18,
+      "deploymentTimestamp": 1763038283,
+      "coingeckoListingTimestamp": 1769990400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70921/large/zama.png?1764591992",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Zircuit",
       "coingeckoId": "zircuit",
       "address": "0xfd418e42783382E86Ae91e445406600Ba144D162",

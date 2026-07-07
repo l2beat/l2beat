@@ -105,22 +105,13 @@ export const privacyPools: BaseProject = {
       description:
         'The contracts, circuits, and supporting software needed to participate in Privacy Pools are publicly available and can be run locally.',
     },
-    adminViewingKey: {
+    privacy: {
       value: 'None',
       sentiment: 'good',
       description:
-        "The protocol does not include an auditor viewing key that decrypts users' private balances and transactions.",
+        'Compliance is enforced through centralized association set providers, which can refuse deposits into the pool, sending them back to the sender.',
     },
-    attributes: [
-      PRIVACY_ATTRIBUTES.immutable,
-      {
-        ...PRIVACY_ATTRIBUTES.enforcedCompliance,
-        description:
-          'Centralised ASPs (association set providers) can refuse deposits before they are withdrawn and forcibly remove them from the anonymity set.',
-      },
-      PRIVACY_ATTRIBUTES.anyAmount,
-      PRIVACY_ATTRIBUTES.sourceAvailable,
-    ],
+    attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.anyAmount],
     riskSummary: readProjectMarkdown('privacy-pools', 'riskSummary'),
     upgradesAndGovernance: readProjectMarkdown(
       'privacy-pools',

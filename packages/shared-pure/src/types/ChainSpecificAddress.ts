@@ -45,6 +45,7 @@ const SHORT_TO_LONG_CHAIN_NAMES = {
   taiko: 'taiko',
   facet: 'facet',
   gateway: 'gateway',
+  zama: 'zama',
   ethereal: 'ethereal',
   jovay: 'jovay',
   ethscr: 'ethscriptions',

@@ -132,18 +132,13 @@ export const tornadoCash: BaseProject = {
       description:
         'There is at least one practical way to participate in Tornado Cash using published source code that can be audited and run locally.',
     },
-    adminViewingKey: {
+    privacy: {
       value: 'None',
       sentiment: 'good',
       description:
-        "The protocol does not include an auditor viewing key that decrypts users' private balances and transactions.",
+        'There is no protocol-level compliance mechanism or way to compromise user privacy.',
     },
-    attributes: [
-      PRIVACY_ATTRIBUTES.immutable,
-      PRIVACY_ATTRIBUTES.unconditionalPrivacy,
-      PRIVACY_ATTRIBUTES.fixedAmounts,
-      PRIVACY_ATTRIBUTES.sourceAvailable,
-    ],
+    attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.fixedAmounts],
     riskSummary: readProjectMarkdown('tornado-cash', 'riskSummary'),
     upgradesAndGovernance: readProjectMarkdown(
       'tornado-cash',
