@@ -16,6 +16,7 @@ import type {
   TokenData,
 } from './types'
 import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
+import { getIntentProjects } from './utils/getIntentProjects'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
 import { getProtocolEntries } from './utils/getProtocolEntries'
 import { getSummaryTokensData } from './utils/getSummaryTokensData'
@@ -123,12 +124,6 @@ export async function getIntentBridgesData(
     transferSizeChartData: getTransferSizeChartData(records, intentProjects),
     snapshotTimestamp,
   }
-}
-
-function getIntentProjects(projects: Project<'interopConfig'>[]) {
-  return projects
-    .filter((project) => project.interopConfig.type === 'intent')
-    .toSorted((a, b) => a.name.localeCompare(b.name))
 }
 
 function getActivityEntries(

@@ -64,6 +64,7 @@ export const STATIC_PAGES: PageToVerify[] = [
     'interop.tokenFrameworks',
     'interop.tokenFrameworks',
   ]),
+  page('/interop/intent-bridges', ['interop.intentBridges']),
   page('/privacy/summary', ['privacy.flowsChart', 'privacy.tvlChart']),
   page('/privacy/projects/tornado-cash', [
     'privacy.flowsChart',
