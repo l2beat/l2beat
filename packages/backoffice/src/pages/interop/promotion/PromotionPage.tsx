@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { CheckIcon, RefreshCwIcon } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
@@ -27,6 +27,7 @@ import {
 } from '~/components/core/Table'
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
+import { useHashTarget } from '~/hooks/useHashTarget'
 import { AppLayout } from '~/layouts/AppLayout'
 import { formatTransferTimestamp } from '~/pages/interop/transfers/utils'
 import { useBackendTrpc } from '~/react-query/trpc'
@@ -35,6 +36,7 @@ export function PromotionPage() {
   const trpc = useBackendTrpc()
   const queryClient = useQueryClient()
   const [pendingTimestamp, setPendingTimestamp] = useState<number | null>(null)
+  const highlightTimestamp = useHashTarget()
 
   const { data, error, isError, isLoading, isFetching, refetch } = useQuery(
     trpc.interop.promotion.listRecent.queryOptions(),
@@ -42,6 +44,22 @@ export function PromotionPage() {
 
   const rows = data ?? []
   const blockedCount = rows.filter((row) => row.status === 'blocked').length
+
+  // Scroll to and highlight a deep-linked snapshot row once the list has loaded.
+  const scrolledRef = useRef(false)
+  // biome-ignore lint/correctness/useExhaustiveDependencies: `rows` re-triggers this effect after the list loads
+  useEffect(() => {
+    if (!highlightTimestamp || scrolledRef.current) {
+      return
+    }
+    const element = document.getElementById(
+      `promotion-snapshot-${highlightTimestamp}`,
+    )
+    if (element) {
+      scrolledRef.current = true
+      element.scrollIntoView({ block: 'center' })
+    }
+  }, [highlightTimestamp, rows])
 
   const promote = useMutation(
     trpc.interop.promotion.promote.mutationOptions({
@@ -159,8 +177,18 @@ export function PromotionPage() {
                     const isBlocked = row.status === 'blocked'
                     const isPending =
                       promote.isPending && pendingTimestamp === row.timestamp
+                    const isHighlighted =
+                      String(row.timestamp) === highlightTimestamp
                     return (
-                      <TableRow key={row.timestamp}>
+                      <TableRow
+                        key={row.timestamp}
+                        id={`promotion-snapshot-${row.timestamp}`}
+                        className={
+                          isHighlighted
+                            ? '!bg-blue-100 dark:!bg-blue-900/40'
+                            : undefined
+                        }
+                      >
                         <TableCell className="whitespace-nowrap font-mono text-xs">
                           {formatTransferTimestamp(row.timestamp)}
                         </TableCell>

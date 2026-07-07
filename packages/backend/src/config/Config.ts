@@ -200,6 +200,8 @@ export interface UpdateMonitorConfig {
   }
 }
 
+export type DeploymentEnvironment = 'local' | 'staging' | 'production'
+
 export interface NotificationsConfig {
   readonly updateMonitor:
     | {
@@ -214,6 +216,7 @@ export interface NotificationsConfig {
   readonly interop:
     | {
         discordWebhookUrl: string
+        backofficeEnvironment: DeploymentEnvironment
       }
     | false
   readonly ethereumBlobs:

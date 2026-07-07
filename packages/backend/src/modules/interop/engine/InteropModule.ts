@@ -70,7 +70,9 @@ export function createInteropModule({
     const discordClient = new DiscordClient(
       config.notifications.interop.discordWebhookUrl,
     )
-    notificationClient = new InteropNotifier(discordClient, logger)
+    notificationClient = new InteropNotifier(discordClient, logger, {
+      backofficeEnvironment: config.notifications.interop.backofficeEnvironment,
+    })
     transferAnalyzer = new InteropTransferAnalyzer(notificationClient)
     configStore = new InteropMonitoringConfigStoreProxy(
       configStore,
