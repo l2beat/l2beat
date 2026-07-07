@@ -1,5 +1,6 @@
-import type { InteropTransferRecord } from '@l2beat/database'
-import { Address32 } from '@l2beat/shared-pure'
+import type { InteropTokenRouteRecord } from '@l2beat/database'
+import { Address32, type InteropBridgeType } from '@l2beat/shared-pure'
+import { InteropTransferClassifier } from '../../../shared/build'
 
 export interface TokenAddress {
   chain: string
@@ -7,7 +8,9 @@ export interface TokenAddress {
 }
 
 export interface InteropTransferMatch {
-  transfer: InteropTransferRecord
+  bridgeType: InteropBridgeType
+  transferCount: number
+  sampleTransferId: string
   token: TokenAddress
   otherToken: TokenAddress | undefined
 }
@@ -17,22 +20,22 @@ export interface InteropTransferIndex {
 }
 
 export function buildInteropTransferIndex(
-  transfers: InteropTransferRecord[],
+  routes: InteropTokenRouteRecord[],
 ): InteropTransferIndex {
   const map = new Map<string, InteropTransferMatch[]>()
 
-  for (const transfer of transfers) {
-    const src = normalizeTransferSide(
-      transfer.srcChain,
-      transfer.srcTokenAddress,
-    )
-    const dst = normalizeTransferSide(
-      transfer.dstChain,
-      transfer.dstTokenAddress,
-    )
+  for (const route of routes) {
+    const src = normalizeTransferSide(route.srcChain, route.srcTokenAddress)
+    const dst = normalizeTransferSide(route.dstChain, route.dstTokenAddress)
+    const base = {
+      bridgeType:
+        route.bridgeType ?? InteropTransferClassifier.inferBridgeType(route),
+      transferCount: route.transferCount,
+      sampleTransferId: route.sampleTransferId,
+    }
 
-    if (src) addMatch(map, src, { transfer, token: src, otherToken: dst })
-    if (dst) addMatch(map, dst, { transfer, token: dst, otherToken: src })
+    if (src) addMatch(map, src, { ...base, token: src, otherToken: dst })
+    if (dst) addMatch(map, dst, { ...base, token: dst, otherToken: src })
   }
 
   return {

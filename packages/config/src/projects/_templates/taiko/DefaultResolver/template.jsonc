@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.",
+  "description": "Maps chainId-name pairs to contract addresses. Bridge and vault contracts resolve their counterparties through this registry, so changes in this mapping effectively act as contract upgrades. The pause function is intentionally disabled in this implementation.",
   "ignoreMethods": ["proxiableUUID"],
   "types": {
     "Bytes32ToName": {
@@ -26,7 +26,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "can update the contract address for a given name"
+          "description": "update the contract address registered for any chainId-name pair."
         }
       ]
     },

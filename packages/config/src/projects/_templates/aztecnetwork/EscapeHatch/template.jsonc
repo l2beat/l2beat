@@ -70,7 +70,16 @@
     "LAG_IN_EPOCHS_FOR_SET_SIZE": {
       "description": "The number of epochs to look back from the start of the hatch to snapshot the stable candidate set."
     },
-    "getRollup": { "description": "The address of the core Rollup contract." }
+    "getRollup": {
+      "description": "The rollup contract that this escape hatch can fallback-propose for.",
+      "template": "aztecnetwork/Rollup",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "record submitted archives for designated escape-hatch proposers, which are later used to validate or slash them."
+        }
+      ]
+    }
   },
   "category": "core"
 }

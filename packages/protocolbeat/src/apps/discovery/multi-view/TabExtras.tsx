@@ -4,6 +4,7 @@ import type { ApiAbi, Field } from '../../../api/types'
 import { IconChatbot } from '../../../icons/IconChatbot'
 import { findSelected } from '../../../utils/findSelected'
 import { getProjectQueryOptions } from '../hooks/projectQuery'
+import { joinDeclarations } from '../panel-code/declarations'
 import { usePanelStore } from '../store/panel-store'
 import type { PanelId } from './config'
 
@@ -11,7 +12,7 @@ const COPYABLE_PANELS: PanelId[] = ['code', 'values', 'list', 'nodes']
 
 export function TabExtras(props: { id: PanelId }) {
   const { project } = useParams()
-  const selectedAddress = usePanelStore((state) => state.selected)
+  const selectedAddress = usePanelStore((state) => state.selected[0])
   const highlighted = usePanelStore((state) => state.highlighted)
 
   if (!COPYABLE_PANELS.includes(props.id)) {
@@ -47,7 +48,7 @@ async function formatContractCode(
     if (chain) header += ` on chain ${chain}`
     result.push('\n' + header + ':')
     result.push('```')
-    result.push(s.code)
+    result.push(joinDeclarations(s.declarations))
     result.push('```')
   }
   return result

@@ -160,7 +160,9 @@ function ListItemContracts(props: {
 }
 
 function AddressEntry({ entry }: { entry: ApiAddressEntry }) {
-  const isSelected = usePanelStore((state) => state.selected === entry.address)
+  const isSelected = usePanelStore((state) =>
+    state.selected.includes(entry.address),
+  )
   const select = usePanelStore((state) => state.select)
   const markUnreachableEntries = useGlobalSettingsStore(
     (s) => s.markUnreachableEntries,
@@ -177,7 +179,7 @@ function AddressEntry({ entry }: { entry: ApiAddressEntry }) {
         isSelected && 'bg-autumn-300 text-black',
         !isSelected && 'bg-coffee-800 hover:bg-aux-brown',
       )}
-      onClick={() => select(entry.address)}
+      onClick={() => select([entry.address])}
       style={{
         opacity: isGrayedOut ? 0.2 : 1,
         filter: isGrayedOut ? 'grayscale(100%)' : 'none',

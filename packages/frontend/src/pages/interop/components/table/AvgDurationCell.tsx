@@ -15,10 +15,12 @@ export function AvgDurationCell({
   averageDuration,
   className,
   splitClassName,
+  splitItemClassName,
 }: {
   averageDuration: AverageDuration
   className?: string
   splitClassName?: string
+  splitItemClassName?: string
 }) {
   switch (averageDuration.type) {
     case 'unknown':
@@ -45,12 +47,16 @@ export function AvgDurationCell({
       return (
         <div
           className={cn(
-            'flex flex-col items-center gap-0.5 font-medium text-label-value-15 md:gap-1.5',
+            'flex flex-col items-end gap-0.5 font-medium text-label-value-15 md:gap-1.5',
             splitClassName,
           )}
         >
           {averageDuration.splits.map((split) => (
-            <DurationCellItem key={split.label} split={split} />
+            <DurationCellItem
+              key={split.label}
+              split={split}
+              className={splitItemClassName}
+            />
           ))}
         </div>
       )
@@ -61,11 +67,13 @@ export function AvgDurationCell({
 
 function DurationCellItem({
   split,
+  className,
 }: {
   split: SplitAverageDuration['splits'][number]
+  className?: string
 }) {
   return (
-    <div className="flex items-center gap-1 whitespace-nowrap">
+    <div className={cn('flex items-center gap-1 whitespace-nowrap', className)}>
       <span className="text-[13px] text-secondary leading-none">
         {split.label}:
       </span>

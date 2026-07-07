@@ -46,9 +46,9 @@ import { relay } from '../projects/relay/relay'
 import { risc0 } from '../projects/risc0/risc0'
 import { sp1hypercube } from '../projects/sp1hypercube/sp1hypercube'
 import { sp1turbo } from '../projects/sp1turbo/sp1turbo'
-import { squid } from '../projects/squid/squid'
 import { stargate } from '../projects/stargate/stargate'
 import { stone } from '../projects/stone/stone'
+import { strk20 } from '../projects/strk20/strk20'
 import { stwo } from '../projects/stwo/stwo'
 import { teeBridge } from '../projects/tee-bridge/tee-bridge'
 import { tempo } from '../projects/tempo/tempo'
@@ -56,6 +56,8 @@ import { tornadoCash } from '../projects/tornado-cash/tornado-cash'
 import { vector } from '../projects/vector/vector'
 import { wormholeNtt } from '../projects/wormhole-ntt/wormhole-ntt'
 import { wormholeWtt } from '../projects/wormhole-wtt/wormhole-wtt'
+import { zama } from '../projects/zama/zama'
+import { zamaCw } from '../projects/zama-cw/zama-cw'
 import { zkprover } from '../projects/zkprover/zkprover'
 import { zksyncprover } from '../projects/zksyncprover/zksyncprover'
 import type { BaseProject } from '../types'
@@ -98,6 +100,7 @@ export const refactored: BaseProject[] = [
   avalanche,
   monad,
   tempo,
+  zama,
   // interop protocols
   debridgeDln,
   hyperlaneHwr,
@@ -110,7 +113,6 @@ export const refactored: BaseProject[] = [
   layerzero,
   axelar,
   axelarits,
-  squid,
   fusionplus,
   circlegateway,
   wormholeWtt,
@@ -126,5 +128,7 @@ export const refactored: BaseProject[] = [
   // privacy
   privacyPools,
   railgun,
+  strk20,
   tornadoCash,
+  zamaCw,
 ]

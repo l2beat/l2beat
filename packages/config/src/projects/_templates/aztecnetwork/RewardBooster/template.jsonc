@@ -1,4 +1,20 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Calculates 'boosted' reward shares for active provers based on a configured curve, incentivizing consistent participation."
+  "description": "Calculates boosted reward shares for active provers based on a configured curve, incentivizing consistent participation.",
+  "category": "core",
+  "fields": {
+    "ROLLUP": {
+      "description": "Rollup allowed to update prover activity scores and query boosted shares during reward accounting.",
+      "template": "aztecnetwork/Rollup",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "update prover activity scores used to calculate boosted prover reward shares."
+        }
+      ]
+    },
+    "getConfig": {
+      "description": "Reward boost curve parameters used to convert prover activity into reward shares."
+    }
+  }
 }

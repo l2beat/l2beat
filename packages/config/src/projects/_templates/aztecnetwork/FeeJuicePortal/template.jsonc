@@ -3,13 +3,22 @@
   "description": "One-way gas bridge: Escrows the fee asset (AZTEC) used to pay for L2 mana (gas). Users deposit tokens here, which are minted on L2 via the Inbox. The Rollup contract holds exclusive rights to withdraw tokens from this portal to distribute them as rewards to L1 sequencers and provers. Apart from that, this escrow does NOT afford a way to withdraw tokens.",
   "fields": {
     "UNDERLYING": {
-      "description": "The L1 ERC20 token serving as the native fee asset for the Aztec network."
+      "description": "The L1 ERC20 token serving as the native fee asset for the Aztec network.",
+      "template": "aztecnetwork/Aztec"
     },
     "ROLLUP": {
-      "description": "The core Rollup contract, possessing exclusive permission to call distributeFees and pay out sequencers and provers."
+      "description": "The core Rollup contract, possessing exclusive permission to call distributeFees and pay out sequencers and provers.",
+      "template": "aztecnetwork/Rollup",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "distribute fee-asset funds escrowed in the portal to sequencers and provers."
+        }
+      ]
     },
     "INBOX": {
-      "description": "The Inbox contract used to relay user deposit messages to the L2."
+      "description": "The Inbox contract used to relay user deposit messages to the L2.",
+      "template": "aztecnetwork/Inbox"
     },
     "L2_TOKEN_ADDRESS": {
       "description": "The hardcoded canonical address of the fee asset on the L2."

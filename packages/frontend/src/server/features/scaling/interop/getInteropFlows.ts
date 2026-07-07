@@ -1,14 +1,20 @@
+import type { InteropDurationSplit, Project } from '@l2beat/config'
 import { assert, notUndefined, type ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
 import { INTEROP_PAIR_SEPARATOR } from './consts'
-import type { InteropFlowsParams, TokenData } from './types'
+import type { AverageDuration, InteropFlowsParams, TokenData } from './types'
 import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
+import {
+  getAverageDuration,
+  getDurationSplit,
+} from './utils/getAverageDuration'
 import { getInteropChains } from './utils/getInteropChains'
-import type { TopEntry } from './utils/getInteropFlowAggregates'
+import type { DurationData, TopEntry } from './utils/getInteropFlowAggregates'
 import { getInteropFlowAggregates } from './utils/getInteropFlowAggregates'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
+import { getRelevantBridgeTypes } from './utils/getRelevantBridgeTypes'
 import { getSummaryTokensData } from './utils/getSummaryTokensData'
 import { getTopItems, type TopItems } from './utils/getTopItems'
 import { scopeRecordsToToken } from './utils/scopeRecordsToToken'
@@ -54,12 +60,14 @@ export interface ChainData {
   protocolCount: number
   topTokens: FlowToken[]
   topProtocols: FlowProtocol[]
+  avgDuration: AverageDuration | null
 }
 
 export interface ChainPairData {
   chains: [string, string]
   topTokens: FlowToken[]
   topProtocols: FlowProtocol[]
+  avgDuration: AverageDuration | null
 }
 
 interface FlowsStats {
@@ -81,21 +89,25 @@ export type InteropFlowsData = {
   stats: FlowsStats
 }
 
+type GetInteropFlowsParams = InteropFlowsParams & {
+  anchorChain?: string
+}
+
 export async function getInteropFlows(
-  params: InteropFlowsParams,
+  params: GetInteropFlowsParams,
 ): Promise<InteropFlowsData> {
   if (env.MOCK) {
     return getMockInteropFlows()
   }
 
-  const { records } = await getLatestAggregatedInteropTransferWithTokens(
-    {
+  const { records } = await getLatestAggregatedInteropTransferWithTokens({
+    selection: {
       from: params.chains,
       to: params.chains,
     },
-    undefined,
-    params.protocolIds,
-  )
+    protocolIds: params.protocolIds,
+    anchorChain: params.anchorChain,
+  })
   const scopedRecords = params.tokenId
     ? scopeRecordsToToken(records, params.tokenId)
     : records
@@ -132,6 +144,8 @@ export async function getInteropFlows(
     chainPairTopTokens,
     chainTopProtocols,
     chainPairTopProtocols,
+    chainDurations,
+    chainPairDurations,
     chainTokenCounts,
     chainProtocolCounts,
     topToken: topTokenEntry,
@@ -139,6 +153,16 @@ export async function getInteropFlows(
     tokenIds,
   } = getInteropFlowAggregates(scopedRecords, subgroupProjects)
 
+  const selectedProject =
+    params.protocolIds.length === 1
+      ? interopProjects.find((p) => p.id === params.protocolIds[0])
+      : undefined
+  const durationSplit = selectedProject
+    ? getDurationSplit(
+        selectedProject,
+        getRelevantBridgeTypes(selectedProject, undefined),
+      )
+    : undefined
   const detailsMap = await buildTokensDetailsMap(tokenIds)
   const summaryTokens = getSummaryTokensData(
     scopedRecords.filter(
@@ -199,15 +223,25 @@ export async function getInteropFlows(
     resolveProtocol,
   )
 
+  const chainPairKeys = new Set([
+    ...resolvedPairTokens.keys(),
+    ...resolvedPairProtocols.keys(),
+    ...chainPairDurations.keys(),
+  ])
   const chainPairData: ChainPairData[] = []
-  for (const [pairKey, topTokens] of resolvedPairTokens) {
+  for (const pairKey of chainPairKeys) {
     const [chainA, chainB] = pairKey.split(INTEROP_PAIR_SEPARATOR)
 
     assert(chainA && chainB, `Invalid pair key: ${pairKey}`)
     chainPairData.push({
       chains: [chainA, chainB],
-      topTokens,
+      topTokens: resolvedPairTokens.get(pairKey) ?? [],
       topProtocols: resolvedPairProtocols.get(pairKey) ?? [],
+      avgDuration: resolveAvgDuration(
+        chainPairDurations.get(pairKey),
+        selectedProject,
+        durationSplit,
+      ),
     })
   }
 
@@ -231,6 +265,9 @@ export async function getInteropFlows(
     resolvedChainProtocols,
     chainTokenCounts,
     chainProtocolCounts,
+    chainDurations,
+    selectedProject,
+    durationSplit,
   )
 
   const topChain = chainData.reduce<ChainData | undefined>((max, chain) => {
@@ -262,6 +299,18 @@ export async function getInteropFlows(
   }
 }
 
+function resolveAvgDuration(
+  duration: DurationData | undefined,
+  selectedProject: Project<'interopConfig'> | undefined,
+  durationSplit: InteropDurationSplit | undefined,
+): AverageDuration | null {
+  if (!duration) return null
+  if (selectedProject?.interopConfig.transfersTimeMode === 'unknown') {
+    return { type: 'unknown' }
+  }
+  return getAverageDuration(duration, durationSplit)
+}
+
 function resolveEntries<T>(
   map: Map<string, TopEntry[]>,
   resolve: (entry: TopEntry) => T | undefined,
@@ -280,6 +329,9 @@ function computeChainsData(
   chainTopProtocols: Map<string, FlowProtocol[]>,
   chainTokenCounts: Map<string, number>,
   chainProtocolCounts: Map<string, number>,
+  chainDurations: Map<string, DurationData>,
+  selectedProject: Project<'interopConfig'> | undefined,
+  durationSplit: InteropDurationSplit | undefined,
 ): ChainData[] {
   const chains = new Map<
     string,
@@ -336,6 +388,11 @@ function computeChainsData(
       protocolCount: chainProtocolCounts.get(chainId) ?? 0,
       topTokens: chainTopTokens.get(chainId) ?? [],
       topProtocols: chainTopProtocols.get(chainId) ?? [],
+      avgDuration: resolveAvgDuration(
+        chainDurations.get(chainId),
+        selectedProject,
+        durationSplit,
+      ),
     }
   })
 }
@@ -358,6 +415,9 @@ function getMockInteropFlows(): InteropFlowsData {
     new Map(),
     new Map(),
     new Map(),
+    new Map(),
+    undefined,
+    undefined,
   )
 
   return {

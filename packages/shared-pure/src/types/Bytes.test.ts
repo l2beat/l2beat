@@ -37,6 +37,9 @@ describe(Bytes.name, () => {
     it('checks constructor arguments', () => {
       expect(() => Bytes.fromNumber(1.5)).toThrow(TypeError)
       expect(() => Bytes.fromNumber(-2)).toThrow(TypeError)
+      expect(() => Bytes.fromNumber(Number.MAX_SAFE_INTEGER + 1)).toThrow(
+        TypeError,
+      )
     })
 
     it('encodes 0 as empty', () => {

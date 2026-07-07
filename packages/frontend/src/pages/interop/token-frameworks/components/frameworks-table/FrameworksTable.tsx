@@ -44,7 +44,6 @@ export function FrameworksTable({
               entry={tableById.get(framework.id)}
               isFirst={i === 0}
               isLoading={isLoading}
-              apiSelection={apiSelection}
             />
           ))}
         </div>

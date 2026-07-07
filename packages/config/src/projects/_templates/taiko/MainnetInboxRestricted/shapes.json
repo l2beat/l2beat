@@ -1,0 +1,14 @@
+{
+  "MainnetInbox.sol": {
+    "hash": "0xc8fb004590f1c60e5c9735be36da74676fdc93286aa44749d3156ad33bc416e7",
+    "address": "eth:0x349Ae3578f48F758d79451EeAB61Cdd5fedD0098",
+    "chain": "ethereum",
+    "blockNumber": 25379204
+  },
+  "MainnetInbox_postHack.sol": {
+    "hash": "0xd6d3af78f692a4c928f8e1b046eca6884ed0d15d120df586c3509c802795d433",
+    "address": "eth:0x64523f2580f4E7038a121D55b220a9C12C1E8f01",
+    "chain": "ethereum",
+    "blockNumber": 25430675
+  }
+}

@@ -71,6 +71,10 @@ function toUpdateRow(
   }
 }
 
+// Keeps each query's (chain, address) tuple list small enough to avoid
+// overflowing both the Kysely query compiler and the Postgres parser stack.
+const BATCH_SIZE = 1000
+
 export class DeployedTokenRepository extends BaseRepository {
   async insert(record: DeployedTokenRecord): Promise<void> {
     await this.db.insertInto('DeployedToken').values(toRow(record)).execute()
@@ -96,77 +100,81 @@ export class DeployedTokenRepository extends BaseRepository {
       abstractToken: AbstractTokenRecord | undefined
     }[]
   > {
-    if (pks.length === 0) {
-      return []
-    }
+    const result: {
+      deployedToken: DeployedTokenRecord
+      abstractToken: AbstractTokenRecord | undefined
+    }[] = []
 
-    const result = await this.db
-      .selectFrom('DeployedToken')
-      .leftJoin(
-        'AbstractToken',
-        'AbstractToken.id',
-        'DeployedToken.abstractTokenId',
-      )
-      .selectAll('DeployedToken')
-      .select([
-        'AbstractToken.id as AbstractToken_id',
-        'AbstractToken.issuer as AbstractToken_issuer',
-        'AbstractToken.category as AbstractToken_category',
-        'AbstractToken.iconUrl as AbstractToken_iconUrl',
-        'AbstractToken.coingeckoId as AbstractToken_coingeckoId',
-        'AbstractToken.coingeckoListingTimestamp as AbstractToken_coingeckoListingTimestamp',
-        'AbstractToken.additionalCoingeckoEntries as AbstractToken_additionalCoingeckoEntries',
-        'AbstractToken.symbol as AbstractToken_symbol',
-        'AbstractToken.comment as AbstractToken_comment',
-        'AbstractToken.reviewed as AbstractToken_reviewed',
-        'AbstractToken.isPriceUnreliable as AbstractToken_isPriceUnreliable',
-      ])
-      .where((eb) =>
-        eb.or(
-          pks.map((pk) =>
-            eb.and([
-              eb('chain', '=', pk.chain),
-              eb('address', '=', pk.address.toLowerCase()),
-            ]),
+    await this.batch(pks, BATCH_SIZE, async (batch) => {
+      const rows = await this.db
+        .selectFrom('DeployedToken')
+        .leftJoin(
+          'AbstractToken',
+          'AbstractToken.id',
+          'DeployedToken.abstractTokenId',
+        )
+        .selectAll('DeployedToken')
+        .select([
+          'AbstractToken.id as AbstractToken_id',
+          'AbstractToken.issuer as AbstractToken_issuer',
+          'AbstractToken.category as AbstractToken_category',
+          'AbstractToken.iconUrl as AbstractToken_iconUrl',
+          'AbstractToken.coingeckoId as AbstractToken_coingeckoId',
+          'AbstractToken.coingeckoListingTimestamp as AbstractToken_coingeckoListingTimestamp',
+          'AbstractToken.additionalCoingeckoEntries as AbstractToken_additionalCoingeckoEntries',
+          'AbstractToken.symbol as AbstractToken_symbol',
+          'AbstractToken.comment as AbstractToken_comment',
+          'AbstractToken.reviewed as AbstractToken_reviewed',
+          'AbstractToken.isPriceUnreliable as AbstractToken_isPriceUnreliable',
+        ])
+        .where((eb) =>
+          eb(
+            eb.refTuple('chain', 'address'),
+            'in',
+            batch.map((pk) => eb.tuple(pk.chain, pk.address.toLowerCase())),
           ),
-        ),
-      )
-      .execute()
+        )
+        .execute()
 
-    return result.map((row) => ({
-      deployedToken: toRecord({
-        symbol: row.symbol,
-        comment: row.comment,
-        chain: row.chain,
-        address: row.address,
-        abstractTokenId: row.abstractTokenId,
-        decimals: row.decimals,
-        deploymentTimestamp: row.deploymentTimestamp,
-        metadata: row.metadata as DeployedTokenMetadata,
-        abstractTokenAssignmentProof: row.abstractTokenAssignmentProof,
-      }),
-      abstractToken:
-        row.AbstractToken_id === null ||
-        row.AbstractToken_symbol === null ||
-        row.AbstractToken_reviewed === null ||
-        row.AbstractToken_isPriceUnreliable === null
-          ? undefined
-          : toAbstractTokenRecord({
-              id: row.AbstractToken_id,
-              issuer: row.AbstractToken_issuer,
-              symbol: row.AbstractToken_symbol,
-              category: row.AbstractToken_category,
-              iconUrl: row.AbstractToken_iconUrl,
-              coingeckoId: row.AbstractToken_coingeckoId,
-              coingeckoListingTimestamp:
-                row.AbstractToken_coingeckoListingTimestamp,
-              additionalCoingeckoEntries:
-                row.AbstractToken_additionalCoingeckoEntries,
-              comment: row.AbstractToken_comment,
-              reviewed: row.AbstractToken_reviewed,
-              isPriceUnreliable: row.AbstractToken_isPriceUnreliable,
-            }),
-    }))
+      for (const row of rows) {
+        result.push({
+          deployedToken: toRecord({
+            symbol: row.symbol,
+            comment: row.comment,
+            chain: row.chain,
+            address: row.address,
+            abstractTokenId: row.abstractTokenId,
+            decimals: row.decimals,
+            deploymentTimestamp: row.deploymentTimestamp,
+            metadata: row.metadata as DeployedTokenMetadata,
+            abstractTokenAssignmentProof: row.abstractTokenAssignmentProof,
+          }),
+          abstractToken:
+            row.AbstractToken_id === null ||
+            row.AbstractToken_symbol === null ||
+            row.AbstractToken_reviewed === null ||
+            row.AbstractToken_isPriceUnreliable === null
+              ? undefined
+              : toAbstractTokenRecord({
+                  id: row.AbstractToken_id,
+                  issuer: row.AbstractToken_issuer,
+                  symbol: row.AbstractToken_symbol,
+                  category: row.AbstractToken_category,
+                  iconUrl: row.AbstractToken_iconUrl,
+                  coingeckoId: row.AbstractToken_coingeckoId,
+                  coingeckoListingTimestamp:
+                    row.AbstractToken_coingeckoListingTimestamp,
+                  additionalCoingeckoEntries:
+                    row.AbstractToken_additionalCoingeckoEntries,
+                  comment: row.AbstractToken_comment,
+                  reviewed: row.AbstractToken_reviewed,
+                  isPriceUnreliable: row.AbstractToken_isPriceUnreliable,
+                }),
+        })
+      }
+    })
+
+    return result
   }
 
   async findByChainAndAddress(
@@ -184,24 +192,23 @@ export class DeployedTokenRepository extends BaseRepository {
   async getByChainsAndAddresses(
     pks: DeployedTokenPrimaryKey[],
   ): Promise<DeployedTokenRecord[]> {
-    if (pks.length === 0) {
-      return []
-    }
+    const rows: Selectable<DeployedToken>[] = []
 
-    const rows = await this.db
-      .selectFrom('DeployedToken')
-      .selectAll()
-      .where((eb) =>
-        eb.or(
-          pks.map((pk) =>
-            eb.and([
-              eb('chain', '=', pk.chain),
-              eb('address', '=', pk.address.toLowerCase()),
-            ]),
-          ),
-        ),
+    await this.batch(pks, BATCH_SIZE, async (batch) => {
+      rows.push(
+        ...(await this.db
+          .selectFrom('DeployedToken')
+          .selectAll()
+          .where((eb) =>
+            eb(
+              eb.refTuple('chain', 'address'),
+              'in',
+              batch.map((pk) => eb.tuple(pk.chain, pk.address.toLowerCase())),
+            ),
+          )
+          .execute()),
       )
-      .execute()
+    })
 
     return rows.map(toRecord)
   }
@@ -223,24 +230,25 @@ export class DeployedTokenRepository extends BaseRepository {
   async getByPrimaryKeys(
     keys: DeployedTokenPrimaryKey[],
   ): Promise<DeployedTokenRecord[]> {
-    if (keys.length === 0) {
-      return []
-    }
+    const rows: Selectable<DeployedToken>[] = []
 
-    const rows = await this.db
-      .selectFrom('DeployedToken')
-      .selectAll()
-      .where((eb) =>
-        eb.or(
-          keys.map((key) =>
-            eb.and([
-              eb('chain', '=', key.chain),
-              eb('address', '=', key.address.toLowerCase()),
-            ]),
-          ),
-        ),
+    await this.batch(keys, BATCH_SIZE, async (batch) => {
+      rows.push(
+        ...(await this.db
+          .selectFrom('DeployedToken')
+          .selectAll()
+          .where((eb) =>
+            eb(
+              eb.refTuple('chain', 'address'),
+              'in',
+              batch.map((key) =>
+                eb.tuple(key.chain, key.address.toLowerCase()),
+              ),
+            ),
+          )
+          .execute()),
       )
-      .execute()
+    })
     return rows.map(toRecord)
   }
 
@@ -255,25 +263,24 @@ export class DeployedTokenRepository extends BaseRepository {
   }
 
   async deleteByPrimaryKeys(keys: DeployedTokenPrimaryKey[]): Promise<number> {
-    if (keys.length === 0) {
-      return 0
-    }
+    let numDeletedRows = 0
 
-    const result = await this.db
-      .deleteFrom('DeployedToken')
-      .where((eb) =>
-        eb.or(
-          keys.map((key) =>
-            eb.and([
-              eb('chain', '=', key.chain),
-              eb('address', '=', key.address.toLowerCase()),
-            ]),
+    await this.batch(keys, BATCH_SIZE, async (batch) => {
+      const result = await this.db
+        .deleteFrom('DeployedToken')
+        .where((eb) =>
+          eb(
+            eb.refTuple('chain', 'address'),
+            'in',
+            batch.map((key) => eb.tuple(key.chain, key.address.toLowerCase())),
           ),
-        ),
-      )
-      .executeTakeFirst()
+        )
+        .executeTakeFirst()
 
-    return Number(result.numDeletedRows)
+      numDeletedRows += Number(result.numDeletedRows)
+    })
+
+    return numDeletedRows
   }
 
   async deleteAll(): Promise<bigint> {

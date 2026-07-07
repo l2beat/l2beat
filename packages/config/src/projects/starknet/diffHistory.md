@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x46be0f3a5ee0bbfd930370ece20fd5c286d971b4
+
+# Diff at Mon, 06 Jul 2026 11:01:07 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@1fd9d39064602bc28714717ec6eae23c740b472b block: 1776761835
+- current timestamp: 1783335585
+
+## Description
+
+Rotated two ms members.
+
+## Watched changes
+
+```diff
+    contract Starkware Security Council (eth:0x15e8c684FD095d4796A0c0CF678554F4c1C7C361) [GnosisSafe] {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x2914767E232FD7708ab06bA60dB16c36C555751d"
++        "eth:0x49C6396070D3310f335AE19169Da6B80ea67B831"
+      values.$members.4:
+-        "eth:0xfaECfa5E4180dd55D15396F804Fd00C6dbA233B0"
++        "eth:0x16117672EBF77d5DE9a1Af91F8F79b26421b310F"
+    }
+```
+
+```diff
+    contract Starkware SCMinority Multisig (eth:0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x2914767E232FD7708ab06bA60dB16c36C555751d"
++        "eth:0x49C6396070D3310f335AE19169Da6B80ea67B831"
+      values.$members.4:
+-        "eth:0xfaECfa5E4180dd55D15396F804Fd00C6dbA233B0"
++        "eth:0x16117672EBF77d5DE9a1Af91F8F79b26421b310F"
+    }
+```
+
 Generated with discovered.json: 0x87cb70c631d2ef726a94fec4da7aa4ad4e378f7c
 
 # Diff at Fri, 12 Jun 2026 10:54:23 GMT:

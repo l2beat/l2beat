@@ -56,6 +56,7 @@ export type ApiAddressType =
   | 'Timelock'
   | 'Untemplatized'
   | 'Contract'
+  | 'Group'
   | 'Unknown'
 
 export interface ApiAddressEntry {
@@ -166,6 +167,16 @@ export interface ApiAbiEntry {
 export interface ApiCodeResponse {
   entryName: string | undefined
   sources: { name: string; code: string }[]
+}
+
+export interface ApiCodeSegment {
+  name: string | null
+  content: string
+}
+
+export interface ApiCodeDeclarationsResponse {
+  entryName: string | undefined
+  sources: { name: string; declarations: ApiCodeSegment[] }[]
 }
 
 export interface ApiCodeSearchResponse {

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { getCode } from '../../../api/api'
 import type { ApiCodeResponse } from '../../../api/types'
 import { ActionNeededState } from '../../../components/ActionNeededState'
@@ -11,6 +11,8 @@ import { IS_READONLY } from '../../../config/readonly'
 import { toShortenedAddress } from '../../../utils/toShortenedAddress'
 import { useProjectData } from '../hooks/useProjectData'
 import { getDefaultSourceIndex, hasSourceCode } from '../utils/sourceCode'
+import { CarveCopyDialog } from './CarveCopyDialog'
+import { joinDeclarations } from './declarations'
 import { RediscoverPrompt } from './RediscoverPrompt'
 
 export function CodePanel() {
@@ -32,6 +34,10 @@ export function CodePanel() {
   })
 
   const { getRange, getSourceIndex } = useCodeStore()
+
+  const [activeFile, setActiveFile] = useState<EditorFile | undefined>(
+    undefined,
+  )
 
   const files = useMemo(
     () => getCodeFiles(codeResponse, selectedAddress, hasCode),
@@ -68,9 +74,23 @@ export function CodePanel() {
           data: range,
         }
 
+  const activeSource = codeResponse.data?.sources.find(
+    (source) => source.name === activeFile?.name,
+  )
+  const canCarve =
+    activeSource?.declarations.some((segment) => segment.name !== null) ?? false
+
   return (
-    <div className="flex h-full w-full select-none flex-col">
+    <div className="relative flex h-full w-full select-none flex-col">
       {showRediscoverInfo && <RediscoverPrompt />}
+      {activeSource && canCarve && (
+        <div className="absolute top-1 right-3 z-10">
+          <CarveCopyDialog
+            sourceName={activeSource.name}
+            declarations={activeSource.declarations}
+          />
+        </div>
+      )}
       <EditorView
         editorId="code-panel"
         files={files}
@@ -79,6 +99,7 @@ export function CodePanel() {
           codeResponse.data?.sources ?? [],
         )}
         features={{ lineSelection: false, rangeHighlight: true }}
+        onActiveFileChange={setActiveFile}
       />
     </div>
   )
@@ -132,7 +153,7 @@ function getCodeFiles(
   return codeResponse.data.sources.map((source) => ({
     id: source.name,
     name: source.name,
-    content: source.code,
+    content: joinDeclarations(source.declarations),
     readOnly: true,
     language: 'solidity' as const,
   }))

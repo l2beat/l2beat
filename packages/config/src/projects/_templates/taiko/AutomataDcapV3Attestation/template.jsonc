@@ -1,5 +1,5 @@
 {
-  "description": "Contract managing SGX attestation certificates.",
+  "description": "Contract managing SGX DCAP attestation policy, trusted measurements, and certificate revocation data.",
   "fields": {
     "proxiableUUID": {
       "handler": {
@@ -10,6 +10,8 @@
       }
     },
     "mrEnclaves": {
+      "description": "Trusted SGX enclave measurements accepted by attestation verification.",
+      "severity": "HIGH",
       "handler": {
         "type": "event",
         "select": "mrEnclave",
@@ -24,6 +26,8 @@
       }
     },
     "mrSigners": {
+      "description": "Trusted SGX signer measurements accepted by attestation verification.",
+      "severity": "HIGH",
       "handler": {
         "type": "event",
         "select": "mrSigner",
@@ -41,7 +45,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "can update the program being verified"
+          "description": "manage trusted SGX measurements, revoked certificate serial numbers, TCB info, QE identity, and local report checks."
         }
       ]
     }

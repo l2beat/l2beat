@@ -1,13 +1,14 @@
 import type { AnalyzerResultApiResponse } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
-import { type ReactNode, useMemo, useState } from 'react'
+import { type ReactNode, useCallback, useMemo, useState } from 'react'
 import { getAnalyzers, getCode, runAnalyzer } from '../../../api/api'
 import { ActionNeededState } from '../../../components/ActionNeededState'
 import { Button } from '../../../components/Button'
-import { Checkbox } from '../../../components/Checkbox'
 import { ErrorState } from '../../../components/ErrorState'
+import { useCodeStore } from '../../../components/editor/store'
 import { Loader } from '../../../components/Loader'
 import { LoadingState } from '../../../components/LoadingState'
+import { Markdown } from '../../../components/Markdown'
 import { Select } from '../../../components/Select'
 import { IconPlay } from '../../../icons/IconPlay'
 import { IconRefresh } from '../../../icons/IconRefresh'
@@ -17,6 +18,7 @@ import { getDefaultSourceName, hasSourceCode } from '../utils/sourceCode'
 export function AnalyzePanel() {
   const { project, selectedAddress, projectResponse, selected } =
     useProjectData()
+  const codePanelEditor = useCodeStore((state) => state.editors['code-panel'])
 
   const hasCode = hasSourceCode(selected)
 
@@ -40,7 +42,6 @@ export function AnalyzePanel() {
 
   const [preferredAnalyzer, setPreferredAnalyzer] = useState<string>()
   const [preferredSource, setPreferredSource] = useState<string>()
-  const [wrapText, setWrapText] = useState(true)
   const [hasRun, setHasRun] = useState(false)
 
   const sources = codeResponse.data?.sources ?? []
@@ -95,6 +96,24 @@ export function AnalyzePanel() {
       )
     },
   })
+
+  const searchSelectedResultInCodePanel = useCallback(() => {
+    if (codePanelEditor === undefined) {
+      return
+    }
+
+    const selection = window.getSelection()
+    if (!selection || selection.isCollapsed) {
+      return
+    }
+
+    const searchString = selection.toString().trim()
+    if (searchString.length === 0) {
+      return
+    }
+
+    codePanelEditor.find(searchString)
+  }, [codePanelEditor])
 
   if (projectResponse.isError) {
     return <ErrorState />
@@ -198,26 +217,17 @@ export function AnalyzePanel() {
         )}
       </Field>
 
-      <Field
-        label="Result"
-        className="min-h-0 flex-1"
-        actions={
-          <div
-            className="flex cursor-pointer items-center gap-1 text-coffee-400 text-xs"
-            onClick={() => setWrapText(!wrapText)}
-          >
-            <Checkbox checked={wrapText} />
-            Wrap text
-          </div>
-        }
-      >
-        <div className="min-h-0 flex-1 select-text overflow-auto border border-coffee-600 bg-coffee-800 p-2">
+      <Field label="Result" className="min-h-0 flex-1">
+        <div
+          className="min-h-0 flex-1 select-text overflow-auto border border-coffee-600 bg-coffee-800 p-2"
+          onMouseUp={searchSelectedResultInCodePanel}
+          onKeyUp={searchSelectedResultInCodePanel}
+        >
           {hasRun ? (
             <ResultView
               isPending={analyzeQuery.isFetching || codeResponse.isPending}
               result={analyzeQuery.data}
               error={analyzeQuery.error}
-              wrap={wrapText}
             />
           ) : (
             <p className="text-coffee-400 text-xs italic">
@@ -253,12 +263,7 @@ function ResultView(props: {
   isPending: boolean
   result: AnalyzerResultApiResponse | undefined
   error: Error | null
-  wrap: boolean
 }) {
-  const wrapClass = props.wrap
-    ? 'whitespace-pre-wrap break-all'
-    : 'whitespace-pre'
-
   if (props.isPending) {
     return (
       <div className="flex items-center gap-2 text-coffee-400 text-xs">
@@ -270,7 +275,7 @@ function ResultView(props: {
 
   if (props.error) {
     return (
-      <pre className={`${wrapClass} font-mono text-aux-red text-xs`}>
+      <pre className="whitespace-pre-wrap break-all font-mono text-aux-red text-xs">
         {props.error.message}
       </pre>
     )
@@ -282,7 +287,7 @@ function ResultView(props: {
 
   if (props.result.status === 'error') {
     return (
-      <pre className={`${wrapClass} font-mono text-aux-red text-xs`}>
+      <pre className="whitespace-pre-wrap break-all font-mono text-aux-red text-xs">
         {props.result.error.message}
         {props.result.error.details
           ? `\n\n${JSON.stringify(props.result.error.details, null, 2)}`
@@ -292,10 +297,11 @@ function ResultView(props: {
   }
 
   return (
-    <pre
-      className={`${wrapClass} font-mono text-coffee-200 text-xs leading-relaxed`}
+    <Markdown
+      allowHtml={false}
+      className="text-coffee-200 text-sm leading-relaxed"
     >
       {props.result.output.text}
-    </pre>
+    </Markdown>
   )
 }

@@ -119,12 +119,26 @@ export const tornadoCash: BaseProject = {
   privacyInfo: {
     trustedSetup: TRUSTED_SETUPS.TornadoCash,
     tokens: getPrivacyTokens(),
-    attributes: [
-      PRIVACY_ATTRIBUTES.immutable,
-      PRIVACY_ATTRIBUTES.unconditionalPrivacy,
-      PRIVACY_ATTRIBUTES.fixedAmounts,
-      PRIVACY_ATTRIBUTES.sourceAvailable,
-    ],
+    exitWindow: {
+      value: 'Infinite',
+      sentiment: 'good',
+      orderHint: Number.MAX_SAFE_INTEGER,
+      description:
+        'The core Tornado Cash contracts are immutable and have no admin upgrade path, so users can always withdraw with a valid note and proof.',
+    },
+    reproducibility: {
+      value: 'Reproducible',
+      sentiment: 'good',
+      description:
+        'There is at least one practical way to participate in Tornado Cash using published source code that can be audited and run locally.',
+    },
+    privacy: {
+      value: 'None',
+      sentiment: 'good',
+      description:
+        'There is no protocol-level compliance mechanism or way to compromise user privacy.',
+    },
+    attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.fixedAmounts],
     riskSummary: readProjectMarkdown('tornado-cash', 'riskSummary'),
     upgradesAndGovernance: readProjectMarkdown(
       'tornado-cash',

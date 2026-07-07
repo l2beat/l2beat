@@ -3,14 +3,12 @@ import type {
   ChainRecord,
   Database,
   DeployedTokenRecord,
-  InteropTransferRecord,
   TokenDatabase,
   TokenIngestionQueueRecord,
   TokenIngestionQueueState,
 } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
+import { type InteropBridgeType, UnixTime } from '@l2beat/shared-pure'
 import { randomUUID } from 'crypto'
-import { InteropTransferClassifier } from '../../../shared/build'
 import { Chain } from '../chains/Chain'
 import type { CoingeckoClient } from '../chains/clients/coingecko/CoingeckoClient'
 import type {
@@ -62,12 +60,24 @@ interface TokenIngestionProcessorDeps {
   newQueueState?: Extract<TokenIngestionQueueState, 'staged' | 'pending'>
 }
 
+/**
+ * Where the assignment proof for a resolved abstract token will come from.
+ * Materializing a non-swapping-transfer proof costs a DB lookup (the index
+ * only carries a sample transfer id per route), so resolution hands over the
+ * source and `buildPlanOutcome` builds the proof only for outcomes that
+ * persist it — noop and conflict plans, the common steady-state outcomes,
+ * never pay the lookup.
+ */
+type ProofSource =
+  | { kind: 'coingecko' }
+  | { kind: 'non-swapping-transfer'; match: InteropTransferMatch }
+
 type AbstractTokenResolution =
   | {
       type: 'resolved'
       abstractToken: AbstractTokenRef
       symbolFallback: string | undefined
-      proof: AbstractTokenAssignmentProof
+      proofSource: ProofSource
     }
   | { type: 'existing-noop'; abstractToken: AbstractTokenRef }
   | {
@@ -101,8 +111,8 @@ export class TokenIngestionProcessor {
   }
 
   async refreshInteropTransferIndex(): Promise<InteropTransferIndex> {
-    const transfers = await this.deps.db.interopTransfer.getAll()
-    const index = buildInteropTransferIndex(transfers)
+    const routes = await this.deps.db.interopTransfer.getTokenRoutes()
+    const index = buildInteropTransferIndex(routes)
     this.interopTransferIndex = index
     return index
   }
@@ -178,7 +188,12 @@ export class TokenIngestionProcessor {
       address,
       existingDeployedToken: existing,
       steps,
-      outcome: this.buildPlanOutcome(existing, resolution, transfers, address),
+      outcome: await this.buildPlanOutcome(
+        existing,
+        resolution,
+        transfers,
+        address,
+      ),
     }
   }
 
@@ -267,10 +282,15 @@ export class TokenIngestionProcessor {
       }
     }
 
-    const conflict = getNewCoingeckoSymbolConflict(
-      newAbstractToken,
-      built.record.symbol,
-    )
+    const conflict =
+      getNewCoingeckoSymbolConflict(newAbstractToken, built.record.symbol) ??
+      getTransferAbstractSymbolConflict(
+        pending.proof.kind,
+        pending.abstract.kind === 'existing'
+          ? pending.abstract.token
+          : undefined,
+        built.record.symbol,
+      )
     if (conflict) {
       return {
         ...trace,
@@ -365,7 +385,7 @@ export class TokenIngestionProcessor {
       return fromTransfers
     }
 
-    if (fromTransfers.abstractToken && fromTransfers.supportingTransfer) {
+    if (fromTransfers.abstractToken && fromTransfers.supportingMatch) {
       steps.push({
         kind: 'resolved-from-transfers',
         abstractToken: fromTransfers.abstractToken,
@@ -374,7 +394,10 @@ export class TokenIngestionProcessor {
         type: 'resolved',
         abstractToken: fromTransfers.abstractToken,
         symbolFallback: undefined,
-        proof: nonSwappingTransferProof(fromTransfers.supportingTransfer),
+        proofSource: {
+          kind: 'non-swapping-transfer',
+          match: fromTransfers.supportingMatch,
+        },
       }
     }
 
@@ -404,13 +427,14 @@ export class TokenIngestionProcessor {
     | {
         type: 'resolved'
         abstractToken: AbstractTokenRef | undefined
-        supportingTransfer: InteropTransferRecord | undefined
+        supportingMatch: InteropTransferMatch | undefined
       }
     | { type: 'conflict'; message: string }
   > {
     const usableNonSwapping = transfers.filter(
       (match): match is InteropTransferMatch & { otherToken: TokenAddress } =>
-        isNonSwappingTransfer(match.transfer) && match.otherToken !== undefined,
+        isNonSwappingBridgeType(match.bridgeType) &&
+        match.otherToken !== undefined,
     )
     const otherTokens = uniqueTokenAddresses(
       usableNonSwapping.map((match) => match.otherToken),
@@ -448,8 +472,8 @@ export class TokenIngestionProcessor {
 
     steps.push({
       kind: 'transfer-evidence',
-      total: transfers.length,
-      nonSwapping: usableNonSwapping.length,
+      total: sumTransferCounts(transfers),
+      nonSwapping: sumTransferCounts(usableNonSwapping),
       abstractTokens: transferRefs,
     })
 
@@ -473,19 +497,35 @@ export class TokenIngestionProcessor {
       }
     }
 
-    const supportingTransfer = transferAbstract
-      ? supportingTransferFor(
-          transferAbstract.id,
-          usableNonSwapping,
-          otherDeployedTokenMap,
-        )
-      : undefined
-
     return {
       type: 'resolved',
       abstractToken: transferAbstract,
-      supportingTransfer,
+      supportingMatch: transferAbstract
+        ? supportingMatchFor(
+            transferAbstract.id,
+            usableNonSwapping,
+            otherDeployedTokenMap,
+          )
+        : undefined,
     }
+  }
+
+  private async buildProof(
+    source: ProofSource,
+  ): Promise<AbstractTokenAssignmentProof> {
+    if (source.kind === 'coingecko') {
+      return { kind: 'coingecko' }
+    }
+
+    const transfer = await this.deps.db.interopTransfer.findByTransferId(
+      source.match.sampleTransferId,
+    )
+    if (!transfer) {
+      throw new Error(
+        `Supporting transfer ${source.match.sampleTransferId} no longer exists; the interop transfer index is stale`,
+      )
+    }
+    return nonSwappingTransferProof(transfer)
   }
 
   private async resolveAbstractFromCoingecko(
@@ -503,8 +543,6 @@ export class TokenIngestionProcessor {
       symbol: coin.symbol,
     })
 
-    const proof: AbstractTokenAssignmentProof = { kind: 'coingecko' }
-
     const abstractToken =
       await this.deps.tokenDb.abstractToken.findByCoingeckoId(coin.id)
     if (abstractToken) {
@@ -521,7 +559,7 @@ export class TokenIngestionProcessor {
         type: 'resolved',
         abstractToken: ref,
         symbolFallback: coin.symbol.toUpperCase(),
-        proof,
+        proofSource: { kind: 'coingecko' },
       }
     }
 
@@ -534,11 +572,11 @@ export class TokenIngestionProcessor {
       type: 'pending-new-coingecko',
       coingeckoId: coin.id,
       coinSymbol: coin.symbol,
-      proof,
+      proof: { kind: 'coingecko' },
     }
   }
 
-  private buildPlanOutcome(
+  private async buildPlanOutcome(
     existing: DeployedTokenRecord | undefined,
     resolution: Extract<
       AbstractTokenResolution,
@@ -546,7 +584,7 @@ export class TokenIngestionProcessor {
     >,
     transfers: InteropTransferMatch[],
     address: TokenAddress,
-  ): IngestionOutcome {
+  ): Promise<IngestionOutcome> {
     const neighborsToEnqueue = collectTransferNeighbors(address, transfers)
 
     if (resolution.type === 'existing-noop') {
@@ -561,6 +599,14 @@ export class TokenIngestionProcessor {
         if (existing.abstractTokenId === resolution.abstractToken.id) {
           return { kind: 'noop', deployedToken: existing }
         }
+        const conflict = getTransferAbstractSymbolConflict(
+          resolution.proofSource.kind,
+          resolution.abstractToken,
+          existing.symbol,
+        )
+        if (conflict) {
+          return { kind: 'conflict', message: conflict }
+        }
         return {
           kind: 'write',
           newAbstractToken: undefined,
@@ -570,7 +616,9 @@ export class TokenIngestionProcessor {
             existing,
             update: {
               abstractTokenId: resolution.abstractToken.id,
-              abstractTokenAssignmentProof: resolution.proof,
+              abstractTokenAssignmentProof: await this.buildProof(
+                resolution.proofSource,
+              ),
             },
           },
           neighborsToEnqueue,
@@ -583,7 +631,7 @@ export class TokenIngestionProcessor {
         abstract: { kind: 'existing', token: resolution.abstractToken },
         symbolFallback: resolution.symbolFallback,
         neighborsToEnqueue,
-        proof: resolution.proof,
+        proof: await this.buildProof(resolution.proofSource),
       }
     }
 
@@ -848,18 +896,16 @@ function buildWriteCommands(
   return commands
 }
 
-function supportingTransferFor(
+function supportingMatchFor(
   abstractTokenId: string,
   usableNonSwapping: (InteropTransferMatch & { otherToken: TokenAddress })[],
   otherDeployedTokenMap: Map<string, DeployedTokenRecord>,
-): InteropTransferRecord | undefined {
-  for (const match of usableNonSwapping) {
-    const other = otherDeployedTokenMap.get(getTokenKey(match.otherToken))
-    if (other?.abstractTokenId === abstractTokenId) {
-      return match.transfer
-    }
-  }
-  return undefined
+): InteropTransferMatch | undefined {
+  return usableNonSwapping.find(
+    (match) =>
+      otherDeployedTokenMap.get(getTokenKey(match.otherToken))
+        ?.abstractTokenId === abstractTokenId,
+  )
 }
 
 function collectTransferNeighbors(
@@ -878,11 +924,12 @@ function collectTransferNeighbors(
   return Array.from(seen.values())
 }
 
-function isNonSwappingTransfer(transfer: InteropTransferRecord) {
-  const bridgeType =
-    transfer.bridgeType ?? InteropTransferClassifier.inferBridgeType(transfer)
-
+function isNonSwappingBridgeType(bridgeType: InteropBridgeType) {
   return bridgeType === 'lockAndMint' || bridgeType === 'burnAndMint'
+}
+
+function sumTransferCounts(matches: InteropTransferMatch[]) {
+  return matches.reduce((sum, match) => sum + match.transferCount, 0)
 }
 
 function formatRef(ref: AbstractTokenRef) {
@@ -906,6 +953,31 @@ function getNewCoingeckoSymbolConflict(
   }
 
   return `CoinGecko would create abstract token ${newAbstractToken.id}:${newAbstractToken.symbol}, but the deployed token symbol is ${deployedTokenSymbol}.`
+}
+
+/**
+ * Counterpart of `getNewCoingeckoSymbolConflict` for abstract tokens resolved
+ * from non-swapping transfers. Called from two places: `buildPlanOutcome()`
+ * for updates of existing deployed tokens (their symbol is already in the DB)
+ * and `fetch()` for inserts (the symbol only arrives with the RPC facts).
+ * Case-insensitive because deployments of the same asset routinely differ in
+ * casing only; unlike the CoinGecko path no casing is adopted — the abstract
+ * token already exists and its symbol stays as-is.
+ */
+function getTransferAbstractSymbolConflict(
+  proofKind: AbstractTokenAssignmentProof['kind'],
+  abstractToken: AbstractTokenRef | undefined,
+  deployedTokenSymbol: string,
+): string | undefined {
+  if (proofKind !== 'non-swapping-transfer') return undefined
+  if (!abstractToken) return undefined
+  if (
+    abstractToken.symbol.toLowerCase() === deployedTokenSymbol.toLowerCase()
+  ) {
+    return undefined
+  }
+
+  return `Non-swapping transfers point to abstract token ${formatRef(abstractToken)}, but the deployed token symbol is ${deployedTokenSymbol}.`
 }
 
 /**

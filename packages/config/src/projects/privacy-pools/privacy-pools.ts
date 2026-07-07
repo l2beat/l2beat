@@ -92,12 +92,26 @@ export const privacyPools: BaseProject = {
   privacyInfo: {
     trustedSetup: TRUSTED_SETUPS.PrivacyPools,
     tokens: getPrivacyTokens(),
-    attributes: [
-      PRIVACY_ATTRIBUTES.immutable,
-      PRIVACY_ATTRIBUTES.enforcedCompliance,
-      PRIVACY_ATTRIBUTES.anyAmount,
-      PRIVACY_ATTRIBUTES.sourceAvailable,
-    ],
+    exitWindow: {
+      value: 'Infinite',
+      sentiment: 'good',
+      orderHint: Number.MAX_SAFE_INTEGER,
+      description:
+        'Even if the Entrypoint or ASP turns malicious, users can always ragequit (withdraw tokens) from the immutable pool contracts, at the cost of losing privacy.',
+    },
+    reproducibility: {
+      value: 'Reproducible',
+      sentiment: 'good',
+      description:
+        'The contracts, circuits, and supporting software needed to participate in Privacy Pools are publicly available and can be run locally.',
+    },
+    privacy: {
+      value: 'None',
+      sentiment: 'good',
+      description:
+        'Compliance is enforced through centralized association set providers, which can refuse deposits into the pool, sending them back to the sender.',
+    },
+    attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.anyAmount],
     riskSummary: readProjectMarkdown('privacy-pools', 'riskSummary'),
     upgradesAndGovernance: readProjectMarkdown(
       'privacy-pools',

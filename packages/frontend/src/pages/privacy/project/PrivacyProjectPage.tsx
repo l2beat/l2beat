@@ -10,6 +10,7 @@ import { projectDetailsToNavigationSections } from '~/components/projects/naviga
 import { ProjectDetails } from '~/components/projects/ProjectDetails'
 import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
+import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
@@ -17,6 +18,7 @@ import { MobileSectionNavigation } from '~/components/section-navigation/MobileS
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import { PrivacyProjectRiskProfile } from './components/PrivacyProjectRiskProfile'
 import { PrivacyProjectStats } from './components/PrivacyProjectStats'
 import type { PrivacyProjectEntry } from './getPrivacyProjectData'
 
@@ -94,15 +96,26 @@ export function PrivacyProjectPage({ entry, queryState, ...props }: Props) {
                         deposits={entry.summary.deposits}
                       />
 
+                      <PrivacyProjectRiskProfile
+                        exitWindow={entry.exitWindow}
+                        privacy={entry.privacy}
+                        reproducibility={entry.reproducibility}
+                        className="mt-4"
+                      />
+
                       {entry.attributes.length > 0 && (
-                        <div className="mt-4 flex flex-wrap gap-1 md:mt-2">
-                          {entry.attributes.map((attribute) => (
+                        <ProjectSummaryStat
+                          className="mt-6 md:mt-4"
+                          title="Attributes"
+                          tooltip="Protocol attributes and capabilities."
+                          valueClassName="flex flex-wrap justify-end gap-1 md:justify-start"
+                          value={entry.attributes.map((attribute) => (
                             <PrivacyAttributeTag
                               key={attribute.id}
                               attribute={attribute}
                             />
                           ))}
-                        </div>
+                        />
                       )}
 
                       <HorizontalSeparator className="my-4 max-md:hidden" />

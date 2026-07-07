@@ -1,3 +1,171 @@
+Generated with discovered.json: 0xdb4c93d65aac4f190440217b4951bc8f8ad4daac
+
+# Diff at Wed, 24 Jun 2026 12:34:05 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@de5d8a0f706ed1564e5583609b20d2bf29d3dfd5 block: 1782119094
+- current timestamp: 1782304372
+
+## Description
+
+Added custom implementation operators for the current callproxy implementation. It does not introduce any trust assumptions because this callproxy is used by default anyway.
+
+## Watched changes
+
+```diff
+    contract SHARPVerifierCallProxy (eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60) [shared-sharp-verifier/SHARPVerifierCallProxy] {
+    +++ description: Upgradable call proxy contract through which the SHARPVerifier can be called. A call proxy does not delegatecall and the storage context remains at the target contract. It allows eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 to change the otherwise immutable verifier contract with 8d delay.
++++ description: Calls of these operators are redirected to custom proxy implementations, usually older versions of verifiers.
++++ severity: HIGH
+      values.customImplOperators.8:
++        "eth:0x6eEDe907dF99F7FBCd26e71e5b157BBB6483Fc8b"
++++ description: Calls of these operators are redirected to custom proxy implementations, usually older versions of verifiers.
++++ severity: HIGH
+      values.customImplOperators.9:
++        "eth:0xA410aEA6d7ad518165c214a42730A19fB3828170"
++++ description: Non-default targets for call proxy delegation. These targets are automatically chosen based on which operator makes a call.
++++ severity: HIGH
+      values.customProxyImplementations.4:
++        "eth:0xE67515a751291445B85b2F176c1eCdf08e86b406"
+    }
+```
+
+Generated with discovered.json: 0x48091a0469dcd0a331a808bf4041e1e950719f7e
+
+# Diff at Mon, 22 Jun 2026 10:11:52 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@18532eacfff59dfa2ff9ea37d128b65c569fef40 block: 1777891441
+- current timestamp: 1782119094
+
+## Description
+
+Redeployed SHARP verifier with the same program hashes and same contracts (https://disco.l2beat.com/diff/eth:0x7Da1225C752ab37E610a242D9D8a0548262E3fF7/eth:0xE67515a751291445B85b2F176c1eCdf08e86b406). 
+
+The new verifier has expiry timestamp at 1782316139, which is in 2 days and not 600 years as for previous verifiers. All older verifiers will become unusable (and should be purged from the FE) after this timestamp.
+
+## Watched changes
+
+```diff
+    contract SHARPVerifierCallProxy (eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60) [shared-sharp-verifier/SHARPVerifierCallProxy] {
+    +++ description: Upgradable call proxy contract through which the SHARPVerifier can be called. A call proxy does not delegatecall and the storage context remains at the target contract. It allows eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 to change the otherwise immutable verifier contract with 8d delay.
+      values.$pastUpgrades.13:
++        ["2026-06-21T09:15:59.000Z","0x57f323ff6c828c8fe0c65c9c89d5b242264455cd5f3a5bacd25a78efa17b0ed4",["eth:0x3597c5CBCbCB30079a0bD2A68cDE5f98272f9feb"]]
+      values.$upgradeCount:
+-        13
++        14
+      values.callProxyImplementation:
+-        "eth:0x7Da1225C752ab37E610a242D9D8a0548262E3fF7"
++        "eth:0xE67515a751291445B85b2F176c1eCdf08e86b406"
+      values.StarkWareProxy_callImplementation:
+-        "eth:0x7Da1225C752ab37E610a242D9D8a0548262E3fF7"
++        "eth:0xE67515a751291445B85b2F176c1eCdf08e86b406"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SHARPVerifier (eth:0xE67515a751291445B85b2F176c1eCdf08e86b406) [shared-sharp-verifier/SHARPVerifier]
+    +++ description: Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.
+```
+
+## Source code changes
+
+```diff
+.../shared-sharp-verifier/.flat/SHARPVerifier.sol  | 2413 ++++++++++++++++++++
+ 1 file changed, 2413 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777891441 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract CpuFrilessVerifier (eth:0x28E3aD4201ba416B23d9950503dB28a9232BE32a) [shared-sharp-verifier/Level2CpuFrilessVerifier]
+    +++ description: None
+```
+
+```diff
+    contract SHARPVerifier_2026_13_1 (eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe) [shared-sharp-verifier/SHARPVerifier] {
+    +++ description: Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.
+      name:
+-        "SHARPVerifier_2026_13"
++        "SHARPVerifier_2026_13_1"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract CpuFrilessVerifier (eth:0x5f1AbAA5d375Edb7bEd213855D44268B844CD65d) [shared-sharp-verifier/Level2CpuFrilessVerifier]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuFrilessVerifier (eth:0x6097FC32a720D0DE369A67FecdBC91fE3C6Cc460) [shared-sharp-verifier/Level2CpuFrilessVerifier]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuFrilessVerifier (eth:0x66F2345D003511a1A60D87E3984Bb8d12C21A970) [shared-sharp-verifier/Level2CpuFrilessVerifier]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Level3SHARPVerifier (eth:0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6) [shared-sharp-verifier/Level3SHARPVerifier]
+    +++ description: Old shared Starkware SHARP verifier that was used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output. Only used as fallback
+```
+
+```diff
+    contract SHARPVerifier_2026_13_2 (eth:0x7Da1225C752ab37E610a242D9D8a0548262E3fF7) [shared-sharp-verifier/SHARPVerifier] {
+    +++ description: Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.
+      name:
+-        "SHARPVerifier"
++        "SHARPVerifier_2026_13_2"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract CpuFrilessVerifier (eth:0x8055948c530dbBc19cc350d53473EEe3a1e3d22B) [shared-sharp-verifier/Level2CpuFrilessVerifier]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuFrilessVerifier (eth:0xaA2c9CDD4ceAebe9A35873B77F57FB47c3Ef11b9) [shared-sharp-verifier/Level2CpuFrilessVerifier]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CairoBootloaderProgram_2023_9 (eth:0xb4c61d092eCf1b69F1965F9D8DE639148ea26a40) [shared-sharp-verifier/CairoBootloaderProgram]
+    +++ description: Bootloader program for the SHARPVerifier.
+```
+
+```diff
+-   Status: DELETED
+    contract CpuFrilessVerifier (eth:0xbF8D127efc09ed49C65f00355A0C5a5FF57D26cc) [shared-sharp-verifier/Level2CpuFrilessVerifier]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuFrilessVerifier (eth:0xD0fC19710c389ef4a7244656cB08db08eA9D88b4) [shared-sharp-verifier/Level2CpuFrilessVerifier]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Level2SHARPVerifier (eth:0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF) [shared-sharp-verifier/Level2SHARPVerifier]
+    +++ description: Old shared Starkware SHARP verifier that was used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output. Only used as fallback
+```
+
 Generated with discovered.json: 0x5cc2ebe5db7e9cc030b100516d5bf0d696421e86
 
 # Diff at Fri, 08 May 2026 07:52:18 GMT:

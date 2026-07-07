@@ -6921,6 +6921,20 @@
       "supply": "zero"
     },
     {
+      "name": "Zama",
+      "coingeckoId": "zama",
+      "address": "0xA12CC123ba206d4031D1c7f6223D1C2Ec249f4f3",
+      "symbol": "ZAMA",
+      "decimals": 18,
+      "deploymentTimestamp": 1763038283,
+      "coingeckoListingTimestamp": 1769990400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70921/large/zama.png?1764591992",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Zircuit",
       "coingeckoId": "zircuit",
       "address": "0xfd418e42783382E86Ae91e445406600Ba144D162",
@@ -8333,6 +8347,28 @@
       "chainId": 185,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "USD₮0",
+      "coingeckoId": "usdt0",
+      "address": "0x779Ded0c9e1022225f8E0630b35a9b54bE713736",
+      "symbol": "USD₮0",
+      "decimals": 6,
+      "deploymentTimestamp": 1756441826,
+      "coingeckoListingTimestamp": 1737590400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53705/large/usdt0.jpg?1737086183",
+      "chainId": 196,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "name": "OpenUSDT",
@@ -11121,6 +11157,42 @@
           {
             "name": "Layer Zero v2 OFT",
             "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Global Dollar",
+      "coingeckoId": "global-dollar",
+      "address": "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168",
+      "symbol": "USDG",
+      "decimals": 6,
+      "deploymentTimestamp": 1778003991,
+      "coingeckoListingTimestamp": 1730764800,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/51281/large/GDN_USDG_Token_200x200.png?1730484111",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "symbol": "USDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1780403342,
+      "coingeckoListingTimestamp": 1702512000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33613/large/usde.png?1733810059",
+      "chainId": 4663,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargate"
           }
         ]
       }

@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "The executor contract for penalties. It receives authorization to slash validator stakes, subject to an execution delay and a vetoer.",
+  "category": "core",
   "fields": {
     "SLASHING_DISABLE_DURATION_fmt": {
       "handler": {
@@ -10,7 +11,18 @@
       },
       "edit": ["format", "FormatSeconds"]
     },
+    "PROPOSER": {
+      "description": "The slashing proposer allowed to execute accepted slash payloads.",
+      "template": "aztecnetwork/TallySlashingProposer",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "execute slashing payloads that slash validators, unless slashing is currently disabled or the payload has been vetoed."
+        }
+      ]
+    },
     "VETOER": {
+      "description": "Address that can veto slash payloads or temporarily disable slashing.",
       "permissions": [
         {
           "type": "interact",
@@ -19,12 +31,20 @@
       ]
     },
     "GOVERNANCE": {
+      "description": "Governance address with emergency authority to execute slash payloads directly.",
+      "template": "aztecnetwork/Governance",
       "permissions": [
         {
           "type": "interact",
-          "description": "slash sequencers from the active set."
+          "description": "execute slashing payloads directly, bypassing the proposer address but still subject to vetoes and temporary slashing disablement."
         }
       ]
+    },
+    "isSlashingEnabled": {
+      "description": "Whether slash payload execution is currently enabled."
+    },
+    "slashingDisabledUntil": {
+      "description": "Timestamp until which slash payload execution is disabled."
     }
   }
 }

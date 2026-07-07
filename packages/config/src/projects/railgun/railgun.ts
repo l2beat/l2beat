@@ -170,13 +170,29 @@ export const railgun: BaseProject = {
   privacyInfo: {
     trustedSetup: TRUSTED_SETUPS.Railgun,
     tokens: privacyTokens,
+    exitWindow: {
+      value: formatSeconds(executionStartOffset),
+      sentiment: 'warning',
+      orderHint: executionStartOffset,
+      description: `DAO-approved upgrades wait ${formatSeconds(executionStartOffset)} before they can execute, giving users time to unshield funds if they do not approve the change.`,
+    },
+    reproducibility: {
+      value: 'Reproducible',
+      sentiment: 'good',
+      description:
+        'The contracts, circuits, and supporting software needed to participate in the protocol are publicly available and can be run locally.',
+    },
+    privacy: {
+      value: 'None',
+      sentiment: 'good',
+      description:
+        'Compliance is optional at the core protocol level: users can create proofs of innocence to disassociate deposits from flagged addresses, and relayers can choose to require them.',
+    },
     attributes: [
-      PRIVACY_ATTRIBUTES.upgradeable,
-      PRIVACY_ATTRIBUTES.optCompliance,
+      PRIVACY_ATTRIBUTES.zk,
       PRIVACY_ATTRIBUTES.transfers,
       PRIVACY_ATTRIBUTES.defi,
       PRIVACY_ATTRIBUTES.anyAmount,
-      PRIVACY_ATTRIBUTES.sourceAvailable,
     ],
     riskSummary: readProjectMarkdown('railgun', 'riskSummary'),
     upgradesAndGovernance: readProjectMarkdown(

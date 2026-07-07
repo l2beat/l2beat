@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "core",
   "description": "Simple, owner-controlled contract for storing protocol-wide, token-specific configuration data.",
   "fields": {
     "owner": {

@@ -2,6 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import type {
   Database,
   DeployedTokenRecord,
+  InteropTokenRouteRecord,
   InteropTransferRecord,
   TokenDatabase,
   TokenIngestionQueueRecord,
@@ -50,7 +51,7 @@ describe(TokenIngestionLoop.name, () => {
         db: mockObject<Database>({
           interopTransfer: mockObject<Database['interopTransfer']>({
             getTokenAddressesAfterSerialId,
-            getAll: mockFn().resolvesTo([]),
+            getTokenRoutes: mockFn().resolvesTo([]),
           }),
         }),
       })
@@ -93,7 +94,7 @@ describe(TokenIngestionLoop.name, () => {
               transferCount: 1,
               tokenAddresses: [{ chain: 'ethereum', address: '0xaaa' }],
             }),
-            getAll: mockFn().resolvesTo([]),
+            getTokenRoutes: mockFn().resolvesTo([]),
           }),
         }),
       })
@@ -123,7 +124,7 @@ describe(TokenIngestionLoop.name, () => {
         db: mockObject<Database>({
           interopTransfer: mockObject<Database['interopTransfer']>({
             getTokenAddressesAfterSerialId,
-            getAll: mockFn().resolvesTo([]),
+            getTokenRoutes: mockFn().resolvesTo([]),
           }),
         }),
       })
@@ -159,7 +160,7 @@ describe(TokenIngestionLoop.name, () => {
               transferCount: 0,
               tokenAddresses: [],
             }),
-            getAll: mockFn().resolvesTo([]),
+            getTokenRoutes: mockFn().resolvesTo([]),
           }),
         }),
       })
@@ -192,7 +193,7 @@ describe(TokenIngestionLoop.name, () => {
               transferCount: 0,
               tokenAddresses: [],
             }),
-            getAll: mockFn().resolvesTo([]),
+            getTokenRoutes: mockFn().resolvesTo([]),
           }),
         }),
         mockObject<TokenDatabase>({
@@ -239,8 +240,8 @@ describe(TokenIngestionLoop.name, () => {
               transferCount: 0,
               tokenAddresses: [],
             }),
-            getAll: mockFn().resolvesTo([
-              transfer({
+            getTokenRoutes: mockFn().resolvesTo([
+              route({
                 srcChain: address.chain,
                 srcTokenAddress: address.address,
                 dstChain: otherAddress.chain,
@@ -248,6 +249,15 @@ describe(TokenIngestionLoop.name, () => {
                 bridgeType: 'lockAndMint',
               }),
             ]),
+            findByTransferId: mockFn().resolvesTo(
+              transfer({
+                srcChain: address.chain,
+                srcTokenAddress: address.address,
+                dstChain: otherAddress.chain,
+                dstTokenAddress: otherAddress.address,
+                bridgeType: 'lockAndMint',
+              }),
+            ),
           }),
         }),
         tokenDb: mockObject<TokenDatabase>({
@@ -310,15 +320,15 @@ describe(TokenIngestionLoop.name, () => {
               transferCount: 0,
               tokenAddresses: [],
             }),
-            getAll: mockFn().resolvesTo([
-              transfer({
+            getTokenRoutes: mockFn().resolvesTo([
+              route({
                 srcChain: address.chain,
                 srcTokenAddress: address.address,
                 dstChain: firstOther.chain,
                 dstTokenAddress: firstOther.address,
                 bridgeType: 'lockAndMint',
               }),
-              transfer({
+              route({
                 srcChain: address.chain,
                 srcTokenAddress: address.address,
                 dstChain: secondOther.chain,
@@ -397,7 +407,7 @@ describe(TokenIngestionLoop.name, () => {
               transferCount: 0,
               tokenAddresses: [],
             }),
-            getAll: mockFn().resolvesTo([]),
+            getTokenRoutes: mockFn().resolvesTo([]),
           }),
         }),
         coingeckoClient: mockObject<CoingeckoClient>({
@@ -424,8 +434,8 @@ describe(TokenIngestionLoop.name, () => {
               transferCount: 0,
               tokenAddresses: [],
             }),
-            getAll: mockFn().resolvesTo([
-              transfer({
+            getTokenRoutes: mockFn().resolvesTo([
+              route({
                 srcChain: address.chain,
                 srcTokenAddress: address.address,
                 dstChain: otherAddress.chain,
@@ -433,6 +443,15 @@ describe(TokenIngestionLoop.name, () => {
                 bridgeType: 'lockAndMint',
               }),
             ]),
+            findByTransferId: mockFn().resolvesTo(
+              transfer({
+                srcChain: address.chain,
+                srcTokenAddress: address.address,
+                dstChain: otherAddress.chain,
+                dstTokenAddress: otherAddress.address,
+                bridgeType: 'lockAndMint',
+              }),
+            ),
           }),
         }),
         tokenDb: mockObject<TokenDatabase>({
@@ -502,7 +521,7 @@ describe(TokenIngestionLoop.name, () => {
               transferCount: 0,
               tokenAddresses: [],
             }),
-            getAll: mockFn().resolvesTo([]),
+            getTokenRoutes: mockFn().resolvesTo([]),
           }),
         }),
         tokenDb: mockObject<TokenDatabase>({
@@ -586,7 +605,7 @@ describe(TokenIngestionLoop.name, () => {
               transferCount: 0,
               tokenAddresses: [],
             }),
-            getAll: mockFn().resolvesTo([]),
+            getTokenRoutes: mockFn().resolvesTo([]),
           }),
         }),
         mockObject<TokenDatabase>({
@@ -633,7 +652,7 @@ describe(TokenIngestionLoop.name, () => {
               transferCount: 0,
               tokenAddresses: [],
             }),
-            getAll: mockFn().resolvesTo([]),
+            getTokenRoutes: mockFn().resolvesTo([]),
           }),
         }),
         tokenDb: mockObject<TokenDatabase>({
@@ -734,7 +753,7 @@ describe(TokenIngestionLoop.name, () => {
               transferCount: 0,
               tokenAddresses: [],
             }),
-            getAll: mockFn().resolvesTo([]),
+            getTokenRoutes: mockFn().resolvesTo([]),
           }),
         }),
         tokenDb: mockObject<TokenDatabase>({
@@ -843,7 +862,7 @@ describe(TokenIngestionLoop.name, () => {
               transferCount: 0,
               tokenAddresses: [],
             }),
-            getAll: mockFn().resolvesTo([]),
+            getTokenRoutes: mockFn().resolvesTo([]),
           }),
         }),
         tokenDb: mockObject<TokenDatabase>({
@@ -949,7 +968,7 @@ function createLoop(deps: {
           transferCount: 0,
           tokenAddresses: [],
         }),
-        getAll: mockFn().resolvesTo([]),
+        getTokenRoutes: mockFn().resolvesTo([]),
       }),
     })
   const tokenDb =
@@ -1037,6 +1056,23 @@ function completeFacts(): DeployedTokenFacts {
     decimals: 6,
     deploymentTimestamp: UnixTime(1),
     warnings: [],
+  }
+}
+
+function route(
+  overrides: Partial<InteropTokenRouteRecord>,
+): InteropTokenRouteRecord {
+  return {
+    srcChain: 'ethereum',
+    srcTokenAddress: token('ethereum', '0xaaa').address,
+    dstChain: 'base',
+    dstTokenAddress: token('base', '0xbbb').address,
+    bridgeType: undefined,
+    srcWasBurned: false,
+    dstWasMinted: true,
+    transferCount: 1,
+    sampleTransferId: 'transfer-id',
+    ...overrides,
   }
 }
 
