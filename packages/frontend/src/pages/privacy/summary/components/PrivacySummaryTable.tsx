@@ -238,6 +238,9 @@ export function PrivacySummaryTable({
     getSortedRowModel: getSortedRowModel(),
     state: {
       sorting,
+      columnPinning: {
+        left: ['#', 'logo'],
+      },
     },
     onSortingChange: setSorting,
   })
