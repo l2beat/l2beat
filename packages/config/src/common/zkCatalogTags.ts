@@ -247,6 +247,13 @@ export const zkCatalogTags = [
     description:
       'EthSnarks implementation of Groth16 proving system written in C++.',
   },
+  {
+    id: 'websnark',
+    type: ZkCatalogTagType.Groth16,
+    name: 'websnark',
+    description:
+      'Fast browser-native ZK SNARK prover written in WASM by Tornado Cash team.',
+  },
   // Curve
   {
     id: 'BN254',

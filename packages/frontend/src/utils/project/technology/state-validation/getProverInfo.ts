@@ -13,7 +13,7 @@ export function getProverInfo(
   tvs: SevenDayTvsBreakdown,
   allProjects: Project<
     never,
-    'display' | 'daBridge' | 'scalingInfo' | 'daLayer'
+    'display' | 'daBridge' | 'scalingInfo' | 'daLayer' | 'privacyInfo'
   >[],
 ): StateValidationSectionProps['proverInfo'] {
   const zkCatalogProject = zkCatalogProjects.find(

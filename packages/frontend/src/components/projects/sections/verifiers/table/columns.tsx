@@ -8,7 +8,7 @@ import type { VerifierRow } from './VerifiersTable'
 
 const columnHelper = createColumnHelper<VerifierRow>()
 
-export const verifiersColumns = [
+const baseVerifiersColumns = [
   columnHelper.accessor('name', {
     header: 'Verifier',
     cell: (ctx) => (
@@ -87,29 +87,38 @@ export const verifiersColumns = [
       </div>
     ),
   }),
-  columnHelper.display({
-    id: 'actions',
-    meta: {
-      align: 'right',
-      headClassName: 'w-0',
-      cellClassName: '!pr-0',
-    },
-    cell: (ctx) => {
-      const isExpanded = ctx.row.getIsExpanded()
-      const toggleExpandedHandler = ctx.row.getToggleExpandedHandler()
-      return (
-        <button
-          className="flex h-full w-full items-center justify-end p-1"
-          onClick={toggleExpandedHandler}
-        >
-          <ChevronIcon
-            className={cn(
-              'size-3 transition-transform duration-300',
-              isExpanded && 'rotate-180',
-            )}
-          />{' '}
-        </button>
-      )
-    },
-  }),
 ]
+
+const actionsColumn = columnHelper.display({
+  id: 'actions',
+  meta: {
+    align: 'right',
+    headClassName: 'w-0',
+    cellClassName: '!pr-0',
+  },
+  cell: (ctx) => {
+    const isExpanded = ctx.row.getIsExpanded()
+    const toggleExpandedHandler = ctx.row.getToggleExpandedHandler()
+    return (
+      <button
+        className="flex h-full w-full items-center justify-end p-1"
+        onClick={toggleExpandedHandler}
+      >
+        <ChevronIcon
+          className={cn(
+            'size-3 transition-transform duration-300',
+            isExpanded && 'rotate-180',
+          )}
+        />{' '}
+      </button>
+    )
+  },
+})
+
+export function verifiersColumns(collapsible = true) {
+  if (!collapsible) {
+    return baseVerifiersColumns
+  }
+
+  return [...baseVerifiersColumns, actionsColumn]
+}

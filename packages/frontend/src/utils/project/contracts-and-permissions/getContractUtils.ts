@@ -14,6 +14,9 @@ export interface ContractUtils {
     projectId: ProjectId,
     chain: string,
     address: EthereumAddress | string,
+    options?: {
+      includeCurrentProject?: boolean
+    },
   ): UsedInProject[]
 }
 
@@ -68,7 +71,7 @@ async function getContractUsageMap() {
     ps.getProjects({ where: ['daLayer'] }),
     ps.getProjects({
       select: ['contracts'],
-      optional: ['permissions', 'scalingInfo', 'daBridge'],
+      optional: ['permissions', 'scalingInfo', 'daBridge', 'privacyInfo'],
       whereNot: ['archivedAt'],
     }),
   ])
@@ -78,6 +81,8 @@ async function getContractUsageMap() {
     if (project.daBridge) {
       const layer = daLayers.find((x) => x.id === project.daBridge?.daLayer)
       url = `/data-availability/projects/${layer?.slug}/${project.slug}`
+    } else if (project.privacyInfo) {
+      url = `/privacy/projects/${project.slug}`
     }
 
     const basic = {
@@ -140,8 +145,11 @@ function createContractUtils(
       }
       return name
     },
-    getUsedIn(projectId, chain, address) {
+    getUsedIn(projectId, chain, address, options) {
       const usedIn = usageMap.get(chain)?.get(address) ?? []
+      if (options?.includeCurrentProject) {
+        return usedIn
+      }
       return usedIn.filter((x) => x.id !== projectId)
     },
   }
