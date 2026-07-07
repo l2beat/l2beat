@@ -5,7 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/core/Select'
-import type { InteropChainWithIcon } from '../../../components/chain-selector/types'
+import type { InteropChainWithIcon } from './types'
 
 export function ChainSelect({
   chains,

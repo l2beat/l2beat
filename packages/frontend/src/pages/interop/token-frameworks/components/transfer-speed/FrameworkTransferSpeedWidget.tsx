@@ -5,9 +5,9 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ScrollWithGradient } from '~/components/ScrollWithGradient'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { useTRPC } from '~/trpc/React'
+import { ChainSelect } from '../../../components/chain-selector/ChainSelect'
 import type { InteropChainWithIcon } from '../../../components/chain-selector/types'
 import type { InteropTokenFramework } from '../../getInteropTokenFrameworksData'
-import { ChainSelect } from './ChainSelect'
 import {
   TRANSFER_SPEED_DEFAULT_FROM,
   TRANSFER_SPEED_DEFAULT_TO,

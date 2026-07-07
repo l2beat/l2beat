@@ -4,10 +4,10 @@ import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { TokenFrameworksData } from '~/server/features/scaling/interop/getTokenFrameworksData'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
+import { HeadToHeadRow } from '../../../components/comparison/HeadToHeadRow'
 import type { InteropTokenFramework } from '../../getInteropTokenFrameworksData'
 import { FrameworkSelect } from './FrameworkSelect'
-import { HeadToHeadRow } from './HeadToHeadRow'
-import type { Side } from './types'
+import { type Side, toComparisonSide } from './types'
 
 export function FrameworkCompareContent({
   tokenFrameworks,
@@ -36,6 +36,8 @@ export function FrameworkCompareContent({
 
   const left = getSide(leftId)
   const right = getSide(rightId)
+  const leftSide = toComparisonSide(left)
+  const rightSide = toComparisonSide(right)
   const showSkeleton = isLoading && (!!leftId || !!rightId)
 
   return (
@@ -68,8 +70,8 @@ export function FrameworkCompareContent({
       <div className="mt-6 flex flex-col gap-5">
         <HeadToHeadRow
           label="Volume"
-          left={left}
-          right={right}
+          left={leftSide}
+          right={rightSide}
           leftValue={left?.entry.volume ?? null}
           rightValue={right?.entry.volume ?? null}
           format={(v) => formatCurrency(v, 'usd')}
@@ -77,8 +79,8 @@ export function FrameworkCompareContent({
         />
         <HeadToHeadRow
           label="Transfers"
-          left={left}
-          right={right}
+          left={leftSide}
+          right={rightSide}
           leftValue={left?.entry.transferCount ?? null}
           rightValue={right?.entry.transferCount ?? null}
           format={formatInteger}
@@ -86,8 +88,8 @@ export function FrameworkCompareContent({
         />
         <HeadToHeadRow
           label="Tokens"
-          left={left}
-          right={right}
+          left={leftSide}
+          right={rightSide}
           leftValue={getTokenCount(leftId)}
           rightValue={getTokenCount(rightId)}
           format={formatInteger}
@@ -95,8 +97,8 @@ export function FrameworkCompareContent({
         />
         <HeadToHeadRow
           label="Avg. transfer time"
-          left={left}
-          right={right}
+          left={leftSide}
+          right={rightSide}
           leftValue={left?.entry.averageDurationSeconds ?? null}
           rightValue={right?.entry.averageDurationSeconds ?? null}
           format={formatSeconds}
@@ -105,8 +107,8 @@ export function FrameworkCompareContent({
         />
         <HeadToHeadRow
           label="Avg. transfer size"
-          left={left}
-          right={right}
+          left={leftSide}
+          right={rightSide}
           leftValue={left?.entry.averageValue ?? null}
           rightValue={right?.entry.averageValue ?? null}
           format={(v) => formatCurrency(v, 'usd')}
