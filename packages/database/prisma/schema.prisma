@@ -543,6 +543,7 @@ model TokenDbHistory {
   userEmail    String?  @db.VarChar(255)
   commandType  String   @db.VarChar(64)
   command      Json
+  intent       Json?
   ingestionLog String?  @db.Text
 
   @@index([timestamp])

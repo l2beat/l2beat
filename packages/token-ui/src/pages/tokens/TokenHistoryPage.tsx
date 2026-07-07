@@ -291,6 +291,7 @@ function HistoryDetails({
             </SheetHeader>
             <div className="min-h-0 flex-1 space-y-4 overflow-y-auto px-4 pb-4">
               <CommandDiff entry={entry} />
+              {entry.intent !== null && <IntentDetails intent={entry.intent} />}
               {entry.ingestionLog && <IngestionLog log={entry.ingestionLog} />}
             </div>
           </>
@@ -306,9 +307,21 @@ function SourceLabel({ entry }: { entry: HistoryEntry }) {
       <Badge variant={entry.source === 'manual' ? 'secondary' : 'default'}>
         {entry.source}
       </Badge>
+      {entry.intent !== null && <Badge variant="outline">intent</Badge>}
       {entry.userEmail && (
         <div className="text-muted-foreground text-xs">{entry.userEmail}</div>
       )}
+    </div>
+  )
+}
+
+function IntentDetails({ intent }: { intent: unknown }) {
+  return (
+    <div className="space-y-2 rounded-md border p-3">
+      <div className="font-medium text-sm">Intent</div>
+      <pre className="overflow-x-auto rounded bg-muted p-2 text-xs">
+        {JSON.stringify(intent, null, 2)}
+      </pre>
     </div>
   )
 }

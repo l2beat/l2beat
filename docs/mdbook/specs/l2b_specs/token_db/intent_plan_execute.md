@@ -52,6 +52,12 @@ On the frontend, [PlanConfirmationDialog.tsx](../../../../../packages/token-ui/s
 shows the plan to the user, and only on **Confirm** does it call
 `plan.execute`.
 
+Each command executed from a confirmed manual plan is stored as its own
+`TokenDbHistory` row, together with the intent that produced the plan. This
+keeps history entries primitive and easy to inspect/revert, while preserving
+the higher-level reason for multi-command operations such as abstract-token
+merges.
+
 ## Why this shape?
 
 Two reasons, both load-bearing.

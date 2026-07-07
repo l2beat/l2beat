@@ -14,10 +14,16 @@ export interface TokenDbHistoryEntryRecord {
   userEmail: string | null
   commandType: string
   command: unknown
+  intent: unknown | null
   ingestionLog: string | null
 }
 
-export type TokenDbHistoryEntryInsert = Omit<TokenDbHistoryEntryRecord, 'id'>
+export type TokenDbHistoryEntryInsert = Omit<
+  TokenDbHistoryEntryRecord,
+  'id' | 'intent'
+> & {
+  intent?: unknown | null
+}
 
 export interface TokenDbHistoryPage {
   entries: TokenDbHistoryEntryRecord[]
@@ -32,6 +38,7 @@ function toRecord(row: Selectable<TokenDbHistory>): TokenDbHistoryEntryRecord {
     userEmail: row.userEmail,
     commandType: row.commandType,
     command: row.command,
+    intent: row.intent,
     ingestionLog: row.ingestionLog,
   }
 }
@@ -43,6 +50,7 @@ function toRow(record: TokenDbHistoryEntryInsert): Insertable<TokenDbHistory> {
     userEmail: record.userEmail,
     commandType: record.commandType,
     command: toJsonSafe(record.command),
+    intent: record.intent === undefined ? null : toJsonSafe(record.intent),
     ingestionLog: record.ingestionLog,
   }
 }
@@ -86,10 +94,10 @@ export class TokenDbHistoryRepository extends BaseRepository {
 
     if (pattern) {
       rowsQuery = rowsQuery.where(
-        sql<boolean>`"command"::text ILIKE ${pattern}`,
+        sql<boolean>`"command"::text ILIKE ${pattern} OR "intent"::text ILIKE ${pattern}`,
       )
       countQuery = countQuery.where(
-        sql<boolean>`"command"::text ILIKE ${pattern}`,
+        sql<boolean>`"command"::text ILIKE ${pattern} OR "intent"::text ILIKE ${pattern}`,
       )
     }
 
