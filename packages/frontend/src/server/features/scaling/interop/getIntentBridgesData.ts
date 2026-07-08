@@ -16,9 +16,14 @@ import type {
   TokenData,
 } from './types'
 import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
+import { getAverageDurationSeconds } from './utils/getAverageDuration'
 import { getIntentProjects } from './utils/getIntentProjects'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
 import { getProtocolEntries } from './utils/getProtocolEntries'
+import {
+  getProtocolsDataMap,
+  type ProtocolData,
+} from './utils/getProtocolsDataMap'
 import { getSummaryTokensData } from './utils/getSummaryTokensData'
 import { getTopItems, type TopItems } from './utils/getTopItems'
 import {
@@ -34,7 +39,10 @@ export type IntentBridgeActivityEntry = {
   transferCount: number
   previousVolume: number | null
   previousTransferCount: number | null
+  /** Per-bridge-type breakdown, for the split-aware table cell display. */
   averageDuration: AverageDuration | null
+  /** Overall count-weighted average, matching the token frameworks scalar. */
+  averageDurationSeconds: number | null
   averageValue: number | null
 }
 
@@ -102,9 +110,11 @@ export async function getIntentBridgesData(
     params,
     TOP_ITEMS_LIMIT,
   )
+  const protocolsDataMap = getProtocolsDataMap(records)
   const activityEntries = getActivityEntries(
     intentProjects,
     table.entries,
+    protocolsDataMap,
     previousProtocolData,
   )
 
@@ -130,6 +140,7 @@ export async function getIntentBridgesData(
 function getActivityEntries(
   intentProjects: Project<'interopConfig'>[],
   tableEntries: ProtocolEntry[],
+  protocolsDataMap: Map<string, ProtocolData>,
   previousProtocolData: Map<string, { volume: number; transferCount: number }>,
 ): IntentBridgeActivityEntry[] {
   const tableEntriesById = new Map(
@@ -139,6 +150,10 @@ function getActivityEntries(
   return intentProjects.map((project) => {
     const entry = tableEntriesById.get(project.id)
     const previous = previousProtocolData.get(project.id)
+    const data = protocolsDataMap.get(project.id)
+    const averageDurationSeconds = data
+      ? getAverageDurationSeconds(data, project)
+      : null
 
     if (!entry) {
       return {
@@ -148,6 +163,7 @@ function getActivityEntries(
         previousVolume: previous?.volume ?? null,
         previousTransferCount: previous?.transferCount ?? null,
         averageDuration: null,
+        averageDurationSeconds,
         averageValue: null,
       }
     }
@@ -159,6 +175,7 @@ function getActivityEntries(
       previousVolume: previous?.volume ?? null,
       previousTransferCount: previous?.transferCount ?? null,
       averageDuration: entry.averageDuration,
+      averageDurationSeconds,
       averageValue: entry.averageValue,
     }
   })

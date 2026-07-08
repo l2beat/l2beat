@@ -26,7 +26,6 @@ import {
   buildIntentBridgeRows,
   type IntentBridgeRow,
 } from '../../utils/buildIntentBridgeRows'
-import { getDurationSeconds } from '../../utils/getDurationSeconds'
 
 type Metric = 'volume' | 'transfers'
 
@@ -145,7 +144,7 @@ function IntentBridgeRowItem({
     previousValue !== null && previousValue > 0
       ? calculatePercentageChange(value, previousValue)
       : null
-  const durationSeconds = getDurationSeconds(entry.averageDuration)
+  const durationSeconds = entry.averageDurationSeconds
 
   return (
     <div className="flex flex-col gap-1">

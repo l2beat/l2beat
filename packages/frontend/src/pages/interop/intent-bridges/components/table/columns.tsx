@@ -10,7 +10,6 @@ import { formatInteger } from '~/utils/number-format/formatInteger'
 import { AvgDurationCell } from '../../../components/table/AvgDurationCell'
 import { InteropProjectNameTooltip } from '../../../components/table/InteropProjectNameTooltip'
 import type { IntentBridgeRow } from '../../utils/buildIntentBridgeRows'
-import { getDurationSeconds } from '../../utils/getDurationSeconds'
 import { IntentBridgesTransferTrigger } from '../IntentBridgesTransferTrigger'
 
 const columnHelper = createColumnHelper<IntentBridgeRow>()
@@ -120,7 +119,7 @@ export function getIntentBridgeColumns() {
       },
     }),
     columnHelper.accessor(
-      (row) => getDurationSeconds(row.activity?.averageDuration) ?? undefined,
+      (row) => row.activity?.averageDurationSeconds ?? undefined,
       {
         id: 'averageDuration',
         header: 'Last 24h avg.\ntransfer time',

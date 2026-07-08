@@ -11,7 +11,6 @@ import {
   buildIntentBridgeRows,
   type IntentBridgeRow,
 } from '../../utils/buildIntentBridgeRows'
-import { getDurationSeconds } from '../../utils/getDurationSeconds'
 import { IntentAttributeRow } from './IntentAttributeRow'
 import { IntentBridgeSelect } from './IntentBridgeSelect'
 
@@ -93,8 +92,8 @@ export function IntentBridgeCompareContent({
           label="Avg. transfer time"
           left={leftSide}
           right={rightSide}
-          leftValue={getDurationSeconds(left?.activity.averageDuration)}
-          rightValue={getDurationSeconds(right?.activity.averageDuration)}
+          leftValue={left?.activity.averageDurationSeconds ?? null}
+          rightValue={right?.activity.averageDurationSeconds ?? null}
           format={formatSeconds}
           lowerIsBetter
           isLoading={showSkeleton}

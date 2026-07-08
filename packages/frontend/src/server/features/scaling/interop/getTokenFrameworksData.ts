@@ -25,6 +25,7 @@ import {
   buildTokensDetailsMap,
   type TokensDetailsMap,
 } from './utils/buildTokensDetailsMap'
+import { getAverageDurationSeconds } from './utils/getAverageDuration'
 import { getInteropChains } from './utils/getInteropChains'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
 import {
@@ -292,7 +293,7 @@ export function buildFrameworkEntry(
     transferCount: data.transferCount,
     previousVolume: previous?.volume ?? null,
     previousTransferCount: previous?.transferCount ?? null,
-    averageDurationSeconds: getSingleAverageDurationSeconds(data, project),
+    averageDurationSeconds: getAverageDurationSeconds(data, project),
     averageValue:
       data.identifiedTransferCount > 0
         ? data.volume / data.identifiedTransferCount
@@ -326,15 +327,6 @@ async function getPreviousProtocolData(
     result.set(record.id, current)
   }
   return result
-}
-
-function getSingleAverageDurationSeconds(
-  data: ProtocolData,
-  project: Project<'interopConfig'> | undefined,
-): number | null {
-  if (project?.interopConfig.transfersTimeMode === 'unknown') return null
-  if (data.transfersWithDurationCount <= 0) return null
-  return Math.floor(data.totalDurationSum / data.transfersWithDurationCount)
 }
 
 const frameworkIdByProjectId = new Map(

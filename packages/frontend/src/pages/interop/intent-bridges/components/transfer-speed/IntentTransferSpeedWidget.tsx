@@ -8,7 +8,6 @@ import { ChainPairSelector } from '../../../components/chain-selector/ChainPairS
 import type { InteropChainWithIcon } from '../../../components/chain-selector/types'
 import { InteropTransferSpeedRow } from '../../../components/InteropTransferSpeedRow'
 import type { InteropIntentBridge } from '../../getInteropIntentBridgesData'
-import { getDurationSeconds } from '../../utils/getDurationSeconds'
 import {
   INTENT_TRANSFER_SPEED_DEFAULT_FROM,
   INTENT_TRANSFER_SPEED_DEFAULT_TO,
@@ -38,7 +37,7 @@ export function IntentTransferSpeedWidget({
   const sorted = (data?.activity.entries ?? [])
     .map((entry) => ({
       entry,
-      durationSeconds: getDurationSeconds(entry.averageDuration),
+      durationSeconds: entry.averageDurationSeconds,
     }))
     .toSorted(
       (a, b) =>
