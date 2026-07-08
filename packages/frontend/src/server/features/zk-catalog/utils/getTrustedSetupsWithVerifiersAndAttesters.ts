@@ -65,14 +65,16 @@ interface TargetProject {
   contracts: ProjectContracts | undefined
 }
 
+type AllProjectsWithPageInfo = Project<
+  never,
+  'display' | 'daBridge' | 'scalingInfo' | 'daLayer' | 'privacyInfo'
+>
+
 export function getTrustedSetupsWithVerifiersAndAttesters(
   project: Project<'zkCatalogInfo'>,
   contractUtils: ContractUtils,
   tvs: SevenDayTvsBreakdown,
-  allProjects: Project<
-    never,
-    'display' | 'daBridge' | 'scalingInfo' | 'daLayer'
-  >[],
+  allProjects: AllProjectsWithPageInfo[],
   targetProject?: TargetProject,
 ): TrustedSetupsByProofSystem {
   const grouped = groupBy(
@@ -149,10 +151,7 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
 
 function uniqAndSortProjectsUsedIn(
   usedIn: UsedInProjectWithIcon[] | undefined,
-  allProjects: Project<
-    never,
-    'display' | 'daBridge' | 'scalingInfo' | 'daLayer'
-  >[],
+  allProjects: AllProjectsWithPageInfo[],
   tvs: SevenDayTvsBreakdown,
 ) {
   if (!usedIn) return undefined
@@ -166,10 +165,7 @@ function getVerifiersWithProcessedUsedIn(
   project: Project<'zkCatalogInfo'>,
   key: string,
   contractUtils: ContractUtils,
-  allProjects: Project<
-    never,
-    'display' | 'daBridge' | 'scalingInfo' | 'daLayer'
-  >[],
+  allProjects: AllProjectsWithPageInfo[],
 ) {
   return project.zkCatalogInfo.verifierHashes
     .filter((v) => key === `${v.proofSystem.type}-${v.proofSystem.id}`)
@@ -182,6 +178,7 @@ function getVerifiersWithProcessedUsedIn(
               project.id,
               ChainSpecificAddress.longChain(deployment.address),
               toPlainAddress(deployment.address),
+              { includeCurrentProject: true },
             ),
       }))
 
@@ -302,10 +299,7 @@ function getVerifierStatuses(
 
 export function getProjectsUsedIn(
   projectIds: ProjectId[],
-  allProjects: Project<
-    never,
-    'display' | 'daBridge' | 'scalingInfo' | 'daLayer'
-  >[],
+  allProjects: AllProjectsWithPageInfo[],
 ): UsedInProjectWithIcon[] {
   return projectIds
     .map((projectId) => {
@@ -320,6 +314,8 @@ export function getProjectsUsedIn(
         url = `/data-availability/projects/${layer?.slug}/${project.slug}`
       } else if (project.daLayer) {
         url = `/data-availability/projects/${project.slug}/no-bridge`
+      } else if ('privacyInfo' in project && project.privacyInfo) {
+        url = `/privacy/projects/${project.slug}`
       }
 
       return {

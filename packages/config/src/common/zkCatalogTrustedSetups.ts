@@ -127,9 +127,9 @@ export const TRUSTED_SETUPS = {
     id: 'PrivacyPools',
     name: 'Privacy Pools',
     risk: 'yellow',
-    participantCount: 55,
+    participantCount: 80,
     shortDescription:
-      'Trusted setup for two Groth16 Privacy Pools circuits. It was built on top of 55 phase 1 contributions, with 513 phase 2 participants. Proving system could be broken if either phase 1 or 2 is compromised.',
+      'Trusted setup for two Groth16 Privacy Pools circuits. It was built on top of 80 phase 1 contributions, with 513 phase 2 participants. Proving system could be broken if either phase 1 or 2 is compromised.',
     longDescription: readMarkdown('common/trustedSetups/PrivacyPools.md'),
   },
   Railgun: {

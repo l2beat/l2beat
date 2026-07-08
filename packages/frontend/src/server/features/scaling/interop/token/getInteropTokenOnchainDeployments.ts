@@ -8,6 +8,7 @@ export interface InteropTokenOnchainDeployment {
   chain: string
   address: string
   symbol: string
+  isSupported: boolean
   volume: number | null
   transferCount: number | null
   avgDuration: number | null
@@ -15,6 +16,7 @@ export interface InteropTokenOnchainDeployment {
 
 export async function getInteropTokenOnchainDeployments(
   tokenId: string,
+  supportedChainIds: string[],
 ): Promise<InteropTokenOnchainDeployment[]> {
   if (env.MOCK) {
     return MOCK_INTEROP_TOKEN_DEPLOYMENTS
@@ -43,18 +45,21 @@ export async function getInteropTokenOnchainDeployments(
   const statsMap = new Map(
     stats.map((stat) => [`${stat.tokenChain}|${stat.tokenAddress}`, stat]),
   )
+  const supportedChains = new Set(supportedChainIds)
 
   const deployments = deployedTokens.map((token) => {
     const tokenAddress = Address32.fromOrUndefined(token.address)
     const stat = tokenAddress
       ? statsMap.get(`${token.chain}|${tokenAddress}`)
       : undefined
+    const isSupported = supportedChains.has(token.chain)
     return {
       chain: token.chain,
       address: token.address,
       symbol: token.symbol,
-      volume: stat?.volume ?? null,
-      transferCount: stat?.transferCount ?? null,
+      isSupported,
+      volume: stat?.volume ?? (isSupported ? 0 : null),
+      transferCount: stat?.transferCount ?? (isSupported ? 0 : null),
       avgDuration:
         stat && stat.transfersWithDurationCount > 0
           ? Math.round(stat.totalDurationSum / stat.transfersWithDurationCount)
@@ -73,6 +78,7 @@ const MOCK_INTEROP_TOKEN_DEPLOYMENTS: InteropTokenOnchainDeployment[] = [
     chain: 'ethereum',
     address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
     symbol: 'USDC',
+    isSupported: true,
     volume: 2_170_000,
     transferCount: 403,
     avgDuration: 24,
@@ -81,6 +87,7 @@ const MOCK_INTEROP_TOKEN_DEPLOYMENTS: InteropTokenOnchainDeployment[] = [
     chain: 'arbitrum',
     address: '0xaf88d065e77c8cc2239327c5edb3a432268e5831',
     symbol: 'USDC',
+    isSupported: true,
     volume: 392_430,
     transferCount: 125,
     avgDuration: 19,
@@ -89,6 +96,7 @@ const MOCK_INTEROP_TOKEN_DEPLOYMENTS: InteropTokenOnchainDeployment[] = [
     chain: 'base',
     address: '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913',
     symbol: 'USDbC',
+    isSupported: false,
     volume: null,
     transferCount: null,
     avgDuration: null,

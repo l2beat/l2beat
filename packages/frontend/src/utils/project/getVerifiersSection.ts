@@ -1,5 +1,9 @@
-import type { Project } from '@l2beat/config'
-import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
+import type { Project, ProjectZkCatalogInfo } from '@l2beat/config'
+import {
+  ChainSpecificAddress,
+  type EthereumAddress,
+  type ProjectId,
+} from '@l2beat/shared-pure'
 import uniqBy from 'lodash/uniqBy'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import type { VerifiersSectionProps } from '~/components/projects/sections/verifiers/VerifiersSection'
@@ -19,11 +23,15 @@ function plainDeploymentAddress(
 }
 
 export async function getVerifiersSection(
-  project: Project<'zkCatalogInfo'>,
+  data: {
+    projectId: ProjectId
+    verifierHashes: ProjectZkCatalogInfo['verifierHashes']
+    includeCurrentProject?: boolean
+  },
   contractUtils: ContractUtils,
   allProjects: Project<
     never,
-    'display' | 'daBridge' | 'scalingInfo' | 'daLayer'
+    'display' | 'daBridge' | 'scalingInfo' | 'daLayer' | 'privacyInfo'
   >[],
   tvs: SevenDayTvsBreakdown,
 ): Promise<Omit<VerifiersSectionProps, keyof ProjectSectionProps>> {
@@ -35,7 +43,7 @@ export async function getVerifiersSection(
     VerifiersSectionProps['proofSystemVerifiers'][number]
   > = {}
 
-  for (const verifier of project.zkCatalogInfo.verifierHashes) {
+  for (const verifier of data.verifierHashes) {
     const key = `${verifier.proofSystem.type}-${verifier.proofSystem.id}`
     const proofSystemVerifiers = byProofSystem[key]
 
@@ -61,9 +69,12 @@ export async function getVerifiersSection(
         projectsUsedIn: (d.overrideUsedIn
           ? getProjectsUsedIn(d.overrideUsedIn, allProjects)
           : contractUtils.getUsedIn(
-              project.id,
+              data.projectId,
               ChainSpecificAddress.longChain(d.address),
               addressKey,
+              {
+                includeCurrentProject: data.includeCurrentProject,
+              },
             )
         ).sort(tvsComparator(allProjects, tvs)),
       }

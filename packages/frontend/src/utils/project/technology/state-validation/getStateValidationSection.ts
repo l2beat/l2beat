@@ -16,7 +16,7 @@ export function getStateValidationSection(
   tvs: SevenDayTvsBreakdown,
   allProjects: Project<
     never,
-    'display' | 'daBridge' | 'scalingInfo' | 'daLayer'
+    'display' | 'daBridge' | 'scalingInfo' | 'daLayer' | 'privacyInfo'
   >[],
   allProjectsWithContracts: Project<'contracts'>[],
 ):

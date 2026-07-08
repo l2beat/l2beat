@@ -82,6 +82,7 @@ function toDeploymentRow(
         ? `${chain.explorerUrl}/address/${deployment.address}`
         : undefined,
     symbol: deployment.symbol,
+    isSupported: deployment.isSupported,
     volume: deployment.volume,
     transferCount: deployment.transferCount,
     avgDuration: deployment.avgDuration,
