@@ -2193,6 +2193,17 @@
       },
       // manual override: robinhood public RPC is non-archival. Creation block 29380.
       "deploymentTimestamp": 1780403342
+    },
+    {
+      // Natively minted meme token on Robinhood Chain.
+      "symbol": "CASHCAT",
+      "address": "0x020bfC650A365f8BB26819deAAbF3E21291018b4",
+      "coingeckoId": "cash-cat",
+      "source": "native",
+      "supply": "circulatingSupply",
+      "category": "other",
+      // manual override: robinhood public RPC is non-archival. Creation block 88836.
+      "deploymentTimestamp": 1781812885
     }
   ],
   "galxegravity": [

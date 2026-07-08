@@ -11162,6 +11162,20 @@
       }
     },
     {
+      "name": "Cash Cat",
+      "coingeckoId": "cash-cat",
+      "address": "0x020bfC650A365f8BB26819deAAbF3E21291018b4",
+      "symbol": "CASHCAT",
+      "decimals": 18,
+      "deploymentTimestamp": 1781812885,
+      "coingeckoListingTimestamp": 1782950400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174280/large/cashcat-logo.jpg?1782922765",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "Global Dollar",
       "coingeckoId": "global-dollar",
       "address": "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168",

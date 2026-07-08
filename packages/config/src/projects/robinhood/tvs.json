@@ -78,6 +78,25 @@
       "category": "stablecoin",
       "source": "external",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-CASHCAT",
+      "priceId": "cash-cat",
+      "symbol": "CASHCAT",
+      "name": "Cash Cat",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174280/large/cashcat-logo.jpg?1782922765",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "cash-cat",
+        "decimals": 18,
+        "sinceTimestamp": 1782950400,
+        "address": "0x020bfC650A365f8BB26819deAAbF3E21291018b4",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
     }
   ]
 }
