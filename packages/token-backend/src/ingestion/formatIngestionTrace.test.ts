@@ -72,4 +72,58 @@ describe(formatIngestionTrace.name, () => {
       ),
     ).toEqual(true)
   })
+
+  it('renders discovered token relations in steps and write outcomes', () => {
+    const trace: IngestionTrace = {
+      id: 'ing_test',
+      address: { chain: 'ethereum', address: '0xaaa' },
+      existingDeployedToken: undefined,
+      steps: [
+        {
+          kind: 'relations-discovered',
+          relations: [
+            {
+              tokenFromChain: 'ethereum',
+              tokenFromAddress: '0xaaa',
+              tokenToChain: 'base',
+              tokenToAddress: '0xbbb',
+              plugin: 'test-plugin',
+              sourceWasBurned: true,
+              destinationWasMinted: true,
+              bridgeType: 'burnAndMint',
+              transfer: { transferId: 'transfer-id' },
+            },
+          ],
+        },
+      ],
+      outcome: {
+        kind: 'write',
+        newAbstractToken: undefined,
+        deployedToken: undefined,
+        tokenRelations: [
+          {
+            tokenFromChain: 'ethereum',
+            tokenFromAddress: '0xaaa',
+            tokenToChain: 'base',
+            tokenToAddress: '0xbbb',
+            plugin: 'test-plugin',
+            sourceWasBurned: true,
+            destinationWasMinted: true,
+            bridgeType: 'burnAndMint',
+            transfer: { transferId: 'transfer-id' },
+          },
+        ],
+        neighborsToEnqueue: [],
+      },
+    }
+
+    expect(formatIngestionTrace(trace)).toEqual(
+      [
+        'Ingestion ID: ing_test',
+        'Address: ethereum:0xaaa',
+        '1. Will add 1 token relation(s): ethereum:0xaaa -> base:0xbbb via test-plugin.',
+        'Outcome: write — no deployed-token changes. Add 1 token relation(s).',
+      ].join('\n'),
+    )
+  })
 })

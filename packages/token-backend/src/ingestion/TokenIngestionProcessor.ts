@@ -4,10 +4,10 @@ import type {
   Database,
   DeployedTokenRecord,
   InteropTransferRecord,
-  TokenRelationRecord,
   TokenDatabase,
   TokenIngestionQueueRecord,
   TokenIngestionQueueState,
+  TokenRelationRecord,
 } from '@l2beat/database'
 import { type InteropBridgeType, UnixTime } from '@l2beat/shared-pure'
 import { randomUUID } from 'crypto'
@@ -559,9 +559,12 @@ export class TokenIngestionProcessor {
       return []
     }
 
+    const relationTransfers = transfers.filter((transfer) =>
+      isNonSwappingBridgeType(transfer.bridgeType),
+    )
     const ownKey = getTokenKey(address)
     const tokensToLookup = uniqueTokenAddresses(
-      transfers.flatMap((transfer) => {
+      relationTransfers.flatMap((transfer) => {
         const tokens: TokenAddress[] = []
         if (
           transfer.sourceToken &&
@@ -588,7 +591,7 @@ export class TokenIngestionProcessor {
       { pk: TokenRelationPrimaryKey; match: InteropTransferMatch }
     >()
 
-    for (const transfer of transfers) {
+    for (const transfer of relationTransfers) {
       if (!transfer.sourceToken || !transfer.destinationToken) continue
 
       const sourceKey = getTokenKey(transfer.sourceToken)
@@ -618,9 +621,10 @@ export class TokenIngestionProcessor {
       return []
     }
 
-    const existingRelations = await this.deps.tokenDb.tokenRelation.getByPrimaryKeys(
-      Array.from(candidates.values(), (candidate) => candidate.pk),
-    )
+    const existingRelations =
+      await this.deps.tokenDb.tokenRelation.getByPrimaryKeys(
+        Array.from(candidates.values(), (candidate) => candidate.pk),
+      )
     const existingRelationKeys = new Set(
       existingRelations.map((relation) =>
         tokenRelationKey(tokenRelationPrimaryKey(relation)),
@@ -636,7 +640,9 @@ export class TokenIngestionProcessor {
     const transfersById = new Map(
       await Promise.all(
         unique(
-          missingCandidates.map((candidate) => candidate.match.sampleTransferId),
+          missingCandidates.map(
+            (candidate) => candidate.match.sampleTransferId,
+          ),
         ).map(async (transferId) => {
           const transfer = await this.getInteropTransferById(transferId)
           if (!transfer) {
@@ -761,7 +767,10 @@ export class TokenIngestionProcessor {
           true,
         )
         if (tokenRelations.length > 0) {
-          steps.push({ kind: 'relations-discovered', relations: tokenRelations })
+          steps.push({
+            kind: 'relations-discovered',
+            relations: tokenRelations,
+          })
         }
         if (existing.abstractTokenId === resolution.abstractToken.id) {
           if (tokenRelations.length === 0) {

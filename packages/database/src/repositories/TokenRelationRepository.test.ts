@@ -1,5 +1,5 @@
-import { expect } from 'earl'
 import { UnixTime } from '@l2beat/shared-pure'
+import { expect } from 'earl'
 import { describeTokenDatabase } from '../test/tokenDatabase'
 import type { ChainRecord } from './ChainRepository'
 import type {

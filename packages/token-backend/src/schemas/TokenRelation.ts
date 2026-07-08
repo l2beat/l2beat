@@ -1,8 +1,8 @@
 import type {
-  JsonValue,
   TokenRelationPrimaryKey as DbTokenRelationPrimaryKey,
   TokenRelationRecord as DbTokenRelationRecord,
   TokenRelationUpdateable as DbTokenRelationUpdateable,
+  JsonValue,
 } from '@l2beat/database'
 import { InteropBridgeTypeValues } from '@l2beat/shared-pure'
 import { type Validator, v } from '@l2beat/validate'

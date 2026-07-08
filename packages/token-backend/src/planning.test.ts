@@ -313,12 +313,14 @@ function mockDb(opts: {
     transfer: unknown
   }[]
 }): TokenDatabase {
-  const findDeployed = mockFn().executes(async (pk: { chain: string; address: string }) => {
-    return (
-      opts.deployedByPk?.[`${pk.chain}:${pk.address.toLowerCase()}`] ??
-      opts.existingDeployed
-    )
-  })
+  const findDeployed = mockFn().executes(
+    async (pk: { chain: string; address: string }) => {
+      return (
+        opts.deployedByPk?.[`${pk.chain}:${pk.address.toLowerCase()}`] ??
+        opts.existingDeployed
+      )
+    },
+  )
 
   return mockObject<TokenDatabase>({
     deployedToken: mockObject<TokenDatabase['deployedToken']>({

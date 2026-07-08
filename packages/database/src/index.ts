@@ -106,12 +106,6 @@ export type {
   SyncMetadataRecord,
 } from './repositories/SyncMetadataRepository'
 export type {
-  JsonValue,
-  TokenRelationPrimaryKey,
-  TokenRelationRecord,
-  TokenRelationUpdateable,
-} from './repositories/TokenRelationRepository'
-export type {
   TokenDbHistoryEntryInsert,
   TokenDbHistoryEntryRecord,
   TokenDbHistoryPage,
@@ -125,6 +119,12 @@ export type {
   TokenIngestionQueueState,
 } from './repositories/TokenIngestionQueueRepository'
 export type { TokenMetadataRecord } from './repositories/TokenMetadataRepository'
+export type {
+  JsonValue,
+  TokenRelationPrimaryKey,
+  TokenRelationRecord,
+  TokenRelationUpdateable,
+} from './repositories/TokenRelationRepository'
 export type {
   SummedByTimestampTokenValuePerProjectRecord,
   SummedByTimestampTokenValueRecord,

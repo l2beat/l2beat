@@ -101,11 +101,7 @@ export class TokenRelationRepository extends BaseRepository {
           keys.map((key) =>
             eb.and([
               eb('tokenFromChain', '=', key.tokenFromChain),
-              eb(
-                'tokenFromAddress',
-                '=',
-                key.tokenFromAddress.toLowerCase(),
-              ),
+              eb('tokenFromAddress', '=', key.tokenFromAddress.toLowerCase()),
               eb('tokenToChain', '=', key.tokenToChain),
               eb('tokenToAddress', '=', key.tokenToAddress.toLowerCase()),
               eb('plugin', '=', key.plugin),

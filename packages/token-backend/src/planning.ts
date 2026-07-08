@@ -230,7 +230,9 @@ async function planDeleteDeployedToken(
       `DeployedToken ${intent.pk.chain}+${intent.pk.address} doesn't exist`,
     )
   }
-  const touchingRelations = await db.tokenRelation.getRelationsFromOrTo(intent.pk)
+  const touchingRelations = await db.tokenRelation.getRelationsFromOrTo(
+    intent.pk,
+  )
   return [
     ...touchingRelations.map((relation) => ({
       type: 'DeleteTokenRelationCommand' as const,

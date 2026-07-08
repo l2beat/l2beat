@@ -442,22 +442,34 @@ function PredictedOutcome({ outcome }: { outcome: IngestionOutcome }) {
       )
     case 'noop':
       return <Badge variant="secondary">No update</Badge>
-    case 'write':
+    case 'write': {
+      const badges = [
+        outcome.deployedToken?.type === 'insert' ? 'Add token' : undefined,
+        outcome.deployedToken?.type === 'update' ? 'Update' : undefined,
+        outcome.tokenRelations.length > 0 ? 'Add relation' : undefined,
+      ].filter((badge): badge is string => badge !== undefined)
+
       return (
-        <Badge>
-          {outcome.deployedToken?.type === 'insert'
-            ? 'Add token'
-            : outcome.deployedToken?.type === 'update'
-              ? 'Update'
-              : 'Add relation'}
-        </Badge>
+        <span className="inline-flex flex-wrap gap-1">
+          {badges.map((badge) => (
+            <Badge key={badge}>{badge}</Badge>
+          ))}
+        </span>
       )
-    case 'pending':
+    }
+    case 'pending': {
+      const badges = [
+        outcome.operation === 'insert' ? 'Add token' : 'Update',
+        outcome.tokenRelations.length > 0 ? 'Add relation' : undefined,
+      ].filter((badge): badge is string => badge !== undefined)
+
       return (
         <span>
-          <Badge>
-            {outcome.operation === 'insert' ? 'Add token' : 'Update'}
-          </Badge>
+          <span className="inline-flex flex-wrap gap-1">
+            {badges.map((badge) => (
+              <Badge key={badge}>{badge}</Badge>
+            ))}
+          </span>
           <span className="ml-2 text-muted-foreground text-xs">
             {outcome.abstract.kind === 'existing'
               ? `abstract ${formatAbstractRef(outcome.abstract.token)}`
@@ -465,5 +477,6 @@ function PredictedOutcome({ outcome }: { outcome: IngestionOutcome }) {
           </span>
         </span>
       )
+    }
   }
 }

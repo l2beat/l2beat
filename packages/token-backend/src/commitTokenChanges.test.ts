@@ -36,7 +36,10 @@ describe(commitTokenChanges.name, () => {
 
     const abstract = abstractRecord('USDC01', 'USDC')
     const deployed = deployedRecord('ethereum', '0xaaa', 'USDC01')
-    const relation = tokenRelationRecord(deployed, deployedRecord('arbitrum', '0xbbb', 'USDC01'))
+    const relation = tokenRelationRecord(
+      deployed,
+      deployedRecord('arbitrum', '0xbbb', 'USDC01'),
+    )
 
     const commands: Command[] = [
       { type: 'AddAbstractTokenCommand', record: abstract },

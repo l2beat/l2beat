@@ -52,7 +52,9 @@ export function PlanConfirmationDialog({
     queryClient.invalidateQueries(
       trpc.deployedTokens.getByChainAndAddress.queryFilter(),
     )
-    queryClient.invalidateQueries(trpc.deployedTokens.getRelations.queryFilter())
+    queryClient.invalidateQueries(
+      trpc.deployedTokens.getRelations.queryFilter(),
+    )
     queryClient.invalidateQueries(trpc.deployedTokens.checks.queryFilter())
     queryClient.invalidateQueries(
       trpc.deployedTokens.getSuggestionsByCoingeckoId.queryFilter(),

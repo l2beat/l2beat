@@ -10,15 +10,10 @@ import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import {
   Card,
   CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
 } from '~/components/core/Card'
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from '~/components/core/Tabs'
 import {
   Table,
   TableBody,
@@ -27,6 +22,12 @@ import {
   TableHeader,
   TableRow,
 } from '~/components/core/Table'
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '~/components/core/Tabs'
 import {
   DeployedTokenForm,
   DeployedTokenSchema,
@@ -271,14 +272,20 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
           </div>
         </TabsContent>
         <TabsContent value="relations">
-          <div className="grid gap-4 lg:grid-cols-2">
+          <div className="space-y-4">
             <TokenRelationsSection
-              title="Outgoing"
+              title="Outgoing relations"
+              description="This token is the source/from token."
+              otherTokenHeader="To token"
+              direction="outgoing"
               entries={relations?.outgoing ?? []}
               loading={areRelationsLoading}
             />
             <TokenRelationsSection
-              title="Incoming"
+              title="Incoming relations"
+              description="This token is the target/to token."
+              otherTokenHeader="From token"
+              direction="incoming"
               entries={relations?.incoming ?? []}
               loading={areRelationsLoading}
             />
@@ -294,17 +301,24 @@ type TokenRelationEntry = TokenRelationsResponse['incoming'][number]
 
 function TokenRelationsSection({
   title,
+  description,
+  otherTokenHeader,
+  direction,
   entries,
   loading,
 }: {
   title: string
+  description: string
+  otherTokenHeader: string
+  direction: 'outgoing' | 'incoming'
   entries: TokenRelationEntry[]
   loading: boolean
 }) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{title} Relations</CardTitle>
+        <CardTitle>{title}</CardTitle>
+        <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>
         {loading ? (
@@ -315,9 +329,10 @@ function TokenRelationsSection({
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Other token</TableHead>
+                <TableHead>{otherTokenHeader}</TableHead>
                 <TableHead>Plugin</TableHead>
-                <TableHead>Flags</TableHead>
+                <TableHead>Burn</TableHead>
+                <TableHead>Mint</TableHead>
                 <TableHead>Bridge type</TableHead>
                 <TableHead>Transfer</TableHead>
               </TableRow>
@@ -335,7 +350,7 @@ function TokenRelationsSection({
                     String(relation.destinationWasMinted),
                   ].join(':')}
                 >
-                  <TableCell className="whitespace-normal align-top">
+                  <TableCell className="min-w-56 whitespace-normal align-top">
                     {otherToken ? (
                       <Link
                         to={`/tokens/${otherToken.chain}/${otherToken.address}`}
@@ -349,15 +364,19 @@ function TokenRelationsSection({
                     <div className="break-all text-muted-foreground text-xs">
                       {otherToken
                         ? otherToken.address
-                        : `${relation.tokenFromChain}:${relation.tokenFromAddress}`}
+                        : formatRelationEndpoint(relation, direction)}
                     </div>
                   </TableCell>
-                  <TableCell>{relation.plugin}</TableCell>
+                  <TableCell className="align-top">{relation.plugin}</TableCell>
                   <TableCell>
-                    burn={String(relation.sourceWasBurned)} mint=
-                    {String(relation.destinationWasMinted)}
+                    <BooleanMark value={relation.sourceWasBurned} />
                   </TableCell>
-                  <TableCell>{relation.bridgeType ?? 'none'}</TableCell>
+                  <TableCell>
+                    <BooleanMark value={relation.destinationWasMinted} />
+                  </TableCell>
+                  <TableCell className="align-top">
+                    {relation.bridgeType ?? 'none'}
+                  </TableCell>
                   <TableCell className="whitespace-normal align-top">
                     <details>
                       <summary className="cursor-pointer text-muted-foreground text-xs">
@@ -376,4 +395,27 @@ function TokenRelationsSection({
       </CardContent>
     </Card>
   )
+}
+
+function BooleanMark({ value }: { value: boolean }) {
+  return (
+    <span
+      className={
+        value ? 'font-medium text-green-600' : 'font-medium text-destructive'
+      }
+      title={String(value)}
+    >
+      {value ? '✓' : '✕'}
+    </span>
+  )
+}
+
+function formatRelationEndpoint(
+  relation: TokenRelationEntry['relation'],
+  direction: 'outgoing' | 'incoming',
+) {
+  if (direction === 'outgoing') {
+    return `${relation.tokenToChain}:${relation.tokenToAddress}`
+  }
+  return `${relation.tokenFromChain}:${relation.tokenFromAddress}`
 }
