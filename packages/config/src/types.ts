@@ -1443,17 +1443,11 @@ export type InteropPluginName =
 
 export type InteropType = 'multichain' | 'intent' | 'canonical' | 'other'
 
-export interface InteropIntentAttribute {
-  value: string
-  description?: string
-  sentiment?: Sentiment
-}
-
 export interface InteropIntentConfig {
-  intentModel: InteropIntentAttribute
-  userRecovery: InteropIntentAttribute
-  solverAccess: InteropIntentAttribute
-  settlement: InteropIntentAttribute
+  intentModel: TableReadyValue
+  userRecovery: TableReadyValue
+  solverAccess: TableReadyValue
+  settlement: TableReadyValue
 }
 
 export interface InteropConfig {

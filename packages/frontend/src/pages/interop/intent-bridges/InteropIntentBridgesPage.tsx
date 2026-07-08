@@ -1,18 +1,22 @@
-import {
-  type DehydratedState,
-  HydrationBoundary,
-  useQuery,
-} from '@tanstack/react-query'
+import { type DehydratedState, HydrationBoundary } from '@tanstack/react-query'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { MainPageHeader } from '~/components/MainPageHeader'
-import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import { useTRPC } from '~/trpc/React'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatInteger } from '~/utils/number-format/formatInteger'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
+import { IntentBridgeDominanceWidget } from './components/dominance/IntentBridgeDominanceWidget'
+import { IntentBridgesChainSelector } from './components/IntentBridgesChainSelector'
+import {
+  IntentTotalTransfersWidget,
+  IntentTotalVolumeWidget,
+} from './components/IntentBridgeTotalsWidgets'
+import { IntentTransferSizeWidget } from './components/IntentTransferSizeWidget'
+import { IntentBridgesTable } from './components/table/IntentBridgesTable'
+import { IntentTopTokensWidget } from './components/top-tokens/IntentTopTokensWidget'
+import { IntentTransferSpeedWidget } from './components/transfer-speed/IntentTransferSpeedWidget'
 import type { InteropIntentBridge } from './getInteropIntentBridgesData'
+import { IntentBridgesSelectedChainsProvider } from './utils/IntentBridgesSelectedChainsContext'
 
 interface Props extends AppLayoutProps {
   intentBridges: InteropIntentBridge[]
@@ -26,66 +30,44 @@ export function InteropIntentBridgesPage({
   queryState,
   ...props
 }: Props) {
-  const initialChainIds = interopChains.map((chain) => chain.id)
-
   return (
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
-        <SideNavLayout>
-          <MainPageHeader description="This dashboard provides an overview of intent-based bridge protocols across supported interop chains.">
-            Intent bridges
-          </MainPageHeader>
-          <IntentBridgesSummary
-            intentBridges={intentBridges}
-            initialChainIds={initialChainIds}
-          />
-        </SideNavLayout>
+        <IntentBridgesSelectedChainsProvider interopChains={interopChains}>
+          <SideNavLayout>
+            <MainPageHeader description="This dashboard provides an overview of intent-based bridge protocols. It combines indexed transfer activity with curated intent-specific properties such as user recovery paths, solver access, settlement model, active tokens and active chain routes.">
+              Intent bridges
+            </MainPageHeader>
+            <div className="mt-4 max-md:bg-surface-primary max-md:p-4 max-md:pb-0">
+              <IntentBridgesChainSelector allChains={interopChains} />
+            </div>
+            <div className="grid grid-cols-2 gap-2 border-divider border-b bg-surface-primary p-4 md:hidden">
+              <IntentTotalVolumeWidget mobile />
+              <IntentTotalTransfersWidget mobile />
+            </div>
+            <div className="md:mt-4 md:grid md:grid-cols-2 md:gap-4 lg:grid-cols-4">
+              <div className="flex flex-col md:col-span-2 md:gap-4">
+                <IntentBridgeDominanceWidget intentBridges={intentBridges} />
+                <div className="grid grid-cols-2 gap-4 max-md:hidden">
+                  <IntentTotalVolumeWidget />
+                  <IntentTotalTransfersWidget />
+                </div>
+              </div>
+              <div className="flex flex-col md:col-span-2 md:gap-4 lg:h-0 lg:min-h-full">
+                <IntentTopTokensWidget intentBridges={intentBridges} />
+                <IntentTransferSpeedWidget
+                  intentBridges={intentBridges}
+                  interopChains={interopChains}
+                />
+              </div>
+            </div>
+            <HorizontalSeparator className="md:my-4" />
+            <IntentTransferSizeWidget />
+            <HorizontalSeparator className="md:my-4" />
+            <IntentBridgesTable intentBridges={intentBridges} />
+          </SideNavLayout>
+        </IntentBridgesSelectedChainsProvider>
       </HydrationBoundary>
     </AppLayout>
-  )
-}
-
-function IntentBridgesSummary({
-  intentBridges,
-  initialChainIds,
-}: {
-  intentBridges: InteropIntentBridge[]
-  initialChainIds: string[]
-}) {
-  const trpc = useTRPC()
-  const { data } = useQuery(
-    trpc.interop.intentBridges.queryOptions({
-      from: initialChainIds,
-      to: initialChainIds,
-    }),
-  )
-
-  return (
-    <div className="mt-4 grid gap-4 md:grid-cols-3">
-      <PrimaryCard>
-        <div className="font-medium text-secondary text-xs uppercase">
-          Intent bridges
-        </div>
-        <div className="mt-2 font-bold text-heading-24">
-          {formatInteger(intentBridges.length)}
-        </div>
-      </PrimaryCard>
-      <PrimaryCard>
-        <div className="font-medium text-secondary text-xs uppercase">
-          Total volume
-        </div>
-        <div className="mt-2 font-bold text-brand text-heading-24">
-          {data ? formatCurrency(data.activity.totalVolume, 'usd') : '...'}
-        </div>
-      </PrimaryCard>
-      <PrimaryCard>
-        <div className="font-medium text-secondary text-xs uppercase">
-          Total transfers
-        </div>
-        <div className="mt-2 font-bold text-brand text-heading-24">
-          {data ? formatInteger(data.activity.totalTransferCount) : '...'}
-        </div>
-      </PrimaryCard>
-    </div>
   )
 }
