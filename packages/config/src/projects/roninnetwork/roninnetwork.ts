@@ -3,7 +3,7 @@ import {
   EthereumAddress,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { CONTRACTS, REASON_FOR_BEING_OTHER } from '../../common'
+import { CONTRACTS } from '../../common'
 import { BADGES } from '../../common/badges'
 import { PROGRAM_HASHES } from '../../common/programHashes'
 import { getAltDaStage } from '../../common/stages/getAltDaStage'
@@ -59,14 +59,13 @@ export const roninNetwork: ScalingProject = opStackL2({
   addedAt: UnixTime(1754639625),
   discovery,
   genesisTimestamp,
-  daProvider: EIGENDA_DA_PROVIDER(false),
+  daProvider: EIGENDA_DA_PROVIDER(true),
   additionalBadges: [
     BADGES.RaaS.Conduit,
     BADGES.Other.MigratedFromL1,
     BADGES.Stack.OPKailua,
   ],
   associatedTokens: ['RON'],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
     name: 'Ronin',
     aliases: ['Sky Mavis', 'Axie Infinity'],
