@@ -206,9 +206,9 @@ describe(InMemoryCache.name, () => {
           ['key', { result: 'stale', timestamp: now - 2000 }],
         ])
         const logger = {
-          info: mockFn(),
-          warn: mockFn(),
-          debug: mockFn(),
+          info: mockFn().returns(undefined),
+          warn: mockFn().returns(undefined),
+          debug: mockFn().returns(undefined),
           for: () => undefined as never,
         }
         const cache = new InMemoryCache({ initialCache, logger })
