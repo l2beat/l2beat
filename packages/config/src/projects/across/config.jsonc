@@ -73,6 +73,9 @@
     },
     "eth:0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a": {
       "category": "shared"
+    },
+    "eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D": {
+      "ignoreMethods": ["proxiableUUID"]
     }
   }
 }

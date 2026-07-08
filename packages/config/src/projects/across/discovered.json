@@ -1,7 +1,7 @@
 {
   "name": "across",
   "timestamp": 1783509971,
-  "configHash": "0x6df4a5aa345fe951785c8e3792d8c2c032ed5f4ab56ff92cd95373917be30489",
+  "configHash": "0xcc32b038d0aa3c3f9eedde8606e69d34bb49a53ed9e89772ae9a086587a6f7f0",
   "entries": [
     {
       "name": "VotingV2",
@@ -1618,8 +1618,7 @@
           "eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
           false
         ]
-      },
-      "errors": { "proxiableUUID": "Processing error occurred." }
+      }
     },
     {
       "name": "Solana_Adapter",

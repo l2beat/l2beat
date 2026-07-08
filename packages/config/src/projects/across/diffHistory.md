@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xb7bdfffe43e3a67d9926bc09fea4f16bfc076193
+Generated with discovered.json: 0x8354005005099c44015c883895b884324c20a8fb
 
-# Diff at Wed, 08 Jul 2026 12:19:07 GMT:
+# Diff at Wed, 08 Jul 2026 12:42:41 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@b07b540456fadbe70953a62e508fc92311c971c6 block: 1782464735
@@ -45,8 +45,6 @@ some `poolRebalanceRoutes` (UMA v1, ACX,..) are routed to the zero address, mean
 +        "alchemy.sma-7702.1.0.0"
       values.getFallbackSignerData:
 +        ["eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",false]
-      errors:
-+        {"proxiableUUID":"Processing error occurred."}
     }
 ```
 
