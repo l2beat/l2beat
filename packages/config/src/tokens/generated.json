@@ -7911,6 +7911,20 @@
       }
     },
     {
+      "name": "Savings USDS",
+      "coingeckoId": "susds",
+      "address": "0xA06b10Db9F390990364A3984C04FaDf1c13691b5",
+      "symbol": "sUSDS",
+      "decimals": 18,
+      "deploymentTimestamp": 1746046906,
+      "coingeckoListingTimestamp": 1734048000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52721/large/sUSDS_Coin.png?1734086971",
+      "chainId": 130,
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
+    {
       "name": "USD₮0",
       "coingeckoId": "usdt0",
       "address": "0x9151434b16b9763660705744891fA906F660EcC5",
@@ -7952,6 +7966,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "USDS Stablecoin",
+      "coingeckoId": "usds",
+      "address": "0x7E10036Acc4B56d4dFCa3b77810356CE52313F9C",
+      "symbol": "USDS",
+      "decimals": 18,
+      "deploymentTimestamp": 1745994447,
+      "coingeckoListingTimestamp": 1727136000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
+      "chainId": 130,
+      "source": "canonical",
+      "supply": "totalSupply"
     },
     {
       "name": "Wrapped BTC",
@@ -11204,20 +11232,6 @@
       }
     },
     {
-      "name": "Cash Cat",
-      "coingeckoId": "cash-cat",
-      "address": "0x020bfC650A365f8BB26819deAAbF3E21291018b4",
-      "symbol": "CASHCAT",
-      "decimals": 18,
-      "deploymentTimestamp": 1781812885,
-      "coingeckoListingTimestamp": 1782950400,
-      "category": "other",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174280/large/cashcat-logo.jpg?1782922765",
-      "chainId": 4663,
-      "source": "native",
-      "supply": "circulatingSupply"
-    },
-    {
       "name": "Alibaba • Robinhood Token",
       "coingeckoId": "alibaba-robinhood-tokenized-stock",
       "address": "0xad25Ac6C84D497db898fa1E8387bf6Af3532a1c4",
@@ -11300,6 +11314,20 @@
       "chainId": 4663,
       "source": "native",
       "supply": "totalSupply"
+    },
+    {
+      "name": "Cash Cat",
+      "coingeckoId": "cash-cat",
+      "address": "0x020bfC650A365f8BB26819deAAbF3E21291018b4",
+      "symbol": "CASHCAT",
+      "decimals": 18,
+      "deploymentTimestamp": 1781812885,
+      "coingeckoListingTimestamp": 1782950400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174280/large/cashcat-logo.jpg?1782922765",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "Circle Internet Group • Robinhood Token",

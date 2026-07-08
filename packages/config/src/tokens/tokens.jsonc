@@ -7967,6 +7967,22 @@
   ],
   "unichain": [
     {
+      "symbol": "USDS",
+      "coingeckoId": "usds",
+      "address": "0x7E10036Acc4B56d4dFCa3b77810356CE52313F9C",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "sUSDS",
+      "coingeckoId": "susds",
+      "address": "0xA06b10Db9F390990364A3984C04FaDf1c13691b5",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
+    {
       "symbol": "HYPE",
       "address": "0x15D0e0c55a3E7eE67152aD7E89acf164253Ff68d",
       "coingeckoId": "hyperliquid",
