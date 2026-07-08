@@ -39,6 +39,7 @@ export const pluginStatusColumns: TableOptions<PluginStatusRow>['columns'] = [
   columnHelper.accessor('toTimestamp', {
     header: 'Distance from now',
     enableGlobalFilter: false,
+    invertSorting: true,
     cell: ({ getValue }) => {
       const value = getValue()
 
@@ -61,6 +62,35 @@ export const pluginStatusColumns: TableOptions<PluginStatusRow>['columns'] = [
           : 'n/a',
     },
   }),
+  columnHelper.accessor(
+    (row) =>
+      row.blocksAggregation === undefined
+        ? 'unknown'
+        : row.blocksAggregation
+          ? 'yes'
+          : 'no',
+    {
+      id: 'blocksAggregation',
+      header: 'Blocks aggregation',
+      enableGlobalFilter: false,
+      cell: ({ getValue }) => {
+        const value = getValue()
+
+        if (value === 'unknown') {
+          return <span className="text-muted-foreground">n/a</span>
+        }
+        return (
+          <Badge variant={value === 'yes' ? 'destructive' : 'secondary'}>
+            {value === 'yes' ? 'Yes' : 'No'}
+          </Badge>
+        )
+      },
+      meta: {
+        csvHeader: 'Blocks aggregation',
+        filter: { kind: 'select' },
+      },
+    },
+  ),
   columnHelper.accessor('toBlock', {
     header: 'To block',
     sortingFn: (rowA, rowB, columnId) =>
@@ -95,6 +125,7 @@ export const pluginStatusColumns: TableOptions<PluginStatusRow>['columns'] = [
   columnHelper.accessor('resyncRequestedFrom', {
     header: 'Resync from',
     enableGlobalFilter: false,
+    invertSorting: true,
     cell: ({ getValue }) => {
       const value = getValue()
 

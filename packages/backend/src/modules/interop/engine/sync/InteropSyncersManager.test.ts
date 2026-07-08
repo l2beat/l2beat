@@ -461,6 +461,9 @@ describe(InteropSyncersManager.name, () => {
   })
 
   describe(InteropSyncersManager.prototype.getPluginSyncStatuses.name, () => {
+    const target = UnixTime(10_000)
+    const tolerance = 30 * UnixTime.MINUTE
+
     it('merges db ranges, db states, and existing syncers, then sorts the result', async () => {
       const syncedRanges: InteropPluginSyncedRangeRecord[] = [
         makeSyncedRangeRecord('cluster-a', 'ethereum', 10n),
@@ -479,7 +482,7 @@ describe(InteropSyncersManager.name, () => {
         db,
       })
 
-      const result = await manager.getPluginSyncStatuses()
+      const result = await manager.getPluginSyncStatuses(target, tolerance)
 
       expect(result.map((r) => `${r.pluginName}:${r.chain}`)).toEqual([
         'cluster-a:arbitrum',
@@ -507,11 +510,49 @@ describe(InteropSyncersManager.name, () => {
         toTimestamp: UnixTime(10),
         lastError: 'boom',
         resyncRequestedFrom: UnixTime(123),
+        // pending resync
+        blocksAggregation: true,
       })
       expect(bEth?.syncMode).toEqual('following-starting')
       expect(bEth?.toBlock).toEqual(undefined)
       expect(cEth?.syncMode).toEqual('undefined-undefined')
       expect(cEth?.lastError).toEqual('missing')
+    })
+
+    it('flags syncers that would block aggregation', async () => {
+      const db = mockDb({
+        syncedRanges: [
+          makeSyncedRangeRecordAt('cluster-a', 'ethereum', target),
+          makeSyncedRangeRecordAt(
+            'cluster-a',
+            'arbitrum',
+            target - tolerance - 1,
+          ),
+          // fresh range of a syncer that is not registered in the manager
+          makeSyncedRangeRecordAt('cluster-x', 'ethereum', target),
+        ],
+        syncStates: [
+          makeSyncStateRecord('cluster-b', 'ethereum', 'boom', UnixTime(123)),
+        ],
+      })
+      const manager = makeManager({
+        clusters: [makeCluster('cluster-a'), makeCluster('cluster-b')],
+        chains: ['ethereum', 'arbitrum'],
+        db,
+      })
+
+      const result = await manager.getPluginSyncStatuses(target, tolerance)
+      const byKey = Object.fromEntries(
+        result.map((r) => [`${r.pluginName}:${r.chain}`, r.blocksAggregation]),
+      )
+
+      expect(byKey).toEqual({
+        'cluster-a:ethereum': false, // fresh
+        'cluster-a:arbitrum': true, // stale range
+        'cluster-b:ethereum': true, // pending resync
+        'cluster-b:arbitrum': true, // no synced range
+        'cluster-x:ethereum': false, // not part of aggregation
+      })
     })
   })
 })
