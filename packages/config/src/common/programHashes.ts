@@ -1185,8 +1185,16 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     verificationStatus: 'notVerified',
   },
   '0xd3c097dfec583bb305eefcb5dcddc313b072e372cee66e13492c37fb50e6a90b': {
-    ...KAILUA_FP('Ronin', 'This version adds op-contracts v5 compatibility.'),
-    verificationStatus: 'notVerified',
+    // https://github.com/boundless-xyz/kailua/tree/a11c73fec58f55010b4c6feec0d5c73dd9346f45
+    ...KAILUA_FP(
+      'Risc0 v3.0.5, Kailua v1.3.0 (Hokulea)',
+      'This is the Hokulea variant of the Kailua guest, used by projects that post data availability to EigenDA.',
+    ),
+    programUrl: 'https://github.com/boundless-xyz/kailua/releases/tag/v1.3.0',
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0xd3c097dfec583bb305eefcb5dcddc313b072e372cee66e13492c37fb50e6a90b.md',
+    ),
   },
   '0xf0ce5d15fa89991210ca2667b7f7a8bb740ce551c0f2b20cc76f9debc55d22c2': {
     ...KAILUA_FP('MegaETH'),
