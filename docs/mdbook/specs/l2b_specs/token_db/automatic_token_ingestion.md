@@ -28,8 +28,8 @@
 
 This document describes how TokenDB is kept in sync automatically: how new
 deployed tokens are added, how they are linked to abstract tokens, how token
-relations are materialized from interop transfer evidence, and how conflicts
-and errors surface to humans.
+relations are materialized from non-swapping interop transfer evidence, and
+how conflicts and errors surface to humans.
 
 ## Overview
 
@@ -45,6 +45,11 @@ does two things in order:
 That is the entire shape. Everything else is a detail of how a single entry
 gets processed, including relation inserts that may happen alongside an
 otherwise-stable deployed token.
+
+Token relations currently only represent non-swapping routes between
+deployed tokens: `lockAndMint` and `burnAndMint` transfer evidence. Swap-like
+routes such as `nonMinting` can still enqueue or propagate token addresses,
+but they do not create `TokenRelation` rows.
 
 ## Drain guard and monitoring
 
@@ -223,14 +228,14 @@ with a newly built CoinGecko abstract), `conflict`
   incomplete (missing `symbol`, `decimals`, or `deploymentTimestamp`).
   `apply` moves the entry to `error` with a message.
 - **`noop`** — token already exists with the resolved abstract, and no
-  missing token relations were discovered. `apply` removes the queue
-  entry.
+  missing token relations were discovered from non-swapping transfer
+  evidence. `apply` removes the queue entry.
 - **`write`** — `apply` writes whatever the trace discovered is missing:
   insert/update the deployed token, insert a new abstract token if
   needed, and insert any new token relations in the same transaction.
   Some writes are relation-only: the deployed token stays unchanged, but
-  transfer evidence revealed a missing relation. After the write it
-  re-enqueues every neighbor token from the address's transfers
+  non-swapping transfer evidence revealed a missing relation. After the
+  write it re-enqueues every neighbor token from the address's transfers
   (propagation) and removes the queue entry.
 
 ## Shared write boundary
@@ -350,8 +355,10 @@ grew from one day to seven.
 The consumers that need a full transfer row — token-relation
 materialization and the `non-swapping-transfer` assignment proof —
 fetch the group's sample transfer by primary key, and only for outcomes
-that persist that evidence. Plans that end in `noop` or `conflict` — the
-common steady-state outcomes — never pay the lookup.
+that persist that evidence. Token-relation materialization filters this
+index to non-swapping bridge types (`lockAndMint` and `burnAndMint`) before
+it checks for missing relations. Plans that end in `noop` or `conflict` —
+the common steady-state outcomes — never pay the lookup.
 
 The drain refresh happens immediately after the pre-step and immediately
 before processing the queue. Do not replace it with a stale cached read:

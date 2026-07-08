@@ -19,8 +19,8 @@ The docs in this folder describe how TokenDB is kept correct:
 - [Automatic token ingestion](./automatic_token_ingestion.md) — the
   background loop that discovers new deployed tokens from interop
   transfers, links them to abstract tokens (via transfer evidence and
-  CoinGecko), materializes token relations from interop transfer evidence,
-  and surfaces conflicts/errors to humans.
+  CoinGecko), materializes token relations from non-swapping interop
+  transfer evidence, and surfaces conflicts/errors to humans.
 - [Intent / Plan / Execute](./intent_plan_execute.md) — the
   intent → plan → commands pipeline behind every human-driven write
   from token-UI, and why it exists (visible blast radius + concurrency
