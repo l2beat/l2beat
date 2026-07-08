@@ -45,7 +45,13 @@ export async function getZkCatalogEntries(): Promise<ZkCatalogEntry[]> {
         whereNot: ['archivedAt'],
       }),
       ps.getProjects({
-        optional: ['display', 'daBridge', 'scalingInfo', 'daLayer'],
+        optional: [
+          'display',
+          'daBridge',
+          'scalingInfo',
+          'daLayer',
+          'privacyInfo',
+        ],
       }),
       get7dTvsBreakdown({ type: 'all' }),
       getContractUtils(),
@@ -62,7 +68,7 @@ function getZkCatalogEntry(
   project: Project<'zkCatalogInfo' | 'display' | 'statuses'>,
   allProjects: Project<
     never,
-    'display' | 'daBridge' | 'scalingInfo' | 'daLayer'
+    'display' | 'daBridge' | 'scalingInfo' | 'daLayer' | 'privacyInfo'
   >[],
   tvs: SevenDayTvsBreakdown,
   contractUtils: ContractUtils,

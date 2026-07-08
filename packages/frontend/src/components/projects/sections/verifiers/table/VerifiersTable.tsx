@@ -17,16 +17,18 @@ export type VerifierRow =
 
 interface Props {
   entries: VerifierRow[]
+  collapsible?: boolean
 }
-export function VerifiersTable({ entries }: Props) {
+export function VerifiersTable({ entries, collapsible = true }: Props) {
   const table = useTable({
     data: entries,
-    columns: verifiersColumns,
+    columns: verifiersColumns(collapsible),
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
     getRowId: (row) => row.hash,
     getRowCanExpand: () => true,
+    initialState: collapsible ? undefined : { expanded: true },
   })
   return (
     <BasicTable

@@ -11,10 +11,7 @@ const discovery = new ProjectDiscovery('apechain')
 export const apechain: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1729296000), // 2024-10-19
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Caldera],
-  reasonsForBeingOther: [
-    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-    REASON_FOR_BEING_OTHER.SMALL_DAC,
-  ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'ApeChain',
     slug: 'apechain',
@@ -57,6 +54,14 @@ export const apechain: ScalingProject = orbitStackL3({
   associatedTokens: ['APE'],
   customDa: AnytrustDAC({ discovery, hostChain: 'arbitrum' }),
   milestones: [
+    {
+      title: 'ApeChain switches from DAC to Ethereum calldata',
+      url: 'https://arbiscan.io/address/0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C',
+      date: '2026-07-01T00:00:00Z',
+      description:
+        'ApeChain stops posting data via the AnyTrust DAC and starts posting batches directly to Arbitrum as calldata.',
+      type: 'general',
+    },
     {
       title: 'Mainnet Launch',
       url: 'https://x.com/apecoin/status/1847731593437155673',

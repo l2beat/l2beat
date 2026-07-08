@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x073dad3bf7f35e0bdf71a576509dbc8f208b7db3
+
+# Diff at Wed, 01 Jul 2026 16:34:19 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@cfafbf3de953d9f519656c89c622fe51a04d547a block: 1772526845
+- current timestamp: 1782923571
+
+## Description
+
+SystemConfig `opStackDA.isUsingCelestia`: `true` → `false`. Karak no longer uses Celestia DA.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x622333688CC1878C7ff4205c89bDe051798788A7) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isUsingCelestia:
+-        true
++        false
+    }
+```
+
 Generated with discovered.json: 0x35431eee855a014b8d5772b53ce55772db25ee07
 
 # Diff at Tue, 09 Jun 2026 12:43:35 GMT:

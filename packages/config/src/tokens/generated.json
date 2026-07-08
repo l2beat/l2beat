@@ -5702,6 +5702,34 @@
       "supply": "zero"
     },
     {
+      "name": "Steakhouse Confidential Prime USDC",
+      "coingeckoId": "usd-coin",
+      "address": "0xbEEF00A59B577423653A1526c7009bdE103F542B",
+      "symbol": "steakcUSDC",
+      "decimals": 18,
+      "deploymentTimestamp": 1781867411,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Steakhouse tGBP",
+      "coingeckoId": "tokenised-gbp",
+      "address": "0xbeeffABcd0dB09589Dd21854aa760C52aB4bf04F",
+      "symbol": "bbqTGBP",
+      "decimals": 18,
+      "deploymentTimestamp": 1776442415,
+      "coingeckoListingTimestamp": 1762905600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70647/large/tgbp-square.png?1762953800",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "STONE Carnival LP",
       "coingeckoId": "stakestone-ether",
       "address": "0x4d831e22F062b5327dFdB15f0b6a5dF20E2E3dD0",
@@ -6075,6 +6103,20 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "tGBP",
+      "coingeckoId": "tokenised-gbp",
+      "address": "0x27f6c8289550fCE67f6B50BeD1F519966aFE5287",
+      "symbol": "tGBP",
+      "decimals": 18,
+      "deploymentTimestamp": 1754053223,
+      "coingeckoListingTimestamp": 1762905600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70647/large/tgbp-square.png?1762953800",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -11160,6 +11202,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "Cash Cat",
+      "coingeckoId": "cash-cat",
+      "address": "0x020bfC650A365f8BB26819deAAbF3E21291018b4",
+      "symbol": "CASHCAT",
+      "decimals": 18,
+      "deploymentTimestamp": 1781812885,
+      "coingeckoListingTimestamp": 1782950400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174280/large/cashcat-logo.jpg?1782922765",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "Alibaba • Robinhood Token",

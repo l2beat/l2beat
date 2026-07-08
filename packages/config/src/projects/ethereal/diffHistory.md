@@ -1,3 +1,73 @@
+Generated with discovered.json: 0xde471847ba5617227c432c687847e031ebf01e81
+
+# Diff at Tue, 07 Jul 2026 12:22:00 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1fd9d39064602bc28714717ec6eae23c740b472b block: 1781510846
+- current timestamp: 1783426843
+
+## Description
+
+ExchangeGateway upgraded; source unchanged. PerpEngine redeployed and rewired via the ExchangeGateway `PERP_ENGINE` registry. New PerpEngine adds a Liquidator role that can settle funding and PnL without a matching account, and lets `update()` change a perp product's `pythFeedId`. [PerpEngine diff](https://disco.l2beat.com/diff/ethereal:0xCc0385301a10191b7ac633A64742a34F2e4cFB37/ethereal:0x5e26faca3898F6fF88A6ae0Be08a290Ad9f3C3c8).
+
+## Watched changes
+
+```diff
+    contract ExchangeGateway (ethereal:0xB3cDC82035C495c484C9fF11eD5f3Ff6d342e3cc) [ethereal/ExchangeGateway] {
+    +++ description: Main contract of the Ethereal DEX. Entrypoint for users to deposit and withdraw funds and for operators submit user actions.
+      values.$implementation:
+-        "ethereal:0x6F4888af4c37D9Da8545b4766646e2891e47b1db"
++        "ethereal:0xd03959377f5DF4CB08A6bB1aec93ddE2141fC3A0"
+      values.$pastUpgrades.2:
++        ["2026-06-19T01:34:15.000Z","0x7e8bc19dd02c63ae22cba5f88603c784cbcd2bd6230e11491b2b80d601ee4967",["ethereal:0xd03959377f5DF4CB08A6bB1aec93ddE2141fC3A0"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.registry.0x504552505f454e47494e45000000000000000000000000000000000000000000:
+-        "ethereal:0xCc0385301a10191b7ac633A64742a34F2e4cFB37"
++        "ethereal:0x5e26faca3898F6fF88A6ae0Be08a290Ad9f3C3c8"
+      implementationNames.ethereal:0x6F4888af4c37D9Da8545b4766646e2891e47b1db:
+-        "ExchangeGateway"
+      implementationNames.ethereal:0xd03959377f5DF4CB08A6bB1aec93ddE2141fC3A0:
++        "ExchangeGateway"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PerpEngine (ethereal:0xCc0385301a10191b7ac633A64742a34F2e4cFB37) [ethereal/ExchangeGatewayRegistryContracts]
+    +++ description: Auxiliary contract of the ExchangeGateway.
+```
+
+```diff
++   Status: CREATED
+    contract PerpEngine (ethereal:0x5e26faca3898F6fF88A6ae0Be08a290Ad9f3C3c8) [ethereal/ExchangeGatewayRegistryContracts]
+    +++ description: Auxiliary contract of the ExchangeGateway.
+```
+
+## Source code changes
+
+```diff
+.../ExchangeGateway/ExchangeGateway.sol            |  1 +
+ .../{.flat@1781510846 => .flat}/PerpEngine.sol     | 79 +++++++++++++++++-----
+ 2 files changed, 63 insertions(+), 17 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1781510846 (main branch discovery), not current.
+
+```diff
+    EOA  (ethereal:0x9D4F46b2595F596fC826Db2e5A6c32bCfE8BdDA5) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "take over liquidated accounts."
++        "take over liquidated accounts, then settle funding and PnL on the resulting positions via the PerpEngine."
+    }
+```
+
 Generated with discovered.json: 0x6b1193cd40192d42f0c8c272ed83b221486f2213
 
 # Diff at Mon, 15 Jun 2026 08:08:46 GMT:

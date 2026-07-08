@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x76869a79df2f4f45c7004f654c3ebdfb8f4c5d06
+
+# Diff at Fri, 03 Jul 2026 10:13:14 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@4572e5b954c85d78517dc66fc4a82b8ddc679e2a block: 1782463184
+- current timestamp: 1783073499
+
+## Description
+
+SequencerInbox `sequencerVersion` flipped `0x88` → `0x00`: latest batch posted as Ethereum calldata instead of a DAC certificate (AnyTrust fall-back). ApeChainMultisig dropped one signer; threshold 3/7 → 3/6.
+
+## Watched changes
+
+```diff
+    contract ApeChainMultisig (arb1:0x2B1FbeE3c7D278bFD9E179893FF304fE49FA7DDF) [GnosisSafe] {
+    +++ description: None
+      values.$members.3:
+-        "arb1:0x83F58bBB1a940E364ED2dE775D1FD5218135cCE3"
+      values.multisigThreshold:
+-        "3 of 7 (43%)"
++        "3 of 6 (50%)"
+    }
+```
+
+```diff
+    contract SequencerInbox (arb1:0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C) [orbitstack/SequencerInbox_Espresso] {
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.sequencerVersion:
+-        "0x88"
++        "0x00"
+    }
+```
+
 Generated with discovered.json: 0x9082fd2c9987833518ccc834d3f11691122095c5
 
 # Diff at Fri, 26 Jun 2026 08:41:02 GMT:

@@ -5,6 +5,26 @@
       "address": "0xA12CC123ba206d4031D1c7f6223D1C2Ec249f4f3"
     },
     {
+      "symbol": "tGBP",
+      "address": "0x27f6c8289550fCE67f6B50BeD1F519966aFE5287",
+      "coingeckoId": "tokenised-gbp",
+      "category": "stablecoin"
+    },
+    {
+      // Steakhouse tGBP vault; not listed on CoinGecko, priced with its tGBP underlying
+      "symbol": "bbqTGBP",
+      "address": "0xbeeffABcd0dB09589Dd21854aa760C52aB4bf04F",
+      "coingeckoId": "tokenised-gbp",
+      "category": "stablecoin"
+    },
+    {
+      // Steakhouse Confidential Prime USDC vault; not listed on CoinGecko, priced with its USDC underlying
+      "symbol": "steakcUSDC",
+      "address": "0xbEEF00A59B577423653A1526c7009bdE103F542B",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin"
+    },
+    {
       "symbol": "RON",
       "address": "0x5f2Db62536dd888AacEa933068384318A02094c0",
       "coingeckoId": "ronin"
@@ -2193,6 +2213,17 @@
       },
       // manual override: robinhood public RPC is non-archival. Creation block 29380.
       "deploymentTimestamp": 1780403342
+    },
+    {
+      // Natively minted meme token on Robinhood Chain.
+      "symbol": "CASHCAT",
+      "address": "0x020bfC650A365f8BB26819deAAbF3E21291018b4",
+      "coingeckoId": "cash-cat",
+      "source": "native",
+      "supply": "circulatingSupply",
+      "category": "other",
+      // manual override: robinhood public RPC is non-archival. Creation block 88836.
+      "deploymentTimestamp": 1781812885
     },
     {
       "symbol": "AAPL",
