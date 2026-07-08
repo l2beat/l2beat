@@ -8,6 +8,7 @@ import { getRequestIp } from '../utils/getRequestIp'
 import { getLogger } from '../utils/logger'
 
 const logger = getLogger().for('TrpcRouter')
+const MAX_LOGGED_INPUT_LENGTH = 1000
 
 const createContext = ({ req }: trpcExpress.CreateExpressContextOptions) => ({
   headers: new Headers(req.headers as Record<string, string>),
@@ -33,13 +34,55 @@ export function createTrpcRouter() {
           path: opts.path,
           code: opts.error.code,
           type: opts.type,
-          input: opts.input,
+          input: stringifyInputForLogging(opts.input),
+          inputType: getInputType(opts.input),
         })
       },
     }),
   )
 
   return router
+}
+
+function stringifyInputForLogging(input: unknown): string | undefined {
+  if (input === undefined) {
+    return undefined
+  }
+
+  try {
+    const stringified =
+      typeof input === 'string'
+        ? input
+        : JSON.stringify(input, (_key, value: unknown) =>
+            typeof value === 'bigint' ? value.toString() : value,
+          )
+
+    if (stringified === undefined) {
+      return undefined
+    }
+
+    return stringified.length > MAX_LOGGED_INPUT_LENGTH
+      ? `${stringified.slice(0, MAX_LOGGED_INPUT_LENGTH)}...`
+      : stringified
+  } catch {
+    return '[unserializable input]'
+  }
+}
+
+function getInputType(input: unknown): string | undefined {
+  if (input === undefined) {
+    return undefined
+  }
+
+  if (input === null) {
+    return 'null'
+  }
+
+  if (Array.isArray(input)) {
+    return 'array'
+  }
+
+  return typeof input
 }
 
 function getLogFn(error: TRPCError) {
