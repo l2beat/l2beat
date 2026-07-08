@@ -19,6 +19,7 @@ import type { TopTokenItem } from '~/server/features/scaling/interop/getTokenFra
 import { useTRPC } from '~/trpc/React'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
+import { ChainIcon } from '../../components/ChainIcon'
 import { Last24HoursBadge } from '../../components/Last24HoursBadge'
 import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
 import type { InteropTokenFramework } from '../getInteropTokenFrameworksData'
@@ -216,21 +217,6 @@ function TokenRow({
         )}
       </div>
     </div>
-  )
-}
-
-function ChainIcon({
-  iconUrl,
-  alt,
-}: {
-  iconUrl: string | undefined
-  alt: string
-}) {
-  if (!iconUrl) {
-    return <span className="size-4 rounded-sm bg-surface-secondary" />
-  }
-  return (
-    <img src={iconUrl} alt={alt} className="size-4 rounded-sm object-contain" />
   )
 }
 
