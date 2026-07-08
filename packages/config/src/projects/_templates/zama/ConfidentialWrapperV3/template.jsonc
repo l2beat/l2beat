@@ -73,5 +73,6 @@
       }
     }
   },
-  "ignoreRelatives": ["underlying"]
+  "ignoreRelatives": ["underlying"],
+  "ignoreInWatchMode": ["confidentialTotalSupply", "inferredTotalSupply"]
 }
