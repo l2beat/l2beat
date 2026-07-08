@@ -4,6 +4,7 @@ import type {
   DeployedTokenRecord,
   InteropTransferRecord,
   TokenDatabase,
+  TokenRelationRecord,
 } from '@l2beat/database'
 import { Address32 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
@@ -189,6 +190,77 @@ describe('deployedTokensRouter', () => {
       expect(mockGetByChainAndAddress).toHaveBeenCalledWith([
         { chain: 'ethereum', address: '0x123' },
         { chain: 'arbitrum', address: '0x456' },
+      ])
+    })
+  })
+
+  describe('getRelationsGraph', () => {
+    it('returns relation endpoints as nodes and all relations as edges', async () => {
+      const relations = [
+        tokenRelation({
+          tokenFromChain: 'base',
+          tokenFromAddress: '0xbbb',
+          tokenToChain: 'ethereum',
+          tokenToAddress: '0xaaa',
+          plugin: 'test-plugin',
+        }),
+        tokenRelation({
+          tokenFromChain: 'ethereum',
+          tokenFromAddress: '0xaaa',
+          tokenToChain: 'base',
+          tokenToAddress: '0xbbb',
+          plugin: 'test-plugin',
+        }),
+      ]
+      const tokens = [
+        deployedToken({
+          chain: 'base',
+          address: '0xbbb',
+          symbol: 'USDC',
+        }),
+        deployedToken({
+          chain: 'ethereum',
+          address: '0xaaa',
+          symbol: 'USDC',
+        }),
+      ]
+      const mockGetAllRelations = mockFn().resolvesTo(relations)
+      const mockGetTokens = mockFn().resolvesTo(tokens)
+      const mockTokenDb = mockObject<TokenDatabase>({
+        tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
+          getAll: mockGetAllRelations,
+        }),
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
+          getByPrimaryKeys: mockGetTokens,
+        }),
+      })
+      const mockDb = mockObject<Database>({})
+      const mockCoingeckoClient = mockObject<CoingeckoClient>({})
+
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
+      const result = await caller.getRelationsGraph()
+
+      expect(result).toEqual({
+        nodes: [
+          {
+            id: 'base:0xbbb',
+            chain: 'base',
+            address: '0xbbb',
+            symbol: 'USDC',
+          },
+          {
+            id: 'ethereum:0xaaa',
+            chain: 'ethereum',
+            address: '0xaaa',
+            symbol: 'USDC',
+          },
+        ],
+        relations,
+      })
+      expect(mockGetAllRelations).toHaveBeenCalledTimes(1)
+      expect(mockGetTokens).toHaveBeenCalledWith([
+        { chain: 'base', address: '0xbbb' },
+        { chain: 'ethereum', address: '0xaaa' },
       ])
     })
   })
@@ -2171,6 +2243,39 @@ describe('deployedTokensRouter', () => {
     })
   })
 })
+
+function deployedToken(input: {
+  chain: string
+  address: string
+  symbol: string
+}): DeployedTokenRecord {
+  return {
+    chain: input.chain,
+    address: input.address,
+    symbol: input.symbol,
+    decimals: 18,
+    comment: null,
+    abstractTokenId: null,
+    deploymentTimestamp: 0,
+    metadata: null,
+  }
+}
+
+function tokenRelation(input: {
+  tokenFromChain: string
+  tokenFromAddress: string
+  tokenToChain: string
+  tokenToAddress: string
+  plugin: string
+}): TokenRelationRecord {
+  return {
+    ...input,
+    sourceWasBurned: true,
+    destinationWasMinted: true,
+    bridgeType: null,
+    transfer: {},
+  }
+}
 
 function createRouter(
   mockTokenDb: TokenDatabase,
