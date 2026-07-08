@@ -98,7 +98,8 @@
       "source": "native",
       "isAssociated": false
     },
-      "category": "other",
+    {
+      "mode": "auto",
       "id": "robinhood-AAPL",
       "priceId": "apple-robinhood-tokenized-stock",
       "symbol": "AAPL",
