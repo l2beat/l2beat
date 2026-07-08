@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 import { useTRPC } from '~/trpc/React'
+import { useInteropSelectedChains } from '../../components/chain-selector/InteropSelectedChainsContext'
 import { InteropTransferDetailsTrigger } from '../../components/InteropTransferDetailsTrigger'
-import { useIntentBridgesSelectedChains } from '../utils/IntentBridgesSelectedChainsContext'
 
 export function IntentBridgesTransferTrigger({
   protocol,
@@ -16,7 +16,7 @@ export function IntentBridgesTransferTrigger({
   children: ReactNode
 }) {
   const trpc = useTRPC()
-  const { selectedChains } = useIntentBridgesSelectedChains()
+  const { selectedChains } = useInteropSelectedChains()
   const { data } = useQuery(
     trpc.interop.intentBridges.queryOptions({
       from: selectedChains,

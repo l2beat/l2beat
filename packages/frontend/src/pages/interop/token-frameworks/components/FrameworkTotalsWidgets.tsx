@@ -3,8 +3,8 @@ import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
+import { useInteropSelectedChains } from '../../components/chain-selector/InteropSelectedChainsContext'
 import { InteropTotalCard } from '../../components/InteropTotalCard'
-import { useTokenFrameworksSelectedChains } from '../utils/TokenFrameworksSelectedChainsContext'
 
 export function TotalVolumeWidget({
   mobile,
@@ -14,7 +14,7 @@ export function TotalVolumeWidget({
   className?: string
 }) {
   const trpc = useTRPC()
-  const { selectedChains } = useTokenFrameworksSelectedChains()
+  const { selectedChains } = useInteropSelectedChains()
   const { data, isLoading } = useQuery(
     trpc.interop.tokenFrameworks.queryOptions({
       from: selectedChains,
@@ -44,7 +44,7 @@ export function TotalTransfersWidget({
   className?: string
 }) {
   const trpc = useTRPC()
-  const { selectedChains } = useTokenFrameworksSelectedChains()
+  const { selectedChains } = useInteropSelectedChains()
   const { data, isLoading } = useQuery(
     trpc.interop.tokenFrameworks.queryOptions({
       from: selectedChains,

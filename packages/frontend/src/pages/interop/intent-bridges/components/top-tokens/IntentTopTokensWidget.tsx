@@ -11,9 +11,9 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { TokenData } from '~/server/features/scaling/interop/types'
 import { useTRPC } from '~/trpc/React'
 import { formatInteger } from '~/utils/number-format/formatInteger'
+import { useInteropSelectedChains } from '../../../components/chain-selector/InteropSelectedChainsContext'
 import { Last24HoursBadge } from '../../../components/Last24HoursBadge'
 import type { InteropIntentBridge } from '../../getInteropIntentBridgesData'
-import { useIntentBridgesSelectedChains } from '../../utils/IntentBridgesSelectedChainsContext'
 import { IntentTokenRow } from './IntentTokenRow'
 
 export function IntentTopTokensWidget({
@@ -22,7 +22,7 @@ export function IntentTopTokensWidget({
   intentBridges: InteropIntentBridge[]
 }) {
   const trpc = useTRPC()
-  const { selectedChains } = useIntentBridgesSelectedChains()
+  const { selectedChains } = useInteropSelectedChains()
   const [activeTab, setActiveTab] = useState<string>('all')
 
   const { data, isLoading } = useQuery(

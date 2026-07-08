@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
 import { useTRPC } from '~/trpc/React'
+import { useInteropSelectedChains } from '../../components/chain-selector/InteropSelectedChainsContext'
 import { InteropTransferSizeCard } from '../../components/InteropTransferSizeCard'
-import { useIntentBridgesSelectedChains } from '../utils/IntentBridgesSelectedChainsContext'
 
 export function IntentTransferSizeWidget() {
   const trpc = useTRPC()
-  const { selectedChains } = useIntentBridgesSelectedChains()
+  const { selectedChains } = useInteropSelectedChains()
   const { data, isLoading } = useQuery(
     trpc.interop.intentBridges.queryOptions({
       from: selectedChains,

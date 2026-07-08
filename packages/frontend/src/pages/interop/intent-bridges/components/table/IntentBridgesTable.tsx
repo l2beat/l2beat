@@ -6,9 +6,9 @@ import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
 import type { IntentBridgesData } from '~/server/features/scaling/interop/getIntentBridgesData'
 import { useTRPC } from '~/trpc/React'
+import { useInteropSelectedChains } from '../../../components/chain-selector/InteropSelectedChainsContext'
 import { Last24HoursBadge } from '../../../components/Last24HoursBadge'
 import type { InteropIntentBridge } from '../../getInteropIntentBridgesData'
-import { useIntentBridgesSelectedChains } from '../../utils/IntentBridgesSelectedChainsContext'
 import { getActiveCounts } from '../dominance/getActiveCounts'
 import { getIntentBridgeColumns } from './columns'
 import type { IntentBridgeRow } from './types'
@@ -19,7 +19,7 @@ export function IntentBridgesTable({
   intentBridges: InteropIntentBridge[]
 }) {
   const trpc = useTRPC()
-  const { selectedChains } = useIntentBridgesSelectedChains()
+  const { selectedChains } = useInteropSelectedChains()
   const { data, isLoading } = useQuery(
     trpc.interop.intentBridges.queryOptions({
       from: selectedChains,

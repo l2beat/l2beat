@@ -7,28 +7,28 @@ import {
   useMemo,
   useState,
 } from 'react'
-import type { InteropChainWithIcon } from '../../components/chain-selector/types'
+import type { InteropChainWithIcon } from './types'
 
-interface IntentBridgesSelectedChainsContextType {
+interface InteropSelectedChainsContextType {
   selectedChains: string[]
   toggleChain: (chainId: string) => void
   selectAll: () => void
   deselectAll: () => void
 }
 
-export const IntentBridgesSelectedChainsContext = createContext<
-  IntentBridgesSelectedChainsContextType | undefined
+const InteropSelectedChainsContext = createContext<
+  InteropSelectedChainsContextType | undefined
 >(undefined)
 
-interface IntentBridgesSelectedChainsProviderProps {
+interface InteropSelectedChainsProviderProps {
   children: ReactNode
   interopChains: InteropChainWithIcon[]
 }
 
-export function IntentBridgesSelectedChainsProvider({
+export function InteropSelectedChainsProvider({
   children,
   interopChains,
-}: IntentBridgesSelectedChainsProviderProps) {
+}: InteropSelectedChainsProviderProps) {
   const allChainIds = useMemo(
     () => interopChains.map((c) => c.id),
     [interopChains],
@@ -48,7 +48,7 @@ export function IntentBridgesSelectedChainsProvider({
   }, [])
 
   return (
-    <IntentBridgesSelectedChainsContext.Provider
+    <InteropSelectedChainsContext.Provider
       value={{
         selectedChains: selection,
         toggleChain,
@@ -57,15 +57,15 @@ export function IntentBridgesSelectedChainsProvider({
       }}
     >
       {children}
-    </IntentBridgesSelectedChainsContext.Provider>
+    </InteropSelectedChainsContext.Provider>
   )
 }
 
-export function useIntentBridgesSelectedChains() {
-  const context = useContext(IntentBridgesSelectedChainsContext)
+export function useInteropSelectedChains() {
+  const context = useContext(InteropSelectedChainsContext)
   if (!context) {
     throw new Error(
-      'useIntentBridgesSelectedChains must be used within IntentBridgesSelectedChainsProvider',
+      'useInteropSelectedChains must be used within InteropSelectedChainsProvider',
     )
   }
   return context

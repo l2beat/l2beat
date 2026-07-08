@@ -3,16 +3,15 @@ import { useState } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ScrollWithGradient } from '~/components/ScrollWithGradient'
-import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { useTRPC } from '~/trpc/React'
-import { ChainSelect } from '../../../components/chain-selector/ChainSelect'
+import { ChainPairSelector } from '../../../components/chain-selector/ChainPairSelector'
 import type { InteropChainWithIcon } from '../../../components/chain-selector/types'
+import { InteropTransferSpeedRow } from '../../../components/InteropTransferSpeedRow'
 import type { InteropTokenFramework } from '../../getInteropTokenFrameworksData'
 import {
   TRANSFER_SPEED_DEFAULT_FROM,
   TRANSFER_SPEED_DEFAULT_TO,
 } from './consts'
-import { FrameworkRow } from './FrameworkRow'
 
 export function FrameworkTransferSpeedWidget({
   tokenFrameworks,
@@ -48,31 +47,13 @@ export function FrameworkTransferSpeedWidget({
         Select two chains to compare cross-chain transfer speed.
       </p>
 
-      <div className="mt-4 flex items-center gap-2">
-        <ChainSelect
-          chains={interopChains}
-          value={src}
-          onChange={setSrc}
-          excludeId={dst}
-        />
-        <button
-          type="button"
-          onClick={() => {
-            setSrc(dst)
-            setDst(src)
-          }}
-          className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-divider bg-surface-primary transition-colors hover:bg-surface-secondary"
-          aria-label="Swap chains"
-        >
-          <ArrowRightIcon className="size-4 fill-brand" />
-        </button>
-        <ChainSelect
-          chains={interopChains}
-          value={dst}
-          onChange={setDst}
-          excludeId={src}
-        />
-      </div>
+      <ChainPairSelector
+        chains={interopChains}
+        src={src}
+        dst={dst}
+        onSrcChange={setSrc}
+        onDstChange={setDst}
+      />
 
       <h3 className="mt-5 font-medium text-label-value-13 text-secondary">
         All Frameworks
@@ -86,10 +67,14 @@ export function FrameworkTransferSpeedWidget({
               const framework = frameworksById.get(entry.id)
               if (!framework) return null
               return (
-                <FrameworkRow
+                <InteropTransferSpeedRow
                   key={`${src}-${dst}-${entry.id}`}
-                  framework={framework}
-                  entry={entry}
+                  slug={framework.slug}
+                  iconUrl={framework.iconUrl}
+                  label={framework.label}
+                  color={framework.color}
+                  durationSeconds={entry.averageDurationSeconds}
+                  transferCount={entry.transferCount}
                 />
               )
             })}

@@ -1,14 +1,14 @@
-import { ChainsMultiSelect } from '../../components/chain-selector/ChainsMultiSelect'
-import type { InteropChainWithIcon } from '../../components/chain-selector/types'
-import { useIntentBridgesSelectedChains } from '../utils/IntentBridgesSelectedChainsContext'
+import { ChainsMultiSelect } from './ChainsMultiSelect'
+import { useInteropSelectedChains } from './InteropSelectedChainsContext'
+import type { InteropChainWithIcon } from './types'
 
-export function IntentBridgesChainSelector({
+export function InteropChainSelector({
   allChains,
 }: {
   allChains: InteropChainWithIcon[]
 }) {
   const { selectedChains, toggleChain, selectAll, deselectAll } =
-    useIntentBridgesSelectedChains()
+    useInteropSelectedChains()
 
   return (
     <ChainsMultiSelect

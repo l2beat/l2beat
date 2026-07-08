@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
 import { useTRPC } from '~/trpc/React'
+import { useInteropSelectedChains } from '../../components/chain-selector/InteropSelectedChainsContext'
 import { InteropTransferSizeCard } from '../../components/InteropTransferSizeCard'
-import { useTokenFrameworksSelectedChains } from '../utils/TokenFrameworksSelectedChainsContext'
 
 export function FrameworkTransferSizeWidget() {
   const trpc = useTRPC()
-  const { selectedChains } = useTokenFrameworksSelectedChains()
+  const { selectedChains } = useInteropSelectedChains()
   const { data, isLoading } = useQuery(
     trpc.interop.tokenFrameworks.queryOptions({
       from: selectedChains,

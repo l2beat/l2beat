@@ -7,8 +7,8 @@ import {
 } from '~/components/core/Tabs'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { useTRPC } from '~/trpc/React'
+import { useInteropSelectedChains } from '../../../components/chain-selector/InteropSelectedChainsContext'
 import type { InteropIntentBridge } from '../../getInteropIntentBridgesData'
-import { useIntentBridgesSelectedChains } from '../../utils/IntentBridgesSelectedChainsContext'
 import { IntentBridgeCompareContent } from '../comparison/IntentBridgeCompareContent'
 import { IntentBridgeDominanceContent } from './IntentBridgeDominanceContent'
 
@@ -18,7 +18,7 @@ export function IntentBridgeDominanceWidget({
   intentBridges: InteropIntentBridge[]
 }) {
   const trpc = useTRPC()
-  const { selectedChains } = useIntentBridgesSelectedChains()
+  const { selectedChains } = useInteropSelectedChains()
 
   const { data, isLoading } = useQuery(
     trpc.interop.intentBridges.queryOptions({
