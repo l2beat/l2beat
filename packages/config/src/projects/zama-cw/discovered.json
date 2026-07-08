@@ -1,6 +1,6 @@
 {
   "name": "zama-cw",
-  "timestamp": 1782746392,
+  "timestamp": 1783513792,
   "configHash": "0x2de8b851098fee269a3d58b4035085adddb34cb4505e54af33abe952f4fc0b44",
   "entries": [
     {
@@ -436,6 +436,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.",
+      "ignoreInWatchMode": ["confidentialTotalSupply", "inferredTotalSupply"],
       "deployerAddress": "eth:0xB15981a567C2c3fF472132505265BBe74576443c",
       "sinceTimestamp": 1781877707,
       "sinceBlock": 25352089,
@@ -457,7 +458,7 @@
         "$upgradeCount": 2,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0x1d247641eef464dca8e368ccec49b72211e780d6eaff00000000000000010500",
+        "confidentialTotalSupply": "0xf520e9796978fd96f893192705d5b0a545c197078cff00000000000000010500",
         "constructorArgs": [
           "eth:0xAea1d2cc69aF93CA0fdd34426E74Ad7cB19E9745",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000beef00a59b577423653a1526c7009bde103f542b000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000017436f6e666964656e7469616c20737465616b6355534443000000000000000000000000000000000000000000000000000000000000000000000000000000000b63737465616b635553444300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000ae646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c20737465616b6355534443222c2273796d626f6c223a2263737465616b6355534443222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f6620737465616b635553444320736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d000000000000000000000000000000000000"
@@ -471,7 +472,7 @@
           "isSet": false,
           "selector": "0x00000000"
         },
-        "inferredTotalSupply": 12984382494676,
+        "inferredTotalSupply": 10424732856320,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential steakcUSDC",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -652,7 +653,7 @@
             ]
           }
         },
-        "clock": 25424176,
+        "clock": 25487857,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -688,8 +689,8 @@
         "rewardRate": "6970000000000000000",
         "stakingToken": "eth:0xA12CC123ba206d4031D1c7f6223D1C2Ec249f4f3",
         "symbol": "stZAMA-Coprocessor",
-        "totalStakedWeight": 53534157844508,
-        "totalSupply": "573519732384224507839994342",
+        "totalStakedWeight": 56247779730578,
+        "totalSupply": "633056009142991964913677764",
         "unstakeCooldownPeriod": 604800,
         "unstakeCooldownPeriod_fmt": "7d",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -777,6 +778,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.",
+      "ignoreInWatchMode": ["confidentialTotalSupply", "inferredTotalSupply"],
       "deployerAddress": "eth:0xB15981a567C2c3fF472132505265BBe74576443c",
       "sinceTimestamp": 1772116091,
       "sinceBlock": 24541690,
@@ -1012,6 +1014,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.",
+      "ignoreInWatchMode": ["confidentialTotalSupply", "inferredTotalSupply"],
       "deployerAddress": "eth:0xB15981a567C2c3fF472132505265BBe74576443c",
       "sinceTimestamp": 1766750867,
       "sinceBlock": 24096701,
@@ -1038,7 +1041,7 @@
         "$upgradeCount": 3,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0x09c0369bf6a775950ebc596f2d452f5c876daee980ff00000000000000010500",
+        "confidentialTotalSupply": "0x29dd39176a04068f6d8c1b6747ad4509e431f85d02ff00000000000000010500",
         "constructorArgs": [
           "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000a12cc123ba206d4031d1c7f6223d1c2ec249f4f3000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205a414d410000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005635a414d41000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c205a414d41222c2273796d626f6c223a22635a414d41222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205a414d4120736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -1052,7 +1055,7 @@
           "isSet": false,
           "selector": "0x00000000"
         },
-        "inferredTotalSupply": 186239443298691,
+        "inferredTotalSupply": 186239579349400,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential ZAMA",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -1118,6 +1121,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.",
+      "ignoreInWatchMode": ["confidentialTotalSupply", "inferredTotalSupply"],
       "deployerAddress": "eth:0xB15981a567C2c3fF472132505265BBe74576443c",
       "sinceTimestamp": 1766750855,
       "sinceBlock": 24096700,
@@ -1144,7 +1148,7 @@
         "$upgradeCount": 3,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0x487d028947ece4850efebbb019dd9ef42887cbf4b0ff00000000000000010500",
+        "confidentialTotalSupply": "0x25c75bd0ce0fd202e19dbb203fa94993536a5b1374ff00000000000000010500",
         "constructorArgs": [
           "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000ba2c598e11ed093079cc324fca5bbba99f616e83000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c2042524f4e00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056342524f4e000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2042524f4e222c2273796d626f6c223a226342524f4e222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f662042524f4e20736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -1158,7 +1162,7 @@
           "isSet": false,
           "selector": "0x00000000"
         },
-        "inferredTotalSupply": 10320931873148,
+        "inferredTotalSupply": 10320943903148,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential BRON",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -1241,7 +1245,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 22,
+        "nonce": 23,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1377,6 +1381,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.",
+      "ignoreInWatchMode": ["confidentialTotalSupply", "inferredTotalSupply"],
       "deployerAddress": "eth:0xB15981a567C2c3fF472132505265BBe74576443c",
       "sinceTimestamp": 1767000887,
       "sinceBlock": 24117438,
@@ -1483,6 +1488,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.",
+      "ignoreInWatchMode": ["confidentialTotalSupply", "inferredTotalSupply"],
       "deployerAddress": "eth:0xB15981a567C2c3fF472132505265BBe74576443c",
       "sinceTimestamp": 1766750831,
       "sinceBlock": 24096698,
@@ -1509,7 +1515,7 @@
         "$upgradeCount": 3,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0x52c55034039ef219ed372450e4e442254000f83c86ff00000000000000010500",
+        "confidentialTotalSupply": "0xefa6ca6659b2c97e1a73ddbcda208ba9502ef8e94aff00000000000000010500",
         "constructorArgs": [
           "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000dac17f958d2ee523a2206206994597c13d831ec7000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205553445400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056355534454000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2055534454222c2273796d626f6c223a226355534454222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205553445420736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -1523,7 +1529,7 @@
           "isSet": true,
           "selector": "0x59bf1abe"
         },
-        "inferredTotalSupply": 8036455803023,
+        "inferredTotalSupply": 7990678967061,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential USDT",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -2048,6 +2054,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.",
+      "ignoreInWatchMode": ["confidentialTotalSupply", "inferredTotalSupply"],
       "deployerAddress": "eth:0xB15981a567C2c3fF472132505265BBe74576443c",
       "sinceTimestamp": 1780585031,
       "sinceBlock": 25244762,
@@ -2937,6 +2944,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.",
+      "ignoreInWatchMode": ["confidentialTotalSupply", "inferredTotalSupply"],
       "deployerAddress": "eth:0xB15981a567C2c3fF472132505265BBe74576443c",
       "sinceTimestamp": 1766750843,
       "sinceBlock": 24096699,
@@ -2963,7 +2971,7 @@
         "$upgradeCount": 3,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0xeb9cf9504282994de321f8e2f74cb362cc0b3072b7ff00000000000000010500",
+        "confidentialTotalSupply": "0x99fa3bea48511eb0a996dc75a8544a44e3efd46839ff00000000000000010500",
         "constructorArgs": [
           "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205745544800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056357455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2057455448222c2273796d626f6c223a226357455448222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205745544820736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -2977,7 +2985,7 @@
           "isSet": false,
           "selector": "0x00000000"
         },
-        "inferredTotalSupply": 26548149,
+        "inferredTotalSupply": 22705037,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential WETH",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -3561,6 +3569,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.",
+      "ignoreInWatchMode": ["confidentialTotalSupply", "inferredTotalSupply"],
       "deployerAddress": "eth:0xB15981a567C2c3fF472132505265BBe74576443c",
       "sinceTimestamp": 1766750819,
       "sinceBlock": 24096697,
@@ -3587,7 +3596,7 @@
         "$upgradeCount": 3,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0x07a47db6b1fdd3ec0f8b42f0175cfbf596d7ff6ad0ff00000000000000010500",
+        "confidentialTotalSupply": "0xaa9e3bfb0ec70e0f53aa0716ddec02c05375376072ff00000000000000010500",
         "constructorArgs": [
           "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205553444300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056355534443000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2055534443222c2273796d626f6c223a226355534443222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205553444320736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -3601,7 +3610,7 @@
           "isSet": true,
           "selector": "0xfe575a87"
         },
-        "inferredTotalSupply": 5993616580675,
+        "inferredTotalSupply": 5615898224591,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential USDC",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -3715,7 +3724,7 @@
             ]
           }
         },
-        "clock": 25424176,
+        "clock": 25487857,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -3759,8 +3768,8 @@
         "rewardRate": "10460000000000000000",
         "stakingToken": "eth:0xA12CC123ba206d4031D1c7f6223D1C2Ec249f4f3",
         "symbol": "stZAMA-KMS",
-        "totalStakedWeight": 104718586658333,
-        "totalSupply": "850707170486523554607587610",
+        "totalStakedWeight": 110546859478390,
+        "totalSupply": "946092691423186671396857974",
         "unstakeCooldownPeriod": 604800,
         "unstakeCooldownPeriod_fmt": "7d",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -7401,7 +7410,7 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "zama/CiphertextCommits": "0xe2f42de1746de3eb1b71992159aea607195d575a68c009d46a71c73fe3274fb5",
     "zama/ConfidentialTokenWrappersRegistry": "0xac4c61aea2fe3548481375913505c610bc9a6c1ea7a22dfc9ac73d0c1a5b9a66",
-    "zama/ConfidentialWrapperV3": "0x2af134a4c8d8bac46ae03c385334b08c7674ade2a124f1b2405278aa00a1a287",
+    "zama/ConfidentialWrapperV3": "0x4c4042fbf171de0b14b575e4bde209e4e75a7cac9f7ef1ed7fe20dadf9a65cb3",
     "zama/Decryption": "0x90f2b48e8f3c42b73e42236a7c191904bee8a2a5b2a96dcd26a377e6c3486d32",
     "zama/GatewayConfig": "0x2cf5e07836e743b1e8f3eb6dd0280df868669cd87274f027d5a40144173b42ed",
     "zama/GatewayPauserSet": "0x6e3bdded022ec01666a6e04d5f08b9f51c449213ba48bee15c272d39a5e512c8",
@@ -7419,6 +7428,6 @@
     "zama/ZamaKMSVerifier": "0xb4f0d7aaa3e90b160ffbead289af925e65a0be7405a906362656a983c7719eb8",
     "zama/ZamaPauserSet": "0x1af56cc25e42342b2f464add26e41d36787603eb96bf24f0923abdf7caf5d35f"
   },
-  "usedBlockNumbers": { "ethereum": 25424176, "zama": 1875303 },
+  "usedBlockNumbers": { "ethereum": 25487857, "zama": 1922081 },
   "permissionsConfigHash": "0x2bb8df921c3e81bfeb65834c107505aa6ce4721ce3a2b18c565bd871e40ed7da"
 }
