@@ -95,7 +95,7 @@ export const roninNetwork: ScalingProject = opStackL2({
         callsItselfValidiumOrOptimium: true,
         stateRootsPostedToL1: true,
         stateVerificationOnL1: true,
-        daAttestedByIndependentParty: false,
+        daAttestedByIndependentParty: true,
         nodeSourceAvailable: true,
         fraudProofSystemAtLeast5Outsiders: true,
       },
