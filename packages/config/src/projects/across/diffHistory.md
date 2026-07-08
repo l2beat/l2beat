@@ -1,3 +1,122 @@
+Generated with discovered.json: 0xb7bdfffe43e3a67d9926bc09fea4f16bfc076193
+
+# Diff at Wed, 08 Jul 2026 12:19:07 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b07b540456fadbe70953a62e508fc92311c971c6 block: 1782464735
+- current timestamp: 1783509971
+
+## Description
+
+7702 delegation of the `protocolFeeCaptureAddress` EOA.
+
+some `poolRebalanceRoutes` (UMA v1, ACX,..) are routed to the zero address, meaning they are now unsupported.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
++        "0x3e6b48b0583e724b7006fcec0d9a021abd698deb8f7699582cdfee96bd65db4f"
+      values.$implementation:
+-        "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B"
++        "eth:0x69007702764179f14F51cdce752f4f775d74E139"
+      values.delegationManager:
+-        "eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3"
+      values.DOMAIN_VERSION:
+-        "1"
+      values.eip712Domain:
+-        {"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]}
+      values.getDeposit:
+-        0
+      values.getDomainHash:
+-        "0x3818b9766109877e09a9c427e7b310cde355550731129529095a7e6b02cf55ab"
+      values.getNonce:
+-        0
+      values.NAME:
+-        "EIP7702StatelessDeleGator"
+      values.PACKED_USER_OP_TYPEHASH:
+-        "0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18"
+      values.VERSION:
+-        "1.3.0"
+      values.accountId:
++        "alchemy.sma-7702.1.0.0"
+      values.getFallbackSignerData:
++        ["eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",false]
+      errors:
++        {"proxiableUUID":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) [acrossv3/HubPool] {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT.
+      values.Adapters.Avalanche:
++        "eth:0x1af659333172DC502bD71Cf5b889521C97751838"
+      values.CrossChainContracts.Avalanche:
++        "eth:0xFE9D541c92E4e90437C7152A00244886dE37a658"
+      values.poolRebalanceRoutes.Ethereum.3.destinationToken:
+-        "eth:0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Ethereum.9.destinationToken:
+-        "eth:0x44108f0223A3C3028F5Fe7AEC7f9bb2E66beF82F"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Ethereum.13.destinationToken:
+-        "eth:0x1ff1dC3cB9eeDbC6Eb2d99C03b30A05cA625fB5a"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.OP Mainnet.3.destinationToken:
+-        "eth:0xE7798f023fC62146e8Aa1b36Da45fb70855a77Ea"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.OP Mainnet.7.destinationToken:
+-        "eth:0xFf733b2A3557a7ed6697007ab5D11B79FdD1b76B"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Polygon PoS.3.destinationToken:
+-        "eth:0x3066818837c5e6eD6601bd5a91B0762877A6B731"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Polygon PoS.8.destinationToken:
+-        "eth:0xF328b73B6c685831F238c30a23Fc19140CB4D8FC"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Lens.1.destinationToken:
+-        "eth:0x6bDc36E20D267Ff0dd6097799f82e78907105e2F"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Arbitrum One.5.destinationToken:
+-        "eth:0xd693Ec944A85eeca4247eC1c3b130DCa9B0C3b22"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Arbitrum One.8.destinationToken:
+-        "eth:0x53691596d1BCe8CEa565b84d4915e69e03d9C99d"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Avalance_Adapter (eth:0x1af659333172DC502bD71Cf5b889521C97751838) [acrossv3/universalAdapter]
+    +++ description: This adapter can be used to send messages / root bundles to chains that do not have a canonical adapter. It stores calldata in the HubPoolStore on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP.
+```
+
+## Source code changes
+
+```diff
+.../src/projects/across/.flat/Avalance_Adapter.sol | 1416 ++++++++++++++++++++
+ 1 file changed, 1416 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782464735 (main branch discovery), not current.
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) [acrossv3/HubPool] {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT.
+      usedTypes.1.arg.43114:
++        "Avalanche"
+    }
+```
+
 Generated with discovered.json: 0x63d03bb2bd33d381c000e8af591b3b28e5801b78
 
 # Diff at Fri, 26 Jun 2026 09:06:40 GMT:
