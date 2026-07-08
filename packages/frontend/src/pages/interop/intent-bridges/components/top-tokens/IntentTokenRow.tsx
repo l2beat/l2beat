@@ -9,6 +9,7 @@ import type { TokenData } from '~/server/features/scaling/interop/types'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { ChainIcon } from '../../../components/ChainIcon'
+import { InteropNoDataBadge } from '../../../components/InteropNoDataBadge'
 import { getInteropTokenUrl } from '../../../utils/getInteropTokenUrl'
 import type { InteropIntentBridge } from '../../getInteropIntentBridgesData'
 import { IntentBridgesTransferTrigger } from '../IntentBridgesTransferTrigger'
@@ -82,9 +83,13 @@ export function IntentTokenRow({
         )}
       </div>
       <div className="flex items-baseline gap-2 whitespace-nowrap">
-        <span className="font-bold text-label-value-15 md:text-label-value-16">
-          {formatCurrency(token.volume ?? 0, 'usd', { decimals: 2 })}
-        </span>
+        {token.volume === null ? (
+          <InteropNoDataBadge />
+        ) : (
+          <span className="font-bold text-label-value-15 md:text-label-value-16">
+            {formatCurrency(token.volume, 'usd', { decimals: 2 })}
+          </span>
+        )}
         {bridge ? (
           <IntentBridgesTransferTrigger
             protocol={{
