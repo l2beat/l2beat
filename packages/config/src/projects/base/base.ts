@@ -127,14 +127,6 @@ export const base: ScalingProject = opStackL2({
       description:
         'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
     }),
-    discovery.getEscrowDetails({
-      address: ChainSpecificAddress(
-        'eth:0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3',
-      ),
-      tokens: ['USDS', 'sUSDS'],
-      description:
-        'Maker/Sky-controlled vault for USDS and sUSDS bridged with canonical messaging.',
-    }),
   ],
   activityConfig: {
     type: 'block',
