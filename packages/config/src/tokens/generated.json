@@ -11217,6 +11217,7 @@
       "source": "native",
       "supply": "circulatingSupply"
     },
+    {
       "name": "Alibaba • Robinhood Token",
       "coingeckoId": "alibaba-robinhood-tokenized-stock",
       "address": "0xad25Ac6C84D497db898fa1E8387bf6Af3532a1c4",
