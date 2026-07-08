@@ -117,15 +117,10 @@ async function getIntentBridges(
       description: project.interopConfig.description,
       color:
         INTENT_BRIDGE_COLORS[index % INTENT_BRIDGE_COLORS.length] ?? '#64748B',
-      intentModel: intent?.intentModel ?? unknownAttribute,
-      userRecovery: intent?.userRecovery ?? unknownAttribute,
-      solverAccess: intent?.solverAccess ?? unknownAttribute,
-      settlement: intent?.settlement ?? unknownAttribute,
+      intentModel: intent.intentModel,
+      userRecovery: intent.userRecovery,
+      solverAccess: intent.solverAccess,
+      settlement: intent.settlement,
     }
   })
 }
-
-const unknownAttribute = {
-  value: 'Unknown',
-  description: 'This protocol-specific detail has not been added yet.',
-} satisfies TableReadyValue
