@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useTRPC } from '~/trpc/React'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
-import { useInteropSelectedChains } from '../../components/chain-selector/InteropSelectedChainsContext'
+import { useChainSetSelection } from '../../components/chain-selector/ChainSetSelectionContext'
 import { InteropTotalCard } from '../../components/InteropTotalCard'
 
 export function IntentTotalVolumeWidget({
@@ -13,7 +13,7 @@ export function IntentTotalVolumeWidget({
   className?: string
 }) {
   const trpc = useTRPC()
-  const { selectedChains } = useInteropSelectedChains()
+  const { selectedChains } = useChainSetSelection()
   const { data, isLoading } = useQuery(
     trpc.interop.intentBridges.queryOptions({
       from: selectedChains,
@@ -41,7 +41,7 @@ export function IntentTotalTransfersWidget({
   className?: string
 }) {
   const trpc = useTRPC()
-  const { selectedChains } = useInteropSelectedChains()
+  const { selectedChains } = useChainSetSelection()
   const { data, isLoading } = useQuery(
     trpc.interop.intentBridges.queryOptions({
       from: selectedChains,

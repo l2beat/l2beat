@@ -20,7 +20,7 @@ import { useTRPC } from '~/trpc/React'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { ChainIcon } from '../../components/ChainIcon'
-import { useInteropSelectedChains } from '../../components/chain-selector/InteropSelectedChainsContext'
+import { useChainSetSelection } from '../../components/chain-selector/ChainSetSelectionContext'
 import { Last24HoursBadge } from '../../components/Last24HoursBadge'
 import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
 import type { InteropTokenFramework } from '../getInteropTokenFrameworksData'
@@ -32,7 +32,7 @@ export function TopTokensWidget({
   tokenFrameworks: InteropTokenFramework[]
 }) {
   const trpc = useTRPC()
-  const { selectedChains } = useInteropSelectedChains()
+  const { selectedChains } = useChainSetSelection()
   const [activeTab, setActiveTab] = useState<string>('all')
 
   const { data, isLoading } = useQuery(

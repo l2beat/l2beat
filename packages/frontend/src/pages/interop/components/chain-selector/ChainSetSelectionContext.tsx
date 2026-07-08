@@ -9,26 +9,26 @@ import {
 } from 'react'
 import type { InteropChainWithIcon } from './types'
 
-interface InteropSelectedChainsContextType {
+interface ChainSetSelectionContextType {
   selectedChains: string[]
   toggleChain: (chainId: string) => void
   selectAll: () => void
   deselectAll: () => void
 }
 
-const InteropSelectedChainsContext = createContext<
-  InteropSelectedChainsContextType | undefined
+const ChainSetSelectionContext = createContext<
+  ChainSetSelectionContextType | undefined
 >(undefined)
 
-interface InteropSelectedChainsProviderProps {
+interface ChainSetSelectionProviderProps {
   children: ReactNode
   interopChains: InteropChainWithIcon[]
 }
 
-export function InteropSelectedChainsProvider({
+export function ChainSetSelectionProvider({
   children,
   interopChains,
-}: InteropSelectedChainsProviderProps) {
+}: ChainSetSelectionProviderProps) {
   const allChainIds = useMemo(
     () => interopChains.map((c) => c.id),
     [interopChains],
@@ -48,7 +48,7 @@ export function InteropSelectedChainsProvider({
   }, [])
 
   return (
-    <InteropSelectedChainsContext.Provider
+    <ChainSetSelectionContext.Provider
       value={{
         selectedChains: selection,
         toggleChain,
@@ -57,15 +57,15 @@ export function InteropSelectedChainsProvider({
       }}
     >
       {children}
-    </InteropSelectedChainsContext.Provider>
+    </ChainSetSelectionContext.Provider>
   )
 }
 
-export function useInteropSelectedChains() {
-  const context = useContext(InteropSelectedChainsContext)
+export function useChainSetSelection() {
+  const context = useContext(ChainSetSelectionContext)
   if (!context) {
     throw new Error(
-      'useInteropSelectedChains must be used within InteropSelectedChainsProvider',
+      'useChainSetSelection must be used within ChainSetSelectionProvider',
     )
   }
   return context

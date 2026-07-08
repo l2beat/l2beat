@@ -4,8 +4,8 @@ import { MainPageHeader } from '~/components/MainPageHeader'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import { ChainSetSelectionProvider } from '../components/chain-selector/ChainSetSelectionContext'
 import { InteropChainSelector } from '../components/chain-selector/InteropChainSelector'
-import { InteropSelectedChainsProvider } from '../components/chain-selector/InteropSelectedChainsContext'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { FrameworkDominanceWidget } from './components/FrameworkDominanceWidget'
 import {
@@ -33,7 +33,7 @@ export function InteropTokenFrameworksPage({
   return (
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
-        <InteropSelectedChainsProvider interopChains={interopChains}>
+        <ChainSetSelectionProvider interopChains={interopChains}>
           <SideNavLayout>
             <MainPageHeader description="This dashboard provides a comprehensive overview of the major token frameworks - multichain standards that can be used for token creation. The page uses cross-chain transfers data to provide insights on volume, transfers, tokens and speed across different chains.">
               Token frameworks
@@ -60,7 +60,7 @@ export function InteropTokenFrameworksPage({
             <HorizontalSeparator className="md:my-4" />
             <FrameworksTable tokenFrameworks={tokenFrameworks} />
           </SideNavLayout>
-        </InteropSelectedChainsProvider>
+        </ChainSetSelectionProvider>
       </HydrationBoundary>
     </AppLayout>
   )

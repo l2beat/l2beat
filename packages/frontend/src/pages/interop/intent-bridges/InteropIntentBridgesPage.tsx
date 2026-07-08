@@ -4,8 +4,8 @@ import { MainPageHeader } from '~/components/MainPageHeader'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import { ChainSetSelectionProvider } from '../components/chain-selector/ChainSetSelectionContext'
 import { InteropChainSelector } from '../components/chain-selector/InteropChainSelector'
-import { InteropSelectedChainsProvider } from '../components/chain-selector/InteropSelectedChainsContext'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { IntentBridgeDominanceWidget } from './components/dominance/IntentBridgeDominanceWidget'
 import {
@@ -33,7 +33,7 @@ export function InteropIntentBridgesPage({
   return (
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
-        <InteropSelectedChainsProvider interopChains={interopChains}>
+        <ChainSetSelectionProvider interopChains={interopChains}>
           <SideNavLayout>
             <MainPageHeader description="This dashboard provides an overview of intent-based bridge protocols. It combines indexed transfer activity with curated intent-specific properties such as user recovery paths, solver access, settlement model, active tokens and active chain routes.">
               Intent bridges
@@ -66,7 +66,7 @@ export function InteropIntentBridgesPage({
             <HorizontalSeparator className="md:my-4" />
             <IntentBridgesTable intentBridges={intentBridges} />
           </SideNavLayout>
-        </InteropSelectedChainsProvider>
+        </ChainSetSelectionProvider>
       </HydrationBoundary>
     </AppLayout>
   )

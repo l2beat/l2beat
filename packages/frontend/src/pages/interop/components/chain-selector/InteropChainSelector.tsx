@@ -1,5 +1,5 @@
+import { useChainSetSelection } from './ChainSetSelectionContext'
 import { ChainsMultiSelect } from './ChainsMultiSelect'
-import { useInteropSelectedChains } from './InteropSelectedChainsContext'
 import type { InteropChainWithIcon } from './types'
 
 export function InteropChainSelector({
@@ -8,7 +8,7 @@ export function InteropChainSelector({
   allChains: InteropChainWithIcon[]
 }) {
   const { selectedChains, toggleChain, selectAll, deselectAll } =
-    useInteropSelectedChains()
+    useChainSetSelection()
 
   return (
     <ChainsMultiSelect

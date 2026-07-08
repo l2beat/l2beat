@@ -7,7 +7,7 @@ import {
 } from '~/components/core/Tabs'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { useTRPC } from '~/trpc/React'
-import { useInteropSelectedChains } from '../../components/chain-selector/InteropSelectedChainsContext'
+import { useChainSetSelection } from '../../components/chain-selector/ChainSetSelectionContext'
 import type { InteropTokenFramework } from '../getInteropTokenFrameworksData'
 import { FrameworkCompareContent } from './comparison/FrameworkCompareContent'
 import { FrameworkDominanceContent } from './FrameworkDominanceContent'
@@ -18,7 +18,7 @@ export function FrameworkDominanceWidget({
   tokenFrameworks: InteropTokenFramework[]
 }) {
   const trpc = useTRPC()
-  const { selectedChains } = useInteropSelectedChains()
+  const { selectedChains } = useChainSetSelection()
 
   const { data, isLoading } = useQuery(
     trpc.interop.tokenFrameworks.queryOptions({

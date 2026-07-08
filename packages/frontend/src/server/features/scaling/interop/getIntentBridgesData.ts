@@ -26,7 +26,7 @@ import {
   type TransferSizeDataPoint,
 } from './utils/getTransferSizeChartData'
 
-const TOP_TOKENS_LIMIT = 5
+const TOP_ITEMS_LIMIT = 5
 
 export type IntentBridgeActivityEntry = {
   id: ProjectId
@@ -100,6 +100,7 @@ export async function getIntentBridgesData(
     undefined,
     snapshotTimestamp,
     params,
+    TOP_ITEMS_LIMIT,
   )
   const activityEntries = getActivityEntries(
     intentProjects,
@@ -119,7 +120,7 @@ export async function getIntentBridgesData(
       ),
       entries: activityEntries.toSorted((a, b) => b.volume - a.volume),
     },
-    topTokens: getTopItems(summaryTokens, TOP_TOKENS_LIMIT),
+    topTokens: getTopItems(summaryTokens, TOP_ITEMS_LIMIT),
     table,
     transferSizeChartData: getTransferSizeChartData(records, intentProjects),
     snapshotTimestamp,

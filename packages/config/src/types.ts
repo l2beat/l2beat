@@ -1450,13 +1450,12 @@ export interface InteropIntentConfig {
   settlement: TableReadyValue
 }
 
-export interface InteropConfig {
+interface InteropConfigBase {
   name?: string
   shortName?: string
   description?: string
   /** Longer markdown description visible on interop detailed pages. */
   detailedDescription?: string
-  type: InteropType
   /** If set to `unknown` we show `Unknown` for transfers time. */
   transfersTimeMode?: 'unknown'
   /** If true we show `Aggregated` as second line in table under project name. Should be configured
@@ -1464,8 +1463,6 @@ export interface InteropConfig {
    * which is a separate project)
    */
   isAggregate?: boolean
-  /** Intent-specific properties displayed on intent bridge pages. */
-  intent?: InteropIntentConfig
   /** Should be configured for projects that are part of other project (e.g. USDT0 is part of LayerZero,
    * so layerzero id should be configured in usdt0 config)
    */
@@ -1481,6 +1478,17 @@ export interface InteropConfig {
    * this is intentionally a different (narrower) set than the chain page. */
   permissions?: Record<string, ProjectPermissions>
 }
+
+export type InteropConfig =
+  | (InteropConfigBase & {
+      type: 'intent'
+      /** Intent-specific properties displayed on intent bridge pages. */
+      intent: InteropIntentConfig
+    })
+  | (InteropConfigBase & {
+      type: Exclude<InteropType, 'intent'>
+      intent?: never
+    })
 
 export type InteropPlugin = {
   plugin: InteropPluginName
