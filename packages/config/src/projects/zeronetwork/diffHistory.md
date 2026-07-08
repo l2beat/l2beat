@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x564acc5d000003c586c65c728b4a4ed88c6de7e5
+
+# Diff at Wed, 08 Jul 2026 09:05:17 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@bd632cb3b3a14cad96138a9cfe1677d08dcc197d block: 1776418304
+- current timestamp: 1783501445
+
+## Description
+
+Announced a protocol upgrade at a timestamp 4 days ago, no changes yet.
+
+## Watched changes
+
+```diff
+    contract ZeroNetworkZkEvmAdmin (eth:0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9 act through it.
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.4:
++        {"_protocolVersion":124554051586,"_upgradeTimestamp":1783155600}
+    }
+```
+
 Generated with discovered.json: 0x37e1c7b7121e45a37d06895b438922adfffa29b9
 
 # Diff at Tue, 09 Jun 2026 12:43:41 GMT:

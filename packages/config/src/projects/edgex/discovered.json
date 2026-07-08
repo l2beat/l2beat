@@ -1,6 +1,6 @@
 {
   "name": "edgex",
-  "timestamp": 1783333087,
+  "timestamp": 1783501903,
   "configHash": "0x7b612ee90a3e5afdcce8adbc1d609340a4a06b887724d5027611d9d830fd306d",
   "entries": [
     {
@@ -491,7 +491,7 @@
         "FREEZE_GRACE_PERIOD": 604800,
         "getEnableWindowDuration": 1209600,
         "getGlobalConfigCode": 0,
-        "getLastBatchId": 65098,
+        "getLastBatchId": 65203,
         "getOrderRoot": "3531663064398379414392103051782416009365270089329406087415787723190509217307",
         "getOrderTreeHeight": 64,
         "getRegisteredAvailabilityVerifiers": [
@@ -502,11 +502,11 @@
         ],
         "getRollupTreeHeight": 64,
         "getRollupVaultRoot": "2342595862804194058781558162417993093531983529298102817989527487868713080358",
-        "getSequenceNumber": 65013,
+        "getSequenceNumber": 65118,
         "getUpgradeActivationDelay": 0,
         "getValidiumTreeHeight": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "getValidiumVaultRoot": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "globalConfigurationHash": "0x0114f28bf054a4ec460b72691af8a31eac9e0793cd57778e25b5b7d236052d64",
+        "globalConfigurationHash": "0x02564aef7cc3de2f3779f578d2a2bf916abbf30c34007ce06434b8fb7e671a79",
         "implementation": "eth:0x8C43C9bec15d82D153C52518030e0a9590ABD35d",
         "initializerSize": 0,
         "isFinalized": false,
@@ -980,6 +980,6 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "starkex/FinalizableGpsFactAdapter": "0x2c4115608421d0d7aabe41291500b1f02a4d2989db1976f2c05a07b91fe4ba47"
   },
-  "usedBlockNumbers": { "ethereum": 25472842 },
+  "usedBlockNumbers": { "ethereum": 25486870 },
   "permissionsConfigHash": "0x200cb118fc31d1a085cefa87422cff454d38e706224c3f156e9947ca12e899a4"
 }
