@@ -6,5 +6,5 @@ export interface PluginStatusRow {
   toTimestamp?: number
   lastError?: string
   resyncRequestedFrom?: number
-  blocksAggregation?: boolean
+  blocksAggregation: boolean
 }
