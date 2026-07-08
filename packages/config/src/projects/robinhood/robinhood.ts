@@ -25,6 +25,9 @@ export const robinhood: ScalingProject = orbitStackL2({
       "Robinhood Chain is an Arbitrum Orbit Layer 2 operated by Robinhood, focused on tokenized real-world assets (such as stocks and ETFs) and onchain financial services including 24/7 trading, lending, and borrowing.\n\nRobinhood Chain is part of Robinhood's broader mission to democratize access to global financial markets and to empower users and developers with modern blockchain tools.",
     links: {
       websites: ['https://robinhood.com/chain/'],
+      bridges: [
+        'https://portal.arbitrum.io/bridge?destinationChain=robinhood-chain&sourceChain=ethereum',
+      ],
       documentation: ['https://docs.robinhood.com/chain'],
       explorers: ['https://robinhoodchain.blockscout.com'],
       socialMedia: ['https://x.com/RobinhoodApp'],
