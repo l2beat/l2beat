@@ -4,14 +4,15 @@ import { useMemo } from 'react'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
-import type { IntentBridgesData } from '~/server/features/scaling/interop/getIntentBridgesData'
 import { useTRPC } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../../components/chain-selector/InteropSelectedChainsContext'
 import { Last24HoursBadge } from '../../../components/Last24HoursBadge'
 import type { InteropIntentBridge } from '../../getInteropIntentBridgesData'
-import { getActiveCounts } from '../dominance/getActiveCounts'
+import {
+  buildIntentBridgeRows,
+  type IntentBridgeRow,
+} from '../../utils/buildIntentBridgeRows'
 import { getIntentBridgeColumns } from './columns'
-import type { IntentBridgeRow } from './types'
 
 export function IntentBridgesTable({
   intentBridges,
@@ -28,7 +29,7 @@ export function IntentBridgesTable({
   )
 
   const rows = useMemo<IntentBridgeRow[]>(
-    () => (data ? buildRows(intentBridges, data) : []),
+    () => (data ? buildIntentBridgeRows(intentBridges, data) : []),
     [data, intentBridges],
   )
 
@@ -70,31 +71,4 @@ export function IntentBridgesTable({
       />
     </PrimaryCard>
   )
-}
-
-function buildRows(
-  intentBridges: InteropIntentBridge[],
-  data: IntentBridgesData,
-): IntentBridgeRow[] {
-  const activityById = new Map(
-    data.activity.entries.map((entry) => [entry.id, entry]),
-  )
-  const tableEntriesById = new Map(
-    data.table.entries.map((entry) => [entry.id, entry]),
-  )
-  const countsById = getActiveCounts(data.table.entries)
-
-  return intentBridges
-    .map((bridge) => {
-      const counts = countsById.get(bridge.id)
-      return {
-        slug: bridge.slug,
-        bridge,
-        activity: activityById.get(bridge.id),
-        activeChainCount: counts?.chains,
-        activeTokenCount: counts?.tokens,
-        topRoute: tableEntriesById.get(bridge.id)?.topRoute,
-      }
-    })
-    .toSorted((a, b) => (b.activity?.volume ?? 0) - (a.activity?.volume ?? 0))
 }

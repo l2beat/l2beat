@@ -1,27 +1,22 @@
 import { formatSeconds } from '@l2beat/shared-pure'
 import { useState } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import type {
-  IntentBridgeActivityEntry,
-  IntentBridgesData,
-} from '~/server/features/scaling/interop/getIntentBridgesData'
+import type { IntentBridgesData } from '~/server/features/scaling/interop/getIntentBridgesData'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { HeadToHeadRow } from '../../../components/comparison/HeadToHeadRow'
 import type { ComparisonSide } from '../../../components/comparison/types'
 import type { InteropIntentBridge } from '../../getInteropIntentBridgesData'
-import { getDurationSeconds } from '../../utils/getDurationSeconds'
 import {
-  type ActiveCounts,
-  getActiveCounts,
-} from '../dominance/getActiveCounts'
+  buildIntentBridgeRows,
+  type IntentBridgeRow,
+} from '../../utils/buildIntentBridgeRows'
+import { getDurationSeconds } from '../../utils/getDurationSeconds'
 import { IntentAttributeRow } from './IntentAttributeRow'
 import { IntentBridgeSelect } from './IntentBridgeSelect'
 
-type Side = {
-  bridge: InteropIntentBridge
-  entry: IntentBridgeActivityEntry
-  counts: ActiveCounts | undefined
+type Side = IntentBridgeRow & {
+  activity: NonNullable<IntentBridgeRow['activity']>
 }
 
 export function IntentBridgeCompareContent({
@@ -35,15 +30,11 @@ export function IntentBridgeCompareContent({
 }) {
   const [leftId, setLeftId] = useState<string>()
   const [rightId, setRightId] = useState<string>()
+  const rows = data ? buildIntentBridgeRows(intentBridges, data) : []
 
   const getSide = (id: string | undefined): Side | undefined => {
-    const bridge = intentBridges.find((item) => item.id === id)
-    const entry = data?.activity.entries.find((item) => item.id === id)
-    if (!bridge || !entry) return undefined
-    const counts = data
-      ? getActiveCounts(data.table.entries).get(bridge.id)
-      : undefined
-    return { bridge, entry, counts }
+    const row = rows.find((item) => item.bridge.id === id)
+    return row?.activity ? { ...row, activity: row.activity } : undefined
   }
 
   const left = getSide(leftId)
@@ -84,8 +75,8 @@ export function IntentBridgeCompareContent({
           label="Volume"
           left={leftSide}
           right={rightSide}
-          leftValue={left?.entry.volume ?? null}
-          rightValue={right?.entry.volume ?? null}
+          leftValue={left?.activity.volume ?? null}
+          rightValue={right?.activity.volume ?? null}
           format={(value) => formatCurrency(value, 'usd')}
           isLoading={showSkeleton}
         />
@@ -93,8 +84,8 @@ export function IntentBridgeCompareContent({
           label="Transfers"
           left={leftSide}
           right={rightSide}
-          leftValue={left?.entry.transferCount ?? null}
-          rightValue={right?.entry.transferCount ?? null}
+          leftValue={left?.activity.transferCount ?? null}
+          rightValue={right?.activity.transferCount ?? null}
           format={formatInteger}
           isLoading={showSkeleton}
         />
@@ -102,8 +93,8 @@ export function IntentBridgeCompareContent({
           label="Avg. transfer time"
           left={leftSide}
           right={rightSide}
-          leftValue={getDurationSeconds(left?.entry.averageDuration)}
-          rightValue={getDurationSeconds(right?.entry.averageDuration)}
+          leftValue={getDurationSeconds(left?.activity.averageDuration)}
+          rightValue={getDurationSeconds(right?.activity.averageDuration)}
           format={formatSeconds}
           lowerIsBetter
           isLoading={showSkeleton}
@@ -112,8 +103,8 @@ export function IntentBridgeCompareContent({
           label="Avg. transfer size"
           left={leftSide}
           right={rightSide}
-          leftValue={left?.entry.averageValue ?? null}
-          rightValue={right?.entry.averageValue ?? null}
+          leftValue={left?.activity.averageValue ?? null}
+          rightValue={right?.activity.averageValue ?? null}
           format={(value) => formatCurrency(value, 'usd')}
           isLoading={showSkeleton}
         />
@@ -121,8 +112,8 @@ export function IntentBridgeCompareContent({
           label="Active chains"
           left={leftSide}
           right={rightSide}
-          leftValue={left?.counts?.chains ?? null}
-          rightValue={right?.counts?.chains ?? null}
+          leftValue={left?.activeChainCount ?? null}
+          rightValue={right?.activeChainCount ?? null}
           format={formatInteger}
           isLoading={showSkeleton}
         />
@@ -130,8 +121,8 @@ export function IntentBridgeCompareContent({
           label="Active tokens"
           left={leftSide}
           right={rightSide}
-          leftValue={left?.counts?.tokens ?? null}
-          rightValue={right?.counts?.tokens ?? null}
+          leftValue={left?.activeTokenCount ?? null}
+          rightValue={right?.activeTokenCount ?? null}
           format={formatInteger}
           isLoading={showSkeleton}
         />

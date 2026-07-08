@@ -15,26 +15,23 @@ import {
 import { PercentChange } from '~/components/PercentChange'
 import { ScrollWithGradient } from '~/components/ScrollWithGradient'
 import { InfoIcon } from '~/icons/Info'
-import type {
-  IntentBridgeActivityEntry,
-  IntentBridgesData,
-} from '~/server/features/scaling/interop/getIntentBridgesData'
+import type { IntentBridgesData } from '~/server/features/scaling/interop/getIntentBridgesData'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { Last24HoursBadge } from '../../../components/Last24HoursBadge'
 import type { InteropIntentBridge } from '../../getInteropIntentBridgesData'
+import {
+  buildIntentBridgeRows,
+  type IntentBridgeRow,
+} from '../../utils/buildIntentBridgeRows'
 import { getDurationSeconds } from '../../utils/getDurationSeconds'
-import { getActiveCounts } from './getActiveCounts'
 
 type Metric = 'volume' | 'transfers'
 
-type DisplayItem = {
-  entry: IntentBridgeActivityEntry
-  bridge: InteropIntentBridge
-  activeChainCount: number | undefined
-  activeTokenCount: number | undefined
+type ActiveIntentBridgeRow = IntentBridgeRow & {
+  activity: NonNullable<IntentBridgeRow['activity']>
 }
 
 export function IntentBridgeDominanceContent({
@@ -53,9 +50,8 @@ export function IntentBridgeDominanceContent({
       ? data.activity.totalVolume
       : data.activity.totalTransferCount
     : 0
-  const displayItems = data
-    ? buildDisplayItems(data, intentBridges, metric)
-    : []
+  const rows = data ? buildIntentBridgeRows(intentBridges, data) : []
+  const displayItems = buildDisplayItems(rows, metric)
 
   return (
     <div className="lg:flex lg:h-full lg:flex-col">
@@ -100,7 +96,7 @@ export function IntentBridgeDominanceContent({
             <ScrollWithGradient className="flex max-h-[42rem] flex-col gap-5 pr-3 lg:h-full lg:max-h-none">
               {displayItems.map((item) => (
                 <IntentBridgeRowItem
-                  key={item.entry.id}
+                  key={item.bridge.id}
                   item={item}
                   metric={metric}
                   total={total}
@@ -115,34 +111,20 @@ export function IntentBridgeDominanceContent({
 }
 
 function buildDisplayItems(
-  data: IntentBridgesData,
-  intentBridges: InteropIntentBridge[],
+  rows: IntentBridgeRow[],
   metric: Metric,
-): DisplayItem[] {
-  const bridgesById = new Map(
-    intentBridges.map((bridge) => [bridge.id, bridge]),
-  )
-  const countsById = getActiveCounts(data.table.entries)
-
-  return data.activity.entries
-    .flatMap((entry) => {
-      const bridge = bridgesById.get(entry.id)
-      if (!bridge) return []
-      const counts = countsById.get(entry.id)
-      return [
-        {
-          entry,
-          bridge,
-          activeChainCount: counts?.chains,
-          activeTokenCount: counts?.tokens,
-        },
-      ]
-    })
+): ActiveIntentBridgeRow[] {
+  return rows
+    .filter(hasActivity)
     .toSorted((a, b) =>
       metric === 'volume'
-        ? b.entry.volume - a.entry.volume
-        : b.entry.transferCount - a.entry.transferCount,
+        ? b.activity.volume - a.activity.volume
+        : b.activity.transferCount - a.activity.transferCount,
     )
+}
+
+function hasActivity(row: IntentBridgeRow): row is ActiveIntentBridgeRow {
+  return row.activity !== undefined
 }
 
 function IntentBridgeRowItem({
@@ -150,11 +132,11 @@ function IntentBridgeRowItem({
   metric,
   total,
 }: {
-  item: DisplayItem
+  item: ActiveIntentBridgeRow
   metric: Metric
   total: number
 }) {
-  const { entry, bridge } = item
+  const { activity: entry, bridge } = item
   const value = metric === 'volume' ? entry.volume : entry.transferCount
   const previousValue =
     metric === 'volume' ? entry.previousVolume : entry.previousTransferCount

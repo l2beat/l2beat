@@ -9,9 +9,9 @@ import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { AvgDurationCell } from '../../../components/table/AvgDurationCell'
 import { InteropProjectNameTooltip } from '../../../components/table/InteropProjectNameTooltip'
+import type { IntentBridgeRow } from '../../utils/buildIntentBridgeRows'
 import { getDurationSeconds } from '../../utils/getDurationSeconds'
 import { IntentBridgesTransferTrigger } from '../IntentBridgesTransferTrigger'
-import type { IntentBridgeRow } from './types'
 
 const columnHelper = createColumnHelper<IntentBridgeRow>()
 
