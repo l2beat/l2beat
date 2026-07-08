@@ -7463,6 +7463,20 @@
       }
     },
     {
+      "name": "Savings USDS",
+      "coingeckoId": "susds",
+      "address": "0xb5B2dc7fd34C249F4be7fB1fCea07950784229e0",
+      "symbol": "sUSDS",
+      "decimals": 18,
+      "deploymentTimestamp": 1746045509,
+      "coingeckoListingTimestamp": 1734048000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52721/large/sUSDS_Coin.png?1734086971",
+      "chainId": 10,
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Staked FRAX",
       "coingeckoId": "staked-frax",
       "address": "0x2Dd1B4D4548aCCeA497050619965f91f78b3b532",
@@ -7700,6 +7714,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "USDS Stablecoin",
+      "coingeckoId": "usds",
+      "address": "0x4F13a96EC5C4Cf34e442b46Bbd98a0791F20edC3",
+      "symbol": "USDS",
+      "decimals": 18,
+      "deploymentTimestamp": 1745995631,
+      "coingeckoListingTimestamp": 1727136000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
+      "chainId": 10,
+      "source": "canonical",
+      "supply": "totalSupply"
     },
     {
       "name": "VelodromeV2",
@@ -12891,6 +12919,20 @@
       "supply": "totalSupply"
     },
     {
+      "name": "Savings USDS",
+      "coingeckoId": "susds",
+      "address": "0x5875eEE11Cf8398102FdAd704C9E96607675467a",
+      "symbol": "sUSDS",
+      "decimals": 18,
+      "deploymentTimestamp": 1728572501,
+      "coingeckoListingTimestamp": 1734048000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52721/large/sUSDS_Coin.png?1734086971",
+      "chainId": 8453,
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Seamless",
       "coingeckoId": "seamless-protocol",
       "address": "0x1C7a460413dD4e964f96D8dFC56E7223cE88CD85",
@@ -13140,6 +13182,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "USDS Stablecoin",
+      "coingeckoId": "usds",
+      "address": "0x820C137fa70C8691f0e44Dc420a5e53c168921Dc",
+      "symbol": "USDS",
+      "decimals": 18,
+      "deploymentTimestamp": 1728558915,
+      "coingeckoListingTimestamp": 1727136000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
+      "chainId": 8453,
+      "source": "canonical",
+      "supply": "totalSupply"
     },
     {
       "name": "VaderAI by Virtuals",
@@ -14803,6 +14859,20 @@
       }
     },
     {
+      "name": "Savings USDS",
+      "coingeckoId": "susds",
+      "address": "0xdDb46999F8891663a8F2828d25298f70416d7610",
+      "symbol": "sUSDS",
+      "decimals": 18,
+      "deploymentTimestamp": 1738149802,
+      "coingeckoListingTimestamp": 1734048000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52721/large/sUSDS_Coin.png?1734086971",
+      "chainId": 42161,
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
+    {
       "name": "SmarDex Token",
       "coingeckoId": "smardex",
       "address": "0xabD587f2607542723b17f14d00d99b987C29b074",
@@ -15176,6 +15246,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "USDS Stablecoin",
+      "coingeckoId": "usds",
+      "address": "0x6491c05A82219b8D1479057361ff1654749b876b",
+      "symbol": "USDS",
+      "decimals": 18,
+      "deploymentTimestamp": 1737544573,
+      "coingeckoListingTimestamp": 1727136000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
+      "chainId": 42161,
+      "source": "canonical",
+      "supply": "totalSupply"
     },
     {
       "name": "USDX",

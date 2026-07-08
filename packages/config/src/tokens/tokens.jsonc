@@ -2758,6 +2758,22 @@
   ],
   "arbitrum": [
     {
+      "symbol": "USDS",
+      "coingeckoId": "usds",
+      "address": "0x6491c05A82219b8D1479057361ff1654749b876b",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "sUSDS",
+      "coingeckoId": "susds",
+      "address": "0xdDb46999F8891663a8F2828d25298f70416d7610",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
+    {
       "symbol": "CHIP",
       "address": "0x0c1c1c109fe34733fca54b82d7b46b75cfb71f6e",
       "source": "native",
@@ -3817,6 +3833,22 @@
   ],
   "optimism": [
     {
+      "symbol": "USDS",
+      "coingeckoId": "usds",
+      "address": "0x4F13a96EC5C4Cf34e442b46Bbd98a0791F20edC3",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "sUSDS",
+      "coingeckoId": "susds",
+      "address": "0xb5B2dc7fd34C249F4be7fB1fCea07950784229e0",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
+    {
       "symbol": "cgETH.hashkey",
       "category": "ether",
       "address": "0x0Ce45dd53affbb011884EF1866E0738f58AB7969",
@@ -4261,6 +4293,22 @@
     }
   ],
   "base": [
+    {
+      "symbol": "USDS",
+      "coingeckoId": "usds",
+      "address": "0x820C137fa70C8691f0e44Dc420a5e53c168921Dc",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "sUSDS",
+      "coingeckoId": "susds",
+      "address": "0x5875eEE11Cf8398102FdAd704C9E96607675467a",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
     {
       "symbol": "BENJI",
       "address": "0x60CfC2b186a4CF647486e42c42B11cC6D571d1E4",

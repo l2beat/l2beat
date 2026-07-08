@@ -156,9 +156,9 @@ export const optimism: ScalingProject = opStackL2({
         'eth:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65',
       ),
       sinceTimestamp: UnixTime(1625675779),
-      tokens: ['DAI', 'USDS', 'sUSDS'],
+      tokens: ['DAI'],
       description:
-        'Maker/Sky-controlled vault for DAI, USDS and sUSDS bridged with canonical messaging.',
+        'Maker/Sky-controlled vault for DAI bridged with canonical messaging.',
     }),
     discovery.getEscrowDetails({
       // current SNX bridge escrow
