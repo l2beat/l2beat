@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "BoldToken",
+  "description": "BOLD, the protocol's stablecoin and the debt side of every trove. It is a standard ERC20 with permit, so anyone can hold, transfer, and approve it, but only the protocol's own branch contracts can create or destroy it. New BOLD is minted when a borrower draws debt (by a branch's BorrowerOperations or ActivePool) and burned when debt is repaid, liquidated, or redeemed (by a branch's BorrowerOperations, TroveManager, or StabilityPool, or by the CollateralRegistry on redemption), so the total supply always tracks the system's outstanding debt. The set of addresses allowed to mint and burn is a fixed whitelist: each branch's contracts were registered once at deployment, after which ownership was renounced, so no minter or burner can ever be added or removed.",
   "ignoreInCoverage": ["ERC20", "ERC20Permit", "EIP712"],
   "fields": {
     "borrowerOperationsAddresses": {

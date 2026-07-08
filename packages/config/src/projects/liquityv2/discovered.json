@@ -1,7 +1,7 @@
 {
   "name": "liquityv2",
   "timestamp": 1781962796,
-  "configHash": "0xbb5abc25ad5a2acc9594c765b1c912723a69c3ff7cf8a9fff89181b692f61080",
+  "configHash": "0x3a11af1f48a0a021d45634bd3f412851972474d372c5296d7dcd5194ba48328a",
   "entries": [
     {
       "name": "SortedTroves_rETH",
@@ -12,6 +12,7 @@
         "0xdb460bdae45b443fe99151a7edb99c146ac4b5b141a39d4d9559f6f4b19643cc"
       ],
       "proxyType": "immutable",
+      "description": "The branch's troves kept as a doubly-linked list ordered by annual interest rate, so any trove's position relative to the others is known at a glance. It is maintained only by the branch's BorrowerOperations and TroveManager, which insert, remove, and re-position troves as they open, close, or change their rate. It holds no funds and stores nothing but the ordering.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646939,
       "sinceBlock": 22516124,
@@ -39,6 +40,7 @@
         "0xff500cdaecf749cfa3178cb8655e0aa319acae7cd808b439829380e26ae1ee1f"
       ],
       "proxyType": "immutable",
+      "description": "The ERC721 that represents ownership of a trove: opening one mints an NFT and closing it burns one, both by the branch's TroveManager. The holder of a trove's NFT is its owner, with full control over the position, and transferring the NFT hands the entire trove, collateral and debt alike, to the new holder. In every other respect it is a standard ERC721.",
       "ignoreInCoverage": ["ERC721"],
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646399,
@@ -72,6 +74,7 @@
         "0x416bcf92a9471ec6e39cd89f575d2a1002804690134fb08f97a3226fd5818763"
       ],
       "proxyType": "immutable",
+      "description": "The immutable address book and risk-parameter store for a single collateral branch: every other contract in the branch reads its sibling addresses and risk settings from here at construction. The parameters it fixes, none of which can change, are the collateral-ratio thresholds (Minimum 110%, Critical 150%, Shutdown 110%, and a Batch buffer of 10%) and the liquidation penalties (5% when a liquidation is absorbed by the Stability Pool, 10% when it is redistributed across the remaining troves). Its addresses were registered once at deployment and the owner then renounced, so nothing here can be changed afterward.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747597091,
       "sinceBlock": 22512007,
@@ -90,8 +93,8 @@
         "hintHelpers": "eth:0xF0caE19C96E572234398d6665cC1147A16cBe657",
         "interestRouter": "eth:0x807DEf5E7d057DF05C796F4bc75C3Fe82Bd6EeE1",
         "isOwner": false,
-        "LIQUIDATION_PENALTY_REDISTRIBUTION": "100000000000000000",
-        "LIQUIDATION_PENALTY_SP": "50000000000000000",
+        "LIQUIDATION_PENALTY_REDISTRIBUTION": "10",
+        "LIQUIDATION_PENALTY_SP": "5",
         "MCR": "110",
         "metadataNFT": "eth:0x9B36C3B16299D68c79F174df7e728E35b6AF4A12",
         "multiTroveGetter": "eth:0xFA61dB085510C64B83056Db3A7Acf3b6f631D235",
@@ -114,6 +117,12 @@
         },
         "BCR": {
           "description": "Batch Collateral Ratio buffer (%). Batched troves must stay above MCR + BCR."
+        },
+        "LIQUIDATION_PENALTY_SP": {
+          "description": "Liquidation penalty when a trove is absorbed by the Stability Pool (%)."
+        },
+        "LIQUIDATION_PENALTY_REDISTRIBUTION": {
+          "description": "Liquidation penalty when a trove is redistributed across the remaining troves (%)."
         }
       },
       "implementationNames": {
@@ -125,10 +134,12 @@
       "name": "MetadataNFT_rETH",
       "address": "eth:0x3400874305E1547020fb8e80eAF1308B757171Af",
       "type": "Contract",
+      "template": "liquityv2/MetadataNFT",
       "sourceHashes": [
         "0xe72395243676d0e322c28155c85b95ae0d5b231c1d88e91fdbea83b6cc9b050e"
       ],
       "proxyType": "immutable",
+      "description": "A read-only renderer for the trove NFT: it builds the on-chain SVG image and JSON metadata returned for each trove, pulling the embedded fonts through the FixedAssetReader. It holds no funds and changes no state.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646807,
       "sinceBlock": 22516113,
@@ -149,6 +160,7 @@
         "0x032281686590b78ea421d34d187f764a649df5cbcf57331ccc9367b7971e7754"
       ],
       "proxyType": "immutable",
+      "description": "The price source for the rETH branch. It builds the rETH/USD price from Chainlink's ETH/USD feed and the rETH/ETH rate, using the more conservative of Chainlink's market rETH/ETH feed and the canonical rate reported by the rETH token to blunt upward market manipulation. Fetching the price is permissionless and happens on every branch operation. A Chainlink feed is treated as failed if it reverts, returns a non-positive answer, or grows stale beyond its staleness window, which is 1d for the ETH/USD feed and 2d for the rETH/ETH feed. If the ETH/USD feed or the canonical rate fails the branch is permanently shut down and priced from its last healthy value; if only the rETH/ETH feed fails, the branch shuts down but keeps pricing from the ETH/USD feed and the canonical rate.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646819,
       "sinceBlock": 22516114,
@@ -168,6 +180,7 @@
           "stalenessThreshold": 86400,
           "decimals": 8
         },
+        "ethUsdStaleness": "1d",
         "lastGoodPrice": "1997846860921810543422",
         "priceSource": 0,
         "rateProviderAddress": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393",
@@ -176,6 +189,15 @@
           "aggregator": "eth:0x536218f9E9Eb48863970252233c8F271f554C2d0",
           "stalenessThreshold": 172800,
           "decimals": 18
+        },
+        "rEthEthStaleness": "2d"
+      },
+      "fieldMeta": {
+        "ethUsdStaleness": {
+          "description": "How long the ETH/USD feed may go without an update before the branch shuts down."
+        },
+        "rEthEthStaleness": {
+          "description": "How long the rETH/ETH feed may go without an update before the branch shuts down."
         }
       },
       "implementationNames": {
@@ -186,10 +208,12 @@
       "name": "MetadataNFT_wstETH",
       "address": "eth:0x362f822dF79790C8077e61110484Fffa48F682A1",
       "type": "Contract",
+      "template": "liquityv2/MetadataNFT",
       "sourceHashes": [
         "0xe72395243676d0e322c28155c85b95ae0d5b231c1d88e91fdbea83b6cc9b050e"
       ],
       "proxyType": "immutable",
+      "description": "A read-only renderer for the trove NFT: it builds the on-chain SVG image and JSON metadata returned for each trove, pulling the embedded fonts through the FixedAssetReader. It holds no funds and changes no state.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646579,
       "sinceBlock": 22516094,
@@ -210,6 +234,7 @@
         "0x0ba59a053d50a63d8cfb2c8dfe6a31503b8f41ed10c10f35245f48fb1b770627"
       ],
       "proxyType": "immutable",
+      "description": "Holds the collateral left over from liquidations. When a liquidated trove is worth more than its debt plus penalty, the excess collateral is set aside here and credited to the former owner by the TroveManager; the owner later reclaims it through the BorrowerOperations. It only ever holds these unclaimed surpluses.",
       "ignoreInCoverage": ["balances"],
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646699,
@@ -235,7 +260,7 @@
         "0xd912ef195da3732a17ca667884c3832e1a3cd9dbc3eefae4625937c65911da7d"
       ],
       "proxyType": "immutable",
-      "description": "User-facing entry point of a single collateral branch. Borrowers open, adjust, and close troves here (depositing or withdrawing collateral and drawing or repaying BOLD), set their interest rate directly or by joining an interest-rate batch, and delegate trove management. It mints and burns BOLD as debt is drawn and repaid, and enforces the branch's collateral-ratio rules. A trove becomes liquidatable once its individual collateral ratio falls below the Minimum Collateral Ratio (MCR, 110%); troves managed by an interest-rate batch are held to the stronger MCR plus Batch Collateral Ratio buffer (BCR, 10%). While the branch's total collateral ratio is below the Critical Collateral Ratio (CCR, 150%) the branch is in restricted mode and borrowing operations that would lower it further are blocked. Anyone can shut the branch down once its total collateral ratio falls below the Shutdown Collateral Ratio (SCR, 110%), and it also shuts down automatically if the price feed reports a failure of one of its oracles. The contract has no owner or admin, and its wired addresses and risk parameters are set at construction from the AddressesRegistry and cannot be changed afterward.",
+      "description": "User-facing entry point of a single collateral branch. Borrowers open, adjust, and close troves here (depositing or withdrawing collateral and drawing or repaying BOLD), set their interest rate directly or by joining an interest-rate batch, and delegate trove management. It mints and burns BOLD as debt is drawn and repaid, and enforces the branch's collateral-ratio rules. A trove becomes liquidatable once its individual collateral ratio falls below the Minimum Collateral Ratio (MCR, 110%); troves managed by an interest-rate batch are held to the stronger MCR plus Batch Collateral Ratio buffer (BCR, 10%). While the branch's total collateral ratio is below the Critical Collateral Ratio (CCR, 150%) the branch is in restricted mode and borrowing operations that would lower it further are blocked. Anyone can shut the branch down once its total collateral ratio falls below the Shutdown Collateral Ratio (SCR, 110%), and it also shuts down automatically if the price feed reports a failure of one of its oracles.",
       "ignoreInCoverage": [
         "addManagerOf",
         "interestBatchManagerOf",
@@ -292,10 +317,12 @@
       "name": "GasPool_rETH",
       "address": "eth:0x45c81dcE308389e1Bee63ae30A04Fb1e148dad41",
       "type": "Contract",
+      "template": "liquityv2/GasPool",
       "sourceHashes": [
         "0x4e3fbd298fc50de53de152f791e82192ce7014301f8f9f4b40993bbab02862e6"
       ],
       "proxyType": "immutable",
+      "description": "A minimal per-branch vault for WETH gas compensation. Each trove posts a small fixed amount of WETH when it opens, held here and used only to cover liquidation gas: it is returned to the borrower when the trove closes, or paid to the liquidator when the trove is liquidated. The contract has no functions of its own; at deployment it simply grants the branch's BorrowerOperations and TroveManager standing approval to move its WETH for those two purposes.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646915,
       "sinceBlock": 22516122,
@@ -313,7 +340,7 @@
         "0xffe40a8f84a61ecad0d9b18bc9b9b4a3c288ee814b430a8ddb8d40988c3c61df"
       ],
       "proxyType": "immutable",
-      "description": "The branch's collateral vault and interest engine. It custodies the collateral of every active trove on this branch and tracks the branch's aggregate BOLD debt. Collateral only moves in or out on instruction from the branch's own contracts (the BorrowerOperations, TroveManager, StabilityPool, and DefaultPool); there is no permissionless or admin path to move it. It is also where borrower interest is realized: when the branch's aggregate interest is settled, the newly accrued amount is minted as fresh BOLD and split, with 75% going to the StabilityPool as depositor yield and the remaining 25% to the InterestRouter. The contract has no owner or admin, and its wired addresses are read from the AddressesRegistry at construction and cannot be changed afterward.",
+      "description": "The branch's collateral vault and interest engine. It custodies the collateral of every active trove on this branch and tracks the branch's aggregate BOLD debt. Collateral only moves in or out on instruction from the branch's own contracts (the BorrowerOperations, TroveManager, StabilityPool, and DefaultPool). It is also where borrower interest is realized: when the branch's aggregate interest is settled, the newly accrued amount is minted as fresh BOLD and split, with 75% going to the StabilityPool as depositor yield and the remainder to the InterestRouter.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646663,
       "sinceBlock": 22516101,
@@ -338,8 +365,14 @@
         "lastAggUpdateTime": 1781947895,
         "NAME": "ActivePool",
         "shutdownTime": 0,
+        "spYieldSplit": 75,
         "stabilityPool": "eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B",
         "troveManagerAddress": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22"
+      },
+      "fieldMeta": {
+        "spYieldSplit": {
+          "description": "Share of borrower interest paid to Stability Pool depositors as yield (%); the remainder goes to the InterestRouter. A code constant, not an on-chain parameter."
+        }
       },
       "implementationNames": {
         "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0": "ActivePool"
@@ -405,7 +438,7 @@
         "0x1e7cfda26e94142780a4842c5715b0364d98333268e7585b3d9885a1622d0b34"
       ],
       "proxyType": "immutable",
-      "description": "The branch's liquidation backstop. Anyone can deposit BOLD here, and those deposits are the first resource used to absorb liquidations: when a trove on this branch is liquidated, the pool burns BOLD to cancel an equal amount of that trove's debt and receives the corresponding collateral in return. Because that collateral is worth more than the debt cancelled, depositors generally come out ahead on each liquidation, and they also earn a share of the interest that branch borrowers pay. Deposits can be withdrawn at any time with no lock-up, as long as a small minimum is left so the pool can never be fully emptied. The contract has no owner or admin: its wired addresses are set at construction from the AddressesRegistry and cannot be changed afterward.",
+      "description": "The branch's liquidation backstop. Anyone can deposit BOLD here, and those deposits are the first resource used to absorb liquidations: when a trove on this branch is liquidated, the pool burns BOLD to cancel an equal amount of that trove's debt and receives the corresponding collateral in return. Because that collateral is worth more than the debt cancelled, depositors generally come out ahead on each liquidation, and they also earn a share of the interest that branch borrowers pay. Deposits can be withdrawn at any time with no lock-up, as long as a small minimum is left so the pool can never be fully emptied.",
       "ignoreInCoverage": ["deposits", "depositSnapshots", "stashedColl"],
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646411,
@@ -449,7 +482,7 @@
         "0xa65617ba575ecd14fe2ae717c82c2feff2da018b2a42498f1d1323a0829e9d87"
       ],
       "proxyType": "immutable",
-      "description": "The counterpart to the ActivePool that holds only what is pending redistribution. When a liquidation cannot be fully covered by the StabilityPool, the liquidated trove's collateral and debt are spread across the remaining troves, and until each of those troves actually realizes its share this pool holds it: the redistributed collateral as real tokens, and the redistributed debt as a bookkeeping figure (no BOLD is kept here). When a trove is next touched and its pending share is applied, that collateral and debt move out of here into the ActivePool. Only the branch's TroveManager (which adjusts the recorded debt and moves collateral out to the ActivePool) and the ActivePool (which moves collateral in) can touch it; there is no permissionless or admin path. The contract has no owner or admin, and its wired addresses are read from the AddressesRegistry at construction and cannot be changed afterward.",
+      "description": "The counterpart to the ActivePool that holds only what is pending redistribution. When a liquidation cannot be fully covered by the StabilityPool, the liquidated trove's collateral and debt are spread across the remaining troves, and until each of those troves actually realizes its share this pool holds it: the redistributed collateral as real tokens, and the redistributed debt as a bookkeeping figure (no BOLD is kept here). When a trove is next touched and its pending share is applied, that collateral and debt move out of here into the ActivePool. Only the branch's TroveManager (which adjusts the recorded debt and moves collateral out to the ActivePool) and the ActivePool (which moves collateral in) can touch it.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646903,
       "sinceBlock": 22516121,
@@ -470,15 +503,24 @@
       "name": "FixedAssetData_WETH",
       "address": "eth:0x5CcA549ca706C39D68156e5E0a72CcBC95f563d0",
       "type": "Contract",
-      "unverified": true,
+      "sourceHashes": [
+        "0x838582d4d0e791578299ad342b02c0e249e3a14fe6e789d91a52b7bbba044b14"
+      ],
       "proxyType": "immutable",
+      "description": "A data contract holding the raw asset bytes (an embedded font and the collateral logos) used to render the trove NFT image. The bytes are stored as the contract's own bytecode via the SSTORE2 pattern rather than as executable code, so it has no logic and no Solidity source; the FixedAssetReader slices out the assets it needs.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646315,
       "sinceBlock": 22516072,
       "values": { "$immutable": true },
       "implementationNames": {
         "eth:0x5CcA549ca706C39D68156e5E0a72CcBC95f563d0": ""
-      }
+      },
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://github.com/liquity/bold/tree/main/contracts/utils/assets"
+        }
+      ]
     },
     {
       "name": "Chainlink_ETH_USD",
@@ -564,6 +606,7 @@
         "0x416bcf92a9471ec6e39cd89f575d2a1002804690134fb08f97a3226fd5818763"
       ],
       "proxyType": "immutable",
+      "description": "The immutable address book and risk-parameter store for a single collateral branch: every other contract in the branch reads its sibling addresses and risk settings from here at construction. The parameters it fixes, none of which can change, are the collateral-ratio thresholds (Minimum 120%, Critical 160%, Shutdown 120%, and a Batch buffer of 10%) and the liquidation penalties (5% when a liquidation is absorbed by the Stability Pool, 20% when it is redistributed across the remaining troves). Its addresses were registered once at deployment and the owner then renounced, so nothing here can be changed afterward.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747597115,
       "sinceBlock": 22512009,
@@ -582,8 +625,8 @@
         "hintHelpers": "eth:0xF0caE19C96E572234398d6665cC1147A16cBe657",
         "interestRouter": "eth:0x807DEf5E7d057DF05C796F4bc75C3Fe82Bd6EeE1",
         "isOwner": false,
-        "LIQUIDATION_PENALTY_REDISTRIBUTION": "200000000000000000",
-        "LIQUIDATION_PENALTY_SP": "50000000000000000",
+        "LIQUIDATION_PENALTY_REDISTRIBUTION": "20",
+        "LIQUIDATION_PENALTY_SP": "5",
         "MCR": "120",
         "metadataNFT": "eth:0x3400874305E1547020fb8e80eAF1308B757171Af",
         "multiTroveGetter": "eth:0xFA61dB085510C64B83056Db3A7Acf3b6f631D235",
@@ -606,6 +649,12 @@
         },
         "BCR": {
           "description": "Batch Collateral Ratio buffer (%). Batched troves must stay above MCR + BCR."
+        },
+        "LIQUIDATION_PENALTY_SP": {
+          "description": "Liquidation penalty when a trove is absorbed by the Stability Pool (%)."
+        },
+        "LIQUIDATION_PENALTY_REDISTRIBUTION": {
+          "description": "Liquidation penalty when a trove is redistributed across the remaining troves (%)."
         }
       },
       "implementationNames": {
@@ -622,6 +671,7 @@
         "0xd76c427ef934b882bcaef160c9273d7f8b5129950cea14cfc0d00108b2b953b3"
       ],
       "proxyType": "immutable",
+      "description": "BOLD, the protocol's stablecoin and the debt side of every trove. It is a standard ERC20 with permit, so anyone can hold, transfer, and approve it, but only the protocol's own branch contracts can create or destroy it. New BOLD is minted when a borrower draws debt (by a branch's BorrowerOperations or ActivePool) and burned when debt is repaid, liquidated, or redeemed (by a branch's BorrowerOperations, TroveManager, or StabilityPool, or by the CollateralRegistry on redemption), so the total supply always tracks the system's outstanding debt. The set of addresses allowed to mint and burn is a fixed whitelist: each branch's contracts were registered once at deployment, after which ownership was renounced, so no minter or burner can ever be added or removed.",
       "ignoreInCoverage": ["ERC20", "ERC20Permit", "EIP712"],
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747245587,
@@ -697,6 +747,7 @@
         "0xe7c6d54af8f01ef571fc2e026efebff1ec252bce90cd96fbcd15ce9c41f7f82b"
       ],
       "proxyType": "immutable",
+      "description": "A per-staker proxy deployed by the Governance to hold and stake one user's LQTY. It forwards the LQTY into Liquity's legacy V1 staking, so the staker keeps earning the V1 fee rewards (LUSD and ETH) while that same LQTY backs their V2 voting power, and it passes those rewards back to the staker. Only the Governance can operate it.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747647047,
       "sinceBlock": 22516133,
@@ -721,6 +772,7 @@
         "0xff500cdaecf749cfa3178cb8655e0aa319acae7cd808b439829380e26ae1ee1f"
       ],
       "proxyType": "immutable",
+      "description": "The ERC721 that represents ownership of a trove: opening one mints an NFT and closing it burns one, both by the branch's TroveManager. The holder of a trove's NFT is its owner, with full control over the position, and transferring the NFT hands the entire trove, collateral and debt alike, to the new holder. In every other respect it is a standard ERC721.",
       "ignoreInCoverage": ["ERC721"],
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646867,
@@ -749,10 +801,12 @@
       "name": "GasPool_WETH",
       "address": "eth:0x7b9ab3DE4036caE51F1fa4ec0a2C2fd606bCF921",
       "type": "Contract",
+      "template": "liquityv2/GasPool",
       "sourceHashes": [
         "0x4e3fbd298fc50de53de152f791e82192ce7014301f8f9f4b40993bbab02862e6"
       ],
       "proxyType": "immutable",
+      "description": "A minimal per-branch vault for WETH gas compensation. Each trove posts a small fixed amount of WETH when it opens, held here and used only to cover liquidation gas: it is returned to the borrower when the trove closes, or paid to the liquidator when the trove is liquidated. The contract has no functions of its own; at deployment it simply grants the branch's BorrowerOperations and TroveManager standing approval to move its WETH for those two purposes.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646447,
       "sinceBlock": 22516083,
@@ -770,7 +824,7 @@
         "0xc9d6f44af9c5528d817ecb926770bd146fd944d0892b3fd066b2a7abb8fb1091"
       ],
       "proxyType": "immutable",
-      "description": "The branch's ledger and enforcement engine. It holds the canonical record of every trove on this collateral branch (debt, collateral, stake, interest rate, and accounting snapshots) and is where BorrowerOperations persists changes when owners open, adjust, or close their troves. It also carries out the two things that happen to a trove without its owner. Liquidation is permissionless: once a trove's collateral ratio falls below the branch minimum, anyone can liquidate it, and its collateral (up to the debt plus a liquidation penalty) is either absorbed by the StabilityPool or redistributed across the remaining troves, with any surplus returned to the owner. Redemption is driven by the CollateralRegistry, which exchanges BOLD for collateral at face value against the lowest-interest-rate troves first, letting BOLD holders defend the peg. The contract has no owner or admin, and its wired addresses and risk parameters are set at construction from the AddressesRegistry and cannot be changed afterward.",
+      "description": "The branch's ledger and enforcement engine. It holds the canonical record of every trove on this collateral branch (debt, collateral, stake, interest rate, and accounting snapshots) and is where BorrowerOperations persists changes when owners open, adjust, or close their troves. It also carries out the two things that happen to a trove without its owner. Liquidation is permissionless: once a trove's collateral ratio falls below the branch minimum, anyone can liquidate it, and its collateral (up to the debt plus a penalty) is either absorbed by the StabilityPool at a 5% penalty or redistributed across the remaining troves at a 10% penalty, with any surplus returned to the owner. Redemption is driven by the CollateralRegistry, which exchanges BOLD for collateral at face value against the lowest-interest-rate troves first, letting BOLD holders defend the peg. If the branch is ever shut down, redemption instead runs directly through this contract in an urgent mode: BOLD holders can redeem against troves of their own choosing, in any order, and are paid a 2% collateral bonus rather than a fee, so the branch can be wound down and its remaining debt cleared.",
       "ignoreInCoverage": ["Troves", "batchIds", "batches"],
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646387,
@@ -793,15 +847,27 @@
         "getEntireBranchDebt": "8032407482842554494569922",
         "getTroveIdsCount": 100,
         "lastZombieTroveId": 0,
+        "liquidationPenaltyRedistribution": "10",
+        "liquidationPenaltySP": "5",
         "priceFeed": "eth:0xCC5F8102eb670c89a4a3c567C13851260303c24F",
         "shutdownTime": 0,
         "sortedTroves": "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4",
         "stabilityPool": "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF",
         "troveNFT": "eth:0x1A0FC0b843aFD9140267D25d4E575Cb37a838013",
+        "urgentRedemptionBonus": 2,
         "WETH": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "fieldMeta": {
-        "CCR": { "description": "Critical Collateral Ratio (%)." }
+        "CCR": { "description": "Critical Collateral Ratio (%)." },
+        "liquidationPenaltySP": {
+          "description": "Liquidation penalty taken when a trove is absorbed by the Stability Pool (%). Read from the AddressesRegistry."
+        },
+        "liquidationPenaltyRedistribution": {
+          "description": "Liquidation penalty taken when a trove is redistributed across the remaining troves (%). Read from the AddressesRegistry."
+        },
+        "urgentRedemptionBonus": {
+          "description": "Collateral bonus paid to the redeemer during urgent redemption, which is only possible once the branch has shut down (%). Hardcoded because it is a compiled-in contract constant (URGENT_REDEMPTION_BONUS) with no onchain getter."
+        }
       },
       "implementationNames": {
         "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A": "TroveManager"
@@ -817,6 +883,7 @@
         "0x068d712943aa85bab770a9518b2d3912d9027ae3a68734c178236929beb373fa"
       ],
       "proxyType": "immutable",
+      "description": "The protocol's revenue router and LQTY-staking governance. Every branch sends the share of borrower interest not paid to Stability Pool depositors to this contract, which hands that BOLD out to community initiatives chosen by LQTY holders. Anyone can stake LQTY here (each staker gets a personal proxy that also stakes into Liquity's legacy V1 staking), earning voting power that grows the longer it stays staked. Time is split into fixed 7d epochs; within each epoch stakers allocate their voting power across initiatives as votes and vetoes, and any initiative whose net votes clear the voting threshold becomes eligible for a share of the accrued BOLD, which anyone can then pay out to it. Registering a new initiative (for a 100 BOLD fee), unregistering a stale one, and triggering payouts are all permissionless. The starting set of initiatives was registered once at launch, after which ownership was renounced, so there is no privileged operator.",
       "ignoreInCoverage": [
         "initiativeStates",
         "lqtyAllocatedByUserToInitiative",
@@ -832,7 +899,7 @@
         "bold": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
         "boldAccrued": "12398790503784830380211",
         "epoch": 59,
-        "EPOCH_DURATION": 604800,
+        "EPOCH_DURATION": "7d",
         "EPOCH_START": 1746662400,
         "EPOCH_VOTING_CUTOFF": 518400,
         "epochStart": 1781740800,
@@ -857,7 +924,7 @@
         "MIN_ACCRUAL": 0,
         "MIN_CLAIM": 0,
         "owner": "eth:0x0000000000000000000000000000000000000000",
-        "REGISTRATION_FEE": "100000000000000000000",
+        "REGISTRATION_FEE": "100",
         "REGISTRATION_THRESHOLD_FACTOR": 100000000000000,
         "secondsWithinEpoch": 221987,
         "stakingV1": "eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d",
@@ -870,18 +937,29 @@
         },
         "VOTING_THRESHOLD_FACTOR": "20000000000000000"
       },
+      "fieldMeta": {
+        "EPOCH_DURATION": {
+          "description": "Length of a governance epoch: the period over which votes are allocated and initiative payouts are decided."
+        },
+        "REGISTRATION_FEE": {
+          "description": "BOLD fee paid to register a new initiative (burned), on top of clearing the registration vote threshold."
+        }
+      },
       "implementationNames": {
         "eth:0x807DEf5E7d057DF05C796F4bc75C3Fe82Bd6EeE1": "Governance"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }]
     },
     {
       "name": "FixedAssetReader_WETH",
       "address": "eth:0x84087689B0D6a8A8f11C297e9e7f8De99f398258",
       "type": "Contract",
+      "template": "liquityv2/FixedAssetReader",
       "sourceHashes": [
         "0xdf98b38ca2addcfd82976a7774eed61a289ab3383e0b2a655588d5a50046d407"
       ],
       "proxyType": "immutable",
+      "description": "A read-only accessor for the embedded font data used to draw the trove NFT image. It reads the raw bytes out of the FixedAssetData data contract (stored via the SSTORE2 pattern) and serves them to the MetadataNFT renderer. It holds no funds and changes no state.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646327,
       "sinceBlock": 22516073,
@@ -902,6 +980,7 @@
         "0xdb460bdae45b443fe99151a7edb99c146ac4b5b141a39d4d9559f6f4b19643cc"
       ],
       "proxyType": "immutable",
+      "description": "The branch's troves kept as a doubly-linked list ordered by annual interest rate, so any trove's position relative to the others is known at a glance. It is maintained only by the branch's BorrowerOperations and TroveManager, which insert, remove, and re-position troves as they open, close, or change their rate. It holds no funds and stores nothing but the ordering.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646711,
       "sinceBlock": 22516105,
@@ -929,6 +1008,7 @@
         "0xff500cdaecf749cfa3178cb8655e0aa319acae7cd808b439829380e26ae1ee1f"
       ],
       "proxyType": "immutable",
+      "description": "The ERC721 that represents ownership of a trove: opening one mints an NFT and closing it burns one, both by the branch's TroveManager. The holder of a trove's NFT is its owner, with full control over the position, and transferring the NFT hands the entire trove, collateral and debt alike, to the new holder. In every other respect it is a standard ERC721.",
       "ignoreInCoverage": ["ERC721"],
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646639,
@@ -957,24 +1037,35 @@
       "name": "FixedAssetData_rETH",
       "address": "eth:0x884Acfa4593a6FdbA0a9373007E48Ea9AF881C42",
       "type": "Contract",
-      "unverified": true,
+      "sourceHashes": [
+        "0x838582d4d0e791578299ad342b02c0e249e3a14fe6e789d91a52b7bbba044b14"
+      ],
       "proxyType": "immutable",
+      "description": "A data contract holding the raw asset bytes (an embedded font and the collateral logos) used to render the trove NFT image. The bytes are stored as the contract's own bytecode via the SSTORE2 pattern rather than as executable code, so it has no logic and no Solidity source; the FixedAssetReader slices out the assets it needs.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646783,
       "sinceBlock": 22516111,
       "values": { "$immutable": true },
       "implementationNames": {
         "eth:0x884Acfa4593a6FdbA0a9373007E48Ea9AF881C42": ""
-      }
+      },
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://github.com/liquity/bold/tree/main/contracts/utils/assets"
+        }
+      ]
     },
     {
       "name": "GasPool_wstETH",
       "address": "eth:0x8C44FBa379D8A8608C0e29B2729DeB75a981Db1f",
       "type": "Contract",
+      "template": "liquityv2/GasPool",
       "sourceHashes": [
         "0x4e3fbd298fc50de53de152f791e82192ce7014301f8f9f4b40993bbab02862e6"
       ],
       "proxyType": "immutable",
+      "description": "A minimal per-branch vault for WETH gas compensation. Each trove posts a small fixed amount of WETH when it opens, held here and used only to cover liquidation gas: it is returned to the borrower when the trove closes, or paid to the liquidator when the trove is liquidated. The contract has no functions of its own; at deployment it simply grants the branch's BorrowerOperations and TroveManager standing approval to move its WETH for those two purposes.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646687,
       "sinceBlock": 22516103,
@@ -992,6 +1083,7 @@
         "0x416bcf92a9471ec6e39cd89f575d2a1002804690134fb08f97a3226fd5818763"
       ],
       "proxyType": "immutable",
+      "description": "The immutable address book and risk-parameter store for a single collateral branch: every other contract in the branch reads its sibling addresses and risk settings from here at construction. The parameters it fixes, none of which can change, are the collateral-ratio thresholds (Minimum 120%, Critical 160%, Shutdown 120%, and a Batch buffer of 10%) and the liquidation penalties (5% when a liquidation is absorbed by the Stability Pool, 20% when it is redistributed across the remaining troves). Its addresses were registered once at deployment and the owner then renounced, so nothing here can be changed afterward.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747597103,
       "sinceBlock": 22512008,
@@ -1010,8 +1102,8 @@
         "hintHelpers": "eth:0xF0caE19C96E572234398d6665cC1147A16cBe657",
         "interestRouter": "eth:0x807DEf5E7d057DF05C796F4bc75C3Fe82Bd6EeE1",
         "isOwner": false,
-        "LIQUIDATION_PENALTY_REDISTRIBUTION": "200000000000000000",
-        "LIQUIDATION_PENALTY_SP": "50000000000000000",
+        "LIQUIDATION_PENALTY_REDISTRIBUTION": "20",
+        "LIQUIDATION_PENALTY_SP": "5",
         "MCR": "120",
         "metadataNFT": "eth:0x362f822dF79790C8077e61110484Fffa48F682A1",
         "multiTroveGetter": "eth:0xFA61dB085510C64B83056Db3A7Acf3b6f631D235",
@@ -1034,6 +1126,12 @@
         },
         "BCR": {
           "description": "Batch Collateral Ratio buffer (%). Batched troves must stay above MCR + BCR."
+        },
+        "LIQUIDATION_PENALTY_SP": {
+          "description": "Liquidation penalty when a trove is absorbed by the Stability Pool (%)."
+        },
+        "LIQUIDATION_PENALTY_REDISTRIBUTION": {
+          "description": "Liquidation penalty when a trove is redistributed across the remaining troves (%)."
         }
       },
       "implementationNames": {
@@ -1050,7 +1148,7 @@
         "0xffe40a8f84a61ecad0d9b18bc9b9b4a3c288ee814b430a8ddb8d40988c3c61df"
       ],
       "proxyType": "immutable",
-      "description": "The branch's collateral vault and interest engine. It custodies the collateral of every active trove on this branch and tracks the branch's aggregate BOLD debt. Collateral only moves in or out on instruction from the branch's own contracts (the BorrowerOperations, TroveManager, StabilityPool, and DefaultPool); there is no permissionless or admin path to move it. It is also where borrower interest is realized: when the branch's aggregate interest is settled, the newly accrued amount is minted as fresh BOLD and split, with 75% going to the StabilityPool as depositor yield and the remaining 25% to the InterestRouter. The contract has no owner or admin, and its wired addresses are read from the AddressesRegistry at construction and cannot be changed afterward.",
+      "description": "The branch's collateral vault and interest engine. It custodies the collateral of every active trove on this branch and tracks the branch's aggregate BOLD debt. Collateral only moves in or out on instruction from the branch's own contracts (the BorrowerOperations, TroveManager, StabilityPool, and DefaultPool). It is also where borrower interest is realized: when the branch's aggregate interest is settled, the newly accrued amount is minted as fresh BOLD and split, with 75% going to the StabilityPool as depositor yield and the remainder to the InterestRouter.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646891,
       "sinceBlock": 22516120,
@@ -1075,8 +1173,14 @@
         "lastAggUpdateTime": 1781947979,
         "NAME": "ActivePool",
         "shutdownTime": 0,
+        "spYieldSplit": 75,
         "stabilityPool": "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695",
         "troveManagerAddress": "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e"
+      },
+      "fieldMeta": {
+        "spYieldSplit": {
+          "description": "Share of borrower interest paid to Stability Pool depositors as yield (%); the remainder goes to the InterestRouter. A code constant, not an on-chain parameter."
+        }
       },
       "implementationNames": {
         "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F": "ActivePool"
@@ -1091,7 +1195,7 @@
         "0x1e7cfda26e94142780a4842c5715b0364d98333268e7585b3d9885a1622d0b34"
       ],
       "proxyType": "immutable",
-      "description": "The branch's liquidation backstop. Anyone can deposit BOLD here, and those deposits are the first resource used to absorb liquidations: when a trove on this branch is liquidated, the pool burns BOLD to cancel an equal amount of that trove's debt and receives the corresponding collateral in return. Because that collateral is worth more than the debt cancelled, depositors generally come out ahead on each liquidation, and they also earn a share of the interest that branch borrowers pay. Deposits can be withdrawn at any time with no lock-up, as long as a small minimum is left so the pool can never be fully emptied. The contract has no owner or admin: its wired addresses are set at construction from the AddressesRegistry and cannot be changed afterward.",
+      "description": "The branch's liquidation backstop. Anyone can deposit BOLD here, and those deposits are the first resource used to absorb liquidations: when a trove on this branch is liquidated, the pool burns BOLD to cancel an equal amount of that trove's debt and receives the corresponding collateral in return. Because that collateral is worth more than the debt cancelled, depositors generally come out ahead on each liquidation, and they also earn a share of the interest that branch borrowers pay. Deposits can be withdrawn at any time with no lock-up, as long as a small minimum is left so the pool can never be fully emptied.",
       "ignoreInCoverage": ["deposits", "depositSnapshots", "stashedColl"],
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646651,
@@ -1130,10 +1234,12 @@
       "name": "MetadataNFT_WETH",
       "address": "eth:0x9B36C3B16299D68c79F174df7e728E35b6AF4A12",
       "type": "Contract",
+      "template": "liquityv2/MetadataNFT",
       "sourceHashes": [
         "0xe72395243676d0e322c28155c85b95ae0d5b231c1d88e91fdbea83b6cc9b050e"
       ],
       "proxyType": "immutable",
+      "description": "A read-only renderer for the trove NFT: it builds the on-chain SVG image and JSON metadata returned for each trove, pulling the embedded fonts through the FixedAssetReader. It holds no funds and changes no state.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646339,
       "sinceBlock": 22516074,
@@ -1154,6 +1260,7 @@
         "0xdb460bdae45b443fe99151a7edb99c146ac4b5b141a39d4d9559f6f4b19643cc"
       ],
       "proxyType": "immutable",
+      "description": "The branch's troves kept as a doubly-linked list ordered by annual interest rate, so any trove's position relative to the others is known at a glance. It is maintained only by the branch's BorrowerOperations and TroveManager, which insert, remove, and re-position troves as they open, close, or change their rate. It holds no funds and stores nothing but the ordering.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646471,
       "sinceBlock": 22516085,
@@ -1181,7 +1288,7 @@
         "0xc9d6f44af9c5528d817ecb926770bd146fd944d0892b3fd066b2a7abb8fb1091"
       ],
       "proxyType": "immutable",
-      "description": "The branch's ledger and enforcement engine. It holds the canonical record of every trove on this collateral branch (debt, collateral, stake, interest rate, and accounting snapshots) and is where BorrowerOperations persists changes when owners open, adjust, or close their troves. It also carries out the two things that happen to a trove without its owner. Liquidation is permissionless: once a trove's collateral ratio falls below the branch minimum, anyone can liquidate it, and its collateral (up to the debt plus a liquidation penalty) is either absorbed by the StabilityPool or redistributed across the remaining troves, with any surplus returned to the owner. Redemption is driven by the CollateralRegistry, which exchanges BOLD for collateral at face value against the lowest-interest-rate troves first, letting BOLD holders defend the peg. The contract has no owner or admin, and its wired addresses and risk parameters are set at construction from the AddressesRegistry and cannot be changed afterward.",
+      "description": "The branch's ledger and enforcement engine. It holds the canonical record of every trove on this collateral branch (debt, collateral, stake, interest rate, and accounting snapshots) and is where BorrowerOperations persists changes when owners open, adjust, or close their troves. It also carries out the two things that happen to a trove without its owner. Liquidation is permissionless: once a trove's collateral ratio falls below the branch minimum, anyone can liquidate it, and its collateral (up to the debt plus a penalty) is either absorbed by the StabilityPool at a 5% penalty or redistributed across the remaining troves at a 20% penalty, with any surplus returned to the owner. Redemption is driven by the CollateralRegistry, which exchanges BOLD for collateral at face value against the lowest-interest-rate troves first, letting BOLD holders defend the peg. If the branch is ever shut down, redemption instead runs directly through this contract in an urgent mode: BOLD holders can redeem against troves of their own choosing, in any order, and are paid a 2% collateral bonus rather than a fee, so the branch can be wound down and its remaining debt cleared.",
       "ignoreInCoverage": ["Troves", "batchIds", "batches"],
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646627,
@@ -1204,15 +1311,27 @@
         "getEntireBranchDebt": "19782667450133726381311178",
         "getTroveIdsCount": 103,
         "lastZombieTroveId": 0,
+        "liquidationPenaltyRedistribution": "20",
+        "liquidationPenaltySP": "5",
         "priceFeed": "eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E",
         "shutdownTime": 0,
         "sortedTroves": "eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1",
         "stabilityPool": "eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B",
         "troveNFT": "eth:0x857aECeBF75f1012DC18E15020C97096aeA31b04",
+        "urgentRedemptionBonus": 2,
         "WETH": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "fieldMeta": {
-        "CCR": { "description": "Critical Collateral Ratio (%)." }
+        "CCR": { "description": "Critical Collateral Ratio (%)." },
+        "liquidationPenaltySP": {
+          "description": "Liquidation penalty taken when a trove is absorbed by the Stability Pool (%). Read from the AddressesRegistry."
+        },
+        "liquidationPenaltyRedistribution": {
+          "description": "Liquidation penalty taken when a trove is redistributed across the remaining troves (%). Read from the AddressesRegistry."
+        },
+        "urgentRedemptionBonus": {
+          "description": "Collateral bonus paid to the redeemer during urgent redemption, which is only possible once the branch has shut down (%). Hardcoded because it is a compiled-in contract constant (URGENT_REDEMPTION_BONUS) with no onchain getter."
+        }
       },
       "implementationNames": {
         "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22": "TroveManager"
@@ -1223,10 +1342,12 @@
       "name": "FixedAssetReader_wstETH",
       "address": "eth:0xa5224865040034A9f8E5C60e0a616c9c8A63f237",
       "type": "Contract",
+      "template": "liquityv2/FixedAssetReader",
       "sourceHashes": [
         "0xdf98b38ca2addcfd82976a7774eed61a289ab3383e0b2a655588d5a50046d407"
       ],
       "proxyType": "immutable",
+      "description": "A read-only accessor for the embedded font data used to draw the trove NFT image. It reads the raw bytes out of the FixedAssetData data contract (stored via the SSTORE2 pattern) and serves them to the MetadataNFT renderer. It holds no funds and changes no state.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646567,
       "sinceBlock": 22516093,
@@ -1247,7 +1368,7 @@
         "0xd912ef195da3732a17ca667884c3832e1a3cd9dbc3eefae4625937c65911da7d"
       ],
       "proxyType": "immutable",
-      "description": "User-facing entry point of a single collateral branch. Borrowers open, adjust, and close troves here (depositing or withdrawing collateral and drawing or repaying BOLD), set their interest rate directly or by joining an interest-rate batch, and delegate trove management. It mints and burns BOLD as debt is drawn and repaid, and enforces the branch's collateral-ratio rules. A trove becomes liquidatable once its individual collateral ratio falls below the Minimum Collateral Ratio (MCR, 120%); troves managed by an interest-rate batch are held to the stronger MCR plus Batch Collateral Ratio buffer (BCR, 10%). While the branch's total collateral ratio is below the Critical Collateral Ratio (CCR, 160%) the branch is in restricted mode and borrowing operations that would lower it further are blocked. Anyone can shut the branch down once its total collateral ratio falls below the Shutdown Collateral Ratio (SCR, 120%), and it also shuts down automatically if the price feed reports a failure of one of its oracles. The contract has no owner or admin, and its wired addresses and risk parameters are set at construction from the AddressesRegistry and cannot be changed afterward.",
+      "description": "User-facing entry point of a single collateral branch. Borrowers open, adjust, and close troves here (depositing or withdrawing collateral and drawing or repaying BOLD), set their interest rate directly or by joining an interest-rate batch, and delegate trove management. It mints and burns BOLD as debt is drawn and repaid, and enforces the branch's collateral-ratio rules. A trove becomes liquidatable once its individual collateral ratio falls below the Minimum Collateral Ratio (MCR, 120%); troves managed by an interest-rate batch are held to the stronger MCR plus Batch Collateral Ratio buffer (BCR, 10%). While the branch's total collateral ratio is below the Critical Collateral Ratio (CCR, 160%) the branch is in restricted mode and borrowing operations that would lower it further are blocked. Anyone can shut the branch down once its total collateral ratio falls below the Shutdown Collateral Ratio (SCR, 120%), and it also shuts down automatically if the price feed reports a failure of one of its oracles.",
       "ignoreInCoverage": [
         "addManagerOf",
         "interestBatchManagerOf",
@@ -1309,7 +1430,7 @@
         "0xc9d6f44af9c5528d817ecb926770bd146fd944d0892b3fd066b2a7abb8fb1091"
       ],
       "proxyType": "immutable",
-      "description": "The branch's ledger and enforcement engine. It holds the canonical record of every trove on this collateral branch (debt, collateral, stake, interest rate, and accounting snapshots) and is where BorrowerOperations persists changes when owners open, adjust, or close their troves. It also carries out the two things that happen to a trove without its owner. Liquidation is permissionless: once a trove's collateral ratio falls below the branch minimum, anyone can liquidate it, and its collateral (up to the debt plus a liquidation penalty) is either absorbed by the StabilityPool or redistributed across the remaining troves, with any surplus returned to the owner. Redemption is driven by the CollateralRegistry, which exchanges BOLD for collateral at face value against the lowest-interest-rate troves first, letting BOLD holders defend the peg. The contract has no owner or admin, and its wired addresses and risk parameters are set at construction from the AddressesRegistry and cannot be changed afterward.",
+      "description": "The branch's ledger and enforcement engine. It holds the canonical record of every trove on this collateral branch (debt, collateral, stake, interest rate, and accounting snapshots) and is where BorrowerOperations persists changes when owners open, adjust, or close their troves. It also carries out the two things that happen to a trove without its owner. Liquidation is permissionless: once a trove's collateral ratio falls below the branch minimum, anyone can liquidate it, and its collateral (up to the debt plus a penalty) is either absorbed by the StabilityPool at a 5% penalty or redistributed across the remaining troves at a 20% penalty, with any surplus returned to the owner. Redemption is driven by the CollateralRegistry, which exchanges BOLD for collateral at face value against the lowest-interest-rate troves first, letting BOLD holders defend the peg. If the branch is ever shut down, redemption instead runs directly through this contract in an urgent mode: BOLD holders can redeem against troves of their own choosing, in any order, and are paid a 2% collateral bonus rather than a fee, so the branch can be wound down and its remaining debt cleared.",
       "ignoreInCoverage": ["Troves", "batchIds", "batches"],
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646855,
@@ -1332,15 +1453,27 @@
         "getEntireBranchDebt": "4194897977456767410468621",
         "getTroveIdsCount": 16,
         "lastZombieTroveId": 0,
+        "liquidationPenaltyRedistribution": "20",
+        "liquidationPenaltySP": "5",
         "priceFeed": "eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B",
         "shutdownTime": 0,
         "sortedTroves": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
         "stabilityPool": "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695",
         "troveNFT": "eth:0x7ae430E25b67f19B431e1D1Dc048a5BCF24C0873",
+        "urgentRedemptionBonus": 2,
         "WETH": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "fieldMeta": {
-        "CCR": { "description": "Critical Collateral Ratio (%)." }
+        "CCR": { "description": "Critical Collateral Ratio (%)." },
+        "liquidationPenaltySP": {
+          "description": "Liquidation penalty taken when a trove is absorbed by the Stability Pool (%). Read from the AddressesRegistry."
+        },
+        "liquidationPenaltyRedistribution": {
+          "description": "Liquidation penalty taken when a trove is redistributed across the remaining troves (%). Read from the AddressesRegistry."
+        },
+        "urgentRedemptionBonus": {
+          "description": "Collateral bonus paid to the redeemer during urgent redemption, which is only possible once the branch has shut down (%). Hardcoded because it is a compiled-in contract constant (URGENT_REDEMPTION_BONUS) with no onchain getter."
+        }
       },
       "implementationNames": {
         "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e": "TroveManager"
@@ -1356,6 +1489,7 @@
         "0x0ba59a053d50a63d8cfb2c8dfe6a31503b8f41ed10c10f35245f48fb1b770627"
       ],
       "proxyType": "immutable",
+      "description": "Holds the collateral left over from liquidations. When a liquidated trove is worth more than its debt plus penalty, the excess collateral is set aside here and credited to the former owner by the TroveManager; the owner later reclaims it through the BorrowerOperations. It only ever holds these unclaimed surpluses.",
       "ignoreInCoverage": ["balances"],
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646927,
@@ -1381,6 +1515,7 @@
         "0x44383161cfda219b00f1e94bb530b1011dfea08f6b280bcce410e7c82107e61e"
       ],
       "proxyType": "immutable",
+      "description": "The price source for the WETH branch: it reports the collateral's USD value by reading Chainlink's ETH/USD feed. Fetching the price is permissionless and happens on every branch operation. If that feed fails, meaning it reverts, returns a zero or negative answer, or has not updated within its 1d staleness window, the branch is permanently shut down and thereafter priced from the last value recorded while the feed was healthy.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646351,
       "sinceBlock": 22516075,
@@ -1397,8 +1532,14 @@
           "stalenessThreshold": 86400,
           "decimals": 8
         },
+        "ethUsdStaleness": "1d",
         "lastGoodPrice": "1724050000000000000000",
         "priceSource": 0
+      },
+      "fieldMeta": {
+        "ethUsdStaleness": {
+          "description": "How long the ETH/USD feed may go without an update before the branch shuts down."
+        }
       },
       "implementationNames": {
         "eth:0xCC5F8102eb670c89a4a3c567C13851260303c24F": "WETHPriceFeed"
@@ -1408,10 +1549,12 @@
       "name": "FixedAssetReader_rETH",
       "address": "eth:0xcC77baf5706BDf7CFA7FefD5337833e2e1fd0d8e",
       "type": "Contract",
+      "template": "liquityv2/FixedAssetReader",
       "sourceHashes": [
         "0xdf98b38ca2addcfd82976a7774eed61a289ab3383e0b2a655588d5a50046d407"
       ],
       "proxyType": "immutable",
+      "description": "A read-only accessor for the embedded font data used to draw the trove NFT image. It reads the raw bytes out of the FixedAssetData data contract (stored via the SSTORE2 pattern) and serves them to the MetadataNFT renderer. It holds no funds and changes no state.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646795,
       "sinceBlock": 22516112,
@@ -1483,7 +1626,7 @@
         "0x1e7cfda26e94142780a4842c5715b0364d98333268e7585b3d9885a1622d0b34"
       ],
       "proxyType": "immutable",
-      "description": "The branch's liquidation backstop. Anyone can deposit BOLD here, and those deposits are the first resource used to absorb liquidations: when a trove on this branch is liquidated, the pool burns BOLD to cancel an equal amount of that trove's debt and receives the corresponding collateral in return. Because that collateral is worth more than the debt cancelled, depositors generally come out ahead on each liquidation, and they also earn a share of the interest that branch borrowers pay. Deposits can be withdrawn at any time with no lock-up, as long as a small minimum is left so the pool can never be fully emptied. The contract has no owner or admin: its wired addresses are set at construction from the AddressesRegistry and cannot be changed afterward.",
+      "description": "The branch's liquidation backstop. Anyone can deposit BOLD here, and those deposits are the first resource used to absorb liquidations: when a trove on this branch is liquidated, the pool burns BOLD to cancel an equal amount of that trove's debt and receives the corresponding collateral in return. Because that collateral is worth more than the debt cancelled, depositors generally come out ahead on each liquidation, and they also earn a share of the interest that branch borrowers pay. Deposits can be withdrawn at any time with no lock-up, as long as a small minimum is left so the pool can never be fully emptied.",
       "ignoreInCoverage": ["deposits", "depositSnapshots", "stashedColl"],
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646879,
@@ -1527,7 +1670,7 @@
         "0xa65617ba575ecd14fe2ae717c82c2feff2da018b2a42498f1d1323a0829e9d87"
       ],
       "proxyType": "immutable",
-      "description": "The counterpart to the ActivePool that holds only what is pending redistribution. When a liquidation cannot be fully covered by the StabilityPool, the liquidated trove's collateral and debt are spread across the remaining troves, and until each of those troves actually realizes its share this pool holds it: the redistributed collateral as real tokens, and the redistributed debt as a bookkeeping figure (no BOLD is kept here). When a trove is next touched and its pending share is applied, that collateral and debt move out of here into the ActivePool. Only the branch's TroveManager (which adjusts the recorded debt and moves collateral out to the ActivePool) and the ActivePool (which moves collateral in) can touch it; there is no permissionless or admin path. The contract has no owner or admin, and its wired addresses are read from the AddressesRegistry at construction and cannot be changed afterward.",
+      "description": "The counterpart to the ActivePool that holds only what is pending redistribution. When a liquidation cannot be fully covered by the StabilityPool, the liquidated trove's collateral and debt are spread across the remaining troves, and until each of those troves actually realizes its share this pool holds it: the redistributed collateral as real tokens, and the redistributed debt as a bookkeeping figure (no BOLD is kept here). When a trove is next touched and its pending share is applied, that collateral and debt move out of here into the ActivePool. Only the branch's TroveManager (which adjusts the recorded debt and moves collateral out to the ActivePool) and the ActivePool (which moves collateral in) can touch it.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646435,
       "sinceBlock": 22516082,
@@ -1553,7 +1696,7 @@
         "0xa65617ba575ecd14fe2ae717c82c2feff2da018b2a42498f1d1323a0829e9d87"
       ],
       "proxyType": "immutable",
-      "description": "The counterpart to the ActivePool that holds only what is pending redistribution. When a liquidation cannot be fully covered by the StabilityPool, the liquidated trove's collateral and debt are spread across the remaining troves, and until each of those troves actually realizes its share this pool holds it: the redistributed collateral as real tokens, and the redistributed debt as a bookkeeping figure (no BOLD is kept here). When a trove is next touched and its pending share is applied, that collateral and debt move out of here into the ActivePool. Only the branch's TroveManager (which adjusts the recorded debt and moves collateral out to the ActivePool) and the ActivePool (which moves collateral in) can touch it; there is no permissionless or admin path. The contract has no owner or admin, and its wired addresses are read from the AddressesRegistry at construction and cannot be changed afterward.",
+      "description": "The counterpart to the ActivePool that holds only what is pending redistribution. When a liquidation cannot be fully covered by the StabilityPool, the liquidated trove's collateral and debt are spread across the remaining troves, and until each of those troves actually realizes its share this pool holds it: the redistributed collateral as real tokens, and the redistributed debt as a bookkeeping figure (no BOLD is kept here). When a trove is next touched and its pending share is applied, that collateral and debt move out of here into the ActivePool. Only the branch's TroveManager (which adjusts the recorded debt and moves collateral out to the ActivePool) and the ActivePool (which moves collateral in) can touch it.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646675,
       "sinceBlock": 22516102,
@@ -1579,6 +1722,7 @@
         "0x390e31d43acc737be645145e40e1ae040994f68fe0e9275836d5dfcc655d5b65"
       ],
       "proxyType": "immutable",
+      "description": "The price source for the wstETH branch. It builds the wstETH/USD price from two inputs: Chainlink's stETH/USD feed and the wstETH-to-stETH exchange rate reported by the wstETH token. Fetching the price is permissionless and happens on every branch operation. A Chainlink feed is treated as failed if it reverts, returns a non-positive answer, or has not updated within its 1d staleness window. If the exchange rate or the ETH/USD reference feed fails the branch is permanently shut down and priced from its last healthy value; if only the stETH/USD feed fails, the branch shuts down but keeps pricing from the ETH/USD feed and the exchange rate.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646591,
       "sinceBlock": 22516095,
@@ -1598,6 +1742,7 @@
           "stalenessThreshold": 86400,
           "decimals": 8
         },
+        "ethUsdStaleness": "1d",
         "lastGoodPrice": "2131986583693178207135",
         "priceSource": 0,
         "rateProviderAddress": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
@@ -1606,6 +1751,11 @@
           "aggregator": "eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8",
           "stalenessThreshold": 86400,
           "decimals": 8
+        }
+      },
+      "fieldMeta": {
+        "ethUsdStaleness": {
+          "description": "How long a Chainlink feed may go without an update before the branch shuts down."
         }
       },
       "implementationNames": {
@@ -1621,7 +1771,7 @@
         "0xd912ef195da3732a17ca667884c3832e1a3cd9dbc3eefae4625937c65911da7d"
       ],
       "proxyType": "immutable",
-      "description": "User-facing entry point of a single collateral branch. Borrowers open, adjust, and close troves here (depositing or withdrawing collateral and drawing or repaying BOLD), set their interest rate directly or by joining an interest-rate batch, and delegate trove management. It mints and burns BOLD as debt is drawn and repaid, and enforces the branch's collateral-ratio rules. A trove becomes liquidatable once its individual collateral ratio falls below the Minimum Collateral Ratio (MCR, 120%); troves managed by an interest-rate batch are held to the stronger MCR plus Batch Collateral Ratio buffer (BCR, 10%). While the branch's total collateral ratio is below the Critical Collateral Ratio (CCR, 160%) the branch is in restricted mode and borrowing operations that would lower it further are blocked. Anyone can shut the branch down once its total collateral ratio falls below the Shutdown Collateral Ratio (SCR, 120%), and it also shuts down automatically if the price feed reports a failure of one of its oracles. The contract has no owner or admin, and its wired addresses and risk parameters are set at construction from the AddressesRegistry and cannot be changed afterward.",
+      "description": "User-facing entry point of a single collateral branch. Borrowers open, adjust, and close troves here (depositing or withdrawing collateral and drawing or repaying BOLD), set their interest rate directly or by joining an interest-rate batch, and delegate trove management. It mints and burns BOLD as debt is drawn and repaid, and enforces the branch's collateral-ratio rules. A trove becomes liquidatable once its individual collateral ratio falls below the Minimum Collateral Ratio (MCR, 120%); troves managed by an interest-rate batch are held to the stronger MCR plus Batch Collateral Ratio buffer (BCR, 10%). While the branch's total collateral ratio is below the Critical Collateral Ratio (CCR, 160%) the branch is in restricted mode and borrowing operations that would lower it further are blocked. Anyone can shut the branch down once its total collateral ratio falls below the Shutdown Collateral Ratio (SCR, 120%), and it also shuts down automatically if the price feed reports a failure of one of its oracles.",
       "ignoreInCoverage": [
         "addManagerOf",
         "interestBatchManagerOf",
@@ -1683,7 +1833,7 @@
         "0xffe40a8f84a61ecad0d9b18bc9b9b4a3c288ee814b430a8ddb8d40988c3c61df"
       ],
       "proxyType": "immutable",
-      "description": "The branch's collateral vault and interest engine. It custodies the collateral of every active trove on this branch and tracks the branch's aggregate BOLD debt. Collateral only moves in or out on instruction from the branch's own contracts (the BorrowerOperations, TroveManager, StabilityPool, and DefaultPool); there is no permissionless or admin path to move it. It is also where borrower interest is realized: when the branch's aggregate interest is settled, the newly accrued amount is minted as fresh BOLD and split, with 75% going to the StabilityPool as depositor yield and the remaining 25% to the InterestRouter. The contract has no owner or admin, and its wired addresses are read from the AddressesRegistry at construction and cannot be changed afterward.",
+      "description": "The branch's collateral vault and interest engine. It custodies the collateral of every active trove on this branch and tracks the branch's aggregate BOLD debt. Collateral only moves in or out on instruction from the branch's own contracts (the BorrowerOperations, TroveManager, StabilityPool, and DefaultPool). It is also where borrower interest is realized: when the branch's aggregate interest is settled, the newly accrued amount is minted as fresh BOLD and split, with 75% going to the StabilityPool as depositor yield and the remainder to the InterestRouter.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646423,
       "sinceBlock": 22516081,
@@ -1708,8 +1858,14 @@
         "lastAggUpdateTime": 1781962475,
         "NAME": "ActivePool",
         "shutdownTime": 0,
+        "spYieldSplit": 75,
         "stabilityPool": "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF",
         "troveManagerAddress": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A"
+      },
+      "fieldMeta": {
+        "spYieldSplit": {
+          "description": "Share of borrower interest paid to Stability Pool depositors as yield (%); the remainder goes to the InterestRouter. A code constant, not an on-chain parameter."
+        }
       },
       "implementationNames": {
         "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE": "ActivePool"
@@ -1724,6 +1880,7 @@
         "0x0ba59a053d50a63d8cfb2c8dfe6a31503b8f41ed10c10f35245f48fb1b770627"
       ],
       "proxyType": "immutable",
+      "description": "Holds the collateral left over from liquidations. When a liquidated trove is worth more than its debt plus penalty, the excess collateral is set aside here and credited to the former owner by the TroveManager; the owner later reclaims it through the BorrowerOperations. It only ever holds these unclaimed surpluses.",
       "ignoreInCoverage": ["balances"],
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646459,
@@ -1744,10 +1901,12 @@
       "name": "HintHelpers",
       "address": "eth:0xF0caE19C96E572234398d6665cC1147A16cBe657",
       "type": "Contract",
+      "template": "liquityv2/HintHelpers",
       "sourceHashes": [
         "0x335487b96bbd176cd8e18ef9e95d743901446a024cd18f70d86dd0d334fd74aa"
       ],
       "proxyType": "immutable",
+      "description": "A read-only helper for locating where a trove sits in a branch's interest-rate ordering. Off-chain callers use it to compute the position hints that keep opening and adjusting troves gas-efficient. It holds no funds and changes no state.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646291,
       "sinceBlock": 22516070,
@@ -1764,15 +1923,24 @@
       "name": "FixedAssetData_wstETH",
       "address": "eth:0xf4a3fE99227F6060e4C1c62b557EEE050B6483E4",
       "type": "Contract",
-      "unverified": true,
+      "sourceHashes": [
+        "0x838582d4d0e791578299ad342b02c0e249e3a14fe6e789d91a52b7bbba044b14"
+      ],
       "proxyType": "immutable",
+      "description": "A data contract holding the raw asset bytes (an embedded font and the collateral logos) used to render the trove NFT image. The bytes are stored as the contract's own bytecode via the SSTORE2 pattern rather than as executable code, so it has no logic and no Solidity source; the FixedAssetReader slices out the assets it needs.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646555,
       "sinceBlock": 22516092,
       "values": { "$immutable": true },
       "implementationNames": {
         "eth:0xf4a3fE99227F6060e4C1c62b557EEE050B6483E4": ""
-      }
+      },
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://github.com/liquity/bold/tree/main/contracts/utils/assets"
+        }
+      ]
     },
     {
       "name": "CollateralRegistry",
@@ -1783,6 +1951,7 @@
         "0xa8e1ff392900573c7844ae540203263461b33a91733271d2483c5d8ff76a926d"
       ],
       "proxyType": "immutable",
+      "description": "The protocol's redemption hub and the registry of its collateral branches: it stores only the address of each branch's collateral token and TroveManager, 3 branches in all, fixed at construction, and custodies no funds itself. Redemption is what keeps BOLD near its dollar peg. Anyone can hand in BOLD and receive an equal dollar value of collateral drawn from the branches, so whenever BOLD trades below a dollar it becomes profitable to buy it up and redeem it. Each redemption is spread across the branches in proportion to their unbacked debt, meaning the debt a branch has not covered with Stability Pool deposits, so redemptions land hardest on the branches whose Stability Pools back them the least; a branch is skipped if it has been shut down or its total collateral ratio has fallen below the shutdown threshold. The redeemer pays a fee taken from the collateral they receive, set by a base rate that jumps up with the size of the redemption relative to total BOLD supply and decays back down over time, but never below a 0.5% floor.",
       "ignoreInCoverage": [
         "token0",
         "token1",
@@ -1825,7 +1994,13 @@
           "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e"
         ],
         "lastFeeOperationTime": 1781932259,
+        "redemptionFeeFloor": "0.5",
         "totalCollaterals": 3
+      },
+      "fieldMeta": {
+        "redemptionFeeFloor": {
+          "description": "Minimum redemption fee (%): a floor the decaying base rate never drops below. A code constant, not an on-chain parameter. Stored as a string since it is fractional (the discovery UI parses numeric field values as integers)."
+        }
       },
       "implementationNames": {
         "eth:0xf949982B91C8c61e952B3bA942cbbfaef5386684": "CollateralRegistry"
@@ -1835,10 +2010,12 @@
       "name": "MultiTroveGetter",
       "address": "eth:0xFA61dB085510C64B83056Db3A7Acf3b6f631D235",
       "type": "Contract",
+      "template": "liquityv2/MultiTroveGetter",
       "sourceHashes": [
         "0x5aca099fef434b253a5e679ebcb85ad0623a4042f25536f392710b50d96d5351"
       ],
       "proxyType": "immutable",
+      "description": "A read-only helper that returns trove data in bulk, so front-ends and indexers can page through a branch's troves in a single call. It holds no funds and changes no state.",
       "deployerAddress": "eth:0x83Cfa33A2ee969F8aDd9a2AcdcdC0D7e556E5ED0",
       "sinceTimestamp": 1747646303,
       "sinceBlock": 22516071,
@@ -3361,22 +3538,27 @@
     ]
   },
   "usedTemplates": {
-    "liquityv2/ActivePool": "0xa03de504b0e25900a097612746f737802a3b9b706d86d99a41247b7f32043f7e",
-    "liquityv2/AddressesRegistry": "0x4057078646dbe0858012bd2ff2ae0137ee7af70c682f66fb06e825df19eb622d",
+    "liquityv2/ActivePool": "0x0143135692c76a8d31bfa43e6160b08722b7addf2bac83270cf793df2490aa71",
+    "liquityv2/AddressesRegistry": "0x16ec82eb6d1f66f72db0e2edabe08448dc26ad34c011aa632021fcfc207f13de",
     "liquityv2/BoldToken": "0x96b7f5e8109e92144b009c45c30075f8ec5a0830b138d15b06b2ff950a4445f9",
     "liquityv2/BorrowerOperations": "0xd1e24c0556fdef3a9c8a610c2d62e6905402610f9c508087c62155c7074fe791",
-    "liquityv2/CollateralRegistry": "0xdb1284f537acceb4b2d8fd91c683c82ced83969cd6c76f0990817ee455c8ac35",
+    "liquityv2/CollateralRegistry": "0x8ce29e700a65594895d4f34a78cd6421a9cf625c26de3f10dde6ef5e89271b2c",
     "liquityv2/CollSurplusPool": "0x6684ffbbf8dc46d947e5b66d6287a08379c0ea50e85d4095693bce55e87c8784",
     "liquityv2/DefaultPool": "0xf76544a2d96f34f8558006a2796043cf6480a50fe6796cb3430971a69d07f033",
-    "liquityv2/Governance": "0x58a62670b1b5ac1f65f6541bfcd0f70cacc7a4eb28d2e8f6f430096bdd6ff446",
-    "liquityv2/RETHPriceFeed": "0xc41b282901cfe548ef934ef56f7b3e6bc4b0b89c3ff08cd7810b343f0167cf5c",
+    "liquityv2/FixedAssetReader": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "liquityv2/GasPool": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "liquityv2/Governance": "0xd8a24794fdb23a1f2c5b10cf18b2c662a149df30b57afd12a5b076093c0cc3f5",
+    "liquityv2/HintHelpers": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "liquityv2/MetadataNFT": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "liquityv2/MultiTroveGetter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "liquityv2/RETHPriceFeed": "0x256c81060a5987c01d516be151385887222d6372fa52f55088c24c41a4f7067a",
     "liquityv2/SortedTroves": "0xf293f74be45106d609814c95b63ca8ad04c5a5635075c1248f36508f2c468bf9",
     "liquityv2/StabilityPool": "0x14d6c8f51a09720083f6e5fb4903344e584819dac8b4e321694f6029e651d416",
-    "liquityv2/TroveManager": "0x86616ddf43f9a5c18001a4dc7426eaffe9b7658724fe4f58087be651ab68682d",
+    "liquityv2/TroveManager": "0xce786b39ae54579d03206bc1960b09f1f0ceb4f272d85775a7f08ca822bb93cc",
     "liquityv2/TroveNFT": "0x3168d31b447cb5348fe6021d098550105dc8a4f5c53da1e489528b0285e63b67",
     "liquityv2/UserProxy": "0x76c1139858057493e9d67b62aaf9bf39fe368ce27ecbde05d644d94d1db2fbcf",
-    "liquityv2/WETHPriceFeed": "0x361894a2d93e618766cca1f5551f98d785e16db05088e0cd1e86c12e4dc8ac4b",
-    "liquityv2/WSTETHPriceFeed": "0x092ccc44a6b14e7893838ae5171ee4343beac3c8dd3091f335153db3647aaf09"
+    "liquityv2/WETHPriceFeed": "0xee5eb87f43d9ec8d920e2e77807f291aaa371bdb754cee44bd302215b10b3fd8",
+    "liquityv2/WSTETHPriceFeed": "0x82688f2ae1096bb3900214a12a642915b8e1c5efca75a3db266327b6c09ace56"
   },
   "usedBlockNumbers": { "ethereum": 25359156 },
   "permissionsConfigHash": "0x548965044a2b91d51f0018e60ce0c0331a564bcb87897499efeb7c2624490ada"
