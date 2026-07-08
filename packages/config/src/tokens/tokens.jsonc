@@ -2223,8 +2223,9 @@
       "supply": "circulatingSupply",
       "category": "other",
       // manual override: robinhood public RPC is non-archival. Creation block 88836.
-    },
       "deploymentTimestamp": 1781812885
+    },
+    {
       "symbol": "AAPL",
       "address": "0xaF3D76f1834A1d425780943C99Ea8A608f8a93f9",
       "coingeckoId": "apple-robinhood-tokenized-stock",
