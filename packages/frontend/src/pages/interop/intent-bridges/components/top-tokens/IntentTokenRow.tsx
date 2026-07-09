@@ -10,9 +10,9 @@ import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { ChainIcon } from '../../../components/ChainIcon'
 import { InteropNoDataBadge } from '../../../components/InteropNoDataBadge'
+import { InteropTransferTrigger } from '../../../components/InteropTransferTrigger'
 import { getInteropTokenUrl } from '../../../utils/getInteropTokenUrl'
 import type { InteropIntentBridge } from '../../getInteropIntentBridgesData'
-import { IntentBridgesTransferTrigger } from '../IntentBridgesTransferTrigger'
 
 export function IntentTokenRow({
   token,
@@ -91,7 +91,7 @@ export function IntentTokenRow({
           </span>
         )}
         {bridge ? (
-          <IntentBridgesTransferTrigger
+          <InteropTransferTrigger
             protocol={{
               id: bridge.id,
               name: bridge.name,
@@ -102,7 +102,7 @@ export function IntentTokenRow({
             className="cursor-pointer font-medium text-paragraph-14 text-secondary hover:underline md:text-paragraph-16"
           >
             {txsLabel}
-          </IntentBridgesTransferTrigger>
+          </InteropTransferTrigger>
         ) : (
           <span className="font-medium text-paragraph-14 text-secondary md:text-paragraph-16">
             {txsLabel}

@@ -21,10 +21,10 @@ import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { ChainIcon } from '../../components/ChainIcon'
 import { useChainSetSelection } from '../../components/chain-selector/ChainSetSelectionContext'
+import { InteropTransferTrigger } from '../../components/InteropTransferTrigger'
 import { Last24HoursBadge } from '../../components/Last24HoursBadge'
 import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
 import type { InteropTokenFramework } from '../getInteropTokenFrameworksData'
-import { TokenFrameworksTransferTrigger } from './TokenFrameworksTransferTrigger'
 
 export function TopTokensWidget({
   tokenFrameworks,
@@ -198,7 +198,7 @@ function TokenRow({
           {formatCurrency(token.volume, 'usd', { decimals: 2 })}
         </span>
         {framework ? (
-          <TokenFrameworksTransferTrigger
+          <InteropTransferTrigger
             protocol={{
               id: framework.projectId,
               name: framework.name,
@@ -209,7 +209,7 @@ function TokenRow({
             className="cursor-pointer font-medium text-paragraph-14 text-secondary hover:underline md:text-paragraph-16"
           >
             {txsLabel}
-          </TokenFrameworksTransferTrigger>
+          </InteropTransferTrigger>
         ) : (
           <span className="font-medium text-paragraph-14 text-secondary md:text-paragraph-16">
             {txsLabel}

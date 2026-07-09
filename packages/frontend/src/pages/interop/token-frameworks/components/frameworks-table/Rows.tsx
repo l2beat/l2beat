@@ -7,8 +7,8 @@ import type {
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { ChainIcon } from '../../../components/ChainIcon'
+import { InteropTransferTrigger } from '../../../components/InteropTransferTrigger'
 import type { InteropTokenFramework } from '../../getInteropTokenFrameworksData'
-import { TokenFrameworksTransferTrigger } from '../TokenFrameworksTransferTrigger'
 
 export function TokenRow({
   token,
@@ -48,7 +48,7 @@ export function TokenRow({
         transferCount={token.transferCount}
         txsTrigger={
           token.isUnknown ? undefined : (
-            <TokenFrameworksTransferTrigger
+            <InteropTransferTrigger
               protocol={{
                 id: framework.projectId,
                 name: framework.name,
@@ -59,7 +59,7 @@ export function TokenRow({
               className="cursor-pointer font-medium text-secondary hover:underline"
             >
               {formatInteger(token.transferCount)} txs
-            </TokenFrameworksTransferTrigger>
+            </InteropTransferTrigger>
           )
         }
       />
@@ -85,7 +85,7 @@ export function ChainPathRow({
         volume={path.volume}
         transferCount={path.transferCount}
         txsTrigger={
-          <TokenFrameworksTransferTrigger
+          <InteropTransferTrigger
             protocol={{
               id: framework.projectId,
               name: framework.name,
@@ -96,7 +96,7 @@ export function ChainPathRow({
             className="cursor-pointer font-medium text-secondary hover:underline"
           >
             {formatInteger(path.transferCount)} txs
-          </TokenFrameworksTransferTrigger>
+          </InteropTransferTrigger>
         }
       />
     </div>

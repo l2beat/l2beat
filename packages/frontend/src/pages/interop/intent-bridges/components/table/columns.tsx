@@ -7,10 +7,10 @@ import { EM_DASH } from '~/consts/characters'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
+import { InteropTransferTrigger } from '../../../components/InteropTransferTrigger'
 import { AvgDurationCell } from '../../../components/table/AvgDurationCell'
 import { InteropProjectNameTooltip } from '../../../components/table/InteropProjectNameTooltip'
 import type { IntentBridgeRow } from '../../utils/buildIntentBridgeRows'
-import { IntentBridgesTransferTrigger } from '../IntentBridgesTransferTrigger'
 
 const columnHelper = createColumnHelper<IntentBridgeRow>()
 
@@ -98,7 +98,7 @@ export function getIntentBridgeColumns() {
         const transferCount = ctx.row.original.activity?.transferCount ?? 0
         if (transferCount === 0) return EM_DASH
         return (
-          <IntentBridgesTransferTrigger
+          <InteropTransferTrigger
             protocol={{
               id: bridge.id,
               name: bridge.name,
@@ -108,7 +108,7 @@ export function getIntentBridgeColumns() {
             className="cursor-pointer font-medium text-label-value-15 text-primary hover:underline"
           >
             {formatInteger(transferCount)}
-          </IntentBridgesTransferTrigger>
+          </InteropTransferTrigger>
         )
       },
       meta: {

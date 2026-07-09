@@ -8,11 +8,11 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
-import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
 import {
   TRANSFER_SPEED_DEFAULT_FROM,
   TRANSFER_SPEED_DEFAULT_TO,
-} from './components/transfer-speed/consts'
+} from '../components/transferSpeedDefaults'
+import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
 
 export type InteropTokenFramework = {
   id: string
@@ -91,7 +91,7 @@ async function getCachedData(initialChainIds: string[]) {
           to: initialChainIds,
         }),
       ),
-      // FrameworkTransferSpeedWidget fetches this exact pair on initial render.
+      // InteropTransferSpeedWidget fetches this exact pair on initial render.
       helpers.queryClient.prefetchQuery(
         helpers.trpc.interop.tokenFrameworks.queryOptions({
           from: [TRANSFER_SPEED_DEFAULT_FROM],

@@ -1,10 +1,9 @@
-import { useQuery } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
-import { useTRPC } from '~/trpc/React'
-import { useChainSetSelection } from '../../components/chain-selector/ChainSetSelectionContext'
-import { InteropTransferDetailsTrigger } from '../../components/InteropTransferDetailsTrigger'
+import { useChainSetSelection } from './chain-selector/ChainSetSelectionContext'
+import { InteropTransferDetailsTrigger } from './InteropTransferDetailsTrigger'
+import { useInteropOverview } from './useInteropOverview'
 
-export function TokenFrameworksTransferTrigger({
+export function InteropTransferTrigger({
   protocol,
   tokenId,
   selectionForApi,
@@ -17,14 +16,8 @@ export function TokenFrameworksTransferTrigger({
   className?: string
   children: ReactNode
 }) {
-  const trpc = useTRPC()
   const { selectedChains } = useChainSetSelection()
-  const { data } = useQuery(
-    trpc.interop.tokenFrameworks.queryOptions({
-      from: selectedChains,
-      to: selectedChains,
-    }),
-  )
+  const { data } = useInteropOverview()
 
   return (
     <InteropTransferDetailsTrigger

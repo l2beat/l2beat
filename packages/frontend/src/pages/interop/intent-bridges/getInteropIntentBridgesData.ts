@@ -10,11 +10,11 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
-import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
 import {
-  INTENT_TRANSFER_SPEED_DEFAULT_FROM,
-  INTENT_TRANSFER_SPEED_DEFAULT_TO,
-} from './components/transfer-speed/consts'
+  TRANSFER_SPEED_DEFAULT_FROM,
+  TRANSFER_SPEED_DEFAULT_TO,
+} from '../components/transferSpeedDefaults'
+import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
 
 export type InteropIntentBridge = {
   id: ProjectId
@@ -92,8 +92,8 @@ async function getCachedData(initialChainIds: string[]) {
       ),
       helpers.queryClient.prefetchQuery(
         helpers.trpc.interop.intentBridges.queryOptions({
-          from: [INTENT_TRANSFER_SPEED_DEFAULT_FROM],
-          to: [INTENT_TRANSFER_SPEED_DEFAULT_TO],
+          from: [TRANSFER_SPEED_DEFAULT_FROM],
+          to: [TRANSFER_SPEED_DEFAULT_TO],
         }),
       ),
     ])
