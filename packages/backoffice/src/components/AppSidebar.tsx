@@ -116,8 +116,8 @@ const navGroups: NavigationGroup[] = [
             url: '/interop/indexing/processor-statuses',
           },
           {
-            title: 'Financial actions',
-            url: '/interop/financials/actions',
+            title: 'Financials',
+            url: '/interop/financials',
           },
         ],
       },
