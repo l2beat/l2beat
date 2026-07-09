@@ -1,134 +1,83 @@
-import { useQuery } from '@tanstack/react-query'
-import { useState } from 'react'
-import { Skeleton } from '~/components/core/Skeleton'
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from '~/components/core/Tabs'
-import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { TokenData } from '~/server/features/scaling/interop/types'
-import { useTRPC } from '~/trpc/React'
-import { formatInteger } from '~/utils/number-format/formatInteger'
-import { useChainSetSelection } from '../../../components/chain-selector/ChainSetSelectionContext'
-import { Last24HoursBadge } from '../../../components/Last24HoursBadge'
+import type { InteropTokenRowData } from '../../../components/InteropTokenRow'
+import {
+  InteropTopTokensWidget,
+  type TopTokensTab,
+} from '../../../components/InteropTopTokensWidget'
+import { useInteropOverview } from '../../../components/useInteropOverview'
+import { getInteropTokenUrl } from '../../../utils/getInteropTokenUrl'
 import type { InteropIntentBridge } from '../../getInteropIntentBridgesData'
-import { IntentTokenRow } from './IntentTokenRow'
 
 export function IntentTopTokensWidget({
   intentBridges,
 }: {
   intentBridges: InteropIntentBridge[]
 }) {
-  const trpc = useTRPC()
-  const { selectedChains } = useChainSetSelection()
-  const [activeTab, setActiveTab] = useState<string>('all')
+  const { data, isLoading } = useInteropOverview()
+  const intentData = data && 'activity' in data ? data : undefined
+  const bridgesBySlug = new Map(intentBridges.map((b) => [b.slug, b]))
 
-  const { data, isLoading } = useQuery(
-    trpc.interop.intentBridges.queryOptions({
-      from: selectedChains,
-      to: selectedChains,
-    }),
-  )
+  const tabs: TopTokensTab[] = intentBridges.map((bridge) => ({
+    id: bridge.id,
+    iconUrl: bridge.iconUrl,
+    label: bridge.name,
+  }))
 
-  const bridgesBySlug = new Map(
-    intentBridges.map((bridge) => [bridge.slug, bridge]),
-  )
-  const activeBridge = intentBridges.find((bridge) => bridge.id === activeTab)
-
-  const tokens =
-    activeTab === 'all'
-      ? data?.topTokens
-      : data?.table.entries.find((entry) => entry.id === activeTab)?.tokens
-  const activeTokenCount = activeBridge
-    ? (tokens?.items.length ?? 0) + (tokens?.remainingCount ?? 0)
-    : undefined
-
-  const getRowBridge = (token: TokenData) =>
-    activeBridge ??
-    (token.topProtocol ? bridgesBySlug.get(token.topProtocol.slug) : undefined)
+  const toRow = (
+    token: TokenData,
+    bridge: InteropIntentBridge | undefined,
+    showBadge: boolean,
+  ): InteropTokenRowData => {
+    const flow = token.flows[0]
+    return {
+      tokenId: token.id,
+      iconUrl: token.iconUrl,
+      symbol: token.symbol,
+      href: getInteropTokenUrl(token),
+      volume: token.volume,
+      transferCount: token.transferCount,
+      badge:
+        showBadge && bridge
+          ? { color: bridge.color, iconUrl: bridge.iconUrl, label: bridge.name }
+          : undefined,
+      topRoute: flow ? { src: flow.srcChain, dst: flow.dstChain } : undefined,
+      protocol: bridge
+        ? {
+            id: bridge.id,
+            name: bridge.name,
+            slug: bridge.slug,
+            iconUrl: bridge.iconUrl,
+          }
+        : undefined,
+    }
+  }
 
   return (
-    <PrimaryCard className="@container border-divider max-md:border-b">
-      <div className="flex items-center gap-2.5">
-        <h2 className="font-bold text-heading-18 md:text-heading-20">
-          Top Tokens by Volume
-        </h2>
-        <Last24HoursBadge />
-      </div>
-
-      <Tabs
-        name="topTokensIntentBridge"
-        value={activeTab}
-        onValueChange={setActiveTab}
-        className="mt-4 gap-1"
-        variant="highlighted"
-      >
-        <TabsList className="h-auto w-full flex-wrap justify-start gap-1 bg-transparent p-0">
-          <TabsTrigger
-            value="all"
-            className="rounded-full bg-surface-secondary px-2.5 py-[3px] font-bold text-sm leading-[1.15]"
-          >
-            All
-          </TabsTrigger>
-          {intentBridges.map((bridge) => (
-            <TabsTrigger
-              key={bridge.id}
-              value={bridge.id}
-              className="flex items-center gap-1 rounded-full bg-surface-secondary px-2.5 py-[3px] font-bold text-sm leading-[1.15]"
-            >
-              <img
-                src={bridge.iconUrl}
-                alt={bridge.name}
-                className="size-4 rounded-full"
-              />
-              <span className="@max-[420px]:hidden">{bridge.name}</span>
-            </TabsTrigger>
-          ))}
-        </TabsList>
-        <div className="mt-1 h-3.5 font-medium text-secondary text-xs leading-none">
-          {activeTokenCount
-            ? `${formatInteger(activeTokenCount)} active tokens`
-            : null}
-        </div>
-        <TabsContent value={activeTab} className="mt-2">
-          {isLoading ? (
-            <RowsSkeleton />
-          ) : !tokens || tokens.items.length === 0 ? (
-            <EmptyState />
-          ) : (
-            <div className="flex flex-col gap-3">
-              {tokens.items.map((token) => (
-                <IntentTokenRow
-                  key={token.id}
-                  token={token}
-                  bridge={getRowBridge(token)}
-                  showBridgeBadge={activeTab === 'all'}
-                />
-              ))}
-            </div>
-          )}
-        </TabsContent>
-      </Tabs>
-    </PrimaryCard>
-  )
-}
-
-function RowsSkeleton() {
-  return (
-    <div className="flex flex-col gap-3">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <Skeleton key={i} className="h-7 w-full" />
-      ))}
-    </div>
-  )
-}
-
-function EmptyState() {
-  return (
-    <div className="flex min-h-40 items-center justify-center font-medium text-secondary text-sm">
-      No tokens found.
-    </div>
+    <InteropTopTokensWidget
+      tabsName="topTokensIntentBridge"
+      tabs={tabs}
+      isLoading={isLoading}
+      tabsListClassName="h-auto w-full flex-wrap justify-start"
+      tabLabelClassName="@max-[420px]:hidden"
+      getTabData={(activeTab) => {
+        const activeBridge = intentBridges.find((b) => b.id === activeTab)
+        const tokens =
+          activeTab === 'all'
+            ? intentData?.topTokens
+            : intentData?.table.entries.find((e) => e.id === activeTab)?.tokens
+        const value = activeBridge
+          ? (tokens?.items.length ?? 0) + (tokens?.remainingCount ?? 0)
+          : undefined
+        const rows = (tokens?.items ?? []).map((token) => {
+          const bridge =
+            activeBridge ??
+            (token.topProtocol
+              ? bridgesBySlug.get(token.topProtocol.slug)
+              : undefined)
+          return toRow(token, bridge, activeTab === 'all')
+        })
+        return { activeCount: { value, label: 'active tokens' }, rows }
+      }}
+    />
   )
 }

@@ -5,26 +5,28 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
-import type { TokenData } from '~/server/features/scaling/interop/types'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
-import { ChainIcon } from '../../../components/ChainIcon'
-import { InteropNoDataBadge } from '../../../components/InteropNoDataBadge'
-import { InteropTransferTrigger } from '../../../components/InteropTransferTrigger'
-import { getInteropTokenUrl } from '../../../utils/getInteropTokenUrl'
-import type { InteropIntentBridge } from '../../getInteropIntentBridgesData'
+import { ChainIcon } from './ChainIcon'
+import { InteropNoDataBadge } from './InteropNoDataBadge'
+import { InteropTransferTrigger } from './InteropTransferTrigger'
 
-export function IntentTokenRow({
-  token,
-  bridge,
-  showBridgeBadge,
-}: {
-  token: TokenData
-  bridge: InteropIntentBridge | undefined
-  showBridgeBadge: boolean
-}) {
-  const href = getInteropTokenUrl(token)
-  const topRoute = token.flows[0]
+export interface InteropTokenRowData {
+  tokenId: string
+  iconUrl: string
+  symbol: string
+  href: string | undefined
+  volume: number | null
+  transferCount: number
+  badge?: { color: string; iconUrl: string; label: string }
+  topRoute?: {
+    src: { id: string; iconUrl: string | undefined }
+    dst: { id: string; iconUrl: string | undefined }
+  }
+  protocol?: { id: string; name: string; slug: string; iconUrl: string }
+}
+
+export function InteropTokenRow({ token }: { token: InteropTokenRowData }) {
   const txsLabel = `${formatInteger(token.transferCount)} txs`
   const identity = (
     <>
@@ -40,44 +42,47 @@ export function IntentTokenRow({
   return (
     <div className="flex items-center justify-between gap-2">
       <div className="flex min-w-0 items-center gap-2">
-        {href ? (
-          <a href={href} className="flex items-center gap-2 hover:underline">
+        {token.href ? (
+          <a
+            href={token.href}
+            className="flex items-center gap-2 hover:underline"
+          >
             {identity}
           </a>
         ) : (
           identity
         )}
-        {showBridgeBadge && bridge && (
+        {token.badge && (
           <Tooltip>
             <TooltipTrigger asChild>
               <div
                 className="flex shrink-0 items-center gap-1 font-bold text-label-value-14"
-                style={{ color: bridge.color }}
+                style={{ color: token.badge.color }}
               >
                 <img
-                  src={bridge.iconUrl}
-                  alt={bridge.name}
+                  src={token.badge.iconUrl}
+                  alt={token.badge.label}
                   className="size-4 rounded-sm"
                 />
-                <span className="@max-[450px]:hidden">{bridge.name}</span>
+                <span className="@max-[450px]:hidden">{token.badge.label}</span>
               </div>
             </TooltipTrigger>
             <TooltipPortal>
-              <TooltipContent>{bridge.name}</TooltipContent>
+              <TooltipContent>{token.badge.label}</TooltipContent>
             </TooltipPortal>
           </Tooltip>
         )}
-        {topRoute && (
+        {token.topRoute && (
           <div className="flex items-center gap-1 text-label-value-12 text-secondary">
             <span className="font-medium">Top path</span>
             <ChainIcon
-              iconUrl={topRoute.srcChain.iconUrl}
-              alt={topRoute.srcChain.id}
+              iconUrl={token.topRoute.src.iconUrl}
+              alt={token.topRoute.src.id}
             />
             <ArrowRightIcon className="size-4 shrink-0 fill-brand" />
             <ChainIcon
-              iconUrl={topRoute.dstChain.iconUrl}
-              alt={topRoute.dstChain.id}
+              iconUrl={token.topRoute.dst.iconUrl}
+              alt={token.topRoute.dst.id}
             />
           </div>
         )}
@@ -90,15 +95,10 @@ export function IntentTokenRow({
             {formatCurrency(token.volume, 'usd', { decimals: 2 })}
           </span>
         )}
-        {bridge ? (
+        {token.protocol ? (
           <InteropTransferTrigger
-            protocol={{
-              id: bridge.id,
-              name: bridge.name,
-              slug: bridge.slug,
-              iconUrl: bridge.iconUrl,
-            }}
-            tokenId={token.id}
+            protocol={token.protocol}
+            tokenId={token.tokenId}
             className="cursor-pointer font-medium text-paragraph-14 text-secondary hover:underline md:text-paragraph-16"
           >
             {txsLabel}

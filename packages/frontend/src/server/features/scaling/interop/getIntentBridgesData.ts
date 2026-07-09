@@ -1,12 +1,6 @@
 import type { Project } from '@l2beat/config'
-import {
-  getInteropTransferValue,
-  type ProjectId,
-  UnixTime,
-  unique,
-} from '@l2beat/shared-pure'
+import { type ProjectId, UnixTime, unique } from '@l2beat/shared-pure'
 import { env } from '~/env'
-import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import type {
   AverageDuration,
@@ -19,6 +13,7 @@ import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
 import { getAverageDurationSeconds } from './utils/getAverageDuration'
 import { getIntentProjects } from './utils/getIntentProjects'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
+import { getPreviousProtocolData } from './utils/getPreviousProtocolData'
 import { getProtocolEntries } from './utils/getProtocolEntries'
 import {
   getProtocolsDataMap,
@@ -179,35 +174,6 @@ function getActivityEntries(
       averageValue: entry.averageValue,
     }
   })
-}
-
-async function getPreviousProtocolData(
-  snapshotTimestamp: UnixTime | undefined,
-  params: InteropSelectionInput,
-  intentProjectIds: string[],
-): Promise<Map<string, { volume: number; transferCount: number }>> {
-  const result = new Map<string, { volume: number; transferCount: number }>()
-  if (!snapshotTimestamp) return result
-
-  const db = getDb()
-  const previousTimestamp = snapshotTimestamp - UnixTime.DAY
-  const previousRecords =
-    await db.aggregatedInteropTransfer.getByChainsAndTimestamp(
-      previousTimestamp,
-      params.from,
-      params.to,
-      undefined,
-      intentProjectIds,
-    )
-
-  for (const record of previousRecords) {
-    const current = result.get(record.id) ?? { volume: 0, transferCount: 0 }
-    current.volume += getInteropTransferValue(record) ?? 0
-    current.transferCount += record.transferCount ?? 0
-    result.set(record.id, current)
-  }
-
-  return result
 }
 
 function getMockIntentBridgesData(): IntentBridgesData {

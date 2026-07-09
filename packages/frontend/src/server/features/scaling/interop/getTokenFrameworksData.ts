@@ -8,7 +8,6 @@ import {
 import groupBy from 'lodash/groupBy'
 import sumBy from 'lodash/sumBy'
 import { env } from '~/env'
-import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
@@ -28,6 +27,7 @@ import {
 import { getAverageDurationSeconds } from './utils/getAverageDuration'
 import { getInteropChains } from './utils/getInteropChains'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
+import { getPreviousProtocolData } from './utils/getPreviousProtocolData'
 import {
   getProtocolsDataMap,
   type ProtocolData,
@@ -132,6 +132,7 @@ export async function getTokenFrameworksData(
     snapshotTimestamp,
     params,
     frameworkProjectIds,
+    ['lockAndMint', 'burnAndMint'],
   )
 
   const protocolsDataMap = getProtocolsDataMap(records)
@@ -299,34 +300,6 @@ export function buildFrameworkEntry(
         ? data.volume / data.identifiedTransferCount
         : null,
   }
-}
-
-async function getPreviousProtocolData(
-  snapshotTimestamp: UnixTime | undefined,
-  params: InteropSelectionInput,
-  frameworkProjectIds: string[],
-): Promise<Map<string, { volume: number; transferCount: number }>> {
-  const result = new Map<string, { volume: number; transferCount: number }>()
-  if (!snapshotTimestamp) return result
-  const db = getDb()
-
-  const previousTimestamp = snapshotTimestamp - UnixTime.DAY
-  const previousRecords =
-    await db.aggregatedInteropTransfer.getByChainsAndTimestamp(
-      previousTimestamp,
-      params.from,
-      params.to,
-      ['lockAndMint', 'burnAndMint'],
-      frameworkProjectIds,
-    )
-
-  for (const record of previousRecords) {
-    const current = result.get(record.id) ?? { volume: 0, transferCount: 0 }
-    current.volume += getInteropTransferValue(record) ?? 0
-    current.transferCount += record.transferCount ?? 0
-    result.set(record.id, current)
-  }
-  return result
 }
 
 const frameworkIdByProjectId = new Map(
