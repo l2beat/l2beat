@@ -505,7 +505,7 @@ function abstractInfo(
 function relationInfo(
   record: Record<string, unknown>,
   deployedTokensByKey: Map<string, DeployedTokenLookupEntry>,
-  update?: Record<string, unknown>,
+  _update?: Record<string, unknown>,
   fallback: Record<string, unknown> = {},
 ): TokenInfo {
   const fromChain =
