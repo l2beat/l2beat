@@ -26,7 +26,7 @@
     "coingecko:platforms": "node -r esbuild-register scripts/getCoingeckoPlatforms.ts",
     "stargatev2-pools": "node -r esbuild-register scripts/stargatev2-pools",
     "diff": "./scripts/diff/diff.sh",
-    "tvs:update-schema": "ts-node ./scripts/tvs/update-schema.ts"
+    "tvs:update-schema": "tsx ./scripts/tvs/update-schema.ts"
   },
   "dependencies": {
     "@l2beat/discovery": "workspace:*",
