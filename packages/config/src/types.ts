@@ -236,6 +236,7 @@ export interface ProjectStatuses {
 export interface ProjectDisplay {
   description: string
   detailedDescription?: string
+  references?: ReferenceLink[]
   links: ProjectLinks
   badges: Badge[]
   redWarning?: ProjectRedWarning

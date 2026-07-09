@@ -30,7 +30,19 @@ export const liquityv2: BaseProject = {
     ),
     links: {
       websites: ['https://www.liquity.org/'],
+      documentation: ['https://docs.liquity.org/'],
+      repositories: ['https://github.com/liquity/bold'],
+      socialMedia: [
+        'https://x.com/LiquityProtocol',
+        'https://discord.com/invite/HFKpCdgQm6',
+      ],
     },
+    references: [
+      {
+        title: 'Liquity V2 Whitepaper',
+        url: 'https://liquity.gitbook.io/v2-whitepaper',
+      },
+    ],
     badges: [],
   },
   defiInfo: {

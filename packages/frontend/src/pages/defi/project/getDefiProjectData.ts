@@ -126,6 +126,7 @@ export async function getDefiProjectData(
         title: 'Protocol description',
         description: undefined,
         detailedDescription: project.display.detailedDescription,
+        references: project.display.references,
       },
     })
   }
