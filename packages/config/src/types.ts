@@ -1444,6 +1444,7 @@ export type InteropPluginName =
 export type InteropType = 'multichain' | 'intent' | 'canonical' | 'other'
 
 export interface InteropIntentConfig {
+  color: string
   intentModel: TableReadyValue
   userRecovery: TableReadyValue
   solverAccess: TableReadyValue

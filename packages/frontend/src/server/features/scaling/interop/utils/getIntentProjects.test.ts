@@ -45,6 +45,7 @@ function project({
 }
 
 const intentConfig = {
+  color: '#6D5EF6',
   intentModel: {
     value: 'Intent framework',
     description: 'Users create intents.',

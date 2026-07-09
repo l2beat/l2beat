@@ -14,6 +14,7 @@ export const stargate: BaseProject = {
     description:
       'Liquidity bridge focused on USD stablecoins and ETH using the LayerZero message bridge. Stargate also has a Hydra product which is a minting token bridge for chains that do not natively support Stargate assets.',
     intent: {
+      color: '#8B5CF6',
       intentModel: {
         value: 'Liquidity network',
         description: 'Transfers use Stargate liquidity and omnichain routing.',

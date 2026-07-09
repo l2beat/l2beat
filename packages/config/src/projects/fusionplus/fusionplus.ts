@@ -10,6 +10,7 @@ export const fusionplus: BaseProject = {
   interopConfig: {
     description: 'Hash time lock (HTLC) based intent framework built by 1inch.',
     intent: {
+      color: '#6D5EF6',
       intentModel: {
         value: 'HTLC',
         description: 'Cross-chain swaps use hash time locks.',

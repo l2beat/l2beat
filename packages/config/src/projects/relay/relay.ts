@@ -19,6 +19,7 @@ export const relay: BaseProject = {
       'Intent-based centralized EOA bridge optimised for speed, multichain and multiasset support.',
     detailedDescription: RELAY_DETAILED_DESCRIPTION,
     intent: {
+      color: '#14B8A6',
       intentModel: {
         value: 'Intent framework',
         description:

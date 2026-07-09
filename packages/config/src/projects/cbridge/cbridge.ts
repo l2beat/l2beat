@@ -13,6 +13,7 @@ export const cbridge: BaseProject = {
   // TODO!: when added, remove it from filter in config.test.ts
   interopConfig: {
     intent: {
+      color: '#00A86B',
       intentModel: {
         value: 'Liquidity network',
         description: 'Transfers are filled from the liquidity pool.',

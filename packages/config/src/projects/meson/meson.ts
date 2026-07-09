@@ -10,6 +10,7 @@ export const meson: BaseProject = {
   interopConfig: {
     description: 'Liquidity bridge specialised on alt-L1s.',
     intent: {
+      color: '#F59E0B',
       intentModel: {
         value: 'Liquidity network',
         description:

@@ -11,6 +11,7 @@ export const gaszip: BaseProject = {
     description:
       'Intent-based centralised EOA bridge used for gas token transfers, optimised for speed and diverse chain support.',
     intent: {
+      color: '#64748B',
       intentModel: {
         value: 'Gas refuel',
         description: 'Focused on sending small gas balances across chains.',

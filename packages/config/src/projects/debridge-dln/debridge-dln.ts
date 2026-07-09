@@ -11,6 +11,7 @@ export const debridgeDln: BaseProject = {
     description:
       'Intent framework built on top of the deBridge messaging protocol.',
     intent: {
+      color: '#F97316',
       intentModel: {
         value: 'Intent framework',
         description: 'Users create orders that takers can fulfill.',

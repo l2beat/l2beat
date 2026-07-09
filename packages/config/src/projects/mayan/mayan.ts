@@ -12,6 +12,7 @@ export const mayan: BaseProject = {
     description: 'Intent framework using the Wormhole message bridge.',
     detailedDescription: WORMHOLE_DETAILED_DESCRIPTION,
     intent: {
+      color: '#EC4899',
       intentModel: {
         value: 'Intent framework',
         description: 'Solvers compete to fill cross-chain swap intents.',

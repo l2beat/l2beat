@@ -4,7 +4,6 @@ import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getIntentProjects } from '~/server/features/scaling/interop/utils/getIntentProjects'
 import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
-import { INTENT_BRIDGE_COLORS } from '~/server/features/scaling/interop/utils/intentBridgeColors'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -106,7 +105,7 @@ async function getIntentBridges(
 ): Promise<InteropIntentBridge[]> {
   const projects = await ps.getProjects({ select: ['interopConfig'] })
 
-  return getIntentProjects(projects).map((project, index) => {
+  return getIntentProjects(projects).map((project) => {
     const intent = project.interopConfig.intent
 
     return {
@@ -115,8 +114,7 @@ async function getIntentBridges(
       slug: project.slug,
       iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
       description: project.interopConfig.description,
-      color:
-        INTENT_BRIDGE_COLORS[index % INTENT_BRIDGE_COLORS.length] ?? '#64748B',
+      color: intent.color,
       intentModel: intent.intentModel,
       userRecovery: intent.userRecovery,
       solverAccess: intent.solverAccess,

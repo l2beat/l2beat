@@ -28,6 +28,7 @@ export const across: BaseProject = {
     description:
       'Intent framework specialised on popular chains and assets, speed and security.',
     intent: {
+      color: '#1E88E5',
       intentModel: {
         value: 'Intent framework',
         description:

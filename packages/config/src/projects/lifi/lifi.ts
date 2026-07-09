@@ -11,6 +11,7 @@ export const lifi: BaseProject = {
     description:
       'Intent protocol implemented by LI.FI, based on the Open Intents Framework (OIF).',
     intent: {
+      color: '#00B8D9',
       intentModel: {
         value: 'Intent framework (OIF)',
         description: 'Uses the Open Intents Framework standard.',
