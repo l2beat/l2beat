@@ -2,8 +2,9 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "liquityv2",
   "import": ["../globalConfig.jsonc"],
-  "maxAddresses": 150,
+  "maxAddresses": 70,
   "initialAddresses": ["eth:0x6440f144b7e50D6a8439336510312d2F54beB01D"],
+  "sharedModules": ["chainlink"],
   "names": {
     "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE": "ActivePool_WETH",
     "eth:0x20F7C9ad66983F6523a0881d0f82406541417526": "AddressesRegistry_WETH",
@@ -43,14 +44,7 @@
     "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386": "SortedTroves_rETH",
     "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695": "StabilityPool_rETH",
     "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e": "TroveManager_rETH",
-    "eth:0x7ae430E25b67f19B431e1D1Dc048a5BCF24C0873": "TroveNFT_rETH",
-    "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419": "Chainlink_ETH_USD",
-    "eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5": "Chainlink_ETH_USD_Aggregator",
-    "eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8": "Chainlink_stETH_USD",
-    "eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f": "Chainlink_stETH_USD_Aggregator",
-    "eth:0x536218f9E9Eb48863970252233c8F271f554C2d0": "Chainlink_rETH_ETH",
-    "eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d": "Chainlink_rETH_ETH_Aggregator",
-    "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA": "ChainlinkOracleMultisig"
+    "eth:0x7ae430E25b67f19B431e1D1Dc048a5BCF24C0873": "TroveNFT_rETH"
   },
   "overrides": {
     "eth:0x5CcA549ca706C39D68156e5E0a72CcBC95f563d0": {
@@ -70,9 +64,6 @@
       "manualSourcePaths": {
         "eth:0xf4a3fE99227F6060e4C1c62b557EEE050B6483E4": "https://github.com/liquity/bold/tree/main/contracts/utils/assets"
       }
-    },
-    "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA": {
-      "description": "The Gnosis Safe that Chainlink uses to administer all three price feeds Liquity V2 reads. It owns both the feed proxies and their aggregators, so it can swap the aggregator behind any feed and replace the set of oracle nodes and how many of them must sign a price. In effect it can set the ETH, wstETH, and rETH prices the protocol relies on, or push a feed into the invalid state that shuts a branch down, which makes it BOLD's principal external trust dependency, held by Chainlink rather than Liquity."
     },
     "eth:0x1A0FC0b843aFD9140267D25d4E575Cb37a838013": {
       "fields": {
