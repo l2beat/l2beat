@@ -18,7 +18,6 @@ export interface TopTokensTab {
   label: string
 }
 
-
 export function InteropTopTokensWidget({
   tabsName,
   tabs,
