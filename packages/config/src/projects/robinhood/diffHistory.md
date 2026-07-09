@@ -1,3 +1,50 @@
+Generated with discovered.json: 0x1ef63b051347edc6dd4f8324ffa694becd3fa01f
+
+# Diff at Thu, 09 Jul 2026 14:46:29 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1e8c379b8fe786381adcddb9c648173990ad4ea3 block: 1783461693
+- current timestamp: 1783608301
+
+## Description
+
+Set `ignoreDiscovery` on the ArbFilteredTransactionsManager precompile
+(`robinhood:0x…74`) and move the `transactionFilterers` tracking to the
+L2UpgradeExecutor. The update monitor's Blockscout source-fetch of this
+`0xfe`-stub precompile intermittently failed ("No client could fetch contract
+source"), dropping the L2 entries and firing false high-severity REMOVED alerts.
+The authorized-filterer set and actor are still tracked via
+`getAllTransactionFilterers` on the executor; the per-tx event counts are dropped.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1783461693 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract ArbFilteredTransactionsManager (robinhood:0x0000000000000000000000000000000000000074) [N/A]
+    +++ description: ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.
+```
+
+```diff
+    contract L2UpgradeExecutor (robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09) [orbitstack/UpgradeExecutor] {
+    +++ description: ArbOS chain owner (UpgradeExecutor). Manages the ArbOwner chain-owner set and the transaction-filterer set, and can upgrade ArbOS configuration without delay.
+      values.transactionFilterers:
++        ["robinhood:0xebDc18A1F5C42fC25552eA233fAcf4054DF224b7"]
+    }
+```
+
+```diff
+    EOA TransactionFilterer (robinhood:0xebDc18A1F5C42fC25552eA233fAcf4054DF224b7) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "robinhood:0x0000000000000000000000000000000000000074"
++        "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09"
+    }
+```
+
 Generated with discovered.json: 0xd4ee2b65c075a2e41ae1b9b1350dde933a74c0ac
 
 # Diff at Tue, 07 Jul 2026 22:02:36 GMT:

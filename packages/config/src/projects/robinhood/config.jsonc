@@ -26,55 +26,13 @@
   },
   "overrides": {
     "robinhood:0x0000000000000000000000000000000000000074": {
+      // Ignored for discovery: the update monitor's Blockscout source-fetch of
+      // this 0xfe-stub precompile intermittently fails ("No client could fetch
+      // contract source"), which drops the L2 entries and fires false REMOVED
+      // alerts. Its authorized filterers are still tracked via
+      // getAllTransactionFilterers on the L2UpgradeExecutor below.
       "description": "ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.",
-      // Precompiles have no verifiable on-chain bytecode (a 0xfe stub); their
-      // logic lives in the Nitro node and is covered by the fraud-proof
-      // wasmModuleRoot. Point at the implementation source so the contract is
-      // treated as verified instead of flagged "unverified / may contain
-      // malicious code".
-      "manualSourcePaths": {
-        "robinhood:0x0000000000000000000000000000000000000074": "https://github.com/OffchainLabs/nitro/blob/v3.11.0/precompiles/ArbFilteredTransactionsManager.go"
-      },
-      "fields": {
-        // Number of transactions ever added to the censored list
-        // (FilteredTransactionAdded(bytes32)). A non-zero, growing value means
-        // the operator is actively censoring transactions.
-        "filteredTransactionsAdded": {
-          "handler": {
-            "type": "eventCount",
-            "topics": [
-              "0xde91070c821fde128c9ad6c14fac600aa5d701f4f74997eb997cd5591414426f"
-            ]
-          }
-        },
-        // Number of transactions removed from the censored list
-        // (FilteredTransactionDeleted(bytes32)).
-        "filteredTransactionsDeleted": {
-          "handler": {
-            "type": "eventCount",
-            "topics": [
-              "0xdb54a829e2a086557fb16aeb8950816c19960c430bf7d36c791c0f8382b66d22"
-            ]
-          }
-        },
-        // The authorized transaction filterers (ArbOwnerPublic.getAllTransaction
-        // Filterers, read cross-address off 0x..6b). They act on this precompile,
-        // so the actor/permission is attached here rather than on the chain owner.
-        "transactionFilterers": {
-          "handler": {
-            "type": "call",
-            "method": "function getAllTransactionFilterers() view returns (address[])",
-            "args": [],
-            "address": "robinhood:0x000000000000000000000000000000000000006b"
-          },
-          "permissions": [
-            {
-              "type": "interact",
-              "description": "Can register/remove transaction hashes in the ArbFilteredTransactionsManager precompile, causing the state transition function to forcibly fail those transactions, including force-included ones, without delay."
-            }
-          ]
-        }
-      }
+      "ignoreDiscovery": true
     },
     "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09": {
       "description": "ArbOS chain owner (UpgradeExecutor). Manages the ArbOwner chain-owner set and the transaction-filterer set, and can upgrade ArbOS configuration without delay.",
@@ -92,6 +50,23 @@
             {
               "type": "interact",
               "description": "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay."
+            }
+          ]
+        },
+        // The authorized transaction filterers (ArbOwnerPublic.getAllTransaction
+        // Filterers, read cross-address off 0x..6b) that can register/remove
+        // filtered tx hashes in the ArbFilteredTransactionsManager precompile.
+        "transactionFilterers": {
+          "handler": {
+            "type": "call",
+            "method": "function getAllTransactionFilterers() view returns (address[])",
+            "args": [],
+            "address": "robinhood:0x000000000000000000000000000000000000006b"
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Can register/remove transaction hashes in the ArbFilteredTransactionsManager precompile, causing the state transition function to forcibly fail those transactions, including force-included ones, without delay."
             }
           ]
         }
