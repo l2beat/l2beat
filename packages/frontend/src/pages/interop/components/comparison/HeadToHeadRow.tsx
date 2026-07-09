@@ -36,7 +36,7 @@ export function HeadToHeadRow({
           className={cn('font-bold text-heading-16', !left && 'text-secondary')}
           style={{ color: left?.color }}
         >
-          {leftValue ? format(leftValue) : '—'}
+          {leftValue != null ? format(leftValue) : '—'}
         </span>
         <span className="text-center font-semibold text-base text-secondary leading-none">
           {label}
@@ -48,7 +48,7 @@ export function HeadToHeadRow({
           )}
           style={{ color: right?.color }}
         >
-          {rightValue ? format(rightValue) : '—'}
+          {rightValue != null ? format(rightValue) : '—'}
         </span>
       </div>
 

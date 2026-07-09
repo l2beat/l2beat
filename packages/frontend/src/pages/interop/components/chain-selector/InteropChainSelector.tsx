@@ -17,7 +17,6 @@ export function InteropChainSelector({
       onToggle={toggleChain}
       onSelectAll={selectAll}
       onDeselectAll={deselectAll}
-      min={1}
     />
   )
 }
