@@ -7,6 +7,7 @@ import type {
 import { formatError } from '../utils/formatError'
 import type { IngestionOutcome } from './IngestionTrace'
 import type { TokenIngestionProcessor } from './TokenIngestionProcessor'
+import type { TokenRelationIngestion } from './TokenRelationIngestion'
 import { normalizeInteropTokenAddress } from './tokenIngestionUtils'
 
 const INTEROP_TRANSFERS_LAST_SERIAL_ID_KEY = 'interop-transfers:lastSerialId'
@@ -27,6 +28,7 @@ export class TokenIngestionLoop {
     private readonly db: Database,
     private readonly tokenDb: TokenDatabase,
     private readonly processor: TokenIngestionProcessor,
+    private readonly relationIngestion: TokenRelationIngestion,
     private readonly logger: Logger,
     private readonly config: TokenIngestionLoopConfig,
   ) {
@@ -65,7 +67,12 @@ export class TokenIngestionLoop {
     this.logger.info('Stopped')
   }
 
+  // The steps run sequentially on purpose: their logs stay separated and a
+  // failure is attributable to a single step. Token relation ingestion comes
+  // first because it is fast and bounded, while the queue drain can run long
+  // — relations have no ordering dependency on the token catalogue.
   async runOnce() {
+    await this.relationIngestion.runOnce()
     await this.enqueueNewInteropTransferTokens()
     await this.drainPendingQueue()
   }

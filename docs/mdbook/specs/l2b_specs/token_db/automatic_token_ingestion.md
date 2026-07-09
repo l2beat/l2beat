@@ -27,29 +27,28 @@
 # Automatic Token Ingestion
 
 This document describes how TokenDB is kept in sync automatically: how new
-deployed tokens are added, how they are linked to abstract tokens, how token
-relations are materialized from non-swapping interop transfer evidence, and
-how conflicts and errors surface to humans.
+deployed tokens are added, how they are linked to abstract tokens, and how
+conflicts and errors surface to humans.
 
 ## Overview
 
 A background loop in the token-backend service ticks every minute. Each tick
-does two things in order:
+does three things in order:
 
-1. **Pre-step.** Scan the interop transfer table for transfers inserted
+1. **Token relation ingestion.** Materialize `TokenRelation` rows from
+   interop transfers inserted since the previous tick. This is a separate
+   subsystem that deliberately does not use the queue below — see
+   [Token relations](./token_relations.md) for how it works and, more
+   importantly, why it is not part of this queue.
+2. **Pre-step.** Scan the interop transfer table for transfers inserted
    since the previous tick and enqueue both token addresses from each
    transfer.
-2. **Drain.** Repeatedly take the next pending queue entry and process it
+3. **Drain.** Repeatedly take the next pending queue entry and process it
    until the queue is empty or the per-run safety cap is reached.
 
-That is the entire shape. Everything else is a detail of how a single entry
-gets processed, including relation inserts that may happen alongside an
-otherwise-stable deployed token.
-
-Token relations currently only represent non-swapping routes between
-deployed tokens: `lockAndMint` and `burnAndMint` transfer evidence. Swap-like
-routes such as `nonMinting` can still enqueue or propagate token addresses,
-but they do not create `TokenRelation` rows.
+The steps run sequentially (never in parallel) so that logs stay separated
+and a failure is attributable to a single step. That's the entire shape.
+Everything else is a detail of how a single entry gets processed.
 
 ## Drain guard and monitoring
 
@@ -131,9 +130,8 @@ The processor splits each tick into three phases:
    facts) or we'd materialize a new abstract from a CoinGecko coin we
    haven't seen before (needs CoinGecko per-coin endpoints) — the
    outcome is `pending`, which carries the operation (`insert` or
-   `update`), the abstract intent (`existing` id, or `new-coingecko`
-   with just the coin id and symbol), and any token relations that should
-   be inserted once the deployed-token write succeeds.
+   `update`) and the abstract intent (`existing` id, or `new-coingecko`
+   with just the coin id and symbol).
 2. **`fetch(trace)`** — the only place external calls happen.
    Pass-through for every outcome except `pending`. For `pending`,
    `fetch` materializes the new abstract record (when needed) via
@@ -211,11 +209,10 @@ existing record only needs its abstract pointer updated.
 
 ## Outcomes
 
-`plan` produces one of: `skip`, `conflict`, `noop`, `write` (either a
-deployed-token change with an already-existing abstract, or a
-relation-only write), or `pending`. `fetch` either passes the outcome
-through or converts `pending` into `write` (insert or update, possibly
-with a newly built CoinGecko abstract), `conflict`
+`plan` produces one of: `skip`, `conflict`, `noop`, `write` (update
+with an already-existing abstract), or `pending`. `fetch` either passes
+the outcome through or converts `pending` into `write` (insert or
+update, possibly with a newly built CoinGecko abstract), `conflict`
 (new CoinGecko abstract symbol differs from deployed token symbol), or `error`.
 `apply` only ever sees the five terminal outcome kinds:
 
@@ -227,25 +224,21 @@ with a newly built CoinGecko abstract), `conflict`
   be fetched, or the abstract resolved but the deployed-token facts are
   incomplete (missing `symbol`, `decimals`, or `deploymentTimestamp`).
   `apply` moves the entry to `error` with a message.
-- **`noop`** — token already exists with the resolved abstract, and no
-  missing token relations were discovered from non-swapping transfer
-  evidence. `apply` removes the queue entry.
-- **`write`** — `apply` writes whatever the trace discovered is missing:
-  insert/update the deployed token, insert a new abstract token if
-  needed, and insert any new token relations in the same transaction.
-  Some writes are relation-only: the deployed token stays unchanged, but
-  non-swapping transfer evidence revealed a missing relation. After the
-  write it re-enqueues every neighbor token from the address's transfers
+- **`noop`** — token already exists with the resolved abstract; nothing to
+  write. `apply` removes the queue entry.
+- **`write`** — `apply` inserts/updates the deployed token and, if
+  needed, inserts a new abstract token in the same transaction. It then
+  re-enqueues every neighbor token from the address's transfers
   (propagation) and removes the queue entry.
 
 ## Shared write boundary
 
-Both this pipeline and the user-driven `intent → plan → execute` pipeline
-ultimately write to the same TokenDB tables (`AbstractToken`,
-`DeployedToken`, and `TokenRelation`). To make sure both paths produce
-the same writes — and so that future cross-cutting concerns like a
-persistent history table land in exactly one place — they share a single
-primitive,
+This pipeline, the user-driven `intent → plan → execute` pipeline, and
+[token relation ingestion](./token_relations.md) ultimately write to the
+same TokenDB core tables (`AbstractToken`, `DeployedToken`, and
+`TokenRelation`). To make sure all paths produce the same writes — and so
+that future cross-cutting concerns like a persistent history table land
+in exactly one place — they share a single primitive,
 [`commitTokenChanges`](../../../../../packages/token-backend/src/commitTokenChanges.ts),
 that takes a list of `Command`s and dispatches each to the matching
 repository method.
@@ -342,23 +335,20 @@ ping-pong cycles between two stable tokens.
 
 For each tick, the drain builds an in-memory index keyed by normalized
 `(chain, address)` from a SQL aggregation over the interop transfer table:
-one row per unique group of `(src token, dst token, plugin, bridge type,
-srcWasBurned, dstWasMinted)`, carrying the group's transfer count and a
-sample transfer id. Each processed entry looks up its own routes from
-this index — no per-entry DB queries for transfer evidence. Aggregating
-in SQL keeps the index size proportional to the number of distinct
-bridged token routes, not to transfer volume — the table retains ~7 days
-of transfers, and loading full rows for all of them (as an earlier
-version of this index did) caused out-of-memory crashes when retention
-grew from one day to seven.
+one row per unique group of `(src token, dst token, bridge-type evidence)`,
+carrying the group's transfer count and a sample transfer id. Each
+processed entry looks up its own routes from this index — no per-entry DB
+queries for transfer evidence. Aggregating in SQL keeps the index size
+proportional to the number of distinct bridged token pairs, not to
+transfer volume — the table retains ~7 days of transfers, and loading full
+rows for all of them (as an earlier version of this index did) caused
+out-of-memory crashes when retention grew from one day to seven.
 
-The consumers that need a full transfer row — token-relation
-materialization and the `non-swapping-transfer` assignment proof —
-fetch the group's sample transfer by primary key, and only for outcomes
-that persist that evidence. Token-relation materialization filters this
-index to non-swapping bridge types (`lockAndMint` and `burnAndMint`) before
-it checks for missing relations. Plans that end in `noop` or `conflict` —
-the common steady-state outcomes — never pay the lookup.
+The one consumer that needs a full transfer row — the
+`non-swapping-transfer` assignment proof — fetches the group's sample
+transfer by primary key, and only for outcomes that persist the proof
+(`write` and `pending`). Plans that end in `noop` or `conflict` — the
+common steady-state outcomes — never pay the lookup.
 
 The drain refresh happens immediately after the pre-step and immediately
 before processing the queue. Do not replace it with a stale cached read:

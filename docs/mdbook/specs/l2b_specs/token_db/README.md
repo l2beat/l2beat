@@ -19,8 +19,11 @@ The docs in this folder describe how TokenDB is kept correct:
 - [Automatic token ingestion](./automatic_token_ingestion.md) — the
   background loop that discovers new deployed tokens from interop
   transfers, links them to abstract tokens (via transfer evidence and
-  CoinGecko), materializes token relations from non-swapping interop
-  transfer evidence, and surfaces conflicts/errors to humans.
+  CoinGecko), and surfaces conflicts/errors to humans.
+- [Token relations](./token_relations.md) — how relations between
+  deployed tokens are observed from non-swapping interop transfers, why
+  their ingestion is deliberately separate from the token ingestion
+  queue, and why the table has no foreign keys to `DeployedToken`.
 - [Intent / Plan / Execute](./intent_plan_execute.md) — the
   intent → plan → commands pipeline behind every human-driven write
   from token-UI, and why it exists (visible blast radius + concurrency
@@ -57,13 +60,14 @@ What the two pipelines *do* share — and what should remain shared — is
 the **write boundary** below them: the `Command` primitives and a single
 `commitTokenChanges` helper in
 [`packages/token-backend/src/commitTokenChanges.ts`](../../../../../packages/token-backend/src/commitTokenChanges.ts).
-Both pipelines translate their work into `Command[]` and funnel it
+Both pipelines — and [token relation ingestion](./token_relations.md) as
+a third writer — translate their work into `Command[]` and funnel it
 through this helper. That means:
 
 - There is exactly one place that writes to TokenDB's three core tables
   (`AbstractToken`, `DeployedToken`, `TokenRelation`).
 - Future cross-cutting concerns (history, audit log, write proofs) plug
-  in here once and cover both pipelines automatically.
+  in here once and cover every writer automatically.
 - Each pipeline still owns its own concurrency story (the intent
   pipeline re-plans inside the SERIALIZABLE transaction; ingestion just
   wraps the writes in SERIALIZABLE), because they have different

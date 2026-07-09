@@ -4,7 +4,6 @@ import type {
   InteropTransferRecord,
   TokenDatabase,
   TokenIngestionQueueRecord,
-  TokenRelationRecord,
 } from '@l2beat/database'
 import { Address32, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
@@ -308,9 +307,6 @@ describe(TokenIngestionProcessor.name, () => {
             getByIds: mockFn().resolvesTo([
               abstractTokenRecord('USDC01', 'USDC'),
             ]),
-            findById: mockFn().resolvesTo(
-              abstractTokenRecord('USDC01', 'USDC'),
-            ),
           }),
         }),
       })
@@ -359,148 +355,6 @@ describe(TokenIngestionProcessor.name, () => {
           }),
         }),
         tokenDb: mockObject<TokenDatabase>({
-          deployedToken: mockObject<TokenDatabase['deployedToken']>({
-            findByChainAndAddress: mockFn().resolvesTo(existing),
-            getByPrimaryKeys: mockFn().resolvesTo([
-              {
-                ...otherAddress,
-                abstractTokenId: 'USDC01',
-                symbol: 'USDC',
-                comment: null,
-                decimals: 6,
-                deploymentTimestamp: UnixTime(1),
-                metadata: null,
-              },
-            ]),
-          }),
-          abstractToken: mockObject<TokenDatabase['abstractToken']>({
-            getByIds: mockFn().resolvesTo([
-              abstractTokenRecord('USDC01', 'USDC'),
-            ]),
-            findById: mockFn().resolvesTo(
-              abstractTokenRecord('USDC01', 'USDC'),
-            ),
-          }),
-        }),
-      })
-
-      const trace = await processor.plan(
-        queueEntry(address),
-        buildInteropTransferIndex([
-          route({
-            srcChain: address.chain,
-            srcTokenAddress: address.address,
-            dstChain: otherAddress.chain,
-            dstTokenAddress: otherAddress.address,
-            bridgeType: 'lockAndMint',
-          }),
-        ]),
-      )
-
-      expect(trace.outcome.kind).toEqual('write')
-      if (trace.outcome.kind !== 'write') return
-      expect(trace.outcome.deployedToken).toEqual(undefined)
-      expect(trace.outcome.tokenRelations).toHaveLength(1)
-      expect(findByTransferId).toHaveBeenOnlyCalledWith('transfer-id')
-    })
-
-    it('does not create token relations from swapping transfers', async () => {
-      const address = token('ethereum', '0xaaa')
-      const otherAddress = token('base', '0xbbb')
-      const existing = {
-        ...address,
-        abstractTokenId: 'USDC01',
-        symbol: 'USDC',
-        comment: null,
-        decimals: 6,
-        deploymentTimestamp: UnixTime(1),
-        metadata: null,
-      }
-      const relationGetByPrimaryKeys = mockFn().resolvesTo([])
-      const findByTransferId = mockFn().resolvesTo(
-        transfer({ bridgeType: 'nonMinting' }),
-      )
-
-      const processor = createProcessor({
-        db: mockObject<Database>({
-          interopTransfer: mockObject<Database['interopTransfer']>({
-            findByTransferId,
-          }),
-        }),
-        tokenDb: mockObject<TokenDatabase>({
-          tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
-            getByPrimaryKeys: relationGetByPrimaryKeys,
-          }),
-          deployedToken: mockObject<TokenDatabase['deployedToken']>({
-            findByChainAndAddress: mockFn().resolvesTo(existing),
-            getByPrimaryKeys: mockFn().resolvesTo([
-              {
-                ...otherAddress,
-                abstractTokenId: 'USDC01',
-                symbol: 'USDC',
-                comment: null,
-                decimals: 6,
-                deploymentTimestamp: UnixTime(1),
-                metadata: null,
-              },
-            ]),
-          }),
-          abstractToken: mockObject<TokenDatabase['abstractToken']>({
-            getByIds: mockFn().resolvesTo([
-              abstractTokenRecord('USDC01', 'USDC'),
-            ]),
-            findById: mockFn().resolvesTo(
-              abstractTokenRecord('USDC01', 'USDC'),
-            ),
-          }),
-        }),
-      })
-
-      const trace = await processor.plan(
-        queueEntry(address),
-        buildInteropTransferIndex([
-          route({
-            srcChain: address.chain,
-            srcTokenAddress: address.address,
-            dstChain: otherAddress.chain,
-            dstTokenAddress: otherAddress.address,
-            bridgeType: 'nonMinting',
-          }),
-        ]),
-      )
-
-      expect(trace.outcome).toEqual({ kind: 'noop', deployedToken: existing })
-      expect(relationGetByPrimaryKeys).toHaveBeenCalledTimes(0)
-      expect(findByTransferId).toHaveBeenCalledTimes(0)
-    })
-
-    it('does not suggest token relations that already exist', async () => {
-      const address = token('ethereum', '0xaaa')
-      const otherAddress = token('base', '0xbbb')
-      const existing = {
-        ...address,
-        abstractTokenId: 'USDC01',
-        symbol: 'USDC',
-        comment: null,
-        decimals: 6,
-        deploymentTimestamp: UnixTime(1),
-        metadata: null,
-      }
-      const relation = tokenRelationRecord(address, otherAddress)
-      const findByTransferId = mockFn().resolvesTo(
-        transfer({ bridgeType: 'lockAndMint' }),
-      )
-
-      const processor = createProcessor({
-        db: mockObject<Database>({
-          interopTransfer: mockObject<Database['interopTransfer']>({
-            findByTransferId,
-          }),
-        }),
-        tokenDb: mockObject<TokenDatabase>({
-          tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
-            getByPrimaryKeys: mockFn().resolvesTo([relation]),
-          }),
           deployedToken: mockObject<TokenDatabase['deployedToken']>({
             findByChainAndAddress: mockFn().resolvesTo(existing),
             getByPrimaryKeys: mockFn().resolvesTo([
@@ -598,8 +452,7 @@ describe(TokenIngestionProcessor.name, () => {
 
       expect(trace.outcome.kind).toEqual('write')
       if (trace.outcome.kind !== 'write') return
-      expect(trace.outcome.deployedToken?.type).toEqual('update')
-      if (!trace.outcome.deployedToken) return
+      expect(trace.outcome.deployedToken.type).toEqual('update')
       if (trace.outcome.deployedToken.type !== 'update') return
       expect(trace.outcome.deployedToken.update.abstractTokenId).toEqual(
         'USDC01',
@@ -661,7 +514,6 @@ describe(TokenIngestionProcessor.name, () => {
           symbol: 'usdc',
         },
         symbolFallback: 'USDC',
-        tokenRelations: [],
         neighborsToEnqueue: [],
         proof: { kind: 'coingecko' },
       })
@@ -724,7 +576,6 @@ describe(TokenIngestionProcessor.name, () => {
             token: { id: 'USDC01', symbol: 'USDC' },
           },
           symbolFallback: undefined,
-          tokenRelations: [],
           neighborsToEnqueue: [],
           proof: { kind: 'coingecko' },
         },
@@ -746,7 +597,6 @@ describe(TokenIngestionProcessor.name, () => {
             abstractTokenAssignmentProof: { kind: 'coingecko' },
           },
         },
-        tokenRelations: [],
         neighborsToEnqueue: [],
       })
     })
@@ -808,7 +658,6 @@ describe(TokenIngestionProcessor.name, () => {
             symbol: 'usdc',
           },
           symbolFallback: 'USDC',
-          tokenRelations: [],
           neighborsToEnqueue: [],
           proof: { kind: 'coingecko' },
         },
@@ -877,7 +726,6 @@ describe(TokenIngestionProcessor.name, () => {
             symbol: 'susde',
           },
           symbolFallback: 'SUSDE',
-          tokenRelations: [],
           neighborsToEnqueue: [],
           proof: { kind: 'coingecko' },
         },
@@ -886,10 +734,10 @@ describe(TokenIngestionProcessor.name, () => {
       expect(result.outcome.kind).toEqual('write')
       if (result.outcome.kind !== 'write') return
       expect(result.outcome.newAbstractToken?.symbol).toEqual('sUSDe')
-      expect(result.outcome.deployedToken?.type).toEqual('insert')
-      if (!result.outcome.deployedToken) return
-      if (result.outcome.deployedToken.type !== 'insert') return
-      expect(result.outcome.deployedToken.record.symbol).toEqual('sUSDe')
+      expect(
+        result.outcome.deployedToken.type === 'insert' &&
+          result.outcome.deployedToken.record.symbol,
+      ).toEqual('sUSDe')
       const correctionStep = result.steps.find(
         (step) => step.kind === 'corrected-coingecko-symbol-casing',
       )
@@ -956,7 +804,6 @@ describe(TokenIngestionProcessor.name, () => {
             symbol: 'usdc',
           },
           symbolFallback: 'USDC',
-          tokenRelations: [],
           neighborsToEnqueue: [],
           proof: { kind: 'coingecko' },
         },
@@ -1014,7 +861,6 @@ describe(TokenIngestionProcessor.name, () => {
             token: { id: 'USDC01', symbol: 'USDC' },
           },
           symbolFallback: undefined,
-          tokenRelations: [],
           neighborsToEnqueue: [],
           proof: nonSwappingProof(),
         },
@@ -1069,7 +915,6 @@ describe(TokenIngestionProcessor.name, () => {
             token: { id: 'SUSDE1', symbol: 'sUSDe' },
           },
           symbolFallback: undefined,
-          tokenRelations: [],
           neighborsToEnqueue: [],
           proof: nonSwappingProof(),
         },
@@ -1078,10 +923,10 @@ describe(TokenIngestionProcessor.name, () => {
       expect(result.outcome.kind).toEqual('write')
       if (result.outcome.kind !== 'write') return
       expect(result.outcome.newAbstractToken).toEqual(undefined)
-      expect(result.outcome.deployedToken?.type).toEqual('insert')
-      if (!result.outcome.deployedToken) return
-      if (result.outcome.deployedToken.type !== 'insert') return
-      expect(result.outcome.deployedToken.record.symbol).toEqual('SUSDE')
+      expect(
+        result.outcome.deployedToken.type === 'insert' &&
+          result.outcome.deployedToken.record.symbol,
+      ).toEqual('SUSDE')
       expect(
         result.steps.some(
           (step) => step.kind === 'corrected-coingecko-symbol-casing',
@@ -1145,7 +990,6 @@ describe(TokenIngestionProcessor.name, () => {
             symbol: 'usdc',
           },
           symbolFallback: 'USDC',
-          tokenRelations: [],
           neighborsToEnqueue: [],
           proof: { kind: 'coingecko' },
         },
@@ -1206,7 +1050,6 @@ describe(TokenIngestionProcessor.name, () => {
             symbol: 'usdc',
           },
           symbolFallback: 'USDC',
-          tokenRelations: [],
           neighborsToEnqueue: [],
           proof: { kind: 'coingecko' },
         },
@@ -1257,7 +1100,6 @@ describe(TokenIngestionProcessor.name, () => {
             token: { id: 'USDC01', symbol: 'USDC' },
           },
           symbolFallback: undefined,
-          tokenRelations: [],
           neighborsToEnqueue: [],
           proof: { kind: 'coingecko' },
         },
@@ -1272,7 +1114,6 @@ describe(TokenIngestionProcessor.name, () => {
       const address = token('ethereum', '0xaaa')
       const neighbor = token('base', '0xbbb')
       const insert = mockFn().resolvesTo(undefined)
-      const relationInsert = mockFn().resolvesTo(undefined)
       const enqueue = mockFn().resolvesTo(undefined)
       const remove = mockFn().resolvesTo(1)
 
@@ -1281,9 +1122,6 @@ describe(TokenIngestionProcessor.name, () => {
           transaction: async (callback) => await callback(),
           deployedToken: mockObject<TokenDatabase['deployedToken']>({
             insert,
-          }),
-          tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
-            insert: relationInsert,
           }),
           tokenDbHistory: mockObject<TokenDatabase['tokenDbHistory']>({
             insert: mockFn().resolvesTo(undefined),
@@ -1318,7 +1156,6 @@ describe(TokenIngestionProcessor.name, () => {
               abstractTokenAssignmentProof: { kind: 'coingecko' },
             },
           },
-          tokenRelations: [tokenRelationRecord(address, neighbor)],
           neighborsToEnqueue: [neighbor],
         },
       }
@@ -1326,9 +1163,6 @@ describe(TokenIngestionProcessor.name, () => {
       await processor.apply(queueEntry(address), trace)
 
       expect(insert).toHaveBeenCalledTimes(1)
-      expect(relationInsert).toHaveBeenOnlyCalledWith(
-        tokenRelationRecord(address, neighbor),
-      )
       expect(enqueue).toHaveBeenCalledWith(neighbor, 'pending')
       expect(remove).toHaveBeenCalledWith(queueEntry(address))
     })
@@ -1349,7 +1183,6 @@ describe(TokenIngestionProcessor.name, () => {
             token: { id: 'USDC01', symbol: 'USDC' },
           },
           symbolFallback: undefined,
-          tokenRelations: [],
           neighborsToEnqueue: [],
           proof: { kind: 'coingecko' },
         },
@@ -1433,23 +1266,8 @@ function createProcessor(deps: {
   generateAbstractTokenId?: () => string
 }) {
   return new TokenIngestionProcessor({
-    db: mockObject<Database>({
-      interopTransfer: mockObject<Database['interopTransfer']>({
-        findByTransferId: mockFn().executes(async (transferId: string) =>
-          transfer({ transferId }),
-        ),
-      }),
-      ...deps.db,
-    }),
-    tokenDb: mockObject<TokenDatabase>({
-      tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
-        getByPrimaryKeys: mockFn().resolvesTo([]),
-        insert: mockFn().resolvesTo(undefined),
-        updateByPrimaryKey: mockFn().resolvesTo(0),
-        deleteByPrimaryKey: mockFn().resolvesTo(0),
-      }),
-      ...deps.tokenDb,
-    }),
+    db: deps.db ?? mockObject<Database>({}),
+    tokenDb: deps.tokenDb ?? mockObject<TokenDatabase>({}),
     coingeckoClient: deps.coingeckoClient ?? mockObject<CoingeckoClient>({}),
     etherscanApiKey: undefined,
     fetchDeployedTokenFacts: deps.fetchDeployedTokenFacts,
@@ -1501,28 +1319,10 @@ function nonSwappingProof() {
   }
 }
 
-function tokenRelationRecord(
-  from: ReturnType<typeof token>,
-  to: ReturnType<typeof token>,
-): TokenRelationRecord {
-  return {
-    tokenFromChain: from.chain,
-    tokenFromAddress: from.address,
-    tokenToChain: to.chain,
-    tokenToAddress: to.address,
-    plugin: 'test',
-    sourceWasBurned: false,
-    destinationWasMinted: true,
-    bridgeType: 'lockAndMint',
-    transfer: { transferId: 'transfer-id' },
-  }
-}
-
 function route(
   overrides: Partial<InteropTokenRouteRecord>,
 ): InteropTokenRouteRecord {
   return {
-    plugin: 'test',
     srcChain: 'ethereum',
     srcTokenAddress: undefined,
     dstChain: 'base',

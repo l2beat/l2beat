@@ -17,7 +17,10 @@ import {
 } from './intents'
 import { getLogger } from './logger'
 import type { DeployedTokenUpdateable } from './schemas/DeployedToken'
-import type { TokenRelationPrimaryKey } from './schemas/TokenRelation'
+import type {
+  TokenRelationPrimaryKey,
+  TokenRelationRecord,
+} from './schemas/TokenRelation'
 
 export type Plan = v.infer<typeof Plan>
 export const Plan = v.object({
@@ -230,15 +233,11 @@ async function planDeleteDeployedToken(
       `DeployedToken ${intent.pk.chain}+${intent.pk.address} doesn't exist`,
     )
   }
-  const touchingRelations = await db.tokenRelation.getRelationsFromOrTo(
-    intent.pk,
-  )
+  // Token relations touching this token are deliberately left in place:
+  // they are observations of on-chain transfers and stay valid whether or
+  // not the address is catalogued as a deployed token.
+  // See docs/mdbook/specs/l2b_specs/token_db/token_relations.md.
   return [
-    ...touchingRelations.map((relation) => ({
-      type: 'DeleteTokenRelationCommand' as const,
-      pk: toTokenRelationPrimaryKey(relation),
-      existing: relation,
-    })),
     {
       type: 'DeleteDeployedTokenCommand',
       pk: intent.pk,
@@ -343,28 +342,21 @@ async function assertRelationEndpointsExist(
   }
 }
 
-function toTokenRelationPrimaryKey(relation: {
-  tokenFromChain: string
-  tokenFromAddress: string
-  tokenToChain: string
-  tokenToAddress: string
-  plugin: string
-  sourceWasBurned: boolean
-  destinationWasMinted: boolean
-}): TokenRelationPrimaryKey {
+function toTokenRelationPrimaryKey(
+  relation: TokenRelationRecord,
+): TokenRelationPrimaryKey {
   return {
     tokenFromChain: relation.tokenFromChain,
     tokenFromAddress: relation.tokenFromAddress,
     tokenToChain: relation.tokenToChain,
     tokenToAddress: relation.tokenToAddress,
     plugin: relation.plugin,
-    sourceWasBurned: relation.sourceWasBurned,
-    destinationWasMinted: relation.destinationWasMinted,
+    bridgeType: relation.bridgeType,
   }
 }
 
 function formatTokenRelationPrimaryKey(pk: TokenRelationPrimaryKey): string {
-  return `${pk.tokenFromChain}+${pk.tokenFromAddress} -> ${pk.tokenToChain}+${pk.tokenToAddress} via ${pk.plugin} (${pk.sourceWasBurned}/${pk.destinationWasMinted})`
+  return `${pk.tokenFromChain}+${pk.tokenFromAddress} -> ${pk.tokenToChain}+${pk.tokenToAddress} via ${pk.plugin} (${pk.bridgeType})`
 }
 
 function stampInsertProof(

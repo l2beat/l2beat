@@ -17,8 +17,6 @@ export type TokenRelation = {
   tokenToChain: string
   tokenToAddress: string
   plugin: string
-  sourceWasBurned: boolean
-  destinationWasMinted: boolean
-  bridgeType: string | null
+  bridgeType: string
   transfer: unknown
 }

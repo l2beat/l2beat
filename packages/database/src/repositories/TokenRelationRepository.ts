@@ -18,9 +18,7 @@ export type TokenRelationRecord = {
   tokenToChain: string
   tokenToAddress: string
   plugin: string
-  sourceWasBurned: boolean
-  destinationWasMinted: boolean
-  bridgeType: InteropBridgeType | null
+  bridgeType: InteropBridgeType
   transfer: JsonValue
 }
 
@@ -31,8 +29,7 @@ export type TokenRelationPrimaryKey = Pick<
   | 'tokenToChain'
   | 'tokenToAddress'
   | 'plugin'
-  | 'sourceWasBurned'
-  | 'destinationWasMinted'
+  | 'bridgeType'
 >
 
 export type TokenRelationUpdateable = Omit<
@@ -43,7 +40,7 @@ export type TokenRelationUpdateable = Omit<
 function toRecord(row: Selectable<TokenRelation>): TokenRelationRecord {
   return {
     ...row,
-    bridgeType: row.bridgeType as InteropBridgeType | null,
+    bridgeType: row.bridgeType as InteropBridgeType,
     transfer: row.transfer as JsonValue,
   }
 }
@@ -53,15 +50,6 @@ function toRow(record: TokenRelationRecord): Insertable<TokenRelation> {
     ...record,
     tokenFromAddress: record.tokenFromAddress.toLowerCase(),
     tokenToAddress: record.tokenToAddress.toLowerCase(),
-  }
-}
-
-function toUpdateRow(
-  record: TokenRelationUpdateable,
-): Updateable<TokenRelation> {
-  return {
-    ...record,
-    bridgeType: record.bridgeType as TokenRelation['bridgeType'],
   }
 }
 
@@ -81,8 +69,7 @@ export class TokenRelationRepository extends BaseRepository {
       .where('tokenToChain', '=', pk.tokenToChain)
       .where('tokenToAddress', '=', pk.tokenToAddress.toLowerCase())
       .where('plugin', '=', pk.plugin)
-      .where('sourceWasBurned', '=', pk.sourceWasBurned)
-      .where('destinationWasMinted', '=', pk.destinationWasMinted)
+      .where('bridgeType', '=', pk.bridgeType)
       .executeTakeFirst()
 
     return row ? toRecord(row) : undefined
@@ -105,8 +92,7 @@ export class TokenRelationRepository extends BaseRepository {
               eb('tokenToChain', '=', key.tokenToChain),
               eb('tokenToAddress', '=', key.tokenToAddress.toLowerCase()),
               eb('plugin', '=', key.plugin),
-              eb('sourceWasBurned', '=', key.sourceWasBurned),
-              eb('destinationWasMinted', '=', key.destinationWasMinted),
+              eb('bridgeType', '=', key.bridgeType),
             ]),
           ),
         ),
@@ -122,14 +108,13 @@ export class TokenRelationRepository extends BaseRepository {
   ): Promise<number> {
     const result = await this.db
       .updateTable('TokenRelation')
-      .set(toUpdateRow(patch))
+      .set(patch)
       .where('tokenFromChain', '=', pk.tokenFromChain)
       .where('tokenFromAddress', '=', pk.tokenFromAddress.toLowerCase())
       .where('tokenToChain', '=', pk.tokenToChain)
       .where('tokenToAddress', '=', pk.tokenToAddress.toLowerCase())
       .where('plugin', '=', pk.plugin)
-      .where('sourceWasBurned', '=', pk.sourceWasBurned)
-      .where('destinationWasMinted', '=', pk.destinationWasMinted)
+      .where('bridgeType', '=', pk.bridgeType)
       .executeTakeFirst()
 
     return Number(result.numUpdatedRows)
@@ -137,29 +122,6 @@ export class TokenRelationRepository extends BaseRepository {
 
   async getAll(): Promise<TokenRelationRecord[]> {
     const rows = await this.db.selectFrom('TokenRelation').selectAll().execute()
-    return rows.map(toRecord)
-  }
-
-  async getRelationsFromOrTo(
-    token: DeployedTokenPrimaryKey,
-  ): Promise<TokenRelationRecord[]> {
-    const rows = await this.db
-      .selectFrom('TokenRelation')
-      .selectAll()
-      .where((eb) =>
-        eb.or([
-          eb.and([
-            eb('tokenFromChain', '=', token.chain),
-            eb('tokenFromAddress', '=', token.address.toLowerCase()),
-          ]),
-          eb.and([
-            eb('tokenToChain', '=', token.chain),
-            eb('tokenToAddress', '=', token.address.toLowerCase()),
-          ]),
-        ]),
-      )
-      .execute()
-
     return rows.map(toRecord)
   }
 
@@ -197,8 +159,7 @@ export class TokenRelationRepository extends BaseRepository {
       .where('tokenToChain', '=', pk.tokenToChain)
       .where('tokenToAddress', '=', pk.tokenToAddress.toLowerCase())
       .where('plugin', '=', pk.plugin)
-      .where('sourceWasBurned', '=', pk.sourceWasBurned)
-      .where('destinationWasMinted', '=', pk.destinationWasMinted)
+      .where('bridgeType', '=', pk.bridgeType)
       .executeTakeFirst()
 
     return Number(result.numDeletedRows)

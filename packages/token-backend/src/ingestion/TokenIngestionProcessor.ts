@@ -3,11 +3,9 @@ import type {
   ChainRecord,
   Database,
   DeployedTokenRecord,
-  InteropTransferRecord,
   TokenDatabase,
   TokenIngestionQueueRecord,
   TokenIngestionQueueState,
-  TokenRelationRecord,
 } from '@l2beat/database'
 import { type InteropBridgeType, UnixTime } from '@l2beat/shared-pure'
 import { randomUUID } from 'crypto'
@@ -26,9 +24,7 @@ import {
   type AbstractTokenAssignmentProof,
   commitTokenChanges,
   nonSwappingTransferProof,
-  serializeInteropTransferRecord,
 } from '../commitTokenChanges'
-import type { TokenRelationPrimaryKey } from '../schemas/TokenRelation'
 import {
   buildAliasToChainMap,
   platformsToChainAddressPairs,
@@ -105,10 +101,6 @@ export class TokenIngestionProcessor {
     | Promise<Map<string, CoinListPlatformEntry>>
     | undefined
   private interopTransferIndex: InteropTransferIndex | undefined
-  private readonly interopTransferCache = new Map<
-    string,
-    Promise<InteropTransferRecord | undefined>
-  >()
 
   constructor(private readonly deps: TokenIngestionProcessorDeps) {}
 
@@ -201,7 +193,6 @@ export class TokenIngestionProcessor {
         resolution,
         transfers,
         address,
-        steps,
       ),
     }
   }
@@ -271,7 +262,6 @@ export class TokenIngestionProcessor {
               abstractTokenAssignmentProof: pending.proof,
             },
           },
-          tokenRelations: pending.tokenRelations,
           neighborsToEnqueue: pending.neighborsToEnqueue,
         },
       }
@@ -328,7 +318,6 @@ export class TokenIngestionProcessor {
             abstractTokenAssignmentProof: pending.proof,
           },
         },
-        tokenRelations: pending.tokenRelations,
         neighborsToEnqueue: pending.neighborsToEnqueue,
       },
     }
@@ -528,7 +517,7 @@ export class TokenIngestionProcessor {
       return { kind: 'coingecko' }
     }
 
-    const transfer = await this.getInteropTransferById(
+    const transfer = await this.deps.db.interopTransfer.findByTransferId(
       source.match.sampleTransferId,
     )
     if (!transfer) {
@@ -537,134 +526,6 @@ export class TokenIngestionProcessor {
       )
     }
     return nonSwappingTransferProof(transfer)
-  }
-
-  private async getInteropTransferById(transferId: string) {
-    const cached = this.interopTransferCache.get(transferId)
-    if (cached) {
-      return await cached
-    }
-
-    const pending = this.deps.db.interopTransfer.findByTransferId(transferId)
-    this.interopTransferCache.set(transferId, pending)
-    return await pending
-  }
-
-  private async buildMissingTokenRelations(
-    address: TokenAddress,
-    transfers: InteropTransferMatch[],
-    currentTokenWillExist: boolean,
-  ): Promise<TokenRelationRecord[]> {
-    if (!currentTokenWillExist) {
-      return []
-    }
-
-    const relationTransfers = transfers.filter((transfer) =>
-      isNonSwappingBridgeType(transfer.bridgeType),
-    )
-    const ownKey = getTokenKey(address)
-    const tokensToLookup = uniqueTokenAddresses(
-      relationTransfers.flatMap((transfer) => {
-        const tokens: TokenAddress[] = []
-        if (
-          transfer.sourceToken &&
-          getTokenKey(transfer.sourceToken) !== ownKey
-        ) {
-          tokens.push(transfer.sourceToken)
-        }
-        if (
-          transfer.destinationToken &&
-          getTokenKey(transfer.destinationToken) !== ownKey
-        ) {
-          tokens.push(transfer.destinationToken)
-        }
-        return tokens
-      }),
-    )
-
-    const existingTokens =
-      await this.deps.tokenDb.deployedToken.getByPrimaryKeys(tokensToLookup)
-    const existingTokenKeys = new Set(existingTokens.map(getTokenKey))
-
-    const candidates = new Map<
-      string,
-      { pk: TokenRelationPrimaryKey; match: InteropTransferMatch }
-    >()
-
-    for (const transfer of relationTransfers) {
-      if (!transfer.sourceToken || !transfer.destinationToken) continue
-
-      const sourceKey = getTokenKey(transfer.sourceToken)
-      const destinationKey = getTokenKey(transfer.destinationToken)
-      const sourceExists =
-        sourceKey === ownKey || existingTokenKeys.has(sourceKey)
-      const destinationExists =
-        destinationKey === ownKey || existingTokenKeys.has(destinationKey)
-      if (!sourceExists || !destinationExists) continue
-
-      const pk = {
-        tokenFromChain: transfer.sourceToken.chain,
-        tokenFromAddress: transfer.sourceToken.address,
-        tokenToChain: transfer.destinationToken.chain,
-        tokenToAddress: transfer.destinationToken.address,
-        plugin: transfer.plugin,
-        sourceWasBurned: transfer.sourceWasBurned,
-        destinationWasMinted: transfer.destinationWasMinted,
-      }
-      const key = tokenRelationKey(pk)
-      if (!candidates.has(key)) {
-        candidates.set(key, { pk, match: transfer })
-      }
-    }
-
-    if (candidates.size === 0) {
-      return []
-    }
-
-    const existingRelations =
-      await this.deps.tokenDb.tokenRelation.getByPrimaryKeys(
-        Array.from(candidates.values(), (candidate) => candidate.pk),
-      )
-    const existingRelationKeys = new Set(
-      existingRelations.map((relation) =>
-        tokenRelationKey(tokenRelationPrimaryKey(relation)),
-      ),
-    )
-    const missingCandidates = Array.from(candidates.values()).filter(
-      (candidate) => !existingRelationKeys.has(tokenRelationKey(candidate.pk)),
-    )
-    if (missingCandidates.length === 0) {
-      return []
-    }
-
-    const transfersById = new Map(
-      await Promise.all(
-        unique(
-          missingCandidates.map(
-            (candidate) => candidate.match.sampleTransferId,
-          ),
-        ).map(async (transferId) => {
-          const transfer = await this.getInteropTransferById(transferId)
-          if (!transfer) {
-            throw new Error(
-              `Supporting transfer ${transferId} no longer exists; the interop transfer index is stale`,
-            )
-          }
-          return [transferId, transfer] as const
-        }),
-      ),
-    )
-
-    return missingCandidates.map(({ pk, match }) => ({
-      ...pk,
-      bridgeType: match.bridgeType,
-      transfer: toJsonValue(
-        serializeInteropTransferRecord(
-          transfersById.get(match.sampleTransferId) ??
-            failMissingTransfer(match.sampleTransferId),
-        ),
-      ),
-    }))
   }
 
   private async resolveAbstractFromCoingecko(
@@ -723,7 +584,6 @@ export class TokenIngestionProcessor {
     >,
     transfers: InteropTransferMatch[],
     address: TokenAddress,
-    steps: IngestionStep[],
   ): Promise<IngestionOutcome> {
     const neighborsToEnqueue = collectTransferNeighbors(address, transfers)
 
@@ -731,28 +591,14 @@ export class TokenIngestionProcessor {
       if (!existing) {
         throw new Error('existing-noop resolution without an existing token')
       }
-      const tokenRelations = await this.buildMissingTokenRelations(
-        address,
-        transfers,
-        true,
-      )
-      if (tokenRelations.length > 0) {
-        steps.push({ kind: 'relations-discovered', relations: tokenRelations })
-      }
-      if (tokenRelations.length === 0) {
-        return { kind: 'noop', deployedToken: existing }
-      }
-      return {
-        kind: 'write',
-        newAbstractToken: undefined,
-        deployedToken: undefined,
-        tokenRelations,
-        neighborsToEnqueue,
-      }
+      return { kind: 'noop', deployedToken: existing }
     }
 
     if (resolution.type === 'resolved') {
       if (existing) {
+        if (existing.abstractTokenId === resolution.abstractToken.id) {
+          return { kind: 'noop', deployedToken: existing }
+        }
         const conflict = getTransferAbstractSymbolConflict(
           resolution.proofSource.kind,
           resolution.abstractToken,
@@ -760,29 +606,6 @@ export class TokenIngestionProcessor {
         )
         if (conflict) {
           return { kind: 'conflict', message: conflict }
-        }
-        const tokenRelations = await this.buildMissingTokenRelations(
-          address,
-          transfers,
-          true,
-        )
-        if (tokenRelations.length > 0) {
-          steps.push({
-            kind: 'relations-discovered',
-            relations: tokenRelations,
-          })
-        }
-        if (existing.abstractTokenId === resolution.abstractToken.id) {
-          if (tokenRelations.length === 0) {
-            return { kind: 'noop', deployedToken: existing }
-          }
-          return {
-            kind: 'write',
-            newAbstractToken: undefined,
-            deployedToken: undefined,
-            tokenRelations,
-            neighborsToEnqueue,
-          }
         }
         return {
           kind: 'write',
@@ -798,17 +621,8 @@ export class TokenIngestionProcessor {
               ),
             },
           },
-          tokenRelations,
           neighborsToEnqueue,
         }
-      }
-      const tokenRelations = await this.buildMissingTokenRelations(
-        address,
-        transfers,
-        true,
-      )
-      if (tokenRelations.length > 0) {
-        steps.push({ kind: 'relations-discovered', relations: tokenRelations })
       }
       return {
         kind: 'pending',
@@ -816,20 +630,11 @@ export class TokenIngestionProcessor {
         existing: undefined,
         abstract: { kind: 'existing', token: resolution.abstractToken },
         symbolFallback: resolution.symbolFallback,
-        tokenRelations,
         neighborsToEnqueue,
         proof: await this.buildProof(resolution.proofSource),
       }
     }
 
-    const tokenRelations = await this.buildMissingTokenRelations(
-      address,
-      transfers,
-      true,
-    )
-    if (tokenRelations.length > 0) {
-      steps.push({ kind: 'relations-discovered', relations: tokenRelations })
-    }
     return {
       kind: 'pending',
       operation: existing ? 'update' : 'insert',
@@ -840,7 +645,6 @@ export class TokenIngestionProcessor {
         symbol: resolution.coinSymbol,
       },
       symbolFallback: resolution.coinSymbol.toUpperCase(),
-      tokenRelations,
       neighborsToEnqueue,
       proof: resolution.proof,
     }
@@ -1075,12 +879,12 @@ function buildWriteCommands(
       record: outcome.newAbstractToken,
     })
   }
-  if (outcome.deployedToken?.type === 'insert') {
+  if (outcome.deployedToken.type === 'insert') {
     commands.push({
       type: 'AddDeployedTokenCommand',
       record: outcome.deployedToken.record,
     })
-  } else if (outcome.deployedToken?.type === 'update') {
+  } else {
     commands.push({
       type: 'UpdateDeployedTokenCommand',
       pk: outcome.deployedToken.pk,
@@ -1088,12 +892,6 @@ function buildWriteCommands(
       update: outcome.deployedToken.update,
     })
   }
-  commands.push(
-    ...outcome.tokenRelations.map((relation) => ({
-      type: 'AddTokenRelationCommand' as const,
-      record: relation,
-    })),
-  )
   return commands
 }
 
@@ -1133,46 +931,8 @@ function sumTransferCounts(matches: InteropTransferMatch[]) {
   return matches.reduce((sum, match) => sum + match.transferCount, 0)
 }
 
-function unique<T>(items: T[]): T[] {
-  return Array.from(new Set(items))
-}
-
 function formatRef(ref: AbstractTokenRef) {
   return `${ref.id}:${ref.symbol}`
-}
-
-function tokenRelationPrimaryKey(relation: TokenRelationRecord) {
-  return {
-    tokenFromChain: relation.tokenFromChain,
-    tokenFromAddress: relation.tokenFromAddress,
-    tokenToChain: relation.tokenToChain,
-    tokenToAddress: relation.tokenToAddress,
-    plugin: relation.plugin,
-    sourceWasBurned: relation.sourceWasBurned,
-    destinationWasMinted: relation.destinationWasMinted,
-  }
-}
-
-function tokenRelationKey(pk: TokenRelationPrimaryKey): string {
-  return [
-    pk.tokenFromChain,
-    pk.tokenFromAddress.toLowerCase(),
-    pk.tokenToChain,
-    pk.tokenToAddress.toLowerCase(),
-    pk.plugin,
-    String(pk.sourceWasBurned),
-    String(pk.destinationWasMinted),
-  ].join(':')
-}
-
-function failMissingTransfer(transferId: string): never {
-  throw new Error(
-    `Supporting transfer ${transferId} no longer exists; the interop transfer index is stale`,
-  )
-}
-
-function toJsonValue(value: unknown) {
-  return JSON.parse(JSON.stringify(value))
 }
 
 function getNewCoingeckoSymbolConflict(

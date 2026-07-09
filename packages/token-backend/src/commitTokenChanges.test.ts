@@ -71,7 +71,7 @@ describe(commitTokenChanges.name, () => {
         type: 'UpdateTokenRelationCommand',
         pk: relationPk(relation),
         existing: relation,
-        update: { bridgeType: 'lockAndMint' },
+        update: { transfer: { transferId: 'transfer-2' } },
       },
       {
         type: 'DeleteTokenRelationCommand',
@@ -102,7 +102,7 @@ describe(commitTokenChanges.name, () => {
     expect(tokenRelation.insert).toHaveBeenOnlyCalledWith(relation)
     expect(tokenRelation.updateByPrimaryKey).toHaveBeenOnlyCalledWith(
       relationPk(relation),
-      { bridgeType: 'lockAndMint' },
+      { transfer: { transferId: 'transfer-2' } },
     )
     expect(tokenRelation.deleteByPrimaryKey).toHaveBeenOnlyCalledWith(
       relationPk(relation),
@@ -322,8 +322,6 @@ function tokenRelationRecord(
     tokenToChain: tokenTo.chain,
     tokenToAddress: tokenTo.address,
     plugin: 'superbridge',
-    sourceWasBurned: true,
-    destinationWasMinted: true,
     bridgeType: 'burnAndMint',
     transfer: { transferId: 'transfer-1' },
   }
@@ -336,7 +334,6 @@ function relationPk(relation: TokenRelationRecord) {
     tokenToChain: relation.tokenToChain,
     tokenToAddress: relation.tokenToAddress,
     plugin: relation.plugin,
-    sourceWasBurned: relation.sourceWasBurned,
-    destinationWasMinted: relation.destinationWasMinted,
+    bridgeType: relation.bridgeType,
   }
 }

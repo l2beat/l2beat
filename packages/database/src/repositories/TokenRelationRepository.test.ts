@@ -53,16 +53,12 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
           tokenFrom: tokenA,
           tokenTo: tokenB,
           plugin: 'superbridge',
-          sourceWasBurned: true,
-          destinationWasMinted: true,
           bridgeType: 'burnAndMint',
         }),
         tokenRelation({
           tokenFrom: tokenB,
           tokenTo: tokenC,
           plugin: 'otherbridge',
-          sourceWasBurned: false,
-          destinationWasMinted: true,
           bridgeType: 'lockAndMint',
         }),
       ]
@@ -73,6 +69,45 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
 
       expect(await repository.getAll()).toEqualUnsorted(relations)
     })
+
+    it('inserts a relation whose endpoints are not catalogued as deployed tokens', async () => {
+      // Load-bearing: relations are observations of on-chain transfers and
+      // must be recordable before either endpoint exists in DeployedToken.
+      // See docs/mdbook/specs/l2b_specs/token_db/token_relations.md.
+      const relation = tokenRelation({
+        tokenFrom: { chain: 'ethereum', address: '0x' + '9'.repeat(40) },
+        tokenTo: { chain: 'arbitrum', address: '0x' + '8'.repeat(40) },
+        plugin: 'superbridge',
+        bridgeType: 'burnAndMint',
+      })
+
+      await repository.insert(relation)
+
+      expect(await repository.getAll()).toEqual([relation])
+    })
+
+    it('keeps two relations for the same route with different bridge types', async () => {
+      const lockAndMint = tokenRelation({
+        tokenFrom: tokenA,
+        tokenTo: tokenB,
+        plugin: 'superbridge',
+        bridgeType: 'lockAndMint',
+      })
+      const burnAndMint = tokenRelation({
+        tokenFrom: tokenA,
+        tokenTo: tokenB,
+        plugin: 'superbridge',
+        bridgeType: 'burnAndMint',
+      })
+
+      await repository.insert(lockAndMint)
+      await repository.insert(burnAndMint)
+
+      expect(await repository.getAll()).toEqualUnsorted([
+        lockAndMint,
+        burnAndMint,
+      ])
+    })
   })
 
   describe(TokenRelationRepository.prototype.findByPrimaryKey.name, () => {
@@ -81,8 +116,7 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
         tokenFrom: tokenA,
         tokenTo: tokenB,
         plugin: 'superbridge',
-        sourceWasBurned: true,
-        destinationWasMinted: true,
+        bridgeType: 'burnAndMint',
       })
       await repository.insert(relation)
 
@@ -96,15 +130,13 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
         tokenFrom: tokenA,
         tokenTo: tokenB,
         plugin: 'superbridge',
-        sourceWasBurned: true,
-        destinationWasMinted: true,
+        bridgeType: 'burnAndMint',
       })
       const relationB = tokenRelation({
         tokenFrom: tokenB,
         tokenTo: tokenC,
         plugin: 'otherbridge',
-        sourceWasBurned: false,
-        destinationWasMinted: true,
+        bridgeType: 'lockAndMint',
       })
       await repository.insert(relationA)
       await repository.insert(relationB)
@@ -116,13 +148,11 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
   })
 
   describe(TokenRelationRepository.prototype.updateByPrimaryKey.name, () => {
-    it('updates bridge metadata without changing identity columns', async () => {
+    it('updates the evidence transfer without changing identity columns', async () => {
       const relation = tokenRelation({
         tokenFrom: tokenA,
         tokenTo: tokenB,
         plugin: 'superbridge',
-        sourceWasBurned: true,
-        destinationWasMinted: true,
         bridgeType: 'burnAndMint',
       })
       await repository.insert(relation)
@@ -132,42 +162,14 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
         plugin: 'superbridge',
       }
       const updatedRows = await repository.updateByPrimaryKey(relation, {
-        bridgeType: 'lockAndMint',
         transfer: updatedTransfer,
       })
 
       expect(updatedRows).toEqual(1)
       expect(await repository.findByPrimaryKey(relation)).toEqual({
         ...relation,
-        bridgeType: 'lockAndMint',
         transfer: updatedTransfer,
       })
-    })
-  })
-
-  describe(TokenRelationRepository.prototype.getRelationsFromOrTo.name, () => {
-    it('returns inbound and outbound relations', async () => {
-      const outgoing = tokenRelation({
-        tokenFrom: tokenA,
-        tokenTo: tokenB,
-        plugin: 'superbridge',
-        sourceWasBurned: true,
-        destinationWasMinted: true,
-      })
-      const incoming = tokenRelation({
-        tokenFrom: tokenC,
-        tokenTo: tokenA,
-        plugin: 'otherbridge',
-        sourceWasBurned: false,
-        destinationWasMinted: true,
-      })
-      await repository.insert(outgoing)
-      await repository.insert(incoming)
-
-      expect(await repository.getRelationsFromOrTo(tokenA)).toEqualUnsorted([
-        outgoing,
-        incoming,
-      ])
     })
   })
 
@@ -177,15 +179,13 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
         tokenFrom: tokenA,
         tokenTo: tokenB,
         plugin: 'superbridge',
-        sourceWasBurned: true,
-        destinationWasMinted: true,
+        bridgeType: 'burnAndMint',
       })
       const relationB = tokenRelation({
         tokenFrom: tokenA,
         tokenTo: tokenC,
         plugin: 'otherbridge',
-        sourceWasBurned: false,
-        destinationWasMinted: true,
+        bridgeType: 'lockAndMint',
       })
       await repository.insert(relationA)
       await repository.insert(relationB)
@@ -203,8 +203,7 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
         tokenFrom: tokenA,
         tokenTo: tokenB,
         plugin: 'superbridge',
-        sourceWasBurned: true,
-        destinationWasMinted: true,
+        bridgeType: 'burnAndMint',
       })
       await repository.insert(relation)
 
@@ -218,8 +217,7 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
         tokenFrom: tokenA,
         tokenTo: tokenB,
         plugin: 'superbridge',
-        sourceWasBurned: true,
-        destinationWasMinted: true,
+        bridgeType: 'burnAndMint',
       })
       await repository.insert(relation)
 
@@ -233,9 +231,7 @@ interface TokenRelationInput {
   tokenFrom: DeployedTokenPrimaryKey
   tokenTo: DeployedTokenPrimaryKey
   plugin: string
-  sourceWasBurned: boolean
-  destinationWasMinted: boolean
-  bridgeType?: TokenRelationRecord['bridgeType']
+  bridgeType: TokenRelationRecord['bridgeType']
   transfer?: JsonValue
 }
 
@@ -246,9 +242,7 @@ function tokenRelation(input: TokenRelationInput): TokenRelationRecord {
     tokenToChain: input.tokenTo.chain,
     tokenToAddress: input.tokenTo.address.toLowerCase(),
     plugin: input.plugin,
-    sourceWasBurned: input.sourceWasBurned,
-    destinationWasMinted: input.destinationWasMinted,
-    bridgeType: input.bridgeType ?? null,
+    bridgeType: input.bridgeType,
     transfer:
       input.transfer ??
       ({

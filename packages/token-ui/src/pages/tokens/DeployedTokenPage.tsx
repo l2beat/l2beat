@@ -331,8 +331,6 @@ function TokenRelationsSection({
               <TableRow>
                 <TableHead>{otherTokenHeader}</TableHead>
                 <TableHead>Plugin</TableHead>
-                <TableHead>Burn</TableHead>
-                <TableHead>Mint</TableHead>
                 <TableHead>Bridge type</TableHead>
                 <TableHead>Transfer</TableHead>
               </TableRow>
@@ -346,8 +344,7 @@ function TokenRelationsSection({
                     relation.tokenToChain,
                     relation.tokenToAddress,
                     relation.plugin,
-                    String(relation.sourceWasBurned),
-                    String(relation.destinationWasMinted),
+                    relation.bridgeType,
                   ].join(':')}
                 >
                   <TableCell className="min-w-56 whitespace-normal align-top">
@@ -368,14 +365,8 @@ function TokenRelationsSection({
                     </div>
                   </TableCell>
                   <TableCell className="align-top">{relation.plugin}</TableCell>
-                  <TableCell>
-                    <BooleanMark value={relation.sourceWasBurned} />
-                  </TableCell>
-                  <TableCell>
-                    <BooleanMark value={relation.destinationWasMinted} />
-                  </TableCell>
                   <TableCell className="align-top">
-                    {relation.bridgeType ?? 'none'}
+                    {relation.bridgeType}
                   </TableCell>
                   <TableCell className="whitespace-normal align-top">
                     <details>
@@ -394,19 +385,6 @@ function TokenRelationsSection({
         )}
       </CardContent>
     </Card>
-  )
-}
-
-function BooleanMark({ value }: { value: boolean }) {
-  return (
-    <span
-      className={
-        value ? 'font-medium text-green-600' : 'font-medium text-destructive'
-      }
-      title={String(value)}
-    >
-      {value ? '✓' : '✕'}
-    </span>
   )
 }
 
