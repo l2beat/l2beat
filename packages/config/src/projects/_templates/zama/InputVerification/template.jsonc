@@ -1,0 +1,105 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "InputVerification",
+  "description": "Gateway contract that receives encrypted input verification requests from registered host chains, collects coprocessor responses, and emits a threshold-signed attestation once coprocessor consensus is reached. Ethereum InputVerifier verifies attestations against this contract's EIP-712 domain.",
+  "category": "core",
+  "ignoreMethods": [
+    "proxiableUUID",
+    "getRejectProofConsensusTxSenders",
+    "getVerifyProofConsensusTxSenders",
+    "isProofRejected",
+    "isProofVerified"
+  ],
+  "fields": {
+    "gatewayConfig": {
+      "description": "GatewayConfig contract used as the source of truth for the gateway owner, pausers, host chains, coprocessors, KMS nodes, custodians, and protocol thresholds.",
+      "type": "EXTERNAL",
+      "handler": {
+        "type": "hardcoded",
+        "value": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab"
+      }
+    },
+    "gatewayOwner": {
+      "description": "Owner of GatewayConfig. This account authorizes InputVerification upgrades and can unpause the contract.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "call",
+        "method": "function owner() view returns (address)",
+        "args": [],
+        "address": "{{ gatewayConfig }}"
+      },
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "upgrade the InputVerification implementation."
+        },
+        {
+          "type": "interact",
+          "description": "unpause InputVerification."
+        }
+      ]
+    },
+    "gatewayProtocolPayment": {
+      "description": "ProtocolPayment contract charged when users submit encrypted input verification requests.",
+      "type": "EXTERNAL",
+      "handler": {
+        "type": "hardcoded",
+        "value": "zama:0x7E179E45E5fe0a21015Be25185363B4F2F2F7e89"
+      }
+    },
+    "gatewayCoprocessorTxSenders": {
+      "description": "Coprocessor transaction-sender addresses configured in GatewayConfig. These accounts may submit signed verification responses and rejection responses.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "call",
+        "method": "function getCoprocessorTxSenders() view returns (address[])",
+        "args": [],
+        "address": "{{ gatewayConfig }}"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit coprocessor proof verification and rejection responses to InputVerification."
+        }
+      ]
+    },
+    "gatewayCoprocessorSigners": {
+      "description": "Coprocessor signer addresses configured in GatewayConfig. Their EIP-712 signatures determine whether encrypted input proofs reach consensus.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "call",
+        "method": "function getCoprocessorSigners() view returns (address[])",
+        "args": [],
+        "address": "{{ gatewayConfig }}"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "sign encrypted input proof verification responses accepted by InputVerification."
+        }
+      ]
+    },
+    "gatewayCoprocessorMajorityThreshold": {
+      "description": "Minimum number of matching coprocessor responses required for an encrypted input proof to be verified or rejected.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "handler": {
+        "type": "call",
+        "method": "function getCoprocessorMajorityThreshold() view returns (uint256)",
+        "args": [],
+        "address": "{{ gatewayConfig }}"
+      }
+    },
+    "paused": {
+      "description": "Whether encrypted input verification requests are currently paused.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "eip712Domain": {
+      "description": "EIP-712 domain used when validating coprocessor signatures over encrypted input proof responses. Ethereum InputVerifier is configured to verify this same source domain."
+    }
+  }
+}

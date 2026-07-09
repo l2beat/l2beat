@@ -6,6 +6,42 @@
   "ignoreInWatchMode": ["rootBundleProposal"],
   "category": "core",
   "canActIndependently": false,
+  "types": {
+    "ChainIdToName": {
+      "typeCaster": "Mapping",
+      "arg": {
+        "1": "Ethereum",
+        "10": "OP Mainnet",
+        "56": "BNB Smart Chain",
+        "130": "Unichain",
+        "137": "Polygon PoS",
+        "143": "Monad",
+        "232": "Lens",
+        "288": "Boba",
+        "324": "ZKsync Era",
+        "480": "World Chain",
+        "690": "Redstone",
+        "999": "HyperEVM",
+        "1135": "Lisk",
+        "1868": "Soneium",
+        "4217": "Tempo",
+        "4326": "MegaETH",
+        "8453": "Base",
+        "9745": "Plasma",
+        "34443": "Mode",
+        "41455": "Aleph Zero",
+        "42161": "Arbitrum One",
+        "43114": "Avalanche",
+        "57073": "Ink",
+        "59144": "Linea",
+        "81457": "Blast",
+        "534352": "Scroll",
+        "7777777": "Zora",
+        "728126428": "Tron",
+        "34268394551451": "Solana"
+      }
+    }
+  },
   "fields": {
     "bondAmountFmt": {
       "handler": {
@@ -21,12 +57,11 @@
         {
           "type": "interact",
           "description": "pause the system, manage all fees, bonds and security parameters, manage tokens and chain support, and critical emergency actions like admin functions on remote SpokePools or deleting proposals (can steal funds)."
-        }
+        },
+        { "type": "act" }
       ]
     },
-    "paused": {
-      "severity": "HIGH"
-    },
+    "paused": { "severity": "HIGH" },
     "finalizationDelayFmt": {
       "handler": {
         "type": "call",
@@ -39,12 +74,11 @@
       "handler": {
         "type": "event",
         "select": "spokePool",
-        "set": {
-          "event": "CrossChainContractsSet"
-        },
+        "set": { "event": "CrossChainContractsSet" },
         "groupBy": "l2ChainId",
         "ignoreRelative": true
-      }
+      },
+      "edit": ["map_keys", ["format", "ChainIdToName"]]
     },
     "spokePool": {
       "handler": {
@@ -54,14 +88,41 @@
       },
       "edit": ["get", "spokePool"]
     },
+    "optimismSpokePool": {
+      "handler": {
+        "type": "call",
+        "method": "function crossChainContracts(uint256) view returns (address adapter, address spokePool)",
+        "args": ["10"]
+      },
+      "edit": ["pipe", ["get", "spokePool"], ["format", "OptimismAddress"]]
+    },
     "Adapters": {
       "handler": {
         "type": "event",
         "select": "adapter",
-        "set": {
-          "event": "CrossChainContractsSet"
-        },
+        "set": { "event": "CrossChainContractsSet" },
         "groupBy": "l2ChainId"
+      },
+      "edit": ["map_keys", ["format", "ChainIdToName"]]
+    },
+    "poolRebalanceRoutes": {
+      "handler": {
+        "type": "event",
+        "add": { "event": "SetPoolRebalanceRoute" },
+        "groupBy": "destinationChainId",
+        "dedupBy": "l1Token",
+        "select": ["l1Token", "destinationToken"],
+        "ignoreRelative": true
+      },
+      "edit": ["map_keys", ["format", "ChainIdToName"]]
+    },
+    "pooledTokens": {
+      "handler": {
+        "type": "event",
+        "add": { "event": "L1TokenEnabledForLiquidityProvision" },
+        "dedupBy": "l1Token",
+        "select": ["l1Token", "lpToken"],
+        "ignoreRelative": true
       }
     }
   }

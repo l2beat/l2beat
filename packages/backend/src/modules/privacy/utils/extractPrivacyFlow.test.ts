@@ -14,6 +14,11 @@ const railgunInterface = new utils.Interface([
   'event Unshield(address to, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint256 amount, uint256 fee)',
 ])
 
+const zamaInterface = new utils.Interface([
+  'event Wrap(address indexed to, uint256 roundedAmount, bytes32 encryptedWrappedAmount)',
+  'event UnwrapFinalized(address indexed receiver, bytes32 indexed unwrapRequestId, bytes32 encryptedAmount, uint64 cleartextAmount)',
+])
+
 const ADDRESS = EthereumAddress.random()
 const TOKEN_ADDRESS = EthereumAddress(
   '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
@@ -274,6 +279,48 @@ describe(extractPrivacyFlow.name, () => {
       const result = extractPrivacyFlow(config, log)
 
       expect(result).toEqual(undefined)
+    })
+  })
+
+  describe('zamaWrap', () => {
+    it('extracts roundedAmount from Wrap event', () => {
+      const config: PrivacyFlowIndexerConfig = {
+        ...baseFlowConfig,
+        event: 'Wrap',
+        extractor: 'zamaWrap',
+        params: {},
+      }
+      const log = encodeLog(zamaInterface, 'Wrap', [
+        EthereumAddress.random().toString(),
+        123_456n,
+        '0x' + '11'.repeat(32),
+      ])
+
+      const result = extractPrivacyFlow(config, log)
+
+      expect(result).toEqual({ count: 1, amount: 123_456n })
+    })
+  })
+
+  describe('zamaUnwrap', () => {
+    it('extracts cleartextAmount multiplied by wrapper rate', () => {
+      const config: PrivacyFlowIndexerConfig = {
+        ...baseFlowConfig,
+        direction: 'withdrawal',
+        event: 'UnwrapFinalized',
+        extractor: 'zamaUnwrap',
+        params: { rate: '10' },
+      }
+      const log = encodeLog(zamaInterface, 'UnwrapFinalized', [
+        EthereumAddress.random().toString(),
+        '0x' + '22'.repeat(32),
+        '0x' + '33'.repeat(32),
+        987n,
+      ])
+
+      const result = extractPrivacyFlow(config, log)
+
+      expect(result).toEqual({ count: 1, amount: 9_870n })
     })
   })
 })

@@ -1,0 +1,43 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PauserSet",
+  "description": "Maintains the pauser account set used in pause-control checks.",
+  "category": "gov",
+  "fields": {
+    "aclOwner": {
+      "description": "Owner of the Zama ACL contract. This account is authorized by onlyACLOwner to add, remove, or swap pausers.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "call",
+        "method": "function owner() view returns (address)",
+        "args": [],
+        "address": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add, remove, or swap accounts that can pause the ACL."
+        }
+      ]
+    },
+    "pausers": {
+      "description": "Accounts that can pause the ACL, reconstructed from AddPauser and RemovePauser events.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "event",
+        "select": "account",
+        "ignoreRelative": true,
+        "add": { "event": "AddPauser" },
+        "remove": { "event": "RemovePauser" }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause the ACL."
+        }
+      ]
+    }
+  }
+}

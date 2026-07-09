@@ -1,6 +1,6 @@
 {
   "name": "starknet",
-  "timestamp": 1776761835,
+  "timestamp": 1783503373,
   "configHash": "0x5e6773cf0636f934b0a447f2b5eea93ac6f192fcbfb490eb91d93b06e80e42eb",
   "entries": [
     {
@@ -609,8 +609,8 @@
           "eth:0x0762bCc4D604Aa3B5122C7D6571Cf5368EF3F09c",
           "eth:0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F",
           "eth:0x04D5b12b196a8CADEB2F476F22Ffb1334Ef9F94c",
-          "eth:0x2914767E232FD7708ab06bA60dB16c36C555751d",
-          "eth:0xfaECfa5E4180dd55D15396F804Fd00C6dbA233B0",
+          "eth:0x49C6396070D3310f335AE19169Da6B80ea67B831",
+          "eth:0x16117672EBF77d5DE9a1Af91F8F79b26421b310F",
           "eth:0xF6AB8BD99EfE2515C45d6FeE8Ea32738877EFbD8",
           "eth:0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD",
           "eth:0x10277B1922e56d1B69f4dCe5A35696C791F78cac",
@@ -624,7 +624,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "9 of 12 (75%)",
-        "nonce": 10,
+        "nonce": 11,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -637,6 +637,11 @@
           "href": "https://governance.starknet.io/learn/security_council"
         }
       ]
+    },
+    {
+      "address": "eth:0x16117672EBF77d5DE9a1Af91F8F79b26421b310F",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD",
@@ -815,11 +820,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x2914767E232FD7708ab06bA60dB16c36C555751d",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
       "type": "EOA",
       "proxyType": "EOA",
@@ -923,6 +923,11 @@
       "type": "Reference",
       "targetType": "Contract",
       "targetProject": "shared-sharp-verifier"
+    },
+    {
+      "address": "eth:0x49C6396070D3310f335AE19169Da6B80ea67B831",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x5540E5e19a48172C37d3D79523ab7737c5b2033F",
@@ -1303,7 +1308,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 6 (33%)",
-        "nonce": 39,
+        "nonce": 40,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1425,6 +1430,11 @@
         "eth:0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff": "StarknetTokenBridge"
       },
       "category": { "name": "Non-Critical", "priority": 0 }
+    },
+    {
+      "address": "eth:0x99E84d004E73CC41eFacd382ef6FD34208B0F122",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "L1DaiGateway",
@@ -1774,6 +1784,11 @@
         }
       ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "eth:0xb731B63eC22904A17d1cf6fD771eb5BA87f35Fa3",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "USDTBridge",
@@ -2179,7 +2194,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 1693195,
+        "l1ToL2MessageNonce": 1696130,
         "messageCancellationDelay": 432100,
         "operators": [
           "eth:0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
@@ -2206,9 +2221,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "1157353749876318293424436310711911021457063744068332438891973851713211617769",
-        "stateBlockNumber": 9006331,
-        "stateRoot": "184450255805653895831212569900445965339058658574853059829075312504805448675",
+        "stateBlockHash": "658411517597298733059014494744739422728360425341689400638436622024459170538",
+        "stateBlockNumber": 11587811,
+        "stateRoot": "2792908564556065635958870408761538444169227081643847425934227090972073855396",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -3460,11 +3475,11 @@
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
-          "eth:0x2914767E232FD7708ab06bA60dB16c36C555751d",
-          "eth:0x04D5b12b196a8CADEB2F476F22Ffb1334Ef9F94c",
-          "eth:0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F",
+          "eth:0x49C6396070D3310f335AE19169Da6B80ea67B831",
+          "eth:0x99E84d004E73CC41eFacd382ef6FD34208B0F122",
+          "eth:0xb731B63eC22904A17d1cf6fD771eb5BA87f35Fa3",
           "eth:0x0762bCc4D604Aa3B5122C7D6571Cf5368EF3F09c",
-          "eth:0xfaECfa5E4180dd55D15396F804Fd00C6dbA233B0",
+          "eth:0x16117672EBF77d5DE9a1Af91F8F79b26421b310F",
           "eth:0xF6AB8BD99EfE2515C45d6FeE8Ea32738877EFbD8",
           "eth:0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD",
           "eth:0x10277B1922e56d1B69f4dCe5A35696C791F78cac",
@@ -3478,7 +3493,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 12 (25%)",
-        "nonce": 7,
+        "nonce": 9,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -3621,11 +3636,6 @@
         }
       ],
       "category": { "name": "External Bridges", "priority": 1 }
-    },
-    {
-      "address": "eth:0xfaECfa5E4180dd55D15396F804Fd00C6dbA233B0",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0xFf713991196F8a9D6838bA82C9Bb3579F8Cc0D90",
@@ -4974,6 +4984,6 @@
     "starknet/StarknetMultiBridge": "0x4461bc7d3b7d5f2005e77088cd802162318e8813c7df5d1732e4b9172634626b",
     "starknet/StarknetMultiBridge_haltable": "0xe8353adf6ac366e8437be00a65d081e1d14c386d2b59bbfc9f50dcc2d80299b9"
   },
-  "usedBlockNumbers": { "ethereum": 24927241 },
-  "permissionsConfigHash": "0xc0c917cf5566efd526b3cfc3c0ed92fd9749f28338a7ddaf5abc554a4b7eae0d"
+  "usedBlockNumbers": { "ethereum": 25486992 },
+  "permissionsConfigHash": "0x09f162f945d756c076a07f0d14ecd16b47416a40d47a3e8e7828b3e2b4046ad9"
 }

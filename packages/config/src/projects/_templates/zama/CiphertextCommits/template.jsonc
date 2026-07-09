@@ -1,0 +1,76 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "CiphertextCommits",
+  "description": "Gateway contract that stores ciphertext and SNS ciphertext digests after coprocessor consensus, allowing decryption requests to reference committed ciphertext material.",
+  "category": "core",
+  "ignoreMethods": [
+    "proxiableUUID",
+    "getAddCiphertextMaterialConsensusTxSenders",
+    "getCiphertextMaterials",
+    "getSnsCiphertextMaterials",
+    "isCiphertextMaterialAdded"
+  ],
+  "fields": {
+    "gatewayConfig": {
+      "description": "GatewayConfig contract used as the source of truth for the gateway owner, coprocessor set, host-chain registry, and coprocessor consensus threshold.",
+      "type": "EXTERNAL",
+      "handler": {
+        "type": "hardcoded",
+        "value": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab"
+      }
+    },
+    "gatewayOwner": {
+      "description": "Owner of GatewayConfig. This account authorizes CiphertextCommits upgrades.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "call",
+        "method": "function owner() view returns (address)",
+        "args": [],
+        "address": "{{ gatewayConfig }}"
+      },
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "upgrade the CiphertextCommits implementation."
+        }
+      ]
+    },
+    "kmsGeneration": {
+      "description": "KMSGeneration contract referenced by the CiphertextCommits implementation for KMS key material context.",
+      "type": "EXTERNAL",
+      "handler": {
+        "type": "hardcoded",
+        "value": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3"
+      }
+    },
+    "gatewayCoprocessorTxSenders": {
+      "description": "Coprocessor transaction-sender addresses configured in GatewayConfig. These accounts may submit ciphertext material commitments.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "call",
+        "method": "function getCoprocessorTxSenders() view returns (address[])",
+        "args": [],
+        "address": "{{ gatewayConfig }}"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit ciphertext and SNS ciphertext digests to CiphertextCommits."
+        }
+      ]
+    },
+    "gatewayCoprocessorMajorityThreshold": {
+      "description": "Minimum number of matching coprocessor submissions required before ciphertext material is committed.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "handler": {
+        "type": "call",
+        "method": "function getCoprocessorMajorityThreshold() view returns (uint256)",
+        "args": [],
+        "address": "{{ gatewayConfig }}"
+      }
+    }
+  }
+}

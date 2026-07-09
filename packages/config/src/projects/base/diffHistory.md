@@ -1,3 +1,260 @@
+Generated with discovered.json: 0xcbc286ad33355fd5fb2ae809fce45e16934e5001
+
+# Diff at Wed, 01 Jul 2026 10:32:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cfafbf3de953d9f519656c89c622fe51a04d547a block: 1782850575
+- current timestamp: 1782850575
+
+## Description
+
+Config: small template adjustments
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782850575 (main branch discovery), not current.
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97) [taiko/RiscZeroGroth16Verifier] {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.0.0-rc.3).
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D) [taiko/RiscZeroGroth16Verifier] {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF) [taiko/RiscZeroGroth16Verifier] {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.0.3).
+      template:
++        "taiko/RiscZeroGroth16Verifier"
+      description:
++        "Verifier contract for RISC Zero Groth16 proofs (version 2.0.3)."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9) [taiko/RiscZeroGroth16Verifier] {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C) [taiko/RiscZeroGroth16VerifierLegacy] {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs. This older implementation exposes control-root and selector constants but does not expose a VERSION getter.
+      template:
++        "taiko/RiscZeroGroth16VerifierLegacy"
+      description:
++        "Verifier contract for RISC Zero Groth16 proofs. This older implementation exposes control-root and selector constants but does not expose a VERSION getter."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+Generated with discovered.json: 0xf58b65eaa755afabaa1c8eafaa939837bc7461d7
+
+# Diff at Tue, 30 Jun 2026 20:17:25 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1782377394
+- current timestamp: 1782850575
+
+## Description
+
+Rotated TEE signers.
+
+## Watched changes
+
+```diff
+    contract TEEProverRegistry (eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA) [base/TEEProverRegistry] {
+    +++ description: Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a Risc0 ZK proof of a valid AWS Nitro attestation document verified by the NITRO_VERIFIER.
++++ severity: LOW
+      values.getRegisteredSigners.0:
+-        "eth:0xBb82fe2b294F7a9F74aF2ad32DF3B2d61abd4BEC"
++        "eth:0xCD5C52b857A8E4B3883997b856b730D76938B38C"
++++ severity: LOW
+      values.getRegisteredSigners.1:
+-        "eth:0x1A095fE4895D142955c36F958be2a9e53c41224f"
++        "eth:0x0BcBdab1Adf24461682e9DE37AFc0548C462ca10"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782377394 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
++++ severity: HIGH
+      values.game8:
++        "eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499"
+      values.game8Args:
++        "0x0323914d3050e80c3d09da528be54794fde60cd26849cd3410dde0da7cd7d4fa6463dee3828677f6270d83d45408044fc5edb908909f6cf47ed12f010a796527f562bfc26c7f4e722453c1216e49704d84ea98a4dacd95738f2fc8ec0000000000000000000000000000000000000000000000000000000000002105"
+      values.game8Vm:
++        "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908"
+      values.initBondGame8:
++        "80000000000000000"
+      fieldMeta.game8:
++        {"severity":"HIGH"}
+      usedTypes.0:
++        {"typeCaster":"SliceAddress","arg":{"offset":32}}
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x49048044D57e1C92A77f79988d21Fa8fAF74E97e) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the AggregateVerifier.
+      usedTypes.0.arg.8:
++        "FaultDisputeGame"
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x909f6cf47ed12f010A796527f562bFc26C7F4E72) [opstack/AnchorStateRegistry_post20] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
+      usedTypes.0.arg.8:
++        "FaultDisputeGame"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3) [opstack/PreimageOracle]
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (eth:0x6463dEE3828677F6270d83d45408044fc5eDB908) [opstack/MIPS]
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499) [opstack/FaultDisputeGame]
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+Generated with discovered.json: 0x3b9671b4fa92f8a963da506b96a98fb9e02856dd
+
+# Diff at Thu, 25 Jun 2026 10:11:05 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@97724e7b196709850ff462946c329b4e37cc602d block: 1782209652
+- current timestamp: 1782377394
+
+## Description
+
+Base Beryll upgrade: https://x.com/buildonbase/status/2067693904909189141.
+
+Reduced optimistic path finalization 7d -> 5d: https://disco.l2beat.com/diff/eth:0xeEcb8A5944B217585817E802702b1262a049D259/eth:0x1bd8db5139Ba7aC9277684650c15e6E341761919.
+
+Also deployed a new AggregateVerifier with new program hashes and upgraded the TEE Image hash. All programs are reproduced.
+
+## Watched changes
+
+```diff
+    contract TEEProverRegistry (eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA) [base/TEEProverRegistry] {
+    +++ description: Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a Risc0 ZK proof of a valid AWS Nitro attestation document verified by the NITRO_VERIFIER.
++++ severity: HIGH
+      values.getExpectedImageHash:
+-        "0xc9536fb5b1387f30d16f6b95a5a26de352f8056866482bca632f7219896ea74c"
++        "0x58557c709e93357a135041297107aecc4bc6ba616509098a4aa8dbef774d212a"
++++ severity: LOW
+      values.getRegisteredSigners.0:
+-        "eth:0x8a2B99252bad63813e704237Bf2A40A6a4cEBda9"
++        "eth:0xBb82fe2b294F7a9F74aF2ad32DF3B2d61abd4BEC"
++++ severity: LOW
+      values.getRegisteredSigners.1:
+-        "eth:0xf3aef21F74AD989812D066ad3e51b986ED312875"
++        "eth:0x1A095fE4895D142955c36F958be2a9e53c41224f"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
++++ severity: HIGH
+      values.game621:
+-        "eth:0xeEcb8A5944B217585817E802702b1262a049D259"
++        "eth:0x1bd8db5139Ba7aC9277684650c15e6E341761919"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract AggregateVerifier (eth:0xeEcb8A5944B217585817E802702b1262a049D259) [opstack/AggregateVerifier]
+    +++ description: Game type implementation that combines a TEE attestation arm and a ZK proof arm. A single un-nullified proof of either type can resolve a game (PROOF_THRESHOLD = 1). When both arms commit, the finalization window collapses from SLOW_FINALIZATION_DELAY (7d) to FAST_FINALIZATION_DELAY (1d).
+```
+
+```diff
++   Status: CREATED
+    contract AggregateVerifier (eth:0x1bd8db5139Ba7aC9277684650c15e6E341761919) [opstack/AggregateVerifier]
+    +++ description: Game type implementation that combines a TEE attestation arm and a ZK proof arm. A single un-nullified proof of either type can resolve a game (PROOF_THRESHOLD = 1). When both arms commit, the finalization window collapses from SLOW_FINALIZATION_DELAY (5d) to FAST_FINALIZATION_DELAY (1d).
+```
+
+## Source code changes
+
+```diff
+.../AggregateVerifier.sol                          | 1522 +++-----------------
+ 1 file changed, 177 insertions(+), 1345 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782209652 (main branch discovery), not current.
+
+```diff
+    contract AggregateVerifier (eth:0xeEcb8A5944B217585817E802702b1262a049D259) [opstack/AggregateVerifier] {
+    +++ description: Game type implementation that combines a TEE attestation arm and a ZK proof arm. A single un-nullified proof of either type can resolve a game (PROOF_THRESHOLD = 1). When both arms commit, the finalization window collapses from SLOW_FINALIZATION_DELAY (7d) to FAST_FINALIZATION_DELAY (1d).
+      values.fastFinalizationDelayFmt:
++        "1d"
+      values.slowFinalizationDelayFmt:
++        "7d"
+    }
+```
+
+Generated with discovered.json: 0x389f30067f4f3c3cc47ecff9868a507f4b9dc274
+
+# Diff at Tue, 23 Jun 2026 10:15:42 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@0e360eee2a54a17c6634ebce656a966ffe743da7 block: 1781105531
+- current timestamp: 1782209652
+
+## Description
+
+FeeDisburser admin rotated. Not security critical.
+
+## Watched changes
+
+```diff
+    contract FeeDisburser (base:0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA) [opstack/Layer2/FeeDisburser] {
+    +++ description: Contract used to disburse funds from system FeeVault contracts, shares revenue with Optimism and bridges the rest of funds to L1.
+      values.$admin:
+-        "base:0xaD5B57FEB77e294fD7BF5EBE9aB01caA0a90B221"
++        "base:0xa966054731540a48b28990b63Dcf4f33d8aE57B2"
+    }
+```
+
 Generated with discovered.json: 0xb15162cd79a14842eece0395af8c30ed0da296fb
 
 # Diff at Fri, 12 Jun 2026 10:18:41 GMT:

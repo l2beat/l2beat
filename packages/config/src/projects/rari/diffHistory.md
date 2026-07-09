@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x99938787e7932f7b4e3d4e19b97e2e174d0f301c
+
+# Diff at Mon, 29 Jun 2026 15:30:13 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1779719714
+- current timestamp: 1782746888
+
+## Description
+
+Caldera Multisig 1 (shared with blessnet, inevm, molten): member rotated.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 1 (arb1:0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) [GnosisSafe] {
+    +++ description: None
+      values.$members.4:
+-        "arb1:0xEC114946E7213d113c9B9481028271B5E9e09371"
++        "arb1:0xFcB26a1DbFafF84b91f1b7D9026DA63007b88D3c"
+    }
+```
+
 Generated with discovered.json: 0x41765d20aedab397d97b7e3c41c60a3a3a291c40
 
 # Diff at Tue, 09 Jun 2026 12:43:38 GMT:

@@ -116,8 +116,7 @@ function TopTokenIdentity({
   const selectedChainsContext = useContext(InteropSelectedChainsContext)
   const selection =
     apiSelection ?? selectedChainsContext?.selectedChains ?? undefined
-  const href =
-    topToken && selection ? getInteropTokenUrl(topToken, selection) : undefined
+  const href = topToken && selection ? getInteropTokenUrl(topToken) : undefined
   const content = isLoading ? (
     <Skeleton className="h-8 w-28" />
   ) : topToken ? (

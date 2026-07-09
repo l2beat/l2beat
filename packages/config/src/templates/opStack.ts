@@ -182,6 +182,12 @@ interface DAProvider {
   fallback?: DaProjectTableValue
 }
 
+const CLOSED_CHALLENGER_STATE_ROOT_RISK: ProjectRisk = {
+  category: 'Funds can be stolen if',
+  text: 'no whitelisted challenger disputes an invalid state root before the challenge window expires.',
+  isCritical: true,
+}
+
 interface OpStackConfigCommon {
   capability?: ProjectScalingCapability
   architectureImage?: string
@@ -660,6 +666,29 @@ export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
   }
 }
 
+// A real absolute prestate is exactly 32 non-zero bytes. V2 game implementations
+// return all-zero (the value lives in clone immutable args), the AnchorStateRegistry
+// *FromGame fields resolve to the zero address until a game is anchored, and
+// unresolved handler reads come back as non-hex strings; all must be rejected.
+function isRealPrestate(value: string | undefined): value is string {
+  return (
+    value !== undefined &&
+    /^0x(?!0+$)[0-9a-f]{64}$/i.test(value) &&
+    // v7 (Karst) game args carry a 0xdead0…0 sentinel in the prestate slot when
+    // the prestate is not baked into the clone args; it is not a real prestate.
+    !/^0xdead0*$/i.test(value)
+  )
+}
+
+// The factory's gameArgs[1] is the implementation-args blob it appends to every
+// permissioned game clone; the absolute prestate is its first 32 bytes. The blob
+// is empty ("0x") on chains whose games keep the prestate in the implementation.
+function prestateFromGameArgs(
+  gameArgs: string | undefined,
+): string | undefined {
+  return gameArgs?.startsWith('0x') ? gameArgs.slice(0, 66) : undefined
+}
+
 function getProgramHashes(
   templateVars: OpStackConfigCommon,
 ): ProjectScalingContractsProgramHash[] {
@@ -670,29 +699,58 @@ function getProgramHashes(
       return []
     case 'Permissioned':
     case 'Permissionless': {
-      const absolutePrestate = templateVars.discovery.getContractValue<string>(
-        'PermissionedDisputeGame',
-        'absolutePrestate',
-      )
-      const EMPTY_PRESTATE = '0x' + '0'.repeat(64)
-      // V2 dispute games store params in clone bytecode;
-      // the implementation contract returns zero.
-      // Read from AnchorStateRegistry's game clone instead.
-      if (absolutePrestate === EMPTY_PRESTATE) {
-        const fromAnchor = templateVars.discovery.hasContract(
-          'AnchorStateRegistry',
+      // When CANNON_KONA (respectedGameType 8, Karst) is the respected game, the
+      // active prestate lives only in the factory's type-8 game args (gameArgs[8]);
+      // impls return zero. Read only that - falling back to the op-program / anchor
+      // candidates would surface the inactive type-0 program as if it were live.
+      const portal = getOptimismPortal(templateVars)
+      const respectedGameType =
+        templateVars.discovery.getContractValueOrUndefined<number>(
+          portal.name ?? portal.address,
+          'respectedGameType',
         )
+      if (respectedGameType === 8) {
+        const konaPrestate = templateVars.discovery.hasContract(
+          'DisputeGameFactory',
+        )
+          ? prestateFromGameArgs(
+              templateVars.discovery.getContractValueOrUndefined<string>(
+                'DisputeGameFactory',
+                'game8Args',
+              ),
+            )
+          : undefined
+        return isRealPrestate(konaPrestate)
+          ? [PROGRAM_HASHES(konaPrestate)]
+          : []
+      }
+      // V2 dispute games store the prestate in clone immutable args, so the
+      // implementation returns zero. Try the implementation, then the anchored
+      // game clone, then the factory's configured game args (gameArgs[1], which
+      // it bakes into every permissioned game). The anchor stays empty until a
+      // game resolves. Zero / zero-address / empty forms are skipped.
+      const prestateCandidates = [
+        templateVars.discovery.getContractValueOrUndefined<string>(
+          'PermissionedDisputeGame',
+          'absolutePrestate',
+        ),
+        templateVars.discovery.hasContract('AnchorStateRegistry')
           ? templateVars.discovery.getContractValueOrUndefined<string>(
               'AnchorStateRegistry',
               'absolutePrestateFromGame',
             )
-          : undefined
-        if (fromAnchor && fromAnchor !== EMPTY_PRESTATE) {
-          return [PROGRAM_HASHES(fromAnchor)]
-        }
-        return []
-      }
-      return [PROGRAM_HASHES(absolutePrestate)]
+          : undefined,
+        templateVars.discovery.hasContract('DisputeGameFactory')
+          ? prestateFromGameArgs(
+              templateVars.discovery.getContractValueOrUndefined<string>(
+                'DisputeGameFactory',
+                'permissionedGameArgs',
+              ),
+            )
+          : undefined,
+      ]
+      const prestate = prestateCandidates.find(isRealPrestate)
+      return prestate ? [PROGRAM_HASHES(prestate)] : []
     }
     case 'Kailua': {
       const kailuaProgramHash = templateVars.discovery.getContractValue<string>(
@@ -834,11 +892,7 @@ function getStateValidation(
         'maxClockDuration',
       )
 
-      const permissionedDisputeGameBonds =
-        templateVars.discovery.getContractValue<number[]>(
-          'DisputeGameFactory',
-          'initBonds',
-        )[1] // 1 is for permissioned games!
+      const permissionedDisputeGameBonds = getPermissionedGameBond(templateVars)
 
       const permissionedGameClockExtension =
         templateVars.discovery.getContractValue<number>(
@@ -874,10 +928,7 @@ function getStateValidation(
       const faultDisputeGame = getFaultDisputeGameName(templateVars)
 
       const permissionlessDisputeGameBonds =
-        templateVars.discovery.getContractValue<number[]>(
-          'DisputeGameFactory',
-          'initBonds',
-        )[0] // 0 is for permissionless games!
+        getPermissionlessGameBond(templateVars)
 
       const maxClockDuration = templateVars.discovery.getContractValue<number>(
         faultDisputeGame,
@@ -1252,6 +1303,7 @@ function getStateValidation(
                 category: 'Funds can be stolen if',
                 text: 'the validity proof cryptography is broken or implemented incorrectly.',
               },
+              CLOSED_CHALLENGER_STATE_ROOT_RISK,
               {
                 category: 'Funds can be stolen if',
                 text: 'the proposer routes proof verification through a malicious or faulty verifier.',
@@ -1381,6 +1433,7 @@ function describeOPFP({
             url: 'https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#fault-dispute-game',
           },
         ],
+        risks: isPermissionless ? [] : [CLOSED_CHALLENGER_STATE_ROOT_RISK],
       },
       {
         title: 'Challenges',
@@ -1460,12 +1513,7 @@ function getRiskViewStateValidation(
           ' Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed.',
         sentiment: 'bad',
         initialBond: {
-          value: formatEther(
-            templateVars.discovery.getContractValue<number[]>(
-              'DisputeGameFactory',
-              'initBonds',
-            )[1], // 1 is for permissioned games!
-          ),
+          value: formatEther(getPermissionedGameBond(templateVars)),
         },
         permissioned: true,
         defenderAdvantage: 'not-applicable',
@@ -1478,12 +1526,7 @@ function getRiskViewStateValidation(
           getExecutionDelay(templateVars),
         ),
         initialBond: {
-          value: formatEther(
-            templateVars.discovery.getContractValue<number[]>(
-              'DisputeGameFactory',
-              'initBonds',
-            )[0], // 0 is for permissionless games!
-          ),
+          value: formatEther(getPermissionlessGameBond(templateVars)),
         },
         permissioned: false,
         // OPFP: bonds scale by `exponentialBondsFactor` (1.09493) per depth,
@@ -2474,6 +2517,42 @@ function ifPostsToEthereum<T>(
   }
 }
 
+// The active permissionless game's init bond. Pre-Karst it is initBonds[0] (game
+// type 0). After Karst the respected game is CANNON_KONA (type 8) and initBonds[0]
+// is zeroed, so the bond lives in the per-type initBondGame8 field.
+function getPermissionlessGameBond(templateVars: OpStackConfigCommon): number {
+  const portal = getOptimismPortal(templateVars)
+  const respectedGameType =
+    templateVars.discovery.getContractValueOrUndefined<number>(
+      portal.name ?? portal.address,
+      'respectedGameType',
+    )
+  if (respectedGameType === 8) {
+    return templateVars.discovery.getContractValue<number>(
+      'DisputeGameFactory',
+      'initBondGame8',
+    )
+  }
+  return templateVars.discovery.getContractValue<number[]>(
+    'DisputeGameFactory',
+    'initBonds',
+  )[0]
+}
+
+// The permissioned game's init bond. v7 DisputeGameFactory_v2 exposes it per-type
+// as initBondGame1; older factories expose the legacy initBonds array.
+function getPermissionedGameBond(templateVars: OpStackConfigCommon): number {
+  const perType = templateVars.discovery.getContractValueOrUndefined<number>(
+    'DisputeGameFactory',
+    'initBondGame1',
+  )
+  if (perType !== undefined) return perType
+  return templateVars.discovery.getContractValue<number[]>(
+    'DisputeGameFactory',
+    'initBonds',
+  )[1]
+}
+
 function getOptimismPortal(templateVars: OpStackConfigCommon): EntryParameters {
   if (templateVars.portal !== undefined) {
     return templateVars.portal
@@ -2657,6 +2736,11 @@ function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
   )
 
   if (respectedGameType === 0) {
+    return 'Permissionless'
+  }
+  // 8 = CANNON_KONA (Karst): permissionless fault proof, same trust model as
+  // type 0 (kona-client Rust program instead of op-program).
+  if (respectedGameType === 8) {
     return 'Permissionless'
   }
   if (respectedGameType === 1) {

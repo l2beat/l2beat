@@ -1,3 +1,4 @@
+import type { TableReadyValue } from '@l2beat/config'
 import { Button } from '~/components/core/Button'
 import {
   Collapsible,
@@ -5,8 +6,15 @@ import {
   CollapsibleTrigger,
 } from '~/components/core/Collapsible'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import { LiveIndicator } from '~/components/LiveIndicator'
+import { Markdown } from '~/components/markdown/Markdown'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { SentimentText } from '~/components/SentimentText'
 import { ChevronIcon } from '~/icons/Chevron'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import { cn } from '~/utils/cn'
@@ -126,6 +134,12 @@ function AnomalyCollapsible({
                   </span>
                 )}
                 <AnomalyText anomaly={anomaly} />
+                {anomaly.failureMechanism && (
+                  <FailureMechanism
+                    failureMechanism={anomaly.failureMechanism}
+                    slug={projectWithAnomalies.slug}
+                  />
+                )}
               </div>
             )
           })}
@@ -137,5 +151,44 @@ function AnomalyCollapsible({
         </Button>
       </CollapsibleContent>
     </Collapsible>
+  )
+}
+
+function FailureMechanism({
+  failureMechanism,
+  slug,
+}: {
+  failureMechanism: TableReadyValue
+  slug: string
+}) {
+  const link = (
+    <a href={`/scaling/projects/${slug}#operator`}>
+      <SentimentText
+        sentiment={failureMechanism.sentiment ?? 'neutral'}
+        vibrant
+        className="font-medium text-paragraph-13 underline decoration-dotted underline-offset-2 hover:decoration-solid"
+      >
+        {failureMechanism.value}
+      </SentimentText>
+    </a>
+  )
+  return (
+    <div className="mt-1 flex flex-wrap items-baseline gap-x-1.5">
+      <span className="text-secondary text-subtitle-10 uppercase leading-none">
+        Failure mechanism
+      </span>
+      {failureMechanism.description ? (
+        <Tooltip>
+          <TooltipTrigger asChild disabledOnMobile>
+            {link}
+          </TooltipTrigger>
+          <TooltipContent>
+            <Markdown>{failureMechanism.description}</Markdown>
+          </TooltipContent>
+        </Tooltip>
+      ) : (
+        link
+      )}
+    </div>
   )
 }

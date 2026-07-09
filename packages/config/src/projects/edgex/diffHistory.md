@@ -1,3 +1,91 @@
+Generated with discovered.json: 0xcfe3c2673ae837dff0272a9f6f37eb1b80812f69
+
+# Diff at Wed, 08 Jul 2026 09:12:48 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@bd632cb3b3a14cad96138a9cfe1677d08dcc197d block: 1783333087
+- current timestamp: 1783501903
+
+## Description
+
+Updated global configuration hash that commits to a set of offchain configs. Global configuration contains perp dex parameters and asset info for each synthetic asset: https://docs.starkware.co/starkex/perpetual/on-chain-configuration-perpetual-trading.html#global_configuration.
+
+## Watched changes
+
+```diff
+    contract StarkPerpetual (eth:0xfAaE2946e846133af314d1Df13684c89fA7d83DD) [N/A] {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      values.globalConfigurationHash:
+-        "0x0114f28bf054a4ec460b72691af8a31eac9e0793cd57778e25b5b7d236052d64"
++        "0x02564aef7cc3de2f3779f578d2a2bf916abbf30c34007ce06434b8fb7e671a79"
+    }
+```
+
+Generated with discovered.json: 0xfbd1411158193eb92661534af37e67e6fbe0a1da
+
+# Diff at Mon, 06 Jul 2026 11:11:14 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@1fd9d39064602bc28714717ec6eae23c740b472b block: 1777891423
+- current timestamp: 1783333087
+
+## Description
+
+Upgraded PerpetualTokensAndRamping facet of Stark diamond to an unverified contract. The diamond changed to not finalized, so probably there will be further upgrades.
+
+## Watched changes
+
+```diff
+    contract StarkPerpetual (eth:0xfAaE2946e846133af314d1Df13684c89fA7d83DD) [N/A] {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      template:
+-        "starkex/StarkPerpetual"
+      sourceHashes:
+-        ["0x6b1917ba25a5b5df4eef66afa57aefa61ccb2230c2403358cca3b5e3dd6bbd5a","0x7cd422f025b0fd3210c5dd5116401aea5673db49cd24c6a040b7b148d25dc7f4"]
+      values.$implementation.2:
+-        "eth:0x1BC9C618B7FA6b5EfAAD31DC801eB55c608B9310"
++        "eth:0x80961E33198fa91C43De1Bc1d07516148099D58D"
+      values.$pastUpgrades.1:
++        ["2026-07-05T07:25:47.000Z","0xa613c279b34ee7e5e767125c40a99b77136d6c4fd69042f618a5e3687a24c939",["eth:0x8C43C9bec15d82D153C52518030e0a9590ABD35d","eth:0x540Ad8576d2F90f28994ab001622F964945854A8","eth:0x80961E33198fa91C43De1Bc1d07516148099D58D","eth:0x45de249eEa8f9CDB70943B17CceDeb42F5BA0175","eth:0x31e2d974BaC547101413c24C23443AD488423f64"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.tokenAdmins:
+-        ["eth:0x8847c33C6AEB53bf9a43D6b5579e9146478e6D3a"]
+      implementationNames.eth:0x1BC9C618B7FA6b5EfAAD31DC801eB55c608B9310:
+-        "PerpetualTokensAndRamping"
+      implementationNames.eth:0x80961E33198fa91C43De1Bc1d07516148099D58D:
++        ""
+      unverified:
++        true
+    }
+```
+
+## Source code changes
+
+```diff
+.../PerpetualTokensAndRamping.3.sol => /dev/null   | 2254 --------------------
+ 1 file changed, 2254 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777891423 (main branch discovery), not current.
+
+```diff
+    contract StarkPerpetual (eth:0xfAaE2946e846133af314d1Df13684c89fA7d83DD) [starkex/StarkPerpetual] {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      values.isNotFinalized:
+-        true
++++ description: Finalizes most of the configuration of the contract, which cannot be changed afterwards (only thorugh an upgrade).
++++ severity: HIGH
+      values.isFinalized:
++        false
+    }
+```
+
 Generated with discovered.json: 0xb1703c9b23e30fcc16e61c3f884dd5abc84f19ce
 
 # Diff at Fri, 12 Jun 2026 12:07:47 GMT:

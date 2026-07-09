@@ -173,6 +173,67 @@ describeDatabase(InteropTransferRepository.name, (db) => {
     })
   })
 
+  describe(InteropTransferRepository.prototype.getTokenRoutes.name, () => {
+    it('aggregates transfers into one row per token pair and bridge-type evidence', async () => {
+      const srcToken = EthereumAddress.random()
+      const dstToken = EthereumAddress.random()
+      const otherDstToken = EthereumAddress.random()
+
+      const first = transfer('plugin1', 'transfer1', 'type', UnixTime(100))
+      const second = transfer('plugin1', 'transfer2', 'type', UnixTime(200))
+      for (const record of [first, second]) {
+        record.srcTokenAddress = srcToken
+        record.dstTokenAddress = dstToken
+        record.bridgeType = 'lockAndMint'
+      }
+      const third = transfer('plugin1', 'transfer3', 'type', UnixTime(300))
+      third.srcTokenAddress = srcToken
+      third.dstTokenAddress = otherDstToken
+      third.bridgeType = undefined
+      third.srcWasBurned = true
+      third.dstWasMinted = true
+
+      await repository.insertMany([first, second, third])
+
+      const routes = await repository.getTokenRoutes()
+
+      expect(routes).toEqualUnsorted([
+        {
+          srcChain: 'ethereum',
+          srcTokenAddress: srcToken,
+          dstChain: 'arbitrum',
+          dstTokenAddress: dstToken,
+          bridgeType: 'lockAndMint',
+          srcWasBurned: false,
+          dstWasMinted: false,
+          transferCount: 2,
+          sampleTransferId: 'transfer2',
+        },
+        {
+          srcChain: 'ethereum',
+          srcTokenAddress: srcToken,
+          dstChain: 'arbitrum',
+          dstTokenAddress: otherDstToken,
+          bridgeType: undefined,
+          srcWasBurned: true,
+          dstWasMinted: true,
+          transferCount: 1,
+          sampleTransferId: 'transfer3',
+        },
+      ])
+    })
+  })
+
+  describe(InteropTransferRepository.prototype.findByTransferId.name, () => {
+    it('returns the full transfer by id and undefined for unknown ids', async () => {
+      const record = transfer('plugin1', 'transfer1', 'type', UnixTime(100))
+      await repository.insertMany([record])
+
+      expect(await repository.findByTransferId('transfer1')).toEqual(record)
+      expect(await repository.findByTransferId('missing')).toEqual(undefined)
+    })
+  })
+
   describe(InteropTransferRepository.prototype.getByType.name, () => {
     beforeEach(async () => {
       await repository.insertMany([

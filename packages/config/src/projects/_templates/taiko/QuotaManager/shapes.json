@@ -3,5 +3,11 @@
     "hash": "0x6ae3c0946e5703cdce5cd4aab28ec8bba4df9b9be88a368c1078da02c48896de",
     "address": "eth:0xdb627bfD79e81fE42138Eb875287F94FAd5BBc64",
     "blockNumber": 22579860
+  },
+  "QuotaManager.sol": {
+    "hash": "0xe620a95bd219381446643873f2b188ac353fe2b9ab4aa8ef6a178d0f7f1031ca",
+    "address": "eth:0xBaCb003f0B13CeAF09Eb9Baf5915A640BD4Bc6cC",
+    "chain": "ethereum",
+    "blockNumber": 25430675
   }
 }

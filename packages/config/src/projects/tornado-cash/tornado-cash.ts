@@ -9,6 +9,8 @@ import {
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
+import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
+import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
@@ -79,6 +81,9 @@ interface TornadoBucket {
 }
 
 const BUCKETS = getTornadoBuckets()
+const TORNADO_CASH_SINCE_TIMESTAMP = UnixTime(
+  Math.min(...BUCKETS.map((bucket) => bucket.sinceTimestamp)),
+)
 
 export const tornadoCash: BaseProject = {
   id: ProjectId('tornado-cash'),
@@ -116,8 +121,49 @@ export const tornadoCash: BaseProject = {
     associatedTokens: [],
     warnings: [],
   },
+  zkCatalogInfo: {
+    creator: 'Tornado Cash',
+    techStack: {
+      zkVM: [ZK_CATALOG_TAGS.curve.BN254, ZK_CATALOG_TAGS.Groth16.websnark],
+    },
+    proofSystemInfo: '',
+    trustedSetups: [
+      {
+        proofSystem: ZK_CATALOG_TAGS.Groth16.websnark,
+        ...TRUSTED_SETUPS.TornadoCash,
+      },
+    ],
+    projectsForTvs: [
+      {
+        projectId: ProjectId('tornado-cash'),
+        sinceTimestamp: TORNADO_CASH_SINCE_TIMESTAMP,
+      },
+    ],
+    verifierHashes: [
+      {
+        hash: 'Tornado Cash verifier 03.07.2026',
+        name: 'Tornado Cash verifier v2.1',
+        sourceLink:
+          'https://github.com/tornadocash/tornado-core/tree/v2.1/circuits',
+        proofSystem: ZK_CATALOG_TAGS.Groth16.websnark,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0xce172ce1F20EC0B3728c9965470eaf994A03557A',
+            ),
+          },
+        ],
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'tornado-cash',
+          'verificationSteps-03.07.2026',
+        ),
+      },
+    ],
+  },
   privacyInfo: {
-    trustedSetup: TRUSTED_SETUPS.TornadoCash,
     tokens: getPrivacyTokens(),
     exitWindow: {
       value: 'Infinite',
@@ -132,18 +178,13 @@ export const tornadoCash: BaseProject = {
       description:
         'There is at least one practical way to participate in Tornado Cash using published source code that can be audited and run locally.',
     },
-    adminViewingKey: {
+    privacy: {
       value: 'None',
       sentiment: 'good',
       description:
-        "The protocol does not include an auditor viewing key that decrypts users' private balances and transactions.",
+        'There is no protocol-level compliance mechanism or way to compromise user privacy.',
     },
-    attributes: [
-      PRIVACY_ATTRIBUTES.immutable,
-      PRIVACY_ATTRIBUTES.unconditionalPrivacy,
-      PRIVACY_ATTRIBUTES.fixedAmounts,
-      PRIVACY_ATTRIBUTES.sourceAvailable,
-    ],
+    attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.fixedAmounts],
     riskSummary: readProjectMarkdown('tornado-cash', 'riskSummary'),
     upgradesAndGovernance: readProjectMarkdown(
       'tornado-cash',

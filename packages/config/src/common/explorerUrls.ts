@@ -36,9 +36,11 @@ export const EXPLORER_URLS: Record<string, string> = {
   gateway: 'https://gateway.explorer.zksync.io',
   gnosis: 'https://gnosisscan.io',
   zircuit: 'https://explorer.zircuit.com',
+  zama: 'https://explorer.mainnet.zama.org',
   metis: 'https://andromeda-explorer.metis.io',
   ethereal: 'https://explorer.ethereal.trade',
   ethscriptions: 'https://explorer.ethscriptions.com',
   sepolia: 'https://sepolia.etherscan.io',
   katana: 'https://katanascan.com',
+  robinhood: 'https://robinhoodchain.blockscout.com',
 }

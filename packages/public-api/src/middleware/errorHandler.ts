@@ -13,7 +13,7 @@ export function errorHandler(logger: Logger) {
     res.status(500)
 
     const body = {
-      error: err instanceof Error ? err.message : String(err),
+      error: err instanceof Error ? err : new Error(String(err)),
       method: req.method,
       url: req.originalUrl,
       errorId,

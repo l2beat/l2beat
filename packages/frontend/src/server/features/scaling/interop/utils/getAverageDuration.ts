@@ -9,7 +9,10 @@ import type {
 } from '../types'
 
 export function getAverageDuration(
-  data: CommonInteropData,
+  data: Pick<
+    CommonInteropData,
+    'totalDurationSum' | 'transfersWithDurationCount' | 'transferTypeStats'
+  >,
   durationSplit: InteropDurationSplit | undefined,
 ): Exclude<AverageDuration, UnknownAverageDuration> | null {
   if (data.transfersWithDurationCount <= 0) return null

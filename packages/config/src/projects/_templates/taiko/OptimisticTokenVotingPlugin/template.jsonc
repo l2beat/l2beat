@@ -32,7 +32,9 @@
       "handler": { "type": "call", "method": "minVetoRatio", "args": [] },
       "edit": ["format", "Undecimal4"]
     },
-    "governanceSettings": { "description": "" },
+    "governanceSettings": {
+      "description": "Governance parameters controlling veto threshold, minimum voting duration, post-vote timelock, L2 inactivity timeout, L2 veto aggregation grace period, and whether L2 voting power is ignored."
+    },
     "governanceSettings_timelockPeriod_fmt": {
       "handler": { "type": "call", "method": "governanceSettings", "args": [] },
       "edit": ["pipe", ["get", "timelockPeriod"], ["format", "FormatSeconds"]]

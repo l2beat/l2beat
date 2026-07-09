@@ -55,6 +55,7 @@ export function updateNodePositions(
     if (boxMoved) {
       movedIds.add(node.id)
     }
+    indexSubnodes(node, nextBox, boxMoved, nextBoxes, movedIds)
   }
 
   // Pass 2: rebuild nodes lazily. Reuse refs whenever the data is
@@ -144,13 +145,76 @@ export function updateNodePositions(
     }
   }
 
-  if (!anyNodeChanged) {
+  // Members of opened groups live nested inside their group. Top-level boxes
+  // are handled above; here we drag the nested ones whose ids are being moved.
+  // Their display geometry is recomputed by the render graph.
+  let nestedMoved = false
+  const positions = nextState.positionsBeforeMove
+  for (let n = 0; n < nextNodes.length; n++) {
+    const node = nextNodes[n] as Node
+    if (node.subnodes.length === 0) {
+      continue
+    }
+    const subnodes = shiftSubnodes(node.subnodes, positions, dx, dy)
+    if (subnodes !== node.subnodes) {
+      nextNodes[n] = { ...node, subnodes }
+      nestedMoved = true
+    }
+  }
+
+  if (!anyNodeChanged && !nestedMoved) {
     return nextState
   }
 
   return {
     ...nextState,
     nodes: nextNodes,
+  }
+}
+
+function shiftSubnodes(
+  subnodes: readonly Node[],
+  positions: State['positionsBeforeMove'],
+  dx: number,
+  dy: number,
+): readonly Node[] {
+  let changed = false
+  const next = subnodes.map((node) => {
+    const start = positions[node.id]
+    const movedSubnodes =
+      node.subnodes.length > 0
+        ? shiftSubnodes(node.subnodes, positions, dx, dy)
+        : node.subnodes
+    if (start !== undefined) {
+      changed = true
+      return {
+        ...node,
+        box: { ...node.box, x: start.x + dx, y: start.y + dy },
+        subnodes: movedSubnodes,
+      }
+    }
+    if (movedSubnodes !== node.subnodes) {
+      changed = true
+      return { ...node, subnodes: movedSubnodes }
+    }
+    return node
+  })
+  return changed ? next : subnodes
+}
+
+function indexSubnodes(
+  node: Node,
+  box: Box,
+  moved: boolean,
+  boxes: Map<string, Box>,
+  movedIds: Set<string>,
+): void {
+  for (const subnode of node.subnodes) {
+    boxes.set(subnode.id, box)
+    if (moved) {
+      movedIds.add(subnode.id)
+    }
+    indexSubnodes(subnode, box, moved, boxes, movedIds)
   }
 }
 
@@ -178,7 +242,7 @@ function connectionsEqual(a: Connection, b: Connection): boolean {
   )
 }
 
-function processConnection(
+export function processConnection(
   index: number,
   from: { x: number; y: number; width: number },
   to: { x: number; y: number; width: number },

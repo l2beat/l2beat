@@ -6,6 +6,7 @@ import type {
   ProjectDisplay,
   ProjectPermissions,
   ProjectStatuses,
+  ProjectZkCatalogInfo,
 } from '@l2beat/config'
 import type {
   PrivacyFlowBucketTotalRecord,
@@ -35,15 +36,9 @@ export interface PrivacyProjectDetails {
   contracts?: ProjectContracts
   permissions?: Record<string, ProjectPermissions>
   statuses: ProjectStatuses
-  trustedSetup: {
-    name: string
-    risk: 'green' | 'yellow' | 'red' | 'N/A'
-    shortDescription: string
-    longDescription: string
-    participantCount?: number
-  }
+  zkCatalogInfo?: ProjectZkCatalogInfo
   exitWindow: PrivacyExitWindow
-  adminViewingKey: PrivacySummaryValue
+  privacy: PrivacySummaryValue
   reproducibility: PrivacySummaryValue
   riskSummary?: string
   upgradesAndGovernance?: string
@@ -72,7 +67,13 @@ export async function getPrivacyProjectDetails(
     slug,
     where: ['privacyInfo'],
     select: ['display', 'privacyInfo', 'statuses'],
-    optional: ['tvsConfig', 'contracts', 'permissions', 'discoveryInfo'],
+    optional: [
+      'tvsConfig',
+      'contracts',
+      'permissions',
+      'discoveryInfo',
+      'zkCatalogInfo',
+    ],
   })
   if (!project) {
     return undefined
@@ -257,9 +258,9 @@ export async function getPrivacyProjectDetails(
     contracts: project.contracts,
     permissions: project.permissions,
     statuses: project.statuses,
-    trustedSetup: project.privacyInfo.trustedSetup,
+    zkCatalogInfo: project.zkCatalogInfo,
     exitWindow: project.privacyInfo.exitWindow,
-    adminViewingKey: project.privacyInfo.adminViewingKey,
+    privacy: project.privacyInfo.privacy,
     reproducibility: project.privacyInfo.reproducibility,
     riskSummary: project.privacyInfo.riskSummary,
     upgradesAndGovernance: project.privacyInfo.upgradesAndGovernance,

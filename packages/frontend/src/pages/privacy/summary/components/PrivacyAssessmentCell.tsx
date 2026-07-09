@@ -33,7 +33,7 @@ export function PrivacyAssessmentCell({
           className="shrink-0"
         />
         {showValue && (
-          <span className="font-medium text-[11px] text-secondary leading-none">
+          <span className="max-w-20 whitespace-normal text-center font-medium text-[11px] text-secondary leading-tight">
             {value.value}
           </span>
         )}

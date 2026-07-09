@@ -3,17 +3,13 @@ import { cn } from '~/utils/cn'
 import { Tooltip, TooltipContent, TooltipTrigger } from './core/tooltip/Tooltip'
 
 const ATTRIBUTE_CLASS_NAMES: Record<string, string> = {
-  upgradeable: 'text-[#5A3216] bg-[#FFA91E] border-[#D78400]',
-  optCompliance: 'text-[#004B3A] bg-[#A6F5D2] border-[#29BD8C]',
-  transfers: 'text-[#4B1877] bg-[#D9B4FF] border-[#A45CDB]',
+  fhe: 'text-[#5C3B00] bg-[#FFE8A3] border-[#D9A31A]',
+  zk: 'text-[#6B2D00] bg-[#FFD5A3] border-[#E2872A]',
+  transfers: 'text-[#17452A] bg-[#C8F2D7] border-[#4FB875]',
   defi: 'text-[#5D1163] bg-[#F7B3FF] border-[#D96BE8]',
   anyAmount: 'text-[#3F1E6D] bg-[#C7B8FF] border-[#8D78D9]',
   fixedAmounts: 'text-[#452576] bg-[#D8CEFF] border-[#9B86E6]',
-  sourceAvailable: 'bg-[#CCD0DA] border-[#808CAA] text-[#272A2F]',
-  closedSource: 'bg-[#F1C7C7] border-[#D16A6A] text-[#5D1F1F]',
-  immutable: 'text-[#6B4A00] bg-[#FFE08A] border-[#D6A900]',
-  unconditionalPrivacy: 'text-[#00445A] bg-[#A9ECF4] border-[#46C7D9]',
-  enforcedCompliance: 'text-[#235000] bg-[#C9F59B] border-[#7AC943]',
+  privateAmounts: 'text-[#0F3F3A] bg-[#BFEFE5] border-[#45B8A7]',
 }
 
 export function PrivacyAttributeTag({
@@ -24,14 +20,14 @@ export function PrivacyAttributeTag({
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <div
+        <span
           className={cn(
             'inline-flex select-none items-center rounded border px-1.5 py-0.5 font-medium text-xs',
             ATTRIBUTE_CLASS_NAMES[attribute.id],
           )}
         >
           {attribute.label}
-        </div>
+        </span>
       </TooltipTrigger>
       <TooltipContent>
         <p>{attribute.description}</p>

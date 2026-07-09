@@ -15,6 +15,7 @@ export const onyx: ScalingProject = orbitStackL3({
   discovery,
   capability: 'universal',
   addedAt: UnixTime(1744637831),
+  archivedAt: UnixTime(1783296000), // 2026-07-06T00:00:00Z
   hostChain: ProjectId('base'),
   additionalBadges: [BADGES.RaaS.Conduit],
   associatedTokens: ['XCN'],
@@ -44,6 +45,7 @@ export const onyx: ScalingProject = orbitStackL3({
     name: 'onyx',
     gasTokens: ['XCN'],
     chainId: 80888,
+    untilTimestamp: UnixTime(1783296000), // 2026-07-06T00:00:00Z
     apis: [
       {
         type: 'rpc',

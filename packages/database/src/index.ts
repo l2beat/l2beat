@@ -74,6 +74,7 @@ export type { InteropPluginSyncStateRecord } from './repositories/InteropPluginS
 export type {
   InteropMissingTokenInfo,
   InteropSuspiciousTransferRecord,
+  InteropTokenRouteRecord,
   InteropTransferRecord,
   InteropTransfersDetailedStatsRecord,
   InteropTransfersStatsRecord,

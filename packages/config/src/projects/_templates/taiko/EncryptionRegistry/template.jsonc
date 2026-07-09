@@ -4,7 +4,13 @@
   "fields": {
     "constructorArgs": { "handler": { "type": "constructorArgs" } },
     "getRegisteredAccounts": {
-      "permissions": [{ "type": "interact", "description": "" }]
+      "description": "Addresses that registered encryption keys or appointed an encryption agent for Security Council proposal support.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "appoint an encryption agent and register an encryption public key for Security Council proposal support."
+        }
+      ]
     }
   },
   "ignoreMethods": ["accountList"],

@@ -1,0 +1,78 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ConfidentialWrapperV3",
+  "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.",
+  "category": "core",
+  "ignoreMethods": ["proxiableUUID"],
+  "fields": {
+    "constructorArgs": { "handler": { "type": "constructorArgs" } },
+    "owner": {
+      "description": "Current owner of the wrapper.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "block and unblock users, and transfer ownership."
+        }
+      ]
+    },
+    "pendingOwner": {
+      "description": "Pending owner for a two-step ownership transfer.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "accept ownership of the wrapper if non-zero."
+        }
+      ]
+    },
+    "underlying": { "description": "ERC-20 token escrowed by this wrapper." },
+    "getUnderlyingDenyListSelector": {
+      "description": "Underlying-token denylist hook used by the wrapper. If enabled, the wrapper calls this selector on the underlying token before restricted operations.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "blockedUsers": {
+      "description": "Wrapper-local denylist reconstructed from UserBlocked and UserUnblocked events.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "event",
+        "select": "user",
+        "ignoreRelative": true,
+        "add": { "event": "UserBlocked" },
+        "remove": { "event": "UserUnblocked" }
+      }
+    },
+    "fheAcl": {
+      "description": "Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles.",
+      "handler": {
+        "type": "storage",
+        "slot": "0x9e7b61f58c47dc699ac88507c4f5bb9f121c03808c5676a8078fe583e4649700",
+        "returnType": "address"
+      }
+    },
+    "fheCoprocessor": {
+      "description": "Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles.",
+      "handler": {
+        "type": "storage",
+        "slot": "0x9e7b61f58c47dc699ac88507c4f5bb9f121c03808c5676a8078fe583e4649700",
+        "offset": 1,
+        "returnType": "address"
+      }
+    },
+    "fheKmsVerifier": {
+      "description": "Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS.",
+      "handler": {
+        "type": "storage",
+        "slot": "0x9e7b61f58c47dc699ac88507c4f5bb9f121c03808c5676a8078fe583e4649700",
+        "offset": 2,
+        "returnType": "address"
+      }
+    }
+  },
+  "ignoreRelatives": ["underlying"],
+  "ignoreInWatchMode": ["confidentialTotalSupply", "inferredTotalSupply"]
+}

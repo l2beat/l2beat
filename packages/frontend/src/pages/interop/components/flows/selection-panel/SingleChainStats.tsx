@@ -9,6 +9,7 @@ import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { getInteropTokenUrl } from '../../../utils/getInteropTokenUrl'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
+import { AvgDurationStatValue } from './AvgDurationStatValue'
 import { getChainFlowStatItems } from './getChainFlowStatItems'
 import { TopItemsList } from './TopItemsList'
 
@@ -51,10 +52,7 @@ export function SingleChainStats({
           items={chainData.topTokens.map((t) => ({
             ...t,
             title: t.symbol,
-            href: getInteropTokenUrl(t, {
-              from: selectedChains,
-              to: selectedChains,
-            }),
+            href: getInteropTokenUrl(t),
           }))}
         />
       )}
@@ -102,6 +100,13 @@ function Stats({
             isLoading={isLoading}
           />
         ))}
+        {chainData.avgDuration && (
+          <StatRow
+            label="Avg. transfer time"
+            value={<AvgDurationStatValue avgDuration={chainData.avgDuration} />}
+            isLoading={isLoading}
+          />
+        )}
         <StatRow
           label="Connected"
           value={`${chainData.connectedChains} chains`}
@@ -188,7 +193,7 @@ function StatRow({
   onClick,
 }: {
   label: ReactNode
-  value: string
+  value: ReactNode
   isLoading: boolean
   onClick?: () => void
 }) {
@@ -202,7 +207,7 @@ function StatRow({
       {isLoading ? (
         <Skeleton className="h-4 w-16" />
       ) : (
-        <span className="text-right font-semibold leading-[1.15]">{value}</span>
+        <div className="text-right font-semibold leading-[1.15]">{value}</div>
       )}
     </>
   )

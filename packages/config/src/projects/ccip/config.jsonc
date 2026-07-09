@@ -33,6 +33,7 @@
         "241851231317828981": "bitcoin-merlin",
         "2135107236357186872": "bittensor",
         "11344663589394136015": "bsc",
+        "2308837218439511688": "canton",
         "1346049177634351622": "celo",
         "1224752112135636129": "core",
         "9043146809313071210": "corn",
@@ -79,6 +80,7 @@
         "17912061998839310979": "plume",
         "6422105447186081193": "astar",
         "2459028469735686113": "katana",
+        "6180753054346818345": "robinhood",
         "6916147374840168594": "ronin",
         "11964252391146578476": "rootstock",
         "9027416829622342829": "sei",
@@ -324,10 +326,12 @@
     },
     "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA": {
       "description": "Token accepted as fee token for sending outgoing messages.",
-      "ignoreRelatives": true
+      "ignoreRelatives": true,
+      "ignoreInWatchMode": ["totalSupply"]
     },
     "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
-      "description": "Token accepted as fee token for sending outgoing messages."
+      "description": "Token accepted as fee token for sending outgoing messages.",
+      "ignoreInWatchMode": ["totalSupply"]
     },
     "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f": {
       "description": "Token accepted as fee token for sending outgoing messages.",

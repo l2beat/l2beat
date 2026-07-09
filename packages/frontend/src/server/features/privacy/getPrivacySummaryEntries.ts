@@ -1,4 +1,5 @@
 import type {
+  PrivacyAttribute,
   PrivacyExitWindow,
   PrivacySummaryValue,
   TrustedSetup,
@@ -9,6 +10,7 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { manifest } from '~/utils/Manifest'
 import type { PrivacyProject } from './types'
+import { getPrivacyTrustedSetup } from './utils/getPrivacyTrustedSetup'
 
 export interface PrivacySummaryEntry {
   id: string
@@ -24,10 +26,12 @@ export interface PrivacySummaryEntry {
   totalDeposits?: number
   totalValueDeposited30dUsd?: number
   isUnderReview: boolean
+  summaryTrackedItemName: string
   trustedSetup: TrustedSetup
   exitWindow: PrivacyExitWindow
   reproducibility: PrivacySummaryValue
-  adminViewingKey: PrivacySummaryValue
+  privacy: PrivacySummaryValue
+  attributes: PrivacyAttribute[]
 }
 
 type PrivacySummaryTrackingMetrics = Pick<
@@ -135,10 +139,13 @@ function getPrivacySummaryBaseEntry(
     href: `/privacy/projects/${project.slug}`,
     description: project.display.description,
     isUnderReview: !!project.statuses.reviewStatus,
-    trustedSetup: project.privacyInfo.trustedSetup,
+    summaryTrackedItemName:
+      project.privacyInfo.summaryTrackedItemName ?? 'pool',
+    trustedSetup: getPrivacyTrustedSetup(project.zkCatalogInfo),
     exitWindow: project.privacyInfo.exitWindow,
     reproducibility: project.privacyInfo.reproducibility,
-    adminViewingKey: project.privacyInfo.adminViewingKey,
+    privacy: project.privacyInfo.privacy,
+    attributes: project.privacyInfo.attributes ?? [],
   }
 }
 

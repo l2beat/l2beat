@@ -26,10 +26,7 @@ export function PluginStatusesTable({
   } = useTanStackTable({
     data,
     columns: pluginStatusColumns,
-    initialSorting: [
-      { id: 'pluginName', desc: false },
-      { id: 'chain', desc: false },
-    ],
+    initialSorting: [{ id: 'toTimestamp', desc: true }],
     getRowId: (row) => `${row.pluginName}:${row.chain}`,
     searchPlaceholder: 'Search plugins, chains, sync modes, and errors',
   })

@@ -29,7 +29,7 @@ export function ProjectSummaryStat(props: ProjectSummaryStatProps) {
   return (
     <li
       className={cn(
-        'flex max-md:items-center max-md:justify-between md:flex-col md:gap-3',
+        'flex gap-4 max-md:items-center max-md:justify-between md:flex-col md:gap-3',
         props.className,
       )}
     >

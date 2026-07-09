@@ -4,9 +4,14 @@ import { CopyButton } from '~/components/CopyButton'
 import { CustomLink } from '~/components/link/CustomLink'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { IndexCell } from '~/components/table/cells/IndexCell'
-import { EM_DASH } from '~/consts/characters'
+import { InteropNoDataBadge } from '~/pages/interop/components/InteropNoDataBadge'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { InteropTokenOnchainDeploymentsRow } from './InteropTokenOnchainDeploymentsSection'
+
+const UNSUPPORTED_CHAIN_TOOLTIP =
+  "The information is not available as this deployment is on a chain we don't fully support."
+const NO_TRANSFER_TIME_TOOLTIP =
+  'There is no transfer time data for this deployment from the past 24 hours.'
 
 export type DeploymentRow = InteropTokenOnchainDeploymentsRow & BasicTableRow
 const columnHelper = createColumnHelper<DeploymentRow>()
@@ -76,7 +81,8 @@ export const interopTokenOnchainDeploymentsColumns = [
   columnHelper.accessor('volume', {
     header: 'Last 24h\nVolume',
     cell: (ctx) => {
-      if (ctx.row.original.volume === null) return EM_DASH
+      if (ctx.row.original.volume === null)
+        return <InteropNoDataBadge tooltip={UNSUPPORTED_CHAIN_TOOLTIP} />
       return (
         <span className="font-medium text-label-value-15">
           {formatCurrency(ctx.row.original.volume, 'usd')}
@@ -92,7 +98,8 @@ export const interopTokenOnchainDeploymentsColumns = [
   columnHelper.accessor('transferCount', {
     header: 'Last 24h\ntransfer count',
     cell: (ctx) => {
-      if (ctx.row.original.transferCount === null) return EM_DASH
+      if (ctx.row.original.transferCount === null)
+        return <InteropNoDataBadge tooltip={UNSUPPORTED_CHAIN_TOOLTIP} />
       return (
         <span className="font-medium text-label-value-15">
           {ctx.row.original.transferCount}
@@ -108,7 +115,17 @@ export const interopTokenOnchainDeploymentsColumns = [
   columnHelper.accessor('avgDuration', {
     header: 'Last 24h avg.\ntransfer time',
     cell: (ctx) => {
-      if (ctx.row.original.avgDuration === null) return EM_DASH
+      if (ctx.row.original.avgDuration === null) {
+        return (
+          <InteropNoDataBadge
+            tooltip={
+              !ctx.row.original.isSupported
+                ? UNSUPPORTED_CHAIN_TOOLTIP
+                : NO_TRANSFER_TIME_TOOLTIP
+            }
+          />
+        )
+      }
       return (
         <span className="font-medium text-label-value-15">
           {formatSeconds(ctx.row.original.avgDuration)}

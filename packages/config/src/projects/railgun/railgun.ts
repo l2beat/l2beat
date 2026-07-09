@@ -7,6 +7,8 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
+import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
+import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
@@ -84,6 +86,7 @@ const executionEndOffset = discovery.getContractValue<number>(
   'EXECUTION_END_OFFSET',
 )
 const quorum = discovery.getContractValueBigInt('Voting', 'QUORUM')
+const RAILGUN_SINCE_TIMESTAMP = UnixTime(railgunCore.sinceTimestamp ?? 0)
 
 function formatBasisPoints(value: number): string {
   return `${Number((value / 100).toFixed(4))}%`
@@ -167,8 +170,49 @@ export const railgun: BaseProject = {
     associatedTokens: [{ symbol: RAIL_TOKEN.symbol, icon: RAIL_TOKEN.iconUrl }],
     warnings: [],
   },
+  zkCatalogInfo: {
+    creator: 'Railgun',
+    techStack: {
+      zkVM: [ZK_CATALOG_TAGS.curve.BN254, ZK_CATALOG_TAGS.Groth16.Snarkjs],
+    },
+    proofSystemInfo: '',
+    trustedSetups: [
+      {
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+        ...TRUSTED_SETUPS.Railgun,
+      },
+    ],
+    projectsForTvs: [
+      {
+        projectId: ProjectId('railgun'),
+        sinceTimestamp: RAILGUN_SINCE_TIMESTAMP,
+      },
+    ],
+    verifierHashes: [
+      {
+        hash: 'Railgun 91 circuit verifier 03.07.2026',
+        name: 'Railgun verifier',
+        sourceLink:
+          'https://github.com/Railgun-Privacy/circuits-v2/tree/0aa2d13763a9fcfbb7b7ea9c02e004e71f1394bb/src/library',
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9',
+            ),
+          },
+        ],
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'railgun',
+          'verificationSteps-03.07.2026',
+        ),
+      },
+    ],
+  },
   privacyInfo: {
-    trustedSetup: TRUSTED_SETUPS.Railgun,
     tokens: privacyTokens,
     exitWindow: {
       value: formatSeconds(executionStartOffset),
@@ -182,27 +226,17 @@ export const railgun: BaseProject = {
       description:
         'The contracts, circuits, and supporting software needed to participate in the protocol are publicly available and can be run locally.',
     },
-    adminViewingKey: {
+    privacy: {
       value: 'None',
       sentiment: 'good',
       description:
-        "The protocol does not include an auditor viewing key that decrypts users' private balances and transactions.",
+        'Compliance is optional at the core protocol level: users can create proofs of innocence to disassociate deposits from flagged addresses, and relayers can choose to require them.',
     },
     attributes: [
-      {
-        ...PRIVACY_ATTRIBUTES.upgradeable,
-        description:
-          'DAO can vote on upgrades that are executable with a 7d delay.',
-      },
-      {
-        ...PRIVACY_ATTRIBUTES.optCompliance,
-        description:
-          "Optional 'proofs of innocence' (POIs), can disassociate a deposit from a list of flagged addresses. They are not enforced by the protocol but can be enforced by relayers.",
-      },
+      PRIVACY_ATTRIBUTES.zk,
       PRIVACY_ATTRIBUTES.transfers,
       PRIVACY_ATTRIBUTES.defi,
       PRIVACY_ATTRIBUTES.anyAmount,
-      PRIVACY_ATTRIBUTES.sourceAvailable,
     ],
     riskSummary: readProjectMarkdown('railgun', 'riskSummary'),
     upgradesAndGovernance: readProjectMarkdown(

@@ -165,11 +165,9 @@ function toTechnologyContract(
   let usedInProjects: UsedInProject[] | undefined
   if (permission.accounts.length === 1) {
     usedInProjects = permission.accounts.flatMap((a) =>
-      contractUtils.getUsedIn(
-        projectParams.id,
-        permission.chain,
-        ChainSpecificAddress.address(a.address),
-      ),
+      contractUtils
+        .getUsedIn(permission.chain, ChainSpecificAddress.address(a.address))
+        .filter((x) => x.id !== projectParams.id),
     )
     if (usedInProjects !== undefined) {
       usedInProjects = usedInProjects.map((p) => ({
