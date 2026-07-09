@@ -10,6 +10,7 @@ import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { getPrivacyProjectDetails } from '~/server/features/privacy/getPrivacyProjectDetails'
+import { getPrivacyTrustedSetupsSection } from '~/server/features/privacy/utils/getPrivacyTrustedSetup'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import { get7dTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
@@ -24,7 +25,6 @@ import { getContractUtils } from '~/utils/project/contracts-and-permissions/getC
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
-import { getTrustedSetupsSectionFromTrustedSetups } from '~/utils/project/getTrustedSetupsSection'
 import { getVerifiersSection } from '~/utils/project/getVerifiersSection'
 import { optionToRange } from '~/utils/range/range'
 
@@ -274,21 +274,7 @@ export async function getPrivacyProjectData(
     props: {
       id: 'trusted-setups',
       title: 'Trusted setup',
-      ...(details.zkCatalogInfo &&
-      details.zkCatalogInfo.trustedSetups.length > 0
-        ? getTrustedSetupsSectionFromTrustedSetups(
-            details.zkCatalogInfo.trustedSetups,
-          )
-        : {
-            trustedSetups: [
-              {
-                name: details.trustedSetup.name,
-                risk: details.trustedSetup.risk,
-                description: details.trustedSetup.longDescription,
-                proofSystems: [],
-              },
-            ],
-          }),
+      ...getPrivacyTrustedSetupsSection(details.zkCatalogInfo),
     },
   })
 
@@ -297,11 +283,7 @@ export async function getPrivacyProjectData(
     details.zkCatalogInfo.verifierHashes.length > 0
   ) {
     const verifiersSection = await getVerifiersSection(
-      {
-        projectId: details.id,
-        verifierHashes: details.zkCatalogInfo.verifierHashes,
-        includeCurrentProject: true,
-      },
+      details.zkCatalogInfo.verifierHashes,
       contractUtils,
       allProjects,
       tvs,
@@ -312,9 +294,7 @@ export async function getPrivacyProjectData(
       props: {
         id: 'verifiers',
         title: 'Verifier IDs',
-        introText: undefined,
-        showProofSystemTag: false,
-        collapsible: false,
+        variant: 'privacy',
         ...verifiersSection,
       },
     })

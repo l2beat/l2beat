@@ -2,16 +2,14 @@ import type { Milestone, Project } from '@l2beat/config'
 import type { ZkCatalogTvsSectionProps } from '~/components/projects/sections/tvs/ZkCatalogTvsSection'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import { getLogger } from '~/server/utils/logger'
+import type { ProjectWithPageMetadata } from '~/utils/project/getProjectUrl'
 import { optionToRange } from '~/utils/range/range'
 import { withProjectIcon } from '~/utils/withProjectIcon'
 import { getProjectsUsedIn } from './getTrustedSetupsWithVerifiersAndAttesters'
 
 export function getZkCatalogTvsSection(
   project: Project<'zkCatalogInfo', 'tvsInfo' | 'milestones'>,
-  allProjects: Project<
-    never,
-    'display' | 'daBridge' | 'scalingInfo' | 'daLayer' | 'privacyInfo'
-  >[],
+  allProjects: ProjectWithPageMetadata[],
 ): Omit<ZkCatalogTvsSectionProps, keyof ProjectSectionProps> | undefined {
   const allProjectsMap = new Map(
     allProjects.map((project) => [project.id, project]),

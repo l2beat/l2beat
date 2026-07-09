@@ -4,6 +4,7 @@ import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTv
 import type { ContractUtils } from '../../contracts-and-permissions/getContractUtils'
 import { getProgramHashes } from '../../contracts-and-permissions/getProgramHashes'
 import { getDiagramParams } from '../../getDiagramParams'
+import type { ProjectWithPageMetadata } from '../../getProjectUrl'
 import { getProverInfo } from './getProverInfo'
 
 export function getStateValidationSection(
@@ -14,10 +15,7 @@ export function getStateValidationSection(
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
   contractUtils: ContractUtils,
   tvs: SevenDayTvsBreakdown,
-  allProjects: Project<
-    never,
-    'display' | 'daBridge' | 'scalingInfo' | 'daLayer' | 'privacyInfo'
-  >[],
+  allProjects: ProjectWithPageMetadata[],
   allProjectsWithContracts: Project<'contracts'>[],
 ):
   | Omit<StateValidationSectionProps, 'id' | 'title' | 'sectionOrder'>
