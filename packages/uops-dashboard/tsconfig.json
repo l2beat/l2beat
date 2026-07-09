@@ -1,7 +1,6 @@
 {
   "extends": "@l2beat/typescript-config/nextjs",
   "compilerOptions": {
-    "downlevelIteration": true,
     "noUncheckedIndexedAccess": false,
     "paths": {
       "@/*": ["./src/*"],
