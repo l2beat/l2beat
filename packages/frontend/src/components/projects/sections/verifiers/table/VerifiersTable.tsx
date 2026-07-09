@@ -9,7 +9,7 @@ import {
   VerifierRowDetails,
   type VerifiersSectionProps,
 } from '../VerifiersSection'
-import { verifiersColumns } from './columns'
+import { verifiersColumns, verifiersColumnsWithoutActions } from './columns'
 
 export type VerifierRow =
   VerifiersSectionProps['proofSystemVerifiers'][number]['verifierHashes'][number] &
@@ -22,7 +22,7 @@ interface Props {
 export function VerifiersTable({ entries, collapsible = true }: Props) {
   const table = useTable({
     data: entries,
-    columns: verifiersColumns(collapsible),
+    columns: collapsible ? verifiersColumns : verifiersColumnsWithoutActions,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getExpandedRowModel: getExpandedRowModel(),

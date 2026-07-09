@@ -7,7 +7,6 @@ import type {
   ProjectPermissions,
   ProjectStatuses,
   ProjectZkCatalogInfo,
-  TrustedSetup,
 } from '@l2beat/config'
 import type {
   PrivacyFlowBucketTotalRecord,
@@ -21,7 +20,6 @@ import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type { PrivacyAsset, PrivacyBucket, PrivacyProject } from './types'
-import { getPrivacyTrustedSetup } from './utils/getPrivacyTrustedSetup'
 
 interface PrivacyProjectFlowData {
   totals: PrivacyFlowBucketTotalRecord[]
@@ -38,7 +36,6 @@ export interface PrivacyProjectDetails {
   contracts?: ProjectContracts
   permissions?: Record<string, ProjectPermissions>
   statuses: ProjectStatuses
-  trustedSetup: TrustedSetup
   zkCatalogInfo?: ProjectZkCatalogInfo
   exitWindow: PrivacyExitWindow
   privacy: PrivacySummaryValue
@@ -261,7 +258,6 @@ export async function getPrivacyProjectDetails(
     contracts: project.contracts,
     permissions: project.permissions,
     statuses: project.statuses,
-    trustedSetup: getPrivacyTrustedSetup(project.zkCatalogInfo),
     zkCatalogInfo: project.zkCatalogInfo,
     exitWindow: project.privacyInfo.exitWindow,
     privacy: project.privacyInfo.privacy,

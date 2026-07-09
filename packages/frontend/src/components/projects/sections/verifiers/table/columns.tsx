@@ -115,10 +115,6 @@ const actionsColumn = columnHelper.display({
   },
 })
 
-export function verifiersColumns(collapsible = true) {
-  if (!collapsible) {
-    return baseVerifiersColumns
-  }
+export const verifiersColumns = [...baseVerifiersColumns, actionsColumn]
 
-  return [...baseVerifiersColumns, actionsColumn]
-}
+export const verifiersColumnsWithoutActions = baseVerifiersColumns

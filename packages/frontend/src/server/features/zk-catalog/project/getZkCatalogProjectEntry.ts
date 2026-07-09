@@ -167,11 +167,7 @@ export async function getZkCatalogProjectEntry(
   })
 
   const verifiersSection = await getVerifiersSection(
-    {
-      projectId: project.id,
-      verifierHashes: project.zkCatalogInfo.verifierHashes,
-      includeCurrentProject: true,
-    },
+    project.zkCatalogInfo.verifierHashes,
     contractUtils,
     allProjects,
     tvs,
@@ -181,6 +177,7 @@ export async function getZkCatalogProjectEntry(
     props: {
       id: 'verifiers',
       title: 'Verifier IDs',
+      variant: 'zkCatalog',
       ...verifiersSection,
     },
   })
