@@ -64,16 +64,23 @@ export async function getDefiProjectData(
     contractUtils,
     allProjectsWithContracts,
     zkCatalogProjects,
+    allProjects,
   ] = await Promise.all([
     getAppLayoutProps(),
     ps.getProject({
       slug,
       select: ['display', 'statuses', 'defiInfo'],
-      optional: ['contracts', 'permissions', 'discoveryInfo'],
+      optional: [
+        'contracts',
+        'permissions',
+        'discoveryInfo',
+        'externalDependencies',
+      ],
     }),
     getContractUtils(),
     ps.getProjects({ select: ['contracts'] }),
     ps.getProjects({ select: ['zkCatalogInfo'] }),
+    ps.getProjects({}),
   ])
 
   if (!project) {
@@ -127,6 +134,33 @@ export async function getDefiProjectData(
         description: undefined,
         detailedDescription: project.display.detailedDescription,
         references: project.display.references,
+      },
+    })
+  }
+
+  const externalDependencies = (project.externalDependencies ?? []).flatMap(
+    (dependency) => {
+      const dependencyProject = allProjects.find(
+        (p) => p.id === dependency.project,
+      )
+      if (!dependencyProject) return []
+      return [
+        {
+          name: dependencyProject.name,
+          description: dependency.description,
+          icon: manifest.getUrl(`/icons/${dependencyProject.slug}.png`),
+          href: `/defi/projects/${dependencyProject.slug}`,
+        },
+      ]
+    },
+  )
+  if (externalDependencies.length > 0) {
+    sections.push({
+      type: 'ExternalDependenciesSection',
+      props: {
+        id: 'external-dependencies',
+        title: 'External dependencies',
+        dependencies: externalDependencies,
       },
     })
   }

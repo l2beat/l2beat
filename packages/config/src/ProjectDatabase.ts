@@ -54,6 +54,7 @@ const schema = {
   interopConfig: 'TEXT',
   privacyInfo: 'TEXT',
   defiInfo: 'TEXT',
+  externalDependencies: 'TEXT',
 
   tvsInfo: 'TEXT',
   tvsConfig: 'TEXT',

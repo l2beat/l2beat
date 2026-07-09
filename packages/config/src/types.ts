@@ -190,6 +190,9 @@ export interface BaseProject {
   // defi data
   defiInfo?: ProjectDefiInfo
 
+  // cross-project references (e.g. an oracle or bridge this project depends on)
+  externalDependencies?: ProjectExternalDependency[]
+
   // feature configs
   tvsInfo?: ProjectTvsInfo
   tvsConfig?: TvsToken[]
@@ -967,6 +970,13 @@ export interface ProjectPrivacyInfo {
 export interface ProjectDefiInfo {
   /** Short category label shown in the DeFi table, e.g. "CDP / Stablecoin". */
   category: string
+}
+
+export interface ProjectExternalDependency {
+  /** The project this one depends on, rendered as a link to its page. */
+  project: ProjectId
+  /** What this project relies on the dependency for. */
+  description: string
 }
 
 export interface PrivacyExitWindow extends ExitWindowRisk {

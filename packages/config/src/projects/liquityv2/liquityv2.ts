@@ -23,7 +23,7 @@ export const liquityv2: BaseProject = {
   },
   display: {
     description:
-      'Liquity V2 is an immutable, decentralized borrowing protocol where users draw the BOLD stablecoin against ETH, wstETH, and rETH collateral at a user-set interest rate. Each collateral is an isolated branch, backed by its own Stability Pool and price feed.',
+      'Liquity V2 is a borrowing protocol where users draw the BOLD stablecoin against ETH, wstETH, and rETH collateral at a user-set interest rate, each collateral held in its own isolated branch with a dedicated Stability Pool. Its contracts are immutable and adminless, so the protocol adds no trust assumptions of its own; the only one it carries is the externally controlled Chainlink price feed that each branch relies on to value its collateral.',
     detailedDescription: readProjectMarkdown(
       'liquityv2',
       'detailedDescription',
@@ -48,6 +48,13 @@ export const liquityv2: BaseProject = {
   defiInfo: {
     category: 'Stablecoin',
   },
+  externalDependencies: [
+    {
+      project: ProjectId('chainlink'),
+      description:
+        'Supplies the price feeds each branch reads to value its ETH, wstETH, or rETH collateral. A stale, zero, or reverting feed shuts that branch down.',
+    },
+  ],
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
