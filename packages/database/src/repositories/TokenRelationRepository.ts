@@ -140,29 +140,6 @@ export class TokenRelationRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getRelationsFromOrTo(
-    token: DeployedTokenPrimaryKey,
-  ): Promise<TokenRelationRecord[]> {
-    const rows = await this.db
-      .selectFrom('TokenRelation')
-      .selectAll()
-      .where((eb) =>
-        eb.or([
-          eb.and([
-            eb('tokenFromChain', '=', token.chain),
-            eb('tokenFromAddress', '=', token.address.toLowerCase()),
-          ]),
-          eb.and([
-            eb('tokenToChain', '=', token.chain),
-            eb('tokenToAddress', '=', token.address.toLowerCase()),
-          ]),
-        ]),
-      )
-      .execute()
-
-    return rows.map(toRecord)
-  }
-
   async getRelationsFrom(
     token: DeployedTokenPrimaryKey,
   ): Promise<TokenRelationRecord[]> {

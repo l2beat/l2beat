@@ -73,6 +73,24 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
 
       expect(await repository.getAll()).toEqualUnsorted(relations)
     })
+
+    it('inserts a relation whose endpoints are not catalogued as deployed tokens', async () => {
+      // Load-bearing: relations are observations of on-chain transfers and
+      // must be recordable before either endpoint exists in DeployedToken.
+      // See docs/mdbook/specs/l2b_specs/token_db/token_relations.md.
+      const relation = tokenRelation({
+        tokenFrom: { chain: 'ethereum', address: '0x' + '9'.repeat(40) },
+        tokenTo: { chain: 'arbitrum', address: '0x' + '8'.repeat(40) },
+        plugin: 'superbridge',
+        sourceWasBurned: true,
+        destinationWasMinted: true,
+        bridgeType: 'burnAndMint',
+      })
+
+      await repository.insert(relation)
+
+      expect(await repository.getAll()).toEqual([relation])
+    })
   })
 
   describe(TokenRelationRepository.prototype.findByPrimaryKey.name, () => {
@@ -142,32 +160,6 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
         bridgeType: 'lockAndMint',
         transfer: updatedTransfer,
       })
-    })
-  })
-
-  describe(TokenRelationRepository.prototype.getRelationsFromOrTo.name, () => {
-    it('returns inbound and outbound relations', async () => {
-      const outgoing = tokenRelation({
-        tokenFrom: tokenA,
-        tokenTo: tokenB,
-        plugin: 'superbridge',
-        sourceWasBurned: true,
-        destinationWasMinted: true,
-      })
-      const incoming = tokenRelation({
-        tokenFrom: tokenC,
-        tokenTo: tokenA,
-        plugin: 'otherbridge',
-        sourceWasBurned: false,
-        destinationWasMinted: true,
-      })
-      await repository.insert(outgoing)
-      await repository.insert(incoming)
-
-      expect(await repository.getRelationsFromOrTo(tokenA)).toEqualUnsorted([
-        outgoing,
-        incoming,
-      ])
     })
   })
 

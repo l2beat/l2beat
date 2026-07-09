@@ -508,8 +508,6 @@ model DeployedToken {
 
   chainRelation Chain?         @relation(fields: [chain], references: [name], onDelete: Restrict)
   abstractToken AbstractToken? @relation(fields: [abstractTokenId], references: [id], onDelete: Restrict)
-  relationsFrom TokenRelation[] @relation("TokenRelation_tokenFrom")
-  relationsTo   TokenRelation[] @relation("TokenRelation_tokenTo")
 
   @@id([chain, address])
   @@index([abstractTokenId])
@@ -548,19 +546,20 @@ model TokenDbHistory {
   @@index([commandType, timestamp])
 }
 
+// Deliberately no relations to DeployedToken: a TokenRelation is an
+// observation of an on-chain transfer between two token addresses and must be
+// recordable before (or without) either endpoint being catalogued as a
+// deployed token. See docs/mdbook/specs/l2b_specs/token_db/token_relations.md.
 model TokenRelation {
-  tokenFromChain        String  @db.VarChar(32)
-  tokenFromAddress      String  @db.VarChar(255)
-  tokenToChain          String  @db.VarChar(32)
-  tokenToAddress        String  @db.VarChar(255)
-  plugin                String  @db.VarChar(64)
-  sourceWasBurned       Boolean
-  destinationWasMinted  Boolean
-  bridgeType            String? @db.VarChar(32)
-  transfer              Json
-
-  tokenFrom DeployedToken @relation("TokenRelation_tokenFrom", fields: [tokenFromChain, tokenFromAddress], references: [chain, address], onDelete: Restrict)
-  tokenTo   DeployedToken @relation("TokenRelation_tokenTo", fields: [tokenToChain, tokenToAddress], references: [chain, address], onDelete: Restrict)
+  tokenFromChain       String  @db.VarChar(32)
+  tokenFromAddress     String  @db.VarChar(255)
+  tokenToChain         String  @db.VarChar(32)
+  tokenToAddress       String  @db.VarChar(255)
+  plugin               String  @db.VarChar(64)
+  sourceWasBurned      Boolean
+  destinationWasMinted Boolean
+  bridgeType           String? @db.VarChar(32)
+  transfer             Json
 
   @@id([tokenFromChain, tokenFromAddress, tokenToChain, tokenToAddress, plugin, sourceWasBurned, destinationWasMinted])
   @@index([tokenFromChain, tokenFromAddress])

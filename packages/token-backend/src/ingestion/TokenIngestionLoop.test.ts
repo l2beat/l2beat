@@ -15,9 +15,60 @@ import type { DeployedTokenFacts } from '../chains/fetchDeployedTokenFacts'
 import type { IngestionTrace } from './IngestionTrace'
 import { TokenIngestionLoop } from './TokenIngestionLoop'
 import { TokenIngestionProcessor } from './TokenIngestionProcessor'
+import type { TokenRelationIngestion } from './TokenRelationIngestion'
 
 describe(TokenIngestionLoop.name, () => {
   describe(TokenIngestionLoop.prototype.runOnce.name, () => {
+    it('runs token relation ingestion before enqueueing and draining', async () => {
+      const order: string[] = []
+      const relationIngestion = mockObject<TokenRelationIngestion>({
+        runOnce: mockFn().executes(async () => {
+          order.push('relations')
+        }),
+      })
+      const getTokenAddressesAfterSerialId = mockFn().executes(async () => {
+        order.push('enqueue')
+        return {
+          latestSerialId: undefined,
+          transferCount: 0,
+          tokenAddresses: [],
+        }
+      })
+      const findNextPending = mockFn().executes(async () => {
+        order.push('drain')
+        return undefined
+      })
+
+      const loop = new TokenIngestionLoop(
+        mockObject<Database>({
+          interopTransfer: mockObject<Database['interopTransfer']>({
+            getTokenAddressesAfterSerialId,
+            getTokenRoutes: mockFn().resolvesTo([]),
+          }),
+        }),
+        mockObject<TokenDatabase>({
+          tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
+            get: mockFn().resolvesTo(undefined),
+          }),
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            { findNextPending },
+          ),
+        }),
+        mockObject({
+          refreshInteropTransferIndex: mockFn().resolvesTo({
+            findInvolving: mockFn().returns([]),
+          }),
+        }) as unknown as TokenIngestionProcessor,
+        relationIngestion,
+        Logger.SILENT,
+        { intervalMs: 60_000 },
+      )
+
+      await loop.runOnce()
+
+      expect(order).toEqual(['relations', 'enqueue', 'drain'])
+    })
+
     it('enqueues addresses after the stored cursor and advances it', async () => {
       const get = mockFn().resolvesTo({
         key: 'interop-transfers:lastSerialId',
@@ -211,6 +262,7 @@ describe(TokenIngestionLoop.name, () => {
           process,
           refreshInteropTransferIndex,
         }) as unknown as TokenIngestionProcessor,
+        stubRelationIngestion(),
         Logger.SILENT,
         { intervalMs: 60_000, maxProcessedPerRun: 3 },
       )
@@ -626,6 +678,7 @@ describe(TokenIngestionLoop.name, () => {
           process,
           refreshInteropTransferIndex,
         }) as unknown as TokenIngestionProcessor,
+        stubRelationIngestion(),
         Logger.SILENT,
         { intervalMs: 60_000 },
       )
@@ -980,12 +1033,6 @@ function createLoop(deps: {
     tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>({
       findNextPending: mockFn().resolvesTo(undefined),
     }),
-    tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
-      getByPrimaryKeys: mockFn().resolvesTo([]),
-      insert: mockFn().resolvesTo(undefined),
-      updateByPrimaryKey: mockFn().resolvesTo(0),
-      deleteByPrimaryKey: mockFn().resolvesTo(0),
-    }),
     ...deps.tokenDb,
   })
   const coingeckoClient =
@@ -1000,9 +1047,22 @@ function createLoop(deps: {
     newQueueState: deps.newQueueState,
   })
 
-  return new TokenIngestionLoop(db, tokenDb, processor, Logger.SILENT, {
-    intervalMs: 60_000,
-    newQueueState: deps.newQueueState,
+  return new TokenIngestionLoop(
+    db,
+    tokenDb,
+    processor,
+    stubRelationIngestion(),
+    Logger.SILENT,
+    {
+      intervalMs: 60_000,
+      newQueueState: deps.newQueueState,
+    },
+  )
+}
+
+function stubRelationIngestion() {
+  return mockObject<TokenRelationIngestion>({
+    runOnce: mockFn().resolvesTo(undefined),
   })
 }
 
@@ -1069,7 +1129,6 @@ function route(
   overrides: Partial<InteropTokenRouteRecord>,
 ): InteropTokenRouteRecord {
   return {
-    plugin: 'test',
     srcChain: 'ethereum',
     srcTokenAddress: token('ethereum', '0xaaa').address,
     dstChain: 'base',

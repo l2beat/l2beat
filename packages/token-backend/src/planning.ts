@@ -230,15 +230,11 @@ async function planDeleteDeployedToken(
       `DeployedToken ${intent.pk.chain}+${intent.pk.address} doesn't exist`,
     )
   }
-  const touchingRelations = await db.tokenRelation.getRelationsFromOrTo(
-    intent.pk,
-  )
+  // Token relations touching this token are deliberately left in place:
+  // they are observations of on-chain transfers and stay valid whether or
+  // not the address is catalogued as a deployed token.
+  // See docs/mdbook/specs/l2b_specs/token_db/token_relations.md.
   return [
-    ...touchingRelations.map((relation) => ({
-      type: 'DeleteTokenRelationCommand' as const,
-      pk: toTokenRelationPrimaryKey(relation),
-      existing: relation,
-    })),
     {
       type: 'DeleteDeployedTokenCommand',
       pk: intent.pk,

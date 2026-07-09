@@ -28,16 +28,7 @@ ON "TokenRelation"("tokenFromChain", "tokenFromAddress");
 CREATE INDEX "TokenRelation_tokenToChain_tokenToAddress_idx"
 ON "TokenRelation"("tokenToChain", "tokenToAddress");
 
-ALTER TABLE "TokenRelation"
-ADD CONSTRAINT "TokenRelation_tokenFromChain_tokenFromAddress_fkey"
-FOREIGN KEY ("tokenFromChain", "tokenFromAddress")
-REFERENCES "DeployedToken"("chain", "address")
-ON DELETE RESTRICT
-ON UPDATE CASCADE;
-
-ALTER TABLE "TokenRelation"
-ADD CONSTRAINT "TokenRelation_tokenToChain_tokenToAddress_fkey"
-FOREIGN KEY ("tokenToChain", "tokenToAddress")
-REFERENCES "DeployedToken"("chain", "address")
-ON DELETE RESTRICT
-ON UPDATE CASCADE;
+-- Deliberately no foreign keys to "DeployedToken": token relations are
+-- observations of on-chain transfers and must be recordable before (or
+-- without) either endpoint being catalogued as a deployed token.
+-- See docs/mdbook/specs/l2b_specs/token_db/token_relations.md.

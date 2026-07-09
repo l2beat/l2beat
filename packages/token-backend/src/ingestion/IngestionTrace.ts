@@ -5,7 +5,6 @@ import type {
   DeployedTokenPrimaryKey,
   DeployedTokenUpdateable,
 } from '../schemas/DeployedToken'
-import type { TokenRelationRecord } from '../schemas/TokenRelation'
 import type { TokenAddress } from './tokenIngestionUtils'
 
 export interface IngestionTrace {
@@ -48,7 +47,6 @@ export type IngestionStep =
   | { kind: 'fetched-coingecko-abstract'; record: AbstractTokenRecord }
   | { kind: 'corrected-coingecko-symbol-casing'; from: string; to: string }
   | { kind: 'fetched-facts'; facts: DeployedTokenFacts }
-  | { kind: 'relations-discovered'; relations: TokenRelationRecord[] }
 
 export type IngestionOutcome =
   | { kind: 'skip'; reason: string }
@@ -58,8 +56,7 @@ export type IngestionOutcome =
   | {
       kind: 'write'
       newAbstractToken: AbstractTokenRecord | undefined
-      deployedToken: DeployedTokenWrite | undefined
-      tokenRelations: TokenRelationRecord[]
+      deployedToken: DeployedTokenWrite
       neighborsToEnqueue: TokenAddress[]
     }
   | {
@@ -68,7 +65,6 @@ export type IngestionOutcome =
       existing: DeployedTokenRecord | undefined
       abstract: PendingAbstract
       symbolFallback: string | undefined
-      tokenRelations: TokenRelationRecord[]
       neighborsToEnqueue: TokenAddress[]
       /** Decided at plan time; transferred onto the deployed-token write by
        * `fetch()` once the abstract token id is known. */
