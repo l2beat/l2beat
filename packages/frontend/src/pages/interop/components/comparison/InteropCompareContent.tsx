@@ -7,14 +7,13 @@ import {
 } from './InteropEntitySelect'
 import type { ComparisonSide } from './types'
 
-export interface CompareRow {
+interface CompareRow {
   label: string
   leftValue: number | null
   rightValue: number | null
   format: (value: number) => string
   lowerIsBetter?: boolean
 }
-
 
 export function InteropCompareContent({
   title,

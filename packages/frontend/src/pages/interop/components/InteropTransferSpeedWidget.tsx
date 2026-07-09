@@ -13,7 +13,7 @@ import {
 import { useInteropOverview } from './useInteropOverview'
 
 /** An entity (intent bridge or framework) rendered as a transfer-speed row. */
-export interface TransferSpeedEntity {
+interface TransferSpeedEntity {
   id: string
   slug: string
   iconUrl: string
