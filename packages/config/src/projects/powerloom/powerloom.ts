@@ -72,4 +72,13 @@ export const powerloom: ScalingProject = orbitStackL2({
       tokens: ['USDC'],
     }),
   ],
+  milestones: [
+    {
+      title: 'Powerloom announces wind-down',
+      url: 'https://blog.powerloom.io/wind-down/',
+      date: '2026-07-09T00:00:00Z',
+      description: 'Powerloom announces protocol wind down.',
+      type: 'general',
+    },
+  ],
 })
