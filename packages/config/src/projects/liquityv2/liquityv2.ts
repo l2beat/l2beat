@@ -46,7 +46,7 @@ export const liquityv2: BaseProject = {
     badges: [],
   },
   defiInfo: {
-    category: 'CDP / Stablecoin',
+    category: 'Stablecoin',
   },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
