@@ -27,9 +27,7 @@ export const TokenRelationRecord = v.object({
   tokenToChain: v.string(),
   tokenToAddress: v.string(),
   plugin: v.string(),
-  sourceWasBurned: v.boolean(),
-  destinationWasMinted: v.boolean(),
-  bridgeType: v.union([v.enum(InteropBridgeTypeValues), v.null()]),
+  bridgeType: v.enum(InteropBridgeTypeValues),
   transfer: JsonValue,
 })
 
@@ -41,13 +39,11 @@ export const TokenRelationPrimaryKey = v.object({
   tokenToChain: v.string(),
   tokenToAddress: v.string(),
   plugin: v.string(),
-  sourceWasBurned: v.boolean(),
-  destinationWasMinted: v.boolean(),
+  bridgeType: v.enum(InteropBridgeTypeValues),
 })
 
 type ___ = Expect<Equal<TokenRelationUpdateable, DbTokenRelationUpdateable>>
 export type TokenRelationUpdateable = v.infer<typeof TokenRelationUpdateable>
 export const TokenRelationUpdateable = v.object({
-  bridgeType: v.union([v.enum(InteropBridgeTypeValues), v.null()]).optional(),
   transfer: JsonValue.optional(),
 })

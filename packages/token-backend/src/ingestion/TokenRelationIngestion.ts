@@ -132,14 +132,15 @@ function tokenRelationFromTransfer(
     return undefined
   }
 
+  // The observed burn/mint flags are deliberately not copied onto the
+  // relation: they are nullable observations (one-sided transfers often
+  // miss one) and live in the `transfer` evidence JSON exactly as observed.
   return {
     tokenFromChain: source.chain,
     tokenFromAddress: source.address,
     tokenToChain: destination.chain,
     tokenToAddress: destination.address,
     plugin: transfer.plugin,
-    sourceWasBurned: transfer.srcWasBurned ?? false,
-    destinationWasMinted: transfer.dstWasMinted ?? false,
     bridgeType,
     transfer: JSON.parse(
       JSON.stringify(serializeInteropTransferRecord(transfer)),
@@ -154,8 +155,7 @@ function relationKey(relation: TokenRelationRecord): string {
     relation.tokenToChain,
     relation.tokenToAddress.toLowerCase(),
     relation.plugin,
-    String(relation.sourceWasBurned),
-    String(relation.destinationWasMinted),
+    relation.bridgeType,
   ].join(':')
 }
 

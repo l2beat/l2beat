@@ -1,14 +1,19 @@
 DROP TABLE IF EXISTS "TokenConnection";
 
+-- A TokenRelation is identified by the route and its plugin-level
+-- classification. The observed burn/mint flags are deliberately NOT columns:
+-- they are nullable observations on interop transfers and live in the
+-- "transfer" evidence JSON exactly as observed. Materializing them as
+-- non-nullable columns previously forced fabricated `false` values for
+-- one-sided transfers. See
+-- docs/mdbook/specs/l2b_specs/token_db/token_relations.md.
 CREATE TABLE "TokenRelation" (
     "tokenFromChain" VARCHAR(32) NOT NULL,
     "tokenFromAddress" VARCHAR(255) NOT NULL,
     "tokenToChain" VARCHAR(32) NOT NULL,
     "tokenToAddress" VARCHAR(255) NOT NULL,
     "plugin" VARCHAR(64) NOT NULL,
-    "sourceWasBurned" BOOLEAN NOT NULL,
-    "destinationWasMinted" BOOLEAN NOT NULL,
-    "bridgeType" VARCHAR(32),
+    "bridgeType" VARCHAR(32) NOT NULL,
     "transfer" JSONB NOT NULL,
 
     CONSTRAINT "TokenRelation_pkey" PRIMARY KEY (
@@ -17,8 +22,7 @@ CREATE TABLE "TokenRelation" (
         "tokenToChain",
         "tokenToAddress",
         "plugin",
-        "sourceWasBurned",
-        "destinationWasMinted"
+        "bridgeType"
     )
 );
 

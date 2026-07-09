@@ -7,6 +7,7 @@
   - [The table](#the-table)
   - [How relations are ingested](#how-relations-are-ingested)
   - [Why this is NOT part of the token ingestion queue](#why-this-is-not-part-of-the-token-ingestion-queue)
+  - [Why the burn/mint flags are NOT columns](#why-the-burnmint-flags-are-not-columns)
   - [Why there are NO foreign keys to DeployedToken](#why-there-are-no-foreign-keys-to-deployedtoken)
   - [Deleting a deployed token leaves its relations in place](#deleting-a-deployed-token-leaves-its-relations-in-place)
   - [Display implications](#display-implications)
@@ -20,10 +21,10 @@
 A **token relation** records that we witnessed a *non-swapping* interop
 transfer between two token addresses: the same abstract asset left one
 chain as `tokenFrom` and arrived on another chain as `tokenTo`, via a
-specific plugin, with specific burn/mint semantics. Relations are the raw
-material for reasoning about which deployed tokens represent the same
-asset — including, crucially, for spotting places where our current
-abstract-token assignments are *wrong*.
+specific plugin, classified as a specific non-swapping `bridgeType`.
+Relations are the raw material for reasoning about which deployed tokens
+represent the same asset — including, crucially, for spotting places where
+our current abstract-token assignments are *wrong*.
 
 ## Observations, not catalogue entries
 
@@ -52,16 +53,18 @@ can suppress a relation destroys the primary use of relations.
 
 ```
 (tokenFromChain, tokenFromAddress, tokenToChain, tokenToAddress,
- plugin, sourceWasBurned, destinationWasMinted)
+ plugin, bridgeType)
 ```
 
-plus a non-key `bridgeType` and a `transfer` JSON column holding one full
-sample interop transfer as evidence. The evidence is embedded (not
+plus a `transfer` JSON column holding one full sample interop transfer as
+evidence. `bridgeType` is `NOT NULL` — a relation only exists for
+non-swapping types, so every row has one. The evidence is embedded (not
 referenced by id) because the interop transfer table is a sliding ~7-day
 window — the same reasoning as the `non-swapping-transfer` assignment
-proof on `DeployedToken`. Addresses are stored normalized (lowercase,
-`Address32` cropped to Ethereum addresses, same normalization as token
-ingestion).
+proof on `DeployedToken`. The observed burn/mint flags are deliberately
+*not* columns (see below); they live inside the evidence JSON. Addresses
+are stored normalized (lowercase, `Address32` cropped to Ethereum
+addresses, same normalization as token ingestion).
 
 The table size is bounded by the number of distinct bridged routes, not by
 transfer volume.
@@ -137,6 +140,45 @@ If some future requirement seems to demand coupling relation creation to
 token ingestion again, re-read the observation/interpretation model above
 first: the requirement is almost certainly about *interpreting* relations,
 and belongs in a read path, not in ingestion.
+
+## Why the burn/mint flags are NOT columns
+
+An earlier version stored `sourceWasBurned` and `destinationWasMinted` as
+`NOT NULL` boolean columns, both part of the primary key. **This was a bug;
+do not add them back as columns.**
+
+The interop transfer table's `srcWasBurned` / `dstWasMinted` are
+*nullable*. Null means "we did not observe this side" — routinely the case
+for one-sided transfers, where only the source or only the destination
+event was captured. In production, ~85% of stored-`lockAndMint` transfers
+have at least one of these flags null. The old code coerced null to
+`false` (`transfer.srcWasBurned ?? false`), which was wrong in three ways:
+
+- **It fabricated observations.** `false` asserts "we saw that it was not
+  burned". We saw no such thing. In a table whose entire justification is
+  "relations are facts", inventing a fact is the cardinal sin.
+- **It self-contradicted.** A stored-`lockAndMint` transfer with both flags
+  null became a row with `bridgeType = lockAndMint` and flags
+  `(false, false)` — flags the classifier itself reads as `nonMinting`.
+- **It fragmented routes.** Because the flags were in the primary key, one
+  real-world route observed once via a two-sided transfer and once via a
+  one-sided one produced *two* rows, split by an artifact of which events
+  happened to be indexed rather than by anything on-chain.
+
+The fix: the flags are not relation columns at all. A relation's identity
+is `(route, plugin, bridgeType)`, and `bridgeType` is the authoritative,
+plugin-declared (or, absent that, inferred) classification of the bridge's
+mechanism. The honestly-observed flags are not lost — they remain in the
+`transfer` evidence JSON exactly as seen: present when observed, absent
+when not. No tri-state column, nothing to fabricate, no route
+fragmentation.
+
+Note this means a stored `bridgeType` is trusted even when the flags are
+unobserved — deliberately, and consistently with how the token ingestion
+processor already trusts a stored `bridgeType` as `non-swapping-transfer`
+assignment evidence. Demanding observed flags instead would drop the
+~80k+ one-sided non-swapping transfers and recreate the very
+"missing relations" problem this subsystem exists to fix.
 
 ## Why there are NO foreign keys to DeployedToken
 

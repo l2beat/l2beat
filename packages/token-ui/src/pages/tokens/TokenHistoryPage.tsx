@@ -368,7 +368,7 @@ function getChangedFields(entry: HistoryEntry) {
     case 'AddDeployedTokenCommand':
       return []
     case 'AddTokenRelationCommand':
-      return ['plugin', 'sourceWasBurned', 'destinationWasMinted', 'bridgeType']
+      return ['plugin', 'bridgeType']
     case 'UpdateAbstractTokenCommand':
     case 'UpdateDeployedTokenCommand':
     case 'UpdateTokenRelationCommand':
@@ -526,13 +526,8 @@ function relationInfo(
     '?'
   const plugin =
     stringValue(fallback.plugin) ?? stringValue(record.plugin) ?? '?'
-  const bridgeType = stringValue(updatedValue(update, record, 'bridgeType'))
-  const sourceWasBurned = booleanValue(
-    updatedValue(update, record, 'sourceWasBurned'),
-  )
-  const destinationWasMinted = booleanValue(
-    updatedValue(update, record, 'destinationWasMinted'),
-  )
+  const bridgeType =
+    stringValue(fallback.bridgeType) ?? stringValue(record.bridgeType) ?? '?'
   const fromToken = deployedTokensByKey.get(
     tokenKey({ chain: fromChain, address: fromAddress }),
   )
@@ -568,14 +563,7 @@ function relationInfo(
         />
       </>
     ),
-    secondary: [
-      `plugin: ${plugin}`,
-      `burned: ${sourceWasBurned ?? '?'}`,
-      `minted: ${destinationWasMinted ?? '?'}`,
-      bridgeType ? `bridge: ${bridgeType}` : undefined,
-    ]
-      .filter(Boolean)
-      .join(' | '),
+    secondary: [`plugin: ${plugin}`, `bridge: ${bridgeType}`].join(' | '),
   }
 }
 
@@ -747,10 +735,6 @@ function asRecord(value: unknown): Record<string, unknown> {
 
 function stringValue(value: unknown) {
   return typeof value === 'string' && value.length > 0 ? value : undefined
-}
-
-function booleanValue(value: unknown) {
-  return typeof value === 'boolean' ? value : undefined
 }
 
 function formatTimestamp(timestamp: number) {

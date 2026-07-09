@@ -209,7 +209,7 @@ describe('planning proof stamping', () => {
         {
           type: 'UpdateTokenRelationIntent',
           pk: relationPk(existing),
-          update: { bridgeType: 'lockAndMint' },
+          update: { transfer: { transferId: 'transfer-2' } },
         },
         { user: USER, skipLogs: true },
       )
@@ -220,7 +220,7 @@ describe('planning proof stamping', () => {
           type: 'UpdateTokenRelationCommand',
           pk: relationPk(existing),
           existing,
-          update: { bridgeType: 'lockAndMint' },
+          update: { transfer: { transferId: 'transfer-2' } },
         },
       ])
     })
@@ -278,17 +278,7 @@ describe('planning proof stamping', () => {
 function mockDb(opts: {
   existingDeployed?: DeployedTokenRecord
   deployedByPk?: Record<string, DeployedTokenRecord>
-  existingRelation?: {
-    tokenFromChain: string
-    tokenFromAddress: string
-    tokenToChain: string
-    tokenToAddress: string
-    plugin: string
-    sourceWasBurned: boolean
-    destinationWasMinted: boolean
-    bridgeType: string | null
-    transfer: unknown
-  }
+  existingRelation?: ReturnType<typeof tokenRelation>
 }): TokenDatabase {
   const findDeployed = mockFn().executes(
     async (pk: { chain: string; address: string }) => {
@@ -337,8 +327,6 @@ function tokenRelation(
     tokenToChain: tokenTo.chain,
     tokenToAddress: tokenTo.address,
     plugin: 'superbridge',
-    sourceWasBurned: true,
-    destinationWasMinted: true,
     bridgeType: 'burnAndMint' as const,
     transfer: { transferId: 'transfer-1' },
   }
@@ -351,8 +339,7 @@ function relationPk(relation: ReturnType<typeof tokenRelation>) {
     tokenToChain: relation.tokenToChain,
     tokenToAddress: relation.tokenToAddress,
     plugin: relation.plugin,
-    sourceWasBurned: relation.sourceWasBurned,
-    destinationWasMinted: relation.destinationWasMinted,
+    bridgeType: relation.bridgeType,
   }
 }
 

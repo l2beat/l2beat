@@ -49,8 +49,6 @@ describe(TokenRelationIngestion.name, () => {
       tokenToChain: 'base',
       tokenToAddress: token('0xbbb'),
       plugin: 'test',
-      sourceWasBurned: false,
-      destinationWasMinted: true,
       bridgeType: 'lockAndMint',
     })
     expect(evidenceTransferId(inserted)).toEqual('lock-mint')
@@ -109,9 +107,40 @@ describe(TokenRelationIngestion.name, () => {
 
     expect(insert.calls[0]?.args[0]).toHaveSubset({
       bridgeType: 'burnAndMint',
-      sourceWasBurned: true,
-      destinationWasMinted: true,
     })
+  })
+
+  it('trusts a stored bridge type even when the burn and mint flags are unobserved', async () => {
+    // One-sided transfers often miss a flag. The plugin-declared bridgeType
+    // is authoritative — the relation must be created, and the unobserved
+    // flags must NOT be fabricated (they stay absent in the evidence JSON).
+    const insert = mockFn().resolvesTo(undefined)
+
+    const ingestion = createIngestion({
+      getAfterSerialId: mockFn()
+        .resolvesToOnce({
+          latestSerialId: '3',
+          transfers: [
+            transfer({
+              transferId: 'one-sided',
+              bridgeType: 'lockAndMint',
+              srcWasBurned: undefined,
+              dstWasMinted: true,
+            }),
+          ],
+        })
+        .resolvesToOnce(emptyBatch()),
+      insert,
+    })
+
+    await ingestion.runOnce()
+
+    expect(insert).toHaveBeenCalledTimes(1)
+    const inserted = insert.calls[0]?.args[0] as TokenRelationRecord
+    expect(inserted.bridgeType).toEqual('lockAndMint')
+    const evidence = inserted.transfer as Record<string, unknown>
+    expect('srcWasBurned' in evidence).toEqual(false)
+    expect(evidence['dstWasMinted']).toEqual(true)
   })
 
   it('ignores swap-like and unclassifiable transfers', async () => {
@@ -186,8 +215,7 @@ describe(TokenRelationIngestion.name, () => {
           tokenToChain: existing.dstChain,
           tokenToAddress: existing.dstTokenAddress ?? '',
           plugin: existing.plugin,
-          sourceWasBurned: false,
-          destinationWasMinted: true,
+          bridgeType: 'lockAndMint',
         }),
       ],
       insert,
@@ -353,8 +381,6 @@ function relationRecord(
     tokenToChain: 'base',
     tokenToAddress: token('0xbbb'),
     plugin: 'test',
-    sourceWasBurned: false,
-    destinationWasMinted: true,
     bridgeType: 'lockAndMint',
     transfer: {},
     ...overrides,
