@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x2d3969ee9c26440ff55bc19eda7beb68c2decaac
+Generated with discovered.json: 0x1ee6ae021c9eef7920359738da30948dce4487a4
 
-# Diff at Wed, 08 Jul 2026 11:34:12 GMT:
+# Diff at Thu, 09 Jul 2026 12:09:51 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - current timestamp: 1781962796
@@ -10,6 +10,18 @@ Generated with discovered.json: 0x2d3969ee9c26440ff55bc19eda7beb68c2decaac
 Discovery rerun on the same block number with only config-related changes.
 
 ## Initial discovery
+
+```diff
++   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0x0613A20e394593c2aEB627760e6d6Fb816D77fbB) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
+```
+
+```diff
++   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0x0C46Dc0BA85eAb5A515f819F1a705eD324dA687B) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
+```
 
 ```diff
 +   Status: CREATED
@@ -25,8 +37,68 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0x1B586bcad859a265592e7A10856AEd85B344eEb2) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
+```
+
+```diff
++   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0x1d36A4c2ab15CcD29B312991176D85622299cc11) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
+```
+
+```diff
++   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0x1d5804aE896c64ECc88E15379061CE6230F11895) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
+```
+
+```diff
++   Status: CREATED
     contract AddressesRegistry_WETH (eth:0x20F7C9ad66983F6523a0881d0f82406541417526) [liquityv2/AddressesRegistry]
     +++ description: The immutable address book and risk-parameter store for a single collateral branch: every other contract in the branch reads its sibling addresses and risk settings from here at construction. The parameters it fixes, none of which can change, are the collateral-ratio thresholds (Minimum 110%, Critical 150%, Shutdown 110%, and a Batch buffer of 10%) and the liquidation penalties (5% when a liquidation is absorbed by the Stability Pool, 10% when it is redistributed across the remaining troves). Its addresses were registered once at deployment and the owner then renounced, so nothing here can be changed afterward.
+```
+
+```diff
++   Status: CREATED
+    contract ChainlinkOracleMultisig (eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA) [GnosisSafe]
+    +++ description: The Gnosis Safe that Chainlink uses to administer all three price feeds Liquity V2 reads. It owns both the feed proxies and their aggregators, so it can swap the aggregator behind any feed and replace the set of oracle nodes and how many of them must sign a price. In effect it can set the ETH, wstETH, and rETH prices the protocol relies on, or push a feed into the invalid state that shuts a branch down, which makes it BOLD's principal external trust dependency, held by Chainlink rather than Liquity.
+```
+
+```diff
++   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0x243205E5c413534d0702ea981A35256E6853857F) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
+```
+
+```diff
++   Status: CREATED
+    contract Chainlink_stETH_USD_Aggregator (eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f) [ChainlinkOCR2Aggregator]
+    +++ description: A Chainlink OCR2 aggregator producing a price feed. Each update is the median of a report signed by a quorum (f+1) of its signers and relayed onchain by one of its transmitters, accepted only within a fixed min/max band. A colluding signer quorum can move the reported price anywhere within that band, while a transmitter only relays an already-signed report. Its owner sets the signer and transmitter sets and the quorum size, so it controls who can report the price.
+```
+
+```diff
++   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0x2DBbD12Bf0f6A23Cf4455cC6BE874b7a246288Ce) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
+```
+
+```diff
++   Status: CREATED
+    contract ConfirmedTransactionModule (eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0x30B18F1c425123314C82b0236D7a349433755386) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
+```
+
+```diff
++   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0x30d872350Fe74f47C85847D6784B42f9b0816f04) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
 ```
 
 ```diff
@@ -39,6 +111,12 @@ Discovery rerun on the same block number with only config-related changes.
 +   Status: CREATED
     contract RETHPriceFeed (eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B) [liquityv2/RETHPriceFeed]
     +++ description: The price source for the rETH branch. It builds the rETH/USD price from Chainlink's ETH/USD feed and the rETH/ETH rate, using the more conservative of Chainlink's market rETH/ETH feed and the canonical rate reported by the rETH token to blunt upward market manipulation. Fetching the price is permissionless and happens on every branch operation. A Chainlink feed is treated as failed if it reverts, returns a non-positive answer, or grows stale beyond its staleness window, which is 1d for the ETH/USD feed and 2d for the rETH/ETH feed. If the ETH/USD feed or the canonical rate fails the branch is permanently shut down and priced from its last healthy value; if only the rETH/ETH feed fails, the branch shuts down but keeps pricing from the ETH/USD feed and the canonical rate.
+```
+
+```diff
++   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0x35a06994a99B335b700bB3c875408489a9F8BbeF) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
 ```
 
 ```diff
@@ -61,8 +139,26 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0x42Afc2F6aE88678296EcB2eBA34cCfbd1Adc5F93) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
+```
+
+```diff
++   Status: CREATED
     contract GasPool_rETH (eth:0x45c81dcE308389e1Bee63ae30A04Fb1e148dad41) [liquityv2/GasPool]
     +++ description: A minimal per-branch vault for WETH gas compensation. Each trove posts a small fixed amount of WETH when it opens, held here and used only to cover liquidation gas: it is returned to the borrower when the trove closes, or paid to the liquidator when the trove is liquidated. The contract has no functions of its own; at deployment it simply grants the branch's BorrowerOperations and TroveManager standing approval to move its WETH for those two purposes.
+```
+
+```diff
++   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0x4CB67cfee180B6B73B70c7B3fC162E5FCF6532f1) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
+```
+
+```diff
++   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0x522bB49bE4fB6E3ceC18df911C2A66457E6Fc3e2) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
 ```
 
 ```diff
@@ -73,14 +169,26 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract Chainlink_rETH_ETH (eth:0x536218f9E9Eb48863970252233c8F271f554C2d0) [N/A]
-    +++ description: Chainlink rETH/ETH price feed.
+    contract Chainlink_rETH_ETH (eth:0x536218f9E9Eb48863970252233c8F271f554C2d0) [ChainlinkAggregatorProxy]
+    +++ description: A Chainlink RETH / ETH price-feed proxy. It forwards price reads to a current aggregator and lets its owner propose then confirm a replacement aggregator, so whoever owns it can swap the price source behind the feed. It holds no funds and does no aggregation of its own.
 ```
 
 ```diff
 +   Status: CREATED
     contract StabilityPool_WETH (eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF) [liquityv2/StabilityPool]
     +++ description: The branch's liquidation backstop. Anyone can deposit BOLD here, and those deposits are the first resource used to absorb liquidations: when a trove on this branch is liquidated, the pool burns BOLD to cancel an equal amount of that trove's debt and receives the corresponding collateral in return. Because that collateral is worth more than the debt cancelled, depositors generally come out ahead on each liquidation, and they also earn a share of the interest that branch borrowers pay. Deposits can be withdrawn at any time with no lock-up, as long as a small minimum is left so the pool can never be fully emptied.
+```
+
+```diff
++   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0x585B3e95EEdd03AF221F724557D03384864Da3ca) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
+```
+
+```diff
++   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0x5C026B7107f1F92a9768CF64f8B2a22252B0788d) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
 ```
 
 ```diff
@@ -97,8 +205,32 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract Chainlink_ETH_USD (eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419) [N/A]
-    +++ description: Chainlink ETH/USD price feed.
+    contract ChainlinkAuthorizedForwarder (eth:0x5Dc428646BF9a29A4d623E0CDB57384E811f6F77) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
+```
+
+```diff
++   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0x5eA7eAe0EBC1f4256806C8bf234F672d410Fc988) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
+```
+
+```diff
++   Status: CREATED
+    contract Chainlink_ETH_USD (eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419) [ChainlinkAggregatorProxy]
+    +++ description: A Chainlink ETH / USD price-feed proxy. It forwards price reads to a current aggregator and lets its owner propose then confirm a replacement aggregator, so whoever owns it can swap the price source behind the feed. It holds no funds and does no aggregation of its own.
+```
+
+```diff
++   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0x5fdf4ABaF24d8229deFBD28890cb01E0d8108e96) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
+```
+
+```diff
++   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0x605b23dDB04B02D3413d365aC01e87aC2e1A0367) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
 ```
 
 ```diff
@@ -115,14 +247,38 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0x65a43936d7e1295CcA6f30F6a0B25fe49cAb32c8) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
+```
+
+```diff
++   Status: CREATED
     contract UserProxy (eth:0x65f9A98009Aecaa3fc8A3A83FEF44e2b6931A7b2) [liquityv2/UserProxy]
     +++ description: A per-staker proxy deployed by the Governance to hold and stake one user's LQTY. It forwards the LQTY into Liquity's legacy V1 staking, so the staker keeps earning the V1 fee rewards (LUSD and ETH) while that same LQTY backs their V2 voting power, and it passes those rewards back to the staker. Only the Governance can operate it.
 ```
 
 ```diff
 +   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0x6D53d5E35F5226a1613877e071b81217387aC6B5) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
+```
+
+```diff
++   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0x7A13cD97D442856FF5387d55a7b3F09bf680102B) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
+```
+
+```diff
++   Status: CREATED
     contract TroveNFT_rETH (eth:0x7ae430E25b67f19B431e1D1Dc048a5BCF24C0873) [liquityv2/TroveNFT]
     +++ description: The ERC721 that represents ownership of a trove: opening one mints an NFT and closing it burns one, both by the branch's TroveManager. The holder of a trove's NFT is its owner, with full control over the position, and transferring the NFT hands the entire trove, collateral and debt alike, to the new holder. In every other respect it is a standard ERC721.
+```
+
+```diff
++   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0x7B740d24396B09F992B655A590139D7Fbb5C73c8) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
 ```
 
 ```diff
@@ -135,6 +291,12 @@ Discovery rerun on the same block number with only config-related changes.
 +   Status: CREATED
     contract TroveManager_WETH (eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A) [liquityv2/TroveManager]
     +++ description: The branch's ledger and enforcement engine. It holds the canonical record of every trove on this collateral branch (debt, collateral, stake, interest rate, and accounting snapshots) and is where BorrowerOperations persists changes when owners open, adjust, or close their troves. It also carries out the two things that happen to a trove without its owner. Liquidation is permissionless: once a trove's collateral ratio falls below the branch minimum, anyone can liquidate it, and its collateral (up to the debt plus a penalty) is either absorbed by the StabilityPool at a 5% penalty or redistributed across the remaining troves at a 10% penalty, with any surplus returned to the owner. Redemption is driven by the CollateralRegistry, which exchanges BOLD for collateral at face value against the lowest-interest-rate troves first, letting BOLD holders defend the peg. If the branch is ever shut down, redemption instead runs directly through this contract in an urgent mode: BOLD holders can redeem against troves of their own choosing, in any order, and are paid a 2% collateral bonus rather than a fee, so the branch can be wound down and its remaining debt cleared.
+```
+
+```diff
++   Status: CREATED
+    contract Chainlink_ETH_USD_Aggregator (eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5) [ChainlinkOCR2Aggregator]
+    +++ description: A Chainlink OCR2 aggregator producing a price feed. Each update is the median of a report signed by a quorum (f+1) of its signers and relayed onchain by one of its transmitters, accepted only within a fixed min/max band. A colluding signer quorum can move the reported price anywhere within that band, while a transmitter only relays an already-signed report. Its owner sets the signer and transmitter sets and the quorum size, so it controls who can report the price.
 ```
 
 ```diff
@@ -163,8 +325,20 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0x87B331d3bb9Cf70Dd85c3dc606B684a0bd61c772) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
+```
+
+```diff
++   Status: CREATED
     contract FixedAssetData_rETH (eth:0x884Acfa4593a6FdbA0a9373007E48Ea9AF881C42) [N/A]
     +++ description: A data contract holding the raw asset bytes (an embedded font and the collateral logos) used to render the trove NFT image. The bytes are stored as the contract's own bytecode via the SSTORE2 pattern rather than as executable code, so it has no logic and no Solidity source; the FixedAssetReader slices out the assets it needs.
+```
+
+```diff
++   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0x8AaDF849561DcCeC75DA44d1147E736E0cc0134E) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
 ```
 
 ```diff
@@ -189,6 +363,24 @@ Discovery rerun on the same block number with only config-related changes.
 +   Status: CREATED
     contract StabilityPool_wstETH (eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B) [liquityv2/StabilityPool]
     +++ description: The branch's liquidation backstop. Anyone can deposit BOLD here, and those deposits are the first resource used to absorb liquidations: when a trove on this branch is liquidated, the pool burns BOLD to cancel an equal amount of that trove's debt and receives the corresponding collateral in return. Because that collateral is worth more than the debt cancelled, depositors generally come out ahead on each liquidation, and they also earn a share of the interest that branch borrowers pay. Deposits can be withdrawn at any time with no lock-up, as long as a small minimum is left so the pool can never be fully emptied.
+```
+
+```diff
++   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0x97360A89B5adb7D82Dbde6C66A49de8a48D550E6) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
+```
+
+```diff
++   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0x990cfBBDc5aeB794B657b4309017F84479e8Eb7D) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
+```
+
+```diff
++   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0x9A5B545aA8B6289288E529c4099B0CcA62bcB708) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
 ```
 
 ```diff
@@ -223,14 +415,44 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0xAE80A59ba821544cB508808942C20C11442d8A9b) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
+```
+
+```diff
++   Status: CREATED
     contract TroveManager_rETH (eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e) [liquityv2/TroveManager]
     +++ description: The branch's ledger and enforcement engine. It holds the canonical record of every trove on this collateral branch (debt, collateral, stake, interest rate, and accounting snapshots) and is where BorrowerOperations persists changes when owners open, adjust, or close their troves. It also carries out the two things that happen to a trove without its owner. Liquidation is permissionless: once a trove's collateral ratio falls below the branch minimum, anyone can liquidate it, and its collateral (up to the debt plus a penalty) is either absorbed by the StabilityPool at a 5% penalty or redistributed across the remaining troves at a 20% penalty, with any surplus returned to the owner. Redemption is driven by the CollateralRegistry, which exchanges BOLD for collateral at face value against the lowest-interest-rate troves first, letting BOLD holders defend the peg. If the branch is ever shut down, redemption instead runs directly through this contract in an urgent mode: BOLD holders can redeem against troves of their own choosing, in any order, and are paid a 2% collateral bonus rather than a fee, so the branch can be wound down and its remaining debt cleared.
 ```
 
 ```diff
 +   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0xBa4555a80E47477BBf23B721563D38B10eb65dFa) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
+```
+
+```diff
++   Status: CREATED
     contract CollSurplusPool_rETH (eth:0xba4A2bD8b76DF84CaC98eBa3f4b967D8423192bF) [liquityv2/CollSurplusPool]
     +++ description: Holds the collateral left over from liquidations. When a liquidated trove is worth more than its debt plus penalty, the excess collateral is set aside here and credited to the former owner by the TroveManager; the owner later reclaims it through the BorrowerOperations. It only ever holds these unclaimed surpluses.
+```
+
+```diff
++   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0xC0C7eB4A39BAa77fD52715BD1dcE2246Df85E489) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
+```
+
+```diff
++   Status: CREATED
+    contract Chainlink_rETH_ETH_Aggregator (eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d) [ChainlinkOCR2Aggregator]
+    +++ description: A Chainlink OCR2 aggregator producing a price feed. Each update is the median of a report signed by a quorum (f+1) of its signers and relayed onchain by one of its transmitters, accepted only within a fixed min/max band. A colluding signer quorum can move the reported price anywhere within that band, while a transmitter only relays an already-signed report. Its owner sets the signer and transmitter sets and the quorum size, so it controls who can report the price.
+```
+
+```diff
++   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0xC917E3BF6c211b326ffD4ed13E7D9a67682095CA) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
 ```
 
 ```diff
@@ -247,8 +469,8 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract Chainlink_stETH_USD (eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8) [N/A]
-    +++ description: Chainlink stETH/USD price feed.
+    contract Chainlink_stETH_USD (eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8) [ChainlinkAggregatorProxy]
+    +++ description: A Chainlink STETH / USD price-feed proxy. It forwards price reads to a current aggregator and lets its owner propose then confirm a replacement aggregator, so whoever owns it can swap the price source behind the feed. It holds no funds and does no aggregation of its own.
 ```
 
 ```diff
@@ -271,14 +493,44 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0xd8D2297bDf4a84569bCec83C92A81549bE9c51E6) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
+```
+
+```diff
++   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0xDb0f470c2e87A645b1d7f8900b9a8F5aDe9aF259) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
+```
+
+```diff
++   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0xE62Efa5462961055757C63931a15601545E4d273) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
+```
+
+```diff
++   Status: CREATED
     contract WSTETHPriceFeed (eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E) [liquityv2/WSTETHPriceFeed]
     +++ description: The price source for the wstETH branch. It builds the wstETH/USD price from two inputs: Chainlink's stETH/USD feed and the wstETH-to-stETH exchange rate reported by the wstETH token. Fetching the price is permissionless and happens on every branch operation. A Chainlink feed is treated as failed if it reverts, returns a non-positive answer, or has not updated within its 1d staleness window. If the exchange rate or the ETH/USD reference feed fails the branch is permanently shut down and priced from its last healthy value; if only the stETH/USD feed fails, the branch shuts down but keeps pricing from the ETH/USD feed and the exchange rate.
 ```
 
 ```diff
 +   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0xe7b837A55df42eCc95bf893C3c31750264932596) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
+```
+
+```diff
++   Status: CREATED
     contract BorrowerOperations_rETH (eth:0xe8119fC02953B27a1b48D2573855738485A17329) [liquityv2/BorrowerOperations]
     +++ description: User-facing entry point of a single collateral branch. Borrowers open, adjust, and close troves here (depositing or withdrawing collateral and drawing or repaying BOLD), set their interest rate directly or by joining an interest-rate batch, and delegate trove management. It mints and burns BOLD as debt is drawn and repaid, and enforces the branch's collateral-ratio rules. A trove becomes liquidatable once its individual collateral ratio falls below the Minimum Collateral Ratio (MCR, 120%); troves managed by an interest-rate batch are held to the stronger MCR plus Batch Collateral Ratio buffer (BCR, 10%). While the branch's total collateral ratio is below the Critical Collateral Ratio (CCR, 160%) the branch is in restricted mode and borrowing operations that would lower it further are blocked. Anyone can shut the branch down once its total collateral ratio falls below the Shutdown Collateral Ratio (SCR, 120%), and it also shuts down automatically if the price feed reports a failure of one of its oracles.
+```
+
+```diff
++   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0xE9DcbaCc91dB0e37562a8455c80d0734D7CF3bd1) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
 ```
 
 ```diff
@@ -301,6 +553,12 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0xF38326579519377178725A741C35999E8051e907) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
+```
+
+```diff
++   Status: CREATED
     contract FixedAssetData_wstETH (eth:0xf4a3fE99227F6060e4C1c62b557EEE050B6483E4) [N/A]
     +++ description: A data contract holding the raw asset bytes (an embedded font and the collateral logos) used to render the trove NFT image. The bytes are stored as the contract's own bytecode via the SSTORE2 pattern rather than as executable code, so it has no logic and no Solidity source; the FixedAssetReader slices out the assets it needs.
 ```
@@ -315,4 +573,10 @@ Discovery rerun on the same block number with only config-related changes.
 +   Status: CREATED
     contract MultiTroveGetter (eth:0xFA61dB085510C64B83056Db3A7Acf3b6f631D235) [liquityv2/MultiTroveGetter]
     +++ description: A read-only helper that returns trove data in bulk, so front-ends and indexers can page through a branch's troves in a single call. It holds no funds and changes no state.
+```
+
+```diff
++   Status: CREATED
+    contract ChainlinkAuthorizedForwarder (eth:0xFe31f3EcfDE29Fc4915d80Eb8A9d67bFF14180B3) [ChainlinkAuthorizedForwarder]
+    +++ description: A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.
 ```

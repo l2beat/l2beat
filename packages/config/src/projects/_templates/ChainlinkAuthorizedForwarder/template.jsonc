@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ChainlinkAuthorizedForwarder",
+  "description": "A Chainlink authorized forwarder that an oracle node uses to submit its signed reports onchain. It relays calls from its own authorized sender keys to a fixed target and holds no funds or price logic of its own.",
+  "ignoreRelatives": true
+}

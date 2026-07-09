@@ -1,0 +1,14 @@
+{
+  "Chainlink_ETH_USD": {
+    "hash": "0x6817c1bb5c0e498f52adbdf85688dd550e05aefc265a30f95ee83a2185ac8b8f",
+    "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+    "chain": "ethereum",
+    "blockNumber": 25296176
+  },
+  "Chainlink_stETH_USD": {
+    "hash": "0x056d4c6b4a8b2539822536f963ddff40d7327819b0a088b558d678ba5f38e984",
+    "address": "eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8",
+    "chain": "ethereum",
+    "blockNumber": 25296176
+  }
+}
