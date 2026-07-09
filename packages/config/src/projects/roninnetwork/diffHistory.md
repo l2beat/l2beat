@@ -1,3 +1,146 @@
+Generated with discovered.json: 0x3e6247f7c354f1b9671aaa3adfcf3fd24e665a9e
+
+# Diff at Mon, 06 Jul 2026 08:53:30 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@4572e5b954c85d78517dc66fc4a82b8ddc679e2a block: 1781531783
+- current timestamp: 1783327943
+
+## Description
+
+Kailua cutover: `respectedGameType` on OptimismPortal2 and AnchorStateRegistry moved from 1 (PermissionedDisputeGame) to 1337 (KailuaGame). Withdrawals now clear through the ZK fault-proof game.
+
+DisputeGameFactory `game1337` slot repointed from KailuaTreasury (`eth:0xc7EaCDd1…`) to the KailuaGame implementation (`eth:0x296e7aD6…`); the treasury continues to hold bonds and mint game clones.
+
+KailuaVerifier proxy upgraded (impl `eth:0x7fC721AC…` → `eth:0xDd26da83…`, 2026-07-01), with new `FPVM_IMAGE_ID` (`0xd3c097df…`) and `ROLLUP_CONFIG_HASH` (`0x96ff8605…`).
+
+KailuaTreasury economic parameters now live: `participationBond` = 0.5 ETH, `vanguard` = `eth:0xD379de94…`, `vanguardAdvantage` = 1 month.
+
+## Watched changes
+
+```diff
+    contract AnchorStateRegistry (eth:0x0B95fF1d1B113bac3E29Ac0BBF2089126C9aE81A) [opstack/AnchorStateRegistry_post13] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.
+      description:
+-        "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
++        "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the KailuaGame."
+      values.RespectedGameString:
+-        "PermissionedDisputeGame"
++        "KailuaGame"
++++ severity: HIGH
+      values.respectedGameType:
+-        1
++        1337
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game1337:
+-        "eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336"
++        "eth:0x296e7aD6D441b0627768bC0650179a4206479444"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.
+      description:
+-        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
++        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame."
+      values.RespectedGameString:
+-        "PermissionedDisputeGame"
++        "KailuaGame"
++++ severity: HIGH
+      values.respectedGameType:
+-        1
++        1337
+    }
+```
+
+```diff
+    contract KailuaVerifier (eth:0x6b49976a7340D0A3C00d1bEBE0E36E2367D89c7C) [N/A] {
+    +++ description: Proxy in front of the Kailua proof verifier; routes verification requests to the canonical RiscZeroVerifierRouter and asserts the chain-specific rollup config and FPVM image ID.
+      values.$implementation:
+-        "eth:0x7fC721ACC2183c292737C5a28Ea1B30d19f1cF29"
++        "eth:0xDd26da83B27987A7040caE31f2E35d9Bd6f5DE59"
+      values.$pastUpgrades.1:
++        ["2026-07-01T10:19:35.000Z","0x07bf7a192a2ea3b5324ef5cef339715fc6b972b261463e751f39a3f7bb2ae72d",["eth:0xDd26da83B27987A7040caE31f2E35d9Bd6f5DE59"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.FPVM_IMAGE_ID:
+-        "0xc2e7bc71ae10caf806a1a073e4170daf3f4ac31099f1f854f7062dd70ed12fe3"
++        "0xd3c097dfec583bb305eefcb5dcddc313b072e372cee66e13492c37fb50e6a90b"
+      values.ROLLUP_CONFIG_HASH:
+-        "0xc1f5bee1ef35d2b73a7cd351e650b2b123cb3bec91b0de3941af90539d5fc829"
++        "0x96ff86054c51b6b832108a14d93ced530c42e0ee5a113b47671c912fc19f5b1a"
+      implementationNames.eth:0x7fC721ACC2183c292737C5a28Ea1B30d19f1cF29:
+-        "KailuaVerifier"
+      implementationNames.eth:0xDd26da83B27987A7040caE31f2E35d9Bd6f5DE59:
++        "KailuaVerifier"
+    }
+```
+
+```diff
+    contract KailuaTreasury (eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336) [risc0/KailuaTreasury] {
+    +++ description: Kailua (RISC Zero ZK fault-proof) treasury: holds participation bonds, mints KailuaGame clones, and defines the vanguard proposer economics. Bonds confiscated from eliminated proposers are split 1/3 to the prover, 1/3 to the tournament winner, 1/3 burned.
+      values.participationBond:
+-        0
++        "500000000000000000"
+      values.participationBondFmt:
+-        "0"
++        "0.5"
+      values.vanguard:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0xD379de941E78Ab394d4D4917FcCE1CC45b6cd620"
+      values.vanguardAdvantage:
+-        0
++        2592000
+      values.vanguardAdvantageFmt:
+-        "0s"
++        "1mo"
+    }
+```
+
+```diff
+    EOA  (eth:0xD379de941E78Ab394d4D4917FcCE1CC45b6cd620) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336","description":"propose new state roots before anyone else, giving a first-mover advantage on the optimistic clock.","role":".vanguard"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract KailuaGame (eth:0x296e7aD6D441b0627768bC0650179a4206479444) [risc0/KailuaGame]
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+```
+
+## Source code changes
+
+```diff
+.../src/projects/roninnetwork/.flat/KailuaGame.sol | 3874 ++++++++++++++++++++
+ 1 file changed, 3874 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1781531783 (main branch discovery), not current.
+
+```diff
+    contract KailuaTreasury (eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336) [risc0/KailuaTreasury] {
+    +++ description: Kailua (RISC Zero ZK fault-proof) treasury: holds participation bonds, mints KailuaGame clones, and defines the vanguard proposer economics. Bonds confiscated from eliminated proposers are split 1/3 to the prover, 1/3 to the tournament winner, 1/3 burned.
+      description:
+-        "Kailua (RISC Zero ZK fault-proof) game implementation registered as game type 1337 in the DisputeGameFactory. Deployed but NOT yet active. Bonds confiscated from eliminated proposers are split 1/3 to the prover, 1/3 to the tournament winner, 1/3 burned."
++        "Kailua (RISC Zero ZK fault-proof) treasury: holds participation bonds, mints KailuaGame clones, and defines the vanguard proposer economics. Bonds confiscated from eliminated proposers are split 1/3 to the prover, 1/3 to the tournament winner, 1/3 burned."
+    }
+```
+
 Generated with discovered.json: 0x81fe96904ec3c6d1b6424554954cfd9180db1366
 
 # Diff at Wed, 01 Jul 2026 10:34:57 GMT:
