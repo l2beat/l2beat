@@ -1,6 +1,6 @@
 {
   "name": "bob",
-  "timestamp": 1783072732,
+  "timestamp": 1783498944,
   "configHash": "0x743e691e16138eebb26ca371aeed739e976928a0d61dc79bfcf25df2369d7f12",
   "entries": [
     {
@@ -918,11 +918,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x3A75346f81302aAc0333FB5DCDD407e12A6CfA83",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1386,8 +1381,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 21000,
-          "prevBlockNum": 25437761
+          "prevBoughtGas": 414371,
+          "prevBlockNum": 25486432
         },
         "paused": false,
         "proofMaturityDelaySeconds": 86400,
@@ -1513,7 +1508,7 @@
         "game1337": "eth:0xD37b0BEdD9094988a31dBbB6BF77dC97269E742b",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 708,
+        "gameCount": 718,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x15F80920C8Fec136e2A804E04f26203FF8dAd19A",
@@ -1596,7 +1591,7 @@
         "L2_BLOCK_NUMBER": 32517291,
         "l2BlockNumber": 0,
         "l2SequenceNumber": 0,
-        "lastResolved": "eth:0xc60927C36447A57c99Bb4F73eF3d0Db932a95A37",
+        "lastResolved": "eth:0x5ac1205A224b4e2021E1Ba7F4D1DbfF416CdeaCB",
         "minCreationTime": 0,
         "opponentIndex": 0,
         "OPTIMISM_PORTAL": "eth:0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E",
@@ -1675,25 +1670,30 @@
       "sinceBlock": 25021678,
       "values": {
         "$admin": "eth:0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E",
-        "$implementation": "eth:0xF59DA245d3D69E5432Afd05008E8D332C1bfAb4e",
+        "$implementation": "eth:0xC9934Db60031aDd319d008f8d643E3b723f28e43",
         "$pastUpgrades": [
           [
             "2026-05-04T12:38:23.000Z",
             "0x237eddbdb5201a747c74cb6964186fdb2dd8c7924d61b2d594a15fd8c286f3ad",
             ["eth:0xF59DA245d3D69E5432Afd05008E8D332C1bfAb4e"]
+          ],
+          [
+            "2026-07-08T07:35:47.000Z",
+            "0x211cae5e55a0b57029752e11536fb7a4175d8059cb9d4ec37ca7e50d635809dd",
+            ["eth:0xC9934Db60031aDd319d008f8d643E3b723f28e43"]
           ]
         ],
-        "$upgradeCount": 1,
-        "FPVM_IMAGE_ID": "0x3768ea4f0e0d940f69c4cc5bd39a9e2772bfe3cb57818ce526bbe68033ee5934",
+        "$upgradeCount": 2,
+        "FPVM_IMAGE_ID": "0xb2e2b1513e80ea1e8f998e51bf8e7754eec21dbd0463e0b6b115165ba6bac2bf",
         "PERMIT_DELAY": 0,
         "PERMIT_DURATION": 1,
         "RISC_ZERO_VERIFIER": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
-        "ROLLUP_CONFIG_HASH": "0x8afe7ad42347f5d9f9ad307825d14a39630504005cb998d5132dcd0d0485d64d",
+        "ROLLUP_CONFIG_HASH": "0x56ed6a78ed98a992a16a46513ee4ee496a86302a96d0f2bcee133c21351cd681",
         "version": "1.2.0"
       },
       "implementationNames": {
         "eth:0xa23bf38299bbCbAA01b9ea8a1d3412D9f405b97d": "Proxy",
-        "eth:0xF59DA245d3D69E5432Afd05008E8D332C1bfAb4e": "KailuaVerifier"
+        "eth:0xC9934Db60031aDd319d008f8d643E3b723f28e43": "KailuaVerifier"
       }
     },
     {
@@ -2053,7 +2053,7 @@
           "eth:0x3C30D693b23F77d55e14b8e0CFB6C00075ff93aB",
           "eth:0xFB771f2640Dfd37B18332a84817B2a6e994f5BF6",
           "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
-          "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
+          "eth:0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
           "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
         ],
         "$threshold": 4,
@@ -2061,7 +2061,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 49,
+        "nonce": 51,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2327,7 +2327,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292660795",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292660799",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2405,6 +2405,11 @@
         "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957": "SuperchainConfig"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "address": "eth:0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "AddressManager",
@@ -3617,6 +3622,32 @@
     "eth:0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E": [
       "constructor(address _singleton)"
     ],
+    "eth:0xC9934Db60031aDd319d008f8d643E3b723f28e43": [
+      "constructor(address _verifierContract, bytes32 _imageId, bytes32 _configHash, uint64 _permitDuration, uint64 _permitDelay)",
+      "error AlreadyEliminated()",
+      "error BadTarget()",
+      "error BondTransferFailed()",
+      "error ClockNotExpired()",
+      "error IncorrectBondAmount()",
+      "error NoCreditToClaim()",
+      "error NotProven()",
+      "error ProvenFaulty()",
+      "function FPVM_IMAGE_ID() view returns (bytes32)",
+      "function PERMIT_DELAY() view returns (uint64)",
+      "function PERMIT_DURATION() view returns (uint64)",
+      "function RISC_ZERO_VERIFIER() view returns (address)",
+      "function ROLLUP_CONFIG_HASH() view returns (bytes32)",
+      "function acquireFaultProofPermit(address proposalParent, bytes32 proposalSignature, uint64 numExpiredPermits, uint64 numDelayedPermits, address payoutRecipient) payable returns (uint256 totalPermitsIssued_)",
+      "function countExpiredPermits(bytes32 proposalKey, uint64 numExpiredPermits, uint64 numDelayedPermits, uint64 timestamp) view returns (uint64, uint64, uint256, uint64)",
+      "function faultProofPermitBeneficiary(address proposalParent, bytes32 proposalSignature) view returns (address)",
+      "function faultProofPermitBond(address treasury) view returns (uint256 bond)",
+      "function faultProofPermitKey(address proposalParent, bytes32 proposalSignature) pure returns (bytes32)",
+      "function faultProofPermitProvenAt(address proposalParent, bytes32 proposalSignature) view returns (uint64)",
+      "function faultProofPermits(bytes32, uint256) view returns (uint256 aggregateCollateral, address recipient, uint64 timestamp, bool released)",
+      "function releaseFaultProofPermit(address proposalParent, bytes32 proposalSignature, uint64 numExpiredPermits, uint64 numDelayedPermits, uint64 permitIndex)",
+      "function verify(address payoutRecipient, bytes32 preconditionHash, bytes32 l1Head, bytes32 agreedL2OutputRoot, bytes32 claimedL2OutputRoot, uint64 claimedL2BlockNumber, bytes encodedSeal) view",
+      "function version() view returns (string)"
+    ],
     "eth:0xC9AC21AcD8696B64270716528bF83630Ea7a293c": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -3845,32 +3876,6 @@
       "function setAddress(string _name, address _address)",
       "function transferOwnership(address newOwner)"
     ],
-    "eth:0xF59DA245d3D69E5432Afd05008E8D332C1bfAb4e": [
-      "constructor(address _verifierContract, bytes32 _imageId, bytes32 _configHash, uint64 _permitDuration, uint64 _permitDelay)",
-      "error AlreadyEliminated()",
-      "error BadTarget()",
-      "error BondTransferFailed()",
-      "error ClockNotExpired()",
-      "error IncorrectBondAmount()",
-      "error NoCreditToClaim()",
-      "error NotProven()",
-      "error ProvenFaulty()",
-      "function FPVM_IMAGE_ID() view returns (bytes32)",
-      "function PERMIT_DELAY() view returns (uint64)",
-      "function PERMIT_DURATION() view returns (uint64)",
-      "function RISC_ZERO_VERIFIER() view returns (address)",
-      "function ROLLUP_CONFIG_HASH() view returns (bytes32)",
-      "function acquireFaultProofPermit(address proposalParent, bytes32 proposalSignature, uint64 numExpiredPermits, uint64 numDelayedPermits, address payoutRecipient) payable returns (uint256 totalPermitsIssued_)",
-      "function countExpiredPermits(bytes32 proposalKey, uint64 numExpiredPermits, uint64 numDelayedPermits, uint64 timestamp) view returns (uint64, uint64, uint256, uint64)",
-      "function faultProofPermitBeneficiary(address proposalParent, bytes32 proposalSignature) view returns (address)",
-      "function faultProofPermitBond(address treasury) view returns (uint256 bond)",
-      "function faultProofPermitKey(address proposalParent, bytes32 proposalSignature) pure returns (bytes32)",
-      "function faultProofPermitProvenAt(address proposalParent, bytes32 proposalSignature) view returns (uint64)",
-      "function faultProofPermits(bytes32, uint256) view returns (uint256 aggregateCollateral, address recipient, uint64 timestamp, bool released)",
-      "function releaseFaultProofPermit(address proposalParent, bytes32 proposalSignature, uint64 numExpiredPermits, uint64 numDelayedPermits, uint64 permitIndex)",
-      "function verify(address payoutRecipient, bytes32 preconditionHash, bytes32 l1Head, bytes32 agreedL2OutputRoot, bytes32 claimedL2OutputRoot, uint64 claimedL2BlockNumber, bytes encodedSeal) view",
-      "function version() view returns (string)"
-    ],
     "eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C": [
       "constructor(bytes32 control_root, bytes32 bn254_control_id)",
       "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
@@ -3912,6 +3917,6 @@
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/RiscZeroGroth16VerifierLegacy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 25451243 },
-  "permissionsConfigHash": "0xf2620237361323c9d4e2cc8d099dde0cc25486a43451209b12803fefc9b2a78a"
+  "usedBlockNumbers": { "ethereum": 25486625 },
+  "permissionsConfigHash": "0xfbb2faf2a3d593ed08e363e7239b7fd8199f6165cd59e3c36b679ff6e460d749"
 }
