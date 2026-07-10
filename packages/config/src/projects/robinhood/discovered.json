@@ -1,12 +1,56 @@
 {
   "name": "robinhood",
-  "timestamp": 1783461693,
+  "timestamp": 1783676456,
   "configHash": "0xcc9d094fa77db745a97783825475026653597e8bd7d7fdfc3f24fd1a4b372888",
   "entries": [
+    {
+      "address": "eth:0x026F0df4b04a258207337fBB05790F0E1283e526",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "address": "eth:0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "Safe",
+      "address": "eth:0x0fc5c64074641e677Fb86bCE80303a2eE64344Ac",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xBa86e3b54E3Ee00185EccB41ff40FC3d5Ee79ecA",
+      "sinceTimestamp": 1782495911,
+      "sinceBlock": 25403382,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "eth:0xBa86e3b54E3Ee00185EccB41ff40FC3d5Ee79ecA",
+          "eth:0x582B0cCE0bA332D151998A7cA62Cf12d308b050F",
+          "eth:0xFA677559d43856af84E9ceA929E36BF126da4562",
+          "eth:0x499b56449Fe624Cc984Ec92F64Be01F9619441B4",
+          "eth:0x90a0eb0337224f74D694c04648f0Ab8a80E37029",
+          "eth:0x026F0df4b04a258207337fBB05790F0E1283e526",
+          "eth:0x9b6488FBa4ed8fD4840F37345311eCCA1B09740C"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x44661a22a3662f06d77a5fade029a235f6a8d31026cca7a3b80851ec8302401a",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 7 (43%)",
+        "nonce": 5,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "eth:0x0fc5c64074641e677Fb86bCE80303a2eE64344Ac": "SafeProxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -138,122 +182,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x23A19d23e89166adedbDcB432518AB01e4272D94",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x1A07cc4BD17E0118BdB54D70990D2158AbAD7a2D",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD" },
-            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x23A19d23e89166adedbDcB432518AB01e4272D94",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD" },
-            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x6a2E3a1e16FC29f27Ce61429746D558d656975bB",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD" },
-            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x6f38FC91105Fc9a43931DcA33450ab3315E3D4Fa",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD" },
-            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD" },
-            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xBd0D173EEb87D57A09521c24388a12789F33ba96",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD" },
-            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xc34f4907822d1cDC6aE3038Be22e6f12DEa35bd4",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD" },
-            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xDf8755334ce7A73cCF6b581C02eA649AE3E864b3",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD" },
-            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD" },
-            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD" },
-            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf",
-          "role": ".executors"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xc8451c5DE260E7ea1b879e7994967077e71230Ca",
       "sinceTimestamp": 1777568363,
@@ -271,7 +199,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 6,
+        "nonce": 7,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -331,7 +259,7 @@
         ],
         "inbox": "eth:0x1A07cc4BD17E0118BdB54D70990D2158AbAD7a2D",
         "isPostBoLD": true,
-        "latestConfirmed": "0xa89d5d6588d3bd01042da324495c21a157ed8bc449afc1a37eb33dfa68748520",
+        "latestConfirmed": "0x589f0f4a03edb5d090da52dc5cfed9940e6e6f03b94c153569c34a55f6fd5e8b",
         "loserStakeEscrow": "eth:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9",
@@ -417,6 +345,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x499b56449Fe624Cc984Ec92F64Be01F9619441B4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "OneStepProverMath",
       "address": "eth:0x4B15E064d5d55705E89080bDEA4BFe4cF20D6114",
       "type": "Contract",
@@ -432,6 +365,27 @@
       "values": { "$immutable": true },
       "implementationNames": {
         "eth:0x4B15E064d5d55705E89080bDEA4BFe4cF20D6114": "OneStepProverMath"
+      }
+    },
+    {
+      "name": "",
+      "address": "eth:0x4e393071053C5d95771b1B716857d65cdf5B1839",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465",
+          "role": "admin"
+        }
+      ],
+      "deployerAddress": "eth:0xcFDab226f6DF33cd364Ff8E617bEB5Fe54E84Ebe",
+      "sinceTimestamp": 1782841247,
+      "sinceBlock": 25432046,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x4e393071053C5d95771b1B716857d65cdf5B1839": ""
       }
     },
     {
@@ -457,6 +411,11 @@
       "implementationNames": {
         "eth:0x5087a6fD526eFD5c6770d94D0c325de0e2A2c44D": "OneStepProofEntry"
       }
+    },
+    {
+      "address": "eth:0x54Fafc2728569b9F6099613482bBc8E47B61E477",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "UpgradeExecutor",
@@ -512,19 +471,35 @@
           },
           "EXECUTOR_ROLE": {
             "adminRole": "ADMIN_ROLE",
-            "members": ["eth:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5"]
+            "members": [
+              "eth:0x7Ae50886c7EA0394613aa7Dcc287a5c9650784b6",
+              "eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465"
+            ]
           }
         },
         "ADMIN_ROLE": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
-        "executors": ["eth:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5"]
+        "executors": [
+          "eth:0x7Ae50886c7EA0394613aa7Dcc287a5c9650784b6",
+          "eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465"
+        ]
       },
       "implementationNames": {
         "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf": "TransparentUpgradeableProxy",
         "eth:0x9149DF379237a935cf0658fE54D2325109493CBb": "UpgradeExecutor"
       },
       "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "address": "eth:0x582B0cCE0bA332D151998A7cA62Cf12d308b050F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x640BF0B6b8706f35195d6491cbE347c01b967393",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "OneStepProverMemory",
@@ -643,6 +618,167 @@
       }
     },
     {
+      "address": "eth:0x7957e74a59Af4404f64B454cDfaF08F7047021DD",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Safe",
+      "address": "eth:0x7Ae50886c7EA0394613aa7Dcc287a5c9650784b6",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x23A19d23e89166adedbDcB432518AB01e4272D94",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x1A07cc4BD17E0118BdB54D70990D2158AbAD7a2D",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD" },
+            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x23A19d23e89166adedbDcB432518AB01e4272D94",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD" },
+            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x6a2E3a1e16FC29f27Ce61429746D558d656975bB",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD" },
+            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x6f38FC91105Fc9a43931DcA33450ab3315E3D4Fa",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD" },
+            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD" },
+            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xBd0D173EEb87D57A09521c24388a12789F33ba96",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD" },
+            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xc34f4907822d1cDC6aE3038Be22e6f12DEa35bd4",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD" },
+            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xDf8755334ce7A73cCF6b581C02eA649AE3E864b3",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD" },
+            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD" },
+            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD" },
+            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf",
+          "role": ".executors"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xcFDab226f6DF33cd364Ff8E617bEB5Fe54E84Ebe",
+      "sinceTimestamp": 1782841211,
+      "sinceBlock": 25432043,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "eth:0x640BF0B6b8706f35195d6491cbE347c01b967393",
+          "eth:0x7957e74a59Af4404f64B454cDfaF08F7047021DD",
+          "eth:0x0fc5c64074641e677Fb86bCE80303a2eE64344Ac",
+          "eth:0x54Fafc2728569b9F6099613482bBc8E47B61E477",
+          "eth:0xb89C85BE593e6A8f7e35AC481b5F75Fc4036f31c",
+          "eth:0x29631c2da9Ab1C0Ca1935A463842a9484E34Fa17",
+          "eth:0x2584fd737d35bE395aa979b18602d0dE65f38b2c",
+          "eth:0xe94aCAa305ce4DF3862585AD0B8Ed05C8C808d6A"
+        ],
+        "$threshold": 7,
+        "domainSeparator": "0xa22e502d36eac513510d671dd9bd2ca8bdf9e6216c3e5a7b99352c8bf4d38230",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "7 of 8 (88%)",
+        "nonce": 2,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "eth:0x7Ae50886c7EA0394613aa7Dcc287a5c9650784b6": "SafeProxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
       "name": "L1ERC20Gateway",
       "address": "eth:0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0",
       "type": "Contract",
@@ -681,6 +817,11 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "address": "eth:0x90a0eb0337224f74D694c04648f0Ab8a80E37029",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x992D8d50548fCcCaF11147A9a692c496011C8Aa0",
       "type": "EOA",
       "proxyType": "EOA",
@@ -692,6 +833,11 @@
           "role": ".getValidators"
         }
       ]
+    },
+    {
+      "address": "eth:0x9b6488FBa4ed8fD4840F37345311eCCA1B09740C",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xa0A1D8cd6f867a583a39232a477ff231aFD8eC4C",
@@ -708,6 +854,11 @@
     },
     {
       "address": "eth:0xb89C85BE593e6A8f7e35AC481b5F75Fc4036f31c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xBa86e3b54E3Ee00185EccB41ff40FC3d5Ee79ecA",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -742,7 +893,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 5696,
+        "batchCount": 10508,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": ["eth:0xDaa526086787d9DEbE1D7F3FFdb1fE50cf8687F4"],
         "bridge": "eth:0xDf8755334ce7A73cCF6b581C02eA649AE3E864b3",
@@ -781,7 +932,7 @@
         "rollup": "eth:0x23A19d23e89166adedbDcB432518AB01e4272D94",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 7675,
+        "totalDelayedMessagesRead": 15062,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -813,7 +964,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2430128229654056558875411"
+        "totalSupply": "2471983917956443124005133"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -911,7 +1062,7 @@
           "eth:0xc34f4907822d1cDC6aE3038Be22e6f12DEa35bd4"
         ],
         "allowedOutboxList": ["eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9"],
-        "delayedMessageCount": 7678,
+        "delayedMessageCount": 15078,
         "inboxHistory": [
           "eth:0x1A07cc4BD17E0118BdB54D70990D2158AbAD7a2D",
           "eth:0xc34f4907822d1cDC6aE3038Be22e6f12DEa35bd4"
@@ -919,8 +1070,8 @@
         "outboxHistory": ["eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9"],
         "rollup": "eth:0x23A19d23e89166adedbDcB432518AB01e4272D94",
         "sequencerInbox": "eth:0xBd0D173EEb87D57A09521c24388a12789F33ba96",
-        "sequencerMessageCount": 5696,
-        "sequencerReportedSubMessageCount": 3844047
+        "sequencerMessageCount": 10508,
+        "sequencerReportedSubMessageCount": 5978871
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -966,6 +1117,153 @@
       "implementationNames": {
         "eth:0xe1aAfAfBde42f043495B39d1a15a58E91c894Fbf": "OneStepProverHostIo"
       }
+    },
+    {
+      "name": "",
+      "address": "eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x23A19d23e89166adedbDcB432518AB01e4272D94",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x1A07cc4BD17E0118BdB54D70990D2158AbAD7a2D",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD" },
+            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x23A19d23e89166adedbDcB432518AB01e4272D94",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD" },
+            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x6a2E3a1e16FC29f27Ce61429746D558d656975bB",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD" },
+            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x6f38FC91105Fc9a43931DcA33450ab3315E3D4Fa",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD" },
+            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD" },
+            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xBd0D173EEb87D57A09521c24388a12789F33ba96",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD" },
+            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xc34f4907822d1cDC6aE3038Be22e6f12DEa35bd4",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD" },
+            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xDf8755334ce7A73cCF6b581C02eA649AE3E864b3",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD" },
+            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD" },
+            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD" },
+            { "address": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf",
+          "role": ".executors"
+        }
+      ],
+      "deployerAddress": "eth:0xcFDab226f6DF33cd364Ff8E617bEB5Fe54E84Ebe",
+      "sinceTimestamp": 1782841247,
+      "sinceBlock": 25432046,
+      "values": {
+        "$admin": "eth:0x4e393071053C5d95771b1B716857d65cdf5B1839",
+        "$implementation": "eth:0x145046bdd5c4bc72338f60dE5d9707BD73ff1843",
+        "$pastUpgrades": [
+          [
+            "2026-06-30T17:40:47.000Z",
+            "0xb477a23fc6630baa3ecad25b2aaf63d74c843389db8063307762fbc99aea78ba",
+            ["eth:0x145046bdd5c4bc72338f60dE5d9707BD73ff1843"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465": "",
+        "eth:0x145046bdd5c4bc72338f60dE5d9707BD73ff1843": ""
+      }
+    },
+    {
+      "address": "eth:0xe94aCAa305ce4DF3862585AD0B8Ed05C8C808d6A",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Outbox",
@@ -1043,6 +1341,11 @@
       }
     },
     {
+      "address": "eth:0xFA677559d43856af84E9ceA929E36BF126da4562",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xfd9b17206278C16DdaacF6AC8f05dBf97EdCb31e",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1075,69 +1378,9 @@
       ]
     },
     {
-      "name": "SafeL2",
-      "address": "robinhood:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
-      ],
-      "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09",
-          "description": "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay.",
-          "role": ".chainOwners",
-          "via": [
-            {
-              "address": "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09"
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09",
-          "role": "admin",
-          "via": [
-            {
-              "address": "robinhood:0xa3Acd31AFb851B4eB9DAD00F5204c01D924267dF"
-            },
-            {
-              "address": "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09"
-            }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09",
-          "role": ".executors"
-        }
-      ],
-      "ignoreInWatchMode": ["nonce"],
-      "values": {
-        "$immutable": false,
-        "$implementation": "robinhood:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
-        "$members": [
-          "robinhood:0x29631c2da9Ab1C0Ca1935A463842a9484E34Fa17",
-          "robinhood:0x2584fd737d35bE395aa979b18602d0dE65f38b2c",
-          "robinhood:0xb89C85BE593e6A8f7e35AC481b5F75Fc4036f31c"
-        ],
-        "$threshold": 2,
-        "domainSeparator": "0x8ebb2e0c973c3d3fb7a65852c391da8d4b536e82452539e22c46c73b8a554d68",
-        "getChainId": 4663,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 4,
-        "VERSION": "1.4.1"
-      },
-      "implementationNames": {
-        "robinhood:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5": "SafeProxy",
-        "robinhood:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
-      }
+      "address": "robinhood:0x026F0df4b04a258207337fBB05790F0E1283e526",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "robinhood:0x2584fd737d35bE395aa979b18602d0dE65f38b2c",
@@ -1202,7 +1445,8 @@
             "adminRole": "ADMIN_ROLE",
             "members": [
               "robinhood:0x663703B4bC1F5e896Af2854548d6380F45F1C5D0",
-              "robinhood:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5"
+              "robinhood:0x6b9F63817F1442e40Bb9c3C2207758934C323FdC",
+              "robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173"
             ]
           }
         },
@@ -1212,7 +1456,8 @@
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": [
           "robinhood:0x663703B4bC1F5e896Af2854548d6380F45F1C5D0",
-          "robinhood:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5"
+          "robinhood:0x6b9F63817F1442e40Bb9c3C2207758934C323FdC",
+          "robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173"
         ]
       },
       "implementationNames": {
@@ -1220,6 +1465,113 @@
         "robinhood:0x3c3E52bC8C181D06A76e2518bBc655C5BB3Ce7Cd": "UpgradeExtractor"
       },
       "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "SafeL2",
+      "address": "robinhood:0x3A0C507Cc7F8785C877359ad49d0476966d17a1C",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "values": {
+        "$immutable": false,
+        "$implementation": "robinhood:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
+        "$members": [
+          "robinhood:0x582B0cCE0bA332D151998A7cA62Cf12d308b050F",
+          "robinhood:0xBa86e3b54E3Ee00185EccB41ff40FC3d5Ee79ecA",
+          "robinhood:0xFA677559d43856af84E9ceA929E36BF126da4562",
+          "robinhood:0x499b56449Fe624Cc984Ec92F64Be01F9619441B4",
+          "robinhood:0x90a0eb0337224f74D694c04648f0Ab8a80E37029",
+          "robinhood:0x026F0df4b04a258207337fBB05790F0E1283e526",
+          "robinhood:0x9b6488FBa4ed8fD4840F37345311eCCA1B09740C"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x8fabaa1c25be9c1966b8df222228171c9a9218bdebf0106ed8dcd8979e0b10b1",
+        "getChainId": 4663,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 7 (43%)",
+        "nonce": 4,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "robinhood:0x3A0C507Cc7F8785C877359ad49d0476966d17a1C": "SafeProxy",
+        "robinhood:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
+      }
+    },
+    {
+      "address": "robinhood:0x499b56449Fe624Cc984Ec92F64Be01F9619441B4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "",
+      "address": "robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09",
+          "description": "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay.",
+          "role": ".chainOwners",
+          "via": [
+            {
+              "address": "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09"
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09",
+          "role": "admin",
+          "via": [
+            {
+              "address": "robinhood:0xa3Acd31AFb851B4eB9DAD00F5204c01D924267dF"
+            },
+            {
+              "address": "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09"
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09",
+          "role": ".executors"
+        }
+      ],
+      "values": {
+        "$admin": "robinhood:0x672Da8B43058D1bC78956d71d9A208E168E2a3EF",
+        "$implementation": "robinhood:0x145046bdd5c4bc72338f60dE5d9707BD73ff1843",
+        "$pastUpgrades": [
+          [
+            "2026-06-30T17:40:53.000Z",
+            "0xee6757ba43dff65e9d0b595e3d538fb039c1d5dc6e9032c4e1de63c51d713dcc",
+            ["robinhood:0x145046bdd5c4bc72338f60dE5d9707BD73ff1843"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173": "",
+        "robinhood:0x145046bdd5c4bc72338f60dE5d9707BD73ff1843": ""
+      }
+    },
+    {
+      "address": "robinhood:0x582B0cCE0bA332D151998A7cA62Cf12d308b050F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "robinhood:0x640BF0B6b8706f35195d6491cbE347c01b967393",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "robinhood:0x663703B4bC1F5e896Af2854548d6380F45F1C5D0",
@@ -1260,6 +1612,114 @@
       ]
     },
     {
+      "name": "",
+      "address": "robinhood:0x672Da8B43058D1bC78956d71d9A208E168E2a3EF",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173",
+          "role": "admin"
+        }
+      ],
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "robinhood:0x672Da8B43058D1bC78956d71d9A208E168E2a3EF": ""
+      }
+    },
+    {
+      "address": "robinhood:0x686c4267B9F9868Dff3787CeA38f44868c6DF6eA",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "SafeL2",
+      "address": "robinhood:0x6b9F63817F1442e40Bb9c3C2207758934C323FdC",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09",
+          "description": "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay.",
+          "role": ".chainOwners",
+          "via": [
+            {
+              "address": "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09"
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09",
+          "role": "admin",
+          "via": [
+            {
+              "address": "robinhood:0xa3Acd31AFb851B4eB9DAD00F5204c01D924267dF"
+            },
+            {
+              "address": "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09"
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09",
+          "role": ".executors"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "values": {
+        "$immutable": false,
+        "$implementation": "robinhood:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
+        "$members": [
+          "robinhood:0x640BF0B6b8706f35195d6491cbE347c01b967393",
+          "robinhood:0x7957e74a59Af4404f64B454cDfaF08F7047021DD",
+          "robinhood:0x3A0C507Cc7F8785C877359ad49d0476966d17a1C",
+          "robinhood:0x686c4267B9F9868Dff3787CeA38f44868c6DF6eA",
+          "robinhood:0xb89C85BE593e6A8f7e35AC481b5F75Fc4036f31c",
+          "robinhood:0x29631c2da9Ab1C0Ca1935A463842a9484E34Fa17",
+          "robinhood:0x2584fd737d35bE395aa979b18602d0dE65f38b2c",
+          "robinhood:0xe94aCAa305ce4DF3862585AD0B8Ed05C8C808d6A"
+        ],
+        "$threshold": 7,
+        "domainSeparator": "0xa8ce32f442f51ec8853b18d1d5fc555f0f9af1295e0ce174e2dc68d0ff0db1bb",
+        "getChainId": 4663,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "7 of 8 (88%)",
+        "nonce": 2,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "robinhood:0x6b9F63817F1442e40Bb9c3C2207758934C323FdC": "SafeProxy",
+        "robinhood:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
+      }
+    },
+    {
+      "address": "robinhood:0x7957e74a59Af4404f64B454cDfaF08F7047021DD",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "robinhood:0x90a0eb0337224f74D694c04648f0Ab8a80E37029",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "robinhood:0x9b6488FBa4ed8fD4840F37345311eCCA1B09740C",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ProxyAdmin",
       "address": "robinhood:0xa3Acd31AFb851B4eB9DAD00F5204c01D924267dF",
       "type": "Contract",
@@ -1289,6 +1749,16 @@
       "proxyType": "EOA"
     },
     {
+      "address": "robinhood:0xBa86e3b54E3Ee00185EccB41ff40FC3d5Ee79ecA",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "robinhood:0xe94aCAa305ce4DF3862585AD0B8Ed05C8C808d6A",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "TransactionFilterer",
       "address": "robinhood:0xebDc18A1F5C42fC25552eA233fAcf4054DF224b7",
       "type": "EOA",
@@ -1301,9 +1771,17 @@
           "role": ".transactionFilterers"
         }
       ]
+    },
+    {
+      "address": "robinhood:0xFA677559d43856af84E9ceA929E36BF126da4562",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
   ],
   "abis": {
+    "eth:0x0fc5c64074641e677Fb86bCE80303a2eE64344Ac": [
+      "constructor(address _singleton)"
+    ],
     "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
@@ -1510,6 +1988,9 @@
       "function rollup() view returns (address)",
       "function rollupInitialized(uint256 chainId, string chainConfig, uint256 dataCostEstimate)",
       "function updateRollupAddress()"
+    ],
+    "eth:0x7Ae50886c7EA0394613aa7Dcc287a5c9650784b6": [
+      "constructor(address _singleton)"
     ],
     "eth:0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -2110,9 +2591,6 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "robinhood:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5": [
-      "constructor(address _singleton)"
-    ],
     "robinhood:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": [
       "event AddedOwner(address indexed owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -2168,6 +2646,9 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
+    "robinhood:0x3A0C507Cc7F8785C877359ad49d0476966d17a1C": [
+      "constructor(address _singleton)"
+    ],
     "robinhood:0x3c3E52bC8C181D06A76e2518bBc655C5BB3Ce7Cd": [
       "event Initialized(uint8 version)",
       "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
@@ -2187,6 +2668,9 @@
       "function renounceRole(bytes32 role, address account)",
       "function revokeRole(bytes32 role, address account)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)"
+    ],
+    "robinhood:0x6b9F63817F1442e40Bb9c3C2207758934C323FdC": [
+      "constructor(address _singleton)"
     ],
     "robinhood:0xa3Acd31AFb851B4eB9DAD00F5204c01D924267dF": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -2219,6 +2703,6 @@
     "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "ethereum": 25483528, "robinhood": 3846224 },
-  "permissionsConfigHash": "0x5fee83d598f3339893459f1b2001639f6f3780cee622d2e5d39f2d7926cd7832"
+  "usedBlockNumbers": { "ethereum": 25501357, "robinhood": 5979261 },
+  "permissionsConfigHash": "0x697c42c6c38d58fe62629f148dc97b125b1ced7af783786be55942249872b370"
 }

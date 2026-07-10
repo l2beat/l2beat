@@ -1,3 +1,138 @@
+Generated with discovered.json: 0x808546f059b3bc44df0d08969d3798f272d2b1fb
+
+# Diff at Fri, 10 Jul 2026 09:42:34 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1e8c379b8fe786381adcddb9c648173990ad4ea3 block: 1783461693
+- current timestamp: 1783676456
+
+## Description
+
+Robinhood expanded its chain-governance multisig and added a timelock.
+
+Both the L1 and L2 UpgradeExecutors previously had a single 2-of-3 Safe
+(`0x1F3Bdec…31C5`) as their only executor. They now have two executors each:
+
+- a 7-of-8 Safe (`eth:0x7Ae5…84b6` / `robinhood:0x6b9F…3FdC`) that includes a
+  3-of-7 Safe (`0x0fc5…44Ac`) as one of its owners;
+- a 7-day timelock (`eth:0xE1e8…F465` / `robinhood:0x560C…8173`).
+
+The former 2-of-3 Safe's three signers are among the new Safe's owners.
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x23A19d23e89166adedbDcB432518AB01e4272D94","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.","role":".owner","via":[{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0x1A07cc4BD17E0118BdB54D70990D2158AbAD7a2D","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0x23A19d23e89166adedbDcB432518AB01e4272D94","role":"admin","via":[{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0x6a2E3a1e16FC29f27Ce61429746D558d656975bB","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0x6f38FC91105Fc9a43931DcA33450ab3315E3D4Fa","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0xBd0D173EEb87D57A09521c24388a12789F33ba96","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0xc34f4907822d1cDC6aE3038Be22e6f12DEa35bd4","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0xDf8755334ce7A73cCF6b581C02eA649AE3E864b3","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf","role":".executors"}]
+    }
+```
+
+```diff
+    contract UpgradeExecutor (eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.accessControl.EXECUTOR_ROLE.members.0:
++        "eth:0x7Ae50886c7EA0394613aa7Dcc287a5c9650784b6"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "eth:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5"
++        "eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465"
+      values.executors.0:
++        "eth:0x7Ae50886c7EA0394613aa7Dcc287a5c9650784b6"
+      values.executors.0:
+-        "eth:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5"
++        "eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SafeL2 (robinhood:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract L2UpgradeExecutor (robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09) [orbitstack/UpgradeExecutor] {
+    +++ description: ArbOS chain owner (UpgradeExecutor). Manages the ArbOwner chain-owner set and the transaction-filterer set, and can upgrade ArbOS configuration without delay.
+      values.accessControl.EXECUTOR_ROLE.members.1:
++        "robinhood:0x6b9F63817F1442e40Bb9c3C2207758934C323FdC"
+      values.accessControl.EXECUTOR_ROLE.members.1:
+-        "robinhood:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5"
++        "robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173"
+      values.executors.1:
++        "robinhood:0x6b9F63817F1442e40Bb9c3C2207758934C323FdC"
+      values.executors.1:
+-        "robinhood:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5"
++        "robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x0fc5c64074641e677Fb86bCE80303a2eE64344Ac) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x4e393071053C5d95771b1B716857d65cdf5B1839) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x7Ae50886c7EA0394613aa7Dcc287a5c9650784b6) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (robinhood:0x3A0C507Cc7F8785C877359ad49d0476966d17a1C) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (robinhood:0x672Da8B43058D1bC78956d71d9A208E168E2a3EF) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (robinhood:0x6b9F63817F1442e40Bb9c3C2207758934C323FdC) [GnosisSafe]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../Safe.sol                                       |    0
+ .../SafeProxy.p.sol                                |    0
+ .../Safe.sol                                       | 1216 ++++++++++++++++++
+ .../SafeProxy.p.sol                                |    0
+ .../Safe.sol                                       | 1216 ++++++++++++++++++
+ .../SafeProxy.p.sol                                |   42 +
+ .../SafeL2.sol                                     |    0
+ .../SafeProxy.p.sol                                |   42 +
+ .../SafeL2.sol                                     | 1286 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   42 +
+ 10 files changed, 3844 insertions(+)
+```
+
 Generated with discovered.json: 0xd4ee2b65c075a2e41ae1b9b1350dde933a74c0ac
 
 # Diff at Tue, 07 Jul 2026 22:02:36 GMT:
