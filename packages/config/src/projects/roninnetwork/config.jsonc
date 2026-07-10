@@ -44,26 +44,6 @@
     "eth:0xF184a6Cd470Cac2CF5cD4fBa34e20D482D6A6062": {
       "description": "Immutable emergency-pause contract for the legacy MainchainGateway. Holders of the SENTRY_ROLE can flip MainchainGateway into a paused state to halt deposits and withdrawals in an emergency."
     },
-    "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a": {
-      "fields": {
-        "proposerFromDGF": {
-          "permissions": [
-            {
-              "type": "interact",
-              "description": "Allowed to post new state roots of the current layer to the host chain."
-            }
-          ]
-        },
-        "challengerFromDGF": {
-          "permissions": [
-            {
-              "type": "interact",
-              "description": "Allowed to challenge or delete state roots proposed by a Proposer."
-            }
-          ]
-        }
-      }
-    },
     "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
       "ignoreInWatchMode": ["totalSupply"]
     },

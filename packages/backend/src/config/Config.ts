@@ -356,6 +356,7 @@ export type BlockLayerDaTrackingConfig = {
   name: string
   url: string
   callsPerMinute: number
+  timeout?: number
   batchSize: number
   startingBlock: number
 }
