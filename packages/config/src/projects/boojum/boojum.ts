@@ -216,33 +216,6 @@ export const boojum: BaseProject = {
       // The output of the last command will contain the required \`fflonk_snark_wrapper\` value.
       //       `,
       //       },
-      {
-        hash: '0x6f36a08c517b060fa97308cdb3e23b04842ff839d451a753ec8fae1a5408304a',
-        name: 'Boojum Fflonk core-v29.1.0',
-        sourceLink:
-          'https://github.com/matter-labs/zksync-era/tree/core-v29.1.0/prover',
-        proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
-        knownDeployments: [
-          {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0x1AC4F629Fdc77A7700B68d03bF8D1A53f2210911',
-            ),
-          },
-          // {
-          //   address: EthereumAddress(
-          //     '0x3CFB3a80Af42cBE4d82C14301690A62D53e870a5',
-          //   ),
-          //   chain: 'zksync',
-          // },
-        ],
-        verificationStatus: 'successful',
-        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: readProjectMarkdown(
-          'boojum',
-          'verificationSteps-0x6f36a08c',
-        ),
-      },
       // {
       //   hash: '0x17e8d7931f1314431359233e65c22657a32c335205e3c24ce292c5819becfaa7',
       //   proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
@@ -377,33 +350,6 @@ export const boojum: BaseProject = {
       // The output of the last command will contain the required \`snark_wrapper\` value.
       //       `,
       //       },
-      {
-        hash: '0x64b347c642ea60114c98b3976124ea8a7e0bb778bd7e479aedc02f994486c8a1',
-        name: 'Boojum Plonk prover-v22.0.0',
-        sourceLink:
-          'https://github.com/matter-labs/zksync-era/tree/prover-v22.0.0/prover',
-        proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
-        knownDeployments: [
-          {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0x2db2ffdecb7446aaab01FAc3f4D55863db3C5bd6',
-            ),
-          },
-          // {
-          //   address: EthereumAddress(
-          //     '0x92A9Fd0E84354213D9c3d33128eDd6Ea55ee0717',
-          //   ),
-          //   chain: 'zksync',
-          // },
-        ],
-        verificationStatus: 'successful',
-        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: readProjectMarkdown(
-          'boojum',
-          'verificationSteps-0x64b347c6',
-        ),
-      },
       // {
       //   hash: '0xd90459c5b727b9ceeb2b6192d2953dbf05970edf090333b3ad3bcac1a1442b78',
       //   proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
