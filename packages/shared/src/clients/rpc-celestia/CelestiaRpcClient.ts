@@ -11,6 +11,7 @@ import {
 
 interface Dependencies extends ClientCoreDependencies {
   url: string
+  timeout?: number
   generateId?: () => string
 }
 
@@ -115,6 +116,7 @@ export class CelestiaRpcClient extends ClientCore {
     return await this.fetch(`${url}${query}`, {
       method: 'GET',
       redirect: 'follow',
+      ...(this.$.timeout !== undefined && { timeout: this.$.timeout }),
     })
   }
 

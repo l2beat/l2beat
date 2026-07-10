@@ -240,6 +240,7 @@ export function initClients(config: Config, logger: Logger): Clients {
             sourceName: layer.name,
             logger,
             http,
+            timeout: layer.timeout,
           })
           blockClients.push(celestia)
           break
