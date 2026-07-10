@@ -1,16 +1,18 @@
-import { ProjectId } from '@l2beat/shared-pure'
 import { type ReactNode, useState } from 'react'
+import type { InteropScope } from '~/server/features/scaling/interop/types'
 import { TransferDetailsDialog } from './table/transfer-count-cell/TransferCountCell'
 
 export function InteropTransferDetailsTrigger({
-  protocol,
+  scope,
+  title,
   tokenId,
   selection,
   snapshotTimestamp,
   className,
   children,
 }: {
-  protocol: { id: string; name: string; slug: string; iconUrl: string }
+  scope: InteropScope
+  title: ReactNode
   tokenId?: string
   selection: { from: string[]; to: string[] }
   snapshotTimestamp: number | undefined
@@ -29,7 +31,8 @@ export function InteropTransferDetailsTrigger({
         {children}
       </button>
       <TransferDetailsDialog
-        protocol={{ ...protocol, id: ProjectId(protocol.id) }}
+        scope={scope}
+        title={title}
         type={undefined}
         tokenId={tokenId}
         snapshotTimestamp={snapshotTimestamp}

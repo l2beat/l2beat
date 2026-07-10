@@ -5,10 +5,12 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
+import type { InteropScope } from '~/server/features/scaling/interop/types'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { ChainIcon } from './ChainIcon'
 import { InteropNoDataBadge } from './InteropNoDataBadge'
+import { InteropTransferDetailsTrigger } from './InteropTransferDetailsTrigger'
 import {
   type InteropTransferDefaults,
   InteropTransferTrigger,
@@ -27,6 +29,7 @@ export interface InteropTokenRowData {
     dst: { id: string; iconUrl: string | undefined }
   }
   protocol?: { id: string; name: string; slug: string; iconUrl: string }
+  transferScope?: InteropScope
 }
 
 export function InteropTokenRow({
@@ -104,7 +107,28 @@ export function InteropTokenRow({
             {formatCurrency(token.volume, 'usd', { decimals: 2 })}
           </span>
         )}
-        {token.protocol ? (
+        {token.transferScope ? (
+          <InteropTransferDetailsTrigger
+            scope={token.transferScope}
+            title={
+              <>
+                <span>Transfers for </span>
+                <img
+                  src={token.iconUrl}
+                  alt={token.symbol}
+                  className="relative bottom-0.5 mx-1 inline-block size-6 rounded-full"
+                />
+                <span>{token.symbol}</span>
+              </>
+            }
+            tokenId={token.tokenId}
+            selection={transfer.selection}
+            snapshotTimestamp={transfer.snapshotTimestamp}
+            className="cursor-pointer font-medium text-paragraph-14 text-secondary hover:underline md:text-paragraph-16"
+          >
+            {txsLabel}
+          </InteropTransferDetailsTrigger>
+        ) : token.protocol ? (
           <InteropTransferTrigger
             protocol={token.protocol}
             tokenId={token.tokenId}

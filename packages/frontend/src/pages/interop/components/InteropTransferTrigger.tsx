@@ -23,7 +23,20 @@ export function InteropTransferTrigger({
 }) {
   return (
     <InteropTransferDetailsTrigger
-      protocol={protocol}
+      scope={{ type: 'project', projectId: protocol.id }}
+      title={
+        <>
+          <span>Transfers for </span>
+          <a href={`/interop/protocols/${protocol.slug}`}>
+            <img
+              src={protocol.iconUrl}
+              alt={protocol.name}
+              className="relative bottom-0.5 mx-1 inline-block size-6"
+            />
+            <span>{protocol.name}</span>
+          </a>
+        </>
+      }
       tokenId={tokenId}
       selection={selection}
       snapshotTimestamp={snapshotTimestamp}

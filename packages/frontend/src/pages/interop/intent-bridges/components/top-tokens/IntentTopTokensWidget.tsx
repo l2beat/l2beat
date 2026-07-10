@@ -20,8 +20,6 @@ export function IntentTopTokensWidget({
   isLoading: boolean
   transfer: InteropTransferDefaults
 }) {
-  const bridgesBySlug = new Map(intentBridges.map((b) => [b.slug, b]))
-
   const tabs: TopTokensTab[] = intentBridges.map((bridge) => ({
     id: bridge.id,
     iconUrl: bridge.iconUrl,
@@ -31,7 +29,6 @@ export function IntentTopTokensWidget({
   const toRow = (
     token: TokenData,
     bridge: InteropIntentBridge | undefined,
-    showBadge: boolean,
   ): InteropTokenRowData => {
     const flow = token.flows[0]
     return {
@@ -41,10 +38,6 @@ export function IntentTopTokensWidget({
       href: getInteropTokenUrl(token),
       volume: token.volume,
       transferCount: token.transferCount,
-      badge:
-        showBadge && bridge
-          ? { color: bridge.color, iconUrl: bridge.iconUrl, label: bridge.name }
-          : undefined,
       topRoute: flow ? { src: flow.srcChain, dst: flow.dstChain } : undefined,
       protocol: bridge
         ? {
@@ -54,6 +47,12 @@ export function IntentTopTokensWidget({
             iconUrl: bridge.iconUrl,
           }
         : undefined,
+      transferScope: bridge
+        ? undefined
+        : {
+            type: 'selection',
+            protocolIds: intentBridges.map((bridge) => bridge.id),
+          },
     }
   }
 
@@ -74,14 +73,9 @@ export function IntentTopTokensWidget({
         const value = activeBridge
           ? (tokens?.items.length ?? 0) + (tokens?.remainingCount ?? 0)
           : undefined
-        const rows = (tokens?.items ?? []).map((token) => {
-          const bridge =
-            activeBridge ??
-            (token.topProtocol
-              ? bridgesBySlug.get(token.topProtocol.slug)
-              : undefined)
-          return toRow(token, bridge, activeTab === 'all')
-        })
+        const rows = (tokens?.items ?? []).map((token) =>
+          toRow(token, activeBridge),
+        )
         return { activeCount: { value, label: 'active tokens' }, rows }
       }}
     />
