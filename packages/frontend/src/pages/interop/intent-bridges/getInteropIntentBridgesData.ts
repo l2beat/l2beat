@@ -63,7 +63,7 @@ export async function getInteropIntentBridgesData(
           'Overview of intent-based bridge protocols across the Ethereum ecosystem.',
         url: req.originalUrl,
         openGraph: {
-          image: '/meta-images/interop/summary/opengraph-image.png',
+          image: '/meta-images/interop/intent-bridges/opengraph-image.png',
         },
       }),
     },
