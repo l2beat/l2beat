@@ -24,6 +24,7 @@ RUN pnpm install --frozen-lockfile
 COPY --from=pruner /src/.discovery.json .
 COPY --from=pruner /src/out/full/ ./
 RUN --mount=type=secret,id=TURBO_TOKEN,env=TURBO_TOKEN \
+  --mount=type=secret,id=TURBO_API,env=TURBO_API \
   pnpm build:tools-api
 
 FROM node:22.22.0-slim AS release

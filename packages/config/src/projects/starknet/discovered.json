@@ -1,6 +1,6 @@
 {
   "name": "starknet",
-  "timestamp": 1783335585,
+  "timestamp": 1783503373,
   "configHash": "0x5e6773cf0636f934b0a447f2b5eea93ac6f192fcbfb490eb91d93b06e80e42eb",
   "entries": [
     {
@@ -1432,6 +1432,11 @@
       "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
+      "address": "eth:0x99E84d004E73CC41eFacd382ef6FD34208B0F122",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "L1DaiGateway",
       "address": "eth:0x9F96fE0633eE838D0298E8b8980E6716bE81388d",
       "type": "Contract",
@@ -1779,6 +1784,11 @@
         }
       ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "eth:0xb731B63eC22904A17d1cf6fD771eb5BA87f35Fa3",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "USDTBridge",
@@ -2184,7 +2194,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 1696085,
+        "l1ToL2MessageNonce": 1696130,
         "messageCancellationDelay": 432100,
         "operators": [
           "eth:0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
@@ -2211,9 +2221,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "3500177599756668347639159136180320810218829820573469869811253751834080628376",
-        "stateBlockNumber": 11523300,
-        "stateRoot": "1227116110213457540172068979400752884834224020049648721029726354500875121351",
+        "stateBlockHash": "658411517597298733059014494744739422728360425341689400638436622024459170538",
+        "stateBlockNumber": 11587811,
+        "stateRoot": "2792908564556065635958870408761538444169227081643847425934227090972073855396",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -3466,8 +3476,8 @@
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
           "eth:0x49C6396070D3310f335AE19169Da6B80ea67B831",
-          "eth:0x04D5b12b196a8CADEB2F476F22Ffb1334Ef9F94c",
-          "eth:0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F",
+          "eth:0x99E84d004E73CC41eFacd382ef6FD34208B0F122",
+          "eth:0xb731B63eC22904A17d1cf6fD771eb5BA87f35Fa3",
           "eth:0x0762bCc4D604Aa3B5122C7D6571Cf5368EF3F09c",
           "eth:0x16117672EBF77d5DE9a1Af91F8F79b26421b310F",
           "eth:0xF6AB8BD99EfE2515C45d6FeE8Ea32738877EFbD8",
@@ -3483,7 +3493,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 12 (25%)",
-        "nonce": 8,
+        "nonce": 9,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -4974,6 +4984,6 @@
     "starknet/StarknetMultiBridge": "0x4461bc7d3b7d5f2005e77088cd802162318e8813c7df5d1732e4b9172634626b",
     "starknet/StarknetMultiBridge_haltable": "0xe8353adf6ac366e8437be00a65d081e1d14c386d2b59bbfc9f50dcc2d80299b9"
   },
-  "usedBlockNumbers": { "ethereum": 25473050 },
-  "permissionsConfigHash": "0x2223daa280b8f39d5a51750e91110316fd194411cc5e380f5ff94062cd9ff961"
+  "usedBlockNumbers": { "ethereum": 25486992 },
+  "permissionsConfigHash": "0x09f162f945d756c076a07f0d14ecd16b47416a40d47a3e8e7828b3e2b4046ad9"
 }

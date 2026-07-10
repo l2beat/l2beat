@@ -6,9 +6,11 @@ import { TechStackTag } from './TechStackTag'
 export function TechStackCell({
   tags,
   className,
+  emptyText = 'No data',
 }: {
   tags: ZkCatalogTag[] | undefined
   className?: string
+  emptyText?: string
   labelClassName?: string
   tagWrapperClassName?: string
 }) {
@@ -19,7 +21,7 @@ export function TechStackCell({
         size="small"
         className="select-none border border-[#656565] bg-[#c2c2c2] py-0.5 text-[13px] text-secondary"
       >
-        No final wrap
+        {emptyText}
       </Badge>
     )
   }

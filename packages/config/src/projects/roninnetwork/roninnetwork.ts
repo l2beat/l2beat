@@ -3,33 +3,69 @@ import {
   EthereumAddress,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { CONTRACTS, REASON_FOR_BEING_OTHER } from '../../common'
+import { CONTRACTS } from '../../common'
 import { BADGES } from '../../common/badges'
 import { PROGRAM_HASHES } from '../../common/programHashes'
 import { getAltDaStage } from '../../common/stages/getAltDaStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { EIGENDA_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
-import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('roninnetwork')
 
 // L2Migration hardfork activates at Ronin block 55,577,490 on 2026-05-12 ~15:16 UTC
 const genesisTimestamp = UnixTime(1778598960)
 
+const respectedGameType = discovery.getContractValue<number>(
+  'OptimismPortal2',
+  'respectedGameType',
+)
+const activeKailuaGame = discovery.getContractValue<ChainSpecificAddress>(
+  'DisputeGameFactory',
+  `game${respectedGameType}`,
+)
+const activeKailuaTreasury = discovery.getContractValue<ChainSpecificAddress>(
+  activeKailuaGame,
+  'KAILUA_TREASURY',
+)
+const activeKailuaVerifier = discovery.getContractValue<ChainSpecificAddress>(
+  activeKailuaTreasury,
+  'KAILUA_VERIFIER',
+)
+const kailuaSetBuilderProgramHash = discovery.getContractValue<string[]>(
+  'RiscZeroSetVerifier',
+  'imageInfo',
+)[0]
+
+// Selectors of the RiscZero verifier versions the Kailua guest actually calls
+// through the RiscZeroVerifierRouter. Kept in sync with BOB's selection.
+const KAILUA_VERIFIER_SELECTORS = ['bb001d44', '73c457ba'] as const
+
+function getVerifiers(): ChainSpecificAddress[] {
+  return KAILUA_VERIFIER_SELECTORS.map((selector) => {
+    const emergencyStop = discovery.getContractValue<ChainSpecificAddress>(
+      'RiscZeroVerifierRouter',
+      `verifier_${selector}`,
+    )
+    return discovery.getContractValue<ChainSpecificAddress>(
+      emergencyStop,
+      'verifier',
+    )
+  })
+}
+
 export const roninNetwork: ScalingProject = opStackL2({
   capability: 'universal',
   addedAt: UnixTime(1754639625),
   discovery,
   genesisTimestamp,
-  daProvider: EIGENDA_DA_PROVIDER(false),
-  additionalBadges: [BADGES.RaaS.Conduit, BADGES.Other.MigratedFromL1],
-  associatedTokens: ['RON'],
-  reasonsForBeingOther: [
-    REASON_FOR_BEING_OTHER.NO_PROOFS,
-    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  daProvider: EIGENDA_DA_PROVIDER(true),
+  additionalBadges: [
+    BADGES.RaaS.Conduit,
+    BADGES.Other.MigratedFromL1,
+    BADGES.Stack.OPKailua,
   ],
-  stateValidationImage: 'opfp',
+  associatedTokens: ['RON'],
   display: {
     name: 'Ronin',
     aliases: ['Sky Mavis', 'Axie Infinity'],
@@ -58,9 +94,9 @@ export const roninNetwork: ScalingProject = opStackL2({
         callsItselfValidiumOrOptimium: true,
         stateRootsPostedToL1: true,
         stateVerificationOnL1: true,
-        daAttestedByIndependentParty: false,
+        daAttestedByIndependentParty: true,
         nodeSourceAvailable: true,
-        fraudProofSystemAtLeast5Outsiders: false,
+        fraudProofSystemAtLeast5Outsiders: true,
       },
       stage1: {
         principle: false,
@@ -182,42 +218,15 @@ export const roninNetwork: ScalingProject = opStackL2({
           },
         ],
       },
-      {
-        name: 'Proof system cannot execute for this chain',
-        description: readProjectMarkdown(
-          'roninnetwork',
-          'technologyOtherConsiderations3',
-        ),
-        risks: [],
-        references: [
-          {
-            title:
-              'absolutePrestate hash registered in superchain-registry as op-program v1.3.1',
-            url: 'https://github.com/ethereum-optimism/superchain-registry/blob/main/validation/standard/standard-prestates.toml',
-          },
-          {
-            title: 'op-program v1.3.1 release (commit e3c2f04, 2024-08-23)',
-            url: 'https://github.com/ethereum-optimism/optimism/releases/tag/op-program%2Fv1.3.1',
-          },
-          {
-            title:
-              'superchain-registry snapshot pinned at op-program v1.3.1 build (42bd03ba8313)',
-            url: 'https://github.com/ethereum-optimism/superchain-registry/blob/42bd03ba8313/chainList.json',
-          },
-        ],
-      },
     ],
   },
   nonTemplateContractRisks: CONTRACTS.UPGRADE_NO_DELAY_RISK,
-  // The OP Stack template's prestate lookup walks the live game clone /
-  // AnchorStateRegistry, both of which are still zero on Ronin (gameCount=0,
-  // anchorGame=0x0). Surface the prestate directly from the factory's
-  // `permissionedGameArgs` immutable args — first 32 bytes are the Cannon
-  // MIPS64 v1.3.1 absolute prestate.
+  nonTemplateZkVerifiers: getVerifiers(),
   nonTemplateProgramHashes: [
     PROGRAM_HASHES(
-      '0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c',
+      discovery.getContractValue<string>(activeKailuaVerifier, 'FPVM_IMAGE_ID'),
     ),
+    PROGRAM_HASHES(kailuaSetBuilderProgramHash),
   ],
   activityConfig: {
     type: 'block',

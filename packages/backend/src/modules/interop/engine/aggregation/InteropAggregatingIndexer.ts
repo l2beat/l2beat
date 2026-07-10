@@ -20,7 +20,7 @@ import type { InteropAggregationService } from './InteropAggregationService'
  * to an hour in the past), so a syncer must lag by more than this plus that
  * gap to trip the check.
  */
-const SYNCER_FRESHNESS_TOLERANCE = 30 * UnixTime.MINUTE
+export const SYNCER_FRESHNESS_TOLERANCE = 30 * UnixTime.MINUTE
 
 export interface InteropAggregatingIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {

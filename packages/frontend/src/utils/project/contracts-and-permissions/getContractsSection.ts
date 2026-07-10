@@ -243,11 +243,9 @@ function makeTechnologyContract(
   const usedInProjects = uniqBy(
     [item.address, ...(item.upgradeability?.implementations ?? [])].flatMap(
       (address) =>
-        contractUtils.getUsedIn(
-          projectParams.id,
-          item.chain,
-          ChainSpecificAddress.address(address),
-        ),
+        contractUtils
+          .getUsedIn(item.chain, ChainSpecificAddress.address(address))
+          .filter((x) => x.id !== projectParams.id),
     ),
     'id',
   )

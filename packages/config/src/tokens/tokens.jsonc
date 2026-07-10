@@ -5,6 +5,26 @@
       "address": "0xA12CC123ba206d4031D1c7f6223D1C2Ec249f4f3"
     },
     {
+      "symbol": "tGBP",
+      "address": "0x27f6c8289550fCE67f6B50BeD1F519966aFE5287",
+      "coingeckoId": "tokenised-gbp",
+      "category": "stablecoin"
+    },
+    {
+      // Steakhouse tGBP vault; not listed on CoinGecko, priced with its tGBP underlying
+      "symbol": "bbqTGBP",
+      "address": "0xbeeffABcd0dB09589Dd21854aa760C52aB4bf04F",
+      "coingeckoId": "tokenised-gbp",
+      "category": "stablecoin"
+    },
+    {
+      // Steakhouse Confidential Prime USDC vault; not listed on CoinGecko, priced with its USDC underlying
+      "symbol": "steakcUSDC",
+      "address": "0xbEEF00A59B577423653A1526c7009bdE103F542B",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin"
+    },
+    {
       "symbol": "RON",
       "address": "0x5f2Db62536dd888AacEa933068384318A02094c0",
       "coingeckoId": "ronin"
@@ -2193,6 +2213,305 @@
       },
       // manual override: robinhood public RPC is non-archival. Creation block 29380.
       "deploymentTimestamp": 1780403342
+    },
+    {
+      // Natively minted meme token on Robinhood Chain.
+      "symbol": "CASHCAT",
+      "address": "0x020bfC650A365f8BB26819deAAbF3E21291018b4",
+      "coingeckoId": "cash-cat",
+      "source": "native",
+      "supply": "circulatingSupply",
+      "category": "other",
+      // manual override: robinhood public RPC is non-archival. Creation block 88836.
+      "deploymentTimestamp": 1781812885
+    },
+    {
+      "symbol": "AAPL",
+      "address": "0xaF3D76f1834A1d425780943C99Ea8A608f8a93f9",
+      "coingeckoId": "apple-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1781105102
+    },
+    {
+      "symbol": "AMD",
+      "address": "0x86923f96303D656E4aa86D9d42D1e57ad2023fdC",
+      "coingeckoId": "amd-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1781105109
+    },
+    {
+      "symbol": "AMZN",
+      "address": "0x12f190a9F9d7D37a250758b26824B97CE941bF54",
+      "coingeckoId": "amazon-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1781105205
+    },
+    {
+      "symbol": "ASML",
+      "address": "0x47F93d52cBeC7C6D2CfC080e154002370a60dAEA",
+      "coingeckoId": "asml-holding-nv-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1781039713
+    },
+    {
+      "symbol": "BABA",
+      "address": "0xad25Ac6C84D497db898fa1E8387bf6Af3532a1c4",
+      "coingeckoId": "alibaba-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1781105034
+    },
+    {
+      "symbol": "CLSK",
+      "address": "0xcBB95BBF36099d34dA091dc6Fa6F49EfA257Cee3",
+      "coingeckoId": "cleanspark-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1781039599
+    },
+    {
+      "symbol": "COIN",
+      "address": "0x6330D8C3178a418788dF01a47479c0ce7CCF450b",
+      "coingeckoId": "coinbase-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1781106177
+    },
+    {
+      "symbol": "CRCL",
+      "address": "0xdF0992E440dD0be65BD8439b609d6D4366bf1CB5",
+      "coingeckoId": "circle-internet-group-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1781105147
+    },
+    {
+      "symbol": "CRWV",
+      "address": "0x5f10A1C971B69e47e059e1dC91901B59b3fB49C3",
+      "coingeckoId": "coreweave-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1781105154
+    },
+    {
+      "symbol": "EWY",
+      "address": "0x7f0aBeF0C07280F82c6a08ead09dEd6BAE2C13Fc",
+      "coingeckoId": "ishares-msci-south-korea-fund-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1781105044
+    },
+    {
+      "symbol": "GME",
+      "address": "0x1b0E319c6A659F002271B69dB8A7df2F911c153E",
+      "coingeckoId": "gamestop-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1781104998
+    },
+    {
+      "symbol": "GOOGL",
+      "address": "0x2e0847E8910a9732eB3fb1bb4b70a580ADAD4FE3",
+      "coingeckoId": "alphabet-class-a-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1781105160
+    },
+    {
+      "symbol": "INTC",
+      "address": "0xc72b96e0E48ecd4DC75E1e45396e26300BC39681",
+      "coingeckoId": "intel-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1781105167
+    },
+    {
+      "symbol": "IONQ",
+      "address": "0x558378E000D634A36593E338eBacdd6207640EfE",
+      "coingeckoId": "ionq-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1781039680
+    },
+    {
+      "symbol": "META",
+      "address": "0xc0D6457C16Cc70d6790Dd43521C899C87ce02f35",
+      "coingeckoId": "meta-platforms-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1781105150
+    },
+    {
+      "symbol": "MSFT",
+      "address": "0xe93237C50D904957Cf27E7B1133b510C669c2e74",
+      "coingeckoId": "microsoft-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1781105099
+    },
+    {
+      "symbol": "MSTR",
+      "address": "0xec262a75e413fAfD0dF80480274532C79D42da09",
+      "coingeckoId": "strategy-inc-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1781104904
+    },
+    {
+      "symbol": "MU",
+      "address": "0xfF080c8ce2E5feadaCa0Da81314Ae59D232d4afD",
+      "coingeckoId": "micron-technology-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1781105219
+    },
+    {
+      "symbol": "NBIS",
+      "address": "0x9D9c6684F596F66a64C030B93A886D51Fd4D7931",
+      "coingeckoId": "nebius-group-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1781105048
+    },
+    {
+      "symbol": "NVDA",
+      "address": "0xd0601CE157Db5bdC3162BbaC2a2C8aF5320D9EEC",
+      "coingeckoId": "nvidia-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1781031216
+    },
+    {
+      "symbol": "ORCL",
+      "address": "0xb0992820E760d836549ba69BC7598b4af75dEE03",
+      "coingeckoId": "oracle-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1781105209
+    },
+    {
+      "symbol": "PLTR",
+      "address": "0x894E1EC2D74FFE5AEF8Dc8A9e84686acCB964F2A",
+      "coingeckoId": "palantir-technologies-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1781105164
+    },
+    {
+      "symbol": "QQQ",
+      "address": "0xD5f3879160bc7c32ebb4dC785F8a4F505888de68",
+      "coingeckoId": "invesco-qqq-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1781105170
+    },
+    {
+      "symbol": "RGTI",
+      "address": "0x284358abc07F9359f19f4b5b4aC91901Be2597Ba",
+      "coingeckoId": "rigetti-computing-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1781104854
+    },
+    {
+      "symbol": "RKLB",
+      "address": "0x3b14C39E89D60D627b42a1A4CA45b5bb45Fc12e2",
+      "coingeckoId": "rocket-lab-corporation-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1781104864
+    },
+    {
+      "symbol": "SLV",
+      "address": "0x411eFb0E7f985935DAec3D4C3ebaEa0d0AD7D89f",
+      "coingeckoId": "ishares-silver-trust-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1781105112
+    },
+    {
+      "symbol": "SNDK",
+      "address": "0xB90A19fF0Af67f7779afF50A882A9CfF42446400",
+      "coingeckoId": "sandisk-corporation-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1781105223
+    },
+    {
+      "symbol": "SPCX",
+      "address": "0x4a0E65A3EcceC6dBe60AE065F2e7bb85Fae35eEa",
+      "coingeckoId": "spacex-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1781535194
+    },
+    {
+      "symbol": "SPY",
+      "address": "0x117cc2133c37B721F49dE2A7a74833232B3B4C0C",
+      "coingeckoId": "spdr-s-p-500-etf-trust-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1781105226
+    },
+    {
+      "symbol": "TSLA",
+      "address": "0x322F0929c4625eD5bAd873c95208D54E1c003b2d",
+      "coingeckoId": "tesla-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1780668515
+    },
+    {
+      "symbol": "TSM",
+      "address": "0x58FfE4a942d3885bAa22D7520691F611EF09e7AA",
+      "coingeckoId": "taiwan-semiconductor-manufacturing-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1781104994
+    },
+    {
+      "symbol": "USO",
+      "address": "0xa30FA36Db767ad9eD3f7a60fC79526fB4d56D344",
+      "coingeckoId": "united-states-oil-fund-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1781105106
     }
   ],
   "galxegravity": [
@@ -2438,6 +2757,22 @@
     }
   ],
   "arbitrum": [
+    {
+      "symbol": "USDS",
+      "coingeckoId": "usds",
+      "address": "0x6491c05A82219b8D1479057361ff1654749b876b",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "sUSDS",
+      "coingeckoId": "susds",
+      "address": "0xdDb46999F8891663a8F2828d25298f70416d7610",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
     {
       "symbol": "CHIP",
       "address": "0x0c1c1c109fe34733fca54b82d7b46b75cfb71f6e",
@@ -3498,6 +3833,22 @@
   ],
   "optimism": [
     {
+      "symbol": "USDS",
+      "coingeckoId": "usds",
+      "address": "0x4F13a96EC5C4Cf34e442b46Bbd98a0791F20edC3",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "sUSDS",
+      "coingeckoId": "susds",
+      "address": "0xb5B2dc7fd34C249F4be7fB1fCea07950784229e0",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
+    {
       "symbol": "cgETH.hashkey",
       "category": "ether",
       "address": "0x0Ce45dd53affbb011884EF1866E0738f58AB7969",
@@ -3942,6 +4293,22 @@
     }
   ],
   "base": [
+    {
+      "symbol": "USDS",
+      "coingeckoId": "usds",
+      "address": "0x820C137fa70C8691f0e44Dc420a5e53c168921Dc",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "sUSDS",
+      "coingeckoId": "susds",
+      "address": "0x5875eEE11Cf8398102FdAd704C9E96607675467a",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
     {
       "symbol": "BENJI",
       "address": "0x60CfC2b186a4CF647486e42c42B11cC6D571d1E4",
@@ -7647,6 +8014,22 @@
     }
   ],
   "unichain": [
+    {
+      "symbol": "USDS",
+      "coingeckoId": "usds",
+      "address": "0x7E10036Acc4B56d4dFCa3b77810356CE52313F9C",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "sUSDS",
+      "coingeckoId": "susds",
+      "address": "0xA06b10Db9F390990364A3984C04FaDf1c13691b5",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
     {
       "symbol": "HYPE",
       "address": "0x15D0e0c55a3E7eE67152aD7E89acf164253Ff68d",

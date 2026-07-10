@@ -1,6 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
-import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 
@@ -35,7 +34,6 @@ export const strk20: BaseProject = {
     badges: [],
   },
   privacyInfo: {
-    trustedSetup: TRUSTED_SETUPS.TransparentSetup,
     tokens: [],
     exitWindow: {
       value: 'None',
