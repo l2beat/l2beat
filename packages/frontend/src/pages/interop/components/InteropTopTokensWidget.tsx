@@ -10,6 +10,7 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { cn } from '~/utils/cn'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { InteropTokenRow, type InteropTokenRowData } from './InteropTokenRow'
+import type { InteropTransferDefaults } from './InteropTransferTrigger'
 import { Last24HoursBadge } from './Last24HoursBadge'
 
 export interface TopTokensTab {
@@ -23,6 +24,7 @@ export function InteropTopTokensWidget({
   tabs,
   isLoading,
   getTabData,
+  transfer,
   className,
   tabsListClassName,
   tabLabelClassName,
@@ -34,6 +36,7 @@ export function InteropTopTokensWidget({
     activeCount: { value: number | undefined; label: string }
     rows: InteropTokenRowData[]
   }
+  transfer: InteropTransferDefaults
   className?: string
   tabsListClassName?: string
   tabLabelClassName?: string
@@ -94,7 +97,11 @@ export function InteropTopTokensWidget({
           ) : (
             <div className="flex flex-col gap-3">
               {rows.map((row) => (
-                <InteropTokenRow key={row.tokenId} token={row} />
+                <InteropTokenRow
+                  key={row.tokenId}
+                  token={row}
+                  transfer={transfer}
+                />
               ))}
             </div>
           )}

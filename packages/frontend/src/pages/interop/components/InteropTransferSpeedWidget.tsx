@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ScrollWithGradient } from '~/components/ScrollWithGradient'
@@ -6,11 +5,6 @@ import { cn } from '~/utils/cn'
 import { ChainPairSelector } from './chain-selector/ChainPairSelector'
 import type { InteropChainWithIcon } from './chain-selector/types'
 import { InteropTransferSpeedRow } from './InteropTransferSpeedRow'
-import {
-  TRANSFER_SPEED_DEFAULT_FROM,
-  TRANSFER_SPEED_DEFAULT_TO,
-} from './transferSpeedDefaults'
-import { useInteropOverview } from './useInteropOverview'
 
 /** An entity (intent bridge or framework) rendered as a transfer-speed row. */
 interface TransferSpeedEntity {
@@ -21,9 +15,21 @@ interface TransferSpeedEntity {
   label: string
 }
 
+interface TransferSpeedEntry {
+  id: string
+  averageDurationSeconds: number | null
+  transferCount: number
+}
+
 export function InteropTransferSpeedWidget({
   entities,
   interopChains,
+  src,
+  dst,
+  onSrcChange,
+  onDstChange,
+  entries,
+  isLoading,
   description,
   listHeading,
   className,
@@ -31,23 +37,19 @@ export function InteropTransferSpeedWidget({
 }: {
   entities: TransferSpeedEntity[]
   interopChains: InteropChainWithIcon[]
+  src: string
+  dst: string
+  onSrcChange: (chainId: string) => void
+  onDstChange: (chainId: string) => void
+  entries: TransferSpeedEntry[] | undefined
+  isLoading: boolean
   description: string
   listHeading: string
   className?: string
   scrollClassName?: string
 }) {
-  const [src, setSrc] = useState(TRANSFER_SPEED_DEFAULT_FROM)
-  const [dst, setDst] = useState(TRANSFER_SPEED_DEFAULT_TO)
-
-  const { data, isLoading } = useInteropOverview({ from: [src], to: [dst] })
-
   const entitiesById = new Map(entities.map((entity) => [entity.id, entity]))
-  const entries = data
-    ? 'activity' in data
-      ? data.activity.entries
-      : data.frameworkDominance.transfers.entries
-    : []
-  const sorted = [...entries].sort(
+  const sorted = [...(entries ?? [])].sort(
     (a, b) =>
       (a.averageDurationSeconds ?? Number.POSITIVE_INFINITY) -
       (b.averageDurationSeconds ?? Number.POSITIVE_INFINITY),
@@ -66,8 +68,8 @@ export function InteropTransferSpeedWidget({
         chains={interopChains}
         src={src}
         dst={dst}
-        onSrcChange={setSrc}
-        onDstChange={setDst}
+        onSrcChange={onSrcChange}
+        onDstChange={onDstChange}
       />
 
       <h3 className="mt-5 font-medium text-label-value-13 text-secondary">

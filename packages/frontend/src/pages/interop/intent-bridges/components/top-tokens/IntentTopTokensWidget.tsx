@@ -1,20 +1,25 @@
+import type { IntentBridgesData } from '~/server/features/scaling/interop/getIntentBridgesData'
 import type { TokenData } from '~/server/features/scaling/interop/types'
 import type { InteropTokenRowData } from '../../../components/InteropTokenRow'
 import {
   InteropTopTokensWidget,
   type TopTokensTab,
 } from '../../../components/InteropTopTokensWidget'
-import { useInteropOverview } from '../../../components/useInteropOverview'
+import type { InteropTransferDefaults } from '../../../components/InteropTransferTrigger'
 import { getInteropTokenUrl } from '../../../utils/getInteropTokenUrl'
 import type { InteropIntentBridge } from '../../getInteropIntentBridgesData'
 
 export function IntentTopTokensWidget({
   intentBridges,
+  data: intentData,
+  isLoading,
+  transfer,
 }: {
   intentBridges: InteropIntentBridge[]
+  data: IntentBridgesData | undefined
+  isLoading: boolean
+  transfer: InteropTransferDefaults
 }) {
-  const { data, isLoading } = useInteropOverview()
-  const intentData = data && 'activity' in data ? data : undefined
   const bridgesBySlug = new Map(intentBridges.map((b) => [b.slug, b]))
 
   const tabs: TopTokensTab[] = intentBridges.map((bridge) => ({
@@ -57,6 +62,7 @@ export function IntentTopTokensWidget({
       tabsName="topTokensIntentBridge"
       tabs={tabs}
       isLoading={isLoading}
+      transfer={transfer}
       tabsListClassName="h-auto w-full flex-wrap justify-start"
       tabLabelClassName="@max-[420px]:hidden"
       getTabData={(activeTab) => {

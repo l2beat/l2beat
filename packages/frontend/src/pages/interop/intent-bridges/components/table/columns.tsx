@@ -7,14 +7,17 @@ import { EM_DASH } from '~/consts/characters'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
-import { InteropTransferTrigger } from '../../../components/InteropTransferTrigger'
+import {
+  type InteropTransferDefaults,
+  InteropTransferTrigger,
+} from '../../../components/InteropTransferTrigger'
 import { AvgDurationCell } from '../../../components/table/AvgDurationCell'
 import { InteropProjectNameTooltip } from '../../../components/table/InteropProjectNameTooltip'
 import type { IntentBridgeRow } from '../../utils/buildIntentBridgeRows'
 
 const columnHelper = createColumnHelper<IntentBridgeRow>()
 
-export function getIntentBridgeColumns() {
+export function getIntentBridgeColumns(transfer: InteropTransferDefaults) {
   return [
     columnHelper.accessor((_, index) => index + 1, {
       id: '#',
@@ -105,6 +108,8 @@ export function getIntentBridgeColumns() {
               slug: bridge.slug,
               iconUrl: bridge.iconUrl,
             }}
+            selection={transfer.selection}
+            snapshotTimestamp={transfer.snapshotTimestamp}
             className="cursor-pointer font-medium text-label-value-15 text-primary hover:underline"
           >
             {formatInteger(transferCount)}

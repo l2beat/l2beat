@@ -7,17 +7,22 @@ import type {
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { ChainIcon } from '../../../components/ChainIcon'
-import { InteropTransferTrigger } from '../../../components/InteropTransferTrigger'
+import {
+  type InteropTransferDefaults,
+  InteropTransferTrigger,
+} from '../../../components/InteropTransferTrigger'
 import type { InteropTokenFramework } from '../../getInteropTokenFrameworksData'
 
 export function TokenRow({
   token,
   framework,
   href,
+  transfer,
 }: {
   token: TopTokenItem
   framework: InteropTokenFramework
   href: string | undefined
+  transfer: InteropTransferDefaults
 }) {
   const identity = (
     <>
@@ -56,6 +61,8 @@ export function TokenRow({
                 iconUrl: framework.iconUrl,
               }}
               tokenId={token.id}
+              selection={transfer.selection}
+              snapshotTimestamp={transfer.snapshotTimestamp}
               className="cursor-pointer font-medium text-secondary hover:underline"
             >
               {formatInteger(token.transferCount)} txs
@@ -70,9 +77,11 @@ export function TokenRow({
 export function ChainPathRow({
   path,
   framework,
+  transfer,
 }: {
   path: FrameworkChainPathItem
   framework: InteropTokenFramework
+  transfer: InteropTransferDefaults
 }) {
   return (
     <div className="flex h-7 shrink-0 items-center justify-between gap-2">
@@ -92,7 +101,8 @@ export function ChainPathRow({
               slug: framework.slug,
               iconUrl: framework.iconUrl,
             }}
-            selectionForApi={{ from: [path.src.id], to: [path.dst.id] }}
+            selection={{ from: [path.src.id], to: [path.dst.id] }}
+            snapshotTimestamp={transfer.snapshotTimestamp}
             className="cursor-pointer font-medium text-secondary hover:underline"
           >
             {formatInteger(path.transferCount)} txs

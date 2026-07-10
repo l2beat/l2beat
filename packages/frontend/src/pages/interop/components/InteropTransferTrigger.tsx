@@ -1,32 +1,32 @@
 import type { ReactNode } from 'react'
-import { useChainSetSelection } from './chain-selector/ChainSetSelectionContext'
 import { InteropTransferDetailsTrigger } from './InteropTransferDetailsTrigger'
-import { useInteropOverview } from './useInteropOverview'
+
+export interface InteropTransferDefaults {
+  selection: { from: string[]; to: string[] }
+  snapshotTimestamp: number | undefined
+}
 
 export function InteropTransferTrigger({
   protocol,
   tokenId,
-  selectionForApi,
+  selection,
+  snapshotTimestamp,
   className,
   children,
 }: {
   protocol: { id: string; name: string; slug: string; iconUrl: string }
   tokenId?: string
-  selectionForApi?: { from: string[]; to: string[] }
+  selection: { from: string[]; to: string[] }
+  snapshotTimestamp: number | undefined
   className?: string
   children: ReactNode
 }) {
-  const { selectedChains } = useChainSetSelection()
-  const { data } = useInteropOverview()
-
   return (
     <InteropTransferDetailsTrigger
       protocol={protocol}
       tokenId={tokenId}
-      selection={
-        selectionForApi ?? { from: selectedChains, to: selectedChains }
-      }
-      snapshotTimestamp={data?.snapshotTimestamp}
+      selection={selection}
+      snapshotTimestamp={snapshotTimestamp}
       className={className}
     >
       {children}

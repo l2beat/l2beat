@@ -91,7 +91,7 @@ async function getCachedData(initialChainIds: string[]) {
           to: initialChainIds,
         }),
       ),
-      // InteropTransferSpeedWidget fetches this exact pair on initial render.
+      // The token frameworks page fetches this exact pair on initial render.
       helpers.queryClient.prefetchQuery(
         helpers.trpc.interop.tokenFrameworks.queryOptions({
           from: [TRANSFER_SPEED_DEFAULT_FROM],

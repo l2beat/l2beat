@@ -1,20 +1,27 @@
-import type { TopTokenItem } from '~/server/features/scaling/interop/getTokenFrameworksData'
+import type {
+  TokenFrameworksData,
+  TopTokenItem,
+} from '~/server/features/scaling/interop/getTokenFrameworksData'
 import type { InteropTokenRowData } from '../../components/InteropTokenRow'
 import {
   InteropTopTokensWidget,
   type TopTokensTab,
 } from '../../components/InteropTopTokensWidget'
-import { useInteropOverview } from '../../components/useInteropOverview'
+import type { InteropTransferDefaults } from '../../components/InteropTransferTrigger'
 import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
 import type { InteropTokenFramework } from '../getInteropTokenFrameworksData'
 
 export function TopTokensWidget({
   tokenFrameworks,
+  data,
+  isLoading,
+  transfer,
 }: {
   tokenFrameworks: InteropTokenFramework[]
+  data: TokenFrameworksData | undefined
+  isLoading: boolean
+  transfer: InteropTransferDefaults
 }) {
-  const { data, isLoading } = useInteropOverview()
-  const frameworkData = data && 'frameworkDominance' in data ? data : undefined
   const frameworksById = new Map(tokenFrameworks.map((f) => [f.id, f]))
 
   const tabs: TopTokensTab[] = tokenFrameworks.map((framework) => ({
@@ -60,14 +67,14 @@ export function TopTokensWidget({
       tabsName="topTokensFramework"
       tabs={tabs}
       isLoading={isLoading}
+      transfer={transfer}
       className="md:col-span-2 lg:row-span-5"
       tabsListClassName="h-6 w-fit"
       getTabData={(activeTab) => {
         const items =
           activeTab === 'all'
-            ? frameworkData?.topTokens
-            : frameworkData?.frameworkTable.find((e) => e.id === activeTab)
-                ?.tokens
+            ? data?.topTokens
+            : data?.frameworkTable.find((e) => e.id === activeTab)?.tokens
         const value = activeTab === 'all' ? undefined : items?.length
         const rows = (items ?? []).slice(0, 5).map((token) => {
           const framework =

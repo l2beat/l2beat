@@ -9,7 +9,10 @@ import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { ChainIcon } from './ChainIcon'
 import { InteropNoDataBadge } from './InteropNoDataBadge'
-import { InteropTransferTrigger } from './InteropTransferTrigger'
+import {
+  type InteropTransferDefaults,
+  InteropTransferTrigger,
+} from './InteropTransferTrigger'
 
 export interface InteropTokenRowData {
   tokenId: string
@@ -26,7 +29,13 @@ export interface InteropTokenRowData {
   protocol?: { id: string; name: string; slug: string; iconUrl: string }
 }
 
-export function InteropTokenRow({ token }: { token: InteropTokenRowData }) {
+export function InteropTokenRow({
+  token,
+  transfer,
+}: {
+  token: InteropTokenRowData
+  transfer: InteropTransferDefaults
+}) {
   const txsLabel = `${formatInteger(token.transferCount)} txs`
   const identity = (
     <>
@@ -99,6 +108,8 @@ export function InteropTokenRow({ token }: { token: InteropTokenRowData }) {
           <InteropTransferTrigger
             protocol={token.protocol}
             tokenId={token.tokenId}
+            selection={transfer.selection}
+            snapshotTimestamp={transfer.snapshotTimestamp}
             className="cursor-pointer font-medium text-paragraph-14 text-secondary hover:underline md:text-paragraph-16"
           >
             {txsLabel}

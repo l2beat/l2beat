@@ -1,11 +1,10 @@
-import { useQuery } from '@tanstack/react-query'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
-import { useTRPC } from '~/trpc/React'
-import { useChainSetSelection } from '../../../components/chain-selector/ChainSetSelectionContext'
+import type { IntentBridgesData } from '~/server/features/scaling/interop/getIntentBridgesData'
+import type { InteropTransferDefaults } from '../../../components/InteropTransferTrigger'
 import { Last24HoursBadge } from '../../../components/Last24HoursBadge'
 import type { InteropIntentBridge } from '../../getInteropIntentBridgesData'
 import {
@@ -16,24 +15,21 @@ import { getIntentBridgeColumns } from './columns'
 
 export function IntentBridgesTable({
   intentBridges,
+  data,
+  isLoading,
+  transfer,
 }: {
   intentBridges: InteropIntentBridge[]
+  data: IntentBridgesData | undefined
+  isLoading: boolean
+  transfer: InteropTransferDefaults
 }) {
-  const trpc = useTRPC()
-  const { selectedChains } = useChainSetSelection()
-  const { data, isLoading } = useQuery(
-    trpc.interop.intentBridges.queryOptions({
-      from: selectedChains,
-      to: selectedChains,
-    }),
-  )
-
   const rows = useMemo<IntentBridgeRow[]>(
     () => (data ? buildIntentBridgeRows(intentBridges, data) : []),
     [data, intentBridges],
   )
 
-  const columns = useMemo(() => getIntentBridgeColumns(), [])
+  const columns = useMemo(() => getIntentBridgeColumns(transfer), [transfer])
   const table = useTable<IntentBridgeRow>({
     data: rows,
     columns,
