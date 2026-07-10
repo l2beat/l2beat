@@ -44,7 +44,7 @@ export function SectionHeading({
   description?: string
 }) {
   return (
-    <div className="mb-4 md:mb-6">
+    <div className="mb-4 max-md:px-4 md:mb-6">
       <span className="font-medium text-purple-100 text-xs uppercase tracking-[0.14px] dark:text-pink-200">
         {eyebrow}
       </span>

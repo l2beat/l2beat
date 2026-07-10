@@ -1,8 +1,8 @@
-import { Callout } from '~/components/Callout'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { CheckIcon } from '~/icons/Check'
+import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { ClockIcon } from '~/icons/Clock'
 import { InfoIcon } from '~/icons/Info'
+import { CustomLinkIcon } from '~/icons/Outlink'
 import { cn } from '~/utils/cn'
 import { ROADMAP } from '../consts'
 import { SectionHeading } from './WhyNativeSection'
@@ -60,7 +60,7 @@ export function RoadmapSection() {
                     <span className="absolute inline-flex size-full animate-ping rounded-full bg-purple-100/60 motion-reduce:hidden dark:bg-pink-200/60" />
                   )}
                   {isDone ? (
-                    <CheckIcon className="relative size-3.5 fill-current" />
+                    <ArrowRightIcon className="relative size-3 fill-current" />
                   ) : (
                     <ClockIcon className="relative size-3.5 fill-current" />
                   )}
@@ -102,24 +102,32 @@ export function RoadmapSection() {
                 <p className="mt-1.5 text-paragraph-15 text-secondary md:text-paragraph-16">
                   {item.description}
                 </p>
+                {item.url && (
+                  <a
+                    href={item.url}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="mt-2 inline-flex items-center gap-1 font-medium text-label-value-15 text-link transition-colors hover:text-purple-100 dark:hover:text-pink-200"
+                  >
+                    Learn more
+                    <CustomLinkIcon className="size-3.5 fill-current" />
+                  </a>
+                )}
               </li>
             )
           })}
         </ol>
-        <Callout
-          className="mt-6"
-          color="blue"
-          icon={<InfoIcon className="size-5 fill-blue-700" />}
-          body={
-            <span className="text-paragraph-15">
-              Native rollups are{' '}
-              <strong>not part of any scheduled Ethereum hard fork</strong>.
-              Glamsterdam&apos;s headliners are ePBS (EIP-7732) and Block-Level
-              Access Lists (EIP-7928); inclusion of the EXECUTE precompile is
-              targeted for a later fork.
-            </span>
-          }
-        />
+        {/* Disclaimer */}
+        <div className="mt-6 flex items-start gap-2.5 rounded-lg bg-surface-info p-3.5 md:p-4">
+          <InfoIcon className="mt-px size-5 shrink-0 fill-link" />
+          <p className="text-paragraph-15 leading-relaxed">
+            Native rollups are{' '}
+            <strong>not part of any scheduled Ethereum hard fork</strong>.
+            Glamsterdam&apos;s headliners are ePBS (EIP-7732) and Block-Level
+            Access Lists (EIP-7928); inclusion of the EXECUTE precompile is
+            targeted for a later fork.
+          </p>
+        </div>
       </PrimaryCard>
     </section>
   )

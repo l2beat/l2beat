@@ -16,8 +16,8 @@ export function Hero() {
       />
       <div className="relative flex w-full items-center justify-between gap-8">
         <div className="flex max-w-2xl flex-col gap-6">
-          <span className="w-max rounded-full bg-linear-to-r from-purple-100 to-pink-100 px-3 py-1 font-semibold text-2xs text-white uppercase tracking-[0.14px]">
-            Native Rollups
+          <span className="w-max font-medium text-purple-100 text-xs uppercase tracking-[0.14px] dark:text-pink-200">
+            What is native rollups?
           </span>
           <h2 className="text-balance font-bold text-heading-32 md:text-heading-40">
             The easiest and most secure way to deploy your own EVM chain.

@@ -1,5 +1,5 @@
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { CheckIcon } from '~/icons/Check'
+import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { CORE_PROTOCOL_NEEDS } from '../consts'
 import { SectionHeading } from './WhyNativeSection'
 
@@ -16,7 +16,7 @@ export function CoreProtocolSection() {
           {CORE_PROTOCOL_NEEDS.map((need) => (
             <li key={need.title} className="flex gap-3">
               <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-linear-to-br from-purple-100 to-pink-100 text-white">
-                <CheckIcon className="size-3 fill-current" />
+                <ArrowRightIcon className="size-3 fill-current" />
               </span>
               <div>
                 <h3 className="font-bold text-label-value-15 md:text-label-value-16">

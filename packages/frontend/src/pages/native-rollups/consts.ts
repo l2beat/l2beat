@@ -2,15 +2,18 @@ import type React from 'react'
 import { CodeIcon } from '~/icons/Code'
 import { DocumentIcon } from '~/icons/Document'
 import { GlobeIcon } from '~/icons/Globe'
+import { HistoryClockIcon } from '~/icons/HistoryClock'
 import { GithubIcon } from '~/icons/products/Github'
 import { YouTubeIcon } from '~/icons/products/Youtube'
-import { QuantumResistanceIcon } from '~/icons/QuantumResistance'
 import { ShieldIcon } from '~/icons/Shield'
 import { SwapIcon } from '~/icons/Swap'
 import { UserIcon } from '~/icons/User'
 
 export const NATIVE_ROLLUPS_BOOK_URL = 'https://native-rollups.l2beat.com'
 export const NATIVE_ROLLUPS_EIP_URL = 'https://eips.ethereum.org/EIPS/eip-8079'
+export const FOUNDING_POST_URL =
+  'https://ethresear.ch/t/native-rollups-superpowers-from-l1-execution/21517'
+export const ETHREX_POC_URL = 'https://github.com/lambdaclass/ethrex/pull/6186'
 
 export interface FeatureItem {
   title: string
@@ -24,7 +27,7 @@ export const WHY_NATIVE: FeatureItem[] = [
     title: 'Automatically upgrade with Ethereum',
     description:
       "Native rollups replace their custom state transition function with the EXECUTE precompile — a recursive call to Ethereum's own execution environment. Every time Ethereum hard-forks, native rollups adopt the new features automatically. No bespoke governance processes, no long exit windows, and no gradual divergence from L1.",
-    icon: QuantumResistanceIcon,
+    icon: HistoryClockIcon,
   },
   {
     title: 'No more dedicated proof system',
@@ -67,6 +70,8 @@ export interface RoadmapItem {
   date: string
   title: string
   description: string
+  /** Optional external link for the milestone ("Learn more"). */
+  url?: string
 }
 
 /**
@@ -80,13 +85,7 @@ export const ROADMAP: RoadmapItem[] = [
     title: 'Founding research',
     description:
       "Justin Drake publishes “Native rollups — superpowers from L1 execution” on ethresear.ch, introducing the EXECUTE precompile that lets a rollup reuse Ethereum's own execution for verification.",
-  },
-  {
-    status: 'done',
-    date: 'May 2025',
-    title: 'L2BEAT × Nethermind article',
-    description:
-      'Luca Donno and Conor McMenamin publish “Native Rollups: Where they are, and where they are going”, mapping out the design space and open problems.',
+    url: FOUNDING_POST_URL,
   },
   {
     status: 'done',
@@ -94,6 +93,7 @@ export const ROADMAP: RoadmapItem[] = [
     title: 'The Native Rollups Book',
     description:
       'L2BEAT publishes the canonical educational resource explaining governance risk, bug risk, and the EXECUTE precompile.',
+    url: NATIVE_ROLLUPS_BOOK_URL,
   },
   {
     status: 'done',
@@ -101,6 +101,7 @@ export const ROADMAP: RoadmapItem[] = [
     title: 'EIP-8079 (Draft)',
     description:
       'The EXECUTE precompile is formalized as EIP-8079 by Luca Donno (L2BEAT) and Justin Drake (Ethereum Foundation), together with the `burned_fees` header field and an anchoring mechanism for L1→L2 messaging.',
+    url: NATIVE_ROLLUPS_EIP_URL,
   },
   {
     status: 'done',
@@ -108,32 +109,33 @@ export const ROADMAP: RoadmapItem[] = [
     title: 'ethrex proof-of-concept',
     description:
       'The ethrex / LambdaClass team, with EF researchers and L2BEAT, demonstrate a working native-rollup PoC implementing EIP-8079 via re-execution — L2 settlement, deposits, contract deployment, cross-layer calls, and withdrawals.',
+    url: ETHREX_POC_URL,
   },
   {
     status: 'planned',
     date: 'Target: September 2026',
-    title: 'Milestone 1 · Rebase on Hegotá',
+    title: 'Rebase on Hegotá',
     description:
       'Rebase of the native rollups EIP on top of Hegotá (mainly ePBS, BALs, FOCIL); update of one client implementation to the latest spec (at least re-execution).',
   },
   {
     status: 'planned',
     date: 'Target: December 2026',
-    title: 'Milestone 2 · Native proof verification',
+    title: 'Native proof verification',
     description:
       'Native proof verification EIP as an extension of native rollups; a CL+EL devnet running the ZK version of the spec.',
   },
   {
     status: 'planned',
     date: 'Target: March 2027',
-    title: 'Milestone 3 · Blocks-in-Blobs study',
+    title: 'Blocks-in-Blobs study',
     description:
       'Study of the interaction with the Blocks-in-Blobs EIP; spec refinements and devnets.',
   },
   {
     status: 'planned',
     date: 'Target: June 2027',
-    title: 'Milestone 4 · Proof aggregation',
+    title: 'Proof aggregation',
     description:
       'Definition of the proof aggregation infrastructure needed for proof-carrying transactions; spec refinements and devnets; discussions related to inclusion in a future fork.',
   },
@@ -238,23 +240,6 @@ export const MATERIALS: MaterialItem[] = [
     source: 'ethereum-magicians.org',
     description: 'The Ethereum Magicians thread tracking the EIP-8079 design.',
     href: 'https://ethereum-magicians.org/t/eip-8079-native-rollups/26565',
-  },
-  {
-    kind: 'article',
-    label: 'Native rollups — superpowers from L1 execution',
-    source: 'ethresear.ch',
-    description:
-      "Justin Drake's founding post introducing the EXECUTE precompile (January 2025).",
-    href: 'https://ethresear.ch/t/native-rollups-superpowers-from-l1-execution/21517',
-  },
-  {
-    kind: 'article',
-    label: 'Native Rollups: Where they are, and where they are going',
-    source: 'L2BEAT × Nethermind',
-    description:
-      'Luca Donno and Conor McMenamin map the design space and open problems (May 2025).',
-    href: 'https://medium.com/l2beat',
-    unverified: true,
   },
   {
     kind: 'code',
