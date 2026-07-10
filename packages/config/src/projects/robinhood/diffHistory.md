@@ -1,23 +1,29 @@
-Generated with discovered.json: 0x808546f059b3bc44df0d08969d3798f272d2b1fb
+Generated with discovered.json: 0x4e1dc0d580f4467946f308e797c50a37eab42846
 
-# Diff at Fri, 10 Jul 2026 09:42:34 GMT:
+# Diff at Fri, 10 Jul 2026 14:21:03 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@1e8c379b8fe786381adcddb9c648173990ad4ea3 block: 1783461693
-- current timestamp: 1783676456
+- current timestamp: 1783693193
 
 ## Description
 
-Robinhood expanded its chain-governance multisig and added a timelock.
+Robinhood expanded its chain-governance multisig and added a timelock executor.
 
 Both the L1 and L2 UpgradeExecutors previously had a single 2-of-3 Safe
 (`0x1F3Bdec…31C5`) as their only executor. They now have two executors each:
 
 - a 7-of-8 Safe (`eth:0x7Ae5…84b6` / `robinhood:0x6b9F…3FdC`) that includes a
   3-of-7 Safe (`0x0fc5…44Ac`) as one of its owners;
-- a 7-day timelock (`eth:0xE1e8…F465` / `robinhood:0x560C…8173`).
+- a `TimelockController` with a 7-day delay (`getMinDelay` = 604800s, verified
+  on-chain on L1 and L2; `eth:0xE1e8…F465` / `robinhood:0x560C…8173`).
 
-The former 2-of-3 Safe's three signers are among the new Safe's owners.
+The former 2-of-3 Safe's three signers are among the new Safe's owners. The
+timelock is a co-executor, not a delay on governance: the 7-of-8 Safe keeps a
+no-delay upgrade path and owns the timelock's ProxyAdmin, so it can swap the
+timelock implementation without delay. That implementation is unverified and not
+byte-reproducible from stock OpenZeppelin, so its internal behavior is not
+independently confirmed.
 
 ## Watched changes
 
@@ -77,7 +83,7 @@ The former 2-of-3 Safe's three signers are among the new Safe's owners.
 
 ```diff
 +   Status: CREATED
-    contract  (eth:0x4e393071053C5d95771b1B716857d65cdf5B1839) [N/A]
+    contract ProxyAdmin (eth:0x4e393071053C5d95771b1B716857d65cdf5B1839) [N/A]
     +++ description: None
 ```
 
@@ -120,7 +126,8 @@ The former 2-of-3 Safe's three signers are among the new Safe's owners.
 ## Source code changes
 
 ```diff
-.../Safe.sol                                       |    0
+...:0x4e393071053C5d95771b1B716857d65cdf5B1839.sol |  184 +++
+ .../Safe.sol                                       |    0
  .../SafeProxy.p.sol                                |    0
  .../Safe.sol                                       | 1216 ++++++++++++++++++
  .../SafeProxy.p.sol                                |    0
@@ -130,7 +137,7 @@ The former 2-of-3 Safe's three signers are among the new Safe's owners.
  .../SafeProxy.p.sol                                |   42 +
  .../SafeL2.sol                                     | 1286 ++++++++++++++++++++
  .../SafeProxy.p.sol                                |   42 +
- 10 files changed, 3844 insertions(+)
+ 11 files changed, 4028 insertions(+)
 ```
 
 Generated with discovered.json: 0xd4ee2b65c075a2e41ae1b9b1350dde933a74c0ac
