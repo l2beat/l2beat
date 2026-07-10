@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useState } from 'react'
+import { toggleSelection } from '../../utils/toggleSelection'
 import type { InteropChainWithIcon } from './types'
 
 export function useChainSelection(interopChains: InteropChainWithIcon[]) {
@@ -10,15 +11,9 @@ export function useChainSelection(interopChains: InteropChainWithIcon[]) {
 
   const toggleChain = useCallback(
     (chainId: string) => {
-      setSelectedChains((previous) => {
-        const next = new Set(previous)
-        if (next.has(chainId)) {
-          next.delete(chainId)
-        } else {
-          next.add(chainId)
-        }
-        return allChainIds.filter((id) => next.has(id))
-      })
+      setSelectedChains((previous) =>
+        toggleSelection(previous, chainId, allChainIds),
+      )
     },
     [allChainIds],
   )
