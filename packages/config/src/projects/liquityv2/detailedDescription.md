@@ -6,7 +6,7 @@ BOLD's dollar peg holds without active governance. A hard floor comes from redem
 
 ### Opening a trove
 
-To open a trove, a borrower deposits collateral and draws at least 2,000 BOLD at their chosen rate. The position must stay above the branch's Minimum Collateral Ratio (MCR): 110% on the ETH branch, 120% on the wstETH and rETH branches. A trove in an interest-rate batch (see below) is instead held to the MCR plus a 10% Batch Collateral Ratio buffer (BCR).
+To open a trove, a borrower deposits collateral and draws at least 2,000 BOLD at their chosen rate. The position must stay above the branch's Minimum Collateral Ratio (MCR): {{wethMcr}}% on the ETH branch, {{lstMcr}}% on the wstETH and rETH branches. A trove in an interest-rate batch (see below) is instead held to the MCR plus a {{bcr}}% Batch Collateral Ratio buffer (BCR).
 
 Opening costs two things: a 0.0375 WETH gas-compensation deposit, set aside and paid to the trove's liquidator or refunded on close, and an upfront borrowing fee of about seven days of interest at the branch's average rate, added to the debt.
 
@@ -24,7 +24,7 @@ A borrower can instead delegate the rate to an interest-rate batch. Anyone can r
 
 A trove becomes liquidatable once its collateral ratio falls below the MCR (or MCR plus BCR for a batched trove). Liquidation is permissionless: anyone can liquidate a list of underwater troves in one call.
 
-The Stability Pool absorbs liquidations first, burning BOLD equal to the debt and taking the trove's collateral in return; it seizes the debt plus a 5% penalty, so depositors gain. If the pool cannot cover the whole debt, the rest is redistributed across the branch's other troves in proportion to size, at a higher penalty: 10% on ETH, 20% on wstETH and rETH.
+The Stability Pool absorbs liquidations first, burning BOLD equal to the debt and taking the trove's collateral in return; it seizes the debt plus a {{spPenalty}}% penalty, so depositors gain. If the pool cannot cover the whole debt, the rest is redistributed across the branch's other troves in proportion to size, at a higher penalty: {{wethRedistribution}}% on ETH, {{lstRedistribution}}% on wstETH and rETH.
 
 The liquidator is paid the gas deposit plus 0.5% of the trove's collateral (capped at 2 units) as gas compensation. Whatever collateral remains after debt, penalty, and this compensation is the former owner's, claimable later.
 
@@ -38,8 +38,8 @@ A redemption fee, taken from the collateral paid out, protects borrowers from ch
 
 ### Emergency scenarios
 
-Before shutdown, a softer protection applies: no borrowing operation may push a branch's total collateral ratio below its Critical Collateral Ratio (CCR), 150% on ETH and 160% on wstETH and rETH. As a branch nears it, weakening actions like drawing more BOLD or withdrawing collateral are blocked until it recovers.
+Before shutdown, a softer protection applies: no borrowing operation may push a branch's total collateral ratio below its Critical Collateral Ratio (CCR), {{wethCcr}}% on ETH and {{lstCcr}}% on wstETH and rETH. As a branch nears it, weakening actions like drawing more BOLD or withdrawing collateral are blocked until it recovers.
 
-A branch shuts down in one of two ways: anyone can trigger it once the branch's total collateral ratio falls below its Shutdown Collateral Ratio (SCR), 110% on ETH and 120% on wstETH and rETH, or it happens automatically when the Chainlink feed fails, meaning it reverts, returns a non-positive price, or goes stale past its window (24 hours for ETH/USD, 48 hours for the staked-ETH feeds).
+A branch shuts down in one of two ways: anyone can trigger it once the branch's total collateral ratio falls below its Shutdown Collateral Ratio (SCR), {{wethScr}}% on ETH and {{lstScr}}% on wstETH and rETH, or it happens automatically when the Chainlink feed fails, meaning it reverts, returns a non-positive price, or goes stale past its window ({{ethStaleness}} for the ETH/USD and stETH/USD feeds, {{rethEthStaleness}} for the rETH/ETH feed).
 
 After shutdown, all borrowing-side activity stops (no new troves, no drawing or repaying BOLD, no collateral moves, no rate changes) and interest stops accruing. Borrowers can still close troves and claim surplus, and Stability Pool depositors can still withdraw. Shutdown also opens urgent redemption: any holder can redeem against troves of their choosing, in any order, paying no fee and receiving a 2% collateral bonus instead.
