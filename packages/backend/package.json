@@ -26,7 +26,7 @@
     "build:dependencies": "cd ../.. && pnpm build:dependencies:backend",
     "watch:dependencies": "cd ../.. && pnpm watch:dependencies:backend",
     "build:config": "cd ../config && pnpm build",
-    "clean": "rm -rf build",
+    "clean": "rm -rf build *.tsbuildinfo",
     "format": "biome format .",
     "format:fix": "biome format --write .",
     "invert": "discovery invert",

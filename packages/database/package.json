@@ -5,7 +5,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "clean": "rm -rf dist",
+    "clean": "rm -rf dist *.tsbuildinfo",
     "build": "tsc -p tsconfig.build.json",
     "db:generate-types": "prisma generate",
     "db:create-migration": "prisma migrate dev --create-only --name",

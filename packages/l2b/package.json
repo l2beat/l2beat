@@ -15,7 +15,7 @@
     "dev:watch": "node --watch -r esbuild-register src/cli.ts",
     "l2bup": "pnpm build:dependencies && pnpm build && npm install -g .",
     "typecheck": "tsc --noEmit",
-    "clean": "rm -rf dist",
+    "clean": "rm -rf dist *.tsbuildinfo",
     "format": "biome format .",
     "format:fix": "biome format --write .",
     "lint:fix": "biome check --formatter-enabled=false --write .",
