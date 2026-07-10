@@ -1,5 +1,5 @@
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { SidebarProvider } from './components/core/Sidebar'
 import { Toaster } from './components/core/Sonner'
 import {
@@ -65,10 +65,6 @@ function EnvironmentScopedApp() {
             />
 
             <Route path="/interop/financials" element={<FinancialsPage />} />
-            <Route
-              path="/interop/financials/actions"
-              element={<Navigate to="/interop/financials" replace />}
-            />
             <Route path="/interop/messages" element={<MessagesPage />} />
             <Route
               path="/interop/messages/:type"
