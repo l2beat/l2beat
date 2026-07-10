@@ -55,8 +55,8 @@ importers:
         specifier: ^2.9.6
         version: 2.9.6
       typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
+        specifier: ^6.0.3
+        version: 6.0.3
       wait-for-expect:
         specifier: ^3.0.2
         version: 3.0.2
@@ -95,7 +95,7 @@ importers:
         version: link:../validate
       '@trpc/server':
         specifier: 11.17.0
-        version: 11.17.0(typescript@5.9.3)
+        version: 11.17.0(typescript@6.0.3)
       '@types/ws':
         specifier: ^8.18.1
         version: 8.18.1
@@ -155,7 +155,7 @@ importers:
         version: 0.5.21
       viem:
         specifier: ^2.31.6
-        version: 2.31.6(typescript@5.9.3)(zod@3.24.1)
+        version: 2.31.6(typescript@6.0.3)(zod@3.24.1)
       ws:
         specifier: ^8.18.2
         version: 8.18.2
@@ -295,13 +295,13 @@ importers:
         version: 3.13.23(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@trpc/client':
         specifier: 11.17.0
-        version: 11.17.0(@trpc/server@11.17.0(typescript@5.9.3))(typescript@5.9.3)
+        version: 11.17.0(@trpc/server@11.17.0(typescript@6.0.3))(typescript@6.0.3)
       '@trpc/server':
         specifier: 11.17.0
-        version: 11.17.0(typescript@5.9.3)
+        version: 11.17.0(typescript@6.0.3)
       '@trpc/tanstack-react-query':
         specifier: 11.17.0
-        version: 11.17.0(@tanstack/react-query@5.100.14(react@19.0.0))(@trpc/client@11.17.0(@trpc/server@11.17.0(typescript@5.9.3))(typescript@5.9.3))(@trpc/server@11.17.0(typescript@5.9.3))(react@19.0.0)(typescript@5.9.3)
+        version: 11.17.0(@tanstack/react-query@5.100.14(react@19.0.0))(@trpc/client@11.17.0(@trpc/server@11.17.0(typescript@6.0.3))(typescript@6.0.3))(@trpc/server@11.17.0(typescript@6.0.3))(react@19.0.0)(typescript@6.0.3)
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.0
@@ -599,13 +599,13 @@ importers:
         version: 8.20.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@trpc/client':
         specifier: ^11.17.0
-        version: 11.17.0(@trpc/server@11.17.0(typescript@5.9.3))(typescript@5.9.3)
+        version: 11.17.0(@trpc/server@11.17.0(typescript@6.0.3))(typescript@6.0.3)
       '@trpc/server':
         specifier: ^11.17.0
-        version: 11.17.0(typescript@5.9.3)
+        version: 11.17.0(typescript@6.0.3)
       '@trpc/tanstack-react-query':
         specifier: ^11.17.0
-        version: 11.17.0(@tanstack/react-query@5.100.14(react@19.0.0))(@trpc/client@11.17.0(@trpc/server@11.17.0(typescript@5.9.3))(typescript@5.9.3))(@trpc/server@11.17.0(typescript@5.9.3))(react@19.0.0)(typescript@5.9.3)
+        version: 11.17.0(@tanstack/react-query@5.100.14(react@19.0.0))(@trpc/client@11.17.0(@trpc/server@11.17.0(typescript@6.0.3))(typescript@6.0.3))(@trpc/server@11.17.0(typescript@6.0.3))(react@19.0.0)(typescript@6.0.3)
       '@types/compression':
         specifier: ^1.7.5
         version: 1.7.5
@@ -828,7 +828,7 @@ importers:
         version: 5.0.10
       viem:
         specifier: ^2.18.6
-        version: 2.31.6(typescript@5.9.3)(zod@3.24.1)
+        version: 2.31.6(typescript@6.0.3)(zod@3.24.1)
     devDependencies:
       '@l2beat/typescript-config':
         specifier: workspace:*
@@ -971,7 +971,7 @@ importers:
         version: 8.4.47
       tailwindcss:
         specifier: ^3.4.14
-        version: 3.4.14(ts-node@10.9.2(@swc/core@1.15.13)(@types/node@22.8.2)(typescript@5.9.3))
+        version: 3.4.14(ts-node@10.9.2(@swc/core@1.15.13)(@types/node@22.8.2)(typescript@6.0.3))
       vite:
         specifier: ^5.4.10
         version: 5.4.10(@types/node@22.8.2)(lightningcss@1.30.1)(terser@5.36.0)
@@ -1050,7 +1050,7 @@ importers:
         version: 11.1.0
       viem:
         specifier: ^2.21.36
-        version: 2.31.6(typescript@5.9.3)(zod@3.24.1)
+        version: 2.31.6(typescript@6.0.3)(zod@3.24.1)
     devDependencies:
       '@l2beat/typescript-config':
         specifier: workspace:*
@@ -1109,7 +1109,7 @@ importers:
         version: link:../validate
       '@trpc/server':
         specifier: 11.17.0
-        version: 11.17.0(typescript@5.9.3)
+        version: 11.17.0(typescript@6.0.3)
       fuzzysort:
         specifier: 3.1.0
         version: 3.1.0
@@ -1118,11 +1118,11 @@ importers:
         version: 6.1.0
       viem:
         specifier: ^2.31.6
-        version: 2.31.6(typescript@5.9.3)(zod@3.24.1)
+        version: 2.31.6(typescript@6.0.3)(zod@3.24.1)
     devDependencies:
       '@trpc/client':
         specifier: 11.17.0
-        version: 11.17.0(@trpc/server@11.17.0(typescript@5.9.3))(typescript@5.9.3)
+        version: 11.17.0(@trpc/server@11.17.0(typescript@6.0.3))(typescript@6.0.3)
       '@types/express':
         specifier: ^5.0.0
         version: 5.0.0
@@ -1191,13 +1191,13 @@ importers:
         version: 5.100.14(@tanstack/react-query@5.100.14(react@19.0.0))(react@19.0.0)
       '@trpc/client':
         specifier: 11.17.0
-        version: 11.17.0(@trpc/server@11.17.0(typescript@5.9.3))(typescript@5.9.3)
+        version: 11.17.0(@trpc/server@11.17.0(typescript@6.0.3))(typescript@6.0.3)
       '@trpc/server':
         specifier: 11.17.0
-        version: 11.17.0(typescript@5.9.3)
+        version: 11.17.0(typescript@6.0.3)
       '@trpc/tanstack-react-query':
         specifier: 11.17.0
-        version: 11.17.0(@tanstack/react-query@5.100.14(react@19.0.0))(@trpc/client@11.17.0(@trpc/server@11.17.0(typescript@5.9.3))(typescript@5.9.3))(@trpc/server@11.17.0(typescript@5.9.3))(react@19.0.0)(typescript@5.9.3)
+        version: 11.17.0(@tanstack/react-query@5.100.14(react@19.0.0))(@trpc/client@11.17.0(@trpc/server@11.17.0(typescript@6.0.3))(typescript@6.0.3))(@trpc/server@11.17.0(typescript@6.0.3))(react@19.0.0)(typescript@6.0.3)
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.0
@@ -1288,7 +1288,7 @@ importers:
         version: 15.6.1(react@19.0.0)
       viem:
         specifier: ^2.18.6
-        version: 2.31.6(typescript@5.9.3)(zod@3.24.1)
+        version: 2.31.6(typescript@6.0.3)(zod@3.24.1)
       zustand:
         specifier: ^5.0.0
         version: 5.0.0(@types/react@19.0.10)(immer@11.1.3)(react@19.0.0)(use-sync-external-store@1.6.0(react@19.0.0))
@@ -1301,7 +1301,7 @@ importers:
         version: 3.7.1(vite@5.4.10(@types/node@22.8.2)(lightningcss@1.30.1)(terser@5.36.0))
       abitype:
         specifier: ^1.0.6
-        version: 1.0.8(typescript@5.9.3)(zod@3.24.1)
+        version: 1.0.8(typescript@6.0.3)(zod@3.24.1)
       autoprefixer:
         specifier: ^10.4.20
         version: 10.4.20(postcss@8.4.47)
@@ -1310,7 +1310,7 @@ importers:
         version: 8.4.47
       tailwindcss:
         specifier: ^3.4.14
-        version: 3.4.14(ts-node@10.9.2(@swc/core@1.15.13)(@types/node@22.8.2)(typescript@5.9.3))
+        version: 3.4.14(ts-node@10.9.2(@swc/core@1.15.13)(@types/node@22.8.2)(typescript@6.0.3))
       vite:
         specifier: ^5.4.10
         version: 5.4.10(@types/node@22.8.2)(lightningcss@1.30.1)(terser@5.36.0)
@@ -1343,7 +1343,7 @@ importers:
         version: 5.0.0
       abitype:
         specifier: ^1.0.6
-        version: 1.0.8(typescript@5.9.3)(zod@3.24.1)
+        version: 1.0.8(typescript@6.0.3)(zod@3.24.1)
       cors:
         specifier: ^2.8.5
         version: 2.8.5
@@ -1352,7 +1352,7 @@ importers:
         version: 5.0.1
       viem:
         specifier: ^2.8.14
-        version: 2.31.6(typescript@5.9.3)(zod@3.24.1)
+        version: 2.31.6(typescript@6.0.3)(zod@3.24.1)
     devDependencies:
       '@l2beat/typescript-config':
         specifier: workspace:*
@@ -8062,6 +8062,11 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
+  typescript@6.0.3:
+    resolution: {integrity: sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
   typical@7.3.0:
     resolution: {integrity: sha512-ya4mg/30vm+DOWfBg4YK3j2WD6TWtRkCbasOJr40CseYENzCUby/7rIvXA99JGsQHeNxLbnXdyLLxKSv3tauFw==}
     engines: {node: '>=12.17'}
@@ -11142,22 +11147,22 @@ snapshots:
   '@tootallnate/once@1.1.2':
     optional: true
 
-  '@trpc/client@11.17.0(@trpc/server@11.17.0(typescript@5.9.3))(typescript@5.9.3)':
+  '@trpc/client@11.17.0(@trpc/server@11.17.0(typescript@6.0.3))(typescript@6.0.3)':
     dependencies:
-      '@trpc/server': 11.17.0(typescript@5.9.3)
-      typescript: 5.9.3
+      '@trpc/server': 11.17.0(typescript@6.0.3)
+      typescript: 6.0.3
 
-  '@trpc/server@11.17.0(typescript@5.9.3)':
+  '@trpc/server@11.17.0(typescript@6.0.3)':
     dependencies:
-      typescript: 5.9.3
+      typescript: 6.0.3
 
-  '@trpc/tanstack-react-query@11.17.0(@tanstack/react-query@5.100.14(react@19.0.0))(@trpc/client@11.17.0(@trpc/server@11.17.0(typescript@5.9.3))(typescript@5.9.3))(@trpc/server@11.17.0(typescript@5.9.3))(react@19.0.0)(typescript@5.9.3)':
+  '@trpc/tanstack-react-query@11.17.0(@tanstack/react-query@5.100.14(react@19.0.0))(@trpc/client@11.17.0(@trpc/server@11.17.0(typescript@6.0.3))(typescript@6.0.3))(@trpc/server@11.17.0(typescript@6.0.3))(react@19.0.0)(typescript@6.0.3)':
     dependencies:
       '@tanstack/react-query': 5.100.14(react@19.0.0)
-      '@trpc/client': 11.17.0(@trpc/server@11.17.0(typescript@5.9.3))(typescript@5.9.3)
-      '@trpc/server': 11.17.0(typescript@5.9.3)
+      '@trpc/client': 11.17.0(@trpc/server@11.17.0(typescript@6.0.3))(typescript@6.0.3)
+      '@trpc/server': 11.17.0(typescript@6.0.3)
       react: 19.0.0
-      typescript: 5.9.3
+      typescript: 6.0.3
 
   '@tsconfig/node10@1.0.11':
     optional: true
@@ -11489,9 +11494,9 @@ snapshots:
   abbrev@1.1.1:
     optional: true
 
-  abitype@1.0.8(typescript@5.9.3)(zod@3.24.1):
+  abitype@1.0.8(typescript@6.0.3)(zod@3.24.1):
     optionalDependencies:
-      typescript: 5.9.3
+      typescript: 6.0.3
       zod: 3.24.1
 
   abort-controller@3.0.0:
@@ -14065,7 +14070,7 @@ snapshots:
 
   os-tmpdir@1.0.2: {}
 
-  ox@0.8.1(typescript@5.9.3)(zod@3.24.1):
+  ox@0.8.1(typescript@6.0.3)(zod@3.24.1):
     dependencies:
       '@adraffy/ens-normalize': 1.11.0
       '@noble/ciphers': 1.3.0
@@ -14073,10 +14078,10 @@ snapshots:
       '@noble/hashes': 1.8.0
       '@scure/bip32': 1.7.0
       '@scure/bip39': 1.6.0
-      abitype: 1.0.8(typescript@5.9.3)(zod@3.24.1)
+      abitype: 1.0.8(typescript@6.0.3)(zod@3.24.1)
       eventemitter3: 5.0.1
     optionalDependencies:
-      typescript: 5.9.3
+      typescript: 6.0.3
     transitivePeerDependencies:
       - zod
 
@@ -14272,13 +14277,13 @@ snapshots:
       postcss: 8.4.47
       ts-node: 10.9.2(@swc/core@1.15.13)(@types/node@20.17.2)(typescript@5.6.3)
 
-  postcss-load-config@4.0.2(postcss@8.4.47)(ts-node@10.9.2(@swc/core@1.15.13)(@types/node@22.8.2)(typescript@5.9.3)):
+  postcss-load-config@4.0.2(postcss@8.4.47)(ts-node@10.9.2(@swc/core@1.15.13)(@types/node@22.8.2)(typescript@6.0.3)):
     dependencies:
       lilconfig: 3.1.2
       yaml: 2.6.0
     optionalDependencies:
       postcss: 8.4.47
-      ts-node: 10.9.2(@swc/core@1.15.13)(@types/node@22.8.2)(typescript@5.9.3)
+      ts-node: 10.9.2(@swc/core@1.15.13)(@types/node@22.8.2)(typescript@6.0.3)
 
   postcss-load-config@6.0.1(jiti@2.4.2)(postcss@8.4.47)(tsx@4.19.2)(yaml@2.6.0):
     dependencies:
@@ -15273,7 +15278,7 @@ snapshots:
     transitivePeerDependencies:
       - ts-node
 
-  tailwindcss@3.4.14(ts-node@10.9.2(@swc/core@1.15.13)(@types/node@22.8.2)(typescript@5.9.3)):
+  tailwindcss@3.4.14(ts-node@10.9.2(@swc/core@1.15.13)(@types/node@22.8.2)(typescript@6.0.3)):
     dependencies:
       '@alloc/quick-lru': 5.2.0
       arg: 5.0.2
@@ -15292,7 +15297,7 @@ snapshots:
       postcss: 8.4.47
       postcss-import: 15.1.0(postcss@8.4.47)
       postcss-js: 4.0.1(postcss@8.4.47)
-      postcss-load-config: 4.0.2(postcss@8.4.47)(ts-node@10.9.2(@swc/core@1.15.13)(@types/node@22.8.2)(typescript@5.9.3))
+      postcss-load-config: 4.0.2(postcss@8.4.47)(ts-node@10.9.2(@swc/core@1.15.13)(@types/node@22.8.2)(typescript@6.0.3))
       postcss-nested: 6.2.0(postcss@8.4.47)
       postcss-selector-parser: 6.1.2
       resolve: 1.22.8
@@ -15431,7 +15436,7 @@ snapshots:
       '@swc/core': 1.15.13
     optional: true
 
-  ts-node@10.9.2(@swc/core@1.15.13)(@types/node@22.8.2)(typescript@5.9.3):
+  ts-node@10.9.2(@swc/core@1.15.13)(@types/node@22.8.2)(typescript@6.0.3):
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       '@tsconfig/node10': 1.0.11
@@ -15445,7 +15450,7 @@ snapshots:
       create-require: 1.1.1
       diff: 4.0.2
       make-error: 1.3.6
-      typescript: 5.9.3
+      typescript: 6.0.3
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
     optionalDependencies:
@@ -15514,6 +15519,8 @@ snapshots:
   typescript@5.6.3: {}
 
   typescript@5.9.3: {}
+
+  typescript@6.0.3: {}
 
   typical@7.3.0: {}
 
@@ -15624,18 +15631,18 @@ snapshots:
       d3-time: 3.1.0
       d3-timer: 3.0.1
 
-  viem@2.31.6(typescript@5.9.3)(zod@3.24.1):
+  viem@2.31.6(typescript@6.0.3)(zod@3.24.1):
     dependencies:
       '@noble/curves': 1.9.2
       '@noble/hashes': 1.8.0
       '@scure/bip32': 1.7.0
       '@scure/bip39': 1.6.0
-      abitype: 1.0.8(typescript@5.9.3)(zod@3.24.1)
+      abitype: 1.0.8(typescript@6.0.3)(zod@3.24.1)
       isows: 1.0.7(ws@8.18.2)
-      ox: 0.8.1(typescript@5.9.3)(zod@3.24.1)
+      ox: 0.8.1(typescript@6.0.3)(zod@3.24.1)
       ws: 8.18.2
     optionalDependencies:
-      typescript: 5.9.3
+      typescript: 6.0.3
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate

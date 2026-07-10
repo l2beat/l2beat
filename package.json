@@ -73,7 +73,7 @@
     "mocha": "^10.2.0",
     "tsx": "^4.9.3",
     "turbo": "^2.9.6",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.3",
     "wait-for-expect": "^3.0.2"
   }
 }
