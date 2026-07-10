@@ -24,6 +24,7 @@ import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySu
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
+import { PRIVACY_QUANTUM_RESISTANCE_TOOLTIP } from '../../privacyQuantumResistance'
 import { PrivacyAssessmentCell } from './PrivacyAssessmentCell'
 import { PrivacyTrustedSetupCell } from './PrivacyTrustedSetupCell'
 
@@ -54,6 +55,8 @@ const columns = [
                 icon: ctx.row.original.icon,
                 backgroundColor: undefined,
                 description: ctx.row.original.description,
+                quantumResistant: ctx.row.original.quantumResistant,
+                quantumResistantTooltip: PRIVACY_QUANTUM_RESISTANCE_TOOLTIP,
                 statuses: {
                   underReview: ctx.row.original.isUnderReview
                     ? 'config'

@@ -956,6 +956,11 @@ export interface ProjectPrivacyInfo {
   reproducibility: PrivacySummaryValue
   privacy: PrivacySummaryValue
   attributes?: PrivacyAttribute[]
+  /**
+   * Privacy-specific quantum-resistance flag. Distinct in meaning from
+   * ProjectZkCatalogInfo.quantumResistant
+   */
+  quantumResistant?: true
   riskSummary?: string
   upgradesAndGovernance?: string
 }

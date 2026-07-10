@@ -36,6 +36,12 @@ export type ProjectCellProject = Omit<CommonProjectEntry, 'href' | 'id'> & {
   capability?: ProjectScalingCapability
   ecosystemInfo?: ProjectEcosystemInfo
   quantumResistant?: boolean
+  /**
+   * Tooltip text for the quantum-resistance badge. Defaults to the
+   * prover-oriented QUANTUM_RESISTANCE_TOOLTIP; privacy tables pass their own
+   * privacy-specific wording so the two meanings never share a constant.
+   */
+  quantumResistantTooltip?: string
 }
 
 interface ProjectCellProps {
@@ -84,7 +90,19 @@ function DesktopStatusIcons({
     <div className={cn('flex items-center gap-1.5', className)}>
       {project.isLayer3 && <Layer3Icon className="size-4" />}
       {project.ecosystemInfo?.isPartOfSuperchain && <SuperchainIcon />}
-      {project.quantumResistant && <QuantumResistanceIcon className="size-4" />}
+      {project.quantumResistant &&
+        (project.quantumResistantTooltip ? (
+          <Tooltip>
+            <TooltipTrigger aria-label="Quantum resistance details">
+              <QuantumResistanceIcon className="size-4" />
+            </TooltipTrigger>
+            <TooltipPortal>
+              <TooltipContent>{project.quantumResistantTooltip}</TooltipContent>
+            </TooltipPortal>
+          </Tooltip>
+        ) : (
+          <QuantumResistanceIcon className="size-4" />
+        ))}
       {project.statuses?.verificationWarnings &&
         Object.values(project.statuses.verificationWarnings).some(
           (value) => value !== undefined,
@@ -132,7 +150,7 @@ export function ProjectNameMobileStatusIcons({
         <MobileProjectIconTooltip
           icon={<QuantumResistanceIcon className="size-4" />}
         >
-          {QUANTUM_RESISTANCE_TOOLTIP}
+          {project.quantumResistantTooltip ?? QUANTUM_RESISTANCE_TOOLTIP}
         </MobileProjectIconTooltip>
       )}
       {project.statuses?.verificationWarnings &&
@@ -389,7 +407,7 @@ function getTooltipSections(project: ProjectCellProject) {
   if (project.quantumResistant) {
     sections.push({
       id: 'quantum-resistance',
-      text: QUANTUM_RESISTANCE_TOOLTIP,
+      text: project.quantumResistantTooltip ?? QUANTUM_RESISTANCE_TOOLTIP,
       variant: 'muted',
       icon: <QuantumResistanceIcon className="size-4" />,
     })

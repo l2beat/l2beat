@@ -193,6 +193,7 @@ export const zamaCw: BaseProject = {
           'Interop with DeFi (swaps, vaults) from within the confidential token.',
       },
     ],
+    quantumResistant: true,
     riskSummary: readProjectMarkdown('zama-cw', 'riskSummary', {
       kmsThreshold,
       kmsSignerCount,
