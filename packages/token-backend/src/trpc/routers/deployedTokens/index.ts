@@ -80,7 +80,9 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) =>
       }),
 
     getRelationsGraph: readOnlyProcedure.query(async ({ ctx }) => {
-      const relations = sortRelations(await ctx.tokenDb.tokenRelation.getAll())
+      const relations = sortRelations(
+        await ctx.tokenDb.tokenRelation.getAllRoutes(),
+      )
       const tokenKeys = uniqueTokenKeys(
         relations.flatMap((relation) => [
           {
@@ -95,24 +97,59 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) =>
       )
       const tokens = await ctx.tokenDb.deployedToken.getByPrimaryKeys(tokenKeys)
       const tokenMap = new Map(tokens.map((token) => [tokenKey(token), token]))
+      const renderableRelations = relations.flatMap((relation) => {
+        const tokenFrom = tokenMap.get(
+          tokenKey({
+            chain: relation.tokenFromChain,
+            address: relation.tokenFromAddress,
+          }),
+        )
+        const tokenTo = tokenMap.get(
+          tokenKey({
+            chain: relation.tokenToChain,
+            address: relation.tokenToAddress,
+          }),
+        )
+        if (!tokenFrom || !tokenTo) return []
+
+        return [
+          {
+            ...relation,
+            isConflict:
+              tokenFrom.abstractTokenId !== null &&
+              tokenTo.abstractTokenId !== null &&
+              tokenFrom.abstractTokenId !== tokenTo.abstractTokenId,
+          },
+        ]
+      })
+      const renderableTokenKeys = uniqueTokenKeys(
+        renderableRelations.flatMap((relation) => [
+          {
+            chain: relation.tokenFromChain,
+            address: relation.tokenFromAddress,
+          },
+          {
+            chain: relation.tokenToChain,
+            address: relation.tokenToAddress,
+          },
+        ]),
+      )
 
       return {
-        nodes: tokenKeys.map((key) => {
+        nodes: renderableTokenKeys.flatMap((key) => {
           const token = tokenMap.get(tokenKey(key))
-          if (!token) {
-            throw new Error(
-              `Missing deployed token for relation endpoint ${tokenKey(key)}`,
-            )
-          }
-
-          return {
-            id: tokenKey(token),
-            chain: token.chain,
-            address: token.address,
-            symbol: token.symbol,
-          }
+          return token
+            ? [
+                {
+                  id: tokenKey(token),
+                  chain: token.chain,
+                  address: token.address,
+                  symbol: token.symbol,
+                },
+              ]
+            : []
         }),
-        relations,
+        relations: renderableRelations,
       }
     }),
 

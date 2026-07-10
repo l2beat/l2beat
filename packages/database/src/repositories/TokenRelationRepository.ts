@@ -22,6 +22,8 @@ export type TokenRelationRecord = {
   transfer: JsonValue
 }
 
+export type TokenRelationRoute = Omit<TokenRelationRecord, 'transfer'>
+
 export type TokenRelationPrimaryKey = Pick<
   TokenRelationRecord,
   | 'tokenFromChain'
@@ -123,6 +125,25 @@ export class TokenRelationRepository extends BaseRepository {
   async getAll(): Promise<TokenRelationRecord[]> {
     const rows = await this.db.selectFrom('TokenRelation').selectAll().execute()
     return rows.map(toRecord)
+  }
+
+  async getAllRoutes(): Promise<TokenRelationRoute[]> {
+    const rows = await this.db
+      .selectFrom('TokenRelation')
+      .select([
+        'tokenFromChain',
+        'tokenFromAddress',
+        'tokenToChain',
+        'tokenToAddress',
+        'plugin',
+        'bridgeType',
+      ])
+      .execute()
+
+    return rows.map((row) => ({
+      ...row,
+      bridgeType: row.bridgeType as InteropBridgeType,
+    }))
   }
 
   async getRelationsFrom(

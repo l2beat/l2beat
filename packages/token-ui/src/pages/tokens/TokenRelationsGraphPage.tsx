@@ -77,8 +77,13 @@ function TokenRelationsGraph({ graph }: { graph: Graph }) {
 
     svg
       .append('defs')
-      .append('marker')
-      .attr('id', 'token-relation-arrow')
+      .selectAll('marker')
+      .data([
+        { id: 'token-relation-arrow', color: 'var(--muted-foreground)' },
+        { id: 'token-relation-conflict-arrow', color: 'var(--destructive)' },
+      ])
+      .join('marker')
+      .attr('id', (marker) => marker.id)
       .attr('viewBox', '0 0 10 10')
       .attr('refX', 8)
       .attr('refY', 5)
@@ -87,7 +92,7 @@ function TokenRelationsGraph({ graph }: { graph: Graph }) {
       .attr('orient', 'auto')
       .append('path')
       .attr('d', 'M 0 0 L 10 5 L 0 10 z')
-      .attr('fill', 'var(--muted-foreground)')
+      .attr('fill', (marker) => marker.color)
 
     const zoom = d3
       .zoom<SVGSVGElement, unknown>()
@@ -102,14 +107,22 @@ function TokenRelationsGraph({ graph }: { graph: Graph }) {
       .data(visualLinks, (link) => relationId(link.relation))
       .join('path')
       .attr('fill', 'none')
-      .attr('stroke', 'var(--muted-foreground)')
-      .attr('stroke-opacity', 0.45)
-      .attr('stroke-width', 1.2)
-      .attr('marker-end', 'url(#token-relation-arrow)')
+      .attr('stroke', (link) =>
+        link.relation.isConflict
+          ? 'var(--destructive)'
+          : 'var(--muted-foreground)',
+      )
+      .attr('stroke-opacity', (link) => (link.relation.isConflict ? 0.9 : 0.45))
+      .attr('stroke-width', (link) => (link.relation.isConflict ? 2 : 1.2))
+      .attr('marker-end', (link) =>
+        link.relation.isConflict
+          ? 'url(#token-relation-conflict-arrow)'
+          : 'url(#token-relation-arrow)',
+      )
 
     links.append('title').text((link) => {
       const relation = link.relation
-      return `${formatEndpoint(relation.tokenFromChain, relation.tokenFromAddress)} -> ${formatEndpoint(relation.tokenToChain, relation.tokenToAddress)} via ${relation.plugin}`
+      return `${formatEndpoint(relation.tokenFromChain, relation.tokenFromAddress)} -> ${formatEndpoint(relation.tokenToChain, relation.tokenToAddress)} via ${relation.plugin} (${relation.bridgeType})${relation.isConflict ? '\nConflict: endpoints belong to different abstract tokens' : ''}`
     })
 
     const node = nodesLayer
@@ -229,7 +242,11 @@ function buildVisualLinks(
     relationGroups.set(key, [...(relationGroups.get(key) ?? []), relation])
   }
 
-  return relations.map((relation) => {
+  return relations.flatMap((relation) => {
+    const source = nodeById.get(sourceId(relation))
+    const target = nodeById.get(targetId(relation))
+    if (!source || !target) return []
+
     const group =
       relationGroups.get(
         unorderedPairKey(sourceId(relation), targetId(relation)),
@@ -239,12 +256,7 @@ function buildVisualLinks(
     )
     const curve = (index - (group.length - 1) / 2) * 16
 
-    return {
-      source: nodeById.get(sourceId(relation))!,
-      target: nodeById.get(targetId(relation))!,
-      relation,
-      curve,
-    }
+    return [{ source, target, relation, curve }]
   })
 }
 
@@ -299,8 +311,7 @@ function relationId(relation: Relation) {
     relation.tokenToChain,
     relation.tokenToAddress,
     relation.plugin,
-    String(relation.sourceWasBurned),
-    String(relation.destinationWasMinted),
+    relation.bridgeType,
   ].join(':')
 }
 

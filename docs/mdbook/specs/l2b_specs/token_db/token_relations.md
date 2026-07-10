@@ -239,12 +239,15 @@ Because endpoints may be uncatalogued, read paths that show relations
 resolve endpoints against `DeployedToken` at query time and must tolerate
 a miss. The deployed-token `getRelations` endpoint returns
 `otherToken: null` for unknown endpoints and the UI renders the raw
-address instead of a token link. A future graph view should either filter
-to catalogued endpoints or render unknown endpoints distinctly — showing
-"we have observed transfers to this address we don't know yet" is a
-feature, not a bug. The deployed-token set is small enough to resolve
-in memory; this small read-time cost is the entire price paid for the
-foreign-key decision above.
+address instead of a token link.
+
+The [token relations graph](../../../../../packages/token-ui/TOKEN_RELATIONS_GRAPH.md)
+currently filters out a relation unless both endpoints resolve. It draws a
+resolved relation red when both deployed tokens have non-null, different
+`abstractTokenId` values. Its query selects only route identity fields and
+does not load the transfer evidence JSON, which the graph does not display.
+The deployed-token set is small enough to resolve in memory; this small
+read-time cost is the entire price paid for the foreign-key decision above.
 
 ## Human edits
 

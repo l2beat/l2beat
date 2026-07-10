@@ -195,16 +195,16 @@ describe('deployedTokensRouter', () => {
   })
 
   describe('getRelationsGraph', () => {
-    it('returns relation endpoints as nodes and all relations as edges', async () => {
+    it('returns resolved relation endpoints and lightweight edges', async () => {
       const relations = [
-        tokenRelation({
+        tokenRelationRoute({
           tokenFromChain: 'base',
           tokenFromAddress: '0xbbb',
           tokenToChain: 'ethereum',
           tokenToAddress: '0xaaa',
           plugin: 'test-plugin',
         }),
-        tokenRelation({
+        tokenRelationRoute({
           tokenFromChain: 'ethereum',
           tokenFromAddress: '0xaaa',
           tokenToChain: 'base',
@@ -217,18 +217,20 @@ describe('deployedTokensRouter', () => {
           chain: 'base',
           address: '0xbbb',
           symbol: 'USDC',
+          abstractTokenId: 'USDC',
         }),
         deployedToken({
           chain: 'ethereum',
           address: '0xaaa',
           symbol: 'USDC',
+          abstractTokenId: 'USDC',
         }),
       ]
       const mockGetAllRelations = mockFn().resolvesTo(relations)
       const mockGetTokens = mockFn().resolvesTo(tokens)
       const mockTokenDb = mockObject<TokenDatabase>({
         tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
-          getAll: mockGetAllRelations,
+          getAllRoutes: mockGetAllRelations,
         }),
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getByPrimaryKeys: mockGetTokens,
@@ -255,13 +257,79 @@ describe('deployedTokensRouter', () => {
             symbol: 'USDC',
           },
         ],
-        relations,
+        relations: relations.map((relation) => ({
+          ...relation,
+          isConflict: false,
+        })),
       })
       expect(mockGetAllRelations).toHaveBeenCalledTimes(1)
       expect(mockGetTokens).toHaveBeenCalledWith([
         { chain: 'base', address: '0xbbb' },
         { chain: 'ethereum', address: '0xaaa' },
       ])
+    })
+
+    it('skips unresolved relations and marks different abstract tokens as conflicts', async () => {
+      const conflict = tokenRelationRoute({
+        tokenFromChain: 'ethereum',
+        tokenFromAddress: '0xaaa',
+        tokenToChain: 'base',
+        tokenToAddress: '0xbbb',
+        plugin: 'test-plugin',
+      })
+      const unresolved = tokenRelationRoute({
+        tokenFromChain: 'ethereum',
+        tokenFromAddress: '0xaaa',
+        tokenToChain: 'optimism',
+        tokenToAddress: '0xccc',
+        plugin: 'test-plugin',
+      })
+      const tokens = [
+        deployedToken({
+          chain: 'ethereum',
+          address: '0xaaa',
+          symbol: 'USDC',
+          abstractTokenId: 'USDC',
+        }),
+        deployedToken({
+          chain: 'base',
+          address: '0xbbb',
+          symbol: 'USDC',
+          abstractTokenId: 'USDC-BASE',
+        }),
+      ]
+      const mockTokenDb = mockObject<TokenDatabase>({
+        tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
+          getAllRoutes: mockFn().resolvesTo([conflict, unresolved]),
+        }),
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
+          getByPrimaryKeys: mockFn().resolvesTo(tokens),
+        }),
+      })
+
+      const caller = createRouter(
+        mockTokenDb,
+        mockObject<Database>({}),
+        mockObject<CoingeckoClient>({}),
+      )
+
+      expect(await caller.getRelationsGraph()).toEqual({
+        nodes: [
+          {
+            id: 'ethereum:0xaaa',
+            chain: 'ethereum',
+            address: '0xaaa',
+            symbol: 'USDC',
+          },
+          {
+            id: 'base:0xbbb',
+            chain: 'base',
+            address: '0xbbb',
+            symbol: 'USDC',
+          },
+        ],
+        relations: [{ ...conflict, isConflict: true }],
+      })
     })
   })
 
@@ -2248,6 +2316,7 @@ function deployedToken(input: {
   chain: string
   address: string
   symbol: string
+  abstractTokenId?: string | null
 }): DeployedTokenRecord {
   return {
     chain: input.chain,
@@ -2255,25 +2324,22 @@ function deployedToken(input: {
     symbol: input.symbol,
     decimals: 18,
     comment: null,
-    abstractTokenId: null,
+    abstractTokenId: input.abstractTokenId ?? null,
     deploymentTimestamp: 0,
     metadata: null,
   }
 }
 
-function tokenRelation(input: {
+function tokenRelationRoute(input: {
   tokenFromChain: string
   tokenFromAddress: string
   tokenToChain: string
   tokenToAddress: string
   plugin: string
-}): TokenRelationRecord {
+}): Omit<TokenRelationRecord, 'transfer'> {
   return {
     ...input,
-    sourceWasBurned: true,
-    destinationWasMinted: true,
-    bridgeType: null,
-    transfer: {},
+    bridgeType: 'lockAndMint',
   }
 }
 
