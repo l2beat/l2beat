@@ -8,7 +8,7 @@
     "build": "tsc -p tsconfig.build.json && rm -f build/db.sqlite && node build/build.js",
     "build:dependencies": "cd ../.. && pnpm build:dependencies:config",
     "watch:dependencies": "cd ../.. && pnpm watch:dependencies:config",
-    "clean": "rm -rf build",
+    "clean": "rm -rf build *.tsbuildinfo",
     "format:fix": "biome format --write .",
     "format": "biome format .",
     "lint:fix": "biome check --formatter-enabled=false --write .",
