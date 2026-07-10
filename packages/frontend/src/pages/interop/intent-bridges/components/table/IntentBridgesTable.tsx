@@ -59,12 +59,14 @@ export function IntentBridgesTable({
         Activity metrics come from indexed transfers. Intent mechanics are
         curated protocol properties.
       </p>
-      <BasicTable
-        table={table}
-        isLoading={isLoading}
-        skeletonCount={8}
-        tableWrapperClassName="pb-0"
-      />
+      <div className="px-4 md:px-5">
+        <BasicTable
+          table={table}
+          isLoading={isLoading}
+          skeletonCount={8}
+          tableWrapperClassName="pb-0"
+        />
+      </div>
     </PrimaryCard>
   )
 }
