@@ -4,20 +4,15 @@
   "private": true,
   "sideEffects": false,
   "type": "module",
-  "main": "./build/esm/index.js",
-  "module": "./build/esm/index.js",
-  "types": "./build/types/index.d.ts",
   "exports": {
     ".": {
-      "types": "./build/types/index.d.ts",
-      "import": "./build/esm/index.js",
-      "require": "./build/esm/index.js"
+      "types": "./build/index.d.ts",
+      "default": "./build/index.js"
     }
   },
   "scripts": {
-    "build": "pnpm run clean && pnpm run build:esm",
-    "build:esm": "tsc -p tsconfig.esm.json",
-    "clean": "rm -rf build",
+    "build": "pnpm run clean && tsc -p tsconfig.build.json",
+    "clean": "rm -rf build *.tsbuildinfo",
     "format:fix": "biome format --write .",
     "format": "biome format .",
     "lint:fix": "biome check --formatter-enabled=false --write .",
