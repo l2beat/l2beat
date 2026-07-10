@@ -493,6 +493,48 @@ export const boojum: BaseProject = {
           'verificationSteps-0xc8cd705a',
         ),
       },
+      {
+        hash: '0x49eae0bf5c7ea580f4979b366e52b386adc5f42e2ce50fc1d3c4de9a86052bff',
+        name: 'Boojum Fflonk core-v29.4.0',
+        sourceLink:
+          'https://github.com/matter-labs/zksync-era/tree/core-v29.4.0/prover',
+        proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0xD324a7c8556A059371B207fB96FD77bE24E2042c',
+            ),
+          },
+        ],
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'boojum',
+          'verificationSteps-0x49eae0bf',
+        ),
+      },
+      {
+        hash: '0x1ffc56111a5cfaf5db387f6a31408ad20217e9bc1f31f2f5c1bd38b0d6d7968b',
+        name: 'Boojum Plonk prover-v23.2.0',
+        sourceLink:
+          'https://github.com/matter-labs/zksync-era/tree/prover-v23.2.0/prover',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7',
+            ),
+          },
+        ],
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'boojum',
+          'verificationSteps-0x1ffc5611',
+        ),
+      },
     ],
   },
 }

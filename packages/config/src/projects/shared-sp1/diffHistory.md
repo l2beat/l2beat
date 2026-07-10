@@ -1,3 +1,81 @@
+Generated with discovered.json: 0xda8333d541551da51c38a6ef5a5a8a2aadb508f9
+
+# Diff at Fri, 10 Jul 2026 10:31:34 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@1e8c379b8fe786381adcddb9c648173990ad4ea3 block: 1783513569
+- current timestamp: 1783679422
+
+## Description
+
+Config stuff (IDK what exactly).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1783513569 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (base:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      deployerAddress:
++        "base:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126"
+      sinceTimestamp:
++        1748550043
+      sinceBlock:
++        30880348
+    }
+```
+
+```diff
+    contract SP1VerifierGatewayBase (base:0x3B6041173B80E77f038f3F2C0f9744f04837185e) [succinct/SP1VerifierGateway] {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      deployerAddress:
++        "base:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"
+      sinceTimestamp:
++        1719523667
+      sinceBlock:
++        16367160
+    }
+```
+
+```diff
+    contract SP1Verifier (base:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.0.0).
+      deployerAddress:
++        "base:0x9193a78157957F3E03beE50A3E6a51F0f1669E23"
+      sinceTimestamp:
++        1771084367
+      sinceBlock:
++        42147510
+    }
+```
+
+```diff
+    contract SP1Verifier (base:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A) [shared-sp1/SP1Verifier] {
+    +++ description: None
+      deployerAddress:
++        "base:0x9193a78157957F3E03beE50A3E6a51F0f1669E23"
+      sinceTimestamp:
++        1776172423
+      sinceBlock:
++        44691538
+    }
+```
+
+```diff
+    contract SP1VerifierGatewayMultisig (base:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) [GnosisSafe] {
+    +++ description: None
+      deployerAddress:
++        "base:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"
+      sinceTimestamp:
++        1724206353
+      sinceBlock:
++        18708503
+    }
+```
+
 Generated with discovered.json: 0xbad6aec48bf7f5e28d6e823a3de237b0e2103e8b
 
 # Diff at Wed, 08 Jul 2026 12:27:24 GMT:

@@ -1535,6 +1535,16 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
         'common/programHashes/3480185788024326007166778030599498673382667448173974782477620863541158415714.md',
       ),
     },
+  '1050253032170513549151251823521174837478197699740478552102884446098263561922':
+    {
+      ...SHARP_AGG('stwo'),
+      programUrl:
+        'https://github.com/starkware-libs/sequencer/tree/APOLLO-0.14.3-RC.11/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core/aggregator',
+      verificationStatus: 'successful',
+      verificationSteps: readMarkdown(
+        'common/programHashes/1050253032170513549151251823521174837478197699740478552102884446098263561922.md',
+      ),
+    },
   '2571508110958925737463010241874806654058743535666147712534445437599630018294':
     {
       ...SHARP_AGG('stwo'),
@@ -1563,6 +1573,16 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       verificationStatus: 'successful',
       verificationSteps: readMarkdown(
         'common/programHashes/760308386675154762009993173725077399730170358078020153308029499928875469870.md',
+      ),
+    },
+  '2006389624453304912912750132846114593020263069652857561377702883656839453432':
+    {
+      ...STARKNET_OS,
+      programUrl:
+        'https://github.com/starkware-libs/sequencer/tree/APOLLO-0.14.3-RC.11/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core/os',
+      verificationStatus: 'successful',
+      verificationSteps: readMarkdown(
+        'common/programHashes/2006389624453304912912750132846114593020263069652857561377702883656839453432.md',
       ),
     },
   '2733003247060056328192560178934419513655729851806095615814023997114795707702':
