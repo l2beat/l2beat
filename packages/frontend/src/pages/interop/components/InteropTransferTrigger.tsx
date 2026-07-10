@@ -1,3 +1,4 @@
+import { ProjectId } from '@l2beat/shared-pure'
 import type { ReactNode } from 'react'
 import { InteropTransferDetailsTrigger } from './InteropTransferDetailsTrigger'
 
@@ -23,7 +24,7 @@ export function InteropTransferTrigger({
 }) {
   return (
     <InteropTransferDetailsTrigger
-      scope={{ type: 'project', projectId: protocol.id }}
+      scope={{ type: 'project', projectId: ProjectId(protocol.id) }}
       title={
         <>
           <span>Transfers for </span>
