@@ -145,6 +145,25 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
         relationB,
       ])
     })
+
+    it('handles more identities than fit in a single query batch', async () => {
+      const relation = tokenRelation({
+        tokenFrom: tokenA,
+        tokenTo: tokenB,
+        plugin: 'superbridge',
+        bridgeType: 'burnAndMint',
+      })
+      await repository.insert(relation)
+
+      const missingRelations = Array.from({ length: 2_000 }, (_, index) => ({
+        ...relation,
+        tokenFromAddress: `0x${index.toString(16).padStart(40, '0')}`,
+      }))
+
+      expect(
+        await repository.getByPrimaryKeys([...missingRelations, relation]),
+      ).toEqual([relation])
+    })
   })
 
   describe(TokenRelationRepository.prototype.getAllRoutes.name, () => {

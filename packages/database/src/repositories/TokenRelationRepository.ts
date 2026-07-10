@@ -55,6 +55,10 @@ function toRow(record: TokenRelationRecord): Insertable<TokenRelation> {
   }
 }
 
+// Keeps each query's composite-key tuple list small enough to avoid
+// overflowing both the Kysely query compiler and the Postgres parser stack.
+const BATCH_SIZE = 1000
+
 export class TokenRelationRepository extends BaseRepository {
   async insert(record: TokenRelationRecord): Promise<void> {
     await this.db.insertInto('TokenRelation').values(toRow(record)).execute()
@@ -80,26 +84,53 @@ export class TokenRelationRepository extends BaseRepository {
   async getByPrimaryKeys(
     keys: TokenRelationPrimaryKey[],
   ): Promise<TokenRelationRecord[]> {
-    if (keys.length === 0) return []
+    const rows: Selectable<TokenRelation>[] = []
 
-    const rows = await this.db
-      .selectFrom('TokenRelation')
-      .selectAll()
-      .where((eb) =>
-        eb.or(
-          keys.map((key) =>
-            eb.and([
-              eb('tokenFromChain', '=', key.tokenFromChain),
-              eb('tokenFromAddress', '=', key.tokenFromAddress.toLowerCase()),
-              eb('tokenToChain', '=', key.tokenToChain),
-              eb('tokenToAddress', '=', key.tokenToAddress.toLowerCase()),
-              eb('plugin', '=', key.plugin),
-              eb('bridgeType', '=', key.bridgeType),
-            ]),
-          ),
-        ),
+    await this.batch(keys, BATCH_SIZE, async (batch) => {
+      const keysByBridgeType = new Map<
+        InteropBridgeType,
+        TokenRelationPrimaryKey[]
+      >()
+      for (const key of batch) {
+        const matchingKeys = keysByBridgeType.get(key.bridgeType) ?? []
+        matchingKeys.push(key)
+        keysByBridgeType.set(key.bridgeType, matchingKeys)
+      }
+      rows.push(
+        ...(await this.db
+          .selectFrom('TokenRelation')
+          .selectAll()
+          .where((eb) =>
+            eb.or(
+              [...keysByBridgeType].map(([bridgeType, matchingKeys]) =>
+                eb.and([
+                  eb('bridgeType', '=', bridgeType),
+                  eb(
+                    eb.refTuple(
+                      'tokenFromChain',
+                      'tokenFromAddress',
+                      'tokenToChain',
+                      'tokenToAddress',
+                      'plugin',
+                    ),
+                    'in',
+                    matchingKeys.map((key) =>
+                      eb.tuple(
+                        key.tokenFromChain,
+                        key.tokenFromAddress.toLowerCase(),
+                        key.tokenToChain,
+                        key.tokenToAddress.toLowerCase(),
+                        key.plugin,
+                      ),
+                    ),
+                  ),
+                ]),
+              ),
+            ),
+          )
+          .execute()),
       )
-      .execute()
+    })
 
     return rows.map(toRecord)
   }
