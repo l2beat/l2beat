@@ -4,8 +4,6 @@ import { useTanStackTable } from '~/components/table/useTanStackTable'
 import type { SuspiciousTransferRow } from '../types'
 import { createSuspiciousTransfersColumns } from './columns'
 
-const getRowId = (row: SuspiciousTransferRow) => row.transferId
-
 interface SuspiciousTransfersTableProps {
   data: SuspiciousTransferRow[]
   getExplorerUrl: (chain: string) => string | undefined
@@ -48,7 +46,7 @@ export function SuspiciousTransfersTable({
       { id: 'valueDifferencePercent', desc: true },
       { id: 'timestamp', desc: true },
     ],
-    getRowId,
+    getRowId: (row: SuspiciousTransferRow) => row.transferId,
     searchPlaceholder:
       'Search transfer IDs, plugins, types, chains, tokens, and hashes',
   })

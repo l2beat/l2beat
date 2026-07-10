@@ -50,19 +50,10 @@ const STORAGE_KEY = 'backoffice-environment'
 
 const environmentSchema = v.enum(['local', 'staging', 'production'])
 
-function isEnvironment(what: string | null): what is Environment {
-  if (what === null) {
-    return false
-  }
-
-  return Object.keys(ENVIRONMENTS).includes(what)
-}
-
 function readEnvironmentFromUrl(): Environment | undefined {
   const value = new URLSearchParams(window.location.search).get('env')
-  if (isEnvironment(value)) {
-    return value
-  }
+  const result = environmentSchema.safeParse(value)
+  return result.success ? result.data : undefined
 }
 
 function stripEnvironmentParamFromUrl(): void {
