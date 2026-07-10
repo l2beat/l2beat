@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x4e1dc0d580f4467946f308e797c50a37eab42846
+Generated with discovered.json: 0x8784069de76a83924d281d946164b47c76a50862
 
-# Diff at Fri, 10 Jul 2026 14:21:03 GMT:
+# Diff at Fri, 10 Jul 2026 14:36:44 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@1e8c379b8fe786381adcddb9c648173990ad4ea3 block: 1783461693
-- current timestamp: 1783693193
+- current timestamp: 1783694135
 
 ## Description
 
@@ -113,7 +113,7 @@ independently confirmed.
 
 ```diff
 +   Status: CREATED
-    contract  (robinhood:0x672Da8B43058D1bC78956d71d9A208E168E2a3EF) [N/A]
+    contract ProxyAdmin (robinhood:0x672Da8B43058D1bC78956d71d9A208E168E2a3EF) [N/A]
     +++ description: None
 ```
 
@@ -127,6 +127,7 @@ independently confirmed.
 
 ```diff
 ...:0x4e393071053C5d95771b1B716857d65cdf5B1839.sol |  184 +++
+ ...:0x672Da8B43058D1bC78956d71d9A208E168E2a3EF.sol |  184 +++
  .../Safe.sol                                       |    0
  .../SafeProxy.p.sol                                |    0
  .../Safe.sol                                       | 1216 ++++++++++++++++++
@@ -137,7 +138,7 @@ independently confirmed.
  .../SafeProxy.p.sol                                |   42 +
  .../SafeL2.sol                                     | 1286 ++++++++++++++++++++
  .../SafeProxy.p.sol                                |   42 +
- 11 files changed, 4028 insertions(+)
+ 12 files changed, 4212 insertions(+)
 ```
 
 Generated with discovered.json: 0xd4ee2b65c075a2e41ae1b9b1350dde933a74c0ac
