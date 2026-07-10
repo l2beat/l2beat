@@ -108,7 +108,7 @@ export function PrivacyProjectPage({ entry, queryState, ...props }: Props) {
                           className="mt-6 md:mt-4"
                           title="Attributes"
                           tooltip="Protocol attributes and capabilities."
-                          valueClassName="flex flex-wrap justify-end gap-1 md:justify-start"
+                          valueClassName="flex flex-wrap justify-start gap-1"
                           value={entry.attributes.map((attribute) => (
                             <PrivacyAttributeTag
                               key={attribute.id}

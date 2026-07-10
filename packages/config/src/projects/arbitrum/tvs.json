@@ -1161,6 +1161,39 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-BOLD",
+      "priceId": "liquity-bold-2",
+      "symbol": "BOLD",
+      "name": "BOLD Stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/56069/large/BOLD_logo.png?1748265087",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6440f144b7e50D6a8439336510312d2F54beB01D",
+            "chain": "ethereum",
+            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+            "decimals": 18,
+            "sinceTimestamp": 1748217600
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6440f144b7e50D6a8439336510312d2F54beB01D",
+            "chain": "ethereum",
+            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+            "decimals": 18,
+            "sinceTimestamp": 1748217600
+          }
+        ]
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-BONE",
       "priceId": "bone-shibaswap",
       "symbol": "BONE",
@@ -1313,6 +1346,39 @@
           }
         ]
       }
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-CAPX",
+      "priceId": "capx-ai",
+      "symbol": "CAPX",
+      "name": "Capx",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70528/large/capx_logo_icon_-_circle.png?1762334471",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x833E53F1e2D320e0768671Dee5CEc88b2d93330F",
+            "chain": "ethereum",
+            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+            "decimals": 18,
+            "sinceTimestamp": 1762300800
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x833E53F1e2D320e0768671Dee5CEc88b2d93330F",
+            "chain": "ethereum",
+            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+            "decimals": 18,
+            "sinceTimestamp": 1762300800
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -3482,6 +3548,39 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-FLUID",
+      "priceId": "instadapp",
+      "symbol": "FLUID",
+      "name": "Fluid",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/14688/large/Logo_1_%28brighter%29.png?1734430693",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6f40d4A6237C257fff2dB00FA0510DeEECd303eb",
+            "chain": "ethereum",
+            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+            "decimals": 18,
+            "sinceTimestamp": 1623867835
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6f40d4A6237C257fff2dB00FA0510DeEECd303eb",
+            "chain": "ethereum",
+            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+            "decimals": 18,
+            "sinceTimestamp": 1623801600
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-FNXAI",
       "priceId": "finanx-ai",
       "symbol": "FNXAI",
@@ -3941,6 +4040,39 @@
           }
         ]
       }
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-fxUSD",
+      "priceId": "f-x-protocol-fxusd",
+      "symbol": "fxUSD",
+      "name": "f(x) USD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36202/large/fxUSD.jpg?1710833113",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x085780639CC2cACd35E474e71f4d000e2405d8f6",
+            "chain": "ethereum",
+            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+            "decimals": 18,
+            "sinceTimestamp": 1710979200
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x085780639CC2cACd35E474e71f4d000e2405d8f6",
+            "chain": "ethereum",
+            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+            "decimals": 18,
+            "sinceTimestamp": 1710979200
+          }
+        ]
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -5885,6 +6017,39 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-NEAR-2",
+      "priceId": "rainbow-bridged-near-ethereum",
+      "symbol": "NEAR",
+      "name": "NEAR",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/71681/large/near.png?1768905174",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x85F17Cf997934a597031b2E18a9aB6ebD4B9f6a4",
+            "chain": "ethereum",
+            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+            "decimals": 24,
+            "sinceTimestamp": 1768867200
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x85F17Cf997934a597031b2E18a9aB6ebD4B9f6a4",
+            "chain": "ethereum",
+            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+            "decimals": 24,
+            "sinceTimestamp": 1768867200
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-NEXO",
       "priceId": "nexo",
       "symbol": "NEXO",
@@ -7058,6 +7223,39 @@
         ]
       },
       "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-RAIL",
+      "priceId": "railgun",
+      "symbol": "RAIL",
+      "name": "Rail",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/16840/large/railgun.jpeg?1696516407",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D",
+            "chain": "ethereum",
+            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+            "decimals": 18,
+            "sinceTimestamp": 1625318205
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D",
+            "chain": "ethereum",
+            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+            "decimals": 18,
+            "sinceTimestamp": 1625318205
+          }
+        ]
+      },
+      "category": "other",
       "source": "canonical",
       "isAssociated": false
     },
@@ -8379,75 +8577,18 @@
       }
     },
     {
-      "mode": "custom",
+      "mode": "auto",
       "id": "arbitrum-sUSDS",
       "priceId": "susds",
       "symbol": "sUSDS",
       "name": "Savings USDS",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/52721/large/sUSDS_Coin.png?1734086971",
       "amount": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
-            "chain": "ethereum",
-            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
-            "decimals": 18,
-            "sinceTimestamp": 1738625028
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
-            "chain": "ethereum",
-            "escrowAddress": "0xA10c7CE4b876998858b1a9E12b10092229539400",
-            "decimals": 18,
-            "sinceTimestamp": 1738625028
-          }
-        ]
-      },
-      "valueForProject": {
-        "type": "calculation",
-        "operator": "diff",
-        "arguments": [
-          {
-            "type": "value",
-            "priceId": "susds",
-            "amount": {
-              "type": "balanceOfEscrow",
-              "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
-              "chain": "ethereum",
-              "escrowAddress": "0xA10c7CE4b876998858b1a9E12b10092229539400",
-              "decimals": 18,
-              "sinceTimestamp": 1738625028
-            }
-          },
-          {
-            "type": "value",
-            "priceId": "susds",
-            "amount": {
-              "type": "balanceOfEscrow",
-              "address": "0xdDb46999F8891663a8F2828d25298f70416d7610",
-              "chain": "arbitrum",
-              "escrowAddress": "0x2B05F8e1cACC6974fD79A673a341Fe1f58d27266",
-              "decimals": 18,
-              "sinceTimestamp": 1738625028
-            }
-          },
-          {
-            "type": "value",
-            "priceId": "susds",
-            "amount": {
-              "type": "balanceOfEscrow",
-              "address": "0xdDb46999F8891663a8F2828d25298f70416d7610",
-              "chain": "arbitrum",
-              "escrowAddress": "0x92afd6F2385a90e44da3a8B60fe36f6cBe1D8709",
-              "decimals": 18,
-              "sinceTimestamp": 1738625028
-            }
-          }
-        ]
+        "type": "totalSupply",
+        "address": "0xdDb46999F8891663a8F2828d25298f70416d7610",
+        "chain": "arbitrum",
+        "decimals": 18,
+        "sinceTimestamp": 1738149802
       },
       "category": "stablecoin",
       "source": "canonical",
@@ -9426,75 +9567,18 @@
       "isAssociated": false
     },
     {
-      "mode": "custom",
+      "mode": "auto",
       "id": "arbitrum-USDS",
       "priceId": "usds",
       "symbol": "USDS",
       "name": "USDS Stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
       "amount": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
-            "chain": "ethereum",
-            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
-            "decimals": 18,
-            "sinceTimestamp": 1738625028
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
-            "chain": "ethereum",
-            "escrowAddress": "0xA10c7CE4b876998858b1a9E12b10092229539400",
-            "decimals": 18,
-            "sinceTimestamp": 1738625028
-          }
-        ]
-      },
-      "valueForProject": {
-        "type": "calculation",
-        "operator": "diff",
-        "arguments": [
-          {
-            "type": "value",
-            "priceId": "usds",
-            "amount": {
-              "type": "balanceOfEscrow",
-              "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
-              "chain": "ethereum",
-              "escrowAddress": "0xA10c7CE4b876998858b1a9E12b10092229539400",
-              "decimals": 18,
-              "sinceTimestamp": 1738625028
-            }
-          },
-          {
-            "type": "value",
-            "priceId": "usds",
-            "amount": {
-              "type": "balanceOfEscrow",
-              "address": "0x6491c05A82219b8D1479057361ff1654749b876b",
-              "chain": "arbitrum",
-              "escrowAddress": "0x2B05F8e1cACC6974fD79A673a341Fe1f58d27266",
-              "decimals": 18,
-              "sinceTimestamp": 1738625028
-            }
-          },
-          {
-            "type": "value",
-            "priceId": "usds",
-            "amount": {
-              "type": "balanceOfEscrow",
-              "address": "0x6491c05A82219b8D1479057361ff1654749b876b",
-              "chain": "arbitrum",
-              "escrowAddress": "0x92afd6F2385a90e44da3a8B60fe36f6cBe1D8709",
-              "decimals": 18,
-              "sinceTimestamp": 1738625028
-            }
-          }
-        ]
+        "type": "totalSupply",
+        "address": "0x6491c05A82219b8D1479057361ff1654749b876b",
+        "chain": "arbitrum",
+        "decimals": 18,
+        "sinceTimestamp": 1737544573
       },
       "category": "stablecoin",
       "source": "canonical",
@@ -10080,7 +10164,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-wOETH",
+      "id": "arbitrum-wOETH-1",
       "priceId": "wrapped-oeth",
       "symbol": "wOETH",
       "name": "Wrapped OETH",

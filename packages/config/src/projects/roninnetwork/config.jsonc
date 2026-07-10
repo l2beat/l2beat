@@ -44,26 +44,6 @@
     "eth:0xF184a6Cd470Cac2CF5cD4fBa34e20D482D6A6062": {
       "description": "Immutable emergency-pause contract for the legacy MainchainGateway. Holders of the SENTRY_ROLE can flip MainchainGateway into a paused state to halt deposits and withdrawals in an emergency."
     },
-    "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a": {
-      "fields": {
-        "proposerFromDGF": {
-          "permissions": [
-            {
-              "type": "interact",
-              "description": "Allowed to post new state roots of the current layer to the host chain."
-            }
-          ]
-        },
-        "challengerFromDGF": {
-          "permissions": [
-            {
-              "type": "interact",
-              "description": "Allowed to challenge or delete state roots proposed by a Proposer."
-            }
-          ]
-        }
-      }
-    },
     "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
       "ignoreInWatchMode": ["totalSupply"]
     },
@@ -71,7 +51,7 @@
       "description": "5-of-6 joint Ronin/Conduit Safe."
     },
     "eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336": {
-      "description": "Kailua (RISC Zero ZK fault-proof) game implementation registered as game type 1337 in the DisputeGameFactory. Deployed but NOT yet active. Bonds confiscated from eliminated proposers are split 1/3 to the prover, 1/3 to the tournament winner, 1/3 burned."
+      "description": "Kailua (RISC Zero ZK fault-proof) treasury: holds participation bonds, mints KailuaGame clones, and defines the vanguard proposer economics. Bonds confiscated from eliminated proposers are split 1/3 to the prover, 1/3 to the tournament winner, 1/3 burned."
     },
     "eth:0x6b49976a7340D0A3C00d1bEBE0E36E2367D89c7C": {
       "description": "Proxy in front of the Kailua proof verifier; routes verification requests to the canonical RiscZeroVerifierRouter and asserts the chain-specific rollup config and FPVM image ID."

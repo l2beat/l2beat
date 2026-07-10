@@ -127,6 +127,7 @@ export const risc0: BaseProject = {
               ProjectId('bob'),
               ProjectId('megaeth'),
               ProjectId('soon'),
+              ProjectId('roninnetwork'),
             ],
           },
         ],
@@ -151,7 +152,11 @@ export const risc0: BaseProject = {
               '0x2a098988600d87650Fb061FfAff08B97149Fa84D',
             ),
             // Base also references this verifier via its TEE arm (Nitro attestation), not for state validation.
-            overrideUsedIn: [ProjectId('bob'), ProjectId('taiko')],
+            overrideUsedIn: [
+              ProjectId('bob'),
+              ProjectId('taiko'),
+              ProjectId('roninnetwork'),
+            ],
           },
           // {
           //   address: ChainSpecificAddress.fromLong(

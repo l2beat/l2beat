@@ -1570,5 +1570,9 @@
   "static/meta-images/interop/projects/robinhood/opengraph-image.png": "b305fd887bac6c707c45046ac24ffe90",
   "static/meta-images/publications/monthly-update-2026-06.png": "1b5bf60bd96460bca674d265bf669991",
   "static/meta-images/publications/governance-review-99.png": "378bfc632976890a324ec81c30fea8ff",
-  "static/meta-images/interop/intent-bridges/opengraph-image.png": "250d575e0d76427a4c1384faf63ca3fb"
+  "static/meta-images/interop/intent-bridges/opengraph-image.png": "250d575e0d76427a4c1384faf63ca3fb",
+  "static/meta-images/zk-catalog/projects/privacy-pools/opengraph-image.png": "4b6f6183d8c992a19fd217ea7f5caa3e",
+  "static/meta-images/zk-catalog/projects/railgun/opengraph-image.png": "5fdc48e99c2f80790ec6b42681bb3646",
+  "static/meta-images/zk-catalog/projects/tornado-cash/opengraph-image.png": "16a4e5fc3712a8247e88d19b2c2bb072",
+  "static/meta-images/zk-catalog/projects/strk20/opengraph-image.png": "f05a90a3a5c37363a161f93880e6be6e"
 }

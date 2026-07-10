@@ -78,6 +78,601 @@
       "category": "stablecoin",
       "source": "external",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-CASHCAT",
+      "priceId": "cash-cat",
+      "symbol": "CASHCAT",
+      "name": "Cash Cat",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174280/large/cashcat-logo.jpg?1782922765",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "cash-cat",
+        "decimals": 18,
+        "sinceTimestamp": 1782950400,
+        "address": "0x020bfC650A365f8BB26819deAAbF3E21291018b4",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-AAPL",
+      "priceId": "apple-robinhood-tokenized-stock",
+      "symbol": "AAPL",
+      "name": "Apple \u2022 Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174123/large/0xaf3d76f1834a1d425780943c99ea8a608f8a93f9.png?1782444598",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xaF3D76f1834A1d425780943C99Ea8A608f8a93f9",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1782432000
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-AMD",
+      "priceId": "amd-robinhood-tokenized-stock",
+      "symbol": "AMD",
+      "name": "AMD \u2022 Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174114/large/0x86923f96303d656e4aa86d9d42d1e57ad2023fdc.png?1782444575",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x86923f96303D656E4aa86D9d42D1e57ad2023fdC",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1782432000
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-AMZN",
+      "priceId": "amazon-robinhood-tokenized-stock",
+      "symbol": "AMZN",
+      "name": "Amazon \u2022 Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174126/large/0x12f190a9f9d7d37a250758b26824b97ce941bf54.png?1782444606",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x12f190a9F9d7D37a250758b26824B97CE941bF54",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1782432000
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-ASML",
+      "priceId": "asml-holding-nv-robinhood-tokenized-stock",
+      "symbol": "ASML",
+      "name": "ASML Holding NV \u2022 Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174168/large/0x47f93d52cbec7c6d2cfc080e154002370a60daea.png?1782444718",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x47F93d52cBeC7C6D2CfC080e154002370a60dAEA",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1782432000
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-BABA",
+      "priceId": "alibaba-robinhood-tokenized-stock",
+      "symbol": "BABA",
+      "name": "Alibaba \u2022 Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174135/large/0xad25ac6c84d497db898fa1e8387bf6af3532a1c4.png?1782444629",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xad25Ac6C84D497db898fa1E8387bf6Af3532a1c4",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1782432000
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-CLSK",
+      "priceId": "cleanspark-robinhood-tokenized-stock",
+      "symbol": "CLSK",
+      "name": "CleanSpark \u2022 Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174156/large/0xcbb95bbf36099d34da091dc6fa6f49efa257cee3.png?1782444686",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xcBB95BBF36099d34dA091dc6Fa6F49EfA257Cee3",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1782432000
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-COIN",
+      "priceId": "coinbase-robinhood-tokenized-stock",
+      "symbol": "COIN",
+      "name": "Coinbase \u2022 Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174136/large/0x6330d8c3178a418788df01a47479c0ce7ccf450b.png?1782444632",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x6330D8C3178a418788dF01a47479c0ce7CCF450b",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1782432000
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-CRCL",
+      "priceId": "circle-internet-group-robinhood-tokenized-stock",
+      "symbol": "CRCL",
+      "name": "Circle Internet Group \u2022 Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174121/large/0xdf0992e440dd0be65bd8439b609d6d4366bf1cb5.png?1782444593",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xdF0992E440dD0be65BD8439b609d6D4366bf1CB5",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1782432000
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-CRWV",
+      "priceId": "coreweave-robinhood-tokenized-stock",
+      "symbol": "CRWV",
+      "name": "CoreWeave \u2022 Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174127/large/0x5f10a1c971b69e47e059e1dc91901b59b3fb49c3.png?1782444608",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x5f10A1C971B69e47e059e1dC91901B59b3fB49C3",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1782432000
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-EWY",
+      "priceId": "ishares-msci-south-korea-fund-robinhood-tokenized-stock",
+      "symbol": "EWY",
+      "name": "iShares MSCI South Korea fund \u2022 Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174159/large/0x7f0abef0c07280f82c6a08ead09ded6bae2c13fc.png?1782444694",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x7f0aBeF0C07280F82c6a08ead09dEd6BAE2C13Fc",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1782432000
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-GME",
+      "priceId": "gamestop-robinhood-tokenized-stock",
+      "symbol": "GME",
+      "name": "GameStop \u2022 Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174150/large/0x1b0e319c6a659f002271b69db8a7df2f911c153e.png?1782444670",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x1b0E319c6A659F002271B69dB8A7df2F911c153E",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1782432000
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-GOOGL",
+      "priceId": "alphabet-class-a-robinhood-tokenized-stock",
+      "symbol": "GOOGL",
+      "name": "Alphabet Class A \u2022 Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174124/large/0x2e0847e8910a9732eb3fb1bb4b70a580adad4fe3.png?1782444601",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x2e0847E8910a9732eB3fb1bb4b70a580ADAD4FE3",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1782432000
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-INTC",
+      "priceId": "intel-robinhood-tokenized-stock",
+      "symbol": "INTC",
+      "name": "Intel \u2022 Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174118/large/0xc72b96e0e48ecd4dc75e1e45396e26300bc39681.png?1782444585",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xc72b96e0E48ecd4DC75E1e45396e26300BC39681",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1782432000
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-IONQ",
+      "priceId": "ionq-robinhood-tokenized-stock",
+      "symbol": "IONQ",
+      "name": "IonQ \u2022 Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174166/large/0x558378e000d634a36593e338ebacdd6207640efe.png?1782444713",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x558378E000D634A36593E338eBacdd6207640EfE",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1782432000
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-META",
+      "priceId": "meta-platforms-robinhood-tokenized-stock",
+      "symbol": "META",
+      "name": "Meta Platforms \u2022 Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174122/large/0xc0d6457c16cc70d6790dd43521c899c87ce02f35.png?1782444595",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xc0D6457C16Cc70d6790Dd43521C899C87ce02f35",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1782432000
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-MSFT",
+      "priceId": "microsoft-robinhood-tokenized-stock",
+      "symbol": "MSFT",
+      "name": "Microsoft \u2022 Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174116/large/0xe93237c50d904957cf27e7b1133b510c669c2e74.png?1782444580",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xe93237C50D904957Cf27E7B1133b510C669c2e74",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1782432000
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-MSTR",
+      "priceId": "strategy-inc-robinhood-tokenized-stock",
+      "symbol": "MSTR",
+      "name": "Strategy Inc. \u2022 Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174143/large/0xec262a75e413fafd0df80480274532c79d42da09.png?1782444651",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xec262a75e413fAfD0dF80480274532C79D42da09",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1782432000
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-MU",
+      "priceId": "micron-technology-robinhood-tokenized-stock",
+      "symbol": "MU",
+      "name": "Micron Technology \u2022 Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174111/large/0xff080c8ce2e5feadaca0da81314ae59d232d4afd.png?1782444567",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xfF080c8ce2E5feadaCa0Da81314Ae59D232d4afD",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1782432000
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-NBIS",
+      "priceId": "nebius-group-robinhood-tokenized-stock",
+      "symbol": "NBIS",
+      "name": "Nebius Group \u2022 Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174160/large/0x9d9c6684f596f66a64c030b93a886d51fd4d7931.png?1782444697",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x9D9c6684F596F66a64C030B93A886D51Fd4D7931",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1782432000
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-NVDA",
+      "priceId": "nvidia-robinhood-tokenized-stock",
+      "symbol": "NVDA",
+      "name": "NVIDIA \u2022 Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174110/large/0xd0601ce157db5bdc3162bbac2a2c8af5320d9eec.png?1782444565",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xd0601CE157Db5bdC3162BbaC2a2C8aF5320D9EEC",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1782432000
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-ORCL",
+      "priceId": "oracle-robinhood-tokenized-stock",
+      "symbol": "ORCL",
+      "name": "Oracle \u2022 Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174128/large/0xb0992820e760d836549ba69bc7598b4af75dee03.png?1782444611",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xb0992820E760d836549ba69BC7598b4af75dEE03",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1782432000
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-PLTR",
+      "priceId": "palantir-technologies-robinhood-tokenized-stock",
+      "symbol": "PLTR",
+      "name": "Palantir Technologies \u2022 Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174117/large/0x894e1ec2d74ffe5aef8dc8a9e84686accb964f2a.png?1782444583",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x894E1EC2D74FFE5AEF8Dc8A9e84686acCB964F2A",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1782432000
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-QQQ",
+      "priceId": "invesco-qqq-robinhood-tokenized-stock",
+      "symbol": "QQQ",
+      "name": "Invesco QQQ \u2022 Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174119/large/0xd5f3879160bc7c32ebb4dc785f8a4f505888de68.png?1782444588",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xD5f3879160bc7c32ebb4dC785F8a4F505888de68",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1782432000
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-RGTI",
+      "priceId": "rigetti-computing-robinhood-tokenized-stock",
+      "symbol": "RGTI",
+      "name": "Rigetti Computing \u2022 Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174146/large/0x284358abc07f9359f19f4b5b4ac91901be2597ba.png?1782444659",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x284358abc07F9359f19f4b5b4aC91901Be2597Ba",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1782432000
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-RKLB",
+      "priceId": "rocket-lab-corporation-robinhood-tokenized-stock",
+      "symbol": "RKLB",
+      "name": "Rocket Lab Corporation \u2022 Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174133/large/0x3b14c39e89d60d627b42a1a4ca45b5bb45fc12e2.png?1782444624",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x3b14C39E89D60D627b42a1A4CA45b5bb45Fc12e2",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1782432000
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-SLV",
+      "priceId": "ishares-silver-trust-robinhood-tokenized-stock",
+      "symbol": "SLV",
+      "name": "iShares Silver Trust \u2022 Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174120/large/0x411efb0e7f985935daec3d4c3ebaea0d0ad7d89f.png?1782444590",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x411eFb0E7f985935DAec3D4C3ebaEa0d0AD7D89f",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1782432000
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-SNDK",
+      "priceId": "sandisk-corporation-robinhood-tokenized-stock",
+      "symbol": "SNDK",
+      "name": "Sandisk Corporation \u2022 Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174113/large/0xb90a19ff0af67f7779aff50a882a9cff42446400.png?1782444573",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xB90A19fF0Af67f7779afF50A882A9CfF42446400",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1782432000
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-SPCX",
+      "priceId": "spacex-robinhood-tokenized-stock",
+      "symbol": "SPCX",
+      "name": "SpaceX \u2022 Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174129/large/0x4a0e65a3eccec6dbe60ae065f2e7bb85fae35eea.png?1782444614",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x4a0E65A3EcceC6dBe60AE065F2e7bb85Fae35eEa",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1782432000
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-SPY",
+      "priceId": "spdr-s-p-500-etf-trust-robinhood-tokenized-stock",
+      "symbol": "SPY",
+      "name": "SPDR S&P 500 ETF Trust \u2022 Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174115/large/0x117cc2133c37b721f49de2a7a74833232b3b4c0c.png?1782444578",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x117cc2133c37B721F49dE2A7a74833232B3B4C0C",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1782432000
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-TSLA",
+      "priceId": "tesla-robinhood-tokenized-stock",
+      "symbol": "TSLA",
+      "name": "Tesla \u2022 Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174112/large/0x322f0929c4625ed5bad873c95208d54e1c003b2d.png?1782444570",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x322F0929c4625eD5bAd873c95208D54E1c003b2d",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1782432000
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-TSM",
+      "priceId": "taiwan-semiconductor-manufacturing-robinhood-tokenized-stock",
+      "symbol": "TSM",
+      "name": "Taiwan Semiconductor Manufacturing \u2022 Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174148/large/0x58ffe4a942d3885baa22d7520691f611ef09e7aa.png?1782444664",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x58FfE4a942d3885bAa22D7520691F611EF09e7AA",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1782432000
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-USO",
+      "priceId": "united-states-oil-fund-robinhood-tokenized-stock",
+      "symbol": "USO",
+      "name": "United States Oil Fund \u2022 Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174125/large/0xa30fa36db767ad9ed3f7a60fc79526fb4d56d344.png?1782444603",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xa30FA36Db767ad9eD3f7a60fC79526fB4d56D344",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1782432000
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
     }
   ]
 }

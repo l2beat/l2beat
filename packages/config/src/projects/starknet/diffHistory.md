@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xc5a7e72179f1d45f52a9addb401aa5a0a80a6774
+
+# Diff at Wed, 08 Jul 2026 09:37:18 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@bd632cb3b3a14cad96138a9cfe1677d08dcc197d block: 1783335585
+- current timestamp: 1783503373
+
+## Description
+
+Rotated two ms members.
+
+## Watched changes
+
+```diff
+    contract Starkware SCMinority Multisig (eth:0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B) [GnosisSafe] {
+    +++ description: None
+      values.$members.1:
+-        "eth:0x04D5b12b196a8CADEB2F476F22Ffb1334Ef9F94c"
++        "eth:0x99E84d004E73CC41eFacd382ef6FD34208B0F122"
+      values.$members.2:
+-        "eth:0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F"
++        "eth:0xb731B63eC22904A17d1cf6fD771eb5BA87f35Fa3"
+    }
+```
+
 Generated with discovered.json: 0x46be0f3a5ee0bbfd930370ece20fd5c286d971b4
 
 # Diff at Mon, 06 Jul 2026 11:01:07 GMT:

@@ -111,7 +111,7 @@ async function getCachedData({
       tokenId: token.id,
       ...apiSelection,
     }),
-    getInteropTokenOnchainDeployments(token.id),
+    getInteropTokenOnchainDeployments(token.id, activeInteropChainIds),
     ps.getProjects({
       select: ['chainConfig'],
     }),

@@ -14,7 +14,7 @@ import { ChainsSummaryPage } from './pages/interop/chains-summary/ChainsSummaryP
 import { CoveragePiesPage } from './pages/interop/coverage-pies/CoveragePiesPage'
 import { EventDetailsPage } from './pages/interop/events/EventDetailsPage'
 import { EventsPage } from './pages/interop/events/EventsPage'
-import { FinancialActionsPage } from './pages/interop/financials/FinancialActionsPage'
+import { FinancialsPage } from './pages/interop/financials/FinancialsPage'
 import { HighlightsPage } from './pages/interop/highlights/HighlightsPage'
 import { KnownAppsPage } from './pages/interop/known-apps/KnownAppsPage'
 import { MemoryPage } from './pages/interop/memory/MemoryPage'
@@ -64,10 +64,7 @@ function EnvironmentScopedApp() {
               element={<EventDetailsPage />}
             />
 
-            <Route
-              path="/interop/financials/actions"
-              element={<FinancialActionsPage />}
-            />
+            <Route path="/interop/financials" element={<FinancialsPage />} />
             <Route path="/interop/messages" element={<MessagesPage />} />
             <Route
               path="/interop/messages/:type"
