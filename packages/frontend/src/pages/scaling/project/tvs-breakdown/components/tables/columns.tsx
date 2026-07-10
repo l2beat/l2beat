@@ -6,6 +6,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { PercentChange } from '~/components/PercentChange'
+import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import { IndexCell } from '~/components/table/cells/IndexCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { ChevronIcon } from '~/icons/Chevron'
@@ -13,11 +14,11 @@ import { LineChartIcon } from '~/icons/LineChart'
 import { sourceToLabel } from '~/server/features/scaling/tvs/utils/sourceToLabel'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import { formatNumberWithCommas } from '~/utils/number-format/formatNumber'
 import { categoryToLabel } from './categoryToLabel'
 import { BridgedUsingCell } from './cells/BridgedUsingCell'
 import { TokenAddressCell } from './cells/TokenAddressCell'
 import { TokenNameCell } from './cells/TokenNameCell'
-import { TokenValueCell } from './cells/TokenValueCell'
 import type { TokenRow } from './ProjectTvsBreakdownTokenTable'
 
 const columnHelper = createColumnHelper<TokenRow>()
@@ -108,8 +109,10 @@ export const columns = [
           <div className="font-medium text-xs">
             {formatCurrency(priceUsd.value, 'usd')}
           </div>
-          {priceUsd.change !== undefined && (
+          {priceUsd.change !== undefined ? (
             <PercentChange value={priceUsd.change} />
+          ) : (
+            <PercentChangeNotAvailable />
           )}
         </div>
       )
@@ -121,10 +124,10 @@ export const columns = [
     meta: {
       align: 'right',
       tooltip:
-        'The value is calculated by multiplying the amount by the token price for most tokens. For some tokens, we use custom calculations to avoid double counting. Expand the section to learn more.',
+        'The value is calculated by multiplying the amount by the token price for most tokens. For some tokens, we use custom calculations to avoid double counting. Percentage change compared to 7 days ago. Expand the section to learn more.',
     },
     cell: (ctx) => {
-      return <TokenValueCell {...ctx.row.original} />
+      return <ProjectTokenValueCell row={ctx.row.original} />
     },
   }),
   columnHelper.display({
@@ -167,3 +170,30 @@ export const columns = [
     },
   }),
 ]
+
+function PercentChangeNotAvailable() {
+  return (
+    <span className="relative text-secondary">
+      <span className="relative inline-block w-[52px] text-right text-xs">
+        %N/A
+      </span>
+    </span>
+  )
+}
+
+function ProjectTokenValueCell({ row }: { row: TokenRow }) {
+  return (
+    <SyncStatusWrapper isSynced={row.syncStatus === undefined}>
+      <div className="flex items-center justify-end gap-1">
+        <div className="font-bold text-xs">
+          ${formatNumberWithCommas(+row.valueForProject.value)}
+        </div>
+        {row.valueForProject.change !== undefined ? (
+          <PercentChange value={row.valueForProject.change} />
+        ) : (
+          <PercentChangeNotAvailable />
+        )}
+      </div>
+    </SyncStatusWrapper>
+  )
+}
