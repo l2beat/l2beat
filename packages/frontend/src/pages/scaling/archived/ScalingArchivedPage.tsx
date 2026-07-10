@@ -3,12 +3,11 @@ import { TableFilterContextProvider } from '~/components/table/filters/TableFilt
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingTabs'
 import type { ScalingArchivedEntry } from '~/server/features/scaling/archived/getScalingArchivedEntries'
-import { ScalingArchivedTables } from './components/ScalingArchivedTables'
+import { ScalingArchivedTableSection } from './components/ScalingArchivedTableSection'
 
 interface Props extends AppLayoutProps {
-  entries: TabbedScalingEntries<ScalingArchivedEntry>
+  entries: ScalingArchivedEntry[]
 }
 
 export function ScalingArchivedPage({ entries, ...props }: Props) {
@@ -17,7 +16,7 @@ export function ScalingArchivedPage({ entries, ...props }: Props) {
       <SideNavLayout>
         <MainPageHeader>Archived</MainPageHeader>
         <TableFilterContextProvider>
-          <ScalingArchivedTables {...entries} />
+          <ScalingArchivedTableSection entries={entries} />
         </TableFilterContextProvider>
       </SideNavLayout>
     </AppLayout>
