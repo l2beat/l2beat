@@ -1,5 +1,4 @@
 import { Button } from '~/components/core/Button'
-import { CustomLink } from '~/components/link/CustomLink'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import { NativeRollupsHeroIllustration } from '../assets/NativeRollupsHero'
@@ -30,7 +29,11 @@ export function Hero() {
             in lockstep with L1, and needs no dedicated proof system to trust.
           </p>
           <div className="flex flex-wrap items-center gap-3">
-            <Button asChild variant="fill" className="gap-2">
+            <Button
+              asChild
+              variant="fill"
+              className="gap-2 border border-transparent"
+            >
               <a
                 href={NATIVE_ROLLUPS_BOOK_URL}
                 target="_blank"
@@ -40,14 +43,20 @@ export function Hero() {
                 <CustomLinkIcon className="fill-current" />
               </a>
             </Button>
-            <CustomLink
-              href={NATIVE_ROLLUPS_EIP_URL}
-              underline={false}
-              className="flex items-center gap-1.5 rounded-lg border border-divider bg-surface-secondary px-4 py-2.5 font-semibold text-primary text-sm hover:bg-surface-secondary/60"
+            <Button
+              asChild
+              variant="outline"
+              className="gap-2 border-divider bg-surface-secondary text-primary hover:bg-surface-secondary/60"
             >
-              Read EIP-8079
-              <CustomLinkIcon className="fill-current" />
-            </CustomLink>
+              <a
+                href={NATIVE_ROLLUPS_EIP_URL}
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                Read EIP-8079
+                <CustomLinkIcon className="fill-current" />
+              </a>
+            </Button>
           </div>
         </div>
         <NativeRollupsHeroIllustration className="hidden h-auto w-[420px] shrink-0 lg:block" />

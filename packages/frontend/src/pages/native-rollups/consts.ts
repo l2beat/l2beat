@@ -242,6 +242,14 @@ export const MATERIALS: MaterialItem[] = [
     href: 'https://ethereum-magicians.org/t/eip-8079-native-rollups/26565',
   },
   {
+    kind: 'article',
+    label: 'Native proof verification',
+    source: 'ethresear.ch',
+    description:
+      "Luca Donno's proposal for a standardized L1 primitive that lets any project verify ZK proofs through Ethereum's consensus.",
+    href: 'https://ethresear.ch/t/native-proof-verification/24798',
+  },
+  {
     kind: 'code',
     label: 'ethrex native rollups PoC',
     source: 'github.com/lambdaclass/ethrex',
