@@ -1,3 +1,667 @@
+Generated with discovered.json: 0x2bdd63e93489bd1ae2220d32bf14c9a120463e99
+
+# Diff at Sat, 11 Jul 2026 11:03:20 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1e8c379b8fe786381adcddb9c648173990ad4ea3 block: 1782850566
+- current timestamp: 1783767732
+
+## Description
+
+L2 predeploys upgraded 2026-07-08 as part of the Karst rollout (op-contracts v7). L2CrossDomainMessenger v1.4.0 → v2.2.1, exposing new fields (`otherMessenger`, `proxyAdminOwner`, `ENCODING_OVERHEAD`, `FLOOR_CALLDATA_OVERHEAD`, `TX_BASE_GAS`). Also upgraded: GasPriceOracle, L2StandardBridge, SequencerFeeVault, OptimismMintableERC20Factory, L2ERC721Bridge, L1Block, BaseFeeVault, L2ToL1MessagePasser, L2ProxyAdmin, OperatorFeeVault, EAS, SchemaRegistry.
+
+Separately, SafeL2 (`oeth:0x3F3C…61D2`) member[7] rotated `0x6419…2cc7` → `0x7F1D…9f27`.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (oeth:0x3F3Cd78Ef9Bd85961C0729E6BbB11E94Ca6f61D2) [GnosisSafe] {
+    +++ description: None
+      values.$members.7:
+-        "oeth:0x6419F81580343DF023E68715C6e269aFb00a2cc7"
++        "oeth:0x7F1D4FE689B73B628285454667B93cfd09409f27"
+    }
+```
+
+```diff
+    contract L2CrossDomainMessenger (oeth:0x4200000000000000000000000000000000000007) [N/A] {
+    +++ description: None
+      template:
+-        "opstack/Layer2/L2CrossDomainMessenger"
+      sourceHashes.1:
+-        "0xc976dd7891ac59d37603c7648ea8e3a566365094a242d169a646ebfed971bab8"
++        "0x9e9ae8aec73e808e50f80bced53c3a020588eed516b310a10397596869dcd3b1"
+      description:
+-        "The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function."
+      values.$implementation:
+-        "oeth:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007"
++        "oeth:0x250AF3f400cf8Aac8D410c90f1ba3968dD87DF96"
+      values.$pastUpgrades.0:
++        ["2026-07-08T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["oeth:0x2A5A3eabB9Fd571A3Af0299eebdF8EaafE29a914"]]
+      values.$pastUpgrades.1:
++        ["2026-07-08T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["oeth:0x250AF3f400cf8Aac8D410c90f1ba3968dD87DF96"]]
+      values.$upgradeCount:
+-        0
++        2
+      values.messageNonce:
+-        "1766847064778384329583297500742918515827483896875618958121606201292653587"
++        "1766847064778384329583297500742918515827483896875618958121606201292653678"
+      values.version:
+-        "1.4.0"
++        "2.2.1"
+      values.ENCODING_OVERHEAD:
++        260
+      values.FLOOR_CALLDATA_OVERHEAD:
++        40
+      values.otherMessenger:
++        "oeth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1"
+      values.paused:
++        false
+      values.proxyAdmin:
++        "oeth:0x4200000000000000000000000000000000000018"
+      values.proxyAdminOwner:
++        "oeth:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      values.TX_BASE_GAS:
++        21000
+      implementationNames.oeth:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007:
+-        "L2CrossDomainMessenger"
+      implementationNames.oeth:0x250AF3f400cf8Aac8D410c90f1ba3968dD87DF96:
++        "L2CrossDomainMessenger"
+      errors:
++        {"xDomainMessageSender":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract GasPriceOracle (oeth:0x420000000000000000000000000000000000000F) [opstack/Layer2/GasPriceOracle] {
+    +++ description: Provides the current gas price for L2 transactions.
+      values.$implementation:
+-        "oeth:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1"
++        "oeth:0x547d0fba434877D7237d511cF87FABe2ee26b152"
+      values.$pastUpgrades.4:
++        ["2026-07-08T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["oeth:0x547d0fba434877D7237d511cF87FABe2ee26b152"]]
+      values.$upgradeCount:
+-        4
++        5
+      implementationNames.oeth:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1:
+-        "GasPriceOracle"
+      implementationNames.oeth:0x547d0fba434877D7237d511cF87FABe2ee26b152:
++        "GasPriceOracle"
+    }
+```
+
+```diff
+    contract L2StandardBridge (oeth:0x4200000000000000000000000000000000000010) [N/A] {
+    +++ description: None
+      template:
+-        "opstack/Layer2/L2StandardBridge"
+      sourceHashes.1:
+-        "0x4354fe0c1ae65beab0a93e37ea50f3964a7d5e51a2f4a33c98cb041a1d18d32c"
++        "0xf6ef848ca1cf88e27b5e3bb5e01b91ef79f302e5daad8ba5206c4dc60027d312"
+      description:
+-        "The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token."
+      values.$implementation:
+-        "oeth:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010"
++        "oeth:0xAE9ed42f43a3ee45c3A9dEf8ae6B48cBb58Ed1a1"
+      values.$pastUpgrades.0:
++        ["2026-07-08T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["oeth:0x2A5A3eabB9Fd571A3Af0299eebdF8EaafE29a914"]]
+      values.$pastUpgrades.1:
++        ["2026-07-08T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["oeth:0xAE9ed42f43a3ee45c3A9dEf8ae6B48cBb58Ed1a1"]]
+      values.$upgradeCount:
+-        0
++        2
+      values.version:
+-        "1.1.0"
++        "1.13.2"
+      values.otherBridge:
++        "oeth:0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"
+      values.paused:
++        false
+      values.proxyAdmin:
++        "oeth:0x4200000000000000000000000000000000000018"
+      values.proxyAdminOwner:
++        "oeth:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      implementationNames.oeth:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010:
+-        "L2StandardBridge"
+      implementationNames.oeth:0xAE9ed42f43a3ee45c3A9dEf8ae6B48cBb58Ed1a1:
++        "L2StandardBridge"
+    }
+```
+
+```diff
+    contract SequencerFeeVault (oeth:0x4200000000000000000000000000000000000011) [N/A] {
+    +++ description: None
+      template:
+-        "opstack/Layer2/SequencerFeeVault"
+      sourceHashes.1:
+-        "0x0441c14992309acc9ee49b32ded90950f349d5d4ab52d9d4f3380bbfb12d9957"
++        "0xb45389729a8fffa7650568cd2922e482d03d3ed57b35f4819650d11174d9237a"
+      description:
+-        "Collects the sequencer fees, which are withdrawable to the FeesCollector on L1."
+      values.$implementation:
+-        "oeth:0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011"
++        "oeth:0xb178cdAa8336f25624A63C049EdB5AF7ca36C2dA"
+      values.$pastUpgrades.0:
++        ["2026-07-08T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["oeth:0x2A5A3eabB9Fd571A3Af0299eebdF8EaafE29a914"]]
+      values.$pastUpgrades.1:
++        ["2026-07-08T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["oeth:0xb178cdAa8336f25624A63C049EdB5AF7ca36C2dA"]]
+      values.$upgradeCount:
+-        0
++        2
+      values.version:
+-        "1.1.0"
++        "1.6.1"
+      values.minWithdrawalAmount:
++        "10000000000000000000"
+      values.proxyAdmin:
++        "oeth:0x4200000000000000000000000000000000000018"
+      values.proxyAdminOwner:
++        "oeth:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      values.recipient:
++        "oeth:0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa"
+      values.totalProcessed:
++        "6179945228801330673139"
+      values.WITHDRAWAL_NETWORK:
++        0
+      values.withdrawalNetwork:
++        0
+      implementationNames.oeth:0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011:
+-        "SequencerFeeVault"
+      implementationNames.oeth:0xb178cdAa8336f25624A63C049EdB5AF7ca36C2dA:
++        "SequencerFeeVault"
+      category:
+-        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract  (oeth:0x4200000000000000000000000000000000000012) [N/A] {
+    +++ description: None
+      name:
+-        "OptimismMintableERC20Factory"
++        ""
+      template:
+-        "opstack/Layer2/OptimismMintableERC20Factory"
+      sourceHashes:
+-        ["0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44","0xb2fc6f2e6343ad65e6ad1c34dcc5eeb708cc17ebdaeba5635ee74568f976ad26"]
+      description:
+-        "Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens."
+      values.$implementation:
+-        "oeth:0xc0D3c0d3C0d3c0d3c0D3c0d3c0D3c0D3c0D30012"
++        "oeth:0xAF87f2Fd347aCb94656f9F715B4f2409B98e75b9"
+      values.$pastUpgrades.0:
++        ["2026-07-08T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["oeth:0x2A5A3eabB9Fd571A3Af0299eebdF8EaafE29a914"]]
+      values.$pastUpgrades.1:
++        ["2026-07-08T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["oeth:0xAF87f2Fd347aCb94656f9F715B4f2409B98e75b9"]]
+      values.$upgradeCount:
+-        0
++        2
+      values.BRIDGE:
+-        "oeth:0x4200000000000000000000000000000000000010"
+      values.version:
+-        "1.1.0"
+      implementationNames.oeth:0xc0D3c0d3C0d3c0d3c0D3c0d3c0D3c0D3c0D30012:
+-        "OptimismMintableERC20Factory"
+      implementationNames.oeth:0xAF87f2Fd347aCb94656f9F715B4f2409B98e75b9:
++        ""
+      unverified:
++        true
+    }
+```
+
+```diff
+    contract  (oeth:0x4200000000000000000000000000000000000014) [N/A] {
+    +++ description: None
+      name:
+-        "L2ERC721Bridge"
++        ""
+      template:
+-        "opstack/Layer2/L2ERC721Bridge"
+      sourceHashes:
+-        ["0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44","0xe7457c0a0e9e7ba45f45fb369ff94f8a3613c4bb9083999a6eb18eaf6a077cdd"]
+      description:
+-        "The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token."
+      values.$implementation:
+-        "oeth:0xC0D3c0d3c0d3c0d3c0D3C0d3C0D3C0D3c0d30014"
++        "oeth:0x716eAd0Cf3e7FF86A02D4F8cb41a6D14922fA833"
+      values.$pastUpgrades.1:
++        ["2026-07-08T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["oeth:0x2A5A3eabB9Fd571A3Af0299eebdF8EaafE29a914"]]
+      values.$pastUpgrades.2:
++        ["2026-07-08T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["oeth:0x716eAd0Cf3e7FF86A02D4F8cb41a6D14922fA833"]]
+      values.$upgradeCount:
+-        1
++        3
+      values.messenger:
+-        "oeth:0x4200000000000000000000000000000000000007"
+      values.MESSENGER:
+-        "oeth:0x4200000000000000000000000000000000000007"
+      values.OTHER_BRIDGE:
+-        "oeth:0x5a7749f83b81B301cAb5f48EB8516B986DAef23D"
+      values.otherBridge:
+-        "oeth:0x5a7749f83b81B301cAb5f48EB8516B986DAef23D"
+      values.version:
+-        "1.1.0"
+      implementationNames.oeth:0xC0D3c0d3c0d3c0d3c0D3C0d3C0D3C0D3c0d30014:
+-        "L2ERC721Bridge"
+      implementationNames.oeth:0x716eAd0Cf3e7FF86A02D4F8cb41a6D14922fA833:
++        ""
+      unverified:
++        true
+    }
+```
+
+```diff
+    contract  (oeth:0x4200000000000000000000000000000000000015) [N/A] {
+    +++ description: None
+      name:
+-        "L1Block"
++        ""
+      template:
+-        "opstack/Layer2/L1Block"
+      sourceHashes:
+-        ["0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44","0x399e57fff478211b47d61c5acb60592a4df8ffa5716959a1a6ee2ccabc44915e"]
+      description:
+-        "Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain."
+      values.$implementation:
+-        "oeth:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C"
++        "oeth:0x6a97C5D55A21265326150Efe12FC30Fb21cbff56"
+      values.$pastUpgrades.3:
++        ["2026-07-08T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["oeth:0x6a97C5D55A21265326150Efe12FC30Fb21cbff56"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.basefee:
+-        226273929
+      values.baseFeeScalar:
+-        5227
+      values.batcherHash:
+-        "0x0000000000000000000000006887246668a3b87f54deb3b94ba47a6f63f32985"
+      values.blobBaseFee:
+-        13627691
+      values.blobBaseFeeScalar:
+-        1014213
+      values.daFootprintGasScalar:
+-        400
+      values.DEPOSITOR_ACCOUNT:
+-        "oeth:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001"
+      values.gasPayingToken:
+-        {"addr_":"oeth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE","decimals_":18}
+      values.gasPayingTokenName:
+-        "Ether"
+      values.gasPayingTokenSymbol:
+-        "ETH"
+      values.hash:
+-        "0xc19f3795281705a144d60bbdb3ef2bcf9d1eaf0a13704c7b331604b5e824323f"
+      values.isCustomGasToken:
+-        false
+      values.l1FeeOverhead:
+-        188
+      values.l1FeeScalar:
+-        684000
+      values.number:
+-        25432813
+      values.operatorFeeConstant:
+-        0
+      values.operatorFeeScalar:
+-        0
+      values.sequenceNumber:
+-        4
+      values.timestamp:
+-        1782850475
+      values.version:
+-        "1.7.0"
+      implementationNames.oeth:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C:
+-        "L1Block"
+      implementationNames.oeth:0x6a97C5D55A21265326150Efe12FC30Fb21cbff56:
++        ""
+      unverified:
++        true
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (oeth:0x4200000000000000000000000000000000000016) [N/A] {
+    +++ description: None
+      template:
+-        "opstack/Layer2/L2ToL1MessagePasser"
+      sourceHashes.1:
+-        "0xa8bdac224f506426db48b13c4933c57cbe3d88178a3499712638d559204c5eaa"
++        "0xb5be3cf9878e914d0b7feef281dbcc2b72d7c7e9106e44a7dfd516d48de8a62a"
+      description:
+-        "Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface."
+      values.$implementation:
+-        "oeth:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016"
++        "oeth:0x27E51B2254433A3284D9ba73Ea551C397DB2a124"
+      values.$pastUpgrades.0:
++        ["2026-07-08T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["oeth:0x27E51B2254433A3284D9ba73Ea551C397DB2a124"]]
+      values.$upgradeCount:
+-        0
++        1
+      values.version:
+-        "1.0.0"
++        "1.2.0"
+      values.messageNonce:
++        "1766847064778384329583297500742918515827483896875618958121606201292653696"
+      implementationNames.oeth:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016:
+-        "L2ToL1MessagePasser"
+      implementationNames.oeth:0x27E51B2254433A3284D9ba73Ea551C397DB2a124:
++        "L2ToL1MessagePasser"
+    }
+```
+
+```diff
+    contract  (oeth:0x4200000000000000000000000000000000000017) [N/A] {
+    +++ description: None
+      name:
+-        "OptimismMintableERC721Factory"
++        ""
+      template:
+-        "opstack/Layer2/OptimismMintableERC721Factory"
+      sourceHashes:
+-        ["0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44","0x889f9ffc10090c8df747b3523aa4fde7bcc0aade333f7ddabece6b3f005a2e80"]
+      description:
+-        "Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens."
+      values.$implementation:
+-        "oeth:0xc0d3C0d3C0d3C0d3C0d3c0d3C0D3C0d3C0D30017"
++        "oeth:0xf43862B9d814BB4504158CecCB0b74b31265e4eE"
+      values.$pastUpgrades.0:
++        ["2026-07-08T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["oeth:0x2A5A3eabB9Fd571A3Af0299eebdF8EaafE29a914"]]
+      values.$pastUpgrades.1:
++        ["2026-07-08T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["oeth:0xf43862B9d814BB4504158CecCB0b74b31265e4eE"]]
+      values.$upgradeCount:
+-        0
++        2
+      values.BRIDGE:
+-        "oeth:0x4200000000000000000000000000000000000014"
+      values.REMOTE_CHAIN_ID:
+-        1
+      values.version:
+-        "1.2.0"
+      implementationNames.oeth:0xc0d3C0d3C0d3C0d3C0d3c0d3C0D3C0d3C0D30017:
+-        "OptimismMintableERC721Factory"
+      implementationNames.oeth:0xf43862B9d814BB4504158CecCB0b74b31265e4eE:
++        ""
+      unverified:
++        true
+    }
+```
+
+```diff
+    contract  (oeth:0x4200000000000000000000000000000000000018) [N/A] {
+    +++ description: None
+      name:
+-        "ProxyAdmin"
++        ""
+      template:
+-        "global/ProxyAdmin"
+      sourceHashes:
+-        ["0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44","0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"]
+      values.$implementation:
+-        "oeth:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018"
++        "oeth:0x893c2CEEb71D38514daF67728d3Ff1b213FC4B5F"
+      values.$pastUpgrades.0:
++        ["2026-07-08T16:00:01.000Z","0x48aa8d6a9d281bf0eaa204e895acdfe0ba38640c34f6d133b2f4ecb879f5c72c",["oeth:0x893c2CEEb71D38514daF67728d3Ff1b213FC4B5F"]]
+      values.$pastUpgrades.1:
++        ["2026-07-08T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["oeth:0x893c2CEEb71D38514daF67728d3Ff1b213FC4B5F"]]
+      values.$upgradeCount:
+-        0
++        2
+      values.addressManager:
+-        "oeth:0x0000000000000000000000000000000000000000"
+      values.isUpgrading:
+-        false
+      values.owner:
+-        "oeth:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      implementationNames.oeth:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018:
+-        "ProxyAdmin"
+      implementationNames.oeth:0x893c2CEEb71D38514daF67728d3Ff1b213FC4B5F:
++        ""
+      directlyReceivedPermissions:
+-        [{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000002","role":"admin"},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000007","role":"admin"},{"permission":"upgrade","from":"oeth:0x420000000000000000000000000000000000000F","role":"admin"},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000010","role":"admin"},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000011","role":"admin"},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000012","role":"admin"},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000013","role":"admin"},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000014","role":"admin"},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000015","role":"admin"},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000016","role":"admin"},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000017","role":"admin"},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000018","role":"admin"},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000019","role":"admin"},{"permission":"upgrade","from":"oeth:0x420000000000000000000000000000000000001A","role":"admin"},{"permission":"upgrade","from":"oeth:0x420000000000000000000000000000000000001b","role":"admin"},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000020","role":"admin"},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000021","role":"admin"}]
+      unverified:
++        true
+      receivedPermissions:
++        [{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000002","role":"admin"},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000007","role":"admin"},{"permission":"upgrade","from":"oeth:0x420000000000000000000000000000000000000F","role":"admin"},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000010","role":"admin"},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000011","role":"admin"},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000012","role":"admin"},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000013","role":"admin"},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000014","role":"admin"},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000015","role":"admin"},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000016","role":"admin"},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000017","role":"admin"},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000018","role":"admin"},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000019","role":"admin"},{"permission":"upgrade","from":"oeth:0x420000000000000000000000000000000000001A","role":"admin"},{"permission":"upgrade","from":"oeth:0x420000000000000000000000000000000000001b","role":"admin"},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000020","role":"admin"},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000021","role":"admin"}]
+    }
+```
+
+```diff
+    contract BaseFeeVault (oeth:0x4200000000000000000000000000000000000019) [N/A] {
+    +++ description: None
+      template:
+-        "opstack/Layer2/BaseFeeVault"
+      sourceHashes.1:
+-        "0xa4fbbae0f482b898d87c15326c29fdeaa7ad5371f679bbaa0dc95b0866325cab"
++        "0xf7b9f825b6af20abb355da09822d54e6e3fa7243439293826bd7271f87747775"
+      description:
+-        "Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1."
+      values.$implementation:
+-        "oeth:0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019"
++        "oeth:0xf7bed7215EEF1003fac426682Cf2edeb958569f7"
+      values.$pastUpgrades.0:
++        ["2026-07-08T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["oeth:0x2A5A3eabB9Fd571A3Af0299eebdF8EaafE29a914"]]
+      values.$pastUpgrades.1:
++        ["2026-07-08T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["oeth:0xf7bed7215EEF1003fac426682Cf2edeb958569f7"]]
+      values.$upgradeCount:
+-        0
++        2
+      values.version:
+-        "1.1.0"
++        "1.6.1"
+      values.minWithdrawalAmount:
++        "10000000000000000000"
+      values.proxyAdmin:
++        "oeth:0x4200000000000000000000000000000000000018"
+      values.proxyAdminOwner:
++        "oeth:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      values.recipient:
++        "oeth:0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa"
+      values.totalProcessed:
++        "2560969120522571222867"
+      values.WITHDRAWAL_NETWORK:
++        0
+      values.withdrawalNetwork:
++        0
+      implementationNames.oeth:0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019:
+-        "BaseFeeVault"
+      implementationNames.oeth:0xf7bed7215EEF1003fac426682Cf2edeb958569f7:
++        "BaseFeeVault"
+      category:
+-        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract BaseFeeVault (oeth:0x420000000000000000000000000000000000001A) [N/A] {
+    +++ description: None
+      name:
+-        "L1FeeVault"
++        "BaseFeeVault"
+      template:
+-        "opstack/Layer2/L1FeeVault"
+      sourceHashes.1:
+-        "0x09853f7c7e9d53511d9bcb729b4b53f1b00b56183056dd353d2cd640d9407d82"
++        "0xf7b9f825b6af20abb355da09822d54e6e3fa7243439293826bd7271f87747775"
+      description:
+-        "Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1."
+      values.$implementation:
+-        "oeth:0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A"
++        "oeth:0xf7bed7215EEF1003fac426682Cf2edeb958569f7"
+      values.$pastUpgrades.0:
++        ["2026-07-08T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["oeth:0x2A5A3eabB9Fd571A3Af0299eebdF8EaafE29a914"]]
+      values.$pastUpgrades.1:
++        ["2026-07-08T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["oeth:0xf7bed7215EEF1003fac426682Cf2edeb958569f7"]]
+      values.$upgradeCount:
+-        0
++        2
+      values.version:
+-        "1.1.0"
++        "1.6.1"
+      values.minWithdrawalAmount:
++        "10000000000000000000"
+      values.proxyAdmin:
++        "oeth:0x4200000000000000000000000000000000000018"
+      values.proxyAdminOwner:
++        "oeth:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      values.recipient:
++        "oeth:0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa"
+      values.totalProcessed:
++        "11977299663450817495594"
+      values.WITHDRAWAL_NETWORK:
++        0
+      values.withdrawalNetwork:
++        0
+      implementationNames.oeth:0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A:
+-        "L1FeeVault"
+      implementationNames.oeth:0xf7bed7215EEF1003fac426682Cf2edeb958569f7:
++        "BaseFeeVault"
+      category:
+-        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract OperatorFeeVault (oeth:0x420000000000000000000000000000000000001b) [N/A] {
+    +++ description: None
+      template:
+-        "opstack/Layer2/OperatorFeeVault"
+      sourceHashes.1:
+-        "0x8ee929b67fce68f8daf1dac67514e5e05678a9f554e8d6e676fa28fe81874844"
++        "0x0ba9b644913957c9f60eda0ab433da4523bb2437156e4dd8dadca627c884ba2a"
+      description:
+-        "Holds the 'operator fees' for the L2 network, which are part of the L2 fees that users pay."
+      values.$implementation:
+-        "oeth:0x4fa2Be8cd41504037F1838BcE3bCC93bC68Ff537"
++        "oeth:0xEddf416c7159387cc6DF3015700F79Cfb8911373"
+      values.$pastUpgrades.1:
++        ["2026-07-08T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["oeth:0x2A5A3eabB9Fd571A3Af0299eebdF8EaafE29a914"]]
+      values.$pastUpgrades.2:
++        ["2026-07-08T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["oeth:0xEddf416c7159387cc6DF3015700F79Cfb8911373"]]
+      values.$upgradeCount:
+-        1
++        3
+      values.version:
+-        "1.0.0"
++        "1.1.1"
+      values.proxyAdmin:
++        "oeth:0x4200000000000000000000000000000000000018"
+      values.proxyAdminOwner:
++        "oeth:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      implementationNames.oeth:0x4fa2Be8cd41504037F1838BcE3bCC93bC68Ff537:
+-        "OperatorFeeVault"
+      implementationNames.oeth:0xEddf416c7159387cc6DF3015700F79Cfb8911373:
++        "OperatorFeeVault"
+      category:
+-        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract SchemaRegistry (oeth:0x4200000000000000000000000000000000000020) [N/A] {
+    +++ description: None
+      template:
+-        "opstack/Layer2/SchemaRegistry"
+      sourceHashes.1:
+-        "0xc94799f3b35c3dedb3578da655614d2690e56477b3e176966113bbf06888e05d"
++        "0xe2a60db541c987ffa9a6ed73b9100c7f62f2574966a20c903a73a8f730c7dfcc"
+      description:
+-        "Contracts to register schemas for the Ethereum Attestation Service (EAS)."
+      values.$implementation:
+-        "oeth:0x6232208d66bAc2305b46b4Cb6BCB3857B298DF13"
++        "oeth:0x70DE55BC0bfBC52C5D0CCA1DA5816c2428886A34"
+      values.$pastUpgrades.1:
++        ["2026-07-08T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["oeth:0x70DE55BC0bfBC52C5D0CCA1DA5816c2428886A34"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.version:
+-        "1.0.1"
++        "1.3.1-beta.2"
+      implementationNames.oeth:0x6232208d66bAc2305b46b4Cb6BCB3857B298DF13:
+-        "SchemaRegistry"
+      implementationNames.oeth:0x70DE55BC0bfBC52C5D0CCA1DA5816c2428886A34:
++        "SchemaRegistry"
+    }
+```
+
+```diff
+    contract EAS (oeth:0x4200000000000000000000000000000000000021) [N/A] {
+    +++ description: None
+      template:
+-        "opstack/Layer2/EAS"
+      sourceHashes.1:
+-        "0x22dcc9bc6d8b0463159f8a96f6f2ee61c897a8ae5e1b684e38e74e2b25b48e66"
++        "0x16924e7d7c1a311d6c9da93c6bf8bc7bd5454a0efde4d6e365e66c87ef4a0951"
+      description:
+-        "Contract containing the main logic for the Ethereum Attestation Service (EAS)."
+      values.$implementation:
+-        "oeth:0x4E0275Ea5a89e7a3c1B58411379D1a0eDdc5b088"
++        "oeth:0xbEc660b456B84A081E90aF29BE43385BDa5bF7b6"
+      values.$pastUpgrades.1:
++        ["2026-07-08T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["oeth:0xbEc660b456B84A081E90aF29BE43385BDa5bF7b6"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.getAttestTypeHash:
+-        "0xdbfdf8dc2b135c26253e00d5b6cbe6f20457e003fd526d97cea183883570de61"
++        "0xfeb2925a02bae3dae48d424a0437a2b6ac939aa9230ddc55a1a76f065d988076"
+      values.getDomainSeparator:
+-        "0xd963157246e3d9bacafb6121ee5c596e8048baf5c3814c1b9fa094fdc4d6aed1"
++        "0x12909de2583872a9cb6474f44ae7f84a355ed273fda804f81a9594c3fa6220e9"
+      values.getRevokeTypeHash:
+-        "0xa98d02348410c9c76735e0d0bb1396f4015ac2bb9615f9c2611d19d7a8a99650"
++        "0xb5d556f07587ec0f08cf386545cc4362c702a001650c2058002615ee5c9d1e75"
+      values.version:
+-        "1.0.1"
++        "1.4.1-beta.3"
+      implementationNames.oeth:0x4E0275Ea5a89e7a3c1B58411379D1a0eDdc5b088:
+-        "EAS"
+      implementationNames.oeth:0xbEc660b456B84A081E90aF29BE43385BDa5bF7b6:
++        "EAS"
+    }
+```
+
+```diff
+    EOA SuperchainProxyAdminOwner - L2 Alias (oeth:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000002","role":"admin","via":[{"address":"oeth:0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000007","role":"admin","via":[{"address":"oeth:0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"oeth:0x420000000000000000000000000000000000000F","role":"admin","via":[{"address":"oeth:0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000010","role":"admin","via":[{"address":"oeth:0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000011","role":"admin","via":[{"address":"oeth:0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000012","role":"admin","via":[{"address":"oeth:0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000013","role":"admin","via":[{"address":"oeth:0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000014","role":"admin","via":[{"address":"oeth:0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000015","role":"admin","via":[{"address":"oeth:0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000016","role":"admin","via":[{"address":"oeth:0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000017","role":"admin","via":[{"address":"oeth:0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000018","role":"admin","via":[{"address":"oeth:0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000019","role":"admin","via":[{"address":"oeth:0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"oeth:0x420000000000000000000000000000000000001A","role":"admin","via":[{"address":"oeth:0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"oeth:0x420000000000000000000000000000000000001b","role":"admin","via":[{"address":"oeth:0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000020","role":"admin","via":[{"address":"oeth:0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"oeth:0x4200000000000000000000000000000000000021","role":"admin","via":[{"address":"oeth:0x4200000000000000000000000000000000000018"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"oeth:0x4200000000000000000000000000000000000018","role":".owner"}]
+    }
+```
+
+## Source code changes
+
+```diff
+.../Proxy.p.sol                                    |    0
+ .../Proxy.p.sol                                    |    0
+ .../Proxy.p.sol                                    |    0
+ .../Proxy.p.sol                                    |    0
+ .../Proxy.p.sol                                    |    0
+ .../BaseFeeVault/BaseFeeVault.sol => /dev/null     | 3864 ------------
+ .../BaseFeeVault.sol                               | 1367 ++++
+ .../Proxy.p.sol                                    |    0
+ .../BaseFeeVault.sol                               | 1367 ++++
+ .../Proxy.p.sol                                    |    0
+ .../{.flat@1782850566 => .flat}/EAS/EAS.sol        | 1024 +--
+ .../L1Block/L1Block.sol => /dev/null               |  297 -
+ .../L1FeeVault/L1FeeVault.sol => /dev/null         | 3864 ------------
+ .../L2CrossDomainMessenger.sol                     | 3855 +++++------
+ .../L2ERC721Bridge/L2ERC721Bridge.sol => /dev/null | 2878 ---------
+ .../L2StandardBridge/L2StandardBridge.sol          | 6666 ++++++++------------
+ .../L2ToL1MessagePasser/L2ToL1MessagePasser.sol    | 1174 ++--
+ .../OperatorFeeVault/OperatorFeeVault.sol          |  920 ++-
+ .../OptimismMintableERC20Factory.sol               |    0
+ .../OptimismMintableERC20Factory}/Proxy.p.sol      |    0
+ .../OptimismMintableERC20Factory.sol => /dev/null  |  919 ---
+ .../OptimismMintableERC721Factory.sol => /dev/null | 1497 -----
+ .../ProxyAdmin/ProxyAdmin.sol => /dev/null         |  427 --
+ .../SchemaRegistry/SchemaRegistry.sol              |  151 +-
+ .../SequencerFeeVault/SequencerFeeVault.sol        | 5686 ++++-------------
+ 25 files changed, 10127 insertions(+), 25829 deletions(-)
+```
+
 Generated with discovered.json: 0x289c7abdc63c6968673577d26bff604155668381
 
 # Diff at Tue, 30 Jun 2026 20:17:14 GMT:
