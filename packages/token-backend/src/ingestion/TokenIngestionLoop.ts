@@ -70,9 +70,15 @@ export class TokenIngestionLoop {
   // The steps run sequentially on purpose: their logs stay separated and a
   // failure is attributable to a single step. Token relation ingestion comes
   // first because it is fast and bounded, while the queue drain can run long
-  // — relations have no ordering dependency on the token catalogue.
+  // — relations have no ordering dependency on the token catalogue. Its
+  // errors are contained so a persistently failing relation batch cannot
+  // starve the token catalogue steps.
   async runOnce() {
-    await this.relationIngestion.runOnce()
+    try {
+      await this.relationIngestion.runOnce()
+    } catch (error) {
+      this.logger.error(error)
+    }
     await this.enqueueNewInteropTransferTokens()
     await this.drainPendingQueue()
   }

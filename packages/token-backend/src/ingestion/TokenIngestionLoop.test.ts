@@ -69,6 +69,54 @@ describe(TokenIngestionLoop.name, () => {
       expect(order).toEqual(['relations', 'enqueue', 'drain'])
     })
 
+    it('still enqueues and drains when token relation ingestion fails', async () => {
+      const order: string[] = []
+      const relationIngestion = mockObject<TokenRelationIngestion>({
+        runOnce: mockFn().rejectsWith(new Error('poison transfer')),
+      })
+      const getTokenAddressesAfterSerialId = mockFn().executes(async () => {
+        order.push('enqueue')
+        return {
+          latestSerialId: undefined,
+          transferCount: 0,
+          tokenAddresses: [],
+        }
+      })
+      const findNextPending = mockFn().executes(async () => {
+        order.push('drain')
+        return undefined
+      })
+
+      const loop = new TokenIngestionLoop(
+        mockObject<Database>({
+          interopTransfer: mockObject<Database['interopTransfer']>({
+            getTokenAddressesAfterSerialId,
+            getTokenRoutes: mockFn().resolvesTo([]),
+          }),
+        }),
+        mockObject<TokenDatabase>({
+          tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
+            get: mockFn().resolvesTo(undefined),
+          }),
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            { findNextPending },
+          ),
+        }),
+        mockObject({
+          refreshInteropTransferIndex: mockFn().resolvesTo({
+            findInvolving: mockFn().returns([]),
+          }),
+        }) as unknown as TokenIngestionProcessor,
+        relationIngestion,
+        Logger.SILENT,
+        { intervalMs: 60_000 },
+      )
+
+      await loop.runOnce()
+
+      expect(order).toEqual(['enqueue', 'drain'])
+    })
+
     it('enqueues addresses after the stored cursor and advances it', async () => {
       const get = mockFn().resolvesTo({
         key: 'interop-transfers:lastSerialId',
