@@ -1,6 +1,6 @@
 {
   "name": "loopring",
-  "timestamp": 1782730310,
+  "timestamp": 1783679500,
   "configHash": "0x93f5256f3fafd11c31ef9a4470efba43617d18047e99f6f738c0bd9b8cfb6613",
   "entries": [
     {
@@ -9,7 +9,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0x09274cec6469e731822a31ef5a200ae33fc319aca366cf599f707b6359f97613",
-        "0xac16617aa5dbef15d7ade7f376b240d9a040b65a8ab552f5408e97e29168fd41"
+        "0x81db0f4c00a619fd3fea57b1c9a4d3dcb0220158cd03876a0176cf25899f44c2"
       ],
       "proxyType": "ZeppelinOS proxy",
       "ignoreInWatchMode": [
@@ -25,7 +25,7 @@
       "values": {
         "$admin": "eth:0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
         "$immutable": false,
-        "$implementation": "eth:0xB40973B8bffDe1553AE05DE4b298610524E1c37a",
+        "$implementation": "eth:0xB2de2bff671b03612a0Fa3340E0e0eE7e1C0a388",
         "$pastUpgrades": [
           [
             "2020-10-29T11:12:20.000Z",
@@ -71,16 +71,21 @@
             "2026-06-29T10:24:47.000Z",
             "0xecb93127c952956993d2247504aecf504b4e48a26bcd758276242ec10ea35274",
             ["eth:0xB40973B8bffDe1553AE05DE4b298610524E1c37a"]
+          ],
+          [
+            "2026-07-09T12:39:59.000Z",
+            "0xc3371471d0daa75094515baac093f12c217b1e0147ddcf992496fcca9ea4721b",
+            ["eth:0xB2de2bff671b03612a0Fa3340E0e0eE7e1C0a388"]
           ]
         ],
-        "$upgradeCount": 9,
-        "implementation": "eth:0xB40973B8bffDe1553AE05DE4b298610524E1c37a",
+        "$upgradeCount": 10,
+        "implementation": "eth:0xB2de2bff671b03612a0Fa3340E0e0eE7e1C0a388",
         "loopringV3": "eth:0xe56D6ccab6551932C0356E4e8d5dAF0630920C71",
         "proxyOwner": "eth:0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97"
       },
       "implementationNames": {
         "eth:0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4": "OwnedUpgradabilityProxy",
-        "eth:0xB40973B8bffDe1553AE05DE4b298610524E1c37a": "ProxyAdminExecutor"
+        "eth:0xB2de2bff671b03612a0Fa3340E0e0eE7e1C0a388": "ProxyAdminExecutor"
       }
     },
     {
@@ -291,7 +296,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 256,
+        "nonce": 264,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -520,11 +525,17 @@
       "function transferOwnership(address newOwner)",
       "function withdraw(address, address to, address token, uint256 amount, bytes) payable"
     ],
-    "eth:0xB40973B8bffDe1553AE05DE4b298610524E1c37a": [
+    "eth:0xB2de2bff671b03612a0Fa3340E0e0eE7e1C0a388": [
       "error CallReverted(bytes returndata)",
+      "error LengthMismatch(address to, uint256 idsLength, uint256 amountsLength)",
+      "error NotAContract(address token)",
       "error NotProxyOwner(address caller, address owner)",
       "error Reentrancy()",
+      "event NftBatchTransferFailed(address indexed token, address indexed to, uint256[] ids, uint256[] amounts)",
+      "event NftTransferFailed(address indexed token, address indexed to, uint256 id)",
+      "event NftsSent(uint256 succeeded, uint256 failed)",
       "event Transacted(address indexed to, uint256 value, bytes data, bytes result)",
+      "function sendNfts(tuple(address token, bool isERC1155, tuple(address to, uint256[] ids, uint256[] amounts)[] recipients)[] groups, bool tolerant) returns (uint256 succeeded, uint256 failed)",
       "function transact(address to, uint256 value, bytes data) payable returns (bytes result)"
     ],
     "eth:0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD": [
@@ -614,6 +625,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 25422843 },
+  "usedBlockNumbers": { "ethereum": 25501608 },
   "permissionsConfigHash": "0x11ac86fa4315331d727d07a819478ebb59af3675687e6c2e61941d8fc370bd12"
 }
