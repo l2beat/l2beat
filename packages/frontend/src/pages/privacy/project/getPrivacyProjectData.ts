@@ -170,22 +170,25 @@ export async function getPrivacyProjectData(
   const hasTrackedAssets = details.assets.length > 0
   const discoveryHref =
     contractsSection || permissionsSection ? discoUi.href : undefined
+  let totalValueLockedUsd = 0
 
   if (hasTrackedAssets) {
-    await Promise.all([
+    const [tvlChart] = await Promise.all([
+      helpers.queryClient.fetchQuery(
+        helpers.trpc.privacy.tvlChart.queryOptions({
+          projectIds: [details.id],
+          range: defaultChartRange,
+        }),
+      ),
       helpers.queryClient.prefetchQuery(
         helpers.trpc.privacy.flowsChart.queryOptions({
           projectIds: [details.id],
           range: defaultChartRange,
         }),
       ),
-      helpers.queryClient.prefetchQuery(
-        helpers.trpc.privacy.tvlChart.queryOptions({
-          projectIds: [details.id],
-          range: defaultChartRange,
-        }),
-      ),
     ])
+
+    totalValueLockedUsd = tvlChart.chart.at(-1)?.[1][details.id] ?? 0
   }
   const bucketCount = details.assets.reduce(
     (sum, asset) => sum + asset.bucketCount,
@@ -345,7 +348,7 @@ export async function getPrivacyProjectData(
     privacy: details.privacy,
     reproducibility: details.reproducibility,
     summary: {
-      totalValueLockedUsd: details.summary.totalValueLockedUsd,
+      totalValueLockedUsd,
       deposits: {
         total: details.summary.deposits.total,
         last7d: details.summary.deposits.last7d,
