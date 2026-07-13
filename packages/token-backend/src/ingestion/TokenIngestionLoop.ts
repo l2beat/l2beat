@@ -77,7 +77,7 @@ export class TokenIngestionLoop {
     try {
       await this.relationIngestion.runOnce()
     } catch (error) {
-      this.logger.error(error)
+      this.logger.error('Token relation ingestion failed', error)
     }
     await this.enqueueNewInteropTransferTokens()
     await this.drainPendingQueue()

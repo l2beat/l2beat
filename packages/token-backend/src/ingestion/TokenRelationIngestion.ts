@@ -66,7 +66,7 @@ export class TokenRelationIngestion {
     }
 
     if (scanned === 0) {
-      this.logger.debug('No new interop transfers found')
+      this.logger.debug('No new interop transfers to scan')
       return
     }
 
