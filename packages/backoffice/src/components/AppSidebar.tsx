@@ -6,6 +6,7 @@ import {
   PieChartIcon,
   RefreshCwIcon,
   ShieldCheckIcon,
+  SigmaIcon,
 } from 'lucide-react'
 import { Link, matchPath, useLocation } from 'react-router-dom'
 import {
@@ -173,7 +174,7 @@ const navGroups: NavigationGroup[] = [
       {
         type: 'single',
         title: 'Interop aggregates',
-        icon: ClipboardCheckIcon,
+        icon: SigmaIcon,
         url: '/website/interop-aggregates',
       },
       {
