@@ -260,9 +260,12 @@ function InteropMetrics({
   interop: NonNullable<ProjectScalingEntry['header']['interop']>
 }) {
   const headlineStats = [
-    { label: 'Last 24h volume', value: formatCurrency(interop.volume, 'usd') },
     {
-      label: 'Last 24h transfer count',
+      label: 'Last 24h cross-chain volume',
+      value: formatCurrency(interop.volume, 'usd'),
+    },
+    {
+      label: 'Last 24h cross-chain transfers',
       value: formatActivityCount(interop.transferCount),
     },
   ]
