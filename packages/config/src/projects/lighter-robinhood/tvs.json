@@ -1,0 +1,35 @@
+{
+  "$schema": "../tvs-config-schema.json",
+  "projectId": "lighter-robinhood",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "lighter-robinhood-USDG",
+      "priceId": "global-dollar",
+      "symbol": "USDG",
+      "name": "Global Dollar",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/51281/large/GDN_USDG_Token_200x200.png?1730484111",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168",
+        "chain": "robinhood",
+        "escrowAddress": "0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+        "decimals": 6,
+        "sinceTimestamp": 1782477747
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1782477747
+        },
+        "priceId": "global-dollar"
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}
