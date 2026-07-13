@@ -368,14 +368,7 @@ describe(mergeConfigurations.name, () => {
         expect(result).toEqual({
           diff: {
             ...EMPTY_DIFF,
-            toWipeData: [
-              // this is slightly weird that it will return duplicate
-              // but writing code to handle this edge case would introduce complexity
-              // so we will trigger two deletes, second will do nothing
-              // situation like this is anyway very unlikely to happen
-              wipeRemoval('a'),
-              wipeRemoval('a'),
-            ],
+            toWipeData: [wipeRemoval('a')],
             toUpdate: [{ ...actual('a', 200, 300), currentHeight: null }],
           },
           configurations: [{ ...actual('a', 200, 300), currentHeight: null }],

@@ -127,11 +127,19 @@ export function mergeConfigurations<T>(
       toUpdate,
       toTrimData,
       toDelete,
-      toWipeData,
+      toWipeData: uniqueById(toWipeData),
     },
     configurations: configurations,
     safeHeight: getSafeHeight(configurations),
   }
+}
+
+function uniqueById(configurations: WipeRemovalConfiguration[]) {
+  return Array.from(
+    new Map(
+      configurations.map((configuration) => [configuration.id, configuration]),
+    ).values(),
+  )
 }
 
 function getConfigurationsAsMaps<T>(
