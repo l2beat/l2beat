@@ -1,6 +1,6 @@
 {
   "name": "shared-sharp-verifier",
-  "timestamp": 1782304372,
+  "timestamp": 1783938851,
   "configHash": "0x763beeb7544e2aaab313d4437719ced5db231a569f24182a5200e9732c2c3db7",
   "entries": [
     {
@@ -1612,7 +1612,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 22,
+        "nonce": 24,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -3226,9 +3226,14 @@
             "2026-06-21T09:15:59.000Z",
             "0x57f323ff6c828c8fe0c65c9c89d5b242264455cd5f3a5bacd25a78efa17b0ed4",
             ["eth:0x3597c5CBCbCB30079a0bD2A68cDE5f98272f9feb"]
+          ],
+          [
+            "2026-07-12T11:53:47.000Z",
+            "0x7f1e6f9a7268ea6ce5b3b2ce055c3ce420ee776c63c41f57823a0e9cb782e254",
+            ["eth:0x3597c5CBCbCB30079a0bD2A68cDE5f98272f9feb"]
           ]
         ],
-        "$upgradeCount": 14,
+        "$upgradeCount": 15,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -3259,7 +3264,7 @@
           "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
         },
         "appGovernorAC": ["eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"],
-        "callProxyImplementation": "eth:0xE67515a751291445B85b2F176c1eCdf08e86b406",
+        "callProxyImplementation": "eth:0x4956bda1d23F75B988644329c5B06BD1494a72b6",
         "customImplOperators": [
           "eth:0x54B839D988C9E712cd36cBf7C95dedC2B9F9aE6c",
           "eth:0xfE325F97146124F3767bFA59899Fa4177fd46D2f",
@@ -3287,7 +3292,7 @@
         "isNotFinalized": true,
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
-        "StarkWareProxy_callImplementation": "eth:0xE67515a751291445B85b2F176c1eCdf08e86b406",
+        "StarkWareProxy_callImplementation": "eth:0x4956bda1d23F75B988644329c5B06BD1494a72b6",
         "StarkWareProxy_upgradeDelay": 691200,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "upgradeActivationDelayFmt": "8d"
@@ -3344,6 +3349,53 @@
         "eth:0x487175b93FDbac971ceB3a88b9843F46f1d5d2C8": "PoseidonPoseidonFullRoundKey2Column"
       },
       "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "SHARPVerifier",
+      "address": "eth:0x4956bda1d23F75B988644329c5B06BD1494a72b6",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/SHARPVerifier",
+      "sourceHashes": [
+        "0x702c3ac8228cb7a90fdc21a1ff9a274add0e7c4d692fafa13cde53c3cab10c45"
+      ],
+      "proxyType": "immutable",
+      "description": "Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
+      "sinceTimestamp": 1782997607,
+      "sinceBlock": 25445019,
+      "values": {
+        "$immutable": true,
+        "bootloaderProgramContractAddress": "eth:0x24105e6697AdD9B4B1BDE04079a91BDFCCa24A47",
+        "cpuFrilessVerifiers": [
+          "eth:0x30F3AB988Cb00fe3Fb5ab891F50c13684770419b",
+          "eth:0x0cD0cDf0132c566db61B691BCEEBA2c4D8cA5CdC",
+          "eth:0xFFC7974cd74b95f631f454cd787AAc28F0476b44",
+          "eth:0x015381651F240Ed6C44122dCba6Cf807c9442CD6",
+          "eth:0x2867A4509B0969531641A42a3D4A9B0A07109B6B",
+          "eth:0x6a67796ee97700B5B5f5aFBCFFDCbc5F80803F11",
+          "eth:0x71574057D12541ccDa98643aC56441838353A26D",
+          "eth:0xbe0F8F150Fd10798524B4de80eD75751658CAEF3"
+        ],
+        "getBootloaderConfig": [
+          "3442855748187296636739564186904728563385971901122957091055928358173521721079",
+          "2358844945297786488640123814540854423585455959362109345448922524567546993330",
+          "2549868507195840500193135872505150687001846773665388230794631345999578394351"
+        ],
+        "hasRegisteredFact": true,
+        "identify": "StarkWare_GpsStatementVerifier_2026_13",
+        "memoryPageFactRegistry": "eth:0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460",
+        "PAGE_INFO_ADDRESS_OFFSET": 0,
+        "PAGE_INFO_HASH_OFFSET": 2,
+        "PAGE_INFO_SIZE": 3,
+        "PAGE_INFO_SIZE_IN_BYTES": 96,
+        "PAGE_INFO_SIZE_OFFSET": 1,
+        "referenceFactRegistry": "eth:0xE67515a751291445B85b2F176c1eCdf08e86b406",
+        "referralExpirationTime": 1785589607
+      },
+      "implementationNames": {
+        "eth:0x4956bda1d23F75B988644329c5B06BD1494a72b6": "GpsStatementVerifier"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "CpuOods",
@@ -6549,7 +6601,7 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "name": "SHARPVerifier",
+      "name": "SHARPVerifier_2026_13_3",
       "address": "eth:0xE67515a751291445B85b2F176c1eCdf08e86b406",
       "type": "Contract",
       "template": "shared-sharp-verifier/SHARPVerifier",
@@ -7032,6 +7084,23 @@
     "eth:0x487175b93FDbac971ceB3a88b9843F46f1d5d2C8": [
       "function compute(uint256 x) pure returns (uint256 result)"
     ],
+    "eth:0x4956bda1d23F75B988644329c5B06BD1494a72b6": [
+      "constructor(address bootloaderProgramContract, address memoryPageFactRegistry_, address[] cairoVerifierContracts, uint256 simpleBootloaderProgramHash, uint256 applicativeBootloaderProgramHash, uint256 hashedSupportedCairoVerifiers, address referenceVerifier, uint256 referralDurationSeconds)",
+      "event LogMemoryPagesHashes(bytes32 programOutputFact, bytes32[] pagesHashes)",
+      "function PAGE_INFO_ADDRESS_OFFSET() view returns (uint256)",
+      "function PAGE_INFO_HASH_OFFSET() view returns (uint256)",
+      "function PAGE_INFO_SIZE() view returns (uint256)",
+      "function PAGE_INFO_SIZE_IN_BYTES() view returns (uint256)",
+      "function PAGE_INFO_SIZE_OFFSET() view returns (uint256)",
+      "function getBootloaderConfig() view returns (uint256, uint256, uint256)",
+      "function hasRegisteredFact() view returns (bool)",
+      "function identify() pure returns (string)",
+      "function isValid(bytes32 fact) view returns (bool)",
+      "function localIsValid(bytes32 fact) view returns (bool)",
+      "function referenceFactRegistry() view returns (address)",
+      "function referralExpirationTime() view returns (uint256)",
+      "function verifyProofAndRegister(uint256[] proofParams, uint256[] proof, uint256[] taskMetadata, uint256[] cairoAuxInput, uint256 cairoVerifierId)"
+    ],
     "eth:0x5318edCfEcAF84EB5A3A4D364C2dCFF06083953E": [
       "function compute(uint256 x) pure returns (uint256 result)"
     ],
@@ -7370,6 +7439,6 @@
     "shared-sharp-verifier/SHARPVerifier": "0x9f442d61eda2d5aabf1141b1f7769fd6c3100f2fae6777f87260eb27a9903db4",
     "shared-sharp-verifier/SHARPVerifierCallProxy": "0xcbc3662577ca6bc2de4ebf8583008543e01742f079dd46e757b4abe24d694805"
   },
-  "usedBlockNumbers": { "ethereum": 25387494 },
-  "permissionsConfigHash": "0x1e3902f30f489d3f46ccf279fa71c48fff59c41a78c56bd4bd238ea5c46383ba"
+  "usedBlockNumbers": { "ethereum": 25523139 },
+  "permissionsConfigHash": "0x6eac151eb917c8268919da6dfa872373703d32b405ef6b44a1e6c29860ab5e7e"
 }

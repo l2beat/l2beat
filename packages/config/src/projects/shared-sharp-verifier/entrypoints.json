@@ -168,6 +168,11 @@
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
+    "eth:0x4956bda1d23F75B988644329c5B06BD1494a72b6": {
+      "name": "SHARPVerifier",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
     "eth:0x4A3635EEd2C38cB0Eac2D52ddE9CFaB49Be48C17": {
       "name": "CpuOods",
       "type": "Contract",
@@ -474,7 +479,7 @@
       "project": "shared-sharp-verifier"
     },
     "eth:0xE67515a751291445B85b2F176c1eCdf08e86b406": {
-      "name": "SHARPVerifier",
+      "name": "SHARPVerifier_2026_13_3",
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
