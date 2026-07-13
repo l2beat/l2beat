@@ -179,9 +179,9 @@ export const zamaCw: BaseProject = {
         'The smart contracts are source-available, but users also rely on offchain FHE execution and threshold decryption services whose outputs are accepted onchain through signature verification. The offchain data cannot currently be fully reproduced from Ethereum DA.',
     },
     privacy: {
-      value: `${kmsThreshold}/${kmsSignerCount} KMS threshold`,
+      value: `${kmsThreshold}/${kmsSignerCount} current KMS threshold`,
       sentiment: 'warning',
-      description: `Privacy depends on fewer than the KMS threshold of signers to collude and be compromised. Each KMS signer is running inside a TEE. ${kmsThreshold} compromised signers can decrypt all current and past private balances. Compliance can be enforced by confidential token owners blocking users and by configured underlying-token denylist hooks during deposits, transfers, unwrap requests, and unwrap finalization.`,
+      description: `The displayed ${kmsThreshold}/${kmsSignerCount} threshold covers only the current Ethereum verifier context. A threshold with usable KMS key shares can decrypt current and past private balances, and forge public decryption results. Each KMS signer is running inside a TEE. Compliance can be enforced by confidential token owners blocking users and by configured underlying-token denylist hooks during deposits, transfers, unwrap requests, and unwrap finalization.`,
     },
     attributes: [
       PRIVACY_ATTRIBUTES.fhe,
