@@ -18,7 +18,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "start": "node build/server.js",
-    "dev": "node --watch -r esbuild-register src/server.ts",
+    "dev": "tsx watch src/server.ts",
     "clean": "rm -rf build *.tsbuildinfo",
     "build:dependencies": "cd ../.. && pnpm build:dependencies:token-backend",
     "watch:dependencies": "cd ../.. && pnpm watch:dependencies:token-backend",
