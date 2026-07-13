@@ -9,6 +9,7 @@ import { PercentChange } from '~/components/PercentChange'
 import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import { IndexCell } from '~/components/table/cells/IndexCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
+import { EM_DASH } from '~/consts/characters'
 import { ChevronIcon } from '~/icons/Chevron'
 import { LineChartIcon } from '~/icons/LineChart'
 import { sourceToLabel } from '~/server/features/scaling/tvs/utils/sourceToLabel'
@@ -173,10 +174,8 @@ export const columns = [
 
 function PercentChangeNotAvailable() {
   return (
-    <span className="relative text-secondary">
-      <span className="relative inline-block w-[52px] text-right text-xs">
-        %N/A
-      </span>
+    <span className="inline-block w-[52px] text-right text-secondary text-xs">
+      {EM_DASH}
     </span>
   )
 }
