@@ -30,7 +30,7 @@ git rev-parse HEAD > /tmp/compare/pr/commit
 
 cd packages/config
 mkdir -p /tmp/compare/out
-node -r esbuild-register scripts/diff/index.ts /tmp/compare/out/index.html
+tsx scripts/diff/index.ts /tmp/compare/out/index.html
 
 if [ -z "$GITHUB_ACTIONS" ]; then
   open /tmp/compare/out/index.html
