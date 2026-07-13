@@ -1,7 +1,22 @@
-import type { ProjectZkCatalogInfo, TrustedSetup } from '@l2beat/config'
+import type {
+  PrivacySummaryValue,
+  ProjectZkCatalogInfo,
+  TrustedSetup,
+} from '@l2beat/config'
 import type { TrustedSetupSectionProps } from '~/components/projects/sections/TrustedSetupsSection'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
+import { formatInteger } from '~/utils/number-format/formatInteger'
 import { getTrustedSetupsSectionFromTrustedSetups } from '~/utils/project/getTrustedSetupsSection'
+
+const TRUSTED_SETUP_RISK_TO_SENTIMENT = {
+  green: 'good',
+  yellow: 'warning',
+  red: 'bad',
+  'N/A': 'neutral',
+} as const satisfies Record<
+  TrustedSetup['risk'],
+  NonNullable<PrivacySummaryValue['sentiment']>
+>
 
 export function getPrivacyTrustedSetup(
   zkCatalogInfo?: ProjectZkCatalogInfo,
@@ -21,6 +36,19 @@ export function getPrivacyTrustedSetup(
 
   const { proofSystem: _proofSystem, ...result } = trustedSetup
   return result
+}
+
+export function toTrustedSetupSummaryValue(
+  trustedSetup: TrustedSetup,
+): PrivacySummaryValue {
+  return {
+    value:
+      trustedSetup.participantCount !== undefined
+        ? `${formatInteger(trustedSetup.participantCount)} participants`
+        : trustedSetup.name,
+    sentiment: TRUSTED_SETUP_RISK_TO_SENTIMENT[trustedSetup.risk],
+    description: `${trustedSetup.name}: ${trustedSetup.shortDescription}`,
+  }
 }
 
 export function getPrivacyTrustedSetupsSection(

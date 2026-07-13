@@ -12,6 +12,7 @@ import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
 import { sentimentToRiskDot } from '../../sentimentToRiskDot'
 
 interface Props {
+  trustedSetup: PrivacySummaryValue
   exitWindow: PrivacyExitWindow
   privacy: PrivacySummaryValue
   reproducibility: PrivacySummaryValue
@@ -19,13 +20,19 @@ interface Props {
 }
 
 export function PrivacyProjectRiskProfile({
+  trustedSetup,
   exitWindow,
   privacy,
   reproducibility,
   className,
 }: Props) {
   return (
-    <div className={cn('grid gap-4 md:grid-cols-3', className)}>
+    <div className={cn('grid gap-4 md:grid-cols-4', className)}>
+      <ProjectSummaryStat
+        title="Trusted setup"
+        tooltip="Trusted setup used by the project's proving system and its risk."
+        value={<RiskValue value={trustedSetup} />}
+      />
       <ProjectSummaryStat
         title="Exit window"
         tooltip="Time users have to withdraw before a malicious upgrade can take effect."
