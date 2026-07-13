@@ -14,7 +14,7 @@ The ACL is the onchain access-control registry for encrypted handles. It records
 
 The (T)KMS is the threshold key-management service used for private and public decryptions. It holds the FHE secret key and functions like a multisig; the current Ethereum verifier context (KMS signer set) has a threshold of {{kmsThreshold}}/{{kmsSignerCount}}. Each context can be different but retains its full permissions until explicitly invalidated onchain. A malicious new Ethereum verifier context, or the threshold of any retained Ethereum verifier context, can attest an inflated amount for an attacker's real unwrap handle and drain pooled backing deposited by other users. The KMS Signers are operated by [Zama, Dfns, Figment, Fireblocks, InfStones, Unit410, LayerZero, Ledger, Omakase, Stake Capital, OpenZeppelin, Etherscan, and Conduit](https://docs.zama.org/protocol/protocol-apps/addresses/mainnet/ethereum#operator-staking).
 
-There are many moving parts and offchain components in the Zama FHE protocol on which Zama Confidential Tokens is built. The Zama Gateway, an L3 on Arbitrum, is currently used to gather signatures and make data available but the authority for asset storage and signature verification remains Ethereum L1.
+There are many moving parts and offchain components in the Zama FHE protocol on which Zama Confidential Tokens is built. The Zama Gateway, an L3 on Arbitrum, is currently used for coordination/aggregation, ciphertext-metadata, and key-lifecycles. Ethereum does not trust its state directly and independently verifies operator signatures before accepting inputs or withdrawals, but current relayer and operator workflows depend on Gateway availability to produce those proofs.
 
 ### Privacy considerations
 
