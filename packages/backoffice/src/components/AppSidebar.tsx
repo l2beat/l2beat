@@ -168,7 +168,7 @@ const navGroups: NavigationGroup[] = [
         type: 'single',
         title: 'Daily checks',
         icon: ClipboardCheckIcon,
-        url: '/website/daily-checks',
+        url: 'https://kibana-v9.l2beat.com/app/dashboards#/view/4405f3b7-898d-45a0-a12b-a2489bacaa19',
       },
       {
         type: 'single',
@@ -219,13 +219,25 @@ export function AppSidebar() {
               <SidebarMenu>
                 {group.items.map((item) => {
                   if (item.type === 'single') {
+                    const isExternal = item.url.startsWith('http')
                     return (
                       <SidebarMenuItem key={item.title}>
                         <SidebarMenuButton asChild tooltip={item.title}>
-                          <Link to={item.url}>
-                            <item.icon />
-                            <span>{item.title}</span>
-                          </Link>
+                          {isExternal ? (
+                            <a
+                              href={item.url}
+                              target="_blank"
+                              rel="noreferrer noopener"
+                            >
+                              <item.icon />
+                              <span>{item.title}</span>
+                            </a>
+                          ) : (
+                            <Link to={item.url}>
+                              <item.icon />
+                              <span>{item.title}</span>
+                            </Link>
+                          )}
                         </SidebarMenuButton>
                       </SidebarMenuItem>
                     )
