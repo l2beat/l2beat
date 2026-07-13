@@ -181,7 +181,7 @@ export const zamaCw: BaseProject = {
     privacy: {
       value: `${kmsThreshold}/${kmsSignerCount} current KMS threshold`,
       sentiment: 'warning',
-      description: `The displayed ${kmsThreshold}/${kmsSignerCount} threshold covers only the current Ethereum verifier context. A threshold with usable KMS key shares can decrypt current and past private balances, and forge public decryption results. Each KMS signer is running inside a TEE. Compliance can be enforced by confidential token owners blocking users and by configured underlying-token denylist hooks during deposits, transfers, unwrap requests, and unwrap finalization.`,
+      description: `The displayed ${kmsThreshold}/${kmsSignerCount} threshold covers only the current Ethereum verifier context. A threshold with usable KMS key shares can decrypt current and past private balances. Separately, a signature threshold from any retained context can forge public decryption results without proving possession or use of those shares. Zama states that KMS nodes run inside TEEs, but this is not verified onchain. Compliance can be enforced by confidential token owners blocking users and by configured underlying-token denylist hooks during deposits, transfers, unwrap requests, and unwrap finalization.`,
     },
     attributes: [
       PRIVACY_ATTRIBUTES.fhe,
