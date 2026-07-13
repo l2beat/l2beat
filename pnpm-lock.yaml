@@ -854,9 +854,6 @@ importers:
       earl:
         specifier: ^1.1.0
         version: 1.3.0
-      esbuild-register:
-        specifier: ^3.6.0
-        version: 3.6.0(esbuild@0.27.3)
       mocha:
         specifier: ^10.2.0
         version: 10.7.3
@@ -12715,13 +12712,6 @@ snapshots:
     dependencies:
       debug: 4.4.0(supports-color@8.1.1)
       esbuild: 0.25.1
-    transitivePeerDependencies:
-      - supports-color
-
-  esbuild-register@3.6.0(esbuild@0.27.3):
-    dependencies:
-      debug: 4.4.0(supports-color@8.1.1)
-      esbuild: 0.27.3
     transitivePeerDependencies:
       - supports-color
 
