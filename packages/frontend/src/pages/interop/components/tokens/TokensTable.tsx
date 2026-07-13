@@ -30,6 +30,7 @@ export type TokensQueryInput = {
   to: string[]
   type?: KnownInteropBridgeType
   protocolIds?: string[]
+  anchorChain?: string
 }
 
 export function TokensTable({
