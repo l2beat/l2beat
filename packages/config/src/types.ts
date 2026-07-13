@@ -973,8 +973,15 @@ export interface ProjectDefiInfo {
 }
 
 export interface ProjectExternalDependency {
-  /** The project this one depends on, rendered as a link to its page. */
-  project: ProjectId
+  /** An L2BEAT project this depends on, rendered as a link to its (reviewed) page. */
+  project?: ProjectId
+  /**
+   * A dependency L2BEAT does not review, shown with a "not reviewed" tag and no
+   * link. Provide `name` and `icon` instead of `project`.
+   */
+  name?: string
+  /** Icon slug under /icons for a non-reviewed dependency (e.g. 'reth' -> /icons/reth.png). */
+  icon?: string
   /** What this project relies on the dependency for. */
   description: string
 }

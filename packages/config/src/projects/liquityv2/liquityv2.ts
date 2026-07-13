@@ -30,26 +30,36 @@ export const liquityv2: BaseProject = {
   display: {
     description:
       'Liquity V2 is a borrowing protocol where users draw the BOLD stablecoin against ETH, wstETH, and rETH collateral at a user-set interest rate, each collateral held in its own isolated branch with a dedicated Stability Pool. Its contracts are immutable and adminless, so the protocol adds no trust assumptions of its own; the only one it carries is the externally controlled Chainlink price feed that each branch relies on to value its collateral.',
-    detailedDescription: readProjectMarkdown('liquityv2', 'detailedDescription', {
-      wethMcr: branchValue('WETH', 'MCR'),
-      lstMcr: branchValue('wstETH', 'MCR'),
-      wethCcr: branchValue('WETH', 'CCR'),
-      lstCcr: branchValue('wstETH', 'CCR'),
-      wethScr: branchValue('WETH', 'SCR'),
-      lstScr: branchValue('wstETH', 'SCR'),
-      bcr: branchValue('WETH', 'BCR'),
-      spPenalty: branchValue('WETH', 'LIQUIDATION_PENALTY_SP'),
-      wethRedistribution: branchValue('WETH', 'LIQUIDATION_PENALTY_REDISTRIBUTION'),
-      lstRedistribution: branchValue('wstETH', 'LIQUIDATION_PENALTY_REDISTRIBUTION'),
-      ethStaleness: discovery.getContractValue<string>(
-        'RETHPriceFeed',
-        'ethUsdStaleness',
-      ),
-      rethEthStaleness: discovery.getContractValue<string>(
-        'RETHPriceFeed',
-        'rEthEthStaleness',
-      ),
-    }),
+    detailedDescription: readProjectMarkdown(
+      'liquityv2',
+      'detailedDescription',
+      {
+        wethMcr: branchValue('WETH', 'MCR'),
+        lstMcr: branchValue('wstETH', 'MCR'),
+        wethCcr: branchValue('WETH', 'CCR'),
+        lstCcr: branchValue('wstETH', 'CCR'),
+        wethScr: branchValue('WETH', 'SCR'),
+        lstScr: branchValue('wstETH', 'SCR'),
+        bcr: branchValue('WETH', 'BCR'),
+        spPenalty: branchValue('WETH', 'LIQUIDATION_PENALTY_SP'),
+        wethRedistribution: branchValue(
+          'WETH',
+          'LIQUIDATION_PENALTY_REDISTRIBUTION',
+        ),
+        lstRedistribution: branchValue(
+          'wstETH',
+          'LIQUIDATION_PENALTY_REDISTRIBUTION',
+        ),
+        ethStaleness: discovery.getContractValue<string>(
+          'RETHPriceFeed',
+          'ethUsdStaleness',
+        ),
+        rethEthStaleness: discovery.getContractValue<string>(
+          'RETHPriceFeed',
+          'rEthEthStaleness',
+        ),
+      },
+    ),
     links: {
       websites: ['https://www.liquity.org/'],
       documentation: ['https://docs.liquity.org/'],
@@ -75,6 +85,18 @@ export const liquityv2: BaseProject = {
       project: ProjectId('chainlink'),
       description:
         'Supplies the price feeds each branch reads to value its ETH, wstETH, or rETH collateral. A stale, zero, or reverting feed shuts that branch down.',
+    },
+    {
+      name: 'Rocket Pool rETH',
+      icon: 'reth',
+      description:
+        "The rETH branch values its collateral partly from the rETH-to-ETH exchange rate reported by Rocket Pool's rETH token. A wrong rate misprices the branch, and a failing one shuts it down.",
+    },
+    {
+      name: 'Lido wstETH',
+      icon: 'wsteth',
+      description:
+        "The wstETH branch values its collateral from Lido's wstETH-to-stETH exchange rate reported by the wstETH token. A wrong rate misprices the branch, and a failing one shuts it down.",
     },
   ],
   permissions: discovery.getDiscoveredPermissions(),

@@ -3,6 +3,7 @@ import type { ProjectId } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
+import type { ExternalDependencyEntry } from '~/components/projects/sections/ExternalDependenciesSection'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
@@ -139,17 +140,30 @@ export async function getDefiProjectData(
   }
 
   const externalDependencies = (project.externalDependencies ?? []).flatMap(
-    (dependency) => {
-      const dependencyProject = allProjects.find(
-        (p) => p.id === dependency.project,
-      )
-      if (!dependencyProject) return []
+    (dependency): ExternalDependencyEntry[] => {
+      if (dependency.project) {
+        const dependencyProject = allProjects.find(
+          (p) => p.id === dependency.project,
+        )
+        if (!dependencyProject) return []
+        return [
+          {
+            name: dependencyProject.name,
+            description: dependency.description,
+            icon: manifest.getUrl(`/icons/${dependencyProject.slug}.png`),
+            href: `/defi/projects/${dependencyProject.slug}`,
+            reviewed: true,
+          },
+        ]
+      }
+      if (!dependency.name || !dependency.icon) return []
       return [
         {
-          name: dependencyProject.name,
+          name: dependency.name,
           description: dependency.description,
-          icon: manifest.getUrl(`/icons/${dependencyProject.slug}.png`),
-          href: `/defi/projects/${dependencyProject.slug}`,
+          icon: manifest.getUrl(`/icons/${dependency.icon}.png`),
+          href: undefined,
+          reviewed: false,
         },
       ]
     },
