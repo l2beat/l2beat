@@ -297,7 +297,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
         'eth:0xcEe284F754E854890e311e3280b767F80797180d',
       ),
       tokens: '*',
-      excludedTokens: ['USDT'], // upgraded to USDT0 - tracked on L2
+      excludedTokens: ['USDT', 'USDS', 'sUSDS'], // upgraded or tracked on L2
       premintedTokens: ['SQD'],
       description:
         'Main entry point for users depositing ERC20 tokens that require minting custom tokens on L2.',
@@ -309,7 +309,14 @@ export const arbitrum: ScalingProject = orbitStackL2({
         'eth:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
       ),
       tokens: '*',
-      excludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'PEPE', 'rsETH'],
+      excludedTokens: [
+        'SolvBTC',
+        'SolvBTC.BBN',
+        'PEPE',
+        'rsETH',
+        'USDS',
+        'sUSDS',
+      ],
       premintedTokens: ['LOGX', 'AIUS', 'YBR', 'FFM'],
       description:
         'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
@@ -319,9 +326,9 @@ export const arbitrum: ScalingProject = orbitStackL2({
       address: ChainSpecificAddress(
         'eth:0xA10c7CE4b876998858b1a9E12b10092229539400',
       ),
-      tokens: ['DAI', 'USDS', 'sUSDS'],
+      tokens: ['DAI'],
       description:
-        'Maker/Sky-controlled vault for DAI, USDS and sUSDS bridged with canonical messaging.',
+        'Maker/Sky-controlled vault for DAI bridged with canonical messaging.',
     }),
     discovery.getEscrowDetails({
       address: ChainSpecificAddress(

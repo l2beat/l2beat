@@ -334,6 +334,18 @@ describe('getProjects', () => {
     }
   })
 
+  describe('privacy projects', () => {
+    for (const project of projects) {
+      if (!project.privacyInfo) continue
+
+      it(`${project.id} has at most one zk catalog trusted setup entry`, () => {
+        expect(
+          project.zkCatalogInfo?.trustedSetups.length ?? 0,
+        ).toBeLessThanOrEqual(1)
+      })
+    }
+  })
+
   describe('contracts', () => {
     for (const project of getProjects()) {
       describe(project.id, () => {
@@ -838,7 +850,10 @@ function getUsageMap(projects: BaseProject[]) {
   }
 
   for (const project of projects) {
-    if (!(project.scalingInfo || project.daBridge) || !project.contracts)
+    if (
+      !(project.scalingInfo || project.daBridge || project.privacyInfo) ||
+      !project.contracts
+    )
       continue
 
     for (const [, contracts] of Object.entries(project.contracts.addresses)) {

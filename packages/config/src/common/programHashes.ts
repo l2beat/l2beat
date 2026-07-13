@@ -1165,6 +1165,14 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     ...KAILUA_FP('BOB'),
     verificationStatus: 'notVerified',
   },
+  '0xb2e2b1513e80ea1e8f998e51bf8e7754eec21dbd0463e0b6b115165ba6bac2bf': {
+    ...KAILUA_FP('v1.3.0'),
+    programUrl: 'https://github.com/boundless-xyz/kailua/tree/v1.3.0',
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0xb2e2b1513e80ea1e8f998e51bf8e7754eec21dbd0463e0b6b115165ba6bac2bf.md',
+    ),
+  },
   '0xf176eb82fbbb5d2d281a9cce459062bcdbe65f93d7156829b174fae2b4690c23': {
     // https://github.com/boundless-xyz/kailua/blob/dead453517c48240a221845640493b232255c907/book/src/setup.md
     ...KAILUA_FP('Risc0 v3.0.4, Kailua v1.1.8'),
@@ -1183,6 +1191,18 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
   '0x4aca4abde3db9c42152b4d9eb359e6030111c34ba68f7c68160fce93ed5b7b25': {
     ...KAILUA_FP('BOB', 'This version adds op-contracts v5 compatibility.'),
     verificationStatus: 'notVerified',
+  },
+  '0xd3c097dfec583bb305eefcb5dcddc313b072e372cee66e13492c37fb50e6a90b': {
+    // https://github.com/boundless-xyz/kailua/tree/a11c73fec58f55010b4c6feec0d5c73dd9346f45
+    ...KAILUA_FP(
+      'Risc0 v3.0.5, Kailua v1.3.0 (Hokulea)',
+      'This is the Hokulea variant of the Kailua guest, used by projects that post data availability to EigenDA.',
+    ),
+    programUrl: 'https://github.com/boundless-xyz/kailua/releases/tag/v1.3.0',
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0xd3c097dfec583bb305eefcb5dcddc313b072e372cee66e13492c37fb50e6a90b.md',
+    ),
   },
   '0xf0ce5d15fa89991210ca2667b7f7a8bb740ce551c0f2b20cc76f9debc55d22c2': {
     ...KAILUA_FP('MegaETH'),
@@ -1515,6 +1535,16 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
         'common/programHashes/3480185788024326007166778030599498673382667448173974782477620863541158415714.md',
       ),
     },
+  '1050253032170513549151251823521174837478197699740478552102884446098263561922':
+    {
+      ...SHARP_AGG('stwo'),
+      programUrl:
+        'https://github.com/starkware-libs/sequencer/tree/APOLLO-0.14.3-RC.11/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core/aggregator',
+      verificationStatus: 'successful',
+      verificationSteps: readMarkdown(
+        'common/programHashes/1050253032170513549151251823521174837478197699740478552102884446098263561922.md',
+      ),
+    },
   '2571508110958925737463010241874806654058743535666147712534445437599630018294':
     {
       ...SHARP_AGG('stwo'),
@@ -1543,6 +1573,16 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       verificationStatus: 'successful',
       verificationSteps: readMarkdown(
         'common/programHashes/760308386675154762009993173725077399730170358078020153308029499928875469870.md',
+      ),
+    },
+  '2006389624453304912912750132846114593020263069652857561377702883656839453432':
+    {
+      ...STARKNET_OS,
+      programUrl:
+        'https://github.com/starkware-libs/sequencer/tree/APOLLO-0.14.3-RC.11/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core/os',
+      verificationStatus: 'successful',
+      verificationSteps: readMarkdown(
+        'common/programHashes/2006389624453304912912750132846114593020263069652857561377702883656839453432.md',
       ),
     },
   '2733003247060056328192560178934419513655729851806095615814023997114795707702':

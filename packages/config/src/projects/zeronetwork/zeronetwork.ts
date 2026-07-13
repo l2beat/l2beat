@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -6,7 +11,14 @@ import { zkStackL2 } from '../../templates/zkStack'
 
 const discovery = new ProjectDiscovery('zeronetwork')
 const v26UpgradeTS = UnixTime(1742860739)
+const v29UpgradeTS = UnixTime(1783512011)
 const chainId = 543210
+const eraValidatorMsAddress = ChainSpecificAddress.address(
+  discovery.getContract('EraMultisigValidator').address,
+)
+const diamondAddress = ChainSpecificAddress.address(
+  discovery.getContract('Diamond').address,
+)
 
 const bridge = discovery.getContract('L1NativeTokenVault')
 
@@ -113,6 +125,7 @@ export const zeronetwork: ScalingProject = zkStackL2({
         functionSignature:
           'function commitBatchesSharedBridge(uint256 _chainId, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
         sinceTimestamp: v26UpgradeTS,
+        untilTimestamp: v29UpgradeTS,
       },
     },
     {
@@ -128,6 +141,7 @@ export const zeronetwork: ScalingProject = zkStackL2({
         functionSignature:
           'function proveBatchesSharedBridge(uint256 _chainId, uint256, uint256, bytes)',
         sinceTimestamp: v26UpgradeTS,
+        untilTimestamp: v29UpgradeTS,
       },
     },
     {
@@ -143,6 +157,61 @@ export const zeronetwork: ScalingProject = zkStackL2({
         functionSignature:
           'function executeBatchesSharedBridge(uint256 _chainId, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
         sinceTimestamp: v26UpgradeTS,
+        untilTimestamp: v29UpgradeTS,
+      },
+    },
+    {
+      uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: diamondAddress,
+        address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
+        selector: '0x0db9eb87',
+        functionSignature:
+          'function commitBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
+        sinceTimestamp: v29UpgradeTS,
+      },
+    },
+    {
+      uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: diamondAddress,
+        address: eraValidatorMsAddress,
+        selector: '0x0db9eb87',
+        functionSignature:
+          'function commitBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
+        sinceTimestamp: v29UpgradeTS,
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'proofSubmissions' },
+        { type: 'l2costs', subtype: 'proofSubmissions' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: diamondAddress,
+        address: eraValidatorMsAddress,
+        selector: '0x9271e450',
+        functionSignature:
+          'function proveBatchesSharedBridge(address _chainAddress, uint256, uint256, bytes)',
+        sinceTimestamp: v29UpgradeTS,
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: diamondAddress,
+        address: eraValidatorMsAddress,
+        selector: '0xa085344d',
+        functionSignature:
+          'function executeBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
+        sinceTimestamp: v29UpgradeTS,
       },
     },
   ],

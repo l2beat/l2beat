@@ -37,7 +37,7 @@
   ],
   "scripts": {
     "test": "mocha",
-    "clean": "rm -rf dist",
+    "clean": "rm -rf dist *.tsbuildinfo",
     "build": "tsc",
     "start": "node -r esbuild-register src/",
     "format": "biome format .",

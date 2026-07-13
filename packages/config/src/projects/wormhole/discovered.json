@@ -1,6 +1,6 @@
 {
   "name": "wormhole",
-  "timestamp": 1778499359,
+  "timestamp": 1783513675,
   "configHash": "0x17690043724ad3b36f101b161be0caf180807ca10e88440a5d4b53f0682c3471",
   "entries": [
     {
@@ -105,27 +105,6 @@
     },
     {
       "address": "eth:0x178e21ad2E77AE06711549CFBB1f9c7a9d8096e8",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        }
-      ]
-    },
-    {
-      "address": "eth:0x18e41674CcF26329cD111406C1D05C6c80b23EdC",
       "type": "EOA",
       "proxyType": "EOA",
       "eoaWithUpgradePermissions": true,
@@ -364,7 +343,7 @@
       ]
     },
     {
-      "address": "eth:0x6FbEBc898F403E4773E95feB15E80C9A99c8348d",
+      "address": "eth:0x61D9800f9FCb4160FB0C6cf3A0902592bAC2B434",
       "type": "EOA",
       "proxyType": "EOA",
       "eoaWithUpgradePermissions": true,
@@ -486,18 +465,18 @@
           "eth:0x8C82B2fd82FaeD2711d59AF0F2499D16e726f6b2",
           "eth:0x42579bFFbCF4276E290aB8E4C162bd4052b97970",
           "eth:0x938f104AEb5581293216ce97d771e0CB721221B1",
-          "eth:0x18e41674CcF26329cD111406C1D05C6c80b23EdC",
+          "eth:0xF3ea0AD4FFB5a178AE4EBc21861651B25BdcbB91",
           "eth:0x9D16870160e703324D057c3361c34C5beFBa2c34",
           "eth:0x000aC0076727b35FBea2dAc28fEE5cCB0fEA768e",
           "eth:0xAF45Ced136b9D9e24903464AE889F5C8a723FC14",
           "eth:0xf93124b7c738843CBB89E864c862c38cddCccF95",
           "eth:0xD2CC37A4dc036a8D232b48f62cDD4731412f4890",
           "eth:0xDA798F6896A3331F64b48c12D1D57Fd9cbe70811",
-          "eth:0xD1F64e26238811de5553C40f64af41eE1B6057Cc",
+          "eth:0xaE565927Bb8dB25CD8Bf3e7BB663D70023e4Ea78",
           "eth:0x3F851Ad586A47ceF8d04748f33ab0D71395f06b4",
           "eth:0x178e21ad2E77AE06711549CFBB1f9c7a9d8096e8",
           "eth:0x7899cEAB1DC961Dae9defDB7A4f521269a5448FC",
-          "eth:0x6FbEBc898F403E4773E95feB15E80C9A99c8348d"
+          "eth:0x61D9800f9FCb4160FB0C6cf3A0902592bAC2B434"
         ],
         "$pastUpgrades": [
           [
@@ -521,7 +500,7 @@
         "chainId": 2,
         "currentSizeHardcoded": 19,
         "evmChainId": 1,
-        "getCurrentGuardianSetIndex": 6,
+        "getCurrentGuardianSetIndex": 7,
         "getGuardianSetExpiry": 0,
         "governanceChainId": 1,
         "governanceContract": "0x0000000000000000000000000000000000000000000000000000000000000004",
@@ -534,18 +513,18 @@
             "eth:0x8C82B2fd82FaeD2711d59AF0F2499D16e726f6b2",
             "eth:0x42579bFFbCF4276E290aB8E4C162bd4052b97970",
             "eth:0x938f104AEb5581293216ce97d771e0CB721221B1",
-            "eth:0x18e41674CcF26329cD111406C1D05C6c80b23EdC",
+            "eth:0xF3ea0AD4FFB5a178AE4EBc21861651B25BdcbB91",
             "eth:0x9D16870160e703324D057c3361c34C5beFBa2c34",
             "eth:0x000aC0076727b35FBea2dAc28fEE5cCB0fEA768e",
             "eth:0xAF45Ced136b9D9e24903464AE889F5C8a723FC14",
             "eth:0xf93124b7c738843CBB89E864c862c38cddCccF95",
             "eth:0xD2CC37A4dc036a8D232b48f62cDD4731412f4890",
             "eth:0xDA798F6896A3331F64b48c12D1D57Fd9cbe70811",
-            "eth:0xD1F64e26238811de5553C40f64af41eE1B6057Cc",
+            "eth:0xaE565927Bb8dB25CD8Bf3e7BB663D70023e4Ea78",
             "eth:0x3F851Ad586A47ceF8d04748f33ab0D71395f06b4",
             "eth:0x178e21ad2E77AE06711549CFBB1f9c7a9d8096e8",
             "eth:0x7899cEAB1DC961Dae9defDB7A4f521269a5448FC",
-            "eth:0x6FbEBc898F403E4773E95feB15E80C9A99c8348d"
+            "eth:0x61D9800f9FCb4160FB0C6cf3A0902592bAC2B434"
           ],
           "expirationTime": 0
         },
@@ -619,7 +598,7 @@
       ]
     },
     {
-      "address": "eth:0xAF45Ced136b9D9e24903464AE889F5C8a723FC14",
+      "address": "eth:0xaE565927Bb8dB25CD8Bf3e7BB663D70023e4Ea78",
       "type": "EOA",
       "proxyType": "EOA",
       "eoaWithUpgradePermissions": true,
@@ -640,7 +619,7 @@
       ]
     },
     {
-      "address": "eth:0xD1F64e26238811de5553C40f64af41eE1B6057Cc",
+      "address": "eth:0xAF45Ced136b9D9e24903464AE889F5C8a723FC14",
       "type": "EOA",
       "proxyType": "EOA",
       "eoaWithUpgradePermissions": true,
@@ -769,7 +748,7 @@
         "nativeContract": "0x069b8857feab8184fb687f634618c035dac439dc1aeb3b5598a0f00000000001",
         "owner": "eth:0x3ee18B2214AFF97000D974cf647E7C347E8fa585",
         "symbol": "SOL",
-        "totalSupply": 313323990631150
+        "totalSupply": 296627249511670
       },
       "fieldMeta": {
         "chainId": {
@@ -824,6 +803,27 @@
       "address": "eth:0xe00a8a3c66071B44C3aBdFd947Eaa1eA1D70dC6e",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xF3ea0AD4FFB5a178AE4EBc21861651B25BdcbB91",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "eoaWithUpgradePermissions": true,
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        }
+      ]
     },
     {
       "address": "eth:0xf93124b7c738843CBB89E864c862c38cddCccF95",
@@ -1006,6 +1006,6 @@
     "wormhole/TokenBridge": "0xd15c6606803bc4afae7e428a38a2b40690d1fb4e5fd3d29b47d3e66116582d15",
     "wormhole/WormholeCore": "0xe9cd639e09731a38f64813812bd4d5dc25cd9844a52065c894c53cfa445f64da"
   },
-  "usedBlockNumbers": { "ethereum": 25071604 },
-  "permissionsConfigHash": "0xd61cd1130ac9a8d55e4949929e607468e5b8dea1869017ab9cb0b8da9bbd54a7"
+  "usedBlockNumbers": { "ethereum": 25487847 },
+  "permissionsConfigHash": "0x78b5e366bbad07a794410a8fe090f251d4a242805d9e1c16ecfcb08011785055"
 }

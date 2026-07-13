@@ -1,5 +1,9 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { Database } from '@l2beat/database'
+import type {
+  Database,
+  InteropPluginSyncedRangeRecord,
+  InteropPluginSyncStateRecord,
+} from '@l2beat/database'
 import {
   EthRpcClient,
   Http,
@@ -33,6 +37,7 @@ export type PluginSyncStatus = {
   toTimestamp?: number
   lastError?: string
   resyncRequestedFrom?: number
+  blocksAggregation: boolean
 }
 
 export class InteropSyncersManager {
@@ -136,6 +141,43 @@ export class InteropSyncersManager {
     )
     const threshold = target - tolerance
 
+    const { pending, missing, stale } = this.findAggregationBlockers(
+      rangeByKey,
+      stateByKey,
+      target,
+      tolerance,
+    )
+
+    if (missing.length > 0) {
+      this.logger.error('Syncers have no synced range', { target, missing })
+    }
+    if (stale.length > 0) {
+      this.logger.warn('Syncers are behind the aggregation threshold', {
+        target,
+        threshold,
+        stale,
+      })
+    }
+    if (pending.length > 0) {
+      this.logger.warn('Syncers have a pending wipe or resync', { pending })
+    }
+
+    return pending.length === 0 && missing.length === 0 && stale.length === 0
+  }
+
+  /**
+   * Finds registered syncers that would block aggregation at `target`,
+   * grouped by reason: a pending wipe/resync, no persisted synced range, or a
+   * range older than `target - tolerance`. Syncers not registered in this
+   * manager never block aggregation. Keys are `pluginName:chain`.
+   */
+  private findAggregationBlockers(
+    rangeByKey: Map<string, InteropPluginSyncedRangeRecord>,
+    stateByKey: Map<string, InteropPluginSyncStateRecord>,
+    target: UnixTime,
+    tolerance: number,
+  ) {
+    const threshold = target - tolerance
     const pending: string[] = []
     const missing: string[] = []
     const stale: { syncer: string; toTimestamp: UnixTime }[] = []
@@ -157,21 +199,7 @@ export class InteropSyncersManager {
       }
     }
 
-    if (missing.length > 0) {
-      this.logger.error('Syncers have no synced range', { target, missing })
-    }
-    if (stale.length > 0) {
-      this.logger.warn('Syncers are behind the aggregation threshold', {
-        target,
-        threshold,
-        stale,
-      })
-    }
-    if (pending.length > 0) {
-      this.logger.warn('Syncers have a pending wipe or resync', { pending })
-    }
-
-    return pending.length === 0 && missing.length === 0 && stale.length === 0
+    return { pending, missing, stale }
   }
 
   getSyncer(
@@ -257,12 +285,37 @@ export class InteropSyncersManager {
     return result
   }
 
-  async getPluginSyncStatuses(): Promise<PluginSyncStatus[]> {
+  /**
+   * `aggregationTarget` and `freshnessTolerance` should mirror what the
+   * aggregating indexer passes to `areSyncersFreshEnough` so that
+   * `blocksAggregation` reflects whether a row would make it skip an hour.
+   */
+  async getPluginSyncStatuses(
+    aggregationTarget: UnixTime,
+    freshnessTolerance: number,
+  ): Promise<PluginSyncStatus[]> {
     const syncedRanges = await this.db.interopPluginSyncedRange.getAll()
     const syncStates = await this.db.interopPluginSyncState.getAll()
+    const rangeByKey = new Map(
+      syncedRanges.map((range) => [
+        `${range.pluginName}:${range.chain}`,
+        range,
+      ]),
+    )
     const stateByKey = new Map(
       syncStates.map((state) => [`${state.pluginName}:${state.chain}`, state]),
     )
+    const { pending, missing, stale } = this.findAggregationBlockers(
+      rangeByKey,
+      stateByKey,
+      aggregationTarget,
+      freshnessTolerance,
+    )
+    const blockers = new Set([
+      ...pending,
+      ...missing,
+      ...stale.map((s) => s.syncer),
+    ])
     const seen = new Set<string>()
     const rows: PluginSyncStatus[] = []
 
@@ -282,6 +335,7 @@ export class InteropSyncersManager {
         toTimestamp: range.toTimestamp,
         lastError: state?.lastError ?? undefined,
         resyncRequestedFrom: state?.resyncRequestedFrom ?? undefined,
+        blocksAggregation: blockers.has(key),
       })
     }
 
@@ -300,6 +354,7 @@ export class InteropSyncersManager {
         chain: state.chain,
         syncMode: `${syncer?.state.name}-${syncer?.state.status}`,
         lastError: state.lastError ?? undefined,
+        blocksAggregation: blockers.has(key),
       })
     }
 
@@ -315,6 +370,7 @@ export class InteropSyncersManager {
           pluginName: clusterName,
           chain: syncer.chain,
           syncMode: `${syncer?.state.name}-${syncer?.state.status}`,
+          blocksAggregation: blockers.has(key),
         })
       }
     }

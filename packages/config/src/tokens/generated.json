@@ -5702,6 +5702,34 @@
       "supply": "zero"
     },
     {
+      "name": "Steakhouse Confidential Prime USDC",
+      "coingeckoId": "usd-coin",
+      "address": "0xbEEF00A59B577423653A1526c7009bdE103F542B",
+      "symbol": "steakcUSDC",
+      "decimals": 18,
+      "deploymentTimestamp": 1781867411,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Steakhouse tGBP",
+      "coingeckoId": "tokenised-gbp",
+      "address": "0xbeeffABcd0dB09589Dd21854aa760C52aB4bf04F",
+      "symbol": "bbqTGBP",
+      "decimals": 18,
+      "deploymentTimestamp": 1776442415,
+      "coingeckoListingTimestamp": 1762905600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70647/large/tgbp-square.png?1762953800",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "STONE Carnival LP",
       "coingeckoId": "stakestone-ether",
       "address": "0x4d831e22F062b5327dFdB15f0b6a5dF20E2E3dD0",
@@ -6075,6 +6103,20 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "tGBP",
+      "coingeckoId": "tokenised-gbp",
+      "address": "0x27f6c8289550fCE67f6B50BeD1F519966aFE5287",
+      "symbol": "tGBP",
+      "decimals": 18,
+      "deploymentTimestamp": 1754053223,
+      "coingeckoListingTimestamp": 1762905600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70647/large/tgbp-square.png?1762953800",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -7421,6 +7463,20 @@
       }
     },
     {
+      "name": "Savings USDS",
+      "coingeckoId": "susds",
+      "address": "0xb5B2dc7fd34C249F4be7fB1fCea07950784229e0",
+      "symbol": "sUSDS",
+      "decimals": 18,
+      "deploymentTimestamp": 1746045509,
+      "coingeckoListingTimestamp": 1734048000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52721/large/sUSDS_Coin.png?1734086971",
+      "chainId": 10,
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Staked FRAX",
       "coingeckoId": "staked-frax",
       "address": "0x2Dd1B4D4548aCCeA497050619965f91f78b3b532",
@@ -7660,6 +7716,20 @@
       }
     },
     {
+      "name": "USDS Stablecoin",
+      "coingeckoId": "usds",
+      "address": "0x4F13a96EC5C4Cf34e442b46Bbd98a0791F20edC3",
+      "symbol": "USDS",
+      "decimals": 18,
+      "deploymentTimestamp": 1745995631,
+      "coingeckoListingTimestamp": 1727136000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
+      "chainId": 10,
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
+    {
       "name": "VelodromeV2",
       "coingeckoId": "velodrome-finance",
       "address": "0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db",
@@ -7869,6 +7939,20 @@
       }
     },
     {
+      "name": "Savings USDS",
+      "coingeckoId": "susds",
+      "address": "0xA06b10Db9F390990364A3984C04FaDf1c13691b5",
+      "symbol": "sUSDS",
+      "decimals": 18,
+      "deploymentTimestamp": 1746046906,
+      "coingeckoListingTimestamp": 1734048000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52721/large/sUSDS_Coin.png?1734086971",
+      "chainId": 130,
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
+    {
       "name": "USD₮0",
       "coingeckoId": "usdt0",
       "address": "0x9151434b16b9763660705744891fA906F660EcC5",
@@ -7910,6 +7994,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "USDS Stablecoin",
+      "coingeckoId": "usds",
+      "address": "0x7E10036Acc4B56d4dFCa3b77810356CE52313F9C",
+      "symbol": "USDS",
+      "decimals": 18,
+      "deploymentTimestamp": 1745994447,
+      "coingeckoListingTimestamp": 1727136000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
+      "chainId": 130,
+      "source": "canonical",
+      "supply": "totalSupply"
     },
     {
       "name": "Wrapped BTC",
@@ -11246,6 +11344,20 @@
       "supply": "totalSupply"
     },
     {
+      "name": "Cash Cat",
+      "coingeckoId": "cash-cat",
+      "address": "0x020bfC650A365f8BB26819deAAbF3E21291018b4",
+      "symbol": "CASHCAT",
+      "decimals": 18,
+      "deploymentTimestamp": 1781812885,
+      "coingeckoListingTimestamp": 1782950400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174280/large/cashcat-logo.jpg?1782922765",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "Circle Internet Group • Robinhood Token",
       "coingeckoId": "circle-internet-group-robinhood-tokenized-stock",
       "address": "0xdF0992E440dD0be65BD8439b609d6D4366bf1CB5",
@@ -12807,6 +12919,20 @@
       "supply": "totalSupply"
     },
     {
+      "name": "Savings USDS",
+      "coingeckoId": "susds",
+      "address": "0x5875eEE11Cf8398102FdAd704C9E96607675467a",
+      "symbol": "sUSDS",
+      "decimals": 18,
+      "deploymentTimestamp": 1728572501,
+      "coingeckoListingTimestamp": 1734048000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52721/large/sUSDS_Coin.png?1734086971",
+      "chainId": 8453,
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Seamless",
       "coingeckoId": "seamless-protocol",
       "address": "0x1C7a460413dD4e964f96D8dFC56E7223cE88CD85",
@@ -13056,6 +13182,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "USDS Stablecoin",
+      "coingeckoId": "usds",
+      "address": "0x820C137fa70C8691f0e44Dc420a5e53c168921Dc",
+      "symbol": "USDS",
+      "decimals": 18,
+      "deploymentTimestamp": 1728558915,
+      "coingeckoListingTimestamp": 1727136000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
+      "chainId": 8453,
+      "source": "canonical",
+      "supply": "totalSupply"
     },
     {
       "name": "VaderAI by Virtuals",
@@ -14719,6 +14859,20 @@
       }
     },
     {
+      "name": "Savings USDS",
+      "coingeckoId": "susds",
+      "address": "0xdDb46999F8891663a8F2828d25298f70416d7610",
+      "symbol": "sUSDS",
+      "decimals": 18,
+      "deploymentTimestamp": 1738149802,
+      "coingeckoListingTimestamp": 1734048000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52721/large/sUSDS_Coin.png?1734086971",
+      "chainId": 42161,
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
+    {
       "name": "SmarDex Token",
       "coingeckoId": "smardex",
       "address": "0xabD587f2607542723b17f14d00d99b987C29b074",
@@ -15092,6 +15246,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "USDS Stablecoin",
+      "coingeckoId": "usds",
+      "address": "0x6491c05A82219b8D1479057361ff1654749b876b",
+      "symbol": "USDS",
+      "decimals": 18,
+      "deploymentTimestamp": 1737544573,
+      "coingeckoListingTimestamp": 1727136000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
+      "chainId": 42161,
+      "source": "canonical",
+      "supply": "totalSupply"
     },
     {
       "name": "USDX",

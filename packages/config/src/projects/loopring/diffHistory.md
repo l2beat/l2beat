@@ -1,3 +1,50 @@
+Generated with discovered.json: 0xe7ced9dc49e17f1d48ce1832b5ec7ed0c43926da
+
+# Diff at Fri, 10 Jul 2026 10:32:50 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@1e8c379b8fe786381adcddb9c648173990ad4ea3 block: 1782730310
+- current timestamp: 1783679500
+
+## Description
+
+Extended simple distributor contract on top of ExchangeV3 proxy with the functionality to batch distribute NFTs: https://disco.l2beat.com/diff/eth:0xB40973B8bffDe1553AE05DE4b298610524E1c37a/eth:0xB2de2bff671b03612a0Fa3340E0e0eE7e1C0a388.
+
+ERC-20 tokens still have to be sent out manually.
+
+## Watched changes
+
+```diff
+    contract ExchangeV3 (eth:0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xac16617aa5dbef15d7ade7f376b240d9a040b65a8ab552f5408e97e29168fd41"
++        "0x81db0f4c00a619fd3fea57b1c9a4d3dcb0220158cd03876a0176cf25899f44c2"
+      values.$implementation:
+-        "eth:0xB40973B8bffDe1553AE05DE4b298610524E1c37a"
++        "eth:0xB2de2bff671b03612a0Fa3340E0e0eE7e1C0a388"
+      values.$pastUpgrades.9:
++        ["2026-07-09T12:39:59.000Z","0xc3371471d0daa75094515baac093f12c217b1e0147ddcf992496fcca9ea4721b",["eth:0xB2de2bff671b03612a0Fa3340E0e0eE7e1C0a388"]]
+      values.$upgradeCount:
+-        9
++        10
+      values.implementation:
+-        "eth:0xB40973B8bffDe1553AE05DE4b298610524E1c37a"
++        "eth:0xB2de2bff671b03612a0Fa3340E0e0eE7e1C0a388"
+      implementationNames.eth:0xB40973B8bffDe1553AE05DE4b298610524E1c37a:
+-        "ProxyAdminExecutor"
+      implementationNames.eth:0xB2de2bff671b03612a0Fa3340E0e0eE7e1C0a388:
++        "ProxyAdminExecutor"
+    }
+```
+
+## Source code changes
+
+```diff
+.../ExchangeV3/ProxyAdminExecutor.sol              | 186 ++++++++++++++++++++-
+ 1 file changed, 180 insertions(+), 6 deletions(-)
+```
+
 Generated with discovered.json: 0xd05f8cbfa5a520278fb8233068a4b42606b0184b
 
 # Diff at Mon, 29 Jun 2026 10:52:52 GMT:

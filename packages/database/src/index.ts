@@ -71,15 +71,18 @@ export type {
   InteropPluginSyncedRangeRecord,
 } from './repositories/InteropPluginSyncedRangeRepository'
 export type { InteropPluginSyncStateRecord } from './repositories/InteropPluginSyncStateRepository'
-export type {
-  InteropMissingTokenInfo,
-  InteropSuspiciousTransferRecord,
-  InteropTokenRouteRecord,
-  InteropTransferRecord,
-  InteropTransfersDetailedStatsRecord,
-  InteropTransfersStatsRecord,
-  InteropTransferTokenInfo,
-  InteropTransferUpdate,
+export {
+  hasAnyInteropTransferFinancialsFilter,
+  type InteropMissingTokenInfo,
+  type InteropSuspiciousTransferRecord,
+  type InteropTokenRouteRecord,
+  type InteropTransferFinancialsFilter,
+  type InteropTransferFinancialsStats,
+  type InteropTransferRecord,
+  type InteropTransfersDetailedStatsRecord,
+  type InteropTransfersStatsRecord,
+  type InteropTransferTokenInfo,
+  type InteropTransferUpdate,
 } from './repositories/InteropTransferRepository'
 export type {
   InteropTransferTypeStats,

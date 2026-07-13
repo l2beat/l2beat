@@ -5,7 +5,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
-import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -164,7 +163,6 @@ export const zamaCw: BaseProject = {
     warnings: [],
   },
   privacyInfo: {
-    trustedSetup: TRUSTED_SETUPS.TransparentSetup,
     tokens: privacyTokens,
     summaryTrackedItemName: 'token',
     exitWindow: {

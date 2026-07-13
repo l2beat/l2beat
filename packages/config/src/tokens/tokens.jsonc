@@ -5,6 +5,26 @@
       "address": "0xA12CC123ba206d4031D1c7f6223D1C2Ec249f4f3"
     },
     {
+      "symbol": "tGBP",
+      "address": "0x27f6c8289550fCE67f6B50BeD1F519966aFE5287",
+      "coingeckoId": "tokenised-gbp",
+      "category": "stablecoin"
+    },
+    {
+      // Steakhouse tGBP vault; not listed on CoinGecko, priced with its tGBP underlying
+      "symbol": "bbqTGBP",
+      "address": "0xbeeffABcd0dB09589Dd21854aa760C52aB4bf04F",
+      "coingeckoId": "tokenised-gbp",
+      "category": "stablecoin"
+    },
+    {
+      // Steakhouse Confidential Prime USDC vault; not listed on CoinGecko, priced with its USDC underlying
+      "symbol": "steakcUSDC",
+      "address": "0xbEEF00A59B577423653A1526c7009bdE103F542B",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin"
+    },
+    {
       "symbol": "RON",
       "address": "0x5f2Db62536dd888AacEa933068384318A02094c0",
       "coingeckoId": "ronin"
@@ -2195,6 +2215,17 @@
       "deploymentTimestamp": 1780403342
     },
     {
+      // Natively minted meme token on Robinhood Chain.
+      "symbol": "CASHCAT",
+      "address": "0x020bfC650A365f8BB26819deAAbF3E21291018b4",
+      "coingeckoId": "cash-cat",
+      "source": "native",
+      "supply": "circulatingSupply",
+      "category": "other",
+      // manual override: robinhood public RPC is non-archival. Creation block 88836.
+      "deploymentTimestamp": 1781812885
+    },
+    {
       "symbol": "AAPL",
       "address": "0xaF3D76f1834A1d425780943C99Ea8A608f8a93f9",
       "coingeckoId": "apple-robinhood-tokenized-stock",
@@ -2726,6 +2757,22 @@
     }
   ],
   "arbitrum": [
+    {
+      "symbol": "USDS",
+      "coingeckoId": "usds",
+      "address": "0x6491c05A82219b8D1479057361ff1654749b876b",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "sUSDS",
+      "coingeckoId": "susds",
+      "address": "0xdDb46999F8891663a8F2828d25298f70416d7610",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
     {
       "symbol": "CHIP",
       "address": "0x0c1c1c109fe34733fca54b82d7b46b75cfb71f6e",
@@ -3786,6 +3833,22 @@
   ],
   "optimism": [
     {
+      "symbol": "USDS",
+      "coingeckoId": "usds",
+      "address": "0x4F13a96EC5C4Cf34e442b46Bbd98a0791F20edC3",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "sUSDS",
+      "coingeckoId": "susds",
+      "address": "0xb5B2dc7fd34C249F4be7fB1fCea07950784229e0",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
+    {
       "symbol": "cgETH.hashkey",
       "category": "ether",
       "address": "0x0Ce45dd53affbb011884EF1866E0738f58AB7969",
@@ -4230,6 +4293,22 @@
     }
   ],
   "base": [
+    {
+      "symbol": "USDS",
+      "coingeckoId": "usds",
+      "address": "0x820C137fa70C8691f0e44Dc420a5e53c168921Dc",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "sUSDS",
+      "coingeckoId": "susds",
+      "address": "0x5875eEE11Cf8398102FdAd704C9E96607675467a",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
     {
       "symbol": "BENJI",
       "address": "0x60CfC2b186a4CF647486e42c42B11cC6D571d1E4",
@@ -7935,6 +8014,22 @@
     }
   ],
   "unichain": [
+    {
+      "symbol": "USDS",
+      "coingeckoId": "usds",
+      "address": "0x7E10036Acc4B56d4dFCa3b77810356CE52313F9C",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "sUSDS",
+      "coingeckoId": "susds",
+      "address": "0xA06b10Db9F390990364A3984C04FaDf1c13691b5",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
     {
       "symbol": "HYPE",
       "address": "0x15D0e0c55a3E7eE67152aD7E89acf164253Ff68d",

@@ -6,6 +6,7 @@ describe(runClingo.name, () => {
     const program = 'a. b :- a.'
     const result = await runClingo(program)
     expect(result.Result).toEqual('SATISFIABLE')
+    if (result.Result === 'ERROR') return
     expect(result.Call?.[0]?.Witnesses?.[0]?.Value).toEqual(['a', 'b'])
   })
 })

@@ -31,6 +31,7 @@
         "34443": "Mode",
         "41455": "Aleph Zero",
         "42161": "Arbitrum One",
+        "43114": "Avalanche",
         "57073": "Ink",
         "59144": "Linea",
         "81457": "Blast",
@@ -60,9 +61,7 @@
         { "type": "act" }
       ]
     },
-    "paused": {
-      "severity": "HIGH"
-    },
+    "paused": { "severity": "HIGH" },
     "finalizationDelayFmt": {
       "handler": {
         "type": "call",
@@ -75,9 +74,7 @@
       "handler": {
         "type": "event",
         "select": "spokePool",
-        "set": {
-          "event": "CrossChainContractsSet"
-        },
+        "set": { "event": "CrossChainContractsSet" },
         "groupBy": "l2ChainId",
         "ignoreRelative": true
       },
@@ -103,9 +100,7 @@
       "handler": {
         "type": "event",
         "select": "adapter",
-        "set": {
-          "event": "CrossChainContractsSet"
-        },
+        "set": { "event": "CrossChainContractsSet" },
         "groupBy": "l2ChainId"
       },
       "edit": ["map_keys", ["format", "ChainIdToName"]]
@@ -113,9 +108,7 @@
     "poolRebalanceRoutes": {
       "handler": {
         "type": "event",
-        "add": {
-          "event": "SetPoolRebalanceRoute"
-        },
+        "add": { "event": "SetPoolRebalanceRoute" },
         "groupBy": "destinationChainId",
         "dedupBy": "l1Token",
         "select": ["l1Token", "destinationToken"],
@@ -126,9 +119,7 @@
     "pooledTokens": {
       "handler": {
         "type": "event",
-        "add": {
-          "event": "L1TokenEnabledForLiquidityProvision"
-        },
+        "add": { "event": "L1TokenEnabledForLiquidityProvision" },
         "dedupBy": "l1Token",
         "select": ["l1Token", "lpToken"],
         "ignoreRelative": true

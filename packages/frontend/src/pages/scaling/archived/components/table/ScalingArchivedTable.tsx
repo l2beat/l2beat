@@ -1,25 +1,21 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
 import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type { ScalingArchivedEntry } from '~/server/features/scaling/archived/getScalingArchivedEntries'
-import { getScalingArchivedColumns } from './columns'
+import { scalingArchivedColumns } from './columns'
 
 interface Props {
   entries: ScalingArchivedEntry[]
-  hideType?: boolean
 }
 
-export function ScalingArchivedTable({ entries, hideType }: Props) {
+export function ScalingArchivedTable({ entries }: Props) {
   const { sorting, setSorting } = useTableSorting()
-
-  const columns = useMemo(() => getScalingArchivedColumns(hideType), [hideType])
 
   const table = useTable({
     data: entries,
-    columns,
+    columns: scalingArchivedColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,

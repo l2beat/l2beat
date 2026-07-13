@@ -10,6 +10,7 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { manifest } from '~/utils/Manifest'
 import type { PrivacyProject } from './types'
+import { getPrivacyTrustedSetup } from './utils/getPrivacyTrustedSetup'
 
 export interface PrivacySummaryEntry {
   id: string
@@ -140,7 +141,7 @@ function getPrivacySummaryBaseEntry(
     isUnderReview: !!project.statuses.reviewStatus,
     summaryTrackedItemName:
       project.privacyInfo.summaryTrackedItemName ?? 'pool',
-    trustedSetup: project.privacyInfo.trustedSetup,
+    trustedSetup: getPrivacyTrustedSetup(project.zkCatalogInfo),
     exitWindow: project.privacyInfo.exitWindow,
     reproducibility: project.privacyInfo.reproducibility,
     privacy: project.privacyInfo.privacy,
