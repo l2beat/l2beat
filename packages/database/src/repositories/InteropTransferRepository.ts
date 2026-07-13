@@ -136,6 +136,11 @@ export interface InteropTransferTokenAddressBatch {
   tokenAddresses: InteropTransferTokenAddress[]
 }
 
+export interface InteropTransferBatch {
+  latestSerialId: string | undefined
+  transfers: InteropTransferRecord[]
+}
+
 /**
  * One row per unique combination of token pair and bridge-type evidence,
  * aggregated over all retained transfers. `sampleTransferId` is the id of an
@@ -629,6 +634,24 @@ export class InteropTransferRepository extends BaseRepository {
       latestSerialId: rows.at(-1)?.serialId,
       transferCount: rows.length,
       tokenAddresses: Array.from(tokenAddresses.values()),
+    }
+  }
+
+  async getAfterSerialId(
+    serialId: string,
+    limit: number,
+  ): Promise<InteropTransferBatch> {
+    const rows = await this.db
+      .selectFrom('InteropTransfer')
+      .selectAll()
+      .where('serialId', '>', serialId)
+      .orderBy('serialId', 'asc')
+      .limit(limit)
+      .execute()
+
+    return {
+      latestSerialId: rows.at(-1)?.serialId,
+      transfers: rows.map(toRecord),
     }
   }
 
