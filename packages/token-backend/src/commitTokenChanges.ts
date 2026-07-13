@@ -14,7 +14,7 @@ import type { Command } from './commands'
  * boundary below is then a pure router that does not touch proofs.
  *
  * The non-swapping-transfer variant carries a *full* transfer rather than an
- * id because interop transfers are only retained for ~24h.
+ * id because interop transfers are only retained for ~7 days.
  */
 export type AbstractTokenAssignmentProof =
   | { kind: 'manual'; user: string }

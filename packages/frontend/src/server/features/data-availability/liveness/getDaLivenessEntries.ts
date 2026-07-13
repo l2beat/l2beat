@@ -3,6 +3,7 @@ import { assert, ProjectId } from '@l2beat/shared-pure'
 import type { TabbedDaEntries } from '~/pages/data-availability/utils/groupByDaTabs'
 import { groupByDaTabs } from '~/pages/data-availability/utils/groupByDaTabs'
 import { ps } from '~/server/projects'
+import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
 import {
   getProjectsChangeReport,
   type ProjectsChangeReport,
@@ -120,7 +121,7 @@ function getDaLivenessEntry(
                 : undefined,
           syncWarning,
           ongoingAnomaly: bridgeLiveness.anomalies.some(
-            (a) => a.end === undefined,
+            (anomaly) => isAnomalyOngoing(anomaly) && anomaly.isApproved,
           ),
         },
         relayerType: b.daBridge.relayerType,

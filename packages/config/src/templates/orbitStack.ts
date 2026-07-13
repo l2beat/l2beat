@@ -1475,6 +1475,16 @@ function BoLDStateValidation(
     }
   }
 
+  const stateRootProposalRisks: ProjectRisk[] = isWhitelistDisabled
+    ? []
+    : [
+        {
+          category: 'Funds can be stolen if',
+          text: 'no whitelisted challenger disputes an invalid state root before the challenge window expires.',
+          isCritical: true,
+        },
+      ]
+
   return {
     description: isWhitelistDisabled
       ? 'Updates to the system state can be proposed and challenged by anyone who has sufficient funds. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.'
@@ -1487,7 +1497,7 @@ function BoLDStateValidation(
         )}. An assertion without "rivals" can be confirmed after the challenge period has passed, currently set to ${formatSeconds(
           assertionsChallengePeriod,
         )}. If a rival is present, then it is checked that the assertion is the winner in the challenge protocol.`,
-        risks: [],
+        risks: stateRootProposalRisks,
         references: [
           {
             title: 'BoLD paper',

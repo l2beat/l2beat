@@ -950,11 +950,22 @@ export interface TrustedSetup {
 // #region privacy data
 
 export interface ProjectPrivacyInfo {
-  trustedSetup: TrustedSetup
   tokens: ProjectPrivacyToken[]
+  summaryTrackedItemName?: string
+  exitWindow: PrivacyExitWindow
+  reproducibility: PrivacySummaryValue
+  privacy: PrivacySummaryValue
   attributes?: PrivacyAttribute[]
   riskSummary?: string
   upgradesAndGovernance?: string
+}
+
+export interface PrivacyExitWindow extends ExitWindowRisk {
+  description: string
+}
+
+export interface PrivacySummaryValue extends TableReadyValue {
+  description: string
 }
 
 export interface PrivacyAttribute {
@@ -1011,6 +1022,16 @@ export type PrivacyFlowExtractorConfig =
       extractor: 'railgunUnshield'
       params: {
         tokenAddress: EthereumAddress
+      }
+    }
+  | {
+      extractor: 'zamaWrap'
+      params: Record<string, never>
+    }
+  | {
+      extractor: 'zamaUnwrap'
+      params: {
+        rate: string
       }
     }
 

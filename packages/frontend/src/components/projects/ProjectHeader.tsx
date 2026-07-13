@@ -12,6 +12,7 @@ interface Project {
 interface Props {
   project: Project
   ongoingAnomaly?: 'single' | 'multiple'
+  recentUpdatesCount?: number
   secondLine?: string
   livenessSectionHref?: string
   className?: string
@@ -20,6 +21,7 @@ interface Props {
 export function ProjectHeader({
   project,
   ongoingAnomaly,
+  recentUpdatesCount,
   secondLine,
   livenessSectionHref = '#liveness',
   className,
@@ -31,7 +33,7 @@ export function ProjectHeader({
       <div
         className={cn(
           'mt-1 flex w-full flex-wrap gap-6 max-md:flex-col md:items-center',
-          !!ongoingAnomaly && 'max-md:mb-4',
+          (!!ongoingAnomaly || !!recentUpdatesCount) && 'max-md:mb-4',
         )}
       >
         <h1 className="flex items-center justify-start gap-3">
@@ -54,20 +56,35 @@ export function ProjectHeader({
             )}
           </div>
         </h1>
-        {!!ongoingAnomaly && (
-          <a
-            href={livenessSectionHref}
-            className="flex h-8 items-center justify-center gap-2 rounded border border-negative p-2"
-          >
-            <LiveIndicator />
-            <h3 className="font-medium text-negative text-xs uppercase leading-none">
-              {ongoingAnomaly === 'single'
-                ? 'Ongoing anomaly'
-                : 'Ongoing anomalies'}
-            </h3>
-            <ChevronIcon className="-rotate-90 size-2.5 fill-negative" />
-          </a>
-        )}
+        <div className="flex flex-col gap-2 max-md:w-full md:flex-row md:items-center">
+          {!!ongoingAnomaly && (
+            <a
+              href={livenessSectionHref}
+              className="flex h-8 items-center justify-center gap-2 rounded border border-negative p-2"
+            >
+              <LiveIndicator />
+              <h3 className="font-medium text-negative text-xs uppercase leading-none">
+                {ongoingAnomaly === 'single'
+                  ? 'Ongoing anomaly'
+                  : 'Ongoing anomalies'}
+              </h3>
+              <ChevronIcon className="-rotate-90 size-2.5 fill-negative" />
+            </a>
+          )}
+          {!!recentUpdatesCount && (
+            <a
+              href="#updates"
+              className="flex h-8 items-center justify-center gap-2 rounded border border-brand p-2"
+            >
+              <h3 className="font-medium text-brand text-xs uppercase leading-none">
+                {recentUpdatesCount === 1
+                  ? '1 recent update'
+                  : `${recentUpdatesCount} recent updates`}
+              </h3>
+              <ChevronIcon className="-rotate-90 size-2.5 fill-brand" />
+            </a>
+          )}
+        </div>
       </div>
       <SearchBarButton className="max-lg:hidden" label="Search projects" />
     </div>

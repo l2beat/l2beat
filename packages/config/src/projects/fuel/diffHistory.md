@@ -1,3 +1,62 @@
+Generated with discovered.json: 0x779c5a0e73d864ab1e1ea99cd48d717c13971aa3
+
+# Diff at Mon, 06 Jul 2026 11:03:37 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@1fd9d39064602bc28714717ec6eae23c740b472b block: 1773319393
+- current timestamp: 1783335748
+
+## Description
+
+Paused the bridge: no deposits and withdrawals messages could be processed now. I haven't found any public communication about it. 
+
+Also reduced sc from 7 out of 10 to 4 out of 6 by removing 4 members.
+
+## Watched changes
+
+```diff
+    contract Fuel Security Council (eth:0x32da601374b38154f05904B16F44A1911Aa6f314) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x7cdbF64f57f0D623D924d2b4c17664c1Cd9f93d4"
+      values.$members.1:
+-        "eth:0x8a34B78Feb23b97b5ccDf83D9aDC7669C34D346F"
+      values.$members.3:
+-        "eth:0xd4c29D8ddC7D3E326030270f35d9FD4973AbBE09"
+      values.$members.4:
+-        "eth:0x446f9d40cA491cf0788dacCAc4D16d5d8B4015Cc"
+      values.$threshold:
+-        7
++        4
+      values.multisigThreshold:
+-        "7 of 10 (70%)"
++        "4 of 6 (67%)"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (eth:0x446f9d40cA491cf0788dacCAc4D16d5d8B4015Cc) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract FuelMessagePortal (eth:0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf) [N/A] {
+    +++ description: None
+      values.paused:
+-        false
++        true
+    }
+```
+
+## Source code changes
+
+```diff
+.../.flat@1773319393/Safe/Safe.sol => /dev/null    | 1216 --------------------
+ .../Safe/SafeProxy.p.sol => /dev/null              |   42 -
+ 2 files changed, 1258 deletions(-)
+```
+
 Generated with discovered.json: 0xcad6867ea52455e33563660ad415a7ddfa5eee89
 
 # Diff at Fri, 08 May 2026 07:51:20 GMT:

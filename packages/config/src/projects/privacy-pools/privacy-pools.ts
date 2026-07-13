@@ -6,6 +6,8 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
+import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
+import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
@@ -48,6 +50,9 @@ interface PrivacyPoolBucket {
 }
 
 const BUCKETS = getPrivacyPoolBuckets()
+const PRIVACY_POOLS_SINCE_TIMESTAMP = UnixTime(
+  Math.min(...BUCKETS.map((bucket) => bucket.sinceTimestamp)),
+)
 
 const multisigStats = discovery.getMultisigStats('Privacy Pools Multisig')
 const feeSummary = formatPrivacyPoolsFeeSummary()
@@ -89,15 +94,76 @@ export const privacyPools: BaseProject = {
     associatedTokens: [],
     warnings: [],
   },
-  privacyInfo: {
-    trustedSetup: TRUSTED_SETUPS.PrivacyPools,
-    tokens: getPrivacyTokens(),
-    attributes: [
-      PRIVACY_ATTRIBUTES.immutable,
-      PRIVACY_ATTRIBUTES.enforcedCompliance,
-      PRIVACY_ATTRIBUTES.anyAmount,
-      PRIVACY_ATTRIBUTES.sourceAvailable,
+  zkCatalogInfo: {
+    creator: '0xbow',
+    techStack: {
+      zkVM: [ZK_CATALOG_TAGS.curve.BN254, ZK_CATALOG_TAGS.Groth16.Snarkjs],
+    },
+    proofSystemInfo: '',
+    trustedSetups: [
+      {
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+        ...TRUSTED_SETUPS.PrivacyPools,
+      },
     ],
+    projectsForTvs: [
+      {
+        projectId: ProjectId('privacy-pools'),
+        sinceTimestamp: PRIVACY_POOLS_SINCE_TIMESTAMP,
+      },
+    ],
+    verifierHashes: [
+      {
+        hash: 'Privacy Pools Withdrawal and Ragequit verifiers 03.07.2026',
+        name: 'Privacy Pools verifiers v1.2.1',
+        sourceLink:
+          'https://github.com/0xbow-io/privacy-pools-core/tree/v1.2.1/packages/circuits',
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6',
+            ),
+          },
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d',
+            ),
+          },
+        ],
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'privacy-pools',
+          'verificationSteps-03.07.2026',
+        ),
+      },
+    ],
+  },
+  privacyInfo: {
+    tokens: getPrivacyTokens(),
+    exitWindow: {
+      value: 'Infinite',
+      sentiment: 'good',
+      orderHint: Number.MAX_SAFE_INTEGER,
+      description:
+        'Even if the Entrypoint or ASP turns malicious, users can always ragequit (withdraw tokens) from the immutable pool contracts, at the cost of losing privacy.',
+    },
+    reproducibility: {
+      value: 'Reproducible',
+      sentiment: 'good',
+      description:
+        'The contracts, circuits, and supporting software needed to participate in Privacy Pools are publicly available and can be run locally.',
+    },
+    privacy: {
+      value: 'None',
+      sentiment: 'good',
+      description:
+        'Compliance is enforced through centralized association set providers, which can refuse deposits into the pool, sending them back to the sender.',
+    },
+    attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.anyAmount],
     riskSummary: readProjectMarkdown('privacy-pools', 'riskSummary'),
     upgradesAndGovernance: readProjectMarkdown(
       'privacy-pools',

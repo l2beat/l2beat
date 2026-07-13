@@ -1,12 +1,19 @@
-import type { PrivacyAttribute, ProjectRedWarning } from '@l2beat/config'
+import type {
+  PrivacyAttribute,
+  PrivacyExitWindow,
+  PrivacySummaryValue,
+  ProjectRedWarning,
+} from '@l2beat/config'
 import type { InMemoryCache, ProjectId } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { getPrivacyProjectDetails } from '~/server/features/privacy/getPrivacyProjectDetails'
+import { getPrivacyTrustedSetupsSection } from '~/server/features/privacy/utils/getPrivacyTrustedSetup'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
+import { get7dTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getProjectMetadataDescription } from '~/ssr/head/getProjectMetadataDescription'
@@ -18,6 +25,7 @@ import { getContractUtils } from '~/utils/project/contracts-and-permissions/getC
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
+import { getVerifiersSection } from '~/utils/project/getVerifiersSection'
 import { optionToRange } from '~/utils/range/range'
 
 export interface PrivacyProjectEntry {
@@ -29,7 +37,7 @@ export interface PrivacyProjectEntry {
   description: string
   badges: BadgeWithParams[]
   projectLinks: ProjectLink[]
-  discoveryHref: string
+  discoveryHref?: string
   discoUi: {
     href: string
     images: {
@@ -40,6 +48,9 @@ export interface PrivacyProjectEntry {
   bucketCount: number
   assetsCount: number
   attributes: PrivacyAttribute[]
+  exitWindow: PrivacyExitWindow
+  privacy: PrivacySummaryValue
+  reproducibility: PrivacySummaryValue
   summary: {
     totalValueLockedUsd: number
     deposits: {
@@ -87,6 +98,8 @@ export async function getPrivacyProjectData(
     details,
     contractUtils,
     allProjectsWithContracts,
+    allProjects,
+    tvs,
     zkCatalogProjects,
   ] = await Promise.all([
     getAppLayoutProps(),
@@ -103,6 +116,16 @@ export async function getPrivacyProjectData(
       select: ['contracts'],
     }),
     ps.getProjects({
+      optional: [
+        'display',
+        'daBridge',
+        'scalingInfo',
+        'daLayer',
+        'privacyInfo',
+      ],
+    }),
+    get7dTvsBreakdown({ type: 'all' }),
+    ps.getProjects({
       select: ['zkCatalogInfo'],
     }),
   ])
@@ -110,21 +133,6 @@ export async function getPrivacyProjectData(
   if (!details) {
     return undefined
   }
-
-  await Promise.all([
-    helpers.queryClient.prefetchQuery(
-      helpers.trpc.privacy.flowsChart.queryOptions({
-        projectIds: [details.id],
-        range: defaultChartRange,
-      }),
-    ),
-    helpers.queryClient.prefetchQuery(
-      helpers.trpc.privacy.tvlChart.queryOptions({
-        projectIds: [details.id],
-        range: defaultChartRange,
-      }),
-    ),
-  ])
 
   const permissionsSection = getPermissionsSection(
     {
@@ -159,6 +167,26 @@ export async function getPrivacyProjectData(
     },
   }
   const icon = manifest.getUrl(`/icons/${details.slug}.png`)
+  const hasTrackedAssets = details.assets.length > 0
+  const discoveryHref =
+    contractsSection || permissionsSection ? discoUi.href : undefined
+
+  if (hasTrackedAssets) {
+    await Promise.all([
+      helpers.queryClient.prefetchQuery(
+        helpers.trpc.privacy.flowsChart.queryOptions({
+          projectIds: [details.id],
+          range: defaultChartRange,
+        }),
+      ),
+      helpers.queryClient.prefetchQuery(
+        helpers.trpc.privacy.tvlChart.queryOptions({
+          projectIds: [details.id],
+          range: defaultChartRange,
+        }),
+      ),
+    ])
+  }
   const bucketCount = details.assets.reduce(
     (sum, asset) => sum + asset.bucketCount,
     0,
@@ -178,41 +206,43 @@ export async function getPrivacyProjectData(
     })
   }
 
-  const chartProject = {
-    id: details.id,
-    name: details.name,
-    shortName: details.shortName,
-    iconUrl: icon,
+  if (hasTrackedAssets) {
+    const chartProject = {
+      id: details.id,
+      name: details.name,
+      shortName: details.shortName,
+      iconUrl: icon,
+    }
+
+    sections.push({
+      type: 'PrivacyTvlSection',
+      props: {
+        id: 'privacy-tvl',
+        title: 'Value Locked',
+        defaultRange: defaultChartRange,
+        project: chartProject,
+      },
+    })
+
+    sections.push({
+      type: 'PrivacyFlowsSection',
+      props: {
+        id: 'privacy-flows',
+        title: 'Flows',
+        defaultRange: defaultChartRange,
+        project: chartProject,
+      },
+    })
+
+    sections.push({
+      type: 'PrivacyAssetsBreakdownSection',
+      props: {
+        id: 'privacy-assets-breakdown',
+        title: 'Assets Breakdown',
+        assets: details.assets,
+      },
+    })
   }
-
-  sections.push({
-    type: 'PrivacyTvlSection',
-    props: {
-      id: 'privacy-tvl',
-      title: 'Value Locked',
-      defaultRange: defaultChartRange,
-      project: chartProject,
-    },
-  })
-
-  sections.push({
-    type: 'PrivacyFlowsSection',
-    props: {
-      id: 'privacy-flows',
-      title: 'Flows',
-      defaultRange: defaultChartRange,
-      project: chartProject,
-    },
-  })
-
-  sections.push({
-    type: 'PrivacyAssetsBreakdownSection',
-    props: {
-      id: 'privacy-assets-breakdown',
-      title: 'Assets Breakdown',
-      assets: details.assets,
-    },
-  })
 
   if (details.riskSummary) {
     sections.push({
@@ -244,16 +274,31 @@ export async function getPrivacyProjectData(
     props: {
       id: 'trusted-setups',
       title: 'Trusted setup',
-      trustedSetups: [
-        {
-          name: details.trustedSetup.name,
-          risk: details.trustedSetup.risk,
-          description: details.trustedSetup.longDescription,
-          proofSystems: [],
-        },
-      ],
+      ...getPrivacyTrustedSetupsSection(details.zkCatalogInfo),
     },
   })
+
+  if (
+    details.zkCatalogInfo?.verifierHashes &&
+    details.zkCatalogInfo.verifierHashes.length > 0
+  ) {
+    const verifiersSection = await getVerifiersSection(
+      details.zkCatalogInfo.verifierHashes,
+      contractUtils,
+      allProjects,
+      tvs,
+    )
+
+    sections.push({
+      type: 'VerifiersSection',
+      props: {
+        id: 'verifiers',
+        title: 'Verifier IDs',
+        variant: 'privacy',
+        ...verifiersSection,
+      },
+    })
+  }
 
   if (permissionsSection) {
     sections.push({
@@ -291,11 +336,14 @@ export async function getPrivacyProjectData(
       return badgeWithParams ? [badgeWithParams] : []
     }),
     projectLinks: getProjectLinks(details.display.links),
-    discoveryHref: discoUi.href,
+    discoveryHref,
     discoUi,
     bucketCount,
     assetsCount: details.assets.length,
     attributes: details.attributes,
+    exitWindow: details.exitWindow,
+    privacy: details.privacy,
+    reproducibility: details.reproducibility,
     summary: {
       totalValueLockedUsd: details.summary.totalValueLockedUsd,
       deposits: {

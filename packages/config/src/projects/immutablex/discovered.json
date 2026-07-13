@@ -1,6 +1,6 @@
 {
   "name": "immutablex",
-  "timestamp": 1780913745,
+  "timestamp": 1782118661,
   "configHash": "0xd4ed5c6714ecdc1add8536837ef3aa48553c5f753138c746f896fb4a5599f1dc",
   "entries": [
     {
@@ -1099,6 +1099,6 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 25272035 },
+  "usedBlockNumbers": { "ethereum": 25372090 },
   "permissionsConfigHash": "0x47bc8c3c40741d25b4375a26055645504556056f8e3b6f4bc0e7cc6d57e171c6"
 }

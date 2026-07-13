@@ -1,3 +1,204 @@
+Generated with discovered.json: 0x75a6033f46c526e5a1f44e7a9a334f56f5f5b4da
+
+# Diff at Fri, 26 Jun 2026 11:57:45 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@cf24a6eb45e0c4c6be4d66ee4e477ba0cce45b01 block: 1781613178
+- current timestamp: 1782469580
+
+## Description
+
+OpenVM upgraded to 1.6.0: https://forum.scroll.io/t/announcement-openvm-v1-6-0-upgrade-on-scroll/1482. Programs are reproduced, the verifier is not yet regenerated.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract ZkEvmVerifierPostFeynman (eth:0x0dE180164Dc571522457101F5c47B2eaB36d0A82) [N/A]
+    +++ description: None
+```
+
+```diff
+    contract MultipleVersionRollupVerifier (eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F) [scroll/MultipleVersionRollupVerifier] {
+    +++ description: Contract used to update the verifier and keep track of current and old versions.
+      values.latestVerifier.9.verifier:
+-        "eth:0x0dE180164Dc571522457101F5c47B2eaB36d0A82"
++        "eth:0x808297224e86b1a6055B5F790a2cE07Ed611f955"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierPostFeynman (eth:0x808297224e86b1a6055B5F790a2cE07Ed611f955) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierFeynmanV2 (eth:0x96cbcC4333E172927fDa8B631C716d43E2FBA01C) [N/A]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...rPostFeynman-eth:0x808297224e86b1a6055B5F790a2cE07Ed611f955.sol} | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+```
+
+Generated with discovered.json: 0xe1b69e09a54eb953fc254c38098f4d3a781255c8
+
+# Diff at Tue, 16 Jun 2026 12:35:17 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@eab2d50b5606ad7d3266aa03fec9372ca87585e6 block: 1780654305
+- current timestamp: 1781613178
+
+## Description
+
+Final Security Council removal transaction. `ScrollAdminMultisig` now controls the `scMinorityNoDelay` path (used to unpause core contracts via the PauseController), completing the Security Council removal.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract GnosisSafeL2 (eth:0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Scroll Security Council Minority (eth:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    EOA  (eth:0x498C0c17e26EEEC63375A4A20Ba8A91Aa357CbcD)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (eth:0x69C2eD64171bF5737c2B78bdF722e68a032B2825) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract ScrollOwner (eth:0x798576400F7D662961BA15C6b3F3d813447a26a6) [scroll/ScrollOwner] {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      values.accessControl.roles.SECURITY_COUNCIL_MINORITY_NO_DELAY_ROLE.members.0:
+-        "eth:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE"
++        "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+      values.scMinorityNoDelay.0:
+-        "eth:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE"
++        "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (eth:0x8edC4EADEE120d4C51923c515e7C3241c815C2BC) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (eth:0x9479ABfebefEea3c846163012a472b44F305b3d7) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (eth:0xC3eA7C657884BB380B66D79C36aDCb5658b01896) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract ScrollAdminMultisig (eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761) [GnosisSafe] {
+    +++ description: Multisig of Scroll team operators that controls the rollup's upgrade and proof-system parameter paths.
+      receivedPermissions.11:
++        {"permission":"interact","from":"eth:0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"unpause core contracts via the PauseController.","role":".scMinorityNoDelay"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafeL2 (scr:0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract ScrollOwner (scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B) [scroll/ScrollOwnerL2] {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      values.accessControl.roles.SECURITY_COUNCIL_MINORITY_NO_DELAY_ROLE.members.0:
+-        "scr:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE"
++        "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Scroll Security Council Minority (scr:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SafeL2 (scr:0x69C2eD64171bF5737c2B78bdF722e68a032B2825) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SafeL2 (scr:0x8edC4EADEE120d4C51923c515e7C3241c815C2BC) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SafeL2 (scr:0x9479ABfebefEea3c846163012a472b44F305b3d7) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SafeL2 (scr:0xC3eA7C657884BB380B66D79C36aDCb5658b01896) [GnosisSafe]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafeL2}/GnosisSafeL2.sol                 |    0
+ .../GnosisSafeL2}/GnosisSafeProxy.p.sol            |    0
+ .../GnosisSafeL2.sol => /dev/null                  | 1108 -----------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   38 -
+ .../GnosisSafeL2.sol => /dev/null                  | 1108 -----------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   38 -
+ .../Safe.sol => /dev/null                          | 1216 ------------------
+ .../SafeProxy.p.sol => /dev/null                   |   42 -
+ .../Safe.sol => /dev/null                          | 1216 ------------------
+ .../SafeProxy.p.sol => /dev/null                   |   42 -
+ .../Safe.sol => /dev/null                          | 1216 ------------------
+ .../SafeProxy.p.sol => /dev/null                   |   42 -
+ .../Safe.sol => /dev/null                          | 1216 ------------------
+ .../SafeProxy.p.sol => /dev/null                   |   42 -
+ .../SafeL2.sol => /dev/null                        | 1286 --------------------
+ .../SafeProxy.p.sol => /dev/null                   |   42 -
+ .../SafeL2.sol => /dev/null                        | 1286 --------------------
+ .../SafeProxy.p.sol => /dev/null                   |   42 -
+ .../SafeL2.sol => /dev/null                        | 1286 --------------------
+ .../SafeProxy.p.sol => /dev/null                   |   42 -
+ .../SafeL2.sol => /dev/null                        | 1286 --------------------
+ .../SafeProxy.p.sol => /dev/null                   |   42 -
+ .../Safe.sol => /dev/null                          | 1216 ------------------
+ .../SafeProxy.p.sol => /dev/null                   |   42 -
+ .../SafeL2.sol => /dev/null                        | 1286 --------------------
+ .../SafeProxy.p.sol => /dev/null                   |   42 -
+ 26 files changed, 15222 deletions(-)
+```
+
 Generated with discovered.json: 0x7866e19b786bb837c6837710ca4f23bd9706f726
 
 # Diff at Fri, 05 Jun 2026 10:13:00 GMT:

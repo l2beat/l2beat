@@ -1,3 +1,4 @@
+import type { ProjectRiskView } from '@l2beat/config'
 import type {
   AggregatedLivenessRecord,
   AnomalyRecord,
@@ -24,6 +25,7 @@ import type {
   LivenessProject,
   LivenessResponse,
 } from './types'
+import { getAnomalyFailureMechanism } from './utils/getAnomalyFailureMechanism'
 
 export async function getLiveness(projectId?: ProjectId) {
   if (env.MOCK) {
@@ -41,7 +43,7 @@ async function getLivenessData(projectId?: ProjectId) {
     db.indexerConfiguration.getByIndexerId('tracked_txs_indexer'),
     ps.getProjects({
       select: ['trackedTxsConfig'],
-      optional: ['livenessConfig'],
+      optional: ['livenessConfig', 'scalingRisks'],
       whereNot: ['archivedAt'],
     }),
   ])
@@ -101,9 +103,10 @@ async function getLivenessData(projectId?: ProjectId) {
   )
 
   for (const trackedTxProject of trackedTxsProjects) {
-    const livenessConfig = livenessProjects.find(
-      (p) => p.id === trackedTxProject.id,
-    )?.livenessConfig
+    const project = livenessProjects.find((p) => p.id === trackedTxProject.id)
+    const livenessConfig = project?.livenessConfig
+    const riskView =
+      project?.scalingRisks?.stacked ?? project?.scalingRisks?.self
 
     const project30Days = groupedLast30Days?.[trackedTxProject.id]
     const project90Days = groupedLast90Days?.[trackedTxProject.id]
@@ -150,7 +153,12 @@ async function getLivenessData(projectId?: ProjectId) {
         anomalies,
         targetTimestamp,
       ),
-      anomalies: getAnomalies(anomalies, realTimeAnomalies, project30Days),
+      anomalies: getAnomalies(
+        anomalies,
+        realTimeAnomalies,
+        project30Days,
+        riskView,
+      ),
     }
     // duplicate data from one subtype to another if configured
     if (livenessConfig) {
@@ -260,6 +268,7 @@ function getAnomalies(
   project30Days:
     | Omit<AggregatedLivenessRecord, 'timestamp' | 'numberOfRecords'>[]
     | undefined,
+  riskView: ProjectRiskView | undefined,
 ): LivenessAnomaly[] {
   if (!project30Days) {
     return []
@@ -277,7 +286,7 @@ function getAnomalies(
   })
 
   return [
-    ...filteredAnomalies.map((a) => {
+    ...filteredAnomalies.map((a): LivenessAnomaly => {
       const avgInterval = project30Days.find(
         (r) => r.subtype === a.subtype,
       )?.avg
@@ -293,12 +302,14 @@ function getAnomalies(
           ? UnixTime.now() - a.timestamp
           : a.duration,
         end: isOngoing ? undefined : computedEnd,
+        status: isOngoing ? 'ongoing' : 'recovered',
         subtype: a.subtype,
         avgInterval,
         isApproved: false,
+        failureMechanism: getAnomalyFailureMechanism(a.subtype, riskView),
       }
     }),
-    ...realTimeAnomalies.map((a) => {
+    ...realTimeAnomalies.map((a): LivenessAnomaly => {
       const avgInterval = project30Days.find(
         (r) => r.subtype === a.subtype,
       )?.avg
@@ -308,25 +319,27 @@ function getAnomalies(
         start: a.start,
         end: a.end,
         durationInSeconds: a.end ? a.end - a.start : UnixTime.now() - a.start,
+        status: a.status,
         subtype: a.subtype,
         avgInterval,
         isApproved: true,
+        failureMechanism: getAnomalyFailureMechanism(a.subtype, riskView),
       }
     }),
   ].sort(sortAnomalies)
 }
 
 function sortAnomalies(a: LivenessAnomaly, b: LivenessAnomaly) {
-  if (a.end === undefined && b.end === undefined) {
+  if (a.status === 'ongoing' && b.status === 'ongoing') {
     return b.start - a.start
   }
-  if (a.end === undefined) {
+  if (a.status === 'ongoing') {
     return -1
   }
-  if (b.end === undefined) {
+  if (b.status === 'ongoing') {
     return 1
   }
-  return b.end - a.end
+  return (b.end ?? b.start) - (a.end ?? a.start)
 }
 
 function getMockLivenessData(): LivenessResponse {
@@ -465,9 +478,11 @@ function generateAnomalies(): LivenessAnomaly[] {
           subtype: Math.random() > 0.5 ? 'batchSubmissions' : 'stateUpdates',
           start,
           end: isOngoing ? undefined : end,
+          status: isOngoing ? 'ongoing' : 'recovered',
           durationInSeconds: isOngoing ? UnixTime.now() - start : end - start,
           avgInterval: generateRandomTime(),
           isApproved: isOngoing,
+          failureMechanism: undefined,
         } as const
       })
     : []

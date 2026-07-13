@@ -93,6 +93,12 @@
   @apply w-full;
 }
 
+.mdc th,
+.mdc td {
+  /* Necessary so the columns don't collapse to one character per line */
+  overflow-wrap: break-word;
+}
+
 .mdc table tr:not(:last-child) {
   @apply border-b border-coffee-400;
 }

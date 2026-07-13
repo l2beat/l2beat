@@ -180,6 +180,7 @@ export type ApiAddressType =
   | 'Timelock'
   | 'Untemplatized'
   | 'Contract'
+  | 'Group'
   | 'Unknown'
 
 export interface ApiAddressEntry {
@@ -290,9 +291,17 @@ export interface ApiAbiEntry {
   topic?: string
 }
 
+export interface ApiCodeSegment {
+  // `null` marks non-selectable text: the license/pragma/imports preamble and
+  // the whitespace between declarations. Joining every segment's `content` in
+  // order reproduces the original flattened source byte-for-byte.
+  name: string | null
+  content: string
+}
+
 export interface ApiCodeResponse {
   entryName: string | undefined
-  sources: { name: string; code: string }[]
+  sources: { name: string; declarations: ApiCodeSegment[] }[]
 }
 
 export interface ApiCodeSearchResponse {

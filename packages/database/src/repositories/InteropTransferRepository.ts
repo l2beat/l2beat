@@ -6,9 +6,16 @@ import {
   type KnownInteropBridgeType,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { type Insertable, type Selectable, sql } from 'kysely'
+import {
+  type Expression,
+  type ExpressionBuilder,
+  type Insertable,
+  type Selectable,
+  type SqlBool,
+  sql,
+} from 'kysely'
 import { BaseRepository } from '../BaseRepository'
-import type { InteropTransfer } from '../kysely/generated/types'
+import type { DB, InteropTransfer } from '../kysely/generated/types'
 
 // Interop bridge types are stored in the database.
 // If they are modified (e.g. renamed/removed), you MUST update
@@ -75,6 +82,37 @@ export interface InteropTransferUpdate {
   dstValueUsd?: number | null
 }
 
+export interface InteropTransferFinancialsFilter {
+  transferId?: string
+  srcChain?: string
+  srcTokenAddress?: string
+  srcAbstractTokenId?: string
+  srcSymbol?: string
+  dstChain?: string
+  dstTokenAddress?: string
+  dstAbstractTokenId?: string
+  dstSymbol?: string
+  /** Inclusive lower bound for the transfer timestamp. */
+  from?: UnixTime
+  /** Inclusive upper bound for the transfer timestamp. */
+  to?: UnixTime
+}
+
+export interface InteropTransferFinancialsStats {
+  totalCount: number
+  unprocessedCount: number
+  missingSrcValueCount: number
+  missingDstValueCount: number
+  srcValueUsdSum: number
+  dstValueUsdSum: number
+}
+
+export function hasAnyInteropTransferFinancialsFilter(
+  filter: InteropTransferFinancialsFilter,
+): boolean {
+  return Object.values(filter).some((value) => value !== undefined)
+}
+
 export interface InteropMissingTokenInfo {
   chain: string
   tokenAddress: string
@@ -98,10 +136,38 @@ export interface InteropTransferTokenAddressBatch {
   tokenAddresses: InteropTransferTokenAddress[]
 }
 
+/**
+ * One row per unique combination of token pair and bridge-type evidence,
+ * aggregated over all retained transfers. `sampleTransferId` is the id of an
+ * arbitrary transfer belonging to the group, so callers that need a full
+ * transfer row as evidence can fetch exactly one by primary key instead of
+ * holding every transfer in memory.
+ */
+export interface InteropTokenRouteRecord {
+  srcChain: string
+  srcTokenAddress: string | undefined
+  dstChain: string
+  dstTokenAddress: string | undefined
+  bridgeType: KnownInteropBridgeType | undefined
+  srcWasBurned: boolean | undefined
+  dstWasMinted: boolean | undefined
+  transferCount: number
+  sampleTransferId: string
+}
+
 interface PartialAbstractTokenFilter {
   chain: string
   address: Address32
 }
+
+const CASE_INSENSITIVE_FINANCIALS_COLUMNS = [
+  'srcTokenAddress',
+  'srcAbstractTokenId',
+  'srcSymbol',
+  'dstTokenAddress',
+  'dstAbstractTokenId',
+  'dstSymbol',
+] as const
 
 export function toRecord(
   row: Selectable<InteropTransfer>,
@@ -239,6 +305,112 @@ export class InteropTransferRepository extends BaseRepository {
       .execute()
 
     return rows.map(toRecord)
+  }
+
+  async getByFinancialsFilter(
+    filter: InteropTransferFinancialsFilter,
+    limit: number,
+  ): Promise<InteropTransferRecord[]> {
+    assert(limit > 0, 'limit must be a positive number')
+    const rows = await this.db
+      .selectFrom('InteropTransfer')
+      .selectAll()
+      .where((eb) => this.financialsFilterExpression(eb, filter))
+      .orderBy('timestamp', 'desc')
+      .orderBy('transferId', 'desc')
+      .limit(limit)
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
+  async getFinancialsStatsByFilter(
+    filter: InteropTransferFinancialsFilter,
+  ): Promise<InteropTransferFinancialsStats> {
+    const row = await this.db
+      .selectFrom('InteropTransfer')
+      .select((eb) => [
+        eb.fn.countAll().as('totalCount'),
+        sql<string>`COUNT(*) FILTER (WHERE "isProcessed" = false)`.as(
+          'unprocessedCount',
+        ),
+        sql<string>`COUNT(*) FILTER (WHERE "srcValueUsd" IS NULL)`.as(
+          'missingSrcValueCount',
+        ),
+        sql<string>`COUNT(*) FILTER (WHERE "dstValueUsd" IS NULL)`.as(
+          'missingDstValueCount',
+        ),
+        eb.fn.sum('srcValueUsd').as('srcValueUsdSum'),
+        eb.fn.sum('dstValueUsd').as('dstValueUsdSum'),
+      ])
+      .where((eb) => this.financialsFilterExpression(eb, filter))
+      .executeTakeFirst()
+
+    return {
+      totalCount: Number(row?.totalCount ?? 0),
+      unprocessedCount: Number(row?.unprocessedCount ?? 0),
+      missingSrcValueCount: Number(row?.missingSrcValueCount ?? 0),
+      missingDstValueCount: Number(row?.missingDstValueCount ?? 0),
+      srcValueUsdSum: Number(row?.srcValueUsdSum ?? 0),
+      dstValueUsdSum: Number(row?.dstValueUsdSum ?? 0),
+    }
+  }
+
+  async getTokenRoutes(): Promise<InteropTokenRouteRecord[]> {
+    const groupColumns = [
+      'srcChain',
+      'srcTokenAddress',
+      'dstChain',
+      'dstTokenAddress',
+      'bridgeType',
+      'srcWasBurned',
+      'dstWasMinted',
+    ] as const
+
+    const rows = await this.db
+      .selectFrom('InteropTransfer')
+      .select((eb) => [
+        ...groupColumns,
+        eb.fn.countAll().as('transferCount'),
+        eb.fn.max('transferId').as('sampleTransferId'),
+      ])
+      .groupBy([...groupColumns])
+      .execute()
+
+    return rows.map((row) => {
+      if (row.bridgeType !== null && !isInteropBridgeType(row.bridgeType)) {
+        throw new Error(
+          `Invalid interop transfer bridge type: ${row.bridgeType} for transfer ${row.sampleTransferId}`,
+        )
+      }
+
+      return {
+        srcChain: row.srcChain,
+        srcTokenAddress: row.srcTokenAddress ?? undefined,
+        dstChain: row.dstChain,
+        dstTokenAddress: row.dstTokenAddress ?? undefined,
+        bridgeType:
+          row.bridgeType === null
+            ? undefined
+            : (row.bridgeType as KnownInteropBridgeType),
+        srcWasBurned: row.srcWasBurned ?? undefined,
+        dstWasMinted: row.dstWasMinted ?? undefined,
+        transferCount: Number(row.transferCount),
+        sampleTransferId: row.sampleTransferId,
+      }
+    })
+  }
+
+  async findByTransferId(
+    transferId: string,
+  ): Promise<InteropTransferRecord | undefined> {
+    const row = await this.db
+      .selectFrom('InteropTransfer')
+      .selectAll()
+      .where('transferId', '=', transferId)
+      .executeTakeFirst()
+
+    return row ? toRecord(row) : undefined
   }
 
   async getByRange(
@@ -527,6 +699,56 @@ export class InteropTransferRepository extends BaseRepository {
       .executeTakeFirst()
 
     return Number(result.numUpdatedRows)
+  }
+
+  async markAsUnprocessedByFinancialsFilter(
+    filter: InteropTransferFinancialsFilter,
+  ): Promise<number> {
+    const result = await this.db
+      .updateTable('InteropTransfer')
+      .set({ isProcessed: false })
+      .where('isProcessed', '=', true)
+      .where((eb) => this.financialsFilterExpression(eb, filter))
+      .executeTakeFirst()
+
+    return Number(result.numUpdatedRows)
+  }
+
+  private financialsFilterExpression(
+    eb: ExpressionBuilder<DB, 'InteropTransfer'>,
+    filter: InteropTransferFinancialsFilter,
+  ): Expression<SqlBool> {
+    assert(
+      hasAnyInteropTransferFinancialsFilter(filter),
+      'At least one filter is required',
+    )
+
+    const conditions: Expression<SqlBool>[] = []
+    if (filter.transferId !== undefined) {
+      conditions.push(eb('transferId', '=', filter.transferId))
+    }
+    if (filter.srcChain !== undefined) {
+      conditions.push(eb('srcChain', '=', filter.srcChain))
+    }
+    if (filter.dstChain !== undefined) {
+      conditions.push(eb('dstChain', '=', filter.dstChain))
+    }
+    for (const column of CASE_INSENSITIVE_FINANCIALS_COLUMNS) {
+      const value = filter[column]
+      if (value !== undefined) {
+        conditions.push(
+          eb(eb.fn<string>('lower', [column]), '=', value.toLowerCase()),
+        )
+      }
+    }
+    if (filter.from !== undefined) {
+      conditions.push(eb('timestamp', '>=', UnixTime.toDate(filter.from)))
+    }
+    if (filter.to !== undefined) {
+      conditions.push(eb('timestamp', '<=', UnixTime.toDate(filter.to)))
+    }
+
+    return eb.and(conditions)
   }
 
   async markAsUnprocessedByTokens(

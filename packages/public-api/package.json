@@ -5,7 +5,7 @@
   "scripts": {
     "build": "tsc",
     "build:dependencies": "cd ../.. && pnpm build:dependencies:public-api",
-    "clean": "rm -rf build",
+    "clean": "rm -rf build *.tsbuildinfo",
     "format": "biome format .",
     "format:fix": "biome format --write .",
     "lint": "biome check --formatter-enabled=false .",

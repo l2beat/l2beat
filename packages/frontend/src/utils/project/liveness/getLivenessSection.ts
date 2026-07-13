@@ -81,6 +81,7 @@ export async function getLivenessSection(
     anomalies: liveness?.anomalies ?? [],
     hasTrackedContractsChanged,
     trackedTransactions,
+    duplicateData: project.livenessConfig?.duplicateData,
     defaultRange,
     isArchived: project.archivedAt !== undefined,
   }

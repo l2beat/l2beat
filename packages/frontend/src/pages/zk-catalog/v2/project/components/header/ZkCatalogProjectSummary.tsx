@@ -394,6 +394,7 @@ function TechStackSection({
     <div className="mt-3 flex flex-col gap-2">
       <h2 className="font-semibold text-subtitle-12 uppercase">Tech Stack</h2>
       <div className="flex gap-2 rounded-sm border-divider max-md:flex-col md:items-end md:border md:p-4">
+        {leftSideEmpty && rightSideEmpty && <NoDataBadge />}
         {!leftSideEmpty && (
           <div className="flex flex-col">
             <span className="font-medium text-label-value-12 text-secondary">
@@ -416,6 +417,7 @@ function TechStackSection({
             <TechStackCell
               tags={techStack.finalWrap ?? []}
               className="flex-wrap"
+              emptyText="No final wrap"
             />
           </div>
         )}
@@ -427,6 +429,7 @@ function TechStackSection({
 function TvsStat({ value, change }: { value: number; change: number }) {
   return (
     <ProjectSummaryStat
+      titleAsChild
       title={
         <div className="font-semibold text-subtitle-12">
           <span className="md:hidden">Total Value Secured</span>

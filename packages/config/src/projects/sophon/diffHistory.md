@@ -1,3 +1,171 @@
+Generated with discovered.json: 0xec25e2a06f2b63f4b1350d2b0318d609386f8bd1
+
+# Diff at Tue, 30 Jun 2026 10:28:58 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@ddc641881a6870ab0c9e9ee1c517ed9eb73306bc block: 1782464947
+- current timestamp: 1782815274
+
+## Description
+
+Rotated two validators.
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.validatorsVTL.0:
+-        "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA"
++        "eth:0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B"
+      values.validatorsVTL.1:
+-        "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
++        "eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3"
+      values.validatorsVTLFullAC.PRECOMMITTER_ROLE.members.0:
+-        "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA"
++        "eth:0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B"
+      values.validatorsVTLFullAC.PRECOMMITTER_ROLE.members.1:
+-        "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
++        "eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3"
+      values.validatorsVTLFullAC.COMMITTER_ROLE.members.0:
+-        "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA"
++        "eth:0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B"
+      values.validatorsVTLFullAC.COMMITTER_ROLE.members.1:
+-        "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
++        "eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3"
+      values.validatorsVTLFullAC.REVERTER_ROLE.members.0:
+-        "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA"
++        "eth:0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B"
+      values.validatorsVTLFullAC.REVERTER_ROLE.members.1:
+-        "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
++        "eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3"
+      values.validatorsVTLFullAC.PROVER_ROLE.members.0:
+-        "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA"
++        "eth:0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B"
+      values.validatorsVTLFullAC.PROVER_ROLE.members.1:
+-        "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
++        "eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3"
+      values.validatorsVTLFullAC.EXECUTOR_ROLE.members.0:
+-        "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA"
++        "eth:0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B"
+      values.validatorsVTLFullAC.EXECUTOR_ROLE.members.1:
+-        "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
++        "eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3"
+    }
+```
+
+```diff
+    contract SophonZkEvmAdmin (eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1 act through it.
+      values.tokenMultiplierSetter:
+-        "eth:0xe14828E4405239dD331F194F1B7883eeD73bCBF3"
++        "eth:0xB1e2974E81922c1d5923dB4580292fB9954E9E05"
+    }
+```
+
+Generated with discovered.json: 0x23bfe8ee0208749fd2ecb77ad43a0cb78f83a56c
+
+# Diff at Fri, 26 Jun 2026 09:48:20 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@cf24a6eb45e0c4c6be4d66ee4e477ba0cce45b01 block: 1781602990
+- current timestamp: 1782464947
+
+## Description
+
+User deposits into sophon are paused: only authorized superuser can pass transaction filterer now: https://disco.l2beat.com/diff/eth:0x9D06B34adc3026eF876e4DABb859C424DbDA3063/eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41.
+
+Sophon chain is being sunset: https://x.com/sophon/status/2070192257295335800.
+
+## Watched changes
+
+```diff
+    contract Diamond (eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
++++ description: This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2.
++++ severity: HIGH
+      values.getTransactionFilterer:
+-        "eth:0x9D06B34adc3026eF876e4DABb859C424DbDA3063"
++        "eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41"
+    }
+```
+
+```diff
+    EOA  (eth:0x50B238788747B26c408681283D148659F9da7Cf9) {
+    +++ description: None
+      receivedPermissions.0.role:
+-        ".whitelistedSendersAC"
++        ".superuserAC"
+      receivedPermissions.0.from:
+-        "eth:0x9D06B34adc3026eF876e4DABb859C424DbDA3063"
++        "eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41"
+      receivedPermissions.1.from:
+-        "eth:0x9D06B34adc3026eF876e4DABb859C424DbDA3063"
++        "eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SophonTransactionFilterer (eth:0x9D06B34adc3026eF876e4DABb859C424DbDA3063) [shared-zk-stack/TransactionFilterer]
+    +++ description: A contract implementing the ITransactionFilterer interface, able to whitelist transactions based on sender- OR contractL2 (target) addresses. The whitelist is defined in AccessControl roles.
+```
+
+```diff
+    contract SophonZkEvmAdmin (eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1 act through it.
+      directlyReceivedPermissions.0:
++        {"permission":"interact","from":"eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41","description":"call requestL2Transaction() with any target/calldata (whitelisted superuser sender).","role":".superuserAC"}
+    }
+```
+
+```diff
+    contract SophonChainAdminMultisig (eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41","description":"call requestL2Transaction() with any target/calldata (whitelisted superuser sender).","role":".superuserAC","via":[{"address":"eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3"}]}
+      receivedPermissions.1:
+-        {"permission":"interact","from":"eth:0x9D06B34adc3026eF876e4DABb859C424DbDA3063","description":"manage the whitelist.","role":".defaultAdminAC"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SophonTransactionFilterer (eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41) [sophon/SophonTransactionFilterer]
+    +++ description: A contract implementing the ITransactionFilterer interface, allows only trxs from whitelisted superusers. The whitelist is defined in AccessControl roles.
+```
+
+## Source code changes
+
+```diff
+.../SophonTransactionFilterer.sol                  | 22 +++++++---------------
+ 1 file changed, 7 insertions(+), 15 deletions(-)
+```
+
+Generated with discovered.json: 0xd5e37c0efad10bfe6bd88e6a27435d0438ef007c
+
+# Diff at Tue, 16 Jun 2026 09:44:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b8fe7ad12211d67626f7d23839b5be1f7ba15bb5 block: 1780913579
+- current timestamp: 1781602990
+
+## Description
+
+Multisig member switched.
+
+## Watched changes
+
+```diff
+    contract SophonChainAdminMultisig (eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xF6877208302D9715A576D4Bff96f6576B5A1dFbA"
+      values.$members.3:
+-        "eth:0x20719Abd2E63518e68D30a295388cAd6B542dCEf"
+    }
+```
+
 Generated with discovered.json: 0x92f48e1fe0afd597461d13cee378686da2fda143
 
 # Diff at Tue, 09 Jun 2026 12:43:39 GMT:

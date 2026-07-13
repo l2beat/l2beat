@@ -49,6 +49,10 @@ export type { DiscoveryCacheRecord } from './repositories/DiscoveryCacheReposito
 export type { FlatSourcesRecord } from './repositories/FlatSourcesRepository'
 export type { IndexerConfigurationRecord } from './repositories/IndexerConfigurationRepository'
 export type { IndexerStateRecord } from './repositories/IndexerStateRepository'
+export type {
+  InteropAggregateStatusRecord,
+  InteropAggregateStatusValue,
+} from './repositories/InteropAggregateStatusRepository'
 export type { InteropConfigRecord } from './repositories/InteropConfigRepository'
 export type {
   InteropEventContext,
@@ -67,14 +71,18 @@ export type {
   InteropPluginSyncedRangeRecord,
 } from './repositories/InteropPluginSyncedRangeRepository'
 export type { InteropPluginSyncStateRecord } from './repositories/InteropPluginSyncStateRepository'
-export type {
-  InteropMissingTokenInfo,
-  InteropSuspiciousTransferRecord,
-  InteropTransferRecord,
-  InteropTransfersDetailedStatsRecord,
-  InteropTransfersStatsRecord,
-  InteropTransferTokenInfo,
-  InteropTransferUpdate,
+export {
+  hasAnyInteropTransferFinancialsFilter,
+  type InteropMissingTokenInfo,
+  type InteropSuspiciousTransferRecord,
+  type InteropTokenRouteRecord,
+  type InteropTransferFinancialsFilter,
+  type InteropTransferFinancialsStats,
+  type InteropTransferRecord,
+  type InteropTransfersDetailedStatsRecord,
+  type InteropTransfersStatsRecord,
+  type InteropTransferTokenInfo,
+  type InteropTransferUpdate,
 } from './repositories/InteropTransferRepository'
 export type {
   InteropTransferTypeStats,

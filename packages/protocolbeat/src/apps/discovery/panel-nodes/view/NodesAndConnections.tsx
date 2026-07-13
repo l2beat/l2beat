@@ -1,7 +1,10 @@
+import clsx from 'clsx'
 import { useMemo } from 'react'
+import { AddressIcon } from '../../../../components/AddressIcon'
 import { useGlobalSettingsStore } from '../../store/global-settings-store'
 import type { Node } from '../store/State'
 import { useStore } from '../store/store'
+import { buildRenderGraph } from '../store/utils/renderGraph'
 import { Connection, type ConnectionProps } from './Connection'
 import { NodeView } from './NodeView'
 
@@ -39,10 +42,12 @@ export function NodesAndConnections() {
     (s) => s.markUnreachableEntries,
   )
 
+  const graph = useMemo(() => buildRenderGraph(nodes, hidden), [nodes, hidden])
+
   const view = useMemo<DerivedView>(
     () =>
       buildView(
-        nodes,
+        graph.nodes,
         hidden,
         selected,
         enableDimming,
@@ -50,7 +55,7 @@ export function NodesAndConnections() {
         markUnreachableEntries,
       ),
     [
-      nodes,
+      graph,
       hidden,
       selected,
       enableDimming,
@@ -80,6 +85,32 @@ export function NodesAndConnections() {
 
   return (
     <>
+      {graph.containers.map((container) => {
+        const isSelected = selected.includes(container.id)
+        return (
+          <div
+            key={container.id}
+            className={clsx(
+              'pointer-events-none absolute rounded-xl border-2 border-coffee-200/60 border-dashed bg-coffee-200/5',
+              isSelected && 'outline outline-4 outline-autumn-300',
+            )}
+            style={{
+              left: container.box.x,
+              top: container.box.y,
+              width: container.box.width,
+              height: container.box.height,
+            }}
+          >
+            <div
+              className="absolute top-0 right-0 left-0 flex items-center gap-1 rounded-t-lg bg-coffee-600 px-2 font-medium text-coffee-200 text-xs"
+              style={{ height: container.headerBox.height }}
+            >
+              <AddressIcon type="Group" />
+              <span className="truncate">{container.name}</span>
+            </div>
+          </div>
+        )
+      })}
       {svg}
       {view.visible.map((node) => {
         const flags = view.flags.get(node.id) as NodeFlags

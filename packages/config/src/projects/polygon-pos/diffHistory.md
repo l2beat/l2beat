@@ -1,3 +1,76 @@
+Generated with discovered.json: 0xb8ec4c6403e11fdeadb09fba9023e46997efcc2d
+
+# Diff at Thu, 25 Jun 2026 12:43:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8df370c30d58cf2a24a9fe5df1aafba41971f447 block: 1781604054
+- current timestamp: 1782391177
+
+## Description
+
+Activate [Zurich hardfork](https://github.com/0xPolygon/heimdall-v2/releases/tag/v0.9.0) with new heimdall id `heimdallv2-137`.
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) [polygon-pos/StakeManager] {
+    +++ description: Manages the Polygon PoS validator set.
+      values.currentValidatorSetSize:
+-        102
++        101
+    }
+```
+
+```diff
+    contract RootChain (eth:0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287) [polygonposbridge/RootChain] {
+    +++ description: Contract storing chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the validators.
++++ description: Fork identifier for the heimdall state bridge to bor (polygon execution). Changes with hard forks.
+      values.heimdallId:
+-        "0x7e10229e6df5851dc336f813dde0cf6559cd517f9ff1980e2e57e192ba3a2329"
++        "0xd982b078cdb2c4f7afb14b52c5127dd9206472cebd6e13a45f50c113cb9401af"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1781604054 (main branch discovery), not current.
+
+```diff
+    contract RootChain (eth:0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287) [polygonposbridge/RootChain] {
+    +++ description: Contract storing chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the validators.
+      fieldMeta:
++        {"heimdallId":{"description":"Fork identifier for the heimdall state bridge to bor (polygon execution). Changes with hard forks."}}
+    }
+```
+
+Generated with discovered.json: 0xdb7bec85ec39506414134ac6a482cd9cc5c68bf5
+
+# Diff at Tue, 16 Jun 2026 10:02:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b8fe7ad12211d67626f7d23839b5be1f7ba15bb5 block: 1780406469
+- current timestamp: 1781604054
+
+## Description
+
+3 valis removed: vali set is open to join with min stake.
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) [polygon-pos/StakeManager] {
+    +++ description: Manages the Polygon PoS validator set.
+      values.CHECKPOINT_REWARD:
+-        "29414916286149162861491"
++        "25212785388127853881278"
+      values.currentValidatorSetSize:
+-        105
++        102
+    }
+```
+
 Generated with discovered.json: 0x600418befcb185972254ee51e97f55e82666588b
 
 # Diff at Tue, 02 Jun 2026 13:22:27 GMT:

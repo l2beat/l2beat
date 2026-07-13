@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x7731a3eca8c7801b638aa412a97902ac56a0b496
+
+# Diff at Tue, 07 Jul 2026 14:19:42 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1fd9d39064602bc28714717ec6eae23c740b472b block: 1771857552
+- current timestamp: 1783433878
+
+## Description
+
+RollupProxy `stakerCount: 1 → 0` — the only active BoLD staker unstaked. Project archived (2026-06-30).
+
+## Watched changes
+
+```diff
+    contract RollupProxy (eth:0x09eD7e66Dd7c7129Ec3994498A521B502Ca7D61b) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      values.stakerCount:
+-        1
++        0
+    }
+```
+
 Generated with discovered.json: 0x49404390c2d19c629eb1470c6e76191fae30dd22
 
 # Diff at Tue, 09 Jun 2026 12:43:32 GMT:

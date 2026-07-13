@@ -21,6 +21,7 @@ type EditorViewProps = {
     lineSelection: boolean
     rangeHighlight: boolean
   }
+  onActiveFileChange?: (file: EditorFile | undefined) => void
 }
 
 export function EditorView(props: EditorViewProps) {
@@ -99,6 +100,10 @@ export function EditorView(props: EditorViewProps) {
     props.range?.index,
     props.range?.data,
   ])
+
+  useEffect(() => {
+    props.onActiveFileChange?.(props.files[activeFileIndex])
+  }, [props.onActiveFileChange, props.files, activeFileIndex])
 
   useEffect(() => {
     if (

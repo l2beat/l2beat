@@ -70,6 +70,27 @@ export const sp1hypercube: BaseProject = {
         projectId: ProjectId('fluent'),
         sinceTimestamp: UnixTime(1776599267), // first onchain commitBatch 2026-04-19
       },
+      // Agglayer shared gateway v6 route
+      {
+        projectId: ProjectId('forknet'),
+        sinceTimestamp: UnixTime(1781600877),
+      },
+      {
+        projectId: ProjectId('katana'),
+        sinceTimestamp: UnixTime(1781600877),
+      },
+      {
+        projectId: ProjectId('lumia'),
+        sinceTimestamp: UnixTime(1781600877),
+      },
+      {
+        projectId: ProjectId('xlayer'),
+        sinceTimestamp: UnixTime(1781600877),
+      },
+      {
+        projectId: ProjectId('penchain'),
+        sinceTimestamp: UnixTime(1781600877),
+      },
       {
         projectId: ProjectId('celo'),
         sinceTimestamp: UnixTime(1771445567),

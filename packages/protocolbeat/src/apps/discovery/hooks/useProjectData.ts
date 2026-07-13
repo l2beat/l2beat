@@ -6,7 +6,7 @@ import { useProjectQueryOptions } from './projectQuery'
 
 export function useProjectData() {
   const { project } = useParams()
-  const selectedAddress = usePanelStore((state) => state.selected)
+  const selectedAddresses = usePanelStore((state) => state.selected)
 
   if (!project) {
     throw new Error('Cannot use component outside of project page!')
@@ -14,6 +14,7 @@ export function useProjectData() {
 
   const projectResponse = useQuery(useProjectQueryOptions(project))
 
+  const [selectedAddress] = selectedAddresses
   const selected = projectResponse.data
     ? findSelected(projectResponse.data.entries, selectedAddress)
     : undefined
@@ -23,6 +24,7 @@ export function useProjectData() {
     isError: projectResponse.isError,
     project,
     selectedAddress,
+    selectedAddresses,
     projectResponse,
     selected,
   }

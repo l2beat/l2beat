@@ -29,11 +29,13 @@ export function TransferCountCell({
   transferCount,
   snapshotTimestamp,
   type,
+  tokenId,
   protocol,
 }: {
   transferCount: number
   snapshotTimestamp: number | undefined
   type: KnownInteropBridgeType | undefined
+  tokenId?: string
   protocol: {
     id: ProjectId
     name: string
@@ -42,7 +44,14 @@ export function TransferCountCell({
   }
 }) {
   const [isOpen, setIsOpen] = useState(false)
-  const { selectedChains } = useInteropSelectedChains()
+  const { selectedChains, allChainIds } = useInteropSelectedChains()
+  const dialogSelection = useMemo(
+    () =>
+      selectedChains.from.length === 0 && selectedChains.to.length === 0
+        ? { from: allChainIds, to: allChainIds }
+        : selectedChains,
+    [selectedChains, allChainIds],
+  )
 
   return (
     <>
@@ -55,8 +64,9 @@ export function TransferCountCell({
       <TransferDetailsDialog
         protocol={protocol}
         type={type}
+        tokenId={tokenId}
         snapshotTimestamp={snapshotTimestamp}
-        selectedChains={selectedChains}
+        selectedChains={dialogSelection}
         subtitle={<BetweenChainsInfo className="md:mt-1" />}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
@@ -98,7 +108,7 @@ export function TransferDetailsDialog({
       trpc.interop.transfers.infiniteQueryOptions(
         {
           ...selectedChains,
-          id: protocol.id,
+          scope: { type: 'project', projectId: protocol.id },
           type,
           tokenId,
           snapshotTimestamp: snapshotTimestamp ?? 0,

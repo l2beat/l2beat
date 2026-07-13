@@ -19,7 +19,10 @@ import {
   WALK_AWAY_PASSED_PROJECTS,
 } from '~/consts/walkAwayProjects'
 import { env } from '~/env'
-import { getDiscoveryUpdates } from '~/server/features/projects/recent-changes/getDiscoveryUpdates'
+import {
+  countRecentDiscoveryUpdates,
+  getDiscoveryUpdates,
+} from '~/server/features/projects/recent-changes/getDiscoveryUpdates'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
@@ -38,6 +41,7 @@ import { getBadgeWithParamsAndLink } from '~/utils/project/getBadgeWithParams'
 import { getDiagramParams } from '~/utils/project/getDiagramParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { getLivenessSection } from '~/utils/project/liveness/getLivenessSection'
+import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
 import { getScalingRiskSummarySection } from '~/utils/project/risk-summary/getScalingRiskSummary'
 import { getDataAvailabilitySection } from '~/utils/project/technology/getDataAvailabilitySection'
 import { getOperatorSection } from '~/utils/project/technology/getOperatorSection'
@@ -87,6 +91,7 @@ export interface ProjectScalingEntry {
     redWarning?: ProjectRedWarning
     emergencyWarning?: string
     ongoingAnomaly?: 'single' | 'multiple'
+    recentUpdatesCount: number
     description?: string
     badges?: BadgeWithParams[]
     links: ProjectLink[]
@@ -200,7 +205,7 @@ export async function getScalingProjectEntry(
     }),
     ps.getProjects({
       select: ['display'],
-      optional: ['daBridge', 'scalingInfo', 'daLayer'],
+      optional: ['daBridge', 'scalingInfo', 'daLayer', 'privacyInfo'],
     }),
     ps.getProjects({
       select: ['interopConfig'],
@@ -213,7 +218,7 @@ export async function getScalingProjectEntry(
     : []
 
   const ongoingAnomalies = projectLiveness?.anomalies.filter(
-    (a) => a.end === undefined,
+    (anomaly) => isAnomalyOngoing(anomaly) && anomaly.isApproved,
   )
 
   const tvsProjectStats = tvsStats.projects[project.id]
@@ -234,6 +239,7 @@ export async function getScalingProjectEntry(
           ? 'single'
           : 'multiple'
       : undefined,
+    recentUpdatesCount: countRecentDiscoveryUpdates(discoveryUpdates),
     category: project.scalingInfo.type,
     proofSystemType: project.scalingInfo.proofSystem?.type,
     purposes: project.scalingInfo.purposes,
@@ -407,6 +413,7 @@ export async function getScalingProjectEntry(
         protocols: interopData.protocols,
         defaultSelectedChains: interopData.defaultSelectedChains,
         defaultStatsChainId: interopData.chainId,
+        canonicalProtocolId: interopData.canonicalProtocolId,
       },
     })
   }

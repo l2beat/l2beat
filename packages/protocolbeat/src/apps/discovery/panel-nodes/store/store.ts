@@ -1,9 +1,12 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import type { Actions } from './actions/Actions'
+import { alignSelected, distributeSelected } from './actions/align'
 import { applyStoredLayout } from './actions/applyStoredLayout'
+import { groupSelected, renameGroup, ungroupSelected } from './actions/group'
 import { redo, undo } from './actions/history'
 import { loadNodes } from './actions/loadNodes'
+import { onDoubleClick } from './actions/onDoubleClick'
 import { onKeyDown } from './actions/onKeyDown'
 import { onKeyUp } from './actions/onKeyUp'
 import { onMouseDown } from './actions/onMouseDown'
@@ -74,6 +77,11 @@ export const useStore = create<StoreState>()(
       loadNodes: wrapHistoryResetAction(set, loadNodes),
       setNodes: wrapUndoableAction(set, setNodes),
       colorSelected: wrapUndoableAction(set, colorSelected),
+      alignSelected: wrapUndoableAction(set, alignSelected),
+      distributeSelected: wrapUndoableAction(set, distributeSelected),
+      groupSelected: wrapUndoableAction(set, groupSelected),
+      ungroupSelected: wrapUndoableAction(set, ungroupSelected),
+      renameGroup: wrapUndoableAction(set, renameGroup),
       undo: wrapAction(set, undo),
       redo: wrapAction(set, redo),
       hideSelected: wrapUndoableAction(set, hideSelected),
@@ -92,6 +100,7 @@ export const useStore = create<StoreState>()(
       onMouseDown: wrapHistoryStartAction(set, onMouseDown),
       onMouseUp: wrapHistoryEndAction(set, onMouseUp),
       onMouseMove: wrapAction(set, onMouseMove),
+      onDoubleClick: wrapAction(set, onDoubleClick),
       onWheel: wrapAction(set, onWheel),
     }),
     {

@@ -1,8 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type {
-  AggregatedInteropTransferRecord,
-  Database,
-} from '@l2beat/database'
+import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import type { InteropAggregationConfig } from '../../../../config/features/interop'
 import {
@@ -10,11 +7,11 @@ import {
   type ManagedChildIndexerOptions,
 } from '../../../../tools/uif/ManagedChildIndexer'
 import type { InteropNotifier } from '../notifications/InteropNotifier'
-import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
 import type {
-  InteropAggregationAnalysis,
-  InteropAggregationAnalyzer,
-} from './InteropAggregationAnalyzer'
+  InteropPromotionService,
+  ReconcileResult,
+} from '../promotion/InteropPromotionService'
+import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
 import type { InteropAggregationService } from './InteropAggregationService'
 
 /**
@@ -23,15 +20,15 @@ import type { InteropAggregationService } from './InteropAggregationService'
  * to an hour in the past), so a syncer must lag by more than this plus that
  * gap to trip the check.
  */
-const SYNCER_FRESHNESS_TOLERANCE = 30 * UnixTime.MINUTE
+export const SYNCER_FRESHNESS_TOLERANCE = 30 * UnixTime.MINUTE
 
 export interface InteropAggregatingIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
   db: Database
   configs: InteropAggregationConfig[]
   aggregationService: InteropAggregationService
-  aggregationAnalyzer?: InteropAggregationAnalyzer
-  notifier?: Pick<InteropNotifier, 'notifySuspiciousAggregates'>
+  promotionService: InteropPromotionService
+  notifier?: Pick<InteropNotifier, 'notifyBlockedSnapshot'>
   syncersManager: InteropSyncersManager
 }
 
@@ -68,8 +65,8 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
       aggregatedDeployedTokens,
       aggregatedTokensPairs,
     } = this.$.aggregationService.aggregate(transfers, this.$.configs, to)
-    const analysis = await this.runAggregateAnalysis(to, aggregatedTransfers)
 
+    let promotion: ReconcileResult | undefined
     await this.$.db.transaction(async () => {
       await this.$.db.aggregatedInteropTransfer.deleteAllButEarliestPerDayBefore(
         retentionCutoff,
@@ -95,22 +92,20 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
       await this.$.db.aggregatedInteropTokensPair.insertMany(
         aggregatedTokensPairs,
       )
+      // Evaluate + write this snapshot's promotion status (atomic with the
+      // aggregates). The read path is unaffected until the cutover, so a `blocked`
+      // verdict only records + alerts for now; it does not change what is served.
+      promotion = await this.$.promotionService.reconcile({
+        timestamp: to,
+        transfers: aggregatedTransfers,
+        tokens: aggregatedTokens,
+      })
+      // Keep status rows in lockstep with the aggregates retention above.
+      await this.$.db.interopAggregateStatus.deleteOrphaned()
     })
 
-    if (analysis && analysis.suspiciousGroups.length > 0) {
-      this.logger.warn('Suspicious interop aggregates detected', {
-        timestamp: to,
-        checkedGroups: analysis.checkedGroups,
-        suspiciousGroups: analysis.suspiciousGroups.length,
-        details: analysis.suspiciousGroups.map((group) => ({
-          id: group.id,
-          bridgeType: group.bridgeType,
-          srcChain: group.srcChain,
-          dstChain: group.dstChain,
-          reasons: group.reasons,
-        })),
-      })
-      this.$.notifier?.notifySuspiciousAggregates(to, analysis)
+    if (promotion?.notify) {
+      this.$.notifier?.notifyBlockedSnapshot(to, promotion.reasons)
     }
 
     this.logger.info('Aggregated interop transfers saved to db', {
@@ -118,32 +113,9 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
       aggregatedTokens: aggregatedTokens.length,
       aggregatedDeployedTokens: aggregatedDeployedTokens.length,
       aggregatedTokenPairs: aggregatedTokensPairs.length,
-      suspiciousGroups: analysis?.suspiciousGroups.length ?? 0,
     })
 
     return to
-  }
-
-  private async runAggregateAnalysis(
-    timestamp: UnixTime,
-    aggregatedTransfers: AggregatedInteropTransferRecord[],
-  ): Promise<InteropAggregationAnalysis | undefined> {
-    if (!this.$.aggregationAnalyzer) {
-      return undefined
-    }
-
-    try {
-      return await this.$.aggregationAnalyzer.analyze(
-        timestamp,
-        aggregatedTransfers,
-      )
-    } catch (error) {
-      this.logger.error('Failed to analyze interop aggregates', {
-        timestamp,
-        error,
-      })
-      return undefined
-    }
   }
 
   isAggregationInProgress(): boolean {

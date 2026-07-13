@@ -8,5 +8,10 @@
     "hash": "0x3400d2f1f605f55a5f01114dcb37590633d756230f7829fa3949433b038befa2",
     "address": "eth:0xa4a38fD0108C00983E75616b638Ff3321FD26958",
     "blockNumber": 24590324
+  },
+  "SlashingProposer_v5.sol": {
+    "hash": "0x26871597dcda5a57814fdb184bd837f661973ceff7819b4b5653cb75c12a18ff",
+    "address": "eth:0x8A36b8F2Ca71D8d8Bd98e03Ebf8B4D0939Daf0bA",
+    "blockNumber": 25428902
   }
 }

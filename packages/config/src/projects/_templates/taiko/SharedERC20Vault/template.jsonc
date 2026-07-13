@@ -1,6 +1,21 @@
 {
-  "description": "Shared vault for Taiko chains for bridged ERC20 tokens.",
+  "description": "Shared vault for Taiko chains for bridged ERC20 tokens. Pausing stops token sends, message-triggered releases, and recalls. Released or minted tokens are subject to the configured quota manager.",
   "fields": {
+    "paused": { "severity": "HIGH" },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause and unpause token bridge flows and change the bridged token implementation for a canonical token after the migration delay."
+        }
+      ]
+    },
+    "quotaManager": {
+      "description": "Quota manager that rate-limits ERC20 tokens released or minted by this vault."
+    },
+    "btokenDenylist": {
+      "description": "Bridged tokens denied by migration logic. Denied tokens cannot be sent through the vault."
+    },
     "proxiableUUID": {
       "handler": {
         "type": "call",

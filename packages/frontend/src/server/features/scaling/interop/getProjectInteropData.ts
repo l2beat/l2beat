@@ -1,15 +1,17 @@
 import type { Project } from '@l2beat/config'
+import { projectIdToChain } from '@l2beat/config/build/global/chainMap'
 import type { ProjectId } from '@l2beat/shared-pure'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import { MAX_SELECTED_CHAINS } from '~/pages/interop/components/flows/consts'
 import { mapInteropChainsToWithIcons } from '~/pages/interop/utils/mapInteropChainsToWithIcons'
-import type { RouterOutputs } from '~/trpc/React'
 import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
+import { getInteropFlows } from './getInteropFlows'
 import { getInteropChains } from './utils/getInteropChains'
 
 export interface ProjectInteropData {
   chainId: string
+  canonicalProtocolId: string | undefined
   interopChains: InteropChainWithIcon[]
   protocols: {
     id: string
@@ -19,6 +21,8 @@ export interface ProjectInteropData {
   }[]
   defaultSelectedChains: string[]
   summary: {
+    volume: number
+    transferCount: number
     protocols: {
       items: {
         id: string
@@ -50,8 +54,9 @@ export async function getProjectInteropData(
     getInteropChains().filter((chain) => !chain.isUpcoming),
   )
 
+  const projectChainId = projectIdToChain(projectId)
   const currentInteropChain = interopChains.find(
-    (chain) => chain.id === projectId,
+    (chain) => chain.id === projectChainId,
   )
   if (!currentInteropChain) return undefined
 
@@ -62,29 +67,54 @@ export async function getProjectInteropData(
   const defaultSelectedChains = orderedInteropChains
     .map((chain) => chain.id)
     .slice(0, MAX_SELECTED_CHAINS)
+  const allSelectedChains = orderedInteropChains.map((chain) => chain.id)
   const protocols = interopProjects.map((protocol) => ({
     id: protocol.id,
     slug: protocol.slug,
     name: protocol.interopConfig.name ?? protocol.name,
     iconUrl: manifest.getUrl(`/icons/${protocol.slug}.png`),
   }))
-  const interopFlows: RouterOutputs['interop']['flows'] =
-    await helpers.queryClient.fetchQuery(
-      helpers.trpc.interop.flows.queryOptions({
-        chains: defaultSelectedChains,
-        protocolIds: protocols.map((protocol) => protocol.id),
-      }),
-    )
-  const currentChainData = interopFlows.chainData.find(
+  const protocolIds = protocols.map((protocol) => protocol.id)
+  const defaultInteropFlowsPromise = helpers.queryClient.fetchQuery(
+    helpers.trpc.interop.flows.queryOptions({
+      chains: defaultSelectedChains,
+      protocolIds,
+    }),
+  )
+  const summaryInteropFlowsPromise =
+    defaultSelectedChains.length === allSelectedChains.length
+      ? defaultInteropFlowsPromise
+      : getInteropFlows({
+          chains: allSelectedChains,
+          protocolIds,
+          anchorChain: currentInteropChain.id,
+        })
+
+  const [, summaryInteropFlows] = await Promise.all([
+    defaultInteropFlowsPromise,
+    summaryInteropFlowsPromise,
+  ])
+  const currentChainData = summaryInteropFlows.chainData.find(
     (chain) => chain.chainId === currentInteropChain.id,
   )
 
+  const canonicalProtocolId = interopProjects.some(
+    (protocol) => protocol.id === projectId,
+  )
+    ? projectId
+    : undefined
+
   return {
     chainId: currentInteropChain.id,
+    canonicalProtocolId,
     interopChains: orderedInteropChains,
     protocols,
     defaultSelectedChains,
     summary: {
+      volume: currentChainData?.totalVolume ?? 0,
+      transferCount:
+        (currentChainData?.transfersIn ?? 0) +
+        (currentChainData?.transfersOut ?? 0),
       protocols: {
         items: (currentChainData?.topProtocols ?? []).map((protocol) => ({
           id: protocol.id,

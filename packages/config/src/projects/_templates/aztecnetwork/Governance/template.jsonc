@@ -10,7 +10,13 @@
   "ignoreInWatchMode": ["totalPowerNow", "withdrawalCount"],
   "category": "gov",
   "fields": {
+    "ASSET": {
+      "description": "AZTEC token used for governance deposits and voting power.",
+      "template": "aztecnetwork/Aztec"
+    },
     "governanceProposer": {
+      "description": "Address allowed to create proposals after sequencer signalling succeeds.",
+      "template": "aztecnetwork/GovernanceProposer",
       "permissions": [
         {
           "type": "interact",

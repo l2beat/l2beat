@@ -62,7 +62,6 @@ import { RelayConfigPlugin } from './relay/relay.config'
 import { RelayPlugin } from './relay/relay.plugin'
 import { SkyBridgePlugin } from './sky-bridge'
 import { SorareBasePlugin } from './sorare-base'
-import { SquidCoralPlugin } from './squid-coral'
 import { StargatePlugin } from './stargate'
 import { SynthetixBridgePlugin } from './synthetix-bridge'
 import type { InteropPlugin } from './types'
@@ -179,7 +178,6 @@ export function createInteropPlugins(
       ),
     ],
     eventPlugins: [
-      new SquidCoralPlugin(),
       new DeBridgePlugin(deps.oneSidedChains),
       new DeBridgeDlnPlugin(deps.oneSidedChains),
       new AgglayerPlugin(),

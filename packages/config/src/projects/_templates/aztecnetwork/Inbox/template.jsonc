@@ -9,13 +9,24 @@
   ],
   "fields": {
     "FEE_ASSET_PORTAL": {
-      "description": "The address of the FeeJuicePortal contract used for bridging fee assets to the L2."
+      "description": "The FeeJuicePortal contract used for bridging fee assets to the L2. Messages from this portal are inserted with the canonical fee-asset L2 sender.",
+      "template": "aztecnetwork/FeeJuicePortal"
     },
     "LAG": {
       "description": "The delay (in checkpoints) before L1 to L2 messages can be consumed by the sequencer."
     },
     "ROLLUP": {
-      "description": "The address of the core Rollup contract that possesses the permission to consume the message trees."
+      "description": "The address of the core Rollup contract that possesses the permission to consume the message trees.",
+      "template": "aztecnetwork/Rollup",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "consume L1 to L2 message tree roots for checkpoint processing."
+        }
+      ]
+    },
+    "VERSION": {
+      "description": "The identifier of the Aztec instance/version to prevent cross-instance message replay."
     }
   },
   "category": "bridge-canonical"

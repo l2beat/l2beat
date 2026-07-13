@@ -1,5 +1,13 @@
 import { assert } from '@l2beat/shared-pure'
-import { command, extendType, number, oneOf, option, string } from 'cmd-ts'
+import {
+  command,
+  extendType,
+  number,
+  oneOf,
+  option,
+  optional,
+  string,
+} from 'cmd-ts'
 import path from 'path'
 import {
   STAKING_PROJECT_IDS,
@@ -44,15 +52,16 @@ export const GetStakeDistrib = command({
       defaultValueIsSerializable: true,
     }),
     outputPath: option({
-      type: string,
+      type: optional(string),
       long: 'output-path',
       short: 'o',
-      defaultValue: () => './l2b-getstakedistrib_output.json',
-      defaultValueIsSerializable: true,
     }),
   },
   handler: async (args) => {
-    const outputPath = path.resolve(process.cwd(), args.outputPath)
+    const outputPath =
+      args.outputPath !== undefined
+        ? path.resolve(process.cwd(), args.outputPath)
+        : undefined
     const fetcher = new StakeDistributionFetcher(
       args.project,
       args.limit,

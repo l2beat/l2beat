@@ -1,17 +1,17 @@
 import type { PrivacyAttribute } from '../types'
 
 export const PRIVACY_ATTRIBUTES = {
-  upgradeable: {
-    id: 'upgradeable',
-    label: 'Upgradeable',
+  fhe: {
+    id: 'fhe',
+    label: 'FHE',
     description:
-      'DAO can vote on upgrades that are executable with a 7d delay.',
+      'Uses fully homomorphic encryption for private computation over encrypted values.',
   },
-  optCompliance: {
-    id: 'optCompliance',
-    label: 'Opt compliance',
+  zk: {
+    id: 'zk',
+    label: 'ZK',
     description:
-      "Optional 'proofs of innocence' (POIs), can disassociate a deposit from a list of flagged addresses. They are not enforced by the protocol but can be enforced by relayers.",
+      'Uses zero-knowledge proofs to prove private actions without revealing private data.',
   },
   transfers: {
     id: 'transfers',
@@ -35,27 +35,10 @@ export const PRIVACY_ATTRIBUTES = {
     description:
       'Pre-defined transfer amounts use distinct buckets (anonymity sets).',
   },
-  sourceAvailable: {
-    id: 'sourceAvailable',
-    label: 'Source available',
+  privateAmounts: {
+    id: 'privateAmounts',
+    label: 'Private amounts',
     description:
-      'There is at least one practical way to exclusively use auditable, source-available software to interact with this protocol.',
-  },
-  immutable: {
-    id: 'immutable',
-    label: 'Immutable',
-    description: 'Core smart contract code cannot be changed.',
-  },
-  unconditionalPrivacy: {
-    id: 'unconditionalPrivacy',
-    label: 'Unconditional privacy',
-    description:
-      'Deposits and withdrawals cannot be censored or linked by the protocol.',
-  },
-  enforcedCompliance: {
-    id: 'enforcedCompliance',
-    label: 'Enforced compliance',
-    description:
-      'Centralised ASPs (association set providers) can refuse deposits before they are withdrawn and forcibly remove them from the anonymity set.',
+      'Transfer amounts are private, while sender and recipient addresses remain public.',
   },
 } as const satisfies Record<string, PrivacyAttribute>

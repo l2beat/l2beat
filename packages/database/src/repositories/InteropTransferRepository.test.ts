@@ -4,6 +4,7 @@ import type { Selectable } from 'kysely'
 import type { InteropTransfer } from '../kysely/generated/types'
 import { describeDatabase } from '../test/database'
 import {
+  hasAnyInteropTransferFinancialsFilter,
   type InteropTransferRecord,
   InteropTransferRepository,
   toRecord,
@@ -170,6 +171,67 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       const result = await repository.getAll()
       expect(result[0]?.srcSymbol).toEqual(undefined)
       expect(result[0]?.dstSymbol).toEqual(undefined)
+    })
+  })
+
+  describe(InteropTransferRepository.prototype.getTokenRoutes.name, () => {
+    it('aggregates transfers into one row per token pair and bridge-type evidence', async () => {
+      const srcToken = EthereumAddress.random()
+      const dstToken = EthereumAddress.random()
+      const otherDstToken = EthereumAddress.random()
+
+      const first = transfer('plugin1', 'transfer1', 'type', UnixTime(100))
+      const second = transfer('plugin1', 'transfer2', 'type', UnixTime(200))
+      for (const record of [first, second]) {
+        record.srcTokenAddress = srcToken
+        record.dstTokenAddress = dstToken
+        record.bridgeType = 'lockAndMint'
+      }
+      const third = transfer('plugin1', 'transfer3', 'type', UnixTime(300))
+      third.srcTokenAddress = srcToken
+      third.dstTokenAddress = otherDstToken
+      third.bridgeType = undefined
+      third.srcWasBurned = true
+      third.dstWasMinted = true
+
+      await repository.insertMany([first, second, third])
+
+      const routes = await repository.getTokenRoutes()
+
+      expect(routes).toEqualUnsorted([
+        {
+          srcChain: 'ethereum',
+          srcTokenAddress: srcToken,
+          dstChain: 'arbitrum',
+          dstTokenAddress: dstToken,
+          bridgeType: 'lockAndMint',
+          srcWasBurned: false,
+          dstWasMinted: false,
+          transferCount: 2,
+          sampleTransferId: 'transfer2',
+        },
+        {
+          srcChain: 'ethereum',
+          srcTokenAddress: srcToken,
+          dstChain: 'arbitrum',
+          dstTokenAddress: otherDstToken,
+          bridgeType: undefined,
+          srcWasBurned: true,
+          dstWasMinted: true,
+          transferCount: 1,
+          sampleTransferId: 'transfer3',
+        },
+      ])
+    })
+  })
+
+  describe(InteropTransferRepository.prototype.findByTransferId.name, () => {
+    it('returns the full transfer by id and undefined for unknown ids', async () => {
+      const record = transfer('plugin1', 'transfer1', 'type', UnixTime(100))
+      await repository.insertMany([record])
+
+      expect(await repository.findByTransferId('transfer1')).toEqual(record)
+      expect(await repository.findByTransferId('missing')).toEqual(undefined)
     })
   })
 
@@ -1536,8 +1598,280 @@ describeDatabase(InteropTransferRepository.name, (db) => {
     })
   })
 
+  describe(
+    InteropTransferRepository.prototype.getByFinancialsFilter.name,
+    () => {
+      it('filters by transferId', async () => {
+        const records = [financialTransfer('msg1'), financialTransfer('msg2')]
+        await repository.insertMany(records)
+
+        const result = await repository.getByFinancialsFilter(
+          { transferId: 'msg1' },
+          10,
+        )
+
+        expect(result).toEqual([records[0] as InteropTransferRecord])
+      })
+
+      it('filters by src and dst chain', async () => {
+        const records = [
+          financialTransfer('msg1', {
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+          }),
+          financialTransfer('msg2', { srcChain: 'base', dstChain: 'arbitrum' }),
+          financialTransfer('msg3', {
+            srcChain: 'ethereum',
+            dstChain: 'optimism',
+          }),
+        ]
+        await repository.insertMany(records)
+
+        const bySrc = await repository.getByFinancialsFilter(
+          { srcChain: 'ethereum' },
+          10,
+        )
+        expect(bySrc.map((r) => r.transferId)).toEqualUnsorted(['msg1', 'msg3'])
+
+        const byBoth = await repository.getByFinancialsFilter(
+          { srcChain: 'ethereum', dstChain: 'arbitrum' },
+          10,
+        )
+        expect(byBoth.map((r) => r.transferId)).toEqual(['msg1'])
+      })
+
+      it('filters token fields case-insensitively', async () => {
+        const records = [
+          financialTransfer('msg1', {
+            srcTokenAddress: '0xAbCd',
+            srcAbstractTokenId: 'Token-A',
+            srcSymbol: 'WETH',
+          }),
+          financialTransfer('msg2', {
+            dstTokenAddress: '0xDeF0',
+            dstAbstractTokenId: 'Token-B',
+            dstSymbol: 'USDC',
+          }),
+        ]
+        await repository.insertMany(records)
+
+        const cases = [
+          { filter: { srcTokenAddress: '0xABCD' }, expected: 'msg1' },
+          { filter: { srcAbstractTokenId: 'token-a' }, expected: 'msg1' },
+          { filter: { srcSymbol: 'weth' }, expected: 'msg1' },
+          { filter: { dstTokenAddress: '0xdef0' }, expected: 'msg2' },
+          { filter: { dstAbstractTokenId: 'TOKEN-B' }, expected: 'msg2' },
+          { filter: { dstSymbol: 'usdc' }, expected: 'msg2' },
+        ]
+        for (const { filter, expected } of cases) {
+          const result = await repository.getByFinancialsFilter(filter, 10)
+          expect(result.map((r) => r.transferId)).toEqual([expected])
+        }
+      })
+
+      it('filters by inclusive time range', async () => {
+        const records = [
+          financialTransfer('msg1', { timestamp: UnixTime(100) }),
+          financialTransfer('msg2', { timestamp: UnixTime(200) }),
+          financialTransfer('msg3', { timestamp: UnixTime(300) }),
+        ]
+        await repository.insertMany(records)
+
+        const result = await repository.getByFinancialsFilter(
+          { from: UnixTime(100), to: UnixTime(200) },
+          10,
+        )
+
+        expect(result.map((r) => r.transferId)).toEqualUnsorted([
+          'msg1',
+          'msg2',
+        ])
+      })
+
+      it('orders by timestamp and transferId descending and applies limit', async () => {
+        const records = [
+          financialTransfer('msgA', { timestamp: UnixTime(100) }),
+          financialTransfer('msgB', { timestamp: UnixTime(100) }),
+          financialTransfer('msgC', { timestamp: UnixTime(300) }),
+        ]
+        await repository.insertMany(records)
+
+        const result = await repository.getByFinancialsFilter(
+          { from: UnixTime(0) },
+          2,
+        )
+
+        expect(result.map((r) => r.transferId)).toEqual(['msgC', 'msgB'])
+      })
+
+      it('throws when no filter is provided', async () => {
+        await expect(repository.getByFinancialsFilter({}, 10)).toBeRejectedWith(
+          'At least one filter is required',
+        )
+      })
+    },
+  )
+
+  describe(
+    InteropTransferRepository.prototype.getFinancialsStatsByFilter.name,
+    () => {
+      it('aggregates financials of all matching transfers', async () => {
+        const records = [
+          financialTransfer('msg1', {
+            srcChain: 'ethereum',
+            isProcessed: true,
+            srcValueUsd: 100,
+            dstValueUsd: 90,
+          }),
+          financialTransfer('msg2', {
+            srcChain: 'ethereum',
+            isProcessed: false,
+            srcValueUsd: undefined,
+            dstValueUsd: 50,
+          }),
+          financialTransfer('msg3', {
+            srcChain: 'ethereum',
+            isProcessed: true,
+            srcValueUsd: 25,
+            dstValueUsd: undefined,
+          }),
+          financialTransfer('other', {
+            srcChain: 'base',
+            isProcessed: false,
+            srcValueUsd: 1000,
+            dstValueUsd: 1000,
+          }),
+        ]
+        await repository.insertMany(records)
+
+        const stats = await repository.getFinancialsStatsByFilter({
+          srcChain: 'ethereum',
+        })
+
+        expect(stats).toEqual({
+          totalCount: 3,
+          unprocessedCount: 1,
+          missingSrcValueCount: 1,
+          missingDstValueCount: 1,
+          srcValueUsdSum: 125,
+          dstValueUsdSum: 140,
+        })
+      })
+
+      it('returns zeroes when nothing matches', async () => {
+        const stats = await repository.getFinancialsStatsByFilter({
+          srcChain: 'ethereum',
+        })
+
+        expect(stats).toEqual({
+          totalCount: 0,
+          unprocessedCount: 0,
+          missingSrcValueCount: 0,
+          missingDstValueCount: 0,
+          srcValueUsdSum: 0,
+          dstValueUsdSum: 0,
+        })
+      })
+
+      it('throws when no filter is provided', async () => {
+        await expect(
+          repository.getFinancialsStatsByFilter({}),
+        ).toBeRejectedWith('At least one filter is required')
+      })
+    },
+  )
+
+  describe(
+    InteropTransferRepository.prototype.markAsUnprocessedByFinancialsFilter
+      .name,
+    () => {
+      it('marks only matching processed transfers as unprocessed', async () => {
+        const records = [
+          financialTransfer('msg1', {
+            srcChain: 'ethereum',
+            isProcessed: true,
+          }),
+          financialTransfer('msg2', {
+            srcChain: 'ethereum',
+            isProcessed: false,
+          }),
+          financialTransfer('msg3', { srcChain: 'base', isProcessed: true }),
+        ]
+        await repository.insertMany(records)
+
+        const updated = await repository.markAsUnprocessedByFinancialsFilter({
+          srcChain: 'ethereum',
+        })
+
+        expect(updated).toEqual(1)
+        const all = await repository.getAll()
+        const processedById = new Map(
+          all.map((r) => [r.transferId, r.isProcessed]),
+        )
+        expect(processedById.get('msg1')).toEqual(false)
+        expect(processedById.get('msg2')).toEqual(false)
+        expect(processedById.get('msg3')).toEqual(true)
+      })
+
+      it('supports combined filters with a time range', async () => {
+        const records = [
+          financialTransfer('msg1', {
+            srcAbstractTokenId: 'token-a',
+            timestamp: UnixTime(100),
+            isProcessed: true,
+          }),
+          financialTransfer('msg2', {
+            srcAbstractTokenId: 'token-a',
+            timestamp: UnixTime(300),
+            isProcessed: true,
+          }),
+          financialTransfer('msg3', {
+            srcAbstractTokenId: 'token-b',
+            timestamp: UnixTime(100),
+            isProcessed: true,
+          }),
+        ]
+        await repository.insertMany(records)
+
+        const updated = await repository.markAsUnprocessedByFinancialsFilter({
+          srcAbstractTokenId: 'token-a',
+          from: UnixTime(50),
+          to: UnixTime(200),
+        })
+
+        expect(updated).toEqual(1)
+        const unprocessed = await repository.getUnprocessed()
+        expect(unprocessed.map((r) => r.transferId)).toEqual(['msg1'])
+      })
+
+      it('throws when no filter is provided', async () => {
+        await expect(
+          repository.markAsUnprocessedByFinancialsFilter({}),
+        ).toBeRejectedWith('At least one filter is required')
+      })
+    },
+  )
+
   afterEach(async () => {
     await repository.deleteAll()
+  })
+})
+
+describe(hasAnyInteropTransferFinancialsFilter.name, () => {
+  it('returns false for an empty filter', () => {
+    expect(hasAnyInteropTransferFinancialsFilter({})).toEqual(false)
+    expect(
+      hasAnyInteropTransferFinancialsFilter({ transferId: undefined }),
+    ).toEqual(false)
+  })
+
+  it('returns true when any filter is set', () => {
+    expect(hasAnyInteropTransferFinancialsFilter({ srcSymbol: 'ETH' })).toEqual(
+      true,
+    )
+    expect(
+      hasAnyInteropTransferFinancialsFilter({ from: UnixTime(100) }),
+    ).toEqual(true)
   })
 })
 
@@ -1562,6 +1896,18 @@ describe('InteropTransferRepository toRecord', () => {
     )
   })
 })
+
+function financialTransfer(
+  transferId: string,
+  overrides: Partial<InteropTransferRecord> = {},
+): InteropTransferRecord {
+  return {
+    ...transfer('plugin', transferId, 'transfer', UnixTime(100)),
+    srcTokenAddress: '0x1111',
+    dstTokenAddress: '0x2222',
+    ...overrides,
+  }
+}
 
 function transfer(
   plugin: string,

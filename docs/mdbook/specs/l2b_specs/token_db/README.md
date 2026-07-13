@@ -76,6 +76,6 @@ plans, and `{ kind: 'coingecko' }` or
 proof lands on the `DeployedToken.abstractTokenAssignmentProof` JSON
 column; `commitTokenChanges` does not modify commands, it just routes
 them. The non-swapping-transfer proof carries the *full* transfer
-because the interop transfer table is a sliding 24h window; BigInt raw
+because the interop transfer table is a sliding 7-day window; BigInt raw
 amounts are stored in JSON as decimal strings. A persistent history
 table will land in a follow-up change.

@@ -5,6 +5,7 @@ import {
   PanelsTopLeftIcon,
   PieChartIcon,
   RefreshCwIcon,
+  ShieldCheckIcon,
 } from 'lucide-react'
 import { Link, matchPath, useLocation } from 'react-router-dom'
 import {
@@ -115,8 +116,8 @@ const navGroups: NavigationGroup[] = [
             url: '/interop/indexing/processor-statuses',
           },
           {
-            title: 'Financial actions',
-            url: '/interop/financials/actions',
+            title: 'Financials',
+            url: '/interop/financials',
           },
         ],
       },
@@ -126,12 +127,12 @@ const navGroups: NavigationGroup[] = [
         icon: PieChartIcon,
         items: [
           {
-            title: 'Anomalies',
-            url: '/interop/insights/anomalies',
+            title: 'Activity',
+            url: '/interop/insights/activity',
           },
           {
             title: 'Suspicious transfers',
-            url: '/interop/insights/anomalies/suspicious-transfers',
+            url: '/interop/insights/activity/suspicious-transfers',
           },
           {
             title: 'Coverage pies',
@@ -150,6 +151,12 @@ const navGroups: NavigationGroup[] = [
             url: '/interop/insights/memory',
           },
         ],
+      },
+      {
+        type: 'single',
+        title: 'Promotion',
+        icon: ShieldCheckIcon,
+        url: '/interop/promotion',
       },
     ],
   },

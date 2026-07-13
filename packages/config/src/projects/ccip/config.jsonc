@@ -10,7 +10,8 @@
     "base:0xf09AFe78d3c7d359b334d7cB88995751F7eC5E13",
     "oeth:0xee85aEfb15b9489563A6a29891ebe0750AA1A7Ae",
     "bnb:0xA27056438FfA1f286AB197488808692F0db93F8B",
-    "matic:0x77FDbd20ED582794b1d9F1a8a94e4a60494D677e"
+    "matic:0x77FDbd20ED582794b1d9F1a8a94e4a60494D677e",
+    "eth:0x76a443768A5e3B8d1AED0105FC250877841Deb40"
   ],
   "types": {
     "CCIPChainName": {
@@ -32,6 +33,7 @@
         "241851231317828981": "bitcoin-merlin",
         "2135107236357186872": "bittensor",
         "11344663589394136015": "bsc",
+        "2308837218439511688": "canton",
         "1346049177634351622": "celo",
         "1224752112135636129": "core",
         "9043146809313071210": "corn",
@@ -78,6 +80,7 @@
         "17912061998839310979": "plume",
         "6422105447186081193": "astar",
         "2459028469735686113": "katana",
+        "6180753054346818345": "robinhood",
         "6916147374840168594": "ronin",
         "11964252391146578476": "rootstock",
         "9027416829622342829": "sei",
@@ -110,6 +113,8 @@
     "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D": "Router",
     "eth:0x06179f7C1be40863405f374E7f5F8806c728660A": "GHOEthereumTokenPool",
     "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa": "EthereumOnRamp_v1_6",
+    "eth:0x76a443768A5e3B8d1AED0105FC250877841Deb40": "CCIPHome",
+    "eth:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83": "CapabilitiesRegistry",
     "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5": "EthereumOffRamp_v1_6",
     "arb1:0xee85aEfb15b9489563A6a29891ebe0750AA1A7Ae": "ArbitrumOffRamp_v1_6",
     "base:0xf09AFe78d3c7d359b334d7cB88995751F7eC5E13": "BaseOffRamp_v1_6",
@@ -139,6 +144,157 @@
     "eth:0x8513e6F37dBc52De87b166980Fa3F50639694B60": "AaveRiskCouncil"
   },
   "overrides": {
+    "eth:0x76a443768A5e3B8d1AED0105FC250877841Deb40": {
+      "description": "Home-chain registry for CCIP v1.6 DON configurations. Stores the active and candidate OCR3 configs (commit and execution plugins) per DON and computes the config digest that remote OnRamps/OffRamps must accept on every report. The source of truth for OCR reconfigurations: remote chains receive only the resulting digest, so the operator set, offchainConfig and DON id behind a digest are only legible here. The per-DON OCR config digests (keyed by a stable CapabilitiesRegistry donId) are already mirrored on the lane OnRamps/OffRamps, so this entry additionally tracks the chain-selector-keyed chain configuration that only CCIPHome holds.",
+      "fields": {
+        "chainConfigurations": {
+          "description": "Per-destination-chain home configuration that gets propagated to the lane contracts, keyed by CCIP chain name: the set of DON node p2pIds authorized to serve the chain (readers), the fChain fault-tolerance threshold, and the decoded chain-family config (gas/fee parameters). Replayed from ChainConfigSet events, latest config per chain wins.",
+          "handler": {
+            "type": "event",
+            "groupBy": "chainSelector",
+            "select": "chainConfig",
+            "set": {
+              "event": "event ChainConfigSet(uint64 chainSelector, (bytes32[] readers, uint8 fChain, bytes config) chainConfig)"
+            }
+          },
+          "edit": [
+            "pipe",
+            [
+              "map_values",
+              [
+                "pipe",
+                ["shape", "readers", "fChain", "config"],
+                ["set", "config", ["format", "BytesToString"]]
+              ]
+            ],
+            ["map_keys", ["format", "CCIPChainName"]]
+          ]
+        },
+        "executionConfigs": {
+          "description": "Latest execution-plugin (pluginType=1) OCR config set in CCIPHome per destination chain, keyed by chain name, replayed from ConfigSet events (latest set per chain; a staged candidate appears before it is promoted). Surfaces the inputs the configDigest commits to: the global version counter, plus FRoleDON, offchainConfigVersion, rmnHomeAddress (the home-chain RMN config contract, the same for every chain), the DON nodes (p2pId/signerKey/transmitterKey, sorted by p2pId so a pure reordering produces no diff) and the decoded offchainConfig (the libOCR OCR3 protobuf: scheduling/timing params, the transmission schedule, p2p peer ids, and the reportingPluginConfig where per-lane params like the CCTP source pools live). configDigest is the digest the chain's OffRamp must accept on execution reports.",
+          "handler": {
+            "type": "event",
+            "groupBy": "config.1",
+            "select": ["configDigest", "version", "config"],
+            "ignoreRelative": true,
+            "set": {
+              "event": "event ConfigSet(bytes32 indexed configDigest, uint32 version, (uint8 pluginType, uint64 chainSelector, uint8 FRoleDON, uint64 offchainConfigVersion, bytes offrampAddress, bytes rmnHomeAddress, (bytes32 p2pId, bytes signerKey, bytes transmitterKey)[] nodes, bytes offchainConfig) config)",
+              "where": ["=", ["get", "config", 0], 1]
+            }
+          },
+          "edit": [
+            "pipe",
+            [
+              "map_values",
+              [
+                "set",
+                "config",
+                [
+                  "pipe",
+                  [
+                    "shape",
+                    "pluginType",
+                    "chainSelector",
+                    "FRoleDON",
+                    "offchainConfigVersion",
+                    "offrampAddress",
+                    "rmnHomeAddress",
+                    "nodes",
+                    "offchainConfig"
+                  ],
+                  [
+                    "pick",
+                    "FRoleDON",
+                    "offchainConfigVersion",
+                    "rmnHomeAddress",
+                    "nodes",
+                    "offchainConfig"
+                  ],
+                  [
+                    "set",
+                    "nodes",
+                    [
+                      "pipe",
+                      [
+                        "map",
+                        ["shape", "p2pId", "signerKey", "transmitterKey"]
+                      ],
+                      ["sort", ["get", "p2pId"]]
+                    ]
+                  ],
+                  ["set", "offchainConfig", ["format", "Ocr3OffchainConfig"]]
+                ]
+              ]
+            ],
+            ["map_keys", ["format", "CCIPChainName"]]
+          ]
+        },
+        "commitConfigs": {
+          "description": "Latest commit-plugin (pluginType=0) OCR config set in CCIPHome per destination chain, keyed by chain name. Same shape as executionConfigs but for the commit (signing-committee) plugin.",
+          "handler": {
+            "type": "event",
+            "groupBy": "config.1",
+            "select": ["configDigest", "version", "config"],
+            "ignoreRelative": true,
+            "set": {
+              "event": "event ConfigSet(bytes32 indexed configDigest, uint32 version, (uint8 pluginType, uint64 chainSelector, uint8 FRoleDON, uint64 offchainConfigVersion, bytes offrampAddress, bytes rmnHomeAddress, (bytes32 p2pId, bytes signerKey, bytes transmitterKey)[] nodes, bytes offchainConfig) config)",
+              "where": ["=", ["get", "config", 0], 0]
+            }
+          },
+          "edit": [
+            "pipe",
+            [
+              "map_values",
+              [
+                "set",
+                "config",
+                [
+                  "pipe",
+                  [
+                    "shape",
+                    "pluginType",
+                    "chainSelector",
+                    "FRoleDON",
+                    "offchainConfigVersion",
+                    "offrampAddress",
+                    "rmnHomeAddress",
+                    "nodes",
+                    "offchainConfig"
+                  ],
+                  [
+                    "pick",
+                    "FRoleDON",
+                    "offchainConfigVersion",
+                    "rmnHomeAddress",
+                    "nodes",
+                    "offchainConfig"
+                  ],
+                  [
+                    "set",
+                    "nodes",
+                    [
+                      "pipe",
+                      [
+                        "map",
+                        ["shape", "p2pId", "signerKey", "transmitterKey"]
+                      ],
+                      ["sort", ["get", "p2pId"]]
+                    ]
+                  ],
+                  ["set", "offchainConfig", ["format", "Ocr3OffchainConfig"]]
+                ]
+              ]
+            ],
+            ["map_keys", ["format", "CCIPChainName"]]
+          ]
+        }
+      }
+    },
+    "eth:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83": {
+      "description": "Keystone CapabilitiesRegistry for CCIP: the onchain registry of node operators, nodes, capabilities and DONs. It assigns the donIds and DON membership that CCIPHome's OCR configs reference, so a new DON registration here is what re-points a lane's accepted digest. getNodes and getDONs are ignored because they return large, frequently-rotating arrays; the node operator set, capabilities and DON counter are tracked instead.",
+      "ignoreRelatives": true,
+      "ignoreMethods": ["getNodes", "getDONs"]
+    },
     "arb1:0xee85aEfb15b9489563A6a29891ebe0750AA1A7Ae": {
       "description": "v1.6 OffRamp on Arbitrum One.",
       "ignoreRelatives": true
@@ -170,10 +326,12 @@
     },
     "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA": {
       "description": "Token accepted as fee token for sending outgoing messages.",
-      "ignoreRelatives": true
+      "ignoreRelatives": true,
+      "ignoreInWatchMode": ["totalSupply"]
     },
     "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
-      "description": "Token accepted as fee token for sending outgoing messages."
+      "description": "Token accepted as fee token for sending outgoing messages.",
+      "ignoreInWatchMode": ["totalSupply"]
     },
     "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f": {
       "description": "Token accepted as fee token for sending outgoing messages.",

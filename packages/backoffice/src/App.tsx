@@ -6,15 +6,15 @@ import {
   EnvironmentProvider,
   useEnvironment,
 } from './components/environment/EnvironmentContext'
+import { ActivityDetailsPage } from './pages/interop/activity/ActivityDetailsPage'
+import { ActivityPage } from './pages/interop/activity/ActivityPage'
+import { SuspiciousTransfersPage } from './pages/interop/activity/SuspiciousTransfersPage'
 import { AggregatesPage } from './pages/interop/aggregates/AggregatesPage'
-import { AnomaliesPage } from './pages/interop/anomalies/AnomaliesPage'
-import { AnomalyDetailsPage } from './pages/interop/anomalies/AnomalyDetailsPage'
-import { SuspiciousTransfersPage } from './pages/interop/anomalies/SuspiciousTransfersPage'
 import { ChainsSummaryPage } from './pages/interop/chains-summary/ChainsSummaryPage'
 import { CoveragePiesPage } from './pages/interop/coverage-pies/CoveragePiesPage'
 import { EventDetailsPage } from './pages/interop/events/EventDetailsPage'
 import { EventsPage } from './pages/interop/events/EventsPage'
-import { FinancialActionsPage } from './pages/interop/financials/FinancialActionsPage'
+import { FinancialsPage } from './pages/interop/financials/FinancialsPage'
 import { HighlightsPage } from './pages/interop/highlights/HighlightsPage'
 import { KnownAppsPage } from './pages/interop/known-apps/KnownAppsPage'
 import { MemoryPage } from './pages/interop/memory/MemoryPage'
@@ -22,6 +22,7 @@ import { MessageDetailsPage } from './pages/interop/messages/MessageDetailsPage'
 import { MessagesPage } from './pages/interop/messages/MessagesPage'
 import { MissingTokensPage } from './pages/interop/missing-tokens/MissingTokensPage'
 import { ProcessorStatusesPage } from './pages/interop/processor-statuses/ProcessorStatusesPage'
+import { PromotionPage } from './pages/interop/promotion/PromotionPage'
 import { StatusPage } from './pages/interop/status/StatusPage'
 import { SummaryPage } from './pages/interop/summary/SummaryPage'
 import { TransferDetailsPage } from './pages/interop/transfers/TransferDetailsPage'
@@ -63,10 +64,7 @@ function EnvironmentScopedApp() {
               element={<EventDetailsPage />}
             />
 
-            <Route
-              path="/interop/financials/actions"
-              element={<FinancialActionsPage />}
-            />
+            <Route path="/interop/financials" element={<FinancialsPage />} />
             <Route path="/interop/messages" element={<MessagesPage />} />
             <Route
               path="/interop/messages/:type"
@@ -93,15 +91,15 @@ function EnvironmentScopedApp() {
             />
 
             <Route
-              path="/interop/insights/anomalies"
-              element={<AnomaliesPage />}
+              path="/interop/insights/activity"
+              element={<ActivityPage />}
             />
             <Route
-              path="/interop/insights/anomalies/aggregate/:id"
-              element={<AnomalyDetailsPage />}
+              path="/interop/insights/activity/aggregate/:id"
+              element={<ActivityDetailsPage />}
             />
             <Route
-              path="/interop/insights/anomalies/suspicious-transfers"
+              path="/interop/insights/activity/suspicious-transfers"
               element={<SuspiciousTransfersPage />}
             />
             <Route
@@ -117,6 +115,7 @@ function EnvironmentScopedApp() {
               element={<ChainsSummaryPage />}
             />
             <Route path="/interop/insights/memory" element={<MemoryPage />} />
+            <Route path="/interop/promotion" element={<PromotionPage />} />
             <Route
               path="/website/status/tracked-txs"
               element={<TrackedTxsStatusPage />}

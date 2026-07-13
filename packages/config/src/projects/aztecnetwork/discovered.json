@@ -1,6 +1,6 @@
 {
   "name": "aztecnetwork",
-  "timestamp": 1780405492,
+  "timestamp": 1783513321,
   "configHash": "0x07c7b2f2b74b5df0c73bdcf1494022d87860f043eae6fd8f0a2e74b12c2eb191",
   "entries": [
     {
@@ -34,9 +34,13 @@
         "NOMINAL_ANNUAL_PERCENTAGE_CAP": "200000000000000000",
         "owner": "eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a"
       },
+      "fieldMeta": {
+        "ASSET": { "description": "AZTEC token minted by this issuer." }
+      },
       "implementationNames": {
         "eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6": "CoinIssuer"
-      }
+      },
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "GovernanceProposer",
@@ -73,7 +77,7 @@
           "extensions": []
         },
         "EXECUTION_DELAY_IN_ROUNDS": 0,
-        "getCurrentRound": 107,
+        "getCurrentRound": 150,
         "getGovernance": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
         "getInstance": "eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962",
         "GSE": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
@@ -82,6 +86,20 @@
         "REGISTRY": "eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298",
         "ROUND_SIZE": 1000,
         "SIGNAL_TYPEHASH": "0xdec0bfc6a67146d790874e4994d7a4662b60c6400491f3d945793c73ea05ebb7"
+      },
+      "fieldMeta": {
+        "getGovernance": {
+          "description": "Governance contract to which successful signalling rounds are submitted."
+        },
+        "getInstance": {
+          "description": "Rollup instance whose checkpoint proposers can signal proposals."
+        },
+        "GSE": {
+          "description": "Global staking escrow used to validate sequencer voting power."
+        },
+        "REGISTRY": {
+          "description": "Registry used to resolve the canonical rollup instance."
+        }
       },
       "implementationNames": {
         "eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef": "GovernanceProposer"
@@ -107,7 +125,7 @@
         {
           "permission": "interact",
           "from": "eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6",
-          "description": "mint new AZTEC in the bounds of the minting caps and forward the acceptOwnership() call to the eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
+          "description": "mint new AZTEC in the bounds of the minting caps",
           "role": ".owner",
           "via": [
             {
@@ -118,20 +136,20 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298",
+          "description": "register a new canonical rollup version and replace the reward distributor used by the network.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x64E6e9Bb9f1E33D319578B9f8a9C719Ca6D46eBb",
-          "description": "slash sequencers from the active set.",
+          "description": "execute slashing payloads directly, bypassing the proposer address but still subject to vetoes and temporary slashing disablement.",
           "role": ".GOVERNANCE"
         },
         {
           "permission": "interact",
           "from": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
-          "description": "add a new rollup address, which automatically triggers all sequencers staked in the bonus address to be migrated to the new rollup.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962",
-          "description": "change the escape hatch address and disable the escape hatch, change the slasher address which can slash arbitrary sequencers, change the sequencer queue config and disallow new sequencers joining, set the ejection threshold that exits sequencers from the active set, change various critical fee and reward configurations.",
+          "description": "set governance once, change the proof-of-possession gas limit, and add new rollup addresses that make bonus-instance validators effective on the latest rollup.",
           "role": ".owner"
         }
       ],
@@ -157,7 +175,7 @@
           },
           "votingDelay": 259200,
           "votingDuration": 604800,
-          "executionDelay": 2592000,
+          "executionDelay": 172800,
           "gracePeriod": 604800,
           "quorum": "200000000000000000",
           "requiredYeaMargin": "330000000000000000",
@@ -165,9 +183,17 @@
         },
         "governanceProposer": "eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef",
         "isAllBeneficiariesAllowed": true,
-        "proposalCount": 4,
-        "totalPowerNow": "680112460954567139204719433",
-        "withdrawalCount": 4424
+        "proposalCount": 5,
+        "totalPowerNow": "667681570343130994092106830",
+        "withdrawalCount": 4812
+      },
+      "fieldMeta": {
+        "ASSET": {
+          "description": "AZTEC token used for governance deposits and voting power."
+        },
+        "governanceProposer": {
+          "description": "Address allowed to create proposals after sequencer signalling succeeds."
+        }
       },
       "implementationNames": {
         "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e": "Governance"
@@ -183,7 +209,7 @@
         "0xa55a151792fd54a06d45a214430777fdcc77649e3e3366b05a30ed49607b1d6e"
       ],
       "proxyType": "immutable",
-      "description": "Calculates 'boosted' reward shares for active provers based on a configured curve, incentivizing consistent participation.",
+      "description": "Calculates boosted reward shares for active provers based on a configured curve, incentivizing consistent participation.",
       "deployerAddress": "eth:0xA8aA9eb611709454601425CEc7B8C9B142781560",
       "sinceTimestamp": 1772654159,
       "sinceBlock": 24586322,
@@ -198,9 +224,18 @@
         },
         "ROLLUP": "eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962"
       },
+      "fieldMeta": {
+        "ROLLUP": {
+          "description": "Rollup allowed to update prover activity scores and query boosted shares during reward accounting."
+        },
+        "getConfig": {
+          "description": "Reward boost curve parameters used to convert prover activity into reward shares."
+        }
+      },
       "implementationNames": {
         "eth:0x1CbB707Bd7b4Fd2BcED6D96d84372fb428e93D80": "RewardBooster"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "eth:0x23d4A9533627eA70915026638ff5989a967Be667",
@@ -277,6 +312,24 @@
         "numberOfVersions": 2,
         "owner": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e"
       },
+      "fieldMeta": {
+        "owner": { "description": "The governance owner of the registry." },
+        "getCanonicalRollup": {
+          "description": "The latest registered rollup instance, treated as canonical by the Aztec contracts."
+        },
+        "getGovernance": {
+          "description": "The governance contract controlling the registry."
+        },
+        "getRewardDistributor": {
+          "description": "The reward distributor currently used by the canonical rollup."
+        },
+        "numberOfVersions": {
+          "description": "Number of rollup versions registered in the registry."
+        },
+        "getVersion": {
+          "description": "Registered rollup version identifiers in insertion order."
+        }
+      },
       "implementationNames": {
         "eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298": "Registry"
       },
@@ -291,7 +344,8 @@
         "0xdc25555be83a4afb19d53051d224785fb0fb7eeab2471ece49c3f4b103239cb9"
       ],
       "proxyType": "immutable",
-      "description": "Holds tokens allocated for protocol rewards. The canonical Rollup contract (as defined by the Registry) calls this to distribute payments to sequencers and provers.",
+      "description": "Holds tokens allocated for protocol rewards. The canonical Rollup contract, as defined by the Registry, can draw from the implicit reward pool while any address can claim only funds explicitly earmarked to it.",
+      "ignoreInWatchMode": ["totalEarmarkedBalance"],
       "deployerAddress": "eth:0x85e51a78FE8FE21d881894206A9adbf54e3Df8c3",
       "sinceTimestamp": 1762995047,
       "sinceBlock": 23786827,
@@ -301,9 +355,24 @@
         "canonicalRollup": "eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962",
         "REGISTRY": "eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298"
       },
+      "fieldMeta": {
+        "ASSET": {
+          "description": "ERC20 token distributed as protocol rewards."
+        },
+        "REGISTRY": {
+          "description": "Registry used to resolve the canonical rollup and governance owner."
+        },
+        "canonicalRollup": {
+          "description": "Current canonical rollup, which can claim from both the implicit reward pool and funds earmarked to it."
+        },
+        "totalEarmarkedBalance": {
+          "description": "Total reward balance reserved for specific recipients rather than the canonical rollup's implicit pool."
+        }
+      },
       "implementationNames": {
         "eth:0x3D6A1B00C830C5f278FC5dFb3f6Ff0b74Db6dfe0": "RewardDistributor"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "eth:0x4355415548584943414c4c490000000000000000",
@@ -333,9 +402,27 @@
         "slashingDisabledUntil": 1776137255,
         "VETOER": "eth:0xBbB4aF368d02827945748b28CD4b2D42e4A37480"
       },
+      "fieldMeta": {
+        "PROPOSER": {
+          "description": "The slashing proposer allowed to execute accepted slash payloads."
+        },
+        "VETOER": {
+          "description": "Address that can veto slash payloads or temporarily disable slashing."
+        },
+        "GOVERNANCE": {
+          "description": "Governance address with emergency authority to execute slash payloads directly."
+        },
+        "isSlashingEnabled": {
+          "description": "Whether slash payload execution is currently enabled."
+        },
+        "slashingDisabledUntil": {
+          "description": "Timestamp until which slash payload execution is disabled."
+        }
+      },
       "implementationNames": {
         "eth:0x64E6e9Bb9f1E33D319578B9f8a9C719Ca6D46eBb": "Slasher"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "ProtocolTreasury",
@@ -351,7 +438,7 @@
         {
           "permission": "interact",
           "from": "eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6",
-          "description": "mint new AZTEC in the bounds of the minting caps and forward the acceptOwnership() call to the eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
+          "description": "mint new AZTEC in the bounds of the minting caps",
           "role": ".owner"
         }
       ],
@@ -368,9 +455,18 @@
         "markedProposalsCount": 0,
         "owner": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e"
       },
+      "fieldMeta": {
+        "GOVERNANCE": {
+          "description": "Governance contract allowed to act through the treasury once the gate has opened."
+        },
+        "ATP_REGISTRY": {
+          "description": "Registry controlling token unlocks for treasury-held AZTEC positions."
+        }
+      },
       "implementationNames": {
         "eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a": "ProtocolTreasury"
-      }
+      },
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "HonkVerifier",
@@ -427,7 +523,7 @@
         "getBondSizeFmt": "332,000,000",
         "getBondToken": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
         "getCandidateCount": 0,
-        "getCurrentHatch": 30,
+        "getCurrentHatch": 42,
         "getFailedHatchPunishment": "9600000000000000000000000",
         "getFailedHatchPunishmentFmt": "9,600,000",
         "getFrequency": 112,
@@ -475,7 +571,7 @@
           "description": "The number of epochs to look back from the start of the hatch to snapshot the stable candidate set."
         },
         "getRollup": {
-          "description": "The address of the core Rollup contract."
+          "description": "The rollup contract that this escape hatch can fallback-propose for."
         }
       },
       "implementationNames": {
@@ -506,26 +602,29 @@
         "$immutable": true,
         "FEE_ASSET_PORTAL": "eth:0x2891F8b941067F8B5a3F34545A30Cf71E3E23617",
         "getFeeAssetPortal": "eth:0x2891F8b941067F8B5a3F34545A30Cf71E3E23617",
-        "getInProgress": 68022,
+        "getInProgress": 109331,
         "getState": {
-          "rollingHash": "0x9dba8fdcb0ba8e48a98bfc594af8f66d",
-          "totalMessagesInserted": 158,
-          "inProgress": 68022
+          "rollingHash": "0x2e30d98256397919547c83e9caa688af",
+          "totalMessagesInserted": 231,
+          "inProgress": 109331
         },
-        "getTotalMessagesInserted": 158,
+        "getTotalMessagesInserted": 231,
         "LAG": 1,
         "ROLLUP": "eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962",
         "VERSION": 2934756905
       },
       "fieldMeta": {
         "FEE_ASSET_PORTAL": {
-          "description": "The address of the FeeJuicePortal contract used for bridging fee assets to the L2."
+          "description": "The FeeJuicePortal contract used for bridging fee assets to the L2. Messages from this portal are inserted with the canonical fee-asset L2 sender."
         },
         "LAG": {
           "description": "The delay (in checkpoints) before L1 to L2 messages can be consumed by the sequencer."
         },
         "ROLLUP": {
           "description": "The address of the core Rollup contract that possesses the permission to consume the message trees."
+        },
+        "VERSION": {
+          "description": "The identifier of the Aztec instance/version to prevent cross-instance message replay."
         }
       },
       "implementationNames": {
@@ -586,7 +685,8 @@
       },
       "implementationNames": {
         "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2": "Aztec"
-      }
+      },
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "TallySlashingProposer",
@@ -597,7 +697,15 @@
         "0x3400d2f1f605f55a5f01114dcb37590633d756230f7829fa3949433b038befa2"
       ],
       "proxyType": "immutable",
-      "description": "Allows the validator committee to vote on slashing a specific peer. Once a quorum is reached, it proposes a slash action to the Slasher.",
+      "description": "Aggregates validator committee votes for slashing. Once a round reaches quorum and the execution delay has passed, it builds a slash payload and asks the Slasher to execute it.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x64E6e9Bb9f1E33D319578B9f8a9C719Ca6D46eBb",
+          "description": "execute slashing payloads that slash validators, unless slashing is currently disabled or the payload has been vetoed.",
+          "role": ".PROPOSER"
+        }
+      ],
       "ignoreInWatchMode": ["getCurrentRound"],
       "deployerAddress": "eth:0xA8aA9eb611709454601425CEc7B8C9B142781560",
       "sinceTimestamp": 1772654159,
@@ -615,7 +723,7 @@
           "extensions": []
         },
         "EXECUTION_DELAY_IN_ROUNDS": 28,
-        "getCurrentRound": 841,
+        "getCurrentRound": 1178,
         "INSTANCE": "eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962",
         "LIFETIME_IN_ROUNDS": 34,
         "MAX_ROUND_SIZE": 1024,
@@ -632,9 +740,48 @@
         "SLASHING_PROPOSER_TYPE": 1,
         "VOTE_TYPEHASH": "0x18b6b90f234e6d028d4c9800043cedef34624eedddd14e60eba01934728014fe"
       },
+      "fieldMeta": {
+        "INSTANCE": {
+          "description": "Rollup instance whose validator committees vote through this proposer."
+        },
+        "SLASHER": {
+          "description": "Slasher that executes accepted payloads from this proposer."
+        },
+        "SLASH_PAYLOAD_IMPLEMENTATION": {
+          "description": "Cloneable payload implementation used to deploy concrete slashing payloads."
+        },
+        "COMMITTEE_SIZE": {
+          "description": "Number of validators expected in each committee."
+        },
+        "QUORUM": {
+          "description": "Minimum number of validator votes needed to accept a slashing round."
+        },
+        "ROUND_SIZE": {
+          "description": "Number of slots in a slashing voting round."
+        },
+        "ROUND_SIZE_IN_EPOCHS": {
+          "description": "Number of epochs covered by a slashing voting round."
+        },
+        "EXECUTION_DELAY_IN_ROUNDS": {
+          "description": "Number of rounds that must pass before an accepted slashing round can be executed."
+        },
+        "LIFETIME_IN_ROUNDS": {
+          "description": "Number of rounds for which a slashing round remains executable."
+        },
+        "SLASH_AMOUNT_SMALL": {
+          "description": "Small slash amount applied per voted slash unit."
+        },
+        "SLASH_AMOUNT_MEDIUM": {
+          "description": "Medium slash amount applied per voted slash unit."
+        },
+        "SLASH_AMOUNT_LARGE": {
+          "description": "Large slash amount applied per voted slash unit."
+        }
+      },
       "implementationNames": {
         "eth:0xa4a38fD0108C00983E75616b638Ff3321FD26958": "TallySlashingProposer"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "GSE",
@@ -661,7 +808,19 @@
         "getLatestRollup": "eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962",
         "owner": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
         "proofOfPossessionGasLimit": 250000,
-        "totalSupply": "677800000000000000000000000"
+        "totalSupply": "665696000000000000000000000"
+      },
+      "fieldMeta": {
+        "ASSET": {
+          "description": "ERC20 token staked by validators and used for governance voting power."
+        },
+        "getGovernance": {
+          "description": "Governance contract receiving voting power from staked validators."
+        },
+        "getLatestRollup": {
+          "description": "Latest rollup registered in the GSE."
+        },
+        "owner": { "description": "Governance owner of the GSE." }
       },
       "implementationNames": {
         "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f": "GSE"
@@ -696,6 +855,44 @@
       ],
       "proxyType": "immutable",
       "description": "Core rollup logic contract. It processes checkpoint proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1CbB707Bd7b4Fd2BcED6D96d84372fb428e93D80",
+          "description": "update prover activity scores used to calculate boosted prover reward shares.",
+          "role": ".ROLLUP"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x2891F8b941067F8B5a3F34545A30Cf71E3E23617",
+          "description": "distribute fee-asset funds escrowed in the portal to sequencers and provers.",
+          "role": ".ROLLUP"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x3D6A1B00C830C5f278FC5dFb3f6Ff0b74Db6dfe0",
+          "description": "claim protocol reward funds and direct them to sequencers and provers.",
+          "role": ".canonicalRollup"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x8c189ead28D5987A48e522162f9225124D50AD1B",
+          "description": "record submitted archives for designated escape-hatch proposers, which are later used to validate or slash them.",
+          "role": ".getRollup"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x8Dbf0b6ed495baAb6062f5D5365aF3C1B2ed4578",
+          "description": "consume L1 to L2 message tree roots for checkpoint processing.",
+          "role": ".ROLLUP"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc9698B7AdEf9ee63F3Bf5cFF38086e4E836579f0",
+          "description": "insert L2 to L1 message roots that recipients later prove against to consume withdrawals or messages.",
+          "role": ".ROLLUP"
+        }
+      ],
       "ignoreInWatchMode": [
         "archive",
         "getActiveAttesterCount",
@@ -717,9 +914,8 @@
       "sinceTimestamp": 1772654159,
       "sinceBlock": 24586322,
       "values": {
-        "_epochProofVerifier": "eth:0x70aEDda427f26480D240bc0f4308ceDec8d31348",
         "$immutable": true,
-        "archive": "0x2bbbe4422a57966107ff0637970a2080752ce1679ad3de2e77917e5d032c3848",
+        "archive": "0x2b53dbc329caac3a905a0c4617568596b135c4410d2ba3ff5261f35d5e1b556e",
         "checkBlob": true,
         "constructorArgs": {
           "_feeAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
@@ -792,21 +988,21 @@
           "extensions": []
         },
         "getActivationThreshold": "200000000000000000000000",
-        "getActiveAttesterCount": 3394,
+        "getActiveAttesterCount": 3334,
         "getAvailableValidatorFlushes": 4,
         "getBurnAddress": "eth:0x4355415548584943414c4c490000000000000000",
         "getCheckpointReward": "500000000000000000000",
-        "getCurrentBlobCommitmentsHash": "0x0014e0ab6f4e98a59f5d2d45f19ff8a8232720ddc421a376e4bf4bacfa222cf4",
-        "getCurrentEpoch": 3364,
-        "getCurrentSampleSeed": "61577742259759306288768635211105753398483851547271899851700713277928677404240",
-        "getCurrentSlot": 107657,
+        "getCurrentBlobCommitmentsHash": "0x002a81414355de1e0d7d72b9607baf6b1a76460808f0a0dd3c82973236a1876a",
+        "getCurrentEpoch": 4713,
+        "getCurrentSampleSeed": "63359459948325246493119807842787481057668581057269888140549534136640505933970",
+        "getCurrentSlot": 150821,
         "getEarliestRewardsClaimableTimestamp": 0,
         "getEjectionThreshold": "100000000000000000000000",
         "getEntryQueueFlushSize": 4,
         "getEntryQueueLength": 0,
         "getEpochDuration": 32,
         "getEscapeHatch": "eth:0x8c189ead28D5987A48e522162f9225124D50AD1B",
-        "getEthPerFeeAsset": 11905829,
+        "getEthPerFeeAsset": 7871926,
         "getExitDelay": 345600,
         "getFeeAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
         "getFeeAssetPortal": "eth:0x2891F8b941067F8B5a3F34545A30Cf71E3E23617",
@@ -819,13 +1015,14 @@
         "getLocalEjectionThreshold": "190000000000000000000000",
         "getManaLimit": 150000000,
         "getManaTarget": 75000000,
-        "getNextFlushableEpoch": 3346,
+        "getNextFlushableEpoch": 4709,
         "getOutbox": "eth:0xc9698B7AdEf9ee63F3Bf5cFF38086e4E836579f0",
-        "getPendingCheckpointNumber": 68020,
+        "getPendingCheckpointNumber": 109329,
         "getProofSubmissionEpochs": 1,
-        "getProvenCheckpointNumber": 68010,
+        "getProvenCheckpointNumber": 109323,
         "getProvingCostPerManaInEth": 25000000,
-        "getProvingCostPerManaInFeeAsset": 2099811781272,
+        "getProvingCostPerManaInFeeAsset": 3175842862344,
+        "getRewardBooster": "eth:0x1CbB707Bd7b4Fd2BcED6D96d84372fb428e93D80",
         "getRewardConfig": {
           "rewardDistributor": "eth:0x3D6A1B00C830C5f278FC5dFb3f6Ff0b74Db6dfe0",
           "sequencerBps": 7000,
@@ -837,22 +1034,53 @@
         "getSlotDuration": 72,
         "getStakingAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
         "getTargetCommitteeSize": 48,
-        "getTips": { "pending": 68020, "proven": 68010 },
+        "getTips": { "pending": 109329, "proven": 109323 },
         "getVersion": 2934756905,
         "isRewardsClaimable": true,
         "L1_BLOCK_AT_GENESIS": 24586322,
-        "owner": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e"
+        "owner": "eth:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
-        "_epochProofVerifier": {
-          "description": "immutable, defined in constructor"
-        },
+        "owner": { "description": "Governance owner of the rollup instance." },
         "getManaLimit": { "description": "gas limit" },
         "getEntryQueueFlushSize": {
           "description": "number of sequencers flushable per epoch: will move from the entry queue to the active validator set if flushed"
         },
         "getEscapeHatch": {
           "description": "Address of the EscapeHatch contract used as a fallback for trustless proposal generation if the committee stalls."
+        },
+        "getEpochProofVerifier": {
+          "description": "The verifier contract used for epoch proof verification."
+        },
+        "getFeeAsset": {
+          "description": "The ERC20 token used to pay L2 fees."
+        },
+        "getFeeAssetPortal": {
+          "description": "The L1 portal escrowing the fee asset for deposits and fee payouts."
+        },
+        "getGSE": {
+          "description": "The global staking escrow used by this rollup."
+        },
+        "getInbox": {
+          "description": "The canonical L1 to L2 message inbox for this rollup version."
+        },
+        "getOutbox": {
+          "description": "The canonical L2 to L1 message outbox for this rollup version."
+        },
+        "getRewardBooster": {
+          "description": "The reward booster used to calculate prover reward shares."
+        },
+        "getRewardConfig": {
+          "description": "Reward distribution parameters: distributor, sequencer share, prover booster and checkpoint reward."
+        },
+        "getRewardDistributor": {
+          "description": "Reward distributor used by this rollup."
+        },
+        "getSlasher": {
+          "description": "Slasher contract authorized by this rollup."
+        },
+        "getStakingAsset": {
+          "description": "The ERC20 token staked by validators."
         },
         "getCheckpointReward": {
           "description": "The amount of reward tokens distributed per proven checkpoint."
@@ -999,7 +1227,7 @@
         },
         "getNextMilestoneId": 3,
         "getNextStakerVersion": 1,
-        "getRevoker": "eth:0x79E5BD3BD5cfc52C718Fe0f83fEaab31691683cA",
+        "getRevoker": "eth:0x92Ba0FD39658105FaC4dF2B9BADE998B5816b350",
         "getRevokerOperator": "eth:0x0000000000000000000000000000000000000000",
         "getStakerImplementation": [
           "eth:0x79075C8E314Ab4A84d54F90b1c7032Dc5469082d"
@@ -1803,25 +2031,25 @@
   "usedTemplates": {
     "aztecnetwork/Aztec": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
     "aztecnetwork/AztecTokenPositionRegistry": "0x2d27dd3ae14c3e39c77c357b78b58cf9d4c77416f7005bb0250281b446f3e91a",
-    "aztecnetwork/CoinIssuer": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "aztecnetwork/EscapeHatch": "0xc36cbb4ae29d811b032b67a9e8c26ce44b3da19a440e19ae5b0a590807f5f015",
-    "aztecnetwork/FeeJuicePortal": "0x6f147ef34633afd5e35a1aa0eb062b016a58f73357ef821d912ba19733398d9e",
-    "aztecnetwork/Governance": "0x5ab50b472ba1f5486356e16564ebed2a0ee5bb9bf7c959201de352721e6b397f",
-    "aztecnetwork/GovernanceProposer": "0xd251e17ac927ecce11d82c021b46b918e12f5e9be00219536a2945ce7ff509ac",
-    "aztecnetwork/GSE": "0x6f5dd647e0ed32ed1adde569ae57fc571d8e446e7d015f908f04f6f908a600ab",
+    "aztecnetwork/CoinIssuer": "0xad402525be14cd15f55e214fbfd8755c078fcc2856db211ef4b58901bcd2f179",
+    "aztecnetwork/EscapeHatch": "0x5555b0d53e482dfd03319fb326d9f665681ce0dd11ca471f81e5625fb50474d9",
+    "aztecnetwork/FeeJuicePortal": "0x193b3bb31b560ecab87e835029c77ca8cf4fc35a58770da83aed880321dad6fc",
+    "aztecnetwork/Governance": "0xdc442dc3c042b138d88e1b5e2c4d8ba46f795e9a48c7c46477c00e01523c2fd2",
+    "aztecnetwork/GovernanceProposer": "0x7697d56ada834d7a8fd2bac871dd4f061e050e75049db151c87f5eece19cea5a",
+    "aztecnetwork/GSE": "0x912870b314d1d65815360dbc1bf26b7daee605ae8f56d9a7f19aecb329d1139c",
     "aztecnetwork/HonkVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "aztecnetwork/Inbox": "0x244f5e1cb5a02f605bb45a135c9a4a4d0d33f0623c42258988c05ae3ff74e62a",
-    "aztecnetwork/Outbox": "0x8d7e24fc272f6667c39e1f22ffa7564cd1314b29a1ccaa6f5ddbfd54a7af285b",
-    "aztecnetwork/ProtocolTreasury": "0x7b3d25750c9ea2e92807657049546ba3b26899152a56e8d2f3c0dcaebafabb85",
-    "aztecnetwork/Registry": "0xff7797993bafafee36ccb0815db5400327aa8f6a8ed2e4cba1cc25c82ee3b49e",
-    "aztecnetwork/RewardBooster": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "aztecnetwork/RewardDistributor": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "aztecnetwork/Rollup": "0xf2a4d596957d6e36097d04b31a675cae3c4159b1b784e49dacee3db5c3ab0db1",
-    "aztecnetwork/Slasher": "0xeea2ab7255bd1258ceb658820f2ef3cada2e4309246feaf718152db9922a2d7f",
+    "aztecnetwork/Inbox": "0xab45f2970fd991e71ac7c0032e513847c23061a30092e3d0bea3e1338a943f39",
+    "aztecnetwork/Outbox": "0xd63b758b00060f1911371257317592562ddae4f54116af88c22cd6554be68fe9",
+    "aztecnetwork/ProtocolTreasury": "0x78ca59ebd4f7b695c2b5d0fecd58e91fe5fbbeb8ca52ea9aece4b5e2bbcadf19",
+    "aztecnetwork/Registry": "0x3cabef297c0e945a0b683ea3d9f2b600efcbf9f6a67813ac1b4b43e90227648e",
+    "aztecnetwork/RewardBooster": "0x5162095ff7caf7a33a27c7a43e68f8d3922f07ed17c56671ddc43d68664cf8e6",
+    "aztecnetwork/RewardDistributor": "0x632291cc2c4ea7e0c1673b1e90a76530d138c428b1fb9f963e6369dae46652c2",
+    "aztecnetwork/Rollup": "0x02ae625ba384749e026577f1b723c92fdb1e37a36e7e3a7031ee6106f507541f",
+    "aztecnetwork/Slasher": "0x11856da8900b5a5f0f9e18028192e22343096f44eb0387eb1f46c636f2fdeb51",
     "aztecnetwork/SlashPayloadCloneable": "0x821354dfe974f5f53d0c4ebf4ce746144ad353e598809041e44c28c9c572fd92",
-    "aztecnetwork/TallySlashingProposer": "0x79d17506e76ca87ca29df48adf9222a01821722b0096d11689dad9fbc27f40c7",
+    "aztecnetwork/TallySlashingProposer": "0xf37e4988c8b34c84395d9921831ed7268f9799075fe9cfdafd3cc19e071753e7",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 25229879 },
-  "permissionsConfigHash": "0x4f9f421c161b2c68235c86172fa243ab68875b364427647129eff850e522a251"
+  "usedBlockNumbers": { "ethereum": 25487818 },
+  "permissionsConfigHash": "0x2cc5d2c47983e411329eb39b1d5c60a1c88eb0643c3d5cc58bc2cc135dbbb9db"
 }

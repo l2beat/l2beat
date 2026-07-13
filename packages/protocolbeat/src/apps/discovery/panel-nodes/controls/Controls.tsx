@@ -1,6 +1,8 @@
-import type { ReactNode } from 'react'
+import { AlignControls } from './AlignControls'
 import { ClusterLayoutButton } from './ClusterLayoutButton'
 import { ColorButton } from './ColorButton'
+import { ControlGroup } from './ControlGroup'
+import { GroupControls } from './GroupControls'
 import { HideButton } from './HideButton'
 import { HideNodesButton } from './HideNodesButton'
 import { LayoutLibrary } from './LayoutLibrary'
@@ -15,6 +17,7 @@ export function Controls() {
   return (
     <div className="absolute inset-x-2 bottom-4 z-10 flex justify-center">
       <div className="flex max-w-full flex-wrap justify-center gap-2 pb-1">
+        <AlignControls />
         <ControlGroup>
           <UndoButton />
           <RedoButton />
@@ -26,6 +29,7 @@ export function Controls() {
           <HideNodesButton />
         </ControlGroup>
         <ControlGroup>
+          <GroupControls />
           <HideButton />
           <ColorButton />
           <ValuesButton />
@@ -33,14 +37,6 @@ export function Controls() {
           <LayoutLibrary className="px-2.5" />
         </ControlGroup>
       </div>
-    </div>
-  )
-}
-
-function ControlGroup(props: { children: ReactNode }) {
-  return (
-    <div className="flex select-none items-stretch gap-2 rounded-2xl bg-coffee-900/95 px-3 py-2 shadow-[0_24px_56px_-28px_#000000ee] backdrop-blur-sm max-md:text-xs">
-      {props.children}
     </div>
   )
 }

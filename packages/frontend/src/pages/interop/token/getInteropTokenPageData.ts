@@ -5,15 +5,16 @@ import { getInteropTokenData } from '~/server/features/scaling/interop/getIntero
 import { getAbstractTokenSlug } from '~/server/features/scaling/interop/token/getAbstractTokenSlug'
 import { getInteropAbstractTokens } from '~/server/features/scaling/interop/token/getInteropAbstractTokens'
 import { getInteropTokenEntry } from '~/server/features/scaling/interop/token/getInteropTokenEntry'
+import { getInteropTokenOnchainDeployments } from '~/server/features/scaling/interop/token/getInteropTokenOnchainDeployments'
 import { resolveInteropTokenBySlug } from '~/server/features/scaling/interop/token/resolveInteropTokenBySlug'
 import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
+import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import type { InteropQuery } from '../InteropRouter'
-import { getInitialInteropSelection } from '../utils/getInitialInteropSelection'
 import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
 import type { InteropSelection } from '../utils/types'
 
@@ -31,10 +32,9 @@ export async function getInteropTokenPageData(
     activeInteropChains,
   )
 
-  const initialSelection = getInitialInteropSelection({
-    query: req.query,
-    interopChainsIds: activeInteropChainIds,
-  })
+  // Token pages do not honor chain selection from query params; an empty
+  // selection makes the backend default to all active chains.
+  const initialSelection: InteropSelection = { from: [], to: [] }
 
   const data = await cache.get(
     {
@@ -106,12 +106,23 @@ async function getCachedData({
 
   const apiSelection = initialSelection
 
-  const tokenData = await getInteropTokenData({
-    tokenId: token.id,
-    ...apiSelection,
-  })
+  const [tokenData, deployments, projectsWithChains] = await Promise.all([
+    getInteropTokenData({
+      tokenId: token.id,
+      ...apiSelection,
+    }),
+    getInteropTokenOnchainDeployments(token.id, activeInteropChainIds),
+    ps.getProjects({
+      select: ['chainConfig'],
+    }),
+  ])
 
-  const tokenEntry = getInteropTokenEntry(token.id, interopChainsWithIcons)
+  const tokenEntry = getInteropTokenEntry(
+    token.id,
+    interopChainsWithIcons,
+    projectsWithChains,
+    deployments,
+  )
 
   return {
     token: {

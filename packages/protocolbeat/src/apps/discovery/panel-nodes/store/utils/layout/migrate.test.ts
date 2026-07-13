@@ -4,7 +4,7 @@ import { CURRENT_LAYOUT_VERSION, migrateLayout } from './migrate'
 describe(migrateLayout.name, () => {
   it('accepts current-version payload as-is', () => {
     const input = {
-      version: 3 as const,
+      version: 4 as const,
       projectId: 'p',
       metadata: {
         description: 'Useful for audits.',
@@ -13,11 +13,33 @@ describe(migrateLayout.name, () => {
       colors: { a: 3 },
       hiddenFields: { a: ['f'] },
       hiddenNodes: ['b'],
+      groups: [
+        {
+          id: 'group:1',
+          name: 'Group',
+          color: 0,
+          opened: false,
+          box: { x: 0, y: 0 },
+          members: ['a'],
+        },
+      ],
     }
     const result = migrateLayout(input)
     if (!result.ok) throw new Error('expected success')
     expect(result.layout).toEqual(input)
+    expect(result.migratedFrom).toEqual(4)
+  })
+
+  it('migrates v3 payloads to current with no groups', () => {
+    const result = migrateLayout({
+      version: 3,
+      projectId: 'p',
+      locations: { a: { x: 0, y: 0 } },
+    })
+    if (!result.ok) throw new Error('expected success')
     expect(result.migratedFrom).toEqual(3)
+    expect(result.layout.version).toEqual(CURRENT_LAYOUT_VERSION)
+    expect(result.layout.groups).toEqual(undefined)
   })
 
   it('treats unversioned payload as v1 and migrates to current', () => {

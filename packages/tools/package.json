@@ -5,7 +5,7 @@
   "sideEffects": false,
   "scripts": {
     "test": "mocha",
-    "clean": "rm -rf dist",
+    "clean": "rm -rf dist *.tsbuildinfo",
     "prebuild": "pnpm clean",
     "build": "vite build",
     "preview": "vite preview",

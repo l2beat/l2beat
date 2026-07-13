@@ -1,6 +1,6 @@
+import { projectIdToChain } from '@l2beat/config/build/global/chainMap'
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { projectIdToChain } from '../../../../../../config/chainMap'
 import { getActivityComparisonWindow } from './getComparisonWindow'
 import { getLargestUopsCountIncrease } from './highlightsCalculations'
 

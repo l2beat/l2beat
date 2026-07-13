@@ -43,7 +43,7 @@ export function ChainsSummaryPage() {
     trpc.interop.missingTokens.list.queryOptions(),
   )
   const suspiciousTransfersQuery = useQuery(
-    trpc.interop.anomalies.suspiciousTransfers.queryOptions(),
+    trpc.interop.activity.suspiciousTransfers.queryOptions(),
   )
   const aggregatesQuery = useQuery(
     trpc.interop.aggregates.latest.queryOptions(),

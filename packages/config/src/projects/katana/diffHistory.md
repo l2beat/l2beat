@@ -1,3 +1,134 @@
+Generated with discovered.json: 0x322087878ba7a5cc2c2714d3c3a4225ba79da053
+
+# Diff at Wed, 08 Jul 2026 11:18:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@41e54e24b48ee5dc5e63086324d02428320c1565 block: 1782219118
+- current timestamp: 1783509417
+
+## Description
+
+One multisig signer removed.
+
+## Watched changes
+
+```diff
+    contract Katana yieldRecipient Mulsitig (eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x34d23C4fb6542B467cA8724bAD30AC811399b184"
+      values.multisigThreshold:
+-        "2 of 7 (29%)"
++        "2 of 6 (33%)"
+    }
+```
+
+```diff
+    contract Safe (eth:0xFA58659F64a393A6E1A548ABc70Ad2CfE1e8f9Cb) [GnosisSafe] {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x59cE4e1709c7E462F3b72Ca3e1256dFa7358FC29"
+      values.multisigThreshold:
+-        "2 of 7 (29%)"
++        "2 of 6 (33%)"
+    }
+```
+
+Generated with discovered.json: 0x0f1180d79e9cbad47e063dfff7561f97f02c6269
+
+# Diff at Tue, 23 Jun 2026 12:57:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9c9e4ff7c3dc0c9daec01df0643074c3c50df6f0 block: 1781600787
+- current timestamp: 1782219118
+
+## Description
+
+Update op-succinct programs to v6.1.0.
+
+## Watched changes
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) [katana/AggchainFEP_post035] {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      values.selectedOpSuccinctConfig.aggregationVkey:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x0095c1f31a6e1003e1e3083ca45bf69b95c9a1468708df1029c9cf4bceb8a852"
+      values.selectedOpSuccinctConfig.rangeVkeyCommitment:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x3813362d038935ad6cb1e2566278975f08be38a92bfe7137505ef0c14a9d1972"
+      values.selectedOpSuccinctConfig.rollupConfigHash:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x352a9738897d236014fd5bd11986bf008b3b623b037405900ab338f93cdf5272"
++++ description: currently enforced OpSuccinctConfig. update the call handler for the full config if this changes.
++++ severity: HIGH
+      values.selectedOpSuccinctConfigName:
+-        "0xe719c402037f76346e69e021164101e16954889c052f75f16a29758815723dde"
++        "0x3cb66b8472d88440173415d4d4a316b9df81ac208e63e02829f823fccbe3f547"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1781600787 (main branch discovery), not current.
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) [katana/AggchainFEP_post035] {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      values.selectedOpSuccinctConfig.aggregationVkey:
+-        "0x0065e407807b2b3610cc9ff6637ea16e815552bc34b48c206529d3cfcd9d1152"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.selectedOpSuccinctConfig.rangeVkeyCommitment:
+-        "0x5c7c05114bc5dd360fdb52ec2b4977a45f7e22806bc949a72759ea1172202229"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.selectedOpSuccinctConfig.rollupConfigHash:
+-        "0x352a9738897d236014fd5bd11986bf008b3b623b037405900ab338f93cdf5272"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    reference  (eth:0x21618593F7147235aC8D511d68A547C935F9d417) {
+    +++ description: None
+      type:
+-        "EOA"
++        "Reference"
+      proxyType:
+-        "EOA"
+      targetType:
++        "EOA"
+      targetProject:
++        "shared-polygon-cdk"
+    }
+```
+
+Generated with discovered.json: 0x2cd3ad8f95b2d9cab8b8ef4b2055ed6d2dd2331e
+
+# Diff at Tue, 16 Jun 2026 09:07:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e3be4116cfc279e5c4415ba34f338c2f1d453616 block: 1781102006
+- current timestamp: 1781600787
+
+## Description
+
+Add multisig signer.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (katana:0x7990513f4d64d57524a0B2519759f53B0cB1aEbd) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "katana:0xb3dA4c1Ba8De9E04f22B1554a070189F518FDCac"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 6 (50%)"
+    }
+```
+
 Generated with discovered.json: 0x571012f08b4d382395f4140f82a9dc7d7db5ba3e
 
 # Diff at Fri, 12 Jun 2026 10:18:52 GMT:

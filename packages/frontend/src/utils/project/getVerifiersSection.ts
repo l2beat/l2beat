@@ -1,4 +1,4 @@
-import type { Project } from '@l2beat/config'
+import type { Project, ProjectZkCatalogInfo } from '@l2beat/config'
 import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
 import uniqBy from 'lodash/uniqBy'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
@@ -9,6 +9,7 @@ import { getProjectsUsedIn } from '~/server/features/zk-catalog/utils/getTrusted
 import { ps } from '~/server/projects'
 import type { ProjectSectionProps } from '../../components/projects/sections/types'
 import type { ContractUtils } from './contracts-and-permissions/getContractUtils'
+import type { ProjectWithPageMetadata } from './getProjectUrl'
 
 function plainDeploymentAddress(
   address: EthereumAddress | string,
@@ -19,14 +20,11 @@ function plainDeploymentAddress(
 }
 
 export async function getVerifiersSection(
-  project: Project<'zkCatalogInfo'>,
+  verifierHashes: ProjectZkCatalogInfo['verifierHashes'],
   contractUtils: ContractUtils,
-  allProjects: Project<
-    never,
-    'display' | 'daBridge' | 'scalingInfo' | 'daLayer'
-  >[],
+  allProjects: ProjectWithPageMetadata[],
   tvs: SevenDayTvsBreakdown,
-): Promise<Omit<VerifiersSectionProps, keyof ProjectSectionProps>> {
+): Promise<Omit<VerifiersSectionProps, keyof ProjectSectionProps | 'variant'>> {
   const projects = await ps.getProjects({
     select: ['chainConfig'],
   })
@@ -35,7 +33,7 @@ export async function getVerifiersSection(
     VerifiersSectionProps['proofSystemVerifiers'][number]
   > = {}
 
-  for (const verifier of project.zkCatalogInfo.verifierHashes) {
+  for (const verifier of verifierHashes) {
     const key = `${verifier.proofSystem.type}-${verifier.proofSystem.id}`
     const proofSystemVerifiers = byProofSystem[key]
 
@@ -61,7 +59,6 @@ export async function getVerifiersSection(
         projectsUsedIn: (d.overrideUsedIn
           ? getProjectsUsedIn(d.overrideUsedIn, allProjects)
           : contractUtils.getUsedIn(
-              project.id,
               ChainSpecificAddress.longChain(d.address),
               addressKey,
             )

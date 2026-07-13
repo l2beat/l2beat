@@ -1,3 +1,162 @@
+Generated with discovered.json: 0x03cb3253f69346eb1390c645d13660e668d6a774
+
+# Diff at Tue, 30 Jun 2026 12:25:49 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1782210335
+- current timestamp: 1782210335
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782210335 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0xe7Aa79B59CAc06F9706D896a047fEb9d3BDA8bD3) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      usedTypes.0.arg.8:
++        "FaultDisputeGame"
+    }
+```
+
+Generated with discovered.json: 0xe7a84a1e4d92abd1e9a0dcb958f4e4789fb11b33
+
+# Diff at Tue, 23 Jun 2026 11:38:41 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@0e360eee2a54a17c6634ebce656a966ffe743da7 block: 1772626589
+- current timestamp: 1782210335
+
+## Description
+
+Moved some GnosisSafes to NXV multisigs (supposedly simplified version of GnosisSafe), see: nexvault.com
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract Hashkey Multisig 3 (eth:0x29Fbda675Fa5a07B621C2C1a6E3F874C14F612F3) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract SystemConfig (eth:0x43F8DeFe3E9286D152E91BB16a248808E7247198) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.owner:
+-        "eth:0x29Fbda675Fa5a07B621C2C1a6E3F874C14F612F3"
++        "eth:0x391832Fb1884E6772Dbd9f24cE2db35E9B20B696"
+    }
+```
+
+```diff
+    contract Hashkey Multisig 1 (eth:0x441F31C4cdf772558D4EA31f3114de59aE145E7c) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"interact","from":"eth:0x679A65aD62972Ea3561F40A12e93CcA6f79F35E6","description":"set and change address mappings.","role":".owner","via":[{"address":"eth:0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}]}
+      receivedPermissions.3:
+-        {"permission":"upgrade","from":"eth:0x0407af506d86bFA5e401099b2fC2355590638f19","role":"admin","via":[{"address":"eth:0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}]}
+      receivedPermissions.4:
+-        {"permission":"upgrade","from":"eth:0x04Ec030f362CE5A0b5Fe2d4B4219f287C2EBDE50","role":"admin","via":[{"address":"eth:0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}]}
+      receivedPermissions.5:
+-        {"permission":"upgrade","from":"eth:0x2171E6d3B7964fA9654Ce41dA8a8fFAff2Cc70be","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","role":".$admin","via":[{"address":"eth:0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}]}
+      receivedPermissions.6:
+-        {"permission":"upgrade","from":"eth:0x43F8DeFe3E9286D152E91BB16a248808E7247198","role":"admin","via":[{"address":"eth:0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}]}
+      receivedPermissions.7:
+-        {"permission":"upgrade","from":"eth:0x4deC2aA521108d78d983c0c12656c6CF8631F2ED","role":"admin","via":[{"address":"eth:0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}]}
+      receivedPermissions.8:
+-        {"permission":"upgrade","from":"eth:0x899F07862D3A03F70E07b7f01183934b485d2e97","role":"admin","via":[{"address":"eth:0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}]}
+      receivedPermissions.9:
+-        {"permission":"upgrade","from":"eth:0xBb70D595147A141e268532BFEF61A8c25054d26D","role":"admin","via":[{"address":"eth:0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}]}
+      receivedPermissions.10:
+-        {"permission":"upgrade","from":"eth:0xd4C83D93c6fAE3E0804B785F9Cf465BE95449D04","role":"admin","via":[{"address":"eth:0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}]}
+      receivedPermissions.11:
+-        {"permission":"upgrade","from":"eth:0xd9c31D15f2c649e525C2574bC025b3CAafAaf6fe","role":"admin","via":[{"address":"eth:0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}]}
+      receivedPermissions.12:
+-        {"permission":"upgrade","from":"eth:0xe7Aa79B59CAc06F9706D896a047fEb9d3BDA8bD3","role":"admin","via":[{"address":"eth:0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}]}
+      receivedPermissions.13:
+-        {"permission":"upgrade","from":"eth:0xfd1255b6c09D939E7F3896A16C32CDBCD6F8B40A","role":"admin","via":[{"address":"eth:0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}]}
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"eth:0x7986eD289935A0F47FC434C00cDE309fE2c51f1C","role":".owner"}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x7986eD289935A0F47FC434C00cDE309fE2c51f1C) [global/ProxyAdmin] {
+    +++ description: None
+      values.owner:
+-        "eth:0x441F31C4cdf772558D4EA31f3114de59aE145E7c"
++        "eth:0x3228F00FbFD0e1F4c282601c489664B10932C40f"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Hashkey Multisig 2 (eth:0xC7fCbE26c1Db751d63869F72F782a56710f6be5A) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract OptimismPortal2 (eth:0xe7Aa79B59CAc06F9706D896a047fEb9d3BDA8bD3) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      values.guardian:
+-        "eth:0xC7fCbE26c1Db751d63869F72F782a56710f6be5A"
++        "eth:0x6F2b20996ADAf3ae64Da901A67f659C2c48f66C9"
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0xfd1255b6c09D939E7F3896A16C32CDBCD6F8B40A) [opstack/SuperchainConfigFake] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      values.$pastUpgrades.1:
++        ["2026-05-25T05:51:23.000Z","0x3bfc8a22ff71232436c67628de837c36002264a5dfbc55b38b957f5ba471538c",["eth:0x3a6CBE32Ed9E11662362400C293485109bdF2CcC"]]
+      values.$pastUpgrades.2:
++        ["2026-05-25T05:51:23.000Z","0x3bfc8a22ff71232436c67628de837c36002264a5dfbc55b38b957f5ba471538c",["eth:0x1d31a15050DBE75c6c060D6da696332a5CB943e1"]]
+      values.$upgradeCount:
+-        1
++        3
+      values.guardian:
+-        "eth:0xC7fCbE26c1Db751d63869F72F782a56710f6be5A"
++        "eth:0x6F2b20996ADAf3ae64Da901A67f659C2c48f66C9"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract NXV (eth:0x3228F00FbFD0e1F4c282601c489664B10932C40f) [NXV]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract NXV (eth:0x391832Fb1884E6772Dbd9f24cE2db35E9B20B696) [NXV]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract NXV (eth:0x6F2b20996ADAf3ae64Da901A67f659C2c48f66C9) [NXV]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../Hashkey Multisig 2/Safe.sol => /dev/null       | 1216 --------------------
+ .../Hashkey Multisig 3/Safe.sol => /dev/null       | 1216 --------------------
+ .../NXV.sol                                        |  714 ++++++++++++
+ .../NXVProxy.p.sol}                                |    8 +-
+ .../NXV.sol                                        |  714 ++++++++++++
+ .../NXVProxy.p.sol}                                |    8 +-
+ .../NXV.sol                                        |  714 ++++++++++++
+ .../NXVProxy.p.sol                                 |   42 +
+ 8 files changed, 2192 insertions(+), 2440 deletions(-)
+```
+
 Generated with discovered.json: 0x8d7fee2f4c0a1e7d931057059e6559267057d4a2
 
 # Diff at Tue, 09 Jun 2026 12:43:34 GMT:

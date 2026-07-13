@@ -8,12 +8,27 @@
     "resolvedSubgames"
   ],
   "fields": {
+    "maxChallengeDuration_fmt": {
+      "handler": {
+        "type": "call",
+        "method": "maxChallengeDuration",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"],
+      "description": "Formatted maximum time after game creation during which a game can be challenged."
+    },
+    "maxProveDuration_fmt": {
+      "handler": {
+        "type": "call",
+        "method": "maxProveDuration",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"],
+      "description": "Formatted maximum time after a challenge during which the proposal can be proven."
+    },
     "SP1_VERIFIER": {
       "description": "The SP1 verifier contract used to verify ZK proofs. Set in constructor.",
-      "handler": {
-        "type": "hardcoded",
-        "value": "0x3B6041173B80E77f038F3f2C0F9744F04837185E"
-      }
+      "copy": "sp1Verifier"
     }
   }
 }
