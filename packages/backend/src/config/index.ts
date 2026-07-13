@@ -15,15 +15,22 @@ export function getConfig(): Promise<Config> {
     case 'local':
       return makeConfig(env, {
         name: 'Backend/Local',
+        deploymentEnv: 'local',
         isLocal: true,
         minTimestampOverride: env.optionalBoolean('NO_TIMESTAMP_OVERRIDE')
           ? undefined
           : UnixTime.toStartOf(UnixTime.now() - 7 * UnixTime.DAY, 'hour'),
       })
     case 'staging':
-      return makeConfig(env, { name: 'Backend/Staging' })
+      return makeConfig(env, {
+        name: 'Backend/Staging',
+        deploymentEnv: 'staging',
+      })
     case 'production':
-      return makeConfig(env, { name: 'Backend/Production' })
+      return makeConfig(env, {
+        name: 'Backend/Production',
+        deploymentEnv: 'production',
+      })
   }
 
   throw new TypeError(`Unrecognized env: ${deploymentEnv}!`)

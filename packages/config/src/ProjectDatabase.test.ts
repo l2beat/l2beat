@@ -102,4 +102,29 @@ describe(ProjectDatabase.name, () => {
     expect(await db.getToken(token.id)).toEqual(token)
     expect(await db.getTokens()).toEqual([token])
   })
+
+  it('rolls back a failed transaction', async () => {
+    const project: BaseProject = {
+      id: ProjectId('rolled-back'),
+      slug: 'rolled-back',
+      name: 'Rolled back',
+      shortName: undefined,
+      addedAt: 0,
+    }
+
+    await expect(
+      db.transaction(async () => {
+        await db.saveProject(project)
+        throw new Error('test error')
+      }),
+    ).toBeRejectedWith('test error')
+
+    const result = await db.getProject({
+      id: project.id,
+      select: [],
+      whereNotNull: [],
+      whereNull: [],
+    })
+    expect(result).toEqual(undefined)
+  })
 })

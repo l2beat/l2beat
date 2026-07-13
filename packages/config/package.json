@@ -15,16 +15,16 @@
     "lint": "biome check --formatter-enabled=false .",
     "test": "mocha",
     "typecheck": "tsc --noEmit",
-    "get-lz-data": "node -r esbuild-register scripts/omnichain",
-    "update-multichain": "node -r esbuild-register scripts/multichain",
-    "socket-crawl": "node -r esbuild-register scripts/socketcrawl",
-    "socket-convert": "node -r esbuild-register scripts/socketconvert",
-    "fill-ts": "node -r esbuild-register scripts/fillts",
-    "tokens": "node -r esbuild-register scripts/tokens/tokens.ts",
+    "get-lz-data": "tsx scripts/omnichain/index.ts",
+    "update-multichain": "tsx scripts/multichain/index.ts",
+    "socket-crawl": "tsx scripts/socketcrawl",
+    "socket-convert": "tsx scripts/socketconvert",
+    "fill-ts": "tsx scripts/fillts/index.ts",
+    "tokens": "tsx scripts/tokens/tokens.ts",
     "tokens:verify": "sh scripts/tokens/verify.sh",
-    "tokens:generate-names": "node -r esbuild-register scripts/tokens/generateTokenNames.ts",
-    "coingecko:platforms": "node -r esbuild-register scripts/getCoingeckoPlatforms.ts",
-    "stargatev2-pools": "node -r esbuild-register scripts/stargatev2-pools",
+    "tokens:generate-names": "tsx scripts/tokens/generateTokenNames.ts",
+    "coingecko:platforms": "tsx scripts/getCoingeckoPlatforms.ts",
+    "stargatev2-pools": "tsx scripts/stargatev2-pools/index.ts",
     "diff": "./scripts/diff/diff.sh",
     "tvs:update-schema": "tsx ./scripts/tvs/update-schema.ts"
   },
@@ -48,6 +48,7 @@
     "cheerio": "^1.0.0-rc.11",
     "diff": "^7.0.0",
     "dotenv": "^16.4.5",
-    "node-fetch": "^2.6.7"
+    "node-fetch": "^2.6.7",
+    "tsx": "^4.9.3"
   }
 }

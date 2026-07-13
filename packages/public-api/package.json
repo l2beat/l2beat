@@ -11,7 +11,7 @@
     "lint": "biome check --formatter-enabled=false .",
     "lint:fix": "biome check --formatter-enabled=false --write .",
     "start": "node build/index.js",
-    "dev": "node -r esbuild-register --watch src/index.ts",
+    "dev": "tsx watch src/index.ts",
     "test": "mocha",
     "typecheck": "tsc --noEmit"
   },
@@ -29,6 +29,7 @@
     "@l2beat/typescript-config": "workspace:*",
     "@types/express": "^5.0.0",
     "@types/lodash": "^4.17.4",
-    "@types/swagger-ui-express": "^4.1.8"
+    "@types/swagger-ui-express": "^4.1.8",
+    "tsx": "^4.9.3"
   }
 }
