@@ -627,6 +627,35 @@ describeDatabase(InteropTransferRepository.name, (db) => {
     },
   )
 
+  describe(InteropTransferRepository.prototype.getAfterSerialId.name, () => {
+    it('returns full transfers after the cursor, paged by the limit', async () => {
+      const first = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))
+      const second = transfer('plugin1', 'msg2', 'deposit', UnixTime(200))
+      const third = transfer('plugin1', 'msg3', 'deposit', UnixTime(300))
+      await repository.insertMany([first, second, third])
+
+      const firstPage = await repository.getAfterSerialId('0', 2)
+      expect(firstPage.transfers.map((t) => t.transferId)).toEqual([
+        'msg1',
+        'msg2',
+      ])
+      expect(firstPage.latestSerialId).not.toEqual(undefined)
+
+      const secondPage = await repository.getAfterSerialId(
+        firstPage.latestSerialId ?? '',
+        2,
+      )
+      expect(secondPage.transfers.map((t) => t.transferId)).toEqual(['msg3'])
+
+      const emptyPage = await repository.getAfterSerialId(
+        secondPage.latestSerialId ?? '',
+        2,
+      )
+      expect(emptyPage.transfers).toEqual([])
+      expect(emptyPage.latestSerialId).toEqual(undefined)
+    })
+  })
+
   describe(InteropTransferRepository.prototype.updateFinancials.name, () => {
     it('updates financial data and marks transfer as processed', async () => {
       const record = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))
