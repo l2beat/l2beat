@@ -2,7 +2,7 @@ import { Skeleton } from '~/components/core/Skeleton'
 import { cn } from '~/utils/cn'
 import { compareMetric } from './compareMetric'
 import { LeadsIndicator } from './LeadsIndicator'
-import type { Side } from './types'
+import type { ComparisonSide } from './types'
 
 export function HeadToHeadRow({
   label,
@@ -15,8 +15,8 @@ export function HeadToHeadRow({
   isLoading,
 }: {
   label: string
-  left: Side | undefined
-  right: Side | undefined
+  left: ComparisonSide | undefined
+  right: ComparisonSide | undefined
   leftValue: number | null
   rightValue: number | null
   format: (v: number) => string
@@ -34,9 +34,9 @@ export function HeadToHeadRow({
       <div className="grid grid-cols-3 items-baseline gap-3">
         <span
           className={cn('font-bold text-heading-16', !left && 'text-secondary')}
-          style={{ color: left?.framework.color }}
+          style={{ color: left?.color }}
         >
-          {leftValue ? format(leftValue) : '—'}
+          {leftValue != null ? format(leftValue) : '—'}
         </span>
         <span className="text-center font-semibold text-base text-secondary leading-none">
           {label}
@@ -46,9 +46,9 @@ export function HeadToHeadRow({
             'text-right font-bold text-heading-16',
             !right && 'text-secondary',
           )}
-          style={{ color: right?.framework.color }}
+          style={{ color: right?.color }}
         >
-          {rightValue ? format(rightValue) : '—'}
+          {rightValue != null ? format(rightValue) : '—'}
         </span>
       </div>
 
@@ -58,8 +58,8 @@ export function HeadToHeadRow({
         <CompareBar
           leftFill={leftFill}
           rightFill={rightFill}
-          leftColor={left?.framework.color}
-          rightColor={right?.framework.color}
+          leftColor={left?.color}
+          rightColor={right?.color}
         />
       )}
 
