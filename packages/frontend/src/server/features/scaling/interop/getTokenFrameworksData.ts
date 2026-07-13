@@ -8,7 +8,6 @@ import {
 import groupBy from 'lodash/groupBy'
 import sumBy from 'lodash/sumBy'
 import { env } from '~/env'
-import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
@@ -25,8 +24,10 @@ import {
   buildTokensDetailsMap,
   type TokensDetailsMap,
 } from './utils/buildTokensDetailsMap'
+import { getAverageDurationSeconds } from './utils/getAverageDuration'
 import { getInteropChains } from './utils/getInteropChains'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
+import { getPreviousProtocolData } from './utils/getPreviousProtocolData'
 import {
   getProtocolsDataMap,
   type ProtocolData,
@@ -131,6 +132,7 @@ export async function getTokenFrameworksData(
     snapshotTimestamp,
     params,
     frameworkProjectIds,
+    ['lockAndMint', 'burnAndMint'],
   )
 
   const protocolsDataMap = getProtocolsDataMap(records)
@@ -292,49 +294,12 @@ export function buildFrameworkEntry(
     transferCount: data.transferCount,
     previousVolume: previous?.volume ?? null,
     previousTransferCount: previous?.transferCount ?? null,
-    averageDurationSeconds: getSingleAverageDurationSeconds(data, project),
+    averageDurationSeconds: getAverageDurationSeconds(data, project),
     averageValue:
       data.identifiedTransferCount > 0
         ? data.volume / data.identifiedTransferCount
         : null,
   }
-}
-
-async function getPreviousProtocolData(
-  snapshotTimestamp: UnixTime | undefined,
-  params: InteropSelectionInput,
-  frameworkProjectIds: string[],
-): Promise<Map<string, { volume: number; transferCount: number }>> {
-  const result = new Map<string, { volume: number; transferCount: number }>()
-  if (!snapshotTimestamp) return result
-  const db = getDb()
-
-  const previousTimestamp = snapshotTimestamp - UnixTime.DAY
-  const previousRecords =
-    await db.aggregatedInteropTransfer.getByChainsAndTimestamp(
-      previousTimestamp,
-      params.from,
-      params.to,
-      ['lockAndMint', 'burnAndMint'],
-      frameworkProjectIds,
-    )
-
-  for (const record of previousRecords) {
-    const current = result.get(record.id) ?? { volume: 0, transferCount: 0 }
-    current.volume += getInteropTransferValue(record) ?? 0
-    current.transferCount += record.transferCount ?? 0
-    result.set(record.id, current)
-  }
-  return result
-}
-
-function getSingleAverageDurationSeconds(
-  data: ProtocolData,
-  project: Project<'interopConfig'> | undefined,
-): number | null {
-  if (project?.interopConfig.transfersTimeMode === 'unknown') return null
-  if (data.transfersWithDurationCount <= 0) return null
-  return Math.floor(data.totalDurationSum / data.transfersWithDurationCount)
 }
 
 const frameworkIdByProjectId = new Map(

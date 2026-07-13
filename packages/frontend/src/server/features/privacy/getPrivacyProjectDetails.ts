@@ -45,7 +45,6 @@ export interface PrivacyProjectDetails {
   attributes: PrivacyAttribute[]
   assets: PrivacyAsset[]
   summary: {
-    totalValueLockedUsd: number
     bucketCount: number
     deposits: {
       total: number
@@ -103,11 +102,6 @@ export async function getPrivacyProjectDetails(
       tvlBySymbol.set(tvlToken.symbol, existing + tv.valueForProject)
     }
   }
-  const projectTotalTvl = tokenValues.reduce(
-    (sum, tv) => sum + tv.valueForProject,
-    0,
-  )
-
   const totalIndex = new Map<string, PrivacyFlowBucketTotalRecord>()
   for (const total of totals) {
     totalIndex.set(`${total.projectId}::${total.bucketId}`, total)
@@ -267,7 +261,6 @@ export async function getPrivacyProjectDetails(
     attributes: project.privacyInfo.attributes ?? [],
     assets: orderedAssets,
     summary: {
-      totalValueLockedUsd: projectTotalTvl,
       bucketCount: summaryBucketCount,
       deposits: {
         total: summaryDepositsTotal,

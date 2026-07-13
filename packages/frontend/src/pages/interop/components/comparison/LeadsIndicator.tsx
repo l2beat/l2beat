@@ -1,16 +1,16 @@
 import { TrendArrowIcon } from '~/icons/TrendArrow'
 import { cn } from '~/utils/cn'
-import type { Side } from './types'
+import type { ComparisonSide } from './types'
 
 export function LeadsIndicator({
   side,
   align,
 }: {
-  side: Side | undefined
+  side: ComparisonSide | undefined
   align: 'left' | 'right'
 }) {
   if (!side) return <span />
-  const { color, label } = side.framework
+  const { color, label } = side
   return (
     <span
       className={cn(

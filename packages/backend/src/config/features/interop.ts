@@ -9,7 +9,7 @@ import {
 import type { InteropFeatureConfig, InteropPromotionConfig } from '../Config'
 import type { FeatureFlags } from '../FeatureFlags'
 
-export interface InteropAggregationConfig extends InteropConfig {
+export type InteropAggregationConfig = InteropConfig & {
   id: string
 }
 

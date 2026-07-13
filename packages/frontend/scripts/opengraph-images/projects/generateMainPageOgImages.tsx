@@ -76,6 +76,10 @@ const mainPages: MainPage[] = [
     title: 'Token Frameworks',
   },
   {
+    type: 'interop',
+    title: 'Intent Bridges',
+  },
+  {
     type: 'data-availability',
     title: 'Summary',
   },
