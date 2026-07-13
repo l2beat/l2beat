@@ -30,7 +30,9 @@ git rev-parse HEAD > /tmp/compare/pr/commit
 
 cd packages/config
 mkdir -p /tmp/compare/out
-tsx scripts/diff/index.ts /tmp/compare/out/index.html
+# pnpm exec puts node_modules/.bin on PATH; bare `tsx` is not found when this
+# script is invoked directly (e.g. `bash diff.sh` in CI) instead of via pnpm
+pnpm exec tsx scripts/diff/index.ts /tmp/compare/out/index.html
 
 if [ -z "$GITHUB_ACTIONS" ]; then
   open /tmp/compare/out/index.html
