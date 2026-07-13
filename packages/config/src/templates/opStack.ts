@@ -2313,8 +2313,7 @@ function getTrackedTxs(
       ]
     }
     case 'Permissioned':
-    case 'Permissionless':
-    case 'Kailua': {
+    case 'Permissionless': {
       const disputeGameFactory =
         templateVars.disputeGameFactory ??
         templateVars.discovery.getContract('DisputeGameFactory')
@@ -2348,6 +2347,7 @@ function getTrackedTxs(
         },
       ]
     }
+    case 'Kailua':
     case 'KailuaSoon': {
       const kailuaTreasury =
         templateVars.discovery.getContract('KailuaTreasury')
