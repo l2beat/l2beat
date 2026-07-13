@@ -298,7 +298,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
       },
       upgrades: {
         'Normal upgrade path':
-          'Forum temp-check → On-chain vote (14d) → L2 Timelock (8d) → L2→L1 outbox (~6.4d) → L1 Timelock (3d) → execute. Total wall-clock ≈ 37 days for Constitutional AIPs, ≈ 27 days for Treasury AIPs.',
+          'Forum temp-check → On-chain vote (14d) → L2 Timelock (8d) → L2→L1 outbox (~6.4d) → L1 Timelock (3d) → execute. Total wall-clock ≈ 41 days for Constitutional AIPs (≈ 34d onchain-enforced), ≈ 27 days for Treasury AIPs.',
         'Emergency upgrade path':
           '**9/12 SC, instant** — no timelock, no exit window. E.g. KelpDAO freeze (21 Apr 2026), Stylus stack-depth fix (13 Oct 2025).',
         'Exit window':
