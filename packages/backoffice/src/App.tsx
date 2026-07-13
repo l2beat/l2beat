@@ -29,6 +29,7 @@ import { TransferDetailsPage } from './pages/interop/transfers/TransferDetailsPa
 import { TransfersPage } from './pages/interop/transfers/TransfersPage'
 import { BackofficeLandingPage } from './pages/landing/BackofficeLandingPage'
 import { NotFoundPage } from './pages/NotFoundPage'
+import { DailyChecksRedirect } from './pages/website/daily-checks/DailyChecksRedirect'
 import { InteropAggregatesPage } from './pages/website/interop-aggregates/InteropAggregatesPage'
 import { DaTrackingStatusPage } from './pages/website/status/da-tracking/DaTrackingStatusPage'
 import { TrackedTxsStatusPage } from './pages/website/status/tracked-txs/TrackedTxsStatusPage'
@@ -122,6 +123,10 @@ function EnvironmentScopedApp() {
             <Route
               path="/website/status/da-tracking"
               element={<DaTrackingStatusPage />}
+            />
+            <Route
+              path="/website/daily-checks"
+              element={<DailyChecksRedirect />}
             />
             <Route
               path="/website/interop-aggregates"

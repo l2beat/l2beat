@@ -25,6 +25,7 @@ import {
   SidebarSeparator,
   SidebarTrigger,
 } from '~/components/core/Sidebar'
+import { DAILY_CHECKS_DASHBOARD_URL } from '~/pages/website/daily-checks/DailyChecksRedirect'
 import {
   Collapsible,
   CollapsibleContent,
@@ -169,7 +170,7 @@ const navGroups: NavigationGroup[] = [
         type: 'single',
         title: 'Daily checks',
         icon: ClipboardCheckIcon,
-        url: 'https://kibana-v9.l2beat.com/app/dashboards#/view/4405f3b7-898d-45a0-a12b-a2489bacaa19',
+        url: DAILY_CHECKS_DASHBOARD_URL,
       },
       {
         type: 'single',
