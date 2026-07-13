@@ -60,6 +60,43 @@ describe(TokenRelationIngestion.name, () => {
     expect(set).toHaveBeenCalledWith({ key: CURSOR_KEY, value: '12' })
   })
 
+  it('commits all new relations of a batch in a single transaction', async () => {
+    const events: string[] = []
+    const insert = mockFn().executes(async () => {
+      events.push('insert')
+    })
+    const transaction = mockFn().executes(
+      async (callback: () => Promise<void>) => {
+        events.push('begin')
+        await callback()
+        events.push('commit')
+      },
+    )
+    const getAfterSerialId = mockFn()
+      .resolvesToOnce({
+        latestSerialId: '12',
+        transfers: [
+          transfer({
+            transferId: 'first',
+            bridgeType: 'lockAndMint',
+          }),
+          transfer({
+            transferId: 'second',
+            bridgeType: 'burnAndMint',
+            srcTokenAddress: token('0xccc'),
+            dstTokenAddress: token('0xddd'),
+          }),
+        ],
+      })
+      .resolvesToOnce(emptyBatch())
+
+    const ingestion = createIngestion({ getAfterSerialId, insert, transaction })
+
+    await ingestion.runOnce()
+
+    expect(events).toEqual(['begin', 'insert', 'insert', 'commit'])
+  })
+
   it('creates relations without ever consulting the token catalogue', async () => {
     // No deployedToken or tokenIngestionQueue mocks exist on the database
     // object below — any attempt to look up deployed tokens (e.g. to gate
@@ -333,6 +370,7 @@ function createIngestion(opts: {
   insert?: ReturnType<typeof mockFn>
   historyInsert?: ReturnType<typeof mockFn>
   set?: ReturnType<typeof mockFn>
+  transaction?: ReturnType<typeof mockFn>
 }) {
   const db = mockObject<Database>({
     interopTransfer: mockObject<Database['interopTransfer']>({
@@ -341,7 +379,8 @@ function createIngestion(opts: {
     }),
   })
   const tokenDb = mockObject<TokenDatabase>({
-    transaction: async (callback) => await callback(),
+    transaction: (opts.transaction ??
+      (async (callback) => await callback())) as TokenDatabase['transaction'],
     tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
       get: mockFn().resolvesTo(
         opts.cursor ? { key: CURSOR_KEY, value: opts.cursor } : undefined,

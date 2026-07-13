@@ -123,6 +123,7 @@ export type {
   JsonValue,
   TokenRelationPrimaryKey,
   TokenRelationRecord,
+  TokenRelationRoute,
   TokenRelationUpdateable,
 } from './repositories/TokenRelationRepository'
 export type {

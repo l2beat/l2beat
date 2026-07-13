@@ -4,6 +4,7 @@ import type {
   InteropTransferRecord,
   TokenDatabase,
   TokenRelationRecord,
+  TokenRelationRoute,
 } from '@l2beat/database'
 import { InteropTransferClassifier } from '../../../shared/build'
 import {
@@ -80,11 +81,14 @@ export class TokenRelationIngestion {
   private async ingestBatch(
     transfers: InteropTransferRecord[],
   ): Promise<number> {
-    const candidates = new Map<string, TokenRelationRecord>()
+    const candidates = new Map<
+      string,
+      { route: TokenRelationRoute; transfer: InteropTransferRecord }
+    >()
     for (const transfer of transfers) {
-      const relation = tokenRelationFromTransfer(transfer)
-      if (relation && !candidates.has(relationKey(relation))) {
-        candidates.set(relationKey(relation), relation)
+      const route = tokenRouteFromTransfer(transfer)
+      if (route && !candidates.has(relationKey(route))) {
+        candidates.set(relationKey(route), { route, transfer })
       }
     }
     if (candidates.size === 0) {
@@ -92,28 +96,45 @@ export class TokenRelationIngestion {
     }
 
     const existing = await this.tokenDb.tokenRelation.getByPrimaryKeys(
-      Array.from(candidates.values()),
+      Array.from(candidates.values(), (candidate) => candidate.route),
     )
     for (const relation of existing) {
       candidates.delete(relationKey(relation))
     }
+    if (candidates.size === 0) {
+      return 0
+    }
 
-    for (const relation of candidates.values()) {
-      await this.tokenDb.transaction(async () => {
+    // The transfer evidence JSON is built only here, after both dedup checks
+    // — in steady state almost every candidate already exists. The observed
+    // burn/mint flags are deliberately not copied onto the relation: they are
+    // nullable observations (one-sided transfers often miss one) and live in
+    // the `transfer` evidence JSON exactly as observed.
+    const newRelations = Array.from(
+      candidates.values(),
+      ({ route, transfer }): TokenRelationRecord => ({
+        ...route,
+        transfer: JSON.parse(
+          JSON.stringify(serializeInteropTransferRecord(transfer)),
+        ),
+      }),
+    )
+    await this.tokenDb.transaction(async () => {
+      for (const relation of newRelations) {
         await commitTokenChanges(
           this.tokenDb,
           [{ type: 'AddTokenRelationCommand', record: relation }],
           { kind: 'ingestion', log: formatRelationLog(relation) },
         )
-      })
-    }
-    return candidates.size
+      }
+    })
+    return newRelations.length
   }
 }
 
-function tokenRelationFromTransfer(
+function tokenRouteFromTransfer(
   transfer: InteropTransferRecord,
-): TokenRelationRecord | undefined {
+): TokenRelationRoute | undefined {
   const bridgeType =
     transfer.bridgeType ?? InteropTransferClassifier.inferBridgeType(transfer)
   if (bridgeType !== 'lockAndMint' && bridgeType !== 'burnAndMint') {
@@ -132,9 +153,6 @@ function tokenRelationFromTransfer(
     return undefined
   }
 
-  // The observed burn/mint flags are deliberately not copied onto the
-  // relation: they are nullable observations (one-sided transfers often
-  // miss one) and live in the `transfer` evidence JSON exactly as observed.
   return {
     tokenFromChain: source.chain,
     tokenFromAddress: source.address,
@@ -142,13 +160,10 @@ function tokenRelationFromTransfer(
     tokenToAddress: destination.address,
     plugin: transfer.plugin,
     bridgeType,
-    transfer: JSON.parse(
-      JSON.stringify(serializeInteropTransferRecord(transfer)),
-    ),
   }
 }
 
-function relationKey(relation: TokenRelationRecord): string {
+function relationKey(relation: TokenRelationRoute): string {
   return [
     relation.tokenFromChain,
     relation.tokenFromAddress.toLowerCase(),
@@ -159,7 +174,7 @@ function relationKey(relation: TokenRelationRecord): string {
   ].join(':')
 }
 
-function formatRelationLog(relation: TokenRelationRecord): string {
+function formatRelationLog(relation: TokenRelationRoute): string {
   return (
     'Observed a non-swapping interop transfer ' +
     `${relation.tokenFromChain}:${relation.tokenFromAddress} -> ` +
