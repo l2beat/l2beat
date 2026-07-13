@@ -322,6 +322,24 @@ describe(TokenRelationIngestion.name, () => {
     ])
   })
 
+  it('stops after the page budget so a backlog cannot monopolize a tick', async () => {
+    // Never returns an empty batch — only the page budget can end the run.
+    // The cursor persists after every page, so the next run picks up where
+    // this one stopped.
+    const set = mockFn().resolvesTo(undefined)
+    const getAfterSerialId = mockFn().resolvesTo({
+      latestSerialId: '1',
+      transfers: [transfer({ transferId: 'endless' })],
+    })
+
+    const ingestion = createIngestion({ getAfterSerialId, set })
+
+    await ingestion.runOnce()
+
+    expect(getAfterSerialId).toHaveBeenCalledTimes(50)
+    expect(set).toHaveBeenCalledTimes(50)
+  })
+
   it('normalizes Address32 token addresses to lowercase Ethereum addresses', async () => {
     const insert = mockFn().resolvesTo(undefined)
     const ethereumAddress = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'

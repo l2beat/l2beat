@@ -241,13 +241,32 @@ a miss. The deployed-token `getRelations` endpoint returns
 `otherToken: null` for unknown endpoints and the UI renders the raw
 address instead of a token link.
 
-The [token relations graph](../../../../../packages/token-ui/TOKEN_RELATIONS_GRAPH.md)
-currently filters out a relation unless both endpoints resolve. It draws a
-resolved relation red when both deployed tokens have non-null, different
-`abstractTokenId` values. Its query selects only route identity fields and
-does not load the transfer evidence JSON, which the graph does not display.
 The deployed-token set is small enough to resolve in memory; this small
 read-time cost is the entire price paid for the foreign-key decision above.
+
+## Relations graph
+
+The graph page in token-ui is a catalogue-level view of the relation
+observations. A node is a deployed token, identified by `(chain, address)`
+and labelled with the deployed token's symbol. A directed edge is an
+observed token relation; hovering it shows its endpoints, plugin, and
+bridge type. Node colors distinguish chains. The layout is force-directed;
+nodes can be dragged and the canvas can be panned or zoomed.
+
+Relations can exist before either endpoint is catalogued. The graph
+currently omits a relation unless both endpoints resolve to deployed
+tokens, and omits nodes left without a displayed relation. The observation
+stays in `TokenRelation` and can appear automatically once its missing
+endpoint is catalogued.
+
+An edge is red when both endpoints are assigned to abstract tokens and
+those abstract token IDs differ. This is a conflict between the observed
+non-swapping relation and the current catalogue assignments. An unassigned
+endpoint is not considered a conflict.
+
+The graph query reads only relation identity fields. It deliberately
+excludes the full transfer evidence JSON used by deployed-token relation
+details, because the graph neither displays nor interprets that evidence.
 
 ## Human edits
 

@@ -18,6 +18,11 @@ const TOKEN_RELATIONS_LAST_SERIAL_ID_KEY = 'token-relations:lastSerialId'
 // once (~7 days) has caused out-of-memory crashes before — do not remove the
 // paging.
 const TRANSFER_BATCH_SIZE = 2_000
+// A single run processes at most this many pages. The cursor persists after
+// every page, so a backlog larger than the budget (first deploy, long outage)
+// carries over to the next tick instead of monopolizing this one — token
+// catalogue ingestion runs in the same tick, after relations.
+const MAX_PAGES_PER_RUN = 50
 
 /**
  * Materializes `TokenRelation` rows from interop transfers. A relation is an
@@ -47,7 +52,7 @@ export class TokenRelationIngestion {
     )
     let lastSerialId = setting?.value ?? '0'
 
-    while (true) {
+    for (let page = 0; page < MAX_PAGES_PER_RUN; page++) {
       const batch = await this.db.interopTransfer.getAfterSerialId(
         lastSerialId,
         TRANSFER_BATCH_SIZE,
