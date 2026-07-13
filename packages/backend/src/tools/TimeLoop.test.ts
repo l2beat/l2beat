@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { assert } from '@l2beat/shared-pure'
-import { expect, mockFn } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 import { TimeLoop } from './TimeLoop'
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
@@ -73,6 +73,21 @@ describe(TimeLoop.name, () => {
       await timeLoop.loopBody()
 
       expect(fn).toHaveBeenCalledTimes(2)
+    })
+
+    it('logs a named error when run throws', async () => {
+      const error = new Error('boom')
+      const errorFn = mockFn().returns(undefined)
+      const logger = mockObject<Logger>({
+        error: errorFn,
+        debug: mockFn().returns(undefined),
+      })
+
+      const timeLoop = new TestTimeLoop(mockFn().rejectsWith(error), logger)
+
+      await timeLoop.loopBody()
+
+      expect(errorFn).toHaveBeenCalledWith('Run failed', error)
     })
   })
 
