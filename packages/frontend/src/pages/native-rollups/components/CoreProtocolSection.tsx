@@ -8,8 +8,8 @@ export function CoreProtocolSection() {
     <section className="mt-8 md:mt-12">
       <SectionHeading
         eyebrow="Dependencies"
-        title="What's needed in the Ethereum core protocol"
-        description="Native rollups depend on a series of future L1 changes. Here's what the ecosystem is still building."
+        title="What Ethereum still needs"
+        description="Native proof verification depends on several unfinished L1 components and unresolved protocol choices."
       />
       <PrimaryCard className="md:p-8">
         <ul className="grid gap-x-8 gap-y-5 md:grid-cols-2">

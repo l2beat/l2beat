@@ -11,9 +11,18 @@ import { UserIcon } from '~/icons/User'
 
 export const NATIVE_ROLLUPS_BOOK_URL = 'https://native-rollups.l2beat.com'
 export const NATIVE_ROLLUPS_EIP_URL = 'https://eips.ethereum.org/EIPS/eip-8079'
+export const NATIVE_PROOF_VERIFICATION_URL =
+  'https://ethresear.ch/t/native-proof-verification/24798'
+export const NATIVE_ROLLUPS_REPO_URL =
+  'https://github.com/l2beat/native-rollups'
 export const FOUNDING_POST_URL =
   'https://ethresear.ch/t/native-rollups-superpowers-from-l1-execution/21517'
 export const ETHREX_POC_URL = 'https://github.com/lambdaclass/ethrex/pull/6186'
+export const L2_FOCIL_URL = 'https://github.com/l2beat/native-rollups/pull/4'
+export const L2_FOCIL_RESEARCH_URL =
+  'https://ethresear.ch/t/repurposing-focil-as-an-l2-forced-transaction-mechanism/25233'
+export const EIP_8025_URL = 'https://eips.ethereum.org/EIPS/eip-8025'
+export const EIP_8142_URL = 'https://eips.ethereum.org/EIPS/eip-8142'
 
 export interface FeatureItem {
   title: string
@@ -24,16 +33,49 @@ export interface FeatureItem {
 /** The two headline value propositions ("Why native"). */
 export const WHY_NATIVE: FeatureItem[] = [
   {
-    title: 'Automatically upgrade with Ethereum',
+    title: 'Designed to upgrade with Ethereum',
     description:
-      "Native rollups replace their custom state transition function with the EXECUTE precompile — a recursive call to Ethereum's own execution environment. Every time Ethereum hard-forks, native rollups adopt the new features automatically. No bespoke governance processes, no long exit windows, and no gradual divergence from L1.",
+      'A native rollup proves the same EVM state transition program that Ethereum accepts for itself. Instead of being pinned to one EVM version, it follows the version recognized by L1, so upgrades can propagate without a separate rollup upgrade or governance vote.',
     icon: HistoryClockIcon,
   },
   {
-    title: 'No more dedicated proof system',
+    title: 'No bespoke onchain verifier stack',
     description:
-      "Instead of building and maintaining a custom ZK circuit or fraud-proof system — each a source of bugs that forces reliance on security councils and multi-proofs — native rollups delegate verification to L1. The EXECUTE precompile is 'bug-free by construction': any bug in it is a bug in Ethereum itself, fixed by the whole community and hardened by client diversity and formal verification.",
+      "Operators still generate proofs, but Ethereum's consensus-layer proof infrastructure verifies them. Rollups no longer need to independently deploy and govern verifier contracts, adapters, proof routers, and circuit upgrades for EVM execution.",
     icon: ShieldIcon,
+  },
+]
+
+export interface HowItWorksStep {
+  number: string
+  title: string
+  description: string
+}
+
+export const HOW_IT_WORKS: HowItWorksStep[] = [
+  {
+    number: '01',
+    title: 'Build and prove an L2 block',
+    description:
+      "The operator executes an L2 block and proves Ethereum's stateless payload-validation program with one or more supported zkVM backends.",
+  },
+  {
+    number: '02',
+    title: 'Submit a proof-carrying transaction',
+    description:
+      'A new L1 transaction type commits to the L2 data in blobs, the proof backends and program identity, and a hash of the proof’s public values.',
+  },
+  {
+    number: '03',
+    title: 'Ethereum verifies the proofs',
+    description:
+      'Raw proofs travel in ephemeral sidecars. Ethereum clients validate them through a program-agnostic proof engine, while recursive aggregation keeps verification efficient at scale.',
+  },
+  {
+    number: '04',
+    title: 'The rollup advances its state',
+    description:
+      'The rollup contract confirms that Ethereum verified the right program and block data, then accepts the new L2 state root.',
   },
 ]
 
@@ -42,31 +84,31 @@ export const FEATURES: FeatureItem[] = [
   {
     title: 'Custom sequencing',
     description:
-      'Define your own sequencing rules through a smart contract — centralized sequencing with fast preconfirmations, based (L1-)sequencing, or a staked sequencer network.',
+      'Define sequencing policy in the rollup contract — centralized sequencing with fast preconfirmations, based sequencing, or a staked network.',
     icon: SwapIcon,
   },
   {
     title: 'Custom governance',
     description:
-      "The programmable 'consensus layer' lets a rollup keep its own configuration (e.g. a DAO-controlled coinbase or tweaked gas limits) while inheriting and auto-upgrading EVM execution rules from L1.",
+      "The programmable settlement contract lets a rollup keep its own configuration, such as a DAO-controlled fee recipient or opinionated gas limits, around L1's shared execution rules.",
     icon: UserIcon,
   },
   {
     title: 'Custom gas tokens',
     description:
-      'Rather than adding new transaction types, native rollups use generic L1→L2 messaging to unlock pre-minted tokens — enabling custom gas tokens with no EVM changes.',
+      'Choose a token other than ETH for transaction fees. Ethereum-native messaging can bridge it from L1 and make it available as the gas token on L2.',
     icon: GlobeIcon,
   },
   {
     title: 'Custom fee collection',
     description:
-      'A new `burned_fees` block-header field lets a rollup collect the base fee (credit it to any address) instead of burning it, enabling opinionated funding models not possible on L1.',
+      'Instead of automatically burning the base fee, direct it to a rollup treasury, sequencer, or another funding mechanism.',
     icon: CodeIcon,
   },
 ]
 
 export interface RoadmapItem {
-  status: 'done' | 'planned'
+  status: 'done' | 'research' | 'inProgress' | 'planned'
   date: string
   title: string
   description: string
@@ -75,8 +117,7 @@ export interface RoadmapItem {
 }
 
 /**
- * Roadmap timeline. Completed work is `done`; the four grant milestones are
- * `planned` with their target completion dates. Nothing is "in progress".
+ * Roadmap timeline. Future dates are research targets, not fork commitments.
  */
 export const ROADMAP: RoadmapItem[] = [
   {
@@ -92,7 +133,7 @@ export const ROADMAP: RoadmapItem[] = [
     date: '2025',
     title: 'The Native Rollups Book',
     description:
-      'L2BEAT publishes the canonical educational resource explaining governance risk, bug risk, and the EXECUTE precompile.',
+      'L2BEAT publishes an open research book covering governance risk, bug risk, native execution, messaging, fees, and the evolving proof design.',
     url: NATIVE_ROLLUPS_BOOK_URL,
   },
   {
@@ -100,7 +141,7 @@ export const ROADMAP: RoadmapItem[] = [
     date: 'November 2025',
     title: 'EIP-8079 (Draft)',
     description:
-      'The EXECUTE precompile is formalized as EIP-8079 by Luca Donno (L2BEAT) and Justin Drake (Ethereum Foundation), together with the `burned_fees` header field and an anchoring mechanism for L1→L2 messaging.',
+      'The original re-execution path is formalized around the EXECUTE precompile, together with fee accounting and an anchoring mechanism for L1→L2 messaging.',
     url: NATIVE_ROLLUPS_EIP_URL,
   },
   {
@@ -108,74 +149,86 @@ export const ROADMAP: RoadmapItem[] = [
     date: 'March 2026',
     title: 'ethrex proof-of-concept',
     description:
-      'The ethrex / LambdaClass team, with EF researchers and L2BEAT, demonstrate a working native-rollup PoC implementing EIP-8079 via re-execution — L2 settlement, deposits, contract deployment, cross-layer calls, and withdrawals.',
+      'The ethrex / LambdaClass team demonstrates EIP-8079 via L1 re-execution. It validates the contract and messaging model, but is a prototype rather than the target ZK architecture.',
     url: ETHREX_POC_URL,
   },
   {
-    status: 'planned',
+    status: 'done',
+    date: 'May 2026',
+    title: 'Native proof verification',
+    description:
+      'A program-agnostic design replaces EXECUTE in the ZK path with proof-carrying transactions and consensus-layer verification reusable by any ZK application.',
+    url: NATIVE_PROOF_VERIFICATION_URL,
+  },
+  {
+    status: 'done',
+    date: 'June 2026',
+    title: 'FOCIL-based forced transactions',
+    description:
+      'An L1 inbox lets users bypass the sequencer by submitting signed L2 transactions that the rollup enforces through FOCIL-style inclusion lists.',
+    url: L2_FOCIL_RESEARCH_URL,
+  },
+  {
+    status: 'inProgress',
     date: 'Target: September 2026',
     title: 'Rebase on Hegotá',
     description:
-      'Rebase of the native rollups EIP on top of Hegotá (mainly ePBS, BALs, FOCIL); update of one client implementation to the latest spec (at least re-execution).',
+      'Align the specification and a client implementation with the latest execution and consensus work, including ePBS, block-level access lists, FOCIL, and stateless validation.',
   },
   {
     status: 'planned',
     date: 'Target: December 2026',
     title: 'Native proof verification',
     description:
-      'Native proof verification EIP as an extension of native rollups; a CL+EL devnet running the ZK version of the spec.',
+      'Turn the research proposal into an EIP and run a CL+EL devnet with proof-carrying transactions and the ZK version of the native-rollup specification.',
   },
   {
     status: 'planned',
     date: 'Target: March 2027',
     title: 'Blocks-in-Blobs study',
     description:
-      'Study of the interaction with the Blocks-in-Blobs EIP; spec refinements and devnets.',
+      'Specify how proof-carrying transactions bind L2 transactions and block access lists to data made available through EIP-8142.',
   },
   {
     status: 'planned',
     date: 'Target: June 2027',
     title: 'Proof aggregation',
     description:
-      'Definition of the proof aggregation infrastructure needed for proof-carrying transactions; spec refinements and devnets; discussions related to inclusion in a future fork.',
+      'Define recursive aggregation, proof propagation, pricing, and resource limits so L1 can efficiently cover many proof-carrying transactions.',
   },
 ]
 
 /** Bullet list: what the Ethereum core protocol still needs. */
 export const CORE_PROTOCOL_NEEDS: { title: string; description: string }[] = [
   {
-    title: 'The EXECUTE precompile (EIP-8079)',
+    title: 'Proof-carrying transactions',
     description:
-      'A hard fork adding the precompile, the `burned_fees` header extension, and the anchoring predeploy / system transaction.',
+      'A new L1 transaction type that carries program and backend identities plus a public-values commitment, exposed through dedicated EVM opcodes.',
   },
   {
-    title: 'A DERIVE mechanism',
+    title: 'A program-agnostic proof engine',
     description:
-      'A precompile/function for L1→L2 deposits and signaling, forced inclusion, and sequencing rules.',
+      'Generalize the EIP-8025-style consensus infrastructure so clients can verify arbitrary guest programs, not only L1 execution proofs.',
   },
   {
-    title: 'L1 zkEVM / realtime proving',
+    title: 'L1 proof recursion and aggregation',
     description:
-      'Verifying ZK proofs instead of re-executing every EXECUTE call is what makes native rollups efficient at scale.',
+      'Recursive aggregation folds proof sidecars into an L1 block proof, avoiding one additional validator-side verification for every rollup update.',
   },
   {
-    title: 'Proof-system standardization',
+    title: 'Block data availability',
     description:
-      'A decision on enshrining specific proof systems vs. per-client choice, closely tied to EIP-8025 (Optional Execution Proofs) and multi-prover setups.',
+      'EIP-8142-style Blocks-in-Blobs must bind L2 transactions and block access lists to data that Ethereum makes available.',
   },
   {
-    title: 'Data availability for traces',
+    title: 'Proof economics and resource limits',
     description:
-      'Full traces with state-access proofs are large; the DA design drives native-rollup fees and proof diversity.',
+      'Proof propagation needs pricing, size bounds, backend diversity rules, and protection against excessive builder and client workloads.',
   },
   {
-    title: 'An EXECUTE cumulative gas limit',
-    description: 'A per-slot bound on the altruistic prover’s workload.',
-  },
-  {
-    title: 'Client zkVM integrations',
+    title: 'Stable program identity',
     description:
-      'Multi-prover setups (SP1, RISC Zero, ZisK, OpenVM) across execution clients, as ethrex already implements.',
+      'Custom guest programs need identifiers that survive zkVM patches. Native EVM rollups avoid this issue by always referring to the execution program recognized by Ethereum.',
   },
 ]
 
@@ -189,8 +242,6 @@ export interface MaterialItem {
   href: string
   /** For `video` materials — used to fetch the YouTube thumbnail. */
   videoId?: string
-  /** Set when the exact URL still needs confirmation. */
-  unverified?: boolean
 }
 
 /** YouTube thumbnail URL for a video id (`hqdefault` is always available). */
@@ -213,41 +264,78 @@ export function getMaterialIcon(kind: MaterialKind) {
   return MATERIAL_ICONS[kind]
 }
 
-/**
- * External materials. NOTE: entries marked `unverified` use best-known URLs and
- * should be double-checked before shipping (flagged in the PR description).
- */
 export const MATERIALS: MaterialItem[] = [
+  {
+    kind: 'article',
+    label: 'Native proof verification',
+    source: 'ethresear.ch',
+    description:
+      'The program-agnostic proposal for proof-carrying transactions, multi-proofs, and consensus-layer verification.',
+    href: NATIVE_PROOF_VERIFICATION_URL,
+  },
+  {
+    kind: 'article',
+    label: 'FOCIL as an L2 forced transaction mechanism',
+    source: 'ethresear.ch',
+    description:
+      'How an L1 inbox can give EVM rollups forced transactions without changing their execution rules or introducing a custom transaction type.',
+    href: L2_FOCIL_RESEARCH_URL,
+  },
+  {
+    kind: 'code',
+    label: 'L2 forced transaction implementation',
+    source: 'github.com/l2beat',
+    description:
+      'The working forced-inbox implementation, including transaction validation, queueing, pruning, settlement, and gas tests.',
+    href: L2_FOCIL_URL,
+  },
   {
     kind: 'book',
     label: 'The Native Rollups Book',
     source: 'l2beat.com',
     description:
-      'The canonical guide to native rollups — governance risk, bug risk, and the EXECUTE precompile.',
+      'The open technical notebook covering native execution, settlement contracts, messaging, fees, and proof design.',
     href: NATIVE_ROLLUPS_BOOK_URL,
+  },
+  {
+    kind: 'code',
+    label: 'Native rollups research repo',
+    source: 'github.com/l2beat',
+    description:
+      'The living specification, design notes, proof examples, and forced-inclusion prototypes behind this page.',
+    href: NATIVE_ROLLUPS_REPO_URL,
+  },
+  {
+    kind: 'article',
+    label: 'Native rollups — superpowers from L1 execution',
+    source: 'ethresear.ch',
+    description:
+      'The January 2025 founding post that introduced native rollups through the EXECUTE precompile.',
+    href: FOUNDING_POST_URL,
   },
   {
     kind: 'eip',
     label: 'EIP-8079: Native rollups',
     source: 'eips.ethereum.org',
     description:
-      'The formal EIP for the EXECUTE precompile, by Luca Donno and Justin Drake.',
+      'The original draft EIP for native rollups, centered on the re-execution precompile design.',
     href: NATIVE_ROLLUPS_EIP_URL,
   },
   {
     kind: 'eip',
-    label: 'EIP-8079 discussion',
-    source: 'ethereum-magicians.org',
-    description: 'The Ethereum Magicians thread tracking the EIP-8079 design.',
-    href: 'https://ethereum-magicians.org/t/eip-8079-native-rollups/26565',
+    label: 'EIP-8025: Optional Execution Proofs',
+    source: 'eips.ethereum.org',
+    description:
+      'The experimental consensus-layer proof infrastructure that native proof verification proposes to generalize.',
+    href: EIP_8025_URL,
   },
   {
-    kind: 'article',
-    label: 'Native proof verification',
-    source: 'ethresear.ch',
+    kind: 'eip',
+    label: 'EIP-8142: Block-in-Blobs',
+    source: 'eips.ethereum.org',
     description:
-      "Luca Donno's proposal for a standardized L1 primitive that lets any project verify ZK proofs through Ethereum's consensus.",
-    href: 'https://ethresear.ch/t/native-proof-verification/24798',
+      'The draft mechanism for keeping execution payload data available when validity is checked with ZK proofs.',
+    href: EIP_8142_URL,
   },
   {
     kind: 'code',
@@ -255,8 +343,7 @@ export const MATERIALS: MaterialItem[] = [
     source: 'github.com/lambdaclass/ethrex',
     description:
       'The Phase-1 proof-of-concept implementing EIP-8079 via re-execution behind a feature flag.',
-    href: 'https://github.com/lambdaclass/ethrex/pull/6186',
-    unverified: true,
+    href: ETHREX_POC_URL,
   },
   {
     kind: 'video',
@@ -271,7 +358,7 @@ export const MATERIALS: MaterialItem[] = [
     label: 'Lightning Talk: Native Rollups',
     source: 'Luca Donno · L2BEAT',
     description:
-      'A short introduction to native rollups and the EXECUTE precompile.',
+      'A short introduction to the original native rollups and EXECUTE proposal.',
     href: 'https://www.youtube.com/watch?v=y8Rq_VESOac',
     videoId: 'y8Rq_VESOac',
   },
@@ -289,7 +376,7 @@ export const MATERIALS: MaterialItem[] = [
     label: 'Native Proof Verification',
     source: 'Futura Camp',
     description:
-      'A session on native proof verification — extending native rollups so L1 checks ZK proofs rather than re-executing.',
+      'A session on the broader primitive that lets L1 verify proofs for native rollups and arbitrary guest programs.',
     href: 'https://www.youtube.com/watch?v=lbzXH2x2PJ4',
     videoId: 'lbzXH2x2PJ4',
   },

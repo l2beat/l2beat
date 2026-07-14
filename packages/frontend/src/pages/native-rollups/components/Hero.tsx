@@ -2,7 +2,10 @@ import { Button } from '~/components/core/Button'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import { NativeRollupsHeroIllustration } from '../assets/NativeRollupsHero'
-import { NATIVE_ROLLUPS_BOOK_URL, NATIVE_ROLLUPS_EIP_URL } from '../consts'
+import {
+  NATIVE_PROOF_VERIFICATION_URL,
+  NATIVE_ROLLUPS_BOOK_URL,
+} from '../consts'
 
 export function Hero() {
   return (
@@ -16,17 +19,19 @@ export function Hero() {
       <div className="relative flex w-full items-center justify-between gap-8">
         <div className="flex max-w-2xl flex-col gap-6">
           <span className="w-max font-medium text-purple-100 text-xs uppercase tracking-[0.14px] dark:text-pink-200">
-            What is native rollups?
+            What are native rollups?
           </span>
           <h2 className="text-balance font-bold text-heading-32 md:text-heading-40">
             The easiest and most secure way to deploy your own EVM chain.
           </h2>
           <p className="text-pretty text-paragraph-16 text-secondary md:text-paragraph-18">
-            A native rollup swaps its custom state transition function for the{' '}
-            <strong className="text-primary">EXECUTE</strong> precompile — a
-            recursive call into Ethereum&apos;s own execution environment. The
-            result is a rollup that is EVM-equivalent by construction, upgrades
-            in lockstep with L1, and needs no dedicated proof system to trust.
+            Native rollups turn L2 blocks into{' '}
+            <strong className="text-primary">
+              proof-carrying transactions
+            </strong>{' '}
+            on L1. Ethereum verifies that every block follows its own EVM rules,
+            while the rollup stays free to customize sequencing, messaging, and
+            chain policy.
           </p>
           <div className="flex flex-wrap items-center gap-3">
             <Button
@@ -39,7 +44,7 @@ export function Hero() {
                 target="_blank"
                 rel="noreferrer noopener"
               >
-                Read the Book
+                Explore the Book
                 <CustomLinkIcon className="fill-current" />
               </a>
             </Button>
@@ -49,11 +54,11 @@ export function Hero() {
               className="gap-2 border-divider bg-surface-secondary text-primary hover:bg-surface-secondary/60"
             >
               <a
-                href={NATIVE_ROLLUPS_EIP_URL}
+                href={NATIVE_PROOF_VERIFICATION_URL}
                 target="_blank"
                 rel="noreferrer noopener"
               >
-                Read EIP-8079
+                Explore the research
                 <CustomLinkIcon className="fill-current" />
               </a>
             </Button>

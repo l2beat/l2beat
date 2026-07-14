@@ -18,7 +18,7 @@ export function MaterialsSection() {
       <SectionHeading
         eyebrow="Learn more"
         title="Materials, articles & talks"
-        description="Everything you need to go deeper — the spec, the founding research, the proof-of-concept, and recorded talks."
+        description="Explore native proof verification, the technical book, the original EXECUTE research, and implementation work."
       />
 
       <GroupLabel>Articles &amp; specs</GroupLabel>

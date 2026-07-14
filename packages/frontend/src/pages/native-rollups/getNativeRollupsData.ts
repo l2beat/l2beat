@@ -15,7 +15,7 @@ export async function getNativeRollupsData(
       metadata: getMetadata(manifest, {
         title: 'Native Rollups - L2BEAT',
         description:
-          "Native rollups reuse Ethereum's own execution via the EXECUTE precompile — the easiest and most secure way to deploy your own EVM chain.",
+          'Native rollups use proof-carrying transactions so Ethereum can verify L2 blocks with its own execution program and proof infrastructure.',
         url,
         openGraph: {
           // TODO: replace with a dedicated native-rollups OpenGraph image.
