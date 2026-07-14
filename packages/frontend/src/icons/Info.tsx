@@ -9,7 +9,7 @@ const infoVariants = cva(undefined, {
     variant: {
       gray: 'fill-secondary',
       blue: 'fill-blue-500',
-      yellow: 'fill-yellow-900',
+      yellow: 'fill-yellow-800',
     },
   },
   defaultVariants: {
