@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "EscrowFactory",
+  "description": "Fusion+ factory and 1inch Limit Order Protocol extension. A source-chain order fill calls this contract through the configured Limit Order Protocol, validates the resolver against the order's time-dependent whitelist or access token, optionally charges the resolver fee, and deploys a deterministic EscrowSrc clone holding the maker's tokens. On the destination chain, anyone can fund and create the matching EscrowDst clone. Partial fills use Merkle proofs so each cumulative fill is bound to a different secret hash.",
+  "category": "core",
+  "ignoreRelatives": ["constructorArgs", "feeToken"],
+  "fields": {
+    "constructorArgs": {
+      "description": "Deployment configuration: Limit Order Protocol, fee token, resolver access token, initial FeeBank owner, and source/destination rescue delays.",
+      "handler": { "type": "constructorArgs", "nameArgs": true }
+    },
+    "limitOrderProtocol": {
+      "description": "1inch Limit Order Protocol allowed to call the pre-interaction, post-interaction and partial-fill proof hooks.",
+      "copy": "constructorArgs",
+      "edit": ["get", "limitOrderProtocol"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "call the factory's protected order-interaction hooks, including the hook that validates resolver eligibility and deploys source escrows after a maker's signed order is filled."
+        }
+      ]
+    },
+    "feeToken": {
+      "description": "Token deposited in the FeeBank and charged to eligible resolvers when an order enables a resolver fee.",
+      "copy": "constructorArgs",
+      "edit": ["get", "feeToken"]
+    },
+    "accessToken": {
+      "description": "Token whose holders can fill an order after its configured allowed time when they are not in its time-dependent whitelist. The same token gates the public withdrawal and cancellation functions on escrow clones.",
+      "copy": "constructorArgs",
+      "edit": ["get", "accessToken"]
+    },
+    "ESCROW_SRC_IMPLEMENTATION": {
+      "description": "Implementation used by deterministic minimal-proxy escrows on the source chain. The implementation itself does not hold per-swap funds."
+    },
+    "ESCROW_DST_IMPLEMENTATION": {
+      "description": "Implementation used by deterministic minimal-proxy escrows on the destination chain. The implementation itself does not hold per-swap funds."
+    },
+    "FEE_BANK": {
+      "description": "FeeBank deployed with the factory. It holds resolver fee-token deposits and forwards credit changes to this factory."
+    },
+    "lastValidated": {
+      "description": "For a partially fillable order, stores the most recently proven secret index and hash. This prevents reuse or out-of-order use of secrets from the order's Merkle tree."
+    }
+  }
+}
