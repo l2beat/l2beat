@@ -79,7 +79,8 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
     const nodes: Node[] = []
     const autoGroups: AutoGroup[] = []
     for (const chain of data.entries) {
-      const isSharedModule = chain.project.startsWith('shared-')
+      const isSharedModule =
+        chain.project !== project && chain.project.startsWith('shared-')
       const hueShift = isSharedModule ? 90 : 0
       const chainNodesStartIndex = nodes.length
 
