@@ -73,8 +73,13 @@ export function PlanConfirmationDialog({
 
   const { mutate: executePlan, isPending } = useMutation(
     trpc.plan.execute.mutationOptions({
-      onSuccess: () => {
+      onSuccess: (data) => {
         if (!plan) return
+        if (data.outcome === 'error') {
+          toast.error(data.error)
+          setPlan(undefined)
+          return
+        }
         onSuccess?.()
         queryClient.invalidateQueries(trpc.tokenDbHistory.getPage.queryFilter())
         switch (plan.intent.type) {
