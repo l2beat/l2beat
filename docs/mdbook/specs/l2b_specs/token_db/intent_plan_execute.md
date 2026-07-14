@@ -14,7 +14,8 @@
 
 This document describes how user-driven edits to TokenDB flow through the
 `token-backend` package. It is the model that sits behind every "Add
-token", "Update token", and "Delete token" action coming from the token-UI.
+token", "Update token", "Delete token", and token-relation edit coming
+from the token-UI.
 
 If you're looking for how tokens are added *automatically* from interop
 transfers, that's a different subsystem — see
@@ -31,14 +32,15 @@ Intent   ─►   Plan   ─►   Commands  ─►  TokenDB
 
 - **Intent** ([intents.ts](../../../../../packages/token-backend/src/intents.ts)) —
   *what the user wants*. A small, validated union: add/update/delete an
-  abstract or deployed token, plus merging one abstract token into another.
+  abstract token, deployed token, or token relation, plus merging one
+  abstract token into another.
 - **Plan** ([planning.ts](../../../../../packages/token-backend/src/planning.ts)) —
   *what will happen* if the intent is carried out: the original intent
   plus the ordered list of low-level **Commands** the backend will run.
   Generating a plan is **read-only** — it never mutates the DB.
 - **Commands** ([commands.ts](../../../../../packages/token-backend/src/commands.ts)) —
   the primitive write operations TokenDB knows how to execute (insert,
-  update, delete on the two tables).
+  update, delete on the three core tables).
 - **Execute** ([execution.ts](../../../../../packages/token-backend/src/execution.ts)) —
   takes a `Plan` and applies its commands in a single `SERIALIZABLE`
   transaction. Before applying anything, it **regenerates the plan from

@@ -1,6 +1,6 @@
 {
   "name": "zksync2",
-  "timestamp": 1781603066,
+  "timestamp": 1783501723,
   "configHash": "0xe3366ebd88403dbbba2b7749a60f5e9e97666cca45498cba5ffc1e8c682647f5",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -566,7 +566,7 @@
           "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119",
           "eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731"
         ],
-        "getFirstUnprocessedPriorityTx": 3310340,
+        "getFirstUnprocessedPriorityTx": 3311224,
         "getL2BootloaderBytecodeHash": "0x01000911c4db4fe62c98e180cfa7e9b3a22fb15f505905d4bf36192f481551e6",
         "getL2DefaultAccountBytecodeHash": "0x010005f73e7c299ed73db937843643bdc276cbc2cc8596287e1e0cf3afc60252",
         "getL2EvmEmulatorBytecodeHash": "0x01000d8bae37b82f311186426184866498b357f41d7a02ced11f3e3fbfbacd63",
@@ -574,8 +574,8 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 8,
-        "getPriorityTreeRoot": "0xe9bfbefba86e909162aef54efa6ad5d0d46578d540ab12d229e99fc152522967",
+        "getPriorityQueueSize": 9,
+        "getPriorityTreeRoot": "0x791f9447d440b6508ca0686c9fb2fdf45835396088df77d3e96715bfbe7cb851",
         "getPriorityTreeStartIndex": 3270719,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 124554051588,
@@ -583,13 +583,13 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 29, 4],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 512531,
-        "getTotalBatchesExecuted": 512523,
-        "getTotalBatchesVerified": 512528,
-        "getTotalBlocksCommitted": 512531,
-        "getTotalBlocksExecuted": 512523,
-        "getTotalBlocksVerified": 512528,
-        "getTotalPriorityTxs": 3310348,
+        "getTotalBatchesCommitted": 513740,
+        "getTotalBatchesExecuted": 513732,
+        "getTotalBatchesVerified": 513738,
+        "getTotalBlocksCommitted": 513740,
+        "getTotalBlocksExecuted": 513732,
+        "getTotalBlocksVerified": 513738,
+        "getTotalPriorityTxs": 3311233,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45",
         "getVerifierParams": {
@@ -710,11 +710,6 @@
       "type": "Reference",
       "targetType": "Contract",
       "targetProject": "shared-zk-stack"
-    },
-    {
-      "address": "eth:0x548409daf1D6766929F3927D1Ca1df0A13129a6b",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "L1ERC20Bridge",
@@ -849,16 +844,16 @@
       }
     },
     {
+      "address": "eth:0x809bc2e1519641B482730330922950a4972a2227",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "L1AssetRouter",
       "address": "eth:0x8829AD80E425C646DAB305381ff105169FeEcE56",
       "type": "Reference",
       "targetType": "Contract",
       "targetProject": "shared-zk-stack"
-    },
-    {
-      "address": "eth:0x8ffC957cba878cDdF446574e88Cf7e1004fc953F",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "L1VerifierFflonk",
@@ -1004,12 +999,12 @@
         "$members": [
           "eth:0xCCEfc6dB1010af90AB0Fa0bbBd86F6D8C1627df7",
           "eth:0x6d5Cef8F3F998C47a52e27d3e28CaEcc8AdA9693",
-          "eth:0x8ffC957cba878cDdF446574e88Cf7e1004fc953F",
-          "eth:0x548409daf1D6766929F3927D1Ca1df0A13129a6b",
           "eth:0x6D290f04A5908F0390647d9903230de3844e5cA0",
           "eth:0xd3cA2aDe062d453F410b5C5cfA1B2b89879AbE1b",
           "eth:0xBBBCA2805c784e59E4eC2880cE63d08C08282726",
-          "eth:0xD70528Fc72fB9DAc1bE1b684ed6E3E06196f2D04"
+          "eth:0xD70528Fc72fB9DAc1bE1b684ed6E3E06196f2D04",
+          "eth:0xf6f32866b8De74683563fCCd07dE7e23431d0626",
+          "eth:0x809bc2e1519641B482730330922950a4972a2227"
         ],
         "$pastUpgrades": [
           [
@@ -1045,12 +1040,12 @@
         "multisigMembers": [
           "eth:0xCCEfc6dB1010af90AB0Fa0bbBd86F6D8C1627df7",
           "eth:0x6d5Cef8F3F998C47a52e27d3e28CaEcc8AdA9693",
-          "eth:0x8ffC957cba878cDdF446574e88Cf7e1004fc953F",
-          "eth:0x548409daf1D6766929F3927D1Ca1df0A13129a6b",
           "eth:0x6D290f04A5908F0390647d9903230de3844e5cA0",
           "eth:0xd3cA2aDe062d453F410b5C5cfA1B2b89879AbE1b",
           "eth:0xBBBCA2805c784e59E4eC2880cE63d08C08282726",
-          "eth:0xD70528Fc72fB9DAc1bE1b684ed6E3E06196f2D04"
+          "eth:0xD70528Fc72fB9DAc1bE1b684ed6E3E06196f2D04",
+          "eth:0xf6f32866b8De74683563fCCd07dE7e23431d0626",
+          "eth:0x809bc2e1519641B482730330922950a4972a2227"
         ],
         "OPTIONAL_COMMITTER_ADMIN_ROLE": "0x764da40dc482d3b385909d7a072df3207fef1d443f7a2633f4e7f1c0bb574ee0",
         "OPTIONAL_EXECUTOR_ADMIN_ROLE": "0xc77a7447d79c15063f9229278e1e1165208fb21eb078a86552a94a992151cc28",
@@ -1091,6 +1086,11 @@
       "type": "Reference",
       "targetType": "Contract",
       "targetProject": "shared-zk-stack"
+    },
+    {
+      "address": "eth:0xf6f32866b8De74683563fCCd07dE7e23431d0626",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731",
@@ -1662,6 +1662,6 @@
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
-  "usedBlockNumbers": { "ethereum": 25329265 },
-  "permissionsConfigHash": "0x90c925234f71e52fe99df97205cba3c879ea81205967aa3de1d871c75067e2d5"
+  "usedBlockNumbers": { "ethereum": 25486855 },
+  "permissionsConfigHash": "0x4fc269f4294daa52ec1bbe01e397a3d00109c2bf11eca6bbc40514935f5347db"
 }

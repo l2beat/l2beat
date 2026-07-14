@@ -6,16 +6,23 @@ import { manualProof } from './commitTokenChanges'
 import {
   type AddAbstractTokenIntent,
   type AddDeployedTokenIntent,
+  type AddTokenRelationIntent,
   type DeleteAbstractTokenIntent,
   type DeleteDeployedTokenIntent,
+  type DeleteTokenRelationIntent,
   Intent,
   type MergeAbstractTokenIntent,
   type UpdateAbstractTokenIntent,
   type UpdateDeployedTokenIntent,
+  type UpdateTokenRelationIntent,
 } from './intents'
 import { getLogger } from './logger'
 import type { CoingeckoEntry } from './schemas/AbstractToken'
 import type { DeployedTokenUpdateable } from './schemas/DeployedToken'
+import type {
+  TokenRelationPrimaryKey,
+  TokenRelationRecord,
+} from './schemas/TokenRelation'
 
 export type Plan = v.infer<typeof Plan>
 export const Plan = v.object({
@@ -82,6 +89,15 @@ export async function generatePlan(
 
       case 'DeleteDeployedTokenIntent':
         commands = await planDeleteDeployedToken(db, intent)
+        break
+      case 'AddTokenRelationIntent':
+        commands = await planAddTokenRelation(db, intent)
+        break
+      case 'UpdateTokenRelationIntent':
+        commands = await planUpdateTokenRelation(db, intent)
+        break
+      case 'DeleteTokenRelationIntent':
+        commands = await planDeleteTokenRelation(db, intent)
         break
       default:
         assertUnreachable(intent)
@@ -291,6 +307,10 @@ async function planDeleteDeployedToken(
       `DeployedToken ${intent.pk.chain}+${intent.pk.address} doesn't exist`,
     )
   }
+  // Token relations touching this token are deliberately left in place:
+  // they are observations of on-chain transfers and stay valid whether or
+  // not the address is catalogued as a deployed token.
+  // See docs/mdbook/specs/l2b_specs/token_db/token_relations.md.
   return [
     {
       type: 'DeleteDeployedTokenCommand',
@@ -359,6 +379,119 @@ function compareDeployedTokens(a: DeployedTokenRecord, b: DeployedTokenRecord) {
  */
 function extractAbstractTokenId(displayId: string): string {
   return displayId.split(':')[0]
+}
+
+async function planAddTokenRelation(
+  db: TokenDatabase,
+  intent: AddTokenRelationIntent,
+): Promise<Command[]> {
+  await assertRelationEndpointsExist(db, intent.record)
+
+  const existing = await db.tokenRelation.findByPrimaryKey(
+    toTokenRelationPrimaryKey(intent.record),
+  )
+  if (existing !== undefined) {
+    throw new PlanningError(
+      `TokenRelation ${formatTokenRelationPrimaryKey(intent.record)} already exists`,
+    )
+  }
+
+  return [
+    {
+      type: 'AddTokenRelationCommand',
+      record: intent.record,
+    },
+  ]
+}
+
+async function planUpdateTokenRelation(
+  db: TokenDatabase,
+  intent: UpdateTokenRelationIntent,
+): Promise<Command[]> {
+  const existing = await db.tokenRelation.findByPrimaryKey(intent.pk)
+  if (existing === undefined) {
+    throw new PlanningError(
+      `TokenRelation ${formatTokenRelationPrimaryKey(intent.pk)} doesn't exist`,
+    )
+  }
+
+  return [
+    {
+      type: 'UpdateTokenRelationCommand',
+      pk: intent.pk,
+      existing,
+      update: intent.update,
+    },
+  ]
+}
+
+async function planDeleteTokenRelation(
+  db: TokenDatabase,
+  intent: DeleteTokenRelationIntent,
+): Promise<Command[]> {
+  const existing = await db.tokenRelation.findByPrimaryKey(intent.pk)
+  if (existing === undefined) {
+    throw new PlanningError(
+      `TokenRelation ${formatTokenRelationPrimaryKey(intent.pk)} doesn't exist`,
+    )
+  }
+
+  return [
+    {
+      type: 'DeleteTokenRelationCommand',
+      pk: intent.pk,
+      existing,
+    },
+  ]
+}
+
+async function assertRelationEndpointsExist(
+  db: TokenDatabase,
+  relation: {
+    tokenFromChain: string
+    tokenFromAddress: string
+    tokenToChain: string
+    tokenToAddress: string
+  },
+): Promise<void> {
+  const [tokenFrom, tokenTo] = await Promise.all([
+    db.deployedToken.findByChainAndAddress({
+      chain: relation.tokenFromChain,
+      address: relation.tokenFromAddress,
+    }),
+    db.deployedToken.findByChainAndAddress({
+      chain: relation.tokenToChain,
+      address: relation.tokenToAddress,
+    }),
+  ])
+
+  if (tokenFrom === undefined) {
+    throw new PlanningError(
+      `DeployedToken ${relation.tokenFromChain}+${relation.tokenFromAddress} doesn't exist`,
+    )
+  }
+  if (tokenTo === undefined) {
+    throw new PlanningError(
+      `DeployedToken ${relation.tokenToChain}+${relation.tokenToAddress} doesn't exist`,
+    )
+  }
+}
+
+function toTokenRelationPrimaryKey(
+  relation: TokenRelationRecord,
+): TokenRelationPrimaryKey {
+  return {
+    tokenFromChain: relation.tokenFromChain,
+    tokenFromAddress: relation.tokenFromAddress,
+    tokenToChain: relation.tokenToChain,
+    tokenToAddress: relation.tokenToAddress,
+    plugin: relation.plugin,
+    bridgeType: relation.bridgeType,
+  }
+}
+
+function formatTokenRelationPrimaryKey(pk: TokenRelationPrimaryKey): string {
+  return `${pk.tokenFromChain}+${pk.tokenFromAddress} -> ${pk.tokenToChain}+${pk.tokenToAddress} via ${pk.plugin} (${pk.bridgeType})`
 }
 
 function stampInsertProof(

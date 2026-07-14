@@ -1,7 +1,7 @@
 {
   "name": "roninnetwork",
-  "timestamp": 1781531783,
-  "configHash": "0xd88cfdd0a17578feb5a040de29b13c55be76c5a500ac4408672eb02588fcb40e",
+  "timestamp": 1783604846,
+  "configHash": "0x15ab3abb01c25fa00bf289b7dc70528346b29b5aabdfea07384b5c0819521776",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -100,7 +100,7 @@
         "0xfdabc8b9b4db9b7aa78227b26e936abaf24f058502b96e8d9a293d49b1e89b47"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.",
+      "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.",
       "ignoreInWatchMode": [
         "anchorGame",
         "getAnchorRoot",
@@ -142,8 +142,8 @@
         "paused": false,
         "proxyAdmin": "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC",
         "proxyAdminOwner": "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607",
-        "RespectedGameString": "PermissionedDisputeGame",
-        "respectedGameType": 1,
+        "RespectedGameString": "KailuaGame",
+        "respectedGameType": 1337,
         "retirementTimestamp": 1771964639,
         "superchainConfig": "eth:0xEE552e802A50d855bD08E93dfcc69228FC7B9E2c",
         "systemConfig": "eth:0xc4f4F908C36C8119f1FBd52CebbDB30C6f2a23C1",
@@ -281,6 +281,70 @@
       "address": "eth:0x236aF2FFdb611B14e3042A982d13EdA1627d9C96",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "KailuaGame",
+      "address": "eth:0x296e7aD6D441b0627768bC0650179a4206479444",
+      "type": "Contract",
+      "template": "risc0/KailuaGame",
+      "sourceHashes": [
+        "0x4be72063aaae30394371dec5e9714bcd8fdff8900cc76d8d657e180c7ab83742"
+      ],
+      "proxyType": "immutable",
+      "description": "Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.",
+      "deployerAddress": "eth:0x0a1C5E42e423fab63746d375B84d3Fe4cAf9b513",
+      "sinceTimestamp": 1780027583,
+      "sinceBlock": 25198521,
+      "values": {
+        "$immutable": true,
+        "anchorStateRegistry": "eth:0xcA11bde05977b3631167028862bE2a173976CA11",
+        "blobsHash": "0xe3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "childCount": 0,
+        "children": [],
+        "contenderDuplicates": [],
+        "contenderIndex": 0,
+        "createdAt": 0,
+        "DISPUTE_GAME_FACTORY": "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a",
+        "duplicationCounter": 0,
+        "extraData": "0x000000000000000000000000000000000000000000000000",
+        "GAME_TYPE": 1337,
+        "gameCreator": "eth:0x0000000000000000000000000000000000000000",
+        "gameData": {
+          "gameType_": 1337,
+          "rootClaim_": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extraData_": "0x000000000000000000000000000000000000000000000000"
+        },
+        "gameIndex": 0,
+        "gameType": 1337,
+        "GENESIS_TIME_STAMP": 1667468787,
+        "KAILUA_TREASURY": "eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336",
+        "KAILUA_VERIFIER": "eth:0x6b49976a7340D0A3C00d1bEBE0E36E2367D89c7C",
+        "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "L2_BLOCK_TIME": 2,
+        "l2BlockNumber": 0,
+        "l2SequenceNumber": 0,
+        "MAX_CLOCK_DURATION": 259200,
+        "minCreationTime": 1667468787,
+        "opponentIndex": 0,
+        "OPTIMISM_PORTAL": "eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77",
+        "OUTPUT_BLOCK_SPAN": 6,
+        "parentGame": "eth:0x800FAc67109e72db8B7881312E47F98377E6E15b",
+        "parentGameIndex": 0,
+        "PROPOSAL_BLOBS": 1,
+        "PROPOSAL_OUTPUT_COUNT": 3600,
+        "proposalBlobHashes": [],
+        "proposer": "eth:0x0000000000000000000000000000000000000000",
+        "resolvedAt": 0,
+        "rootClaim": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "signature": "0x66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925",
+        "status": 0,
+        "validChildSignature": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "version": "1.2.0",
+        "wasRespectedGameTypeWhenCreated": false
+      },
+      "implementationNames": {
+        "eth:0x296e7aD6D441b0627768bC0650179a4206479444": "KailuaGame"
+      }
     },
     {
       "name": "RiscZeroGroth16Verifier",
@@ -704,10 +768,10 @@
         ],
         "$upgradeCount": 1,
         "challengerFromDGF": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-        "game1337": "eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336",
+        "game1337": "eth:0x296e7aD6D441b0627768bC0650179a4206479444",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 34,
+        "gameCount": 116,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A",
@@ -771,14 +835,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengerFromDGF"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x0954eC5B731501abf85766B5c6f5DE4C2B60BC44",
       "sinceTimestamp": 1680797639,
@@ -803,7 +859,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 277,
+        "nonce": 278,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1233,7 +1289,7 @@
         "0x7883f2d27d696b1fa6259a97c561d651493c2c1324e9646e04dba10adcfd8a21"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.",
+      "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.",
       "ignoreInWatchMode": ["params", "balance"],
       "deployerAddress": "eth:0x60ebFE5cc71a39D877CA1F40D1Cb3c57d6D64523",
       "sinceTimestamp": 1771964639,
@@ -1265,8 +1321,8 @@
         "proofMaturityDelaySeconds": 604800,
         "proxyAdmin": "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC",
         "proxyAdminOwner": "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607",
-        "RespectedGameString": "PermissionedDisputeGame",
-        "respectedGameType": 1,
+        "RespectedGameString": "KailuaGame",
+        "respectedGameType": 1337,
         "respectedGameTypeUpdatedAt": 1771964639,
         "superchainConfig": "eth:0xEE552e802A50d855bD08E93dfcc69228FC7B9E2c",
         "systemConfig": "eth:0xc4f4F908C36C8119f1FBd52CebbDB30C6f2a23C1",
@@ -1390,25 +1446,30 @@
       "sinceBlock": 25198519,
       "values": {
         "$admin": "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607",
-        "$implementation": "eth:0x7fC721ACC2183c292737C5a28Ea1B30d19f1cF29",
+        "$implementation": "eth:0xDd26da83B27987A7040caE31f2E35d9Bd6f5DE59",
         "$pastUpgrades": [
           [
             "2026-05-29T04:06:11.000Z",
             "0xa6d65a7371559f4e7ef00b5e2037850046dce7282d57f0aca5becd5fce93f995",
             ["eth:0x7fC721ACC2183c292737C5a28Ea1B30d19f1cF29"]
+          ],
+          [
+            "2026-07-01T10:19:35.000Z",
+            "0x07bf7a192a2ea3b5324ef5cef339715fc6b972b261463e751f39a3f7bb2ae72d",
+            ["eth:0xDd26da83B27987A7040caE31f2E35d9Bd6f5DE59"]
           ]
         ],
-        "$upgradeCount": 1,
-        "FPVM_IMAGE_ID": "0xc2e7bc71ae10caf806a1a073e4170daf3f4ac31099f1f854f7062dd70ed12fe3",
+        "$upgradeCount": 2,
+        "FPVM_IMAGE_ID": "0xd3c097dfec583bb305eefcb5dcddc313b072e372cee66e13492c37fb50e6a90b",
         "PERMIT_DELAY": 0,
         "PERMIT_DURATION": 1,
         "RISC_ZERO_VERIFIER": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
-        "ROLLUP_CONFIG_HASH": "0xc1f5bee1ef35d2b73a7cd351e650b2b123cb3bec91b0de3941af90539d5fc829",
+        "ROLLUP_CONFIG_HASH": "0x96ff86054c51b6b832108a14d93ced530c42e0ee5a113b47671c912fc19f5b1a",
         "version": "1.2.0"
       },
       "implementationNames": {
         "eth:0x6b49976a7340D0A3C00d1bEBE0E36E2367D89c7C": "Proxy",
-        "eth:0x7fC721ACC2183c292737C5a28Ea1B30d19f1cF29": "KailuaVerifier"
+        "eth:0xDd26da83B27987A7040caE31f2E35d9Bd6f5DE59": "KailuaVerifier"
       }
     },
     {
@@ -1804,7 +1865,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2488535692169425760175688"
+        "totalSupply": "2465772783194992912944652"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -1937,7 +1998,7 @@
         "0xf5a7c7ac441165b26526d65aee55070adb438e0b29658447e1d24955d1a26648"
       ],
       "proxyType": "immutable",
-      "description": "Kailua (RISC Zero ZK fault-proof) game implementation registered as game type 1337 in the DisputeGameFactory. Deployed but NOT yet active. Bonds confiscated from eliminated proposers are split 1/3 to the prover, 1/3 to the tournament winner, 1/3 burned.",
+      "description": "Kailua (RISC Zero ZK fault-proof) treasury: holds participation bonds, mints KailuaGame clones, and defines the vanguard proposer economics. Bonds confiscated from eliminated proposers are split 1/3 to the prover, 1/3 to the tournament winner, 1/3 burned.",
       "ignoreInWatchMode": ["lastResolved"],
       "deployerAddress": "eth:0x0a1C5E42e423fab63746d375B84d3Fe4cAf9b513",
       "sinceTimestamp": 1780027583,
@@ -1972,14 +2033,14 @@
         "L2_BLOCK_NUMBER": 56278374,
         "l2BlockNumber": 0,
         "l2SequenceNumber": 0,
-        "lastResolved": "eth:0x0000000000000000000000000000000000000000",
+        "lastResolved": "eth:0x31148E296790E417FE88bb065f367d4B06329dA6",
         "minCreationTime": 0,
         "opponentIndex": 0,
         "OPTIMISM_PORTAL": "eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77",
         "OUTPUT_BLOCK_SPAN": 6,
         "parentGame": "eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336",
-        "participationBond": 0,
-        "participationBondFmt": "0",
+        "participationBond": "500000000000000000",
+        "participationBondFmt": "0.5",
         "PROPOSAL_BLOBS": 1,
         "PROPOSAL_OUTPUT_COUNT": 3600,
         "proposalBlobHashes": [],
@@ -1991,9 +2052,9 @@
         "status": 0,
         "treasuryAddress": "eth:0x0000000000000000000000000000000000000000",
         "validChildSignature": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "vanguard": "eth:0x0000000000000000000000000000000000000000",
-        "vanguardAdvantage": 0,
-        "vanguardAdvantageFmt": "0s",
+        "vanguard": "eth:0xD379de941E78Ab394d4D4917FcCE1CC45b6cd620",
+        "vanguardAdvantage": 2592000,
+        "vanguardAdvantageFmt": "1mo",
         "version": "1.2.0",
         "wasRespectedGameTypeWhenCreated": false
       },
@@ -2024,9 +2085,9 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a",
-          "description": "Allowed to post new state roots of the current layer to the host chain.",
-          "role": ".proposerFromDGF"
+          "from": "eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336",
+          "description": "propose new state roots before anyone else, giving a first-mover advantage on the optimistic clock.",
+          "role": ".vanguard"
         }
       ]
     },
@@ -2247,7 +2308,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 6 (83%)",
-        "nonce": 3,
+        "nonce": 4,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2705,6 +2766,85 @@
       "function verify(bytes seal, bytes32 imageId, bytes32 journalDigest) view",
       "function verifyIntegrity(tuple(bytes seal, bytes32 claimDigest) receipt) view",
       "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[5] _pubSignals) view returns (bool)"
+    ],
+    "eth:0x296e7aD6D441b0627768bC0650179a4206479444": [
+      "constructor(address _kailuaTreasury, uint256 _genesisTimeStamp, uint256 _l2BlockTime, uint64 _maxClockDuration)",
+      "error AlreadyInitialized()",
+      "error AlreadyProven()",
+      "error BadExtraData()",
+      "error Blacklisted(address source, address expected)",
+      "error BlobHashMissing(uint256 index, uint256 count)",
+      "error BlockNumberMismatch(uint256 anchored, uint256 initialized)",
+      "error ClaimAlreadyResolved()",
+      "error ClockNotExpired()",
+      "error GameNotInProgress()",
+      "error GameNotResolved()",
+      "error InvalidDataRemainder()",
+      "error InvalidDisputedClaimIndex()",
+      "error InvalidDuplicationCounter()",
+      "error InvalidParent()",
+      "error NoConflict()",
+      "error NotProposed()",
+      "error NotProven()",
+      "error OutOfOrderResolution()",
+      "error ProposalGapRemaining(uint256 currentTime, uint256 minCreationTime)",
+      "error ProvenFaulty()",
+      "error UnknownGame()",
+      "event Proven(bytes32 indexed signature, uint8 indexed status)",
+      "event Resolved(uint8 indexed status)",
+      "function DISPUTE_GAME_FACTORY() view returns (address)",
+      "function GAME_TYPE() view returns (uint32)",
+      "function GENESIS_TIME_STAMP() view returns (uint256)",
+      "function KAILUA_TREASURY() view returns (address)",
+      "function KAILUA_VERIFIER() view returns (address)",
+      "function L2_BLOCK_TIME() view returns (uint256)",
+      "function MAX_CLOCK_DURATION() view returns (uint64)",
+      "function OPTIMISM_PORTAL() view returns (address)",
+      "function OUTPUT_BLOCK_SPAN() view returns (uint64)",
+      "function PROPOSAL_BLOBS() view returns (uint64)",
+      "function PROPOSAL_OUTPUT_COUNT() view returns (uint64)",
+      "function anchorStateRegistry() view returns (address registry_)",
+      "function appendChild()",
+      "function blobsHash() view returns (bytes32 blobsHash_)",
+      "function childCount() view returns (uint256 count_)",
+      "function children(uint256) view returns (address)",
+      "function contenderDuplicates(uint256) view returns (uint64)",
+      "function contenderIndex() view returns (uint64)",
+      "function createdAt() view returns (uint64)",
+      "function duplicationCounter() pure returns (uint64 duplicationCounter_)",
+      "function extraData() pure returns (bytes extraData_)",
+      "function gameCreator() pure returns (address creator_)",
+      "function gameData() view returns (uint32 gameType_, bytes32 rootClaim_, bytes extraData_)",
+      "function gameIndex() view returns (uint256)",
+      "function gameType() view returns (uint32 gameType_)",
+      "function getChallengerDuration(uint256 asOfTimestamp) view returns (uint64 duration_)",
+      "function initialize() payable",
+      "function isViableSignature(bytes32 childSignature) view returns (bool isViableSignature_)",
+      "function l1Head() pure returns (bytes32 l1Head_)",
+      "function l2BlockNumber() pure returns (uint256 l2BlockNumber_)",
+      "function l2SequenceNumber() pure returns (uint256 l2SequenceNumber_)",
+      "function minCreationTime() view returns (uint64 minCreationTime_)",
+      "function opponentIndex() view returns (uint64)",
+      "function parentGame() view returns (address parentGame_)",
+      "function parentGameIndex() pure returns (uint64 parentGameIndex_)",
+      "function proofStatus(bytes32) view returns (uint8)",
+      "function proposalBlobHashes(uint256) view returns (bytes32)",
+      "function proposer() view returns (address proposer_)",
+      "function proveOutputFault(address[2] prHs, uint64[2] co, bytes encodedSeal, bytes32[2] ac, uint256 proposedOutputFe, bytes[][2] kzgCommitmentsProofs)",
+      "function proveTrailFault(address payoutRecipient, uint64[2] co, uint256 proposedOutputFe, bytes blobCommitment, bytes kzgProof)",
+      "function proveValidity(address payoutRecipient, address l1HeadSource, uint64 childIndex, bytes encodedSeal)",
+      "function provenAt(bytes32) view returns (uint64)",
+      "function prover(bytes32) view returns (address)",
+      "function pruneChildren(uint256 stepLimit) returns (address)",
+      "function resolve() returns (uint8 status_)",
+      "function resolvedAt() view returns (uint64)",
+      "function rootClaim() pure returns (bytes32 rootClaim_)",
+      "function signature() view returns (bytes32 signature_)",
+      "function status() view returns (uint8)",
+      "function validChildSignature() view returns (bytes32)",
+      "function verifyIntermediateOutput(uint64 outputNumber, uint256 outputFe, bytes blobCommitment, bytes kzgProof) view returns (bool success)",
+      "function version() view returns (string)",
+      "function wasRespectedGameTypeWhenCreated() view returns (bool)"
     ],
     "eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D": [
       "constructor(bytes32 control_root, bytes32 bn254_control_id)",
@@ -3375,32 +3515,6 @@
       "function upgrade(address _proxy, address _implementation)",
       "function upgradeAndCall(address _proxy, address _implementation, bytes _data) payable"
     ],
-    "eth:0x7fC721ACC2183c292737C5a28Ea1B30d19f1cF29": [
-      "constructor(address _verifierContract, bytes32 _imageId, bytes32 _configHash, uint64 _permitDuration, uint64 _permitDelay)",
-      "error AlreadyEliminated()",
-      "error BadTarget()",
-      "error BondTransferFailed()",
-      "error ClockNotExpired()",
-      "error IncorrectBondAmount()",
-      "error NoCreditToClaim()",
-      "error NotProven()",
-      "error ProvenFaulty()",
-      "function FPVM_IMAGE_ID() view returns (bytes32)",
-      "function PERMIT_DELAY() view returns (uint64)",
-      "function PERMIT_DURATION() view returns (uint64)",
-      "function RISC_ZERO_VERIFIER() view returns (address)",
-      "function ROLLUP_CONFIG_HASH() view returns (bytes32)",
-      "function acquireFaultProofPermit(address proposalParent, bytes32 proposalSignature, uint64 numExpiredPermits, uint64 numDelayedPermits, address payoutRecipient) payable returns (uint256 totalPermitsIssued_)",
-      "function countExpiredPermits(bytes32 proposalKey, uint64 numExpiredPermits, uint64 numDelayedPermits, uint64 timestamp) view returns (uint64, uint64, uint256, uint64)",
-      "function faultProofPermitBeneficiary(address proposalParent, bytes32 proposalSignature) view returns (address)",
-      "function faultProofPermitBond(address treasury) view returns (uint256 bond)",
-      "function faultProofPermitKey(address proposalParent, bytes32 proposalSignature) pure returns (bytes32)",
-      "function faultProofPermitProvenAt(address proposalParent, bytes32 proposalSignature) view returns (uint64)",
-      "function faultProofPermits(bytes32, uint256) view returns (uint256 aggregateCollateral, address recipient, uint64 timestamp, bool released)",
-      "function releaseFaultProofPermit(address proposalParent, bytes32 proposalSignature, uint64 numExpiredPermits, uint64 numDelayedPermits, uint64 permitIndex)",
-      "function verify(address payoutRecipient, bytes32 preconditionHash, bytes32 l1Head, bytes32 agreedL2OutputRoot, bytes32 claimedL2OutputRoot, uint64 claimedL2BlockNumber, bytes encodedSeal) view",
-      "function version() view returns (string)"
-    ],
     "eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782": [
       "constructor(address _verifier, address guardian)",
       "error EnforcedPause()",
@@ -3965,6 +4079,32 @@
       "function verify(bytes seal, bytes32 imageId, bytes32 journalDigest) view",
       "function verifyIntegrity(tuple(bytes seal, bytes32 claimDigest) receipt) view"
     ],
+    "eth:0xDd26da83B27987A7040caE31f2E35d9Bd6f5DE59": [
+      "constructor(address _verifierContract, bytes32 _imageId, bytes32 _configHash, uint64 _permitDuration, uint64 _permitDelay)",
+      "error AlreadyEliminated()",
+      "error BadTarget()",
+      "error BondTransferFailed()",
+      "error ClockNotExpired()",
+      "error IncorrectBondAmount()",
+      "error NoCreditToClaim()",
+      "error NotProven()",
+      "error ProvenFaulty()",
+      "function FPVM_IMAGE_ID() view returns (bytes32)",
+      "function PERMIT_DELAY() view returns (uint64)",
+      "function PERMIT_DURATION() view returns (uint64)",
+      "function RISC_ZERO_VERIFIER() view returns (address)",
+      "function ROLLUP_CONFIG_HASH() view returns (bytes32)",
+      "function acquireFaultProofPermit(address proposalParent, bytes32 proposalSignature, uint64 numExpiredPermits, uint64 numDelayedPermits, address payoutRecipient) payable returns (uint256 totalPermitsIssued_)",
+      "function countExpiredPermits(bytes32 proposalKey, uint64 numExpiredPermits, uint64 numDelayedPermits, uint64 timestamp) view returns (uint64, uint64, uint256, uint64)",
+      "function faultProofPermitBeneficiary(address proposalParent, bytes32 proposalSignature) view returns (address)",
+      "function faultProofPermitBond(address treasury) view returns (uint256 bond)",
+      "function faultProofPermitKey(address proposalParent, bytes32 proposalSignature) pure returns (bytes32)",
+      "function faultProofPermitProvenAt(address proposalParent, bytes32 proposalSignature) view returns (uint64)",
+      "function faultProofPermits(bytes32, uint256) view returns (uint256 aggregateCollateral, address recipient, uint64 timestamp, bool released)",
+      "function releaseFaultProofPermit(address proposalParent, bytes32 proposalSignature, uint64 numExpiredPermits, uint64 numDelayedPermits, uint64 permitIndex)",
+      "function verify(address payoutRecipient, bytes32 preconditionHash, bytes32 l1Head, bytes32 agreedL2OutputRoot, bytes32 claimedL2OutputRoot, uint64 claimedL2BlockNumber, bytes encodedSeal) view",
+      "function version() view returns (string)"
+    ],
     "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607": [
       "constructor(address _singleton)"
     ],
@@ -4043,6 +4183,7 @@
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
+    "risc0/KailuaGame": "0x249c17fd26bbb0f5400d386b4cfbe2edc478f66aeca6ba5fe90e477d646ae9dd",
     "risc0/KailuaTreasury": "0x74dc00c46f9739750e0f8e356c2dc96fc06800a44865544c70b5106073ef635c",
     "risc0/RiscZeroSetVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "risc0/RiscZeroVerifierEmergencyStop": "0x51834983916be3dbcb2599e427fff7336cf176a2a5839ac470883eb1d9703763",
@@ -4050,6 +4191,6 @@
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/RiscZeroGroth16VerifierLegacy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 25323341 },
-  "permissionsConfigHash": "0x57a317b6326bcc107649f44f14112eada99cee17f472090164722312221fef99"
+  "usedBlockNumbers": { "ethereum": 25495416 },
+  "permissionsConfigHash": "0xcc0b1c6a2fc3d6bb3bc7a9be8cc395c230797656daf0b3fea23aa9c724fa1b84"
 }

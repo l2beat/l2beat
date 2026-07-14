@@ -5,7 +5,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
-import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -164,7 +163,6 @@ export const zamaCw: BaseProject = {
     warnings: [],
   },
   privacyInfo: {
-    trustedSetup: TRUSTED_SETUPS.TransparentSetup,
     tokens: privacyTokens,
     summaryTrackedItemName: 'token',
     exitWindow: {
@@ -181,9 +179,9 @@ export const zamaCw: BaseProject = {
         'The smart contracts are source-available, but users also rely on offchain FHE execution and threshold decryption services whose outputs are accepted onchain through signature verification. The offchain data cannot currently be fully reproduced from Ethereum DA.',
     },
     privacy: {
-      value: `${kmsThreshold}/${kmsSignerCount} KMS threshold`,
+      value: `${kmsThreshold}/${kmsSignerCount} current KMS threshold`,
       sentiment: 'warning',
-      description: `Privacy depends on fewer than the KMS threshold of signers to collude and be compromised. Each KMS signer is running inside a TEE. ${kmsThreshold} compromised signers can decrypt all current and past private balances. Compliance can be enforced by confidential token owners blocking users and by configured underlying-token denylist hooks during deposits, transfers, unwrap requests, and unwrap finalization.`,
+      description: `The displayed ${kmsThreshold}/${kmsSignerCount} threshold covers only the current Ethereum verifier context. A threshold with usable KMS key shares can decrypt current and past private balances. Separately, a signature threshold from any retained context can forge public decryption results without proving possession or use of those shares. Zama states that KMS nodes run inside TEEs, but this is not verified onchain. Compliance can be enforced by confidential token owners blocking users and by configured underlying-token denylist hooks during deposits, transfers, unwrap requests, and unwrap finalization.`,
     },
     attributes: [
       PRIVACY_ATTRIBUTES.fhe,

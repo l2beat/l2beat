@@ -1,6 +1,6 @@
 {
   "name": "karak",
-  "timestamp": 1772526845,
+  "timestamp": 1783591047,
   "configHash": "0x70f05221a3ff734050baa174ef3de894f65f75955303ca04ee45ed975c58a52a",
   "entries": [
     {
@@ -46,10 +46,10 @@
         "finalizationPeriodSeconds": 259200,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 34560000,
-        "latestOutputIndex": 4799,
-        "nextBlockNumber": 34567200,
-        "nextOutputIndex": 4800,
+        "latestBlockNumber": 40089600,
+        "latestOutputIndex": 5567,
+        "nextBlockNumber": 40096800,
+        "nextOutputIndex": 5568,
         "proposer": "eth:0x4179f43f3b994e97090557363b09F403138a729e",
         "PROPOSER": "eth:0x4179f43f3b994e97090557363b09F403138a729e",
         "startingBlockNumber": 0,
@@ -1001,6 +1001,6 @@
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 24575765 },
+  "usedBlockNumbers": { "ethereum": 25494272 },
   "permissionsConfigHash": "0x206b093547a5025ba83b00878e520080e33367fada14e71f5d119b2c0eba92c3"
 }

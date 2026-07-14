@@ -59,7 +59,13 @@ export async function getZkCatalogProjectEntry(
   const [allProjects, allProjectsWithContracts, tvs, contractUtils] =
     await Promise.all([
       ps.getProjects({
-        optional: ['display', 'daBridge', 'scalingInfo', 'daLayer'],
+        optional: [
+          'display',
+          'daBridge',
+          'scalingInfo',
+          'daLayer',
+          'privacyInfo',
+        ],
       }),
       ps.getProjects({
         select: ['contracts'],
@@ -161,7 +167,7 @@ export async function getZkCatalogProjectEntry(
   })
 
   const verifiersSection = await getVerifiersSection(
-    project,
+    project.zkCatalogInfo.verifierHashes,
     contractUtils,
     allProjects,
     tvs,
@@ -171,6 +177,7 @@ export async function getZkCatalogProjectEntry(
     props: {
       id: 'verifiers',
       title: 'Verifier IDs',
+      variant: 'zkCatalog',
       ...verifiersSection,
     },
   })

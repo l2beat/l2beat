@@ -5,14 +5,11 @@ import type {
   LivenessRecord,
 } from '@l2beat/database'
 import { createTrackedTxId, type TrackedTxConfigEntry } from '@l2beat/shared'
-import {
-  ProjectId,
-  type SavedConfiguration,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { TrackedTxProject } from '../../../../../config/Config'
 import type { IndexerService } from '../../../../../tools/uif/IndexerService'
+import type { SavedConfiguration } from '../../../../../tools/uif/multi/types'
 import type { LivenessRecordWithConfig } from '../utils/mapToRecordWithConfig'
 import { LivenessAggregatingIndexer } from './LivenessAggregatingIndexer'
 

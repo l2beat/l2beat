@@ -71,15 +71,18 @@ export type {
   InteropPluginSyncedRangeRecord,
 } from './repositories/InteropPluginSyncedRangeRepository'
 export type { InteropPluginSyncStateRecord } from './repositories/InteropPluginSyncStateRepository'
-export type {
-  InteropMissingTokenInfo,
-  InteropSuspiciousTransferRecord,
-  InteropTokenRouteRecord,
-  InteropTransferRecord,
-  InteropTransfersDetailedStatsRecord,
-  InteropTransfersStatsRecord,
-  InteropTransferTokenInfo,
-  InteropTransferUpdate,
+export {
+  hasAnyInteropTransferFinancialsFilter,
+  type InteropMissingTokenInfo,
+  type InteropSuspiciousTransferRecord,
+  type InteropTokenRouteRecord,
+  type InteropTransferFinancialsFilter,
+  type InteropTransferFinancialsStats,
+  type InteropTransferRecord,
+  type InteropTransfersDetailedStatsRecord,
+  type InteropTransfersStatsRecord,
+  type InteropTransferTokenInfo,
+  type InteropTransferUpdate,
 } from './repositories/InteropTransferRepository'
 export type {
   InteropTransferTypeStats,
@@ -106,11 +109,6 @@ export type {
   SyncMetadataRecord,
 } from './repositories/SyncMetadataRepository'
 export type {
-  TokenConnectionPrimaryKey,
-  TokenConnectionRecord,
-  TokenConnectionUpdateable,
-} from './repositories/TokenConnectionRepository'
-export type {
   TokenDbHistoryEntryInsert,
   TokenDbHistoryEntryRecord,
   TokenDbHistoryPage,
@@ -124,6 +122,13 @@ export type {
   TokenIngestionQueueState,
 } from './repositories/TokenIngestionQueueRepository'
 export type { TokenMetadataRecord } from './repositories/TokenMetadataRepository'
+export type {
+  JsonValue,
+  TokenRelationPrimaryKey,
+  TokenRelationRecord,
+  TokenRelationRoute,
+  TokenRelationUpdateable,
+} from './repositories/TokenRelationRepository'
 export type {
   SummedByTimestampTokenValuePerProjectRecord,
   SummedByTimestampTokenValueRecord,

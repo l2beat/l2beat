@@ -5,16 +5,14 @@ import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTv
 import { getTrustedSetupsWithVerifiersAndAttesters } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
 import { manifest } from '~/utils/Manifest'
 import type { ContractUtils } from '../../contracts-and-permissions/getContractUtils'
+import type { ProjectWithPageMetadata } from '../../getProjectUrl'
 
 export function getProverInfo(
   project: Project<'scalingInfo', 'contracts'>,
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
   contractUtils: ContractUtils,
   tvs: SevenDayTvsBreakdown,
-  allProjects: Project<
-    never,
-    'display' | 'daBridge' | 'scalingInfo' | 'daLayer'
-  >[],
+  allProjects: ProjectWithPageMetadata[],
 ): StateValidationSectionProps['proverInfo'] {
   const zkCatalogProject = zkCatalogProjects.find(
     (x) => x.id === project.scalingInfo.proofSystem?.zkCatalogId,

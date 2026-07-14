@@ -1,10 +1,7 @@
 process.env.NODE_ENV = 'test'
 module.exports = {
   spec: 'src/**/*.test.ts',
-  'node-option': [
-    'experimental-specifier-resolution=node',
-    'loader=ts-node/esm',
-  ],
+  'node-option': ['import=tsx'],
   watchExtensions: ['js', 'ts'],
   extension: ['js', 'ts'],
 }

@@ -20,9 +20,9 @@
   ],
   "scripts": {
     "test": "mocha",
-    "clean": "rm -rf dist",
+    "clean": "rm -rf dist *.tsbuildinfo",
     "build": "tsc",
-    "start": "node -r esbuild-register src/",
+    "start": "tsx src/index.ts",
     "format": "biome format .",
     "format:fix": "biome format --write .",
     "lint:fix": "biome check --formatter-enabled=false --write .",
@@ -34,6 +34,7 @@
     "@l2beat/shared-pure": "workspace:*"
   },
   "devDependencies": {
-    "@l2beat/typescript-config": "workspace:*"
+    "@l2beat/typescript-config": "workspace:*",
+    "tsx": "^4.9.3"
   }
 }

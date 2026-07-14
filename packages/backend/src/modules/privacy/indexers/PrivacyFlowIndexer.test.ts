@@ -779,7 +779,7 @@ describe(PrivacyFlowIndexer.name, () => {
     })
   })
 
-  describe(PrivacyFlowIndexer.prototype.removeData.name, () => {
+  describe(PrivacyFlowIndexer.prototype.trimData.name, () => {
     it('deletes records for each configuration in the given time range', async () => {
       const privacyFlowEventRepo = mockObject<Database['privacyFlowEvent']>({
         deleteByConfigInTimeRange: mockFn().returnsOnce(3).returnsOnce(0),
@@ -812,11 +812,11 @@ describe(PrivacyFlowIndexer.name, () => {
       )
 
       const removalConfigs = [
-        { id: 'config-1', from: 100, to: 200 },
-        { id: 'config-2', from: 300, to: 400 },
+        { id: 'config-1', range: [100, 200] as [number, number] },
+        { id: 'config-2', range: [300, 400] as [number, number] },
       ]
 
-      await indexer.removeData(removalConfigs)
+      await indexer.trimData(removalConfigs)
 
       expect(
         privacyFlowEventRepo.deleteByConfigInTimeRange,
@@ -824,6 +824,45 @@ describe(PrivacyFlowIndexer.name, () => {
       expect(
         privacyFlowEventRepo.deleteByConfigInTimeRange,
       ).toHaveBeenNthCalledWith(2, 'config-2', 300, 400)
+    })
+  })
+
+  describe(PrivacyFlowIndexer.prototype.wipeData.name, () => {
+    it('deletes all records for the given configurations', async () => {
+      const privacyFlowEventRepo = mockObject<Database['privacyFlowEvent']>({
+        deleteByConfigIds: mockFn().returns(3),
+      })
+      const placeholder = flowConfig({
+        id: 'placeholder',
+        address: ADDRESS_A,
+        event: TOPIC_A,
+        priceId: 'ethereum',
+        decimals: 18,
+        fixedAmount: '1',
+      })
+      const indexer = new PrivacyFlowIndexer(
+        {
+          chain: 'ethereum',
+          configurations: [placeholder],
+          blockProvider: mockObject<BlockProvider>({}),
+          logsProvider: mockObject<LogsProvider>({}),
+          db: mockDatabase({
+            privacyBlockTimestamp: mockObject(),
+            privacyPrice: mockObject(),
+            privacyFlowEvent: privacyFlowEventRepo,
+          }),
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
+
+      await indexer.wipeData([{ id: 'config-1' }, { id: 'config-2' }])
+
+      expect(privacyFlowEventRepo.deleteByConfigIds).toHaveBeenOnlyCalledWith([
+        'config-1',
+        'config-2',
+      ])
     })
   })
 

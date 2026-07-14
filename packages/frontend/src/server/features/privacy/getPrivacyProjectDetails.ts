@@ -6,6 +6,7 @@ import type {
   ProjectDisplay,
   ProjectPermissions,
   ProjectStatuses,
+  ProjectZkCatalogInfo,
 } from '@l2beat/config'
 import type {
   PrivacyFlowBucketTotalRecord,
@@ -35,13 +36,7 @@ export interface PrivacyProjectDetails {
   contracts?: ProjectContracts
   permissions?: Record<string, ProjectPermissions>
   statuses: ProjectStatuses
-  trustedSetup: {
-    name: string
-    risk: 'green' | 'yellow' | 'red' | 'N/A'
-    shortDescription: string
-    longDescription: string
-    participantCount?: number
-  }
+  zkCatalogInfo?: ProjectZkCatalogInfo
   exitWindow: PrivacyExitWindow
   privacy: PrivacySummaryValue
   reproducibility: PrivacySummaryValue
@@ -50,7 +45,6 @@ export interface PrivacyProjectDetails {
   attributes: PrivacyAttribute[]
   assets: PrivacyAsset[]
   summary: {
-    totalValueLockedUsd: number
     bucketCount: number
     deposits: {
       total: number
@@ -72,7 +66,13 @@ export async function getPrivacyProjectDetails(
     slug,
     where: ['privacyInfo'],
     select: ['display', 'privacyInfo', 'statuses'],
-    optional: ['tvsConfig', 'contracts', 'permissions', 'discoveryInfo'],
+    optional: [
+      'tvsConfig',
+      'contracts',
+      'permissions',
+      'discoveryInfo',
+      'zkCatalogInfo',
+    ],
   })
   if (!project) {
     return undefined
@@ -102,11 +102,6 @@ export async function getPrivacyProjectDetails(
       tvlBySymbol.set(tvlToken.symbol, existing + tv.valueForProject)
     }
   }
-  const projectTotalTvl = tokenValues.reduce(
-    (sum, tv) => sum + tv.valueForProject,
-    0,
-  )
-
   const totalIndex = new Map<string, PrivacyFlowBucketTotalRecord>()
   for (const total of totals) {
     totalIndex.set(`${total.projectId}::${total.bucketId}`, total)
@@ -257,7 +252,7 @@ export async function getPrivacyProjectDetails(
     contracts: project.contracts,
     permissions: project.permissions,
     statuses: project.statuses,
-    trustedSetup: project.privacyInfo.trustedSetup,
+    zkCatalogInfo: project.zkCatalogInfo,
     exitWindow: project.privacyInfo.exitWindow,
     privacy: project.privacyInfo.privacy,
     reproducibility: project.privacyInfo.reproducibility,
@@ -266,7 +261,6 @@ export async function getPrivacyProjectDetails(
     attributes: project.privacyInfo.attributes ?? [],
     assets: orderedAssets,
     summary: {
-      totalValueLockedUsd: projectTotalTvl,
       bucketCount: summaryBucketCount,
       deposits: {
         total: summaryDepositsTotal,

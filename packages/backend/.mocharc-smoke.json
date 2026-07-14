@@ -1,4 +1,4 @@
 {
   "spec": ["src/test/config-smoke-test.ts"],
-  "require": ["esbuild-register"]
+  "node-option": ["import=tsx"]
 }

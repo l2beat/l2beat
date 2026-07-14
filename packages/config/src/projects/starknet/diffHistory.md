@@ -1,3 +1,68 @@
+Generated with discovered.json: 0x0b13a0f0fd048362c4142263b502759223ba6a5a
+
+# Diff at Fri, 10 Jul 2026 10:18:08 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@1e8c379b8fe786381adcddb9c648173990ad4ea3 block: 1783503373
+- current timestamp: 1783678624
+
+## Description
+
+Updated Starknet OS and aggregation ZK programs, new versions verified. 
+
+## Watched changes
+
+```diff
+    contract Starknet (eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) [starknet/Starknet] {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      values.aggregatorHashMapped:
+-        "2571508110958925737463010241874806654058743535666147712534445437599630018294"
++        "1050253032170513549151251823521174837478197699740478552102884446098263561922"
+      values.aggregatorProgramHash:
+-        "2571508110958925737463010241874806654058743535666147712534445437599630018294"
++        "1050253032170513549151251823521174837478197699740478552102884446098263561922"
+      values.configHash:
+-        "3188242426588271529884520804512942022765170489242162533995649881904346336763"
++        "2579130946496422157802313572919622021390761807038780433165936715591440018810"
++++ description: The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated.
++++ severity: HIGH
+      values.programHash:
+-        "2733003247060056328192560178934419513655729851806095615814023997114795707702"
++        "2006389624453304912912750132846114593020263069652857561377702883656839453432"
+      values.programHashHistory.14:
++        "2733003247060056328192560178934419513655729851806095615814023997114795707702"
+      values.programHashMapped:
+-        "2733003247060056328192560178934419513655729851806095615814023997114795707702"
++        "2006389624453304912912750132846114593020263069652857561377702883656839453432"
+    }
+```
+
+Generated with discovered.json: 0xc5a7e72179f1d45f52a9addb401aa5a0a80a6774
+
+# Diff at Wed, 08 Jul 2026 09:37:18 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@bd632cb3b3a14cad96138a9cfe1677d08dcc197d block: 1783335585
+- current timestamp: 1783503373
+
+## Description
+
+Rotated two ms members.
+
+## Watched changes
+
+```diff
+    contract Starkware SCMinority Multisig (eth:0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B) [GnosisSafe] {
+    +++ description: None
+      values.$members.1:
+-        "eth:0x04D5b12b196a8CADEB2F476F22Ffb1334Ef9F94c"
++        "eth:0x99E84d004E73CC41eFacd382ef6FD34208B0F122"
+      values.$members.2:
+-        "eth:0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F"
++        "eth:0xb731B63eC22904A17d1cf6fD771eb5BA87f35Fa3"
+    }
+```
+
 Generated with discovered.json: 0x46be0f3a5ee0bbfd930370ece20fd5c286d971b4
 
 # Diff at Mon, 06 Jul 2026 11:01:07 GMT:

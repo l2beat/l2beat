@@ -53,6 +53,12 @@ export function PlanConfirmationDialog({
     queryClient.invalidateQueries(
       trpc.deployedTokens.getByChainAndAddress.queryFilter(),
     )
+    queryClient.invalidateQueries(
+      trpc.deployedTokens.getRelations.queryFilter(),
+    )
+    queryClient.invalidateQueries(
+      trpc.deployedTokens.getRelationsGraph.queryFilter(),
+    )
     queryClient.invalidateQueries(trpc.deployedTokens.checks.queryFilter())
     queryClient.invalidateQueries(
       trpc.deployedTokens.getSuggestionsByCoingeckoId.queryFilter(),
@@ -121,6 +127,18 @@ export function PlanConfirmationDialog({
             break
           case 'UpdateDeployedTokenIntent':
             toast.success('Deployed token updated successfully')
+            invalidateDeployedTokenQueries()
+            break
+          case 'AddTokenRelationIntent':
+            toast.success('Token relation added successfully')
+            invalidateDeployedTokenQueries()
+            break
+          case 'UpdateTokenRelationIntent':
+            toast.success('Token relation updated successfully')
+            invalidateDeployedTokenQueries()
+            break
+          case 'DeleteTokenRelationIntent':
+            toast.success('Token relation deleted successfully')
             invalidateDeployedTokenQueries()
             break
           default:
@@ -254,8 +272,6 @@ function CommandItem({ command }: { command: Command }) {
         </li>
       )
     case 'UpdateDeployedTokenCommand':
-      // Would be nice to show the diff
-
       return (
         <li>
           <Tooltip>
@@ -278,6 +294,59 @@ function CommandItem({ command }: { command: Command }) {
               />
             </TooltipContent>
           </Tooltip>
+        </li>
+      )
+    case 'AddTokenRelationCommand':
+      return (
+        <li>
+          <Tooltip>
+            <TooltipTrigger className="underline">
+              Token relation
+            </TooltipTrigger>
+            <TooltipContent className="whitespace-pre">
+              {JSON.stringify(command.record, null, 2)}
+            </TooltipContent>
+          </Tooltip>{' '}
+          will be added
+        </li>
+      )
+    case 'UpdateTokenRelationCommand':
+      return (
+        <li>
+          <Tooltip>
+            <TooltipTrigger className="underline">
+              Token relation
+            </TooltipTrigger>
+            <TooltipContent className="whitespace-pre">
+              {JSON.stringify(command.existing, null, 2)}
+            </TooltipContent>
+          </Tooltip>{' '}
+          will be{' '}
+          <Tooltip>
+            <TooltipTrigger className="underline">updated</TooltipTrigger>
+            <TooltipContent className="p-0">
+              <Diff
+                differences={diff(command.existing, {
+                  ...command.existing,
+                  ...command.update,
+                })}
+              />
+            </TooltipContent>
+          </Tooltip>
+        </li>
+      )
+    case 'DeleteTokenRelationCommand':
+      return (
+        <li>
+          <Tooltip>
+            <TooltipTrigger className="underline">
+              Token relation
+            </TooltipTrigger>
+            <TooltipContent className="whitespace-pre">
+              {JSON.stringify(command.existing, null, 2)}
+            </TooltipContent>
+          </Tooltip>{' '}
+          will be deleted
         </li>
       )
     default:

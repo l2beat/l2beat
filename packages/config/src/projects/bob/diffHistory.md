@@ -1,3 +1,50 @@
+Generated with discovered.json: 0x116190783ed0470e985e79493cec471e745e31fa
+
+# Diff at Wed, 08 Jul 2026 08:23:37 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@bd632cb3b3a14cad96138a9cfe1677d08dcc197d block: 1783072732
+- current timestamp: 1783498944
+
+## Description
+
+Upgraded Kailua to v1.3.0 release, program hash reproduced. Also rotated ms member.
+
+## Watched changes
+
+```diff
+    contract KailuaVerifier (eth:0xa23bf38299bbCbAA01b9ea8a1d3412D9f405b97d) [N/A] {
+    +++ description: None
+      values.$implementation:
+-        "eth:0xF59DA245d3D69E5432Afd05008E8D332C1bfAb4e"
++        "eth:0xC9934Db60031aDd319d008f8d643E3b723f28e43"
+      values.$pastUpgrades.1:
++        ["2026-07-08T07:35:47.000Z","0x211cae5e55a0b57029752e11536fb7a4175d8059cb9d4ec37ca7e50d635809dd",["eth:0xC9934Db60031aDd319d008f8d643E3b723f28e43"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.FPVM_IMAGE_ID:
+-        "0x3768ea4f0e0d940f69c4cc5bd39a9e2772bfe3cb57818ce526bbe68033ee5934"
++        "0xb2e2b1513e80ea1e8f998e51bf8e7754eec21dbd0463e0b6b115165ba6bac2bf"
+      values.ROLLUP_CONFIG_HASH:
+-        "0x8afe7ad42347f5d9f9ad307825d14a39630504005cb998d5132dcd0d0485d64d"
++        "0x56ed6a78ed98a992a16a46513ee4ee496a86302a96d0f2bcee133c21351cd681"
+      implementationNames.eth:0xF59DA245d3D69E5432Afd05008E8D332C1bfAb4e:
+-        "KailuaVerifier"
+      implementationNames.eth:0xC9934Db60031aDd319d008f8d643E3b723f28e43:
++        "KailuaVerifier"
+    }
+```
+
+```diff
+    contract Bob Multisig 1 (eth:0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E) [GnosisSafe] {
+    +++ description: None
+      values.$members.4:
+-        "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
++        "eth:0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+    }
+```
+
 Generated with discovered.json: 0xc4b6aa14972b20d03cd5056e8b7f516f278902f5
 
 # Diff at Fri, 03 Jul 2026 10:00:00 GMT:

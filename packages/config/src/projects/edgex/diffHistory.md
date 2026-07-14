@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xcfe3c2673ae837dff0272a9f6f37eb1b80812f69
+
+# Diff at Wed, 08 Jul 2026 09:12:48 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@bd632cb3b3a14cad96138a9cfe1677d08dcc197d block: 1783333087
+- current timestamp: 1783501903
+
+## Description
+
+Updated global configuration hash that commits to a set of offchain configs. Global configuration contains perp dex parameters and asset info for each synthetic asset: https://docs.starkware.co/starkex/perpetual/on-chain-configuration-perpetual-trading.html#global_configuration.
+
+## Watched changes
+
+```diff
+    contract StarkPerpetual (eth:0xfAaE2946e846133af314d1Df13684c89fA7d83DD) [N/A] {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      values.globalConfigurationHash:
+-        "0x0114f28bf054a4ec460b72691af8a31eac9e0793cd57778e25b5b7d236052d64"
++        "0x02564aef7cc3de2f3779f578d2a2bf916abbf30c34007ce06434b8fb7e671a79"
+    }
+```
+
 Generated with discovered.json: 0xfbd1411158193eb92661534af37e67e6fbe0a1da
 
 # Diff at Mon, 06 Jul 2026 11:11:14 GMT:

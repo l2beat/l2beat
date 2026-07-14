@@ -1,0 +1,257 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "GatewayConfig",
+  "description": "Central configuration contract for the Zama Gateway. A KMS context snapshots node transaction senders, signers, and workflow thresholds; historical contexts remain stored and selectable by Decryption because this version has no context-destruction function.",
+  "category": "core",
+  "ignoreMethods": [
+    "proxiableUUID",
+    "getHostChain",
+    "isHostChainRegistered",
+    "getKmsNodeForContext",
+    "getKmsTxSendersForContext",
+    "getKmsSignersForContext",
+    "isKmsTxSenderForContext",
+    "isKmsSignerForContext"
+  ],
+  "ignoreRelatives": ["getHostChains"],
+  "fields": {
+    "owner": {
+      "description": "Owner of GatewayConfig. This account creates KMS contexts, changes the current context's thresholds, manages coprocessors, custodians and host chains, transfers ownership, and unpauses gateway contracts. A newly created context becomes current immediately, while all older contexts remain selectable by Decryption.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "create KMS contexts that immediately become current, update current thresholds and other gateway configuration, transfer ownership, and unpause gateway workflow contracts. Historical KMS contexts cannot be removed in this version."
+        }
+      ]
+    },
+    "pendingOwner": {
+      "description": "Pending GatewayConfig owner. If non-zero, this address can accept ownership.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "accept GatewayConfig ownership."
+        }
+      ]
+    },
+    "gatewayPauserSet": {
+      "description": "PauserSet contract checked by GatewayConfig before pausing all pausable gateway workflow contracts.",
+      "type": "EXTERNAL",
+      "handler": {
+        "type": "hardcoded",
+        "value": "zama:0x571ecb596fCc5c840DA35CbeCA175580db50ac1b"
+      }
+    },
+    "decryption": {
+      "description": "Decryption workflow contract paused and unpaused by GatewayConfig.",
+      "type": "EXTERNAL",
+      "handler": {
+        "type": "hardcoded",
+        "value": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24"
+      }
+    },
+    "inputVerification": {
+      "description": "InputVerification workflow contract paused and unpaused by GatewayConfig.",
+      "type": "EXTERNAL",
+      "handler": {
+        "type": "hardcoded",
+        "value": "zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287"
+      }
+    },
+    "ethereumHostChains": {
+      "description": "Ethereum host-chain endpoints registered in GatewayConfig, derived from getHostChains entries with chainId 1. These are the L1 FHEVMExecutor and ACL contracts whose state is used by the Gateway workflows.",
+      "severity": "HIGH",
+      "type": "EXTERNAL",
+      "handler": {
+        "type": "call",
+        "method": "getHostChains",
+        "args": []
+      },
+      "edit": [
+        "pipe",
+        ["filter", ["pipe", ["get", "chainId"], ["=", 1]]],
+        [
+          "map",
+          [
+            "pipe",
+            ["set", "fhevmExecutorAddress", ["format", "EthereumAddress"]],
+            ["set", "aclAddress", ["format", "EthereumAddress"]]
+          ]
+        ]
+      ]
+    },
+    "getKmsTxSenders": {
+      "description": "KMS transaction-sender addresses in the current Gateway context. Historical context senders remain authorized for Decryption responses that explicitly select their context; post-migration contexts are indexed here and the migrated context is indexed on Decryption.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts."
+        }
+      ]
+    },
+    "getKmsSigners": {
+      "description": "KMS signer addresses in the current Gateway context. Historical context signers remain authorized for explicitly selected Decryption responses; post-migration contexts are indexed here and the migrated context is indexed on Decryption.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts."
+        }
+      ]
+    },
+    "createdKmsContexts": {
+      "description": "KMS contexts created after migration, reconstructed from UpdateKmsContext events with their node set and creation thresholds. Nodes remain authorized for Decryption indefinitely; later threshold-update events do not identify a context, so final historical thresholds must be read through context-specific getters or project overrides.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "handler": {
+        "type": "event",
+        "select": [
+          "newContextId",
+          "newKmsNodes",
+          "newMpcThreshold",
+          "newPublicDecryptionThreshold",
+          "newUserDecryptionThreshold",
+          "newKmsGenThreshold"
+        ],
+        "dedupBy": "newContextId",
+        "add": { "event": "UpdateKmsContext" }
+      }
+    },
+    "createdKmsContextTxSenders": {
+      "description": "KMS transaction senders from contexts created after migration. They remain authorized for Decryption responses that select their context because GatewayConfig has no context-destruction function.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "event",
+        "select": "newKmsNodes",
+        "flatten": true,
+        "dedupBy": "newKmsNodes.txSenderAddress",
+        "add": { "event": "UpdateKmsContext" }
+      },
+      "edit": ["map", ["get", "txSenderAddress"]],
+      "permissions": [
+        {
+          "type": "interact",
+          "role": ".getKmsTxSenders",
+          "description": "submit KMS decryption responses accepted by gateway Decryption."
+        }
+      ]
+    },
+    "createdKmsContextSigners": {
+      "description": "KMS signers from contexts created after migration. They remain authorized for Decryption responses that select their context because GatewayConfig has no context-destruction function.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "event",
+        "select": "newKmsNodes",
+        "flatten": true,
+        "dedupBy": "newKmsNodes.signerAddress",
+        "add": { "event": "UpdateKmsContext" }
+      },
+      "edit": ["map", ["get", "signerAddress"]],
+      "permissions": [
+        {
+          "type": "interact",
+          "role": ".getKmsSigners",
+          "description": "sign public decryption results and user decryption shares accepted by gateway Decryption."
+        }
+      ]
+    },
+    "getCoprocessorTxSenders": {
+      "description": "Coprocessor transaction-sender addresses registered for this gateway. These accounts submit input-verification, ACL, and ciphertext-material consensus messages.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit coprocessor responses, ACL mirror updates, and ciphertext material commitments to gateway contracts."
+        }
+      ]
+    },
+    "getCoprocessorSigners": {
+      "description": "Coprocessor signer addresses registered for this gateway. These sign encrypted input proof responses accepted by InputVerification.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "sign encrypted input proof verification responses accepted by the gateway."
+        }
+      ]
+    },
+    "getCustodianTxSenders": {
+      "description": "Custodian transaction-sender addresses registered for this gateway.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "participate in gateway key custody workflows."
+        }
+      ]
+    },
+    "getCustodianSigners": {
+      "description": "Custodian signer addresses registered for this gateway.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "sign gateway key custody material."
+        }
+      ]
+    },
+    "getMpcThreshold": {
+      "description": "MPC threshold for KMS key material generation in the current context.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "getCurrentKmsContextId": {
+      "description": "Identifier of the context used when a Decryption response has empty or version 0 extraData. Version 1 responses can explicitly select any historical context, and requests do not store or bind a context.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "getPublicDecryptionThresholdForContext": {
+      "description": "Minimum number of KMS signatures required for public decryption consensus in the current context.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "handler": {
+        "type": "call",
+        "method": "function getPublicDecryptionThresholdForContext(uint256 contextId) view returns (uint256)",
+        "args": ["{{ getCurrentKmsContextId }}"]
+      }
+    },
+    "getUserDecryptionThresholdForContext": {
+      "description": "Minimum number of KMS shares required for user decryption consensus in the current context.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "handler": {
+        "type": "call",
+        "method": "function getUserDecryptionThresholdForContext(uint256 contextId) view returns (uint256)",
+        "args": ["{{ getCurrentKmsContextId }}"]
+      }
+    },
+    "getKmsGenThreshold": {
+      "description": "Minimum number of KMS signatures required for key and CRS generation consensus in the current context.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "getCoprocessorMajorityThreshold": {
+      "description": "Minimum number of matching coprocessor messages required for gateway coprocessor consensus.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "getHostChains": {
+      "description": "Registered host chains and their host-chain FHEVMExecutor and ACL endpoints. Returned addresses belong to the listed host chain, not to the gateway chain; Ethereum entries are exposed as formatted cross-chain references in ethereumHostChains."
+    },
+    "getProtocolMetadata": {
+      "description": "Human-readable gateway protocol metadata."
+    }
+  }
+}

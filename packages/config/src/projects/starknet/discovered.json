@@ -1,6 +1,6 @@
 {
   "name": "starknet",
-  "timestamp": 1783335585,
+  "timestamp": 1783678624,
   "configHash": "0x5e6773cf0636f934b0a447f2b5eea93ac6f192fcbfb490eb91d93b06e80e42eb",
   "entries": [
     {
@@ -1308,7 +1308,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 6 (33%)",
-        "nonce": 40,
+        "nonce": 41,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1430,6 +1430,11 @@
         "eth:0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff": "StarknetTokenBridge"
       },
       "category": { "name": "Non-Critical", "priority": 0 }
+    },
+    {
+      "address": "eth:0x99E84d004E73CC41eFacd382ef6FD34208B0F122",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "L1DaiGateway",
@@ -1779,6 +1784,11 @@
         }
       ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "eth:0xb731B63eC22904A17d1cf6fD771eb5BA87f35Fa3",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "USDTBridge",
@@ -2172,9 +2182,9 @@
           ]
         ],
         "$upgradeCount": 11,
-        "aggregatorHashMapped": "2571508110958925737463010241874806654058743535666147712534445437599630018294",
-        "aggregatorProgramHash": "2571508110958925737463010241874806654058743535666147712534445437599630018294",
-        "configHash": "3188242426588271529884520804512942022765170489242162533995649881904346336763",
+        "aggregatorHashMapped": "1050253032170513549151251823521174837478197699740478552102884446098263561922",
+        "aggregatorProgramHash": "1050253032170513549151251823521174837478197699740478552102884446098263561922",
+        "configHash": "2579130946496422157802313572919622021390761807038780433165936715591440018810",
         "feeCollector": "eth:0x0000000000000000000000000000000000000000",
         "getMaxL1MsgFee": "1000000000000000000",
         "getUpgradeActivationDelay": 0,
@@ -2184,13 +2194,13 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 1696085,
+        "l1ToL2MessageNonce": 1696163,
         "messageCancellationDelay": 432100,
         "operators": [
           "eth:0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
           "eth:0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B"
         ],
-        "programHash": "2733003247060056328192560178934419513655729851806095615814023997114795707702",
+        "programHash": "2006389624453304912912750132846114593020263069652857561377702883656839453432",
         "programHashHistory": [
           "1921772108187713503530008849184725638117898887391063185252422808224349294626",
           "3258367057337572248818716706664617507069572185152472699066582725377748079373",
@@ -2205,15 +2215,16 @@
           "2231644845387633655859130162745748394456578773184260372693322394988769337368",
           "2534935718742676028234156221136000178296467523045214874259117268197132196876",
           "793595346346724189681221050719974054861327641387231526786912662354259445535",
-          "918745833886511857768061986591752808672496300091957204265383861063635175685"
+          "918745833886511857768061986591752808672496300091957204265383861063635175685",
+          "2733003247060056328192560178934419513655729851806095615814023997114795707702"
         ],
-        "programHashMapped": "2733003247060056328192560178934419513655729851806095615814023997114795707702",
+        "programHashMapped": "2006389624453304912912750132846114593020263069652857561377702883656839453432",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "3500177599756668347639159136180320810218829820573469869811253751834080628376",
-        "stateBlockNumber": 11523300,
-        "stateRoot": "1227116110213457540172068979400752884834224020049648721029726354500875121351",
+        "stateBlockHash": "722487644864385390326804820089377962688978452351899881600880987312916297638",
+        "stateBlockNumber": 11670571,
+        "stateRoot": "319573083650045014526460274934850041091008920765311083596114217340471671686",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -3466,8 +3477,8 @@
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
           "eth:0x49C6396070D3310f335AE19169Da6B80ea67B831",
-          "eth:0x04D5b12b196a8CADEB2F476F22Ffb1334Ef9F94c",
-          "eth:0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F",
+          "eth:0x99E84d004E73CC41eFacd382ef6FD34208B0F122",
+          "eth:0xb731B63eC22904A17d1cf6fD771eb5BA87f35Fa3",
           "eth:0x0762bCc4D604Aa3B5122C7D6571Cf5368EF3F09c",
           "eth:0x16117672EBF77d5DE9a1Af91F8F79b26421b310F",
           "eth:0xF6AB8BD99EfE2515C45d6FeE8Ea32738877EFbD8",
@@ -3483,7 +3494,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 12 (25%)",
-        "nonce": 8,
+        "nonce": 9,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -4974,6 +4985,6 @@
     "starknet/StarknetMultiBridge": "0x4461bc7d3b7d5f2005e77088cd802162318e8813c7df5d1732e4b9172634626b",
     "starknet/StarknetMultiBridge_haltable": "0xe8353adf6ac366e8437be00a65d081e1d14c386d2b59bbfc9f50dcc2d80299b9"
   },
-  "usedBlockNumbers": { "ethereum": 25473050 },
-  "permissionsConfigHash": "0x2223daa280b8f39d5a51750e91110316fd194411cc5e380f5ff94062cd9ff961"
+  "usedBlockNumbers": { "ethereum": 25501536 },
+  "permissionsConfigHash": "0x09f162f945d756c076a07f0d14ecd16b47416a40d47a3e8e7828b3e2b4046ad9"
 }

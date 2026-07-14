@@ -4,6 +4,63 @@
   "tokens": [
     {
       "mode": "auto",
+      "id": "zama-cw-bbqTGBP",
+      "priceId": "tokenised-gbp",
+      "symbol": "bbqTGBP",
+      "name": "Steakhouse tGBP",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70647/large/tgbp-square.png?1762953800",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xbeeffABcd0dB09589Dd21854aa760C52aB4bf04F",
+        "chain": "ethereum",
+        "escrowAddress": "0xBA4cFF6ED6F7Cb2A58776dECa4E984b498446762",
+        "decimals": 18,
+        "sinceTimestamp": 1780585031
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zama-cw-steakcUSDC",
+      "priceId": "usd-coin",
+      "symbol": "steakcUSDC",
+      "name": "Steakhouse Confidential Prime USDC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xbEEF00A59B577423653A1526c7009bdE103F542B",
+        "chain": "ethereum",
+        "escrowAddress": "0x66Bf74E96900D1a19c7070D939D124f2F565C458",
+        "decimals": 18,
+        "sinceTimestamp": 1781877707
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zama-cw-tGBP",
+      "priceId": "tokenised-gbp",
+      "symbol": "tGBP",
+      "name": "tGBP",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70647/large/tgbp-square.png?1762953800",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x27f6c8289550fCE67f6B50BeD1F519966aFE5287",
+        "chain": "ethereum",
+        "escrowAddress": "0xa873750ccBafD5ec7Dd13bfD5237d7129832eDD9",
+        "decimals": 18,
+        "sinceTimestamp": 1767000887
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "zama-cw-USDC",
       "priceId": "usd-coin",
       "symbol": "USDC",
@@ -75,6 +132,25 @@
         "sinceTimestamp": 1772116091
       },
       "category": "rwaPublic",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zama-cw-ZAMA",
+      "priceId": "zama",
+      "symbol": "ZAMA",
+      "name": "Zama",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70921/large/zama.png?1764591992",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA12CC123ba206d4031D1c7f6223D1C2Ec249f4f3",
+        "chain": "ethereum",
+        "escrowAddress": "0x80CB147Fd86dC6dEe3Eee7e4Cee33d1397d98071",
+        "decimals": 18,
+        "sinceTimestamp": 1769990400
+      },
+      "category": "other",
       "source": "canonical",
       "isAssociated": false
     }
