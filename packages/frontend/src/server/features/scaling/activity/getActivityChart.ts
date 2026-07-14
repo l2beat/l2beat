@@ -1,13 +1,16 @@
+import type { ActivityTotals } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { ChartRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { getChartStartTimestamp } from '../../utils/getChartStartTimestamp'
+import {
+  type ActivityProjectChartStats,
+  buildActivityProjectChartStats,
+} from './buildActivityProjectChartStats'
 import { aggregateActivityRecords } from './utils/aggregateActivityRecords'
-import { countPerSecond } from './utils/countPerSecond'
 import { getActivityProjects } from './utils/getActivityProjects'
 import { getActivitySyncInfo } from './utils/getActivitySyncInfo'
 import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
@@ -30,36 +33,11 @@ type ActivityChartDataPoint = [
   ethereumUopsCount: number | null,
 ]
 
-interface ActivityTotalCount {
-  count: number
-  sinceTimestamp: UnixTime
-}
-
-interface ActivityMetricStats {
-  pastDayCount: number | null
-  pastDayChange: number
-  pastDaySum: number | null
-  maxCount: {
-    value: number
-    timestamp: number
-  }
-}
-
-export interface ActivityChartStats {
-  uops: ActivityMetricStats
-  tps: ActivityMetricStats & {
-    totalCount?: {
-      value: number
-      sinceTimestamp: number
-    }
-  }
-}
-
 export type ActivityChartData = {
   data: ActivityChartDataPoint[]
   syncWarning: string | undefined
   syncedUntil: UnixTime
-  stats: ActivityChartStats | undefined
+  stats: ActivityProjectChartStats | undefined
 }
 /**
  * A function that computes values for chart data of the activity over time.
@@ -78,14 +56,15 @@ export async function getActivityChart({
     .filter(createActivityProjectsFilter(filter))
     .map((p) => p.id)
     .concat(ProjectId.ETHEREUM)
-  const isSingleProject = projects.length === 2 // Ethereum + 1 other project
-  const projectId = isSingleProject ? projects[0] : undefined
+  const projectId = projects.length === 2 ? projects[0] : undefined
   const adjustedRange = await getFullySyncedActivityRange(range)
 
-  const [entries, maxCounts, totalCounts] = await Promise.all([
+  const [entries, maxCounts, activityTotals] = await Promise.all([
     db.activity.getByProjectsAndTimeRange(projects, adjustedRange),
     db.activity.getMaxCountsForProjects(),
-    isSingleProject ? db.activity.getTpsTotalsForProjects(projects) : undefined,
+    projectId
+      ? db.activity.getActivityTotalsForProjects([projectId])
+      : undefined,
   ])
 
   // By default, we assume we're always synced...
@@ -115,7 +94,7 @@ export async function getActivityChart({
   const startTimestamp = getChartStartTimestamp({
     rangeStart: adjustedRange[0],
     firstProjectTimestamp: projectId
-      ? totalCounts?.[projectId]?.sinceTimestamp
+      ? activityTotals?.[projectId]?.sinceTimestamp
       : undefined,
     dataStart: projectDataStart,
     resolution: 'day',
@@ -160,11 +139,10 @@ export async function getActivityChart({
 
   const stats = projectId
     ? getActivityChartStats(
-        projects,
         data,
         syncedUntil,
-        maxCounts,
-        totalCounts?.[projectId],
+        maxCounts[projectId],
+        activityTotals?.[projectId],
       )
     : undefined
 
@@ -177,20 +155,20 @@ export async function getActivityChart({
 }
 
 function getActivityChartStats(
-  projects: ProjectId[],
   data: ActivityChartDataPoint[],
   syncedUntil: UnixTime,
-  maxCounts: Record<
-    ProjectId,
-    {
-      uopsCount: number
-      uopsTimestamp: number
-      count: number
-      countTimestamp: number
-    }
-  >,
-  totalCount: ActivityTotalCount | undefined,
-): ActivityChartStats | undefined {
+  maxCounts:
+    | {
+        uopsCount: number
+        uopsTimestamp: number
+        count: number
+        countTimestamp: number
+      }
+    | undefined,
+  totals: ActivityTotals | undefined,
+): ActivityProjectChartStats | undefined {
+  if (!maxCounts) return undefined
+
   const currentData = data.find(([timestamp]) => timestamp === syncedUntil)
   const sevenDaysAgoData = data.find(
     ([timestamp]) => timestamp === syncedUntil - 7 * UnixTime.DAY,
@@ -201,45 +179,14 @@ function getActivityChartStats(
   const sevenDaysAgoTps = sevenDaysAgoData?.[1] ?? 0
   const sevenDaysAgoUops = sevenDaysAgoData?.[3] ?? sevenDaysAgoTps
 
-  const [projectId] = projects.filter((p) => p !== ProjectId.ETHEREUM)
-  const maxCount = projectId ? maxCounts[projectId] : undefined
-
-  if (!maxCount) return undefined
-
-  return {
-    uops: {
-      pastDaySum: pastDaySumUops,
-      pastDayCount:
-        pastDaySumUops !== null ? countPerSecond(pastDaySumUops) : null,
-      pastDayChange:
-        pastDaySumUops !== null
-          ? calculatePercentageChange(pastDaySumUops, sevenDaysAgoUops)
-          : 0,
-      maxCount: {
-        value: countPerSecond(maxCount.uopsCount),
-        timestamp: maxCount.uopsTimestamp,
-      },
-    },
-    tps: {
-      pastDaySum: pastDaySumTps,
-      pastDayCount:
-        pastDaySumTps !== null ? countPerSecond(pastDaySumTps) : null,
-      pastDayChange:
-        pastDaySumTps !== null
-          ? calculatePercentageChange(pastDaySumTps, sevenDaysAgoTps)
-          : 0,
-      maxCount: {
-        value: countPerSecond(maxCount.count),
-        timestamp: maxCount.countTimestamp,
-      },
-      totalCount: totalCount
-        ? {
-            value: totalCount.count,
-            sinceTimestamp: totalCount.sinceTimestamp,
-          }
-        : undefined,
-    },
-  }
+  return buildActivityProjectChartStats({
+    pastDayCount: pastDaySumTps,
+    pastDayUopsCount: pastDaySumUops,
+    sevenDaysAgoCount: sevenDaysAgoTps,
+    sevenDaysAgoUopsCount: sevenDaysAgoUops,
+    maxCounts,
+    totals,
+  })
 }
 
 function getMockActivityChart({

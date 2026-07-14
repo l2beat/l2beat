@@ -12,6 +12,12 @@ export interface ActivityRecord {
   end: number
 }
 
+export interface ActivityTotals {
+  count: number
+  uopsCount?: number
+  sinceTimestamp: UnixTime
+}
+
 export function toRecord(row: Selectable<Activity>): ActivityRecord {
   return {
     projectId: ProjectId(row.projectId),
@@ -219,7 +225,9 @@ export class ActivityRepository extends BaseRepository {
     )
   }
 
-  async getTpsTotalsForProjects(projectIds: ProjectId[]) {
+  async getActivityTotalsForProjects(
+    projectIds: ProjectId[],
+  ): Promise<Partial<Record<ProjectId, ActivityTotals>>> {
     if (projectIds.length === 0) return {}
 
     const rows = await this.db
@@ -227,7 +235,16 @@ export class ActivityRepository extends BaseRepository {
       .select([
         'projectId',
         (eb) => eb.fn.sum('count').as('total_count'),
+        (eb) =>
+          eb.fn
+            .sum(eb.fn.coalesce('Activity.uopsCount', 'Activity.count'))
+            .as('total_uops_count'),
         (eb) => eb.fn.min('timestamp').as('since_timestamp'),
+        (eb) =>
+          eb.fn
+            .min('timestamp')
+            .filterWhere('uopsCount', 'is not', null)
+            .as('uops_since_timestamp'),
       ])
       .where(
         'projectId',
@@ -238,13 +255,22 @@ export class ActivityRepository extends BaseRepository {
       .execute()
 
     return Object.fromEntries(
-      rows.map((row) => [
-        ProjectId(row.projectId),
-        {
+      rows.map((row) => {
+        const sinceTimestamp = UnixTime.fromDate(row.since_timestamp)
+        const hasCompleteUopsHistory =
+          row.uops_since_timestamp !== null &&
+          row.since_timestamp.getTime() === row.uops_since_timestamp.getTime()
+        const totals: ActivityTotals = {
           count: Number(row.total_count),
-          sinceTimestamp: UnixTime.fromDate(row.since_timestamp),
-        },
-      ]),
+          sinceTimestamp,
+        }
+
+        if (hasCompleteUopsHistory) {
+          totals.uopsCount = Number(row.total_uops_count)
+        }
+
+        return [ProjectId(row.projectId), totals]
+      }),
     )
   }
 
