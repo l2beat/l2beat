@@ -28,7 +28,7 @@ export async function getDaRiskEntries(): Promise<
   const [layers, bridges, dacs, economicSecurity, projectsChangeReport] =
     await Promise.all([
       ps.getProjects({
-        select: ['daLayer', 'statuses'],
+        select: ['daLayer', 'statuses', 'display'],
         whereNot: ['archivedAt'],
       }),
       ps.getProjects({
@@ -36,7 +36,7 @@ export async function getDaRiskEntries(): Promise<
         optional: ['contracts'],
       }),
       ps.getProjects({
-        select: ['customDa', 'statuses'],
+        select: ['customDa', 'statuses', 'display'],
         whereNot: ['archivedAt'],
       }),
       getDaProjectsEconomicSecurity(),
@@ -79,7 +79,7 @@ export interface DaBridgeRiskEntry
 }
 
 function getDaRiskEntry(
-  layer: Project<'daLayer' | 'statuses'>,
+  layer: Project<'daLayer' | 'statuses' | 'display'>,
   bridges: Project<'daBridge' | 'statuses', 'contracts'>[],
   getTvs: (projects: ProjectId[]) => { latest: number; sevenDaysAgo: number },
   economicSecurity: number | undefined,
@@ -139,7 +139,7 @@ function getDaRiskEntry(
 }
 
 function getDacEntry(
-  project: Project<'customDa' | 'statuses'>,
+  project: Project<'customDa' | 'statuses' | 'display'>,
   getTvs: (projectIds: ProjectId[]) => { latest: number; sevenDaysAgo: number },
 ): DaRiskEntry {
   const tvs = getTvs([project.id])

@@ -10,7 +10,10 @@ import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { PrivacyAttributeTag } from '~/components/PrivacyAttributeTag'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BasicTable } from '~/components/table/BasicTable'
-import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
+import {
+  ProjectNameCell,
+  ProjectNameInfoTooltip,
+} from '~/components/table/cells/ProjectNameCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
 import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
@@ -42,37 +45,39 @@ const columns = [
   columnHelper.accessor('name', {
     header: 'Name',
     enableHiding: false,
-    cell: (ctx) => (
-      <TableLink href={ctx.row.original.href}>
-        <TwoRowCell>
-          <TwoRowCell.First>
-            <ProjectNameCell
-              project={{
-                name: ctx.row.original.name,
-                shortName: ctx.row.original.shortName,
-                slug: ctx.row.original.slug,
-                icon: ctx.row.original.icon,
-                backgroundColor: undefined,
-                description: ctx.row.original.description,
-                statuses: {
-                  underReview: ctx.row.original.isUnderReview
-                    ? 'config'
-                    : undefined,
-                },
-              }}
-            />
-          </TwoRowCell.First>
-          <TwoRowCell.Second>
-            {ctx.row.original.isTracked
-              ? `${formatInteger(ctx.row.original.poolsTracked)} ${pluralize(
-                  ctx.row.original.poolsTracked,
-                  ctx.row.original.summaryTrackedItemName,
-                )} tracked`
-              : 'Not tracked'}
-          </TwoRowCell.Second>
-        </TwoRowCell>
-      </TableLink>
-    ),
+    cell: (ctx) => {
+      const project = {
+        name: ctx.row.original.name,
+        shortName: ctx.row.original.shortName,
+        slug: ctx.row.original.slug,
+        icon: ctx.row.original.icon,
+        backgroundColor: undefined,
+        description: ctx.row.original.description,
+        statuses: {
+          underReview: ctx.row.original.isUnderReview ? 'config' : undefined,
+        },
+      } as const
+
+      return (
+        <ProjectNameInfoTooltip project={project}>
+          <TableLink href={ctx.row.original.href}>
+            <TwoRowCell>
+              <TwoRowCell.First>
+                <ProjectNameCell project={project} withInfoTooltip />
+              </TwoRowCell.First>
+              <TwoRowCell.Second>
+                {ctx.row.original.isTracked
+                  ? `${formatInteger(ctx.row.original.poolsTracked)} ${pluralize(
+                      ctx.row.original.poolsTracked,
+                      ctx.row.original.summaryTrackedItemName,
+                    )} tracked`
+                  : 'Not tracked'}
+              </TwoRowCell.Second>
+            </TwoRowCell>
+          </TableLink>
+        </ProjectNameInfoTooltip>
+      )
+    },
     enableSorting: false,
     meta: {
       cellClassName: 'pl-4',
