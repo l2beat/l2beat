@@ -242,6 +242,9 @@ starknetProgramHashes.push(
 starknetProgramHashes.push(
   discovery.getContractValue<string>('Starknet', 'aggregatorProgramHash'),
 )
+starknetProgramHashes.push(
+  discovery.getContractValue<string>('Starknet', 'configHash'),
+)
 starknetProgramHashes.push(...acceptedSHARPVerifierChain.programPins)
 
 const starkwareMultisig2Stats = discovery.getMultisigStats(
@@ -439,7 +442,7 @@ export const starknet: ScalingProject = {
     // exposed by the shared SHARP discovery.
     zkVerifiers: acceptedSHARPVerifierChain.factRegistries,
     programHashesDescription:
-      'The Starknet OS, aggregator, outer bootloader, supported-simple-bootloader commitment, and applicative bootloader are reproducible. Every SHARP verifier in the currently accepted fact-registry chain also pins a commitment to an ordered allowlist of recursive Cairo verifier programs. The active allowlist preimages and the programs behind them have not been reproduced, so an invalid nested-proof verifier cannot be ruled out independently.',
+      'The Starknet OS, aggregator, OS configuration commitment, outer bootloader, supported-simple-bootloader commitment, and applicative bootloader are reproducible. Every SHARP verifier in the currently accepted fact-registry chain also pins a commitment to an ordered allowlist of recursive Cairo verifier programs. The active allowlist preimages and the programs behind them have not been reproduced, so an invalid nested-proof verifier cannot be ruled out independently.',
   },
   upgradesAndGovernance: {
     content: readProjectMarkdown('starknet', 'upgradesAndGovernance', {
