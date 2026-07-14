@@ -166,7 +166,7 @@ describe(PrivacyBlockTimestampIndexer.name, () => {
     })
   })
 
-  describe(PrivacyBlockTimestampIndexer.prototype.removeData.name, () => {
+  describe(PrivacyBlockTimestampIndexer.prototype.trimData.name, () => {
     it('deletes records for configurations in time range', async () => {
       const privacyBlockTimestampRepository = mockObject<
         Database['privacyBlockTimestamp']
@@ -188,19 +188,19 @@ describe(PrivacyBlockTimestampIndexer.name, () => {
       )
 
       const removalConfigs = [
-        { id: 'config-1', from: 100, to: 200 },
-        { id: 'config-2', from: 300, to: 400 },
+        { id: 'config-1', range: [100, 200] as [number, number] },
+        { id: 'config-2', range: [300, 400] as [number, number] },
       ]
 
-      await indexer.removeData(removalConfigs)
+      await indexer.trimData(removalConfigs)
 
       expect(
         privacyBlockTimestampRepository.deleteByConfigInTimeRange,
       ).toHaveBeenNthCalledWith(
         1,
         removalConfigs[0].id,
-        UnixTime(removalConfigs[0].from),
-        UnixTime(removalConfigs[0].to),
+        UnixTime(removalConfigs[0].range[0]),
+        UnixTime(removalConfigs[0].range[1]),
       )
 
       expect(
@@ -208,9 +208,37 @@ describe(PrivacyBlockTimestampIndexer.name, () => {
       ).toHaveBeenNthCalledWith(
         2,
         removalConfigs[1].id,
-        UnixTime(removalConfigs[1].from),
-        UnixTime(removalConfigs[1].to),
+        UnixTime(removalConfigs[1].range[0]),
+        UnixTime(removalConfigs[1].range[1]),
       )
+    })
+  })
+
+  describe(PrivacyBlockTimestampIndexer.prototype.wipeData.name, () => {
+    it('deletes all records for the given configurations', async () => {
+      const privacyBlockTimestampRepository = mockObject<
+        Database['privacyBlockTimestamp']
+      >({
+        deleteByConfigIds: mockFn().returns(3),
+      })
+      const indexer = new PrivacyBlockTimestampIndexer(
+        {
+          configurations: [config('config-1', 'ethereum')],
+          blockTimestampProvider: mockObject<BlockTimestampProvider>({}),
+          db: mockDatabase({
+            privacyBlockTimestamp: privacyBlockTimestampRepository,
+          }),
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
+
+      await indexer.wipeData([{ id: 'config-1' }, { id: 'config-2' }])
+
+      expect(
+        privacyBlockTimestampRepository.deleteByConfigIds,
+      ).toHaveBeenOnlyCalledWith(['config-1', 'config-2'])
     })
   })
 
