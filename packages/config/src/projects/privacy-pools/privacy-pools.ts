@@ -158,7 +158,7 @@ export const privacyPools: BaseProject = {
         'The contracts, circuits, and supporting software needed to participate in Privacy Pools are publicly available and can be run locally.',
     },
     privacy: {
-      value: 'None',
+      value: 'Compliance gated',
       sentiment: 'good',
       description:
         'Compliance is enforced through centralized association set providers, which can refuse deposits into the pool, sending them back to the sender.',
