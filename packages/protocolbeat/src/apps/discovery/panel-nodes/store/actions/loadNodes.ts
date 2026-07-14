@@ -21,10 +21,17 @@ import { layout } from './other'
 const NEW_NODE_HORIZONTAL_GAP = 120
 const NEW_NODE_VERTICAL_GAP = 40
 
+export interface AutoGroup {
+  readonly id: string
+  readonly name: string
+  readonly memberIds: readonly string[]
+}
+
 export function loadNodes(
   state: State,
   projectId: string,
   nodes: Node[],
+  autoGroups: AutoGroup[],
 ): Partial<State> {
   const toAddRaw: Node[] = nodes.filter(
     (x) => !state.nodes.some((y) => x.id === y.id),
@@ -105,7 +112,11 @@ export function loadNodes(
   const shouldAutoLayoutFromScratch =
     state.nodes.length === 0 && !hasSavedLayout
   if (shouldAutoLayoutFromScratch) {
-    return layout(baseState, stackAutoLayout(visibleNodes))
+    const laidOut = {
+      ...baseState,
+      ...layout(baseState, stackAutoLayout(visibleNodes)),
+    }
+    return collapseAutoGroups(laidOut, autoGroups)
   }
 
   const fallbackLocations =
@@ -164,10 +175,44 @@ function collectAllIds(nodes: readonly Node[]): Set<string> {
   return ids
 }
 
+function collapseAutoGroups(state: State, autoGroups: AutoGroup[]): State {
+  const byId = new Map(state.nodes.map((node) => [node.id, node]))
+  const groups = autoGroups
+    .map((group) => toStoredGroup(group, byId))
+    .filter((group): group is StoredGroup => group !== undefined)
+  if (groups.length === 0) {
+    return state
+  }
+  return updateNodePositions(state, {
+    nodes: reconstructGroups(state.nodes, groups),
+  })
+}
+
+function toStoredGroup(
+  group: AutoGroup,
+  byId: Map<string, Node>,
+): StoredGroup | undefined {
+  const anchor = group.memberIds.map((id) => byId.get(id)).find(Boolean)?.box
+  if (anchor === undefined) {
+    return undefined
+  }
+  return {
+    id: group.id,
+    name: group.name,
+    color: 0,
+    opened: false,
+    box: { x: anchor.x, y: anchor.y, width: NODE_WIDTH, height: NODE_WIDTH },
+    members: [...group.memberIds],
+  }
+}
+
 // Re-nest the flat contracts into their saved groups. Built bottom-up so a
 // nested group is ready before its parent; a group whose members all vanished
 // (e.g. the contract is gone from the API) is dropped.
-function reconstructGroups(flat: Node[], groups: StoredGroup[]): Node[] {
+function reconstructGroups(
+  flat: readonly Node[],
+  groups: StoredGroup[],
+): Node[] {
   const byId = new Map(flat.map((node) => [node.id, node]))
   const groupIds = new Set(groups.map((group) => group.id))
   const built = new Set<string>()
