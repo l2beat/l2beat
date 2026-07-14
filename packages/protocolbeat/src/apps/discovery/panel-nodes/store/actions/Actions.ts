@@ -21,11 +21,7 @@ export interface Actions {
   onDoubleClick: (event: MouseEvent, container: HTMLElement) => void
   onWheel: (event: WheelEvent, view: HTMLElement) => void
 
-  loadNodes: (
-    projectId: string,
-    nodes: Node[],
-    autoGroups: AutoGroup[],
-  ) => void
+  loadNodes: (projectId: string, nodes: Node[], autoGroups: AutoGroup[]) => void
   setNodes: (nodes: Node[]) => void
   colorSelected: (color: number) => void
   alignSelected: (direction: AlignDirection) => void
