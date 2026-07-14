@@ -242,8 +242,7 @@ function reconstructGroups(
       }
       const firstMember = members[0]
       const colorSettings =
-        group.id.startsWith('group:shared:') &&
-        firstMember !== undefined
+        group.id.startsWith('group:shared:') && firstMember !== undefined
           ? {
               color: group.color === 0 ? firstMember.color : group.color,
               colorSourceId: firstMember.colorSourceId ?? firstMember.id,
