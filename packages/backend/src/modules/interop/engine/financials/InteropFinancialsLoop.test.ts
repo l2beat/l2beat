@@ -290,6 +290,95 @@ describe(InteropFinancialsLoop.name, () => {
       expect(transaction).toHaveBeenCalledTimes(1)
     })
 
+    it('processes transfers in batches until the backlog is drained', async () => {
+      const srcToken = DeployedTokenId.from(
+        'ethereum',
+        EthereumAddress.random(),
+      )
+
+      const makeTransfer = (id: string) => ({
+        transferId: id,
+        timestamp: UnixTime(100),
+        srcChain: 'ethereum',
+        srcTokenAddress: Address32.from(DeployedTokenId.address(srcToken)),
+        srcRawAmount: BigInt('1000000000000000000'),
+        dstChain: 'arbitrum',
+      })
+
+      const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
+        hasAnyPrices: mockFn().resolvesTo(true),
+        getClosestPrices: mockFn().resolvesTo(new Map([['token', 2]])),
+      })
+      const interopTransfer = mockObject<Database['interopTransfer']>({
+        getUnprocessed: mockFn()
+          .resolvesToOnce([makeTransfer('msg1'), makeTransfer('msg2')])
+          .resolvesToOnce([makeTransfer('msg3')]),
+        updateFinancials: mockFn().resolvesTo(undefined),
+      })
+      const transaction = mockFn(async (fn) => await fn())
+      const db = mockObject<Database>({
+        interopRecentPrices,
+        interopTransfer,
+        transaction,
+      })
+
+      const tokenDb = mockObject<TokenDbClient>({
+        deployedTokens: {
+          getByChainAndAddress: {
+            query: mockFn().resolvesTo([
+              {
+                deployedToken: {
+                  chain: 'ethereum',
+                  address: DeployedTokenId.address(srcToken),
+                  symbol: 'TOK',
+                  decimals: 18,
+                },
+                abstractToken: {
+                  id: 'src-abstract-id',
+                  coingeckoId: 'token',
+                  isPriceUnreliable: false,
+                },
+              },
+            ]),
+          },
+        },
+      } as any)
+
+      const analyzer = mockObject<InteropTransferAnalyzer>({
+        handleProcessedTransfers: mockFn().returns(undefined),
+      } as any)
+
+      const service = new InteropFinancialsLoop(
+        [
+          { id: 'ethereum', type: 'evm' as const },
+          { id: 'arbitrum', type: 'evm' as const },
+        ],
+        db,
+        tokenDb,
+        Logger.SILENT,
+        { analyzer, intervalMs: 1000, batchSize: 2 },
+      )
+
+      await service.run()
+
+      expect(interopTransfer.getUnprocessed).toHaveBeenCalledTimes(2)
+      expect(interopTransfer.getUnprocessed).toHaveBeenNthCalledWith(1, 2)
+      expect(interopTransfer.getUnprocessed).toHaveBeenNthCalledWith(2, 2)
+      expect(interopTransfer.updateFinancials).toHaveBeenCalledTimes(3)
+      expect(interopTransfer.updateFinancials).toHaveBeenCalledWith(
+        'msg3',
+        expect.subset({ srcValueUsd: 2 }),
+      )
+      expect(transaction).toHaveBeenCalledTimes(2)
+      expect(analyzer.handleProcessedTransfers).toHaveBeenCalledTimes(2)
+      expect(analyzer.handleProcessedTransfers.calls[0]?.args[0]).toHaveLength(
+        2,
+      )
+      expect(analyzer.handleProcessedTransfers.calls[1]?.args[0]).toHaveLength(
+        1,
+      )
+    })
+
     it('handles missing price info and logs warnings', async () => {
       const srcToken1 = DeployedTokenId.from(
         'ethereum',

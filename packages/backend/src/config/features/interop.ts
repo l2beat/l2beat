@@ -86,6 +86,7 @@ export async function getInteropFeatureConfig(
         'INTEROP_FINANCIALS_MAX_TRANSFER_VALUE_USD',
         1_000_000_000,
       ),
+      batchSize: env.integer('INTEROP_FINANCIALS_BATCH_SIZE', 10_000),
     },
     config: {
       enabled: flags.isEnabled('interop', 'config'),

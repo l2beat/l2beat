@@ -568,6 +568,19 @@ describeDatabase(InteropTransferRepository.name, (db) => {
 
       expect(result).toEqual([])
     })
+
+    it('limits the number of returned transfers', async () => {
+      await repository.insertMany([
+        transfer('plugin1', 'msg1', 'deposit', UnixTime(100)),
+        transfer('plugin1', 'msg2', 'deposit', UnixTime(200)),
+        transfer('plugin1', 'msg3', 'deposit', UnixTime(300)),
+      ])
+
+      const result = await repository.getUnprocessed(2)
+
+      expect(result).toHaveLength(2)
+      expect(result.every((r) => r.isProcessed === false)).toEqual(true)
+    })
   })
 
   describe(

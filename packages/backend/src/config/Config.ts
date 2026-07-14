@@ -274,6 +274,7 @@ export interface InteropFeatureConfig {
     tokenDbAuthToken?: string
     maxTokenPriceUsd: number
     maxTransferValueUsd: number
+    batchSize: number
   }
   config: {
     enabled: boolean

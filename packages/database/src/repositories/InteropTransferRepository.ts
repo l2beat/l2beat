@@ -592,12 +592,17 @@ export class InteropTransferRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getUnprocessed() {
-    const rows = await this.db
+  async getUnprocessed(limit?: number) {
+    let query = this.db
       .selectFrom('InteropTransfer')
       .where('isProcessed', '=', false)
       .selectAll()
-      .execute()
+
+    if (limit !== undefined) {
+      query = query.limit(limit)
+    }
+
+    const rows = await query.execute()
 
     return rows.map(toRecord)
   }
