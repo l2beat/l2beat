@@ -84,7 +84,7 @@ export const FEATURES: FeatureItem[] = [
   {
     title: 'Custom sequencing',
     description:
-      'Define sequencing policy in the rollup contract — centralized sequencing with fast preconfirmations, based sequencing, or a staked network.',
+      'Define sequencing policy in the rollup contract - centralized sequencing with fast preconfirmations, based sequencing, or a staked network.',
     icon: SwapIcon,
   },
   {
@@ -125,7 +125,7 @@ export const ROADMAP: RoadmapItem[] = [
     date: 'January 2025',
     title: 'Founding research',
     description:
-      "Justin Drake publishes “Native rollups — superpowers from L1 execution” on ethresear.ch, introducing the EXECUTE precompile that lets a rollup reuse Ethereum's own execution for verification.",
+      "Justin Drake publishes “Native rollups - superpowers from L1 execution” on ethresear.ch, introducing the EXECUTE precompile that lets a rollup reuse Ethereum's own execution for verification.",
     url: FOUNDING_POST_URL,
   },
   {
@@ -240,7 +240,7 @@ export interface MaterialItem {
   source: string
   description: string
   href: string
-  /** For `video` materials — used to fetch the YouTube thumbnail. */
+  /** For `video` materials - used to fetch the YouTube thumbnail. */
   videoId?: string
 }
 
@@ -307,7 +307,7 @@ export const MATERIALS: MaterialItem[] = [
   },
   {
     kind: 'article',
-    label: 'Native rollups — superpowers from L1 execution',
+    label: 'Native rollups - superpowers from L1 execution',
     source: 'ethresear.ch',
     description:
       'The January 2025 founding post that introduced native rollups through the EXECUTE precompile.',
@@ -367,7 +367,7 @@ export const MATERIALS: MaterialItem[] = [
     label: "Ethereum's Roadmap to 10M TPS",
     source: 'Luca Donno · TOKEN2049 2025',
     description:
-      "L2BEAT's Luca Donno on scaling Ethereum — including native rollups (TOKEN2049 Singapore 2025).",
+      "L2BEAT's Luca Donno on scaling Ethereum - including native rollups (TOKEN2049 Singapore 2025).",
     href: 'https://www.youtube.com/watch?v=0O3JyJpMQLQ',
     videoId: '0O3JyJpMQLQ',
   },

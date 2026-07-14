@@ -16,7 +16,7 @@ export function Hero() {
         aria-hidden
         className="-top-24 -right-24 pointer-events-none absolute size-72 rounded-full bg-radial from-pink-100/25 to-transparent blur-2xl"
       />
-      <div className="relative flex w-full items-center justify-between gap-8">
+      <div className="relative flex w-full flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex max-w-2xl flex-col gap-6">
           <span className="w-max font-medium text-purple-100 text-xs uppercase tracking-[0.14px] dark:text-pink-200">
             What are native rollups?
@@ -64,7 +64,7 @@ export function Hero() {
             </Button>
           </div>
         </div>
-        <NativeRollupsHeroIllustration className="hidden h-auto w-[420px] shrink-0 lg:block" />
+        <NativeRollupsHeroIllustration className="h-auto w-full max-w-[420px] shrink-0 self-center" />
       </div>
     </PrimaryCard>
   )

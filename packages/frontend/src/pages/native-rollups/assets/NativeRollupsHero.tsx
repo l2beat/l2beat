@@ -64,7 +64,7 @@ export function NativeRollupsHeroIllustration({
       <text
         x="32"
         y="76"
-        className="fill-secondary"
+        className="fill-primary"
         fontSize="11"
         fontWeight="600"
         letterSpacing="1.2"
@@ -97,7 +97,7 @@ export function NativeRollupsHeroIllustration({
       />
 
       <path
-        d="M130 97h25"
+        d="M132 97h16"
         stroke="url(#nr-brand)"
         strokeWidth="2.5"
         strokeLinecap="round"
@@ -105,7 +105,7 @@ export function NativeRollupsHeroIllustration({
       />
 
       <rect
-        x="166"
+        x="154"
         y="34"
         width="112"
         height="126"
@@ -115,10 +115,10 @@ export function NativeRollupsHeroIllustration({
         strokeWidth="2"
       />
       <text
-        x="222"
+        x="210"
         y="61"
         textAnchor="middle"
-        className="fill-secondary"
+        className="fill-primary"
         fontSize="10"
         fontWeight="600"
         letterSpacing="1"
@@ -126,33 +126,33 @@ export function NativeRollupsHeroIllustration({
         L1 TRANSACTION
       </text>
       <rect
-        x="180"
-        y="76"
-        width="84"
-        height="25"
-        rx="12.5"
+        x="160"
+        y="74"
+        width="100"
+        height="28"
+        rx="14"
         fill="url(#nr-brand)"
       />
       <text
-        x="222"
-        y="93"
+        x="210"
+        y="92"
         textAnchor="middle"
         fill="#fff"
         fontSize="9"
         fontWeight="700"
-        letterSpacing="0.6"
+        letterSpacing="0.3"
       >
         PROOF-CARRYING
       </text>
-      <text x="181" y="120" className="fill-secondary" fontSize="10">
+      <text x="169" y="120" className="fill-primary" fontSize="10">
         ● BLOBS
       </text>
-      <text x="181" y="139" className="fill-secondary" fontSize="10">
+      <text x="169" y="139" className="fill-primary" fontSize="10">
         ● PROOF SIDECAR
       </text>
 
       <path
-        d="M280 97h24"
+        d="M272 97h16"
         stroke="url(#nr-brand)"
         strokeWidth="2.5"
         strokeLinecap="round"
@@ -160,28 +160,28 @@ export function NativeRollupsHeroIllustration({
       />
 
       <rect
-        x="316"
+        x="292"
         y="50"
-        width="88"
+        width="112"
         height="94"
         rx="14"
         className="fill-pure-white dark:fill-zinc-900"
         stroke="url(#nr-brand)"
         strokeWidth="2"
       />
-      <circle cx="360" cy="84" r="14" fill="url(#nr-brand)" />
+      <circle cx="348" cy="84" r="14" fill="url(#nr-brand)" />
       <path
-        d="m353 84 5 5 9-11"
+        d="m341 84 5 5 9-11"
         stroke="#fff"
         strokeWidth="2.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <text
-        x="360"
+        x="348"
         y="116"
         textAnchor="middle"
-        className="fill-secondary"
+        className="fill-primary"
         fontSize="10"
         fontWeight="600"
         letterSpacing="0.8"
@@ -190,7 +190,7 @@ export function NativeRollupsHeroIllustration({
       </text>
 
       <path
-        d="M360 146v35c0 14-12 25-26 25h-31"
+        d="M348 146v35c0 14-12 25-26 25h-19"
         stroke="url(#nr-brand)"
         strokeWidth="2.5"
         strokeLinecap="round"
@@ -211,7 +211,7 @@ export function NativeRollupsHeroIllustration({
         x="210"
         y="216"
         textAnchor="middle"
-        className="fill-secondary"
+        className="fill-primary"
         fontSize="10"
         fontWeight="600"
         letterSpacing="1"
