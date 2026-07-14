@@ -54,14 +54,12 @@ const columns = [
         backgroundColor: undefined,
         description: ctx.row.original.description,
         quantumResistance: ctx.row.original.quantumResistant
-          ? ('privacy' as const)
+          ? 'privacy'
           : undefined,
         statuses: {
-          underReview: ctx.row.original.isUnderReview
-            ? ('config' as const)
-            : undefined,
+          underReview: ctx.row.original.isUnderReview ? 'config' : undefined,
         },
-      }
+      } as const
 
       return (
         <ProjectNameInfoTooltip project={project}>
