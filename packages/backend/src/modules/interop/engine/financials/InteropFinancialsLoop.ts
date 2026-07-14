@@ -184,11 +184,9 @@ export class InteropFinancialsLoop extends TimeLoop {
 
     const processedAt = UnixTime.now()
 
-    await this.db.transaction(async () => {
-      for (const { id, update } of updates) {
-        await this.db.interopTransfer.updateFinancials(id, update)
-      }
-    })
+    await this.db.interopTransfer.updateManyFinancials(
+      updates.map(({ id, update }) => ({ id, update })),
+    )
 
     this.notifier?.notifySkippedTransferValuations(
       processedAt,
