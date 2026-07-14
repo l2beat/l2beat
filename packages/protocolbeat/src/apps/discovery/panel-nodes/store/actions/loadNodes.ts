@@ -240,7 +240,16 @@ function reconstructGroups(
       for (const member of members) {
         consumed.add(member.id)
       }
-      byId.set(group.id, makeGroupNode(group, members))
+      const firstMember = members[0]
+      const colorSettings =
+        group.id.startsWith('group:shared:') && firstMember !== undefined
+          ? {
+              color: firstMember.color,
+              colorSourceId: firstMember.colorSourceId ?? firstMember.id,
+              hueShift: firstMember.hueShift,
+            }
+          : undefined
+      byId.set(group.id, makeGroupNode(group, members, colorSettings))
     }
   }
 

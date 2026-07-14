@@ -158,7 +158,11 @@ function createPhantomNode(members: Node[]): Node {
   )
 }
 
-export function makeGroupNode(group: StoredGroup, members: Node[]): Node {
+export function makeGroupNode(
+  group: StoredGroup,
+  members: Node[],
+  settings?: Pick<Node, 'color' | 'colorSourceId' | 'hueShift'>,
+): Node {
   return {
     id: group.id,
     address: '',
@@ -174,8 +178,9 @@ export function makeGroupNode(group: StoredGroup, members: Node[]): Node {
       width: group.box.width ?? NODE_WIDTH,
       height: group.box.height ?? NODE_WIDTH,
     },
-    color: group.color,
-    hueShift: 0,
+    color: settings?.color ?? group.color,
+    colorSourceId: settings?.colorSourceId,
+    hueShift: settings?.hueShift ?? 0,
     data: null,
     isReachable: true,
     opened: group.opened,
