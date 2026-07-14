@@ -215,21 +215,24 @@ describeDatabase(ActivityRepository.name, (db) => {
             count: 8,
             uopsCount: 13,
             sinceTimestamp: START,
+            uopsSinceTimestamp: START,
           },
           [ProjectId('b')]: {
             count: 11,
             uopsCount: 14,
             sinceTimestamp: START + 1 * UnixTime.DAY,
+            uopsSinceTimestamp: START + 1 * UnixTime.DAY,
           },
           [ProjectId('c')]: {
             count: 0,
             uopsCount: 0,
             sinceTimestamp: START,
+            uopsSinceTimestamp: START,
           },
         })
       })
 
-      it('omits UOPS totals unless UOPS are present from the first record', async () => {
+      it('returns UOPS totals and their first timestamps', async () => {
         await repository.upsertMany([
           record('complete', START, 1, 2),
           record('complete', START + 1 * UnixTime.DAY, 3, 4),
@@ -250,14 +253,19 @@ describeDatabase(ActivityRepository.name, (db) => {
             count: 9,
             uopsCount: 11,
             sinceTimestamp: START,
+            uopsSinceTimestamp: START,
           },
           [ProjectId('incomplete')]: {
             count: 13,
+            uopsCount: 14,
             sinceTimestamp: START,
+            uopsSinceTimestamp: START + 1 * UnixTime.DAY,
           },
           [ProjectId('without-uops')]: {
             count: 9,
+            uopsCount: 9,
             sinceTimestamp: START,
+            uopsSinceTimestamp: undefined,
           },
         })
       })

@@ -14,8 +14,9 @@ export interface ActivityRecord {
 
 export interface ActivityTotals {
   count: number
-  uopsCount?: number
+  uopsCount: number
   sinceTimestamp: UnixTime
+  uopsSinceTimestamp: UnixTime | undefined
 }
 
 export function toRecord(row: Selectable<Activity>): ActivityRecord {
@@ -255,22 +256,17 @@ export class ActivityRepository extends BaseRepository {
       .execute()
 
     return Object.fromEntries(
-      rows.map((row) => {
-        const sinceTimestamp = UnixTime.fromDate(row.since_timestamp)
-        const hasCompleteUopsHistory =
-          row.uops_since_timestamp !== null &&
-          row.since_timestamp.getTime() === row.uops_since_timestamp.getTime()
-        const totals: ActivityTotals = {
+      rows.map((row) => [
+        ProjectId(row.projectId),
+        {
           count: Number(row.total_count),
-          sinceTimestamp,
-        }
-
-        if (hasCompleteUopsHistory) {
-          totals.uopsCount = Number(row.total_uops_count)
-        }
-
-        return [ProjectId(row.projectId), totals]
-      }),
+          uopsCount: Number(row.total_uops_count),
+          sinceTimestamp: UnixTime.fromDate(row.since_timestamp),
+          uopsSinceTimestamp: row.uops_since_timestamp
+            ? UnixTime.fromDate(row.uops_since_timestamp)
+            : undefined,
+        },
+      ]),
     )
   }
 

@@ -18,7 +18,12 @@ describe(buildActivityProjectChartStats.name, () => {
       sevenDaysAgoCount: UnixTime.DAY,
       sevenDaysAgoUopsCount: UnixTime.DAY,
       maxCounts,
-      totals: { count: 100, uopsCount: 0, sinceTimestamp: SINCE },
+      totals: {
+        count: 100,
+        uopsCount: 0,
+        sinceTimestamp: SINCE,
+        uopsSinceTimestamp: SINCE,
+      },
     })
 
     expect(result).toEqual({
@@ -46,7 +51,12 @@ describe(buildActivityProjectChartStats.name, () => {
       sevenDaysAgoCount: 0,
       sevenDaysAgoUopsCount: 0,
       maxCounts,
-      totals: { count: 100, sinceTimestamp: SINCE },
+      totals: {
+        count: 100,
+        uopsCount: 150,
+        sinceTimestamp: SINCE,
+        uopsSinceTimestamp: SINCE + UnixTime.DAY,
+      },
     })
 
     expect(result.uops.totalCount).toEqual(undefined)

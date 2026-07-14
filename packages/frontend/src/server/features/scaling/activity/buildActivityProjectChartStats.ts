@@ -63,7 +63,8 @@ export function buildActivityProjectChartStats({
       maxCount: maxCounts.uopsCount,
       maxTimestamp: maxCounts.uopsTimestamp,
       totalCount:
-        totals?.uopsCount !== undefined
+        totals !== undefined &&
+        totals.uopsSinceTimestamp === totals.sinceTimestamp
           ? {
               value: totals.uopsCount,
               sinceTimestamp: totals.sinceTimestamp,
