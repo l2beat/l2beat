@@ -350,8 +350,7 @@ export const optimism: ScalingProject = opStackL2({
       upgrades: {
         'Normal upgrade path': `Technical review by the 7-member elected Developer Advisory Board (5/7 quorum for approval) → release on Sepolia → **7-day veto window** during which Token House and/or Citizens' House can veto a DAB-approved upgrade or override a DAB rejection if participation thresholds are met (17% with two groups, 14% with three, 11% with four) → if not vetoed, SC + Foundation Upgrade Safe (${proxyAdminOwnerStats} SuperchainProxyAdminOwner) co-sign the L1 transaction → execute. Maintenance upgrades use a shortened path. Live since Aug 1, 2025.`,
         'Emergency upgrade path': `**SC + Foundation Upgrade Safe (${proxyAdminOwnerStats}), instant** — "may preemptively address actual or anticipated bugs, defects, or stability issues without specific Governance approval" (Charter v0.1). No DAB review, no veto window. Mandatory after-the-fact public retrospective.`,
-        'Exit window':
-          '**None** — per L2BEAT\'s framework: "There is no exit window for users to exit in case of unwanted upgrades as they are initiated by the Security Council with instant upgrade power and without proper notice."',
+        'Exit window': `**None** — upgrades take effect as soon as they are co-signed by the ${proxyAdminOwnerStats} SuperchainProxyAdminOwner, with no onchain delay or prior notice, so users cannot exit ahead of an unwanted upgrade.`,
       },
       tokenGovernance: {
         'Governance token': `\`OP\` — ~4.29B initial supply, up to ${opMintCapPercent}%/yr inflation (cap fixed in the Operating Manual; changes require a 76% Inflation proposal). 1 OP = 1 vote, delegated.`,
