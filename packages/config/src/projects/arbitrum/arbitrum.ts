@@ -45,7 +45,7 @@ const l1TimelockDelay = discovery.getContractValue<number>(
 const l2TimelockDelay = discovery.getContractValue<number>(
   'L2Timelock',
   'getMinDelay',
-) // 3 days
+) // 8 days since the 2024-10 'Extend Delay on L2Time Lock' constitutional AIP
 const totalDelay = l2TimelockDelay + challengeWindowSeconds + l1TimelockDelay // compare https://github.com/ArbitrumFoundation/governance/blob/main/docs/overview.md#proposal-delays
 
 const upgradeExecutorUpgradeability = {
