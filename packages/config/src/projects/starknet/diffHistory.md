@@ -1,16 +1,20 @@
-Generated with discovered.json: 0xe46411178f53024f3077b41a3079c4825daacd97
+Generated with discovered.json: 0x914c2ed7166b6f4732cca04d234b09f62fae6775
 
-# Diff at Tue, 14 Jul 2026 14:55:03 GMT:
+# Diff at Tue, 14 Jul 2026 17:11:36 GMT:
 
-- author: unknown (<unknown>)
-- comparing to: HEAD@a036585904e021f33994b535f998b82c67fd3ec8 block: 1783678624
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@24b66dabda72dfc1e4f6b250e25cdeaadeda1854 block: 1783678624
 - current timestamp: 1784036617
 
 ## Description
 
 Document the complete Starknet SHARP trust chain. This entry combines the latest live discovery delta with the configuration and verification metadata changes.
 
-## Watched changes
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1783678624 (main branch discovery), not current.
 
 ```diff
     contract Starkware Security Council (eth:0x15e8c684FD095d4796A0c0CF678554F4c1C7C361) [GnosisSafe] {
@@ -45,6 +49,16 @@ Document the complete Starknet SHARP trust chain. This entry combines the latest
       description:
 -        "Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles."
 +        "Central Starknet rollup contract. For every state update it derives a SHARP fact from the state-transition output and either the Starknet OS or aggregator program hash, checks that fact through the configured SHARP call proxy, and requires the output's OS-config hash to match. It also processes L1 <-> L2 messages and stores the finalized L2 state."
+      values.governedFinalized:
+-        0
++++ description: Previous Starknet aggregator program hashes emitted on each governance update. The current value is exposed separately as `aggregatorProgramHash`.
++++ severity: HIGH
+      values.aggregatorProgramHashHistory:
++        [0,"1161178844461337253856226043908368523817098764221830529880464854589141231910","15787695375210609250491147414005894154890873413229882671403677761527504080","273279642033703284306509103355536170486431195329675679055627933497997642494","760308386675154762009993173725077399730170358078020153308029499928875469870","1701025211190912681772481128523426351562426117847395998223683709327746845867","2571508110958925737463010241874806654058743535666147712534445437599630018294"]
++++ description: Previous Starknet OS-configuration commitments emitted on each governance update. The current value is exposed separately as `configHash`.
++++ severity: HIGH
+      values.configHashHistory:
++        ["671483050609816861429812414688707376174032882875357307847551691140236175837","2590421891839256512113614983194993186457498815986333310670788206383913888162","3188242426588271529884520804512942022765170489242162533995649881904346336763"]
       fieldMeta.$admin.description:
 -        "Permissioned to upgrade the proxy implementation and access `onlyGovernance` restricted calls."
 +        "Permissioned to upgrade the proxy implementation and access `onlyGovernance` calls. While the contract is not finalized, governance can replace the OS program hash, aggregator program hash, and OS-config hash. An implementation upgrade can also replace the verifier address or bypass all proof checks."

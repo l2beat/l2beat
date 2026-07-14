@@ -24,7 +24,12 @@
     "eth:0x192292817680196A0215a50B07d1C5E7Ab8A8636": "CairoBootloaderProgram_2025_11",
     "eth:0x58600A1Dc51dcF7D4F541a8f1F5C6c6AA86cc515": "CairoBootloaderProgram_2024_10",
     "eth:0xb4c61d092eCf1b69F1965F9D8DE639148ea26a40": "CairoBootloaderProgram_2023_9",
+    "eth:0x40864568f679c10aC9e72211500096a5130770fA": "MemoryPageFactRegistry_2023_9",
+    "eth:0x634DCf4f1421Fc4D95A968A559a450ad0245804c": "MerkleStatementContract_2023_9",
+    "eth:0xDEf8A3b280A54eE7Ed4f72E1c7d6098ad8df44fb": "FriStatementContract_2023_9",
     "eth:0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF": "Level2SHARPVerifier_2023_9",
+    "eth:0x5d07afFAfc8721Ef3dEe4D11A2D1484CBf6A9dDf": "CairoBootloaderProgram_2022_7",
+    "eth:0xFD14567eaf9ba941cB8c8a94eEC14831ca7fD1b4": "MemoryPageFactRegistry_2022_7",
     "eth:0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6": "Level3SHARPVerifier_2022_7"
   },
   "overrides": {

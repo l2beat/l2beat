@@ -2184,11 +2184,24 @@
         "$upgradeCount": 11,
         "aggregatorHashMapped": "1050253032170513549151251823521174837478197699740478552102884446098263561922",
         "aggregatorProgramHash": "1050253032170513549151251823521174837478197699740478552102884446098263561922",
+        "aggregatorProgramHashHistory": [
+          0,
+          "1161178844461337253856226043908368523817098764221830529880464854589141231910",
+          "15787695375210609250491147414005894154890873413229882671403677761527504080",
+          "273279642033703284306509103355536170486431195329675679055627933497997642494",
+          "760308386675154762009993173725077399730170358078020153308029499928875469870",
+          "1701025211190912681772481128523426351562426117847395998223683709327746845867",
+          "2571508110958925737463010241874806654058743535666147712534445437599630018294"
+        ],
         "configHash": "2579130946496422157802313572919622021390761807038780433165936715591440018810",
+        "configHashHistory": [
+          "671483050609816861429812414688707376174032882875357307847551691140236175837",
+          "2590421891839256512113614983194993186457498815986333310670788206383913888162",
+          "3188242426588271529884520804512942022765170489242162533995649881904346336763"
+        ],
         "feeCollector": "eth:0x0000000000000000000000000000000000000000",
         "getMaxL1MsgFee": "1000000000000000000",
         "getUpgradeActivationDelay": 0,
-        "governedFinalized": 0,
         "identify": "StarkWare_Starknet_2026_11",
         "implementation": "eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A",
         "isFinalized": false,
@@ -2237,11 +2250,6 @@
           "severity": "HIGH",
           "description": "Locks the current implementation's setters for the Starknet OS hash, aggregator hash, OS-config hash, and message-cancellation delay. It does not lock the fee collector or freeze the proxy, so an implementation upgrade can replace or bypass every pin."
         },
-        "programHash": {
-          "severity": "HIGH",
-          "description": "Starknet OS program hash. In direct mode it is included in the SHARP fact key; in aggregator mode the aggregator's public output must contain this exact OS hash. A malicious OS program could prove arbitrary state transitions. Update the program-hash catalog and liveness tracking whenever this changes.",
-          "type": "CODE_CHANGE"
-        },
         "programHashHistory": {
           "severity": "HIGH",
           "description": "Previous Starknet OS program hashes emitted on each governance update. The current value is exposed separately as `programHash`.",
@@ -2266,6 +2274,11 @@
           "severity": "HIGH",
           "description": "Address receiving consumed L1 -> L2 message fees. Governance can change it even after application configuration is finalized; the zero address makes the submitting Operator the recipient.",
           "type": "RISK_PARAMETER"
+        },
+        "programHash": {
+          "severity": "HIGH",
+          "description": "Starknet OS program hash. In direct mode it is included in the SHARP fact key; in aggregator mode the aggregator's public output must contain this exact OS hash. A malicious OS program could prove arbitrary state transitions. Update the program-hash catalog and liveness tracking whenever this changes.",
+          "type": "CODE_CHANGE"
         },
         "aggregatorProgramHash": {
           "severity": "HIGH",
@@ -5020,7 +5033,7 @@
     "starknet/LordsL1Bridge": "0x6f155638dd1434607b38c9304ae5de49b108365e50ae6968b56c16cab946c1f4",
     "starknet/StarkgateManager": "0x4b9115f849ab55459358778c2380fc07a7c113eba4d1ea123fccc3b0ee31385d",
     "starknet/StarkgateRegistry": "0x146d95b0ca7a2c08ff095b65a07bf282d92759ed499c9c175b0aae23c17c1072",
-    "starknet/Starknet": "0x94ec7824dea8f420d9b02624ccb3fee6ea169600cf6665c49d0c82cbc2651cc3",
+    "starknet/Starknet": "0xfadaad9feb97c113d19f43abb4e24ed692a26a6efc6094ada095836e6793f431",
     "starknet/StarknetERC20Bridge": "0x823d646295cd3c589fdd26a112b0adb063e5b33a7c751523d6ba995a98d795b6",
     "starknet/StarknetEthBridge": "0x823d646295cd3c589fdd26a112b0adb063e5b33a7c751523d6ba995a98d795b6",
     "starknet/StarknetMultiBridge": "0x4461bc7d3b7d5f2005e77088cd802162318e8813c7df5d1732e4b9172634626b",

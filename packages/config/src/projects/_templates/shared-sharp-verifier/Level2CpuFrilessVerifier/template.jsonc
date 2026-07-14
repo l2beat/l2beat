@@ -11,8 +11,7 @@
       "handler": {
         "type": "constructorArgs",
         "nameArgs": true
-      },
-      "template": "shared-sharp-verifier/ignoreComputeSpam"
+      }
     }
   }
 }

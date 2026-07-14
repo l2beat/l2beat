@@ -176,6 +176,13 @@ const sharpMsThreshold = discovery.getMultisigStats('SHARP Multisig')
 const currentSHARPOuterBootloaderProgramHash =
   '3427958597398434235135013788958741576989752718219267963615783564775551242024'
 
+interface ModernSHARPBootloaderConfig {
+  [key: string]: string
+  simpleBootloaderConfigurationCommitment: string
+  applicativeBootloaderProgramHash: string
+  supportedCairoVerifierProgramHashesCommitment: string
+}
+
 // A verifier accepts facts registered locally or in its reference registry until
 // that reference expires. Collect the accepted registry deployments and their
 // bootloader-configuration pins, plus the current shared outer bootloader.
@@ -192,13 +199,20 @@ export function getAcceptedSHARPVerifierChain(): {
   const timestampNow = Date.now() / 1000
   while (timestampNow < expirationTimestamp) {
     factRegistries.push(sharpVerifierAddress)
-    const bootloaderConfig = discovery.getContractValue<string[]>(
-      sharpVerifierAddress,
-      'getBootloaderConfig',
-    )
-    programPins.push(bootloaderConfig[0]) // simple-bootloader configuration commitment
-    programPins.push(bootloaderConfig[1]) // applicative bootloader program hash
-    programPins.push(bootloaderConfig[2]) // recursive Cairo-verifier allowlist commitment
+    const bootloaderConfig = discovery.getContractValue<
+      ModernSHARPBootloaderConfig | string[]
+    >(sharpVerifierAddress, 'getBootloaderConfig')
+    if (Array.isArray(bootloaderConfig)) {
+      // Older verifier generations expose only the simple-bootloader program
+      // hash and recursive Cairo-verifier allowlist commitment.
+      programPins.push(...bootloaderConfig)
+    } else {
+      programPins.push(
+        bootloaderConfig.simpleBootloaderConfigurationCommitment,
+        bootloaderConfig.applicativeBootloaderProgramHash,
+        bootloaderConfig.supportedCairoVerifierProgramHashesCommitment,
+      )
+    }
 
     expirationTimestamp = discovery.getContractValue<number>(
       sharpVerifierAddress,
