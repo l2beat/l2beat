@@ -4,6 +4,702 @@
   "tokens": [
     {
       "mode": "auto",
+      "id": "lighter-robinhood-AAPL",
+      "priceId": "apple-robinhood-tokenized-stock",
+      "symbol": "AAPL",
+      "name": "Apple • Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174123/large/0xaf3d76f1834a1d425780943c99ea8a608f8a93f9.png?1782444598",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xaF3D76f1834A1d425780943C99Ea8A608f8a93f9",
+        "chain": "robinhood",
+        "escrowAddress": "0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+        "decimals": 18,
+        "sinceTimestamp": 1782477747
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1782477747
+        },
+        "priceId": "apple-robinhood-tokenized-stock"
+      },
+      "category": "rwaRestricted",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lighter-robinhood-AMD",
+      "priceId": "amd-robinhood-tokenized-stock",
+      "symbol": "AMD",
+      "name": "AMD • Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174114/large/0x86923f96303d656e4aa86d9d42d1e57ad2023fdc.png?1782444575",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x86923f96303D656E4aa86D9d42D1e57ad2023fdC",
+        "chain": "robinhood",
+        "escrowAddress": "0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+        "decimals": 18,
+        "sinceTimestamp": 1782477747
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1782477747
+        },
+        "priceId": "amd-robinhood-tokenized-stock"
+      },
+      "category": "rwaRestricted",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lighter-robinhood-AMZN",
+      "priceId": "amazon-robinhood-tokenized-stock",
+      "symbol": "AMZN",
+      "name": "Amazon • Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174126/large/0x12f190a9f9d7d37a250758b26824b97ce941bf54.png?1782444606",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x12f190a9F9d7D37a250758b26824B97CE941bF54",
+        "chain": "robinhood",
+        "escrowAddress": "0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+        "decimals": 18,
+        "sinceTimestamp": 1782477747
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1782477747
+        },
+        "priceId": "amazon-robinhood-tokenized-stock"
+      },
+      "category": "rwaRestricted",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lighter-robinhood-BABA",
+      "priceId": "alibaba-robinhood-tokenized-stock",
+      "symbol": "BABA",
+      "name": "Alibaba • Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174135/large/0xad25ac6c84d497db898fa1e8387bf6af3532a1c4.png?1782444629",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xad25Ac6C84D497db898fa1E8387bf6Af3532a1c4",
+        "chain": "robinhood",
+        "escrowAddress": "0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+        "decimals": 18,
+        "sinceTimestamp": 1782477747
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1782477747
+        },
+        "priceId": "alibaba-robinhood-tokenized-stock"
+      },
+      "category": "rwaRestricted",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lighter-robinhood-COIN",
+      "priceId": "coinbase-robinhood-tokenized-stock",
+      "symbol": "COIN",
+      "name": "Coinbase • Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174136/large/0x6330d8c3178a418788df01a47479c0ce7ccf450b.png?1782444632",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6330D8C3178a418788dF01a47479c0ce7CCF450b",
+        "chain": "robinhood",
+        "escrowAddress": "0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+        "decimals": 18,
+        "sinceTimestamp": 1782477747
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1782477747
+        },
+        "priceId": "coinbase-robinhood-tokenized-stock"
+      },
+      "category": "rwaRestricted",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lighter-robinhood-CRCL",
+      "priceId": "circle-internet-group-robinhood-tokenized-stock",
+      "symbol": "CRCL",
+      "name": "Circle Internet Group • Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174121/large/0xdf0992e440dd0be65bd8439b609d6d4366bf1cb5.png?1782444593",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdF0992E440dD0be65BD8439b609d6D4366bf1CB5",
+        "chain": "robinhood",
+        "escrowAddress": "0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+        "decimals": 18,
+        "sinceTimestamp": 1782477747
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1782477747
+        },
+        "priceId": "circle-internet-group-robinhood-tokenized-stock"
+      },
+      "category": "rwaRestricted",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lighter-robinhood-CRWV",
+      "priceId": "coreweave-robinhood-tokenized-stock",
+      "symbol": "CRWV",
+      "name": "CoreWeave • Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174127/large/0x5f10a1c971b69e47e059e1dc91901b59b3fb49c3.png?1782444608",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x5f10A1C971B69e47e059e1dC91901B59b3fB49C3",
+        "chain": "robinhood",
+        "escrowAddress": "0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+        "decimals": 18,
+        "sinceTimestamp": 1782477747
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1782477747
+        },
+        "priceId": "coreweave-robinhood-tokenized-stock"
+      },
+      "category": "rwaRestricted",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lighter-robinhood-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "native",
+        "chain": "robinhood",
+        "escrowAddress": "0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+        "decimals": 18,
+        "sinceTimestamp": 1782477747
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1782477747
+        },
+        "priceId": "ethereum"
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lighter-robinhood-GOOGL",
+      "priceId": "alphabet-class-a-robinhood-tokenized-stock",
+      "symbol": "GOOGL",
+      "name": "Alphabet Class A • Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174124/large/0x2e0847e8910a9732eb3fb1bb4b70a580adad4fe3.png?1782444601",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2e0847E8910a9732eB3fb1bb4b70a580ADAD4FE3",
+        "chain": "robinhood",
+        "escrowAddress": "0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+        "decimals": 18,
+        "sinceTimestamp": 1782477747
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1782477747
+        },
+        "priceId": "alphabet-class-a-robinhood-tokenized-stock"
+      },
+      "category": "rwaRestricted",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lighter-robinhood-INTC",
+      "priceId": "intel-robinhood-tokenized-stock",
+      "symbol": "INTC",
+      "name": "Intel • Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174118/large/0xc72b96e0e48ecd4dc75e1e45396e26300bc39681.png?1782444585",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xc72b96e0E48ecd4DC75E1e45396e26300BC39681",
+        "chain": "robinhood",
+        "escrowAddress": "0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+        "decimals": 18,
+        "sinceTimestamp": 1782477747
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1782477747
+        },
+        "priceId": "intel-robinhood-tokenized-stock"
+      },
+      "category": "rwaRestricted",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lighter-robinhood-META",
+      "priceId": "meta-platforms-robinhood-tokenized-stock",
+      "symbol": "META",
+      "name": "Meta Platforms • Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174122/large/0xc0d6457c16cc70d6790dd43521c899c87ce02f35.png?1782444595",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xc0D6457C16Cc70d6790Dd43521C899C87ce02f35",
+        "chain": "robinhood",
+        "escrowAddress": "0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+        "decimals": 18,
+        "sinceTimestamp": 1782477747
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1782477747
+        },
+        "priceId": "meta-platforms-robinhood-tokenized-stock"
+      },
+      "category": "rwaRestricted",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lighter-robinhood-MSFT",
+      "priceId": "microsoft-robinhood-tokenized-stock",
+      "symbol": "MSFT",
+      "name": "Microsoft • Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174116/large/0xe93237c50d904957cf27e7b1133b510c669c2e74.png?1782444580",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xe93237C50D904957Cf27E7B1133b510C669c2e74",
+        "chain": "robinhood",
+        "escrowAddress": "0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+        "decimals": 18,
+        "sinceTimestamp": 1782477747
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1782477747
+        },
+        "priceId": "microsoft-robinhood-tokenized-stock"
+      },
+      "category": "rwaRestricted",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lighter-robinhood-MU",
+      "priceId": "micron-technology-robinhood-tokenized-stock",
+      "symbol": "MU",
+      "name": "Micron Technology • Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174111/large/0xff080c8ce2e5feadaca0da81314ae59d232d4afd.png?1782444567",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xfF080c8ce2E5feadaCa0Da81314Ae59D232d4afD",
+        "chain": "robinhood",
+        "escrowAddress": "0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+        "decimals": 18,
+        "sinceTimestamp": 1782477747
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1782477747
+        },
+        "priceId": "micron-technology-robinhood-tokenized-stock"
+      },
+      "category": "rwaRestricted",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lighter-robinhood-NVDA",
+      "priceId": "nvidia-robinhood-tokenized-stock",
+      "symbol": "NVDA",
+      "name": "NVIDIA • Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174110/large/0xd0601ce157db5bdc3162bbac2a2c8af5320d9eec.png?1782444565",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xd0601CE157Db5bdC3162BbaC2a2C8aF5320D9EEC",
+        "chain": "robinhood",
+        "escrowAddress": "0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+        "decimals": 18,
+        "sinceTimestamp": 1782477747
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1782477747
+        },
+        "priceId": "nvidia-robinhood-tokenized-stock"
+      },
+      "category": "rwaRestricted",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lighter-robinhood-ORCL",
+      "priceId": "oracle-robinhood-tokenized-stock",
+      "symbol": "ORCL",
+      "name": "Oracle • Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174128/large/0xb0992820e760d836549ba69bc7598b4af75dee03.png?1782444611",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xb0992820E760d836549ba69BC7598b4af75dEE03",
+        "chain": "robinhood",
+        "escrowAddress": "0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+        "decimals": 18,
+        "sinceTimestamp": 1782477747
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1782477747
+        },
+        "priceId": "oracle-robinhood-tokenized-stock"
+      },
+      "category": "rwaRestricted",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lighter-robinhood-PLTR",
+      "priceId": "palantir-technologies-robinhood-tokenized-stock",
+      "symbol": "PLTR",
+      "name": "Palantir Technologies • Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174117/large/0x894e1ec2d74ffe5aef8dc8a9e84686accb964f2a.png?1782444583",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x894E1EC2D74FFE5AEF8Dc8A9e84686acCB964F2A",
+        "chain": "robinhood",
+        "escrowAddress": "0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+        "decimals": 18,
+        "sinceTimestamp": 1782477747
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1782477747
+        },
+        "priceId": "palantir-technologies-robinhood-tokenized-stock"
+      },
+      "category": "rwaRestricted",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lighter-robinhood-QQQ",
+      "priceId": "invesco-qqq-robinhood-tokenized-stock",
+      "symbol": "QQQ",
+      "name": "Invesco QQQ • Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174119/large/0xd5f3879160bc7c32ebb4dc785f8a4f505888de68.png?1782444588",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xD5f3879160bc7c32ebb4dC785F8a4F505888de68",
+        "chain": "robinhood",
+        "escrowAddress": "0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+        "decimals": 18,
+        "sinceTimestamp": 1782477747
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1782477747
+        },
+        "priceId": "invesco-qqq-robinhood-tokenized-stock"
+      },
+      "category": "rwaRestricted",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lighter-robinhood-SGOV",
+      "priceId": "ishares-0-3-month-treasury-bond-etf-robinhood-tokenized-stock",
+      "symbol": "SGOV",
+      "name": "iShares 0-3 Month Treasury Bond • Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174130/large/0x92fd66527192e3e61d4ddd13322aa222de86f9b5.png?1782444616",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x92FD66527192E3e61d4DDd13322Aa222DE86F9B5",
+        "chain": "robinhood",
+        "escrowAddress": "0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+        "decimals": 18,
+        "sinceTimestamp": 1783468800
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1783468800
+        },
+        "priceId": "ishares-0-3-month-treasury-bond-etf-robinhood-tokenized-stock"
+      },
+      "category": "rwaRestricted",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lighter-robinhood-SLV",
+      "priceId": "ishares-silver-trust-robinhood-tokenized-stock",
+      "symbol": "SLV",
+      "name": "iShares Silver Trust • Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174120/large/0x411efb0e7f985935daec3d4c3ebaea0d0ad7d89f.png?1782444590",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x411eFb0E7f985935DAec3D4C3ebaEa0d0AD7D89f",
+        "chain": "robinhood",
+        "escrowAddress": "0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+        "decimals": 18,
+        "sinceTimestamp": 1782477747
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1782477747
+        },
+        "priceId": "ishares-silver-trust-robinhood-tokenized-stock"
+      },
+      "category": "rwaRestricted",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lighter-robinhood-SNDK",
+      "priceId": "sandisk-corporation-robinhood-tokenized-stock",
+      "symbol": "SNDK",
+      "name": "Sandisk Corporation • Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174113/large/0xb90a19ff0af67f7779aff50a882a9cff42446400.png?1782444573",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xB90A19fF0Af67f7779afF50A882A9CfF42446400",
+        "chain": "robinhood",
+        "escrowAddress": "0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+        "decimals": 18,
+        "sinceTimestamp": 1782477747
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1782477747
+        },
+        "priceId": "sandisk-corporation-robinhood-tokenized-stock"
+      },
+      "category": "rwaRestricted",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lighter-robinhood-SPCX",
+      "priceId": "spacex-robinhood-tokenized-stock",
+      "symbol": "SPCX",
+      "name": "SpaceX • Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174129/large/0x4a0e65a3eccec6dbe60ae065f2e7bb85fae35eea.png?1782444614",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x4a0E65A3EcceC6dBe60AE065F2e7bb85Fae35eEa",
+        "chain": "robinhood",
+        "escrowAddress": "0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+        "decimals": 18,
+        "sinceTimestamp": 1782477747
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1782477747
+        },
+        "priceId": "spacex-robinhood-tokenized-stock"
+      },
+      "category": "rwaRestricted",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lighter-robinhood-SPY",
+      "priceId": "spdr-s-p-500-etf-trust-robinhood-tokenized-stock",
+      "symbol": "SPY",
+      "name": "SPDR S&P 500 ETF Trust • Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174115/large/0x117cc2133c37b721f49de2a7a74833232b3b4c0c.png?1782444578",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x117cc2133c37B721F49dE2A7a74833232B3B4C0C",
+        "chain": "robinhood",
+        "escrowAddress": "0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+        "decimals": 18,
+        "sinceTimestamp": 1782477747
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1782477747
+        },
+        "priceId": "spdr-s-p-500-etf-trust-robinhood-tokenized-stock"
+      },
+      "category": "rwaRestricted",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lighter-robinhood-TSLA",
+      "priceId": "tesla-robinhood-tokenized-stock",
+      "symbol": "TSLA",
+      "name": "Tesla • Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174112/large/0x322f0929c4625ed5bad873c95208d54e1c003b2d.png?1782444570",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x322F0929c4625eD5bAd873c95208D54E1c003b2d",
+        "chain": "robinhood",
+        "escrowAddress": "0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+        "decimals": 18,
+        "sinceTimestamp": 1782477747
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1782477747
+        },
+        "priceId": "tesla-robinhood-tokenized-stock"
+      },
+      "category": "rwaRestricted",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lighter-robinhood-USAR",
+      "priceId": "usa-rare-earth-robinhood-tokenized-stock",
+      "symbol": "USAR",
+      "name": "USA Rare Earth • Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174132/large/0xd917b029c761d264c6a312bbbcda868658ef86a6.png?1782444621",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xd917B029C761D264c6A312BBbcDA868658eF86a6",
+        "chain": "robinhood",
+        "escrowAddress": "0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+        "decimals": 18,
+        "sinceTimestamp": 1783468800
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1783468800
+        },
+        "priceId": "usa-rare-earth-robinhood-tokenized-stock"
+      },
+      "category": "rwaRestricted",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "lighter-robinhood-USDG",
       "priceId": "global-dollar",
       "symbol": "USDG",
@@ -28,6 +724,35 @@
         "priceId": "global-dollar"
       },
       "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lighter-robinhood-USO",
+      "priceId": "united-states-oil-fund-robinhood-tokenized-stock",
+      "symbol": "USO",
+      "name": "United States Oil Fund • Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174125/large/0xa30fa36db767ad9ed3f7a60fc79526fb4d56d344.png?1782444603",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xa30FA36Db767ad9eD3f7a60fC79526fB4d56D344",
+        "chain": "robinhood",
+        "escrowAddress": "0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+        "decimals": 18,
+        "sinceTimestamp": 1782477747
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1782477747
+        },
+        "priceId": "united-states-oil-fund-robinhood-tokenized-stock"
+      },
+      "category": "rwaRestricted",
       "source": "canonical",
       "isAssociated": false
     }

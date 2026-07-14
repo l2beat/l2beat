@@ -11414,6 +11414,19 @@
       "supply": "totalSupply"
     },
     {
+      "name": "Ether",
+      "coingeckoId": "ethereum",
+      "symbol": "ETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1777567931,
+      "coingeckoListingTimestamp": 1777567931,
+      "category": "ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "chainId": 4663,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "GameStop • Robinhood Token",
       "coingeckoId": "gamestop-robinhood-tokenized-stock",
       "address": "0x1b0E319c6A659F002271B69dB8A7df2F911c153E",
@@ -11479,6 +11492,20 @@
       "coingeckoListingTimestamp": 1782432000,
       "category": "rwaRestricted",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/102174166/large/0x558378e000d634a36593e338ebacdd6207640efe.png?1782444713",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "iShares 0-3 Month Treasury Bond • Robinhood Token",
+      "coingeckoId": "ishares-0-3-month-treasury-bond-etf-robinhood-tokenized-stock",
+      "address": "0x92FD66527192E3e61d4DDd13322Aa222DE86F9B5",
+      "symbol": "SGOV",
+      "decimals": 18,
+      "deploymentTimestamp": 1781105212,
+      "coingeckoListingTimestamp": 1783468800,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174130/large/0x92fd66527192e3e61d4ddd13322aa222de86f9b5.png?1782444616",
       "chainId": 4663,
       "source": "native",
       "supply": "totalSupply"
@@ -11731,6 +11758,20 @@
       "coingeckoListingTimestamp": 1782432000,
       "category": "rwaRestricted",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/102174125/large/0xa30fa36db767ad9ed3f7a60fc79526fb4d56d344.png?1782444603",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "USA Rare Earth • Robinhood Token",
+      "coingeckoId": "usa-rare-earth-robinhood-tokenized-stock",
+      "address": "0xd917B029C761D264c6A312BBbcDA868658eF86a6",
+      "symbol": "USAR",
+      "decimals": 18,
+      "deploymentTimestamp": 1781105215,
+      "coingeckoListingTimestamp": 1783468800,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174132/large/0xd917b029c761d264c6a312bbbcda868658ef86a6.png?1782444621",
       "chainId": 4663,
       "source": "native",
       "supply": "totalSupply"
