@@ -1,7 +1,7 @@
 {
   "name": "ccip",
   "timestamp": 1784020316,
-  "configHash": "0x27123da3c5061cbf0bfec91d2f1c7fa8c09e5d17bf94556e8d841ba78ce08a66",
+  "configHash": "0xe716058b6c64996f5fdcfc8d19ace3eb5685c8103503ec3f2146ee5120ab6365",
   "entries": [
     {
       "name": "ArbitrumOffRamp_v1_6",
@@ -407,6 +407,7 @@
             "6422105447186081193": "astar",
             "2459028469735686113": "katana",
             "6180753054346818345": "robinhood",
+            "6370580034781731079": "arc",
             "6916147374840168594": "ronin",
             "11964252391146578476": "rootstock",
             "9027416829622342829": "sei",
@@ -865,6 +866,7 @@
             "6422105447186081193": "astar",
             "2459028469735686113": "katana",
             "6180753054346818345": "robinhood",
+            "6370580034781731079": "arc",
             "6916147374840168594": "ronin",
             "11964252391146578476": "rootstock",
             "9027416829622342829": "sei",
@@ -1305,6 +1307,7 @@
             "6422105447186081193": "astar",
             "2459028469735686113": "katana",
             "6180753054346818345": "robinhood",
+            "6370580034781731079": "arc",
             "6916147374840168594": "ronin",
             "11964252391146578476": "rootstock",
             "9027416829622342829": "sei",
@@ -5025,7 +5028,7 @@
             "isRMNVerificationDisabled": true,
             "onRamp": "0x000000000000000000000000ee85aefb15b9489563a6a29891ebe0750aa1a7ae"
           },
-          "6370580034781731079": {
+          "arc": {
             "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "isEnabled": true,
             "isRMNVerificationDisabled": true,
@@ -5134,6 +5137,7 @@
             "6422105447186081193": "astar",
             "2459028469735686113": "katana",
             "6180753054346818345": "robinhood",
+            "6370580034781731079": "arc",
             "6916147374840168594": "ronin",
             "11964252391146578476": "rootstock",
             "9027416829622342829": "sei",
@@ -12128,7 +12132,7 @@
             "fChain": 5,
             "config": "{\"gasPriceDeviationPPB\":\"4000000000\",\"daGasPriceDeviationPPB\":\"4000000000\",\"optimisticConfirmations\":1,\"chainFeeDeviationDisabled\":false}"
           },
-          "6370580034781731079": {
+          "arc": {
             "readers": [
               "0x7d35d97d8757a08a74e54144b841674ae6d7288c57c9a229ee528351a89d4459",
               "0x2ea219639a1f1c923af8d90eef2d0168c5e887ac8fdb2ead5bd2820b100a4aeb",
@@ -23165,7 +23169,7 @@
               }
             }
           },
-          "6370580034781731079": {
+          "arc": {
             "configDigest": "0x000a093e5f88f304acc5aeabedf6eaa375ad0095bb81701118fc00ed28b84c7f",
             "version": 231,
             "config": {
@@ -33847,7 +33851,7 @@
               }
             }
           },
-          "6370580034781731079": {
+          "arc": {
             "configDigest": "0x000aad37708e9b6c250bdc5a17cc3786dad5a970af9193effacfe7d5075e7d65",
             "version": 232,
             "config": {
@@ -34112,6 +34116,7 @@
             "6422105447186081193": "astar",
             "2459028469735686113": "katana",
             "6180753054346818345": "robinhood",
+            "6370580034781731079": "arc",
             "6916147374840168594": "ronin",
             "11964252391146578476": "rootstock",
             "9027416829622342829": "sei",
@@ -35026,7 +35031,7 @@
           "creditcoin": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
           "robinhood": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
           "canton": "eth:0x2613cc57F3ac4a054D79a04618Fb62589b8a4b26",
-          "6370580034781731079": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
+          "arc": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
         },
         "owner": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "typeAndVersion": "Router 1.2.0"
@@ -35116,6 +35121,7 @@
             "6422105447186081193": "astar",
             "2459028469735686113": "katana",
             "6180753054346818345": "robinhood",
+            "6370580034781731079": "arc",
             "6916147374840168594": "ronin",
             "11964252391146578476": "rootstock",
             "9027416829622342829": "sei",
@@ -37714,7 +37720,7 @@
             "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "allowlistEnabled": false
           },
-          "6370580034781731079": {
+          "arc": {
             "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "allowlistEnabled": false
           }
@@ -37820,6 +37826,7 @@
             "6422105447186081193": "astar",
             "2459028469735686113": "katana",
             "6180753054346818345": "robinhood",
+            "6370580034781731079": "arc",
             "6916147374840168594": "ronin",
             "11964252391146578476": "rootstock",
             "9027416829622342829": "sei",
@@ -39459,7 +39466,7 @@
             "networkFeeUSDCents": 50,
             "linkFeeMultiplierPercent": 90
           },
-          "6370580034781731079": {
+          "arc": {
             "isEnabled": true,
             "maxDataBytes": 30000,
             "maxPerMsgGasLimit": 3000000,
@@ -44244,6 +44251,7 @@
             "6422105447186081193": "astar",
             "2459028469735686113": "katana",
             "6180753054346818345": "robinhood",
+            "6370580034781731079": "arc",
             "6916147374840168594": "ronin",
             "11964252391146578476": "rootstock",
             "9027416829622342829": "sei",
@@ -59117,6 +59125,7 @@
             "6422105447186081193": "astar",
             "2459028469735686113": "katana",
             "6180753054346818345": "robinhood",
+            "6370580034781731079": "arc",
             "6916147374840168594": "ronin",
             "11964252391146578476": "rootstock",
             "9027416829622342829": "sei",
@@ -59657,10 +59666,12 @@
       "name": "CallProxy",
       "address": "eth:0xF3E54a1FDA3d4351C8BD5065678c0F5DDD0D7BCB",
       "type": "Contract",
+      "template": "transporter/CallProxyWithTargetSet",
       "sourceHashes": [
         "0x0fce9e2f61da00588761ff8bbfbd4f481b2e61cd0950745e8b841bf06e465e31"
       ],
       "proxyType": "immutable",
+      "description": "Anyone can call this contract to execute scheduled transactions that have passed the delay.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -59672,10 +59683,19 @@
       "deployerAddress": "eth:0x062f05CD6c835677B05a8658A351969476861316",
       "sinceTimestamp": 1783526339,
       "sinceBlock": 25488897,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true,
+        "target": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"
+      },
+      "fieldMeta": {
+        "target": {
+          "description": "Immutable target contract that every call to this proxy is forwarded to. Extracted from the TargetSet event emitted on deployment."
+        }
+      },
       "implementationNames": {
         "eth:0xF3E54a1FDA3d4351C8BD5065678c0F5DDD0D7BCB": "CallProxy"
-      }
+      },
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "address": "eth:0xf547696fF576aeA0D2C8e41D467daD4CeE904513",
@@ -62134,6 +62154,7 @@
             "6422105447186081193": "astar",
             "2459028469735686113": "katana",
             "6180753054346818345": "robinhood",
+            "6370580034781731079": "arc",
             "6916147374840168594": "ronin",
             "11964252391146578476": "rootstock",
             "9027416829622342829": "sei",
@@ -62460,6 +62481,7 @@
             "6422105447186081193": "astar",
             "2459028469735686113": "katana",
             "6180753054346818345": "robinhood",
+            "6370580034781731079": "arc",
             "6916147374840168594": "ronin",
             "11964252391146578476": "rootstock",
             "9027416829622342829": "sei",
