@@ -55,6 +55,7 @@ export async function getInteropFeatureConfig(
         flags.isEnabled('interop', 'capture', chain.id),
       ),
     },
+    knownChains: INTEROP_CHAINS.map((chain) => chain.id),
     matching: flags.isEnabled('interop', 'matching'),
     cleaner: flags.isEnabled('interop', 'cleaner'),
     dangerousOperationsEnabled: env.boolean(

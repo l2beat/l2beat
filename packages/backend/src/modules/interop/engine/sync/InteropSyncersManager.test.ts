@@ -39,6 +39,7 @@ describe(InteropSyncersManager.name, () => {
           new InteropSyncersManager(
             [cluster],
             ['ethereum'],
+            ['ethereum'],
             [makeChainConfig('ethereum')],
             mockStore(),
             mockDb(),
@@ -66,6 +67,7 @@ describe(InteropSyncersManager.name, () => {
         const manager = new InteropSyncersManager(
           [cluster],
           ['ethereum'],
+          ['ethereum'],
           [makeChainConfig('ethereum')],
           mockStore(),
           mockDb(),
@@ -90,6 +92,7 @@ describe(InteropSyncersManager.name, () => {
           new InteropSyncersManager(
             [makeCluster('cluster-a')],
             ['ethereum'],
+            ['ethereum'],
             [],
             mockStore(),
             mockDb(),
@@ -104,6 +107,7 @@ describe(InteropSyncersManager.name, () => {
         () =>
           new InteropSyncersManager(
             [makeCluster('cluster-a')],
+            ['ethereum'],
             ['ethereum'],
             [makeChainConfig('ethereum', { withRpc: false })],
             mockStore(),
@@ -505,6 +509,7 @@ describe(InteropSyncersManager.name, () => {
       expect(aEth).toEqual({
         pluginName: 'cluster-a',
         chain: 'ethereum',
+        chainStatus: 'active',
         syncMode: 'following-starting',
         toBlock: 10n,
         toTimestamp: UnixTime(10),
@@ -517,6 +522,40 @@ describe(InteropSyncersManager.name, () => {
       expect(bEth?.toBlock).toEqual(undefined)
       expect(cEth?.syncMode).toEqual('undefined-undefined')
       expect(cEth?.lastError).toEqual('missing')
+      // cluster-c is not a registered plugin cluster
+      expect(cEth?.chainStatus).toEqual('stale')
+    })
+
+    it('classifies chains as active, disabled, or stale', async () => {
+      const db = mockDb({
+        syncedRanges: [
+          makeSyncedRangeRecord('cluster-a', 'ethereum', 10n),
+          // known chain with capture disabled
+          makeSyncedRangeRecord('cluster-a', 'arbitrum', 10n),
+          // chain removed from INTEROP_CHAINS
+          makeSyncedRangeRecord('cluster-a', 'forknet', 10n),
+          // plugin that no longer exists
+          makeSyncedRangeRecord('cluster-x', 'ethereum', 10n),
+        ],
+      })
+      const manager = makeManager({
+        clusters: [makeCluster('cluster-a')],
+        chains: ['ethereum'],
+        knownChains: ['ethereum', 'arbitrum'],
+        db,
+      })
+
+      const result = await manager.getPluginSyncStatuses(target, tolerance)
+      const byKey = Object.fromEntries(
+        result.map((r) => [`${r.pluginName}:${r.chain}`, r.chainStatus]),
+      )
+
+      expect(byKey).toEqual({
+        'cluster-a:ethereum': 'active',
+        'cluster-a:arbitrum': 'disabled',
+        'cluster-a:forknet': 'stale',
+        'cluster-x:ethereum': 'stale',
+      })
     })
 
     it('flags syncers that would block aggregation', async () => {
@@ -560,6 +599,7 @@ describe(InteropSyncersManager.name, () => {
 function makeManager(params: {
   clusters: PluginCluster[]
   chains: LongChainName[]
+  knownChains?: string[]
   db?: Database
   logger?: Logger
 }) {
@@ -568,6 +608,7 @@ function makeManager(params: {
   return new InteropSyncersManager(
     params.clusters,
     chains,
+    params.knownChains ?? chains,
     chainConfigs,
     mockStore(),
     params.db ?? mockDb(),

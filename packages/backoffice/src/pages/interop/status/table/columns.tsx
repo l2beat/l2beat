@@ -27,6 +27,37 @@ export const pluginStatusColumns: TableOptions<PluginStatusRow>['columns'] = [
       filter: { kind: 'select' },
     },
   }),
+  columnHelper.accessor('chainStatus', {
+    header: 'Chain status',
+    cell: ({ getValue }) => {
+      const value = getValue()
+      const variant =
+        value === 'active'
+          ? 'secondary'
+          : value === 'disabled'
+            ? 'outline'
+            : 'destructive'
+
+      return (
+        <Badge
+          variant={variant}
+          title={
+            value === 'disabled'
+              ? 'Chain is known but capture is disabled; sync state is kept for re-enable'
+              : value === 'stale'
+                ? 'Chain or plugin no longer exists; this row will be removed by the cleaner'
+                : undefined
+          }
+        >
+          {value}
+        </Badge>
+      )
+    },
+    meta: {
+      csvHeader: 'Chain status',
+      filter: { kind: 'select' },
+    },
+  }),
   columnHelper.accessor((row) => row.syncMode ?? 'unknown', {
     id: 'syncMode',
     header: 'Sync mode',
