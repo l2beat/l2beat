@@ -60,6 +60,7 @@ export const strk20: BaseProject = {
       PRIVACY_ATTRIBUTES.defi,
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
+    quantumResistant: true,
     riskSummary: readProjectMarkdown('strk20', 'riskSummary'),
     upgradesAndGovernance: readProjectMarkdown(
       'strk20',
