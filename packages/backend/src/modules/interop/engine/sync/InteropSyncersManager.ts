@@ -29,9 +29,12 @@ export type BlockProcessingStat = {
   avgCpuMs: number
 }
 
+export type PluginChainStatus = 'active' | 'disabled' | 'stale'
+
 export type PluginSyncStatus = {
   pluginName: string
   chain: string
+  chainStatus: PluginChainStatus
   syncMode?: string
   toBlock?: bigint
   toTimestamp?: number
@@ -48,16 +51,19 @@ export class InteropSyncersManager {
     UpsertMap<LongChainName, InteropEventSyncer>
   >()
   private dataCleaners: InteropDataCleaner[] = []
+  private readonly knownChains: Set<string>
 
   constructor(
     readonly pluginClusters: PluginCluster[],
     enabledChains: LongChainName[],
+    knownChains: string[],
     chainConfigs: ChainApi[],
     eventStore: InteropEventStore,
     private readonly db: Database,
     private readonly logger: Logger,
     private readonly rpcMetricsAggregator: RpcMetricsAggregator,
   ) {
+    this.knownChains = new Set(knownChains)
     for (const cluster of pluginClusters) {
       const resyncablePlugins = cluster.plugins.filter(isPluginResyncable)
       if (resyncablePlugins.length === 0) {
@@ -209,6 +215,16 @@ export class InteropSyncersManager {
     return this.syncers.get(plugin)?.get(chain)
   }
 
+  private getChainStatus(pluginName: string, chain: string): PluginChainStatus {
+    if (this.getSyncer(pluginName, chain as LongChainName)) {
+      return 'active'
+    }
+    if (this.syncers.has(pluginName) && this.knownChains.has(chain)) {
+      return 'disabled'
+    }
+    return 'stale'
+  }
+
   getChainsForPlugin(pluginName: string): LongChainName[] {
     const chainMap = this.syncers.get(pluginName)
     if (!chainMap) return []
@@ -330,7 +346,8 @@ export class InteropSyncersManager {
       rows.push({
         pluginName: range.pluginName,
         chain: range.chain,
-        syncMode: `${syncer?.state.name}-${syncer?.state.status}`,
+        chainStatus: this.getChainStatus(range.pluginName, range.chain),
+        syncMode: formatSyncMode(syncer),
         toBlock: range.toBlock,
         toTimestamp: range.toTimestamp,
         lastError: state?.lastError ?? undefined,
@@ -352,7 +369,8 @@ export class InteropSyncersManager {
       rows.push({
         pluginName: state.pluginName,
         chain: state.chain,
-        syncMode: `${syncer?.state.name}-${syncer?.state.status}`,
+        chainStatus: this.getChainStatus(state.pluginName, state.chain),
+        syncMode: formatSyncMode(syncer),
         lastError: state.lastError ?? undefined,
         blocksAggregation: blockers.has(key),
       })
@@ -369,7 +387,8 @@ export class InteropSyncersManager {
         rows.push({
           pluginName: clusterName,
           chain: syncer.chain,
-          syncMode: `${syncer?.state.name}-${syncer?.state.status}`,
+          chainStatus: 'active',
+          syncMode: formatSyncMode(syncer),
           blocksAggregation: blockers.has(key),
         })
       }
@@ -385,4 +404,10 @@ export class InteropSyncersManager {
 
     return rows
   }
+}
+
+function formatSyncMode(
+  syncer: InteropEventSyncer | undefined,
+): string | undefined {
+  return syncer ? `${syncer.state.name}-${syncer.state.status}` : undefined
 }

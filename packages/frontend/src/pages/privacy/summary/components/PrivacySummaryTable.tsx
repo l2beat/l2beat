@@ -53,6 +53,9 @@ const columns = [
         icon: ctx.row.original.icon,
         backgroundColor: undefined,
         description: ctx.row.original.description,
+        quantumResistance: ctx.row.original.quantumResistant
+          ? 'privacy'
+          : undefined,
         statuses: {
           underReview: ctx.row.original.isUnderReview ? 'config' : undefined,
         },

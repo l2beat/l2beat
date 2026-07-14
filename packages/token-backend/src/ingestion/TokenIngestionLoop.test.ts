@@ -15,9 +15,108 @@ import type { DeployedTokenFacts } from '../chains/fetchDeployedTokenFacts'
 import type { IngestionTrace } from './IngestionTrace'
 import { TokenIngestionLoop } from './TokenIngestionLoop'
 import { TokenIngestionProcessor } from './TokenIngestionProcessor'
+import type { TokenRelationIngestion } from './TokenRelationIngestion'
 
 describe(TokenIngestionLoop.name, () => {
   describe(TokenIngestionLoop.prototype.runOnce.name, () => {
+    it('runs token relation ingestion before enqueueing and draining', async () => {
+      const order: string[] = []
+      const relationIngestion = mockObject<TokenRelationIngestion>({
+        runOnce: mockFn().executes(async () => {
+          order.push('relations')
+        }),
+      })
+      const getTokenAddressesAfterSerialId = mockFn().executes(async () => {
+        order.push('enqueue')
+        return {
+          latestSerialId: undefined,
+          transferCount: 0,
+          tokenAddresses: [],
+        }
+      })
+      const findNextPending = mockFn().executes(async () => {
+        order.push('drain')
+        return undefined
+      })
+
+      const loop = new TokenIngestionLoop(
+        mockObject<Database>({
+          interopTransfer: mockObject<Database['interopTransfer']>({
+            getTokenAddressesAfterSerialId,
+            getTokenRoutes: mockFn().resolvesTo([]),
+          }),
+        }),
+        mockObject<TokenDatabase>({
+          tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
+            get: mockFn().resolvesTo(undefined),
+          }),
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            { findNextPending },
+          ),
+        }),
+        mockObject({
+          refreshInteropTransferIndex: mockFn().resolvesTo({
+            findInvolving: mockFn().returns([]),
+          }),
+        }) as unknown as TokenIngestionProcessor,
+        relationIngestion,
+        Logger.SILENT,
+        { intervalMs: 60_000 },
+      )
+
+      await loop.runOnce()
+
+      expect(order).toEqual(['relations', 'enqueue', 'drain'])
+    })
+
+    it('still enqueues and drains when token relation ingestion fails', async () => {
+      const order: string[] = []
+      const relationIngestion = mockObject<TokenRelationIngestion>({
+        runOnce: mockFn().rejectsWith(new Error('poison transfer')),
+      })
+      const getTokenAddressesAfterSerialId = mockFn().executes(async () => {
+        order.push('enqueue')
+        return {
+          latestSerialId: undefined,
+          transferCount: 0,
+          tokenAddresses: [],
+        }
+      })
+      const findNextPending = mockFn().executes(async () => {
+        order.push('drain')
+        return undefined
+      })
+
+      const loop = new TokenIngestionLoop(
+        mockObject<Database>({
+          interopTransfer: mockObject<Database['interopTransfer']>({
+            getTokenAddressesAfterSerialId,
+            getTokenRoutes: mockFn().resolvesTo([]),
+          }),
+        }),
+        mockObject<TokenDatabase>({
+          tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
+            get: mockFn().resolvesTo(undefined),
+          }),
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            { findNextPending },
+          ),
+        }),
+        mockObject({
+          refreshInteropTransferIndex: mockFn().resolvesTo({
+            findInvolving: mockFn().returns([]),
+          }),
+        }) as unknown as TokenIngestionProcessor,
+        relationIngestion,
+        Logger.SILENT,
+        { intervalMs: 60_000 },
+      )
+
+      await loop.runOnce()
+
+      expect(order).toEqual(['enqueue', 'drain'])
+    })
+
     it('enqueues addresses after the stored cursor and advances it', async () => {
       const get = mockFn().resolvesTo({
         key: 'interop-transfers:lastSerialId',
@@ -211,6 +310,7 @@ describe(TokenIngestionLoop.name, () => {
           process,
           refreshInteropTransferIndex,
         }) as unknown as TokenIngestionProcessor,
+        stubRelationIngestion(),
         Logger.SILENT,
         { intervalMs: 60_000, maxProcessedPerRun: 3 },
       )
@@ -626,6 +726,7 @@ describe(TokenIngestionLoop.name, () => {
           process,
           refreshInteropTransferIndex,
         }) as unknown as TokenIngestionProcessor,
+        stubRelationIngestion(),
         Logger.SILENT,
         { intervalMs: 60_000 },
       )
@@ -959,28 +1060,29 @@ function createLoop(deps: {
   ) => Promise<DeployedTokenFacts>
   generateAbstractTokenId?: () => string
 }) {
-  const db =
-    deps.db ??
-    mockObject<Database>({
-      interopTransfer: mockObject<Database['interopTransfer']>({
-        getTokenAddressesAfterSerialId: mockFn().resolvesTo({
-          latestSerialId: undefined,
-          transferCount: 0,
-          tokenAddresses: [],
-        }),
-        getTokenRoutes: mockFn().resolvesTo([]),
+  const db = mockObject<Database>({
+    interopTransfer: mockObject<Database['interopTransfer']>({
+      getTokenAddressesAfterSerialId: mockFn().resolvesTo({
+        latestSerialId: undefined,
+        transferCount: 0,
+        tokenAddresses: [],
       }),
-    })
-  const tokenDb =
-    deps.tokenDb ??
-    mockObject<TokenDatabase>({
-      tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
-        get: mockFn().resolvesTo(undefined),
-      }),
-      tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>({
-        findNextPending: mockFn().resolvesTo(undefined),
-      }),
-    })
+      getTokenRoutes: mockFn().resolvesTo([]),
+      findByTransferId: mockFn().executes(async (transferId: string) =>
+        transfer({ transferId }),
+      ),
+    }),
+    ...deps.db,
+  })
+  const tokenDb = mockObject<TokenDatabase>({
+    tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
+      get: mockFn().resolvesTo(undefined),
+    }),
+    tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>({
+      findNextPending: mockFn().resolvesTo(undefined),
+    }),
+    ...deps.tokenDb,
+  })
   const coingeckoClient =
     deps.coingeckoClient ?? mockObject<CoingeckoClient>({})
   const processor = new TokenIngestionProcessor({
@@ -993,9 +1095,22 @@ function createLoop(deps: {
     newQueueState: deps.newQueueState,
   })
 
-  return new TokenIngestionLoop(db, tokenDb, processor, Logger.SILENT, {
-    intervalMs: 60_000,
-    newQueueState: deps.newQueueState,
+  return new TokenIngestionLoop(
+    db,
+    tokenDb,
+    processor,
+    stubRelationIngestion(),
+    Logger.SILENT,
+    {
+      intervalMs: 60_000,
+      newQueueState: deps.newQueueState,
+    },
+  )
+}
+
+function stubRelationIngestion() {
+  return mockObject<TokenRelationIngestion>({
+    runOnce: mockFn().resolvesTo(undefined),
   })
 }
 

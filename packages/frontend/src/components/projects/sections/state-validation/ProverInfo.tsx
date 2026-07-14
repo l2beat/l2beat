@@ -4,7 +4,7 @@ import {
   TooltipPortal,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import { QUANTUM_RESISTANCE_TOOLTIP } from '~/components/projects/ProjectTooltipContent'
+import { QUANTUM_RESISTANCE_TOOLTIPS } from '~/components/projects/ProjectTooltipContent'
 import { QuantumResistanceIcon } from '~/icons/QuantumResistance'
 import { TrustedSetupsByProofSystemSection } from '~/pages/zk-catalog/v2/project/components/header/ZkCatalogProjectSummary'
 import type { StateValidationSectionProps } from './StateValidationSection'
@@ -39,7 +39,9 @@ export function ProverInfo({
                   </button>
                 </TooltipTrigger>
                 <TooltipPortal>
-                  <TooltipContent>{QUANTUM_RESISTANCE_TOOLTIP}</TooltipContent>
+                  <TooltipContent>
+                    {QUANTUM_RESISTANCE_TOOLTIPS.prover}
+                  </TooltipContent>
                 </TooltipPortal>
               </Tooltip>
             )}

@@ -9,6 +9,28 @@ export const fusionplus: BaseProject = {
   addedAt: UnixTime(1770021647),
   interopConfig: {
     description: 'Hash time lock (HTLC) based intent framework built by 1inch.',
+    intent: {
+      color: '#6D5EF6',
+      intentModel: {
+        value: 'HTLC',
+        description: 'Cross-chain swaps use hash time locks.',
+      },
+      userRecovery: {
+        value: 'Timeout refund',
+        description:
+          'HTLC construction provides a permissionless timeout-based recovery path.',
+      },
+      solverAccess: {
+        value: 'Whitelist',
+        sentiment: 'bad',
+        description:
+          'Resolvers onboard through the 1inch Business Portal compliance flow and Access NFTs.',
+      },
+      settlement: {
+        value: 'HTLC',
+        description: 'Settlement follows the HTLC atomic swap.',
+      },
+    },
     plugins: [
       {
         plugin: 'oneinch-fusion-plus',

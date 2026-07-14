@@ -1,12 +1,15 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { PriceProvider } from '@l2beat/shared'
-import { CoingeckoId, type Configuration } from '@l2beat/shared-pure'
+import { CoingeckoId } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { mockDatabase } from '../../test/database'
 import type { IndexerService } from '../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../tools/uif/ids'
-import type { ManagedMultiIndexerOptions } from '../../tools/uif/multi/types'
+import type {
+  Configuration,
+  ManagedMultiIndexerOptions,
+} from '../../tools/uif/multi/types'
 import { DaBeatPricesIndexer } from './DaBeatPricesIndexer'
 
 describe(DaBeatPricesIndexer.name, () => {
@@ -121,7 +124,7 @@ describe(DaBeatPricesIndexer.name, () => {
     })
   })
 
-  describe(DaBeatPricesIndexer.prototype.removeData.name, () => {
+  describe(DaBeatPricesIndexer.prototype.wipeData.name, () => {
     it('deletes records by coingecko ids', async () => {
       const currentPriceRepository = mockObject<Database['currentPrice']>({
         deleteByCoingeckoIds: mockFn().resolvesTo(5),
@@ -135,7 +138,7 @@ describe(DaBeatPricesIndexer.name, () => {
 
       const indexer = new DaBeatPricesIndexer(deps, Logger.SILENT)
 
-      await indexer.removeData([{ id: 'config1', from: 100, to: 200 }])
+      await indexer.wipeData([{ id: 'config1' }])
 
       expect(
         currentPriceRepository.deleteByCoingeckoIds,
@@ -150,10 +153,7 @@ describe(DaBeatPricesIndexer.name, () => {
       const indexer = new DaBeatPricesIndexer(deps, Logger.SILENT)
 
       await expect(
-        indexer.removeData([
-          { id: 'config1', from: 100, to: 200 },
-          { id: 'config2', from: 300, to: 400 },
-        ]),
+        indexer.wipeData([{ id: 'config1' }, { id: 'config2' }]),
       ).toBeRejectedWith('Assertion Error')
     })
   })

@@ -78,6 +78,11 @@ export const GASZIP_NETWORKS = defineNetworks<GasZipNetwork>('gaszip', [
     chainId: 8453,
   }),
   gasZipNetwork({
+    chain: 'robinhood',
+    gaszipId: 526,
+    chainId: 4663,
+  }),
+  gasZipNetwork({
     chain: 'optimism',
     gaszipId: 55,
     chainId: 10,
