@@ -1,4 +1,4 @@
-import { type ProjectId, unique } from '@l2beat/shared-pure'
+import type { ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { mapInteropChainsToWithIcons } from '~/pages/interop/utils/mapInteropChainsToWithIcons'
 import { ps } from '~/server/projects'
@@ -8,7 +8,7 @@ import type {
   ProtocolEntry,
   TokenData,
 } from './types'
-import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
+import { buildTokensDetailsMapForRecords } from './utils/buildTokensDetailsMap'
 import { getInteropChains } from './utils/getInteropChains'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
 import { getProtocolEntries } from './utils/getProtocolEntries'
@@ -39,12 +39,8 @@ export async function getInteropProtocolsByVolume(
   const nonSubgroupRecords = records.filter(
     (record) => !subgroupProjects.has(record.id as ProjectId),
   )
-  const abstractTokenIds = unique(
-    nonSubgroupRecords.flatMap((record) =>
-      record.tokens.map((token) => token.abstractTokenId),
-    ),
-  )
-  const tokensDetailsMap = await buildTokensDetailsMap(abstractTokenIds)
+  const tokensDetailsMap =
+    await buildTokensDetailsMapForRecords(nonSubgroupRecords)
 
   return getProtocolEntries(
     nonSubgroupRecords,
