@@ -1,3 +1,98 @@
+Generated with discovered.json: 0xe46411178f53024f3077b41a3079c4825daacd97
+
+# Diff at Tue, 14 Jul 2026 14:55:03 GMT:
+
+- author: unknown (<unknown>)
+- comparing to: HEAD@a036585904e021f33994b535f998b82c67fd3ec8 block: 1783678624
+- current timestamp: 1784036617
+
+## Description
+
+Document the complete Starknet SHARP trust chain. This entry combines the latest live discovery delta with the configuration and verification metadata changes.
+
+## Watched changes
+
+```diff
+    contract Starkware Security Council (eth:0x15e8c684FD095d4796A0c0CF678554F4c1C7C361) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract."
++        "Permissioned to manage the Operator role, finalize the application configuration, and change the OS program hash, aggregator program hash, OS-config hash, fee collector, or message cancellation delay."
+    }
+```
+
+```diff
+    EOA  (eth:0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability."
++        "Permissioned to regularly post L2 state updates and choose an available data-availability entry point. Under the current implementation, every update still needs a fact accepted by SHARP and cannot bypass the pinned program and config hashes."
+    }
+```
+
+```diff
+    contract Starkware Multisig 1 (eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract."
++        "Permissioned to manage the Operator role, finalize the application configuration, and change the OS program hash, aggregator program hash, OS-config hash, fee collector, or message cancellation delay."
+    }
+```
+
+```diff
+    contract Starknet (eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) [starknet/Starknet] {
+    +++ description: Central Starknet rollup contract. For every state update it derives a SHARP fact from the state-transition output and either the Starknet OS or aggregator program hash, checks that fact through the configured SHARP call proxy, and requires the output's OS-config hash to match. It also processes L1 <-> L2 messages and stores the finalized L2 state.
+      description:
+-        "Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles."
++        "Central Starknet rollup contract. For every state update it derives a SHARP fact from the state-transition output and either the Starknet OS or aggregator program hash, checks that fact through the configured SHARP call proxy, and requires the output's OS-config hash to match. It also processes L1 <-> L2 messages and stores the finalized L2 state."
+      fieldMeta.$admin.description:
+-        "Permissioned to upgrade the proxy implementation and access `onlyGovernance` restricted calls."
++        "Permissioned to upgrade the proxy implementation and access `onlyGovernance` calls. While the contract is not finalized, governance can replace the OS program hash, aggregator program hash, and OS-config hash. An implementation upgrade can also replace the verifier address or bypass all proof checks."
+      fieldMeta.isFinalized.description:
+-        "Finalizes most of the configuration of the contract, which cannot be changed afterwards (only thorugh an upgrade)."
++        "Locks the current implementation's setters for the Starknet OS hash, aggregator hash, OS-config hash, and message-cancellation delay. It does not lock the fee collector or freeze the proxy, so an implementation upgrade can replace or bypass every pin."
+      fieldMeta.programHash.description:
+-        "The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated."
++        "Starknet OS program hash. In direct mode it is included in the SHARP fact key; in aggregator mode the aggregator's public output must contain this exact OS hash. A malicious OS program could prove arbitrary state transitions. Update the program-hash catalog and liveness tracking whenever this changes."
+      fieldMeta.programHashHistory:
++        {"severity":"HIGH","description":"Previous Starknet OS program hashes emitted on each governance update. The current value is exposed separately as `programHash`.","type":"CODE_CHANGE"}
+      fieldMeta.aggregatorProgramHashHistory:
++        {"severity":"HIGH","description":"Previous Starknet aggregator program hashes emitted on each governance update. The current value is exposed separately as `aggregatorProgramHash`.","type":"CODE_CHANGE"}
+      fieldMeta.configHashHistory:
++        {"severity":"HIGH","description":"Previous Starknet OS-configuration commitments emitted on each governance update. The current value is exposed separately as `configHash`.","type":"CODE_CHANGE"}
+      fieldMeta.verifier:
++        {"severity":"HIGH","description":"SHARP fact registry used by `updateStateInternal`. It is initialized once and currently points to an upgradeable call proxy. Starknet calls the proxy's explicit `isValid` function, which always queries the default target and its active reference registries; caller-specific fallback routes affect proof submission but not this lookup. All programs pinned by the default target and active references are part of Starknet's proof trust chain. Changing this address requires upgrading the Starknet implementation.","type":"CODE_CHANGE"}
+      fieldMeta.feeCollector:
++        {"severity":"HIGH","description":"Address receiving consumed L1 -> L2 message fees. Governance can change it even after application configuration is finalized; the zero address makes the submitting Operator the recipient.","type":"RISK_PARAMETER"}
+      fieldMeta.aggregatorProgramHash:
++        {"severity":"HIGH","description":"Cairo aggregator program hash used in the SHARP fact key when the program output declares aggregator mode. The output must also name the current Starknet OS hash. A malicious aggregator could fabricate the transition output attributed to otherwise valid OS executions.","type":"CODE_CHANGE"}
+      fieldMeta.configHash:
++        {"severity":"HIGH","description":"Commitment to the Starknet OS execution environment which every direct or aggregated program output must equal. The current V4 commitment is reproducible from `StarknetOsConfig4`, chain ID `SN_MAIN`, the STRK fee-token address, and no state-diff encryption public keys. A malicious value can authorize proofs under a different chain ID, fee token, or optional public-key configuration.","type":"CODE_CHANGE"}
+      fieldMeta.programHashMapped:
++        {"description":"Human-readable label for the current Starknet OS program hash."}
+      fieldMeta.aggregatorHashMapped:
++        {"description":"Human-readable label for the current Starknet aggregator program hash."}
+    }
+```
+
+```diff
+    contract DelayedExecutor (eth:0xCA112018fEB729458b628AadC8f996f9deCbCa0c) [starknet/DelayedExecutor] {
+    +++ description: A simple Timelock contract with an immutable delay of 8d. The owner (eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988) can queue transactions.
+      directlyReceivedPermissions.0.description:
+-        "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract."
++        "Permissioned to manage the Operator role, finalize the application configuration, and change the OS program hash, aggregator program hash, OS-config hash, fee collector, or message cancellation delay."
+    }
+```
+
+```diff
+    contract Starkware SCMinority Multisig (eth:0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability."
++        "Permissioned to regularly post L2 state updates and choose an available data-availability entry point. Under the current implementation, every update still needs a fact accepted by SHARP and cannot bypass the pinned program and config hashes."
+    }
+```
+
 Generated with discovered.json: 0x0b13a0f0fd048362c4142263b502759223ba6a5a
 
 # Diff at Fri, 10 Jul 2026 10:18:08 GMT:
