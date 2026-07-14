@@ -1,0 +1,34 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "KycNFT",
+  "description": "Owner-controlled ERC721 access-token registry that permits at most one token per address. The owner can mint, burn or force-transfer any token and can sign authorizations for third parties to mint or transfer tokens. Token holders can burn their own token, but ordinary holder-initiated transfers are disabled unless authorized by an owner signature.",
+  "category": "core",
+  "ignoreMethods": ["getApproved", "nonces", "ownerOf", "tokenURI"],
+  "ignoreRelatives": ["constructorArgs", "tokenOwners"],
+  "fields": {
+    "constructorArgs": {
+      "description": "Deployment configuration: token name, symbol and initial owner.",
+      "handler": { "type": "constructorArgs", "nameArgs": true }
+    },
+    "owner": {
+      "description": "Owner controlling token issuance, revocation and transfers.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "mint, burn and force-transfer access tokens, authorize mints or transfers by signature, and transfer ownership."
+        }
+      ]
+    },
+    "tokenOwners": {
+      "description": "Latest owner of every token ID, reconstructed from Transfer events. Burned token IDs map to the zero address.",
+      "handler": {
+        "type": "event",
+        "select": "to",
+        "set": { "event": "Transfer" },
+        "groupBy": "tokenId"
+      }
+    }
+  }
+}
