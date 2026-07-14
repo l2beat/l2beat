@@ -20,5 +20,11 @@
     "address": "ink:0xbEc660b456B84A081E90aF29BE43385BDa5bF7b6",
     "chain": "ink",
     "blockNumber": 50094988
+  },
+  "EAS_v1_4_1_beta3_optimism": {
+    "hash": "0x16924e7d7c1a311d6c9da93c6bf8bc7bd5454a0efde4d6e365e66c87ef4a0951",
+    "address": "oeth:0xbEc660b456B84A081E90aF29BE43385BDa5bF7b6",
+    "chain": "optimism",
+    "blockNumber": 154170183
   }
 }
