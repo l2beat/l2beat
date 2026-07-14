@@ -92,12 +92,7 @@ export const lighterprover: BaseProject = {
             ),
           },
         ],
-        verificationStatus: 'unsuccessful',
-        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: readProjectMarkdown(
-          'lighterprover',
-          'verificationSteps-0x1ea7019d',
-        ),
+        verificationStatus: 'notVerified',
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },

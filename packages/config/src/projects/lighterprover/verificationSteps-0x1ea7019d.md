@@ -1,3 +1,0 @@
-The published [`build_circuits.sh`](https://github.com/elliottech/lighter-prover/blob/main/build_circuits.sh) procedure regenerates the verifier used by the Ethereum deployment, whose custom verifier ID is `0x16992bb868b32c1f4bd94d70267468928932f15df9b6ac22e62719f26b0eb221`. It does not reproduce the Robinhood deployment's verifier ID, `0x1ea7019dfa94b4b4c58254a958d8fa81a2a8d5d651477acae75bd9405ee5f181`.
-
-The Robinhood verifier has the same source shape, but four verification-key constants differ. Replacing those constants with values copied from the deployed contract reproduces its bytecode, but this is not an independent regeneration of the verification key. No Robinhood-specific circuit revision or key-generation procedure has been published.
