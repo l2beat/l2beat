@@ -18,8 +18,7 @@ export async function getNativeRollupsData(
           'Native rollups use proof-carrying transactions so Ethereum can verify L2 blocks with its own execution program and proof infrastructure.',
         url,
         openGraph: {
-          // TODO: replace with a dedicated native-rollups OpenGraph image.
-          image: '/meta-images/governance/opengraph-image.png',
+          image: '/meta-images/native-rollups/opengraph-image.png',
         },
       }),
     },
