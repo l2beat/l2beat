@@ -520,7 +520,7 @@ describe(InteropSyncersManager.name, () => {
       })
       expect(bEth?.syncMode).toEqual('following-starting')
       expect(bEth?.toBlock).toEqual(undefined)
-      expect(cEth?.syncMode).toEqual('undefined-undefined')
+      expect(cEth?.syncMode).toEqual(undefined)
       expect(cEth?.lastError).toEqual('missing')
       // cluster-c is not a registered plugin cluster
       expect(cEth?.chainStatus).toEqual('stale')
