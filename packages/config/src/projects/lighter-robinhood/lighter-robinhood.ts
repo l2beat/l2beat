@@ -57,7 +57,7 @@ export const lighterRobinhood: ScalingProject = {
   badges: [BADGES.VM.AppChain, BADGES.DA.EthereumBlobs],
   display: {
     name: 'Lighter on Robinhood',
-    shortName: 'Lighter RH',
+    shortName: 'Lighter on RH',
     slug: 'lighter-robinhood',
     description:
       'Lighter on Robinhood is an application-specific ZK rollup deployed on Robinhood Chain. It is a fork of Lighter adapted to use Global Dollar (USDG) as its quote and margin asset.',
