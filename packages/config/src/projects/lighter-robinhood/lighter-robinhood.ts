@@ -172,7 +172,7 @@ export const lighterRobinhood: ScalingProject = {
     operator: {
       name: 'Centralized operators',
       description:
-        'Only the three permissioned validators can submit batches and verify them with a ZK proof, i.e. advance the state of the protocol. The network governor can add or remove validators.',
+        'Only the centralized operators can submit batches and verify them with a ZK proof, i.e. advance the state of the protocol. The network governor can add or remove validators.',
       risks: [FRONTRUNNING_RISK],
       references: [],
     },
@@ -287,7 +287,7 @@ export const lighterRobinhood: ScalingProject = {
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
   upgradesAndGovernance: {
-    content: `Regular upgrades are initiated by the "network governor" and executed with a ${formatSeconds(upgradeDelay)} delay. The "security council" can reduce the delay to zero in an emergency and does not currently satisfy the Stage 1 requirements. The network governor can also add or remove the three permissioned validators.`,
+    content: `Regular upgrades are initiated by the "network governor" and executed with a ${formatSeconds(upgradeDelay)} delay. The "security council" can reduce the delay to zero in an emergency and does not currently satisfy the Stage 1 requirements. The network governor can also add or remove permissioned validators.`,
   },
   contracts: {
     addresses: {
