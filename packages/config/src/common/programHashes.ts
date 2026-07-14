@@ -1918,7 +1918,12 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
   },
   '0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97': {
     ...WASM_MODULE_ROOT('v61'),
-    verificationStatus: 'notVerified',
+    programUrl:
+      'https://github.com/OffchainLabs/nitro/tree/consensus-v61/arbos',
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97.md',
+    ),
   },
   '0xa18d6266cef250802c3cb2bfefe947ea1aa9a32dd30a8d1dfc4568a8714d3a7a': {
     ...WASM_MODULE_ROOT('v41'),
