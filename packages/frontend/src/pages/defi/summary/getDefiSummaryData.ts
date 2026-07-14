@@ -14,11 +14,17 @@ export async function getDefiSummaryData(
     ps.getProjects({
       where: ['defiInfo'],
       select: ['display', 'defiInfo', 'statuses'],
-      optional: ['contracts', 'permissions', 'discoveryInfo'],
+      optional: [
+        'contracts',
+        'permissions',
+        'discoveryInfo',
+        'externalDependencies',
+        'tvsConfig',
+      ],
     }),
   ])
 
-  const entries = getDefiSummaryEntries(projects)
+  const entries = await getDefiSummaryEntries(projects)
 
   return {
     head: {

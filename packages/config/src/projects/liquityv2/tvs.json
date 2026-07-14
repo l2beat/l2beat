@@ -1,0 +1,105 @@
+{
+  "$schema": "../tvs-config-schema.json",
+  "projectId": "liquityv2",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "liquityv2-rETH",
+      "priceId": "rocket-pool-eth",
+      "symbol": "rETH",
+      "name": "Rocket Pool ETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/20764/large/reth.png?1696520159",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xae78736Cd615f374D3085123A210448E74Fc6393",
+            "chain": "ethereum",
+            "escrowAddress": "0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
+            "decimals": 18,
+            "sinceTimestamp": 1747646891
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xae78736Cd615f374D3085123A210448E74Fc6393",
+            "chain": "ethereum",
+            "escrowAddress": "0x5cc5ceFD034Fdc4728D487a72Ca58A410CDdCD6b",
+            "decimals": 18,
+            "sinceTimestamp": 1747646903
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "liquityv2-WETH",
+      "priceId": "weth",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+            "chain": "ethereum",
+            "escrowAddress": "0xeB5A8C825582965f1d84606E078620a84ab16AfE",
+            "decimals": 18,
+            "sinceTimestamp": 1747646423
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+            "chain": "ethereum",
+            "escrowAddress": "0xD4558240d50C2E219a21c9d25afD513Bb6e5B1A0",
+            "decimals": 18,
+            "sinceTimestamp": 1747646435
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "liquityv2-wstETH",
+      "priceId": "wrapped-steth",
+      "symbol": "wstETH",
+      "name": "Wrapped liquid staked Ether 2.0",
+      "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+            "chain": "ethereum",
+            "escrowAddress": "0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+            "decimals": 18,
+            "sinceTimestamp": 1747646663
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+            "chain": "ethereum",
+            "escrowAddress": "0xD796e1648526400386CC4d12FA05E5F11e6a22A1",
+            "decimals": 18,
+            "sinceTimestamp": 1747646675
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

@@ -11,12 +11,14 @@ import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getProjectMetadataDescription } from '~/ssr/head/getProjectMetadataDescription'
 import type { RenderData } from '~/ssr/types'
+import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
+import { optionToRange } from '~/utils/range/range'
 
 export interface DefiProjectEntry {
   id: ProjectId
@@ -59,6 +61,8 @@ export async function getDefiProjectData(
   slug: string,
   url: string,
 ): Promise<RenderData | undefined> {
+  const helpers = getSsrHelpers()
+  const defaultChartRange = optionToRange('1y')
   const [
     appLayoutProps,
     project,
@@ -76,6 +80,7 @@ export async function getDefiProjectData(
         'permissions',
         'discoveryInfo',
         'externalDependencies',
+        'tvsConfig',
       ],
     }),
     getContractUtils(),
@@ -123,6 +128,16 @@ export async function getDefiProjectData(
   const icon = manifest.getUrl(`/icons/${project.slug}.png`)
   const discoveryHref =
     contractsSection || permissionsSection ? discoUi.href : undefined
+  const hasTvs = project.tvsConfig !== undefined
+
+  if (hasTvs) {
+    await helpers.queryClient.prefetchQuery(
+      helpers.trpc.privacy.tvlChart.queryOptions({
+        projectIds: [project.id],
+        range: defaultChartRange,
+      }),
+    )
+  }
 
   const sections: ProjectDetailsSection[] = []
 
@@ -135,6 +150,23 @@ export async function getDefiProjectData(
         description: undefined,
         detailedDescription: project.display.detailedDescription,
         references: project.display.references,
+      },
+    })
+  }
+
+  if (hasTvs) {
+    sections.push({
+      type: 'PrivacyTvlSection',
+      props: {
+        id: 'privacy-tvl',
+        title: 'Value Locked',
+        defaultRange: defaultChartRange,
+        project: {
+          id: project.id,
+          name: project.name,
+          shortName: project.shortName,
+          iconUrl: icon,
+        },
       },
     })
   }
@@ -247,6 +279,7 @@ export async function getDefiProjectData(
       props: {
         ...appLayoutProps,
         entry: projectEntry,
+        queryState: helpers.dehydrate(),
       },
     },
   }

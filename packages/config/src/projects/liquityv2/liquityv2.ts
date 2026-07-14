@@ -13,6 +13,15 @@ const discovery = new ProjectDiscovery('liquityv2')
 const branchValue = (branch: string, key: string): string =>
   discovery.getContractValue<string>(`AddressesRegistry_${branch}`, key)
 
+const collateralPools = [
+  { contract: 'ActivePool_WETH', token: 'WETH' },
+  { contract: 'DefaultPool_WETH', token: 'WETH' },
+  { contract: 'ActivePool_wstETH', token: 'wstETH' },
+  { contract: 'DefaultPool_wstETH', token: 'wstETH' },
+  { contract: 'ActivePool_rETH', token: 'rETH' },
+  { contract: 'DefaultPool_rETH', token: 'rETH' },
+] as const
+
 export const liquityv2: BaseProject = {
   id: ProjectId('liquityv2'),
   slug: 'liquityv2',
@@ -76,6 +85,16 @@ export const liquityv2: BaseProject = {
       },
     ],
     badges: [],
+  },
+  escrows: collateralPools.map(({ contract, token }) =>
+    discovery.getEscrowDetails({
+      address: discovery.getContract(contract).address,
+      tokens: [token],
+    }),
+  ),
+  tvsInfo: {
+    associatedTokens: [],
+    warnings: [],
   },
   defiInfo: {
     category: 'Stablecoin',
