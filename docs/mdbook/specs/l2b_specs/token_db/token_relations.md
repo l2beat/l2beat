@@ -11,6 +11,7 @@
   - [Why there are NO foreign keys to DeployedToken](#why-there-are-no-foreign-keys-to-deployedtoken)
   - [Deleting a deployed token leaves its relations in place](#deleting-a-deployed-token-leaves-its-relations-in-place)
   - [Display implications](#display-implications)
+  - [Relations graph](#relations-graph)
   - [Human edits](#human-edits)
   - [Known limitations](#known-limitations)
 
@@ -41,7 +42,8 @@ where our interpretation (two different abstract tokens) disagrees with the
 observations (non-swapping transfers between them). The whole point of
 collecting relations is to surface those disagreements — for example as a
 graph where an edge between tokens of different abstract tokens is drawn
-red, telling a human "these abstract tokens should probably be merged".
+red, telling a human "these abstract tokens should probably be merged"
+(see [abstract token merging](./abstract_token_merging.md)).
 
 It follows that observation recording must never be gated on the
 interpretation being consistent. Any design where a token-level conflict
