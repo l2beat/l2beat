@@ -6,6 +6,7 @@ import type {
 } from '@l2beat/database'
 import {
   Address32,
+  assert,
   assertUnreachable,
   UnixTime,
   unique,
@@ -84,6 +85,7 @@ export class InteropFinancialsLoop extends TimeLoop {
     this.maxTransferValueUsd =
       options.maxTransferValueUsd ?? Number.POSITIVE_INFINITY
     this.batchSize = options.batchSize ?? DEFAULT_BATCH_SIZE
+    assert(this.batchSize > 0, 'batch size must be positive')
   }
 
   async run() {
