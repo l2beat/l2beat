@@ -1,6 +1,6 @@
 # Standard path (sequencer signaling)
 
-Sequencers stake AZTEC to secure the L2 and also participate in protocol governance. Every proposal is an already-deployed smart contract payload on Ethereum. The public proposal flow takes at least {{governanceTotalDelayString}} before execution, after which Governance can change the bounded parameters described below or deploy and register a new canonical rollup version.
+Sequencers stake AZTEC to secure the L2 and also participate in protocol governance. Every proposal is a smart contract payload on Ethereum. The public proposal flow takes at least {{governanceTotalDelayString}} before execution, after which Governance can change the bounded parameters described below or deploy and register a new canonical rollup version.
 
 ## 1. Signaling (`GovernanceProposer`)
 
@@ -23,13 +23,13 @@ If sequencer signaling is unavailable, anyone can call `proposeWithLock()` direc
 
 The `Rollup`, verifier, `Inbox`, `Outbox`, and installed `EscapeHatch` code cannot be upgraded in place. Feature upgrades deploy a new stack and use Governance to register its Rollup in the `Registry` and GSE. Validators staked to the bonus instance (`{{bonusInstanceAddress}}`) follow the newest GSE Rollup automatically; validators explicitly bound to an older Rollup remain associated with it.
 
-Governance owns the Rollup, but its setter surface is intentionally constrained: it can change the sequencer/prover reward split and checkpoint reward, only increase the mana target, change proving cost no more often than every 30 days and only to between two-thirds and 150% of its current value, and update validator-entry parameters subject to nonzero normal-phase limits and bounded bootstrap settings. It can queue a replacement Slasher, but finalization waits {{slasherExecutionDelayString}}. The outgoing Slasher then remains authorized for {{legacySlasherDrainWindowString}}, during which either of its authorized callers can still execute payloads. The EscapeHatch setter is one-shot and has already been consumed, while the reward distributor and reward-booster addresses are fixed for the deployment.
+Governance owns the Rollup, but its setter surface is intentionally constrained: it can change the sequencer/prover reward split and checkpoint reward, only increase the mana target, change proving cost delayed and within bounds, and update validator-entry rate within non-zero values. It can queue a replacement Slasher with a {{slasherExecutionDelayString}} delay. The outgoing Slasher then remains active for {{legacySlasherDrainWindowString}}. The EscapeHatch, the reward distributor and reward-booster addresses are fixed for the deployment.
 
 Governance also owns the GSE and can register a new latest Rollup or set the proof-of-possession gas limit too low for new validator deposits. These powers can move incentives and bonus-instance validators away from the current version, but they do not mutate this deployment's verifier, messaging contracts, or installed EscapeHatch.
 
 ## Slashing and the SlashVeto Council
 
-Aztec's onchain slashing path uses `SlashingProposer` ballots and the `Slasher`. Governance can bypass the proposer and submit a payload directly to the Slasher, and can rotate the authorized Slasher through the delayed Rollup process described above. Both the ballot and direct-governance paths remain subject to payload vetoes and global pauses.
+Aztec's onchain slashing path uses `SlashingProposer` ballots and the `Slasher`. Governance can bypass the proposer and submit a payload directly to the Slasher, and can rotate the authorized Slasher through the delayed Rollup process described above. Both the ballot and direct-governance paths remain subject to payload vetoes and global pauses by the SlashVeto Council.
 
 The **Vetoer** role is held by the SlashVeto Council. It cannot upgrade the protocol or relay arbitrary calls. It can:
 
