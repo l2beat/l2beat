@@ -2,34 +2,16 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { InfoIcon } from '~/icons/Info'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import { cn } from '~/utils/cn'
-import { ROADMAP, type RoadmapItem } from '../roadmap'
+import { ROADMAP_YEARS, type RoadmapItem } from '../roadmap'
 import { SectionHeading } from './SectionHeading'
 
 const STATUS_LABEL: Record<RoadmapItem['status'], string> = {
   done: 'Done',
   inProgress: 'In progress',
-  research: 'Research',
   planned: 'Planned',
 }
 
-function groupByYear(items: RoadmapItem[]) {
-  const groups = new Map<number, RoadmapItem[]>()
-
-  for (const item of items) {
-    const group = groups.get(item.year) ?? []
-    group.push(item)
-    groups.set(item.year, group)
-  }
-
-  return [...groups].map(([year, groupedItems]) => ({
-    year,
-    items: groupedItems,
-  }))
-}
-
 export function RoadmapSection() {
-  const years = groupByYear(ROADMAP)
-
   return (
     <section id="roadmap" className="mt-8 md:mt-12">
       <SectionHeading
@@ -37,11 +19,8 @@ export function RoadmapSection() {
         description="The research has moved from the original EXECUTE proposal to a program-agnostic proof architecture. Future dates are targets, not Ethereum fork commitments."
       />
       <PrimaryCard className="overflow-hidden p-0 md:p-0">
-        {years.map((group, groupIndex) => {
+        {ROADMAP_YEARS.map((group, groupIndex) => {
           const isCurrentYear = group.items.some(
-            (item) => item.status === 'inProgress',
-          )
-          const currentIndex = group.items.findIndex(
             (item) => item.status === 'inProgress',
           )
           return (
@@ -49,7 +28,8 @@ export function RoadmapSection() {
               key={group.year}
               className={cn(
                 'grid md:grid-cols-[140px_1fr] lg:grid-cols-[180px_1fr]',
-                groupIndex < years.length - 1 && 'border-divider border-b',
+                groupIndex < ROADMAP_YEARS.length - 1 &&
+                  'border-divider border-b',
               )}
             >
               <div className="p-5 pb-0 md:border-divider md:border-r md:p-6 md:pb-6">
@@ -69,7 +49,8 @@ export function RoadmapSection() {
                   const isLast = i === group.items.length - 1
                   const isDone = item.status === 'done'
                   const isCurrent = item.status === 'inProgress'
-                  const flowsIntoCurrent = i + 1 === currentIndex
+                  const flowsIntoCurrent =
+                    group.items[i + 1]?.status === 'inProgress'
                   return (
                     <li
                       key={`${item.date}-${item.title}`}
@@ -77,7 +58,7 @@ export function RoadmapSection() {
                     >
                       {!isLast &&
                         (flowsIntoCurrent ? (
-                          <span className="absolute top-6 left-[11px] h-[calc(100%-24px)] w-px animate-roadmap-line-flow bg-[length:1px_12px] bg-[repeating-linear-gradient(to_bottom,var(--color-purple-100)_0,var(--color-purple-100)_6px,transparent_6px,transparent_12px)] motion-reduce:animate-none dark:bg-[repeating-linear-gradient(to_bottom,var(--color-pink-200)_0,var(--color-pink-200)_6px,transparent_6px,transparent_12px)]" />
+                          <span className="absolute top-6 left-[11px] h-[calc(100%-24px)] border-purple-100 border-l border-dashed dark:border-pink-200" />
                         ) : (
                           <span
                             className={cn(

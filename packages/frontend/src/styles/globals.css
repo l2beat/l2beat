@@ -505,16 +505,6 @@
   --animate-row-highlight: row-highlight 2.5s ease-in-out;
   --animate-row-highlight-no-opacity: row-highlight-no-opacity 2.5s ease-in-out;
   --animate-badge-dialog-loading: badge-dialog-loading 1.2s linear infinite;
-  --animate-roadmap-line-flow: roadmap-line-flow 1s linear infinite;
-
-  @keyframes roadmap-line-flow {
-    from {
-      background-position-y: 0;
-    }
-    to {
-      background-position-y: 12px;
-    }
-  }
 
   @keyframes badge-dialog-loading {
     0% {

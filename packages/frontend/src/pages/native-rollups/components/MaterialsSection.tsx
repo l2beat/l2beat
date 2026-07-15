@@ -10,16 +10,14 @@ import { SectionHeading } from './SectionHeading'
 
 const MATERIAL_ICONS: Record<MaterialKind, (props: SvgIconProps) => ReactNode> =
   {
-    eip: DocumentIcon,
-    article: DocumentIcon,
-    book: DocumentIcon,
+    document: DocumentIcon,
     code: GithubIcon,
-    video: YouTubeIcon,
+    youtube: YouTubeIcon,
   }
 
 export function MaterialsSection() {
-  const articles = MATERIALS.filter((material) => material.kind !== 'video')
-  const talks = MATERIALS.filter((material) => material.kind === 'video')
+  const articles = MATERIALS.filter((material) => material.kind !== 'youtube')
+  const talks = MATERIALS.filter((material) => material.kind === 'youtube')
 
   return (
     <section id="materials" className="mt-8 md:mt-12">
@@ -63,15 +61,20 @@ function GroupLabel({
 
 function MaterialCard({ material }: { material: MaterialItem }) {
   const Icon = MATERIAL_ICONS[material.kind]
+  const href =
+    material.kind === 'youtube'
+      ? `https://www.youtube.com/watch?v=${material.videoId}`
+      : material.href
+
   return (
     <a
-      href={material.href}
+      href={href}
       target="_blank"
       rel="noreferrer noopener"
       className="group block outline-none focus-visible:ring-2 focus-visible:ring-brand md:rounded-xl"
     >
       <PrimaryCard className="flex h-full flex-col overflow-hidden p-0 transition-colors group-hover:bg-white/70 md:rounded-xl md:p-0 dark:group-hover:bg-surface-primary-hover">
-        {material.kind === 'video' && (
+        {material.kind === 'youtube' && (
           <div className="relative aspect-video w-full overflow-hidden bg-surface-secondary md:rounded-t-xl">
             <img
               src={`https://img.youtube.com/vi/${material.videoId}/hqdefault.jpg`}

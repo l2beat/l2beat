@@ -11,28 +11,27 @@ import {
   NATIVE_ROLLUPS_REPO_URL,
 } from './links'
 
-export type MaterialKind = 'eip' | 'article' | 'book' | 'code' | 'video'
-
 interface BaseMaterialItem {
   label: string
   source: string
   description: string
-  href: string
 }
 
 export type MaterialItem =
   | (BaseMaterialItem & {
-      kind: Exclude<MaterialKind, 'video'>
-      videoId?: never
+      kind: 'document' | 'code'
+      href: string
     })
   | (BaseMaterialItem & {
-      kind: 'video'
+      kind: 'youtube'
       videoId: string
     })
 
+export type MaterialKind = MaterialItem['kind']
+
 export const MATERIALS: MaterialItem[] = [
   {
-    kind: 'article',
+    kind: 'document',
     label: 'Native proof verification',
     source: 'ethresear.ch',
     description:
@@ -40,7 +39,7 @@ export const MATERIALS: MaterialItem[] = [
     href: NATIVE_PROOF_VERIFICATION_URL,
   },
   {
-    kind: 'article',
+    kind: 'document',
     label: 'FOCIL as an L2 forced transaction mechanism',
     source: 'ethresear.ch',
     description:
@@ -56,7 +55,7 @@ export const MATERIALS: MaterialItem[] = [
     href: L2_FOCIL_URL,
   },
   {
-    kind: 'book',
+    kind: 'document',
     label: 'The Native Rollups Book',
     source: 'l2beat.com',
     description:
@@ -72,7 +71,7 @@ export const MATERIALS: MaterialItem[] = [
     href: NATIVE_ROLLUPS_REPO_URL,
   },
   {
-    kind: 'article',
+    kind: 'document',
     label: 'Native rollups — superpowers from L1 execution',
     source: 'ethresear.ch',
     description:
@@ -80,7 +79,7 @@ export const MATERIALS: MaterialItem[] = [
     href: FOUNDING_POST_URL,
   },
   {
-    kind: 'eip',
+    kind: 'document',
     label: 'EIP-8079: Native rollups',
     source: 'eips.ethereum.org',
     description:
@@ -88,7 +87,7 @@ export const MATERIALS: MaterialItem[] = [
     href: NATIVE_ROLLUPS_EIP_URL,
   },
   {
-    kind: 'eip',
+    kind: 'document',
     label: 'EIP-8025: Optional Execution Proofs',
     source: 'eips.ethereum.org',
     description:
@@ -96,7 +95,7 @@ export const MATERIALS: MaterialItem[] = [
     href: EIP_8025_URL,
   },
   {
-    kind: 'eip',
+    kind: 'document',
     label: 'EIP-8142: Block-in-Blobs',
     source: 'eips.ethereum.org',
     description:
@@ -112,38 +111,34 @@ export const MATERIALS: MaterialItem[] = [
     href: ETHREX_POC_URL,
   },
   {
-    kind: 'video',
+    kind: 'youtube',
     label: 'Execution Sharding Through Native Rollups',
     source: 'Luca Donno · L2BEAT',
     description: "L2BEAT's talk on scaling Ethereum through native rollups.",
-    href: 'https://www.youtube.com/watch?v=69NKLnejppk',
     videoId: '69NKLnejppk',
   },
   {
-    kind: 'video',
+    kind: 'youtube',
     label: 'Lightning Talk: Native Rollups',
     source: 'Luca Donno · L2BEAT',
     description:
       'A short introduction to the original native rollups and EXECUTE proposal.',
-    href: 'https://www.youtube.com/watch?v=y8Rq_VESOac',
     videoId: 'y8Rq_VESOac',
   },
   {
-    kind: 'video',
+    kind: 'youtube',
     label: "Ethereum's Roadmap to 10M TPS",
     source: 'Luca Donno · TOKEN2049 2025',
     description:
       "L2BEAT's Luca Donno on scaling Ethereum — including native rollups (TOKEN2049 Singapore 2025).",
-    href: 'https://www.youtube.com/watch?v=0O3JyJpMQLQ',
     videoId: '0O3JyJpMQLQ',
   },
   {
-    kind: 'video',
+    kind: 'youtube',
     label: 'Native Proof Verification',
     source: 'Futura Camp',
     description:
       'A session on the broader primitive that lets L1 verify proofs for native rollups and arbitrary guest programs.',
-    href: 'https://www.youtube.com/watch?v=lbzXH2x2PJ4',
     videoId: 'lbzXH2x2PJ4',
   },
 ]
