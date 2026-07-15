@@ -1,13 +1,7 @@
 import type React from 'react'
-import { CodeIcon } from '~/icons/Code'
 import { DocumentIcon } from '~/icons/Document'
-import { GlobeIcon } from '~/icons/Globe'
-import { HistoryClockIcon } from '~/icons/HistoryClock'
 import { GithubIcon } from '~/icons/products/Github'
 import { YouTubeIcon } from '~/icons/products/Youtube'
-import { ShieldIcon } from '~/icons/Shield'
-import { SwapIcon } from '~/icons/Swap'
-import { UserIcon } from '~/icons/User'
 
 export const NATIVE_ROLLUPS_BOOK_URL = 'https://native-rollups.l2beat.com'
 export const NATIVE_ROLLUPS_EIP_URL = 'https://eips.ethereum.org/EIPS/eip-8079'
@@ -27,7 +21,6 @@ export const EIP_8142_URL = 'https://eips.ethereum.org/EIPS/eip-8142'
 export interface FeatureItem {
   title: string
   description: string
-  icon: (props: { className?: string }) => React.ReactNode
 }
 
 /** The two headline value propositions ("Why native"). */
@@ -36,43 +29,36 @@ export const WHY_NATIVE: FeatureItem[] = [
     title: 'Designed to upgrade with Ethereum',
     description:
       'A native rollup proves the same EVM state transition program that Ethereum accepts for itself. Instead of being pinned to one EVM version, it follows the version recognized by L1, so upgrades can propagate without a separate rollup upgrade or governance vote.',
-    icon: HistoryClockIcon,
   },
   {
     title: 'No bespoke onchain verifier stack',
     description:
       "Operators still generate proofs, but Ethereum's consensus-layer proof infrastructure verifies them. Rollups no longer need to independently deploy and govern verifier contracts, adapters, proof routers, and circuit upgrades for EVM execution.",
-    icon: ShieldIcon,
   },
 ]
 
 export interface HowItWorksStep {
-  number: string
   title: string
   description: string
 }
 
 export const HOW_IT_WORKS: HowItWorksStep[] = [
   {
-    number: '01',
     title: 'Build and prove an L2 block',
     description:
       "The operator executes an L2 block and proves Ethereum's stateless payload-validation program with one or more supported zkVM backends.",
   },
   {
-    number: '02',
     title: 'Submit a proof-carrying transaction',
     description:
       'A new L1 transaction type commits to the L2 data in blobs, the proof backends and program identity, and a hash of the proof’s public values.',
   },
   {
-    number: '03',
     title: 'Ethereum verifies the proofs',
     description:
       'Raw proofs travel in ephemeral sidecars. Ethereum clients validate them through a program-agnostic proof engine, while recursive aggregation keeps verification efficient at scale.',
   },
   {
-    number: '04',
     title: 'The rollup advances its state',
     description:
       'The rollup contract confirms that Ethereum verified the right program and block data, then accepts the new L2 state root.',
@@ -85,25 +71,21 @@ export const FEATURES: FeatureItem[] = [
     title: 'Custom sequencing',
     description:
       'Define sequencing policy in the rollup contract — centralized sequencing with fast preconfirmations, based sequencing, or a staked network.',
-    icon: SwapIcon,
   },
   {
     title: 'Custom governance',
     description:
       "The programmable settlement contract lets a rollup keep its own configuration, such as a DAO-controlled fee recipient or opinionated gas limits, around L1's shared execution rules.",
-    icon: UserIcon,
   },
   {
     title: 'Custom gas tokens',
     description:
       'Choose a token other than ETH for transaction fees. Ethereum-native messaging can bridge it from L1 and make it available as the gas token on L2.',
-    icon: GlobeIcon,
   },
   {
     title: 'Custom fee collection',
     description:
       'Instead of automatically burning the base fee, direct it to a rollup treasury, sequencer, or another funding mechanism.',
-    icon: CodeIcon,
   },
 ]
 
@@ -178,7 +160,7 @@ export const ROADMAP: RoadmapItem[] = [
   {
     status: 'planned',
     date: 'Target: December 2026',
-    title: 'Native proof verification',
+    title: 'Native proof verification EIP and devnet',
     description:
       'Turn the research proposal into an EIP and run a CL+EL devnet with proof-carrying transactions and the ZK version of the native-rollup specification.',
   },

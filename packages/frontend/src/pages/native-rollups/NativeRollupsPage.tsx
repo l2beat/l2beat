@@ -16,16 +16,16 @@ export function NativeRollupsPage(props: AppLayoutProps) {
     <AppLayout {...props}>
       <SideNavLayout maxWidth="wide">
         <MainPageHeader>Native Rollups</MainPageHeader>
-        <Hero />
         <main>
+          <Hero />
           <WhyNativeSection />
           <HowItWorksSection />
           <NativeProofVerificationSection />
           <FeaturesSection />
           <RoadmapSection />
           <CoreProtocolSection />
-          <MaterialsSection />
           <ContributorsSection />
+          <MaterialsSection />
         </main>
       </SideNavLayout>
     </AppLayout>

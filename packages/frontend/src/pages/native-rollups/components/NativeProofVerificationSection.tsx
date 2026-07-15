@@ -1,6 +1,5 @@
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { ShieldIcon } from '~/icons/Shield'
-import { SectionHeading } from './WhyNativeSection'
+import { SectionHeading } from './SectionHeading'
 
 const CAPABILITIES = [
   {
@@ -22,9 +21,8 @@ const CAPABILITIES = [
 
 export function NativeProofVerificationSection() {
   return (
-    <section className="mt-8 md:mt-12">
+    <section id="native-proof-verification" className="mt-8 md:mt-12">
       <SectionHeading
-        eyebrow="Beyond native rollups"
         title="Native proof verification is the more general primitive"
         description="Native rollups are one use of a broader proposal: let any smart contract consume proofs already verified by Ethereum's consensus infrastructure."
       />
@@ -33,9 +31,6 @@ export function NativeProofVerificationSection() {
           <div className="grid gap-6 sm:grid-cols-3">
             {CAPABILITIES.map((capability) => (
               <div key={capability.title}>
-                <div className="mb-3 flex size-9 items-center justify-center rounded-lg bg-linear-to-br from-purple-100 to-pink-100 text-white">
-                  <ShieldIcon className="size-4.5 fill-current" />
-                </div>
                 <h3 className="font-bold text-label-value-16">
                   {capability.title}
                 </h3>

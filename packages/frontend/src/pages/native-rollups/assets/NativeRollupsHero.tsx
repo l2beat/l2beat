@@ -23,8 +23,8 @@ export function NativeRollupsHeroIllustration({
           y2="260"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#7E41CC" />
-          <stop offset="1" stopColor="#FF46C0" />
+          <stop stopColor="var(--color-purple-100)" />
+          <stop offset="1" stopColor="var(--color-pink-100)" />
         </linearGradient>
         <linearGradient
           id="nr-brand-soft"
@@ -34,8 +34,12 @@ export function NativeRollupsHeroIllustration({
           y2="260"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#7E41CC" stopOpacity="0.18" />
-          <stop offset="1" stopColor="#FF46C0" stopOpacity="0.18" />
+          <stop stopColor="var(--color-purple-100)" stopOpacity="0.18" />
+          <stop
+            offset="1"
+            stopColor="var(--color-pink-100)"
+            stopOpacity="0.18"
+          />
         </linearGradient>
         <marker
           id="nr-arrow"
@@ -45,7 +49,7 @@ export function NativeRollupsHeroIllustration({
           refY="3.5"
           orient="auto"
         >
-          <path d="M0 0l6 3.5L0 7z" fill="#A94AD0" />
+          <path d="M0 0l6 3.5L0 7z" fill="var(--color-purple-100)" />
         </marker>
       </defs>
 

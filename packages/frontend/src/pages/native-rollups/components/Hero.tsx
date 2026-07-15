@@ -9,20 +9,11 @@ import {
 
 export function Hero() {
   return (
-    <PrimaryCard className="relative overflow-hidden md:p-8">
-      {/* Brand gradient wash */}
-      <div className="pointer-events-none absolute inset-0 bg-linear-to-br from-purple-100/10 via-transparent to-pink-100/10" />
-      <div
-        aria-hidden
-        className="-top-24 -right-24 pointer-events-none absolute size-72 rounded-full bg-radial from-pink-100/25 to-transparent blur-2xl"
-      />
-      <div className="relative flex w-full items-center justify-between gap-8">
+    <PrimaryCard className="md:p-8">
+      <div className="flex w-full items-center justify-between gap-8">
         <div className="flex max-w-2xl flex-col gap-6">
-          <span className="w-max font-medium text-purple-100 text-xs uppercase tracking-[0.14px] dark:text-pink-200">
-            What are native rollups?
-          </span>
           <h2 className="text-balance font-bold text-heading-32 md:text-heading-40">
-            The easiest and most secure way to deploy your own EVM chain.
+            Rollups verified by Ethereum itself
           </h2>
           <p className="text-pretty text-paragraph-16 text-secondary md:text-paragraph-18">
             Native rollups turn L2 blocks into{' '}
@@ -31,37 +22,29 @@ export function Hero() {
             </strong>{' '}
             on L1. Ethereum verifies that every block follows its own EVM rules,
             while the rollup stays free to customize sequencing, messaging, and
-            chain policy.
+            chain policy. Native rollups are an active research effort, not yet
+            part of any scheduled Ethereum upgrade.
           </p>
-          <div className="flex flex-wrap items-center gap-3">
-            <Button
-              asChild
-              variant="fill"
-              className="gap-2 border border-transparent"
-            >
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+            <Button asChild variant="fill" className="gap-2">
               <a
                 href={NATIVE_ROLLUPS_BOOK_URL}
                 target="_blank"
                 rel="noreferrer noopener"
               >
-                Explore the Book
+                Read the Book
                 <CustomLinkIcon className="fill-current" />
               </a>
             </Button>
-            <Button
-              asChild
-              variant="outline"
-              className="gap-2 border-divider bg-surface-secondary text-primary hover:bg-surface-secondary/60"
+            <a
+              href={NATIVE_PROOF_VERIFICATION_URL}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="inline-flex items-center gap-1 font-medium text-label-value-15 text-link transition-colors hover:text-purple-100 dark:hover:text-pink-200"
             >
-              <a
-                href={NATIVE_PROOF_VERIFICATION_URL}
-                target="_blank"
-                rel="noreferrer noopener"
-              >
-                Explore the research
-                <CustomLinkIcon className="fill-current" />
-              </a>
-            </Button>
+              Read the research proposal
+              <CustomLinkIcon className="size-3.5 fill-current" />
+            </a>
           </div>
         </div>
         <NativeRollupsHeroIllustration className="hidden h-auto w-[420px] shrink-0 lg:block" />
