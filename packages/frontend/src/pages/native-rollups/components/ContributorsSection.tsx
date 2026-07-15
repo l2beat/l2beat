@@ -4,7 +4,7 @@ import { SectionHeading } from './SectionHeading'
 
 export function ContributorsSection() {
   return (
-    <section id="contributors" className="mt-8 md:mt-12">
+    <section id="contributors" className="mt-8 mb-4 md:mt-12 md:mb-8">
       <SectionHeading title="Core contributors" />
       <div className="flex flex-wrap gap-8 max-md:px-4 md:gap-12">
         {CONTRIBUTORS.map((contributor) => (

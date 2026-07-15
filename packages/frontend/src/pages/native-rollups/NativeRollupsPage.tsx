@@ -24,8 +24,8 @@ export function NativeRollupsPage(props: AppLayoutProps) {
           <FeaturesSection />
           <RoadmapSection />
           <CoreProtocolSection />
-          <ContributorsSection />
           <MaterialsSection />
+          <ContributorsSection />
         </main>
       </SideNavLayout>
     </AppLayout>

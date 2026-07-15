@@ -14,7 +14,7 @@ export function MaterialsSection() {
   const talks = MATERIALS.filter((m) => m.videoId)
 
   return (
-    <section id="materials" className="mt-8 mb-4 md:mt-12 md:mb-8">
+    <section id="materials" className="mt-8 md:mt-12">
       <SectionHeading
         title="Materials, articles & talks"
         description="Explore native proof verification, the technical book, the original EXECUTE research, and implementation work."
