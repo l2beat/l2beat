@@ -125,7 +125,8 @@
       ]
     },
     "getPendingSlasher": {
-      "description": "Queued replacement Slasher and the timestamp at which anyone can finalize the replacement."
+      "description": "Queued replacement Slasher and the timestamp at which anyone can finalize the replacement.",
+      "severity": "HIGH"
     },
     "getLegacySlasher": {
       "description": "Outgoing Slasher and the timestamp until which it remains authorized after replacement.",

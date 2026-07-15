@@ -1009,6 +1009,7 @@
           "description": "Active Slasher authorized by this rollup."
         },
         "getPendingSlasher": {
+          "severity": "HIGH",
           "description": "Queued replacement Slasher and the timestamp at which anyone can finalize the replacement."
         },
         "getLegacySlasher": {
