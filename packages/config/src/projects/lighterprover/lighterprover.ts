@@ -53,6 +53,10 @@ export const lighterprover: BaseProject = {
         projectId: ProjectId('lighter'),
         sinceTimestamp: UnixTime(1759356000),
       },
+      {
+        projectId: ProjectId('lighter-robinhood'),
+        sinceTimestamp: UnixTime(1782502424), // first BatchVerification event
+      },
     ],
     verifierHashes: [
       {
@@ -73,6 +77,22 @@ export const lighterprover: BaseProject = {
           'lighterprover',
           'verificationSteps-0x16992bb8',
         ),
+        description:
+          'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
+      },
+      {
+        hash: '0x1ea7019dfa94b4b4c58254a958d8fa81a2a8d5d651477acae75bd9405ee5f181',
+        name: 'Lighter on Robinhood verifier',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'robinhood',
+              '0xA3c70B197AcE329D9e09C753DA7874B78F1D00f4',
+            ),
+          },
+        ],
+        verificationStatus: 'notVerified',
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },
