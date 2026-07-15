@@ -65,6 +65,22 @@ describe(validateBlip.name, () => {
       expect(validateBlip(['!=', {}])).toBeFalsy() // Invalid sub-element
     })
 
+    it('validates "<" operation', () => {
+      expect(validateBlip(['<'])).toBeFalsy() // Empty < is invalid
+      expect(validateBlip(['<', 123])).toBeTruthy()
+      expect(validateBlip(['<', 123, 456])).toBeTruthy() // Multiple arguments
+      expect(validateBlip(['<', ['get', 'n'], 5])).toBeTruthy() // Nested valid blips
+      expect(validateBlip(['<', {}])).toBeFalsy() // Invalid sub-element
+    })
+
+    it('validates ">" operation', () => {
+      expect(validateBlip(['>'])).toBeFalsy() // Empty > is invalid
+      expect(validateBlip(['>', 123])).toBeTruthy()
+      expect(validateBlip(['>', 123, 456])).toBeTruthy() // Multiple arguments
+      expect(validateBlip(['>', ['get', 'n'], 5])).toBeTruthy() // Nested valid blips
+      expect(validateBlip(['>', {}])).toBeFalsy() // Invalid sub-element
+    })
+
     it('validates "and" operation', () => {
       expect(validateBlip(['and'])).toBeFalsy() // Empty and is invalid
       expect(validateBlip(['and', 123])).toBeTruthy()

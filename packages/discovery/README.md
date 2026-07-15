@@ -1036,6 +1036,8 @@ In the first example, `["get", "systemConfig"]` is a filter that extracts the sy
 - `set`, updates a value at a specific key or index path.
 - `filter`, creates a new array with all elements that pass the filter.
 - `find`, returns the first element that passes the filter.
+- `<`, less-than comparison of numbers or strings.
+- `>`, greater-than comparison of numbers or strings.
 - `format`, applies the selected type caster.
 - `if`, conditional logic (if/then/else).
 - `delete`, deletes removes keys/indices from objects/arrays.
@@ -1158,6 +1160,30 @@ The second argument must be a single filter expression that will be applied to e
 - Program: `["find", ["pipe", ["get", "v"], ["=", 43]]]`
 - Output: `{ a: 2, v: 43 }`
 
+### `<`
+
+Compares values, returning `true` when they are in strictly ascending order.
+Both operands must be two numbers or two strings, otherwise the runtime throws.
+With a single argument the input value is compared against it (`input < arg`).
+With multiple arguments the first argument is compared against each of the rest.
+Together with `=`, `!=` and `>` it forms the comparison operators.
+
+- Input: `1`
+- Program: `["<", 2]`
+- Output: `true`
+
+- Input: `{ n: 10 }`
+- Program: `["pipe", ["get", "n"], ["<", 5]]`
+- Output: `false`
+
+### `>`
+
+Works like `<` but returns `true` when the values are in strictly descending order.
+
+- Input: `3`
+- Program: `[">", 2]`
+- Output: `true`
+
 ### `format`
 
 Formats a value using a type caster.
@@ -1268,6 +1294,29 @@ The filter must return a string.
 - Input: `{ a: 1, b: 2 }`
 - Program: `["map_keys", ["if", ["=", "a"], "first", "second"]]`
 - Output: `{ first: 1, second: 2 }`
+
+### Context variables
+
+Besides the piped input value, filters can reference values from the discovery context using `$`-prefixed leaf tokens.
+`$$` exposes chain-wide values and `$` exposes contract-level ones.
+
+- `$$blockNumber` - the block number the discovery is running on.
+- `$$timestamp` - the UNIX timestamp (in seconds) of that block.
+- `$$chainName` - the name of the chain being discovered (e.g. `ethereum`).
+- `$address` - the address of the contract the field belongs to.
+
+Referencing an unknown token, or one that is unavailable in the current context, throws an error.
+
+For example, to derive a boolean `hasExpired` field that becomes `true` once a stored expiration timestamp is in the past, `copy` the timestamp field and compare it against `$$timestamp`:
+
+```json
+{
+  "hasExpired": {
+    "copy": "referralExpirationTime",
+    "edit": ["<", "$$timestamp"]
+  }
+}
+```
 
 ### Copy feature
 

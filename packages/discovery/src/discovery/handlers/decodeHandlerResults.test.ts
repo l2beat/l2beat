@@ -132,5 +132,37 @@ describe(decodeHandlerResults.name, () => {
 
       expect(values?.foo).toEqual({ chain: 'ethereum' })
     })
+
+    it('derives hasExpired by copying a field and comparing to $$timestamp', () => {
+      const results: HandlerResult[] = [
+        { field: 'referralExpirationTime', value: 1_000 },
+      ]
+      const expiredEnv: BlipEnv = { timestamp: 2_000 }
+      const notExpiredEnv: BlipEnv = { timestamp: 500 }
+      const fieldOverrides: StructureContract['fields'] = {
+        hasExpired: {
+          copy: 'referralExpirationTime',
+          edit: ['<', '$$timestamp'],
+        },
+      }
+
+      const expired = decodeHandlerResults(
+        longChain,
+        results,
+        fieldOverrides,
+        emptyTypes,
+        expiredEnv,
+      )
+      expect(expired.values?.hasExpired).toEqual(true)
+
+      const notExpired = decodeHandlerResults(
+        longChain,
+        results,
+        fieldOverrides,
+        emptyTypes,
+        notExpiredEnv,
+      )
+      expect(notExpired.values?.hasExpired).toEqual(false)
+    })
   })
 })

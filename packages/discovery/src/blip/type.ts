@@ -15,6 +15,8 @@ export type BlipSexp =
   | ['not', ...BlipSexp[]]
   | ['=', ...BlipSexp[]]
   | ['!=', ...BlipSexp[]]
+  | ['<', ...BlipSexp[]]
+  | ['>', ...BlipSexp[]]
   | ['and', ...BlipSexp[]]
   | ['pipe', ...BlipSexp[]]
   | ['map', BlipSexp]
