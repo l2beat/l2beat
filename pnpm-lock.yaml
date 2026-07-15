@@ -419,6 +419,22 @@ importers:
         specifier: ^4.9.3
         version: 4.19.2
 
+  packages/daily-check:
+    dependencies:
+      '@elastic/elasticsearch':
+        specifier: ^8.13.1
+        version: 8.18.2
+      '@l2beat/backend-tools':
+        specifier: workspace:*
+        version: link:../backend-tools
+    devDependencies:
+      '@l2beat/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      tsx:
+        specifier: ^4.9.3
+        version: 4.19.2
+
   packages/database:
     dependencies:
       '@l2beat/backend-tools':

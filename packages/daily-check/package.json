@@ -1,0 +1,25 @@
+{
+  "name": "@l2beat/daily-check",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf build *.tsbuildinfo",
+    "format": "biome format .",
+    "format:fix": "biome format --write .",
+    "lint": "biome check --formatter-enabled=false .",
+    "lint:fix": "biome check --formatter-enabled=false --write .",
+    "start": "node build/index.js",
+    "dev": "tsx src/index.ts --once --dry-run",
+    "test": "mocha",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@elastic/elasticsearch": "^8.13.1",
+    "@l2beat/backend-tools": "workspace:*"
+  },
+  "devDependencies": {
+    "@l2beat/typescript-config": "workspace:*",
+    "tsx": "^4.9.3"
+  }
+}
