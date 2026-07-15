@@ -1,6 +1,6 @@
 import { Client, type estypes } from '@elastic/elasticsearch'
 
-export class Elastic {
+export class ElasticSearchClient {
   private readonly client: Client
 
   constructor(url: string, apiKey: string) {

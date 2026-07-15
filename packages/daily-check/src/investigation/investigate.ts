@@ -1,84 +1,12 @@
-import { spawn } from 'node:child_process'
-import { mkdtempSync } from 'node:fs'
-import { tmpdir } from 'node:os'
-import { join } from 'node:path'
-import type { TileResult } from './evaluate'
+import type { ClaudeCodeClient } from '../clients/ClaudeCodeClient'
+import type { TileResult } from '../evaluation/types'
 
-const TIMEOUT_MS = 15 * 60 * 1000
-const MAX_TURNS = 40
-
-/**
- * Runs an AI investigation of the failing tiles through Claude Code
- * (`claude -p`), so it authenticates like Claude Code does (local login or
- * CLAUDE_CODE_OAUTH_TOKEN) — no Anthropic API key needed. The agent is only
- * allowed to run curl, which it uses to query Elasticsearch directly.
- */
 export async function investigate(
+  claude: ClaudeCodeClient,
   failing: TileResult[],
   controls: string[],
-  model: string,
 ): Promise<string> {
-  const prompt = buildPrompt(failing, controls)
-  return await runClaude(prompt, model)
-}
-
-function runClaude(prompt: string, model: string): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const child = spawn(
-      'claude',
-      [
-        '-p',
-        '--output-format',
-        'text',
-        '--model',
-        model,
-        '--allowedTools',
-        'Bash(curl:*)',
-        '--max-turns',
-        String(MAX_TURNS),
-      ],
-      {
-        // An empty working directory so no repo context leaks in.
-        cwd: mkdtempSync(join(tmpdir(), 'daily-check-')),
-        env: process.env,
-        stdio: ['pipe', 'pipe', 'pipe'],
-      },
-    )
-
-    let stdout = ''
-    let stderr = ''
-    child.stdout.on('data', (data) => {
-      stdout += data
-    })
-    child.stderr.on('data', (data) => {
-      stderr += data
-    })
-
-    const timeout = setTimeout(() => {
-      child.kill('SIGKILL')
-      reject(new Error('claude -p timed out'))
-    }, TIMEOUT_MS)
-
-    child.on('error', (error) => {
-      clearTimeout(timeout)
-      reject(
-        error.message.includes('ENOENT')
-          ? new Error('claude CLI not found — is Claude Code installed?')
-          : error,
-      )
-    })
-    child.on('close', (code) => {
-      clearTimeout(timeout)
-      if (code !== 0) {
-        reject(new Error(`claude -p exited with ${code}: ${stderr.trim()}`))
-        return
-      }
-      resolve(stdout.trim() || 'Investigation produced no report.')
-    })
-
-    child.stdin.write(prompt)
-    child.stdin.end()
-  })
+  return await claude.run(buildPrompt(failing, controls))
 }
 
 function buildPrompt(failing: TileResult[], controls: string[]): string {

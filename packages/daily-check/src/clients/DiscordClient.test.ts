@@ -1,7 +1,7 @@
 import { expect } from 'earl'
-import { splitMessage } from './discord'
+import { splitMessage } from './DiscordClient'
 
-describe('splitMessage', () => {
+describe(splitMessage.name, () => {
   it('keeps short content in one chunk', () => {
     expect(splitMessage('hello\nworld', 100)).toEqual(['hello\nworld'])
   })

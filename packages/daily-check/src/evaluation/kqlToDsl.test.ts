@@ -1,7 +1,7 @@
 import { expect } from 'earl'
-import { kqlToDsl } from './kql'
+import { kqlToDsl } from './kqlToDsl'
 
-describe('kqlToDsl', () => {
+describe(kqlToDsl.name, () => {
   it('converts a field phrase match', () => {
     expect(kqlToDsl('message.keyword : "Request processed"')).toEqual({
       match_phrase: { 'message.keyword': 'Request processed' },

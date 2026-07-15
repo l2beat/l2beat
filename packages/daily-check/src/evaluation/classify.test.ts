@@ -1,6 +1,6 @@
 import { expect } from 'earl'
-import { classify } from './evaluate'
-import type { Palette } from './tiles'
+import type { Palette } from '../dashboard/types'
+import { classify } from './classify'
 
 function palette(
   colorStops: { color: string; stop: number | null }[],
@@ -10,7 +10,7 @@ function palette(
   return { params: { colorStops, continuity, rangeMin } }
 }
 
-describe('classify', () => {
+describe(classify.name, () => {
   it('handles liveness tiles (red below threshold, green above)', () => {
     // [Website] Requests: red from 0, green from 0.5, continuity above.
     const p = palette(

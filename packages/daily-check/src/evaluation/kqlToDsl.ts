@@ -1,5 +1,5 @@
 /**
- * Converts the subset of KQL used by the Control Plane tiles into an
+ * Converts the supported subset of KQL used by the Control Plane tiles into an
  * Elasticsearch query DSL clause: `field : "value"`, `field : value*`,
  * `field : *`, bare quoted phrases, and/or/not (case-insensitive) and
  * parentheses. Throws on anything it does not understand so the caller can

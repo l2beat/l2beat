@@ -5,7 +5,7 @@ export interface SavedObject {
   references: { id: string; type: string; name: string }[]
 }
 
-export class Kibana {
+export class KibanaClient {
   constructor(
     private readonly url: string,
     private readonly apiKey: string,

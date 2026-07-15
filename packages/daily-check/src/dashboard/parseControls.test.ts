@@ -1,7 +1,7 @@
 import { expect } from 'earl'
-import { parseControls } from './tiles'
+import { parseControls } from './parseControls'
 
-describe('parseControls', () => {
+describe(parseControls.name, () => {
   it('converts the environment options list (production selected)', () => {
     const result = parseControls({
       panels: {
