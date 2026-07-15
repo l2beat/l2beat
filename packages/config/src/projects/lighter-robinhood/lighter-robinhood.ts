@@ -10,6 +10,7 @@ import {
   DA_MODES,
   EXITS,
   FRONTRUNNING_RISK,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
 } from '../../common'
 import { BADGES } from '../../common/badges'
@@ -55,6 +56,9 @@ export const lighterRobinhood: ScalingProject = {
   capability: 'appchain',
   addedAt: UnixTime(1782864000), // 2026-07-01T00:00:00Z
   badges: [BADGES.VM.AppChain, BADGES.DA.EthereumBlobs],
+  // Settles on Robinhood Chain, whose own state validation does not meet the
+  // rollup requirement (closed proofs).
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Lighter on Robinhood',
     shortName: 'Lighter on RH',
