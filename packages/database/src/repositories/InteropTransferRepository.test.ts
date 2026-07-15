@@ -1326,6 +1326,61 @@ describeDatabase(InteropTransferRepository.name, (db) => {
         expect(result.map((x) => x.transferId)).toEqual(['msg1'])
       })
 
+      it('filters by abstract token id on either side', async () => {
+        await repository.insertMany([
+          {
+            ...transfer(
+              'plugin1',
+              'msg1',
+              'deposit',
+              snapshotTimestamp - 10,
+              'ethereum',
+              'arbitrum',
+              10,
+            ),
+            srcAbstractTokenId: 'tokenA',
+            dstAbstractTokenId: 'tokenB',
+          },
+          {
+            ...transfer(
+              'plugin1',
+              'msg2',
+              'deposit',
+              snapshotTimestamp - 9,
+              'ethereum',
+              'arbitrum',
+              10,
+            ),
+            srcAbstractTokenId: 'tokenB',
+            dstAbstractTokenId: 'tokenA',
+          },
+          {
+            ...transfer(
+              'plugin1',
+              'msg3',
+              'deposit',
+              snapshotTimestamp - 8,
+              'ethereum',
+              'arbitrum',
+              10,
+            ),
+            srcAbstractTokenId: 'tokenB',
+            dstAbstractTokenId: undefined,
+          },
+        ])
+
+        const result = await repository.getProjectTransfersPage({
+          snapshotTimestamp,
+          sourceChains: ['ethereum'],
+          destinationChains: ['arbitrum'],
+          plugins: ['plugin1'],
+          abstractTokenId: 'tokenA',
+          limit: 10,
+        })
+
+        expect(result.map((x) => x.transferId)).toEqual(['msg2', 'msg1'])
+      })
+
       it('excludes same-chain transfers and returns empty when plugins or chains are empty', async () => {
         await repository.insertMany([
           transfer(
