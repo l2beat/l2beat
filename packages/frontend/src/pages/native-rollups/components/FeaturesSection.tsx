@@ -12,26 +12,35 @@ export function FeaturesSection() {
       />
       <PrimaryCard className="overflow-hidden p-0 md:p-0">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4">
-          {FEATURES.map((feature, index) => (
-            <article
-              key={feature.title}
-              className={cn(
-                'border-divider p-5 md:p-6',
-                index < FEATURES.length - 1 && 'border-b',
-                index % 2 === 0 && 'sm:border-r',
-                index < 2 ? 'sm:border-b' : 'sm:border-b-0',
-                'lg:border-b-0',
-                index < FEATURES.length - 1 ? 'lg:border-r' : 'lg:border-r-0',
-              )}
-            >
-              <h3 className="font-bold text-heading-16 md:text-label-value-18">
-                {feature.title}
-              </h3>
-              <p className="mt-2 text-paragraph-15 text-secondary">
-                {feature.description}
-              </p>
-            </article>
-          ))}
+          {FEATURES.map((feature, index) => {
+            const Icon = feature.icon
+
+            return (
+              <article
+                key={feature.title}
+                className={cn(
+                  'border-divider p-5 md:p-6',
+                  index < FEATURES.length - 1 && 'border-b',
+                  index % 2 === 0 && 'sm:border-r',
+                  index < 2 ? 'sm:border-b' : 'sm:border-b-0',
+                  'lg:border-b-0',
+                  index < FEATURES.length - 1 ? 'lg:border-r' : 'lg:border-r-0',
+                )}
+              >
+                <div className="flex items-center gap-3">
+                  <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-purple-100/10 text-purple-100 dark:bg-pink-200/10 dark:text-pink-200">
+                    <Icon aria-hidden className="size-4" />
+                  </div>
+                  <h3 className="font-bold text-heading-16 md:text-label-value-18">
+                    {feature.title}
+                  </h3>
+                </div>
+                <p className="mt-3 text-paragraph-15 text-secondary">
+                  {feature.description}
+                </p>
+              </article>
+            )
+          })}
         </div>
       </PrimaryCard>
     </section>
