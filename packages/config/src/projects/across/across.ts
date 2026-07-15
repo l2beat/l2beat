@@ -27,6 +27,28 @@ export const across: BaseProject = {
   interopConfig: {
     description:
       'Intent framework specialised on popular chains and assets, speed and security.',
+    intent: {
+      color: '#1E88E5',
+      intentModel: {
+        value: 'Intent framework',
+        description:
+          'Relayers compete to fill cross-chain transfer intents across supported chains and assets.',
+      },
+      userRecovery: {
+        value: 'Slow-fill fallback',
+        description:
+          'If no relayer fast-fills a deposit, Across can complete it through the protocol slow-fill path. This is not available for chains without an Ethereum canonical bridge adapter.',
+      },
+      solverAccess: {
+        value: 'Permissionless',
+        description: 'Relayers compete to fill deposits and receive repayment.',
+      },
+      settlement: {
+        value: 'Optimistic',
+        description:
+          'Relayer repayment is settled through the Across system and can be escalated to token voting via UMA.',
+      },
+    },
     detailedDescription: readProjectMarkdown('across', 'detailedDescription', {
       bondAmountFmt,
       finalizationDelayFmt,

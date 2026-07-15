@@ -1,11 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { PrivacyPriceRecord } from '@l2beat/database'
 import type { PriceProvider } from '@l2beat/shared'
-import {
-  CoingeckoId,
-  type RemovalConfiguration,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { CoingeckoId } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { createPrivacyConfigurationId } from '../../../config/features/privacy'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
@@ -13,6 +9,8 @@ import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexe
 import type {
   Configuration,
   ManagedMultiIndexerOptions,
+  TrimRemovalConfiguration,
+  WipeRemovalConfiguration,
 } from '../../../tools/uif/multi/types'
 import type { PrivacyPriceIndexerConfig } from '../types'
 
@@ -122,19 +120,32 @@ export class PrivacyPriceIndexer extends ManagedMultiIndexer<PrivacyPriceIndexer
     }
   }
 
-  override async removeData(configurations: RemovalConfiguration[]) {
+  override async wipeData(configurations: WipeRemovalConfiguration[]) {
+    const deletedRecords = await this.$.db.privacyPrice.deleteByConfigIds(
+      configurations.map((c) => c.id),
+    )
+
+    if (deletedRecords > 0) {
+      this.logger.info('Wiped privacy price records for configurations', {
+        configurations: configurations.length,
+        deletedRecords,
+      })
+    }
+  }
+
+  override async trimData(configurations: TrimRemovalConfiguration[]) {
     if (configurations.length === 0) return
 
     const configs = configurations.map((c) => ({
       configurationId: c.id,
-      fromInclusive: UnixTime(c.from),
-      toInclusive: UnixTime(c.to),
+      fromInclusive: c.range[0],
+      toInclusive: c.range[1],
     }))
 
     const deletedRecords = await this.$.db.privacyPrice.deleteByConfigs(configs)
 
     if (deletedRecords > 0) {
-      this.logger.info('Deleted privacy price records for configurations', {
+      this.logger.info('Trimmed privacy price records for configurations', {
         configurations: configurations.length,
         deletedRecords,
       })

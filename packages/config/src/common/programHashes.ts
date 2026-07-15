@@ -134,12 +134,19 @@ const RAIKO2_GUEST_DIGEST_STEPS = (
   commitHash = 'a3fb34237daeddab65b965c33b2f85570dd3ff74',
   options: {
     enableDigestsFeature?: boolean
+    forceRebuild?: boolean
     reference?: string
   } = {},
 ) => {
   const guestDigestsCommand = options.enableDigestsFeature
     ? 'cargo run -r -p xtask-build-guest --bin guest-digests --features digests --'
     : 'cargo run -p xtask-build-guest --bin guest-digests --'
+  const buildGuestCommand = options.forceRebuild
+    ? 'just build-guest all --force'
+    : 'just build-guest all'
+  const buildGuestCargoCommand = options.forceRebuild
+    ? 'cargo run -r -p xtask -- build-guest all --force'
+    : 'cargo run -r -p xtask-build-guest --bin xtask-build-guest -- all'
   const reference = options.reference ? `\n\n${options.reference}` : ''
 
   return `
@@ -154,11 +161,11 @@ git checkout ${version}
 Commit hash should be \`${commitHash}\`.
 2. From the \`raiko2\` root dir, rebuild the Shasta guest ELFs from source:
 \`\`\`
-just build-guest all
+${buildGuestCommand}
 \`\`\`
 If \`just\` is unavailable, run the equivalent command:
 \`\`\`
-cargo run -r -p xtask-build-guest --bin xtask-build-guest -- all
+${buildGuestCargoCommand}
 \`\`\`
 This exports fresh ELFs to \`crates/guests/elf\`.
 3. Generate the guest digest summary from the rebuilt ELFs:
@@ -176,6 +183,15 @@ const RAIKO2_V051_GUEST_DIGEST_OPTIONS = {
   enableDigestsFeature: true,
   reference:
     'Reference: [Taiko Proposal0017 recovery bundle](https://github.com/taikoxyz/taiko-mono/blob/0603e070589a091db61e95b883a007bd271886ac/packages/protocol/script/layer1/proposals/Proposal0017.md) from [taiko-mono#21833](https://github.com/taikoxyz/taiko-mono/pull/21833).',
+}
+
+const RAIKO2_V060_COMMIT_HASH = 'a9e88a4bd9e38383d601685d74e9d977531c909f'
+
+const RAIKO2_V060_GUEST_DIGEST_OPTIONS = {
+  enableDigestsFeature: true,
+  forceRebuild: true,
+  reference:
+    'References: [Raiko2 v0.6.0 release](https://github.com/taikoxyz/raiko2/releases/tag/v0.6.0) and [Taiko Proposal0019 Unzen hardfork bundle](https://github.com/taikoxyz/taiko-mono/blob/9bd8e263065be0c553e41c6d4a82f978bdce80ed/packages/protocol/script/layer1/proposals/Proposal0019.md) from [taiko-mono#21935](https://github.com/taikoxyz/taiko-mono/pull/21935).',
 }
 
 const KAILUA_FP = (version: string, descAppendix = '') => ({
@@ -912,6 +928,62 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       RAIKO2_V051_GUEST_DIGEST_OPTIONS,
     ),
   },
+  '0x00ad090221a8fa0f09e1be7a53feb67be010f01310d4b2314a69d10152ee1ce0': {
+    ...RAIKO2_PROPOSAL('v0.6.0'),
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.6.0/guests/sp1/src/shasta_proposal.rs',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'sp1_shasta_proposal',
+      'vk_bn254',
+      'v0.6.0',
+      RAIKO2_V060_COMMIT_HASH,
+      RAIKO2_V060_GUEST_DIGEST_OPTIONS,
+    ),
+  },
+  '0x568481106a3e83c23c37cf4a3feb67be008780984352c8c514d3a20252ee1ce0': {
+    ...RAIKO2_PROPOSAL('v0.6.0'),
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.6.0/guests/sp1/src/shasta_proposal.rs',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'sp1_shasta_proposal',
+      'vk_hash_bytes',
+      'v0.6.0',
+      RAIKO2_V060_COMMIT_HASH,
+      RAIKO2_V060_GUEST_DIGEST_OPTIONS,
+    ),
+  },
+  '0x000b11691352e55fcf64f62620cefaa700161600093f2751032fe71ea912264d': {
+    ...RAIKO2_AGG('v0.6.0'),
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.6.0/guests/sp1/src/shasta_aggregation.rs',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'sp1_shasta_aggregation',
+      'vk_bn254',
+      'v0.6.0',
+      RAIKO2_V060_COMMIT_HASH,
+      RAIKO2_V060_GUEST_DIGEST_OPTIONS,
+    ),
+  },
+  '0x0588b48954b957f36c9ec4c40cefaa7000b0b00024fc9d44065fce3d2912264d': {
+    ...RAIKO2_AGG('v0.6.0'),
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.6.0/guests/sp1/src/shasta_aggregation.rs',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'sp1_shasta_aggregation',
+      'vk_hash_bytes',
+      'v0.6.0',
+      RAIKO2_V060_COMMIT_HASH,
+      RAIKO2_V060_GUEST_DIGEST_OPTIONS,
+    ),
+  },
   '0x0040b6021bbe547fc651492bcc4eea12eaaa9b0a60086439206e27495ec6d6c3': {
     ...RAIKO_AGG('v1.10.4'),
     proverSystemProject: ProjectId('sp1turbo'),
@@ -1165,6 +1237,14 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     ...KAILUA_FP('BOB'),
     verificationStatus: 'notVerified',
   },
+  '0xb2e2b1513e80ea1e8f998e51bf8e7754eec21dbd0463e0b6b115165ba6bac2bf': {
+    ...KAILUA_FP('v1.3.0'),
+    programUrl: 'https://github.com/boundless-xyz/kailua/tree/v1.3.0',
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0xb2e2b1513e80ea1e8f998e51bf8e7754eec21dbd0463e0b6b115165ba6bac2bf.md',
+    ),
+  },
   '0xf176eb82fbbb5d2d281a9cce459062bcdbe65f93d7156829b174fae2b4690c23': {
     // https://github.com/boundless-xyz/kailua/blob/dead453517c48240a221845640493b232255c907/book/src/setup.md
     ...KAILUA_FP('Risc0 v3.0.4, Kailua v1.1.8'),
@@ -1183,6 +1263,18 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
   '0x4aca4abde3db9c42152b4d9eb359e6030111c34ba68f7c68160fce93ed5b7b25': {
     ...KAILUA_FP('BOB', 'This version adds op-contracts v5 compatibility.'),
     verificationStatus: 'notVerified',
+  },
+  '0xd3c097dfec583bb305eefcb5dcddc313b072e372cee66e13492c37fb50e6a90b': {
+    // https://github.com/boundless-xyz/kailua/tree/a11c73fec58f55010b4c6feec0d5c73dd9346f45
+    ...KAILUA_FP(
+      'Risc0 v3.0.5, Kailua v1.3.0 (Hokulea)',
+      'This is the Hokulea variant of the Kailua guest, used by projects that post data availability to EigenDA.',
+    ),
+    programUrl: 'https://github.com/boundless-xyz/kailua/releases/tag/v1.3.0',
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0xd3c097dfec583bb305eefcb5dcddc313b072e372cee66e13492c37fb50e6a90b.md',
+    ),
   },
   '0xf0ce5d15fa89991210ca2667b7f7a8bb740ce551c0f2b20cc76f9debc55d22c2': {
     ...KAILUA_FP('MegaETH'),
@@ -1264,6 +1356,34 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       'v0.5.1',
       RAIKO2_V051_COMMIT_HASH,
       RAIKO2_V051_GUEST_DIGEST_OPTIONS,
+    ),
+  },
+  '0x5a818b4c7dc80e9ba85d55492c20c263c67238724e3982f76d15a158e501210b': {
+    ...RAIKO2_PROPOSAL('v0.6.0'),
+    proverSystemProject: ProjectId('risc0'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.6.0/guests/risc0/src/shasta_proposal.rs',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'risc0_shasta_proposal',
+      'image_id',
+      'v0.6.0',
+      RAIKO2_V060_COMMIT_HASH,
+      RAIKO2_V060_GUEST_DIGEST_OPTIONS,
+    ),
+  },
+  '0x9cfcc1b34a98853c3c5873a4d456726e528246f7f03a4ea35f27c2543aa6e7f0': {
+    ...RAIKO2_AGG('v0.6.0'),
+    proverSystemProject: ProjectId('risc0'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.6.0/guests/risc0/src/shasta_aggregation.rs',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'risc0_shasta_aggregation',
+      'image_id',
+      'v0.6.0',
+      RAIKO2_V060_COMMIT_HASH,
+      RAIKO2_V060_GUEST_DIGEST_OPTIONS,
     ),
   },
   '0xcecc85819e15d173c2991577727525b136e820728f7aaaede612f1281cac2249': {
@@ -1515,6 +1635,16 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
         'common/programHashes/3480185788024326007166778030599498673382667448173974782477620863541158415714.md',
       ),
     },
+  '1050253032170513549151251823521174837478197699740478552102884446098263561922':
+    {
+      ...SHARP_AGG('stwo'),
+      programUrl:
+        'https://github.com/starkware-libs/sequencer/tree/APOLLO-0.14.3-RC.11/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core/aggregator',
+      verificationStatus: 'successful',
+      verificationSteps: readMarkdown(
+        'common/programHashes/1050253032170513549151251823521174837478197699740478552102884446098263561922.md',
+      ),
+    },
   '2571508110958925737463010241874806654058743535666147712534445437599630018294':
     {
       ...SHARP_AGG('stwo'),
@@ -1543,6 +1673,16 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       verificationStatus: 'successful',
       verificationSteps: readMarkdown(
         'common/programHashes/760308386675154762009993173725077399730170358078020153308029499928875469870.md',
+      ),
+    },
+  '2006389624453304912912750132846114593020263069652857561377702883656839453432':
+    {
+      ...STARKNET_OS,
+      programUrl:
+        'https://github.com/starkware-libs/sequencer/tree/APOLLO-0.14.3-RC.11/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core/os',
+      verificationStatus: 'successful',
+      verificationSteps: readMarkdown(
+        'common/programHashes/2006389624453304912912750132846114593020263069652857561377702883656839453432.md',
       ),
     },
   '2733003247060056328192560178934419513655729851806095615814023997114795707702':

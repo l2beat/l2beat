@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xc8eb9dafc1e8964d9a2f249e41f79449d9ca483e
+
+# Diff at Wed, 08 Jul 2026 11:24:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@41e54e24b48ee5dc5e63086324d02428320c1565 block: 1782979130
+- current timestamp: 1783509666
+
+## Description
+
+Quota changes 150K -> 250K per day for stables (USDT and USDC).
+
+## Watched changes
+
+```diff
+    contract QuotaManager (eth:0xBaCb003f0B13CeAF09Eb9Baf5915A640BD4Bc6cC) [taiko/QuotaManager] {
+    +++ description: Defines withdrawal quotas for ETH and ERC20 releases from the shared bridge. A token quota of zero means unlimited withdrawals for that token.
+      values.tokenQuotas.3.quota:
+-        "150,000"
++        "250,000"
+      values.tokenQuotas.4.quota:
+-        "150,000"
++        "250,000"
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) [taiko/PreconfWhitelist] {
+    +++ description: Contains the whitelist of addresses eligible to propose batches on L1 and issue preconfirmations. It dynamically selects a single active operator for each epoch using a delayed Ethereum beacon block root as randomness. There is no fallback proposer path in this contract: non-selected operators cannot propose for the current epoch.
+      values.operatorMapping.2:
++        "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d"
+    }
+```
+
 Generated with discovered.json: 0xc1e626bc3cfeac450c7b7a901cc355aad349f7c6
 
 # Diff at Thu, 02 Jul 2026 08:00:24 GMT:

@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
+import { ProtocolsByVolumeTable } from '~/pages/interop/components/flows/protocols-by-volume/ProtocolsByVolumeTable'
 import { InteropTransferSizeBreakdown } from '~/pages/interop/components/InteropTransferSizeBreakdown'
 import { InteropTransferTypeBreakdown } from '~/pages/interop/components/InteropTransferTypeBreakdown'
 import type { InteropScope } from '~/server/features/scaling/interop/types'
@@ -44,6 +45,18 @@ export function InteropBridgeSubsections({
           <InteropTransferTypeBreakdown byType={data?.transferType} />
         </div>
       </div>
+
+      <InteropCollapsibleSubsection
+        id="interop-bridges"
+        title="Top bridges by volume"
+      >
+        <ProtocolsByVolumeTable
+          protocols={data?.protocols ?? []}
+          selectedChains={chains}
+          anchorChain={anchorChain}
+          isLoading={isLoading}
+        />
+      </InteropCollapsibleSubsection>
 
       <InteropCollapsibleSubsection
         id="interop-tokens"

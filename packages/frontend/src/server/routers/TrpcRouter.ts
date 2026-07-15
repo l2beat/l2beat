@@ -89,6 +89,8 @@ function getLogFn(error: TRPCError) {
   switch (error.code) {
     case 'UNAUTHORIZED':
     case 'BAD_REQUEST':
+    // We had plenty of 404s for some reason, so I demoted it to warn
+    case 'NOT_FOUND':
       return logger.warn
     case 'PARSE_ERROR':
     case 'INTERNAL_SERVER_ERROR':
@@ -98,7 +100,6 @@ function getLogFn(error: TRPCError) {
     case 'GATEWAY_TIMEOUT':
     case 'PAYMENT_REQUIRED':
     case 'FORBIDDEN':
-    case 'NOT_FOUND':
     case 'METHOD_NOT_SUPPORTED':
     case 'TIMEOUT':
     case 'CONFLICT':

@@ -7,7 +7,6 @@ import type {
   ProjectPermissions,
   ProjectStatuses,
   ProjectZkCatalogInfo,
-  TrustedSetup,
 } from '@l2beat/config'
 import type {
   PrivacyFlowBucketTotalRecord,
@@ -21,7 +20,6 @@ import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type { PrivacyAsset, PrivacyBucket, PrivacyProject } from './types'
-import { getPrivacyTrustedSetup } from './utils/getPrivacyTrustedSetup'
 
 interface PrivacyProjectFlowData {
   totals: PrivacyFlowBucketTotalRecord[]
@@ -38,7 +36,6 @@ export interface PrivacyProjectDetails {
   contracts?: ProjectContracts
   permissions?: Record<string, ProjectPermissions>
   statuses: ProjectStatuses
-  trustedSetup: TrustedSetup
   zkCatalogInfo?: ProjectZkCatalogInfo
   exitWindow: PrivacyExitWindow
   privacy: PrivacySummaryValue
@@ -48,7 +45,6 @@ export interface PrivacyProjectDetails {
   attributes: PrivacyAttribute[]
   assets: PrivacyAsset[]
   summary: {
-    totalValueLockedUsd: number
     bucketCount: number
     deposits: {
       total: number
@@ -106,11 +102,6 @@ export async function getPrivacyProjectDetails(
       tvlBySymbol.set(tvlToken.symbol, existing + tv.valueForProject)
     }
   }
-  const projectTotalTvl = tokenValues.reduce(
-    (sum, tv) => sum + tv.valueForProject,
-    0,
-  )
-
   const totalIndex = new Map<string, PrivacyFlowBucketTotalRecord>()
   for (const total of totals) {
     totalIndex.set(`${total.projectId}::${total.bucketId}`, total)
@@ -261,7 +252,6 @@ export async function getPrivacyProjectDetails(
     contracts: project.contracts,
     permissions: project.permissions,
     statuses: project.statuses,
-    trustedSetup: getPrivacyTrustedSetup(project.zkCatalogInfo),
     zkCatalogInfo: project.zkCatalogInfo,
     exitWindow: project.privacyInfo.exitWindow,
     privacy: project.privacyInfo.privacy,
@@ -271,7 +261,6 @@ export async function getPrivacyProjectDetails(
     attributes: project.privacyInfo.attributes ?? [],
     assets: orderedAssets,
     summary: {
-      totalValueLockedUsd: projectTotalTvl,
       bucketCount: summaryBucketCount,
       deposits: {
         total: summaryDepositsTotal,

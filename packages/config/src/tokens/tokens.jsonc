@@ -2804,7 +2804,7 @@
       "symbol": "RAIN",
       "address": "0x25118290e6A5f4139381D072181157035864099d",
       "source": "native",
-      "supply": "circulatingSupply"
+      "supply": "circulatingSupply" // overridden by a custom TVS formula excluding controlled allocation balances
     },
     {
       "symbol": "syrupUSDC",

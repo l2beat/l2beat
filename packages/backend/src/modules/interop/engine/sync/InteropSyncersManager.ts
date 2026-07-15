@@ -1,5 +1,9 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { Database } from '@l2beat/database'
+import type {
+  Database,
+  InteropPluginSyncedRangeRecord,
+  InteropPluginSyncStateRecord,
+} from '@l2beat/database'
 import {
   EthRpcClient,
   Http,
@@ -25,14 +29,18 @@ export type BlockProcessingStat = {
   avgCpuMs: number
 }
 
+export type PluginChainStatus = 'active' | 'disabled' | 'stale'
+
 export type PluginSyncStatus = {
   pluginName: string
   chain: string
+  chainStatus: PluginChainStatus
   syncMode?: string
   toBlock?: bigint
   toTimestamp?: number
   lastError?: string
   resyncRequestedFrom?: number
+  blocksAggregation: boolean
 }
 
 export class InteropSyncersManager {
@@ -43,16 +51,19 @@ export class InteropSyncersManager {
     UpsertMap<LongChainName, InteropEventSyncer>
   >()
   private dataCleaners: InteropDataCleaner[] = []
+  private readonly knownChains: Set<string>
 
   constructor(
     readonly pluginClusters: PluginCluster[],
     enabledChains: LongChainName[],
+    knownChains: string[],
     chainConfigs: ChainApi[],
     eventStore: InteropEventStore,
     private readonly db: Database,
     private readonly logger: Logger,
     private readonly rpcMetricsAggregator: RpcMetricsAggregator,
   ) {
+    this.knownChains = new Set(knownChains)
     for (const cluster of pluginClusters) {
       const resyncablePlugins = cluster.plugins.filter(isPluginResyncable)
       if (resyncablePlugins.length === 0) {
@@ -136,6 +147,43 @@ export class InteropSyncersManager {
     )
     const threshold = target - tolerance
 
+    const { pending, missing, stale } = this.findAggregationBlockers(
+      rangeByKey,
+      stateByKey,
+      target,
+      tolerance,
+    )
+
+    if (missing.length > 0) {
+      this.logger.error('Syncers have no synced range', { target, missing })
+    }
+    if (stale.length > 0) {
+      this.logger.warn('Syncers are behind the aggregation threshold', {
+        target,
+        threshold,
+        stale,
+      })
+    }
+    if (pending.length > 0) {
+      this.logger.warn('Syncers have a pending wipe or resync', { pending })
+    }
+
+    return pending.length === 0 && missing.length === 0 && stale.length === 0
+  }
+
+  /**
+   * Finds registered syncers that would block aggregation at `target`,
+   * grouped by reason: a pending wipe/resync, no persisted synced range, or a
+   * range older than `target - tolerance`. Syncers not registered in this
+   * manager never block aggregation. Keys are `pluginName:chain`.
+   */
+  private findAggregationBlockers(
+    rangeByKey: Map<string, InteropPluginSyncedRangeRecord>,
+    stateByKey: Map<string, InteropPluginSyncStateRecord>,
+    target: UnixTime,
+    tolerance: number,
+  ) {
+    const threshold = target - tolerance
     const pending: string[] = []
     const missing: string[] = []
     const stale: { syncer: string; toTimestamp: UnixTime }[] = []
@@ -157,21 +205,7 @@ export class InteropSyncersManager {
       }
     }
 
-    if (missing.length > 0) {
-      this.logger.error('Syncers have no synced range', { target, missing })
-    }
-    if (stale.length > 0) {
-      this.logger.warn('Syncers are behind the aggregation threshold', {
-        target,
-        threshold,
-        stale,
-      })
-    }
-    if (pending.length > 0) {
-      this.logger.warn('Syncers have a pending wipe or resync', { pending })
-    }
-
-    return pending.length === 0 && missing.length === 0 && stale.length === 0
+    return { pending, missing, stale }
   }
 
   getSyncer(
@@ -179,6 +213,16 @@ export class InteropSyncersManager {
     chain: LongChainName,
   ): InteropEventSyncer | undefined {
     return this.syncers.get(plugin)?.get(chain)
+  }
+
+  private getChainStatus(pluginName: string, chain: string): PluginChainStatus {
+    if (this.getSyncer(pluginName, chain as LongChainName)) {
+      return 'active'
+    }
+    if (this.syncers.has(pluginName) && this.knownChains.has(chain)) {
+      return 'disabled'
+    }
+    return 'stale'
   }
 
   getChainsForPlugin(pluginName: string): LongChainName[] {
@@ -257,12 +301,37 @@ export class InteropSyncersManager {
     return result
   }
 
-  async getPluginSyncStatuses(): Promise<PluginSyncStatus[]> {
+  /**
+   * `aggregationTarget` and `freshnessTolerance` should mirror what the
+   * aggregating indexer passes to `areSyncersFreshEnough` so that
+   * `blocksAggregation` reflects whether a row would make it skip an hour.
+   */
+  async getPluginSyncStatuses(
+    aggregationTarget: UnixTime,
+    freshnessTolerance: number,
+  ): Promise<PluginSyncStatus[]> {
     const syncedRanges = await this.db.interopPluginSyncedRange.getAll()
     const syncStates = await this.db.interopPluginSyncState.getAll()
+    const rangeByKey = new Map(
+      syncedRanges.map((range) => [
+        `${range.pluginName}:${range.chain}`,
+        range,
+      ]),
+    )
     const stateByKey = new Map(
       syncStates.map((state) => [`${state.pluginName}:${state.chain}`, state]),
     )
+    const { pending, missing, stale } = this.findAggregationBlockers(
+      rangeByKey,
+      stateByKey,
+      aggregationTarget,
+      freshnessTolerance,
+    )
+    const blockers = new Set([
+      ...pending,
+      ...missing,
+      ...stale.map((s) => s.syncer),
+    ])
     const seen = new Set<string>()
     const rows: PluginSyncStatus[] = []
 
@@ -277,11 +346,13 @@ export class InteropSyncersManager {
       rows.push({
         pluginName: range.pluginName,
         chain: range.chain,
-        syncMode: `${syncer?.state.name}-${syncer?.state.status}`,
+        chainStatus: this.getChainStatus(range.pluginName, range.chain),
+        syncMode: formatSyncMode(syncer),
         toBlock: range.toBlock,
         toTimestamp: range.toTimestamp,
         lastError: state?.lastError ?? undefined,
         resyncRequestedFrom: state?.resyncRequestedFrom ?? undefined,
+        blocksAggregation: blockers.has(key),
       })
     }
 
@@ -298,8 +369,10 @@ export class InteropSyncersManager {
       rows.push({
         pluginName: state.pluginName,
         chain: state.chain,
-        syncMode: `${syncer?.state.name}-${syncer?.state.status}`,
+        chainStatus: this.getChainStatus(state.pluginName, state.chain),
+        syncMode: formatSyncMode(syncer),
         lastError: state.lastError ?? undefined,
+        blocksAggregation: blockers.has(key),
       })
     }
 
@@ -314,7 +387,9 @@ export class InteropSyncersManager {
         rows.push({
           pluginName: clusterName,
           chain: syncer.chain,
-          syncMode: `${syncer?.state.name}-${syncer?.state.status}`,
+          chainStatus: 'active',
+          syncMode: formatSyncMode(syncer),
+          blocksAggregation: blockers.has(key),
         })
       }
     }
@@ -329,4 +404,10 @@ export class InteropSyncersManager {
 
     return rows
   }
+}
+
+function formatSyncMode(
+  syncer: InteropEventSyncer | undefined,
+): string | undefined {
+  return syncer ? `${syncer.state.name}-${syncer.state.status}` : undefined
 }

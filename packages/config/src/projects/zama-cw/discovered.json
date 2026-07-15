@@ -1,7 +1,7 @@
 {
   "name": "zama-cw",
-  "timestamp": 1782746392,
-  "configHash": "0x2de8b851098fee269a3d58b4035085adddb34cb4505e54af33abe952f4fc0b44",
+  "timestamp": 1783927795,
+  "configHash": "0x9966c7120d6e80774741b8e28cd70224af776aa48ce73e46d22e41344c8dadd2",
   "entries": [
     {
       "address": "eth:0x0321a4Ee7E843A83Fa314f4e76E756864CBdE62e",
@@ -225,19 +225,20 @@
       "name": "HCULimit",
       "address": "eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2",
       "type": "Contract",
-      "template": "zama/ZamaHCULimit",
+      "template": "zama/ZamaHCULimit_v0_2_0",
       "sourceHashes": [
         "0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3",
-        "0xb4b32e3ee98a51750d9ec0af3a9c599dbb6e097cdf4f55f37e198a75f0f2e5eb"
+        "0xc52e1b93c97602e6da1f1925e14fc5454426a778875655ec17910be5e217b98e"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Tracks and enforces homomorphic computation unit limits for FHEVM operation requests.",
+      "description": "Tracks and enforces per-transaction and per-block homomorphic computation unit limits for FHEVM operation requests.",
+      "ignoreInWatchMode": ["getBlockMeter"],
       "deployerAddress": "eth:0xFAa70BBE20b7a7a14E9bb5F162C747cb4B991f91",
       "sinceTimestamp": 1763549531,
       "sinceBlock": 23832652,
       "values": {
         "$admin": "eth:0x0000000000000000000000000000000000000000",
-        "$implementation": "eth:0x4E4329F10f7EE88a5dDB13716B8bE00c077CBeb6",
+        "$implementation": "eth:0x0F2B7e8F19ADc874F21e27ADAA4B22FC00a0B442",
         "$pastUpgrades": [
           [
             "2025-11-19T10:52:11.000Z",
@@ -248,13 +249,23 @@
             "2025-11-19T10:54:23.000Z",
             "0xb5ab1dbab2a11947fad8475b643fb3ecf7710a1d09bf250038635a0198c7fc0d",
             ["eth:0x4E4329F10f7EE88a5dDB13716B8bE00c077CBeb6"]
+          ],
+          [
+            "2026-07-10T08:34:11.000Z",
+            "0xec2212fb2d35b72388507e5fe9c218c97512b943b5f28cedbfba35b7ac9bd224",
+            ["eth:0x0F2B7e8F19ADc874F21e27ADAA4B22FC00a0B442"]
           ]
         ],
-        "$upgradeCount": 2,
+        "$upgradeCount": 3,
         "aclAddress": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
         "aclOwner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+        "blockHCUWhitelist": [],
+        "getBlockMeter": { "blockNumber": 25522225, "usedHCU": 0 },
         "getFHEVMExecutorAddress": "eth:0xD82385dADa1ae3E969447f20A3164F6213100e75",
-        "getVersion": "HCULimit v0.1.0",
+        "getGlobalHCUCapPerBlock": 281474976710655,
+        "getMaxHCUDepthPerTx": 5000000,
+        "getMaxHCUPerTx": 20000000,
+        "getVersion": "HCULimit v0.2.0",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "fieldMeta": {
@@ -270,11 +281,34 @@
         "aclAddress": {
           "description": "ACL contract resolved through FHEVMExecutor and used by onlyACLOwner checks.",
           "type": "EXTERNAL"
+        },
+        "getGlobalHCUCapPerBlock": {
+          "severity": "HIGH",
+          "description": "Maximum HCU consumed by non-whitelisted callers in one block.",
+          "type": "RISK_PARAMETER"
+        },
+        "getMaxHCUDepthPerTx": {
+          "severity": "HIGH",
+          "description": "Maximum sequential HCU depth allowed in one transaction.",
+          "type": "RISK_PARAMETER"
+        },
+        "getMaxHCUPerTx": {
+          "severity": "HIGH",
+          "description": "Maximum total HCU allowed in one transaction.",
+          "type": "RISK_PARAMETER"
+        },
+        "blockHCUWhitelist": {
+          "severity": "HIGH",
+          "description": "Callers that bypass the global per-block HCU cap, reconstructed from whitelist events.",
+          "type": "PERMISSION"
+        },
+        "getBlockMeter": {
+          "description": "HCU consumed by non-whitelisted callers in the current block."
         }
       },
       "implementationNames": {
         "eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2": "ERC1967Proxy",
-        "eth:0x4E4329F10f7EE88a5dDB13716B8bE00c077CBeb6": "HCULimit"
+        "eth:0x0F2B7e8F19ADc874F21e27ADAA4B22FC00a0B442": "HCULimit"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -436,6 +470,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.",
+      "ignoreInWatchMode": ["confidentialTotalSupply", "inferredTotalSupply"],
       "deployerAddress": "eth:0xB15981a567C2c3fF472132505265BBe74576443c",
       "sinceTimestamp": 1781877707,
       "sinceBlock": 25352089,
@@ -457,7 +492,7 @@
         "$upgradeCount": 2,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0x1d247641eef464dca8e368ccec49b72211e780d6eaff00000000000000010500",
+        "confidentialTotalSupply": "0xb4ebd0ceaad40e91c0fe3f15b14954ea81efc6f36eff00000000000000010500",
         "constructorArgs": [
           "eth:0xAea1d2cc69aF93CA0fdd34426E74Ad7cB19E9745",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000beef00a59b577423653a1526c7009bde103f542b000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000017436f6e666964656e7469616c20737465616b6355534443000000000000000000000000000000000000000000000000000000000000000000000000000000000b63737465616b635553444300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000ae646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c20737465616b6355534443222c2273796d626f6c223a2263737465616b6355534443222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f6620737465616b635553444320736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d000000000000000000000000000000000000"
@@ -471,7 +506,7 @@
           "isSet": false,
           "selector": "0x00000000"
         },
-        "inferredTotalSupply": 12984382494676,
+        "inferredTotalSupply": 23973474310697,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential steakcUSDC",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -652,7 +687,7 @@
             ]
           }
         },
-        "clock": 25424176,
+        "clock": 25522225,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -688,8 +723,8 @@
         "rewardRate": "6970000000000000000",
         "stakingToken": "eth:0xA12CC123ba206d4031D1c7f6223D1C2Ec249f4f3",
         "symbol": "stZAMA-Coprocessor",
-        "totalStakedWeight": 53534157844508,
-        "totalSupply": "573519732384224507839994342",
+        "totalStakedWeight": 56439254386756,
+        "totalSupply": "637217866229888221432816032",
         "unstakeCooldownPeriod": 604800,
         "unstakeCooldownPeriod_fmt": "7d",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -777,6 +812,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.",
+      "ignoreInWatchMode": ["confidentialTotalSupply", "inferredTotalSupply"],
       "deployerAddress": "eth:0xB15981a567C2c3fF472132505265BBe74576443c",
       "sinceTimestamp": 1772116091,
       "sinceBlock": 24541690,
@@ -871,19 +907,19 @@
       "name": "KMSVerifier",
       "address": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
       "type": "Contract",
-      "template": "zama/ZamaKMSVerifier",
+      "template": "zama/ZamaKMSVerifier_v0_2_0",
       "sourceHashes": [
         "0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3",
-        "0xe6773e8f1549070f8e0fcae01d4bcf98332a43c1b6f2d4eca1a108295c327d8e"
+        "0xa40292fe461810a065f80e305f6b85ab3ca2cfd416dc965d4791a111554cf638"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Ethereum host-chain verifier for public decryption results produced through the Zama Gateway Decryption contract. Confidential token wrappers use it before accepting decrypted values.",
+      "description": "Ethereum host-chain verifier for public decryption results produced through the Zama Gateway Decryption contract. Confidential token wrappers accept a decrypted value when it is signed by the threshold of the current or any retained non-destroyed KMS context.",
       "deployerAddress": "eth:0xFAa70BBE20b7a7a14E9bb5F162C747cb4B991f91",
       "sinceTimestamp": 1763549507,
       "sinceBlock": 23832650,
       "values": {
         "$admin": "eth:0x0000000000000000000000000000000000000000",
-        "$implementation": "eth:0x8210A6c69FAc2e9856C7a19Ee70b26cFa3A4F0E2",
+        "$implementation": "eth:0xd0d0C7E1bc1E2F6Cd00E3b4B1083DdD9969155FD",
         "$pastUpgrades": [
           [
             "2025-11-19T10:51:47.000Z",
@@ -894,10 +930,16 @@
             "2025-11-19T10:53:59.000Z",
             "0x7e4b4f2daadb3e6752b8c1fc896cba229da788a227041dfdc2660122ca1a7568",
             ["eth:0x8210A6c69FAc2e9856C7a19Ee70b26cFa3A4F0E2"]
+          ],
+          [
+            "2026-07-10T08:34:11.000Z",
+            "0xec2212fb2d35b72388507e5fe9c218c97512b943b5f28cedbfba35b7ac9bd224",
+            ["eth:0xd0d0C7E1bc1E2F6Cd00E3b4B1083DdD9969155FD"]
           ]
         ],
-        "$upgradeCount": 2,
+        "$upgradeCount": 3,
         "aclOwner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+        "createdKmsContexts": [],
         "DECRYPTION_RESULT_TYPEHASH": "0x89bac15e5ba205584832145601e359431e80fb9fb331ba5a22058132d525c794",
         "EIP712_PUBLIC_DECRYPT_TYPE": "PublicDecryptVerification(bytes32[] ctHandles,bytes decryptedResult,bytes extraData)",
         "eip712Domain": {
@@ -910,6 +952,7 @@
           "extensions": []
         },
         "gatewayDecryption": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+        "getCurrentKmsContextId": "3166189940082864718613269121331309980362851143201109172953918312716374638593",
         "getKmsSigners": [
           "eth:0xe9f7ecfF21a2e0Ca58eA26ae869FEF38ab49ed6f",
           "eth:0xdC472efa1642D5afB684aAaa546E22FB24AAB965",
@@ -926,23 +969,60 @@
           "eth:0xB7978e602D2AF68258dA614AF949E014BF0DE0eb"
         ],
         "getThreshold": 7,
-        "getVersion": "KMSVerifier v0.1.0",
+        "getVersion": "KMSVerifier v0.2.0",
+        "initialKmsContextId": "3166189940082864718613269121331309980362851143201109172953918312716374638593",
+        "initialKmsContextSigners": [
+          "eth:0xe9f7ecfF21a2e0Ca58eA26ae869FEF38ab49ed6f",
+          "eth:0xdC472efa1642D5afB684aAaa546E22FB24AAB965",
+          "eth:0xbf05c17BEB0BF2F2c78Cd491A53a148e035279C3",
+          "eth:0x915055c5F05C0d88BCdf1e3DfBA18aBD2a18350f",
+          "eth:0x41b19EB4585450db79ac03ba9503106EC7895905",
+          "eth:0x6e5f02Cd4B33f0Cf4ED5326ac9eE25e5aA8c4921",
+          "eth:0x966188a1f697F6A1B5cfA51495DD8A8A7b5CdB8D",
+          "eth:0x5d0e7033774dD43eE546D49b72Bd0B561E52f7C8",
+          "eth:0xDFc9Dcb3D206AA164770874f36a4B5AD2EE5194f",
+          "eth:0x7C5Eeb4D8CED0101799B8Cc212eE874097364F58",
+          "eth:0x7C17BE232e5968BDa9516478B798b9E90D013fCC",
+          "eth:0x6016DCA5e91e62826e3FEA1Fb0a763602dc1E385",
+          "eth:0xB7978e602D2AF68258dA614AF949E014BF0DE0eb"
+        ],
+        "initialKmsContextThreshold": 7,
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "fieldMeta": {
         "aclOwner": {
           "severity": "HIGH",
-          "description": "Owner of the Zama ACL contract. This account is authorized by onlyACLOwner to rotate the KMS signer set and threshold.",
+          "description": "Owner of the Zama ACL contract. This account can create a new KMS signer context that immediately becomes the default verifier authority, and can destroy any non-current context.",
           "type": "PERMISSION"
         },
         "getKmsSigners": {
           "severity": "HIGH",
-          "description": "KMS signers accepted by KMSVerifier. The threshold number of these signers must sign public decryption results for the Gateway Decryption EIP-712 domain before wrappers accept the decrypted values.",
+          "description": "KMS signers in the current context. Permission coverage is also indexed through initialKmsContextSigners and createdKmsContexts so superseded contexts remain visible.",
+          "type": "PERMISSION"
+        },
+        "initialKmsContextId": {
+          "severity": "HIGH",
+          "description": "Identifier of the first v0.2 KMS context created from the source-defined context counter during initialization or migration.",
+          "type": "RISK_PARAMETER"
+        },
+        "initialKmsContextSigners": {
+          "severity": "HIGH",
+          "description": "Signers in the first v0.2 KMS context. This code-defined context remains authorized for public decryption proofs after later rotations unless the ACL owner explicitly destroys it.",
+          "type": "PERMISSION"
+        },
+        "createdKmsContexts": {
+          "severity": "HIGH",
+          "description": "Non-destroyed KMS contexts created after the v0.2 migration, reconstructed from context creation and destruction events. Each context is an immutable signer and threshold snapshot that can attest results for any ciphertext handle; it is not scoped to ciphertext age or key ID.",
           "type": "PERMISSION"
         },
         "getThreshold": {
           "severity": "HIGH",
-          "description": "Minimum number of configured KMS signer signatures required to accept a public decryption result.",
+          "description": "Minimum number of KMS signatures from the current context required to accept a public decryption result. Retained contexts keep their own immutable thresholds.",
+          "type": "RISK_PARAMETER"
+        },
+        "getCurrentKmsContextId": {
+          "severity": "HIGH",
+          "description": "Identifier of the context used when proof extraData is empty or starts with version 0. Version 1 extraData can explicitly select any non-destroyed historical context, including for ciphertexts created after that context was superseded.",
           "type": "RISK_PARAMETER"
         },
         "gatewayDecryption": {
@@ -954,11 +1034,16 @@
           "severity": "HIGH",
           "description": "Cross-chain EIP-712 source domain used when verifying KMS signatures over public decryption results. The verifying contract is on the Zama Gateway chain, not on Ethereum.",
           "type": "L2"
+        },
+        "initialKmsContextThreshold": {
+          "severity": "HIGH",
+          "description": "Immutable public-decryption threshold assigned to initialKmsContextId during the v0.2 migration. It remains security-critical after rotation while initialKmsContextSigners is non-empty; an empty signer list means the context was destroyed.",
+          "type": "RISK_PARAMETER"
         }
       },
       "implementationNames": {
         "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03": "ERC1967Proxy",
-        "eth:0x8210A6c69FAc2e9856C7a19Ee70b26cFa3A4F0E2": "KMSVerifier"
+        "eth:0xd0d0C7E1bc1E2F6Cd00E3b4B1083DdD9969155FD": "KMSVerifier"
       },
       "usedTypes": [
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "zama" } }
@@ -1012,6 +1097,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.",
+      "ignoreInWatchMode": ["confidentialTotalSupply", "inferredTotalSupply"],
       "deployerAddress": "eth:0xB15981a567C2c3fF472132505265BBe74576443c",
       "sinceTimestamp": 1766750867,
       "sinceBlock": 24096701,
@@ -1038,7 +1124,7 @@
         "$upgradeCount": 3,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0x09c0369bf6a775950ebc596f2d452f5c876daee980ff00000000000000010500",
+        "confidentialTotalSupply": "0xcffe6a2f4f4439a5369833b147fcf95952f216feadff00000000000000010500",
         "constructorArgs": [
           "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000a12cc123ba206d4031d1c7f6223d1c2ec249f4f3000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205a414d410000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005635a414d41000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c205a414d41222c2273796d626f6c223a22635a414d41222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205a414d4120736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -1052,7 +1138,7 @@
           "isSet": false,
           "selector": "0x00000000"
         },
-        "inferredTotalSupply": 186239443298691,
+        "inferredTotalSupply": 186240579349400,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential ZAMA",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -1118,6 +1204,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.",
+      "ignoreInWatchMode": ["confidentialTotalSupply", "inferredTotalSupply"],
       "deployerAddress": "eth:0xB15981a567C2c3fF472132505265BBe74576443c",
       "sinceTimestamp": 1766750855,
       "sinceBlock": 24096700,
@@ -1144,7 +1231,7 @@
         "$upgradeCount": 3,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0x487d028947ece4850efebbb019dd9ef42887cbf4b0ff00000000000000010500",
+        "confidentialTotalSupply": "0x4c2cdee317708d01e4e60338c1bd40f3ba2b6081cdff00000000000000010500",
         "constructorArgs": [
           "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000ba2c598e11ed093079cc324fca5bbba99f616e83000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c2042524f4e00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056342524f4e000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2042524f4e222c2273796d626f6c223a226342524f4e222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f662042524f4e20736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -1158,7 +1245,7 @@
           "isSet": false,
           "selector": "0x00000000"
         },
-        "inferredTotalSupply": 10320931873148,
+        "inferredTotalSupply": 10609146191145,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential BRON",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -1241,7 +1328,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 22,
+        "nonce": 23,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1324,7 +1411,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 303,
+        "nonce": 317,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1377,6 +1464,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.",
+      "ignoreInWatchMode": ["confidentialTotalSupply", "inferredTotalSupply"],
       "deployerAddress": "eth:0xB15981a567C2c3fF472132505265BBe74576443c",
       "sinceTimestamp": 1767000887,
       "sinceBlock": 24117438,
@@ -1483,6 +1571,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.",
+      "ignoreInWatchMode": ["confidentialTotalSupply", "inferredTotalSupply"],
       "deployerAddress": "eth:0xB15981a567C2c3fF472132505265BBe74576443c",
       "sinceTimestamp": 1766750831,
       "sinceBlock": 24096698,
@@ -1509,7 +1598,7 @@
         "$upgradeCount": 3,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0x52c55034039ef219ed372450e4e442254000f83c86ff00000000000000010500",
+        "confidentialTotalSupply": "0x1a9caab8f973b379533f6f0ed0950abbf6bb16b23bff00000000000000010500",
         "constructorArgs": [
           "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000dac17f958d2ee523a2206206994597c13d831ec7000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205553445400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056355534454000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2055534454222c2273796d626f6c223a226355534454222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205553445420736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -1523,7 +1612,7 @@
           "isSet": true,
           "selector": "0x59bf1abe"
         },
-        "inferredTotalSupply": 8036455803023,
+        "inferredTotalSupply": 8012901756696,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential USDT",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -1587,6 +1676,12 @@
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
+          "from": "eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2",
+          "description": "change the per-block and per-transaction HCU limits and manage callers that bypass the per-block limit.",
+          "role": ".aclOwner"
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458",
           "description": "block and unblock users, and transfer ownership.",
           "role": ".owner"
@@ -1612,7 +1707,7 @@
         {
           "permission": "interact",
           "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
-          "description": "set the KMS signer set and signature threshold used for public decryption verification.",
+          "description": "create KMS signer contexts with arbitrary signer sets and thresholds, and destroy non-current contexts. A malicious context can attest an inflated unwrap amount and drain pooled wrapper backing.",
           "role": ".aclOwner"
         },
         {
@@ -1672,7 +1767,7 @@
         {
           "permission": "interact",
           "from": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
-          "description": "transfer ACL ownership, unpause the ACL, block or unblock accounts, manage PauserSet membership, and update Zama verifier signer sets and thresholds.",
+          "description": "transfer ACL ownership, unpause the ACL, block or unblock accounts, manage PauserSet membership, and create or destroy KMSVerifier signer contexts.",
           "role": ".owner"
         },
         {
@@ -2048,6 +2143,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.",
+      "ignoreInWatchMode": ["confidentialTotalSupply", "inferredTotalSupply"],
       "deployerAddress": "eth:0xB15981a567C2c3fF472132505265BBe74576443c",
       "sinceTimestamp": 1780585031,
       "sinceBlock": 25244762,
@@ -2206,6 +2302,15 @@
       "receivedPermissions": [
         {
           "permission": "interact",
+          "from": "eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2",
+          "description": "change the per-block and per-transaction HCU limits and manage callers that bypass the per-block limit.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458",
           "description": "block and unblock users, and transfer ownership.",
           "role": ".owner",
@@ -2243,7 +2348,7 @@
         {
           "permission": "interact",
           "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
-          "description": "set the KMS signer set and signature threshold used for public decryption verification.",
+          "description": "create KMS signer contexts with arbitrary signer sets and thresholds, and destroy non-current contexts. A malicious context can attest an inflated unwrap amount and drain pooled wrapper backing.",
           "role": ".aclOwner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -2345,7 +2450,7 @@
         {
           "permission": "interact",
           "from": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
-          "description": "transfer ACL ownership, unpause the ACL, block or unblock accounts, manage PauserSet membership, and update Zama verifier signer sets and thresholds.",
+          "description": "transfer ACL ownership, unpause the ACL, block or unblock accounts, manage PauserSet membership, and create or destroy KMSVerifier signer contexts.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -2677,10 +2782,10 @@
       "name": "ACL",
       "address": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
       "type": "Contract",
-      "template": "zama/ZamaACL",
+      "template": "zama/ZamaACL_v0_3_0",
       "sourceHashes": [
         "0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3",
-        "0x5f835dee1c2a2676dc34ff636b1df73f1fe8b58073069d0a8df7687cd834f35f"
+        "0x47f47986a3024b31fa3caee357720f4fba4ea3fae419ff53eebe1a66e87d69ef"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Ethereum host-chain access-control registry for encrypted handles, storing handle allowances and delegation state for ciphertext references. Its public-decryption and user-delegation events are mirrored into the Gateway MultichainACL by coprocessor consensus.",
@@ -2689,7 +2794,7 @@
       "sinceBlock": 23832647,
       "values": {
         "$admin": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-        "$implementation": "eth:0x96B171e4f8eCda0FFdD128b319Fa185b14f99D76",
+        "$implementation": "eth:0x3F6D970d30E1FFE9657aa8072C82dA10eef1c3D6",
         "$pastUpgrades": [
           [
             "2025-11-19T10:51:11.000Z",
@@ -2705,13 +2810,18 @@
             "2025-12-09T16:10:11.000Z",
             "0x106ad2025c3f8b47cc0be8456e38f332345068a2c99ad8f12fc779c573676a05",
             ["eth:0x96B171e4f8eCda0FFdD128b319Fa185b14f99D76"]
+          ],
+          [
+            "2026-07-10T08:34:11.000Z",
+            "0xec2212fb2d35b72388507e5fe9c218c97512b943b5f28cedbfba35b7ac9bd224",
+            ["eth:0x3F6D970d30E1FFE9657aa8072C82dA10eef1c3D6"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "blockedAccounts": [],
         "getFHEVMExecutorAddress": "eth:0xD82385dADa1ae3E969447f20A3164F6213100e75",
         "getPauserSetAddress": "eth:0xbBfE1680b4a63ED05f7F80CE330BED7C992A586C",
-        "getVersion": "ACL v0.2.0",
+        "getVersion": "ACL v0.3.0",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
@@ -2749,7 +2859,7 @@
       },
       "implementationNames": {
         "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6": "ERC1967Proxy",
-        "eth:0x96B171e4f8eCda0FFdD128b319Fa185b14f99D76": "ACL"
+        "eth:0x3F6D970d30E1FFE9657aa8072C82dA10eef1c3D6": "ACL"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -2849,10 +2959,10 @@
       "name": "FHEVMExecutor",
       "address": "eth:0xD82385dADa1ae3E969447f20A3164F6213100e75",
       "type": "Contract",
-      "template": "zama/ZamaFHEVMExecutor",
+      "template": "zama/ZamaFHEVMExecutor_v0_3_0",
       "sourceHashes": [
         "0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3",
-        "0xc3b56811670be45b7f1aac864be6855e3875c8e449c2fe3cbb540143f0dacddb"
+        "0xf475718e9125acfc2f69d3c9cca8cedb9a15c644da7490f7f5fe0ae2690a77cc"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "FHEVM executor that accepts encrypted operation requests, accounts for computation usage, and stores ciphertext handles for operation results.",
@@ -2861,7 +2971,7 @@
       "sinceBlock": 23832649,
       "values": {
         "$admin": "eth:0x0000000000000000000000000000000000000000",
-        "$implementation": "eth:0xde3624dA8d9c45B57674cA0AcAC40630682211bb",
+        "$implementation": "eth:0xC38aAfCBB73Fd4bd6f995275079C4Add9C1687E5",
         "$pastUpgrades": [
           [
             "2025-11-19T10:51:35.000Z",
@@ -2877,15 +2987,20 @@
             "2026-03-21T08:53:11.000Z",
             "0xc43696e8168a63f43cf6aa8bee9651d3170d311fd07fd6dda6e4e51e18fd2b44",
             ["eth:0xde3624dA8d9c45B57674cA0AcAC40630682211bb"]
+          ],
+          [
+            "2026-07-10T08:34:11.000Z",
+            "0xec2212fb2d35b72388507e5fe9c218c97512b943b5f28cedbfba35b7ac9bd224",
+            ["eth:0xC38aAfCBB73Fd4bd6f995275079C4Add9C1687E5"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "aclOwner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
         "getACLAddress": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
         "getHandleVersion": 0,
         "getHCULimitAddress": "eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2",
         "getInputVerifierAddress": "eth:0xCe0FC2e05CFff1B719EFF7169f7D80Af770c8EA2",
-        "getVersion": "FHEVMExecutor v0.2.0",
+        "getVersion": "FHEVMExecutor v0.3.0",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "fieldMeta": {
@@ -2899,7 +3014,7 @@
           "type": "EXTERNAL"
         },
         "getHCULimitAddress": {
-          "description": "HCULimit contract used to account for homomorphic computation units consumed by encrypted operations.",
+          "description": "HCULimit contract used to account for homomorphic computation units consumed by encrypted operations for the original external caller.",
           "type": "EXTERNAL"
         },
         "getInputVerifierAddress": {
@@ -2907,12 +3022,12 @@
           "type": "EXTERNAL"
         },
         "getHandleVersion": {
-          "description": "Current ciphertext handle version emitted by the executor."
+          "description": "Current ciphertext handle version emitted by the executor. Version 1 result handles include operation-specific domain separation and block context in their derivation."
         }
       },
       "implementationNames": {
         "eth:0xD82385dADa1ae3E969447f20A3164F6213100e75": "ERC1967Proxy",
-        "eth:0xde3624dA8d9c45B57674cA0AcAC40630682211bb": "FHEVMExecutor"
+        "eth:0xC38aAfCBB73Fd4bd6f995275079C4Add9C1687E5": "FHEVMExecutor"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -2937,6 +3052,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.",
+      "ignoreInWatchMode": ["confidentialTotalSupply", "inferredTotalSupply"],
       "deployerAddress": "eth:0xB15981a567C2c3fF472132505265BBe74576443c",
       "sinceTimestamp": 1766750843,
       "sinceBlock": 24096699,
@@ -2963,7 +3079,7 @@
         "$upgradeCount": 3,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0xeb9cf9504282994de321f8e2f74cb362cc0b3072b7ff00000000000000010500",
+        "confidentialTotalSupply": "0x34c6d9a714b094e13be1304211cbea7b6e8fda4b6cff00000000000000010500",
         "constructorArgs": [
           "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205745544800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056357455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2057455448222c2273796d626f6c223a226357455448222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205745544820736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -2977,7 +3093,7 @@
           "isSet": false,
           "selector": "0x00000000"
         },
-        "inferredTotalSupply": 26548149,
+        "inferredTotalSupply": 27684191,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential WETH",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -3067,6 +3183,15 @@
       "receivedPermissions": [
         {
           "permission": "interact",
+          "from": "eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2",
+          "description": "change the per-block and per-transaction HCU limits and manage callers that bypass the per-block limit.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458",
           "description": "block and unblock users, and transfer ownership.",
           "role": ".owner",
@@ -3104,7 +3229,7 @@
         {
           "permission": "interact",
           "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
-          "description": "set the KMS signer set and signature threshold used for public decryption verification.",
+          "description": "create KMS signer contexts with arbitrary signer sets and thresholds, and destroy non-current contexts. A malicious context can attest an inflated unwrap amount and drain pooled wrapper backing.",
           "role": ".aclOwner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -3206,7 +3331,7 @@
         {
           "permission": "interact",
           "from": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
-          "description": "transfer ACL ownership, unpause the ACL, block or unblock accounts, manage PauserSet membership, and update Zama verifier signer sets and thresholds.",
+          "description": "transfer ACL ownership, unpause the ACL, block or unblock accounts, manage PauserSet membership, and create or destroy KMSVerifier signer contexts.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -3541,7 +3666,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 1,
+        "nonce": 8,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -3561,6 +3686,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.",
+      "ignoreInWatchMode": ["confidentialTotalSupply", "inferredTotalSupply"],
       "deployerAddress": "eth:0xB15981a567C2c3fF472132505265BBe74576443c",
       "sinceTimestamp": 1766750819,
       "sinceBlock": 24096697,
@@ -3587,7 +3713,7 @@
         "$upgradeCount": 3,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0x07a47db6b1fdd3ec0f8b42f0175cfbf596d7ff6ad0ff00000000000000010500",
+        "confidentialTotalSupply": "0xe0a3b7446639c71192c8e5ae855e10bf9bf2f4822bff00000000000000010500",
         "constructorArgs": [
           "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205553444300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056355534443000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2055534443222c2273796d626f6c223a226355534443222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205553444320736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -3601,7 +3727,7 @@
           "isSet": true,
           "selector": "0xfe575a87"
         },
-        "inferredTotalSupply": 5993616580675,
+        "inferredTotalSupply": 6725691816036,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential USDC",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -3715,7 +3841,7 @@
             ]
           }
         },
-        "clock": 25424176,
+        "clock": 25522225,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -3759,8 +3885,8 @@
         "rewardRate": "10460000000000000000",
         "stakingToken": "eth:0xA12CC123ba206d4031D1c7f6223D1C2Ec249f4f3",
         "symbol": "stZAMA-KMS",
-        "totalStakedWeight": 104718586658333,
-        "totalSupply": "850707170486523554607587610",
+        "totalStakedWeight": 110624510877955,
+        "totalSupply": "947376154932509725560138804",
         "unstakeCooldownPeriod": 604800,
         "unstakeCooldownPeriod_fmt": "7d",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -4115,19 +4241,19 @@
       "name": "Decryption",
       "address": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
       "type": "Contract",
-      "template": "zama/Decryption",
+      "template": "zama/Decryption_v0_4_0",
       "sourceHashes": [
         "0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3",
-        "0xd2e9269a1dc3580af2eaa84178722c052767a5d174734ececeddeea5bacd1929"
+        "0xcd821ac822a19a355acde1dd7ce435e2a6e16e21017756b899c058ee64552e28"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Gateway contract that orchestrates public and user decryption requests, checks mirrored host-chain ACL state, collects KMS responses, and emits results once the configured KMS threshold is reached. Ethereum KMSVerifier verifies public decryption results against this contract's EIP-712 domain.",
+      "description": "Gateway contract that orchestrates public and user decryption requests and checks committed ciphertext material. Each response independently selects a KMS context through extraData, or uses the context current when the response executes; requests do not store a context. KMS nodes enforce host-chain ACL state offchain, and Ethereum KMSVerifier verifies public results against this contract's EIP-712 domain.",
       "deployerAddress": "zama:0x2D0b9A711A887E8a5678400b2311012fEB9BeBF9",
       "sinceTimestamp": 1763504841,
       "sinceBlock": 1524,
       "values": {
         "$admin": "zama:0x0000000000000000000000000000000000000000",
-        "$implementation": "zama:0xe691cE3d7a71E2eC9E96AF5bdD263FfEB124F8dE",
+        "$implementation": "zama:0x943CEfD1A00d3ae5b298bB10D4EddA09B279C8B0",
         "$pastUpgrades": [
           [
             "2025-11-18T22:27:21.000Z",
@@ -4143,9 +4269,14 @@
             "2025-12-09T14:39:38.000Z",
             "0x0dd6bc720fd0c2158c1720e26292d3df770b9ba6613ebcce2c292bfbcc1eff08",
             ["zama:0xe691cE3d7a71E2eC9E96AF5bdD263FfEB124F8dE"]
+          ],
+          [
+            "2026-07-10T08:15:40.000Z",
+            "0x5d63d8d9bf4790e7169cd1d6c440262aad29368190932f823377df311f389217",
+            ["zama:0x943CEfD1A00d3ae5b298bB10D4EddA09B279C8B0"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "eip712Domain": {
           "fields": "0x0f",
           "name": "Decryption",
@@ -4157,6 +4288,7 @@
         },
         "gatewayCiphertextCommits": "zama:0xd82cF70FC102028cd01acB87D0E107780ae4F41F",
         "gatewayConfig": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+        "gatewayKmsContextId": "3166189940082864718613269121331309980362851143201109172953918312716374638593",
         "gatewayKmsSigners": [
           "zama:0xe9f7ecfF21a2e0Ca58eA26ae869FEF38ab49ed6f",
           "zama:0xdC472efa1642D5afB684aAaa546E22FB24AAB965",
@@ -4192,7 +4324,40 @@
         "gatewayProtocolPayment": "zama:0x7E179E45E5fe0a21015Be25185363B4F2F2F7e89",
         "gatewayPublicDecryptionThreshold": 7,
         "gatewayUserDecryptionThreshold": 9,
-        "getVersion": "Decryption v0.3.0",
+        "getVersion": "Decryption v0.4.0",
+        "initialMigratedKmsContextId": "3166189940082864718613269121331309980362851143201109172953918312716374638593",
+        "initialMigratedKmsSigners": [
+          "zama:0xe9f7ecfF21a2e0Ca58eA26ae869FEF38ab49ed6f",
+          "zama:0xdC472efa1642D5afB684aAaa546E22FB24AAB965",
+          "zama:0xbf05c17BEB0BF2F2c78Cd491A53a148e035279C3",
+          "zama:0x915055c5F05C0d88BCdf1e3DfBA18aBD2a18350f",
+          "zama:0x41b19EB4585450db79ac03ba9503106EC7895905",
+          "zama:0x6e5f02Cd4B33f0Cf4ED5326ac9eE25e5aA8c4921",
+          "zama:0x966188a1f697F6A1B5cfA51495DD8A8A7b5CdB8D",
+          "zama:0x5d0e7033774dD43eE546D49b72Bd0B561E52f7C8",
+          "zama:0xDFc9Dcb3D206AA164770874f36a4B5AD2EE5194f",
+          "zama:0x7C5Eeb4D8CED0101799B8Cc212eE874097364F58",
+          "zama:0x7C17BE232e5968BDa9516478B798b9E90D013fCC",
+          "zama:0x6016DCA5e91e62826e3FEA1Fb0a763602dc1E385",
+          "zama:0xB7978e602D2AF68258dA614AF949E014BF0DE0eb"
+        ],
+        "initialMigratedKmsTxSenders": [
+          "zama:0x711EBE8aA590f9C9904ff279239E89dB2eFbC890",
+          "zama:0xB4CE988D382425F64c99A352375F72A5f1cf6FFB",
+          "zama:0x4eC7200E392B97913cbD6d8160B011406EB019F1",
+          "zama:0xEd1D622bd59d657580aBAc65312b40B4B2dA6236",
+          "zama:0x74a1E2e87a4026b7B8b5252c747E514159515e9a",
+          "zama:0x0e25B8DB74c754C8275C0B219ba2A6CD7c59E31D",
+          "zama:0x577Fd21e4BC7D644A4177C4B89146e1Ab394De04",
+          "zama:0xbaac6F9DD84bFB303F05B4DE45A88Eec86855BD0",
+          "zama:0x43e4c21cf9d24Dc5b4e00031349EC213A2ba8340",
+          "zama:0xC105B5933446658D226582f7A112F49a70b54364",
+          "zama:0xbcF4943A856497FB2345409D35f4d1eae9A0363E",
+          "zama:0xD227C4B573800EdA3bAdA6DAC872E9134E012e6D",
+          "zama:0x487e41623b7FeB464ff79F7326DCa791c9a1c5EC"
+        ],
+        "initialMigratedPublicDecryptionThreshold": 7,
+        "initialMigratedUserDecryptionThreshold": 9,
         "maxDecryptionRequestBits": 2048,
         "maxUserDecryptContractAddresses": 10,
         "maxUserDecryptDurationDays": 365,
@@ -4214,7 +4379,7 @@
           "type": "EXTERNAL"
         },
         "gatewayMultichainACL": {
-          "description": "MultichainACL contract containing the gateway-side ACL mirror checked before public or user decryptions are accepted.",
+          "description": "MultichainACL contract containing the gateway-side host-chain ACL mirror. The upgraded Decryption contract no longer checks it onchain and relies on KMS nodes to enforce ACL state.",
           "type": "EXTERNAL"
         },
         "gatewayCiphertextCommits": {
@@ -4223,22 +4388,27 @@
         },
         "gatewayKmsTxSenders": {
           "severity": "HIGH",
-          "description": "KMS transaction-sender addresses configured in GatewayConfig. These accounts may submit signed public decryption results and user decryption shares.",
+          "description": "KMS transaction-sender addresses configured in the current GatewayConfig context. Historical context senders can also submit responses when response extraData explicitly selects their retained context. Post-migration contexts are indexed on GatewayConfig; migration-created membership requires a project override because no creation event was emitted.",
           "type": "PERMISSION"
         },
         "gatewayKmsSigners": {
           "severity": "HIGH",
-          "description": "KMS signer addresses configured in GatewayConfig. Their EIP-712 signatures determine whether public decryption results and user decryption shares reach threshold.",
+          "description": "KMS signer addresses configured in the current GatewayConfig context. Historical context signers can also sign responses when response extraData explicitly selects their retained context. Post-migration contexts are indexed on GatewayConfig; migration-created membership requires a project override because no creation event was emitted.",
           "type": "PERMISSION"
+        },
+        "gatewayKmsContextId": {
+          "severity": "HIGH",
+          "description": "Current GatewayConfig KMS context used by responses whose extraData is empty or starts with version 0. Requests do not bind this value, so a rotation can change the context used to answer an already pending request.",
+          "type": "RISK_PARAMETER"
         },
         "gatewayPublicDecryptionThreshold": {
           "severity": "HIGH",
-          "description": "Minimum number of matching KMS signatures required before a public decryption result is emitted.",
+          "description": "Minimum matching-signature count for the current context. Public responses are grouped by a digest containing raw extraData; identical empty or version 0 extraData can accumulate responses across a context rotation while the last response selects the threshold checked.",
           "type": "RISK_PARAMETER"
         },
         "gatewayUserDecryptionThreshold": {
           "severity": "HIGH",
-          "description": "Minimum number of KMS shares required before a user decryption request is considered threshold-reached.",
+          "description": "Minimum response count for the current context. User response counts are stored per request rather than per context, so valid shares submitted under different contexts can be combined and the last response selects the threshold checked.",
           "type": "RISK_PARAMETER"
         },
         "maxUserDecryptDurationDays": {
@@ -4263,11 +4433,36 @@
         },
         "eip712Domain": {
           "description": "EIP-712 domain used when validating KMS signatures and user/delegate decryption request signatures. Ethereum KMSVerifier is configured to verify this same source domain for public decryptions."
+        },
+        "initialMigratedKmsContextId": {
+          "severity": "HIGH",
+          "description": "Identifier assigned to the Gateway KMS context created by the v0.5 migration. Version 1 Decryption response metadata can continue to select it after later rotations.",
+          "type": "RISK_PARAMETER"
+        },
+        "initialMigratedKmsTxSenders": {
+          "severity": "HIGH",
+          "description": "KMS transaction senders in the Gateway context created by the v0.5 migration. Node membership is immutable and GatewayConfig cannot destroy contexts, so these accounts remain authorized to submit responses to Decryption after future rotations.",
+          "type": "PERMISSION"
+        },
+        "initialMigratedKmsSigners": {
+          "severity": "HIGH",
+          "description": "KMS signers in the Gateway context created by the v0.5 migration. Node membership is immutable and GatewayConfig cannot destroy contexts, so this signer set remains authorized for Decryption responses after future rotations.",
+          "type": "PERMISSION"
+        },
+        "initialMigratedPublicDecryptionThreshold": {
+          "severity": "HIGH",
+          "description": "Snapshot of the public-decryption threshold in the context created by the v0.5 migration. Update this project-specific value if governance changes the initial context while it is current. This value remains security-critical after future context rotations.",
+          "type": "RISK_PARAMETER"
+        },
+        "initialMigratedUserDecryptionThreshold": {
+          "severity": "HIGH",
+          "description": "Snapshot of the user-decryption threshold in the context created by the v0.5 migration. Update this project-specific value if governance changes the initial context while it is current. This value remains security-critical after future context rotations.",
+          "type": "RISK_PARAMETER"
         }
       },
       "implementationNames": {
         "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24": "ERC1967Proxy",
-        "zama:0xe691cE3d7a71E2eC9E96AF5bdD263FfEB124F8dE": "Decryption"
+        "zama:0x943CEfD1A00d3ae5b298bB10D4EddA09B279C8B0": "Decryption"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -4695,7 +4890,7 @@
         {
           "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "update KMS, coprocessor, custodian, host-chain, and threshold configuration, transfer GatewayConfig ownership, and unpause gateway workflow contracts.",
+          "description": "create KMS contexts that immediately become current, update current thresholds and other gateway configuration, transfer ownership, and unpause gateway workflow contracts. Historical KMS contexts cannot be removed in this version.",
           "role": ".owner"
         },
         {
@@ -5493,19 +5688,19 @@
       "name": "GatewayConfig",
       "address": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
       "type": "Contract",
-      "template": "zama/GatewayConfig",
+      "template": "zama/GatewayConfig_v0_5_0",
       "sourceHashes": [
         "0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3",
-        "0x40662103941fd76e1fc3b63e38f9036b39d3394d96fe2c46db9640bcbbc76d4b"
+        "0x1089121569189032b8cee0dae0c71eedecf7757f712a6d14ef684915093c6747"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Central configuration contract for the Zama Gateway. It stores the KMS, coprocessor, custodian, host-chain, pauser, and consensus-threshold configuration used by the gateway workflow contracts.",
+      "description": "Central configuration contract for the Zama Gateway. A KMS context snapshots node transaction senders, signers, and workflow thresholds; historical contexts remain stored and selectable by Decryption because this version has no context-destruction function.",
       "deployerAddress": "zama:0x2D0b9A711A887E8a5678400b2311012fEB9BeBF9",
       "sinceTimestamp": 1763504825,
       "sinceBlock": 1520,
       "values": {
         "$admin": "zama:0x5f0F86BcEad6976711C9B131bCa5D30E767fe2bE",
-        "$implementation": "zama:0xDa97dfc327349F7C1333610C80cc20971eD0eb0f",
+        "$implementation": "zama:0x2294E3C211238Ae31E2824576CCd7f996CC7Dc00",
         "$pastUpgrades": [
           [
             "2025-11-18T22:27:05.000Z",
@@ -5521,9 +5716,17 @@
             "2025-12-09T14:46:28.000Z",
             "0xd05685ebd7a7a76a93963ade6cabe69887f3e0f2160eb1a122abc9eb347550f5",
             ["zama:0xDa97dfc327349F7C1333610C80cc20971eD0eb0f"]
+          ],
+          [
+            "2026-07-10T08:15:40.000Z",
+            "0x5d63d8d9bf4790e7169cd1d6c440262aad29368190932f823377df311f389217",
+            ["zama:0x2294E3C211238Ae31E2824576CCd7f996CC7Dc00"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
+        "createdKmsContexts": [],
+        "createdKmsContextSigners": [],
+        "createdKmsContextTxSenders": [],
         "decryption": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
         "ethereumHostChains": [
           {
@@ -5542,6 +5745,7 @@
         "getCoprocessorTxSenders": [
           "zama:0x373E36A8684A3344E177C5894179845Cbe57AE44"
         ],
+        "getCurrentKmsContextId": "3166189940082864718613269121331309980362851143201109172953918312716374638593",
         "getCustodianSigners": [
           "zama:0x0000000000000000000000000000000000000001"
         ],
@@ -5593,9 +5797,9 @@
           "name": "Zama Gateway",
           "website": "zama.org"
         },
-        "getPublicDecryptionThreshold": 7,
-        "getUserDecryptionThreshold": 9,
-        "getVersion": "GatewayConfig v0.4.0",
+        "getPublicDecryptionThresholdForContext": 7,
+        "getUserDecryptionThresholdForContext": 9,
+        "getVersion": "GatewayConfig v0.5.0",
         "inputVerification": "zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287",
         "owner": "zama:0x5f0F86BcEad6976711C9B131bCa5D30E767fe2bE",
         "pendingOwner": "zama:0x0000000000000000000000000000000000000000",
@@ -5604,7 +5808,7 @@
       "fieldMeta": {
         "owner": {
           "severity": "HIGH",
-          "description": "Owner of GatewayConfig. This account manages KMS nodes, coprocessors, custodians, host chains, consensus thresholds, ownership, and gateway unpausing.",
+          "description": "Owner of GatewayConfig. This account creates KMS contexts, changes the current context's thresholds, manages coprocessors, custodians and host chains, transfers ownership, and unpauses gateway contracts. A newly created context becomes current immediately, while all older contexts remain selectable by Decryption.",
           "type": "PERMISSION"
         },
         "pendingOwner": {
@@ -5631,12 +5835,27 @@
         },
         "getKmsTxSenders": {
           "severity": "HIGH",
-          "description": "KMS transaction-sender addresses registered for this gateway. These accounts submit KMS responses to gateway contracts.",
+          "description": "KMS transaction-sender addresses in the current Gateway context. Historical context senders remain authorized for Decryption responses that explicitly select their context; post-migration contexts are indexed here and the migrated context is indexed on Decryption.",
           "type": "PERMISSION"
         },
         "getKmsSigners": {
           "severity": "HIGH",
-          "description": "KMS signer addresses registered for this gateway. Thresholds over these signers secure public and user decryption, key generation, and CRS generation.",
+          "description": "KMS signer addresses in the current Gateway context. Historical context signers remain authorized for explicitly selected Decryption responses; post-migration contexts are indexed here and the migrated context is indexed on Decryption.",
+          "type": "PERMISSION"
+        },
+        "createdKmsContexts": {
+          "severity": "HIGH",
+          "description": "KMS contexts created after migration, reconstructed from UpdateKmsContext events with their node set and creation thresholds. Nodes remain authorized for Decryption indefinitely; later threshold-update events do not identify a context, so final historical thresholds must be read through context-specific getters or project overrides.",
+          "type": "RISK_PARAMETER"
+        },
+        "createdKmsContextTxSenders": {
+          "severity": "HIGH",
+          "description": "KMS transaction senders from contexts created after migration. They remain authorized for Decryption responses that select their context because GatewayConfig has no context-destruction function.",
+          "type": "PERMISSION"
+        },
+        "createdKmsContextSigners": {
+          "severity": "HIGH",
+          "description": "KMS signers from contexts created after migration. They remain authorized for Decryption responses that select their context because GatewayConfig has no context-destruction function.",
           "type": "PERMISSION"
         },
         "getCoprocessorTxSenders": {
@@ -5661,22 +5880,27 @@
         },
         "getMpcThreshold": {
           "severity": "HIGH",
-          "description": "MPC threshold for KMS key material generation.",
+          "description": "MPC threshold for KMS key material generation in the current context.",
           "type": "RISK_PARAMETER"
         },
-        "getPublicDecryptionThreshold": {
+        "getCurrentKmsContextId": {
           "severity": "HIGH",
-          "description": "Minimum number of KMS signatures required for public decryption consensus.",
+          "description": "Identifier of the context used when a Decryption response has empty or version 0 extraData. Version 1 responses can explicitly select any historical context, and requests do not store or bind a context.",
           "type": "RISK_PARAMETER"
         },
-        "getUserDecryptionThreshold": {
+        "getPublicDecryptionThresholdForContext": {
           "severity": "HIGH",
-          "description": "Minimum number of KMS shares required for user decryption consensus.",
+          "description": "Minimum number of KMS signatures required for public decryption consensus in the current context.",
+          "type": "RISK_PARAMETER"
+        },
+        "getUserDecryptionThresholdForContext": {
+          "severity": "HIGH",
+          "description": "Minimum number of KMS shares required for user decryption consensus in the current context.",
           "type": "RISK_PARAMETER"
         },
         "getKmsGenThreshold": {
           "severity": "HIGH",
-          "description": "Minimum number of KMS signatures required for key and CRS generation consensus.",
+          "description": "Minimum number of KMS signatures required for key and CRS generation consensus in the current context.",
           "type": "RISK_PARAMETER"
         },
         "getCoprocessorMajorityThreshold": {
@@ -5693,7 +5917,7 @@
       },
       "implementationNames": {
         "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab": "ERC1967Proxy",
-        "zama:0xDa97dfc327349F7C1333610C80cc20971eD0eb0f": "GatewayConfig"
+        "zama:0x2294E3C211238Ae31E2824576CCd7f996CC7Dc00": "GatewayConfig"
       },
       "usedTypes": [
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }
@@ -5782,6 +6006,80 @@
     }
   ],
   "abis": {
+    "eth:0x0F2B7e8F19ADc874F21e27ADAA4B22FC00a0B442": [
+      "constructor()",
+      "error AddressEmptyCode(address target)",
+      "error AlreadyBlockHCUWhitelisted(address account)",
+      "error CallerMustBeFHEVMExecutorContract()",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error HCUBlockLimitExceeded()",
+      "error HCUPerBlockBelowMaxPerTx()",
+      "error HCUTransactionDepthLimitExceeded()",
+      "error HCUTransactionLimitExceeded()",
+      "error InvalidInitialization()",
+      "error MaxHCUPerTxBelowDepth()",
+      "error NotBlockHCUWhitelisted(address account)",
+      "error NotHostOwner(address sender)",
+      "error NotInitializing()",
+      "error NotInitializingFromEmptyProxy()",
+      "error OnlyScalarOperationsAreSupported()",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "error UnsupportedOperation()",
+      "event BlockHCUWhitelistAdded(address indexed account)",
+      "event BlockHCUWhitelistRemoved(address indexed account)",
+      "event HCUPerBlockSet(uint48 hcuPerBlock)",
+      "event Initialized(uint64 version)",
+      "event MaxHCUDepthPerTxSet(uint48 maxHCUDepthPerTx)",
+      "event MaxHCUPerTxSet(uint48 maxHCUPerTx)",
+      "event Upgraded(address indexed implementation)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function addToBlockHCUWhitelist(address account)",
+      "function checkHCUForCast(uint8 resultType, bytes32 ct, bytes32 result, address caller)",
+      "function checkHCUForFheAdd(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result, address caller)",
+      "function checkHCUForFheBitAnd(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result, address caller)",
+      "function checkHCUForFheBitOr(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result, address caller)",
+      "function checkHCUForFheBitXor(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result, address caller)",
+      "function checkHCUForFheDiv(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32, bytes32 result, address caller)",
+      "function checkHCUForFheEq(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result, address caller)",
+      "function checkHCUForFheGe(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result, address caller)",
+      "function checkHCUForFheGt(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result, address caller)",
+      "function checkHCUForFheLe(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result, address caller)",
+      "function checkHCUForFheLt(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result, address caller)",
+      "function checkHCUForFheMax(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result, address caller)",
+      "function checkHCUForFheMin(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result, address caller)",
+      "function checkHCUForFheMul(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result, address caller)",
+      "function checkHCUForFheNe(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result, address caller)",
+      "function checkHCUForFheNeg(uint8 resultType, bytes32 ct, bytes32 result, address caller)",
+      "function checkHCUForFheNot(uint8 resultType, bytes32 ct, bytes32 result, address caller)",
+      "function checkHCUForFheRand(uint8 resultType, bytes32 result, address caller)",
+      "function checkHCUForFheRandBounded(uint8 resultType, bytes32 result, address caller)",
+      "function checkHCUForFheRem(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32, bytes32 result, address caller)",
+      "function checkHCUForFheRotl(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result, address caller)",
+      "function checkHCUForFheRotr(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result, address caller)",
+      "function checkHCUForFheShl(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result, address caller)",
+      "function checkHCUForFheShr(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result, address caller)",
+      "function checkHCUForFheSub(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result, address caller)",
+      "function checkHCUForIfThenElse(uint8 resultType, bytes32 lhs, bytes32 middle, bytes32 rhs, bytes32 result, address caller)",
+      "function checkHCUForTrivialEncrypt(uint8 resultType, bytes32 result, address caller)",
+      "function getBlockMeter() view returns (uint48 blockNumber, uint48 usedHCU)",
+      "function getFHEVMExecutorAddress() view returns (address)",
+      "function getGlobalHCUCapPerBlock() view returns (uint48)",
+      "function getMaxHCUDepthPerTx() view returns (uint48)",
+      "function getMaxHCUPerTx() view returns (uint48)",
+      "function getVersion() pure returns (string)",
+      "function initializeFromEmptyProxy(uint48 hcuCapPerBlock, uint48 maxHCUDepthPerTx, uint48 maxHCUPerTx)",
+      "function isBlockHCUWhitelisted(address account) view returns (bool)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function reinitializeV2(uint48 hcuCapPerBlock, uint48 maxHCUDepthPerTx, uint48 maxHCUPerTx)",
+      "function removeFromBlockHCUWhitelist(address account)",
+      "function setHCUPerBlock(uint48 hcuPerBlock)",
+      "function setMaxHCUDepthPerTx(uint48 maxHCUDepthPerTx)",
+      "function setMaxHCUPerTx(uint48 maxHCUPerTx)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C": [
       "constructor(address _logic, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -5795,6 +6093,80 @@
       "error ERC1967NonPayable()",
       "error FailedCall()",
       "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x3F6D970d30E1FFE9657aa8072C82dA10eef1c3D6": [
+      "constructor()",
+      "error AccountAlreadyBlocked(address account)",
+      "error AccountNotBlocked(address account)",
+      "error AddressEmptyCode(address target)",
+      "error AlreadyDelegatedOrRevokedInSameBlock(address delegator, address delegate, address contractAddress, uint256 blockNumber)",
+      "error DelegateCannotBeContractAddress(address contractAddress)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error ExpirationDateAlreadySetToSameValue(address delegator, address delegate, address contractAddress, uint256 expirationDate)",
+      "error ExpirationDateInThePast()",
+      "error FailedCall()",
+      "error HandlesListIsEmpty()",
+      "error InvalidInitialization()",
+      "error NotDelegatedYet(address delegator, address delegate, address contractAddress)",
+      "error NotInitializing()",
+      "error NotInitializingFromEmptyProxy()",
+      "error NotPauser(address sender)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error SenderCannotBeContractAddress(address contractAddress)",
+      "error SenderCannotBeDelegate(address delegate)",
+      "error SenderDenied(address sender)",
+      "error SenderNotAllowed(address sender)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event Allowed(address indexed caller, address indexed account, bytes32 handle)",
+      "event AllowedForDecryption(address indexed caller, bytes32[] handlesList)",
+      "event BlockedAccount(address indexed account)",
+      "event DelegatedForUserDecryption(address indexed delegator, address indexed delegate, address contractAddress, uint64 delegationCounter, uint64 oldExpirationDate, uint64 newExpirationDate)",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event RevokedDelegationForUserDecryption(address indexed delegator, address indexed delegate, address contractAddress, uint64 delegationCounter, uint64 oldExpirationDate)",
+      "event UnblockedAccount(address indexed account)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function acceptOwnership()",
+      "function allow(bytes32 handle, address account)",
+      "function allowForDecryption(bytes32[] handlesList)",
+      "function allowTransient(bytes32 handle, address account)",
+      "function allowedTransient(bytes32 handle, address account) view returns (bool)",
+      "function blockAccount(address account)",
+      "function cleanTransientStorage()",
+      "function delegateForUserDecryption(address delegate, address contractAddress, uint64 expirationDate)",
+      "function getFHEVMExecutorAddress() view returns (address)",
+      "function getPauserSetAddress() view returns (address)",
+      "function getUserDecryptionDelegationExpirationDate(address delegator, address delegate, address contractAddress) view returns (uint64)",
+      "function getVersion() pure returns (string)",
+      "function initializeFromEmptyProxy()",
+      "function isAccountDenied(address account) view returns (bool)",
+      "function isAllowed(bytes32 handle, address account) view returns (bool)",
+      "function isAllowedForDecryption(bytes32 handle) view returns (bool)",
+      "function isHandleDelegatedForUserDecryption(address delegator, address delegate, address contractAddress, bytes32 handle) view returns (bool)",
+      "function isPauser(address account) view returns (bool)",
+      "function multicall(bytes[] data) returns (bytes[] results)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pendingOwner() view returns (address)",
+      "function persistAllowed(bytes32 handle, address account) view returns (bool)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function reinitializeV3()",
+      "function renounceOwnership()",
+      "function revokeDelegationForUserDecryption(address delegate, address contractAddress)",
+      "function transferOwnership(address newOwner)",
+      "function unblockAccount(address account)",
+      "function unpause()",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
@@ -5846,59 +6218,6 @@
     ],
     "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": [
       "constructor(address _singleton)"
-    ],
-    "eth:0x4E4329F10f7EE88a5dDB13716B8bE00c077CBeb6": [
-      "constructor()",
-      "error AddressEmptyCode(address target)",
-      "error CallerMustBeFHEVMExecutorContract()",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error FailedCall()",
-      "error HCUTransactionDepthLimitExceeded()",
-      "error HCUTransactionLimitExceeded()",
-      "error InvalidInitialization()",
-      "error NotHostOwner(address sender)",
-      "error NotInitializing()",
-      "error NotInitializingFromEmptyProxy()",
-      "error OnlyScalarOperationsAreSupported()",
-      "error UUPSUnauthorizedCallContext()",
-      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
-      "error UnsupportedOperation()",
-      "event Initialized(uint64 version)",
-      "event Upgraded(address indexed implementation)",
-      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
-      "function checkHCUForCast(uint8 resultType, bytes32 ct, bytes32 result)",
-      "function checkHCUForFheAdd(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result)",
-      "function checkHCUForFheBitAnd(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result)",
-      "function checkHCUForFheBitOr(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result)",
-      "function checkHCUForFheBitXor(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result)",
-      "function checkHCUForFheDiv(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32, bytes32 result)",
-      "function checkHCUForFheEq(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result)",
-      "function checkHCUForFheGe(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result)",
-      "function checkHCUForFheGt(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result)",
-      "function checkHCUForFheLe(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result)",
-      "function checkHCUForFheLt(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result)",
-      "function checkHCUForFheMax(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result)",
-      "function checkHCUForFheMin(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result)",
-      "function checkHCUForFheMul(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result)",
-      "function checkHCUForFheNe(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result)",
-      "function checkHCUForFheNeg(uint8 resultType, bytes32 ct, bytes32 result)",
-      "function checkHCUForFheNot(uint8 resultType, bytes32 ct, bytes32 result)",
-      "function checkHCUForFheRand(uint8 resultType, bytes32 result)",
-      "function checkHCUForFheRandBounded(uint8 resultType, bytes32 result)",
-      "function checkHCUForFheRem(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32, bytes32 result)",
-      "function checkHCUForFheRotl(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result)",
-      "function checkHCUForFheRotr(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result)",
-      "function checkHCUForFheShl(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result)",
-      "function checkHCUForFheShr(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result)",
-      "function checkHCUForFheSub(uint8 resultType, bytes1 scalarByte, bytes32 lhs, bytes32 rhs, bytes32 result)",
-      "function checkHCUForIfThenElse(uint8 resultType, bytes32 lhs, bytes32 middle, bytes32 rhs, bytes32 result)",
-      "function checkHCUForTrivialEncrypt(uint8 resultType, bytes32 result)",
-      "function getFHEVMExecutorAddress() view returns (address)",
-      "function getVersion() pure returns (string)",
-      "function initializeFromEmptyProxy()",
-      "function proxiableUUID() view returns (bytes32)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "eth:0x517BD0E1fbE9dDf828fD139b19CF9F434Da94371": [
       "error AddresslistLengthOutOfBounds(uint16 limit, uint256 actual)",
@@ -6223,50 +6542,6 @@
       "error FailedCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "eth:0x8210A6c69FAc2e9856C7a19Ee70b26cFa3A4F0E2": [
-      "constructor()",
-      "error AddressEmptyCode(address target)",
-      "error DeserializingDecryptionProofFail()",
-      "error ECDSAInvalidSignature()",
-      "error ECDSAInvalidSignatureLength(uint256 length)",
-      "error ECDSAInvalidSignatureS(bytes32 s)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error EmptyDecryptionProof()",
-      "error FailedCall()",
-      "error InvalidInitialization()",
-      "error KMSAlreadySigner()",
-      "error KMSInvalidSigner(address invalidSigner)",
-      "error KMSSignatureThresholdNotReached(uint256 numSignatures)",
-      "error KMSSignerNull()",
-      "error KMSZeroSignature()",
-      "error NotHostOwner(address sender)",
-      "error NotInitializing()",
-      "error NotInitializingFromEmptyProxy()",
-      "error SignersSetIsEmpty()",
-      "error ThresholdIsAboveNumberOfSigners()",
-      "error ThresholdIsNull()",
-      "error UUPSUnauthorizedCallContext()",
-      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
-      "event EIP712DomainChanged()",
-      "event Initialized(uint64 version)",
-      "event NewContextSet(address[] newKmsSignersSet, uint256 newThreshold)",
-      "event Upgraded(address indexed implementation)",
-      "function DECRYPTION_RESULT_TYPEHASH() view returns (bytes32)",
-      "function EIP712_PUBLIC_DECRYPT_TYPE() view returns (string)",
-      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
-      "function defineNewContext(address[] newSignersSet, uint256 newThreshold)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function getKmsSigners() view returns (address[])",
-      "function getThreshold() view returns (uint256)",
-      "function getVersion() pure returns (string)",
-      "function initializeFromEmptyProxy(address verifyingContractSource, uint64 chainIDSource, address[] initialSigners, uint256 initialThreshold)",
-      "function isSigner(address account) view returns (bool)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function setThreshold(uint256 threshold)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable",
-      "function verifyDecryptionEIP712KMSSignatures(bytes32[] handlesList, bytes decryptedResult, bytes decryptionProof) returns (bool)"
-    ],
     "eth:0x85dE671c3bec1aDeD752c3Cea943521181C826bc": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
@@ -6277,80 +6552,6 @@
     ],
     "eth:0x8c0E2c46F96756C49DBd6723F4C57a03a254B4B0": [
       "constructor(address _singleton)"
-    ],
-    "eth:0x96B171e4f8eCda0FFdD128b319Fa185b14f99D76": [
-      "constructor()",
-      "error AccountAlreadyBlocked(address account)",
-      "error AccountNotBlocked(address account)",
-      "error AddressEmptyCode(address target)",
-      "error AlreadyDelegatedOrRevokedInSameBlock(address delegator, address delegate, address contractAddress, uint256 blockNumber)",
-      "error DelegateCannotBeContractAddress(address contractAddress)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error EnforcedPause()",
-      "error ExpectedPause()",
-      "error ExpirationDateAlreadySetToSameValue(address delegator, address delegate, address contractAddress, uint256 expirationDate)",
-      "error ExpirationDateBeforeOneHour()",
-      "error FailedCall()",
-      "error HandlesListIsEmpty()",
-      "error InvalidInitialization()",
-      "error NotDelegatedYet(address delegator, address delegate, address contractAddress)",
-      "error NotInitializing()",
-      "error NotInitializingFromEmptyProxy()",
-      "error NotPauser(address sender)",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "error SenderCannotBeContractAddress(address contractAddress)",
-      "error SenderCannotBeDelegate(address delegate)",
-      "error SenderDenied(address sender)",
-      "error SenderNotAllowed(address sender)",
-      "error UUPSUnauthorizedCallContext()",
-      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
-      "event Allowed(address indexed caller, address indexed account, bytes32 handle)",
-      "event AllowedForDecryption(address indexed caller, bytes32[] handlesList)",
-      "event BlockedAccount(address indexed account)",
-      "event DelegatedForUserDecryption(address indexed delegator, address indexed delegate, address contractAddress, uint64 delegationCounter, uint64 oldExpirationDate, uint64 newExpirationDate)",
-      "event Initialized(uint64 version)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event RevokedDelegationForUserDecryption(address indexed delegator, address indexed delegate, address contractAddress, uint64 delegationCounter, uint64 oldExpirationDate)",
-      "event UnblockedAccount(address indexed account)",
-      "event Unpaused(address account)",
-      "event Upgraded(address indexed implementation)",
-      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
-      "function acceptOwnership()",
-      "function allow(bytes32 handle, address account)",
-      "function allowForDecryption(bytes32[] handlesList)",
-      "function allowTransient(bytes32 handle, address account)",
-      "function allowedTransient(bytes32 handle, address account) view returns (bool)",
-      "function blockAccount(address account)",
-      "function cleanTransientStorage()",
-      "function delegateForUserDecryption(address delegate, address contractAddress, uint64 expirationDate)",
-      "function getFHEVMExecutorAddress() view returns (address)",
-      "function getPauserSetAddress() view returns (address)",
-      "function getUserDecryptionDelegationExpirationDate(address delegator, address delegate, address contractAddress) view returns (uint64)",
-      "function getVersion() pure returns (string)",
-      "function initializeFromEmptyProxy()",
-      "function isAccountDenied(address account) view returns (bool)",
-      "function isAllowed(bytes32 handle, address account) view returns (bool)",
-      "function isAllowedForDecryption(bytes32 handle) view returns (bool)",
-      "function isHandleDelegatedForUserDecryption(address delegator, address delegate, address contractAddress, bytes32 handle) view returns (bool)",
-      "function isPauser(address account) view returns (bool)",
-      "function multicall(bytes[] data) returns (bytes[] results)",
-      "function owner() view returns (address)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function pendingOwner() view returns (address)",
-      "function persistAllowed(bytes32 handle, address account) view returns (bool)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function reinitializeV2()",
-      "function renounceOwnership()",
-      "function revokeDelegationForUserDecryption(address delegate, address contractAddress)",
-      "function transferOwnership(address newOwner)",
-      "function unblockAccount(address account)",
-      "function unpause()",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "eth:0x97E18544e156724E4076945F10c288ecBBC94e54": [
       "constructor(address _singleton)"
@@ -6453,141 +6654,7 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "eth:0xc4a1a1BaE73ca6aceb2FAa62ce08BfAbCd2323b6": [
-      "constructor()",
-      "error AddressEmptyCode(address target)",
-      "error CoprocessorAlreadySigner()",
-      "error CoprocessorSignerNull()",
-      "error DeserializingInputProofFail()",
-      "error ECDSAInvalidSignature()",
-      "error ECDSAInvalidSignatureLength(uint256 length)",
-      "error ECDSAInvalidSignatureS(bytes32 s)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error EmptyInputProof()",
-      "error FailedCall()",
-      "error InvalidChainId()",
-      "error InvalidHandleVersion()",
-      "error InvalidIndex()",
-      "error InvalidInitialization()",
-      "error InvalidInputHandle()",
-      "error InvalidSigner(address signerRecovered)",
-      "error NotASigner()",
-      "error NotHostOwner(address sender)",
-      "error NotInitializing()",
-      "error NotInitializingFromEmptyProxy()",
-      "error SignatureThresholdNotReached(uint256 numSignatures)",
-      "error SignaturesVerificationFailed()",
-      "error SignersSetIsEmpty()",
-      "error ThresholdIsAboveNumberOfSigners()",
-      "error ThresholdIsNull()",
-      "error UUPSUnauthorizedCallContext()",
-      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
-      "error ZeroSignature()",
-      "event EIP712DomainChanged()",
-      "event Initialized(uint64 version)",
-      "event NewContextSet(address[] newSignersSet, uint256 newThreshold)",
-      "event Upgraded(address indexed implementation)",
-      "function EIP712_INPUT_VERIFICATION_TYPE() view returns (string)",
-      "function EIP712_INPUT_VERIFICATION_TYPEHASH() view returns (bytes32)",
-      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
-      "function cleanTransientStorage()",
-      "function defineNewContext(address[] newSignersSet, uint256 newThreshold)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function getCoprocessorSigners() view returns (address[])",
-      "function getHandleVersion() pure returns (uint8)",
-      "function getThreshold() view returns (uint256)",
-      "function getVersion() pure returns (string)",
-      "function initializeFromEmptyProxy(address verifyingContractSource, uint64 chainIDSource, address[] initialSigners, uint256 initialThreshold)",
-      "function isSigner(address account) view returns (bool)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function reinitializeV2(address[] newSignersSet, uint256 threshold)",
-      "function setThreshold(uint256 threshold)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable",
-      "function verifyInput(tuple(address userAddress, address contractAddress) context, bytes32 inputHandle, bytes inputProof) returns (bytes32)"
-    ],
-    "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6": [
-      "constructor(address implementation, bytes _data) payable",
-      "error AddressEmptyCode(address target)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error FailedCall()",
-      "event Upgraded(address indexed implementation)"
-    ],
-    "eth:0xCe0FC2e05CFff1B719EFF7169f7D80Af770c8EA2": [
-      "constructor(address implementation, bytes _data) payable",
-      "error AddressEmptyCode(address target)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error FailedCall()",
-      "event Upgraded(address indexed implementation)"
-    ],
-    "eth:0xD82385dADa1ae3E969447f20A3164F6213100e75": [
-      "constructor(address implementation, bytes _data) payable",
-      "error AddressEmptyCode(address target)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error FailedCall()",
-      "event Upgraded(address indexed implementation)"
-    ],
-    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
-      "constructor()",
-      "event AddedOwner(address owner)",
-      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
-      "event ChangedFallbackHandler(address handler)",
-      "event ChangedGuard(address guard)",
-      "event ChangedThreshold(uint256 threshold)",
-      "event DisabledModule(address module)",
-      "event EnabledModule(address module)",
-      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
-      "event ExecutionFromModuleFailure(address indexed module)",
-      "event ExecutionFromModuleSuccess(address indexed module)",
-      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
-      "event RemovedOwner(address owner)",
-      "event SafeReceived(address indexed sender, uint256 value)",
-      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
-      "event SignMsg(bytes32 indexed msgHash)",
-      "function VERSION() view returns (string)",
-      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
-      "function approveHash(bytes32 hashToApprove)",
-      "function approvedHashes(address, bytes32) view returns (uint256)",
-      "function changeThreshold(uint256 _threshold)",
-      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
-      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
-      "function disableModule(address prevModule, address module)",
-      "function domainSeparator() view returns (bytes32)",
-      "function enableModule(address module)",
-      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
-      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
-      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
-      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
-      "function getChainId() view returns (uint256)",
-      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
-      "function getOwners() view returns (address[])",
-      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
-      "function getThreshold() view returns (uint256)",
-      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
-      "function isModuleEnabled(address module) view returns (bool)",
-      "function isOwner(address owner) view returns (bool)",
-      "function nonce() view returns (uint256)",
-      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
-      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
-      "function setFallbackHandler(address handler)",
-      "function setGuard(address guard)",
-      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
-      "function signedMessages(bytes32) view returns (uint256)",
-      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
-      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
-    ],
-    "eth:0xda9396b82634Ea99243cE51258B6A5Ae512D4893": [
-      "constructor(address implementation, bytes _data) payable",
-      "error AddressEmptyCode(address target)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error FailedCall()",
-      "event Upgraded(address indexed implementation)"
-    ],
-    "eth:0xde3624dA8d9c45B57674cA0AcAC40630682211bb": [
+    "eth:0xC38aAfCBB73Fd4bd6f995275079C4Add9C1687E5": [
       "constructor()",
       "error ACLNotAllowed(bytes32 handle, address account)",
       "error AddressEmptyCode(address target)",
@@ -6674,10 +6741,197 @@
       "function getVersion() pure returns (string)",
       "function initializeFromEmptyProxy()",
       "function proxiableUUID() view returns (bytes32)",
-      "function reinitializeV2()",
+      "function reinitializeV3()",
       "function trivialEncrypt(uint256 pt, uint8 toType) returns (bytes32 result)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function verifyInput(bytes32 inputHandle, address userAddress, bytes inputProof, uint8 inputType) returns (bytes32 result)"
+    ],
+    "eth:0xc4a1a1BaE73ca6aceb2FAa62ce08BfAbCd2323b6": [
+      "constructor()",
+      "error AddressEmptyCode(address target)",
+      "error CoprocessorAlreadySigner()",
+      "error CoprocessorSignerNull()",
+      "error DeserializingInputProofFail()",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error EmptyInputProof()",
+      "error FailedCall()",
+      "error InvalidChainId()",
+      "error InvalidHandleVersion()",
+      "error InvalidIndex()",
+      "error InvalidInitialization()",
+      "error InvalidInputHandle()",
+      "error InvalidSigner(address signerRecovered)",
+      "error NotASigner()",
+      "error NotHostOwner(address sender)",
+      "error NotInitializing()",
+      "error NotInitializingFromEmptyProxy()",
+      "error SignatureThresholdNotReached(uint256 numSignatures)",
+      "error SignaturesVerificationFailed()",
+      "error SignersSetIsEmpty()",
+      "error ThresholdIsAboveNumberOfSigners()",
+      "error ThresholdIsNull()",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "error ZeroSignature()",
+      "event EIP712DomainChanged()",
+      "event Initialized(uint64 version)",
+      "event NewContextSet(address[] newSignersSet, uint256 newThreshold)",
+      "event Upgraded(address indexed implementation)",
+      "function EIP712_INPUT_VERIFICATION_TYPE() view returns (string)",
+      "function EIP712_INPUT_VERIFICATION_TYPEHASH() view returns (bytes32)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function cleanTransientStorage()",
+      "function defineNewContext(address[] newSignersSet, uint256 newThreshold)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function getCoprocessorSigners() view returns (address[])",
+      "function getHandleVersion() pure returns (uint8)",
+      "function getThreshold() view returns (uint256)",
+      "function getVersion() pure returns (string)",
+      "function initializeFromEmptyProxy(address verifyingContractSource, uint64 chainIDSource, address[] initialSigners, uint256 initialThreshold)",
+      "function isSigner(address account) view returns (bool)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function reinitializeV2(address[] newSignersSet, uint256 threshold)",
+      "function setThreshold(uint256 threshold)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function verifyInput(tuple(address userAddress, address contractAddress) context, bytes32 inputHandle, bytes inputProof) returns (bytes32)"
+    ],
+    "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xCe0FC2e05CFff1B719EFF7169f7D80Af770c8EA2": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xd0d0C7E1bc1E2F6Cd00E3b4B1083DdD9969155FD": [
+      "constructor()",
+      "error AddressEmptyCode(address target)",
+      "error CurrentKMSContextCannotBeDestroyed(uint256 kmsContextId)",
+      "error DeserializingDecryptionProofFail()",
+      "error DeserializingExtraDataFail()",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error EmptyDecryptionProof()",
+      "error FailedCall()",
+      "error InvalidInitialization()",
+      "error InvalidKMSContext(uint256 kmsContextId)",
+      "error KMSAlreadySigner()",
+      "error KMSInvalidSigner(address invalidSigner)",
+      "error KMSSignatureThresholdNotReached(uint256 numSignatures)",
+      "error KMSSignerNull()",
+      "error KMSZeroSignature()",
+      "error NotHostOwner(address sender)",
+      "error NotInitializing()",
+      "error NotInitializingFromEmptyProxy()",
+      "error SignersSetIsEmpty()",
+      "error ThresholdIsAboveNumberOfSigners()",
+      "error ThresholdIsNull()",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "error UnsupportedExtraDataVersion(uint8 version)",
+      "event EIP712DomainChanged()",
+      "event Initialized(uint64 version)",
+      "event KMSContextDestroyed(uint256 indexed kmsContextId)",
+      "event NewContextSet(uint256 indexed kmsContextId, address[] newKmsSignersSet, uint256 newThreshold)",
+      "event Upgraded(address indexed implementation)",
+      "function DECRYPTION_RESULT_TYPEHASH() view returns (bytes32)",
+      "function EIP712_PUBLIC_DECRYPT_TYPE() view returns (string)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function defineNewContext(address[] newSignersSet, uint256 newThreshold)",
+      "function destroyKmsContext(uint256 kmsContextId)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function getContextSignersAndThresholdFromExtraData(bytes extraData) view returns (address[] signers, uint256 threshold)",
+      "function getCurrentKmsContextId() view returns (uint256)",
+      "function getKmsSigners() view returns (address[])",
+      "function getSignersForKmsContext(uint256 kmsContextId) view returns (address[])",
+      "function getThreshold() view returns (uint256)",
+      "function getVersion() pure returns (string)",
+      "function initializeFromEmptyProxy(address verifyingContractSource, uint64 chainIDSource, address[] initialSigners, uint256 initialThreshold)",
+      "function isSigner(address account) view returns (bool)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function reinitializeV2()",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function verifyDecryptionEIP712KMSSignatures(bytes32[] handlesList, bytes decryptedResult, bytes decryptionProof) returns (bool)"
+    ],
+    "eth:0xD82385dADa1ae3E969447f20A3164F6213100e75": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "eth:0xda9396b82634Ea99243cE51258B6A5Ae512D4893": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "event Upgraded(address indexed implementation)"
     ],
     "eth:0xE43c73aAb2b6aBBad6d0461997ce1cfea5ABe66f": [
       "constructor(address _logic, bytes _data) payable",
@@ -6848,6 +7102,113 @@
       "error FailedCall()",
       "event Upgraded(address indexed implementation)"
     ],
+    "zama:0x2294E3C211238Ae31E2824576CCd7f996CC7Dc00": [
+      "constructor()",
+      "error AddressEmptyCode(address target)",
+      "error ChainIdNotUint64(uint256 chainId)",
+      "error CoprocessorSignerAlreadyRegistered(address coprocessorSignerAddress)",
+      "error CoprocessorTxSenderAlreadyRegistered(address coprocessorTxSenderAddress)",
+      "error CustodianSignerAlreadyRegistered(address custodianSignerAddress)",
+      "error CustodianTxSenderAlreadyRegistered(address custodianTxSenderAddress)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error EmptyCoprocessors()",
+      "error EmptyCustodians()",
+      "error EmptyKmsNodes()",
+      "error FailedCall()",
+      "error HostChainAlreadyRegistered(uint256 chainId)",
+      "error InvalidHighCoprocessorThreshold(uint256 coprocessorThreshold, uint256 nCoprocessors)",
+      "error InvalidHighKmsGenThreshold(uint256 kmsGenThreshold, uint256 nKmsNodes)",
+      "error InvalidHighMpcThreshold(uint256 mpcThreshold, uint256 nKmsNodes)",
+      "error InvalidHighPublicDecryptionThreshold(uint256 publicDecryptionThreshold, uint256 nKmsNodes)",
+      "error InvalidHighUserDecryptionThreshold(uint256 userDecryptionThreshold, uint256 nKmsNodes)",
+      "error InvalidInitialization()",
+      "error InvalidNullChainId()",
+      "error InvalidNullCoprocessorThreshold()",
+      "error InvalidNullKmsContextId()",
+      "error InvalidNullKmsGenThreshold()",
+      "error InvalidNullPublicDecryptionThreshold()",
+      "error InvalidNullUserDecryptionThreshold()",
+      "error KmsContextAlreadyRegistered(uint256 contextId, uint256 currentKmsContextId)",
+      "error KmsSignerAlreadyRegistered(address kmsSignerAddress)",
+      "error KmsTxSenderAlreadyRegistered(address kmsTxSenderAddress)",
+      "error NotInitializing()",
+      "error NotInitializingFromEmptyProxy()",
+      "error NotPauser(address account)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event AddHostChain(tuple(uint256 chainId, address fhevmExecutorAddress, address aclAddress, string name, string website) hostChain)",
+      "event InitializeGatewayConfig(uint256 indexed kmsContextId, tuple(string name, string website) metadata, tuple(uint256 mpcThreshold, uint256 publicDecryptionThreshold, uint256 userDecryptionThreshold, uint256 kmsGenThreshold, uint256 coprocessorThreshold) thresholds, tuple(address txSenderAddress, address signerAddress, string ipAddress, string storageUrl)[] kmsNodes, tuple(address txSenderAddress, address signerAddress, string s3BucketUrl)[] coprocessors, tuple(address txSenderAddress, address signerAddress, bytes encryptionKey)[] custodians)",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PauseAllGatewayContracts()",
+      "event UnpauseAllGatewayContracts()",
+      "event UpdateCoprocessorThreshold(uint256 newCoprocessorThreshold)",
+      "event UpdateCoprocessors(tuple(address txSenderAddress, address signerAddress, string s3BucketUrl)[] newCoprocessors, uint256 newCoprocessorThreshold)",
+      "event UpdateCustodians(tuple(address txSenderAddress, address signerAddress, bytes encryptionKey)[] newCustodians)",
+      "event UpdateKmsContext(uint256 indexed newContextId, tuple(address txSenderAddress, address signerAddress, string ipAddress, string storageUrl)[] newKmsNodes, uint256 newMpcThreshold, uint256 newPublicDecryptionThreshold, uint256 newUserDecryptionThreshold, uint256 newKmsGenThreshold)",
+      "event UpdateKmsGenThreshold(uint256 newKmsGenThreshold)",
+      "event UpdateMpcThreshold(uint256 newMpcThreshold)",
+      "event UpdatePublicDecryptionThreshold(uint256 newPublicDecryptionThreshold)",
+      "event UpdateUserDecryptionThreshold(uint256 newUserDecryptionThreshold)",
+      "event Upgraded(address indexed implementation)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function acceptOwnership()",
+      "function addHostChain(tuple(uint256 chainId, address fhevmExecutorAddress, address aclAddress, string name, string website) hostChain)",
+      "function getCoprocessor(address coprocessorTxSenderAddress) view returns (tuple(address txSenderAddress, address signerAddress, string s3BucketUrl))",
+      "function getCoprocessorMajorityThreshold() view returns (uint256)",
+      "function getCoprocessorSigners() view returns (address[])",
+      "function getCoprocessorTxSenders() view returns (address[])",
+      "function getCurrentKmsContextId() view returns (uint256)",
+      "function getCustodian(address custodianTxSenderAddress) view returns (tuple(address txSenderAddress, address signerAddress, bytes encryptionKey))",
+      "function getCustodianSigners() view returns (address[])",
+      "function getCustodianTxSenders() view returns (address[])",
+      "function getHostChain(uint256 index) view returns (tuple(uint256 chainId, address fhevmExecutorAddress, address aclAddress, string name, string website))",
+      "function getHostChains() view returns (tuple(uint256 chainId, address fhevmExecutorAddress, address aclAddress, string name, string website)[])",
+      "function getKmsGenThreshold() view returns (uint256)",
+      "function getKmsNode(address kmsTxSenderAddress) view returns (tuple(address txSenderAddress, address signerAddress, string ipAddress, string storageUrl))",
+      "function getKmsNodeForContext(uint256 contextId, address kmsTxSenderAddress) view returns (tuple(address txSenderAddress, address signerAddress, string ipAddress, string storageUrl))",
+      "function getKmsSigners() view returns (address[])",
+      "function getKmsSignersForContext(uint256 contextId) view returns (address[])",
+      "function getKmsTxSenders() view returns (address[])",
+      "function getKmsTxSendersForContext(uint256 contextId) view returns (address[])",
+      "function getMpcThreshold() view returns (uint256)",
+      "function getProtocolMetadata() view returns (tuple(string name, string website))",
+      "function getPublicDecryptionThresholdForContext(uint256 contextId) view returns (uint256)",
+      "function getUserDecryptionThresholdForContext(uint256 contextId) view returns (uint256)",
+      "function getVersion() pure returns (string)",
+      "function initializeFromEmptyProxy(uint256 initialKmsContextId, tuple(string name, string website) initialMetadata, tuple(uint256 mpcThreshold, uint256 publicDecryptionThreshold, uint256 userDecryptionThreshold, uint256 kmsGenThreshold, uint256 coprocessorThreshold) initialThresholds, tuple(address txSenderAddress, address signerAddress, string ipAddress, string storageUrl)[] initialKmsNodes, tuple(address txSenderAddress, address signerAddress, string s3BucketUrl)[] initialCoprocessors, tuple(address txSenderAddress, address signerAddress, bytes encryptionKey)[] initialCustodians)",
+      "function isCoprocessorSigner(address signerAddress) view returns (bool)",
+      "function isCoprocessorTxSender(address txSenderAddress) view returns (bool)",
+      "function isCustodianSigner(address signerAddress) view returns (bool)",
+      "function isCustodianTxSender(address txSenderAddress) view returns (bool)",
+      "function isHostChainRegistered(uint256 chainId) view returns (bool)",
+      "function isKmsSigner(address signerAddress) view returns (bool)",
+      "function isKmsSignerForContext(uint256 contextId, address signerAddress) view returns (bool)",
+      "function isKmsTxSender(address txSenderAddress) view returns (bool)",
+      "function isKmsTxSenderForContext(uint256 contextId, address txSenderAddress) view returns (bool)",
+      "function isPauser(address account) view returns (bool)",
+      "function owner() view returns (address)",
+      "function pauseAllGatewayContracts()",
+      "function pendingOwner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function reinitializeV5(uint256 initialKmsContextId)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function unpauseAllGatewayContracts()",
+      "function updateCoprocessorThreshold(uint256 newCoprocessorThreshold)",
+      "function updateCoprocessors(tuple(address txSenderAddress, address signerAddress, string s3BucketUrl)[] newCoprocessors, uint256 newCoprocessorThreshold)",
+      "function updateCustodians(tuple(address txSenderAddress, address signerAddress, bytes encryptionKey)[] newCustodians)",
+      "function updateKmsContext(uint256 newContextId, tuple(address txSenderAddress, address signerAddress, string ipAddress, string storageUrl)[] newKmsNodes, uint256 newMpcThreshold, uint256 newPublicDecryptionThreshold, uint256 newUserDecryptionThreshold, uint256 newKmsGenThreshold)",
+      "function updateKmsGenThreshold(uint256 newKmsGenThreshold)",
+      "function updateMpcThreshold(uint256 newMpcThreshold)",
+      "function updatePublicDecryptionThreshold(uint256 newPublicDecryptionThreshold)",
+      "function updateUserDecryptionThreshold(uint256 newUserDecryptionThreshold)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
@@ -6999,6 +7360,88 @@
       "error ERC1967NonPayable()",
       "error FailedCall()",
       "event Upgraded(address indexed implementation)"
+    ],
+    "zama:0x943CEfD1A00d3ae5b298bB10D4EddA09B279C8B0": [
+      "constructor()",
+      "error AddressEmptyCode(address target)",
+      "error ContractAddressesMaxLengthExceeded(uint256 maxLength, uint256 actualLength)",
+      "error ContractNotInContractAddresses(address contractAddress, address[] contractAddresses)",
+      "error CoprocessorSignerDoesNotMatchTxSender(address signerAddress, address txSenderAddress)",
+      "error CtHandleChainIdDiffersFromContractChainId(bytes32 ctHandle, uint256 chainId, uint256 contractChainId)",
+      "error DecryptionNotRequested(uint256 decryptionId)",
+      "error DelegatorAddressInContractAddresses(address delegatorAddress, address[] contractAddresses)",
+      "error DifferentKeyIdsNotAllowed(tuple(bytes32 ctHandle, uint256 keyId, bytes32 snsCiphertextDigest, address[] coprocessorTxSenderAddresses) firstSnsCtMaterial, tuple(bytes32 ctHandle, uint256 keyId, bytes32 snsCiphertextDigest, address[] coprocessorTxSenderAddresses) invalidSnsCtMaterial)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error EmptyContractAddresses()",
+      "error EmptyCtHandleContractPairs()",
+      "error EmptyCtHandles()",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error FailedCall()",
+      "error HostChainNotRegistered(uint256 chainId)",
+      "error InvalidExtraDataLength(uint256 length, uint256 minimumLength)",
+      "error InvalidFHEType(uint8 fheTypeUint8)",
+      "error InvalidInitialization()",
+      "error InvalidNullDurationDays()",
+      "error InvalidUserSignature(bytes signature)",
+      "error KmsNodeAlreadySigned(uint256 decryptionId, address signer)",
+      "error KmsSignerDoesNotMatchTxSender(address signerAddress, address txSenderAddress)",
+      "error MaxDecryptionRequestBitSizeExceeded(uint256 maxBitSize, uint256 totalBitSize)",
+      "error MaxDurationDaysExceeded(uint256 maxValue, uint256 actualValue)",
+      "error NotCoprocessorSigner(address signerAddress)",
+      "error NotCoprocessorTxSender(address txSenderAddress)",
+      "error NotCustodianSigner(address signerAddress)",
+      "error NotCustodianTxSender(address txSenderAddress)",
+      "error NotGatewayOwner(address sender)",
+      "error NotInitializing()",
+      "error NotInitializingFromEmptyProxy()",
+      "error NotKmsSigner(address signerAddress)",
+      "error NotKmsTxSender(address txSenderAddress)",
+      "error NotOwnerOrGatewayConfig(address notOwnerOrGatewayConfig)",
+      "error NotPauserOrGatewayConfig(address notPauserOrGatewayConfig)",
+      "error StartTimestampInFuture(uint256 currentTimestamp, uint256 startTimestamp)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "error UnsupportedExtraDataVersion(uint8 version)",
+      "error UnsupportedFHEType(uint8 fheType)",
+      "error UserAddressInContractAddresses(address userAddress, address[] contractAddresses)",
+      "error UserDecryptionRequestExpired(uint256 currentTimestamp, tuple(uint256 startTimestamp, uint256 durationDays) requestValidity)",
+      "event EIP712DomainChanged()",
+      "event Initialized(uint64 version)",
+      "event Paused(address account)",
+      "event PublicDecryptionRequest(uint256 indexed decryptionId, tuple(bytes32 ctHandle, uint256 keyId, bytes32 snsCiphertextDigest, address[] coprocessorTxSenderAddresses)[] snsCtMaterials, bytes extraData)",
+      "event PublicDecryptionResponse(uint256 indexed decryptionId, bytes decryptedResult, bytes[] signatures, bytes extraData)",
+      "event PublicDecryptionResponseCall(uint256 indexed decryptionId, bytes decryptedResult, bytes signature, address kmsTxSender, bytes extraData)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "event UserDecryptionRequest(uint256 indexed decryptionId, tuple(bytes32 ctHandle, uint256 keyId, bytes32 snsCiphertextDigest, address[] coprocessorTxSenderAddresses)[] snsCtMaterials, address userAddress, bytes publicKey, bytes extraData)",
+      "event UserDecryptionResponse(uint256 indexed decryptionId, uint256 indexShare, bytes userDecryptedShare, bytes signature, bytes extraData)",
+      "event UserDecryptionResponseThresholdReached(uint256 indexed decryptionId)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function delegatedUserDecryptionRequest(tuple(bytes32 ctHandle, address contractAddress)[] ctHandleContractPairs, tuple(uint256 startTimestamp, uint256 durationDays) requestValidity, tuple(address delegatorAddress, address delegateAddress) delegationAccounts, tuple(uint256 chainId, address[] addresses) contractsInfo, bytes publicKey, bytes signature, bytes extraData)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function getDecryptionConsensusTxSenders(uint256 decryptionId) view returns (address[])",
+      "function getVersion() pure returns (string)",
+      "function initializeFromEmptyProxy()",
+      "function isDecryptionDone(uint256 decryptionId) view returns (bool)",
+      "function isDelegatedUserDecryptionReady(tuple(bytes32 ctHandle, address contractAddress)[] ctHandleContractPairs, bytes) view returns (bool)",
+      "function isPublicDecryptionReady(bytes32[] ctHandles, bytes) view returns (bool)",
+      "function isUserDecryptionReady(tuple(bytes32 ctHandle, address contractAddress)[] ctHandleContractPairs, bytes) view returns (bool)",
+      "function isUserDecryptionReady(address, tuple(bytes32 ctHandle, address contractAddress)[] ctHandleContractPairs, bytes extraData) view returns (bool)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function publicDecryptionRequest(bytes32[] ctHandles, bytes extraData)",
+      "function publicDecryptionResponse(uint256 decryptionId, bytes decryptedResult, bytes signature, bytes extraData)",
+      "function reinitializeV4()",
+      "function unpause()",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function userDecryptionRequest(tuple(bytes32 ctHandle, address contractAddress)[] ctHandleContractPairs, tuple(uint256 startTimestamp, uint256 durationDays) requestValidity, tuple(uint256 chainId, address[] addresses) contractsInfo, address userAddress, bytes publicKey, bytes signature, bytes extraData)",
+      "function userDecryptionResponse(uint256 decryptionId, bytes userDecryptedShare, bytes signature, bytes extraData)"
     ],
     "zama:0x9B5bc299FC3C7AEFb6a215C1c156D5854B53b262": [
       "constructor()",
@@ -7172,105 +7615,6 @@
       "error FailedCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "zama:0xDa97dfc327349F7C1333610C80cc20971eD0eb0f": [
-      "constructor()",
-      "error AddressEmptyCode(address target)",
-      "error ChainIdNotUint64(uint256 chainId)",
-      "error CoprocessorSignerAlreadyRegistered(address coprocessorSignerAddress)",
-      "error CoprocessorTxSenderAlreadyRegistered(address coprocessorTxSenderAddress)",
-      "error CustodianSignerAlreadyRegistered(address custodianSignerAddress)",
-      "error CustodianTxSenderAlreadyRegistered(address custodianTxSenderAddress)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error EmptyCoprocessors()",
-      "error EmptyCustodians()",
-      "error EmptyKmsNodes()",
-      "error FailedCall()",
-      "error HostChainAlreadyRegistered(uint256 chainId)",
-      "error InvalidHighCoprocessorThreshold(uint256 coprocessorThreshold, uint256 nCoprocessors)",
-      "error InvalidHighKmsGenThreshold(uint256 kmsGenThreshold, uint256 nKmsNodes)",
-      "error InvalidHighMpcThreshold(uint256 mpcThreshold, uint256 nKmsNodes)",
-      "error InvalidHighPublicDecryptionThreshold(uint256 publicDecryptionThreshold, uint256 nKmsNodes)",
-      "error InvalidHighUserDecryptionThreshold(uint256 userDecryptionThreshold, uint256 nKmsNodes)",
-      "error InvalidInitialization()",
-      "error InvalidNullChainId()",
-      "error InvalidNullCoprocessorThreshold()",
-      "error InvalidNullKmsGenThreshold()",
-      "error InvalidNullPublicDecryptionThreshold()",
-      "error InvalidNullUserDecryptionThreshold()",
-      "error KmsSignerAlreadyRegistered(address kmsSignerAddress)",
-      "error KmsTxSenderAlreadyRegistered(address kmsTxSenderAddress)",
-      "error NotInitializing()",
-      "error NotInitializingFromEmptyProxy()",
-      "error NotPauser(address account)",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "error UUPSUnauthorizedCallContext()",
-      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
-      "event AddHostChain(tuple(uint256 chainId, address fhevmExecutorAddress, address aclAddress, string name, string website) hostChain)",
-      "event InitializeGatewayConfig(tuple(string name, string website) metadata, tuple(uint256 mpcThreshold, uint256 publicDecryptionThreshold, uint256 userDecryptionThreshold, uint256 kmsGenThreshold, uint256 coprocessorThreshold) thresholds, tuple(address txSenderAddress, address signerAddress, string ipAddress, string storageUrl)[] kmsNodes, tuple(address txSenderAddress, address signerAddress, string s3BucketUrl)[] coprocessors, tuple(address txSenderAddress, address signerAddress, bytes encryptionKey)[] custodians)",
-      "event Initialized(uint64 version)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event PauseAllGatewayContracts()",
-      "event UnpauseAllGatewayContracts()",
-      "event UpdateCoprocessorThreshold(uint256 newCoprocessorThreshold)",
-      "event UpdateCoprocessors(tuple(address txSenderAddress, address signerAddress, string s3BucketUrl)[] newCoprocessors, uint256 newCoprocessorThreshold)",
-      "event UpdateCustodians(tuple(address txSenderAddress, address signerAddress, bytes encryptionKey)[] newCustodians)",
-      "event UpdateKmsGenThreshold(uint256 newKmsGenThreshold)",
-      "event UpdateKmsNodes(tuple(address txSenderAddress, address signerAddress, string ipAddress, string storageUrl)[] newKmsNodes, uint256 newMpcThreshold, uint256 newPublicDecryptionThreshold, uint256 newUserDecryptionThreshold, uint256 newKmsGenThreshold)",
-      "event UpdateMpcThreshold(uint256 newMpcThreshold)",
-      "event UpdatePublicDecryptionThreshold(uint256 newPublicDecryptionThreshold)",
-      "event UpdateUserDecryptionThreshold(uint256 newUserDecryptionThreshold)",
-      "event Upgraded(address indexed implementation)",
-      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
-      "function acceptOwnership()",
-      "function addHostChain(tuple(uint256 chainId, address fhevmExecutorAddress, address aclAddress, string name, string website) hostChain)",
-      "function getCoprocessor(address coprocessorTxSenderAddress) view returns (tuple(address txSenderAddress, address signerAddress, string s3BucketUrl))",
-      "function getCoprocessorMajorityThreshold() view returns (uint256)",
-      "function getCoprocessorSigners() view returns (address[])",
-      "function getCoprocessorTxSenders() view returns (address[])",
-      "function getCustodian(address custodianTxSenderAddress) view returns (tuple(address txSenderAddress, address signerAddress, bytes encryptionKey))",
-      "function getCustodianSigners() view returns (address[])",
-      "function getCustodianTxSenders() view returns (address[])",
-      "function getHostChain(uint256 index) view returns (tuple(uint256 chainId, address fhevmExecutorAddress, address aclAddress, string name, string website))",
-      "function getHostChains() view returns (tuple(uint256 chainId, address fhevmExecutorAddress, address aclAddress, string name, string website)[])",
-      "function getKmsGenThreshold() view returns (uint256)",
-      "function getKmsNode(address kmsTxSenderAddress) view returns (tuple(address txSenderAddress, address signerAddress, string ipAddress, string storageUrl))",
-      "function getKmsSigners() view returns (address[])",
-      "function getKmsTxSenders() view returns (address[])",
-      "function getMpcThreshold() view returns (uint256)",
-      "function getProtocolMetadata() view returns (tuple(string name, string website))",
-      "function getPublicDecryptionThreshold() view returns (uint256)",
-      "function getUserDecryptionThreshold() view returns (uint256)",
-      "function getVersion() pure returns (string)",
-      "function initializeFromEmptyProxy(tuple(string name, string website) initialMetadata, tuple(uint256 mpcThreshold, uint256 publicDecryptionThreshold, uint256 userDecryptionThreshold, uint256 kmsGenThreshold, uint256 coprocessorThreshold) initialThresholds, tuple(address txSenderAddress, address signerAddress, string ipAddress, string storageUrl)[] initialKmsNodes, tuple(address txSenderAddress, address signerAddress, string s3BucketUrl)[] initialCoprocessors, tuple(address txSenderAddress, address signerAddress, bytes encryptionKey)[] initialCustodians)",
-      "function isCoprocessorSigner(address signerAddress) view returns (bool)",
-      "function isCoprocessorTxSender(address txSenderAddress) view returns (bool)",
-      "function isCustodianSigner(address signerAddress) view returns (bool)",
-      "function isCustodianTxSender(address txSenderAddress) view returns (bool)",
-      "function isHostChainRegistered(uint256 chainId) view returns (bool)",
-      "function isKmsSigner(address signerAddress) view returns (bool)",
-      "function isKmsTxSender(address txSenderAddress) view returns (bool)",
-      "function isPauser(address account) view returns (bool)",
-      "function owner() view returns (address)",
-      "function pauseAllGatewayContracts()",
-      "function pendingOwner() view returns (address)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function reinitializeV4()",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function unpauseAllGatewayContracts()",
-      "function updateCoprocessorThreshold(uint256 newCoprocessorThreshold)",
-      "function updateCoprocessors(tuple(address txSenderAddress, address signerAddress, string s3BucketUrl)[] newCoprocessors, uint256 newCoprocessorThreshold)",
-      "function updateCustodians(tuple(address txSenderAddress, address signerAddress, bytes encryptionKey)[] newCustodians)",
-      "function updateKmsGenThreshold(uint256 newKmsGenThreshold)",
-      "function updateKmsNodes(tuple(address txSenderAddress, address signerAddress, string ipAddress, string storageUrl)[] newKmsNodes, uint256 newMpcThreshold, uint256 newPublicDecryptionThreshold, uint256 newUserDecryptionThreshold, uint256 newKmsGenThreshold)",
-      "function updateMpcThreshold(uint256 newMpcThreshold)",
-      "function updatePublicDecryptionThreshold(uint256 newPublicDecryptionThreshold)",
-      "function updateUserDecryptionThreshold(uint256 newUserDecryptionThreshold)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
     "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
@@ -7278,88 +7622,6 @@
       "error ERC1967NonPayable()",
       "error FailedCall()",
       "event Upgraded(address indexed implementation)"
-    ],
-    "zama:0xe691cE3d7a71E2eC9E96AF5bdD263FfEB124F8dE": [
-      "constructor()",
-      "error AccountNotAllowedToUseCiphertext(bytes32 ctHandle, address accountAddress)",
-      "error AddressEmptyCode(address target)",
-      "error ContractAddressesMaxLengthExceeded(uint256 maxLength, uint256 actualLength)",
-      "error ContractNotInContractAddresses(address contractAddress, address[] contractAddresses)",
-      "error CoprocessorSignerDoesNotMatchTxSender(address signerAddress, address txSenderAddress)",
-      "error CtHandleChainIdDiffersFromContractChainId(bytes32 ctHandle, uint256 chainId, uint256 contractChainId)",
-      "error DecryptionNotRequested(uint256 decryptionId)",
-      "error DelegatorAddressInContractAddresses(address delegatorAddress, address[] contractAddresses)",
-      "error DifferentKeyIdsNotAllowed(tuple(bytes32 ctHandle, uint256 keyId, bytes32 snsCiphertextDigest, address[] coprocessorTxSenderAddresses) firstSnsCtMaterial, tuple(bytes32 ctHandle, uint256 keyId, bytes32 snsCiphertextDigest, address[] coprocessorTxSenderAddresses) invalidSnsCtMaterial)",
-      "error ECDSAInvalidSignature()",
-      "error ECDSAInvalidSignatureLength(uint256 length)",
-      "error ECDSAInvalidSignatureS(bytes32 s)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error EmptyContractAddresses()",
-      "error EmptyCtHandleContractPairs()",
-      "error EmptyCtHandles()",
-      "error EnforcedPause()",
-      "error ExpectedPause()",
-      "error FailedCall()",
-      "error HostChainNotRegistered(uint256 chainId)",
-      "error InvalidFHEType(uint8 fheTypeUint8)",
-      "error InvalidInitialization()",
-      "error InvalidNullDurationDays()",
-      "error InvalidUserSignature(bytes signature)",
-      "error KmsNodeAlreadySigned(uint256 decryptionId, address signer)",
-      "error KmsSignerDoesNotMatchTxSender(address signerAddress, address txSenderAddress)",
-      "error MaxDecryptionRequestBitSizeExceeded(uint256 maxBitSize, uint256 totalBitSize)",
-      "error MaxDurationDaysExceeded(uint256 maxValue, uint256 actualValue)",
-      "error NotCoprocessorSigner(address signerAddress)",
-      "error NotCoprocessorTxSender(address txSenderAddress)",
-      "error NotCustodianSigner(address signerAddress)",
-      "error NotCustodianTxSender(address txSenderAddress)",
-      "error NotGatewayOwner(address sender)",
-      "error NotInitializing()",
-      "error NotInitializingFromEmptyProxy()",
-      "error NotKmsSigner(address signerAddress)",
-      "error NotKmsTxSender(address txSenderAddress)",
-      "error NotOwnerOrGatewayConfig(address notOwnerOrGatewayConfig)",
-      "error NotPauserOrGatewayConfig(address notPauserOrGatewayConfig)",
-      "error PublicDecryptNotAllowed(bytes32 ctHandle)",
-      "error StartTimestampInFuture(uint256 currentTimestamp, uint256 startTimestamp)",
-      "error UUPSUnauthorizedCallContext()",
-      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
-      "error UnsupportedFHEType(uint8 fheType)",
-      "error UserAddressInContractAddresses(address userAddress, address[] contractAddresses)",
-      "error UserDecryptionNotDelegated(uint256 chainId, address delegator, address delegate, address contractAddress)",
-      "error UserDecryptionRequestExpired(uint256 currentTimestamp, tuple(uint256 startTimestamp, uint256 durationDays) requestValidity)",
-      "event EIP712DomainChanged()",
-      "event Initialized(uint64 version)",
-      "event Paused(address account)",
-      "event PublicDecryptionRequest(uint256 indexed decryptionId, tuple(bytes32 ctHandle, uint256 keyId, bytes32 snsCiphertextDigest, address[] coprocessorTxSenderAddresses)[] snsCtMaterials, bytes extraData)",
-      "event PublicDecryptionResponse(uint256 indexed decryptionId, bytes decryptedResult, bytes[] signatures, bytes extraData)",
-      "event PublicDecryptionResponseCall(uint256 indexed decryptionId, bytes decryptedResult, bytes signature, address kmsTxSender, bytes extraData)",
-      "event Unpaused(address account)",
-      "event Upgraded(address indexed implementation)",
-      "event UserDecryptionRequest(uint256 indexed decryptionId, tuple(bytes32 ctHandle, uint256 keyId, bytes32 snsCiphertextDigest, address[] coprocessorTxSenderAddresses)[] snsCtMaterials, address userAddress, bytes publicKey, bytes extraData)",
-      "event UserDecryptionResponse(uint256 indexed decryptionId, uint256 indexShare, bytes userDecryptedShare, bytes signature, bytes extraData)",
-      "event UserDecryptionResponseThresholdReached(uint256 indexed decryptionId)",
-      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
-      "function delegatedUserDecryptionRequest(tuple(bytes32 ctHandle, address contractAddress)[] ctHandleContractPairs, tuple(uint256 startTimestamp, uint256 durationDays) requestValidity, tuple(address delegatorAddress, address delegateAddress) delegationAccounts, tuple(uint256 chainId, address[] addresses) contractsInfo, bytes publicKey, bytes signature, bytes extraData)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function getDecryptionConsensusTxSenders(uint256 decryptionId) view returns (address[])",
-      "function getVersion() pure returns (string)",
-      "function initializeFromEmptyProxy()",
-      "function isDecryptionDone(uint256 decryptionId) view returns (bool)",
-      "function isDelegatedUserDecryptionReady(tuple(address delegatorAddress, address delegateAddress) delegationAccounts, tuple(bytes32 ctHandle, address contractAddress)[] ctHandleContractPairs, bytes) view returns (bool)",
-      "function isPublicDecryptionReady(bytes32[] ctHandles, bytes) view returns (bool)",
-      "function isUserDecryptionReady(address userAddress, tuple(bytes32 ctHandle, address contractAddress)[] ctHandleContractPairs, bytes) view returns (bool)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function publicDecryptionRequest(bytes32[] ctHandles, bytes extraData)",
-      "function publicDecryptionResponse(uint256 decryptionId, bytes decryptedResult, bytes signature, bytes extraData)",
-      "function reinitializeV3()",
-      "function unpause()",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable",
-      "function userDecryptionRequest(tuple(bytes32 ctHandle, address contractAddress)[] ctHandleContractPairs, tuple(uint256 startTimestamp, uint256 durationDays) requestValidity, tuple(uint256 chainId, address[] addresses) contractsInfo, address userAddress, bytes publicKey, bytes signature, bytes extraData)",
-      "function userDecryptionResponse(uint256 decryptionId, bytes userDecryptedShare, bytes signature, bytes extraData)"
     ],
     "zama:0xEbaC23dc56b1339558cdbdf7dEf245c80d727075": [
       "constructor()",
@@ -7401,9 +7663,9 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "zama/CiphertextCommits": "0xe2f42de1746de3eb1b71992159aea607195d575a68c009d46a71c73fe3274fb5",
     "zama/ConfidentialTokenWrappersRegistry": "0xac4c61aea2fe3548481375913505c610bc9a6c1ea7a22dfc9ac73d0c1a5b9a66",
-    "zama/ConfidentialWrapperV3": "0x2af134a4c8d8bac46ae03c385334b08c7674ade2a124f1b2405278aa00a1a287",
-    "zama/Decryption": "0x90f2b48e8f3c42b73e42236a7c191904bee8a2a5b2a96dcd26a377e6c3486d32",
-    "zama/GatewayConfig": "0x2cf5e07836e743b1e8f3eb6dd0280df868669cd87274f027d5a40144173b42ed",
+    "zama/ConfidentialWrapperV3": "0x4c4042fbf171de0b14b575e4bde209e4e75a7cac9f7ef1ed7fe20dadf9a65cb3",
+    "zama/Decryption_v0_4_0": "0xf7de11ef6782ebf68e102501316d7179c6213af2476f361584c01ea2773ffddb",
+    "zama/GatewayConfig_v0_5_0": "0x8947116076120b4b30c71e6c0a54c165590b9ec24ecd73f8eb57faa66c795081",
     "zama/GatewayPauserSet": "0x6e3bdded022ec01666a6e04d5f08b9f51c449213ba48bee15c272d39a5e512c8",
     "zama/InputVerification": "0x49169792925bc07875f203d69cfb1133de2899d7ae282dac55fbbf0033110aad",
     "zama/KMSGeneration": "0xc877c3bafaf8baea14b623212efdd78a859acce207e54911ac68cc3e627b0db8",
@@ -7411,14 +7673,14 @@
     "zama/Multisig": "0xfacece6ea884ad4d49a3d294d69053b6102e847852204f7f3a65f9980facf297",
     "zama/ProtocolPayment": "0x29f359a705738f82d1d996c1d6568c5ccc8dcb572fd3049117a3194f86f50ab7",
     "zama/ProtocolStaking": "0x5884f0df97651fb8fe7e194b5b33b695d7083e5a4fa5c109c9ac1cee80d193d3",
-    "zama/ZamaACL": "0x3c18c9d4d1944604ae596d5c1e9de891d569ef45ead3c9ba4e84bc4d5fe54602",
+    "zama/ZamaACL_v0_3_0": "0x3c18c9d4d1944604ae596d5c1e9de891d569ef45ead3c9ba4e84bc4d5fe54602",
     "zama/ZamaDAO": "0xfdc0657fce067cffceacf21c2bc38f8c430c7c5ac4ebbe75f97dca7436e0f4b8",
-    "zama/ZamaFHEVMExecutor": "0x19e0e0c6abc98a3d3155c52e9fe91114df722bb21026ae0222ca38c1262f48b1",
-    "zama/ZamaHCULimit": "0x2af793f85b69ebbbe2c86870f1d4bcc1effab09e2deb9be0dda85a86acef4733",
+    "zama/ZamaFHEVMExecutor_v0_3_0": "0x19e0e0c6abc98a3d3155c52e9fe91114df722bb21026ae0222ca38c1262f48b1",
+    "zama/ZamaHCULimit_v0_2_0": "0xaf9fb25b71688a89a9bac6e685b77d0d448f5cd7825023970671ddda37ff1c83",
     "zama/ZamaInputVerifier": "0x43b46c0d8e79fddc961f34a1100e3586d9bd9d8ed3f8f0a482edd52f5cd3ca8f",
-    "zama/ZamaKMSVerifier": "0xb4f0d7aaa3e90b160ffbead289af925e65a0be7405a906362656a983c7719eb8",
+    "zama/ZamaKMSVerifier_v0_2_0": "0x7fc4e3ae2be7d94f782720d3adb57b48f46f25266cbde808b3ce285721e9f7e4",
     "zama/ZamaPauserSet": "0x1af56cc25e42342b2f464add26e41d36787603eb96bf24f0923abdf7caf5d35f"
   },
-  "usedBlockNumbers": { "ethereum": 25424176, "zama": 1875303 },
-  "permissionsConfigHash": "0x2bb8df921c3e81bfeb65834c107505aa6ce4721ce3a2b18c565bd871e40ed7da"
+  "usedBlockNumbers": { "ethereum": 25522225, "zama": 1945080 },
+  "permissionsConfigHash": "0xd11ba1eedda1cf4173b96c1e840541c9d70dbc586f11246366898a6dc3b14b50"
 }

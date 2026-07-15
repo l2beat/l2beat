@@ -67,7 +67,7 @@ export function getTokenKey(address: TokenAddress): string {
   return `${address.chain}:${address.address.toLowerCase()}`
 }
 
-function normalizeTransferSide(
+export function normalizeTransferSide(
   chain: string,
   address: string | undefined,
 ): TokenAddress | undefined {

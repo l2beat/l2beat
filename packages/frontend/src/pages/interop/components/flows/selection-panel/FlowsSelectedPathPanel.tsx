@@ -23,15 +23,20 @@ export function FlowsSelectedPathPanel({
     return null
   }
 
-  const detailsUrl = buildInteropUrl(
-    '/interop/summary',
-    chainB
-      ? {
+  const cta = chainB
+    ? {
+        label: 'View path details',
+        href: buildInteropUrl('/interop/summary', {
           from: [chainA.id, chainB.id],
           to: [chainA.id, chainB.id],
+        }),
+      }
+    : visibleHighlightedChains.length === 1 && chainA.href
+      ? {
+          label: 'View chain details',
+          href: `${chainA.href}#interop-flows`,
         }
-      : { from: [], to: [] },
-  )
+      : undefined
 
   return (
     <div className="flex h-full flex-col rounded-lg bg-surface-secondary p-4 dark:bg-header-secondary">
@@ -58,10 +63,10 @@ export function FlowsSelectedPathPanel({
           />
         )}
       </div>
-      {visibleHighlightedChains.length === 2 && chainB && (
-        <a href={detailsUrl}>
+      {cta && (
+        <a href={cta.href}>
           <Button variant="fill" className="mt-5 w-full">
-            View path details
+            {cta.label}
           </Button>
         </a>
       )}

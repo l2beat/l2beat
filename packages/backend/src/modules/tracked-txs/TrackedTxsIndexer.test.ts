@@ -7,10 +7,13 @@ import type { TrackedTxProject } from '../../config/Config'
 import { mockDatabase } from '../../test/database'
 import type { IndexerService } from '../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../tools/uif/ids'
-import { actual, removal } from '../../tools/uif/multi/test/mockConfigurations'
+import {
+  actual,
+  trimRemoval,
+} from '../../tools/uif/multi/test/mockConfigurations'
 import type {
   Configuration,
-  RemovalConfiguration,
+  TrimRemovalConfiguration,
 } from '../../tools/uif/multi/types'
 import type { L2CostsUpdater } from './modules/l2-costs/L2CostsUpdater'
 import type { LivenessUpdater } from './modules/liveness/LivenessUpdater'
@@ -208,12 +211,14 @@ describe(TrackedTxsIndexer.name, () => {
     })
   })
 
-  describe(TrackedTxsIndexer.prototype.removeData.name, () => {
+  describe(TrackedTxsIndexer.prototype.trimData.name, () => {
     it('removes data for configurations', async () => {
       const l2CostRepository = mockObject<Database['l2Cost']>({
+        deleteByConfigIds: async () => 0,
         deleteByConfigInTimeRange: async () => 1,
       })
       const livenessRepository = mockObject<Database['liveness']>({
+        deleteByConfigIds: async () => 0,
         deleteByConfigInTimeRange: async () => 1,
       })
 
@@ -228,12 +233,12 @@ describe(TrackedTxsIndexer.name, () => {
         ],
       })
 
-      const configurations: RemovalConfiguration[] = [
-        removal('a', 100, 200),
-        removal('b', 200, 300),
+      const configurations: TrimRemovalConfiguration[] = [
+        trimRemoval('a', 100, 200),
+        trimRemoval('b', 200, 300),
       ]
 
-      await indexer.removeData(configurations)
+      await indexer.trimData(configurations)
 
       expect(
         l2CostRepository.deleteByConfigInTimeRange,

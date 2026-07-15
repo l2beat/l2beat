@@ -63,6 +63,9 @@ export const pageLoaders = {
   InteropTokenFrameworksPage: async () =>
     (await import('./interop/token-frameworks/InteropTokenFrameworksPage'))
       .InteropTokenFrameworksPage,
+  InteropIntentBridgesPage: async () =>
+    (await import('./interop/intent-bridges/InteropIntentBridgesPage'))
+      .InteropIntentBridgesPage,
   DataAvailabilitySummaryPage: async () =>
     (await import('./data-availability/summary/DataAvailabilitySummaryPage'))
       .DataAvailabilitySummaryPage,

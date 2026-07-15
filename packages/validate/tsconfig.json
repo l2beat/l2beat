@@ -16,8 +16,10 @@
     "declarationMap": true,
 
     "skipLibCheck": true,
+    "types": ["node", "mocha"],
 
-    "outDir": "dist/esm"
+    "outDir": "dist",
+    "rootDir": "./src"
   },
   "exclude": ["dist"]
 }

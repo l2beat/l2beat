@@ -197,4 +197,15 @@ export class InteropPluginSyncStateRepository extends BaseRepository {
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
+
+  async deleteNotInChains(validChains: string[]): Promise<number> {
+    if (validChains.length === 0) {
+      return 0
+    }
+    const result = await this.db
+      .deleteFrom('InteropPluginSyncState')
+      .where('chain', 'not in', validChains)
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
 }

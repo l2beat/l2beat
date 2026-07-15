@@ -1,3 +1,32 @@
+Generated with discovered.json: 0xa0b658ea4d0aa25b5e39e389c8bb557bc75435fc
+
+# Diff at Wed, 08 Jul 2026 12:29:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b07b540456fadbe70953a62e508fc92311c971c6 block: 1778499359
+- current timestamp: 1783513675
+
+## Description
+
+Three signers (core validators) swapped.
+
+## Watched changes
+
+```diff
+    contract WormholeCore (eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B) [wormhole/WormholeCore] {
+    +++ description: Wormhole Core Bridge on Ethereum. It verifies VAAs signed by the active Wormhole Guardian set and is the security root for Wormhole application contracts on Ethereum, including the Token Bridge by storing the active Guardian set.
+      values.$members.7:
+-        "eth:0x18e41674CcF26329cD111406C1D05C6c80b23EdC"
++        "eth:0xF3ea0AD4FFB5a178AE4EBc21861651B25BdcbB91"
+      values.$members.14:
+-        "eth:0xD1F64e26238811de5553C40f64af41eE1B6057Cc"
++        "eth:0xaE565927Bb8dB25CD8Bf3e7BB663D70023e4Ea78"
+      values.$members.18:
+-        "eth:0x6FbEBc898F403E4773E95feB15E80C9A99c8348d"
++        "eth:0x61D9800f9FCb4160FB0C6cf3A0902592bAC2B434"
+    }
+```
+
 Generated with discovered.json: 0xf2e5719f92c069eef5098bc0342c44a100d24fb7
 
 # Diff at Fri, 12 Jun 2026 10:19:08 GMT:

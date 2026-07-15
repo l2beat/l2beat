@@ -11,6 +11,7 @@ import { LoadingState } from '../../../components/LoadingState'
 import { useProjectQueryOptions } from '../hooks/projectQuery'
 import { usePanelStore } from '../store/panel-store'
 import { Controls } from './controls/Controls'
+import type { AutoGroup } from './store/actions/loadNodes'
 import type { Field, Node } from './store/State'
 import { useStore as useNodeStore, useStore } from './store/store'
 import { NODE_WIDTH } from './store/utils/constants'
@@ -76,8 +77,12 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
       return
     }
     const nodes: Node[] = []
+    const autoGroups: AutoGroup[] = []
     for (const chain of data.entries) {
-      const hueShift = chain.project.startsWith('shared') ? 90 : 0
+      const isSharedModule =
+        chain.project !== project && chain.project.startsWith('shared-')
+      const hueShift = isSharedModule ? 90 : 0
+      const chainNodesStartIndex = nodes.length
 
       const initialAddresses = chain.initialContracts.map((x) => x.address)
       for (const contract of [
@@ -134,8 +139,17 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
         }
         nodes.push(node)
       }
+
+      const memberIds = nodes.slice(chainNodesStartIndex).map((node) => node.id)
+      if (isSharedModule && memberIds.length > 0) {
+        autoGroups.push({
+          id: `group:shared:${chain.project}`,
+          name: chain.project,
+          memberIds,
+        })
+      }
     }
-    loadNodes(project, nodes)
+    loadNodes(project, nodes, autoGroups)
   }, [project, data, clear, loadNodes])
 }
 

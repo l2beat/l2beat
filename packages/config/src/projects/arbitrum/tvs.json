@@ -7260,19 +7260,134 @@
       "isAssociated": false
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "arbitrum-RAIN",
       "priceId": "rain",
       "symbol": "RAIN",
       "name": "RAIN",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/69134/large/Rain_logo_1_.png?1762952191",
       "amount": {
-        "type": "circulatingSupply",
-        "apiId": "rain",
-        "decimals": 18,
-        "sinceTimestamp": 1757548800,
-        "address": "0x25118290e6A5f4139381D072181157035864099d",
-        "chain": "arbitrum"
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "totalSupply",
+            "address": "0x25118290e6A5f4139381D072181157035864099d",
+            "chain": "arbitrum",
+            "decimals": 18,
+            "sinceTimestamp": 1757548800
+          },
+          {
+            "type": "calculation",
+            "operator": "sum",
+            "arguments": [
+              {
+                "type": "balanceOfEscrow",
+                "address": "0x25118290e6A5f4139381D072181157035864099d",
+                "chain": "arbitrum",
+                "escrowAddress": "0x467D5Bf8Cfa1a5f99328fBdCb9C751c78934b725",
+                "decimals": 18,
+                "sinceTimestamp": 1757548800
+              },
+              {
+                "type": "balanceOfEscrow",
+                "address": "0x25118290e6A5f4139381D072181157035864099d",
+                "chain": "arbitrum",
+                "escrowAddress": "0xc41A5462362f6AB4A878AE0Aac91b7259f7176A5",
+                "decimals": 18,
+                "sinceTimestamp": 1757548800
+              },
+              {
+                "type": "balanceOfEscrow",
+                "address": "0x25118290e6A5f4139381D072181157035864099d",
+                "chain": "arbitrum",
+                "escrowAddress": "0xD8324a0Ad7E6FBD9518BDC78E4222c98cF2DeF5d",
+                "decimals": 18,
+                "sinceTimestamp": 1757548800
+              },
+              {
+                "type": "balanceOfEscrow",
+                "address": "0x25118290e6A5f4139381D072181157035864099d",
+                "chain": "arbitrum",
+                "escrowAddress": "0x18305FdCa750419FdAe45efD56433A4E33178eB0",
+                "decimals": 18,
+                "sinceTimestamp": 1757548800
+              },
+              {
+                "type": "balanceOfEscrow",
+                "address": "0x25118290e6A5f4139381D072181157035864099d",
+                "chain": "arbitrum",
+                "escrowAddress": "0xe63e338089128dE0Bcd575aEd1EEf9E02E3C4133",
+                "decimals": 18,
+                "sinceTimestamp": 1757548800
+              },
+              {
+                "type": "balanceOfEscrow",
+                "address": "0x25118290e6A5f4139381D072181157035864099d",
+                "chain": "arbitrum",
+                "escrowAddress": "0xdbb47192466fF89f1fFfAe1F227e49C2652EA51b",
+                "decimals": 18,
+                "sinceTimestamp": 1757548800
+              },
+              {
+                "type": "balanceOfEscrow",
+                "address": "0x25118290e6A5f4139381D072181157035864099d",
+                "chain": "arbitrum",
+                "escrowAddress": "0x746EDAe50bd48aa55Ba1de31Cb988e89b2Ba99D7",
+                "decimals": 18,
+                "sinceTimestamp": 1757548800
+              },
+              {
+                "type": "balanceOfEscrow",
+                "address": "0x25118290e6A5f4139381D072181157035864099d",
+                "chain": "arbitrum",
+                "escrowAddress": "0x96d60ded7ff161dd9a8d98df3b32df229f35b897",
+                "decimals": 18,
+                "sinceTimestamp": 1757548800
+              },
+              {
+                "type": "balanceOfEscrow",
+                "address": "0x25118290e6A5f4139381D072181157035864099d",
+                "chain": "arbitrum",
+                "escrowAddress": "0xF197671467e955D500c14CD1910a022346150773",
+                "decimals": 18,
+                "sinceTimestamp": 1757548800
+              },
+              {
+                "type": "balanceOfEscrow",
+                "address": "0x25118290e6A5f4139381D072181157035864099d",
+                "chain": "arbitrum",
+                "escrowAddress": "0xEC7a416613ED0905b14bb2a2bE94C9f09421404f",
+                "decimals": 18,
+                "sinceTimestamp": 1757548800
+              },
+              {
+                "type": "balanceOfEscrow",
+                "address": "0x25118290e6A5f4139381D072181157035864099d",
+                "chain": "arbitrum",
+                "escrowAddress": "0x37dCC83fE82Fd220D1a54A3b7a44c03E162E3B84",
+                "decimals": 18,
+                "sinceTimestamp": 1757548800
+              },
+              {
+                "type": "balanceOfEscrow",
+                "address": "0x25118290e6A5f4139381D072181157035864099d",
+                "chain": "arbitrum",
+                "escrowAddress": "0xf55A8aa91B16713897869c17D112f156dC149c5A",
+                "decimals": 18,
+                "sinceTimestamp": 1757548800
+              },
+              {
+                "type": "balanceOfEscrow",
+                "address": "0x25118290e6A5f4139381D072181157035864099d",
+                "chain": "arbitrum",
+                "escrowAddress": "0x65a7B3144415A09D30c0dF8bd37C49DFE3eC4eb1",
+                "decimals": 18,
+                "sinceTimestamp": 1757548800
+              }
+            ]
+          }
+        ]
       },
       "category": "other",
       "source": "native",

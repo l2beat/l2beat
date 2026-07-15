@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x346f106961fa5a75d97d9802453c245fea9c566f
+
+# Diff at Wed, 08 Jul 2026 12:23:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b07b540456fadbe70953a62e508fc92311c971c6 block: 1782824030
+- current timestamp: 1783513321
+
+## Description
+
+[v5 upgrade payload](https://aztecgov.nethermind.io/4) passes signaling and is proposed to the Governance contract.
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e) [aztecnetwork/Governance] {
+    +++ description: DAO contract used for proposals and token voting. Heavily interdependent with the GSE for voting power snapshots.
+      values.proposalCount:
+-        4
++        5
+    }
+```
+
 Generated with discovered.json: 0x38927102fd474a5cbf38590c58507a407c429a61
 
 # Diff at Tue, 30 Jun 2026 12:55:01 GMT:

@@ -56,7 +56,7 @@
     "ci:check": "turbo run ci:check",
     "heroku-postbuild": "pnpm build:backend && pnpm install --production",
     "checkout": "pnpm clean && pnpm && pnpm build",
-    "coolify:check-env": "node -r esbuild-register scripts/coolify/check-env.ts"
+    "coolify:check-env": "tsx scripts/coolify/check-env.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.8",
@@ -69,11 +69,10 @@
     "dotenv": "^16.4.5",
     "earl": "^1.1.0",
     "esbuild": "^0.25.1",
-    "esbuild-register": "^3.6.0",
     "mocha": "^10.2.0",
-    "ts-node": "^10.9.1",
+    "tsx": "^4.9.3",
     "turbo": "^2.9.6",
-    "typescript": "^5.9.3",
+    "typescript": "^7.0.2",
     "wait-for-expect": "^3.0.2"
   }
 }

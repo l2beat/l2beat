@@ -14,7 +14,7 @@ import { ChainsSummaryPage } from './pages/interop/chains-summary/ChainsSummaryP
 import { CoveragePiesPage } from './pages/interop/coverage-pies/CoveragePiesPage'
 import { EventDetailsPage } from './pages/interop/events/EventDetailsPage'
 import { EventsPage } from './pages/interop/events/EventsPage'
-import { FinancialActionsPage } from './pages/interop/financials/FinancialActionsPage'
+import { FinancialsPage } from './pages/interop/financials/FinancialsPage'
 import { HighlightsPage } from './pages/interop/highlights/HighlightsPage'
 import { KnownAppsPage } from './pages/interop/known-apps/KnownAppsPage'
 import { MemoryPage } from './pages/interop/memory/MemoryPage'
@@ -29,7 +29,7 @@ import { TransferDetailsPage } from './pages/interop/transfers/TransferDetailsPa
 import { TransfersPage } from './pages/interop/transfers/TransfersPage'
 import { BackofficeLandingPage } from './pages/landing/BackofficeLandingPage'
 import { NotFoundPage } from './pages/NotFoundPage'
-import { DailyChecksPage } from './pages/website/daily-checks/DailyChecksPage'
+import { DailyChecksRedirect } from './pages/website/daily-checks/DailyChecksRedirect'
 import { InteropAggregatesPage } from './pages/website/interop-aggregates/InteropAggregatesPage'
 import { DaTrackingStatusPage } from './pages/website/status/da-tracking/DaTrackingStatusPage'
 import { TrackedTxsStatusPage } from './pages/website/status/tracked-txs/TrackedTxsStatusPage'
@@ -64,10 +64,7 @@ function EnvironmentScopedApp() {
               element={<EventDetailsPage />}
             />
 
-            <Route
-              path="/interop/financials/actions"
-              element={<FinancialActionsPage />}
-            />
+            <Route path="/interop/financials" element={<FinancialsPage />} />
             <Route path="/interop/messages" element={<MessagesPage />} />
             <Route
               path="/interop/messages/:type"
@@ -127,7 +124,10 @@ function EnvironmentScopedApp() {
               path="/website/status/da-tracking"
               element={<DaTrackingStatusPage />}
             />
-            <Route path="/website/daily-checks" element={<DailyChecksPage />} />
+            <Route
+              path="/website/daily-checks"
+              element={<DailyChecksRedirect />}
+            />
             <Route
               path="/website/interop-aggregates"
               element={<InteropAggregatesPage />}

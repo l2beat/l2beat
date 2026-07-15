@@ -154,6 +154,7 @@ const InteropTopItemsParamsShape = {
   ...InteropSelectionInputShape,
   type: KnownInteropBridgeType.optional(),
   protocolIds: v.array(v.string()).optional(),
+  anchorChain: v.string().optional(),
 }
 export const InteropTopItemsParams = v.object(InteropTopItemsParamsShape)
 

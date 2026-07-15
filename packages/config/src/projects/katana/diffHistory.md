@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x322087878ba7a5cc2c2714d3c3a4225ba79da053
+
+# Diff at Wed, 08 Jul 2026 11:18:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@41e54e24b48ee5dc5e63086324d02428320c1565 block: 1782219118
+- current timestamp: 1783509417
+
+## Description
+
+One multisig signer removed.
+
+## Watched changes
+
+```diff
+    contract Katana yieldRecipient Mulsitig (eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x34d23C4fb6542B467cA8724bAD30AC811399b184"
+      values.multisigThreshold:
+-        "2 of 7 (29%)"
++        "2 of 6 (33%)"
+    }
+```
+
+```diff
+    contract Safe (eth:0xFA58659F64a393A6E1A548ABc70Ad2CfE1e8f9Cb) [GnosisSafe] {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x59cE4e1709c7E462F3b72Ca3e1256dFa7358FC29"
+      values.multisigThreshold:
+-        "2 of 7 (29%)"
++        "2 of 6 (33%)"
+    }
+```
+
 Generated with discovered.json: 0x0f1180d79e9cbad47e063dfff7561f97f02c6269
 
 # Diff at Tue, 23 Jun 2026 12:57:22 GMT:

@@ -21,6 +21,8 @@ on:
         required: true
       TURBO_TEAM:
         required: false
+      TURBO_API:
+        required: false
 
 permissions:
   contents: read
@@ -33,6 +35,7 @@ jobs:
     timeout-minutes: 10
     env:
       TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+      TURBO_API: ${{ secrets.TURBO_API }}
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
     steps:
       - name: Check out code
@@ -66,4 +69,5 @@ jobs:
             ${{ inputs.extra_build_args }}
           secrets: |
             TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
+            TURBO_API=${{ secrets.TURBO_API }}
           no-cache: true

@@ -1,6 +1,9 @@
 {
   "$schema": "https://v2-9-6.turborepo.dev/schema.json",
-  "globalDependencies": ["tsconfig.json", ".discovery.json"],
+  "globalDependencies": [
+    "packages/typescript-config/*.json",
+    ".discovery.json"
+  ],
   "ui": "tui",
   "tasks": {
     "build": {
@@ -12,7 +15,7 @@
     },
     "typecheck": {
       "dependsOn": ["^build", "db:generate-types"],
-      "inputs": ["**/*.ts", "**/*.tsx"]
+      "inputs": ["**/*.ts", "**/*.tsx", "tsconfig*.json"]
     },
     "test": {
       "dependsOn": ["^build", "db:generate-types"],

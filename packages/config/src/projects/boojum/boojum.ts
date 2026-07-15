@@ -216,33 +216,6 @@ export const boojum: BaseProject = {
       // The output of the last command will contain the required \`fflonk_snark_wrapper\` value.
       //       `,
       //       },
-      {
-        hash: '0x6f36a08c517b060fa97308cdb3e23b04842ff839d451a753ec8fae1a5408304a',
-        name: 'Boojum Fflonk core-v29.1.0',
-        sourceLink:
-          'https://github.com/matter-labs/zksync-era/tree/core-v29.1.0/prover',
-        proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
-        knownDeployments: [
-          {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0x1AC4F629Fdc77A7700B68d03bF8D1A53f2210911',
-            ),
-          },
-          // {
-          //   address: EthereumAddress(
-          //     '0x3CFB3a80Af42cBE4d82C14301690A62D53e870a5',
-          //   ),
-          //   chain: 'zksync',
-          // },
-        ],
-        verificationStatus: 'successful',
-        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: readProjectMarkdown(
-          'boojum',
-          'verificationSteps-0x6f36a08c',
-        ),
-      },
       // {
       //   hash: '0x17e8d7931f1314431359233e65c22657a32c335205e3c24ce292c5819becfaa7',
       //   proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
@@ -377,33 +350,6 @@ export const boojum: BaseProject = {
       // The output of the last command will contain the required \`snark_wrapper\` value.
       //       `,
       //       },
-      {
-        hash: '0x64b347c642ea60114c98b3976124ea8a7e0bb778bd7e479aedc02f994486c8a1',
-        name: 'Boojum Plonk prover-v22.0.0',
-        sourceLink:
-          'https://github.com/matter-labs/zksync-era/tree/prover-v22.0.0/prover',
-        proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
-        knownDeployments: [
-          {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0x2db2ffdecb7446aaab01FAc3f4D55863db3C5bd6',
-            ),
-          },
-          // {
-          //   address: EthereumAddress(
-          //     '0x92A9Fd0E84354213D9c3d33128eDd6Ea55ee0717',
-          //   ),
-          //   chain: 'zksync',
-          // },
-        ],
-        verificationStatus: 'successful',
-        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: readProjectMarkdown(
-          'boojum',
-          'verificationSteps-0x64b347c6',
-        ),
-      },
       // {
       //   hash: '0xd90459c5b727b9ceeb2b6192d2953dbf05970edf090333b3ad3bcac1a1442b78',
       //   proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
@@ -491,6 +437,48 @@ export const boojum: BaseProject = {
         verificationSteps: readProjectMarkdown(
           'boojum',
           'verificationSteps-0xc8cd705a',
+        ),
+      },
+      {
+        hash: '0x49eae0bf5c7ea580f4979b366e52b386adc5f42e2ce50fc1d3c4de9a86052bff',
+        name: 'Boojum Fflonk core-v29.4.0',
+        sourceLink:
+          'https://github.com/matter-labs/zksync-era/tree/core-v29.4.0/prover',
+        proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0xD324a7c8556A059371B207fB96FD77bE24E2042c',
+            ),
+          },
+        ],
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'boojum',
+          'verificationSteps-0x49eae0bf',
+        ),
+      },
+      {
+        hash: '0x1ffc56111a5cfaf5db387f6a31408ad20217e9bc1f31f2f5c1bd38b0d6d7968b',
+        name: 'Boojum Plonk prover-v23.2.0',
+        sourceLink:
+          'https://github.com/matter-labs/zksync-era/tree/prover-v23.2.0/prover',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7',
+            ),
+          },
+        ],
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'boojum',
+          'verificationSteps-0x1ffc5611',
         ),
       },
     ],

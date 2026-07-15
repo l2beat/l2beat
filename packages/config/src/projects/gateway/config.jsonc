@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "gateway",
+  "archived": true,
   "import": ["../globalConfig.jsonc"],
   "sharedModules": ["shared-zk-stack"],
   "initialAddresses": [

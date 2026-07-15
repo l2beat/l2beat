@@ -1,23 +1,13 @@
-import {
-  ChainSpecificAddress,
-  type EthereumAddress,
-  type ProjectId,
-} from '@l2beat/shared-pure'
+import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
 import type { UsedInProject } from '~/components/projects/sections/permissions/UsedInProject'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
+import { getProjectUrl } from '~/utils/project/getProjectUrl'
 
 export interface ContractUtils {
   getChainName(chain: string): string
 
-  getUsedIn(
-    projectId: ProjectId,
-    chain: string,
-    address: EthereumAddress | string,
-    options?: {
-      includeCurrentProject?: boolean
-    },
-  ): UsedInProject[]
+  getUsedIn(chain: string, address: EthereumAddress | string): UsedInProject[]
 }
 
 let contractUtils: ContractUtils | undefined
@@ -77,13 +67,7 @@ async function getContractUsageMap() {
   ])
 
   for (const project of projects) {
-    let url = `/scaling/projects/${project.slug}`
-    if (project.daBridge) {
-      const layer = daLayers.find((x) => x.id === project.daBridge?.daLayer)
-      url = `/data-availability/projects/${layer?.slug}/${project.slug}`
-    } else if (project.privacyInfo) {
-      url = `/privacy/projects/${project.slug}`
-    }
+    const url = getProjectUrl(project, daLayers)
 
     const basic = {
       id: project.id,
@@ -145,12 +129,8 @@ function createContractUtils(
       }
       return name
     },
-    getUsedIn(projectId, chain, address, options) {
-      const usedIn = usageMap.get(chain)?.get(address) ?? []
-      if (options?.includeCurrentProject) {
-        return usedIn
-      }
-      return usedIn.filter((x) => x.id !== projectId)
+    getUsedIn(chain, address) {
+      return usageMap.get(chain)?.get(address) ?? []
     },
   }
 }

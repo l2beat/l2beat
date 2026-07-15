@@ -26,6 +26,7 @@ import {
   type ContractUtils,
   getContractUtils,
 } from '~/utils/project/contracts-and-permissions/getContractUtils'
+import type { ProjectWithPageMetadata } from '~/utils/project/getProjectUrl'
 import {
   type CommonScalingEntry,
   getCommonScalingEntry,
@@ -137,10 +138,7 @@ function getScalingRiskStateValidationValidityEntry(
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
   contractUtils: ContractUtils,
   tvs: SevenDayTvsBreakdown,
-  allProjects: Project<
-    never,
-    'display' | 'daBridge' | 'scalingInfo' | 'daLayer' | 'privacyInfo'
-  >[],
+  allProjects: ProjectWithPageMetadata[],
 ): ScalingRiskStateValidationValidityEntry {
   const proofSystem = project.scalingInfo?.proofSystem
   assert(proofSystem, 'Proof system is required')
