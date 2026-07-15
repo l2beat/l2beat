@@ -63,27 +63,6 @@ export const stwo: BaseProject = {
     ],
     verifierHashes: [
       {
-        hash: '0xf16d320ba0d2087a99ffd465041960fd0aedf5e723c0fb877533876c531191d3',
-        name: 'Stwo verifier 2025_11',
-        sourceLink:
-          'https://etherscan.io/address/0x13e120F6c8E747983F7aaF0f7731796bfcb0D934#code',
-        proofSystem: ZK_CATALOG_TAGS.STARK.Stwo,
-        knownDeployments: [
-          {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0x13e120F6c8E747983F7aaF0f7731796bfcb0D934',
-            ),
-            overrideUsedIn: [ProjectId('paradex')],
-          },
-        ],
-        verificationStatus: 'successful',
-        verificationSteps:
-          'Onchain stwo verifier smart contracts contain code that directly checks proofs of correct Cairo program execution. Unlike SNARK final wraps, it does not contain any additional cryptographic components that need to be independently regenerated because it introduces no new zk circuits. The sources are verified on etherscan and can be examined directly to check the correct implementation of STARK verification protocol.',
-        description:
-          "Custom verifier ID: SHA256 hash of the address of the immutable verifier smart contract (GpsStatementVerifier) in hex string format '0x...'.",
-      },
-      {
         hash: '0x243611f51b76871574612cc0f140acb660c684a66b74e37b7547474c6683659a',
         name: 'Stwo GPS statement verifier 2026_13_4',
         sourceLink:
@@ -95,7 +74,7 @@ export const stwo: BaseProject = {
               'ethereum',
               '0x4956bda1d23F75B988644329c5B06BD1494a72b6',
             ),
-            overrideUsedIn: [ProjectId('starknet')],
+            overrideUsedIn: [ProjectId('starknet'), ProjectId('paradex')],
           },
         ],
         verificationStatus: 'successful',
@@ -117,7 +96,7 @@ export const stwo: BaseProject = {
               '0xE67515a751291445B85b2F176c1eCdf08e86b406',
             ),
             // TODO: Remove after the current GPS referral expires on 2026-08-01.
-            overrideUsedIn: [ProjectId('starknet')],
+            overrideUsedIn: [ProjectId('starknet'), ProjectId('paradex')],
           },
         ],
         verificationStatus: 'successful',
