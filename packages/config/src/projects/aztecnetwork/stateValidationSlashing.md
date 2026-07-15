@@ -1,15 +1,18 @@
-Each stake of {{activationThresholdString}} that is locked to join the sequencer set and vote in governance can be slashed under certain conditions. Slashing is voted on by sequencers each time they propose a checkpoint and is grouped in rounds that span {{epochsPerRound}} epochs ({{roundDuration}}) each.
+Each {{activationThresholdString}} stake used to join the sequencer set and vote in governance can be slashed. The designated proposer for each slot can submit one separate signed ballot on L1. Ballots are grouped into rounds spanning {{epochsPerRound}} epochs ({{roundDuration}}).
 
-Slashing conditions are programmed into each sequencer node and can be changed by node operators by updating or editing their node software. Nodes usually submit votes to slash automatically on L1. The `TallySlashingProposer` contract only enforces the formalities of the slashing system:
-* A given slashing round's votes always target the checkpoint proposals from {{slashOffsetRounds}} rounds ago.
-* As soon as a round's votes have reached a quorum of {{tallySlashQuorum}}/{{slotsPerRound}}, it enters an execution delay of {{slashPayloadExecutionDelayRounds}} rounds ({{slashExecutionDelay}})
-* An automatically generated slashing payload is executable by anyone on L1 after the execution delay, applying the slashing penalties defined by the sequencer votes.
+Slashing conditions are implemented in sequencer-node software and can change when operators update or modify that software. The onchain `SlashingProposer` enforces the voting and execution rules:
 
-Slashing penalties are defined onchain in three levels: large ({{slashAmountLarge}}), medium ({{slashAmountMedium}}), and small ({{slashAmountSmall}}). Offenses that lead to slashing usually include:
-* Inactivity: A sequencer fails to attest or propose when selected.
-* Data Withholding: A sequencer proposes a checkpoint including state diff data availability on L1 but withholds the public transaction bodies and/or CHONK proofs required for permissionless proving.
-* Invalidity: A sequencer attests to invalid proposals, multiple conflicting proposals, with invalid signatures, or proposes a block that is not proven in time.
+* Ballots in a round target committee members from {{slashOffsetRounds}} rounds earlier.
+* Quorum is evaluated separately for each validator position and penalty level, not for the round as a whole. At least {{slashQuorum}} matching ballots out of up to {{slotsPerRound}} slots are required. Votes for a higher penalty also count toward every lower level, and each validator is slashed once at the highest level that reaches quorum.
+* A round becomes executable after more than {{slashPayloadExecutionDelayRounds}} rounds (approximately {{slashExecutionDelay}}) and expires at age {{slashLifetimeRounds}} rounds, leaving a {{slashExecutionWindowRounds}}-round execution window.
+* Anyone can call `executeRound()` during that window. It verifies committee commitments, skips escape-hatch epochs, deploys a deterministic payload for the approved actions, and asks the authorized Slasher to execute it.
 
-The above offense list is not exhaustive and not defined onchain but usually in the software the sequencers decide to run. This is also where the mapping of offenses to the slashing penalty levels can be defined.
+The current onchain penalty levels are large ({{slashAmountLarge}}), medium ({{slashAmountMedium}}), and small ({{slashAmountSmall}}). Offenses that node software can ballot for include:
 
-The SlashVeto Council is a {{slashVetoStats}} Multisig that can veto specific proposals and/or all slashing for {{slashingDisableDurationString}} at a time.
+* **Inactivity:** a sequencer fails to attest or propose when selected.
+* **Data withholding:** a sequencer publishes state-diff blobs but withholds public transaction bodies or CHONK proofs needed for permissionless proving.
+* **Invalidity or equivocation:** a sequencer attests to an invalid proposal, signs conflicting proposals or attestations, or uses an invalid signature.
+
+This list and the mapping of offenses to penalty levels are not exhaustive or defined by the L1 contracts; they depend on the software each sequencer runs.
+
+The SlashVeto Council is a {{slashVetoStats}} Multisig. It can permanently veto a specific payload, repeatedly renew a global {{slashingDisableDurationString}} pause, or re-enable slashing before a pause expires. Governance can submit Slasher payloads without ballot approval, but it cannot bypass these veto and pause checks.

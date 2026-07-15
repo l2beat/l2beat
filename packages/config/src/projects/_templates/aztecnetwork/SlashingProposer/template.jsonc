@@ -1,17 +1,15 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Aggregates validator committee votes for slashing. Once a round reaches quorum and the execution delay has passed, it builds a slash payload and asks the Slasher to execute it.",
+  "description": "Collects one signed slashing ballot from the designated proposer in each slot. After the execution delay, anyone can tally the ballots per validator and penalty level, deploy the resulting payload, and ask the Slasher to execute it before the round expires.",
   "ignoreMethods": ["getRound"],
   "ignoreInWatchMode": ["getCurrentRound"],
   "category": "core",
   "fields": {
     "INSTANCE": {
-      "description": "Rollup instance whose validator committees vote through this proposer.",
-      "template": "aztecnetwork/Rollup"
+      "description": "Rollup instance whose validator committees vote through this proposer."
     },
     "SLASHER": {
-      "description": "Slasher that executes accepted payloads from this proposer.",
-      "template": "aztecnetwork/Slasher"
+      "description": "Slasher that executes accepted payloads from this proposer."
     },
     "SLASH_PAYLOAD_IMPLEMENTATION": {
       "description": "Cloneable payload implementation used to deploy concrete slashing payloads.",
@@ -21,7 +19,7 @@
       "description": "Number of validators expected in each committee."
     },
     "QUORUM": {
-      "description": "Minimum number of validator votes needed to accept a slashing round."
+      "description": "Minimum number of matching ballots required for a specific validator and penalty level. Votes for a higher penalty also count toward lower penalty levels."
     },
     "ROUND_SIZE": {
       "description": "Number of slots in a slashing voting round."
@@ -33,7 +31,16 @@
       "description": "Number of rounds that must pass before an accepted slashing round can be executed."
     },
     "LIFETIME_IN_ROUNDS": {
-      "description": "Number of rounds for which a slashing round remains executable."
+      "description": "Maximum age of a voting round that can still be tallied and executed."
+    },
+    "SLASH_OFFSET_IN_ROUNDS": {
+      "description": "Number of rounds between a voting round and the earlier committee epochs targeted by its ballots."
+    },
+    "ROUNDABOUT_SIZE": {
+      "description": "Number of round slots retained in the circular storage buffer."
+    },
+    "MAX_ROUND_SIZE": {
+      "description": "Maximum supported number of ballots in one voting round."
     },
     "SLASH_AMOUNT_SMALL": {
       "description": "Small slash amount applied per voted slash unit."

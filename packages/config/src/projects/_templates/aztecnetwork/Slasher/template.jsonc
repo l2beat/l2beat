@@ -1,7 +1,8 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "The executor contract for penalties. It receives authorization to slash validator stakes, subject to an execution delay and a vetoer.",
+  "description": "Executes payload actions submitted by the authorized slashing proposer or Governance. Execution is blocked while slashing is disabled or when the vetoer has vetoed the payload; voting and execution-delay rules are enforced by the proposer, while Governance can bypass the proposer.",
   "category": "core",
+  "canActIndependently": false,
   "fields": {
     "SLASHING_DISABLE_DURATION_fmt": {
       "handler": {
@@ -13,11 +14,16 @@
     },
     "PROPOSER": {
       "description": "The slashing proposer allowed to execute accepted slash payloads.",
-      "template": "aztecnetwork/TallySlashingProposer",
       "permissions": [
         {
+          "type": "act",
+          "description": "execute payload actions produced from validator ballots, including validator slashes.",
+          "condition": "matching ballots meet the proposer quorum, the execution delay has elapsed, the voting round is still within its lifetime, slashing is enabled, and the payload has not been vetoed."
+        },
+        {
           "type": "interact",
-          "description": "execute slashing payloads that slash validators, unless slashing is currently disabled or the payload has been vetoed."
+          "description": "execute payload actions accepted by its validator-ballot tally after the proposer-enforced delay.",
+          "condition": "matching ballots meet the proposer quorum, the execution delay has elapsed, the voting round is still within its lifetime, slashing is enabled, and the payload has not been vetoed."
         }
       ]
     },
@@ -26,17 +32,23 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "veto specific slashing payloads and/or disable all slashing for {{SLASHING_DISABLE_DURATION_fmt}} at a time."
+          "description": "veto specific payloads, repeatedly disable all slashing for {{SLASHING_DISABLE_DURATION_fmt}} at a time, or re-enable slashing before a pause expires."
         }
       ]
     },
     "GOVERNANCE": {
-      "description": "Governance address with emergency authority to execute slash payloads directly.",
+      "description": "Governance address allowed to execute slash payloads directly.",
       "template": "aztecnetwork/Governance",
       "permissions": [
         {
+          "type": "act",
+          "description": "execute arbitrary payload actions through the Slasher, bypassing all proposer validation including ballots, quorum, target construction, delay, and lifetime.",
+          "condition": "slashing is enabled and the payload has not been vetoed."
+        },
+        {
           "type": "interact",
-          "description": "execute slashing payloads directly, bypassing the proposer address but still subject to vetoes and temporary slashing disablement."
+          "description": "execute arbitrary payload actions through the Slasher, bypassing all proposer validation including ballots, quorum, target construction, delay, and lifetime.",
+          "condition": "slashing is enabled and the payload has not been vetoed."
         }
       ]
     },

@@ -40,7 +40,7 @@ const governanceConfiguration = discovery.getContractValue<{
   minimumVotes: string
 }>('Governance', 'getConfiguration')
 
-const hardCodedExitSimTime = 20 * UnixTime.DAY // https://sekuba.github.io/crsim/?max_horizon_days=100&target_inclusion_percent=99&max_new_sequencers_per_epoch=0&honest_add_success_rate=0.5
+const launchExitSimulationTime = 20 * UnixTime.DAY // https://sekuba.github.io/crsim/?max_horizon_days=100&target_inclusion_percent=99&max_new_sequencers_per_epoch=0&honest_add_success_rate=0.5
 
 const activeSequencerCount = discovery.getContractValue<number>(
   'Rollup',
@@ -110,48 +110,44 @@ const aztecTotalSupply = discovery.getContractValueBigInt(
 )
 
 const epochsPerRound = discovery.getContractValue<number>(
-  'TallySlashingProposer',
+  'SlashingProposer',
   'ROUND_SIZE_IN_EPOCHS',
 )
 
 const slotsPerRound = discovery.getContractValue<number>(
-  'TallySlashingProposer',
+  'SlashingProposer',
   'ROUND_SIZE',
 )
 
 const slashOffsetRounds = discovery.getContractValue<number>(
-  'TallySlashingProposer',
+  'SlashingProposer',
   'SLASH_OFFSET_IN_ROUNDS',
 )
 
 const slashPayloadExecutionDelayRounds = discovery.getContractValue<number>(
-  'TallySlashingProposer',
+  'SlashingProposer',
   'EXECUTION_DELAY_IN_ROUNDS',
 )
 
-const tallySlashQuorum = discovery.getContractValue<number>(
-  'TallySlashingProposer',
+const slashQuorum = discovery.getContractValue<number>(
+  'SlashingProposer',
   'QUORUM',
+)
+
+const slashLifetimeRounds = discovery.getContractValue<number>(
+  'SlashingProposer',
+  'LIFETIME_IN_ROUNDS',
 )
 
 const slashAmount = {
   large: formatAztecAmount(
-    discovery.getContractValueBigInt(
-      'TallySlashingProposer',
-      'SLASH_AMOUNT_LARGE',
-    ),
+    discovery.getContractValueBigInt('SlashingProposer', 'SLASH_AMOUNT_LARGE'),
   ),
   medium: formatAztecAmount(
-    discovery.getContractValueBigInt(
-      'TallySlashingProposer',
-      'SLASH_AMOUNT_MEDIUM',
-    ),
+    discovery.getContractValueBigInt('SlashingProposer', 'SLASH_AMOUNT_MEDIUM'),
   ),
   small: formatAztecAmount(
-    discovery.getContractValueBigInt(
-      'TallySlashingProposer',
-      'SLASH_AMOUNT_SMALL',
-    ),
+    discovery.getContractValueBigInt('SlashingProposer', 'SLASH_AMOUNT_SMALL'),
   ),
 }
 
@@ -164,6 +160,8 @@ const outbox = discovery.getContract('Outbox')
 const registry = discovery.getContract('Registry')
 const rollup = discovery.getContract('Rollup')
 const escapeHatch = discovery.getContract('EscapeHatch')
+const slasher = discovery.getContract('Slasher')
+const slashingProposer = discovery.getContract('SlashingProposer')
 
 const rollupAddress = ChainSpecificAddress.address(rollup.address)
 const verifierAddress = ChainSpecificAddress.address(honkVerifier.address)
@@ -172,7 +170,7 @@ const governanceAddress = ChainSpecificAddress.address(governance.address)
 const registryAddress = ChainSpecificAddress.address(registry.address)
 const escapeHatchAddress = ChainSpecificAddress.address(escapeHatch.address)
 
-const alphaGenesisTimestamp = UnixTime(1774839144) // Monday, 30 March 2026 04:52 GMT+2
+const v5ActivationTimestamp = UnixTime(1784060567) // 14 July 2026 20:22:47 UTC
 
 function formatAztecAmount(amount: bigint): string {
   return `${formatLargeNumber(Number(amount / 10n ** 18n))} AZTEC`
@@ -232,6 +230,15 @@ const governanceQuorumString = formatPercentage(governanceConfiguration.quorum)
 const governanceRequiredYeaMarginString = formatPercentage(
   governanceConfiguration.requiredYeaMargin,
 )
+const governanceApprovalThresholdString = formatPercentage(
+  (
+    (10n ** 18n + BigInt(governanceConfiguration.requiredYeaMargin) + 1n) /
+    2n
+  ).toString(),
+)
+const governanceMinimumTotalPowerString = formatAztecAmount(
+  BigInt(governanceConfiguration.minimumVotes),
+)
 const governanceTotalDelayString = formatSeconds(
   governanceConfiguration.votingDelay +
     governanceConfiguration.votingDuration +
@@ -250,6 +257,15 @@ const protocolTreasuryGatedUntilString = formatMonthYear(
 const proofWindowString = formatSeconds(proofWindow)
 const escapeHatchFrequencyString = formatSeconds(escapeHatchFrequency)
 const slashingDisableDurationString = formatSeconds(slashingDisableDuration)
+const validatorExitDelayString = formatSeconds(
+  discovery.getContractValue<number>('Rollup', 'getExitDelay'),
+)
+const slasherExecutionDelayString = formatSeconds(
+  discovery.getContractValue<number>('Rollup', 'getSlasherExecutionDelay'),
+)
+const legacySlasherDrainWindowString = formatSeconds(
+  discovery.getContractValue<number>('Rollup', 'getLegacySlasherDrainWindow'),
+)
 
 export const aztecnetwork: ScalingProject = {
   type: 'layer2',
@@ -269,8 +285,6 @@ export const aztecnetwork: ScalingProject = {
     description:
       'Aztec Network is a privacy-preserving ZK rollup that uses the AztecVM and Noir to support private and public smart contracts on Ethereum.',
     purposes: ['Universal', 'Privacy'],
-    warning:
-      'Aztec v4 has [know security vulnerabilities](https://aztec.network/blog/critical-vulnerability-in-alpha-v4) that can only be fixed in a new deployment.',
     links: {
       websites: ['https://aztec.network/', 'https://aztec.network/noir'],
       documentation: ['https://docs.aztec.network/'],
@@ -293,7 +307,7 @@ export const aztecnetwork: ScalingProject = {
     },
     liveness: {
       warnings: {
-        batchSubmissions: `Checkpoints that are posted to Ethereum but not yet proven can be pruned once the proof submission window of ${proofWindowString} expires.`,
+        batchSubmissions: `Checkpoints posted to Ethereum remain pending until proven and can be pruned after their epoch proof deadline. With the current configuration, the maximum window is ${proofWindowString}; the effective window ranges from roughly one to two epochs depending on a checkpoint's position in its epoch.`,
       },
       explanation:
         'Aztec posts checkpoint data to Ethereum blobs and finalizes checkpoints once an epoch root proof is verified on Ethereum. Transactions should be considered final only after the corresponding epoch proof is accepted on L1.',
@@ -332,13 +346,13 @@ export const aztecnetwork: ScalingProject = {
         query: {
           formula: 'functionCall',
           address: rollupAddress,
-          selector: '0x85b98fd8',
+          selector: '0x72636df9',
           functionSignature:
-            'function propose((bytes32,(int256),(bytes32,bytes32,bytes32,bytes32,bytes32,uint256,uint256,address,bytes32,(uint128,uint128),uint256)),(bytes,bytes),address[],(uint8,bytes32,bytes32),bytes)',
+            'function propose((bytes32,(int256),(bytes32,bytes32,bytes32,bytes32,bytes32,uint256,uint256,address,bytes32,(uint128,uint128),uint256,uint256)),(bytes,bytes),address[],(uint8,bytes32,bytes32),bytes)',
           topics: [
             '0x6ff492bf2b4ca1b93a175167d14b3e46085b935cab3f39ca94013000799b93a0', // CheckpointProposed
           ],
-          sinceTimestamp: alphaGenesisTimestamp,
+          sinceTimestamp: v5ActivationTimestamp,
         },
       },
       {
@@ -349,10 +363,10 @@ export const aztecnetwork: ScalingProject = {
         query: {
           formula: 'functionCall',
           address: rollupAddress,
-          selector: '0xd8ea4277',
+          selector: '0x069d1525',
           functionSignature:
-            'function submitEpochRootProof((uint256,uint256,(bytes32,bytes32,bytes32,address),bytes32[],(bytes,bytes),bytes,bytes))',
-          sinceTimestamp: alphaGenesisTimestamp,
+            'function submitEpochRootProof((uint256,uint256,(bytes32,bytes32,bytes32,address),(bytes32,bytes32,bytes32,bytes32,bytes32,uint256,uint256,address,bytes32,(uint128,uint128),uint256,uint256)[],(bytes,bytes),bytes,bytes))',
+          sinceTimestamp: v5ActivationTimestamp,
         },
       },
     ],
@@ -360,7 +374,7 @@ export const aztecnetwork: ScalingProject = {
   chainConfig: {
     gasTokens: ['AZTEC'],
     name: 'aztecnetwork',
-    chainId: 677868, // TODO: verify
+    chainId: 677868, // on chainlist, but aztec is not evm
     apis: [], // TODO: add
   },
   dataAvailability: {
@@ -374,12 +388,16 @@ export const aztecnetwork: ScalingProject = {
       executionDelay: 0, // a proposed checkpoint can be immediately proven
       permissioned: false,
     },
-    dataAvailability: RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
+    dataAvailability: {
+      ...RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
+      description:
+        'State diffs needed to reconstruct the L2 state are published in Ethereum blobs. Public transaction bodies and client CHONK proofs propagate offchain, so withholding them can prevent permissionless proving; the affected pending checkpoints expire and are pruned rather than finalized.',
+    },
     exitWindow: {
       ...RISK_VIEW.EXIT_WINDOW_NON_UPGRADABLE,
       description:
         RISK_VIEW.EXIT_WINDOW_NON_UPGRADABLE.description +
-        ' Governance can remove Sequencers and prevent new sequencers from joining, making the bonded escape hatch the only exit path in the worst case.',
+        ' Governance can register a new canonical rollup and bonus-instance validators automatically follow the latest version, but this does not mutate the current instance, its verifier, messaging contracts, or already-installed EscapeHatch. Governance can change bounded validator-entry parameters and can set the GSE proof-of-possession gas limit too low for new deposits; validators explicitly bound to this instance remain on it.',
     },
     sequencerFailure: {
       value: 'Decentralized Sequencer Set',
@@ -416,19 +434,24 @@ export const aztecnetwork: ScalingProject = {
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: null, // there is no SC, rollup immutable
         fraudProofSystemIsPermissionless: null,
-        delayWith30DExitWindow: true, // escape hatch and rollup are immutable
+        delayWith30DExitWindow: {
+          satisfied: true,
+          message:
+            'The Rollup, verifier, Inbox and Outbox are immutable. Selecting a new canonical rollup does not mutate this deployed instance or its installed bonded EscapeHatch, although validator migration can affect normal proposer availability and inclusion remains probabilistic.',
+          mode: 'replace',
+        },
       },
     },
     {
       rollupNodeLink:
-        'https://docs.aztec.network/operate/operators/setup/running_a_node',
+        'https://github.com/AztecProtocol/aztec-packages/tree/v5-next',
     },
   ),
   technology: {
     dataAvailability: {
       name: 'All transaction results (state diffs) are published in Ethereum blobs',
       description:
-        'Each checkpoint proposal includes EIP-4844 blob commitments that are checked against the blob hashes in the proposing transaction. The epoch proof revalidates the accumulated blob commitments before the epoch is finalized.',
+        'Each checkpoint proposal includes EIP-4844 blob commitments for state diffs, checked against the blob hashes in the proposing transaction. The epoch proof revalidates the accumulated commitments before finalization. Public transaction bodies and client CHONK proofs propagate offchain; withholding them can prevent permissionless proving, causing the pending checkpoint to expire and be pruned rather than finalized.',
       references: [
         {
           title: 'Rollup.sol - propose() on Etherscan',
@@ -475,7 +498,8 @@ export const aztecnetwork: ScalingProject = {
         stakePerValidator: { value: activationThresholdString + ', constant' },
         rateLimit: {
           value: `Up to ${entryQueueFlushSize} sequencers per epoch (current)`,
-          description: 'Can be changed (or set to 0) by onchain Governance',
+          description:
+            'Can be changed by onchain Governance, but the contract requires nonzero minimum, divisor, and maximum queue-flush parameters.',
         },
         deterministicCrGadget: { value: 'No', sentiment: 'warning' },
         additionalCrGadgets: {
@@ -516,6 +540,23 @@ export const aztecnetwork: ScalingProject = {
         },
       ],
       risks: [],
+    },
+    forceTransactions: {
+      name: 'Bonded, probabilistic self-sequencing',
+      description:
+        'There is no L1 forced-transaction queue. A censored user must wait for an honest regular committee or for an honest, sufficiently capitalized escape-hatch candidate to enroll, become eligible, be selected, include the transaction, and produce a valid proof.',
+      risks: [
+        {
+          category: 'Users can be censored if',
+          text: 'no honest regular proposer or eligible bonded escape-hatch proposer includes and proves their transactions.',
+        },
+      ],
+      references: [
+        {
+          title: 'EscapeHatch.sol on Etherscan',
+          url: `https://etherscan.io/address/${escapeHatchAddress.toString()}#code`,
+        },
+      ],
     },
     exitMechanisms: [
       {
@@ -574,7 +615,7 @@ export const aztecnetwork: ScalingProject = {
         description: readProjectMarkdown(
           'aztecnetwork',
           'technologyOtherConsiderations3',
-          { hardCodedExitSimTime: formatSeconds(hardCodedExitSimTime) },
+          { launchExitSimulationTime: formatSeconds(launchExitSimulationTime) },
         ),
         references: [
           {
@@ -587,7 +628,7 @@ export const aztecnetwork: ScalingProject = {
     ],
   },
   stateValidation: {
-    description: `Each epoch root proof is verified by the HonkVerifier smart contract on Ethereum before the proven checkpoint number is advanced and the epoch outbox state root is inserted into the Outbox. Proving is permissionless, and a single proof can cover one Checkpoint (${formatSeconds(slotDuration)}) to one epoch (${formatSeconds(epochDuration)}). Unproven checkpoints are pruned after the proof submission window of ${proofWindowString} expires.`,
+    description: `Each epoch root proof is verified by the HonkVerifier smart contract on Ethereum before the proven checkpoint number is advanced and the epoch outbox state root is inserted into the Outbox. Proving is permissionless, and a single proof can cover one Checkpoint (${formatSeconds(slotDuration)}) to one epoch (${formatSeconds(epochDuration)}). The current maximum proof window is ${proofWindowString}; checkpoints later in an epoch have less time, and unproven checkpoints are pruned.`,
     categories: [
       {
         title: 'State root proposals',
@@ -624,9 +665,12 @@ export const aztecnetwork: ScalingProject = {
             epochsPerRound,
             roundDuration: formatSeconds(epochsPerRound * epochDuration),
             slashOffsetRounds,
-            tallySlashQuorum,
+            slashQuorum,
             slotsPerRound,
             slashPayloadExecutionDelayRounds,
+            slashLifetimeRounds,
+            slashExecutionWindowRounds:
+              slashLifetimeRounds - slashPayloadExecutionDelayRounds,
             slashExecutionDelay: formatSeconds(
               slashPayloadExecutionDelayRounds * epochsPerRound * epochDuration,
             ),
@@ -639,8 +683,12 @@ export const aztecnetwork: ScalingProject = {
         ),
         references: [
           {
-            title: 'Slashing - Aztec Docs',
-            url: 'https://docs.aztec.network/operate/operators/sequencer-management/slashing_and_offenses',
+            title: 'SlashingProposer.sol on Etherscan',
+            url: `https://etherscan.io/address/${slashingProposer.address.toString()}#code`,
+          },
+          {
+            title: 'Slasher.sol on Etherscan',
+            url: `https://etherscan.io/address/${slasher.address.toString()}#code`,
           },
           {
             title: 'SlashVeto Council - Github',
@@ -657,7 +705,8 @@ export const aztecnetwork: ScalingProject = {
   },
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
-    risks: [], // 30d delay for the canonical rollup pointer and config but main contracts are immutable
+    zkVerifiers: [honkVerifier.address],
+    risks: [],
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   upgradesAndGovernance: {
@@ -669,19 +718,32 @@ export const aztecnetwork: ScalingProject = {
       governanceVotingDurationString,
       governanceQuorumString,
       governanceRequiredYeaMarginString,
+      governanceApprovalThresholdString,
+      governanceMinimumTotalPowerString,
       governanceGracePeriodString,
       governanceTotalDelayString,
       governanceLockString,
       governanceLockShareOfSupplyString,
       governanceLockDelayString,
+      validatorExitDelayString,
       bonusInstanceAddress: bonusInstanceAddress.toString(),
       slashingDisableDurationString,
+      slasherExecutionDelayString,
+      legacySlasherDrainWindowString,
       coinIssuerNominalAnnualPercentageCapString,
       protocolTreasuryGatedUntilString,
     }),
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
   milestones: [
+    {
+      title: 'Aztec v5 Upgrade',
+      url: 'https://etherscan.io/tx/0xff2db4e4bba583f2451478bfe4703e16afc79f0b463fb60615ebe3494142437b',
+      date: '2026-07-14T00:00:00Z',
+      description:
+        'Governance makes v5 canonical which hardens the immutability and fixes vulnerabilities.',
+      type: 'general',
+    },
     {
       title: 'Cut the Leash',
       url: 'https://github.com/AztecProtocol/governance/pull/7',
