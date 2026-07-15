@@ -228,13 +228,6 @@ const STARKNET_OS = {
     'Proves correct state transition for a range of consecutive Starknet transactions.',
 }
 
-const STARKNET_OS_CONFIG = {
-  title: 'Starknet OS configuration commitment V4',
-  description:
-    'This is not a ZK program, but a Blake2s-Felt252 commitment to the execution environment checked for every direct or aggregated Starknet OS output. It binds the configuration version, chain ID, STRK fee-token address, and optional state-diff-encryption public-key hash. A malicious configuration could authorize otherwise valid proofs under unintended transaction-domain, fee-token, or encryption-key semantics.',
-  proverSystemProject: ProjectId('stwo'),
-}
-
 const STARK_EX = (version: string) => ({
   title: `StarkEx program ${version}`,
   description:
@@ -1624,16 +1617,6 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       verificationStatus: 'successful',
       verificationSteps: readMarkdown(
         'common/programHashes/1050253032170513549151251823521174837478197699740478552102884446098263561922.md',
-      ),
-    },
-  '2579130946496422157802313572919622021390761807038780433165936715591440018810':
-    {
-      ...STARKNET_OS_CONFIG,
-      programUrl:
-        'https://github.com/starkware-libs/sequencer/blob/5114457ad4b5d6d1764b520dfa40b9e826f48854/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core/os/os_config/os_config.cairo',
-      verificationStatus: 'successful',
-      verificationSteps: readMarkdown(
-        'common/programHashes/2579130946496422157802313572919622021390761807038780433165936715591440018810.md',
       ),
     },
   '2571508110958925737463010241874806654058743535666147712534445437599630018294':
