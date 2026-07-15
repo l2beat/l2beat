@@ -29,10 +29,8 @@ export function RendererBenchPage() {
 
   const runLayout = () => {
     const state = useStore.getState()
-    const hiddenSet = new Set(state.hidden)
-    const visible = state.nodes.filter((n) => !hiddenSet.has(n.id))
     const t0 = performance.now()
-    const locations = stackAutoLayout(visible)
+    const locations = stackAutoLayout(state.nodes)
     const elapsed = Math.round(performance.now() - t0)
     layoutAction(locations)
     setLayoutMs(elapsed)
@@ -42,7 +40,6 @@ export function RendererBenchPage() {
     useStore.setState({
       projectId: 'bench',
       nodes,
-      hidden: [],
       selected: [],
       loaded: true,
       transform: { offsetX: 20, offsetY: 20, scale: 0.25 },

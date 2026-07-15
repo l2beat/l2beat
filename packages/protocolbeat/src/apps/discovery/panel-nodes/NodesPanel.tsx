@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import type {
   Field as ApiField,
@@ -15,6 +15,7 @@ import type { AutoGroup } from './store/actions/loadNodes'
 import type { Field, Node } from './store/State'
 import { useStore as useNodeStore, useStore } from './store/store'
 import { NODE_WIDTH } from './store/utils/constants'
+import { getHiddenNodeIds } from './store/utils/nodeVisibility'
 import { topLevelByDescendant } from './store/utils/subnodes'
 import { Viewport } from './view/Viewport'
 
@@ -165,7 +166,7 @@ function useSynchronizeSelection() {
   const selectGlobal = usePanelStore((state) => state.select)
   const selectedNodes = useStore((state) => state.selected)
   const nodes = useStore((state) => state.nodes)
-  const hiddenNodes = useStore((state) => state.hidden)
+  const hiddenNodes = useMemo(() => getHiddenNodeIds(nodes), [nodes])
   const selectAndFocus = useStore((state) => state.selectAndFocus)
 
   useEffect(() => {
@@ -200,6 +201,7 @@ function useSynchronizeSelection() {
     selectGlobal,
     selectedNodes,
     hiddenNodes,
+    nodes,
     selectAndFocus,
     loaded,
   ])

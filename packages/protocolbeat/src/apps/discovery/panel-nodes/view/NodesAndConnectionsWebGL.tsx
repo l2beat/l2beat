@@ -2344,7 +2344,6 @@ export function NodesAndConnectionsWebGL() {
   const dataRef = useRef<DrawData | null>(null)
 
   const nodes = useStore((s) => s.nodes)
-  const hidden = useStore((s) => s.hidden)
   const selected = useStore((s) => s.selected)
   const enableDimming = useStore(
     ({ userPreferences }) => userPreferences.enableDimming,
@@ -2356,14 +2355,14 @@ export function NodesAndConnectionsWebGL() {
     (s) => s.markUnreachableEntries,
   )
 
-  const graph = useMemo(() => buildRenderGraph(nodes, hidden), [nodes, hidden])
+  const graph = useMemo(() => buildRenderGraph(nodes), [nodes])
 
   const data = useMemo(
     () =>
       buildDrawData(
         graph.nodes,
         graph.containers,
-        hidden,
+        graph.hidden,
         selected,
         enableDimming,
         highlightOverlapping,
@@ -2371,7 +2370,6 @@ export function NodesAndConnectionsWebGL() {
       ),
     [
       graph,
-      hidden,
       selected,
       enableDimming,
       highlightOverlapping,

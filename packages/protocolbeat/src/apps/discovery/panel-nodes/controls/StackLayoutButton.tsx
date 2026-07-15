@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import type { Node } from '../store/State'
 import { useStore } from '../store/store'
 import { centerLocationsInViewport } from '../store/utils/centerLocationsInViewport'
+import { getHiddenNodeIds } from '../store/utils/nodeVisibility'
 import { containerBoxes } from '../store/utils/renderGraph'
 import type { NodeLocations } from '../store/utils/storage'
 import { topLevelByDescendant } from '../store/utils/subnodes'
@@ -10,15 +11,15 @@ import { IconControlStack } from './icons/IconControlStack'
 
 export function StackLayoutButton({ className }: { className?: string }) {
   const nodes = useStore((state) => state.nodes)
-  const hiddenNodes = useStore((state) => state.hidden)
   const layout = useStore((state) => state.layout)
   const selected = useStore((state) => state.selected)
   const considerAllNodes = selected.length === 0
-  const footprints = containerBoxes(nodes, hiddenNodes)
+  const footprints = containerBoxes(nodes)
+  const effectiveHiddenNodes = new Set(getHiddenNodeIds(nodes))
   const visibleNodes = nodes
     .filter(
       (node) =>
-        !hiddenNodes.includes(node.id) &&
+        !effectiveHiddenNodes.has(node.id) &&
         (considerAllNodes || selected.includes(node.id)),
     )
     .map((node) => {
@@ -315,7 +316,7 @@ function groupByLevel(nodes: LayoutNode[]) {
       }
 
       const uniqueChildren = node.base.fields
-        .flatMap((f) => f.target)
+        .flatMap((field) => field.target)
         .filter((id) => order.indexOf(id) === -1)
       order.splice(index, 0, ...uniqueChildren)
     }

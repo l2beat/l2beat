@@ -10,6 +10,7 @@ import { cn } from '../../../../utils/cn'
 import type { Node } from '../store/State'
 import { useStore } from '../store/store'
 import { centerLocationsInViewport } from '../store/utils/centerLocationsInViewport'
+import { getHiddenNodeIds } from '../store/utils/nodeVisibility'
 import { containerBoxes } from '../store/utils/renderGraph'
 import type { NodeLocations } from '../store/utils/storage'
 import { topLevelByDescendant } from '../store/utils/subnodes'
@@ -30,11 +31,11 @@ interface SimulationNode extends SimulationNodeDatum {
 
 export function ClusterLayoutButton({ className }: { className?: string }) {
   const nodes = useStore((state) => state.nodes)
-  const hiddenNodes = useStore((state) => state.hidden)
   const selected = useStore((state) => state.selected)
-  const footprints = containerBoxes(nodes, hiddenNodes)
+  const footprints = containerBoxes(nodes)
+  const effectiveHiddenNodes = new Set(getHiddenNodeIds(nodes))
   const visibleNodes = nodes
-    .filter((node) => !hiddenNodes.includes(node.id))
+    .filter((node) => !effectiveHiddenNodes.has(node.id))
     .map((node) => {
       const box = footprints.get(node.id)
       return box ? { ...node, box } : node

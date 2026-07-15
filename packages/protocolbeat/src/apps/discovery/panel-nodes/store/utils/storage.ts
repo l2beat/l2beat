@@ -67,7 +67,6 @@ export function buildStoredNodeLayout(
         .filter((n) => n.hiddenFields.length > 0)
         .map((n) => [n.id, n.hiddenFields]),
     ),
-    hiddenNodes: [...state.hidden],
     groups: groups.length > 0 ? groups : undefined,
   }
 }

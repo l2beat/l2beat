@@ -1,6 +1,7 @@
 import type { Box, Node } from '../State'
 import { FIELD_HEIGHT, HEADER_HEIGHT } from './constants'
 import { boxContains } from './containment'
+import { getHiddenNodeIds } from './nodeVisibility'
 import { processConnection } from './updateNodePositions'
 
 const CONTAINER_PADDING = 24
@@ -17,6 +18,8 @@ export interface RenderGraph {
   // Flat list of nodes to draw. Opened groups are replaced by their (possibly
   // nested) members; closed groups stay collapsed as a single node.
   readonly nodes: Node[]
+  // Nodes disconnected by hidden fields.
+  readonly hidden: readonly string[]
   // One boundary per opened group, innermost last so hit-testing can prefer it.
   readonly containers: GroupContainer[]
 }
@@ -25,13 +28,15 @@ export interface RenderGraph {
 // inside them, while closed groups remain a single collapsed box. Connection
 // geometry is recomputed against the expanded layout. When nothing is opened
 // the original node refs are returned untouched so React.memo keeps working.
-export function buildRenderGraph(
-  nodes: readonly Node[],
-  hidden: readonly string[],
-): RenderGraph {
-  const { nodes: rendered, containers, expanded } = expandGroups(nodes, hidden)
+export function buildRenderGraph(nodes: readonly Node[]): RenderGraph {
+  const effectiveHidden = getHiddenNodeIds(nodes)
+  const {
+    nodes: rendered,
+    containers,
+    expanded,
+  } = expandGroups(nodes, effectiveHidden)
   if (!expanded) {
-    return { nodes: rendered, containers }
+    return { nodes: rendered, hidden: effectiveHidden, containers }
   }
 
   const boxById = new Map<string, Box>()
@@ -43,17 +48,15 @@ export function buildRenderGraph(
   }
 
   const laidOut = rendered.map((node) => layoutFields(node, boxById))
-  return { nodes: laidOut, containers }
+  return { nodes: laidOut, hidden: effectiveHidden, containers }
 }
 
 // Flatten opened groups into their members without laying out fields. Select-box
 // hit-testing only reads node boxes, so it can skip the per-field connection
 // recompute that buildRenderGraph does on every mousemove.
-export function expandedNodes(
-  nodes: readonly Node[],
-  hidden: readonly string[],
-): Node[] {
-  return expandGroups(nodes, hidden).nodes
+export function expandedNodes(nodes: readonly Node[]): Node[] {
+  const effectiveHidden = getHiddenNodeIds(nodes)
+  return expandGroups(nodes, effectiveHidden).nodes
 }
 
 function expandGroups(
@@ -91,8 +94,9 @@ function expand(
       .flatMap((subnode) => expand(subnode, hidden, containers))
     if (members.length > 0) {
       containers.push(boundary(node, members))
+      return members
     }
-    return members
+    return [node]
   }
   return [node]
 }
@@ -171,12 +175,9 @@ export function headerAt(
 
 // The on-screen footprint of each open group, so layout can size and place it
 // by its expanded container rather than its collapsed box.
-export function containerBoxes(
-  nodes: readonly Node[],
-  hidden: readonly string[],
-): Map<string, Box> {
+export function containerBoxes(nodes: readonly Node[]): Map<string, Box> {
   const boxes = new Map<string, Box>()
-  for (const group of buildRenderGraph(nodes, hidden).containers) {
+  for (const group of buildRenderGraph(nodes).containers) {
     boxes.set(group.id, group.box)
   }
   return boxes

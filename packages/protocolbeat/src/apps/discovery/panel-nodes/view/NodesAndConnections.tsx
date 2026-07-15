@@ -30,7 +30,6 @@ interface DerivedView {
 
 export function NodesAndConnections() {
   const nodes = useStore((s) => s.nodes)
-  const hidden = useStore((s) => s.hidden)
   const selected = useStore((s) => s.selected)
   const enableDimming = useStore(
     ({ userPreferences }) => userPreferences.enableDimming,
@@ -42,13 +41,13 @@ export function NodesAndConnections() {
     (s) => s.markUnreachableEntries,
   )
 
-  const graph = useMemo(() => buildRenderGraph(nodes, hidden), [nodes, hidden])
+  const graph = useMemo(() => buildRenderGraph(nodes), [nodes])
 
   const view = useMemo<DerivedView>(
     () =>
       buildView(
         graph.nodes,
-        hidden,
+        graph.hidden,
         selected,
         enableDimming,
         highlightOverlapping,
@@ -56,7 +55,6 @@ export function NodesAndConnections() {
       ),
     [
       graph,
-      hidden,
       selected,
       enableDimming,
       highlightOverlapping,

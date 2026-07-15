@@ -124,7 +124,7 @@ export function onMouseMove(
             ? new Set(state.selected)
             : undefined
         const selected: string[] = []
-        for (const node of expandedNodes(state.nodes, state.hidden)) {
+        for (const node of expandedNodes(state.nodes)) {
           if (
             intersects(node.box, selection) ||
             previousSelected?.has(node.id)

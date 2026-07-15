@@ -211,7 +211,6 @@ function buildState(nodes: Node[]): State {
     projectId: 'test',
     nodes,
     selected: [],
-    hidden: [],
     history: {
       past: [],
       future: [],

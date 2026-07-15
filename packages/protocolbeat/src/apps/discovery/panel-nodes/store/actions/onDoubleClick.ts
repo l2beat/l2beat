@@ -11,7 +11,7 @@ export function onDoubleClick(
   container: HTMLElement,
 ): Partial<State> {
   const { x, y } = toViewCoordinates(event, container, state.transform)
-  const graph = buildRenderGraph(state.nodes, state.hidden)
+  const graph = buildRenderGraph(state.nodes)
 
   // Closing only happens on the open group's header, so members stay
   // freely selectable. Check it before nodes since the header sits above them.

@@ -8,6 +8,10 @@ import {
   NODE_WIDTH,
 } from '../utils/constants'
 import {
+  getHiddenNodeIds,
+  setInboundFieldsHidden,
+} from '../utils/nodeVisibility'
+import {
   type NodeLocations,
   recallNodeLayout,
   reconcileHiddenFields,
@@ -38,7 +42,12 @@ export function loadNodes(
   )
   const existingRaw: Node[] = state.nodes.map((node) => {
     const newNode = nodes.find((x) => x.id === node.id)
-    return newNode ? { ...newNode, box: node.box, color: node.color } : node
+    if (!newNode) return node
+    const hiddenFields = reconcileHiddenFields(
+      newNode.fields.map((field) => field.name),
+      [...node.hiddenFields, ...newNode.hiddenFields],
+    )
+    return { ...newNode, box: node.box, color: node.color, hiddenFields }
   })
   const knownIds = new Set([...toAddRaw, ...existingRaw].map((node) => node.id))
   const dropDanglingFields = (node: Node): Node => ({
@@ -86,24 +95,21 @@ export function loadNodes(
   const flatNodes = existing.concat(added)
   // Rebuild user-created groups from the saved layout, re-nesting the freshly
   // loaded contracts. Members live nested, so ids are gathered from the tree.
-  const allNodes = saved?.groups?.length
+  const groupedNodes = saved?.groups?.length
     ? reconstructGroups(flatNodes, saved.groups)
     : flatNodes
-  const allNodeIds = collectAllIds(allNodes)
-
-  const savedHiddenNodes = saved?.hiddenNodes ?? []
-  const shouldReuseCurrentHidden = state.projectId === projectId
-  const baseHiddenNodes = shouldReuseCurrentHidden ? state.hidden : []
-  const hiddenNodes = [
-    ...new Set([...savedHiddenNodes, ...baseHiddenNodes]),
-  ].filter((id) => allNodeIds.has(id))
-  const visibleNodes = allNodes.filter((node) => !hiddenNodes.includes(node.id))
+  const allNodes = setInboundFieldsHidden(
+    groupedNodes,
+    new Set(saved?.hiddenNodes ?? []),
+    true,
+  )
+  const effectiveHidden = new Set(getHiddenNodeIds(allNodes))
+  const visibleNodes = allNodes.filter((node) => !effectiveHidden.has(node.id))
   const hasSavedLayout =
     !!saved && allNodes.some((node) => saved.locations[node.id] !== undefined)
 
   const baseState = {
     ...state,
-    hidden: hiddenNodes,
     nodes: allNodes,
     projectId,
     loaded: true,
@@ -143,7 +149,6 @@ export function loadNodes(
         })
 
   return updateNodePositions(state, {
-    hidden: hiddenNodes,
     nodes: nodesWithFallback,
     projectId,
     loaded: true,
@@ -161,18 +166,6 @@ function combinedHiddenFields(
     ...recalledHiddenFields,
     ...defaultHiddenFields,
   ])
-}
-
-function collectAllIds(nodes: readonly Node[]): Set<string> {
-  const ids = new Set<string>()
-  const walk = (list: readonly Node[]) => {
-    for (const node of list) {
-      ids.add(node.id)
-      walk(node.subnodes)
-    }
-  }
-  walk(nodes)
-  return ids
 }
 
 function collapseAutoGroups(state: State, autoGroups: AutoGroup[]): State {
@@ -205,7 +198,6 @@ function toStoredGroup(
     members: [...group.memberIds],
   }
 }
-
 // Re-nest the flat contracts into their saved groups. Built bottom-up so a
 // nested group is ready before its parent; a group whose members all vanished
 // (e.g. the contract is gone from the API) is dropped.
