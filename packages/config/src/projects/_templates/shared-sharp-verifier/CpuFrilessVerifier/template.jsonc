@@ -1,13 +1,22 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "category": "spam",
+  "displayName": "CpuFrilessVerifier",
+  "description": "Immutable Solidity verifier for one Cairo CPU layout. It checks the STARK proof using layout-specific constraint, OODS, Merkle, FRI, and periodic-column helper contracts. The SHARP verifier can select any configured layout by `cairoVerifierId`.",
+  "category": "shared",
   "fields": {
     "constructorArgs": {
+      "description": "All immutable verifier dependencies and security parameters. `auxPolynomials[0]` is the layout's CPU constraint polynomial and the remaining entries are periodic-column contracts; the other arguments pin the CPU OODS contract, this verifier's memory-page registry, Merkle and FRI statement contracts, security bits, and proof-of-work bits. A malicious helper or nonconforming memory registry, or insufficient security parameters, can make an invalid execution proof pass; a different honest registry generally causes proof submission to revert instead.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
       "handler": {
-        "type": "constructorArgs"
-      },
-      "edit": ["delete", 2],
-      "template": "shared-sharp-verifier/ignoreComputeSpam"
+        "type": "constructorArgs",
+        "nameArgs": true
+      }
+    },
+    "getLayoutInfo": {
+      "description": "The public-memory offset and builtin bitmap for this Cairo layout. The outer SHARP verifier uses these values when constructing the public input supplied to this verifier.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE"
     }
   }
 }

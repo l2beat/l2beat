@@ -1,11 +1,11 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "SHARPVerifierCallProxy",
-  "description": "Upgradable call proxy contract through which the SHARPVerifier can be called. A call proxy does not delegatecall and the storage context remains at the target contract. It allows {{$admin}} to change the otherwise immutable verifier contract with {{upgradeActivationDelayFmt}} delay.",
+  "description": "Upgradeable call router through which Starknet and other applications access SHARP fact registries. It uses `call`, not `delegatecall`, so facts and immutable verifier configuration remain at each target registry. The explicit `isValid` entry point always queries the default target. Other calls handled by the fallback, principally proof submissions, can be routed per caller to a still-active registry in the default target's reference chain. The default target can be replaced by {{$admin}} after {{upgradeActivationDelayFmt}}.",
   "category": "shared",
-  "ignoreRelatives": ["customProxyImplementations"],
   "fields": {
     "$admin": {
+      "description": "Can upgrade the proxy logic and replace the default SHARP fact registry after the configured delay. A malicious target can make arbitrary facts valid for callers routed to it.",
       "severity": "HIGH",
       "permissions": [
         {
@@ -48,7 +48,22 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "manage the upgrade admin amd access control roles."
+          "description": "Administer the CallProxy's `GOVERNANCE_ADMIN` and role-admin hierarchy. This AccessControl role is separate from the outer proxy governor that schedules implementation upgrades."
+        }
+      ]
+    },
+    "appRoleAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x03e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99": "APP_ROLE_ADMIN"
+        },
+        "pickRoleMembers": "APP_ROLE_ADMIN"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Grant and revoke application roles, including the `APP_GOVERNOR` role that controls caller-specific fallback routes."
         }
       ]
     },
@@ -63,27 +78,25 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "set custom implementations for specific operators (changes the verifier based on who calls it)."
+          "description": "Route fallback calls from specific callers to a still-active registry in the default verifier's reference chain. This principally determines which verifier and bootloader configuration processes their proof submissions; the proxy's explicit `isValid` entry point always queries the default target."
         }
       ]
     },
-    "customProxyImplementations": {
-      "description": "Non-default targets for call proxy delegation. These targets are automatically chosen based on which operator makes a call.",
+    "callProxyImplementation": {
+      "description": "Default SHARP fact registry called by the proxy and the only registry queried directly by its explicit `isValid` entry point. Replacing it changes the complete proof-verification trust chain: outer bootloader, bootloader commitments, recursive verifier allowlist, Solidity CPU verifiers, and temporary reference registries.",
       "severity": "HIGH",
-      "handler": {
-        "type": "event",
-        "select": "customReference",
-        "add": { "event": "CustomReferenceSet" }
-      }
+      "type": "CODE_CHANGE"
     },
-    "customImplOperators": {
-      "description": "Calls of these operators are redirected to custom proxy implementations, usually older versions of verifiers.",
+    "customFactRegistryRoutes": {
+      "description": "Latest nonzero caller-to-registry fallback routes reconstructed from events. These are `call` targets, not delegatecall implementations. The stored route is usable only while the target is in the default registry's unexpired reference chain; otherwise the caller's fallback call reverts. This affects proof submissions but not the proxy's explicit `isValid`, which always queries the default target.",
       "severity": "HIGH",
       "handler": {
         "type": "event",
-        "select": "operator",
+        "select": ["operator", "customReference"],
+        "dedupBy": "operator",
         "add": { "event": "CustomReferenceSet" },
-        "remove": { "event": "CustomReferenceCleared" }
+        "remove": { "event": "CustomReferenceCleared" },
+        "ignoreRelative": true
       }
     }
   }
