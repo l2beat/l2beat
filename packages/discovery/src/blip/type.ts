@@ -1,6 +1,13 @@
 type ShapeArg = string | [string, BlipSexp]
 type ArrayOrT<T> = T | T[]
 
+export interface BlipEnv {
+  blockNumber?: number
+  timestamp?: number
+  chainName?: string
+  address?: string
+}
+
 export type BlipSexp =
   | string
   | number

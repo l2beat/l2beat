@@ -8,11 +8,21 @@ import {
   getCustomTypeCaster,
   isCustomTypeCaster,
 } from '../discovery/type-casters'
-import type { BlipSexp } from './type'
+import type { BlipEnv, BlipSexp } from './type'
+
+const CONTEXT_VARIABLES: Record<string, keyof BlipEnv> = {
+  $$blockNumber: 'blockNumber',
+  $$timestamp: 'timestamp',
+  $$chainName: 'chainName',
+  $address: 'address',
+}
 
 export class BlipRuntime {
   public readonly usedTypesSet: Set<DiscoveryCustomType> = new Set()
-  constructor(private readonly types: Record<string, DiscoveryCustomType>) {}
+  constructor(
+    private readonly types: Record<string, DiscoveryCustomType>,
+    private readonly env: BlipEnv = {},
+  ) {}
 
   get usedTypes(): DiscoveryCustomType[] {
     return [...this.usedTypesSet]
@@ -28,6 +38,10 @@ export class BlipRuntime {
           `Tried to extract column [${key}] but it's undefined`,
         )
         return value
+      }
+
+      if (typeof blip === 'string' && blip.startsWith('$')) {
+        return this.resolveContextVariable(blip)
       }
 
       return blip
@@ -269,6 +283,14 @@ export class BlipRuntime {
         assert(false, 'unhandled')
       }
     }
+  }
+
+  resolveContextVariable(token: string): ContractValue {
+    const key = CONTEXT_VARIABLES[token]
+    assert(key !== undefined, `Unknown context variable ${token}`)
+    const value = this.env[key]
+    assert(value !== undefined, `Context variable ${token} is not available`)
+    return value
   }
 
   objectGet(value: ContractValue, keys: (string | number)[]): ContractValue {

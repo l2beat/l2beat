@@ -1,6 +1,9 @@
 import { expect } from 'earl'
 
+import type { BlipEnv } from '../../blip/type'
+import type { StructureContract } from '../config/StructureConfig'
 import { decodeHandlerResults } from './decodeHandlerResults'
+import type { HandlerResult } from './Handler'
 
 describe(decodeHandlerResults.name, () => {
   const longChain = 'ethereum'
@@ -85,6 +88,49 @@ describe(decodeHandlerResults.name, () => {
       },
       errors: {},
       usedTypes: [],
+    })
+  })
+
+  describe('context variables in edit expressions', () => {
+    const env: BlipEnv = {
+      blockNumber: 21_000_000,
+      timestamp: 1_700_000_000,
+      chainName: 'ethereum',
+      address: '0x1234567890123456789012345678901234567890',
+    }
+
+    it('resolves $$blockNumber inside an edit', () => {
+      const results: HandlerResult[] = [{ field: 'foo', value: { block: 0 } }]
+      const fieldOverrides: StructureContract['fields'] = {
+        foo: { edit: ['set', 'block', '$$blockNumber'] },
+      }
+
+      const { values } = decodeHandlerResults(
+        longChain,
+        results,
+        fieldOverrides,
+        emptyTypes,
+        env,
+      )
+
+      expect(values?.foo).toEqual({ block: 21_000_000 })
+    })
+
+    it('resolves $$chainName inside an edit', () => {
+      const results: HandlerResult[] = [{ field: 'foo', value: { chain: '' } }]
+      const fieldOverrides: StructureContract['fields'] = {
+        foo: { edit: ['set', 'chain', '$$chainName'] },
+      }
+
+      const { values } = decodeHandlerResults(
+        longChain,
+        results,
+        fieldOverrides,
+        emptyTypes,
+        env,
+      )
+
+      expect(values?.foo).toEqual({ chain: 'ethereum' })
     })
   })
 })
