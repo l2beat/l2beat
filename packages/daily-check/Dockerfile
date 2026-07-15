@@ -36,7 +36,10 @@ RUN apt update && \
   apt clean && \
   rm -rf /var/lib/apt/lists/* && \
   npm i -g @anthropic-ai/claude-code @openai/codex && \
-  groupadd -r appgroup && useradd -r -g appgroup -m appuser
+  groupadd -r appgroup && \
+  useradd -r -g appgroup -m appuser && \
+  mkdir -p /home/appuser/.codex && \
+  chown appuser:appgroup /home/appuser/.codex
 
 WORKDIR /app/
 COPY --from=builder --chown=appuser:appgroup /src/ .
@@ -45,4 +48,5 @@ WORKDIR /app/packages/daily-check/
 USER appuser
 
 ENV NODE_ENV=production
+ENV CODEX_HOME=/home/appuser/.codex
 CMD ["node", "./build/index.js"]
