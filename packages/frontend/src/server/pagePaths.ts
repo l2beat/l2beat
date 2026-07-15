@@ -31,6 +31,7 @@ export const STATIC_PAGE_PATHS = [
   '/zk-catalog',
   '/governance',
   '/governance/ethereum-connect',
+  '/native-rollups',
   '/faq',
   '/about-us',
   '/brand-kit',

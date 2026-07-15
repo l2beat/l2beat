@@ -1,5 +1,4 @@
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { cn } from '~/utils/cn'
 import { HOW_IT_WORKS } from '../consts'
 import { SectionHeading } from './SectionHeading'
 
@@ -11,21 +10,9 @@ export function HowItWorksSection() {
         description="A native rollup proves its blocks against Ethereum's own execution program, submits the proof to L1, and lets its settlement contract advance the chain."
       />
       <PrimaryCard className="overflow-hidden p-0 md:p-0">
-        <ol className="grid md:grid-cols-2 xl:grid-cols-4">
+        <ol className="grid gap-px bg-divider md:grid-cols-2 xl:grid-cols-4">
           {HOW_IT_WORKS.map((step, index) => (
-            <li
-              key={step.title}
-              className={cn(
-                'border-divider p-5 md:p-6',
-                index < HOW_IT_WORKS.length - 1 && 'border-b',
-                index % 2 === 0 && 'md:border-r',
-                index < 2 ? 'md:border-b' : 'md:border-b-0',
-                'xl:border-b-0',
-                index < HOW_IT_WORKS.length - 1
-                  ? 'xl:border-r'
-                  : 'xl:border-r-0',
-              )}
-            >
+            <li key={step.title} className="bg-surface-primary p-5 md:p-6">
               <span className="font-bold text-heading-32 text-purple-100 dark:text-pink-200">
                 <span className="sr-only">Step </span>
                 {String(index + 1).padStart(2, '0')}

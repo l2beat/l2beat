@@ -103,6 +103,7 @@ export const FEATURES: ProgrammableFeatureItem[] = [
 
 export interface RoadmapItem {
   status: 'done' | 'research' | 'inProgress' | 'planned'
+  year: number
   date: string
   title: string
   description: string
@@ -116,6 +117,7 @@ export interface RoadmapItem {
 export const ROADMAP: RoadmapItem[] = [
   {
     status: 'done',
+    year: 2025,
     date: 'January 2025',
     title: 'Founding research',
     description:
@@ -124,6 +126,7 @@ export const ROADMAP: RoadmapItem[] = [
   },
   {
     status: 'done',
+    year: 2025,
     date: '2025',
     title: 'The Native Rollups Book',
     description:
@@ -132,6 +135,7 @@ export const ROADMAP: RoadmapItem[] = [
   },
   {
     status: 'done',
+    year: 2025,
     date: 'November 2025',
     title: 'EIP-8079 (Draft)',
     description:
@@ -140,6 +144,7 @@ export const ROADMAP: RoadmapItem[] = [
   },
   {
     status: 'done',
+    year: 2026,
     date: 'March 2026',
     title: 'ethrex proof-of-concept',
     description:
@@ -148,6 +153,7 @@ export const ROADMAP: RoadmapItem[] = [
   },
   {
     status: 'done',
+    year: 2026,
     date: 'May 2026',
     title: 'Native proof verification',
     description:
@@ -156,6 +162,7 @@ export const ROADMAP: RoadmapItem[] = [
   },
   {
     status: 'done',
+    year: 2026,
     date: 'June 2026',
     title: 'FOCIL-based forced transactions',
     description:
@@ -164,6 +171,7 @@ export const ROADMAP: RoadmapItem[] = [
   },
   {
     status: 'inProgress',
+    year: 2026,
     date: 'Target: September 2026',
     title: 'Rebase on Hegotá',
     description:
@@ -171,6 +179,7 @@ export const ROADMAP: RoadmapItem[] = [
   },
   {
     status: 'planned',
+    year: 2026,
     date: 'Target: December 2026',
     title: 'Native proof verification',
     description:
@@ -178,6 +187,7 @@ export const ROADMAP: RoadmapItem[] = [
   },
   {
     status: 'planned',
+    year: 2027,
     date: 'Target: March 2027',
     title: 'Blocks-in-Blobs study',
     description:
@@ -185,6 +195,7 @@ export const ROADMAP: RoadmapItem[] = [
   },
   {
     status: 'planned',
+    year: 2027,
     date: 'Target: June 2027',
     title: 'Proof aggregation',
     description:
@@ -228,15 +239,22 @@ export const CORE_PROTOCOL_NEEDS: { title: string; description: string }[] = [
 
 export type MaterialKind = 'eip' | 'article' | 'book' | 'code' | 'video'
 
-export interface MaterialItem {
-  kind: MaterialKind
+interface BaseMaterialItem {
   label: string
   source: string
   description: string
   href: string
-  /** For `video` materials — used to fetch the YouTube thumbnail. */
-  videoId?: string
 }
+
+export type MaterialItem =
+  | (BaseMaterialItem & {
+      kind: Exclude<MaterialKind, 'video'>
+      videoId?: never
+    })
+  | (BaseMaterialItem & {
+      kind: 'video'
+      videoId: string
+    })
 
 /** YouTube thumbnail URL for a video id (`hqdefault` is always available). */
 export function getYouTubeThumbnail(videoId: string) {

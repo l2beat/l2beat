@@ -13,17 +13,18 @@ const STATUS_LABEL: Record<RoadmapItem['status'], string> = {
 }
 
 function groupByYear(items: RoadmapItem[]) {
-  const groups: { year: string; items: RoadmapItem[] }[] = []
+  const groups = new Map<number, RoadmapItem[]>()
+
   for (const item of items) {
-    const year = item.date.match(/\d{4}/)?.[0] ?? item.date
-    const last = groups.at(-1)
-    if (last?.year === year) {
-      last.items.push(item)
-    } else {
-      groups.push({ year, items: [item] })
-    }
+    const group = groups.get(item.year) ?? []
+    group.push(item)
+    groups.set(item.year, group)
   }
-  return groups
+
+  return [...groups].map(([year, groupedItems]) => ({
+    year,
+    items: groupedItems,
+  }))
 }
 
 export function RoadmapSection() {

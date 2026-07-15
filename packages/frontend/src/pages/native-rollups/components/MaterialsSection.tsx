@@ -10,8 +10,8 @@ import {
 import { SectionHeading } from './SectionHeading'
 
 export function MaterialsSection() {
-  const articles = MATERIALS.filter((m) => !m.videoId)
-  const talks = MATERIALS.filter((m) => m.videoId)
+  const articles = MATERIALS.filter((material) => material.kind !== 'video')
+  const talks = MATERIALS.filter((material) => material.kind === 'video')
 
   return (
     <section id="materials" className="mt-8 md:mt-12">
@@ -63,7 +63,7 @@ function MaterialCard({ material }: { material: MaterialItem }) {
       className="group block outline-none focus-visible:ring-2 focus-visible:ring-brand md:rounded-xl"
     >
       <PrimaryCard className="flex h-full flex-col overflow-hidden p-0 transition-colors group-hover:bg-white/70 md:rounded-xl md:p-0 dark:group-hover:bg-surface-primary-hover">
-        {material.videoId && (
+        {material.kind === 'video' && (
           <div className="relative aspect-video w-full overflow-hidden bg-surface-secondary md:rounded-t-xl">
             <img
               src={getYouTubeThumbnail(material.videoId)}
