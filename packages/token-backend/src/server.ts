@@ -5,6 +5,7 @@ import { getConfig } from './config'
 import { getDb, getTokenDb } from './database/db'
 import { TokenIngestionLoop } from './ingestion/TokenIngestionLoop'
 import { TokenIngestionProcessor } from './ingestion/TokenIngestionProcessor'
+import { TokenRelationIngestion } from './ingestion/TokenRelationIngestion'
 import { getLogger } from './logger'
 import { createTrpcRouter } from './server/routers/TrpcRouter'
 
@@ -50,11 +51,18 @@ function main() {
   )
 
   const tokenIngestionLoop = config.tokenIngestion.enabled
-    ? new TokenIngestionLoop(db, tokenDb, tokenIngestionProcessor, logger, {
-        intervalMs: config.tokenIngestion.intervalMs,
-        newQueueState,
-        maxProcessedPerRun: config.tokenIngestion.maxProcessedPerRun,
-      })
+    ? new TokenIngestionLoop(
+        db,
+        tokenDb,
+        tokenIngestionProcessor,
+        new TokenRelationIngestion(db, tokenDb, logger),
+        logger,
+        {
+          intervalMs: config.tokenIngestion.intervalMs,
+          newQueueState,
+          maxProcessedPerRun: config.tokenIngestion.maxProcessedPerRun,
+        },
+      )
     : undefined
   tokenIngestionLoop?.start()
 

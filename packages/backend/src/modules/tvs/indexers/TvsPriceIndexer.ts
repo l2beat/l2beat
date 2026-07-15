@@ -1,17 +1,15 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { TvsPriceRecord } from '@l2beat/database'
 import type { PriceProvider } from '@l2beat/shared'
-import {
-  CoingeckoId,
-  type RemovalConfiguration,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
   Configuration,
   ManagedMultiIndexerOptions,
+  TrimRemovalConfiguration,
+  WipeRemovalConfiguration,
 } from '../../../tools/uif/multi/types'
 import type { SyncOptimizer } from '../tools/SyncOptimizer'
 import type { PriceConfig } from '../types'
@@ -127,19 +125,27 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
     )
   }
 
-  override async removeData(configurations: RemovalConfiguration[]) {
-    if (configurations.length === 0) return
+  override async wipeData(configurations: WipeRemovalConfiguration[]) {
+    const deletedRecords = await this.$.db.tvsPrice.deleteByConfigIds(
+      configurations.map((c) => c.id),
+    )
+    if (deletedRecords > 0) {
+      this.logger.info('Wiped records for configurations', {
+        configurations: configurations.length,
+        deletedRecords,
+      })
+    }
+  }
 
+  override async trimData(configurations: TrimRemovalConfiguration[]) {
     const configs = configurations.map((c) => ({
       configurationId: c.id,
-      fromInclusive: UnixTime(c.from),
-      toInclusive: UnixTime(c.to),
+      fromInclusive: c.range[0],
+      toInclusive: c.range[1],
     }))
-
     const deletedRecords = await this.$.db.tvsPrice.deleteByConfigs(configs)
-
     if (deletedRecords > 0) {
-      this.logger.info('Deleted records for configurations', {
+      this.logger.info('Trimmed records for configurations', {
         configurations: configurations.length,
         deletedRecords,
       })

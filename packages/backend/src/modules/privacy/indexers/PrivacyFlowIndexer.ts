@@ -9,7 +9,8 @@ import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexe
 import type {
   Configuration,
   ManagedMultiIndexerOptions,
-  RemovalConfiguration,
+  TrimRemovalConfiguration,
+  WipeRemovalConfiguration,
 } from '../../../tools/uif/multi/types'
 import type { PrivacyFlowIndexerConfig } from '../types'
 import { extractPrivacyFlow } from '../utils/extractPrivacyFlow'
@@ -81,22 +82,38 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
     }
   }
 
-  override async removeData(
-    configurations: RemovalConfiguration[],
+  override async wipeData(
+    configurations: WipeRemovalConfiguration[],
+  ): Promise<void> {
+    const deletedRecords = await this.$.db.privacyFlowEvent.deleteByConfigIds(
+      configurations.map((c) => c.id),
+    )
+
+    if (deletedRecords > 0) {
+      this.logger.info('Wiped privacy flow events for configurations', {
+        configurations: configurations.length,
+        deletedRecords,
+      })
+    }
+  }
+
+  override async trimData(
+    configurations: TrimRemovalConfiguration[],
   ): Promise<void> {
     for (const configuration of configurations) {
+      const [from, to] = configuration.range
       const deletedRecords =
         await this.$.db.privacyFlowEvent.deleteByConfigInTimeRange(
           configuration.id,
-          configuration.from,
-          configuration.to,
+          from,
+          to,
         )
 
       if (deletedRecords > 0) {
-        this.logger.info('Deleted privacy flow events', {
+        this.logger.info('Trimmed privacy flow events', {
           configurationId: configuration.id,
-          from: configuration.from,
-          to: configuration.to,
+          from,
+          to,
           deletedRecords,
         })
       }

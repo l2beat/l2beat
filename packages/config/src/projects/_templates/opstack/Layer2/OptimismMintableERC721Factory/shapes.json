@@ -8,5 +8,11 @@
     "hash": "0xec1bfae18ba5717949a6969cb01d743511c076e7bc6c78ed2c2b63232b97cc57",
     "address": "ink:0xc0d3C0d3C0d3C0d3C0d3c0d3C0D3C0d3C0D30017",
     "blockNumber": 10183769
+  },
+  "OptimismMintableERC721Factory_v1_5_1": {
+    "hash": "0xf4fd8df9e9191098f5647a3568864aee248b011c092313bf392b57a4b0f43268",
+    "address": "ink:0xf43862B9d814BB4504158CecCB0b74b31265e4eE",
+    "chain": "ink",
+    "blockNumber": 50178011
   }
 }

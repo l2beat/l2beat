@@ -39,7 +39,7 @@ export async function getDaSummaryEntries(): Promise<
 > {
   const [layers, bridges, dacs] = await Promise.all([
     ps.getProjects({
-      select: ['daLayer', 'statuses'],
+      select: ['daLayer', 'statuses', 'display'],
       whereNot: ['archivedAt'],
     }),
     ps.getProjects({
@@ -47,7 +47,7 @@ export async function getDaSummaryEntries(): Promise<
       optional: ['contracts'],
     }),
     ps.getProjects({
-      select: ['customDa', 'statuses'],
+      select: ['customDa', 'statuses', 'display'],
       whereNot: ['archivedAt'],
     }),
   ])
@@ -118,7 +118,7 @@ export interface DaBridgeSummaryEntry
 }
 
 function getDaSummaryEntry(
-  layer: Project<'daLayer' | 'statuses'>,
+  layer: Project<'daLayer' | 'statuses' | 'display'>,
   bridges: Project<'daBridge' | 'statuses', 'contracts'>[],
   economicSecurity: number | undefined,
   getTvs: (projectIds: ProjectId[]) => {
@@ -208,7 +208,7 @@ function getDaSummaryEntry(
 }
 
 function getDacEntry(
-  project: Project<'customDa' | 'statuses'>,
+  project: Project<'customDa' | 'statuses' | 'display'>,
   getTvs: (projectIds: ProjectId[]) => {
     latest: number
     sevenDaysAgo: number
@@ -259,7 +259,7 @@ function getDacEntry(
 }
 
 function getEthereumEntry(
-  layer: Project<'daLayer' | 'statuses'>,
+  layer: Project<'daLayer' | 'statuses' | 'display'>,
   bridges: Project<'daBridge' | 'statuses'>[],
   economicSecurity: number | undefined,
   getTvs: (projectIds: ProjectId[]) => {
@@ -276,6 +276,7 @@ function getEthereumEntry(
     icon: manifest.getUrl(`/icons/${layer.slug}.png`),
     name: layer.name,
     nameSecondLine: layer.daLayer.type,
+    description: layer.display.description,
     href: `/data-availability/projects/${layer.slug}/${bridge.slug}`,
     backgroundColor: 'blue',
     statuses: {},

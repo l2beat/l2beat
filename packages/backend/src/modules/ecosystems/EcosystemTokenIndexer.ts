@@ -8,7 +8,7 @@ import { ManagedMultiIndexer } from '../../tools/uif/multi/ManagedMultiIndexer'
 import type {
   Configuration,
   ManagedMultiIndexerOptions,
-  RemovalConfiguration,
+  WipeRemovalConfiguration,
 } from '../../tools/uif/multi/types'
 
 export interface EcosystemTokenIndexerDeps
@@ -92,15 +92,16 @@ export class EcosystemTokenIndexer extends ManagedMultiIndexer<EcosystemTokenCon
 
     return () => Promise.resolve(to)
   }
-  override async removeData(
-    configurations: RemovalConfiguration[],
+  override async wipeData(
+    configurations: WipeRemovalConfiguration[],
   ): Promise<void> {
-    for (const c of configurations) {
-      const deletedRecords =
-        await this.$.db.ecosystemToken.deleteByConfigurationId(c.id)
+    const deletedRecords = await this.$.db.ecosystemToken.deleteByConfigIds(
+      configurations.map((c) => c.id),
+    )
 
-      this.logger.info('Wiped ecosystem token records for configuration', {
-        id: c.id,
+    if (deletedRecords > 0) {
+      this.logger.info('Wiped ecosystem token records for configurations', {
+        configurations: configurations.length,
         deletedRecords,
       })
     }

@@ -32,6 +32,7 @@ export interface PrivacySummaryEntry {
   reproducibility: PrivacySummaryValue
   privacy: PrivacySummaryValue
   attributes: PrivacyAttribute[]
+  quantumResistant?: boolean
 }
 
 type PrivacySummaryTrackingMetrics = Pick<
@@ -146,6 +147,7 @@ function getPrivacySummaryBaseEntry(
     reproducibility: project.privacyInfo.reproducibility,
     privacy: project.privacyInfo.privacy,
     attributes: project.privacyInfo.attributes ?? [],
+    quantumResistant: project.privacyInfo.quantumResistant,
   }
 }
 

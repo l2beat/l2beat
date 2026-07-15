@@ -8,6 +8,11 @@ import {
   DeployedTokenRecord,
   DeployedTokenUpdateable,
 } from './schemas/DeployedToken'
+import {
+  TokenRelationPrimaryKey,
+  TokenRelationRecord,
+  TokenRelationUpdateable,
+} from './schemas/TokenRelation'
 
 export type AddAbstractTokenIntent = v.infer<typeof AddAbstractTokenIntent>
 export const AddAbstractTokenIntent = v.object({
@@ -55,6 +60,29 @@ export const DeleteDeployedTokenIntent = v.object({
   pk: DeployedTokenPrimaryKey,
 })
 
+export type AddTokenRelationIntent = v.infer<typeof AddTokenRelationIntent>
+export const AddTokenRelationIntent = v.object({
+  type: v.literal('AddTokenRelationIntent'),
+  record: TokenRelationRecord,
+})
+
+export type UpdateTokenRelationIntent = v.infer<
+  typeof UpdateTokenRelationIntent
+>
+export const UpdateTokenRelationIntent = v.object({
+  type: v.literal('UpdateTokenRelationIntent'),
+  pk: TokenRelationPrimaryKey,
+  update: TokenRelationUpdateable,
+})
+
+export type DeleteTokenRelationIntent = v.infer<
+  typeof DeleteTokenRelationIntent
+>
+export const DeleteTokenRelationIntent = v.object({
+  type: v.literal('DeleteTokenRelationIntent'),
+  pk: TokenRelationPrimaryKey,
+})
+
 export type Intent = v.infer<typeof Intent>
 export const Intent = v.union([
   AddAbstractTokenIntent,
@@ -63,4 +91,7 @@ export const Intent = v.union([
   AddDeployedTokenIntent,
   UpdateDeployedTokenIntent,
   DeleteDeployedTokenIntent,
+  AddTokenRelationIntent,
+  UpdateTokenRelationIntent,
+  DeleteTokenRelationIntent,
 ])
