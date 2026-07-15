@@ -1,13 +1,21 @@
+import type { ReactNode } from 'react'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { DocumentIcon } from '~/icons/Document'
 import { CustomLinkIcon } from '~/icons/Outlink'
+import { GithubIcon } from '~/icons/products/Github'
 import { YouTubeIcon } from '~/icons/products/Youtube'
-import {
-  getMaterialIcon,
-  getYouTubeThumbnail,
-  MATERIALS,
-  type MaterialItem,
-} from '../consts'
+import type { SvgIconProps } from '~/icons/SvgIcon'
+import { MATERIALS, type MaterialItem, type MaterialKind } from '../materials'
 import { SectionHeading } from './SectionHeading'
+
+const MATERIAL_ICONS: Record<MaterialKind, (props: SvgIconProps) => ReactNode> =
+  {
+    eip: DocumentIcon,
+    article: DocumentIcon,
+    book: DocumentIcon,
+    code: GithubIcon,
+    video: YouTubeIcon,
+  }
 
 export function MaterialsSection() {
   const articles = MATERIALS.filter((material) => material.kind !== 'video')
@@ -54,7 +62,7 @@ function GroupLabel({
 }
 
 function MaterialCard({ material }: { material: MaterialItem }) {
-  const Icon = getMaterialIcon(material.kind)
+  const Icon = MATERIAL_ICONS[material.kind]
   return (
     <a
       href={material.href}
@@ -66,7 +74,7 @@ function MaterialCard({ material }: { material: MaterialItem }) {
         {material.kind === 'video' && (
           <div className="relative aspect-video w-full overflow-hidden bg-surface-secondary md:rounded-t-xl">
             <img
-              src={getYouTubeThumbnail(material.videoId)}
+              src={`https://img.youtube.com/vi/${material.videoId}/hqdefault.jpg`}
               alt=""
               loading="lazy"
               className="size-full object-cover motion-safe:transition-transform motion-safe:duration-500 motion-safe:ease-out motion-safe:group-hover:scale-105"

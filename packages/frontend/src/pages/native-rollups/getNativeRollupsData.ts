@@ -7,7 +7,13 @@ export async function getNativeRollupsData(
   manifest: Manifest,
   url: string,
 ): Promise<RenderData> {
-  const appLayoutProps = await getAppLayoutProps()
+  const props = {
+    ...(await getAppLayoutProps()),
+    contributorImages: {
+      lucaDonno: manifest.getImage('/images/native-rollups/luca-donno.jpg'),
+      justinDrake: manifest.getImage('/images/native-rollups/justin-drake.jpg'),
+    },
+  }
 
   return {
     head: {
@@ -25,9 +31,7 @@ export async function getNativeRollupsData(
     },
     ssr: {
       page: 'NativeRollupsPage',
-      props: {
-        ...appLayoutProps,
-      },
+      props,
     },
   }
 }

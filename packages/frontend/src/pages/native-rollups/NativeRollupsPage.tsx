@@ -1,7 +1,10 @@
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import { ContributorsSection } from './components/ContributorsSection'
+import {
+  type ContributorImages,
+  ContributorsSection,
+} from './components/ContributorsSection'
 import { CoreProtocolSection } from './components/CoreProtocolSection'
 import { FeaturesSection } from './components/FeaturesSection'
 import { Hero } from './components/Hero'
@@ -11,7 +14,11 @@ import { NativeProofVerificationSection } from './components/NativeProofVerifica
 import { RoadmapSection } from './components/RoadmapSection'
 import { WhyNativeSection } from './components/WhyNativeSection'
 
-export function NativeRollupsPage(props: AppLayoutProps) {
+interface Props extends AppLayoutProps {
+  contributorImages: ContributorImages
+}
+
+export function NativeRollupsPage({ contributorImages, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout maxWidth="wide">
@@ -25,7 +32,7 @@ export function NativeRollupsPage(props: AppLayoutProps) {
           <RoadmapSection />
           <CoreProtocolSection />
           <MaterialsSection />
-          <ContributorsSection />
+          <ContributorsSection images={contributorImages} />
         </main>
       </SideNavLayout>
     </AppLayout>

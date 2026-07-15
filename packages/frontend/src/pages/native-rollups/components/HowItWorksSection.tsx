@@ -1,6 +1,28 @@
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { HOW_IT_WORKS } from '../consts'
 import { SectionHeading } from './SectionHeading'
+
+const STEPS = [
+  {
+    title: 'Build and prove an L2 block',
+    description:
+      "The operator executes an L2 block and proves Ethereum's stateless payload-validation program with one or more supported zkVM backends.",
+  },
+  {
+    title: 'Submit a proof-carrying transaction',
+    description:
+      'A new L1 transaction type commits to the L2 data in blobs, the proof backends and program identity, and a hash of the proof’s public values.',
+  },
+  {
+    title: 'Ethereum verifies the proofs',
+    description:
+      'Raw proofs travel in ephemeral sidecars. Ethereum clients validate them through a program-agnostic proof engine, while recursive aggregation keeps verification efficient at scale.',
+  },
+  {
+    title: 'The rollup advances its state',
+    description:
+      'The rollup contract confirms that Ethereum verified the right program and block data, then accepts the new L2 state root.',
+  },
+]
 
 export function HowItWorksSection() {
   return (
@@ -11,7 +33,7 @@ export function HowItWorksSection() {
       />
       <PrimaryCard className="overflow-hidden p-0 md:p-0">
         <ol className="grid gap-px bg-divider md:grid-cols-2 xl:grid-cols-4">
-          {HOW_IT_WORKS.map((step, index) => (
+          {STEPS.map((step, index) => (
             <li key={step.title} className="bg-surface-primary p-5 md:p-6">
               <span className="font-bold text-heading-32 text-purple-100 dark:text-pink-200">
                 <span className="sr-only">Step </span>

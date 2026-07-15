@@ -5,7 +5,7 @@ import { NativeRollupsHeroIllustration } from '../assets/NativeRollupsHero'
 import {
   NATIVE_PROOF_VERIFICATION_URL,
   NATIVE_ROLLUPS_BOOK_URL,
-} from '../consts'
+} from '../links'
 
 export function Hero() {
   return (

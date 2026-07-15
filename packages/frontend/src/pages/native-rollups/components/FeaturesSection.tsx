@@ -1,6 +1,36 @@
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { FEATURES } from '../consts'
+import { CodeIcon } from '~/icons/Code'
+import { GlobeIcon } from '~/icons/Globe'
+import { SwapIcon } from '~/icons/Swap'
+import { UserIcon } from '~/icons/User'
 import { SectionHeading } from './SectionHeading'
+
+const FEATURES = [
+  {
+    title: 'Custom sequencing',
+    description:
+      'Define sequencing policy in the rollup contract — centralized sequencing with fast preconfirmations, based sequencing, or a staked network.',
+    icon: SwapIcon,
+  },
+  {
+    title: 'Custom governance',
+    description:
+      "The programmable settlement contract lets a rollup keep its own configuration, such as a DAO-controlled fee recipient or opinionated gas limits, around L1's shared execution rules.",
+    icon: UserIcon,
+  },
+  {
+    title: 'Custom gas tokens',
+    description:
+      'Choose a token other than ETH for transaction fees. Ethereum-native messaging can bridge it from L1 and make it available as the gas token on L2.',
+    icon: GlobeIcon,
+  },
+  {
+    title: 'Custom fee collection',
+    description:
+      'Instead of automatically burning the base fee, direct it to a rollup treasury, sequencer, or another funding mechanism.',
+    icon: CodeIcon,
+  },
+]
 
 export function FeaturesSection() {
   return (

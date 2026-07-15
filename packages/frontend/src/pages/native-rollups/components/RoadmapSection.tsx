@@ -2,7 +2,7 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { InfoIcon } from '~/icons/Info'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import { cn } from '~/utils/cn'
-import { ROADMAP, type RoadmapItem } from '../consts'
+import { ROADMAP, type RoadmapItem } from '../roadmap'
 import { SectionHeading } from './SectionHeading'
 
 const STATUS_LABEL: Record<RoadmapItem['status'], string> = {
