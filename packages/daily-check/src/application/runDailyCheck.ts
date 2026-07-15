@@ -79,7 +79,7 @@ export async function runDailyCheck(
   try {
     const agent = createInvestigationAgent(config.agent, config.model)
     const report = await investigate(agent, red, controlPlane.controls)
-    await send(`🔍 **Investigation**\n${report}`)
+    await send(report)
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error)
     logger.error('Investigation failed', { error })
