@@ -1,4 +1,4 @@
-Generated with discovered.json: 0x914c2ed7166b6f4732cca04d234b09f62fae6775
+Generated with discovered.json: 0x8c84eab26da3a2f511f98d64077248c379574bbb
 
 # Diff at Tue, 14 Jul 2026 17:11:36 GMT:
 
@@ -12734,4 +12734,3 @@ A new owner is added to the BridgeMultisig and the threshold is changed to 2, wh
 +        "0x2871B956bC19D25961E9a7519f32D7fDaA21B403"
     }
 ```
-
