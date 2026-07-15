@@ -62,14 +62,14 @@ function MaterialCard({ material }: { material: MaterialItem }) {
       rel="noreferrer noopener"
       className="group block outline-none focus-visible:ring-2 focus-visible:ring-brand md:rounded-xl"
     >
-      <PrimaryCard className="flex h-full flex-col overflow-hidden border-divider p-0 transition-colors group-hover:border-purple-100/50 md:rounded-xl md:border md:p-0 dark:group-hover:border-pink-200/50">
+      <PrimaryCard className="flex h-full flex-col overflow-hidden border-transparent p-0 transition-colors group-hover:bg-white/70 md:rounded-xl md:border md:p-0 dark:group-hover:border-pink-200/50">
         {material.videoId && (
           <div className="relative aspect-video w-full overflow-hidden bg-surface-secondary md:rounded-t-xl">
             <img
               src={getYouTubeThumbnail(material.videoId)}
               alt=""
               loading="lazy"
-              className="size-full object-cover"
+              className="size-full object-cover motion-safe:transition-transform motion-safe:duration-500 motion-safe:ease-out motion-safe:group-hover:scale-105"
             />
             <span className="absolute inset-0 flex items-center justify-center">
               <span className="flex size-10 items-center justify-center rounded-full bg-black/55 text-white">
