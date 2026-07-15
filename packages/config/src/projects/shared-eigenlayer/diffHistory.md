@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xe5af2362202ac50b52f674166e4e578b8d131a94
+
+# Diff at Tue, 14 Jul 2026 14:39:39 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@40c68fc8d6e39f5b4f69bb2e62b69938a949b435 block: 1783434691
+- current timestamp: 1784039848
+
+## Description
+
+RewardsCoordinator `rewardsUpdater` rotated to a new EOA. This role can submit and disable distribution roots for all rewards routed through the coordinator.
+
+## Watched changes
+
+```diff
+    contract RewardsCoordinator (eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda) [N/A] {
+    +++ description: Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.
+      values.rewardsUpdater:
+-        "eth:0x1fCDde04047F63560AEC55383b3Cd33db3C2eA80"
++        "eth:0x604238AB35438f7c46066Aae988FB07CF98f0256"
+    }
+```
+
 Generated with discovered.json: 0x743752e20ad8ae04691c71098694874f07b81c07
 
 # Diff at Tue, 07 Jul 2026 14:33:44 GMT:

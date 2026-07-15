@@ -1,6 +1,6 @@
 {
   "name": "soon",
-  "timestamp": 1769535666,
+  "timestamp": 1784044779,
   "configHash": "0xff8b17e7971c637e4311a2bfcb70bce47479c466d619699839754da789363bc8",
   "entries": [
     {
@@ -66,7 +66,7 @@
         "opStackDA": {
           "isSequencerSendingBlobTx": false,
           "isUsingCelestia": false,
-          "isUsingEigenDA": "v3"
+          "isUsingEigenDA": false
         },
         "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c",
         "OPTIMISM_PORTAL_SLOT": "0x4b6c74f9e688cb39801f2112c14a8c57232a3fc5202e1444126d4bce86eb19ac",
@@ -157,7 +157,7 @@
       "sinceBlock": 21541467,
       "values": {
         "$admin": "eth:0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d",
-        "$implementation": "eth:0x29174FC953F163452093aFa9eE3904168C74b2E7",
+        "$implementation": "eth:0xcd87F6B5B03A73733ab5A9cbB56951600f3330A6",
         "$pastUpgrades": [
           [
             "2025-01-03T04:13:23.000Z",
@@ -173,13 +173,18 @@
             "2025-12-08T07:12:35.000Z",
             "0xd73f4c3b5fed189876a719ed9a80e649b30e2eabba32d6e642deab3bc7f1e149",
             ["eth:0x29174FC953F163452093aFa9eE3904168C74b2E7"]
+          ],
+          [
+            "2026-07-12T16:28:23.000Z",
+            "0xa4ccaddf2ef0b79355fce160a4241d1b637cb32d6a1b6b7c12eea57f32577f0c",
+            ["eth:0xcd87F6B5B03A73733ab5A9cbB56951600f3330A6"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "disputeGameFactory": "eth:0xcf0f094b6765eD31038003831F7f75bD07Bd49c2",
-        "disputeGameFinalityDelaySeconds": 28800,
+        "disputeGameFinalityDelaySeconds": 864000,
         "frozenWithdrawals": [],
-        "guardian": "eth:0x7fFB604c57FAFbAeaE6587DF035a0DB032301593",
+        "guardian": "eth:0xcb17B5F3Cf75eb40F0Addf97B0D457922f10B911",
         "l2Sender": "0x0000000000000000000000000000000000000000000000000000000000000001",
         "MIN_BRIDGE_VALUE": "0.001",
         "params": {
@@ -187,8 +192,8 @@
           "prevBoughtGas": 328258,
           "prevBlockNum": 21827670
         },
-        "paused": false,
-        "proofMaturityDelaySeconds": 28800,
+        "paused": true,
+        "proofMaturityDelaySeconds": 864000,
         "RespectedGameString": "KailuaGame",
         "respectedGameType": 2000,
         "respectedGameTypeUpdatedAt": 1765180799,
@@ -207,7 +212,7 @@
       },
       "implementationNames": {
         "eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07": "Proxy",
-        "eth:0x29174FC953F163452093aFa9eE3904168C74b2E7": "OptimismPortal2"
+        "eth:0xcd87F6B5B03A73733ab5A9cbB56951600f3330A6": "OptimismPortal2"
       },
       "usedTypes": [
         { "typeCaster": "Undecimal", "arg": { "decimals": 18 } },
@@ -296,11 +301,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x7b4d0e4d7C961CF967e88f600399d610736DeE51",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "L1ERC721Bridge",
       "address": "eth:0x7d34832fc0cc6ed718a993CAAb4c6CAdaE9763A2",
       "type": "Contract",
@@ -329,7 +329,7 @@
         "MESSENGER": "eth:0xbB138cE37870443d5b2B02a36619D3478738E0f6",
         "OTHER_BRIDGE": "0x02c806312cb859f1bc25448e39f87aa09857d83ccb4a837df55648e000000000",
         "otherBridge": "0x02c806312cb859f1bc25448e39f87aa09857d83ccb4a837df55648e000000000",
-        "paused": false,
+        "paused": true,
         "superchainConfig": "eth:0xD02631b334FfDCD5674217e57fe524c44B341DD4",
         "version": "2.1.1+beta.1"
       },
@@ -338,31 +338,6 @@
         "eth:0x5ef275bed4d7d3eD69BAc22a0dEf8947f8cA1b4B": "L1ERC721Bridge"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
-    },
-    {
-      "address": "eth:0x7fFB604c57FAFbAeaE6587DF035a0DB032301593",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07",
-          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
-          "role": ".guardian"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07",
-          "description": "freeze specific withdrawals.",
-          "role": ".guardian"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xD02631b334FfDCD5674217e57fe524c44B341DD4",
-          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
-          "role": ".guardian"
-        }
-      ]
     },
     {
       "name": "ProxyAdmin",
@@ -507,13 +482,13 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292669051",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292669073",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
         "OTHER_MESSENGER": "0x02c806312cb859f1bc25448e39f87aa09857d83ccb4a837df55648e000000000",
         "otherMessenger": "0x02c806312cb859f1bc25448e39f87aa09857d83ccb4a837df55648e000000000",
-        "paused": false,
+        "paused": true,
         "portal": "eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07",
         "PORTAL": "eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07",
         "RELAY_CALL_OVERHEAD": 40000,
@@ -531,6 +506,31 @@
         "eth:0x6846B4E0b9992E154fE7d315667B1e385445C503": "L1CrossDomainMessenger"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "eth:0xcb17B5F3Cf75eb40F0Addf97B0D457922f10B911",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
+          "role": ".guardian"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07",
+          "description": "freeze specific withdrawals.",
+          "role": ".guardian"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xD02631b334FfDCD5674217e57fe524c44B341DD4",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
+          "role": ".guardian"
+        }
+      ]
     },
     {
       "name": "DisputeGameFactory",
@@ -566,7 +566,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x62CFb085Ce639a7C3896E51548378cFE5829Bd32",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 108,
+        "gameCount": 347,
         "gameImpls": [
           "eth:0xAa17a7021054a984199a5bC40538f3DD6d04d36e",
           "eth:0x57d53F9715A0A8bEBDFf74b72eCE85950CcfD087",
@@ -632,9 +632,9 @@
           ]
         ],
         "$upgradeCount": 2,
-        "guardian": "eth:0x7fFB604c57FAFbAeaE6587DF035a0DB032301593",
+        "guardian": "eth:0xcb17B5F3Cf75eb40F0Addf97B0D457922f10B911",
         "GUARDIAN_SLOT": "0xd30e835d3f35624761057ff5b27d558f97bd5be034621e62240e5c0b784abe68",
-        "paused": false,
+        "paused": true,
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.1.0"
       },
@@ -751,14 +751,14 @@
           "eth:0xd1bc675f91C9E54C8eA5Adc7B22Cae4C6AD39BB8",
           "eth:0x7b12Dc6d2b7F13d1283E9CCe9eC818C09CB02432",
           "eth:0x6437a4b69e0CF59F21D2cdB59FFaB9dc115A0643",
-          "eth:0x7b4d0e4d7C961CF967e88f600399d610736DeE51"
+          "eth:0xcb17B5F3Cf75eb40F0Addf97B0D457922f10B911"
         ],
         "$threshold": 2,
         "domainSeparator": "0xbf3a78c944e3a08fbc56664df7d361dd0ec1c25f9ef34f2f7593845c007a6b1b",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 31,
+        "nonce": 34,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -805,7 +805,7 @@
         "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "L2_BLOCK_NUMBER": 4850000,
         "l2BlockNumber": 0,
-        "lastResolved": "eth:0x26e50EDE134736A508EBe9410714c0D6c11d3b3d",
+        "lastResolved": "eth:0xdcEF6aEd5a2C7E67d90169496571bbeE85f0ca2B",
         "opponentIndex": 0,
         "OPTIMISM_PORTAL": "eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07",
         "OUTPUT_BLOCK_SPAN": 50,
@@ -858,7 +858,7 @@
         "MESSENGER": "eth:0xbB138cE37870443d5b2B02a36619D3478738E0f6",
         "OTHER_BRIDGE": "0x02c806312cb859f1bc25448e39f87aa09857d83ccb4a837df55648e000000000",
         "otherBridge": "0x02c806312cb859f1bc25448e39f87aa09857d83ccb4a837df55648e000000000",
-        "paused": false,
+        "paused": true,
         "superchainConfig": "eth:0xD02631b334FfDCD5674217e57fe524c44B341DD4",
         "systemConfig": "eth:0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8",
         "version": "2.2.0"
@@ -885,76 +885,6 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
-    ],
-    "eth:0x29174FC953F163452093aFa9eE3904168C74b2E7": [
-      "constructor(uint256 _proofMaturityDelaySeconds, uint256 _disputeGameFinalityDelaySeconds)",
-      "error AlreadyFinalized()",
-      "error BadTarget()",
-      "error Blacklisted()",
-      "error CallPaused()",
-      "error ContentLengthMismatch()",
-      "error EmptyItem()",
-      "error GasEstimation()",
-      "error InvalidDataRemainder()",
-      "error InvalidDisputeGame()",
-      "error InvalidGameType()",
-      "error InvalidHeader()",
-      "error InvalidMerkleProof()",
-      "error InvalidProof()",
-      "error LargeCalldata()",
-      "error NoValue()",
-      "error NonReentrant()",
-      "error NotAllow()",
-      "error OutOfGas()",
-      "error ProposalNotValidated()",
-      "error SmallGasLimit()",
-      "error TransferFailed()",
-      "error Unauthorized()",
-      "error UnexpectedList()",
-      "error UnexpectedString()",
-      "error Unproven()",
-      "error ValueHaveDust()",
-      "error ValueTooLow()",
-      "event DisputeGameBlacklisted(address indexed disputeGame)",
-      "event Initialized(uint8 version)",
-      "event RespectedGameTypeSet(uint32 indexed newGameType, uint64 indexed updatedAt)",
-      "event TransactionDeposited(address indexed from, bytes32 indexed to, uint256 indexed version, bytes opaqueData)",
-      "event WithdrawalFinalized(bytes32 indexed withdrawalHash, bool success)",
-      "event WithdrawalFrozenStateUpdated(bytes32 indexed withdrawalHash, bool frozen)",
-      "event WithdrawalProven(bytes32 indexed withdrawalHash, bytes32 indexed from, address indexed to)",
-      "event WithdrawalProvenExtension1(bytes32 indexed withdrawalHash, address indexed proofSubmitter)",
-      "function MIN_BRIDGE_VALUE() view returns (uint256)",
-      "function balance() view returns (uint256)",
-      "function blacklistDisputeGame(address _disputeGame)",
-      "function checkWithdrawal(bytes32 _withdrawalHash, address _proofSubmitter) view",
-      "function depositERC20Transaction(bytes32, uint256, uint256, uint64, bool, bytes) pure",
-      "function depositTransaction(bytes32 _to, uint256 _value, uint64 _gasLimit, bool _isCreation, bytes _data) payable",
-      "function disputeGameBlacklist(address) view returns (bool)",
-      "function disputeGameFactory() view returns (address)",
-      "function disputeGameFinalityDelaySeconds() view returns (uint256)",
-      "function donateETH() payable",
-      "function finalizeWithdrawalTransaction(tuple(uint256 nonce, bytes32 sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx)",
-      "function finalizeWithdrawalTransactionExternalProof(tuple(uint256 nonce, bytes32 sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, address _proofSubmitter)",
-      "function finalizedWithdrawals(bytes32) view returns (bool)",
-      "function frozenWithdrawals(bytes32) view returns (bool)",
-      "function guardian() view returns (address)",
-      "function initialize(address _disputeGameFactory, address _systemConfig, address _superchainConfig, uint32 _initialRespectedGameType)",
-      "function l2Sender() view returns (bytes32)",
-      "function minimumGasLimit(uint64 _byteCount) pure returns (uint64)",
-      "function numProofSubmitters(bytes32 _withdrawalHash) view returns (uint256)",
-      "function params() view returns (uint128 prevBaseFee, uint64 prevBoughtGas, uint64 prevBlockNum)",
-      "function paused() view returns (bool)",
-      "function proofMaturityDelaySeconds() view returns (uint256)",
-      "function proofSubmitters(bytes32, uint256) view returns (address)",
-      "function proveWithdrawalTransaction(tuple(uint256 nonce, bytes32 sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, uint256 _disputeGameIndex, bytes32 _pdaPubkey, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, bytes[] _withdrawalProof)",
-      "function provenWithdrawals(bytes32, address) view returns (address disputeGameProxy, uint64 timestamp)",
-      "function respectedGameType() view returns (uint32)",
-      "function respectedGameTypeUpdatedAt() view returns (uint64)",
-      "function setRespectedGameType(uint32 _gameType)",
-      "function superchainConfig() view returns (address)",
-      "function systemConfig() view returns (address)",
-      "function updateWithdrawalFrozenState(bytes32 withdrawalHash, bool isFrozen)",
-      "function version() pure returns (string)"
     ],
     "eth:0x2B0634e5b534BA765e24640281b4eB636d446dF3": [
       "constructor()",
@@ -1190,6 +1120,76 @@
     ],
     "eth:0xbB138cE37870443d5b2B02a36619D3478738E0f6": [
       "constructor(address _addressManager, string _implementationName)"
+    ],
+    "eth:0xcd87F6B5B03A73733ab5A9cbB56951600f3330A6": [
+      "constructor(uint256 _proofMaturityDelaySeconds, uint256 _disputeGameFinalityDelaySeconds)",
+      "error AlreadyFinalized()",
+      "error BadTarget()",
+      "error Blacklisted()",
+      "error CallPaused()",
+      "error ContentLengthMismatch()",
+      "error EmptyItem()",
+      "error GasEstimation()",
+      "error InvalidDataRemainder()",
+      "error InvalidDisputeGame()",
+      "error InvalidGameType()",
+      "error InvalidHeader()",
+      "error InvalidMerkleProof()",
+      "error InvalidProof()",
+      "error LargeCalldata()",
+      "error NoValue()",
+      "error NonReentrant()",
+      "error NotAllow()",
+      "error OutOfGas()",
+      "error ProposalNotValidated()",
+      "error SmallGasLimit()",
+      "error TransferFailed()",
+      "error Unauthorized()",
+      "error UnexpectedList()",
+      "error UnexpectedString()",
+      "error Unproven()",
+      "error ValueHaveDust()",
+      "error ValueTooLow()",
+      "event DisputeGameBlacklisted(address indexed disputeGame)",
+      "event Initialized(uint8 version)",
+      "event RespectedGameTypeSet(uint32 indexed newGameType, uint64 indexed updatedAt)",
+      "event TransactionDeposited(address indexed from, bytes32 indexed to, uint256 indexed version, bytes opaqueData)",
+      "event WithdrawalFinalized(bytes32 indexed withdrawalHash, bool success)",
+      "event WithdrawalFrozenStateUpdated(bytes32 indexed withdrawalHash, bool frozen)",
+      "event WithdrawalProven(bytes32 indexed withdrawalHash, bytes32 indexed from, address indexed to)",
+      "event WithdrawalProvenExtension1(bytes32 indexed withdrawalHash, address indexed proofSubmitter)",
+      "function MIN_BRIDGE_VALUE() view returns (uint256)",
+      "function balance() view returns (uint256)",
+      "function blacklistDisputeGame(address _disputeGame)",
+      "function checkWithdrawal(bytes32 _withdrawalHash, address _proofSubmitter) view",
+      "function depositERC20Transaction(bytes32, uint256, uint256, uint64, bool, bytes) pure",
+      "function depositTransaction(bytes32 _to, uint256 _value, uint64 _gasLimit, bool _isCreation, bytes _data) payable",
+      "function disputeGameBlacklist(address) view returns (bool)",
+      "function disputeGameFactory() view returns (address)",
+      "function disputeGameFinalityDelaySeconds() view returns (uint256)",
+      "function donateETH() payable",
+      "function finalizeWithdrawalTransaction(tuple(uint256 nonce, bytes32 sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx)",
+      "function finalizeWithdrawalTransactionExternalProof(tuple(uint256 nonce, bytes32 sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, address _proofSubmitter)",
+      "function finalizedWithdrawals(bytes32) view returns (bool)",
+      "function frozenWithdrawals(bytes32) view returns (bool)",
+      "function guardian() view returns (address)",
+      "function initialize(address _disputeGameFactory, address _systemConfig, address _superchainConfig, uint32 _initialRespectedGameType)",
+      "function l2Sender() view returns (bytes32)",
+      "function minimumGasLimit(uint64 _byteCount) pure returns (uint64)",
+      "function numProofSubmitters(bytes32 _withdrawalHash) view returns (uint256)",
+      "function params() view returns (uint128 prevBaseFee, uint64 prevBoughtGas, uint64 prevBlockNum)",
+      "function paused() view returns (bool)",
+      "function proofMaturityDelaySeconds() view returns (uint256)",
+      "function proofSubmitters(bytes32, uint256) view returns (address)",
+      "function proveWithdrawalTransaction(tuple(uint256 nonce, bytes32 sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, uint256 _disputeGameIndex, bytes32 _pdaPubkey, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, bytes[] _withdrawalProof)",
+      "function provenWithdrawals(bytes32, address) view returns (address disputeGameProxy, uint64 timestamp)",
+      "function respectedGameType() view returns (uint32)",
+      "function respectedGameTypeUpdatedAt() view returns (uint64)",
+      "function setRespectedGameType(uint32 _gameType)",
+      "function superchainConfig() view returns (address)",
+      "function systemConfig() view returns (address)",
+      "function updateWithdrawalFrozenState(bytes32 withdrawalHash, bool isFrozen)",
+      "function version() pure returns (string)"
     ],
     "eth:0xcf0f094b6765eD31038003831F7f75bD07Bd49c2": [
       "constructor(address _admin)",
@@ -1462,6 +1462,6 @@
     "risc0/KailuaGame": "0x249c17fd26bbb0f5400d386b4cfbe2edc478f66aeca6ba5fe90e477d646ae9dd",
     "risc0/KailuaTreasury_soon": "0xf44268b8e01e5036fb2fc2a573c604cad73f80450b22966e227dc0f37bb903b6"
   },
-  "usedBlockNumbers": { "ethereum": 24327726 },
-  "permissionsConfigHash": "0xef1c2805f40b3d40578ebbf979adb1b110b67a6f35172f3f9656d63475bf8d08"
+  "usedBlockNumbers": { "ethereum": 25531934 },
+  "permissionsConfigHash": "0xcc87b872e53061a8260e23c6aa128eb02fb0d6058f06ac4579b2c7ec38497301"
 }
