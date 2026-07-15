@@ -429,7 +429,7 @@ export const aztecnetwork: ScalingProject = {
         noRedTrustedSetups: true,
         programHashesReproducible: null,
         proverSourcePublished: true,
-        verifierContractsReproducible: true,
+        verifierContractsReproducible: null, // TODO: source not yet public
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: null, // there is no SC, rollup immutable
