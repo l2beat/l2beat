@@ -2,7 +2,6 @@ import type { ElasticSearchClient } from '../clients/ElasticSearchClient'
 import type { LensColumn, Tile } from '../dashboard/types'
 import { classify } from './classify'
 import { formatValue } from './formatValue'
-import { kqlToDsl } from './kqlToDsl'
 import type { Status, TileResult } from './types'
 
 const STATUS_SEVERITY: Record<Status, number> = {
@@ -119,7 +118,10 @@ function isPlainCount(column: LensColumn): boolean {
   )
 }
 
-function buildQuery(tile: Tile, column: LensColumn): Record<string, unknown> {
+export function buildQuery(
+  tile: Tile,
+  column: LensColumn,
+): Record<string, unknown> {
   const gte = column.reducedTimeRange
     ? `now-${column.reducedTimeRange}`
     : tile.timeFrom
@@ -132,13 +134,13 @@ function buildQuery(tile: Tile, column: LensColumn): Record<string, unknown> {
     ...tile.controlFilters,
   ]
   if (tile.query) {
-    filter.push(kqlToDsl(tile.query))
+    filter.push({ kql: { query: tile.query } })
   }
   if (column.filter?.query) {
     if (column.filter.language !== 'kuery') {
       throw new Error(`unsupported filter language "${column.filter.language}"`)
     }
-    filter.push(kqlToDsl(column.filter.query))
+    filter.push({ kql: { query: column.filter.query } })
   }
   return { bool: { filter } }
 }
