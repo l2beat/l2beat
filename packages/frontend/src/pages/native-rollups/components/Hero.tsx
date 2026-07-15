@@ -18,7 +18,7 @@ export function Hero() {
       <div className="relative flex w-full items-center justify-between gap-8">
         <div className="flex max-w-2xl flex-col gap-6">
           <h2 className="text-balance font-bold text-heading-32 md:text-heading-40">
-            Rollups verified by Ethereum itself
+            The easiest and most secure way to deploy your own EVM chain.
           </h2>
           <p className="text-pretty text-paragraph-16 text-secondary md:text-paragraph-18">
             Native rollups turn L2 blocks into{' '}
@@ -27,8 +27,7 @@ export function Hero() {
             </strong>{' '}
             on L1. Ethereum verifies that every block follows its own EVM rules,
             while the rollup stays free to customize sequencing, messaging, and
-            chain policy. Native rollups are an active research effort, not yet
-            part of any scheduled Ethereum upgrade.
+            chain policy.
           </p>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
             <Button asChild variant="fill" className="gap-2">
@@ -37,7 +36,7 @@ export function Hero() {
                 target="_blank"
                 rel="noreferrer noopener"
               >
-                Read the Book
+                Explore the Book
                 <CustomLinkIcon className="fill-current" />
               </a>
             </Button>
@@ -47,7 +46,7 @@ export function Hero() {
               rel="noreferrer noopener"
               className="inline-flex items-center gap-1 font-medium text-label-value-15 text-link transition-colors hover:text-purple-100 dark:hover:text-pink-200"
             >
-              Read the research proposal
+              Explore the research
               <CustomLinkIcon className="size-3.5 fill-current" />
             </a>
           </div>

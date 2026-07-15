@@ -160,7 +160,7 @@ export const ROADMAP: RoadmapItem[] = [
   {
     status: 'planned',
     date: 'Target: December 2026',
-    title: 'Native proof verification EIP and devnet',
+    title: 'Native proof verification',
     description:
       'Turn the research proposal into an EIP and run a CL+EL devnet with proof-carrying transactions and the ZK version of the native-rollup specification.',
   },

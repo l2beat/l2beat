@@ -1,4 +1,5 @@
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { InfoIcon } from '~/icons/Info'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import { cn } from '~/utils/cn'
 import { ROADMAP, type RoadmapItem } from '../consts'
@@ -32,7 +33,7 @@ export function RoadmapSection() {
     <section id="roadmap" className="mt-8 md:mt-12">
       <SectionHeading
         title="From re-execution to native proof verification"
-        description="The research has moved from the original EXECUTE proposal to a program-agnostic proof architecture. Native rollups are not part of any scheduled Ethereum hard fork — future dates are research targets, not fork commitments."
+        description="The research has moved from the original EXECUTE proposal to a program-agnostic proof architecture. Future dates are targets, not Ethereum fork commitments."
       />
       <PrimaryCard className="overflow-hidden p-0 md:p-0">
         {years.map((group, groupIndex) => {
@@ -139,6 +140,17 @@ export function RoadmapSection() {
             </div>
           )
         })}
+        <div className="border-divider border-t p-5 md:p-6">
+          <div className="flex items-start gap-2.5 rounded-lg bg-surface-info p-3.5 md:p-4">
+            <InfoIcon className="mt-px size-5 shrink-0 fill-link" />
+            <p className="text-paragraph-15 leading-relaxed">
+              Native rollups are{' '}
+              <strong>not part of any scheduled Ethereum hard fork</strong>.
+              EIP-8079 remains a draft, the EIP-8025 feature is experimental,
+              and proof-carrying transactions are still a research proposal.
+            </p>
+          </div>
+        </div>
       </PrimaryCard>
     </section>
   )
