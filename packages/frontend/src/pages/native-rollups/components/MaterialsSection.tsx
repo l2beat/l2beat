@@ -80,13 +80,12 @@ function MaterialCard({ material }: { material: MaterialItem }) {
         )}
 
         <div className="flex grow flex-col p-4 md:p-3.5">
-          <div className="flex items-start justify-between gap-3">
-            {!material.videoId && (
-              <span className="flex size-8 items-center justify-center rounded-lg bg-surface-secondary text-purple-100 dark:text-pink-200">
-                <Icon className="size-4 fill-current" />
-              </span>
-            )}
-            <CustomLinkIcon className="mt-0.5 ml-auto fill-secondary transition-colors group-hover:fill-primary" />
+          <div className="flex items-center gap-1.5">
+            <Icon className="size-4 shrink-0 fill-purple-100 dark:fill-pink-200" />
+            <span className="truncate font-medium text-3xs text-secondary">
+              {material.source}
+            </span>
+            <CustomLinkIcon className="ml-auto shrink-0 fill-secondary transition-colors group-hover:fill-primary" />
           </div>
           <h4 className="mt-2.5 font-bold text-label-value-15 md:text-label-value-16">
             {material.label}
@@ -94,9 +93,6 @@ function MaterialCard({ material }: { material: MaterialItem }) {
           <p className="mt-1 grow text-2xs text-secondary leading-relaxed md:text-paragraph-14">
             {material.description}
           </p>
-          <span className="mt-2.5 font-medium text-3xs text-secondary">
-            {material.source}
-          </span>
         </div>
       </PrimaryCard>
     </a>

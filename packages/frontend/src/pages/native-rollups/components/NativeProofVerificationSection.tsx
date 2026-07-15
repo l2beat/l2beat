@@ -1,4 +1,6 @@
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { cn } from '~/utils/cn'
+import { NativeProofVerificationDiagram } from '../assets/NativeProofVerificationDiagram'
 import { SectionHeading } from './SectionHeading'
 
 const CAPABILITIES = [
@@ -26,11 +28,20 @@ export function NativeProofVerificationSection() {
         title="Native proof verification is the more general primitive"
         description="Native rollups are one use of a broader proposal: let any smart contract consume proofs already verified by Ethereum's consensus infrastructure."
       />
-      <div className="grid gap-4 lg:grid-cols-[1.15fr_0.85fr] lg:gap-6">
-        <PrimaryCard className="md:p-8">
-          <div className="grid gap-6 sm:grid-cols-3">
-            {CAPABILITIES.map((capability) => (
-              <div key={capability.title}>
+      <PrimaryCard className="overflow-hidden p-0 md:p-0">
+        <div className="grid lg:grid-cols-[1fr_1.4fr]">
+          <div className="flex items-center justify-center border-divider border-b p-6 lg:border-r lg:border-b-0">
+            <NativeProofVerificationDiagram className="h-auto w-full max-w-[360px]" />
+          </div>
+          <div>
+            {CAPABILITIES.map((capability, index) => (
+              <div
+                key={capability.title}
+                className={cn(
+                  'border-divider p-5 md:p-6',
+                  index < CAPABILITIES.length - 1 && 'border-b',
+                )}
+              >
                 <h3 className="font-bold text-label-value-16">
                   {capability.title}
                 </h3>
@@ -40,11 +51,11 @@ export function NativeProofVerificationSection() {
               </div>
             ))}
           </div>
-        </PrimaryCard>
-        <PrimaryCard className="md:p-8">
+        </div>
+        <div className="border-divider border-t p-5 md:p-6">
           <h3 className="font-bold text-heading-20">Native or custom?</h3>
-          <dl className="mt-5 space-y-5">
-            <div>
+          <dl className="mt-4 grid gap-3 md:grid-cols-2 md:gap-4">
+            <div className="rounded-lg bg-purple-100/5 p-4 dark:bg-pink-200/5">
               <dt className="font-bold text-label-value-16 text-purple-100 dark:text-pink-200">
                 Native EVM program
               </dt>
@@ -53,7 +64,7 @@ export function NativeProofVerificationSection() {
                 rollup automatically follows L1 execution upgrades.
               </dd>
             </div>
-            <div>
+            <div className="rounded-lg bg-surface-secondary p-4">
               <dt className="font-bold text-label-value-16">
                 Custom guest program
               </dt>
@@ -64,8 +75,8 @@ export function NativeProofVerificationSection() {
               </dd>
             </div>
           </dl>
-        </PrimaryCard>
-      </div>
+        </div>
+      </PrimaryCard>
     </section>
   )
 }

@@ -53,8 +53,6 @@ export function NativeRollupsHeroIllustration({
         </marker>
       </defs>
 
-      <ellipse cx="210" cy="150" rx="180" ry="120" fill="url(#nr-brand-soft)" />
-
       <rect
         x="16"
         y="50"
@@ -130,9 +128,9 @@ export function NativeRollupsHeroIllustration({
         L1 TRANSACTION
       </text>
       <rect
-        x="180"
+        x="172"
         y="76"
-        width="84"
+        width="100"
         height="25"
         rx="12.5"
         fill="url(#nr-brand)"

@@ -9,8 +9,13 @@ import {
 
 export function Hero() {
   return (
-    <PrimaryCard className="md:p-8">
-      <div className="flex w-full items-center justify-between gap-8">
+    <PrimaryCard className="relative overflow-hidden md:p-8">
+      <div className="pointer-events-none absolute inset-0 bg-linear-to-br from-purple-100/10 via-transparent to-pink-100/10" />
+      <div
+        aria-hidden
+        className="-top-24 -right-24 pointer-events-none absolute size-72 rounded-full bg-radial from-pink-100/25 to-transparent blur-2xl"
+      />
+      <div className="relative flex w-full items-center justify-between gap-8">
         <div className="flex max-w-2xl flex-col gap-6">
           <h2 className="text-balance font-bold text-heading-32 md:text-heading-40">
             Rollups verified by Ethereum itself
