@@ -99,17 +99,17 @@ export function NativeRollupsHeroIllustration({
       />
 
       <path
-        d="M130 97h25"
-        stroke="url(#nr-brand)"
+        d="M134 97h22"
+        stroke="var(--color-purple-100)"
         strokeWidth="2.5"
         strokeLinecap="round"
         markerEnd="url(#nr-arrow)"
       />
 
       <rect
-        x="166"
+        x="162"
         y="34"
-        width="112"
+        width="120"
         height="126"
         rx="14"
         fill="url(#nr-brand-soft)"
@@ -128,34 +128,34 @@ export function NativeRollupsHeroIllustration({
         L1 TRANSACTION
       </text>
       <rect
-        x="172"
-        y="76"
-        width="100"
-        height="25"
-        rx="12.5"
+        x="174"
+        y="74"
+        width="96"
+        height="24"
+        rx="12"
         fill="url(#nr-brand)"
       />
       <text
         x="222"
-        y="93"
+        y="90"
         textAnchor="middle"
         fill="#fff"
-        fontSize="9"
+        fontSize="8.5"
         fontWeight="700"
-        letterSpacing="0.6"
+        letterSpacing="0.5"
       >
         PROOF-CARRYING
       </text>
-      <text x="181" y="120" className="fill-secondary" fontSize="10">
+      <text x="178" y="118" className="fill-secondary" fontSize="10">
         ● BLOBS
       </text>
-      <text x="181" y="139" className="fill-secondary" fontSize="10">
+      <text x="178" y="137" className="fill-secondary" fontSize="10">
         ● PROOF SIDECAR
       </text>
 
       <path
-        d="M280 97h24"
-        stroke="url(#nr-brand)"
+        d="M288 97h22"
+        stroke="var(--color-purple-100)"
         strokeWidth="2.5"
         strokeLinecap="round"
         markerEnd="url(#nr-arrow)"
@@ -171,9 +171,9 @@ export function NativeRollupsHeroIllustration({
         stroke="url(#nr-brand)"
         strokeWidth="2"
       />
-      <circle cx="360" cy="84" r="14" fill="url(#nr-brand)" />
+      <circle cx="360" cy="82" r="14" fill="url(#nr-brand)" />
       <path
-        d="m353 84 5 5 9-11"
+        d="m353 82 5 5 9-11"
         stroke="#fff"
         strokeWidth="2.5"
         strokeLinecap="round"
@@ -181,7 +181,7 @@ export function NativeRollupsHeroIllustration({
       />
       <text
         x="360"
-        y="116"
+        y="114"
         textAnchor="middle"
         className="fill-secondary"
         fontSize="10"
@@ -192,10 +192,9 @@ export function NativeRollupsHeroIllustration({
       </text>
 
       <path
-        d="M360 146v35c0 14-12 25-26 25h-31"
-        stroke="url(#nr-brand)"
+        d="M360 150v78h-48"
+        stroke="var(--color-purple-100)"
         strokeWidth="2.5"
-        strokeLinecap="round"
         markerEnd="url(#nr-arrow)"
       />
 
@@ -222,7 +221,7 @@ export function NativeRollupsHeroIllustration({
       </text>
       <rect
         x="136"
-        y="229"
+        y="228"
         width="148"
         height="23"
         rx="11.5"
@@ -230,7 +229,7 @@ export function NativeRollupsHeroIllustration({
       />
       <text
         x="210"
-        y="244"
+        y="243"
         textAnchor="middle"
         className="fill-purple-100 dark:fill-pink-200"
         fontSize="9"

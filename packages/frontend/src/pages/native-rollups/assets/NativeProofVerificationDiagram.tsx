@@ -84,24 +84,22 @@ export function NativeProofVerificationDiagram({
       </text>
 
       <path
-        d="M180 76v58"
-        stroke="url(#npv-brand)"
+        d="M180 96H64v40"
+        stroke="var(--color-purple-100)"
+        strokeWidth="2.5"
+        markerEnd="url(#npv-arrow)"
+      />
+      <path
+        d="M180 78v58"
+        stroke="var(--color-purple-100)"
         strokeWidth="2.5"
         strokeLinecap="round"
         markerEnd="url(#npv-arrow)"
       />
       <path
-        d="M180 76c0 40-116 26-116 62"
-        stroke="url(#npv-brand)"
+        d="M180 96h116v40"
+        stroke="var(--color-purple-100)"
         strokeWidth="2.5"
-        strokeLinecap="round"
-        markerEnd="url(#npv-arrow)"
-      />
-      <path
-        d="M180 76c0 40 116 26 116 62"
-        stroke="url(#npv-brand)"
-        strokeWidth="2.5"
-        strokeLinecap="round"
         markerEnd="url(#npv-arrow)"
       />
 

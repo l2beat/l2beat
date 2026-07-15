@@ -62,7 +62,7 @@ function MaterialCard({ material }: { material: MaterialItem }) {
       rel="noreferrer noopener"
       className="group block outline-none focus-visible:ring-2 focus-visible:ring-brand md:rounded-xl"
     >
-      <PrimaryCard className="flex h-full flex-col overflow-hidden border-transparent p-0 transition-colors group-hover:bg-white/70 md:rounded-xl md:border md:p-0 dark:group-hover:border-pink-200/50">
+      <PrimaryCard className="flex h-full flex-col overflow-hidden p-0 transition-colors group-hover:bg-white/70 md:rounded-xl md:p-0 dark:group-hover:bg-surface-primary-hover">
         {material.videoId && (
           <div className="relative aspect-video w-full overflow-hidden bg-surface-secondary md:rounded-t-xl">
             <img
