@@ -180,7 +180,7 @@ export const ROADMAP: RoadmapItem[] = [
   },
 ]
 
-/** Bullet list: what the Ethereum core protocol still needs. */
+/** What the Ethereum core protocol still needs. */
 export const CORE_PROTOCOL_NEEDS: { title: string; description: string }[] = [
   {
     title: 'Proof-carrying transactions',
