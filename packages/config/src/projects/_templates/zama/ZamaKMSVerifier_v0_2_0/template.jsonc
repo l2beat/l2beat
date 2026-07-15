@@ -1,0 +1,109 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "KMSVerifier",
+  "description": "Ethereum host-chain verifier for public decryption results produced through the Zama Gateway Decryption contract. Confidential token wrappers accept a decrypted value when it is signed by the threshold of the current or any retained non-destroyed KMS context.",
+  "category": "core",
+  "ignoreMethods": ["proxiableUUID", "getSignersForKmsContext"],
+  "fields": {
+    "aclOwner": {
+      "description": "Owner of the Zama ACL contract. This account can create a new KMS signer context that immediately becomes the default verifier authority, and can destroy any non-current context.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "call",
+        "method": "function owner() view returns (address)",
+        "args": [],
+        "address": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6"
+      },
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "upgrade the KMSVerifier implementation."
+        },
+        {
+          "type": "interact",
+          "description": "create KMS signer contexts with arbitrary signer sets and thresholds, and destroy non-current contexts. A malicious context can attest an inflated unwrap amount and drain pooled wrapper backing."
+        }
+      ]
+    },
+    "getKmsSigners": {
+      "description": "KMS signers in the current context. Permission coverage is also indexed through initialKmsContextSigners and createdKmsContexts so superseded contexts remain visible.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "sign public decryption results accepted by the KMSVerifier."
+        }
+      ]
+    },
+    "initialKmsContextId": {
+      "description": "Identifier of the first v0.2 KMS context created from the source-defined context counter during initialization or migration.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "handler": {
+        "type": "hardcoded",
+        "value": "3166189940082864718613269121331309980362851143201109172953918312716374638593"
+      }
+    },
+    "initialKmsContextSigners": {
+      "description": "Signers in the first v0.2 KMS context. This code-defined context remains authorized for public decryption proofs after later rotations unless the ACL owner explicitly destroys it.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "call",
+        "method": "function getSignersForKmsContext(uint256 kmsContextId) view returns (address[])",
+        "args": ["{{ initialKmsContextId }}"]
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "role": ".getKmsSigners",
+          "description": "sign public decryption results accepted by the KMSVerifier."
+        }
+      ]
+    },
+    "createdKmsContexts": {
+      "description": "Non-destroyed KMS contexts created after the v0.2 migration, reconstructed from context creation and destruction events. Each context is an immutable signer and threshold snapshot that can attest results for any ciphertext handle; it is not scoped to ciphertext age or key ID.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "event",
+        "select": ["kmsContextId", "newKmsSignersSet", "newThreshold"],
+        "dedupBy": "kmsContextId",
+        "add": { "event": "NewContextSet" },
+        "remove": { "event": "KMSContextDestroyed" }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "role": ".getKmsSigners",
+          "description": "sign public decryption results accepted by the KMSVerifier."
+        }
+      ]
+    },
+    "getThreshold": {
+      "description": "Minimum number of KMS signatures from the current context required to accept a public decryption result. Retained contexts keep their own immutable thresholds.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "getCurrentKmsContextId": {
+      "description": "Identifier of the context used when proof extraData is empty or starts with version 0. Version 1 extraData can explicitly select any non-destroyed historical context, including for ciphertexts created after that context was superseded.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "gatewayDecryption": {
+      "description": "Gateway Decryption contract whose EIP-712 source domain is verified by this Ethereum KMSVerifier.",
+      "severity": "HIGH",
+      "type": "L2",
+      "copy": "eip712Domain",
+      "edit": ["pipe", ["get", "verifyingContract"], ["format", "ZamaAddress"]]
+    },
+    "eip712Domain": {
+      "description": "Cross-chain EIP-712 source domain used when verifying KMS signatures over public decryption results. The verifying contract is on the Zama Gateway chain, not on Ethereum.",
+      "severity": "HIGH",
+      "type": "L2",
+      "edit": ["set", "verifyingContract", ["format", "ZamaAddress"]]
+    }
+  }
+}

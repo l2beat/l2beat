@@ -1,13 +1,9 @@
-import type { TrackedTxConfigEntry } from '@l2beat/shared/frontend'
-import type { SavedConfiguration } from '@l2beat/shared-pure'
+import type { IndexerConfigurationRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
 
 export function getConfigurationsSyncedUntil(
-  configurations: Omit<
-    SavedConfiguration<TrackedTxConfigEntry>,
-    'properties' | 'id'
-  >[],
+  configurations: IndexerConfigurationRecord[],
 ): UnixTime | undefined {
   if (configurations.length === 0) {
     return undefined

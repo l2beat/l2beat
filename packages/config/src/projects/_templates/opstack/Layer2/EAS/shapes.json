@@ -14,5 +14,17 @@
     "address": "katana:0xC0D3c0D3C0d3c0D3c0D3C0D3c0D3c0d3c0d30021",
     "chain": "katana",
     "blockNumber": 33142393
+  },
+  "EAS_v1_4_1_beta3": {
+    "hash": "0xd39abb26f6acde3141075c8398a29b17974750e1651a038fcf5647d6cd8c5215",
+    "address": "ink:0xbEc660b456B84A081E90aF29BE43385BDa5bF7b6",
+    "chain": "ink",
+    "blockNumber": 50094988
+  },
+  "EAS_v1_4_1_beta3_optimism": {
+    "hash": "0x16924e7d7c1a311d6c9da93c6bf8bc7bd5454a0efde4d6e365e66c87ef4a0951",
+    "address": "oeth:0xbEc660b456B84A081E90aF29BE43385BDa5bF7b6",
+    "chain": "optimism",
+    "blockNumber": 154170183
   }
 }

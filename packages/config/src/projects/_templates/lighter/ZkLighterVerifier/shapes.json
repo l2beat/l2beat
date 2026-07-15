@@ -96,6 +96,12 @@
     "chain": "ethereum",
     "blockNumber": 25244366
   },
+  "ZkLighterVerifierRobinhood.sol": {
+    "hash": "0x59e0ec2f0ddd3e5e201753df9c0d5acf7b63eaeffcef7037e926b825152d4278",
+    "address": "robinhood:0xA3c70B197AcE329D9e09C753DA7874B78F1D00f4",
+    "chain": "robinhood",
+    "blockNumber": 8751492
+  },
   "ZkLighterVerifier_v0.0.18": {
     "hash": "0xc6a75d062341c148fcc61fdcbf5be6050555aeafba7ce8dd3cb3a5638c9d634a",
     "address": "eth:0x52277Bc0f0cd1C2f64Aa20Edd7d535d67780640D",

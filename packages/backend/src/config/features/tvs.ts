@@ -1,6 +1,6 @@
 import type { ProjectService } from '@l2beat/config'
 import type { CleanableRepoName } from '@l2beat/database'
-import { assert, type Configuration, notUndefined } from '@l2beat/shared-pure'
+import { assert, notUndefined } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 import { CirculatingSupplyAmountIndexer } from '../../modules/tvs/indexers/CirculatingSupplyAmountIndexer'
 import {
@@ -9,6 +9,7 @@ import {
 } from '../../modules/tvs/tools/extractPricesAndAmounts'
 import { getEffectiveConfig } from '../../modules/tvs/tools/getEffectiveConfig'
 import { isOnchainAmountConfig } from '../../modules/tvs/types'
+import type { Configuration } from '../../tools/uif/multi/types'
 import type { TvsCleanerConfig, TvsConfig } from '../Config'
 import type { FeatureFlags } from '../FeatureFlags'
 

@@ -459,6 +459,8 @@ model InteropTransfer {
   @@index([isProcessed, srcValueUsd, dstValueUsd])
   @@index([type, duration, srcValueUsd, dstValueUsd])
   @@index([plugin, srcChain, dstChain, timestamp(sort: Desc), transferId(sort: Desc)])
+  @@index([srcAbstractTokenId, timestamp(sort: Desc)])
+  @@index([dstAbstractTokenId, timestamp(sort: Desc)])
 }
 
 model EcosystemToken {
@@ -506,10 +508,8 @@ model DeployedToken {
   metadata                     Json?
   abstractTokenAssignmentProof Json?
 
-  chainRelation   Chain?            @relation(fields: [chain], references: [name], onDelete: Restrict)
-  abstractToken   AbstractToken?    @relation(fields: [abstractTokenId], references: [id], onDelete: Restrict)
-  connectionsFrom TokenConnection[] @relation("TokenConnection_tokenFrom")
-  connectionsTo   TokenConnection[] @relation("TokenConnection_tokenTo")
+  chainRelation Chain?         @relation(fields: [chain], references: [name], onDelete: Restrict)
+  abstractToken AbstractToken? @relation(fields: [abstractTokenId], references: [id], onDelete: Restrict)
 
   @@id([chain, address])
   @@index([abstractTokenId])
@@ -548,19 +548,22 @@ model TokenDbHistory {
   @@index([commandType, timestamp])
 }
 
-model TokenConnection {
-  tokenFromChain   String  @db.VarChar(32)
-  tokenFromAddress String  @db.VarChar(255)
-  tokenToChain     String  @db.VarChar(32)
-  tokenToAddress   String  @db.VarChar(255)
-  type             String  @db.VarChar(32)
-  params           Json?
-  comment          String? @db.Text
+// Deliberately no relations to DeployedToken: a TokenRelation is an
+// observation of an on-chain transfer between two token addresses and must be
+// recordable before (or without) either endpoint being catalogued as a
+// deployed token. The observed burn/mint flags are deliberately not columns —
+// they are nullable observations and live in the `transfer` evidence JSON.
+// See docs/mdbook/specs/l2b_specs/token_db/token_relations.md.
+model TokenRelation {
+  tokenFromChain   String @db.VarChar(32)
+  tokenFromAddress String @db.VarChar(255)
+  tokenToChain     String @db.VarChar(32)
+  tokenToAddress   String @db.VarChar(255)
+  plugin           String @db.VarChar(64)
+  bridgeType       String @db.VarChar(32)
+  transfer         Json
 
-  tokenFrom DeployedToken @relation("TokenConnection_tokenFrom", fields: [tokenFromChain, tokenFromAddress], references: [chain, address], onDelete: Restrict)
-  tokenTo   DeployedToken @relation("TokenConnection_tokenTo", fields: [tokenToChain, tokenToAddress], references: [chain, address], onDelete: Restrict)
-
-  @@id([tokenFromChain, tokenFromAddress, tokenToChain, tokenToAddress, type])
+  @@id([tokenFromChain, tokenFromAddress, tokenToChain, tokenToAddress, plugin, bridgeType])
   @@index([tokenFromChain, tokenFromAddress])
   @@index([tokenToChain, tokenToAddress])
 }

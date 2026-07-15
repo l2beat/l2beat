@@ -17,6 +17,7 @@ import { hyperliquid } from '../projects/hyperliquid/hyperliquid'
 import { inevm } from '../projects/inevm/inevm'
 import { intmax } from '../projects/intmax/intmax'
 import { l3x } from '../projects/l3x/l3x'
+import { lighterRobinhood } from '../projects/lighter-robinhood/lighter-robinhood'
 import { molten } from '../projects/molten/molten'
 import { muster } from '../projects/muster/muster'
 import { onyx } from '../projects/onyx/onyx'
@@ -48,6 +49,7 @@ export const layer3s: ScalingProject[] = [
   geist,
   inevm,
   intmax,
+  lighterRobinhood,
   ham,
   hyperliquid,
   rari,

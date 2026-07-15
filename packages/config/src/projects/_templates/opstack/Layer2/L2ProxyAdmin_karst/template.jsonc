@@ -1,0 +1,11 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "L2ProxyAdmin",
+  "description": "Administration contract for the L2 predeploy proxies. Adds upgradePredeploys(address), which can only be called by the system depositor account and delegatecalls an L2ContractsManager to upgrade every predeploy in a single network upgrade transaction.",
+  "ignoreRelatives": ["addressManager"],
+  "fields": {
+    "owner": {
+      "permissions": [{ "type": "act" }]
+    }
+  }
+}

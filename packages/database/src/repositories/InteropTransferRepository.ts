@@ -136,6 +136,11 @@ export interface InteropTransferTokenAddressBatch {
   tokenAddresses: InteropTransferTokenAddress[]
 }
 
+export interface InteropTransferBatch {
+  latestSerialId: string | undefined
+  transfers: InteropTransferRecord[]
+}
+
 /**
  * One row per unique combination of token pair and bridge-type evidence,
  * aggregated over all retained transfers. `sampleTransferId` is the id of an
@@ -541,6 +546,7 @@ export class InteropTransferRepository extends BaseRepository {
     snapshotTimestamp: UnixTime
     sourceChains: string[]
     destinationChains: string[]
+    abstractTokenId?: string
     cursor?: InteropTransferCursor
     limit: number
   }): Promise<InteropTransferRecord[]> {
@@ -563,6 +569,16 @@ export class InteropTransferRepository extends BaseRepository {
       .where('srcChain', 'in', options.sourceChains)
       .where('dstChain', 'in', options.destinationChains)
       .whereRef('srcChain', '!=', 'dstChain')
+
+    const abstractTokenId = options.abstractTokenId
+    if (abstractTokenId !== undefined) {
+      query = query.where((eb) =>
+        eb.or([
+          eb('srcAbstractTokenId', '=', abstractTokenId),
+          eb('dstAbstractTokenId', '=', abstractTokenId),
+        ]),
+      )
+    }
 
     const cursor = options.cursor
     if (cursor) {
@@ -629,6 +645,24 @@ export class InteropTransferRepository extends BaseRepository {
       latestSerialId: rows.at(-1)?.serialId,
       transferCount: rows.length,
       tokenAddresses: Array.from(tokenAddresses.values()),
+    }
+  }
+
+  async getAfterSerialId(
+    serialId: string,
+    limit: number,
+  ): Promise<InteropTransferBatch> {
+    const rows = await this.db
+      .selectFrom('InteropTransfer')
+      .selectAll()
+      .where('serialId', '>', serialId)
+      .orderBy('serialId', 'asc')
+      .limit(limit)
+      .execute()
+
+    return {
+      latestSerialId: rows.at(-1)?.serialId,
+      transfers: rows.map(toRecord),
     }
   }
 

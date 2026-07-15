@@ -18,6 +18,7 @@ import {
 import { BasicTable } from '~/components/table/BasicTable'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { useTable } from '~/hooks/useTable'
+import type { InteropScope } from '~/server/features/scaling/interop/types'
 import { useTRPC } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { BetweenChainsInfo } from '../../BetweenChainsInfo'
@@ -62,7 +63,20 @@ export function TransferCountCell({
         {transferCount}
       </button>
       <TransferDetailsDialog
-        protocol={protocol}
+        scope={{ type: 'project', projectId: protocol.id }}
+        title={
+          <>
+            <span>Transfers for </span>
+            <a href={`/interop/protocols/${protocol.slug}`}>
+              <img
+                src={protocol.iconUrl}
+                alt={protocol.name}
+                className="relative bottom-0.5 mx-1 inline-block size-6"
+              />
+              <span>{protocol.name}</span>
+            </a>
+          </>
+        }
         type={type}
         tokenId={tokenId}
         snapshotTimestamp={snapshotTimestamp}
@@ -76,7 +90,8 @@ export function TransferCountCell({
 }
 
 export function TransferDetailsDialog({
-  protocol,
+  scope,
+  title,
   type,
   tokenId,
   snapshotTimestamp,
@@ -85,12 +100,8 @@ export function TransferDetailsDialog({
   isOpen,
   setIsOpen,
 }: {
-  protocol: {
-    id: ProjectId
-    name: string
-    slug: string
-    iconUrl: string
-  }
+  scope: InteropScope
+  title: ReactNode
   type: KnownInteropBridgeType | undefined
   tokenId?: string
   snapshotTimestamp: number | undefined
@@ -108,7 +119,7 @@ export function TransferDetailsDialog({
       trpc.interop.transfers.infiniteQueryOptions(
         {
           ...selectedChains,
-          scope: { type: 'project', projectId: protocol.id },
+          scope,
           type,
           tokenId,
           snapshotTimestamp: snapshotTimestamp ?? 0,
@@ -164,17 +175,7 @@ export function TransferDetailsDialog({
       <Drawer open={isOpen} onOpenChange={setIsOpen}>
         <DrawerContent>
           <DrawerHeader className="mb-2">
-            <DrawerTitle className="mb-0 text-xl">
-              <span>Transfers for </span>
-              <a href={`/interop/protocols/${protocol.slug}`}>
-                <img
-                  src={protocol.iconUrl}
-                  alt={protocol.name}
-                  className="relative bottom-px mx-1 inline-block size-6"
-                />
-                <span>{protocol.name}</span>
-              </a>
-            </DrawerTitle>
+            <DrawerTitle className="mb-0 text-xl">{title}</DrawerTitle>
             {subtitle}
           </DrawerHeader>
           <div
@@ -204,17 +205,7 @@ export function TransferDetailsDialog({
       <DialogContent className="max-h-[560px] w-max max-w-[calc(100vw-1rem)] gap-0 overflow-hidden bg-surface-primary px-0 pt-0 pb-3 md:w-[920px]">
         <DialogClose />
         <DialogHeader className="fade-out-to-bottom-3 sticky top-0 z-10 bg-surface-primary px-6 pt-6 pb-4">
-          <DialogTitle>
-            <span>Transfers for </span>
-            <a href={`/interop/protocols/${protocol.slug}`}>
-              <img
-                src={protocol.iconUrl}
-                alt={protocol.name}
-                className="relative bottom-0.5 mx-1 inline-block size-6"
-              />
-              <span>{protocol.name}</span>
-            </a>
-          </DialogTitle>
+          <DialogTitle>{title}</DialogTitle>
           {subtitle}
         </DialogHeader>
         <div

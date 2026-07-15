@@ -21,6 +21,7 @@ export const STATIC_PAGE_PATHS = [
   '/interop/lock-and-mint',
   '/interop/burn-and-mint',
   '/interop/token-frameworks',
+  '/interop/intent-bridges',
   '/data-availability/summary',
   '/data-availability/risk',
   '/data-availability/throughput',

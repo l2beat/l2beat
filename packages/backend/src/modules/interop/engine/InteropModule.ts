@@ -73,7 +73,9 @@ export function createInteropModule({
     const discordClient = new DiscordClient(
       config.notifications.interop.discordWebhookUrl,
     )
-    notificationClient = new InteropNotifier(discordClient, logger)
+    notificationClient = new InteropNotifier(discordClient, logger, {
+      backofficeEnvironment: config.notifications.interop.backofficeEnvironment,
+    })
     transferAnalyzer = new InteropTransferAnalyzer(notificationClient)
     configStore = new InteropMonitoringConfigStoreProxy(
       configStore,
@@ -108,6 +110,7 @@ export function createInteropModule({
   const syncersManager = new InteropSyncersManager(
     pluginsAsClusters(plugins.eventPlugins),
     config.interop.capture.chains.map((c) => c.id as LongChainName),
+    config.interop.knownChains,
     config.chainConfig,
     eventStore,
     db,
@@ -179,7 +182,13 @@ export function createInteropModule({
   )
 
   const indexerService = new IndexerService(db)
-  const cleaner = new InteropCleanerLoop(eventStore, db, plugins, logger)
+  const cleaner = new InteropCleanerLoop(
+    eventStore,
+    db,
+    plugins,
+    config.interop.knownChains,
+    logger,
+  )
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
   const recentPricesIndexer = new InteropRecentPricesIndexer(

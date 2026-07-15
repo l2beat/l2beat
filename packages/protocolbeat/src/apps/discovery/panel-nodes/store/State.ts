@@ -55,6 +55,7 @@ export interface Node {
   readonly hiddenFields: string[]
   readonly box: Box
   readonly color: number
+  readonly colorSourceId?: string
   readonly hueShift: number
   readonly data: unknown
   readonly isReachable: boolean
