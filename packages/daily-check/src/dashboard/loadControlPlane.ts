@@ -1,6 +1,6 @@
 import type { KibanaClient } from '../clients/KibanaClient'
+import { getControls } from './getControls'
 import { type KibanaDataView, loadLensTile, type Panel } from './loadLensTile'
-import { parseControls } from './parseControls'
 import type { ControlPlane, SkippedTile, Tile } from './types'
 
 export async function loadControlPlane(
@@ -13,11 +13,10 @@ export async function loadControlPlane(
     timeFrom?: string
     timeTo?: string
     panelsJSON: string
-    pinned_panels?: unknown
     sections?: { title: string; gridData: { i: string; y?: number } }[]
   }
 
-  const controls = parseControls(attributes.pinned_panels)
+  const controls = getControls()
   const sectionTitles = new Map<string, string>()
   const sectionOrder = new Map<string, number>()
   for (const section of attributes.sections ?? []) {
@@ -39,11 +38,7 @@ export async function loadControlPlane(
 
   const indexPatternCache = new Map<string, Promise<KibanaDataView>>()
   const tiles: Tile[] = []
-  const skipped: SkippedTile[] = controls.unsupported.map((reason) => ({
-    title: 'Dashboard control',
-    section: '',
-    reason: `${reason} — its filter is NOT applied`,
-  }))
+  const skipped: SkippedTile[] = []
 
   for (const panel of panels) {
     const section = sectionTitles.get(panel.gridData?.sectionId ?? '') ?? ''
@@ -62,7 +57,10 @@ export async function loadControlPlane(
         timeTo,
         indexPatternCache,
       )
-      tiles.push({ ...tile, controlFilters: controls.filters })
+      tiles.push({
+        ...tile,
+        controlFilters: controls.filters,
+      })
     } catch (error) {
       skipped.push({
         title: fallbackTitle,
