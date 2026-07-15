@@ -1,5 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
-import { ClaudeCodeClient } from '../clients/ClaudeCodeClient'
+import { ClaudeAgent } from '../agents/ClaudeAgent'
+import { CodexAgent } from '../agents/CodexAgent'
+import type { IAgent } from '../agents/IAgent'
 import { DiscordClient } from '../clients/DiscordClient'
 import { ElasticSearchClient } from '../clients/ElasticSearchClient'
 import { KibanaClient } from '../clients/KibanaClient'
@@ -75,12 +77,24 @@ export async function runDailyCheck(
 
   logger.info('Investigating red tiles', { count: red.length })
   try {
-    const claude = new ClaudeCodeClient(config.model)
-    const report = await investigate(claude, red, controlPlane.controls)
+    const client = createInvestigationAgent(config.agent, config.model)
+    const report = await investigate(client, red, controlPlane.controls)
     await send(`🔍 **Investigation**\n${report}`)
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error)
     logger.error('Investigation failed', { error })
     await send(`🔍 AI investigation failed: ${message}`)
+  }
+}
+
+export function createInvestigationAgent(
+  agent: Config['agent'],
+  model: string,
+): IAgent {
+  switch (agent) {
+    case 'claude':
+      return new ClaudeAgent(model)
+    case 'codex':
+      return new CodexAgent(model)
   }
 }

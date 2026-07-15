@@ -29,13 +29,13 @@ RUN --mount=type=secret,id=TURBO_TOKEN,env=TURBO_TOKEN \
 
 FROM node:22.22.0-slim AS release
 
-# Install curl for healthcheck, Claude Code for the AI investigation,
-# and create non-root user
+# Install curl for healthcheck, both supported AI CLIs and Codex's Linux
+# sandbox dependency, then create a non-root user
 RUN apt update && \
-  apt install -y curl && \
+  apt install -y curl bubblewrap && \
   apt clean && \
   rm -rf /var/lib/apt/lists/* && \
-  npm i -g @anthropic-ai/claude-code && \
+  npm i -g @anthropic-ai/claude-code @openai/codex && \
   groupadd -r appgroup && useradd -r -g appgroup -m appuser
 
 WORKDIR /app/

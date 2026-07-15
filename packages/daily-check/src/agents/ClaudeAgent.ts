@@ -2,12 +2,13 @@ import { spawn } from 'node:child_process'
 import { mkdtempSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
+import type { IAgent } from './IAgent'
 
 const TIMEOUT_MS = 15 * 60 * 1000
 const MAX_TURNS = 40
 
 /** Runs a prompt through the locally authenticated Claude Code CLI. */
-export class ClaudeCodeClient {
+export class ClaudeAgent implements IAgent {
   constructor(private readonly model: string) {}
 
   run(prompt: string): Promise<string> {

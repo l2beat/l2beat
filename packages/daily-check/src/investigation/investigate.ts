@@ -1,12 +1,12 @@
-import type { ClaudeCodeClient } from '../clients/ClaudeCodeClient'
+import type { InvestigationClient } from '../clients/InvestigationClient'
 import type { TileResult } from '../evaluation/types'
 
 export async function investigate(
-  claude: ClaudeCodeClient,
+  client: InvestigationClient,
   failing: TileResult[],
   controls: string[],
 ): Promise<string> {
-  return await claude.run(buildPrompt(failing, controls))
+  return await client.run(buildPrompt(failing, controls))
 }
 
 function buildPrompt(failing: TileResult[], controls: string[]): string {
