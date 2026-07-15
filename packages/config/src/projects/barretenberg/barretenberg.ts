@@ -85,7 +85,7 @@ export const barretenberg: BaseProject = {
         hash: '0x2f0ca3e610369fc41f7fb8a69995a96428fbf69d7dffd2b576e63ba4d9511ee1',
         name: 'Barretenberg Aztec verifier v5',
         sourceLink:
-          'https://github.com/AztecProtocol/aztec-packages/tree/v5-next/noir-projects/noir-protocol-circuits',
+          'https://github.com/AztecProtocol/aztec-packages/tree/v5.0.0/noir-projects/noir-protocol-circuits',
         proofSystem: ZK_CATALOG_TAGS.Plonk.UltraHonk,
         knownDeployments: [
           {
@@ -95,7 +95,12 @@ export const barretenberg: BaseProject = {
             ),
           },
         ],
-        verificationStatus: 'notVerified',
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'barretenberg',
+          'verificationSteps-0x2f0ca3e6',
+        ),
       },
     ],
   },

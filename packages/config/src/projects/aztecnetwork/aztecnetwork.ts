@@ -429,7 +429,7 @@ export const aztecnetwork: ScalingProject = {
         noRedTrustedSetups: true,
         programHashesReproducible: null,
         proverSourcePublished: true,
-        verifierContractsReproducible: null, // TODO: source not yet public
+        verifierContractsReproducible: true,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: null, // there is no SC, rollup immutable
@@ -444,7 +444,7 @@ export const aztecnetwork: ScalingProject = {
     },
     {
       rollupNodeLink:
-        'https://github.com/AztecProtocol/aztec-packages/tree/v5-next',
+        'https://github.com/AztecProtocol/aztec-packages/tree/v5.0.0',
     },
   ),
   technology: {
