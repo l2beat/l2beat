@@ -1,12 +1,12 @@
-import type { InvestigationClient } from '../clients/InvestigationClient'
+import type { IAgent } from '../agents/IAgent'
 import type { TileResult } from '../evaluation/types'
 
 export async function investigate(
-  client: InvestigationClient,
+  agent: IAgent,
   failing: TileResult[],
   controls: string[],
 ): Promise<string> {
-  return await client.run(buildPrompt(failing, controls))
+  return await agent.run(buildPrompt(failing, controls))
 }
 
 function buildPrompt(failing: TileResult[], controls: string[]): string {

@@ -77,8 +77,8 @@ export async function runDailyCheck(
 
   logger.info('Investigating red tiles', { count: red.length })
   try {
-    const client = createInvestigationAgent(config.agent, config.model)
-    const report = await investigate(client, red, controlPlane.controls)
+    const agent = createInvestigationAgent(config.agent, config.model)
+    const report = await investigate(agent, red, controlPlane.controls)
     await send(`🔍 **Investigation**\n${report}`)
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error)
