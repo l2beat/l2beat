@@ -1,7 +1,7 @@
 {
   "name": "starknet",
   "timestamp": 1784036617,
-  "configHash": "0x5e6773cf0636f934b0a447f2b5eea93ac6f192fcbfb490eb91d93b06e80e42eb",
+  "configHash": "0xae977e3db9220e228674be34897a37d1cca9030b01c2fc8777d7710e9b714112",
   "entries": [
     {
       "name": "Starkware Multisig 2",
@@ -2193,7 +2193,7 @@
           "1701025211190912681772481128523426351562426117847395998223683709327746845867",
           "2571508110958925737463010241874806654058743535666147712534445437599630018294"
         ],
-        "configHash": "2579130946496422157802313572919622021390761807038780433165936715591440018810",
+        "configHash": "Starknet OS config V4 (SN_MAIN, STRK fee token, no state-diff encryption)",
         "configHashHistory": [
           "671483050609816861429812414688707376174032882875357307847551691140236175837",
           "2590421891839256512113614983194993186457498815986333310670788206383913888162",
@@ -2302,6 +2302,12 @@
         "eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A": "Starknet"
       },
       "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "2579130946496422157802313572919622021390761807038780433165936715591440018810": "Starknet OS config V4 (SN_MAIN, STRK fee token, no state-diff encryption)"
+          }
+        },
         {
           "typeCaster": "Mapping",
           "arg": {
