@@ -211,16 +211,19 @@ function AbstractTokenView({
                       coingeckoId: values.coingeckoId || null,
                       comment: values.comment || null,
                       additionalCoingeckoEntries:
-                        values.additionalCoingeckoEntries?.map((entry) => ({
-                          coingeckoId: entry.coingeckoId,
-                          iconUrl: entry.iconUrl || null,
-                          coingeckoListingTimestamp:
-                            entry.coingeckoListingTimestamp
-                              ? UnixTime.fromDate(
-                                  new Date(entry.coingeckoListingTimestamp),
-                                )
-                              : null,
-                        })) ?? null,
+                        values.additionalCoingeckoEntries &&
+                        values.additionalCoingeckoEntries.length > 0
+                          ? values.additionalCoingeckoEntries.map((entry) => ({
+                              coingeckoId: entry.coingeckoId,
+                              iconUrl: entry.iconUrl || null,
+                              coingeckoListingTimestamp:
+                                entry.coingeckoListingTimestamp
+                                  ? UnixTime.fromDate(
+                                      new Date(entry.coingeckoListingTimestamp),
+                                    )
+                                  : null,
+                            }))
+                          : null,
                       coingeckoListingTimestamp:
                         values.coingeckoListingTimestamp
                           ? UnixTime.fromDate(

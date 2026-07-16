@@ -63,6 +63,7 @@ describeTokenDatabase(TokenDbHistoryRepository.name, (db) => {
           type: 'AddAbstractTokenCommand',
           record: { id: 'ABC123', symbol: 'USDC' },
         },
+        intent: null,
         ingestionLog: '1. Resolved abstract\n2. Wrote token',
       })
 
@@ -93,6 +94,7 @@ describeTokenDatabase(TokenDbHistoryRepository.name, (db) => {
             },
           },
         },
+        intent: null,
         ingestionLog: null,
       })
 
@@ -154,6 +156,7 @@ describeTokenDatabase(TokenDbHistoryRepository.name, (db) => {
             abstractTokenId: 'DAI01',
           },
         },
+        intent: null,
         ingestionLog: null,
       })
 
@@ -226,6 +229,7 @@ function manualAddDeployed(
         abstractTokenId: 'USDC01',
       },
     },
+    intent: null,
     ingestionLog: null,
   }
 }

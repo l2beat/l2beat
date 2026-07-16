@@ -83,6 +83,7 @@ describe(commitTokenChanges.name, () => {
     await commitTokenChanges(tokenDb, commands, {
       kind: 'manual',
       user: 'someone@x.io',
+      intent: null,
     })
 
     expect(abstractToken.insert).toHaveBeenOnlyCalledWith(abstract)
@@ -139,7 +140,7 @@ describe(commitTokenChanges.name, () => {
           },
         },
       ],
-      { kind: 'manual', user: 'someone@x.io' },
+      { kind: 'manual', user: 'someone@x.io', intent: null },
     )
 
     expect(insert).toHaveBeenOnlyCalledWith(deployed)
@@ -271,7 +272,7 @@ describe(commitTokenChanges.name, () => {
       await commitTokenChanges(
         tokenDb,
         [{ type: 'AddAbstractTokenCommand', record: abstract }],
-        { kind: 'manual', user: 'someone@x.io' },
+        { kind: 'manual', user: 'someone@x.io', intent: null },
       )
 
       expect(insert.calls[0]!.args[0].ingestionLog).toEqual(null)

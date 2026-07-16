@@ -18,12 +18,7 @@ export interface TokenDbHistoryEntryRecord {
   ingestionLog: string | null
 }
 
-export type TokenDbHistoryEntryInsert = Omit<
-  TokenDbHistoryEntryRecord,
-  'id' | 'intent'
-> & {
-  intent?: unknown | null
-}
+export type TokenDbHistoryEntryInsert = Omit<TokenDbHistoryEntryRecord, 'id'>
 
 export interface TokenDbHistoryPage {
   entries: TokenDbHistoryEntryRecord[]
@@ -50,7 +45,7 @@ function toRow(record: TokenDbHistoryEntryInsert): Insertable<TokenDbHistory> {
     userEmail: record.userEmail,
     commandType: record.commandType,
     command: toJsonSafe(record.command),
-    intent: record.intent === undefined ? null : toJsonSafe(record.intent),
+    intent: toJsonSafe(record.intent),
     ingestionLog: record.ingestionLog,
   }
 }
