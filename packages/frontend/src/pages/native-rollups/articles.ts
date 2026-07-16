@@ -11,25 +11,15 @@ import {
   NATIVE_ROLLUPS_REPO_URL,
 } from './links'
 
-interface BaseMaterialItem {
+export interface Article {
+  kind: 'document' | 'code'
   label: string
   source: string
   description: string
+  href: string
 }
 
-export type MaterialItem =
-  | (BaseMaterialItem & {
-      kind: 'document' | 'code'
-      href: string
-    })
-  | (BaseMaterialItem & {
-      kind: 'youtube'
-      videoId: string
-    })
-
-export type MaterialKind = MaterialItem['kind']
-
-export const MATERIALS: MaterialItem[] = [
+export const ARTICLES: Article[] = [
   {
     kind: 'document',
     label: 'Native proof verification',
@@ -109,36 +99,5 @@ export const MATERIALS: MaterialItem[] = [
     description:
       'The Phase-1 proof-of-concept implementing EIP-8079 via re-execution behind a feature flag.',
     href: ETHREX_POC_URL,
-  },
-  {
-    kind: 'youtube',
-    label: 'Execution Sharding Through Native Rollups',
-    source: 'Luca Donno · L2BEAT',
-    description: "L2BEAT's talk on scaling Ethereum through native rollups.",
-    videoId: '69NKLnejppk',
-  },
-  {
-    kind: 'youtube',
-    label: 'Lightning Talk: Native Rollups',
-    source: 'Luca Donno · L2BEAT',
-    description:
-      'A short introduction to the original native rollups and EXECUTE proposal.',
-    videoId: 'y8Rq_VESOac',
-  },
-  {
-    kind: 'youtube',
-    label: "Ethereum's Roadmap to 10M TPS",
-    source: 'Luca Donno · TOKEN2049 2025',
-    description:
-      "L2BEAT's Luca Donno on scaling Ethereum — including native rollups (TOKEN2049 Singapore 2025).",
-    videoId: '0O3JyJpMQLQ',
-  },
-  {
-    kind: 'youtube',
-    label: 'Native Proof Verification',
-    source: 'Futura Camp',
-    description:
-      'A session on the broader primitive that lets L1 verify proofs for native rollups and arbitrary guest programs.',
-    videoId: 'lbzXH2x2PJ4',
   },
 ]

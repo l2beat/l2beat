@@ -6,20 +6,25 @@ import { GithubIcon } from '~/icons/products/Github'
 import { YouTubeIcon } from '~/icons/products/Youtube'
 import type { SvgIconProps } from '~/icons/SvgIcon'
 import { cn } from '~/utils/cn'
-import { MATERIALS, type MaterialItem, type MaterialKind } from '../materials'
+import { ARTICLES, type Article } from '../articles'
 import { SectionHeading } from './SectionHeading'
 
-const MATERIAL_ICONS: Record<MaterialKind, (props: SvgIconProps) => ReactNode> =
-  {
-    document: DocumentIcon,
-    code: GithubIcon,
-    youtube: YouTubeIcon,
-  }
+export interface Talk {
+  label: string
+  source: string
+  description: string
+  videoId: string
+}
 
-export function MaterialsSection() {
-  const articles = MATERIALS.filter((material) => material.kind !== 'youtube')
-  const talks = MATERIALS.filter((material) => material.kind === 'youtube')
+const ARTICLE_ICONS: Record<
+  Article['kind'],
+  (props: SvgIconProps) => ReactNode
+> = {
+  document: DocumentIcon,
+  code: GithubIcon,
+}
 
+export function MaterialsSection({ talks }: { talks: Talk[] }) {
   return (
     <section id="materials" className="mt-8 md:mt-12">
       <SectionHeading
@@ -29,7 +34,7 @@ export function MaterialsSection() {
 
       <GroupLabel>Articles &amp; specs</GroupLabel>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        {articles.map((material) => (
+        {ARTICLES.map((material) => (
           <MaterialCard key={material.label} material={material} />
         ))}
       </div>
@@ -58,12 +63,12 @@ function GroupLabel({
   )
 }
 
-function MaterialCard({ material }: { material: MaterialItem }) {
-  const Icon = MATERIAL_ICONS[material.kind]
-  const href =
-    material.kind === 'youtube'
-      ? `https://www.youtube.com/watch?v=${material.videoId}`
-      : material.href
+function MaterialCard({ material }: { material: Article | Talk }) {
+  const isTalk = 'videoId' in material
+  const Icon = isTalk ? YouTubeIcon : ARTICLE_ICONS[material.kind]
+  const href = isTalk
+    ? `https://www.youtube.com/watch?v=${material.videoId}`
+    : material.href
 
   return (
     <a
@@ -73,7 +78,7 @@ function MaterialCard({ material }: { material: MaterialItem }) {
       className="group block outline-none focus-visible:ring-2 focus-visible:ring-brand md:rounded-xl"
     >
       <PrimaryCard className="flex h-full flex-col overflow-hidden p-0 transition-colors group-hover:bg-white/70 md:rounded-xl md:p-0 dark:group-hover:bg-surface-primary-hover">
-        {material.kind === 'youtube' && (
+        {isTalk && (
           <div className="relative aspect-video w-full overflow-hidden bg-surface-secondary md:rounded-t-xl">
             <img
               src={`https://img.youtube.com/vi/${material.videoId}/hqdefault.jpg`}

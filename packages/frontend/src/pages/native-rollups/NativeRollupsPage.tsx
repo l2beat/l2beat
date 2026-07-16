@@ -9,16 +9,21 @@ import { CoreProtocolSection } from './components/CoreProtocolSection'
 import { FeaturesSection } from './components/FeaturesSection'
 import { Hero } from './components/Hero'
 import { HowItWorksSection } from './components/HowItWorksSection'
-import { MaterialsSection } from './components/MaterialsSection'
+import { MaterialsSection, type Talk } from './components/MaterialsSection'
 import { NativeProofVerificationSection } from './components/NativeProofVerificationSection'
 import { RoadmapSection } from './components/RoadmapSection'
 import { WhyNativeSection } from './components/WhyNativeSection'
 
 interface Props extends AppLayoutProps {
+  talks: Talk[]
   contributorImages: ContributorImages
 }
 
-export function NativeRollupsPage({ contributorImages, ...props }: Props) {
+export function NativeRollupsPage({
+  talks,
+  contributorImages,
+  ...props
+}: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout maxWidth="wide">
@@ -31,7 +36,7 @@ export function NativeRollupsPage({ contributorImages, ...props }: Props) {
           <FeaturesSection />
           <RoadmapSection />
           <CoreProtocolSection />
-          <MaterialsSection />
+          <MaterialsSection talks={talks} />
           <ContributorsSection images={contributorImages} />
         </main>
       </SideNavLayout>
