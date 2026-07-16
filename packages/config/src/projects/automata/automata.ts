@@ -56,6 +56,7 @@ export const automata: ScalingProject = opStackL2({
     isPartOfSuperchain: false,
   },
   addedAt: UnixTime(1729359609), // 2024-10-19T17:40:09Z
+  archivedAt: UnixTime(1784195945), // Thu, 16 Jul 2026
   additionalBadges: [BADGES.RaaS.AltLayer],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
@@ -94,6 +95,7 @@ export const automata: ScalingProject = opStackL2({
         callsPerMinute: 300,
       },
     ],
+    untilTimestamp: UnixTime(1784195945), // Thu, 16 Jul 2026
   },
   discovery,
   genesisTimestamp,
