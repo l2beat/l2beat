@@ -1,3 +1,25 @@
+Generated with discovered.json: 0x92aa1cedaf3cf244611ffa762f4f2ebb47557c5c
+
+# Diff at Thu, 16 Jul 2026 09:26:20 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@e710b6c5d3cdbeb52887729e85025b32d82b88cf block: 1781603222
+- current timestamp: 1784193913
+
+## Description
+
+Added another Paradex operator.
+
+## Watched changes
+
+```diff
+    contract Paradex (eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640) [starknet/Starknet] {
+    +++ description: Central Starknet rollup contract. For every state update it derives a SHARP fact from the state-transition output and either the Starknet OS or aggregator program hash, checks that fact through the configured SHARP call proxy, and requires the output's OS-config hash to match. It also processes L1 <-> L2 messages and stores the finalized L2 state.
+      values.operators.1:
++        "eth:0x09d1ad25B369A0C48Bdf4CaAb85aFd08a3f07044"
+    }
+```
+
 Generated with discovered.json: 0xe4629e8338bd7c474a452a58efaff4109d7a88aa
 
 # Diff at Tue, 14 Jul 2026 17:10:19 GMT:

@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x5970faecbe80e7e95af6593f35485351228e13a9
+
+# Diff at Thu, 16 Jul 2026 11:02:04 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@e710b6c5d3cdbeb52887729e85025b32d82b88cf block: 1783335748
+- current timestamp: 1784199661
+
+## Description
+
+Unpaused fuel bridge, now it is fully functional again.
+
+## Watched changes
+
+```diff
+    contract FuelMessagePortal (eth:0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf) [N/A] {
+    +++ description: None
+      values.paused:
+-        true
++        false
+    }
+```
+
 Generated with discovered.json: 0x779c5a0e73d864ab1e1ea99cd48d717c13971aa3
 
 # Diff at Mon, 06 Jul 2026 11:03:37 GMT:
