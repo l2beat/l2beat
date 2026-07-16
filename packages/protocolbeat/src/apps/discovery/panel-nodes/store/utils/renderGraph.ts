@@ -1,7 +1,8 @@
 import type { Box, Node } from '../State'
 import { FIELD_HEIGHT, HEADER_HEIGHT } from './constants'
 import { boxContains } from './containment'
-import { type GraphProjection, getGraphProjection } from './graphProjection'
+import { type GraphEdge, getGraphProjection } from './graphProjection'
+import { topLevelByDescendant } from './subnodes'
 import { processConnection } from './updateNodePositions'
 
 const CONTAINER_PADDING = 24
@@ -19,8 +20,8 @@ export interface RenderGraph {
   // nested) members; closed groups stay collapsed as a single node.
   readonly nodes: Node[]
   // Nodes disconnected by hidden fields.
-  readonly hidden: readonly string[]
-  readonly projection: GraphProjection
+  readonly hidden: ReadonlySet<string>
+  readonly visibleFieldNamesByNodeId: ReadonlyMap<string, ReadonlySet<string>>
   // One boundary per opened group, innermost last so hit-testing can prefer it.
   readonly containers: GroupContainer[]
 }
@@ -37,20 +38,26 @@ export function buildRenderGraph(nodes: readonly Node[]): RenderGraph {
     containers,
     expanded,
   } = expandGroups(nodes, effectiveHidden)
-  if (!expanded) {
-    return { nodes: rendered, hidden: effectiveHidden, containers, projection }
-  }
-
-  const boxById = new Map<string, Box>()
-  for (const node of rendered) {
-    boxById.set(node.id, node.box)
-    if (node.subnodes.length > 0) {
-      indexDescendants(node, node.box, boxById)
+  let laidOut = rendered
+  if (expanded) {
+    const boxById = new Map<string, Box>()
+    for (const node of rendered) {
+      boxById.set(node.id, node.box)
+      if (node.subnodes.length > 0) {
+        indexDescendants(node, node.box, boxById)
+      }
     }
+    laidOut = rendered.map((node) => layoutFields(node, boxById))
   }
-
-  const laidOut = rendered.map((node) => layoutFields(node, boxById))
-  return { nodes: laidOut, hidden: effectiveHidden, containers, projection }
+  return {
+    nodes: laidOut,
+    hidden: effectiveHidden,
+    containers,
+    visibleFieldNamesByNodeId: getVisibleFieldNames(
+      laidOut,
+      projection.visibleEdges,
+    ),
+  }
 }
 
 // Flatten opened groups into their members without laying out fields. Select-box
@@ -63,10 +70,9 @@ export function expandedNodes(nodes: readonly Node[]): Node[] {
 
 function expandGroups(
   nodes: readonly Node[],
-  hidden: readonly string[],
+  hidden: ReadonlySet<string>,
 ): { nodes: Node[]; containers: GroupContainer[]; expanded: boolean } {
-  const hiddenSet = new Set(hidden)
-  const visible = nodes.filter((node) => !hiddenSet.has(node.id))
+  const visible = nodes.filter((node) => !hidden.has(node.id))
 
   const hasOpenGroup = visible.some(
     (node) => node.opened && node.subnodes.length > 0,
@@ -78,11 +84,34 @@ function expandGroups(
   const rendered: Node[] = []
   const containers: GroupContainer[] = []
   for (const node of visible) {
-    for (const member of expand(node, hiddenSet, containers)) {
+    for (const member of expand(node, hidden, containers)) {
       rendered.push(member)
     }
   }
   return { nodes: rendered, containers, expanded: true }
+}
+
+function getVisibleFieldNames(
+  nodes: readonly Node[],
+  edges: readonly GraphEdge[],
+): ReadonlyMap<string, ReadonlySet<string>> {
+  const sourceByDescendant = topLevelByDescendant(nodes)
+  const result = new Map<string, Set<string>>()
+  for (const edge of edges) {
+    const source = sourceByDescendant.get(edge.source)
+    if (source === undefined) continue
+    const names = result.get(source.id) ?? new Set()
+    if (source.id === edge.source) {
+      names.add(edge.fieldName)
+    } else {
+      for (const field of source.fields) {
+        if (field.target !== edge.target) continue
+        if (!source.hiddenFields.includes(field.name)) names.add(field.name)
+      }
+    }
+    result.set(source.id, names)
+  }
+  return result
 }
 
 function expand(

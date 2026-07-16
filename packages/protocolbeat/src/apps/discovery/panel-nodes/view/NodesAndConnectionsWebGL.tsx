@@ -2229,14 +2229,14 @@ function getVisibleFields(node: Node): VisibleField[] {
 function buildDrawData(
   nodes: readonly Node[],
   containers: GroupContainer[],
-  hidden: readonly string[],
+  hidden: ReadonlySet<string>,
   visibleFieldNamesByNodeId: ReadonlyMap<string, ReadonlySet<string>>,
   selected: readonly string[],
   enableDimming: boolean,
   highlightOverlapping: boolean,
   markUnreachableEntries: boolean,
 ): DrawData {
-  const hiddenSet = new Set(hidden)
+  const hiddenSet = hidden
   const selectedSet = new Set(selected)
   const visible: Node[] = []
   for (const node of nodes) {
@@ -2374,7 +2374,7 @@ export function NodesAndConnectionsWebGL() {
         graph.nodes,
         graph.containers,
         graph.hidden,
-        graph.projection.visibleFieldNamesByNodeId,
+        graph.visibleFieldNamesByNodeId,
         selected,
         enableDimming,
         highlightOverlapping,

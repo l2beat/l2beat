@@ -167,7 +167,7 @@ function useSynchronizeSelection() {
   const selectedNodes = useStore((state) => state.selected)
   const nodes = useStore((state) => state.nodes)
   const hiddenNodes = useMemo(
-    () => getGraphProjection(nodes).hiddenNodeIdSet,
+    () => getGraphProjection(nodes).hiddenNodeIds,
     [nodes],
   )
   const selectAndFocus = useStore((state) => state.selectAndFocus)

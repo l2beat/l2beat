@@ -35,7 +35,7 @@ export function ClusterLayoutButton({ className }: { className?: string }) {
   const footprints = containerBoxes(nodes)
   const projection = getGraphProjection(nodes)
   const visibleNodes = nodes
-    .filter((node) => !projection.hiddenNodeIdSet.has(node.id))
+    .filter((node) => !projection.hiddenNodeIds.has(node.id))
     .map((node) => {
       const box = footprints.get(node.id)
       return box ? { ...node, box } : node

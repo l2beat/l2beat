@@ -1,23 +1,12 @@
 import type { Node, State } from '../State'
-import {
-  applyFieldVisibility,
-  planFieldVisibility,
-} from '../utils/fieldVisibility'
-import { getGraphProjection } from '../utils/graphProjection'
+import { getGraphProjection, setItemsHidden } from '../utils/graphProjection'
 import { containerBoxes } from '../utils/renderGraph'
 import type { NodeLocations } from '../utils/storage'
 import { updateNodePositions } from '../utils/updateNodePositions'
 
 export function hideSelected(state: State): Partial<State> {
-  const plan = planFieldVisibility(
-    getGraphProjection(state.nodes),
-    new Set(state.selected),
-    true,
-  )
-  if (plan.fieldNamesBySource.size === 0) {
-    return {}
-  }
-  const nodes = applyFieldVisibility(state.nodes, plan)
+  const nodes = setItemsHidden(state.nodes, new Set(state.selected), true)
+  if (nodes === state.nodes) return {}
   return updateNodePositions(state, {
     nodes,
     selected: [],
@@ -31,8 +20,7 @@ export function hideUnreachable(state: State): Partial<State> {
       .filter((node) => !node.isReachable)
       .map((node) => node.id),
   )
-  const plan = planFieldVisibility(projection, unreachable, true)
-  const nodes = applyFieldVisibility(state.nodes, plan)
+  const nodes = setItemsHidden(state.nodes, unreachable, true)
   return updateNodePositions(state, { nodes })
 }
 
@@ -50,12 +38,7 @@ export function setPreferences(
 
 export function showHidden(state: State): Partial<State> {
   const projection = getGraphProjection(state.nodes)
-  const plan = planFieldVisibility(
-    projection,
-    projection.hiddenNodeIdSet,
-    false,
-  )
-  const nodes = applyFieldVisibility(state.nodes, plan)
+  const nodes = setItemsHidden(state.nodes, projection.hiddenNodeIds, false)
   return updateNodePositions(state, { nodes })
 }
 

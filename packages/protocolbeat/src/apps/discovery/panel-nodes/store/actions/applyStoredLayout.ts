@@ -1,10 +1,5 @@
 import type { Node, State } from '../State'
-import {
-  applyFieldVisibility,
-  planFieldVisibility,
-  updateLeafNodes,
-} from '../utils/fieldVisibility'
-import { getGraphProjection } from '../utils/graphProjection'
+import { setItemsHidden, updateLeafNodes } from '../utils/graphProjection'
 import { reconcileHiddenFields, type StoredNodeLayout } from '../utils/storage'
 import { updateNodePositions } from '../utils/updateNodePositions'
 
@@ -63,11 +58,10 @@ export function applyStoredLayout(
     return next
   })
 
-  const plan = planFieldVisibility(
-    getGraphProjection(updatedNodes),
+  const nodes = setItemsHidden(
+    updatedNodes,
     new Set(saved.hiddenNodes ?? []),
     true,
   )
-  const nodes = applyFieldVisibility(updatedNodes, plan)
   return updateNodePositions(state, { nodes })
 }

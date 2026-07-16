@@ -48,7 +48,7 @@ export function NodesAndConnections() {
       buildView(
         graph.nodes,
         graph.hidden,
-        graph.projection.visibleFieldNamesByNodeId,
+        graph.visibleFieldNamesByNodeId,
         selected,
         enableDimming,
         highlightOverlapping,
@@ -171,7 +171,7 @@ function computeOverlappingIds(nodes: readonly Node[]): Set<string> {
 
 function buildView(
   nodes: readonly Node[],
-  hidden: readonly string[],
+  hidden: ReadonlySet<string>,
   visibleFieldNamesByNodeId: ReadonlyMap<string, ReadonlySet<string>>,
   selected: readonly string[],
   enableDimming: boolean,

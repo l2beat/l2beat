@@ -22,7 +22,7 @@ export function StackLayoutButton({ className }: { className?: string }) {
   const visibleNodes = nodes
     .filter(
       (node) =>
-        !projection.hiddenNodeIdSet.has(node.id) &&
+        !projection.hiddenNodeIds.has(node.id) &&
         (considerAllNodes || selected.includes(node.id)),
     )
     .map((node) => {

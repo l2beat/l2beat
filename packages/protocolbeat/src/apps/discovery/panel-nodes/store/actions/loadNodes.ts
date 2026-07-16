@@ -7,11 +7,7 @@ import {
   HIDDEN_FIELDS_FOOTER_HEIGHT,
   NODE_WIDTH,
 } from '../utils/constants'
-import {
-  applyFieldVisibility,
-  planFieldVisibility,
-} from '../utils/fieldVisibility'
-import { getGraphProjection } from '../utils/graphProjection'
+import { getGraphProjection, setItemsHidden } from '../utils/graphProjection'
 import {
   type NodeLocations,
   recallNodeLayout,
@@ -99,15 +95,14 @@ export function loadNodes(
   const groupedNodes = saved?.groups?.length
     ? reconstructGroups(flatNodes, saved.groups)
     : flatNodes
-  const legacyPlan = planFieldVisibility(
-    getGraphProjection(groupedNodes),
+  const allNodes = setItemsHidden(
+    groupedNodes,
     new Set(saved?.hiddenNodes ?? []),
     true,
   )
-  const allNodes = applyFieldVisibility(groupedNodes, legacyPlan)
   const projection = getGraphProjection(allNodes)
   const visibleNodes = allNodes.filter(
-    (node) => !projection.hiddenNodeIdSet.has(node.id),
+    (node) => !projection.hiddenNodeIds.has(node.id),
   )
   const hasSavedLayout =
     !!saved && allNodes.some((node) => saved.locations[node.id] !== undefined)

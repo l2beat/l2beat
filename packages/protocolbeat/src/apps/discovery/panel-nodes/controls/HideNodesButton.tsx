@@ -9,7 +9,7 @@ export function HideNodesButton({ className }: { className?: string }) {
   const projection = getGraphProjection(nodes)
 
   const visibleUnreachableCount = projection.leafNodes.filter(
-    (node) => !node.isReachable && !projection.hiddenNodeIdSet.has(node.id),
+    (node) => !node.isReachable && !projection.hiddenNodeIds.has(node.id),
   ).length
 
   return (

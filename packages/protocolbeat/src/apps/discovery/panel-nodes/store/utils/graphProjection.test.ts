@@ -2,8 +2,7 @@ import { expect } from 'earl'
 import { applyStoredLayout } from '../actions/applyStoredLayout'
 import { hideSelected } from '../actions/other'
 import type { Node, State } from '../State'
-import { applyFieldVisibility, planFieldVisibility } from './fieldVisibility'
-import { getGraphProjection } from './graphProjection'
+import { getGraphProjection, setItemsHidden } from './graphProjection'
 
 describe(getGraphProjection.name, () => {
   it('hides a node referenced only through a hidden field', () => {
@@ -11,7 +10,6 @@ describe(getGraphProjection.name, () => {
       makeNode('root', [['large[0]', 'target']], ['large[0]']),
       makeNode('target'),
     ]
-
     expect(hidden(nodes)).toEqual(['target'])
   })
 
@@ -21,7 +19,6 @@ describe(getGraphProjection.name, () => {
       makeNode('second', [['owner', 'target']]),
       makeNode('target'),
     ]
-
     expect(hidden(nodes)).toEqual([])
   })
 
@@ -31,7 +28,6 @@ describe(getGraphProjection.name, () => {
       makeNode('middle', [['owner', 'target']]),
       makeNode('target'),
     ]
-
     expect(hidden(nodes)).toEqual(['middle', 'target'])
   })
 
@@ -41,7 +37,6 @@ describe(getGraphProjection.name, () => {
       makeNode('first', [['next', 'second']]),
       makeNode('second', [['next', 'first']]),
     ]
-
     expect(hidden(nodes)).toEqual(['first', 'second'])
   })
 
@@ -51,7 +46,6 @@ describe(getGraphProjection.name, () => {
       makeNode('initial', [], [], true),
       makeNode('unreferenced'),
     ]
-
     expect(hidden(nodes)).toEqual([])
   })
 
@@ -62,7 +56,6 @@ describe(getGraphProjection.name, () => {
       makeNode('detached', [['next', 'detached-target']]),
       makeNode('detached-target'),
     ]
-
     expect(hidden(nodes)).toEqual(['hidden'])
   })
 
@@ -88,7 +81,7 @@ describe(getGraphProjection.name, () => {
   })
 })
 
-describe(planFieldVisibility.name, () => {
+describe(setItemsHidden.name, () => {
   it('hides every inbound field instead of storing a hidden node', () => {
     const nodes = [
       makeNode('first', [['owner', 'target']]),
@@ -100,7 +93,7 @@ describe(planFieldVisibility.name, () => {
       makeNode('root'),
     ]
 
-    const updated = setVisibility(nodes, new Set(['target']), true)
+    const updated = setItemsHidden(nodes, new Set(['target']), true)
 
     expect(updated[0]?.hiddenFields).toEqual(['owner'])
     expect(updated[1]?.hiddenFields).toEqual(['members[0]'])
@@ -113,7 +106,7 @@ describe(planFieldVisibility.name, () => {
       makeNode('target'),
     ]
 
-    const updated = setVisibility(nodes, new Set(['target']), false)
+    const updated = setItemsHidden(nodes, new Set(['target']), false)
 
     expect(updated[0]?.hiddenFields).toEqual([])
     expect(hidden(updated)).toEqual([])
@@ -125,9 +118,9 @@ describe(planFieldVisibility.name, () => {
       makeNode('middle', [['target', 'target']]),
       makeNode('target'),
     ]
-    const hiddenIds = getGraphProjection(nodes).hiddenNodeIdSet
+    const hiddenIds = getGraphProjection(nodes).hiddenNodeIds
 
-    const updated = setVisibility(nodes, hiddenIds, false)
+    const updated = setItemsHidden(nodes, hiddenIds, false)
 
     expect(updated[0]?.hiddenFields).toEqual([])
     expect(hidden(updated)).toEqual([])
@@ -137,7 +130,7 @@ describe(planFieldVisibility.name, () => {
     const group = makeGroup('group', [makeNode('member')])
     const nodes = [makeNode('root', [['member', 'member']]), group]
 
-    const updated = setVisibility(nodes, new Set(['group']), true)
+    const updated = setItemsHidden(nodes, new Set(['group']), true)
 
     expect(updated[0]?.hiddenFields).toEqual(['member'])
     expect(hidden(updated)).toEqual(['group', 'member'])
@@ -146,7 +139,7 @@ describe(planFieldVisibility.name, () => {
   it('keeps standalone targets and node references unchanged', () => {
     const nodes = [makeNode('standalone')]
 
-    const updated = setVisibility(nodes, new Set(['standalone']), true)
+    const updated = setItemsHidden(nodes, new Set(['standalone']), true)
 
     expect(updated[0] === nodes[0]).toEqual(true)
   })
@@ -157,7 +150,7 @@ describe(planFieldVisibility.name, () => {
       makeNode('initial', [], [], true),
     ]
 
-    const updated = setVisibility(nodes, new Set(['initial']), true)
+    const updated = setItemsHidden(nodes, new Set(['initial']), true)
 
     expect(updated[0] === nodes[0]).toEqual(true)
     expect(hidden(updated)).toEqual([])
@@ -236,18 +229,8 @@ describe(hideSelected.name, () => {
   })
 })
 
-function hidden(nodes: Node[]): string[] {
+function hidden(nodes: readonly Node[]): string[] {
   return [...getGraphProjection(nodes).hiddenNodeIds].sort()
-}
-
-function setVisibility(
-  nodes: Node[],
-  itemIds: ReadonlySet<string>,
-  hidden: boolean,
-): Node[] {
-  const projection = getGraphProjection(nodes)
-  const plan = planFieldVisibility(projection, itemIds, hidden)
-  return applyFieldVisibility(nodes, plan)
 }
 
 function makeGroup(id: string, subnodes: Node[]): Node {

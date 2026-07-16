@@ -169,7 +169,7 @@ function AddressEntry({ entry }: { entry: ApiAddressEntry }) {
     (s) => s.markUnreachableEntries,
   )
   const isHidden = useNodesStore((state) =>
-    getGraphProjection(state.nodes).hiddenNodeIdSet.has(entry.address),
+    getGraphProjection(state.nodes).hiddenNodeIds.has(entry.address),
   )
   const isGrayedOut = isHidden || (markUnreachableEntries && !entry.isReachable)
 

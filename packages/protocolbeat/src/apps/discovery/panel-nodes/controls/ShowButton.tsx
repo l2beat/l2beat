@@ -6,7 +6,7 @@ import { IconControlEye } from './icons/IconControlEye'
 export function ShowButton({ className }: { className?: string }) {
   const nodes = useStore((state) => state.nodes)
   const showHidden = useStore((state) => state.showHidden)
-  const hiddenCount = getGraphProjection(nodes).hiddenNodeIds.length
+  const hiddenCount = getGraphProjection(nodes).hiddenNodeIds.size
 
   return (
     <ControlDropdownButton
