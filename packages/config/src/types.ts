@@ -952,6 +952,7 @@ export interface TrustedSetup {
 export interface ProjectPrivacyInfo {
   tokens: ProjectPrivacyToken[]
   summaryTrackedItemName?: string
+  relayers?: ProjectPrivacyRelayers
   exitWindow: PrivacyExitWindow
   reproducibility: PrivacySummaryValue
   privacy: PrivacySummaryValue
@@ -963,6 +964,11 @@ export interface ProjectPrivacyInfo {
   quantumResistant?: true
   riskSummary?: string
   upgradesAndGovernance?: string
+}
+
+export interface ProjectPrivacyRelayers {
+  active30d: number
+  tooltip: string
 }
 
 export interface PrivacyExitWindow extends ExitWindowRisk {

@@ -5,6 +5,7 @@ import type {
   ProjectContracts,
   ProjectDisplay,
   ProjectPermissions,
+  ProjectPrivacyRelayers,
   ProjectStatuses,
   ProjectZkCatalogInfo,
 } from '@l2beat/config'
@@ -56,6 +57,7 @@ export interface PrivacyProjectDetails {
       last7d: number
       last30d: number
     }
+    relayers?: ProjectPrivacyRelayers
   }
 }
 
@@ -272,6 +274,7 @@ export async function getPrivacyProjectDetails(
         last7d: summaryValue7d,
         last30d: summaryValue30d,
       },
+      relayers: project.privacyInfo.relayers,
     },
   }
 }

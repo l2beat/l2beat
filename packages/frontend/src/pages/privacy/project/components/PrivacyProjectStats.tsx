@@ -1,4 +1,6 @@
+import type { ProjectPrivacyRelayers } from '@l2beat/config'
 import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
+import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 
@@ -11,6 +13,7 @@ interface Props {
     last7d: number
     last30d: number
   }
+  relayers?: ProjectPrivacyRelayers
 }
 
 export function PrivacyProjectStats({
@@ -18,6 +21,7 @@ export function PrivacyProjectStats({
   assetsCount,
   bucketsCount,
   deposits,
+  relayers,
 }: Props) {
   const hasTrackedAssets = assetsCount > 0
 
@@ -41,7 +45,12 @@ export function PrivacyProjectStats({
   }
 
   return (
-    <div className="grid gap-4 md:grid-cols-4">
+    <div
+      className={cn(
+        'grid gap-4',
+        relayers ? 'md:grid-cols-5' : 'md:grid-cols-4',
+      )}
+    >
       <ProjectSummaryStat
         className="max-md:hidden"
         title="Total Value Locked"
@@ -82,6 +91,13 @@ export function PrivacyProjectStats({
         title="Deposits Total"
         value={formatInteger(deposits.total ?? 0)}
       />
+      {relayers && (
+        <ProjectSummaryStat
+          title="Active Relayers 30D"
+          value={formatInteger(relayers.active30d)}
+          tooltip={relayers.tooltip}
+        />
+      )}
     </div>
   )
 }

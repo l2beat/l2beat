@@ -165,6 +165,11 @@ export const tornadoCash: BaseProject = {
   },
   privacyInfo: {
     tokens: getPrivacyTokens(),
+    relayers: {
+      active30d: 26,
+      tooltip:
+        'Senders of withdrawal Tornado Cash transaction where the trx sender is distinct from the receiver of withdrawn tokens. Relayers defined in this way do not have to necessarily be registered onchain in RelayerRegistry.',
+    },
     exitWindow: {
       value: 'Infinite',
       sentiment: 'good',
