@@ -1162,10 +1162,12 @@ The second argument must be a single filter expression that will be applied to e
 
 ### `<`
 
-Compares values, returning `true` when they are in strictly ascending order.
-Both operands must be two numbers or two strings, otherwise the runtime throws.
+Compares values, returning `true` when the first operand is less than every other operand.
+Both operands of each comparison must be two numbers or two strings, otherwise the runtime throws.
 With a single argument the input value is compared against it (`input < arg`).
-With multiple arguments the first argument is compared against each of the rest.
+With multiple arguments only the first operand is compared against each of the rest.
+It does not compare adjacent pairs, so it is not a strict-ordering (ascending sequence) check.
+For example `["<", 0, ["get", "n"], 10]` on `{ n: 100 }` is `true` because it checks `0 < 100` and `0 < 10`, even though the sequence `0, 100, 10` is not ascending.
 Together with `=`, `!=` and `>` it forms the comparison operators.
 
 - Input: `1`
@@ -1176,9 +1178,14 @@ Together with `=`, `!=` and `>` it forms the comparison operators.
 - Program: `["pipe", ["get", "n"], ["<", 5]]`
 - Output: `false`
 
+- Input: `{ n: 100 }`
+- Program: `["<", 0, ["get", "n"], 10]`
+- Output: `true`
+
 ### `>`
 
-Works like `<` but returns `true` when the values are in strictly descending order.
+Works like `<` but returns `true` when the first operand is greater than every other operand.
+It compares the first operand against each of the rest, not adjacent pairs, so it is likewise not a strict-ordering check.
 
 - Input: `3`
 - Program: `[">", 2]`
