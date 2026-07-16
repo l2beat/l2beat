@@ -19,7 +19,7 @@ export function WhyNativeSection() {
     <section id="why-native" className="mt-4 md:mt-6">
       <SectionHeading title="Security and upgrades, inherited from Ethereum" />
       <PrimaryCard className="overflow-hidden p-0 md:p-0">
-        <div className="h-1 bg-purple-100 dark:bg-pink-200" />
+        <div className="h-1 bg-(--accent)" />
         <div className="grid md:grid-cols-2">
           {FEATURES.map((feature) => (
             <article

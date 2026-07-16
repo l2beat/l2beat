@@ -23,7 +23,7 @@ export function NativeRollupsPage({ contributorImages, ...props }: Props) {
     <AppLayout {...props}>
       <SideNavLayout maxWidth="wide">
         <MainPageHeader>Native Rollups</MainPageHeader>
-        <main>
+        <main className="[--accent:var(--color-purple-100)] dark:[--accent:var(--color-pink-200)]">
           <Hero />
           <WhyNativeSection />
           <HowItWorksSection />

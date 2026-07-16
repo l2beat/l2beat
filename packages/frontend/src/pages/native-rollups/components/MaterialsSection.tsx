@@ -5,6 +5,7 @@ import { CustomLinkIcon } from '~/icons/Outlink'
 import { GithubIcon } from '~/icons/products/Github'
 import { YouTubeIcon } from '~/icons/products/Youtube'
 import type { SvgIconProps } from '~/icons/SvgIcon'
+import { cn } from '~/utils/cn'
 import { MATERIALS, type MaterialItem, type MaterialKind } from '../materials'
 import { SectionHeading } from './SectionHeading'
 
@@ -51,9 +52,7 @@ function GroupLabel({
   className?: string
 }) {
   return (
-    <h3
-      className={`mb-3 font-bold text-heading-16 max-md:px-4 ${className ?? ''}`}
-    >
+    <h3 className={cn('mb-3 font-bold text-heading-16 max-md:px-4', className)}>
       {children}
     </h3>
   )
@@ -92,7 +91,7 @@ function MaterialCard({ material }: { material: MaterialItem }) {
 
         <div className="flex grow flex-col p-4 md:p-3.5">
           <div className="flex items-center gap-1.5">
-            <Icon className="size-4 shrink-0 fill-purple-100 dark:fill-pink-200" />
+            <Icon className="size-4 shrink-0 fill-(--accent)" />
             <span className="truncate font-medium text-3xs text-secondary">
               {material.source}
             </span>

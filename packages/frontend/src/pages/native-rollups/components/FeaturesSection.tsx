@@ -50,7 +50,7 @@ export function FeaturesSection() {
                 className="bg-surface-primary p-5 md:p-6"
               >
                 <div className="flex items-center gap-3">
-                  <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-purple-100/10 text-purple-100 dark:bg-pink-200/10 dark:text-pink-200">
+                  <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-(--accent)/10 text-(--accent)">
                     <Icon aria-hidden className="size-4" />
                   </div>
                   <h3 className="font-bold text-heading-16 md:text-label-value-18">

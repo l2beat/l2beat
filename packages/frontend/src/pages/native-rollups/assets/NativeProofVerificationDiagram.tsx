@@ -49,7 +49,7 @@ export function NativeProofVerificationDiagram({
           refY="3.5"
           orient="auto"
         >
-          <path d="M0 0l6 3.5L0 7z" fill="var(--color-purple-100)" />
+          <path d="M0 0l6 3.5L0 7z" fill="var(--accent)" />
         </marker>
       </defs>
 
@@ -85,20 +85,20 @@ export function NativeProofVerificationDiagram({
 
       <path
         d="M180 96H64v40"
-        stroke="var(--color-purple-100)"
+        stroke="var(--accent)"
         strokeWidth="2.5"
         markerEnd="url(#npv-arrow)"
       />
       <path
         d="M180 78v58"
-        stroke="var(--color-purple-100)"
+        stroke="var(--accent)"
         strokeWidth="2.5"
         strokeLinecap="round"
         markerEnd="url(#npv-arrow)"
       />
       <path
         d="M180 96h116v40"
-        stroke="var(--color-purple-100)"
+        stroke="var(--accent)"
         strokeWidth="2.5"
         markerEnd="url(#npv-arrow)"
       />

@@ -5,10 +5,21 @@ import { cn } from '~/utils/cn'
 import { ROADMAP_YEARS, type RoadmapItem } from '../roadmap'
 import { SectionHeading } from './SectionHeading'
 
-const STATUS_LABEL: Record<RoadmapItem['status'], string> = {
-  done: 'Done',
-  inProgress: 'In progress',
-  planned: 'Planned',
+const STATUS: Record<
+  RoadmapItem['status'],
+  { label: string; dot: string; text: string }
+> = {
+  done: { label: 'Done', dot: 'bg-positive', text: 'text-positive' },
+  inProgress: {
+    label: 'In progress',
+    dot: 'bg-(--accent)',
+    text: 'text-(--accent)',
+  },
+  planned: {
+    label: 'Planned',
+    dot: 'border border-secondary bg-surface-primary',
+    text: 'text-secondary',
+  },
 }
 
 export function RoadmapSection() {
@@ -36,9 +47,7 @@ export function RoadmapSection() {
                 <span
                   className={cn(
                     'font-bold text-heading-32 leading-none md:text-heading-40 lg:text-[56px]',
-                    isCurrentYear
-                      ? 'text-purple-100 dark:text-pink-200'
-                      : 'text-secondary/25',
+                    isCurrentYear ? 'text-(--accent)' : 'text-secondary/25',
                   )}
                 >
                   {group.year}
@@ -47,8 +56,6 @@ export function RoadmapSection() {
               <ol className="relative m-5 ml-8 md:m-6 md:ml-9">
                 {group.items.map((item, i) => {
                   const isLast = i === group.items.length - 1
-                  const isDone = item.status === 'done'
-                  const isCurrent = item.status === 'inProgress'
                   const flowsIntoCurrent =
                     group.items[i + 1]?.status === 'inProgress'
                   return (
@@ -58,23 +65,21 @@ export function RoadmapSection() {
                     >
                       {!isLast &&
                         (flowsIntoCurrent ? (
-                          <span className="absolute top-6 left-[11px] h-[calc(100%-24px)] border-purple-100 border-l border-dashed dark:border-pink-200" />
+                          <span className="absolute top-6 left-[11px] h-[calc(100%-24px)] border-(--accent) border-l border-dashed" />
                         ) : (
                           <span
                             className={cn(
                               'absolute top-6 left-[11px] h-[calc(100%-24px)] w-px',
-                              isDone ? 'bg-positive' : 'bg-divider',
+                              item.status === 'done'
+                                ? 'bg-positive'
+                                : 'bg-divider',
                             )}
                           />
                         ))}
                       <span
                         className={cn(
                           'absolute top-2 left-2 size-2 rounded-full ring-4 ring-surface-primary',
-                          isDone && 'bg-positive',
-                          isCurrent && 'bg-purple-100 dark:bg-pink-200',
-                          !isDone &&
-                            !isCurrent &&
-                            'border border-secondary bg-surface-primary',
+                          STATUS[item.status].dot,
                         )}
                       />
                       <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
@@ -90,12 +95,10 @@ export function RoadmapSection() {
                         <span
                           className={cn(
                             'font-semibold text-label-value-14',
-                            isDone && 'text-positive',
-                            isCurrent && 'text-purple-100 dark:text-pink-200',
-                            !isDone && !isCurrent && 'text-secondary',
+                            STATUS[item.status].text,
                           )}
                         >
-                          {STATUS_LABEL[item.status]}
+                          {STATUS[item.status].label}
                         </span>
                       </div>
                       <h3 className="mt-1 font-bold text-label-value-16 md:text-label-value-18">
@@ -109,7 +112,7 @@ export function RoadmapSection() {
                           href={item.url}
                           target="_blank"
                           rel="noreferrer noopener"
-                          className="mt-2 inline-flex items-center gap-1 rounded-sm font-medium text-label-value-15 text-link outline-none ring-brand transition-colors hover:text-purple-100 focus-visible:ring-2 dark:hover:text-pink-200"
+                          className="mt-2 inline-flex items-center gap-1 rounded-sm font-medium text-label-value-15 text-link outline-none ring-brand transition-colors hover:text-(--accent) focus-visible:ring-2"
                         >
                           Learn more
                           <CustomLinkIcon className="size-3.5 fill-current" />

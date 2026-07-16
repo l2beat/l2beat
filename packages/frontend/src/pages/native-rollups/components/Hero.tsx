@@ -42,15 +42,16 @@ export function Hero() {
               <CustomLinkIcon className="fill-current" />
             </a>
           </Button>
-          <a
-            href={NATIVE_PROOF_VERIFICATION_URL}
-            target="_blank"
-            rel="noreferrer noopener"
-            className="inline-flex w-full items-center justify-center gap-1 rounded-lg border border-divider px-6 py-2 font-bold text-primary transition-colors sm:w-auto sm:rounded-none sm:border-0 sm:p-0 sm:font-medium sm:text-label-value-15 sm:text-link sm:hover:text-purple-100 sm:dark:hover:text-pink-200"
-          >
-            Explore the research
-            <CustomLinkIcon className="size-3.5 fill-current" />
-          </a>
+          <Button asChild variant="outline" className="w-full gap-2 sm:w-max">
+            <a
+              href={NATIVE_PROOF_VERIFICATION_URL}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              Explore the research
+              <CustomLinkIcon className="fill-current" />
+            </a>
+          </Button>
         </div>
       </div>
     </PrimaryCard>

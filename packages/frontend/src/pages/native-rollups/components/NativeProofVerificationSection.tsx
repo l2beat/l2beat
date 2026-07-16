@@ -55,8 +55,8 @@ export function NativeProofVerificationSection() {
         <div className="border-divider border-t p-5 md:p-6">
           <h3 className="font-bold text-heading-20">Native or custom?</h3>
           <dl className="mt-4 grid gap-3 md:grid-cols-2 md:gap-4">
-            <div className="rounded-lg bg-purple-100/5 p-4 dark:bg-pink-200/5">
-              <dt className="font-bold text-label-value-16 text-purple-100 dark:text-pink-200">
+            <div className="rounded-lg bg-(--accent)/5 p-4">
+              <dt className="font-bold text-(--accent) text-label-value-16">
                 Native EVM program
               </dt>
               <dd className="mt-1 text-paragraph-15 text-secondary">

@@ -49,7 +49,7 @@ export function NativeRollupsHeroIllustration({
           refY="3.5"
           orient="auto"
         >
-          <path d="M0 0l6 3.5L0 7z" fill="var(--color-purple-100)" />
+          <path d="M0 0l6 3.5L0 7z" fill="var(--accent)" />
         </marker>
       </defs>
 
@@ -79,7 +79,7 @@ export function NativeRollupsHeroIllustration({
         width="78"
         height="7"
         rx="3.5"
-        className="fill-purple-100/70 dark:fill-pink-200/70"
+        className="fill-(--accent)/70"
       />
       <rect
         x="32"
@@ -87,7 +87,7 @@ export function NativeRollupsHeroIllustration({
         width="62"
         height="7"
         rx="3.5"
-        className="fill-purple-100/45 dark:fill-pink-200/45"
+        className="fill-(--accent)/45"
       />
       <rect
         x="32"
@@ -95,12 +95,12 @@ export function NativeRollupsHeroIllustration({
         width="45"
         height="7"
         rx="3.5"
-        className="fill-purple-100/25 dark:fill-pink-200/30"
+        className="fill-(--accent)/25 dark:fill-(--accent)/30"
       />
 
       <path
         d="M134 97h22"
-        stroke="var(--color-purple-100)"
+        stroke="var(--accent)"
         strokeWidth="2.5"
         strokeLinecap="round"
         markerEnd="url(#nr-arrow)"
@@ -155,7 +155,7 @@ export function NativeRollupsHeroIllustration({
 
       <path
         d="M288 97h22"
-        stroke="var(--color-purple-100)"
+        stroke="var(--accent)"
         strokeWidth="2.5"
         strokeLinecap="round"
         markerEnd="url(#nr-arrow)"
@@ -193,7 +193,7 @@ export function NativeRollupsHeroIllustration({
 
       <path
         d="M360 150v78h-48"
-        stroke="var(--color-purple-100)"
+        stroke="var(--accent)"
         strokeWidth="2.5"
         markerEnd="url(#nr-arrow)"
       />
@@ -231,7 +231,7 @@ export function NativeRollupsHeroIllustration({
         x="210"
         y="243"
         textAnchor="middle"
-        className="fill-purple-100 dark:fill-pink-200"
+        className="fill-(--accent)"
         fontSize="9"
         fontWeight="700"
         letterSpacing="0.4"
