@@ -227,7 +227,7 @@ export const railgun: BaseProject = {
         'The contracts, circuits, and supporting software needed to participate in the protocol are publicly available and can be run locally.',
     },
     privacy: {
-      value: 'None',
+      value: 'Optional compliance',
       sentiment: 'good',
       description:
         'Compliance is optional at the core protocol level: users can create proofs of innocence to disassociate deposits from flagged addresses, and relayers can choose to require them.',

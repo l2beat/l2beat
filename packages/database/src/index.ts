@@ -9,7 +9,10 @@ export type {
   AbstractTokenRecord,
   AbstractTokenUpdateable,
 } from './repositories/AbstractTokenRepository'
-export type { ActivityRecord } from './repositories/ActivityRepository'
+export type {
+  ActivityRecord,
+  ActivityTotals,
+} from './repositories/ActivityRepository'
 export type {
   AggregatedInteropDeployedTokenRecord,
   AggregatedInteropDeployedTokenStats,

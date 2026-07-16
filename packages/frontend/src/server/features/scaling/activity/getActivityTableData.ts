@@ -53,7 +53,7 @@ export async function getActivityTable(
   const range = optionToRange('30d')
   const [from, to] = await getFullySyncedActivityRange(range)
   assert(from !== null, 'its null')
-  const [records, maxCounts, syncMetadataRecords, totalCounts] =
+  const [records, maxCounts, syncMetadataRecords, activityTotals] =
     await Promise.all([
       db.activity.getByProjectsAndTimeRange(
         [ProjectId.ETHEREUM, ...projects.map((p) => p.id)],
@@ -65,7 +65,7 @@ export async function getActivityTable(
         ProjectId.ETHEREUM,
         ...projects.map((p) => p.id),
       ]),
-      db.activity.getTpsTotalsForProjects([
+      db.activity.getActivityTotalsForProjects([
         ProjectId.ETHEREUM,
         ...projects.map((p) => p.id),
       ]),
@@ -99,7 +99,7 @@ export async function getActivityTable(
       }
 
       const syncState = getActivitySyncState(syncMetadata, to)
-      const totalCount = totalCounts[ProjectId(projectId)]
+      const totalCount = activityTotals[ProjectId(projectId)]
       const syncedUntil = getActivityAdjustedTimestamp(syncState.syncedUntil)
       const pastDayData = records.find((r) => r.timestamp === syncedUntil)
       const sevenDaysAgoData = records.find(

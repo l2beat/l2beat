@@ -13,5 +13,11 @@
     "hash": "0x731600bf38cc3dd74c898ee76a2e45bae78a2cc1bfdb0d591915c5b2e15ca8e2",
     "address": "metis-andromeda:0x4200000000000000000000000000000000000010",
     "blockNumber": 21196848
+  },
+  "L2StandardBridge_v1_13_2": {
+    "hash": "0xf6ef848ca1cf88e27b5e3bb5e01b91ef79f302e5daad8ba5206c4dc60027d312",
+    "address": "ink:0xAE9ed42f43a3ee45c3A9dEf8ae6B48cBb58Ed1a1",
+    "chain": "ink",
+    "blockNumber": 50178011
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "automata",
-  "timestamp": 1780925461,
+  "timestamp": 1784039829,
   "configHash": "0xf506dd7683b8b7b4d9d8aba7efc40753977eae921be3937af7d6653fcaaa1686",
   "entries": [
     {
@@ -37,7 +37,7 @@
         "MESSENGER": "eth:0x825C858149F1E775a0f4Aeb172037B970bE7B736",
         "OTHER_BRIDGE": "eth:0x4200000000000000000000000000000000000014",
         "otherBridge": "eth:0x4200000000000000000000000000000000000014",
-        "paused": false,
+        "paused": true,
         "superchainConfig": "eth:0xDf87154Ed6cF332931b70014bA3d9dF423074FfF",
         "version": "2.1.1+beta.1"
       },
@@ -512,7 +512,7 @@
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
         "OTHER_MESSENGER": "eth:0x4200000000000000000000000000000000000007",
         "otherMessenger": "eth:0x4200000000000000000000000000000000000007",
-        "paused": false,
+        "paused": true,
         "portal": "eth:0xD52ba64CBE1e3B44167f810622fBef36bE24d95c",
         "PORTAL": "eth:0xD52ba64CBE1e3B44167f810622fBef36bE24d95c",
         "RELAY_CALL_OVERHEAD": 40000,
@@ -660,7 +660,7 @@
           "prevBoughtGas": 100000,
           "prevBlockNum": 25166280
         },
-        "paused": false,
+        "paused": true,
         "superchainConfig": "eth:0xDf87154Ed6cF332931b70014bA3d9dF423074FfF",
         "systemConfig": "eth:0x72934D7AEDC1A2d889ca89Aaf064CD9455E64d00",
         "version": "2.8.1-beta.1"
@@ -729,10 +729,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 29613600,
-        "latestOutputIndex": 8225,
-        "nextBlockNumber": 29617200,
-        "nextOutputIndex": 8226,
+        "latestBlockNumber": 31392000,
+        "latestOutputIndex": 8719,
+        "nextBlockNumber": 31395600,
+        "nextOutputIndex": 8720,
         "proposer": "eth:0x1f8F34d0A3e8D721f8a05980Af19a7ba2E9Ec510",
         "PROPOSER": "eth:0x1f8F34d0A3e8D721f8a05980Af19a7ba2E9Ec510",
         "startingBlockNumber": 0,
@@ -782,7 +782,7 @@
         "$upgradeCount": 1,
         "guardian": "eth:0xa5822fb7E3Fb516E518e2629E6786e93858e41F4",
         "GUARDIAN_SLOT": "0xd30e835d3f35624761057ff5b27d558f97bd5be034621e62240e5c0b784abe68",
-        "paused": false,
+        "paused": true,
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.1.0"
       },
@@ -816,7 +816,7 @@
         "MESSENGER": "eth:0x825C858149F1E775a0f4Aeb172037B970bE7B736",
         "OTHER_BRIDGE": "eth:0x4200000000000000000000000000000000000010",
         "otherBridge": "eth:0x4200000000000000000000000000000000000010",
-        "paused": false,
+        "paused": true,
         "superchainConfig": "eth:0xDf87154Ed6cF332931b70014bA3d9dF423074FfF",
         "systemConfig": "eth:0x72934D7AEDC1A2d889ca89Aaf064CD9455E64d00",
         "version": "2.2.0"
@@ -1362,6 +1362,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 25273006 },
+  "usedBlockNumbers": { "ethereum": 25531524 },
   "permissionsConfigHash": "0x5804c06855b5cc2dd21a22601d066c0cb84c408604b40e8f03faecc7468fb7d0"
 }

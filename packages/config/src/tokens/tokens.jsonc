@@ -2226,6 +2226,13 @@
       "deploymentTimestamp": 1781812885
     },
     {
+      "symbol": "ETH",
+      "source": "canonical",
+      "supply": "zero",
+      "category": "ether",
+      "deploymentTimestamp": 1777567931
+    },
+    {
       "symbol": "AAPL",
       "address": "0xaF3D76f1834A1d425780943C99Ea8A608f8a93f9",
       "coingeckoId": "apple-robinhood-tokenized-stock",
@@ -2451,6 +2458,15 @@
       "deploymentTimestamp": 1781104864
     },
     {
+      "symbol": "SGOV",
+      "address": "0x92FD66527192E3e61d4DDd13322Aa222DE86F9B5",
+      "coingeckoId": "ishares-0-3-month-treasury-bond-etf-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1781105212
+    },
+    {
       "symbol": "SLV",
       "address": "0x411eFb0E7f985935DAec3D4C3ebaEa0d0AD7D89f",
       "coingeckoId": "ishares-silver-trust-robinhood-tokenized-stock",
@@ -2503,6 +2519,15 @@
       "supply": "totalSupply",
       "category": "rwaRestricted",
       "deploymentTimestamp": 1781104994
+    },
+    {
+      "symbol": "USAR",
+      "address": "0xd917B029C761D264c6A312BBbcDA868658eF86a6",
+      "coingeckoId": "usa-rare-earth-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted",
+      "deploymentTimestamp": 1781105215
     },
     {
       "symbol": "USO",

@@ -3,5 +3,11 @@
     "hash": "0x0033a032557a6a464645acc1901ac15e72d841e4d56cc8b94c64a55cae92b122",
     "address": "eth:0x46D3C0c01D5DAae4FE8e3f54f32901d9Fbde1f08",
     "blockNumber": 23495073
+  },
+  "GovernanceQuoteAsset.sol": {
+    "hash": "0x8077a97b0121aacfd0e919d68968f559b6c979ab9357e7c5c61138d20d78166b",
+    "address": "robinhood:0x3468Dcab5a2D81Af207B3e301DFA889321989a61",
+    "chain": "robinhood",
+    "blockNumber": 229402
   }
 }

@@ -18,5 +18,10 @@
     "hash": "0x42d3a15726c4bd738b1226f33f49c774be8d9cfb84489033d992c4b6c22f4037",
     "address": "eth:0xdf0B63653E86995556079cbc09594BCD88D1D917",
     "blockNumber": 23968827
+  },
+  "CairoBootloaderProgram_2026_13": {
+    "hash": "0xf5024ac4eb50233c89b413be0a009ce68c921f1dad29809c3e5a3551b074ca6e",
+    "address": "eth:0x24105e6697AdD9B4B1BDE04079a91BDFCCa24A47",
+    "blockNumber": 25531244
   }
 }

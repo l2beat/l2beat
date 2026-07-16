@@ -61,14 +61,17 @@ export const chains: ChainConfig[] = [
     chainId: 4663,
     shortName: 'robinhood',
     multicall: getMulticall3Config(406),
-    explorer: {
-      type: 'blockscout',
-      url: 'https://robinhoodchain.blockscout.com/api',
-      // The public RPC is non-archival; getContractCreation triggers a
-      // creation-block lookup that probes historical state and fails. Discovery
-      // only needs latest state here, so skip deployment lookups.
-      unsupported: { getContractCreation: true },
-    },
+    explorer: [
+      {
+        type: 'blockscout',
+        url: 'https://robinhoodchain.blockscout.com/api',
+        // The public RPC is non-archival; getContractCreation triggers a
+        // creation-block lookup that probes historical state and fails.
+        // Discovery only needs latest state here, so skip deployment lookups.
+        unsupported: { getContractCreation: true },
+      },
+      { type: 'sourcify' },
+    ],
   },
   {
     name: 'optimism',
