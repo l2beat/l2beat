@@ -1,6 +1,6 @@
 {
   "name": "paradex",
-  "timestamp": 1781603222,
+  "timestamp": 1784193913,
   "configHash": "0xbb00111652aefbd1f8cb91f3ad989bd7152c23ee6c7637ab4588e2620a088aab",
   "entries": [
     {
@@ -8,6 +8,19 @@
       "type": "Reference",
       "targetType": "EOA",
       "targetProject": "shared-sharp-verifier"
+    },
+    {
+      "address": "eth:0x09d1ad25B369A0C48Bdf4CaAb85aFd08a3f07044",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+          "description": "Permissioned to regularly post L2 state updates and choose an available data-availability entry point. Under the current implementation, every update still needs a fact accepted by SHARP and cannot bypass the pinned program and config hashes.",
+          "role": ".operators"
+        }
+      ]
     },
     {
       "name": "Paradex Multisig",
@@ -588,10 +601,13 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 33041,
+        "l1ToL2MessageNonce": 33152,
         "MAX_UPGRADE_DELAY": 15552000,
         "messageCancellationDelay": 432000,
-        "operators": ["eth:0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"],
+        "operators": [
+          "eth:0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2",
+          "eth:0x09d1ad25B369A0C48Bdf4CaAb85aFd08a3f07044"
+        ],
         "programHash": "2733003247060056328192560178934419513655729851806095615814023997114795707702",
         "programHashHistory": [
           "3258367057337572248818716706664617507069572185152472699066582725377748079373",
@@ -608,9 +624,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "3616019685217746494522161550488971983706792730362815365802711401150630291724",
-        "stateBlockNumber": 2166285,
-        "stateRoot": "1856186521216504153020805447247777617154869698449495924495998905194538449347",
+        "stateBlockHash": "3481158512219903683920468098704109930653191888146505450267964826707009924825",
+        "stateBlockNumber": 2418414,
+        "stateRoot": "3423448762288603387985394761083414206813856215203798233715347992452170206794",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -788,7 +804,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 63,
+        "nonce": 64,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1267,6 +1283,6 @@
     "starknet/Starknet": "0xfadaad9feb97c113d19f43abb4e24ed692a26a6efc6094ada095836e6793f431",
     "starknet/StarknetERC20Bridge": "0x823d646295cd3c589fdd26a112b0adb063e5b33a7c751523d6ba995a98d795b6"
   },
-  "usedBlockNumbers": { "ethereum": 25329278 },
-  "permissionsConfigHash": "0x81cf7823e44c603c2c58122ca8f4c5e3c7a79b297c7b6416c9632382eecf37c6"
+  "usedBlockNumbers": { "ethereum": 25544316 },
+  "permissionsConfigHash": "0xc2a41ecb1e1e03c402f8dcd453f42488c4065b23e7b8144c858b92f15c9f710a"
 }
