@@ -3,8 +3,8 @@ import { getCollection } from '~/content/getCollection'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
-import { getYouTubeVideoId } from '~/utils/youtube'
-import type { Talk } from './components/MaterialsSection'
+import { getYouTubeThumbnailUrl, getYouTubeVideoId } from '~/utils/youtube'
+import type { Talk } from './articles'
 
 export async function getNativeRollupsData(
   manifest: Manifest,
@@ -46,17 +46,20 @@ function getNativeRollupsTalks(): Talk[] {
     )
     .sort((a, b) => b.data.publishedOn.getTime() - a.data.publishedOn.getTime())
     .map((publication) => {
-      const videoId = getYouTubeVideoId(publication.data.url)
-      if (!videoId) {
+      const { title, url, source, description } = publication.data
+      const videoId = getYouTubeVideoId(url)
+      if (!videoId || !source || !description) {
         throw new Error(
-          `Native rollups talk ${publication.id} must be a YouTube video`,
+          `Native rollups talk ${publication.id} must be a YouTube video with a source and description`,
         )
       }
       return {
-        label: publication.data.title,
-        source: publication.data.source ?? 'L2BEAT',
-        description: publication.data.description ?? '',
-        videoId,
+        kind: 'talk' as const,
+        label: title,
+        source,
+        description,
+        href: url,
+        thumbnailSrc: getYouTubeThumbnailUrl(videoId),
       }
     })
 }

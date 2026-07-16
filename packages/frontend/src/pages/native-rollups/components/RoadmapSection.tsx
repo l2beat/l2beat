@@ -55,27 +55,20 @@ export function RoadmapSection() {
               </div>
               <ol className="relative m-5 ml-8 md:m-6 md:ml-9">
                 {group.items.map((item, i) => {
-                  const isLast = i === group.items.length - 1
-                  const flowsIntoCurrent =
-                    group.items[i + 1]?.status === 'inProgress'
+                  const connector = connectorClassName(item, group.items[i + 1])
                   return (
                     <li
                       key={`${item.date}-${item.title}`}
                       className="relative pb-8 pl-9 last:pb-0"
                     >
-                      {!isLast &&
-                        (flowsIntoCurrent ? (
-                          <span className="absolute top-6 left-[11px] h-[calc(100%-24px)] border-(--accent) border-l border-dashed" />
-                        ) : (
-                          <span
-                            className={cn(
-                              'absolute top-6 left-[11px] h-[calc(100%-24px)] w-px',
-                              item.status === 'done'
-                                ? 'bg-positive'
-                                : 'bg-divider',
-                            )}
-                          />
-                        ))}
+                      {connector && (
+                        <span
+                          className={cn(
+                            'absolute top-6 left-[11px] h-[calc(100%-24px)]',
+                            connector,
+                          )}
+                        />
+                      )}
                       <span
                         className={cn(
                           'absolute top-2 left-2 size-2 rounded-full ring-4 ring-surface-primary',
@@ -139,4 +132,15 @@ export function RoadmapSection() {
       </PrimaryCard>
     </section>
   )
+}
+
+/** Line connecting an item's dot to the next item, if any. */
+function connectorClassName(item: RoadmapItem, next: RoadmapItem | undefined) {
+  if (!next) {
+    return undefined
+  }
+  if (next.status === 'inProgress') {
+    return 'border-(--accent) border-l border-dashed'
+  }
+  return cn('w-px', item.status === 'done' ? 'bg-positive' : 'bg-divider')
 }

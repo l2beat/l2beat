@@ -1,6 +1,4 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { existsSync } from 'fs'
-import path from 'path'
 import type { FilterableEntry } from '~/components/table/filters/filterableValue'
 import type { ExternalPublicationTag } from '~/content/external-publications'
 import type { CollectionEntry } from '~/content/getCollection'
@@ -8,7 +6,6 @@ import {
   getImageParams,
   type ImageParams,
 } from '~/utils/project/getImageParams'
-import { getYouTubeThumbnail, getYouTubeVideoId } from '~/utils/youtube'
 
 export interface PublicationEntry extends FilterableEntry {
   id: string
@@ -106,14 +103,9 @@ export function getPublicationEntryFromMonthlyUpdate(
 export function getPublicationEntryFromExternalPublication(
   externalPublication: CollectionEntry<'external-publications'>,
 ): PublicationEntry {
-  const videoId = getYouTubeVideoId(externalPublication.data.url)
-  const pngPath = `/meta-images/publications/${externalPublication.id}.png`
-  const hasPng = existsSync(path.join(process.cwd(), 'static', pngPath))
-  const thumbnail = hasPng
-    ? getImageParams(pngPath)
-    : videoId
-      ? getYouTubeThumbnail(videoId)
-      : undefined
+  const thumbnail = getImageParams(
+    `/meta-images/publications/${externalPublication.id}.png`,
+  )
   if (!thumbnail) {
     throw new Error(`Thumbnail not found for ${externalPublication.id}`)
   }

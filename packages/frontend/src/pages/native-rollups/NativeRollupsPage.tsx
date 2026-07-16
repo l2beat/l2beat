@@ -1,6 +1,7 @@
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { Talk } from './articles'
 import {
   type ContributorImages,
   ContributorsSection,
@@ -9,7 +10,7 @@ import { CoreProtocolSection } from './components/CoreProtocolSection'
 import { FeaturesSection } from './components/FeaturesSection'
 import { Hero } from './components/Hero'
 import { HowItWorksSection } from './components/HowItWorksSection'
-import { MaterialsSection, type Talk } from './components/MaterialsSection'
+import { MaterialsSection } from './components/MaterialsSection'
 import { NativeProofVerificationSection } from './components/NativeProofVerificationSection'
 import { RoadmapSection } from './components/RoadmapSection'
 import { WhyNativeSection } from './components/WhyNativeSection'

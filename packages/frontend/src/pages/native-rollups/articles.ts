@@ -11,13 +11,23 @@ import {
   NATIVE_ROLLUPS_REPO_URL,
 } from './links'
 
-export interface Article {
-  kind: 'document' | 'code'
+interface MaterialBase {
   label: string
   source: string
   description: string
   href: string
 }
+
+export interface Article extends MaterialBase {
+  kind: 'document' | 'code'
+}
+
+export interface Talk extends MaterialBase {
+  kind: 'talk'
+  thumbnailSrc: string
+}
+
+export type Material = Article | Talk
 
 export const ARTICLES: Article[] = [
   {

@@ -6,22 +6,16 @@ import { GithubIcon } from '~/icons/products/Github'
 import { YouTubeIcon } from '~/icons/products/Youtube'
 import type { SvgIconProps } from '~/icons/SvgIcon'
 import { cn } from '~/utils/cn'
-import { ARTICLES, type Article } from '../articles'
+import { ARTICLES, type Material, type Talk } from '../articles'
 import { SectionHeading } from './SectionHeading'
 
-export interface Talk {
-  label: string
-  source: string
-  description: string
-  videoId: string
-}
-
-const ARTICLE_ICONS: Record<
-  Article['kind'],
+const MATERIAL_ICONS: Record<
+  Material['kind'],
   (props: SvgIconProps) => ReactNode
 > = {
   document: DocumentIcon,
   code: GithubIcon,
+  talk: YouTubeIcon,
 }
 
 export function MaterialsSection({ talks }: { talks: Talk[] }) {
@@ -63,25 +57,21 @@ function GroupLabel({
   )
 }
 
-function MaterialCard({ material }: { material: Article | Talk }) {
-  const isTalk = 'videoId' in material
-  const Icon = isTalk ? YouTubeIcon : ARTICLE_ICONS[material.kind]
-  const href = isTalk
-    ? `https://www.youtube.com/watch?v=${material.videoId}`
-    : material.href
+function MaterialCard({ material }: { material: Material }) {
+  const Icon = MATERIAL_ICONS[material.kind]
 
   return (
     <a
-      href={href}
+      href={material.href}
       target="_blank"
       rel="noreferrer noopener"
       className="group block outline-none focus-visible:ring-2 focus-visible:ring-brand md:rounded-xl"
     >
       <PrimaryCard className="flex h-full flex-col overflow-hidden p-0 transition-colors group-hover:bg-white/70 md:rounded-xl md:p-0 dark:group-hover:bg-surface-primary-hover">
-        {isTalk && (
+        {material.kind === 'talk' && (
           <div className="relative aspect-video w-full overflow-hidden bg-surface-secondary md:rounded-t-xl">
             <img
-              src={`https://img.youtube.com/vi/${material.videoId}/hqdefault.jpg`}
+              src={material.thumbnailSrc}
               alt=""
               loading="lazy"
               className="size-full object-cover motion-safe:transition-transform motion-safe:duration-500 motion-safe:ease-out motion-safe:group-hover:scale-105"
