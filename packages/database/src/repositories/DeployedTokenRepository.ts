@@ -121,6 +121,7 @@ export class DeployedTokenRepository extends BaseRepository {
           'AbstractToken.iconUrl as AbstractToken_iconUrl',
           'AbstractToken.coingeckoId as AbstractToken_coingeckoId',
           'AbstractToken.coingeckoListingTimestamp as AbstractToken_coingeckoListingTimestamp',
+          'AbstractToken.additionalCoingeckoEntries as AbstractToken_additionalCoingeckoEntries',
           'AbstractToken.symbol as AbstractToken_symbol',
           'AbstractToken.comment as AbstractToken_comment',
           'AbstractToken.reviewed as AbstractToken_reviewed',
@@ -163,6 +164,8 @@ export class DeployedTokenRepository extends BaseRepository {
                   coingeckoId: row.AbstractToken_coingeckoId,
                   coingeckoListingTimestamp:
                     row.AbstractToken_coingeckoListingTimestamp,
+                  additionalCoingeckoEntries:
+                    row.AbstractToken_additionalCoingeckoEntries,
                   comment: row.AbstractToken_comment,
                   reviewed: row.AbstractToken_reviewed,
                   isPriceUnreliable: row.AbstractToken_isPriceUnreliable,
