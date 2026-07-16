@@ -6,8 +6,9 @@ interface Props {
 }
 
 const SPEC_ROWS = [
-  { key: 'slotTime', label: 'Slot time (inclusion baseline)' },
-  { key: 'epochTime', label: 'Epoch time' },
+  { key: 'blockTime', label: 'L2 block time' },
+  { key: 'proposerRotationTime', label: 'Proposer rotation' },
+  { key: 'committeeRotationTime', label: 'Committee rotation' },
   { key: 'sequencerCount', label: 'Number of block producers' },
   { key: 'blockProductionAccess', label: 'Access to block production rights' },
   { key: 'stakePerValidator', label: 'Stake per validator' },
@@ -17,7 +18,9 @@ const SPEC_ROWS = [
 ] satisfies { key: keyof ProjectSequencerSetSpec; label: string }[]
 
 export function SequencerSetSpecSheet({ spec }: Props) {
-  const rows = SPEC_ROWS.map(({ key, label }) => ({
+  const rows = SPEC_ROWS.filter(
+    ({ key }) => key !== 'committeeRotationTime' || spec[key] !== undefined,
+  ).map(({ key, label }) => ({
     label,
     value: spec[key],
   }))

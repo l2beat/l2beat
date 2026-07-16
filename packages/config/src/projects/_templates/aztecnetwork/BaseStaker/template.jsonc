@@ -1,5 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "A template contract used for staker proxies within the StakingRegistry.",
-  "ignoreMethods": ["getOperator"]
+  "description": "Implementation registered by the ATP Registry for upgradeable staker proxies that manage locked AZTEC positions.",
+  "category": "gov",
+  "ignoreMethods": ["getOperator"],
+  "ignoreRelatives": ["getATP", "getImplementation"]
 }

@@ -2,17 +2,32 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Holds the protocol's funds controlled by Governance. It acts as a timelocked executor for spending or relaying transactions approved by the DAO.",
   "category": "gov",
+  "canActIndependently": false,
   "fields": {
     "GOVERNANCE": {
       "description": "Governance contract allowed to act through the treasury once the gate has opened.",
       "template": "aztecnetwork/Governance",
       "permissions": [
-        { "type": "act", "condition": "the GATED_UNTIL timestamp has passed." }
+        {
+          "type": "act",
+          "condition": "GATED_UNTIL has passed, the oldest unmarked Governance proposal was created after the ATP-derived activation timestamp, and markNext was not called in the same block."
+        },
+        {
+          "type": "interact",
+          "description": "relay arbitrary calls and ETH from the ProtocolTreasury.",
+          "condition": "GATED_UNTIL has passed, the oldest unmarked Governance proposal was created after the ATP-derived activation timestamp, and markNext was not called in the same block."
+        }
       ]
     },
     "ATP_REGISTRY": {
       "description": "Registry controlling token unlocks for treasury-held AZTEC positions.",
       "template": "aztecnetwork/AztecTokenPositionRegistry"
+    },
+    "GATED_UNTIL": {
+      "description": "Earliest timestamp at which the treasury relay gate can open. The additional ATP and proposal-ordering conditions still apply."
+    },
+    "getActivationTimestamp": {
+      "description": "ATP-derived cutoff timestamp. A Governance proposal relaying through the treasury must have been created after this cutoff."
     }
   }
 }
