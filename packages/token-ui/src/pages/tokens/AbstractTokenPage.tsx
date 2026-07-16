@@ -9,6 +9,7 @@ import {
   GitMergeIcon,
   PlusIcon,
   TrashIcon,
+  TriangleAlertIcon,
 } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -386,6 +387,12 @@ function MergeAbstractTokenDialog({
             into another abstract token.
           </DialogDescription>
         </DialogHeader>
+        <div className="flex items-start gap-2 rounded border border-destructive bg-destructive/10 p-3 text-destructive text-sm">
+          <TriangleAlertIcon className="mt-0.5 size-4 shrink-0" />
+          <span>
+            This operation is difficult to revert. Proceed with caution.
+          </span>
+        </div>
         <Popover>
           <PopoverTrigger asChild>
             <Button
