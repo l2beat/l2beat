@@ -67,7 +67,11 @@ and the icon. The additional entries serve two purposes:
 
 Merging abstract token B (source) into A (target) does three things, in
 order: copy B's CoinGecko entries onto A as additional entries, reassign
-all of B's deployed tokens to A, delete B. It is a single intent in the
+all of B's deployed tokens to A, delete B. A `Merged from
+<id>:<issuer>:<symbol> (...)` note is also appended to A's comment — this
+happens even when B has no CoinGecko data and no entries get copied, so
+the target always shows at a glance what was absorbed into it. It is a
+single intent in the
 [intent → plan → execute](./intent_plan_execute.md) pipeline, so the
 user sees the full command list — every reassigned deployed token —
 before confirming. The operation has no automatic undo; history retains

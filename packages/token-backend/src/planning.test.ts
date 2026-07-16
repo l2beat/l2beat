@@ -408,6 +408,8 @@ describe('MergeAbstractTokenIntent', () => {
         existing: target,
         id: target.id,
         update: {
+          comment:
+            'Merged from SOURCE:null:USDC (category: null, coingeckoId: usd-coin-bridged)',
           additionalCoingeckoEntries: [
             {
               coingeckoId: 'usd-coin-extra',
@@ -438,6 +440,45 @@ describe('MergeAbstractTokenIntent', () => {
         update: {
           abstractTokenId: target.id,
           abstractTokenAssignmentProof: { kind: 'manual', user: USER },
+        },
+      },
+      {
+        type: 'DeleteAbstractTokenCommand',
+        id: source.id,
+        existing: source,
+      },
+    ])
+  })
+
+  it('appends the merge note to an existing comment even when the source has no CoinGecko data', async () => {
+    const source = abstractRecord('SOURCE', 'DAI', {
+      issuer: 'MakerDAO',
+      category: 'other',
+    })
+    const target = abstractRecord('TARGET', 'DAI', {
+      comment: 'existing note',
+    })
+    const db = mockDb({ abstractTokens: [source, target] })
+
+    const result = await generatePlan(
+      db,
+      {
+        type: 'MergeAbstractTokenIntent',
+        sourceId: source.id,
+        targetId: target.id,
+      },
+      { user: USER, skipLogs: true },
+    )
+
+    assertSuccess(result)
+    expect(result.plan.commands).toEqual([
+      {
+        type: 'UpdateAbstractTokenCommand',
+        existing: target,
+        id: target.id,
+        update: {
+          comment:
+            'existing note\nMerged from SOURCE:MakerDAO:DAI (category: other, coingeckoId: null)',
         },
       },
       {

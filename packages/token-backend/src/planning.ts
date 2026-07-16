@@ -17,7 +17,10 @@ import {
   type UpdateTokenRelationIntent,
 } from './intents'
 import { getLogger } from './logger'
-import type { CoingeckoEntry } from './schemas/AbstractToken'
+import type {
+  AbstractTokenUpdateable,
+  CoingeckoEntry,
+} from './schemas/AbstractToken'
 import type { DeployedTokenUpdateable } from './schemas/DeployedToken'
 import type {
   TokenRelationPrimaryKey,
@@ -215,6 +218,15 @@ async function planMergeAbstractToken(
   }
 
   const commands: Command[] = []
+  // The note keeps the merged-away token visible at a glance on the target
+  // (its full record is only recoverable from history). Unlike the copied
+  // CoinGecko entries it is appended even when the source has no CoinGecko
+  // data. It must be deterministic (no timestamp): executePlan regenerates
+  // the plan and deep-compares it with the confirmed one.
+  const mergeNote = `Merged from ${source.id}:${source.issuer}:${source.symbol} (category: ${source.category}, coingeckoId: ${source.coingeckoId})`
+  const update: AbstractTokenUpdateable = {
+    comment: target.comment ? `${target.comment}\n${mergeNote}` : mergeNote,
+  }
   const additionalCoingeckoEntries = mergeAdditionalCoingeckoEntries(
     target,
     source,
@@ -223,13 +235,14 @@ async function planMergeAbstractToken(
     JSON.stringify(additionalCoingeckoEntries) !==
     JSON.stringify(target.additionalCoingeckoEntries ?? [])
   ) {
-    commands.push({
-      type: 'UpdateAbstractTokenCommand',
-      existing: target,
-      id: target.id,
-      update: { additionalCoingeckoEntries },
-    })
+    update.additionalCoingeckoEntries = additionalCoingeckoEntries
   }
+  commands.push({
+    type: 'UpdateAbstractTokenCommand',
+    existing: target,
+    id: target.id,
+    update,
+  })
 
   for (const deployedToken of [...deployedTokens].sort(compareDeployedTokens)) {
     commands.push({
