@@ -63,6 +63,7 @@ const slotDuration = discovery.getContractValue<number>(
   'Rollup',
   'getSlotDuration',
 )
+const l2BlockTime = 6 // this is set in the node software and is demand-driven (preconfs)
 const epochSlots = discovery.getContractValue<number>(
   'Rollup',
   'getEpochDuration',
@@ -487,8 +488,13 @@ export const aztecnetwork: ScalingProject = {
         activeSequencerCount,
       }),
       sequencerSetSpec: {
-        slotTime: { value: formatSeconds(slotDuration) },
-        epochTime: {
+        blockTime: {
+          value: `~${formatSeconds(l2BlockTime)}`,
+          description:
+            'Current expected interval between L2 block proposals. Multiple blocks can be produced by the same proposer within one slot, so this interval can differ from the proposer rotation interval.',
+        },
+        proposerRotationTime: { value: formatSeconds(slotDuration) },
+        committeeRotationTime: {
           value: formatSeconds(epochDuration),
           description:
             'A random committee is sampled from the sequencer set for each epoch, a random block producer is sampled from the committee for each slot in the epoch',
