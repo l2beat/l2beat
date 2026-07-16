@@ -8,7 +8,11 @@ export function getYouTubeVideoId(url: string): string | undefined {
   if (parsed.hostname === 'youtu.be') {
     return parsed.pathname.slice(1) || undefined
   }
-  if (parsed.hostname.endsWith('youtube.com') && parsed.pathname === '/watch') {
+  if (
+    (parsed.hostname === 'youtube.com' ||
+      parsed.hostname.endsWith('.youtube.com')) &&
+    parsed.pathname === '/watch'
+  ) {
     return parsed.searchParams.get('v') ?? undefined
   }
   return undefined
