@@ -91,7 +91,7 @@ describe(decodeHandlerResults.name, () => {
     })
   })
 
-  describe('context variables in edit expressions', () => {
+  describe('env operator in edit expressions', () => {
     const env: BlipEnv = {
       blockNumber: 21_000_000,
       timestamp: 1_700_000_000,
@@ -99,10 +99,10 @@ describe(decodeHandlerResults.name, () => {
       address: '0x1234567890123456789012345678901234567890',
     }
 
-    it('resolves $$blockNumber inside an edit', () => {
+    it('reads blockNumber inside an edit', () => {
       const results: HandlerResult[] = [{ field: 'foo', value: { block: 0 } }]
       const fieldOverrides: StructureContract['fields'] = {
-        foo: { edit: ['set', 'block', '$$blockNumber'] },
+        foo: { edit: ['set', 'block', ['env', 'blockNumber']] },
       }
 
       const { values } = decodeHandlerResults(
@@ -116,10 +116,10 @@ describe(decodeHandlerResults.name, () => {
       expect(values?.foo).toEqual({ block: 21_000_000 })
     })
 
-    it('resolves $$chainName inside an edit', () => {
+    it('reads chainName inside an edit', () => {
       const results: HandlerResult[] = [{ field: 'foo', value: { chain: '' } }]
       const fieldOverrides: StructureContract['fields'] = {
-        foo: { edit: ['set', 'chain', '$$chainName'] },
+        foo: { edit: ['set', 'chain', ['env', 'chainName']] },
       }
 
       const { values } = decodeHandlerResults(
@@ -133,7 +133,7 @@ describe(decodeHandlerResults.name, () => {
       expect(values?.foo).toEqual({ chain: 'ethereum' })
     })
 
-    it('derives hasExpired by copying a field and comparing to $$timestamp', () => {
+    it('derives hasExpired by copying a field and comparing to env timestamp', () => {
       const results: HandlerResult[] = [
         { field: 'referralExpirationTime', value: 1_000 },
       ]
@@ -142,7 +142,7 @@ describe(decodeHandlerResults.name, () => {
       const fieldOverrides: StructureContract['fields'] = {
         hasExpired: {
           copy: 'referralExpirationTime',
-          edit: ['<', '$$timestamp'],
+          edit: ['<', ['env', 'timestamp']],
         },
       }
 

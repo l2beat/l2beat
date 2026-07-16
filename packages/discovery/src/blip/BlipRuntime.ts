@@ -9,13 +9,7 @@ import {
   isCustomTypeCaster,
 } from '../discovery/type-casters'
 import type { BlipEnv, BlipSexp } from './type'
-
-const CONTEXT_VARIABLES: Record<string, keyof BlipEnv> = {
-  $$blockNumber: 'blockNumber',
-  $$timestamp: 'timestamp',
-  $$chainName: 'chainName',
-  $address: 'address',
-}
+import { isEnvKey } from './type'
 
 export class BlipRuntime {
   public readonly usedTypesSet: Set<DiscoveryCustomType> = new Set()
@@ -38,10 +32,6 @@ export class BlipRuntime {
           `Tried to extract column [${key}] but it's undefined`,
         )
         return value
-      }
-
-      if (typeof blip === 'string' && CONTEXT_VARIABLES[blip] !== undefined) {
-        return this.resolveContextVariable(blip)
       }
 
       return blip
@@ -81,6 +71,13 @@ export class BlipRuntime {
           return compareValues(v, x) > 0
         }
         return xs.every((e) => compareValues(x, e) > 0)
+      }
+      case 'env': {
+        const key = blip[1]
+        assert(isEnvKey(key), `Unknown environment key: ${key}`)
+        const value = this.env[key]
+        assert(value !== undefined, `Environment value not available: ${key}`)
+        return value
       }
       case 'and': {
         const values = blip.slice(1).map((b) => this.executeBlip(v, b))
@@ -297,14 +294,6 @@ export class BlipRuntime {
         assert(false, 'unhandled')
       }
     }
-  }
-
-  resolveContextVariable(token: string): ContractValue {
-    const key = CONTEXT_VARIABLES[token]
-    assert(key !== undefined, `Unknown context variable ${token}`)
-    const value = this.env[key]
-    assert(value !== undefined, `Context variable ${token} is not available`)
-    return value
   }
 
   objectGet(value: ContractValue, keys: (string | number)[]): ContractValue {

@@ -1,3 +1,5 @@
+import { isEnvKey } from './type'
+
 export function validateBlip(input: unknown): boolean {
   if (!Array.isArray(input)) {
     switch (typeof input) {
@@ -62,6 +64,10 @@ export function validateBlip(input: unknown): boolean {
       return input.length === 2 && validateBlip(input[1])
     case 'find':
       return input.length === 2 && validateBlip(input[1])
+    case 'env':
+      return (
+        input.length === 2 && typeof input[1] === 'string' && isEnvKey(input[1])
+      )
     case 'format':
       return input.length === 2 && typeof input[1] === 'string'
     case 'if':

@@ -8,6 +8,17 @@ export interface BlipEnv {
   address?: string
 }
 
+export const ENV_KEYS: readonly (keyof BlipEnv)[] = [
+  'blockNumber',
+  'timestamp',
+  'chainName',
+  'address',
+]
+
+export function isEnvKey(key: string): key is keyof BlipEnv {
+  return (ENV_KEYS as readonly string[]).includes(key)
+}
+
 export type BlipSexp =
   | string
   | number
@@ -27,6 +38,7 @@ export type BlipSexp =
   | ['set', ArrayOrT<string | number>, BlipSexp]
   | ['filter', BlipSexp]
   | ['find', BlipSexp]
+  | ['env', string]
   | ['format', string]
   | ['if', BlipSexp, BlipSexp, BlipSexp]
   | ['delete', ...(string | number)[]]

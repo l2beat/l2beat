@@ -1038,6 +1038,7 @@ In the first example, `["get", "systemConfig"]` is a filter that extracts the sy
 - `find`, returns the first element that passes the filter.
 - `<`, less-than comparison of numbers or strings.
 - `>`, greater-than comparison of numbers or strings.
+- `env`, reads a value from the discovery environment.
 - `format`, applies the selected type caster.
 - `if`, conditional logic (if/then/else).
 - `delete`, deletes removes keys/indices from objects/arrays.
@@ -1302,27 +1303,30 @@ The filter must return a string.
 - Program: `["map_keys", ["if", ["=", "a"], "first", "second"]]`
 - Output: `{ first: 1, second: 2 }`
 
-### Context variables
+### `env`
 
-Besides the piped input value, filters can reference values from the discovery context using `$`-prefixed leaf tokens.
-`$$` exposes chain-wide values and `$` exposes contract-level ones.
+Reads a value from the discovery environment, ignoring the piped input value.
+The single argument is the key to read and must be one of the keys listed below, otherwise config validation fails.
+Reading a key whose value is unavailable in the current run (e.g. `timestamp` when no timestamp is set) throws an error.
 
-- `$$blockNumber` - the block number the discovery is running on.
-- `$$timestamp` - the UNIX timestamp (in seconds) of that block.
-- `$$chainName` - the name of the chain being discovered (e.g. `ethereum`).
-- `$address` - the address of the contract the field belongs to.
+- `blockNumber` - the block number the discovery is running on.
+- `timestamp` - the UNIX timestamp (in seconds) of that block.
+- `chainName` - the name of the chain being discovered (e.g. `ethereum`).
+- `address` - the address of the contract the field belongs to.
 
-Only these exact tokens are treated as context variables.
-Any other `$`-prefixed leaf string (for example a Solidity key such as `$admin`) is left untouched as a literal, so patterns like `["pick", "$admin"]` keep working.
-A known token that is unavailable in the current context (e.g. `$$timestamp` when no timestamp is set) throws an error.
+Because environment access is an explicit filter, plain strings are never treated as environment references. A literal such as `"$admin"` stays a literal, so patterns like `["pick", "$admin"]` keep working.
 
-For example, to derive a boolean `hasExpired` field that becomes `true` once a stored expiration timestamp is in the past, `copy` the timestamp field and compare it against `$$timestamp`:
+- Input: `anything`
+- Program: `["env", "chainName"]`
+- Output: `"ethereum"`
+
+For example, to derive a boolean `hasExpired` field that becomes `true` once a stored expiration timestamp is in the past, `copy` the timestamp field and compare it against the environment timestamp:
 
 ```json
 {
   "hasExpired": {
     "copy": "referralExpirationTime",
-    "edit": ["<", "$$timestamp"]
+    "edit": ["<", ["env", "timestamp"]]
   }
 }
 ```

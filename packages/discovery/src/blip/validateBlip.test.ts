@@ -158,6 +158,17 @@ describe(validateBlip.name, () => {
       expect(validateBlip(['find', {}])).toBeFalsy() // Invalid sub-element
     })
 
+    it('validates "env" operation', () => {
+      expect(validateBlip(['env'])).toBeFalsy() // Too few arguments
+      expect(validateBlip(['env', 'timestamp'])).toBeTruthy() // Valid known key
+      expect(validateBlip(['env', 'blockNumber'])).toBeTruthy()
+      expect(validateBlip(['env', 'chainName'])).toBeTruthy()
+      expect(validateBlip(['env', 'address'])).toBeTruthy()
+      expect(validateBlip(['env', 'unknown'])).toBeFalsy() // Unknown key
+      expect(validateBlip(['env', 123])).toBeFalsy() // Key must be a string
+      expect(validateBlip(['env', 'timestamp', 'extra'])).toBeFalsy() // Too many arguments
+    })
+
     it('validates "format" operation', () => {
       expect(validateBlip(['format'])).toBeFalsy() // Too few arguments
       expect(validateBlip(['format', 'Hello {0}'])).toBeTruthy() // Valid
