@@ -1,34 +1,42 @@
-# Standard Path (Signaling)
-Because sequencers stake AZTEC tokens to secure the L2 network, they are also the primary governors of the system. Any governance proposal must be encoded and deployed as a smart contract payload on Ethereum. While core contracts are immutable, the onchain Governance system can designate a new 'canonical' rollup with a {{governanceExecutionDelayString}} delay and has access to critical configuration permissions that can freeze or compromise the Rollup system. These permissions can only be accessed through the process described below.
+# Standard path (sequencer signaling)
 
-## 1. The Signaling Phase (`GovernanceProposer`)
-Aztec uses an onchain "Empire" signaling system. Active sequencers operating on the 'canonical rollup' (as defined by the Registry) call `signal(payloadAddress)` on the L1 `GovernanceProposer` contract during their designated L2 slots to support a specific upgrade payload. A voting round consists of {{governanceSignalRoundSizeString}} slots. To win a round and become a formal proposal, a payload must receive signals from at least {{governanceSignalQuorumSizeString}} slots. Once quorum is reached, the payload is submitted to the L1 `Governance` contract.
+Sequencers stake AZTEC to secure the L2 and also participate in protocol governance. Every proposal is a smart contract payload on Ethereum. The public proposal flow takes at least {{governanceTotalDelayString}} before execution, after which Governance can change the bounded parameters described below or deploy and register a new canonical rollup version.
 
-## 2. The Voting Phase (`Governance`)
-Once submitted, the proposal enters a delay and voting flow:
-*   **Pending ({{governanceVotingDelayString}}):** At the end of this delay, voting power is snapshotted.
-*   **Active ({{governanceVotingDurationString}}):** AZTEC token holders can vote. To pass, a proposal must reach a {{governanceQuorumString}} Quorum of all staked power, and the `yea` votes must exceed a required margin of {{governanceRequiredYeaMarginString}}.
-*   **Queued ({{governanceExecutionDelayString}}):** If successful, the proposal enters an execution delay. This acts as an exit window, allowing dissenting sequencers to initiate a withdrawal of their staked tokens before the malicious/disagreed-upon code is executed.
-*   Executable ({{governanceGracePeriodString}}): The proposal enters a grace period where anyone can call `execute()`. If not executed, it expires.
+## 1. Signaling (`GovernanceProposer`)
 
-Total standard delay from proposal to execution: **{{governanceTotalDelayString}}**.
+Aztec uses an onchain "Empire" signaling system. The designated proposer for each slot on the canonical rollup can separately signal support for one payload on L1. A round consists of {{governanceSignalRoundSizeString}} slots. A payload that receives at least {{governanceSignalQuorumSizeString}} signals wins the round and can be submitted to `Governance`.
 
-### Emergency Path (Circumvent Signaling)
-If the L2 sequencer set is offline, censoring, or acting maliciously, the `GovernanceProposer` cannot be used. To ensure liveness, anyone can bypass the Sequencer signaling phase using the `proposeWithLock()` function directly on the `Governance` contract.
-*   An actor must lock **{{governanceLockString}}**, roughly {{governanceLockShareOfSupplyString}} of total supply
-*   These funds are locked for an extended {{governanceLockDelayString}}.
-*   Once proposed, the payload enters the exact same {{governanceTotalDelayString}} Voting Phase (Pending -> Active -> Queued -> Executable) as the standard path.
+## 2. Token voting (`Governance`)
 
-### Rollup Immutability
-The smart contract code of `Rollup`, its verifier and its canonical messaging contracts cannot be changed. For feature upgrades, users need to migrate to a new Rollup. Migrating Rollups involves a `Governance` action that designates a new `Rollup` contract address as canonical. The `GSE` (Governance Staking Escrow) automatically migrates the voting power and stake of all active sequencers to the new rollup version if they staked to the default magic address `{{bonusInstanceAddress}}` instead of a specific immutable rollup. Importantly, `Governance` has revoked ownership and access to all critical config options of the current core Rollup contract, which makes it fully autonomous via the Escape Hatch. Governance can only remove staking incentives by creating a new 'canonical' Rollup and brick the sequencer queue via `GSE.setProofOfPossessionGasLimit(0)`, leaving the Escape Hatch as the fully immutable option to progress the L2 in the worst case.
+Once submitted, a proposal passes through these states:
 
-### Slashing and the SlashVeto Council
-Aztec features onchain slashing for equivocation or missing attestations, managed by `Slasher` and `TallySlashingProposer`. 
+* **Pending ({{governanceVotingDelayString}}):** voting power is snapshotted at the end of this delay.
+* **Active ({{governanceVotingDurationString}}):** AZTEC holders vote. The snapshot must contain at least {{governanceMinimumTotalPowerString}} of total voting power, at least {{governanceQuorumString}} of that power must vote, and `yea` must be strictly greater than {{governanceApprovalThresholdString}} of votes cast (the configured `yea`-minus-`nay` margin is {{governanceRequiredYeaMarginString}}).
+* **Queued ({{governanceExecutionDelayString}}):** a successful proposal waits before it can be executed. This final phase alone is shorter than the validator withdrawal delay, but the complete public process provides at least {{governanceTotalDelayString}} of notice. Initiating an exit immediately removes a validator from the active set, while its stake becomes withdrawable after {{validatorExitDelayString}}.
+* **Executable ({{governanceGracePeriodString}}):** anyone can execute the proposal during this grace period; otherwise it expires.
 
-There is a protective **Vetoer** role held by the SlashVeto Council. The Council cannot upgrade the protocol, alter governance, or steal funds. Instead it is limited to two permissions:
-*   call `vetoPayload()` to stop a specific slashing event.
-*   call `setSlashingEnabled(false)`, which pauses all slashing in the protocol for a period of {{slashingDisableDurationString}}.
+## Emergency proposal path
 
-### Economics & Treasury
-*   **Coin Issuer:** The `CoinIssuer` contract is owned by Governance and is authorized to mint new AZTEC tokens up to a cap of {{coinIssuerNominalAnnualPercentageCapString}} of the current total supply per year.
-*   **Protocol Treasury:** Funds owned by the DAO sit in the `ProtocolTreasury`. The Treasury has a hardcoded timestamp (approx. {{protocolTreasuryGatedUntilString}}). Before this date, the DAO cannot spend Treasury funds. After this date, Treasury funds and token ownership can be moved with a Governance Proposal.
+If sequencer signaling is unavailable, anyone can call `proposeWithLock()` directly on `Governance`. The proposer must lock **{{governanceLockString}}**, roughly {{governanceLockShareOfSupplyString}} of the total supply, for {{governanceLockDelayString}}. The payload then follows the same pending, voting, queued, and executable phases as a signaled proposal.
+
+## Immutable deployments and bounded ownership
+
+The `Rollup`, verifier, `Inbox`, `Outbox`, and installed `EscapeHatch` code cannot be upgraded in place. Feature upgrades deploy a new stack and use Governance to register its Rollup in the `Registry` and GSE. Validators staked to the bonus instance (`{{bonusInstanceAddress}}`) follow the newest GSE Rollup automatically; validators explicitly bound to an older Rollup remain associated with it.
+
+Governance owns the Rollup, but its setter surface is intentionally constrained: it can change the sequencer/prover reward split and checkpoint reward, only increase the mana target, change proving cost delayed and within bounds, and update validator-entry rate within non-zero values. It can queue a replacement Slasher with a {{slasherExecutionDelayString}} delay. The outgoing Slasher then remains active for {{legacySlasherDrainWindowString}}. The EscapeHatch, the reward distributor and reward-booster addresses are fixed for the deployment.
+
+Governance also owns the GSE and can register a new latest Rollup or set the proof-of-possession gas limit too low for new validator deposits. These powers can move incentives and bonus-instance validators away from the current version, but they do not mutate this deployment's verifier, messaging contracts, or installed EscapeHatch.
+
+## Slashing and the SlashVeto Council
+
+Aztec's onchain slashing path uses `SlashingProposer` ballots and the `Slasher`. Governance can bypass the proposer and submit a payload directly to the Slasher, and can rotate the authorized Slasher through the delayed Rollup process described above. Both the ballot and direct-governance paths remain subject to payload vetoes and global pauses by the SlashVeto Council.
+
+The **Vetoer** role is held by the SlashVeto Council. It cannot upgrade the protocol or relay arbitrary calls. It can:
+
+* veto a specific payload permanently; and
+* disable all slashing for {{slashingDisableDurationString}}. Calling the function again renews the pause, while the Council can also re-enable slashing early.
+
+## Economics and treasury
+
+* **CoinIssuer:** the owner can mint AZTEC within an annual cap of {{coinIssuerNominalAnnualPercentageCapString}} of the current total supply.
+* **ProtocolTreasury:** the DAO's treasury is gated until approximately {{protocolTreasuryGatedUntilString}} and is additionally subject to an ATP-derived activation timestamp and proposal-ordering checks. Once every gate is satisfied, a Governance proposal can relay arbitrary calls and value through the treasury.

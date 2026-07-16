@@ -338,6 +338,21 @@ export const fuel: ScalingProject = {
   },
   milestones: [
     {
+      title: 'Fuel bridge unpaused',
+      date: '2026-07-10T00:00:00Z',
+      url: 'https://etherscan.io/tx/0x8943839708f408a0744ad346bbcf0e3f7557aa4c27170d15d2ca5568e886cbe1',
+      description: 'Fuel unpauses the bridge after an eight-day pause.',
+      type: 'general',
+    },
+    {
+      title: 'Fuel bridge paused',
+      date: '2026-07-02T00:00:00Z',
+      url: 'https://etherscan.io/tx/0x95d4ff894e805f1c3348bf68022f60bf768ceaec9e58a3f18529da583df1b9f5',
+      description:
+        'Fuel pauses the bridge, stopping deposits and withdrawal messages.',
+      type: 'incident',
+    },
+    {
       title: 'Switch to EigenDA',
       date: '2025-07-03T00:00:00Z',
       url: 'https://x.com/IAmNickDodson/status/1940736106187678037',

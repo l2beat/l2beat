@@ -14,11 +14,25 @@
     },
     "canonicalRollup": {
       "description": "Current canonical rollup, which can claim from both the implicit reward pool and funds earmarked to it.",
-      "template": "aztecnetwork/Rollup",
       "permissions": [
         {
           "type": "interact",
           "description": "claim protocol reward funds and direct them to sequencers and provers."
+        }
+      ]
+    },
+    "registryOwner": {
+      "description": "Current owner of the linked Registry, resolved by the RewardDistributor at call time.",
+      "handler": {
+        "type": "call",
+        "address": "{{ REGISTRY }}",
+        "method": "function owner() view returns (address)",
+        "args": []
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "recover AZTEC from any implicit or earmarked accounting bucket and recover any non-AZTEC token held by the distributor."
         }
       ]
     },

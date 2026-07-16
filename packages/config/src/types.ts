@@ -64,8 +64,9 @@ export interface ProjectTechnologyChoice {
 }
 
 export interface ProjectSequencerSetSpec {
-  slotTime?: TableReadyValue
-  epochTime?: TableReadyValue
+  blockTime?: TableReadyValue
+  proposerRotationTime?: TableReadyValue
+  committeeRotationTime?: TableReadyValue
   sequencerCount?: TableReadyValue
   blockProductionAccess?: TableReadyValue
   stakePerValidator?: TableReadyValue

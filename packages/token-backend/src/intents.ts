@@ -37,6 +37,13 @@ export const DeleteAbstractTokenIntent = v.object({
   id: v.string(),
 })
 
+export type MergeAbstractTokenIntent = v.infer<typeof MergeAbstractTokenIntent>
+export const MergeAbstractTokenIntent = v.object({
+  type: v.literal('MergeAbstractTokenIntent'),
+  sourceId: v.string(),
+  targetId: v.string(),
+})
+
 export type AddDeployedTokenIntent = v.infer<typeof AddDeployedTokenIntent>
 export const AddDeployedTokenIntent = v.object({
   type: v.literal('AddDeployedTokenIntent'),
@@ -88,6 +95,7 @@ export const Intent = v.union([
   AddAbstractTokenIntent,
   UpdateAbstractTokenIntent,
   DeleteAbstractTokenIntent,
+  MergeAbstractTokenIntent,
   AddDeployedTokenIntent,
   UpdateDeployedTokenIntent,
   DeleteDeployedTokenIntent,

@@ -25,9 +25,11 @@ function formatValue(value: unknown): string {
   if (typeof value === 'string') return `"${value}"`
   if (typeof value === 'boolean') return value.toString()
   if (typeof value === 'number') return value.toString()
-  if (Array.isArray(value)) return `Array(${value.length})`
-  if (typeof value === 'object') return 'Object'
   return String(value)
+}
+
+function isStructuredValue(value: unknown): value is object {
+  return typeof value === 'object' && value !== null
 }
 
 function formatPath(path: (string | number)[]): string {
@@ -102,7 +104,7 @@ function DiffItem({
   }
 
   const renderValue = (value: unknown, label: string) => {
-    if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+    if (isStructuredValue(value)) {
       return (
         <div className="ml-4 space-y-1">
           <div className="font-medium text-muted-foreground text-sm">

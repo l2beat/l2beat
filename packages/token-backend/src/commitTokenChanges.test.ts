@@ -83,6 +83,7 @@ describe(commitTokenChanges.name, () => {
     await commitTokenChanges(tokenDb, commands, {
       kind: 'manual',
       user: 'someone@x.io',
+      intent: null,
     })
 
     expect(abstractToken.insert).toHaveBeenOnlyCalledWith(abstract)
@@ -139,7 +140,7 @@ describe(commitTokenChanges.name, () => {
           },
         },
       ],
-      { kind: 'manual', user: 'someone@x.io' },
+      { kind: 'manual', user: 'someone@x.io', intent: null },
     )
 
     expect(insert).toHaveBeenOnlyCalledWith(deployed)
@@ -185,6 +186,7 @@ describe(commitTokenChanges.name, () => {
       await commitTokenChanges(tokenDb, commands, {
         kind: 'manual',
         user: 'someone@x.io',
+        intent: { type: 'DeleteAbstractTokenIntent', id: abstract.id },
       })
 
       expect(insert).toHaveBeenCalledTimes(3)
@@ -196,6 +198,7 @@ describe(commitTokenChanges.name, () => {
         userEmail: 'someone@x.io',
         commandType: 'AddAbstractTokenCommand',
         command: commands[0],
+        intent: { type: 'DeleteAbstractTokenIntent', id: abstract.id },
         ingestionLog: null,
       })
       expect(entries[1]!).toEqual({
@@ -204,6 +207,7 @@ describe(commitTokenChanges.name, () => {
         userEmail: 'someone@x.io',
         commandType: 'UpdateDeployedTokenCommand',
         command: commands[1],
+        intent: { type: 'DeleteAbstractTokenIntent', id: abstract.id },
         ingestionLog: null,
       })
       expect(entries[2]!).toEqual({
@@ -212,6 +216,7 @@ describe(commitTokenChanges.name, () => {
         userEmail: 'someone@x.io',
         commandType: 'DeleteAbstractTokenCommand',
         command: commands[2],
+        intent: { type: 'DeleteAbstractTokenIntent', id: abstract.id },
         ingestionLog: null,
       })
     })
@@ -245,6 +250,7 @@ describe(commitTokenChanges.name, () => {
       for (const call of insert.calls) {
         expect(call.args[0].source).toEqual('ingestion')
         expect(call.args[0].userEmail).toEqual(null)
+        expect(call.args[0].intent).toEqual(null)
         expect(call.args[0].ingestionLog).toEqual(
           'step 1\nstep 2\nOutcome: write',
         )
@@ -266,10 +272,11 @@ describe(commitTokenChanges.name, () => {
       await commitTokenChanges(
         tokenDb,
         [{ type: 'AddAbstractTokenCommand', record: abstract }],
-        { kind: 'manual', user: 'someone@x.io' },
+        { kind: 'manual', user: 'someone@x.io', intent: null },
       )
 
       expect(insert.calls[0]!.args[0].ingestionLog).toEqual(null)
+      expect(insert.calls[0]!.args[0].intent).toEqual(null)
     })
   })
 })
@@ -289,6 +296,7 @@ function abstractRecord(id: string, symbol: string): AbstractTokenRecord {
     iconUrl: null,
     coingeckoId: null,
     coingeckoListingTimestamp: null,
+    additionalCoingeckoEntries: null,
     comment: null,
     reviewed: false,
     isPriceUnreliable: false,

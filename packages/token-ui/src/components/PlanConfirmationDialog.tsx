@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { useTRPC } from '~/react-query/trpc'
 import { diff } from '~/utils/getDiff'
+import { extractAbstractTokenId } from '~/utils/getDisplayId'
 import { ButtonWithSpinner } from './ButtonWithSpinner'
 import { Button } from './core/Button'
 import {
@@ -72,8 +73,13 @@ export function PlanConfirmationDialog({
 
   const { mutate: executePlan, isPending } = useMutation(
     trpc.plan.execute.mutationOptions({
-      onSuccess: () => {
+      onSuccess: (data) => {
         if (!plan) return
+        if (data.outcome === 'error') {
+          toast.error(data.error)
+          setPlan(undefined)
+          return
+        }
         onSuccess?.()
         queryClient.invalidateQueries(trpc.tokenDbHistory.getPage.queryFilter())
         switch (plan.intent.type) {
@@ -109,6 +115,11 @@ export function PlanConfirmationDialog({
             toast.success('Abstract token deleted successfully')
             invalidateAbstractTokenQueries()
             navigate('/')
+            break
+          case 'MergeAbstractTokenIntent':
+            toast.success('Abstract token merged successfully')
+            invalidateDeployedTokenQueries()
+            navigate(`/tokens/${extractAbstractTokenId(plan.intent.targetId)}`)
             break
           case 'DeleteDeployedTokenIntent':
             toast.success('Deployed token deleted successfully')

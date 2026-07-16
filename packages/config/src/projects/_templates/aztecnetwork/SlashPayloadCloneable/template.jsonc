@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "A template for specific slashing payload contracts deployed deterministically to encode a slashing action (who to slash and how much) that the Slasher executes.",
+  "description": "A template for specific slashing payload contracts deployed deterministically to encode one or more slashing actions (validators and amounts) that the Slasher executes.",
+  "category": "core",
   "ignoreMethods": ["getActions"]
 }

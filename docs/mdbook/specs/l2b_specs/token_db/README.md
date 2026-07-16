@@ -3,6 +3,7 @@
 **Table of Contents**
 
 - [TokenDB](#tokendb)
+  - [Two "planning" subsystems — what they share, what they don't](#two-planning-subsystems--what-they-share-what-they-dont)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -28,6 +29,10 @@ The docs in this folder describe how TokenDB is kept correct:
   intent → plan → commands pipeline behind every human-driven write
   from token-UI, and why it exists (visible blast radius + concurrency
   safety).
+- [Abstract token merging](./abstract_token_merging.md) — why duplicate
+  abstract tokens arise (CoinGecko splits, ingestion fallback), why an
+  abstract token keeps multiple CoinGecko entries, and how merging
+  resolves relation conflicts.
 
 ## Two "planning" subsystems — what they share, what they don't
 

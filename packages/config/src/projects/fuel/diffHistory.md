@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x5970faecbe80e7e95af6593f35485351228e13a9
+Generated with discovered.json: 0x00c0a1cb5de688bb7ef9abd55d46cb79640e2b49
 
-# Diff at Thu, 16 Jul 2026 11:02:04 GMT:
+# Diff at Wed, 15 Jul 2026 14:00:21 GMT:
 
-- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
-- comparing to: main@e710b6c5d3cdbeb52887729e85025b32d82b88cf block: 1783335748
-- current timestamp: 1784199661
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@40c68fc8d6e39f5b4f69bb2e62b69938a949b435 block: 1783335748
+- current timestamp: 1784123940
 
 ## Description
 
-Unpaused fuel bridge, now it is fully functional again.
+FuelMessagePortal is no longer paused.
 
 ## Watched changes
 
@@ -1383,4 +1383,3 @@ Initial discovery.
     contract FuelChainState (0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130)
     +++ description: None
 ```
-

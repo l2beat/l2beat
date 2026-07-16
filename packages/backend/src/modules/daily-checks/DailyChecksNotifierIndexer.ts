@@ -65,7 +65,7 @@ export class DailyChecksNotifierIndexer extends ManagedChildIndexer {
   }
 
   private buildMessage(userId: string): string {
-    return `Good morning <@${userId}>! 🌅\nTime for the daily checks — please review the [Elasticsearch dashboards](https://backoffice.l2beat.com/website/daily-checks) for any syncing or other issues. Leave ✅ if you have reviewed the dashboards.`
+    return `Good morning <@${userId}>! 🌅\nTime for the daily checks — please review the [Elasticsearch dashboards](https://backoffice.l2beat.com/website/daily-checks) for any syncing or other issues, just as before. Even though we now have an AI summary, please perform the review independently and then cross-check the AI summary to make sure it is accurate and has not missed anything. Leave ✅ once you have reviewed both.`
   }
 
   private pickResponsibleUser(timestamp: UnixTime): string {

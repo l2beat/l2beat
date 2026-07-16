@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Core rollup logic contract. It processes checkpoint proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.",
+  "canActIndependently": false,
   "ignoreMethods": [
     "archiveAt",
     "canPruneAtTime",
@@ -43,23 +44,34 @@
     "getTips",
     "getProvingCostPerManaInFeeAsset"
   ],
+  "ignoreRelatives": ["getBurnAddress"],
   "fields": {
     "owner": {
-      "description": "Governance owner of the rollup instance.",
+      "description": "Owner authorized to change the bounded mutable configuration of this rollup instance.",
       "permissions": [
         {
           "type": "interact",
-          "description": "change reward distribution parameters, increase the mana target, update proving costs, queue or cancel slasher replacement, change validator entry-queue limits, and set the one-shot escape hatch address."
+          "description": "change the sequencer reward share and checkpoint reward, only increase the mana target, update proving cost within its step and cooldown bounds, update validator entry-queue limits subject to nonzero normal-phase limits and bounded bootstrap settings, queue or cancel a Slasher replacement subject to the replacement delay, set the EscapeHatch once if still unset, and transfer or renounce ownership."
         }
       ]
     },
-    "getManaLimit": { "description": "gas limit" },
+    "getManaLimit": {
+      "description": "Maximum mana that a checkpoint can consume. It is derived from the current mana target."
+    },
+    "latestStakingQueueConfigUpdate": {
+      "description": "Latest owner-set validator entry-queue configuration. If absent, the deployment configuration in constructorArgs is still in effect.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": "config",
+        "set": { "event": "StakingQueueConfigUpdated" }
+      }
+    },
     "getEntryQueueFlushSize": {
-      "description": "number of sequencers flushable per epoch: will move from the entry queue to the active validator set if flushed"
+      "description": "Current maximum number of queued sequencers that can be moved into the active validator set during this epoch."
     },
     "getEscapeHatch": {
-      "description": "Address of the EscapeHatch contract used as a fallback for trustless proposal generation if the committee stalls.",
-      "template": "aztecnetwork/EscapeHatch"
+      "description": "One-time installed fallback proposal contract used if the committee stalls. The Rollup only accepts a nonzero contract that reports this Rollup as its target."
     },
     "getEpochProofVerifier": {
       "description": "The verifier contract used for epoch proof verification.",
@@ -96,15 +108,41 @@
       "template": "aztecnetwork/RewardBooster"
     },
     "getRewardConfig": {
-      "description": "Reward distribution parameters: distributor, sequencer share, prover booster and checkpoint reward."
+      "description": "Reward distribution parameters. The distributor and booster are fixed at deployment, while the owner can change the sequencer share and checkpoint reward."
     },
     "getRewardDistributor": {
       "description": "Reward distributor used by this rollup.",
       "template": "aztecnetwork/RewardDistributor"
     },
     "getSlasher": {
-      "description": "Slasher contract authorized by this rollup.",
-      "template": "aztecnetwork/Slasher"
+      "description": "Active Slasher authorized by this rollup.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "slash and eject validators while this contract is configured as the active Slasher.",
+          "condition": "the active Slasher authorizes the call under its own execution rules."
+        }
+      ]
+    },
+    "getPendingSlasher": {
+      "description": "Queued replacement Slasher and the timestamp at which anyone can finalize the replacement.",
+      "severity": "HIGH"
+    },
+    "getLegacySlasher": {
+      "description": "Outgoing Slasher and the timestamp until which it remains authorized after replacement.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "slash and eject validators while its legacy authorization remains active.",
+          "condition": "the legacy Slasher authorization window has not expired and the outgoing Slasher authorizes the call under its own execution rules."
+        }
+      ]
+    },
+    "getSlasherExecutionDelay": {
+      "description": "Deployment-fixed 60-day delay between queueing and finalizing a Slasher replacement."
+    },
+    "getLegacySlasherDrainWindow": {
+      "description": "Deployment-fixed 30-day period after replacement during which the outgoing Slasher remains authorized."
     },
     "getStakingAsset": {
       "description": "The ERC20 token staked by validators.",
@@ -124,13 +162,16 @@
       "handler": { "type": "constructorArgs", "nameArgs": true }
     },
     "getManaTarget": {
-      "description": "The `updateManaTarget` function can only increase the target, not decrease it."
+      "description": "Target mana per checkpoint. The owner can only increase this value, not decrease it."
     },
     "getLocalEjectionThreshold": {
-      "description": "Minimum stake before ejection. If slashed below this threshold, the validator is fully ejected. The value can be modified by governance with no bounds."
+      "description": "Deployment-fixed local stake threshold. A slash that would leave a validator below it ejects the validator and withdraws its full effective stake from the GSE."
     },
     "getActivationThreshold": {
       "description": "Stake needed to join as a sequencer."
+    },
+    "getExitDelay": {
+      "description": "Delay between a validator initiating an exit and its stake becoming withdrawable."
     }
   },
   "category": "core"

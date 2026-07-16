@@ -65,6 +65,22 @@ describe(validateBlip.name, () => {
       expect(validateBlip(['!=', {}])).toBeFalsy() // Invalid sub-element
     })
 
+    it('validates "<" operation', () => {
+      expect(validateBlip(['<'])).toBeFalsy() // Empty < is invalid
+      expect(validateBlip(['<', 123])).toBeTruthy()
+      expect(validateBlip(['<', 123, 456])).toBeTruthy() // Multiple arguments
+      expect(validateBlip(['<', ['get', 'n'], 5])).toBeTruthy() // Nested valid blips
+      expect(validateBlip(['<', {}])).toBeFalsy() // Invalid sub-element
+    })
+
+    it('validates ">" operation', () => {
+      expect(validateBlip(['>'])).toBeFalsy() // Empty > is invalid
+      expect(validateBlip(['>', 123])).toBeTruthy()
+      expect(validateBlip(['>', 123, 456])).toBeTruthy() // Multiple arguments
+      expect(validateBlip(['>', ['get', 'n'], 5])).toBeTruthy() // Nested valid blips
+      expect(validateBlip(['>', {}])).toBeFalsy() // Invalid sub-element
+    })
+
     it('validates "and" operation', () => {
       expect(validateBlip(['and'])).toBeFalsy() // Empty and is invalid
       expect(validateBlip(['and', 123])).toBeTruthy()
@@ -140,6 +156,17 @@ describe(validateBlip.name, () => {
       expect(validateBlip(['find', ['get', 'prop']])).toBeTruthy() // Valid with nested blip
       expect(validateBlip(['find', 123, 456])).toBeFalsy() // Too many arguments
       expect(validateBlip(['find', {}])).toBeFalsy() // Invalid sub-element
+    })
+
+    it('validates "env" operation', () => {
+      expect(validateBlip(['env'])).toBeFalsy() // Too few arguments
+      expect(validateBlip(['env', 'timestamp'])).toBeTruthy() // Valid known key
+      expect(validateBlip(['env', 'blockNumber'])).toBeTruthy()
+      expect(validateBlip(['env', 'chainName'])).toBeTruthy()
+      expect(validateBlip(['env', 'address'])).toBeTruthy()
+      expect(validateBlip(['env', 'unknown'])).toBeFalsy() // Unknown key
+      expect(validateBlip(['env', 123])).toBeFalsy() // Key must be a string
+      expect(validateBlip(['env', 'timestamp', 'extra'])).toBeFalsy() // Too many arguments
     })
 
     it('validates "format" operation', () => {

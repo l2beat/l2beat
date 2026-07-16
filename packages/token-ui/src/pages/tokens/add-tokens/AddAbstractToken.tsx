@@ -39,6 +39,7 @@ export function AddAbstractToken({
       reviewed: true,
       isPriceUnreliable: false,
       category: null,
+      additionalCoingeckoEntries: [],
     },
   })
   const [plan, setPlan] = useState<Plan | undefined>(undefined)
@@ -122,6 +123,14 @@ export function AddAbstractToken({
         iconUrl: values.iconUrl || null,
         coingeckoId: values.coingeckoId || null,
         comment: values.comment || null,
+        additionalCoingeckoEntries:
+          values.additionalCoingeckoEntries?.map((entry) => ({
+            coingeckoId: entry.coingeckoId,
+            iconUrl: entry.iconUrl || null,
+            coingeckoListingTimestamp: entry.coingeckoListingTimestamp
+              ? UnixTime.fromDate(new Date(entry.coingeckoListingTimestamp))
+              : null,
+          })) ?? null,
         coingeckoListingTimestamp: values.coingeckoListingTimestamp
           ? UnixTime.fromDate(new Date(values.coingeckoListingTimestamp))
           : null,
