@@ -129,6 +129,9 @@ const mainPages: MainPage[] = [
   {
     title: 'DA Risk Framework',
   },
+  {
+    title: 'Native Rollups',
+  },
 ]
 
 export async function generateMainPageOgImages(

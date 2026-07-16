@@ -246,6 +246,10 @@ export function SideNavLayout({
           href: '/governance',
         },
         {
+          title: 'Native Rollups',
+          href: '/native-rollups',
+        },
+        {
           title: 'Tools',
           href: externalLinks.tools,
         },
