@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xf805c3bbbea2b1650da46b82b559d06d385bc066
+
+# Diff at Mon, 13 Jul 2026 10:31:18 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@217e694bd321092d3ecc9f3d50e8788555454f01 block: 1783587324
+- current timestamp: 1783938613
+
+## Description
+
+Rotated 2 zeronetwork ms members.
+
+## Watched changes
+
+```diff
+    contract Zeronetwork Multisig (eth:0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xA167ca2984F7e08EFd4DDf9c5a4A21D66c07813E"
++        "eth:0x3e27b981b1Cf1b730316f64f88b98c22d931BAc2"
+      values.$members.4:
+-        "eth:0x3Ec90fA056A39e7281a5b4c8c044B86667D770e1"
++        "eth:0x953A9Df5Dc482A36fF3E0AB7D3C38f3fc40CB722"
+    }
+```
+
 Generated with discovered.json: 0x3378be62286ee3f94bd04fbed102b622c6b13a49
 
 # Diff at Fri, 10 Jul 2026 10:03:47 GMT:

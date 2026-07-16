@@ -30,7 +30,7 @@ export async function getDaArchivedEntries(): Promise<
   const [layers, bridges, dacs, economicSecurity, projectsChangeReport] =
     await Promise.all([
       ps.getProjects({
-        select: ['daLayer', 'statuses'],
+        select: ['daLayer', 'statuses', 'display'],
         where: ['archivedAt'],
       }),
       ps.getProjects({
@@ -38,7 +38,7 @@ export async function getDaArchivedEntries(): Promise<
         optional: ['contracts'],
       }),
       ps.getProjects({
-        select: ['customDa', 'statuses'],
+        select: ['customDa', 'statuses', 'display'],
         where: ['archivedAt'],
       }),
       getDaProjectsEconomicSecurity(),
@@ -76,7 +76,7 @@ export interface DaBridgeArchivedEntry
 }
 
 function getDaArchivedEntry(
-  layer: Project<'daLayer' | 'statuses'>,
+  layer: Project<'daLayer' | 'statuses' | 'display'>,
   bridges: Project<'daBridge' | 'statuses', 'contracts'>[],
   getTvs: (projects: ProjectId[]) => { latest: number; sevenDaysAgo: number },
   economicSecurity: number | undefined,
@@ -127,7 +127,7 @@ function getDaArchivedEntry(
 }
 
 function getDacEntry(
-  project: Project<'customDa' | 'statuses'>,
+  project: Project<'customDa' | 'statuses' | 'display'>,
 ): DaArchivedEntry {
   const bridgeEntry: DaBridgeArchivedEntry = {
     name: project.customDa.name ?? `${project.name} DAC`,

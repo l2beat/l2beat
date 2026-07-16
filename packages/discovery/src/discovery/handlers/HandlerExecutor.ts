@@ -27,6 +27,12 @@ export class HandlerExecutor {
       results,
       config.fields,
       config.types,
+      {
+        blockNumber: provider.blockNumber,
+        timestamp: provider.timestamp,
+        chainName: provider.chain,
+        address: address.toString(),
+      },
     )
     return { results, values, errors, usedTypes }
   }

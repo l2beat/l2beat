@@ -257,6 +257,7 @@ export interface InteropFeatureConfig {
       type: 'evm'
     }[]
   }
+  knownChains: string[]
   matching: boolean
   cleaner: boolean
   dangerousOperationsEnabled: boolean

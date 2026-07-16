@@ -6,6 +6,8 @@ import {
   EcosystemTokenRepository,
 } from './EcosystemTokenRepository'
 
+const TIMESTAMP = UnixTime(1)
+
 describeDatabase(EcosystemTokenRepository.name, (db) => {
   const repository = db.ecosystemToken
 
@@ -80,6 +82,6 @@ function ecosystemToken(
     marketCap7dChange: 0.05,
     circulatingSupply: 1_000_000,
     circulatingSupply7dChange: 0.02,
-    timestamp: UnixTime.now(),
+    timestamp: TIMESTAMP,
   }
 }

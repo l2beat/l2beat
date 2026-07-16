@@ -1,6 +1,6 @@
 {
   "name": "zeronetwork",
-  "timestamp": 1783587324,
+  "timestamp": 1783938613,
   "configHash": "0xa70e76d3549719515ee33e0c55d397f90f8a9ba780f46e674fa311c01c400c16",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -201,18 +201,18 @@
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
-          "eth:0xA167ca2984F7e08EFd4DDf9c5a4A21D66c07813E",
+          "eth:0x3e27b981b1Cf1b730316f64f88b98c22d931BAc2",
           "eth:0xc858a504d6c267fe2d462D240b68A7D939B1fEC9",
           "eth:0xF322467cec88d3CDFa9376B19bD5AD40da665277",
           "eth:0x3Bc72A56F9036B94ad14BF082bF93731e0545255",
-          "eth:0x3Ec90fA056A39e7281a5b4c8c044B86667D770e1"
+          "eth:0x953A9Df5Dc482A36fF3E0AB7D3C38f3fc40CB722"
         ],
         "$threshold": 3,
         "domainSeparator": "0x89a4b461d7d0ebc4cbf656eccda8c499236d20a7445adf4d25e2bbc6f9882190",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 13,
+        "nonce": 14,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -282,7 +282,7 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x3Ec90fA056A39e7281a5b4c8c044B86667D770e1",
+      "address": "eth:0x3e27b981b1Cf1b730316f64f88b98c22d931BAc2",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -516,6 +516,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x953A9Df5Dc482A36fF3E0AB7D3C38f3fc40CB722",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ProxyAdmin",
       "address": "eth:0x9B9256E7D5b696F7BD7525F42238Ba3d9BBD9cDA",
       "type": "Contract",
@@ -542,11 +547,6 @@
       "implementationNames": {
         "eth:0x9B9256E7D5b696F7BD7525F42238Ba3d9BBD9cDA": "ProxyAdmin"
       }
-    },
-    {
-      "address": "eth:0xA167ca2984F7e08EFd4DDf9c5a4A21D66c07813E",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0xa925fac7B26C2959b5d55173B21CAc5729372459",
@@ -1016,7 +1016,7 @@
           "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119",
           "eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731"
         ],
-        "getFirstUnprocessedPriorityTx": 5238,
+        "getFirstUnprocessedPriorityTx": 5240,
         "getL2BootloaderBytecodeHash": "0x01000911c4db4fe62c98e180cfa7e9b3a22fb15f505905d4bf36192f481551e6",
         "getL2DefaultAccountBytecodeHash": "0x010005f73e7c299ed73db937843643bdc276cbc2cc8596287e1e0cf3afc60252",
         "getL2EvmEmulatorBytecodeHash": "0x01000d8bae37b82f311186426184866498b357f41d7a02ced11f3e3fbfbacd63",
@@ -1025,7 +1025,7 @@
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
         "getPriorityQueueSize": 0,
-        "getPriorityTreeRoot": "0x8299ba1a7224c736828dfc86529edec1ec59a857a13670a1783e2d623b099dbd",
+        "getPriorityTreeRoot": "0x62efd380511e26fe1cf0312ab939bbb49edd1bd1bbccec5b91b7323699499727",
         "getPriorityTreeStartIndex": 3696,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 124554051586,
@@ -1033,13 +1033,13 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 29, 2],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 2316,
-        "getTotalBatchesExecuted": 2316,
-        "getTotalBatchesVerified": 2316,
-        "getTotalBlocksCommitted": 2316,
-        "getTotalBlocksExecuted": 2316,
-        "getTotalBlocksVerified": 2316,
-        "getTotalPriorityTxs": 5238,
+        "getTotalBatchesCommitted": 2328,
+        "getTotalBatchesExecuted": 2327,
+        "getTotalBatchesVerified": 2328,
+        "getTotalBlocksCommitted": 2328,
+        "getTotalBlocksExecuted": 2327,
+        "getTotalBlocksVerified": 2328,
+        "getTotalPriorityTxs": 5240,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0x4d335C5C08FEc91a39965351AbB6E315ad2e9ff3",
         "getVerifierParams": {
@@ -1794,6 +1794,6 @@
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
-  "usedBlockNumbers": { "ethereum": 25493964 },
-  "permissionsConfigHash": "0x666f36143b225f411052ec6311100ab40ed0f65aa254e90d07bddd4584e17f38"
+  "usedBlockNumbers": { "ethereum": 25523119 },
+  "permissionsConfigHash": "0x9084baf8d5cb5c31c80cb4c8e12b839cb5fe3f0086f12b546af4add096ad5c61"
 }

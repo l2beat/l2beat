@@ -546,6 +546,7 @@ export class InteropTransferRepository extends BaseRepository {
     snapshotTimestamp: UnixTime
     sourceChains: string[]
     destinationChains: string[]
+    abstractTokenId?: string
     cursor?: InteropTransferCursor
     limit: number
   }): Promise<InteropTransferRecord[]> {
@@ -568,6 +569,16 @@ export class InteropTransferRepository extends BaseRepository {
       .where('srcChain', 'in', options.sourceChains)
       .where('dstChain', 'in', options.destinationChains)
       .whereRef('srcChain', '!=', 'dstChain')
+
+    const abstractTokenId = options.abstractTokenId
+    if (abstractTokenId !== undefined) {
+      query = query.where((eb) =>
+        eb.or([
+          eb('srcAbstractTokenId', '=', abstractTokenId),
+          eb('dstAbstractTokenId', '=', abstractTokenId),
+        ]),
+      )
+    }
 
     const cursor = options.cursor
     if (cursor) {

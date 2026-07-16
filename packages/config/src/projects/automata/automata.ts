@@ -185,4 +185,13 @@ export const automata: ScalingProject = opStackL2({
       relayerFailure: DaRelayerFailureRisk.NoMechanism,
     },
   },
+  milestones: [
+    {
+      title: 'Automata paused',
+      url: 'https://etherscan.io/tx/0xe805d831fd737aae90f8313d66da05b7eae1f721f55cda3fbadad22a37deb2a4',
+      date: '2026-07-13T00:00:00Z',
+      description: 'Guardian EOA pauses chain contracts.',
+      type: 'incident',
+    },
+  ],
 })

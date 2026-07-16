@@ -30,6 +30,8 @@ export const zeronetwork: ScalingProject = zkStackL2({
   display: {
     name: 'ZERO Network',
     slug: 'zeronetwork',
+    headerWarning:
+      'ZERO Network is sunsetting. See the [announcement](https://x.com/zerodotnetwork/status/2057529610628128917) and make sure to bridge off your funds until July 31, 2026. Deposits are disabled.',
     description:
       'ZERO Network is an L2 by the Zerion wallet team, utilizing the ZK stack and native account abstraction, allowing Zerion wallet users gasless and prioritized transactions.',
     links: {
