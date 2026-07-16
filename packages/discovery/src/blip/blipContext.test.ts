@@ -104,20 +104,45 @@ describe('BLIP context variables ($$ / $)', () => {
     it('throws when no env is provided but a context token is used', () => {
       expect(() => executeBlip({}, '$$chainName')).toThrow()
     })
+  })
 
-    it('throws on an unknown $$ token', () => {
-      expect(() => executeBlip({}, '$$unknown', env)).toThrow()
+  describe('unknown $-prefixed strings stay literal', () => {
+    it('leaves an unknown $$ token as a literal string', () => {
+      expect(executeBlip({}, '$$unknown', env)).toEqual('$$unknown')
     })
 
-    it('throws on an unknown $ token', () => {
-      expect(() => executeBlip({}, '$unknown', env)).toThrow()
+    it('leaves an unknown $ token as a literal string', () => {
+      expect(executeBlip({}, '$unknown', env)).toEqual('$unknown')
     })
 
-    it('keeps the $$ and $ tiers separate', () => {
+    it('does not resolve wrong-tier tokens, keeping them literal', () => {
       // address lives under the single-dollar (contract) tier, not $$
-      expect(() => executeBlip({}, '$$address', env)).toThrow()
+      expect(executeBlip({}, '$$address', env)).toEqual('$$address')
       // chainName lives under the double-dollar (chain) tier, not $
-      expect(() => executeBlip({}, '$chainName', env)).toThrow()
+      expect(executeBlip({}, '$chainName', env)).toEqual('$chainName')
+    })
+
+    it('keeps a $-prefixed discovery key such as $admin as a literal', () => {
+      expect(executeBlip({}, '$admin', env)).toEqual('$admin')
+    })
+
+    it('picks a $-prefixed key from an object', () => {
+      expect(executeBlip({ $admin: 1, b: 2 }, ['pick', '$admin'], env)).toEqual(
+        { $admin: 1 },
+      )
+    })
+
+    it('compares against a $-prefixed literal after to_entries', () => {
+      // ['$admin', value] is the shape of an entry produced by to_entries
+      expect(
+        executeBlip(['$admin', 'x'], ['=', '$admin', ['get', 0]], env),
+      ).toEqual(true)
+    })
+
+    it('still resolves known tokens alongside $-prefixed literals', () => {
+      expect(executeBlip({}, ['=', '$$chainName', 'ethereum'], env)).toEqual(
+        true,
+      )
     })
   })
 })

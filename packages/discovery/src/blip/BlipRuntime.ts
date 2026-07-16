@@ -40,7 +40,7 @@ export class BlipRuntime {
         return value
       }
 
-      if (typeof blip === 'string' && blip.startsWith('$')) {
+      if (typeof blip === 'string' && CONTEXT_VARIABLES[blip] !== undefined) {
         return this.resolveContextVariable(blip)
       }
 

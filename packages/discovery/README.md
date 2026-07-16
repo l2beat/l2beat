@@ -1312,7 +1312,9 @@ Besides the piped input value, filters can reference values from the discovery c
 - `$$chainName` - the name of the chain being discovered (e.g. `ethereum`).
 - `$address` - the address of the contract the field belongs to.
 
-Referencing an unknown token, or one that is unavailable in the current context, throws an error.
+Only these exact tokens are treated as context variables.
+Any other `$`-prefixed leaf string (for example a Solidity key such as `$admin`) is left untouched as a literal, so patterns like `["pick", "$admin"]` keep working.
+A known token that is unavailable in the current context (e.g. `$$timestamp` when no timestamp is set) throws an error.
 
 For example, to derive a boolean `hasExpired` field that becomes `true` once a stored expiration timestamp is in the past, `copy` the timestamp field and compare it against `$$timestamp`:
 
