@@ -9,7 +9,7 @@ const FEATURES = [
   {
     title: 'Custom sequencing',
     description:
-      'Define sequencing policy in the rollup contract — centralized sequencing with fast preconfirmations, based sequencing, or a staked network.',
+      'Define sequencing policy in the rollup contract - centralized sequencing with fast preconfirmations, based sequencing, or a staked network.',
     icon: SwapIcon,
   },
   {
