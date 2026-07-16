@@ -1,33 +1,17 @@
 import { XIcon } from '~/icons/products/X'
-import type { ImageParams } from '~/utils/project/getImageParams'
+import type { Contributor } from '../contributors'
 import { SectionHeading } from './SectionHeading'
 
-export interface ContributorImages {
-  lucaDonno: ImageParams
-  justinDrake: ImageParams
-}
-
-const CONTRIBUTORS = [
-  {
-    name: 'Luca Donno',
-    org: 'L2BEAT',
-    image: 'lucaDonno',
-    href: 'https://x.com/donnoh_eth',
-  },
-  {
-    name: 'Justin Drake',
-    org: 'Ethereum Foundation',
-    image: 'justinDrake',
-    href: 'https://x.com/drakefjustin',
-  },
-] as const
-
-export function ContributorsSection({ images }: { images: ContributorImages }) {
+export function ContributorsSection({
+  contributors,
+}: {
+  contributors: Contributor[]
+}) {
   return (
     <section id="contributors" className="mt-8 mb-4 md:mt-12 md:mb-8">
       <SectionHeading title="Core contributors" />
       <div className="flex flex-wrap gap-8 max-md:px-4 md:gap-12">
-        {CONTRIBUTORS.map((contributor) => (
+        {contributors.map((contributor) => (
           <a
             key={contributor.name}
             href={contributor.href}
@@ -37,7 +21,7 @@ export function ContributorsSection({ images }: { images: ContributorImages }) {
           >
             <div className="relative">
               <img
-                {...images[contributor.image]}
+                {...contributor.image}
                 alt={contributor.name}
                 className="size-28 rounded-full border border-divider object-cover md:size-36"
               />

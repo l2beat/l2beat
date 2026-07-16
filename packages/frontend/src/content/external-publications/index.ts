@@ -6,7 +6,6 @@ const tags = v.union([v.literal('Others'), v.literal('Research')])
 export type ExternalPublicationTag = v.infer<typeof tags>
 
 const topics = v.array(v.literal('native-rollups'))
-export type ExternalPublicationTopic = v.infer<typeof topics>[number]
 
 const externalPublication = v.object({
   title: v.string(),

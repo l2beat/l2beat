@@ -4,7 +4,8 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { getYouTubeThumbnailUrl, getYouTubeVideoId } from '~/utils/youtube'
-import type { Talk } from './articles'
+import { CONTRIBUTORS, type Contributor } from './contributors'
+import type { Talk } from './materials'
 
 export async function getNativeRollupsData(
   manifest: Manifest,
@@ -13,10 +14,12 @@ export async function getNativeRollupsData(
   const props = {
     ...(await getAppLayoutProps()),
     talks: getNativeRollupsTalks(),
-    contributorImages: {
-      lucaDonno: manifest.getImage('/images/native-rollups/luca-donno.jpg'),
-      justinDrake: manifest.getImage('/images/native-rollups/justin-drake.jpg'),
-    },
+    contributors: CONTRIBUTORS.map(
+      ({ imagePath, ...contributor }): Contributor => ({
+        ...contributor,
+        image: manifest.getImage(imagePath),
+      }),
+    ),
   }
 
   return {

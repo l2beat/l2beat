@@ -6,7 +6,7 @@ import { GithubIcon } from '~/icons/products/Github'
 import { YouTubeIcon } from '~/icons/products/Youtube'
 import type { SvgIconProps } from '~/icons/SvgIcon'
 import { cn } from '~/utils/cn'
-import { ARTICLES, type Material, type Talk } from '../articles'
+import { ARTICLES, type Material, type Talk } from '../materials'
 import { SectionHeading } from './SectionHeading'
 
 const MATERIAL_ICONS: Record<
