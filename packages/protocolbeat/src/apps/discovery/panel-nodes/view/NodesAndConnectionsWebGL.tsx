@@ -106,6 +106,7 @@ interface DrawData {
   enableDimming: boolean
   markUnreachableEntries: boolean
   anyNodeSelected: boolean
+  visibleFieldNamesByNodeId: ReadonlyMap<string, ReadonlySet<string>>
 }
 
 interface VisibleField {
@@ -1373,8 +1374,10 @@ class WebGLRenderer {
     data: DrawData,
   ): number {
     let maxVertices = 0
-    for (const { flags, visibleFields } of renderNodes) {
+    for (const { node, flags, visibleFields } of renderNodes) {
+      const visibleFieldNames = data.visibleFieldNamesByNodeId.get(node.id)
       for (const { field, index } of visibleFields) {
+        if (!visibleFieldNames?.has(field.name)) continue
         if (flags.fieldTargetHidden[index]) continue
         const target = data.visibleById.get(field.target)
         if (!target) continue
@@ -1400,7 +1403,9 @@ class WebGLRenderer {
 
     let v = 0
     for (const { node, flags, visibleFields } of renderNodes) {
+      const visibleFieldNames = data.visibleFieldNamesByNodeId.get(node.id)
       for (const { field, index } of visibleFields) {
+        if (!visibleFieldNames?.has(field.name)) continue
         if (flags.fieldTargetHidden[index]) continue
         const target = data.visibleById.get(field.target)
         if (!target) continue
@@ -2225,6 +2230,7 @@ function buildDrawData(
   nodes: readonly Node[],
   containers: GroupContainer[],
   hidden: readonly string[],
+  visibleFieldNamesByNodeId: ReadonlyMap<string, ReadonlySet<string>>,
   selected: readonly string[],
   enableDimming: boolean,
   highlightOverlapping: boolean,
@@ -2249,13 +2255,17 @@ function buildDrawData(
   if (enableDimming && anyNodeSelected) {
     for (const node of visible) {
       if (!selectedSet.has(node.id)) continue
+      const visibleFieldNames = visibleFieldNamesByNodeId.get(node.id)
       for (const { field } of getVisibleFields(node)) {
+        if (!visibleFieldNames?.has(field.name)) continue
         highlightedSet.add(field.target)
       }
     }
     for (const node of visible) {
       if (highlightedSet.has(node.id)) continue
+      const visibleFieldNames = visibleFieldNamesByNodeId.get(node.id)
       for (const { field } of getVisibleFields(node)) {
+        if (!visibleFieldNames?.has(field.name)) continue
         if (selectedSet.has(field.target)) {
           highlightedSet.add(node.id)
         }
@@ -2300,6 +2310,7 @@ function buildDrawData(
     enableDimming,
     markUnreachableEntries,
     anyNodeSelected,
+    visibleFieldNamesByNodeId,
   }
 }
 
@@ -2363,6 +2374,7 @@ export function NodesAndConnectionsWebGL() {
         graph.nodes,
         graph.containers,
         graph.hidden,
+        graph.projection.visibleFieldNamesByNodeId,
         selected,
         enableDimming,
         highlightOverlapping,

@@ -1,22 +1,23 @@
 import type { Node, State } from '../State'
 import {
-  getHiddenNodeIds,
-  getLeafNodes,
-  setInboundFieldsHidden,
-} from '../utils/nodeVisibility'
+  applyFieldVisibility,
+  planFieldVisibility,
+} from '../utils/fieldVisibility'
+import { getGraphProjection } from '../utils/graphProjection'
 import { containerBoxes } from '../utils/renderGraph'
 import type { NodeLocations } from '../utils/storage'
 import { updateNodePositions } from '../utils/updateNodePositions'
 
 export function hideSelected(state: State): Partial<State> {
-  const nodes = setInboundFieldsHidden(
-    state.nodes,
+  const plan = planFieldVisibility(
+    getGraphProjection(state.nodes),
     new Set(state.selected),
     true,
   )
-  if (nodes.every((node, index) => node === state.nodes[index])) {
+  if (plan.fieldNamesBySource.size === 0) {
     return {}
   }
+  const nodes = applyFieldVisibility(state.nodes, plan)
   return updateNodePositions(state, {
     nodes,
     selected: [],
@@ -24,12 +25,14 @@ export function hideSelected(state: State): Partial<State> {
 }
 
 export function hideUnreachable(state: State): Partial<State> {
+  const projection = getGraphProjection(state.nodes)
   const unreachable = new Set(
-    getLeafNodes(state.nodes)
+    projection.leafNodes
       .filter((node) => !node.isReachable)
       .map((node) => node.id),
   )
-  const nodes = setInboundFieldsHidden(state.nodes, unreachable, true)
+  const plan = planFieldVisibility(projection, unreachable, true)
+  const nodes = applyFieldVisibility(state.nodes, plan)
   return updateNodePositions(state, { nodes })
 }
 
@@ -46,8 +49,13 @@ export function setPreferences(
 }
 
 export function showHidden(state: State): Partial<State> {
-  const hidden = new Set(getHiddenNodeIds(state.nodes))
-  const nodes = setInboundFieldsHidden(state.nodes, hidden, false)
+  const projection = getGraphProjection(state.nodes)
+  const plan = planFieldVisibility(
+    projection,
+    projection.hiddenNodeIdSet,
+    false,
+  )
+  const nodes = applyFieldVisibility(state.nodes, plan)
   return updateNodePositions(state, { nodes })
 }
 

@@ -15,7 +15,7 @@ import type { AutoGroup } from './store/actions/loadNodes'
 import type { Field, Node } from './store/State'
 import { useStore as useNodeStore, useStore } from './store/store'
 import { NODE_WIDTH } from './store/utils/constants'
-import { getHiddenNodeIds } from './store/utils/nodeVisibility'
+import { getGraphProjection } from './store/utils/graphProjection'
 import { topLevelByDescendant } from './store/utils/subnodes'
 import { Viewport } from './view/Viewport'
 
@@ -166,12 +166,15 @@ function useSynchronizeSelection() {
   const selectGlobal = usePanelStore((state) => state.select)
   const selectedNodes = useStore((state) => state.selected)
   const nodes = useStore((state) => state.nodes)
-  const hiddenNodes = useMemo(() => getHiddenNodeIds(nodes), [nodes])
+  const hiddenNodes = useMemo(
+    () => getGraphProjection(nodes).hiddenNodeIdSet,
+    [nodes],
+  )
   const selectAndFocus = useStore((state) => state.selectAndFocus)
 
   useEffect(() => {
     const visibleSelectedNodes = selectedNodes.filter(
-      (id) => !hiddenNodes.includes(id),
+      (id) => !hiddenNodes.has(id),
     )
     highlightGlobal(visibleSelectedNodes)
   }, [selectedNodes, hiddenNodes, highlightGlobal])

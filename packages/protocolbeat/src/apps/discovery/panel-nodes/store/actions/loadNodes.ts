@@ -8,9 +8,10 @@ import {
   NODE_WIDTH,
 } from '../utils/constants'
 import {
-  getHiddenNodeIds,
-  setInboundFieldsHidden,
-} from '../utils/nodeVisibility'
+  applyFieldVisibility,
+  planFieldVisibility,
+} from '../utils/fieldVisibility'
+import { getGraphProjection } from '../utils/graphProjection'
 import {
   type NodeLocations,
   recallNodeLayout,
@@ -98,13 +99,16 @@ export function loadNodes(
   const groupedNodes = saved?.groups?.length
     ? reconstructGroups(flatNodes, saved.groups)
     : flatNodes
-  const allNodes = setInboundFieldsHidden(
-    groupedNodes,
+  const legacyPlan = planFieldVisibility(
+    getGraphProjection(groupedNodes),
     new Set(saved?.hiddenNodes ?? []),
     true,
   )
-  const effectiveHidden = new Set(getHiddenNodeIds(allNodes))
-  const visibleNodes = allNodes.filter((node) => !effectiveHidden.has(node.id))
+  const allNodes = applyFieldVisibility(groupedNodes, legacyPlan)
+  const projection = getGraphProjection(allNodes)
+  const visibleNodes = allNodes.filter(
+    (node) => !projection.hiddenNodeIdSet.has(node.id),
+  )
   const hasSavedLayout =
     !!saved && allNodes.some((node) => saved.locations[node.id] !== undefined)
 
@@ -120,7 +124,10 @@ export function loadNodes(
   if (shouldAutoLayoutFromScratch) {
     const laidOut = {
       ...baseState,
-      ...layout(baseState, stackAutoLayout(visibleNodes)),
+      ...layout(
+        baseState,
+        stackAutoLayout(visibleNodes, true, projection.visibleEdges),
+      ),
     }
     return collapseAutoGroups(laidOut, autoGroups)
   }

@@ -1,7 +1,7 @@
 import type { Box, Node } from '../State'
 import { FIELD_HEIGHT, HEADER_HEIGHT } from './constants'
 import { boxContains } from './containment'
-import { getHiddenNodeIds } from './nodeVisibility'
+import { type GraphProjection, getGraphProjection } from './graphProjection'
 import { processConnection } from './updateNodePositions'
 
 const CONTAINER_PADDING = 24
@@ -20,6 +20,7 @@ export interface RenderGraph {
   readonly nodes: Node[]
   // Nodes disconnected by hidden fields.
   readonly hidden: readonly string[]
+  readonly projection: GraphProjection
   // One boundary per opened group, innermost last so hit-testing can prefer it.
   readonly containers: GroupContainer[]
 }
@@ -29,14 +30,15 @@ export interface RenderGraph {
 // geometry is recomputed against the expanded layout. When nothing is opened
 // the original node refs are returned untouched so React.memo keeps working.
 export function buildRenderGraph(nodes: readonly Node[]): RenderGraph {
-  const effectiveHidden = getHiddenNodeIds(nodes)
+  const projection = getGraphProjection(nodes)
+  const effectiveHidden = projection.hiddenNodeIds
   const {
     nodes: rendered,
     containers,
     expanded,
   } = expandGroups(nodes, effectiveHidden)
   if (!expanded) {
-    return { nodes: rendered, hidden: effectiveHidden, containers }
+    return { nodes: rendered, hidden: effectiveHidden, containers, projection }
   }
 
   const boxById = new Map<string, Box>()
@@ -48,14 +50,14 @@ export function buildRenderGraph(nodes: readonly Node[]): RenderGraph {
   }
 
   const laidOut = rendered.map((node) => layoutFields(node, boxById))
-  return { nodes: laidOut, hidden: effectiveHidden, containers }
+  return { nodes: laidOut, hidden: effectiveHidden, containers, projection }
 }
 
 // Flatten opened groups into their members without laying out fields. Select-box
 // hit-testing only reads node boxes, so it can skip the per-field connection
 // recompute that buildRenderGraph does on every mousemove.
 export function expandedNodes(nodes: readonly Node[]): Node[] {
-  const effectiveHidden = getHiddenNodeIds(nodes)
+  const effectiveHidden = getGraphProjection(nodes).hiddenNodeIds
   return expandGroups(nodes, effectiveHidden).nodes
 }
 

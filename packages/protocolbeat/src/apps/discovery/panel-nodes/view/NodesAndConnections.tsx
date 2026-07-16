@@ -48,6 +48,7 @@ export function NodesAndConnections() {
       buildView(
         graph.nodes,
         graph.hidden,
+        graph.projection.visibleFieldNamesByNodeId,
         selected,
         enableDimming,
         highlightOverlapping,
@@ -171,6 +172,7 @@ function computeOverlappingIds(nodes: readonly Node[]): Set<string> {
 function buildView(
   nodes: readonly Node[],
   hidden: readonly string[],
+  visibleFieldNamesByNodeId: ReadonlyMap<string, ReadonlySet<string>>,
   selected: readonly string[],
   enableDimming: boolean,
   highlightOverlapping: boolean,
@@ -199,19 +201,17 @@ function buildView(
   if (enableDimming && selected.length > 0) {
     for (const node of visible) {
       if (!selectedSet.has(node.id)) continue
-      const hiddenFields =
-        node.hiddenFields.length > 0 ? new Set(node.hiddenFields) : undefined
+      const visibleFieldNames = visibleFieldNamesByNodeId.get(node.id)
       for (const field of node.fields) {
-        if (hiddenFields?.has(field.name)) continue
+        if (!visibleFieldNames?.has(field.name)) continue
         highlightedSet.add(field.target)
       }
     }
     for (const node of visible) {
       if (highlightedSet.has(node.id)) continue
-      const hiddenFields =
-        node.hiddenFields.length > 0 ? new Set(node.hiddenFields) : undefined
+      const visibleFieldNames = visibleFieldNamesByNodeId.get(node.id)
       for (const field of node.fields) {
-        if (hiddenFields?.has(field.name)) continue
+        if (!visibleFieldNames?.has(field.name)) continue
         if (selectedSet.has(field.target)) {
           highlightedSet.add(node.id)
           break
@@ -234,8 +234,7 @@ function buildView(
     const isGrayedOut = markUnreachableEntries && !node.isReachable
     const isOverlapping = overlappingIds.has(node.id)
 
-    const hiddenFieldsSet =
-      node.hiddenFields.length > 0 ? new Set(node.hiddenFields) : undefined
+    const visibleFieldNames = visibleFieldNamesByNodeId.get(node.id)
 
     let fieldHighlightedMask = ''
     let fieldTargetHiddenMask = ''
@@ -249,8 +248,7 @@ function buildView(
       fieldHighlightedMask += targetSelected ? '1' : '0'
       fieldTargetHiddenMask += targetHidden ? '1' : '0'
 
-      const fieldHidden = hiddenFieldsSet?.has(field.name) ?? false
-      if (fieldHidden || targetHidden) continue
+      if (!visibleFieldNames?.has(field.name) || targetHidden) continue
 
       const targetNode = visibleById.get(field.target)
       const isDashed =

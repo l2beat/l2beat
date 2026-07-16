@@ -2,7 +2,10 @@ import clsx from 'clsx'
 import type { Node } from '../store/State'
 import { useStore } from '../store/store'
 import { centerLocationsInViewport } from '../store/utils/centerLocationsInViewport'
-import { getHiddenNodeIds } from '../store/utils/nodeVisibility'
+import {
+  type GraphEdge,
+  getGraphProjection,
+} from '../store/utils/graphProjection'
 import { containerBoxes } from '../store/utils/renderGraph'
 import type { NodeLocations } from '../store/utils/storage'
 import { topLevelByDescendant } from '../store/utils/subnodes'
@@ -15,11 +18,11 @@ export function StackLayoutButton({ className }: { className?: string }) {
   const selected = useStore((state) => state.selected)
   const considerAllNodes = selected.length === 0
   const footprints = containerBoxes(nodes)
-  const effectiveHiddenNodes = new Set(getHiddenNodeIds(nodes))
+  const projection = getGraphProjection(nodes)
   const visibleNodes = nodes
     .filter(
       (node) =>
-        !effectiveHiddenNodes.has(node.id) &&
+        !projection.hiddenNodeIdSet.has(node.id) &&
         (considerAllNodes || selected.includes(node.id)),
     )
     .map((node) => {
@@ -30,7 +33,11 @@ export function StackLayoutButton({ className }: { className?: string }) {
   return (
     <ControlButton
       onClick={() => {
-        let locations = stackAutoLayout(visibleNodes, considerAllNodes)
+        let locations = stackAutoLayout(
+          visibleNodes,
+          considerAllNodes,
+          projection.visibleEdges,
+        )
         if (considerAllNodes) {
           const { transform, viewportContainer } = useStore.getState()
           locations = centerLocationsInViewport(
@@ -74,8 +81,11 @@ interface LayoutNode {
 export function stackAutoLayout(
   baseNodes: readonly Node[],
   freshLayout = true,
+  visibleEdges: readonly GraphEdge[] = getGraphProjection(
+    baseNodes,
+  ).visibleEdges,
 ) {
-  const nodes = toLayoutNodes(baseNodes)
+  const nodes = toLayoutNodes(baseNodes, visibleEdges)
   const clusters = clusterNodes(nodes)
 
   let { top, left } = getAnchorPoints(baseNodes, freshLayout)
@@ -112,7 +122,10 @@ function getChain(address: string): string {
   return prefix
 }
 
-function toLayoutNodes(baseNodes: readonly Node[]) {
+function toLayoutNodes(
+  baseNodes: readonly Node[],
+  visibleEdges: readonly GraphEdge[],
+) {
   const nodes = baseNodes.map(
     (base): LayoutNode => ({
       id: base.id,
@@ -132,17 +145,18 @@ function toLayoutNodes(baseNodes: readonly Node[]) {
   const byId = new Map(nodes.map((node) => [node.id, node]))
   const topLevelByAddress = topLevelByDescendant(baseNodes)
 
-  for (const node of nodes) {
-    const chainA = nodeChain(node.base)
-    for (const field of node.base.fields) {
-      const topLevel = topLevelByAddress.get(field.target)
-      const other = topLevel ? byId.get(topLevel.id) : undefined
-      if (other && other !== node && nodeChain(other.base) === chainA) {
-        if (!node.connectionsOut.includes(other)) {
-          node.connectionsOut.push(other)
+  for (const edge of visibleEdges) {
+    const sourceTop = topLevelByAddress.get(edge.source)
+    const targetTop = topLevelByAddress.get(edge.target)
+    const source = sourceTop ? byId.get(sourceTop.id) : undefined
+    const target = targetTop ? byId.get(targetTop.id) : undefined
+    if (source && target && source !== target) {
+      if (nodeChain(source.base) === nodeChain(target.base)) {
+        if (!source.connectionsOut.includes(target)) {
+          source.connectionsOut.push(target)
         }
-        if (!other.connectionsIn.includes(node)) {
-          other.connectionsIn.push(node)
+        if (!target.connectionsIn.includes(source)) {
+          target.connectionsIn.push(source)
         }
       }
     }
@@ -315,8 +329,8 @@ function groupByLevel(nodes: LayoutNode[]) {
         index = order.push(node.id) - 1
       }
 
-      const uniqueChildren = node.base.fields
-        .flatMap((field) => field.target)
+      const uniqueChildren = node.connectionsOut
+        .map((child) => child.id)
         .filter((id) => order.indexOf(id) === -1)
       order.splice(index, 0, ...uniqueChildren)
     }

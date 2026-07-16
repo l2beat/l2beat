@@ -10,7 +10,7 @@ import { cn } from '../../../../utils/cn'
 import type { Node } from '../store/State'
 import { useStore } from '../store/store'
 import { centerLocationsInViewport } from '../store/utils/centerLocationsInViewport'
-import { getHiddenNodeIds } from '../store/utils/nodeVisibility'
+import { getGraphProjection } from '../store/utils/graphProjection'
 import { containerBoxes } from '../store/utils/renderGraph'
 import type { NodeLocations } from '../store/utils/storage'
 import { topLevelByDescendant } from '../store/utils/subnodes'
@@ -33,9 +33,9 @@ export function ClusterLayoutButton({ className }: { className?: string }) {
   const nodes = useStore((state) => state.nodes)
   const selected = useStore((state) => state.selected)
   const footprints = containerBoxes(nodes)
-  const effectiveHiddenNodes = new Set(getHiddenNodeIds(nodes))
+  const projection = getGraphProjection(nodes)
   const visibleNodes = nodes
-    .filter((node) => !effectiveHiddenNodes.has(node.id))
+    .filter((node) => !projection.hiddenNodeIdSet.has(node.id))
     .map((node) => {
       const box = footprints.get(node.id)
       return box ? { ...node, box } : node
@@ -68,14 +68,18 @@ export function ClusterLayoutButton({ className }: { className?: string }) {
 
     const byDescendant = topLevelByDescendant(simulationNodes)
 
-    const links = simulationNodes
-      .flatMap((node) =>
-        node.fields.map((field) => ({
-          source: node.id,
-          target: byDescendant.get(field.target)?.id ?? field.target,
-        })),
+    const simulationIds = new Set(simNodes.map((node) => node.id))
+    const links = projection.visibleEdges
+      .map((edge) => ({
+        source: byDescendant.get(edge.source)?.id ?? edge.source,
+        target: byDescendant.get(edge.target)?.id ?? edge.target,
+      }))
+      .filter(
+        (link) =>
+          link.source !== link.target &&
+          simulationIds.has(link.source) &&
+          simulationIds.has(link.target),
       )
-      .filter((l) => simNodes.some((sn) => sn.id === l.target))
 
     const simulation = forceSimulation(simNodes)
       .force(

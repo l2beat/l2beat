@@ -1,12 +1,12 @@
 import { useStore } from '../store/store'
-import { getHiddenNodeIds } from '../store/utils/nodeVisibility'
+import { getGraphProjection } from '../store/utils/graphProjection'
 import { ControlDropdownButton } from './ControlDropdownButton'
 import { IconControlEye } from './icons/IconControlEye'
 
 export function ShowButton({ className }: { className?: string }) {
   const nodes = useStore((state) => state.nodes)
   const showHidden = useStore((state) => state.showHidden)
-  const hiddenCount = getHiddenNodeIds(nodes).length
+  const hiddenCount = getGraphProjection(nodes).hiddenNodeIds.length
 
   return (
     <ControlDropdownButton

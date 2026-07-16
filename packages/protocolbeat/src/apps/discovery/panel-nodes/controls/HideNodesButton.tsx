@@ -1,15 +1,15 @@
 import { IconEyeClosed } from '../../../../icons/IconEyeClosed'
 import { useStore } from '../store/store'
-import { getHiddenNodeIds, getLeafNodes } from '../store/utils/nodeVisibility'
+import { getGraphProjection } from '../store/utils/graphProjection'
 import { ControlDropdownButton } from './ControlDropdownButton'
 
 export function HideNodesButton({ className }: { className?: string }) {
   const nodes = useStore((state) => state.nodes)
   const hideUnreachable = useStore((state) => state.hideUnreachable)
-  const hiddenNodes = new Set(getHiddenNodeIds(nodes))
+  const projection = getGraphProjection(nodes)
 
-  const visibleUnreachableCount = getLeafNodes(nodes).filter(
-    (node) => !node.isReachable && !hiddenNodes.has(node.id),
+  const visibleUnreachableCount = projection.leafNodes.filter(
+    (node) => !node.isReachable && !projection.hiddenNodeIdSet.has(node.id),
   ).length
 
   return (
