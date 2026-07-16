@@ -64,7 +64,7 @@
       "type": "RISK_PARAMETER"
     },
     "referralHasExpired": {
-      "description": "Once a referral to a verifier expires, its entry has to be removed from the all Starkware verifiers' zk catalog pages.",
+      "description": "Once a referral to a verifier expires, its entry has to be removed from the all Starkware verifiers' zk catalog pages. Note that if an upstream verifier is already expired, then the current one is not reachable and could be ignored.",
       "severity": "HIGH",
       "copy": "referralExpirationTime",
       "edit": ["<", ["env", "timestamp"]]
