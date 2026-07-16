@@ -18,6 +18,8 @@ export class BlobService {
         from: blob.sequencer,
         to: blob.inbox,
         topics: blob.topics ?? null,
+        callSelector: blob.callSelector ?? null,
+        callFirstParameter: blob.callFirstParameter ?? null,
         size: null, // size is constant for Ethereum blobs
       }
     })
@@ -46,6 +48,8 @@ export class BlobService {
       inbox: record.to ?? '',
       sequencer: record.from,
       topics: record.topics ?? [],
+      callSelector: record.callSelector ?? undefined,
+      callFirstParameter: record.callFirstParameter ?? undefined,
     }))
   }
 

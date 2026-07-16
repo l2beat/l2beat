@@ -12,10 +12,17 @@ import { zkStackL2 } from '../../templates/zkStack'
 
 const discovery = new ProjectDiscovery('zksync2')
 const bridge = discovery.getContract('L1NativeTokenVault')
+const diamondAddress = ChainSpecificAddress.address(
+  discovery.getContract('Diamond').address,
+)
 
 const chainId = 324
 // https://etherscan.io/tx/0x2829993f6183647fc954ec75b67441ab0e597f445a3f5d6f976733775ca06f26#eventlog
-const l1migrationTs = UnixTime(1769897051) // 2023-11-03T00:32:11Z
+const l1migrationTs = UnixTime(1769897051) // 2026-01-31T22:04:11Z
+const l1MigrationBlock = 24357717
+const gatewayDiamondAddress = EthereumAddress(
+  '0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9',
+)
 
 // timestamp of the first executeBatchesSharedBridge trx on 0xdC26B08F0335b68721F64001C38b05D0BC9B539d
 const eraMultisigValidatorTs = UnixTime(1777393175)
@@ -128,10 +135,25 @@ export const zksync2: ScalingProject = zkStackL2({
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
       sinceBlock: 23633924,
-      inbox: 'eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776',
-      sequencers: [
-        '0x14F19299476664665eDa17DBb7dA7e62E3253aa8',
-        '0x7d95f0B9D3383D58E39a75a67760aA2153D355A2',
+      untilBlock: l1MigrationBlock,
+      inbox: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
+      calls: [
+        {
+          selector: '0x0db9eb87',
+          firstParameter: gatewayDiamondAddress,
+        },
+      ],
+    },
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: l1MigrationBlock,
+      inbox: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
+      calls: [
+        {
+          selector: '0x0db9eb87',
+          firstParameter: diamondAddress,
+        },
       ],
     },
   ],

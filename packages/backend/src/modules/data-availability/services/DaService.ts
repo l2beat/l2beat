@@ -5,7 +5,7 @@ import type {
 } from '@l2beat/config'
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import type { AvailBlob, CelestiaBlob, DaBlob } from '@l2beat/shared'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { Address32, assert, UnixTime } from '@l2beat/shared-pure'
 import type { BlockDaIndexedConfig } from '../../../config/Config'
 
 export class DaService {
@@ -115,9 +115,24 @@ export class DaService {
 }
 
 export function matchEthereumProject(
-  blob: { inbox: string; sequencer: string; topics: string[] },
+  blob: {
+    inbox: string
+    sequencer: string
+    topics: string[]
+    callSelector?: string
+    callFirstParameter?: string
+  },
   config: EthereumDaTrackingConfig,
 ) {
+  if (config.calls && config.calls.length > 0) {
+    return config.calls.some(
+      (call) =>
+        call.selector.toLowerCase() === blob.callSelector?.toLowerCase() &&
+        encodeFirstParameter(call.firstParameter) ===
+          blob.callFirstParameter?.toLowerCase(),
+    )
+  }
+
   if (config.topics) {
     const hasTopicMatch = config.topics.some((topic) =>
       blob.topics.includes(topic.toLowerCase()),
@@ -139,6 +154,13 @@ export function matchEthereumProject(
   )
 
   return hasInboxMatch && hasMatchingSequencer
+}
+
+function encodeFirstParameter(value: string | number): string {
+  const valueAsHex =
+    typeof value === 'number' ? `0x${BigInt(value).toString(16)}` : value
+
+  return Address32.from(valueAsHex)
 }
 
 function matchCelestiaProject(

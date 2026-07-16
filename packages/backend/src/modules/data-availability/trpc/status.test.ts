@@ -86,6 +86,7 @@ describe(getDaTrackingStatusRows.name, () => {
             inbox: '0x123',
             sequencers: ['0x456'],
             topics: ['0x789'],
+            calls: [{ selector: '0x12345678', firstParameter: '0xabc' }],
           }),
           mockCelestiaConfig({
             configurationId: 'celestia',
@@ -123,7 +124,7 @@ describe(getDaTrackingStatusRows.name, () => {
       status: 'missing',
     })
     expect(rowsByConfigId.get('ethereum')?.details).toEqual(
-      'inbox: 0x123; sequencers: 0x456; topics: 0x789',
+      'calls: 0x12345678(0xabc)',
     )
     expect(rowsByConfigId.get('celestia')?.details).toEqual(
       'namespace: namespace',

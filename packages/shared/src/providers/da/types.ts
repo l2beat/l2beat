@@ -12,6 +12,8 @@ export interface EthereumBlob extends DaBlobBase {
   inbox: string
   sequencer: string
   topics: string[]
+  callSelector?: string
+  callFirstParameter?: string
 }
 
 export interface AvailBlob extends DaBlobBase {

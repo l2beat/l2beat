@@ -705,16 +705,19 @@ function getDaTracking(
   }
 
   if (templateVars.usesEthereumBlobs) {
+    const validatorTimelockEntry =
+      templateVars.discovery.getContract('ValidatorTimelock')
     const validatorTimelock = ChainSpecificAddress.address(
-      templateVars.discovery.getContractDetails('ValidatorTimelock').address,
+      validatorTimelockEntry.address,
     )
 
-    const validatorsVTL = templateVars.discovery.getContractValue<
-      ChainSpecificAddress[]
-    >('ValidatorTimelock', 'validatorsVTL')
-
-    const inboxDeploymentBlockNumber =
-      templateVars.discovery.getContract('ValidatorTimelock').sinceBlock ?? 0
+    const inboxDeploymentBlockNumber = validatorTimelockEntry.sinceBlock ?? 0
+    const diamond = ChainSpecificAddress.address(
+      templateVars.discovery.getContract('Diamond').address,
+    )
+    const isPostV29 =
+      validatorTimelockEntry.template ===
+      'shared-zk-stack/ValidatorTimelock_post29'
 
     return [
       {
@@ -722,7 +725,17 @@ function getDaTracking(
         daLayer: ProjectId('ethereum'),
         sinceBlock: inboxDeploymentBlockNumber,
         inbox: validatorTimelock,
-        sequencers: validatorsVTL.map((a) => ChainSpecificAddress.address(a)),
+        calls: [
+          isPostV29
+            ? {
+                selector: '0x0db9eb87',
+                firstParameter: diamond,
+              }
+            : {
+                selector: '0x98f81962',
+                firstParameter: templateVars.chainId,
+              },
+        ],
       },
     ]
   }

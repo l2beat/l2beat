@@ -11,6 +11,8 @@ import { zkStackL2 } from '../../templates/zkStack'
 const genesisTimestamp = UnixTime(1729881083)
 const v26UpgradeTS = UnixTime(1742940287)
 const v29UpgradeTS = UnixTime(1761601727)
+// https://etherscan.io/tx/0x1e0981b58494e533e348c55373907e8d29a478dd38d081c3e1f4e0213339008c
+const v29UpgradeBlock = 23671558
 const eraMultisigValidatorTs = UnixTime(1782741239)
 const chainId = 2741
 const discovery = new ProjectDiscovery('abstract')
@@ -99,6 +101,31 @@ export const abstract: ScalingProject = zkStackL2({
     }),
   ],
   usesEthereumBlobs: true,
+  nonTemplateDaTracking: [
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 21809364,
+      untilBlock: v29UpgradeBlock,
+      inbox: EthereumAddress('0x8c0Bfc04AdA21fd496c55B8C50331f904306F564'),
+      sequencers: [
+        EthereumAddress('0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807'),
+        EthereumAddress('0x4b2d036D2c27192549ad5A2F2D9875E1843833De'),
+      ],
+    },
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: v29UpgradeBlock,
+      inbox: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
+      calls: [
+        {
+          selector: '0x0db9eb87',
+          firstParameter: ChainSpecificAddress.address(diamond.address),
+        },
+      ],
+    },
+  ],
   nonTemplateTrackedTxs: [
     {
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],

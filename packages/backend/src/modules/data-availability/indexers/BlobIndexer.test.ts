@@ -26,6 +26,8 @@ describe(BlobIndexer.name, () => {
           inbox: '0x123',
           sequencer: '0x456',
           topics: ['0xabc', '0xdef'],
+          callSelector: '0x12345678',
+          callFirstParameter: '0x789',
         },
       ]
 

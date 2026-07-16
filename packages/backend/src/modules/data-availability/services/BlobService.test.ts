@@ -17,6 +17,8 @@ describe(BlobService.name, () => {
           inbox: '0x123',
           sequencer: '0x456',
           topics: ['0xabc', '0xdef'],
+          callSelector: '0x12345678',
+          callFirstParameter: '0x789',
         },
       ]
 
@@ -39,6 +41,8 @@ describe(BlobService.name, () => {
           from: blob.sequencer,
           to: blob.inbox,
           topics: blob.topics ?? null,
+          callSelector: blob.callSelector ?? null,
+          callFirstParameter: blob.callFirstParameter ?? null,
           size: null,
         })),
       )
@@ -56,6 +60,8 @@ describe(BlobService.name, () => {
           from: '0x123',
           to: '0x456',
           topics: ['0xabc', '0xdef'],
+          callSelector: '0x12345678',
+          callFirstParameter: '0x789',
           size: null,
         },
       ]
@@ -81,6 +87,8 @@ describe(BlobService.name, () => {
           inbox: record.to ?? '',
           sequencer: record.from,
           topics: record.topics ?? [],
+          callSelector: record.callSelector ?? undefined,
+          callFirstParameter: record.callFirstParameter ?? undefined,
         })),
       )
 

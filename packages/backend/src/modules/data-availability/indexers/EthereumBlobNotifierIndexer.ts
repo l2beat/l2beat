@@ -92,13 +92,19 @@ export class EthereumBlobNotifierIndexer extends ManagedChildIndexer {
             inbox: pair.to ?? '',
             sequencer: pair.from,
             topics: [],
+            callSelector: pair.callSelector ?? undefined,
+            callFirstParameter: pair.callFirstParameter ?? undefined,
           },
           config,
         ),
       )
 
       if (!isMatched) {
-        unmatchedPairs.push(pair)
+        unmatchedPairs.push({
+          from: pair.from,
+          to: pair.to,
+          count: pair.count,
+        })
       }
     }
 

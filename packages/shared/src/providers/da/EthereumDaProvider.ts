@@ -73,6 +73,8 @@ export class EthereumDaProvider implements DaBlobProvider {
 
       const txLogs = logs.filter((l) => l.transactionHash === tx.hash)
       const topics = txLogs.flatMap((log) => log.topics)
+      const callSelector = tx.data?.slice(0, 10).toLowerCase()
+      const callFirstParameter = getFirstParameter(tx.data)
 
       tx.blobVersionedHashes.forEach(() =>
         blobs.push({
@@ -84,6 +86,8 @@ export class EthereumDaProvider implements DaBlobProvider {
           inbox: tx.to ?? '',
           sequencer: tx.from,
           topics,
+          callSelector,
+          callFirstParameter,
         }),
       )
     }
@@ -96,6 +100,14 @@ export class EthereumDaProvider implements DaBlobProvider {
   private async getBeaconBlockId(blockNumber: number): Promise<string> {
     return await this.rpcClient.getBlockParentBeaconRoot(blockNumber + 1)
   }
+}
+
+function getFirstParameter(data: string | undefined) {
+  if (data === undefined || data.length < 74) {
+    return undefined
+  }
+
+  return `0x${data.slice(10, 74).toLowerCase()}`
 }
 
 function filterOutIrrelevant(

@@ -1,6 +1,7 @@
 import type { Env } from '@l2beat/backend-tools'
 import type { ProjectDaTrackingConfig, ProjectService } from '@l2beat/config'
 import {
+  Address32,
   assertUnreachable,
   notUndefined,
   ProjectId,
@@ -342,7 +343,7 @@ async function getTimestampDaTrackingSovereignProjects(
   return indexedConfigs
 }
 
-function createDaTrackingId(config: ProjectDaTrackingConfig): string {
+export function createDaTrackingId(config: ProjectDaTrackingConfig): string {
   const input = []
 
   input.push(config.type)
@@ -351,7 +352,19 @@ function createDaTrackingId(config: ProjectDaTrackingConfig): string {
   input.push('v2')
 
   switch (config.type) {
-    case 'ethereum':
+    case 'ethereum': {
+      if (config.calls && config.calls.length > 0) {
+        input.push(
+          ...config.calls
+            .map(
+              (call) =>
+                `${call.selector.toLowerCase()}:${encodeFirstParameter(call.firstParameter)}`,
+            )
+            .sort((a, b) => a.localeCompare(b)),
+        )
+        break
+      }
+
       input.push(config.inbox)
       if (config.sequencers) {
         input.push(...config.sequencers.sort((a, b) => a.localeCompare(b)))
@@ -360,6 +373,7 @@ function createDaTrackingId(config: ProjectDaTrackingConfig): string {
         input.push(...config.topics.sort((a, b) => a.localeCompare(b)))
       }
       break
+    }
     case 'celestia':
       input.push(config.namespace)
       break
@@ -375,6 +389,13 @@ function createDaTrackingId(config: ProjectDaTrackingConfig): string {
 
   const hash = createHash('sha1').update(input.join('')).digest('hex')
   return hash.slice(0, 12)
+}
+
+function encodeFirstParameter(value: string | number): string {
+  const valueAsHex =
+    typeof value === 'number' ? `0x${BigInt(value).toString(16)}` : value
+
+  return Address32.from(valueAsHex)
 }
 
 function createDaLayerConfigId(daLayerName: string): string {
