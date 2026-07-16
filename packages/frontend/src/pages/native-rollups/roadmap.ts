@@ -30,7 +30,7 @@ export const ROADMAP_YEARS: RoadmapYear[] = [
         date: 'January 2025',
         title: 'Founding research',
         description:
-          "Justin Drake publishes “Native rollups — superpowers from L1 execution” on ethresear.ch, introducing the EXECUTE precompile that lets a rollup reuse Ethereum's own execution for verification.",
+          "Justin Drake publishes “Native rollups - superpowers from L1 execution” on ethresear.ch, introducing the EXECUTE precompile that lets a rollup reuse Ethereum's own execution for verification.",
         url: FOUNDING_POST_URL,
       },
       {
