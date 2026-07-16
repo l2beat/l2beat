@@ -71,7 +71,7 @@ function MaterialCard({ material }: { material: Material }) {
         {material.kind === 'talk' && (
           <div className="relative aspect-video w-full overflow-hidden bg-surface-secondary md:rounded-t-xl">
             <img
-              src={material.thumbnailSrc}
+              {...material.thumbnail}
               alt=""
               loading="lazy"
               className="size-full object-cover motion-safe:transition-transform motion-safe:duration-500 motion-safe:ease-out motion-safe:group-hover:scale-105"

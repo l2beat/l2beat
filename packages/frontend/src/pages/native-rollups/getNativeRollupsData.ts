@@ -3,7 +3,7 @@ import { getCollection } from '~/content/getCollection'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
-import { getYouTubeThumbnailUrl, getYouTubeVideoId } from '~/utils/youtube'
+import { getImageParams } from '~/utils/project/getImageParams'
 import { CONTRIBUTORS, type Contributor } from './contributors'
 import type { Talk } from './materials'
 
@@ -50,10 +50,12 @@ function getNativeRollupsTalks(): Talk[] {
     .sort((a, b) => b.data.publishedOn.getTime() - a.data.publishedOn.getTime())
     .map((publication) => {
       const { title, url, source, description } = publication.data
-      const videoId = getYouTubeVideoId(url)
-      if (!videoId || !source || !description) {
+      const thumbnail = getImageParams(
+        `/meta-images/publications/${publication.id}.png`,
+      )
+      if (!thumbnail || !source || !description) {
         throw new Error(
-          `Native rollups talk ${publication.id} must be a YouTube video with a source and description`,
+          `Native rollups talk ${publication.id} must have a generated thumbnail, a source, and a description`,
         )
       }
       return {
@@ -62,7 +64,7 @@ function getNativeRollupsTalks(): Talk[] {
         source,
         description,
         href: url,
-        thumbnailSrc: getYouTubeThumbnailUrl(videoId),
+        thumbnail,
       }
     })
 }

@@ -1,3 +1,4 @@
+import type { ImageParams } from '~/utils/project/getImageParams'
 import {
   EIP_8025_URL,
   EIP_8142_URL,
@@ -24,7 +25,7 @@ export interface Article extends MaterialBase {
 
 export interface Talk extends MaterialBase {
   kind: 'talk'
-  thumbnailSrc: string
+  thumbnail: ImageParams
 }
 
 export type Material = Article | Talk
