@@ -1,7 +1,16 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Plan } from '@l2beat/token-backend'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { ArrowRightIcon, CoinsIcon, PlusIcon, TrashIcon } from 'lucide-react'
+import {
+  ArrowRightIcon,
+  CheckIcon,
+  ChevronsUpDownIcon,
+  CoinsIcon,
+  GitMergeIcon,
+  PlusIcon,
+  TrashIcon,
+  TriangleAlertIcon,
+} from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, Navigate, useParams } from 'react-router-dom'
@@ -16,6 +25,22 @@ import {
   CardTitle,
 } from '~/components/core/Card'
 import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '~/components/core/Command'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '~/components/core/Dialog'
+import {
   Empty,
   EmptyContent,
   EmptyHeader,
@@ -23,15 +48,25 @@ import {
   EmptyTitle,
 } from '~/components/core/Empty'
 import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '~/components/core/Popover'
+import {
   AbstractTokenForm,
   AbstractTokenSchema,
 } from '~/components/forms/AbstractTokenForm'
 import { LoadingState } from '~/components/LoadingState'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { AppLayout } from '~/layouts/AppLayout'
-import type { AbstractTokenWithDeployedTokens } from '~/mock/types'
+import type {
+  AbstractToken,
+  AbstractTokenWithDeployedTokens,
+} from '~/mock/types'
 import { useTRPC } from '~/react-query/trpc'
 import { buildUrlWithParams } from '~/utils/buildUrlWithParams'
+import { cn } from '~/utils/cn'
+import { getAbstractTokenDisplayId } from '~/utils/getDisplayId'
 import { validateResolver } from '~/utils/validateResolver'
 
 export function AbstractTokenPage() {
@@ -65,6 +100,8 @@ function AbstractTokenView({
 }) {
   const trpc = useTRPC()
   const [plan, setPlan] = useState<Plan | undefined>(undefined)
+  const [isMergeDialogOpen, setIsMergeDialogOpen] = useState(false)
+  const [mergeTargetId, setMergeTargetId] = useState('')
 
   const form = useForm<AbstractTokenSchema>({
     resolver: validateResolver(AbstractTokenSchema),
@@ -75,6 +112,14 @@ function AbstractTokenView({
       coingeckoId: token.coingeckoId ?? undefined,
       iconUrl: token.iconUrl ?? undefined,
       comment: token.comment ?? undefined,
+      additionalCoingeckoEntries:
+        token.additionalCoingeckoEntries?.map((entry) => ({
+          coingeckoId: entry.coingeckoId,
+          iconUrl: entry.iconUrl ?? undefined,
+          coingeckoListingTimestamp: entry.coingeckoListingTimestamp
+            ? UnixTime.toYYYYMMDD(entry.coingeckoListingTimestamp)
+            : undefined,
+        })) ?? [],
       coingeckoListingTimestamp: token.coingeckoListingTimestamp
         ? UnixTime.toYYYYMMDD(token.coingeckoListingTimestamp)
         : undefined,
@@ -86,12 +131,16 @@ function AbstractTokenView({
       onSuccess: (data) => {
         if (data.outcome === 'success') {
           setPlan(data.plan)
+          setIsMergeDialogOpen(false)
         } else {
           toast.error(data.error)
         }
       },
     }),
   )
+
+  const { data: abstractTokens, isLoading: areAbstractTokensLoading } =
+    useQuery(trpc.abstractTokens.getAll.queryOptions())
 
   const { data: suggestions, isLoading: isLoadingSuggestions } = useQuery(
     trpc.deployedTokens.getSuggestionsByCoingeckoId.queryOptions(
@@ -116,6 +165,30 @@ function AbstractTokenView({
           form.reset(values)
         }}
       />
+      <MergeAbstractTokenDialog
+        isOpen={isMergeDialogOpen}
+        setIsOpen={setIsMergeDialogOpen}
+        source={token}
+        targetId={mergeTargetId}
+        setTargetId={setMergeTargetId}
+        tokens={abstractTokens ?? []}
+        isLoading={areAbstractTokensLoading}
+        isPending={isPending}
+        onMerge={() => {
+          const target = (abstractTokens ?? []).find(
+            (t) => t.id === mergeTargetId,
+          )
+          if (!target) {
+            toast.error('Select target abstract token')
+            return
+          }
+          planMutate({
+            type: 'MergeAbstractTokenIntent',
+            sourceId: getAbstractTokenDisplayId(token),
+            targetId: getAbstractTokenDisplayId(target),
+          })
+        }}
+      />
       <div className="mx-auto flex max-w-3xl gap-2">
         <div className="space-y-4">
           <Card>
@@ -138,6 +211,20 @@ function AbstractTokenView({
                       iconUrl: values.iconUrl || null,
                       coingeckoId: values.coingeckoId || null,
                       comment: values.comment || null,
+                      additionalCoingeckoEntries:
+                        values.additionalCoingeckoEntries &&
+                        values.additionalCoingeckoEntries.length > 0
+                          ? values.additionalCoingeckoEntries.map((entry) => ({
+                              coingeckoId: entry.coingeckoId,
+                              iconUrl: entry.iconUrl || null,
+                              coingeckoListingTimestamp:
+                                entry.coingeckoListingTimestamp
+                                  ? UnixTime.fromDate(
+                                      new Date(entry.coingeckoListingTimestamp),
+                                    )
+                                  : null,
+                            }))
+                          : null,
                       coingeckoListingTimestamp:
                         values.coingeckoListingTimestamp
                           ? UnixTime.fromDate(
@@ -230,22 +317,144 @@ function AbstractTokenView({
             </CardContent>
           </Card>
         </div>
-        <ButtonWithSpinner
-          variant="destructive"
-          className="mt-2"
-          size="icon"
-          onClick={() => {
-            planMutate({
-              type: 'DeleteAbstractTokenIntent',
-              id: token.id,
-            })
-          }}
-          isLoading={isPending}
-        >
-          <TrashIcon />
-        </ButtonWithSpinner>
+        <div className="mt-2 flex flex-col gap-2">
+          <ButtonWithSpinner
+            variant="outline"
+            size="icon"
+            title="Merge into another abstract token"
+            aria-label="Merge into another abstract token"
+            onClick={() => {
+              setMergeTargetId('')
+              setIsMergeDialogOpen(true)
+            }}
+            isLoading={false}
+            disabled={isPending}
+          >
+            <GitMergeIcon />
+          </ButtonWithSpinner>
+          <ButtonWithSpinner
+            variant="destructive"
+            size="icon"
+            title="Delete abstract token"
+            aria-label="Delete abstract token"
+            onClick={() => {
+              planMutate({
+                type: 'DeleteAbstractTokenIntent',
+                id: token.id,
+              })
+            }}
+            isLoading={isPending}
+          >
+            <TrashIcon />
+          </ButtonWithSpinner>
+        </div>
       </div>
     </>
+  )
+}
+
+function MergeAbstractTokenDialog({
+  isOpen,
+  setIsOpen,
+  source,
+  targetId,
+  setTargetId,
+  tokens,
+  isLoading,
+  isPending,
+  onMerge,
+}: {
+  isOpen: boolean
+  setIsOpen: (isOpen: boolean) => void
+  source: AbstractToken
+  targetId: string
+  setTargetId: (id: string) => void
+  tokens: AbstractToken[]
+  isLoading: boolean
+  isPending: boolean
+  onMerge: () => void
+}) {
+  const target = tokens.find((token) => token.id === targetId)
+  const targetOptions = tokens.filter((token) => token.id !== source.id)
+
+  return (
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogContent onOpenAutoFocus={(e) => e.preventDefault()}>
+        <DialogHeader>
+          <DialogTitle>Merge abstract token</DialogTitle>
+          <DialogDescription>
+            Move deployed tokens from {source.id} and copy its CoinGecko entries
+            into another abstract token.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="flex items-start gap-2 rounded border border-destructive bg-destructive/10 p-3 text-destructive text-sm">
+          <TriangleAlertIcon className="mt-0.5 size-4 shrink-0" />
+          <span>
+            This operation is difficult to revert. Proceed with caution.
+          </span>
+        </div>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              disabled={isLoading || isPending}
+              variant="outline"
+              role="combobox"
+              className={cn(
+                'justify-between',
+                !target && 'text-muted-foreground',
+              )}
+            >
+              {isLoading
+                ? 'Loading...'
+                : target
+                  ? getAbstractTokenDisplayId(target)
+                  : 'Select target abstract token'}
+              <ChevronsUpDownIcon className="opacity-50" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="p-0" align="start">
+            <Command>
+              <CommandInput placeholder="Search abstract token..." />
+              <CommandList>
+                <CommandEmpty>No abstract token found.</CommandEmpty>
+                <CommandGroup>
+                  {targetOptions.map((token) => {
+                    const displayId = getAbstractTokenDisplayId(token)
+                    return (
+                      <CommandItem
+                        value={displayId}
+                        key={displayId}
+                        onSelect={() => setTargetId(token.id)}
+                      >
+                        {displayId}
+                        <CheckIcon
+                          className={cn(
+                            'ml-auto',
+                            token.id === targetId ? 'opacity-100' : 'opacity-0',
+                          )}
+                        />
+                      </CommandItem>
+                    )
+                  })}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
+        <DialogFooter>
+          <ButtonWithSpinner onClick={onMerge} isLoading={isPending}>
+            Merge
+          </ButtonWithSpinner>
+          <Button
+            variant="outline"
+            onClick={() => setIsOpen(false)}
+            disabled={isPending}
+          >
+            Cancel
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   )
 }
 

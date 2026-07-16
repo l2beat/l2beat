@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { formatPlain, utcTime } from './ConsoleTransport'
+import { formatPlain, formatPretty, utcTime } from './ConsoleTransport'
 
 describe(formatPlain.name, () => {
   const time = new Date('1970-01-01T12:34:56.789Z')
@@ -112,5 +112,40 @@ describe(formatPlain.name, () => {
       },
     })
     expect(message).toEqual('12:34:56.789 INFO Hello {"x":1,"y":2,"z":3}')
+  })
+})
+
+describe(formatPretty.name, () => {
+  const time = new Date('1970-01-01T12:34:56.789Z')
+
+  it('does not collapse deeply nested values', () => {
+    const format = formatPretty(utcTime)
+    const message = format({
+      time,
+      level: 'INFO',
+      message: 'Hello',
+      parameters: {
+        plan: {
+          commands: [
+            {
+              update: {
+                additionalCoingeckoEntries: [
+                  {
+                    coingeckoId: 'test-coingecko-id',
+                    coingeckoListingTimestamp: 1782345600,
+                    iconUrl: 'http://xx.com/x.png',
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    })
+
+    expect(message).not.toInclude('[Object]')
+    expect(message).toInclude('test-coingecko-id')
+    expect(message).toInclude('1782345600')
+    expect(message).toInclude('http://xx.com/x.png')
   })
 })

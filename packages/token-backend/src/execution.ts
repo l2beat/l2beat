@@ -60,6 +60,7 @@ export function executePlan(
       await commitTokenChanges(db, plan.commands, {
         kind: 'manual',
         user: opts.user,
+        intent: plan.intent,
       })
       logger.info('Plan executed', { plan, user: opts.user })
       return {
@@ -91,6 +92,7 @@ export async function planAndExecute(
     await commitTokenChanges(db, planningResult.plan.commands, {
       kind: 'manual',
       user: opts.user,
+      intent,
     })
   }, 'serializable')
 }
