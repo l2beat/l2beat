@@ -17,24 +17,28 @@ describeDatabase(LivenessRepository.name, (db) => {
       timestamp: START - 1 * UnixTime.HOUR,
       blockNumber: 12345,
       txHash: '0x1234567890abcdef',
+      eventId: '0x1234567890abcdef',
       configurationId: txIdA,
     },
     {
       timestamp: START - 2 * UnixTime.HOUR,
       blockNumber: 12340,
       txHash: '0xabcdef1234567890',
+      eventId: '0xabcdef1234567890',
       configurationId: txIdA,
     },
     {
       timestamp: START - 3 * UnixTime.HOUR,
       blockNumber: 12346,
       txHash: '0xabcdef1234567890',
+      eventId: '0xabcdef1234567890',
       configurationId: txIdB,
     },
     {
       timestamp: START - 3 * UnixTime.HOUR,
       blockNumber: 12347,
       txHash: '0x12345678901abcdef',
+      eventId: '0x12345678901abcdef',
       configurationId: txIdC,
     },
   ]
@@ -53,12 +57,14 @@ describeDatabase(LivenessRepository.name, (db) => {
           timestamp: START - 5 * UnixTime.HOUR,
           blockNumber: 12349,
           txHash: '0x1234567890abcdef1',
+          eventId: '0x1234567890abcdef1',
           configurationId: txIdA,
         },
         {
           timestamp: START - 6 * UnixTime.HOUR,
           blockNumber: 12350,
           txHash: '0xabcdef1234567892',
+          eventId: '0xabcdef1234567892',
           configurationId: txIdA,
         },
       ]
@@ -77,21 +83,21 @@ describeDatabase(LivenessRepository.name, (db) => {
       await expect(repository.insertMany([])).not.toBeRejected()
     })
 
-    it('keeps the first record for a grouping key', async () => {
+    it('keeps the first record for an event identity', async () => {
       const records: LivenessRecord[] = [
         {
           timestamp: START,
           blockNumber: 12350,
-          txHash: 'first-grouped',
+          txHash: 'first-proof',
+          eventId: 'epoch-1',
           configurationId: txIdA,
-          groupingKey: 'epoch-1',
         },
         {
           timestamp: START + 1,
           blockNumber: 12351,
-          txHash: 'second-grouped',
+          txHash: 'second-proof',
+          eventId: 'epoch-1',
           configurationId: txIdA,
-          groupingKey: 'epoch-1',
         },
       ]
 
@@ -108,6 +114,7 @@ describeDatabase(LivenessRepository.name, (db) => {
           timestamp: START - i * UnixTime.HOUR,
           blockNumber: i,
           txHash: `0xabcdef1234567892${i}`,
+          eventId: `0xabcdef1234567892${i}`,
           configurationId: txIdA,
         })
       }
@@ -175,6 +182,7 @@ describeDatabase(LivenessRepository.name, (db) => {
             timestamp: START - 3 * UnixTime.HOUR,
             blockNumber: 12340,
             txHash: '0xabcdef1234567891',
+            eventId: '0xabcdef1234567891',
             configurationId: txIdA,
           },
         ]
@@ -195,6 +203,7 @@ describeDatabase(LivenessRepository.name, (db) => {
             timestamp: START,
             blockNumber: 12340,
             txHash: '0xabcdef1234567891',
+            eventId: '0xabcdef1234567891',
             configurationId: txIdA,
           },
         ]
@@ -215,30 +224,35 @@ describeDatabase(LivenessRepository.name, (db) => {
             timestamp: START - 1 * UnixTime.HOUR,
             blockNumber: 12345,
             txHash: '0x1234567890abcdef',
+            eventId: '0x1234567890abcdef',
             configurationId: txIdA,
           },
           {
             timestamp: START - 2 * UnixTime.HOUR,
             blockNumber: 12340,
             txHash: '0xabcdef1234567890',
+            eventId: '0xabcdef1234567890',
             configurationId: txIdA,
           },
           {
             timestamp: START - 3 * UnixTime.HOUR - 1,
             blockNumber: 12340,
             txHash: '0xabcdef1234567891',
+            eventId: '0xabcdef1234567891',
             configurationId: txIdA,
           },
           {
             timestamp: START - 3 * UnixTime.HOUR,
             blockNumber: 12346,
             txHash: '0xabcdef1234567890',
+            eventId: '0xabcdef1234567890',
             configurationId: txIdB,
           },
           {
             timestamp: START - 4 * UnixTime.HOUR,
             blockNumber: 12346,
             txHash: '0xabcdef1234567891',
+            eventId: '0xabcdef1234567891',
             configurationId: txIdB,
           },
         ]
@@ -308,24 +322,28 @@ describeDatabase(LivenessRepository.name, (db) => {
           timestamp: START,
           blockNumber: 12345,
           txHash: '0xabcdef1234567891',
+          eventId: '0xabcdef1234567891',
           configurationId: txIdA,
         },
         {
           timestamp: START + 1 * UnixTime.HOUR,
           blockNumber: 12345,
           txHash: '0x1234567890abcdef',
+          eventId: '0x1234567890abcdef',
           configurationId: txIdA,
         },
         {
           timestamp: START + 2 * UnixTime.HOUR,
           blockNumber: 12346,
           txHash: '0xabcdef1234567890',
+          eventId: '0xabcdef1234567890',
           configurationId: txIdA,
         },
         {
           timestamp: START + 2 * UnixTime.HOUR,
           blockNumber: 12346,
           txHash: '0xabcdef1234567890',
+          eventId: '0xabcdef1234567890',
           configurationId: txIdB,
         },
       ]

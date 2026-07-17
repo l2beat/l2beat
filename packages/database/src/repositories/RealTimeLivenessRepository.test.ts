@@ -17,24 +17,28 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
       timestamp: START - 1 * UnixTime.HOUR,
       blockNumber: 12345,
       txHash: '0x1234567890abcdef',
+      eventId: '0x1234567890abcdef',
       configurationId: txIdA,
     },
     {
       timestamp: START - 2 * UnixTime.HOUR,
       blockNumber: 12340,
       txHash: '0xabcdef1234567890',
+      eventId: '0xabcdef1234567890',
       configurationId: txIdA,
     },
     {
       timestamp: START - 3 * UnixTime.HOUR,
       blockNumber: 12346,
       txHash: '0xabcdef1234567890',
+      eventId: '0xabcdef1234567890',
       configurationId: txIdB,
     },
     {
       timestamp: START - 3 * UnixTime.HOUR,
       blockNumber: 12347,
       txHash: '0x12345678901abcdef',
+      eventId: '0x12345678901abcdef',
       configurationId: txIdC,
     },
   ]
@@ -43,26 +47,28 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
     this.timeout(10000)
 
     await repository.deleteAll()
-    await repository.upsertMany(DATA)
+    await repository.insertMany(DATA)
   })
 
-  describe(RealTimeLivenessRepository.prototype.upsertMany.name, () => {
+  describe(RealTimeLivenessRepository.prototype.insertMany.name, () => {
     it('only new rows', async () => {
       const newRows = [
         {
           timestamp: START - 5 * UnixTime.HOUR,
           blockNumber: 12349,
           txHash: '0x1234567890abcdef1',
+          eventId: '0x1234567890abcdef1',
           configurationId: txIdA,
         },
         {
           timestamp: START - 6 * UnixTime.HOUR,
           blockNumber: 12350,
           txHash: '0xabcdef1234567892',
+          eventId: '0xabcdef1234567892',
           configurationId: txIdA,
         },
       ]
-      await repository.upsertMany(newRows)
+      await repository.insertMany(newRows)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([
@@ -73,50 +79,52 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
       ])
     })
 
-    it('update on conflict', async () => {
+    it('keeps the first occurrence of an event', async () => {
       const newRows = [
         {
           timestamp: START - 4 * UnixTime.HOUR,
           blockNumber: 12348,
           txHash: '0xabcdef1234567890',
+          eventId: '0xabcdef1234567890',
           configurationId: txIdB,
         },
         {
           timestamp: START - 4 * UnixTime.HOUR,
           blockNumber: 12349,
           txHash: '0x12345678901abcdef',
+          eventId: '0x12345678901abcdef',
           configurationId: txIdC,
         },
       ]
-      await repository.upsertMany(newRows)
+      await repository.insertMany(newRows)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([DATA[0]!, DATA[1]!, ...newRows])
+      expect(results).toEqualUnsorted(DATA)
     })
 
     it('empty array', async () => {
-      await expect(repository.upsertMany([])).not.toBeRejected()
+      await expect(repository.insertMany([])).not.toBeRejected()
     })
 
-    it('keeps the first record for a grouping key', async () => {
+    it('keeps the first record for an event identity', async () => {
       const records = [
         {
           timestamp: START,
           blockNumber: 12350,
-          txHash: 'first-grouped',
+          txHash: 'first-proof',
+          eventId: 'epoch-1',
           configurationId: txIdA,
-          groupingKey: 'epoch-1',
         },
         {
           timestamp: START + 1,
           blockNumber: 12351,
-          txHash: 'second-grouped',
+          txHash: 'second-proof',
+          eventId: 'epoch-1',
           configurationId: txIdA,
-          groupingKey: 'epoch-1',
         },
       ]
 
-      await repository.upsertMany(records)
+      await repository.insertMany(records)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([...DATA, records[0]!])

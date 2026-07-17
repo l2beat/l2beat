@@ -362,7 +362,7 @@ export const aztecnetwork: ScalingProject = {
             type: 'liveness',
             subtype: 'stateUpdates',
             // All proofs for an epoch share its first checkpoint as `args.start`.
-            deduplicateBy: { type: 'functionCallParameter', path: [0, 0] },
+            eventIdentity: { type: 'functionCallParameter', path: [0, 0] },
           },
           { type: 'l2costs', subtype: 'stateUpdates' },
         ],

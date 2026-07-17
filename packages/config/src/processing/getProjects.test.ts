@@ -610,7 +610,7 @@ describe('getProjects', () => {
         }
       })
 
-      it('deduplicates only Aztec liveness by epoch start', () => {
+      it('identifies Aztec liveness events by epoch start', () => {
         const configs = projectsById.get(
           ProjectId('aztecnetwork'),
         )?.trackedTxsConfig
@@ -626,11 +626,11 @@ describe('getProjects', () => {
 
         assert(liveness?.params.formula === 'functionCall')
         assert(costs?.params.formula === 'functionCall')
-        expect(liveness.params.deduplicateBy).toEqual({
+        expect(liveness.eventIdentity).toEqual({
           type: 'functionCallParameter',
           path: [0, 0],
         })
-        expect(costs.params.deduplicateBy).toEqual(undefined)
+        expect('eventIdentity' in costs).toEqual(false)
       })
     })
   })

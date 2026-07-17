@@ -1,10 +1,10 @@
 import { createHash } from 'crypto'
-import type { TrackedTxConfigEntry } from './TrackedTxsConfig'
+import type { TrackedTxConfigEntryWithoutId } from './TrackedTxsConfig'
 
 export type TrackedTxId = string
 
 export function createTrackedTxId(
-  trackedTxConfig: Omit<TrackedTxConfigEntry, 'id'>,
+  trackedTxConfig: TrackedTxConfigEntryWithoutId,
 ): TrackedTxId {
   const input = []
 
@@ -14,14 +14,15 @@ export function createTrackedTxId(
   input.push(trackedTxConfig.subtype)
   // untilTimestamp is not used in the ID calculation.
 
+  if (trackedTxConfig.type === 'liveness' && trackedTxConfig.eventIdentity) {
+    input.push(trackedTxConfig.eventIdentity.type)
+    input.push(trackedTxConfig.eventIdentity.path.join('.'))
+  }
+
   switch (trackedTxConfig.params.formula) {
     case 'functionCall':
       input.push(trackedTxConfig.params.address)
       input.push(trackedTxConfig.params.selector)
-      if (trackedTxConfig.params.deduplicateBy) {
-        input.push(trackedTxConfig.params.deduplicateBy.type)
-        input.push(trackedTxConfig.params.deduplicateBy.path.join('.'))
-      }
       break
     case 'sharpSubmission':
       input.push(trackedTxConfig.params.address)

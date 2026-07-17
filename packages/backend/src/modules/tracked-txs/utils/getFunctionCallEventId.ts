@@ -1,19 +1,17 @@
-import type { TrackedTxFunctionCallConfig } from '@l2beat/shared'
+import type { TrackedTxLivenessEventIdentity } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-export function getFunctionCallGroupingKey(
+export function getFunctionCallEventId(
   input: string,
-  config: TrackedTxFunctionCallConfig,
-): string | undefined {
-  const deduplication = config.deduplicateBy
-  if (!deduplication) return
-
-  const functionFragment = config.signature.replace('function ', '')
-  const iface = new utils.Interface([config.signature])
+  signature: `function ${string}`,
+  identity: TrackedTxLivenessEventIdentity,
+): string {
+  const functionFragment = signature.replace('function ', '')
+  const iface = new utils.Interface([signature])
   let value: unknown = iface.decodeFunctionData(functionFragment, input)
 
-  for (const index of deduplication.path) {
+  for (const index of identity.path) {
     assert(Number.isInteger(index) && index >= 0, 'Invalid parameter path')
     assert(
       typeof value === 'object' && value !== null,
@@ -23,7 +21,7 @@ export function getFunctionCallGroupingKey(
   }
 
   assert(value !== undefined && value !== null, 'Parameter path does not exist')
-  assert(!Array.isArray(value), 'Grouping parameter must be a scalar')
+  assert(!Array.isArray(value), 'Event identity parameter must be a scalar')
 
   return String(value)
 }

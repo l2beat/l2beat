@@ -80,7 +80,7 @@ describe(RealTimeLivenessProcessor.name, () => {
         const realTimeLivenessRepository = mockObject<
           Database['realTimeLiveness']
         >({
-          upsertMany: mockFn().resolvesTo(undefined),
+          insertMany: mockFn().resolvesTo(undefined),
         })
 
         const projectId = ProjectId('project-id')
@@ -168,33 +168,36 @@ describe(RealTimeLivenessProcessor.name, () => {
 
         await processor.matchLivenessTransactions(block, logs)
 
-        expect(realTimeLivenessRepository.upsertMany).toHaveBeenCalledWith([
+        expect(realTimeLivenessRepository.insertMany).toHaveBeenCalledWith([
           {
             configurationId: configurations[0].id,
             txHash: txHash1,
             blockNumber: block.number,
             timestamp: block.timestamp,
+            eventId: txHash1,
           },
           {
             configurationId: configurations[1].id,
             txHash: txHash1,
             blockNumber: block.number,
             timestamp: block.timestamp,
+            eventId: txHash1,
           },
           {
             configurationId: configurations[1].id,
             txHash: txHash2,
             blockNumber: block.number,
             timestamp: block.timestamp,
+            eventId: txHash2,
           },
         ])
       })
 
-      it('adds a semantic grouping key to function calls', async () => {
+      it('uses a function parameter as the event identity', async () => {
         const realTimeLivenessRepository = mockObject<
           Database['realTimeLiveness']
         >({
-          upsertMany: mockFn().resolvesTo(undefined),
+          insertMany: mockFn().resolvesTo(undefined),
         })
         const projectId = ProjectId('project-id')
         const address = EthereumAddress.random()
@@ -207,15 +210,15 @@ describe(RealTimeLivenessProcessor.name, () => {
           projectId,
           subtype: 'stateUpdates',
           sinceTimestamp: UnixTime.now(),
+          eventIdentity: {
+            type: 'functionCallParameter',
+            path: [0, 0],
+          },
           params: {
             formula: 'functionCall',
             address,
             selector: data.slice(0, 10),
             signature,
-            deduplicateBy: {
-              type: 'functionCallParameter',
-              path: [0, 0],
-            },
           },
         }
         const block = mockObject<Block>({
@@ -238,13 +241,13 @@ describe(RealTimeLivenessProcessor.name, () => {
 
         await processor.matchLivenessTransactions(block, [])
 
-        expect(realTimeLivenessRepository.upsertMany).toHaveBeenCalledWith([
+        expect(realTimeLivenessRepository.insertMany).toHaveBeenCalledWith([
           {
             configurationId: configuration.id,
             txHash: '0x123',
             blockNumber: block.number,
             timestamp: block.timestamp,
-            groupingKey: '123',
+            eventId: '123',
           },
         ])
       })
@@ -278,12 +281,14 @@ describe(RealTimeLivenessProcessor.name, () => {
           {
             configurationId: configurationId1,
             txHash: '0x123',
+            eventId: '0x123',
             blockNumber: 123,
             timestamp: lastTxTimestamp,
           },
           {
             configurationId: configurationId1,
             txHash: '0x123',
+            eventId: '0x123',
             blockNumber: 123,
             timestamp: lastTxTimestamp - 1 * UnixTime.MINUTE,
           },
@@ -391,6 +396,7 @@ describe(RealTimeLivenessProcessor.name, () => {
           {
             configurationId,
             txHash: '0x123',
+            eventId: '0x123',
             blockNumber: 123,
             timestamp: lastTxTimestamp,
           },
@@ -494,12 +500,14 @@ describe(RealTimeLivenessProcessor.name, () => {
           {
             configurationId,
             txHash: '0x123',
+            eventId: '0x123',
             blockNumber: 123,
             timestamp: lastTxTimestamp,
           },
           {
             configurationId: configurationId2,
             txHash: '0x123',
+            eventId: '0x123',
             blockNumber: 123,
             timestamp: lastTxTimestamp - 1 * UnixTime.MINUTE,
           },
@@ -696,6 +704,7 @@ describe(RealTimeLivenessProcessor.name, () => {
           {
             configurationId,
             txHash: '0x123',
+            eventId: '0x123',
             blockNumber: 123,
             timestamp: lastTxTimestamp,
           },

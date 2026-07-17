@@ -145,7 +145,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         blob_versioned_hashes: null,
       },
     ]
-    const expected: TrackedTxFunctionCallResult[] = [
+    const expected: Omit<TrackedTxFunctionCallResult, 'eventId'>[] = [
       {
         formula: 'functionCall',
         projectId: functionCalls[0].properties.projectId,
@@ -206,7 +206,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       queryResults,
     )
 
-    expect(result).toEqual(expected)
+    expect(withoutEventIds(result)).toEqual(expected)
   })
 
   it('throws when there is no matching configuration', () => {
@@ -243,12 +243,12 @@ describe(transformFunctionCallsQueryResult.name, () => {
     ).toThrow('There should be at least one matching config')
   })
 
-  it('groups liveness while leaving costs ungrouped', () => {
+  it('uses a semantic liveness event identity while costs use the tx hash', () => {
     const signature = 'function submit((uint256,uint256))' as const
     const iface = new utils.Interface([signature])
     const input = iface.encodeFunctionData('submit', [[123, 456]])
     const selector = input.slice(0, 10)
-    const liveness = mockFunctionCall({
+    const livenessConfig = mockFunctionCall({
       id: createTrackedTxId.random(),
       projectId: ProjectId('project1'),
       address: ADDRESS_1,
@@ -257,10 +257,19 @@ describe(transformFunctionCallsQueryResult.name, () => {
       sinceTimestamp: SINCE_TIMESTAMP,
       subtype: 'stateUpdates',
     })
-    liveness.properties.params.signature = signature
-    liveness.properties.params.deduplicateBy = {
-      type: 'functionCallParameter',
-      path: [0, 0],
+    const liveness = {
+      ...livenessConfig,
+      properties: {
+        ...livenessConfig.properties,
+        eventIdentity: {
+          type: 'functionCallParameter' as const,
+          path: [0, 0],
+        },
+        params: {
+          ...livenessConfig.properties.params,
+          signature,
+        },
+      },
     }
     const costs = mockFunctionCall({
       id: createTrackedTxId.random(),
@@ -294,8 +303,8 @@ describe(transformFunctionCallsQueryResult.name, () => {
       ],
     )
 
-    expect(result[0]?.groupingKey).toEqual('123')
-    expect(result[1]?.groupingKey).toEqual(undefined)
+    expect(result[0]?.eventId).toEqual('123')
+    expect(result[1]?.eventId).toEqual(txHashes[0])
   })
 
   it('includes only configurations which program hashes were proven', () => {
@@ -338,7 +347,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       },
     ]
 
-    const expected: TrackedTxFunctionCallResult[] = [
+    const expected: Omit<TrackedTxFunctionCallResult, 'eventId'>[] = [
       {
         formula: 'functionCall',
         projectId: sharpSubmissions[0].properties.projectId,
@@ -366,7 +375,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       queryResults,
     )
 
-    expect(result).toEqual(expected)
+    expect(withoutEventIds(result)).toEqual(expected)
   })
 
   it('includes only configurations where chain id matches', () => {
@@ -435,7 +444,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       },
     ]
 
-    const expected: TrackedTxFunctionCallResult[] = [
+    const expected: Omit<TrackedTxFunctionCallResult, 'eventId'>[] = [
       {
         formula: 'functionCall',
         projectId: sharedBridgeCalls[0].properties.projectId,
@@ -481,7 +490,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       queryResults,
     )
 
-    expect(result).toEqual(expected)
+    expect(withoutEventIds(result)).toEqual(expected)
   })
 
   it('includes only configurations where chain address matches', () => {
@@ -528,7 +537,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       },
     ]
 
-    const expected: TrackedTxFunctionCallResult[] = [
+    const expected: Omit<TrackedTxFunctionCallResult, 'eventId'>[] = [
       {
         formula: 'functionCall',
         projectId: sharedBridgeCalls[0].properties.projectId,
@@ -556,7 +565,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       queryResults,
     )
 
-    expect(result).toEqual(expected)
+    expect(withoutEventIds(result)).toEqual(expected)
   })
 
   it('should calculate calldata gas used correctly', () => {
@@ -634,7 +643,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         blob_versioned_hashes: null,
       },
     ]
-    const expected: TrackedTxFunctionCallResult[] = [
+    const expected: Omit<TrackedTxFunctionCallResult, 'eventId'>[] = [
       {
         formula: 'functionCall',
         projectId: functionCalls[0].properties.projectId,
@@ -698,9 +707,15 @@ describe(transformFunctionCallsQueryResult.name, () => {
       queryResults,
     )
 
-    expect(result).toEqual(expected)
+    expect(withoutEventIds(result)).toEqual(expected)
   })
 })
+
+function withoutEventIds<T extends { eventId: string }>(
+  records: T[],
+): Omit<T, 'eventId'>[] {
+  return records.map(({ eventId: _, ...record }) => record)
+}
 
 function mockFunctionCall({
   id,

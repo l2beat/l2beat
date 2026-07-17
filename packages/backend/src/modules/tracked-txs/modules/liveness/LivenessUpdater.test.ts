@@ -41,12 +41,14 @@ describe(LivenessUpdater.name, () => {
           blockNumber: transactions[0].blockNumber,
           timestamp: transactions[0].blockTimestamp,
           configurationId: transactions[0].id,
+          eventId: transactions[0].eventId,
         },
         {
           txHash: transactions[1].hash,
           blockNumber: transactions[1].blockNumber,
           timestamp: transactions[1].blockTimestamp,
           configurationId: transactions[1].id,
+          eventId: transactions[1].eventId,
         },
       ])
     })
@@ -86,19 +88,21 @@ describe(LivenessUpdater.name, () => {
           blockNumber: transactions[0].blockNumber,
           timestamp: transactions[0].blockTimestamp,
           configurationId: transactions[0].id,
+          eventId: transactions[0].eventId,
         },
         {
           txHash: transactions[1].hash,
           blockNumber: transactions[1].blockNumber,
           timestamp: transactions[1].blockTimestamp,
           configurationId: transactions[1].id,
+          eventId: transactions[1].eventId,
         },
       ]
 
       expect(updater.transformTransactions(transactions)).toEqual(expected)
     })
 
-    it('keeps the earliest transaction from each semantic group', () => {
+    it('keeps the earliest transaction for each event', () => {
       const updater = new LivenessUpdater(
         mockDatabase({ liveness: getMockLivenessRepository() }),
         Logger.SILENT,
@@ -109,14 +113,14 @@ describe(LivenessUpdater.name, () => {
         hash: 'later',
         blockNumber: 2,
         blockTimestamp: MIN_TIMESTAMP + 10,
-        groupingKey: 'epoch-1',
+        eventId: 'epoch-1',
       }
       const earlier = {
         ...transaction,
         hash: 'earlier',
         blockNumber: 1,
         blockTimestamp: MIN_TIMESTAMP,
-        groupingKey: 'epoch-1',
+        eventId: 'epoch-1',
       }
 
       expect(updater.transformTransactions([later, earlier])).toEqual([
@@ -125,7 +129,7 @@ describe(LivenessUpdater.name, () => {
           blockNumber: earlier.blockNumber,
           timestamp: earlier.blockTimestamp,
           configurationId: earlier.id,
-          groupingKey: earlier.groupingKey,
+          eventId: earlier.eventId,
         },
       ])
     })
@@ -149,6 +153,7 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       toAddress: EthereumAddress.random(),
       input: '',
       hash: '',
+      eventId: 'event-1',
       type: 'liveness',
       subtype: 'batchSubmissions',
       id: getMockRuntimeConfigurations()[0].id,
@@ -166,6 +171,7 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       blockNumber: 1,
       blockTimestamp: UnixTime.now(),
       hash: '',
+      eventId: 'event-2',
       fromAddress: EthereumAddress.random(),
       toAddress: EthereumAddress.random(),
       projectId: ProjectId('test2'),

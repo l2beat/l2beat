@@ -99,7 +99,7 @@ describe(TrackedTxsClient.name, () => {
       expect(duneQueryService.query).not.toHaveBeenCalled()
     })
 
-    it('requests full calldata for grouped function calls', async () => {
+    it('requests full calldata for custom liveness event identities', async () => {
       const duneQueryService = getMockDuneQueryService([[]])
       const trackedTxsClient = new TrackedTxsClient(
         duneQueryService,
@@ -109,12 +109,10 @@ describe(TrackedTxsClient.name, () => {
         ...CONFIGURATIONS[1],
         properties: {
           ...CONFIGURATIONS[1].properties,
-          params: {
-            ...CONFIGURATIONS[1].properties.params,
-            deduplicateBy: {
-              type: 'functionCallParameter' as const,
-              path: [0],
-            },
+          type: 'liveness' as const,
+          eventIdentity: {
+            type: 'functionCallParameter' as const,
+            path: [0],
           },
         },
       }

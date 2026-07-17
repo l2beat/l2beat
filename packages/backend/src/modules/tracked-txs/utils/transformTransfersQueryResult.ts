@@ -40,6 +40,7 @@ export function transformTransfersQueryResult(
           hash: r.hash,
           blockNumber: r.block_number,
           blockTimestamp: r.block_time,
+          eventId: r.hash,
           fromAddress: r.from,
           toAddress: r.to,
           gasUsed: r.gas_used,

@@ -1,7 +1,7 @@
 import {
   SHARP_SUBMISSION_ADDRESS,
   SHARP_SUBMISSION_SELECTOR,
-  type TrackedTxConfigEntry,
+  type TrackedTxConfigEntryWithoutId,
 } from '@l2beat/shared'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { existsSync, readFileSync } from 'fs'
@@ -245,16 +245,16 @@ function getCostsInfo(p: ScalingProject): ProjectCostsInfo | undefined {
 function toBackendTrackedTxsConfig(
   projectId: ProjectId,
   configs: Layer2TxConfig[] | undefined,
-): Omit<TrackedTxConfigEntry, 'id'>[] | undefined {
+): TrackedTxConfigEntryWithoutId[] | undefined {
   if (configs === undefined) return
 
   return configs.flatMap((config) =>
     config.uses.map((use) => {
       assert(
         use.type !== 'liveness' ||
-          !use.deduplicateBy ||
+          !use.eventIdentity ||
           config.query.formula === 'functionCall',
-        'Liveness deduplication is only supported for function calls',
+        'Custom liveness event identity is only supported for function calls',
       )
       const base = {
         projectId,
@@ -264,6 +264,9 @@ function toBackendTrackedTxsConfig(
         subtype: use.subtype,
         costMultiplier:
           use.type === 'l2costs' ? config._hackCostMultiplier : undefined,
+        ...(use.type === 'liveness' && use.eventIdentity
+          ? { eventIdentity: use.eventIdentity }
+          : {}),
       }
 
       switch (config.query.formula) {
@@ -276,9 +279,6 @@ function toBackendTrackedTxsConfig(
               selector: config.query.selector,
               signature: config.query.functionSignature,
               topics: config.query.topics,
-              ...(use.type === 'liveness' && use.deduplicateBy
-                ? { deduplicateBy: use.deduplicateBy }
-                : {}),
             },
           }
         }

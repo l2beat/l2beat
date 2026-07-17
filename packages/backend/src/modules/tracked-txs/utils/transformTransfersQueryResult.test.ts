@@ -111,7 +111,7 @@ describe(transformTransfersQueryResult.name, () => {
         blob_versioned_hashes: ['0x1'],
       },
     ]
-    const expected: TrackedTxTransferResult[] = [
+    const expected: Omit<TrackedTxTransferResult, 'eventId'>[] = [
       {
         formula: 'transfer',
         projectId: config[0].properties.projectId,
@@ -182,9 +182,9 @@ describe(transformTransfersQueryResult.name, () => {
       },
     ]
 
-    expect(transformTransfersQueryResult(config, queryResults)).toEqual(
-      expected,
-    )
+    expect(
+      withoutEventIds(transformTransfersQueryResult(config, queryResults)),
+    ).toEqual(expected)
   })
 
   it('should calculate calldata gas used correctly', () => {
@@ -265,7 +265,7 @@ describe(transformTransfersQueryResult.name, () => {
         blob_versioned_hashes: ['0x1'],
       },
     ]
-    const expected: TrackedTxTransferResult[] = [
+    const expected: Omit<TrackedTxTransferResult, 'eventId'>[] = [
       {
         formula: 'transfer',
         projectId: config[0].properties.projectId,
@@ -319,9 +319,9 @@ describe(transformTransfersQueryResult.name, () => {
       },
     ]
 
-    expect(transformTransfersQueryResult(config, queryResults)).toEqual(
-      expected,
-    )
+    expect(
+      withoutEventIds(transformTransfersQueryResult(config, queryResults)),
+    ).toEqual(expected)
   })
 
   it('should throw when there is no matching config', () => {
@@ -356,6 +356,12 @@ describe(transformTransfersQueryResult.name, () => {
     )
   })
 })
+
+function withoutEventIds<T extends { eventId: string }>(
+  records: T[],
+): Omit<T, 'eventId'>[] {
+  return records.map(({ eventId: _, ...record }) => record)
+}
 
 function mock({
   id,

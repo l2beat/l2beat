@@ -1,4 +1,4 @@
-import type { TrackedTxFunctionCallDeduplication } from '@l2beat/shared'
+import type { TrackedTxLivenessEventIdentity } from '@l2beat/shared'
 import type {
   EthereumAddress,
   ProjectId,
@@ -197,7 +197,7 @@ export type Layer2TrackedTxUse =
   | {
       type: 'liveness'
       subtype: TrackedTxsConfigSubtype
-      deduplicateBy?: TrackedTxFunctionCallDeduplication
+      eventIdentity?: TrackedTxLivenessEventIdentity
     }
   | {
       type: 'l2costs'

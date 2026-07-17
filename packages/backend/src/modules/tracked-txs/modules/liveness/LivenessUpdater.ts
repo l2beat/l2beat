@@ -23,7 +23,10 @@ export class LivenessUpdater implements TxUpdaterInterface<'liveness'> {
 
     const transformedTransactions = this.transformTransactions(transactions)
     await this.db.liveness.insertMany(transformedTransactions)
-    this.logger.info('Updated liveness', { count: transactions.length })
+    this.logger.info('Updated liveness', {
+      transactionCount: transactions.length,
+      livenessRecordCount: transformedTransactions.length,
+    })
   }
 
   async deleteFromById(id: TrackedTxId, fromInclusive: UnixTime) {
@@ -31,37 +34,38 @@ export class LivenessUpdater implements TxUpdaterInterface<'liveness'> {
   }
 
   transformTransactions(transactions: TrackedTxResult[]): LivenessRecord[] {
-    const records = transactions.map((t) => ({
-      timestamp: t.blockTimestamp,
-      blockNumber: t.blockNumber,
-      configurationId: t.id,
-      txHash: t.hash,
-      ...('groupingKey' in t && t.groupingKey !== undefined
-        ? { groupingKey: t.groupingKey }
-        : {}),
-    }))
-
-    const earliestByGroup = new Map<string, LivenessRecord>()
-    const ungrouped: LivenessRecord[] = []
-
-    for (const record of records) {
-      if (record.groupingKey === undefined) {
-        ungrouped.push(record)
-        continue
-      }
-
-      const key = `${record.configurationId}-${record.groupingKey}`
-      const current = earliestByGroup.get(key)
-      if (
-        !current ||
-        record.timestamp < current.timestamp ||
-        (record.timestamp === current.timestamp &&
-          record.blockNumber < current.blockNumber)
-      ) {
-        earliestByGroup.set(key, record)
-      }
-    }
-
-    return [...ungrouped, ...earliestByGroup.values()]
+    return keepEarliestEvent(transactions.map(toLivenessRecord))
   }
+}
+
+function toLivenessRecord(transaction: TrackedTxResult): LivenessRecord {
+  return {
+    timestamp: transaction.blockTimestamp,
+    blockNumber: transaction.blockNumber,
+    configurationId: transaction.id,
+    txHash: transaction.hash,
+    eventId: transaction.eventId,
+  }
+}
+
+function keepEarliestEvent(records: LivenessRecord[]): LivenessRecord[] {
+  const earliest = new Map<string, LivenessRecord>()
+
+  for (const record of records) {
+    const key = JSON.stringify([record.configurationId, record.eventId])
+    const current = earliest.get(key)
+
+    if (current === undefined || isEarlier(record, current)) {
+      earliest.set(key, record)
+    }
+  }
+
+  return [...earliest.values()]
+}
+
+function isEarlier(a: LivenessRecord, b: LivenessRecord): boolean {
+  return (
+    a.timestamp < b.timestamp ||
+    (a.timestamp === b.timestamp && a.blockNumber < b.blockNumber)
+  )
 }

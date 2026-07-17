@@ -19,7 +19,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import type { TrackedTxsConfig } from '../../config/Config'
-import { getFunctionCallGroupingKey } from '../tracked-txs/utils/getFunctionCallGroupingKey'
+import { getFunctionCallEventId } from '../tracked-txs/utils/getFunctionCallEventId'
 import { isFistParameterMatching } from '../tracked-txs/utils/isFirstParameterMatching'
 import { isProgramHashProven } from '../tracked-txs/utils/isProgramHashProven'
 import type { BlockProcessor } from '../types'
@@ -120,17 +120,21 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
         ...filteredSubmissions,
         ...filteredSharedBridgeCalls,
       ].map((config) => {
-        const groupingKey =
-          config.params.formula === 'functionCall'
-            ? getFunctionCallGroupingKey(tx.data as string, config.params)
-            : undefined
+        const eventId =
+          config.params.formula === 'functionCall' && config.eventIdentity
+            ? getFunctionCallEventId(
+                tx.data as string,
+                config.params.signature,
+                config.eventIdentity,
+              )
+            : (tx.hash as string)
 
         return {
           timestamp: block.timestamp,
           blockNumber: block.number,
           txHash: tx.hash as string,
           configurationId: config.id,
-          ...(groupingKey !== undefined ? { groupingKey } : {}),
+          eventId,
         }
       })
 
@@ -151,6 +155,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
           blockNumber: block.number,
           txHash: log.transactionHash as string,
           configurationId: config.id,
+          eventId: log.transactionHash as string,
         }))
         .filter(
           (result) =>
@@ -169,7 +174,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
       { blockNumber: block.number, count: records.length },
     )
 
-    await this.db.realTimeLiveness.upsertMany(records)
+    await this.db.realTimeLiveness.insertMany(records)
   }
 
   async checkForAnomalies(block: Block) {

@@ -14,6 +14,10 @@ export type TrackedTxConfigEntry =
   | TrackedTxCostsConfig
   | TrackedTxLivenessConfig
 
+export type TrackedTxConfigEntryWithoutId =
+  | Omit<TrackedTxCostsConfig, 'id'>
+  | Omit<TrackedTxLivenessConfig, 'id'>
+
 interface TrackedTxConfigBase {
   id: TrackedTxId
   projectId: ProjectId
@@ -34,6 +38,8 @@ export interface TrackedTxCostsConfig extends TrackedTxConfigBase {
 
 export interface TrackedTxLivenessConfig extends TrackedTxConfigBase {
   type: 'liveness'
+  /** Overrides the default transaction-hash identity of a liveness event. */
+  eventIdentity?: TrackedTxLivenessEventIdentity
 }
 
 export interface TrackedTxFunctionCallConfig {
@@ -42,11 +48,9 @@ export interface TrackedTxFunctionCallConfig {
   selector: string
   signature: `function ${string}`
   topics?: string[]
-  /** Keep only the earliest liveness record for each decoded parameter value. */
-  deduplicateBy?: TrackedTxFunctionCallDeduplication
 }
 
-export interface TrackedTxFunctionCallDeduplication {
+export interface TrackedTxLivenessEventIdentity {
   type: 'functionCallParameter'
   /** Index path through the decoded function arguments, including tuple indices. */
   path: number[]

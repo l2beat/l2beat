@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { createTrackedTxId } from './createTrackedTxConfigId'
-import type { TrackedTxConfigEntry } from './TrackedTxsConfig'
+import type { TrackedTxConfigEntryWithoutId } from './TrackedTxsConfig'
 
 describe(createTrackedTxId.name, () => {
   const fields = [
@@ -55,19 +55,14 @@ describe(createTrackedTxId.name, () => {
     })
   }
 
-  it('includes function call deduplication in the ID', () => {
-    const before = createTrackedTxId(mock())
+  it('includes liveness event identity in the ID', () => {
+    const before = createTrackedTxId(mock({ type: 'liveness' }))
     const after = createTrackedTxId(
       mock({
-        params: {
-          formula: 'functionCall',
-          address: EthereumAddress.ZERO,
-          selector: 'selector',
-          signature: 'function foo((uint256,uint256))',
-          deduplicateBy: {
-            type: 'functionCallParameter',
-            path: [0, 0],
-          },
+        type: 'liveness',
+        eventIdentity: {
+          type: 'functionCallParameter',
+          path: [0, 0],
         },
       }),
     )
@@ -77,8 +72,8 @@ describe(createTrackedTxId.name, () => {
 })
 
 function mock(
-  v?: Partial<TrackedTxConfigEntry>,
-): Omit<TrackedTxConfigEntry, 'id'> {
+  v?: Partial<TrackedTxConfigEntryWithoutId>,
+): TrackedTxConfigEntryWithoutId {
   return {
     projectId: ProjectId('project-id'),
     sinceTimestamp: 0,

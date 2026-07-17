@@ -9,16 +9,14 @@ export interface RealTimeLivenessRecord {
   txHash: string
   timestamp: UnixTime
   blockNumber: number
-  groupingKey?: string
+  eventId: string
 }
 
 export function toRecord(
   row: Selectable<RealTimeLiveness>,
 ): RealTimeLivenessRecord {
-  const { groupingKey, ...rest } = row
   return {
-    ...rest,
-    ...(groupingKey !== null ? { groupingKey } : {}),
+    ...row,
     timestamp: UnixTime.fromDate(row.timestamp),
   }
 }
@@ -28,7 +26,6 @@ export function toRow(
 ): Insertable<RealTimeLiveness> {
   return {
     ...record,
-    groupingKey: record.groupingKey ?? null,
     timestamp: UnixTime.toDate(record.timestamp),
   }
 }
@@ -42,26 +39,11 @@ export class RealTimeLivenessRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async upsertMany(records: RealTimeLivenessRecord[]): Promise<number> {
+  async insertMany(records: RealTimeLivenessRecord[]): Promise<number> {
     if (records.length === 0) return 0
 
     const rows = records.map(toRow)
-    const regularRows = rows.filter((r) => r.groupingKey === null)
-    const groupedRows = rows.filter((r) => r.groupingKey !== null)
-
-    await this.batch(regularRows, 10_000, async (batch) => {
-      await this.db
-        .insertInto('RealTimeLiveness')
-        .values(batch)
-        .onConflict((cb) =>
-          cb.columns(['configurationId', 'txHash']).doUpdateSet((eb) => ({
-            timestamp: eb.ref('excluded.timestamp'),
-            blockNumber: eb.ref('excluded.blockNumber'),
-          })),
-        )
-        .execute()
-    })
-    await this.batch(groupedRows, 10_000, async (batch) => {
+    await this.batch(rows, 10_000, async (batch) => {
       await this.db
         .insertInto('RealTimeLiveness')
         .values(batch)
