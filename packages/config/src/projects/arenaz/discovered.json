@@ -1,6 +1,6 @@
 {
   "name": "arenaz",
-  "timestamp": 1783324270,
+  "timestamp": 1784282781,
   "configHash": "0xec240e05d43dccfb7c3c7433ed40f55877c9b1be5fae7df7578aaa5a25b7f032",
   "entries": [
     {
@@ -975,11 +975,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x6419F81580343DF023E68715C6e269aFb00a2cc7",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "MIPS",
       "address": "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908",
       "type": "Contract",
@@ -1154,6 +1149,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x7F1D4FE689B73B628285454667B93cfd09409f27",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "OpFoundationUpgradeSafe",
       "address": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
       "type": "Contract",
@@ -1196,10 +1196,10 @@
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
-          "eth:0x6419F81580343DF023E68715C6e269aFb00a2cc7",
+          "eth:0xf1EfbdC2C0BDC4554E0f1639D7fe88cD870a4639",
           "eth:0x3041BA32f451F5850c147805F5521AC206421623",
           "eth:0xC2Db495f5a1F91172A361AAFA6FdE47c41de6dF5",
-          "eth:0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8",
+          "eth:0x7F1D4FE689B73B628285454667B93cfd09409f27",
           "eth:0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
           "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02",
           "eth:0xa2A58E31C03C59e34ab4d996d811DA0C035BfDea"
@@ -1211,7 +1211,7 @@
           "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
         ],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 59,
+        "nonce": 62,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1321,10 +1321,10 @@
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
-          "eth:0x6419F81580343DF023E68715C6e269aFb00a2cc7",
+          "eth:0xf1EfbdC2C0BDC4554E0f1639D7fe88cD870a4639",
           "eth:0x3041BA32f451F5850c147805F5521AC206421623",
           "eth:0xC2Db495f5a1F91172A361AAFA6FdE47c41de6dF5",
-          "eth:0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8",
+          "eth:0x7F1D4FE689B73B628285454667B93cfd09409f27",
           "eth:0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
           "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02",
           "eth:0xa2A58E31C03C59e34ab4d996d811DA0C035BfDea"
@@ -1336,7 +1336,7 @@
           "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
         ],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 118,
+        "nonce": 120,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1622,11 +1622,6 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "address": "eth:0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1838,6 +1833,11 @@
     },
     {
       "address": "eth:0xEF9A98511939eEe6Ec69af62082E3F2ff606877c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xf1EfbdC2C0BDC4554E0f1639D7fe88cD870a4639",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -2846,6 +2846,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 25472110 },
-  "permissionsConfigHash": "0x23a4ea0b368aad0057e98c842306989496525e55892f9fd4ac52ada5d0cf6138"
+  "usedBlockNumbers": { "ethereum": 25551698 },
+  "permissionsConfigHash": "0xd5aeab5145929377dca0b32ba8d22f4139c079869dca74ea4a57b6081c8830df"
 }
