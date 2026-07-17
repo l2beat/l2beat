@@ -11,6 +11,7 @@ import type {
   TrackedTxFunctionCallResult,
 } from '../types/model'
 import { calculateCalldataGasUsed } from './calculateCalldataGasUsed'
+import { getFunctionCallGroupingKey } from './getFunctionCallGroupingKey'
 import { isFistParameterMatching } from './isFirstParameterMatching'
 import { isProgramHashProven } from './isProgramHashProven'
 
@@ -79,6 +80,15 @@ export function transformFunctionCallsQueryResult(
           blockTimestamp: r.block_time,
           toAddress: r.to,
           input: r.input,
+          ...(config.properties.params.formula === 'functionCall' &&
+          config.properties.params.deduplicateBy
+            ? {
+                groupingKey: getFunctionCallGroupingKey(
+                  r.input,
+                  config.properties.params,
+                ),
+              }
+            : {}),
           gasUsed: r.gas_used,
           gasPrice: r.gas_price,
           dataLength: r.data_length,

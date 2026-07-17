@@ -3,7 +3,7 @@ import {
   SHARP_SUBMISSION_SELECTOR,
   type TrackedTxConfigEntry,
 } from '@l2beat/shared'
-import { ProjectId } from '@l2beat/shared-pure'
+import { assert, ProjectId } from '@l2beat/shared-pure'
 import { existsSync, readFileSync } from 'fs'
 import { join } from 'path'
 import { badgesCompareFn } from '../common/badges'
@@ -250,6 +250,12 @@ function toBackendTrackedTxsConfig(
 
   return configs.flatMap((config) =>
     config.uses.map((use) => {
+      assert(
+        use.type !== 'liveness' ||
+          !use.deduplicateBy ||
+          config.query.formula === 'functionCall',
+        'Liveness deduplication is only supported for function calls',
+      )
       const base = {
         projectId,
         sinceTimestamp: config.query.sinceTimestamp,
@@ -270,6 +276,9 @@ function toBackendTrackedTxsConfig(
               selector: config.query.selector,
               signature: config.query.functionSignature,
               topics: config.query.topics,
+              ...(use.type === 'liveness' && use.deduplicateBy
+                ? { deduplicateBy: use.deduplicateBy }
+                : {}),
             },
           }
         }

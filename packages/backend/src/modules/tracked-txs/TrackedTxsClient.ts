@@ -173,7 +173,10 @@ function combineCalls(
 ) {
   // TODO: unique
   return [
-    ...functionCallsConfig.map((c) => ({ ...c, getFullInput: false })),
+    ...functionCallsConfig.map((c) => ({
+      ...c,
+      getFullInput: c.deduplicateBy !== undefined,
+    })),
     ...sharpSubmissionsConfig.map((c) => ({ ...c, getFullInput: true })),
     ...sharedBridgesConfig.map((c) => ({ ...c, getFullInput: true })),
   ]

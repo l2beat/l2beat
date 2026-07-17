@@ -54,6 +54,26 @@ describe(createTrackedTxId.name, () => {
       }
     })
   }
+
+  it('includes function call deduplication in the ID', () => {
+    const before = createTrackedTxId(mock())
+    const after = createTrackedTxId(
+      mock({
+        params: {
+          formula: 'functionCall',
+          address: EthereumAddress.ZERO,
+          selector: 'selector',
+          signature: 'function foo((uint256,uint256))',
+          deduplicateBy: {
+            type: 'functionCallParameter',
+            path: [0, 0],
+          },
+        },
+      }),
+    )
+
+    expect(before).not.toEqual(after)
+  })
 })
 
 function mock(

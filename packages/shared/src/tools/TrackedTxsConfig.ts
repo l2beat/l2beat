@@ -42,6 +42,14 @@ export interface TrackedTxFunctionCallConfig {
   selector: string
   signature: `function ${string}`
   topics?: string[]
+  /** Keep only the earliest liveness record for each decoded parameter value. */
+  deduplicateBy?: TrackedTxFunctionCallDeduplication
+}
+
+export interface TrackedTxFunctionCallDeduplication {
+  type: 'functionCallParameter'
+  /** Index path through the decoded function arguments, including tuple indices. */
+  path: number[]
 }
 
 export interface TrackedTxTransferConfig {

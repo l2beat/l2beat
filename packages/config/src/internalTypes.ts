@@ -1,8 +1,8 @@
+import type { TrackedTxFunctionCallDeduplication } from '@l2beat/shared'
 import type {
   EthereumAddress,
   ProjectId,
   TrackedTxsConfigSubtype,
-  TrackedTxsConfigType,
   UnixTime,
 } from '@l2beat/shared-pure'
 import type {
@@ -193,10 +193,16 @@ export interface Layer2TxConfig {
   _hackCostMultiplier?: number
 }
 
-export interface Layer2TrackedTxUse {
-  type: TrackedTxsConfigType
-  subtype: TrackedTxsConfigSubtype
-}
+export type Layer2TrackedTxUse =
+  | {
+      type: 'liveness'
+      subtype: TrackedTxsConfigSubtype
+      deduplicateBy?: TrackedTxFunctionCallDeduplication
+    }
+  | {
+      type: 'l2costs'
+      subtype: TrackedTxsConfigSubtype
+    }
 /** This type is used to query GBQ and manual matching of transactions within a block */
 type TrackedTxQuery = FunctionCall | Transfer | SharpSubmission | SharedBridge
 

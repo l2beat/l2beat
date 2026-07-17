@@ -19,6 +19,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import type { TrackedTxsConfig } from '../../config/Config'
+import { getFunctionCallGroupingKey } from '../tracked-txs/utils/getFunctionCallGroupingKey'
 import { isFistParameterMatching } from '../tracked-txs/utils/isFirstParameterMatching'
 import { isProgramHashProven } from '../tracked-txs/utils/isProgramHashProven'
 import type { BlockProcessor } from '../types'
@@ -118,12 +119,20 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
         ...matchingCalls,
         ...filteredSubmissions,
         ...filteredSharedBridgeCalls,
-      ].map((config) => ({
-        timestamp: block.timestamp,
-        blockNumber: block.number,
-        txHash: tx.hash as string,
-        configurationId: config.id,
-      }))
+      ].map((config) => {
+        const groupingKey =
+          config.params.formula === 'functionCall'
+            ? getFunctionCallGroupingKey(tx.data as string, config.params)
+            : undefined
+
+        return {
+          timestamp: block.timestamp,
+          blockNumber: block.number,
+          txHash: tx.hash as string,
+          configurationId: config.id,
+          ...(groupingKey !== undefined ? { groupingKey } : {}),
+        }
+      })
 
       records.push(...results)
     }

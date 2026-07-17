@@ -97,6 +97,38 @@ describe(LivenessUpdater.name, () => {
 
       expect(updater.transformTransactions(transactions)).toEqual(expected)
     })
+
+    it('keeps the earliest transaction from each semantic group', () => {
+      const updater = new LivenessUpdater(
+        mockDatabase({ liveness: getMockLivenessRepository() }),
+        Logger.SILENT,
+      )
+      const transaction = getMockTrackedTxResults()[0]
+      const later = {
+        ...transaction,
+        hash: 'later',
+        blockNumber: 2,
+        blockTimestamp: MIN_TIMESTAMP + 10,
+        groupingKey: 'epoch-1',
+      }
+      const earlier = {
+        ...transaction,
+        hash: 'earlier',
+        blockNumber: 1,
+        blockTimestamp: MIN_TIMESTAMP,
+        groupingKey: 'epoch-1',
+      }
+
+      expect(updater.transformTransactions([later, earlier])).toEqual([
+        {
+          txHash: earlier.hash,
+          blockNumber: earlier.blockNumber,
+          timestamp: earlier.blockTimestamp,
+          configurationId: earlier.id,
+          groupingKey: earlier.groupingKey,
+        },
+      ])
+    })
   })
 })
 

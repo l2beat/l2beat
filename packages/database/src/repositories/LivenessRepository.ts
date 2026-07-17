@@ -9,11 +9,14 @@ export interface LivenessRecord {
   blockNumber: number
   txHash: string
   configurationId: TrackedTxId
+  groupingKey?: string
 }
 
 export function toRecord(row: Selectable<Liveness>): LivenessRecord {
+  const { groupingKey, ...rest } = row
   return {
-    ...row,
+    ...rest,
+    ...(groupingKey !== null ? { groupingKey } : {}),
     timestamp: UnixTime.fromDate(row.timestamp),
   }
 }
@@ -21,6 +24,7 @@ export function toRecord(row: Selectable<Liveness>): LivenessRecord {
 export function toRow(record: LivenessRecord): Insertable<Liveness> {
   return {
     ...record,
+    groupingKey: record.groupingKey ?? null,
     timestamp: UnixTime.toDate(record.timestamp),
   }
 }
@@ -96,8 +100,18 @@ export class LivenessRepository extends BaseRepository {
     if (records.length === 0) return 0
 
     const rows = records.map(toRow)
-    await this.batch(rows, 10_000, async (batch) => {
+    const regularRows = rows.filter((r) => r.groupingKey === null)
+    const groupedRows = rows.filter((r) => r.groupingKey !== null)
+
+    await this.batch(regularRows, 10_000, async (batch) => {
       await this.db.insertInto('Liveness').values(batch).execute()
+    })
+    await this.batch(groupedRows, 10_000, async (batch) => {
+      await this.db
+        .insertInto('Liveness')
+        .values(batch)
+        .onConflict((cb) => cb.doNothing())
+        .execute()
     })
     return rows.length
   }

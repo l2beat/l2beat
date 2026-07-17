@@ -98,6 +98,44 @@ describe(TrackedTxsClient.name, () => {
 
       expect(duneQueryService.query).not.toHaveBeenCalled()
     })
+
+    it('requests full calldata for grouped function calls', async () => {
+      const duneQueryService = getMockDuneQueryService([[]])
+      const trackedTxsClient = new TrackedTxsClient(
+        duneQueryService,
+        Logger.SILENT,
+      )
+      const config = {
+        ...CONFIGURATIONS[1],
+        properties: {
+          ...CONFIGURATIONS[1].properties,
+          params: {
+            ...CONFIGURATIONS[1].properties.params,
+            deduplicateBy: {
+              type: 'functionCallParameter' as const,
+              path: [0],
+            },
+          },
+        },
+      }
+
+      await trackedTxsClient.getFunctionCalls([config], [], [], FROM, TO)
+
+      expect(duneQueryService.query).toHaveBeenCalledWith(
+        getFunctionCallQuery(
+          [
+            {
+              ...config.properties.params,
+              getFullInput: true,
+            },
+          ],
+          FROM,
+          TO,
+        ),
+        'large',
+        expect.anything(),
+      )
+    })
   })
 })
 

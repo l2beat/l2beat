@@ -37,6 +37,7 @@ export type TrackedTxFunctionCallResult = {
   blockTimestamp: UnixTime
   toAddress: EthereumAddress
   input: string
+  groupingKey?: string
   gasUsed: number
   gasPrice: bigint
   calldataGasUsed: number

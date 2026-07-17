@@ -97,6 +97,30 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
     it('empty array', async () => {
       await expect(repository.upsertMany([])).not.toBeRejected()
     })
+
+    it('keeps the first record for a grouping key', async () => {
+      const records = [
+        {
+          timestamp: START,
+          blockNumber: 12350,
+          txHash: 'first-grouped',
+          configurationId: txIdA,
+          groupingKey: 'epoch-1',
+        },
+        {
+          timestamp: START + 1,
+          blockNumber: 12351,
+          txHash: 'second-grouped',
+          configurationId: txIdA,
+          groupingKey: 'epoch-1',
+        },
+      ]
+
+      await repository.upsertMany(records)
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([...DATA, records[0]!])
+    })
   })
 
   describe(RealTimeLivenessRepository.prototype.getAll.name, () => {

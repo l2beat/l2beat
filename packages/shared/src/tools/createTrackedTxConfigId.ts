@@ -18,6 +18,10 @@ export function createTrackedTxId(
     case 'functionCall':
       input.push(trackedTxConfig.params.address)
       input.push(trackedTxConfig.params.selector)
+      if (trackedTxConfig.params.deduplicateBy) {
+        input.push(trackedTxConfig.params.deduplicateBy.type)
+        input.push(trackedTxConfig.params.deduplicateBy.path.join('.'))
+      }
       break
     case 'sharpSubmission':
       input.push(trackedTxConfig.params.address)

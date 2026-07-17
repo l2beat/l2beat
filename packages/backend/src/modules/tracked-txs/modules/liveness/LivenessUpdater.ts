@@ -31,11 +31,37 @@ export class LivenessUpdater implements TxUpdaterInterface<'liveness'> {
   }
 
   transformTransactions(transactions: TrackedTxResult[]): LivenessRecord[] {
-    return transactions.map((t) => ({
+    const records = transactions.map((t) => ({
       timestamp: t.blockTimestamp,
       blockNumber: t.blockNumber,
       configurationId: t.id,
       txHash: t.hash,
+      ...('groupingKey' in t && t.groupingKey !== undefined
+        ? { groupingKey: t.groupingKey }
+        : {}),
     }))
+
+    const earliestByGroup = new Map<string, LivenessRecord>()
+    const ungrouped: LivenessRecord[] = []
+
+    for (const record of records) {
+      if (record.groupingKey === undefined) {
+        ungrouped.push(record)
+        continue
+      }
+
+      const key = `${record.configurationId}-${record.groupingKey}`
+      const current = earliestByGroup.get(key)
+      if (
+        !current ||
+        record.timestamp < current.timestamp ||
+        (record.timestamp === current.timestamp &&
+          record.blockNumber < current.blockNumber)
+      ) {
+        earliestByGroup.set(key, record)
+      }
+    }
+
+    return [...ungrouped, ...earliestByGroup.values()]
   }
 }

@@ -77,6 +77,30 @@ describeDatabase(LivenessRepository.name, (db) => {
       await expect(repository.insertMany([])).not.toBeRejected()
     })
 
+    it('keeps the first record for a grouping key', async () => {
+      const records: LivenessRecord[] = [
+        {
+          timestamp: START,
+          blockNumber: 12350,
+          txHash: 'first-grouped',
+          configurationId: txIdA,
+          groupingKey: 'epoch-1',
+        },
+        {
+          timestamp: START + 1,
+          blockNumber: 12351,
+          txHash: 'second-grouped',
+          configurationId: txIdA,
+          groupingKey: 'epoch-1',
+        },
+      ]
+
+      await repository.insertMany(records)
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([...DATA, records[0]!])
+    })
+
     it('big query', async () => {
       const records: LivenessRecord[] = []
       for (let i = 0; i < 15_000; i++) {

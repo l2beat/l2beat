@@ -13,6 +13,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { utils } from 'ethers'
 import { readFileSync } from 'fs'
 import {
   agglayerSharedBridgeChainId,
@@ -240,6 +241,61 @@ describe(transformFunctionCallsQueryResult.name, () => {
     expect(() =>
       transformFunctionCallsQueryResult(functionCalls, [], [], queryResults),
     ).toThrow('There should be at least one matching config')
+  })
+
+  it('groups liveness while leaving costs ungrouped', () => {
+    const signature = 'function submit((uint256,uint256))' as const
+    const iface = new utils.Interface([signature])
+    const input = iface.encodeFunctionData('submit', [[123, 456]])
+    const selector = input.slice(0, 10)
+    const liveness = mockFunctionCall({
+      id: createTrackedTxId.random(),
+      projectId: ProjectId('project1'),
+      address: ADDRESS_1,
+      selector,
+      formula: 'functionCall',
+      sinceTimestamp: SINCE_TIMESTAMP,
+      subtype: 'stateUpdates',
+    })
+    liveness.properties.params.signature = signature
+    liveness.properties.params.deduplicateBy = {
+      type: 'functionCallParameter',
+      path: [0, 0],
+    }
+    const costs = mockFunctionCall({
+      id: createTrackedTxId.random(),
+      projectId: ProjectId('project1'),
+      address: ADDRESS_1,
+      selector,
+      formula: 'functionCall',
+      sinceTimestamp: SINCE_TIMESTAMP,
+      subtype: 'stateUpdates',
+    })
+    costs.properties.type = 'l2costs'
+    costs.properties.params.signature = signature
+
+    const result = transformFunctionCallsQueryResult(
+      [liveness, costs],
+      [],
+      [],
+      [
+        {
+          hash: txHashes[0],
+          block_number: block,
+          block_time: timestamp,
+          input,
+          to: ADDRESS_1,
+          gas_price: 10n,
+          gas_used: 100,
+          data_length: 100,
+          non_zero_bytes: 100,
+          blob_versioned_hashes: null,
+        },
+      ],
+    )
+
+    expect(result[0]?.groupingKey).toEqual('123')
+    expect(result[1]?.groupingKey).toEqual(undefined)
   })
 
   it('includes only configurations which program hashes were proven', () => {
