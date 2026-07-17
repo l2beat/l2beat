@@ -167,6 +167,14 @@ export const INTEROP_CHAINS: InteropChain[] = [
     explorerUrl: 'https://web3.okx.com/explorer/x-layer/evm',
   },
   {
+    id: 'adi',
+    name: 'ADI Chain',
+    type: 'evm',
+    display: 'ADI',
+    color: '#FD7108',
+    explorerUrl: 'https://explorer.adifoundation.ai',
+  },
+  {
     id: 'avalanche',
     name: 'Avalanche',
     type: 'evm',
@@ -235,6 +243,7 @@ export const INTEROP_CHAINS: InteropChain[] = [
 export const INTEROP_ONE_SIDED_CHAINS = [
   'solana',
   'xlayer',
+  'adi',
   'plasma',
   'tron',
   'hyperliquid',
