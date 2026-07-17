@@ -140,6 +140,21 @@ export class BlobsRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async deleteByBlockRangeInclusive(
+    daLayer: string,
+    from: number,
+    to: number,
+  ): Promise<number> {
+    const result = await this.db
+      .deleteFrom('Blob')
+      .where('daLayer', '=', daLayerToNumber(daLayer))
+      .where('blockNumber', '>=', from)
+      .where('blockNumber', '<=', to)
+      .executeTakeFirst()
+
+    return Number(result.numDeletedRows)
+  }
+
   async deleteAll(): Promise<number> {
     const result = await this.db.deleteFrom('Blob').executeTakeFirst()
 

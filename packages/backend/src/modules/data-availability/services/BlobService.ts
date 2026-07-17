@@ -5,7 +5,12 @@ import { assert } from '@l2beat/shared-pure'
 export class BlobService {
   constructor(private readonly db: Database) {}
 
-  async save(blobs: DaBlob[]) {
+  async replace(daLayer: string, from: number, to: number, blobs: DaBlob[]) {
+    assert(
+      daLayer === 'ethereum',
+      'Only ethereum blobs are supported in BlobService',
+    )
+
     const records = blobs.map((blob) => {
       assert(
         blob.type === 'ethereum',
@@ -24,7 +29,10 @@ export class BlobService {
       }
     })
 
-    await this.db.blobs.insertMany(records)
+    await this.db.transaction(async () => {
+      await this.db.blobs.deleteByBlockRangeInclusive(daLayer, from, to)
+      await this.db.blobs.insertMany(records)
+    })
   }
 
   async get(daLayer: string, from: number, to: number): Promise<DaBlob[]> {

@@ -116,6 +116,21 @@ describeDatabase(BlobsRepository.name, (db) => {
     })
   })
 
+  describe(BlobsRepository.prototype.deleteByBlockRangeInclusive.name, () => {
+    it('deletes rows from the requested layer and inclusive block range', async () => {
+      const deleted = await repository.deleteByBlockRangeInclusive(
+        'avail',
+        2000,
+        2000,
+      )
+
+      expect(deleted).toEqual(1)
+      expect(await repository.getAll()).toEqualUnsorted(
+        DATA.filter((blob) => blob.blockNumber !== 2000),
+      )
+    })
+  })
+
   describe(BlobsRepository.prototype.getCountPerAddressInbox.name, () => {
     it('should group by from and to and return counts', async () => {
       await repository.deleteAll()
