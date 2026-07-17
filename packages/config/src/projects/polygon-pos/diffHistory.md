@@ -1,3 +1,35 @@
+Generated with discovered.json: 0xc023a2c345d34755c8f4245b3685c9cdf9cad819
+
+# Diff at Fri, 17 Jul 2026 07:50:25 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5a5b552776f13efe49c744667945e52e0a8f9718 block: 1782391177
+- current timestamp: 1784274549
+
+## Description
+
+Vali added, signer rotated.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (eth:0x424bDE99FCfB68c5a1218fd3215caFfD031f19C4) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x6c20ea7778EA9F3Afd74Ce4538bc4D9d61E6ABb1"
++        "eth:0xFAc88BB6229F47A31A78F0Ba91E5a541Cb1866a3"
+    }
+```
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) [polygon-pos/StakeManager] {
+    +++ description: Manages the Polygon PoS validator set.
+      values.currentValidatorSetSize:
+-        101
++        102
+    }
+```
+
 Generated with discovered.json: 0xb8ec4c6403e11fdeadb09fba9023e46997efcc2d
 
 # Diff at Thu, 25 Jun 2026 12:43:40 GMT:
