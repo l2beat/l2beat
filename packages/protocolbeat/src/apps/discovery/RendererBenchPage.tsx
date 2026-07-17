@@ -8,6 +8,7 @@ import {
   HEADER_HEIGHT,
   NODE_WIDTH,
 } from './panel-nodes/store/utils/constants'
+import { getGraphProjection } from './panel-nodes/store/utils/graphProjection'
 import { Viewport, type ViewportRenderer } from './panel-nodes/view/Viewport'
 
 const GRID_HGAP = 80
@@ -29,8 +30,12 @@ export function RendererBenchPage() {
 
   const runLayout = () => {
     const state = useStore.getState()
+    const projection = getGraphProjection(state.nodes)
+    const visible = state.nodes.filter(
+      (node) => !projection.hiddenNodeIds.has(node.id),
+    )
     const t0 = performance.now()
-    const locations = stackAutoLayout(state.nodes)
+    const locations = stackAutoLayout(visible, true, projection.visibleEdges)
     const elapsed = Math.round(performance.now() - t0)
     layoutAction(locations)
     setLayoutMs(elapsed)

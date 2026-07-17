@@ -214,10 +214,15 @@ function toNodeFields(input: ApiField[]): Field[] {
   const implementation = input.find((x) => x.name === '$implementation')
   const bannedKeys: string[] = ['$pastUpgrades']
   const bannedValues: string[] = getAddresses(implementation?.value)
-
-  return input.flatMap((x) =>
+  const fields = input.flatMap((x) =>
     getNodeFields(x.name, x.value, bannedKeys, bannedValues),
   )
+  const names = new Set<string>()
+  return fields.filter((field) => {
+    if (names.has(field.name)) return false
+    names.add(field.name)
+    return true
+  })
 }
 
 function getNodeFields(

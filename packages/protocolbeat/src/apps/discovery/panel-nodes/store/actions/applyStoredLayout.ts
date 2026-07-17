@@ -1,26 +1,25 @@
-import type { Node, State } from '../State'
-import { setItemsHidden, updateLeafNodes } from '../utils/graphProjection'
-import { reconcileHiddenFields, type StoredNodeLayout } from '../utils/storage'
+import type { State } from '../State'
+import { hideItems, mapGraphItems } from '../utils/graphProjection'
+import {
+  reconcileNodeHiddenFields,
+  type StoredNodeLayout,
+} from '../utils/storage'
 import { updateNodePositions } from '../utils/updateNodePositions'
 
 export type ApplyLayoutMode = 'merge' | 'replace'
-
-function fieldNamesOf(node: Node): string[] {
-  return node.fields.map((field) => field.name)
-}
 
 export function applyStoredLayout(
   state: State,
   saved: StoredNodeLayout,
   mode: ApplyLayoutMode,
 ): Partial<State> {
-  const nodesWithFields = updateLeafNodes(state.nodes, (node) => {
+  const nodesWithFields = mapGraphItems(state.nodes, (node) => {
     const imported = saved.hiddenFields?.[node.id] ?? []
     const hiddenFields =
       mode === 'merge' ? [...node.hiddenFields, ...imported] : imported
     return {
       ...node,
-      hiddenFields: reconcileHiddenFields(fieldNamesOf(node), hiddenFields),
+      hiddenFields: reconcileNodeHiddenFields(node.fields, hiddenFields),
     }
   })
   const updatedNodes = nodesWithFields.map((node) => {
@@ -58,10 +57,6 @@ export function applyStoredLayout(
     return next
   })
 
-  const nodes = setItemsHidden(
-    updatedNodes,
-    new Set(saved.hiddenNodes ?? []),
-    true,
-  )
+  const nodes = hideItems(updatedNodes, new Set(saved.hiddenNodes ?? []))
   return updateNodePositions(state, { nodes })
 }

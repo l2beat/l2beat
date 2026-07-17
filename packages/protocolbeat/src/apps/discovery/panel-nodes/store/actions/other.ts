@@ -1,11 +1,15 @@
 import type { Node, State } from '../State'
-import { getGraphProjection, setItemsHidden } from '../utils/graphProjection'
+import {
+  getGraphProjection,
+  hideItems,
+  mapGraphItems,
+} from '../utils/graphProjection'
 import { containerBoxes } from '../utils/renderGraph'
 import type { NodeLocations } from '../utils/storage'
 import { updateNodePositions } from '../utils/updateNodePositions'
 
 export function hideSelected(state: State): Partial<State> {
-  const nodes = setItemsHidden(state.nodes, new Set(state.selected), true)
+  const nodes = hideItems(state.nodes, new Set(state.selected))
   if (nodes === state.nodes) return {}
   return updateNodePositions(state, {
     nodes,
@@ -20,7 +24,7 @@ export function hideUnreachable(state: State): Partial<State> {
       .filter((node) => !node.isReachable)
       .map((node) => node.id),
   )
-  const nodes = setItemsHidden(state.nodes, unreachable, true)
+  const nodes = hideItems(state.nodes, unreachable)
   return updateNodePositions(state, { nodes })
 }
 
@@ -36,9 +40,12 @@ export function setPreferences(
   }
 }
 
+// One hiding mechanism, one full reset: showing hidden means showing every
+// hidden value, which in turn shows every node hidden through those values.
 export function showHidden(state: State): Partial<State> {
-  const projection = getGraphProjection(state.nodes)
-  const nodes = setItemsHidden(state.nodes, projection.hiddenNodeIds, false)
+  const nodes = mapGraphItems(state.nodes, (node) =>
+    node.hiddenFields.length === 0 ? node : { ...node, hiddenFields: [] },
+  )
   return updateNodePositions(state, { nodes })
 }
 

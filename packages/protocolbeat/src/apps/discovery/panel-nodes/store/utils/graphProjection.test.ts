@@ -1,8 +1,11 @@
 import { expect } from 'earl'
-import { applyStoredLayout } from '../actions/applyStoredLayout'
-import { hideSelected } from '../actions/other'
-import type { Node, State } from '../State'
-import { getGraphProjection, setItemsHidden } from './graphProjection'
+import type { Node } from '../State'
+import {
+  getGraphProjection,
+  hideItems,
+  isHideable,
+  mapGraphItems,
+} from './graphProjection'
 
 describe(getGraphProjection.name, () => {
   it('hides a node referenced only through a hidden field', () => {
@@ -38,6 +41,44 @@ describe(getGraphProjection.name, () => {
       makeNode('second', [['next', 'first']]),
     ]
     expect(hidden(nodes)).toEqual(['first', 'second'])
+  })
+
+  it('keeps a detached cycle visible while nothing is hidden into it', () => {
+    const nodes = [
+      makeNode('first', [['next', 'second']]),
+      makeNode('second', [['next', 'first']]),
+    ]
+    expect(hidden(nodes)).toEqual([])
+  })
+
+  it('hides a detached node when all of its inbound fields are hidden', () => {
+    const nodes = [
+      makeNode('first', [['next', 'second']]),
+      makeNode('second', [['next', 'first']], ['next']),
+    ]
+    expect(hidden(nodes)).toEqual(['first', 'second'])
+  })
+
+  it('keeps a detached cycle while every node has visible inbound support', () => {
+    const nodes = [
+      makeNode(
+        'first',
+        [
+          ['visible', 'second'],
+          ['hidden', 'second'],
+        ],
+        ['hidden'],
+      ),
+      makeNode(
+        'second',
+        [
+          ['visible', 'first'],
+          ['hidden', 'first'],
+        ],
+        ['hidden'],
+      ),
+    ]
+    expect(hidden(nodes)).toEqual([])
   })
 
   it('preserves initial nodes and nodes with no references', () => {
@@ -78,10 +119,11 @@ describe(getGraphProjection.name, () => {
     expect(projection.visibleEdges).toEqual([
       { source: 'root', target: 'visible-target', fieldName: 'visible' },
     ])
+    expect(projection.hiddenFieldCount).toEqual(1)
   })
 })
 
-describe(setItemsHidden.name, () => {
+describe(hideItems.name, () => {
   it('hides every inbound field instead of storing a hidden node', () => {
     const nodes = [
       makeNode('first', [['owner', 'target']]),
@@ -93,44 +135,30 @@ describe(setItemsHidden.name, () => {
       makeNode('root'),
     ]
 
-    const updated = setItemsHidden(nodes, new Set(['target']), true)
+    const updated = hideItems(nodes, new Set(['target']))
 
     expect(updated[0]?.hiddenFields).toEqual(['owner'])
     expect(updated[1]?.hiddenFields).toEqual(['members[0]'])
     expect(hidden(updated)).toEqual(['target'])
   })
 
-  it('shows a node by restoring all of its inbound fields', () => {
+  it('hides a target in a detached cycle', () => {
     const nodes = [
-      makeNode('root', [['owner', 'target']], ['owner']),
-      makeNode('target'),
+      makeNode('first', [['next', 'second']]),
+      makeNode('second', [['next', 'first']]),
     ]
 
-    const updated = setItemsHidden(nodes, new Set(['target']), false)
+    const updated = hideItems(nodes, new Set(['first']))
 
-    expect(updated[0]?.hiddenFields).toEqual([])
-    expect(hidden(updated)).toEqual([])
-  })
-
-  it('restores a cascade by showing all derived hidden targets', () => {
-    const nodes = [
-      makeNode('root', [['middle', 'middle']], ['middle']),
-      makeNode('middle', [['target', 'target']]),
-      makeNode('target'),
-    ]
-    const hiddenIds = getGraphProjection(nodes).hiddenNodeIds
-
-    const updated = setItemsHidden(nodes, hiddenIds, false)
-
-    expect(updated[0]?.hiddenFields).toEqual([])
-    expect(hidden(updated)).toEqual([])
+    expect(updated[1]?.hiddenFields).toEqual(['next'])
+    expect(hidden(updated)).toEqual(['first', 'second'])
   })
 
   it('expands group targets to their members', () => {
     const group = makeGroup('group', [makeNode('member')])
     const nodes = [makeNode('root', [['member', 'member']]), group]
 
-    const updated = setItemsHidden(nodes, new Set(['group']), true)
+    const updated = hideItems(nodes, new Set(['group']))
 
     expect(updated[0]?.hiddenFields).toEqual(['member'])
     expect(hidden(updated)).toEqual(['group', 'member'])
@@ -139,8 +167,9 @@ describe(setItemsHidden.name, () => {
   it('keeps standalone targets and node references unchanged', () => {
     const nodes = [makeNode('standalone')]
 
-    const updated = setItemsHidden(nodes, new Set(['standalone']), true)
+    const updated = hideItems(nodes, new Set(['standalone']))
 
+    expect(updated === nodes).toEqual(true)
     expect(updated[0] === nodes[0]).toEqual(true)
   })
 
@@ -150,82 +179,55 @@ describe(setItemsHidden.name, () => {
       makeNode('initial', [], [], true),
     ]
 
-    const updated = setItemsHidden(nodes, new Set(['initial']), true)
+    const updated = hideItems(nodes, new Set(['initial']))
 
-    expect(updated[0] === nodes[0]).toEqual(true)
+    expect(updated === nodes).toEqual(true)
     expect(hidden(updated)).toEqual([])
   })
 })
 
-describe(applyStoredLayout.name, () => {
-  it('translates legacy hidden group ids into hidden inbound fields', () => {
-    const group = makeGroup('group', [makeNode('member')])
-    const state = makeState([makeNode('root', [['member', 'member']]), group])
-
-    const result = applyStoredLayout(
-      state,
-      {
-        version: 4,
-        projectId: 'test',
-        locations: {},
-        hiddenNodes: ['group'],
-      },
-      'merge',
-    )
-
-    expect(result.nodes?.[0]?.hiddenFields).toEqual(['member'])
-  })
-
-  it('unions hidden fields in merge mode', () => {
-    const state = makeState([
-      makeNode(
-        'root',
-        [
-          ['first', 'first'],
-          ['second', 'second'],
-        ],
-        ['first'],
-      ),
-      makeNode('first'),
-      makeNode('second'),
+describe(isHideable.name, () => {
+  it('only accepts non-initial nodes with inbound fields', () => {
+    const referenced = makeNode('referenced')
+    const initial = makeNode('initial', [], [], true)
+    const root = makeNode('root', [
+      ['referenced', 'referenced'],
+      ['initial', 'initial'],
     ])
+    const standalone = makeNode('standalone')
+    const nodes = [root, referenced, initial, standalone]
+    const projection = getGraphProjection(nodes)
 
-    const result = applyStoredLayout(
-      state,
-      {
-        version: 4,
-        projectId: 'test',
-        locations: {},
-        hiddenFields: { root: ['second'] },
-      },
-      'merge',
-    )
-
-    expect(result.nodes?.[0]?.hiddenFields).toEqual(['first', 'second'])
-  })
-
-  it('clears nested hidden fields in replace mode', () => {
-    const member = makeNode('member', [['owner', 'target']], ['owner'])
-    const state = makeState([makeGroup('group', [member]), makeNode('target')])
-
-    const result = applyStoredLayout(
-      state,
-      { version: 4, projectId: 'test', locations: {} },
-      'replace',
-    )
-
-    expect(result.nodes?.[0]?.subnodes[0]?.hiddenFields).toEqual([])
+    expect(isHideable(projection, referenced)).toEqual(true)
+    expect(isHideable(projection, initial)).toEqual(false)
+    expect(isHideable(projection, standalone)).toEqual(false)
   })
 })
 
-describe(hideSelected.name, () => {
-  it('keeps selection when a standalone node cannot be hidden', () => {
-    const state = {
-      ...makeState([makeNode('standalone')]),
-      selected: ['standalone'],
+describe(mapGraphItems.name, () => {
+  it('updates leaves and groups without clearing group fields', () => {
+    const member = makeNode('member')
+    const group = {
+      ...makeGroup('group', [member]),
+      hiddenFields: ['group-field'],
     }
 
-    expect(hideSelected(state)).toEqual({})
+    const updated = mapGraphItems([group], (node) =>
+      node.id === 'member' ? { ...node, name: 'updated' } : node,
+    )
+
+    expect(updated[0]?.hiddenFields).toEqual(['group-field'])
+    expect(updated[0]?.subnodes[0]?.name).toEqual('updated')
+  })
+
+  it('preserves references when nothing changes', () => {
+    const group = makeGroup('group', [makeNode('member')])
+    const nodes = [group]
+
+    const updated = mapGraphItems(nodes, (node) => node)
+
+    expect(updated[0] === group).toEqual(true)
+    expect(updated[0]?.subnodes[0] === group.subnodes[0]).toEqual(true)
   })
 })
 
@@ -235,35 +237,6 @@ function hidden(nodes: readonly Node[]): string[] {
 
 function makeGroup(id: string, subnodes: Node[]): Node {
   return { ...makeNode(id), addressType: 'Group', subnodes }
-}
-
-function makeState(nodes: Node[]): State {
-  return {
-    projectId: 'test',
-    nodes,
-    selected: [],
-    history: { past: [], future: [] },
-    userPreferences: {
-      enableDimming: true,
-      hideLargeArrays: true,
-      highlightOverlapping: true,
-      useExperimentalRenderer: false,
-    },
-    transform: { offsetX: 0, offsetY: 0, scale: 1 },
-    input: {
-      shiftPressed: false,
-      spacePressed: false,
-      ctrlPressed: false,
-      lmbPressed: false,
-      mmbPressed: false,
-      mouseStartX: 0,
-      mouseStartY: 0,
-      mouseX: 0,
-      mouseY: 0,
-    },
-    positionsBeforeMove: {},
-    loaded: true,
-  }
 }
 
 function makeNode(

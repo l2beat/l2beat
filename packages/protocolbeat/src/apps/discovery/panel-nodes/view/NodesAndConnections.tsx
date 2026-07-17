@@ -4,7 +4,10 @@ import { AddressIcon } from '../../../../components/AddressIcon'
 import { useGlobalSettingsStore } from '../../store/global-settings-store'
 import type { Node } from '../store/State'
 import { useStore } from '../store/store'
-import { buildRenderGraph } from '../store/utils/renderGraph'
+import {
+  buildRenderGraph,
+  isFieldConnectionLive,
+} from '../store/utils/renderGraph'
 import { Connection, type ConnectionProps } from './Connection'
 import { NodeView } from './NodeView'
 
@@ -48,7 +51,7 @@ export function NodesAndConnections() {
       buildView(
         graph.nodes,
         graph.hidden,
-        graph.visibleFieldNamesByNodeId,
+        graph.liveGroupTargets,
         selected,
         enableDimming,
         highlightOverlapping,
@@ -172,13 +175,13 @@ function computeOverlappingIds(nodes: readonly Node[]): Set<string> {
 function buildView(
   nodes: readonly Node[],
   hidden: ReadonlySet<string>,
-  visibleFieldNamesByNodeId: ReadonlyMap<string, ReadonlySet<string>>,
+  liveGroupTargets: ReadonlyMap<string, ReadonlySet<string>>,
   selected: readonly string[],
   enableDimming: boolean,
   highlightOverlapping: boolean,
   markUnreachableEntries: boolean,
 ): DerivedView {
-  const hiddenSet = new Set(hidden)
+  const hiddenSet = hidden
   const selectedSet = new Set(selected)
   const visible: Node[] = []
   const visibleById = new Map<string, Node>()
@@ -201,17 +204,17 @@ function buildView(
   if (enableDimming && selected.length > 0) {
     for (const node of visible) {
       if (!selectedSet.has(node.id)) continue
-      const visibleFieldNames = visibleFieldNamesByNodeId.get(node.id)
       for (const field of node.fields) {
-        if (!visibleFieldNames?.has(field.name)) continue
+        if (!isFieldConnectionLive(node, field, liveGroupTargets)) continue
+        if (hiddenSet.has(field.target)) continue
         highlightedSet.add(field.target)
       }
     }
     for (const node of visible) {
       if (highlightedSet.has(node.id)) continue
-      const visibleFieldNames = visibleFieldNamesByNodeId.get(node.id)
       for (const field of node.fields) {
-        if (!visibleFieldNames?.has(field.name)) continue
+        if (!isFieldConnectionLive(node, field, liveGroupTargets)) continue
+        if (hiddenSet.has(field.target)) continue
         if (selectedSet.has(field.target)) {
           highlightedSet.add(node.id)
           break
@@ -234,8 +237,6 @@ function buildView(
     const isGrayedOut = markUnreachableEntries && !node.isReachable
     const isOverlapping = overlappingIds.has(node.id)
 
-    const visibleFieldNames = visibleFieldNamesByNodeId.get(node.id)
-
     let fieldHighlightedMask = ''
     let fieldTargetHiddenMask = ''
 
@@ -248,7 +249,8 @@ function buildView(
       fieldHighlightedMask += targetSelected ? '1' : '0'
       fieldTargetHiddenMask += targetHidden ? '1' : '0'
 
-      if (!visibleFieldNames?.has(field.name) || targetHidden) continue
+      if (!isFieldConnectionLive(node, field, liveGroupTargets) || targetHidden)
+        continue
 
       const targetNode = visibleById.get(field.target)
       const isDashed =

@@ -170,7 +170,7 @@ function NodeFieldImpl(props: NodeFieldProps) {
           lineHeight: FIELD_HEIGHT + 'px',
         }}
       >
-        {props.field.name}
+        {props.field.label ?? props.field.name}
       </div>
       {!props.targetHidden && (
         <div

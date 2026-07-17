@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { reconcileHiddenFields } from './storage'
+import { reconcileHiddenFields, reconcileNodeHiddenFields } from './storage'
 
 describe(reconcileHiddenFields.name, () => {
   it('keeps entries that exist on the node', () => {
@@ -30,5 +30,26 @@ describe(reconcileHiddenFields.name, () => {
   it('returns empty when node has no fields', () => {
     const result = reconcileHiddenFields([], ['a', 'b'])
     expect(result).toEqual([])
+  })
+})
+
+describe(reconcileNodeHiddenFields.name, () => {
+  it('migrates legacy group labels to stable field identities', () => {
+    const fields = [
+      { name: 'group-field:first', label: 'member' },
+      { name: 'group-field:second', label: 'member' },
+    ]
+
+    const result = reconcileNodeHiddenFields(fields, ['member'])
+
+    expect(result).toEqual(['group-field:first', 'group-field:second'])
+  })
+
+  it('preserves stable field identities', () => {
+    const fields = [{ name: 'group-field:first', label: 'member' }]
+
+    const result = reconcileNodeHiddenFields(fields, ['group-field:first'])
+
+    expect(result).toEqual(['group-field:first'])
   })
 })

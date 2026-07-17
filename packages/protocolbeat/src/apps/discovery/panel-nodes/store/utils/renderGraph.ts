@@ -1,4 +1,4 @@
-import type { Box, Node } from '../State'
+import type { Box, Field, Node } from '../State'
 import { FIELD_HEIGHT, HEADER_HEIGHT } from './constants'
 import { boxContains } from './containment'
 import { type GraphEdge, getGraphProjection } from './graphProjection'
@@ -21,7 +21,10 @@ export interface RenderGraph {
   readonly nodes: Node[]
   // Nodes disconnected by hidden fields.
   readonly hidden: ReadonlySet<string>
-  readonly visibleFieldNamesByNodeId: ReadonlyMap<string, ReadonlySet<string>>
+  // Per collapsed group, the row targets that still have a live connection
+  // from some member. Rows are unique per target within a group, so a target
+  // identifies a row.
+  readonly liveGroupTargets: ReadonlyMap<string, ReadonlySet<string>>
   // One boundary per opened group, innermost last so hit-testing can prefer it.
   readonly containers: GroupContainer[]
 }
@@ -53,11 +56,42 @@ export function buildRenderGraph(nodes: readonly Node[]): RenderGraph {
     nodes: laidOut,
     hidden: effectiveHidden,
     containers,
-    visibleFieldNamesByNodeId: getVisibleFieldNames(
-      laidOut,
-      projection.visibleEdges,
-    ),
+    liveGroupTargets: getLiveGroupTargets(laidOut, projection.visibleEdges),
   }
+}
+
+// Whether a field's connection should be drawn and counted for dimming. For
+// regular nodes this is just the hidden-fields check — target visibility is
+// handled separately by the renderers. For collapsed groups, whose rows
+// aggregate member fields, a row is live only while some member still has a
+// visible edge to the row's target.
+export function isFieldConnectionLive(
+  node: Node,
+  field: Field,
+  liveGroupTargets: ReadonlyMap<string, ReadonlySet<string>>,
+): boolean {
+  if (node.hiddenFields.includes(field.name)) return false
+  if (node.subnodes.length === 0) return true
+  return liveGroupTargets.get(node.id)?.has(field.target) ?? false
+}
+
+function getLiveGroupTargets(
+  nodes: readonly Node[],
+  edges: readonly GraphEdge[],
+): ReadonlyMap<string, ReadonlySet<string>> {
+  const result = new Map<string, Set<string>>()
+  if (!nodes.some((node) => node.subnodes.length > 0)) {
+    return result
+  }
+  const sourceByDescendant = topLevelByDescendant(nodes)
+  for (const edge of edges) {
+    const source = sourceByDescendant.get(edge.source)
+    if (source === undefined || source.id === edge.source) continue
+    const targets = result.get(source.id) ?? new Set()
+    targets.add(edge.target)
+    result.set(source.id, targets)
+  }
+  return result
 }
 
 // Flatten opened groups into their members without laying out fields. Select-box
@@ -91,29 +125,6 @@ function expandGroups(
   return { nodes: rendered, containers, expanded: true }
 }
 
-function getVisibleFieldNames(
-  nodes: readonly Node[],
-  edges: readonly GraphEdge[],
-): ReadonlyMap<string, ReadonlySet<string>> {
-  const sourceByDescendant = topLevelByDescendant(nodes)
-  const result = new Map<string, Set<string>>()
-  for (const edge of edges) {
-    const source = sourceByDescendant.get(edge.source)
-    if (source === undefined) continue
-    const names = result.get(source.id) ?? new Set()
-    if (source.id === edge.source) {
-      names.add(edge.fieldName)
-    } else {
-      for (const field of source.fields) {
-        if (field.target !== edge.target) continue
-        if (!source.hiddenFields.includes(field.name)) names.add(field.name)
-      }
-    }
-    result.set(source.id, names)
-  }
-  return result
-}
-
 function expand(
   node: Node,
   hidden: ReadonlySet<string>,
@@ -127,6 +138,8 @@ function expand(
       containers.push(boundary(node, members))
       return members
     }
+    // Defensive: unreachable under derived hiddenness, because an opened
+    // group whose members are all hidden is itself hidden and filtered earlier.
     return [node]
   }
   return [node]

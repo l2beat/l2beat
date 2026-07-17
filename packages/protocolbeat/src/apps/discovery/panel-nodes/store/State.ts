@@ -74,6 +74,7 @@ export interface HistorySnapshot {
 
 export interface Field {
   readonly name: string
+  readonly label?: string
   readonly target: string
   readonly box: Box
   readonly connection: Connection

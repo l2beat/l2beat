@@ -80,10 +80,8 @@ interface LayoutNode {
 
 export function stackAutoLayout(
   baseNodes: readonly Node[],
-  freshLayout = true,
-  visibleEdges: readonly GraphEdge[] = getGraphProjection(
-    baseNodes,
-  ).visibleEdges,
+  freshLayout: boolean,
+  visibleEdges: readonly GraphEdge[],
 ) {
   const nodes = toLayoutNodes(baseNodes, visibleEdges)
   const clusters = clusterNodes(nodes)
