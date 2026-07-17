@@ -6,7 +6,7 @@ A one-sided chain is a chain we reference in interop matching, but do not captur
 
 Current config:
 
-- `INTEROP_ONE_SIDED_CHAINS = ['solana']`
+- `INTEROP_ONE_SIDED_CHAINS = ['solana', 'xlayer', 'adi', 'plasma', 'tron', 'hyperliquid', 'lighter']`
 - This list is a policy/allowlist input; partial transfer creation itself is not auto-gated by framework assertions.
 
 ## Why do we need them?

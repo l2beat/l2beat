@@ -1028,6 +1028,49 @@
       ]
     }
   },
+  "ccip-partial-adi": {
+    "loadConfigs": ["ccip"],
+    "txs": [
+      // Ethereum → ADI Chain (v1.6 send to one-sided chain)
+      {
+        "chain": "ethereum",
+        "tx": "0xcf66ff94bcb9045154e27ddbcfb59559a14439e3b8dbad9ce94a724e89b5abaf"
+      },
+      // ADI Chain → Ethereum (v1.6 receive from one-sided chain)
+      {
+        "chain": "ethereum",
+        "tx": "0x251a702e539a5f3dd07f042de0a7a023d92c54bb7201e8dcb0eb3ed0fe9eb2ce"
+      }
+    ],
+    "expects": {
+      "events": ["ccip.CCIPSendRequested", "ccip.ExecutionStateChanged"],
+      "messages": [],
+      "transfers": [
+        {
+          "type": "ccip.Transfer",
+          "plugin": "ccip",
+          "bridgeType": "lockAndMint",
+          "src": {
+            "tokenAddress": "0x000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+            "wasBurned": false,
+            "financials": { "symbol": "USDC" }
+          },
+          "dst": { "chain": "adi" }
+        },
+        {
+          "type": "ccip.Transfer",
+          "plugin": "ccip",
+          "bridgeType": "lockAndMint",
+          "src": { "chain": "adi" },
+          "dst": {
+            "tokenAddress": "0x000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+            "wasMinted": false,
+            "financials": { "symbol": "USDC" }
+          }
+        }
+      ]
+    }
+  },
   "celer": {
     "txs": [
       // message only, wrapping cctp
