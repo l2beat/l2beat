@@ -83,20 +83,64 @@ describeDatabase(LivenessRepository.name, (db) => {
       await expect(repository.insertMany([])).not.toBeRejected()
     })
 
-    it('keeps the first record for an event identity', async () => {
+    it('keeps the earliest record for an event identity', async () => {
+      const earlier: LivenessRecord = {
+        timestamp: START,
+        blockNumber: 12350,
+        txHash: 'earlier-proof',
+        eventId: 'epoch-1',
+        configurationId: txIdA,
+      }
+      const later: LivenessRecord = {
+        timestamp: START + 1,
+        blockNumber: 12351,
+        txHash: 'later-proof',
+        eventId: 'epoch-1',
+        configurationId: txIdA,
+      }
+
+      await repository.insertMany([later, earlier])
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([...DATA, earlier])
+    })
+
+    it('replaces a stored event with an earlier record', async () => {
+      const later: LivenessRecord = {
+        timestamp: START + 1,
+        blockNumber: 12351,
+        txHash: 'later-proof',
+        eventId: 'epoch-2',
+        configurationId: txIdA,
+      }
+      const earlier = {
+        ...later,
+        timestamp: START,
+        blockNumber: 12350,
+        txHash: 'earlier-proof',
+      }
+
+      await repository.insertMany([later])
+      await repository.insertMany([earlier])
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([...DATA, earlier])
+    })
+
+    it('stores multiple events represented by the same transaction', async () => {
       const records: LivenessRecord[] = [
         {
           timestamp: START,
           blockNumber: 12350,
-          txHash: 'first-proof',
-          eventId: 'epoch-1',
+          txHash: 'multi-event-proof',
+          eventId: 'epoch-3',
           configurationId: txIdA,
         },
         {
-          timestamp: START + 1,
-          blockNumber: 12351,
-          txHash: 'second-proof',
-          eventId: 'epoch-1',
+          timestamp: START,
+          blockNumber: 12350,
+          txHash: 'multi-event-proof',
+          eventId: 'epoch-4',
           configurationId: txIdA,
         },
       ]
@@ -104,7 +148,7 @@ describeDatabase(LivenessRepository.name, (db) => {
       await repository.insertMany(records)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([...DATA, records[0]!])
+      expect(results).toEqualUnsorted([...DATA, ...records])
     })
 
     it('big query', async () => {

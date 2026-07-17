@@ -3,6 +3,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { RealTimeLiveness } from '../kysely/generated/types'
+import { keepEarliestLivenessRecords } from './utils/keepEarliestLivenessRecords'
 
 export interface RealTimeLivenessRecord {
   configurationId: TrackedTxId
@@ -42,12 +43,41 @@ export class RealTimeLivenessRepository extends BaseRepository {
   async insertMany(records: RealTimeLivenessRecord[]): Promise<number> {
     if (records.length === 0) return 0
 
-    const rows = records.map(toRow)
+    const rows = keepEarliestLivenessRecords(records).map(toRow)
     await this.batch(rows, 10_000, async (batch) => {
       await this.db
         .insertInto('RealTimeLiveness')
         .values(batch)
-        .onConflict((cb) => cb.doNothing())
+        .onConflict((cb) =>
+          cb
+            .columns(['configurationId', 'eventId'])
+            .doUpdateSet((eb) => ({
+              timestamp: eb.ref('excluded.timestamp'),
+              blockNumber: eb.ref('excluded.blockNumber'),
+              txHash: eb.ref('excluded.txHash'),
+            }))
+            .where((eb) =>
+              eb.or([
+                eb(
+                  eb.ref('excluded.timestamp'),
+                  '<',
+                  eb.ref('RealTimeLiveness.timestamp'),
+                ),
+                eb.and([
+                  eb(
+                    eb.ref('excluded.timestamp'),
+                    '=',
+                    eb.ref('RealTimeLiveness.timestamp'),
+                  ),
+                  eb(
+                    eb.ref('excluded.blockNumber'),
+                    '<',
+                    eb.ref('RealTimeLiveness.blockNumber'),
+                  ),
+                ]),
+              ]),
+            ),
+        )
         .execute()
     })
     return rows.length

@@ -3,6 +3,7 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { Liveness } from '../kysely/generated/types'
+import { keepEarliestLivenessRecords } from './utils/keepEarliestLivenessRecords'
 
 export interface LivenessRecord {
   timestamp: UnixTime
@@ -96,12 +97,41 @@ export class LivenessRepository extends BaseRepository {
   async insertMany(records: LivenessRecord[]): Promise<number> {
     if (records.length === 0) return 0
 
-    const rows = records.map(toRow)
+    const rows = keepEarliestLivenessRecords(records).map(toRow)
     await this.batch(rows, 10_000, async (batch) => {
       await this.db
         .insertInto('Liveness')
         .values(batch)
-        .onConflict((cb) => cb.doNothing())
+        .onConflict((cb) =>
+          cb
+            .columns(['configurationId', 'eventId'])
+            .doUpdateSet((eb) => ({
+              timestamp: eb.ref('excluded.timestamp'),
+              blockNumber: eb.ref('excluded.blockNumber'),
+              txHash: eb.ref('excluded.txHash'),
+            }))
+            .where((eb) =>
+              eb.or([
+                eb(
+                  eb.ref('excluded.timestamp'),
+                  '<',
+                  eb.ref('Liveness.timestamp'),
+                ),
+                eb.and([
+                  eb(
+                    eb.ref('excluded.timestamp'),
+                    '=',
+                    eb.ref('Liveness.timestamp'),
+                  ),
+                  eb(
+                    eb.ref('excluded.blockNumber'),
+                    '<',
+                    eb.ref('Liveness.blockNumber'),
+                  ),
+                ]),
+              ]),
+            ),
+        )
         .execute()
     })
     return rows.length

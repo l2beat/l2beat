@@ -19,7 +19,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import type { TrackedTxsConfig } from '../../config/Config'
-import { getFunctionCallEventId } from '../tracked-txs/utils/getFunctionCallEventId'
+import { getLivenessEventId } from '../tracked-txs/utils/getLivenessEventId'
 import { isFistParameterMatching } from '../tracked-txs/utils/isFirstParameterMatching'
 import { isProgramHashProven } from '../tracked-txs/utils/isProgramHashProven'
 import type { BlockProcessor } from '../types'
@@ -120,21 +120,15 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
         ...filteredSubmissions,
         ...filteredSharedBridgeCalls,
       ].map((config) => {
-        const eventId =
-          config.params.formula === 'functionCall' && config.eventIdentity
-            ? getFunctionCallEventId(
-                tx.data as string,
-                config.params.signature,
-                config.eventIdentity,
-              )
-            : (tx.hash as string)
-
         return {
           timestamp: block.timestamp,
           blockNumber: block.number,
           txHash: tx.hash as string,
           configurationId: config.id,
-          eventId,
+          eventId: getLivenessEventId(config, {
+            hash: tx.hash as string,
+            input: tx.data as string,
+          }),
         }
       })
 
@@ -150,12 +144,15 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
       )
 
       const results = matchingCalls
+        .filter((config) => config.eventIdentity.type === 'transactionHash')
         .map((config) => ({
           timestamp: block.timestamp,
           blockNumber: block.number,
           txHash: log.transactionHash as string,
           configurationId: config.id,
-          eventId: log.transactionHash as string,
+          eventId: getLivenessEventId(config, {
+            hash: log.transactionHash as string,
+          }),
         }))
         .filter(
           (result) =>

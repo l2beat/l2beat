@@ -79,7 +79,7 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
       ])
     })
 
-    it('keeps the first occurrence of an event', async () => {
+    it('replaces stored events with earlier records', async () => {
       const newRows = [
         {
           timestamp: START - 4 * UnixTime.HOUR,
@@ -99,27 +99,49 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
       await repository.insertMany(newRows)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted(DATA)
+      expect(results).toEqualUnsorted([DATA[0]!, DATA[1]!, ...newRows])
     })
 
     it('empty array', async () => {
       await expect(repository.insertMany([])).not.toBeRejected()
     })
 
-    it('keeps the first record for an event identity', async () => {
+    it('keeps the earliest record for an event identity', async () => {
+      const earlier = {
+        timestamp: START,
+        blockNumber: 12350,
+        txHash: 'earlier-proof',
+        eventId: 'epoch-1',
+        configurationId: txIdA,
+      }
+      const later = {
+        timestamp: START + 1,
+        blockNumber: 12351,
+        txHash: 'later-proof',
+        eventId: 'epoch-1',
+        configurationId: txIdA,
+      }
+
+      await repository.insertMany([later, earlier])
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([...DATA, earlier])
+    })
+
+    it('stores multiple events represented by the same transaction', async () => {
       const records = [
         {
           timestamp: START,
           blockNumber: 12350,
-          txHash: 'first-proof',
-          eventId: 'epoch-1',
+          txHash: 'multi-event-proof',
+          eventId: 'epoch-3',
           configurationId: txIdA,
         },
         {
-          timestamp: START + 1,
-          blockNumber: 12351,
-          txHash: 'second-proof',
-          eventId: 'epoch-1',
+          timestamp: START,
+          blockNumber: 12350,
+          txHash: 'multi-event-proof',
+          eventId: 'epoch-4',
           configurationId: txIdA,
         },
       ]
@@ -127,7 +149,7 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
       await repository.insertMany(records)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([...DATA, records[0]!])
+      expect(results).toEqualUnsorted([...DATA, ...records])
     })
   })
 

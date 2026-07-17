@@ -1,10 +1,12 @@
 import {
   createTrackedTxId,
   type TrackedTxConfigEntry,
+  type TrackedTxCostsConfig,
   type TrackedTxFunctionCallConfig,
   type TrackedTxId,
   type TrackedTxSharedBridgeConfig,
   type TrackedTxSharpSubmissionConfig,
+  type TrackedTxTransactionHashLivenessConfig,
 } from '@l2beat/shared'
 import {
   EthereumAddress,
@@ -35,6 +37,11 @@ import type {
   TrackedTxFunctionCallResult,
 } from '../types/model'
 import { transformFunctionCallsQueryResult } from './transformFunctionCallsQueryResult'
+
+type LivenessFunctionCallResult = Extract<
+  TrackedTxFunctionCallResult,
+  { type: 'liveness' }
+>
 
 const ADDRESS_1 = EthereumAddress.random()
 const SELECTOR_1 = '0x095e4'
@@ -145,7 +152,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         blob_versioned_hashes: null,
       },
     ]
-    const expected: Omit<TrackedTxFunctionCallResult, 'eventId'>[] = [
+    const expected: Omit<LivenessFunctionCallResult, 'eventId'>[] = [
       {
         formula: 'functionCall',
         projectId: functionCalls[0].properties.projectId,
@@ -206,7 +213,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       queryResults,
     )
 
-    expect(withoutEventIds(result)).toEqual(expected)
+    expect(result).toEqual(withTransactionHashEventIds(expected))
   })
 
   it('throws when there is no matching configuration', () => {
@@ -243,7 +250,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
     ).toThrow('There should be at least one matching config')
   })
 
-  it('uses a semantic liveness event identity while costs use the tx hash', () => {
+  it('adds semantic event identity only to liveness results', () => {
     const signature = 'function submit((uint256,uint256))' as const
     const iface = new utils.Interface([signature])
     const input = iface.encodeFunctionData('submit', [[123, 456]])
@@ -263,7 +270,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         ...livenessConfig.properties,
         eventIdentity: {
           type: 'functionCallParameter' as const,
-          path: [0, 0],
+          path: [0, 0] as const,
         },
         params: {
           ...livenessConfig.properties.params,
@@ -279,8 +286,8 @@ describe(transformFunctionCallsQueryResult.name, () => {
       formula: 'functionCall',
       sinceTimestamp: SINCE_TIMESTAMP,
       subtype: 'stateUpdates',
+      type: 'l2costs',
     })
-    costs.properties.type = 'l2costs'
     costs.properties.params.signature = signature
 
     const result = transformFunctionCallsQueryResult(
@@ -303,8 +310,13 @@ describe(transformFunctionCallsQueryResult.name, () => {
       ],
     )
 
-    expect(result[0]?.eventId).toEqual('123')
-    expect(result[1]?.eventId).toEqual(txHashes[0])
+    const [livenessResult, costsResult] = result
+    expect(livenessResult?.type).toEqual('liveness')
+    expect(
+      livenessResult?.type === 'liveness' ? livenessResult.eventId : undefined,
+    ).toEqual('123')
+    expect(costsResult?.type).toEqual('l2costs')
+    expect(costsResult && 'eventId' in costsResult).toEqual(false)
   })
 
   it('includes only configurations which program hashes were proven', () => {
@@ -347,7 +359,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       },
     ]
 
-    const expected: Omit<TrackedTxFunctionCallResult, 'eventId'>[] = [
+    const expected: Omit<LivenessFunctionCallResult, 'eventId'>[] = [
       {
         formula: 'functionCall',
         projectId: sharpSubmissions[0].properties.projectId,
@@ -375,7 +387,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       queryResults,
     )
 
-    expect(withoutEventIds(result)).toEqual(expected)
+    expect(result).toEqual(withTransactionHashEventIds(expected))
   })
 
   it('includes only configurations where chain id matches', () => {
@@ -444,7 +456,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       },
     ]
 
-    const expected: Omit<TrackedTxFunctionCallResult, 'eventId'>[] = [
+    const expected: Omit<LivenessFunctionCallResult, 'eventId'>[] = [
       {
         formula: 'functionCall',
         projectId: sharedBridgeCalls[0].properties.projectId,
@@ -490,7 +502,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       queryResults,
     )
 
-    expect(withoutEventIds(result)).toEqual(expected)
+    expect(result).toEqual(withTransactionHashEventIds(expected))
   })
 
   it('includes only configurations where chain address matches', () => {
@@ -537,7 +549,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       },
     ]
 
-    const expected: Omit<TrackedTxFunctionCallResult, 'eventId'>[] = [
+    const expected: Omit<LivenessFunctionCallResult, 'eventId'>[] = [
       {
         formula: 'functionCall',
         projectId: sharedBridgeCalls[0].properties.projectId,
@@ -565,7 +577,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       queryResults,
     )
 
-    expect(withoutEventIds(result)).toEqual(expected)
+    expect(result).toEqual(withTransactionHashEventIds(expected))
   })
 
   it('should calculate calldata gas used correctly', () => {
@@ -643,7 +655,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         blob_versioned_hashes: null,
       },
     ]
-    const expected: Omit<TrackedTxFunctionCallResult, 'eventId'>[] = [
+    const expected: Omit<LivenessFunctionCallResult, 'eventId'>[] = [
       {
         formula: 'functionCall',
         projectId: functionCalls[0].properties.projectId,
@@ -707,16 +719,36 @@ describe(transformFunctionCallsQueryResult.name, () => {
       queryResults,
     )
 
-    expect(withoutEventIds(result)).toEqual(expected)
+    expect(result).toEqual(withTransactionHashEventIds(expected))
   })
 })
 
-function withoutEventIds<T extends { eventId: string }>(
-  records: T[],
-): Omit<T, 'eventId'>[] {
-  return records.map(({ eventId: _, ...record }) => record)
+function withTransactionHashEventIds(
+  records: Omit<LivenessFunctionCallResult, 'eventId'>[],
+): LivenessFunctionCallResult[] {
+  return records.map((record) => ({ ...record, eventId: record.hash }))
 }
 
+interface MockFunctionCallArgs {
+  id: TrackedTxId
+  projectId: ProjectId
+  subtype: TrackedTxsConfigSubtype
+  address: EthereumAddress
+  selector: string
+  sinceTimestamp: number
+  formula: TrackedTxFunctionCallConfig['formula']
+}
+
+function mockFunctionCall(
+  args: MockFunctionCallArgs & { type: 'l2costs' },
+): Configuration<TrackedTxCostsConfig & { params: TrackedTxFunctionCallConfig }>
+function mockFunctionCall(
+  args: MockFunctionCallArgs & { type?: 'liveness' },
+): Configuration<
+  TrackedTxTransactionHashLivenessConfig & {
+    params: TrackedTxFunctionCallConfig
+  }
+>
 function mockFunctionCall({
   id,
   projectId,
@@ -725,36 +757,41 @@ function mockFunctionCall({
   selector,
   sinceTimestamp,
   formula,
-}: {
-  id: TrackedTxId
-  projectId: ProjectId
-  subtype: TrackedTxsConfigSubtype
-  address: EthereumAddress
-  selector: string
-  sinceTimestamp: number
-  formula: TrackedTxFunctionCallConfig['formula']
-}): Configuration<
+  type = 'liveness',
+}: MockFunctionCallArgs & { type?: 'liveness' | 'l2costs' }): Configuration<
   TrackedTxConfigEntry & {
     params: TrackedTxFunctionCallConfig
   }
 > {
+  const params = {
+    formula,
+    address,
+    selector,
+    signature: 'function foo()' as const,
+  }
   return {
     id,
     minHeight: 0,
     maxHeight: 0,
-    properties: {
-      id,
-      projectId,
-      type: 'liveness',
-      subtype,
-      sinceTimestamp,
-      params: {
-        formula,
-        address,
-        selector,
-        signature: 'function foo()',
-      },
-    },
+    properties:
+      type === 'liveness'
+        ? {
+            id,
+            projectId,
+            type: 'liveness',
+            eventIdentity: { type: 'transactionHash' },
+            subtype,
+            sinceTimestamp,
+            params,
+          }
+        : {
+            id,
+            projectId,
+            type: 'l2costs',
+            subtype,
+            sinceTimestamp,
+            params,
+          },
   }
 }
 
@@ -777,7 +814,7 @@ function mockSharpSubmission({
   formula: TrackedTxSharpSubmissionConfig['formula']
   programHashes: string[]
 }): Configuration<
-  TrackedTxConfigEntry & {
+  TrackedTxTransactionHashLivenessConfig & {
     params: TrackedTxSharpSubmissionConfig
   }
 > {
@@ -789,6 +826,7 @@ function mockSharpSubmission({
       id,
       projectId,
       type: 'liveness',
+      eventIdentity: { type: 'transactionHash' },
       subtype,
       sinceTimestamp,
       params: {
@@ -822,7 +860,7 @@ function mockSharedBridgeCall({
   firstParameter: number | EthereumAddress
   signature: `function ${string}`
 }): Configuration<
-  TrackedTxConfigEntry & {
+  TrackedTxTransactionHashLivenessConfig & {
     params: TrackedTxSharedBridgeConfig
   }
 > {
@@ -834,6 +872,7 @@ function mockSharedBridgeCall({
       id,
       projectId,
       type: 'liveness',
+      eventIdentity: { type: 'transactionHash' },
       subtype,
       sinceTimestamp,
       params: {

@@ -48,6 +48,7 @@ const MOCK_PROJECTS: TrackedTxProject[] = [
         sinceTimestamp: 1000,
         id: 'p2-t1',
         type: 'liveness',
+        eventIdentity: { type: 'transactionHash' },
         subtype: 'batchSubmissions',
       },
       {

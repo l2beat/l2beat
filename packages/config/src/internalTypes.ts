@@ -1,4 +1,4 @@
-import type { TrackedTxLivenessEventIdentity } from '@l2beat/shared'
+import type { TrackedTxFunctionCallParameterEventIdentity } from '@l2beat/shared'
 import type {
   EthereumAddress,
   ProjectId,
@@ -187,17 +187,38 @@ export interface ProjectScalingRiskView extends ProjectRiskView {
   stateValidation: Omit<ProjectRiskView['stateValidation'], 'secondLine'>
 }
 
-export interface Layer2TxConfig {
-  uses: Layer2TrackedTxUse[]
-  query: TrackedTxQuery
+interface Layer2TxConfigBase {
   _hackCostMultiplier?: number
 }
+
+export type Layer2TxConfig = Layer2TxConfigBase &
+  (
+    | {
+        uses: Layer2TrackedTxUseWithoutEventIdentity[]
+        query: TrackedTxQuery
+      }
+    | {
+        uses: Layer2TrackedTxUse[]
+        query: Omit<FunctionCall, 'topics'> & { topics?: never }
+      }
+  )
 
 export type Layer2TrackedTxUse =
   | {
       type: 'liveness'
       subtype: TrackedTxsConfigSubtype
-      eventIdentity?: TrackedTxLivenessEventIdentity
+      eventIdentity?: TrackedTxFunctionCallParameterEventIdentity
+    }
+  | {
+      type: 'l2costs'
+      subtype: TrackedTxsConfigSubtype
+    }
+
+type Layer2TrackedTxUseWithoutEventIdentity =
+  | {
+      type: 'liveness'
+      subtype: TrackedTxsConfigSubtype
+      eventIdentity?: never
     }
   | {
       type: 'l2costs'

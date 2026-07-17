@@ -93,6 +93,7 @@ describe(RealTimeLivenessProcessor.name, () => {
           {
             type: 'liveness' as const,
             id: 'tracked-tx-1',
+            eventIdentity: { type: 'transactionHash' },
             projectId,
             subtype: 'stateUpdates' as const,
             sinceTimestamp: UnixTime.now(),
@@ -105,6 +106,7 @@ describe(RealTimeLivenessProcessor.name, () => {
           {
             type: 'liveness' as const,
             id: 'tracked-tx-2',
+            eventIdentity: { type: 'transactionHash' },
             projectId,
             subtype: 'stateUpdates' as const,
             sinceTimestamp: UnixTime.now(),
@@ -306,6 +308,7 @@ describe(RealTimeLivenessProcessor.name, () => {
         {
           type: 'liveness' as const,
           id: configurationId1,
+          eventIdentity: { type: 'transactionHash' },
           projectId,
           subtype: 'stateUpdates' as const,
           sinceTimestamp: UnixTime.now(),
@@ -318,6 +321,7 @@ describe(RealTimeLivenessProcessor.name, () => {
         {
           type: 'liveness' as const,
           id: configurationId2,
+          eventIdentity: { type: 'transactionHash' },
           projectId,
           subtype: 'stateUpdates' as const,
           sinceTimestamp: UnixTime.now(),
@@ -422,6 +426,7 @@ describe(RealTimeLivenessProcessor.name, () => {
         {
           type: 'liveness' as const,
           id: configurationId,
+          eventIdentity: { type: 'transactionHash' },
           projectId,
           subtype: 'stateUpdates' as const,
           sinceTimestamp: UnixTime.now(),
@@ -540,6 +545,7 @@ describe(RealTimeLivenessProcessor.name, () => {
         {
           type: 'liveness' as const,
           id: configurationId,
+          eventIdentity: { type: 'transactionHash' },
           projectId,
           subtype: 'stateUpdates' as const,
           sinceTimestamp: UnixTime.now(),
@@ -552,6 +558,7 @@ describe(RealTimeLivenessProcessor.name, () => {
         {
           type: 'liveness' as const,
           id: configurationId2,
+          eventIdentity: { type: 'transactionHash' },
           projectId,
           subtype: 'proofSubmissions' as const,
           sinceTimestamp: UnixTime.now(),
@@ -722,6 +729,7 @@ describe(RealTimeLivenessProcessor.name, () => {
         {
           type: 'liveness' as const,
           id: configurationId,
+          eventIdentity: { type: 'transactionHash' },
           projectId,
           subtype: 'stateUpdates' as const,
           sinceTimestamp: UnixTime.now(),
@@ -798,6 +806,7 @@ describe(RealTimeLivenessProcessor.name, () => {
         {
           type: 'liveness',
           id: 'config-1',
+          eventIdentity: { type: 'transactionHash' },
           projectId,
           subtype: 'stateUpdates',
           sinceTimestamp: UnixTime.now(),

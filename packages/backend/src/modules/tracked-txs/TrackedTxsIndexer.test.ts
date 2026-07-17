@@ -261,7 +261,7 @@ function getMockTrackedTxsIndexer(params: {
   indexerService?: IndexerService
   configurations?: Configuration<TrackedTxConfigEntry>[]
   trackedTxsClient?: TrackedTxsClient
-  updaters?: TxUpdaterInterface<'liveness' | 'l2costs'>[]
+  updaters?: (TxUpdaterInterface<'liveness'> | TxUpdaterInterface<'l2costs'>)[]
   livenessRepository?: Database['liveness']
   l2CostRepository?: Database['l2Cost']
   syncMetadataRepository?: Database['syncMetadata']
@@ -358,7 +358,6 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       blockNumber: 1,
       blockTimestamp: UnixTime.now(),
       hash: '',
-      eventId: '',
       fromAddress: EthereumAddress.random(),
       toAddress: EthereumAddress.random(),
       projectId: ProjectId('test2'),

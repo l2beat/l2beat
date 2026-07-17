@@ -112,7 +112,7 @@ describe(TrackedTxsClient.name, () => {
           type: 'liveness' as const,
           eventIdentity: {
             type: 'functionCallParameter' as const,
-            path: [0],
+            path: [0] as const,
           },
         },
       }

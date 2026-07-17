@@ -14,7 +14,10 @@ export function createTrackedTxId(
   input.push(trackedTxConfig.subtype)
   // untilTimestamp is not used in the ID calculation.
 
-  if (trackedTxConfig.type === 'liveness' && trackedTxConfig.eventIdentity) {
+  if (
+    trackedTxConfig.type === 'liveness' &&
+    trackedTxConfig.eventIdentity.type === 'functionCallParameter'
+  ) {
     input.push(trackedTxConfig.eventIdentity.type)
     input.push(trackedTxConfig.eventIdentity.path.join('.'))
   }

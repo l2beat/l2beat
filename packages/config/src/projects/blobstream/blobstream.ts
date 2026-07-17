@@ -53,6 +53,7 @@ export const blobstream: BaseProject = {
       projectId: ProjectId('blobstream'),
       sinceTimestamp: 1724648927,
       type: 'liveness',
+      eventIdentity: { type: 'transactionHash' },
       subtype: 'proofSubmissions',
       params: {
         formula: 'functionCall',

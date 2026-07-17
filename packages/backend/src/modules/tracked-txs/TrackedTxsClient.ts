@@ -145,7 +145,7 @@ export class TrackedTxsClient {
           ...c.properties.params,
           getFullInput:
             c.properties.type === 'liveness' &&
-            c.properties.eventIdentity?.type === 'functionCallParameter',
+            c.properties.eventIdentity.type === 'functionCallParameter',
         })),
         sharpSubmissionsConfig.map((c) => c.properties.params),
         sharedBridgesConfig.map((c) => c.properties.params),

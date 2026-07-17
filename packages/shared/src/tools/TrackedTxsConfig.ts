@@ -14,20 +14,27 @@ export type TrackedTxConfigEntry =
   | TrackedTxCostsConfig
   | TrackedTxLivenessConfig
 
-export type TrackedTxConfigEntryWithoutId =
-  | Omit<TrackedTxCostsConfig, 'id'>
-  | Omit<TrackedTxLivenessConfig, 'id'>
+type DistributiveOmit<T, K extends PropertyKey> = T extends unknown
+  ? Omit<T, K>
+  : never
 
-interface TrackedTxConfigBase {
+export type TrackedTxConfigEntryWithoutId = DistributiveOmit<
+  TrackedTxConfigEntry,
+  'id'
+>
+
+type TrackedTxConfig =
+  | TrackedTxFunctionCallConfig
+  | TrackedTxTransferConfig
+  | TrackedTxSharpSubmissionConfig
+  | TrackedTxSharedBridgeConfig
+
+interface TrackedTxConfigBase<T extends TrackedTxConfig = TrackedTxConfig> {
   id: TrackedTxId
   projectId: ProjectId
   sinceTimestamp: number
   untilTimestamp?: number
-  params:
-    | TrackedTxFunctionCallConfig
-    | TrackedTxTransferConfig
-    | TrackedTxSharpSubmissionConfig
-    | TrackedTxSharedBridgeConfig
+  params: T
   subtype: TrackedTxsConfigSubtype
 }
 
@@ -36,11 +43,20 @@ export interface TrackedTxCostsConfig extends TrackedTxConfigBase {
   type: 'l2costs'
 }
 
-export interface TrackedTxLivenessConfig extends TrackedTxConfigBase {
+export type TrackedTxLivenessConfig =
+  | TrackedTxTransactionHashLivenessConfig
+  | TrackedTxFunctionCallParameterLivenessConfig
+
+export type TrackedTxTransactionHashLivenessConfig = TrackedTxConfigBase & {
   type: 'liveness'
-  /** Overrides the default transaction-hash identity of a liveness event. */
-  eventIdentity?: TrackedTxLivenessEventIdentity
+  eventIdentity: TrackedTxTransactionHashEventIdentity
 }
+
+export type TrackedTxFunctionCallParameterLivenessConfig =
+  TrackedTxConfigBase<TrackedTxFunctionCallConfig> & {
+    type: 'liveness'
+    eventIdentity: TrackedTxFunctionCallParameterEventIdentity
+  }
 
 export interface TrackedTxFunctionCallConfig {
   formula: 'functionCall'
@@ -50,10 +66,18 @@ export interface TrackedTxFunctionCallConfig {
   topics?: string[]
 }
 
-export interface TrackedTxLivenessEventIdentity {
+export type TrackedTxLivenessEventIdentity =
+  | TrackedTxTransactionHashEventIdentity
+  | TrackedTxFunctionCallParameterEventIdentity
+
+export interface TrackedTxTransactionHashEventIdentity {
+  type: 'transactionHash'
+}
+
+export interface TrackedTxFunctionCallParameterEventIdentity {
   type: 'functionCallParameter'
   /** Index path through the decoded function arguments, including tuple indices. */
-  path: number[]
+  path: readonly [number, ...number[]]
 }
 
 export interface TrackedTxTransferConfig {
