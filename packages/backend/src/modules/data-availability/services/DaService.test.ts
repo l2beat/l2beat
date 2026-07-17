@@ -363,7 +363,6 @@ describe(DaService.name, () => {
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
       inbox: '0xSharedInbox',
-      sequencers: ['0xSharedSequencer'],
       calls: [
         {
           selector: '0x12345678',
@@ -400,6 +399,19 @@ describe(DaService.name, () => {
             '0x00000000000000000000000000000000000000000000000000000000000000aa',
         },
         config,
+      )
+
+      expect(result).toEqual(false)
+    })
+
+    it('does not fall back to the inbox for an empty calls array', () => {
+      const result = matchEthereumProject(
+        {
+          inbox: '0xSharedInbox',
+          sequencer: '0xSharedSequencer',
+          topics: [],
+        },
+        { ...config, calls: [] },
       )
 
       expect(result).toEqual(false)

@@ -5,7 +5,11 @@ import type {
 } from '@l2beat/config'
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import type { AvailBlob, CelestiaBlob, DaBlob } from '@l2beat/shared'
-import { Address32, assert, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  encodeFunctionCallFirstParameter,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import type { BlockDaIndexedConfig } from '../../../config/Config'
 
 export class DaService {
@@ -124,11 +128,11 @@ export function matchEthereumProject(
   },
   config: EthereumDaTrackingConfig,
 ) {
-  if (config.calls && config.calls.length > 0) {
+  if (config.calls !== undefined) {
     return config.calls.some(
       (call) =>
         call.selector.toLowerCase() === blob.callSelector?.toLowerCase() &&
-        encodeFirstParameter(call.firstParameter) ===
+        encodeFunctionCallFirstParameter(call.firstParameter) ===
           blob.callFirstParameter?.toLowerCase(),
     )
   }
@@ -154,13 +158,6 @@ export function matchEthereumProject(
   )
 
   return hasInboxMatch && hasMatchingSequencer
-}
-
-function encodeFirstParameter(value: string | number): string {
-  const valueAsHex =
-    typeof value === 'number' ? `0x${BigInt(value).toString(16)}` : value
-
-  return Address32.from(valueAsHex)
 }
 
 function matchCelestiaProject(

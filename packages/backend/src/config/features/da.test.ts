@@ -125,6 +125,12 @@ describe(createDaTrackingId.name, () => {
     topics: ['0xTopic'],
     sinceBlock: 0,
   }
+  const callConfig = {
+    type: 'ethereum' as const,
+    daLayer: ProjectId('ethereum'),
+    inbox: '0xInbox',
+    sinceBlock: 0,
+  }
 
   it('keeps ids stable for configs without calls', () => {
     expect(createDaTrackingId(legacyConfig)).toEqual('8ada7a631e5c')
@@ -132,43 +138,53 @@ describe(createDaTrackingId.name, () => {
 
   it('uses calls in the id', () => {
     const first = createDaTrackingId({
-      ...legacyConfig,
+      ...callConfig,
       calls: [{ selector: '0x12345678', firstParameter: '0xaaaa' }],
     })
     const second = createDaTrackingId({
-      ...legacyConfig,
+      ...callConfig,
       calls: [{ selector: '0x12345678', firstParameter: '0xbbbb' }],
     })
 
     expect(first).not.toEqual(second)
   })
 
-  it('ignores legacy matchers when calls are configured', () => {
-    const first = createDaTrackingId({
-      ...legacyConfig,
-      calls: [{ selector: '0x12345678', firstParameter: '0xaaaa' }],
-    })
-    const second = createDaTrackingId({
-      ...legacyConfig,
-      inbox: '0xOtherInbox',
-      sequencers: ['0xOtherSequencer'],
-      topics: ['0xOtherTopic'],
-      calls: [{ selector: '0x12345678', firstParameter: '0xaaaa' }],
-    })
+  it('rejects calls combined with legacy matchers', () => {
+    expect(() =>
+      createDaTrackingId({
+        ...callConfig,
+        sequencers: ['0xOtherSequencer'],
+        calls: [{ selector: '0x12345678', firstParameter: '0xaaaa' }],
+      }),
+    ).toThrow(/cannot be combined/)
+    expect(() =>
+      createDaTrackingId({
+        ...callConfig,
+        topics: ['0xOtherTopic'],
+        calls: [{ selector: '0x12345678', firstParameter: '0xaaaa' }],
+      }),
+    ).toThrow(/cannot be combined/)
+  })
 
-    expect(first).toEqual(second)
+  it('rejects an empty calls array', () => {
+    expect(() =>
+      createDaTrackingId({
+        ...callConfig,
+        calls: [],
+      }),
+    ).toThrow(/cannot be empty/)
   })
 
   it('normalizes call case and order', () => {
     const first = createDaTrackingId({
-      ...legacyConfig,
+      ...callConfig,
       calls: [
         { selector: '0x12345678', firstParameter: '0xAaAa' },
         { selector: '0x87654321', firstParameter: '0xBbBb' },
       ],
     })
     const second = createDaTrackingId({
-      ...legacyConfig,
+      ...callConfig,
       calls: [
         { selector: '0x87654321', firstParameter: '0xbbbb' },
         { selector: '0x12345678', firstParameter: '0xaaaa' },
@@ -180,11 +196,11 @@ describe(createDaTrackingId.name, () => {
 
   it('normalizes equivalent numeric and hex call parameters', () => {
     const numeric = createDaTrackingId({
-      ...legacyConfig,
+      ...callConfig,
       calls: [{ selector: '0x98f81962', firstParameter: 2904 }],
     })
     const hex = createDaTrackingId({
-      ...legacyConfig,
+      ...callConfig,
       calls: [{ selector: '0x98f81962', firstParameter: '0xb58' }],
     })
 

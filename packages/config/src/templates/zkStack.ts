@@ -53,6 +53,7 @@ import type {
   ReasonForBeingInOther,
   TableReadyValue,
 } from '../types'
+
 import { readMarkdown } from '../utils/readMarkdown'
 import { getActivityConfig } from './activity'
 import { getDiscoveryInfo } from './getDiscoveryInfo'
@@ -715,9 +716,11 @@ function getDaTracking(
     const diamond = ChainSpecificAddress.address(
       templateVars.discovery.getContract('Diamond').address,
     )
-    const isPostV29 =
-      validatorTimelockEntry.template ===
-      'shared-zk-stack/ValidatorTimelock_post29'
+    const protocolVersion = templateVars.discovery.getContractValue<number[]>(
+      'Diamond',
+      'getSemverProtocolVersion',
+    )
+    const isPostV29 = usesChainAddressForDaTracking(protocolVersion)
 
     return [
       {
@@ -765,6 +768,17 @@ function getDaTracking(
   }
 
   return undefined
+}
+
+export function usesChainAddressForDaTracking(
+  protocolVersion: number[],
+): boolean {
+  const protocolMinorVersion = protocolVersion[1]
+  assert(
+    protocolMinorVersion === 28 || protocolMinorVersion === 29,
+    `Unsupported zkStack protocol version for DA tracking: ${protocolVersion.join('.')}`,
+  )
+  return protocolMinorVersion === 29
 }
 
 function programHashesReproducible(l2BootloaderHash: string): boolean | null {

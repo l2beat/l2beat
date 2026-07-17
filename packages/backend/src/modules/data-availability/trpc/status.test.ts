@@ -84,8 +84,6 @@ describe(getDaTrackingStatusRows.name, () => {
           mockEthereumConfig({
             configurationId: 'ethereum',
             inbox: '0x123',
-            sequencers: ['0x456'],
-            topics: ['0x789'],
             calls: [{ selector: '0x12345678', firstParameter: '0xabc' }],
           }),
           mockCelestiaConfig({

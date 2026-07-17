@@ -176,6 +176,87 @@ describe(EthereumBlobNotifierIndexer.name, () => {
 
       expect(result).toEqual([])
     })
+
+    it('aggregates unmatched call groups before applying the threshold', async () => {
+      const blobsRepository = mockBlobsRepository([
+        {
+          from: '0xA',
+          to: '0xB',
+          callSelector: '0x11111111',
+          callFirstParameter: '0x01',
+          count: 75,
+        },
+        {
+          from: '0xA',
+          to: '0xB',
+          callSelector: '0x22222222',
+          callFirstParameter: '0x02',
+          count: 75,
+        },
+        {
+          from: '0xA',
+          to: '0xB',
+          callSelector: '0x33333333',
+          callFirstParameter: '0x03',
+          count: 75,
+        },
+        {
+          from: '0xA',
+          to: '0xB',
+          callSelector: '0x44444444',
+          callFirstParameter: '0x04',
+          count: 75,
+        },
+      ])
+      const indexer = createIndexer({ blobsRepository })
+      const oneAm =
+        UnixTime.toStartOf(UnixTime.now(), 'day') + 1 * UnixTime.HOUR
+
+      const result = await indexer.getUnmatchedPairs(oneAm)
+
+      expect(result).toEqual([{ from: '0xA', to: '0xB', count: 300 }])
+    })
+
+    it('excludes matched call groups before aggregating unmatched groups', async () => {
+      const matchedFirstParameter =
+        '0x00000000000000000000000000000000000000000000000000000000000000aa'
+      const blobsRepository = mockBlobsRepository([
+        {
+          from: '0xA',
+          to: '0xB',
+          callSelector: '0x12345678',
+          callFirstParameter: matchedFirstParameter,
+          count: 100,
+        },
+        {
+          from: '0xA',
+          to: '0xB',
+          callSelector: '0x87654321',
+          callFirstParameter: '0x01',
+          count: 60,
+        },
+      ])
+      const indexer = createIndexer({
+        blobsRepository,
+        configurations: [
+          config({
+            inbox: '0xOther',
+            calls: [
+              {
+                selector: '0x12345678',
+                firstParameter: '0xaa',
+              },
+            ],
+          }),
+        ],
+      })
+      const oneAm =
+        UnixTime.toStartOf(UnixTime.now(), 'day') + 1 * UnixTime.HOUR
+
+      const result = await indexer.getUnmatchedPairs(oneAm)
+
+      expect(result).toEqual([])
+    })
   })
 
   describe(

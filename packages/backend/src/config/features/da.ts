@@ -1,8 +1,9 @@
 import type { Env } from '@l2beat/backend-tools'
 import type { ProjectDaTrackingConfig, ProjectService } from '@l2beat/config'
 import {
-  Address32,
+  assert,
   assertUnreachable,
+  encodeFunctionCallFirstParameter,
   notUndefined,
   ProjectId,
   UnixTime,
@@ -344,6 +345,10 @@ async function getTimestampDaTrackingSovereignProjects(
 }
 
 export function createDaTrackingId(config: ProjectDaTrackingConfig): string {
+  if (config.type === 'ethereum') {
+    validateEthereumDaTrackingConfig(config)
+  }
+
   const input = []
 
   input.push(config.type)
@@ -353,12 +358,12 @@ export function createDaTrackingId(config: ProjectDaTrackingConfig): string {
 
   switch (config.type) {
     case 'ethereum': {
-      if (config.calls && config.calls.length > 0) {
+      if (config.calls !== undefined) {
         input.push(
           ...config.calls
             .map(
               (call) =>
-                `${call.selector.toLowerCase()}:${encodeFirstParameter(call.firstParameter)}`,
+                `${call.selector.toLowerCase()}:${encodeFunctionCallFirstParameter(call.firstParameter)}`,
             )
             .sort((a, b) => a.localeCompare(b)),
         )
@@ -391,11 +396,20 @@ export function createDaTrackingId(config: ProjectDaTrackingConfig): string {
   return hash.slice(0, 12)
 }
 
-function encodeFirstParameter(value: string | number): string {
-  const valueAsHex =
-    typeof value === 'number' ? `0x${BigInt(value).toString(16)}` : value
+function validateEthereumDaTrackingConfig(
+  config: Extract<ProjectDaTrackingConfig, { type: 'ethereum' }>,
+) {
+  if (config.calls === undefined) return
 
-  return Address32.from(valueAsHex)
+  assert(config.calls.length > 0, 'Ethereum DA calls cannot be empty')
+  assert(
+    config.sequencers === undefined,
+    'Ethereum DA calls cannot be combined with sequencers',
+  )
+  assert(
+    config.topics === undefined,
+    'Ethereum DA calls cannot be combined with topics',
+  )
 }
 
 function createDaLayerConfigId(daLayerName: string): string {

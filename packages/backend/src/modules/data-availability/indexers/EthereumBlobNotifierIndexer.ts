@@ -81,11 +81,9 @@ export class EthereumBlobNotifierIndexer extends ManagedChildIndexer {
       todayStart,
     )
 
-    const unmatchedPairs: UnmatchedBlobPair[] = []
+    const unmatchedPairs = new Map<string, UnmatchedBlobPair>()
 
     for (const pair of pairs) {
-      if (pair.count < COUNT_THRESHOLD) continue
-
       const isMatched = this.$.configurations.some((config) =>
         matchEthereumProject(
           {
@@ -100,15 +98,24 @@ export class EthereumBlobNotifierIndexer extends ManagedChildIndexer {
       )
 
       if (!isMatched) {
-        unmatchedPairs.push({
-          from: pair.from,
-          to: pair.to,
-          count: pair.count,
-        })
+        const key = JSON.stringify([pair.from, pair.to])
+        const existing = unmatchedPairs.get(key)
+
+        if (existing) {
+          existing.count += pair.count
+        } else {
+          unmatchedPairs.set(key, {
+            from: pair.from,
+            to: pair.to,
+            count: pair.count,
+          })
+        }
       }
     }
 
-    return unmatchedPairs
+    return [...unmatchedPairs.values()].filter(
+      (pair) => pair.count >= COUNT_THRESHOLD,
+    )
   }
 
   formatDiscordMessages(pairs: UnmatchedBlobPair[], to: number): string[] {

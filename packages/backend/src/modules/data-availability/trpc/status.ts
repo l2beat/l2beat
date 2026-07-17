@@ -105,7 +105,7 @@ function getConfigDetails(
     case 'baseLayer':
       return 'base layer'
     case 'ethereum': {
-      if (config.calls && config.calls.length > 0) {
+      if (config.calls !== undefined) {
         return `calls: ${config.calls
           .map((call) => `${call.selector}(${call.firstParameter})`)
           .join(', ')}`
