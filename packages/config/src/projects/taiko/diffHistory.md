@@ -1,3 +1,56 @@
+Generated with discovered.json: 0x370a7936dcd250464d80ec295584a01067d824ed
+
+# Diff at Fri, 17 Jul 2026 07:47:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5a5b552776f13efe49c744667945e52e0a8f9718 block: 1783509666
+- current timestamp: 1784274333
+
+## Description
+
+One Security Council agent is changed. The [Unzen upgrade proposal](https://dao.taiko.xyz/plugins/community-proposals/#/proposals/36) moves into the optimistic public phase.
+
+## Watched changes
+
+```diff
+    contract SignerList (Security Council) (eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2) [taiko/SignerList] {
+    +++ description: A signer list for storing multisig members and their agents, stores the addresses of the Multisigs that use this signer list. Each signer delegates their permissions to their agent address that they can configure here.
+      values.$members.4:
+-        "eth:0xbC40317A69CB1D1aF2CBcfE32C8B7a6840Dc287a"
++        "eth:0x4236f57E9dBc238878EFac4AeF0A16D4dD06DC1A"
+    }
+```
+
+```diff
+    contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) [taiko/OptimisticTokenVotingPlugin] {
+    +++ description: An optimistic governance module. Standard proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d. Emergency proposals can be executed without delay.
+      values.proposalCount:
+-        36
++        37
+      values.proposalIds.36:
++        "607065748551507217783827454409519139164457533476"
+    }
+```
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) [taiko/Multisig] {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
++++ description: total standard proposal count.
++++ severity: HIGH
+      values.proposalCount:
+-        21
++        22
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) [taiko/PreconfWhitelist] {
+    +++ description: Contains the whitelist of addresses eligible to propose batches on L1 and issue preconfirmations. It dynamically selects a single active operator for each epoch using a delayed Ethereum beacon block root as randomness. There is no fallback proposer path in this contract: non-selected operators cannot propose for the current epoch.
+      values.operatorMapping.2:
+-        "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d"
+    }
+```
+
 Generated with discovered.json: 0xc8eb9dafc1e8964d9a2f249e41f79449d9ca483e
 
 # Diff at Wed, 08 Jul 2026 11:24:06 GMT:
