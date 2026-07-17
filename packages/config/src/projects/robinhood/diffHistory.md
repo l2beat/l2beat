@@ -1,3 +1,96 @@
+Generated with discovered.json: 0x0f00f51906b21f7041f0a11a84c72d1af63e2103
+
+# Diff at Mon, 20 Jul 2026 14:13:02 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b461afee5f10587a00295a471b2542eba2686ebb block: 1784044401
+- current timestamp: 1784556704
+
+## Description
+
+Recent transaction-filtering increase due to a single wallet being blocked — the
+honeypot behind the fake "Robinhood founder seed-phrase leak". Filtered
+transactions rose from 278 to 6,086; none have been reversed.
+
+Added the L1 timelock ProxyAdmin (OpenZeppelin v5.0.0) to the ProxyAdmin template.
+
+## Watched changes
+
+```diff
+    contract ArbFilteredTransactionsManager (robinhood:0x0000000000000000000000000000000000000074) [N/A] {
+    +++ description: ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.
+      values.filteredTransactionsAdded:
+-        278
++        6086
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784044401 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x4e393071053C5d95771b1B716857d65cdf5B1839) [global/ProxyAdmin] {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","role":"admin"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","role":"admin"}]
+    }
+```
+
+```diff
+    contract UpgradeExecutor (eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.1:
++        {"permission":"act","from":"eth:0x4e393071053C5d95771b1B716857d65cdf5B1839","role":".owner"}
+    }
+```
+
+```diff
+    contract Safe (eth:0x7Ae50886c7EA0394613aa7Dcc287a5c9650784b6) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","role":"admin","via":[{"address":"eth:0x4e393071053C5d95771b1B716857d65cdf5B1839"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]}
+    }
+```
+
+```diff
+    contract TimelockController (eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 7d.
+      receivedPermissions.12:
++        {"permission":"upgrade","from":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","role":"admin","via":[{"address":"eth:0x4e393071053C5d95771b1B716857d65cdf5B1839"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]}
+    }
+```
+
+```diff
+    contract SafeL2 (robinhood:0x4C0360aFedD31e53718e4343F95E40b692402462) [GnosisSafe] {
+    +++ description: None
+      deployerAddress:
++        "robinhood:0xcFDab226f6DF33cd364Ff8E617bEB5Fe54E84Ebe"
+      sinceTimestamp:
++        1782841228
+      sinceBlock:
++        615418
+    }
+```
+
+```diff
+    contract TimelockController (robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 7d.
+      deployerAddress:
++        "robinhood:0xcFDab226f6DF33cd364Ff8E617bEB5Fe54E84Ebe"
+      sinceTimestamp:
++        1782841253
+      sinceBlock:
++        615454
+    }
+```
+
 Generated with discovered.json: 0x444b94e2ff7a4ceaf6cbbd1a0604446941743a25
 
 # Diff at Tue, 14 Jul 2026 15:55:02 GMT:
