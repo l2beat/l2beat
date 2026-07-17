@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x15dc33d0d7a05c4ded07820ef7b4984f3277674b
+
+# Diff at Fri, 17 Jul 2026 07:49:26 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5a5b552776f13efe49c744667945e52e0a8f9718 block: 1781603942
+- current timestamp: 1784274500
+
+## Description
+
+Single signer change.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (eth:0xCbcdd778AA25476F203814214dD3E9b9c46829A1) [GnosisSafe] {
+    +++ description: None
+      values.$members.5:
+-        "eth:0xFbF8084Fb81da2e24f9EdD821172efef1b74F218"
++        "eth:0xa85B57bD7433dCC4679d638b87d80F155A689Fc1"
+    }
+```
+
 Generated with discovered.json: 0x4a58a3500fa2244c29fda481586d2a127c8f7207
 
 # Diff at Tue, 16 Jun 2026 10:00:27 GMT:

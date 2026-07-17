@@ -407,6 +407,16 @@ Verify:
     verificationStatus: 'successful',
     verificationSteps: OP_SUCCINCT_AGGLAYER_V390_STEPS,
   },
+  '0x0034587dfb1de8163284d39f3043f5fadfa92f9e03fb3e0315eb469c550fde40': {
+    ...OP_SUCCINCT_AGG_BLOBS,
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/agglayer/op-succinct/tree/v3.10.0-agglayer/programs/aggregation',
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0x0034587dfb1de8163284d39f3043f5fadfa92f9e03fb3e0315eb469c550fde40.md',
+    ),
+  },
   '0x490685ea27adbbb83301073734f40a5656c984fe352359d54dd637e828e66872': {
     ...OP_SUCCINCT_RANGE_BLOBS,
     programUrl:
@@ -431,6 +441,16 @@ Verify:
     proverSystemProject: ProjectId('sp1hypercube'),
     verificationStatus: 'successful',
     verificationSteps: OP_SUCCINCT_AGGLAYER_V390_STEPS,
+  },
+  '0x1b04822373ca65680026b5610c1edf424798421b032ef9117b2c264661de246f': {
+    ...OP_SUCCINCT_RANGE_BLOBS,
+    programUrl:
+      'https://github.com/agglayer/op-succinct/tree/v3.10.0-agglayer/programs/range/ethereum',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0x1b04822373ca65680026b5610c1edf424798421b032ef9117b2c264661de246f.md',
+    ),
   },
   '0x00d9be2980d484ba29aaa1e0d27648b8182df8616a4ec85c3c2b528b29d1a085': {
     ...OP_SUCCINCT_LITE_AGG_BLOBS,
