@@ -68,6 +68,10 @@
       "severity": "HIGH",
       "copy": "referralExpirationTime",
       "edit": ["<", ["env", "timestamp"]]
+    },
+    "hasExpired": {
+      "copy": "referralExpirationTime",
+      "edit": ["<", ["env", "timestamp"]]
     }
   }
 }
