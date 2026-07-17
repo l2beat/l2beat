@@ -339,6 +339,7 @@
           "applicativeBootloaderProgramHash": "3585039955034622347908243360088523999417661979601115750324841620224559981237",
           "supportedCairoVerifierProgramHashesCommitment": "2466486069452806242840925975386070877213363233399077553187556921270027085075"
         },
+        "hasExpired": false,
         "hasRegisteredFact": true,
         "identify": "StarkWare_GpsStatementVerifier_2025_11",
         "memoryPageFactRegistry": "eth:0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460",
@@ -3936,6 +3937,7 @@
           "applicativeBootloaderProgramHash": "2358844945297786488640123814540854423585455959362109345448922524567546993330",
           "supportedCairoVerifierProgramHashesCommitment": "2549868507195840500193135872505150687001846773665388230794631345999578394351"
         },
+        "hasExpired": false,
         "hasRegisteredFact": true,
         "identify": "StarkWare_GpsStatementVerifier_2026_13",
         "memoryPageFactRegistry": "eth:0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460",
@@ -4963,6 +4965,7 @@
           "applicativeBootloaderProgramHash": "989994135429182905628199499137734285064642484443466268071170571058909750176",
           "supportedCairoVerifierProgramHashesCommitment": "2989448937132554463006794084002640731746256535824175616421304143852713734169"
         },
+        "hasExpired": false,
         "hasRegisteredFact": true,
         "identify": "StarkWare_GpsStatementVerifier_2026_13",
         "memoryPageFactRegistry": "eth:0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460",
@@ -6198,6 +6201,7 @@
           "applicativeBootloaderProgramHash": "2358844945297786488640123814540854423585455959362109345448922524567546993330",
           "supportedCairoVerifierProgramHashesCommitment": "2344514586684536563385559840360704301482767436870016911498865422916991654732"
         },
+        "hasExpired": false,
         "hasRegisteredFact": true,
         "identify": "StarkWare_GpsStatementVerifier_2026_13",
         "memoryPageFactRegistry": "eth:0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460",
@@ -6553,6 +6557,7 @@
           "applicativeBootloaderProgramHash": "1104316318711847786071125527957082259001554753246760931396914052122269757907",
           "supportedCairoVerifierProgramHashesCommitment": "988080400528720010398639244351885480706475299330001427790099377094461351470"
         },
+        "hasExpired": true,
         "hasRegisteredFact": true,
         "identify": "StarkWare_GpsStatementVerifier_2024_10",
         "memoryPageFactRegistry": "eth:0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460",
@@ -9719,6 +9724,7 @@
           "applicativeBootloaderProgramHash": "2358844945297786488640123814540854423585455959362109345448922524567546993330",
           "supportedCairoVerifierProgramHashesCommitment": "2344514586684536563385559840360704301482767436870016911498865422916991654732"
         },
+        "hasExpired": true,
         "hasRegisteredFact": true,
         "identify": "StarkWare_GpsStatementVerifier_2026_13",
         "memoryPageFactRegistry": "eth:0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460",
@@ -9943,6 +9949,7 @@
           "applicativeBootloaderProgramHash": "3480185788024326007166778030599498673382667448173974782477620863541158415714",
           "supportedCairoVerifierProgramHashesCommitment": "2932072919023221119013858170796075739921358449313810261427542077330086829225"
         },
+        "hasExpired": false,
         "hasRegisteredFact": true,
         "identify": "StarkWare_GpsStatementVerifier_2025_12",
         "memoryPageFactRegistry": "eth:0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460",
@@ -11069,7 +11076,7 @@
     "shared-sharp-verifier/Level2SHARPVerifier": "0xc00f67c0d4a6d280570b73e9af58b38a22a32aa774757bb8abcfc428f99ab510",
     "shared-sharp-verifier/Level3SHARPVerifier": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072",
     "shared-sharp-verifier/MemoryPageFactRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "shared-sharp-verifier/SHARPVerifier": "0xbb0dfd8f13e81dfc49e293cbb37baaa66b2d014583c195e1c0934d68a92ae178",
+    "shared-sharp-verifier/SHARPVerifier": "0x537fa373038a0047f84c69ff74d37741694d9700d364759a1fa370ffe7dc6718",
     "shared-sharp-verifier/SHARPVerifierCallProxy": "0xd6abe3c01cd750925365115c44550fef728ff685bfa5f1c7971181b2e375a918"
   },
   "usedBlockNumbers": { "ethereum": 25545781 },

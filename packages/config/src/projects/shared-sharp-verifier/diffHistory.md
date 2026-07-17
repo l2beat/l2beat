@@ -1,3 +1,77 @@
+Generated with discovered.json: 0xb44fc01a82de88db671ac6881896e8e6a9f3b226
+
+# Diff at Fri, 17 Jul 2026 08:02:23 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@5a5b552776f13efe49c744667945e52e0a8f9718 block: 1784211561
+- current timestamp: 1784211561
+
+## Description
+
+Check if verifier is expired
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784211561 (main branch discovery), not current.
+
+```diff
+    contract SHARPVerifier_2025_11 (eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934) [shared-sharp-verifier/SHARPVerifier] {
+    +++ description: Immutable GPS statement verifier shared by Starknet and other StarkWare systems. It verifies a STARK proof of the exact Cairo bootloader stored onchain, forces the bootloader configuration into public memory, and registers a fact for every bootloader task. A fact is also considered valid when it exists in the time-limited reference fact registry.
+      values.hasExpired:
++        false
+    }
+```
+
+```diff
+    contract SHARPVerifier (eth:0x4956bda1d23F75B988644329c5B06BD1494a72b6) [shared-sharp-verifier/SHARPVerifier] {
+    +++ description: Immutable GPS statement verifier shared by Starknet and other StarkWare systems. It verifies a STARK proof of the exact Cairo bootloader stored onchain, forces the bootloader configuration into public memory, and registers a fact for every bootloader task. A fact is also considered valid when it exists in the time-limited reference fact registry.
+      values.hasExpired:
++        false
+    }
+```
+
+```diff
+    contract SHARPVerifier_2026_13_1 (eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe) [shared-sharp-verifier/SHARPVerifier] {
+    +++ description: Immutable GPS statement verifier shared by Starknet and other StarkWare systems. It verifies a STARK proof of the exact Cairo bootloader stored onchain, forces the bootloader configuration into public memory, and registers a fact for every bootloader task. A fact is also considered valid when it exists in the time-limited reference fact registry.
+      values.hasExpired:
++        false
+    }
+```
+
+```diff
+    contract SHARPVerifier_2026_13_2 (eth:0x7Da1225C752ab37E610a242D9D8a0548262E3fF7) [shared-sharp-verifier/SHARPVerifier] {
+    +++ description: Immutable GPS statement verifier shared by Starknet and other StarkWare systems. It verifies a STARK proof of the exact Cairo bootloader stored onchain, forces the bootloader configuration into public memory, and registers a fact for every bootloader task. A fact is also considered valid when it exists in the time-limited reference fact registry.
+      values.hasExpired:
++        false
+    }
+```
+
+```diff
+    contract SHARPVerifier_2024_10 (eth:0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942) [shared-sharp-verifier/SHARPVerifier] {
+    +++ description: Immutable GPS statement verifier shared by Starknet and other StarkWare systems. It verifies a STARK proof of the exact Cairo bootloader stored onchain, forces the bootloader configuration into public memory, and registers a fact for every bootloader task. A fact is also considered valid when it exists in the time-limited reference fact registry.
+      values.hasExpired:
++        true
+    }
+```
+
+```diff
+    contract SHARPVerifier_2026_13_3 (eth:0xE67515a751291445B85b2F176c1eCdf08e86b406) [shared-sharp-verifier/SHARPVerifier] {
+    +++ description: Immutable GPS statement verifier shared by Starknet and other StarkWare systems. It verifies a STARK proof of the exact Cairo bootloader stored onchain, forces the bootloader configuration into public memory, and registers a fact for every bootloader task. A fact is also considered valid when it exists in the time-limited reference fact registry.
+      values.hasExpired:
++        true
+    }
+```
+
+```diff
+    contract SHARPVerifier_2025_12 (eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066) [shared-sharp-verifier/SHARPVerifier] {
+    +++ description: Immutable GPS statement verifier shared by Starknet and other StarkWare systems. It verifies a STARK proof of the exact Cairo bootloader stored onchain, forces the bootloader configuration into public memory, and registers a fact for every bootloader task. A fact is also considered valid when it exists in the time-limited reference fact registry.
+      values.hasExpired:
++        false
+    }
+```
+
 Generated with discovered.json: 0xb1feb73af872a79cad2b942d1b43384c28afaa94
 
 # Diff at Thu, 16 Jul 2026 14:36:06 GMT:
