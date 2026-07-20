@@ -59,7 +59,7 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
 
   return (
     <Tooltip>
-      <TooltipTrigger asChild>
+      <TooltipTrigger asChild disabledOnMobile>
         <TableLink href={props.href}>
           <SyncStatusWrapper isSynced={!props.syncWarning}>
             <div className="flex flex-col items-end max-md:py-1">

@@ -22,6 +22,7 @@ interface Props {
   className?: string
   textClassName?: string
   period?: PercentageChangePeriod
+  disabledOnMobile?: boolean
 }
 
 export function PercentChange({
@@ -29,6 +30,7 @@ export function PercentChange({
   className,
   textClassName,
   period,
+  disabledOnMobile,
 }: Props) {
   const isMore = value > 0
   const isLess = value < 0
@@ -66,7 +68,7 @@ export function PercentChange({
 
   return (
     <Tooltip>
-      <TooltipTrigger asChild disabledOnMobile>
+      <TooltipTrigger asChild disabledOnMobile={disabledOnMobile}>
         {content}
       </TooltipTrigger>
       <TooltipContent>

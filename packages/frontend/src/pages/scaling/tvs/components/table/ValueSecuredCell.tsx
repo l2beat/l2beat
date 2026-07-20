@@ -11,6 +11,7 @@ export function ValueSecuredCell(data: ValueSecuredCellProps) {
     <ValueWithPercentageChange
       change={data.change}
       changePeriod="7D"
+      disabledOnMobile
       containerClassName="inline-flex"
     >
       {formatDollarValueNumber(data.value)}

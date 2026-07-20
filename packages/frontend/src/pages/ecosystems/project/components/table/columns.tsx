@@ -137,6 +137,7 @@ export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
               <ValueWithPercentageChange
                 change={data?.change}
                 changePeriod="7D"
+                disabledOnMobile
               >
                 {formatActivityCount(ctx.getValue())}
               </ValueWithPercentageChange>

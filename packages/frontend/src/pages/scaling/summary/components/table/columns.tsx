@@ -143,6 +143,7 @@ export function getScalingSummaryColumns(opts?: ScalingSummaryColumnsOpts) {
               <ValueWithPercentageChange
                 change={data?.change}
                 changePeriod="7D"
+                disabledOnMobile
               >
                 {formatActivityCount(ctx.getValue())}
               </ValueWithPercentageChange>
