@@ -19,7 +19,8 @@
     "isMessageClaimed",
     "rollingHashes",
     "forcedTransactionL2BlockNumbers",
-    "forcedTransactionRollingHashes"
+    "forcedTransactionRollingHashes",
+    "getRequiredForcedTransactionFields"
   ],
   "fields": {
     "yieldManager": {
