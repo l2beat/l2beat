@@ -777,22 +777,23 @@ export const aztecnetwork: ScalingProject = {
   ],
   crops: {
     censorshipResistance: {
-      status: 'medium',
+      sentiment: 'warning',
       description:
         'Sequencing is permissionless with no single privileged actor, the protocol cannot be paused, and the exit window is infinite. It lacks determinism however - there is no L1 forced-transaction queue and no deterministic maximum inclusion delay, so inclusion is only probabilistic.',
     },
     openSource: {
-      status: 'good',
+      sentiment: 'good',
       description:
         'Apache 2.0 licensed, the onchain verifier has been reproduced, and the rollup is even forkable onchain by design.',
     },
     privacy: {
-      status: 'good',
+      sentiment: 'good',
       description:
         'Privacy is protocol-native: the AztecVM supports private and public smart contracts, balances and identities in private state are encrypted, and each private transaction is proven client-side.',
     },
     security: {
-      status: 'medium',
+      sentiment: 'warning',
+      status: 'partiallyReviewed',
       description:
         'State is validated with validity proofs and the v5 rollup is immutable, but quantum safety is unclear and the bridge was insecure until the very recent v5 upgrade (July 2026), leaving a migration risk and burden.',
     },

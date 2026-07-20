@@ -1051,15 +1051,13 @@ export type PrivacyFlowExtractorParams = PrivacyFlowExtractorConfig['params']
 
 // #region crops data
 
-export type ProjectCropStatus =
-  | 'notReviewed'
-  | 'partiallyReviewed'
-  | 'medium'
-  | 'bad'
-  | 'good'
+export type ProjectCropStatus = 'reviewed' | 'partiallyReviewed' | 'notReviewed'
 
 export interface ProjectCropEvaluation {
-  status: ProjectCropStatus
+  /** Drives the color of the crop. Not needed when `status` is `notReviewed`. */
+  sentiment?: Sentiment
+  /** Review state. Defaults to `reviewed`. Only affects the dashed styling. */
+  status?: ProjectCropStatus
   description?: string
 }
 
