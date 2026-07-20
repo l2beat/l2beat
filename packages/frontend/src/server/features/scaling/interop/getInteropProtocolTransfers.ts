@@ -1,4 +1,3 @@
-import type { Project } from '@l2beat/config'
 import type { InteropTransferRecord } from '@l2beat/database'
 import { InteropTransferClassifier } from '@l2beat/shared'
 import { ProjectId } from '@l2beat/shared-pure'
@@ -9,11 +8,13 @@ import type {
   InteropProtocolTransferDetailsItem,
   InteropProtocolTransfersParams,
   InteropProtocolTransfersResponse,
+  InteropTransferBridge,
 } from './types'
 import {
   buildTokensDetailsMap,
   type TokensDetailsMap,
 } from './utils/buildTokensDetailsMap'
+import { createTransferBridgeResolver } from './utils/createTransferBridgeResolver'
 import { getAbstractTokenIds } from './utils/getAbstractTokenIds'
 import { getFilteredInteropTransfersPage } from './utils/getFilteredInteropTransfersPage'
 import { getMockInteropTransfers } from './utils/getMockInteropTransfers'
@@ -78,41 +79,17 @@ export async function getInteropProtocolTransfers({
   const tokensDetailsMap = await buildTokensDetailsMap(
     getAbstractTokenIds(result.items),
   )
+  const resolveTransferBridge = createTransferBridgeResolver(interopProjects)
   return {
-    items: result.items.map((transfer) => {
-      const bridge = getTransferBridge(transfer, interopProjects)
-      return toInteropProtocolTransferDetailsItem(
+    items: result.items.map((transfer) =>
+      toInteropProtocolTransferDetailsItem(
         transfer,
         INTEROP_CHAIN_DETAILS,
         tokensDetailsMap,
-        bridge,
-      )
-    }),
+        resolveTransferBridge(transfer),
+      ),
+    ),
     nextCursor: result.nextCursor,
-  }
-}
-
-export function getTransferBridge(
-  transfer: InteropTransferRecord,
-  projects: Project<'interopConfig'>[],
-): InteropProtocolTransferDetailsItem['bridge'] {
-  const classifier = new InteropTransferClassifier()
-  const matchingProjects = projects.filter((project) =>
-    classifier.createMatcher<InteropTransferRecord>(
-      project.interopConfig.plugins,
-    )(transfer),
-  )
-  const project =
-    matchingProjects.find((project) => !project.interopConfig.isAggregate) ??
-    matchingProjects[0]
-
-  if (!project) {
-    throw new Error(`No interop project found for plugin ${transfer.plugin}`)
-  }
-
-  return {
-    name: project.interopConfig.name ?? project.name,
-    href: `/interop/protocols/${project.slug}`,
   }
 }
 
@@ -120,7 +97,7 @@ export function toInteropProtocolTransferDetailsItem(
   transfer: InteropTransferRecord,
   chainDetailsById: Map<string, InteropChainDetails>,
   tokensDetailsMap: TokensDetailsMap,
-  bridge: InteropProtocolTransferDetailsItem['bridge'],
+  bridge: InteropTransferBridge,
 ): InteropProtocolTransferDetailsItem {
   const srcDetails = chainDetailsById.get(transfer.srcChain)
   const dstDetails = chainDetailsById.get(transfer.dstChain)

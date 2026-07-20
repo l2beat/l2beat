@@ -2,15 +2,13 @@ import type { InteropTransferRecord } from '@l2beat/database'
 import { InteropTransferClassifier } from '@l2beat/shared'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
-import {
-  getTransferBridge,
-  toInteropProtocolTransferDetailsItem,
-} from './getInteropProtocolTransfers'
+import { toInteropProtocolTransferDetailsItem } from './getInteropProtocolTransfers'
 import type {
   InteropProtocolTransfersResponse,
   InteropTokenTransfersParams,
 } from './types'
 import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
+import { createTransferBridgeResolver } from './utils/createTransferBridgeResolver'
 import { getAbstractTokenIds } from './utils/getAbstractTokenIds'
 import { getFilteredInteropTransfersPage } from './utils/getFilteredInteropTransfersPage'
 import { getMockInteropTransfers } from './utils/getMockInteropTransfers'
@@ -59,17 +57,17 @@ export async function getInteropTokenTransfers({
   const tokensDetailsMap = await buildTokensDetailsMap(
     getAbstractTokenIds(result.items),
   )
+  const resolveTransferBridge = createTransferBridgeResolver(interopProjects)
 
   return {
-    items: result.items.map((transfer) => {
-      const bridge = getTransferBridge(transfer, interopProjects)
-      return toInteropProtocolTransferDetailsItem(
+    items: result.items.map((transfer) =>
+      toInteropProtocolTransferDetailsItem(
         transfer,
         INTEROP_CHAIN_DETAILS,
         tokensDetailsMap,
-        bridge,
-      )
-    }),
+        resolveTransferBridge(transfer),
+      ),
+    ),
     nextCursor: result.nextCursor,
   }
 }
