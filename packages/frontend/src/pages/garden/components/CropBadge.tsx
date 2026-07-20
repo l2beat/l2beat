@@ -11,34 +11,52 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { SentimentText } from '~/components/SentimentText'
 import { cn } from '~/utils/cn'
-import { CROP_STATUS_LABELS } from '../crops'
+import { CROP_SENTIMENT_LABELS, CROP_STATUS_LABELS } from '../crops'
 
-const STATUS_SENTIMENT: Record<ProjectCropStatus, Sentiment> = {
-  good: 'good',
-  partiallyReviewed: 'neutral',
-  medium: 'warning',
-  bad: 'bad',
-  notReviewed: 'neutral',
+// The shape of the plant is driven by the sentiment (quality) of the crop.
+type PlantShape = 'flower' | 'bud' | 'wilt'
+
+const PLANT_SHAPE: Record<Sentiment, PlantShape> = {
+  good: 'flower',
+  neutral: 'flower',
+  UnderReview: 'bud',
+  warning: 'bud',
+  bad: 'wilt',
 }
 
-const PLANT_COLOR: Record<ProjectCropStatus, string> = {
+// The color of the plant, driven by the sentiment.
+const PLANT_COLOR: Record<Sentiment, string> = {
   good: 'text-[#1a9d4f] dark:text-[#15ca60]',
-  partiallyReviewed: 'text-[#1a9d4f] dark:text-[#15ca60]',
-  medium: 'text-[#e0a52a] dark:text-[#ffc107]',
+  neutral: 'text-[#bcbfc7] dark:text-[#5a5f68]',
+  UnderReview: 'text-[#e0a52a] dark:text-[#ffc107]',
+  warning: 'text-[#e0a52a] dark:text-[#ffc107]',
   bad: 'text-[#ef4d4d] dark:text-[#ff5d5d]',
-  notReviewed: 'text-[#bcbfc7] dark:text-[#5a5f68]',
 }
 
-const CHIP_STYLE: Record<ProjectCropStatus, string> = {
-  good: 'border-[#b6e0c4] bg-[#eef9f1] text-[#16863f] dark:border-[#15ca60]/50 dark:bg-[#15ca60]/10 dark:text-[#3fe07f]',
-  partiallyReviewed:
-    'border-dashed border-[#aab0b8] bg-[#f4f9f5] text-[#16863f] dark:border-[#5a5f68] dark:bg-[#15ca60]/5 dark:text-[#3fe07f]',
-  medium:
-    'border-[#efd9a6] bg-[#fdf7ea] text-[#b07d18] dark:border-[#ffc107]/50 dark:bg-[#ffc107]/10 dark:text-[#ffcf3a]',
-  bad: 'border-[#f4c7c7] bg-[#fdeeee] text-[#d83a3a] dark:border-[#ff5d5d]/50 dark:bg-[#ff5d5d]/10 dark:text-[#ff8080]',
-  notReviewed:
-    'border-dashed border-[#e0e2e8] bg-[#f7f8fa] text-[#aab0b8] dark:border-[#3a3f47] dark:bg-white/5 dark:text-[#6b7079]',
+// The chip fill + text color, driven by the sentiment.
+const CHIP_FILL: Record<Sentiment, string> = {
+  good: 'bg-[#eef9f1] text-[#16863f] dark:bg-[#15ca60]/10 dark:text-[#3fe07f]',
+  neutral: 'bg-[#f7f8fa] text-[#aab0b8] dark:bg-white/5 dark:text-[#6b7079]',
+  UnderReview:
+    'bg-[#fdf7ea] text-[#b07d18] dark:bg-[#ffc107]/10 dark:text-[#ffcf3a]',
+  warning:
+    'bg-[#fdf7ea] text-[#b07d18] dark:bg-[#ffc107]/10 dark:text-[#ffcf3a]',
+  bad: 'bg-[#fdeeee] text-[#d83a3a] dark:bg-[#ff5d5d]/10 dark:text-[#ff8080]',
 }
+
+// The solid chip border, driven by the sentiment, used for reviewed crops.
+const CHIP_BORDER: Record<Sentiment, string> = {
+  good: 'border-[#b6e0c4] dark:border-[#15ca60]/50',
+  neutral: 'border-[#e0e2e8] dark:border-[#3a3f47]',
+  UnderReview: 'border-[#efd9a6] dark:border-[#ffc107]/50',
+  warning: 'border-[#efd9a6] dark:border-[#ffc107]/50',
+  bad: 'border-[#f4c7c7] dark:border-[#ff5d5d]/50',
+}
+
+// Partially/not reviewed crops always get a grey dashed border, regardless of
+// sentiment - the dash only signals the review state, not the color.
+const CHIP_DASHED_BORDER =
+  'border-dashed border-[#aab0b8] dark:border-[#5a5f68]'
 
 interface Props {
   letter: string
@@ -48,19 +66,25 @@ interface Props {
 }
 
 export function CropBadge({ letter, label, evaluation, delay }: Props) {
-  const { status } = evaluation
+  const status: ProjectCropStatus = evaluation.status ?? 'reviewed'
+  // A not-reviewed crop has no color, so it always renders as neutral.
+  const sentiment: Sentiment =
+    status === 'notReviewed' ? 'neutral' : (evaluation.sentiment ?? 'neutral')
+  const isDashed = status !== 'reviewed'
+
   return (
     <Tooltip>
       <TooltipTrigger asChild>
         <span className="hover:-translate-y-0.5 flex w-10 flex-col items-center gap-1 transition-transform duration-200">
-          <span className={cn('flex h-10 items-end', PLANT_COLOR[status])}>
-            <CropPlant status={status} delay={delay} />
+          <span className={cn('flex h-10 items-end', PLANT_COLOR[sentiment])}>
+            <CropPlant status={status} sentiment={sentiment} delay={delay} />
           </span>
           <span
             className={cn(
-              'flex size-[26px] items-center justify-center rounded-full border font-semibold',
+              'flex size-[26px] items-center justify-center rounded-full border-[1.5px] font-semibold',
               letter.length > 1 ? 'text-[10px]' : 'text-xs',
-              CHIP_STYLE[status],
+              CHIP_FILL[sentiment],
+              isDashed ? CHIP_DASHED_BORDER : CHIP_BORDER[sentiment],
             )}
             style={{
               animation: `garden-pop .5s ease-out ${delay}s both`,
@@ -71,11 +95,8 @@ export function CropBadge({ letter, label, evaluation, delay }: Props) {
         </span>
       </TooltipTrigger>
       <TooltipContent className="max-w-[320px]">
-        <SentimentText
-          sentiment={STATUS_SENTIMENT[status]}
-          className="font-medium text-base"
-        >
-          {`${label}: ${CROP_STATUS_LABELS[status]}`}
+        <SentimentText sentiment={sentiment} className="font-medium text-base">
+          {`${label}: ${getStatusText(status, sentiment)}`}
         </SentimentText>
         {evaluation.description && (
           <p className="mt-1 text-primary">{evaluation.description}</p>
@@ -85,11 +106,26 @@ export function CropBadge({ letter, label, evaluation, delay }: Props) {
   )
 }
 
+function getStatusText(
+  status: ProjectCropStatus,
+  sentiment: Sentiment,
+): string {
+  if (status === 'notReviewed') {
+    return CROP_STATUS_LABELS.notReviewed
+  }
+  if (status === 'partiallyReviewed') {
+    return `${CROP_SENTIMENT_LABELS[sentiment]} · ${CROP_STATUS_LABELS.partiallyReviewed}`
+  }
+  return CROP_SENTIMENT_LABELS[sentiment]
+}
+
 function CropPlant({
   status,
+  sentiment,
   delay,
 }: {
   status: ProjectCropStatus
+  sentiment: Sentiment
   delay: number
 }) {
   const grow: CSSProperties = {
@@ -118,6 +154,8 @@ function CropPlant({
     animation: `${name} ${duration} ease-in-out ${delay + 0.8}s infinite`,
   })
 
+  const shape = PLANT_SHAPE[sentiment]
+
   return (
     <svg
       width={34}
@@ -127,90 +165,7 @@ function CropPlant({
       aria-hidden
     >
       <Soil status={status} />
-      {(status === 'good' || status === 'partiallyReviewed') && (
-        <g style={idle('garden-sway', '4.6s')}>
-          <g style={grow}>
-            <path
-              d="M17 34 C17 27 17 20 17 13"
-              stroke="currentColor"
-              strokeWidth="2.2"
-              fill="none"
-              strokeLinecap="round"
-            />
-            <path
-              d="M17 27 C11 27.5 6.5 24 5.6 18.8 C11.2 18.4 15.7 22 17 27 Z"
-              fill="currentColor"
-              style={leafL}
-            />
-            <path
-              d="M17 27 C23 27.5 27.5 24 28.4 18.8 C22.8 18.4 18.3 22 17 27 Z"
-              fill="currentColor"
-              style={leafR}
-            />
-            <g style={bloom}>
-              <circle cx="17" cy="5.2" r="3.2" fill="currentColor" />
-              <circle cx="12.4" cy="9" r="3.2" fill="currentColor" />
-              <circle cx="21.6" cy="9" r="3.2" fill="currentColor" />
-              <circle cx="17" cy="12.6" r="3.2" fill="currentColor" />
-              <circle cx="17" cy="9" r="2.05" className="fill-[#ffd54a]" />
-            </g>
-          </g>
-        </g>
-      )}
-      {status === 'medium' && (
-        <g style={idle('garden-sway-s', '5.2s')}>
-          <g style={grow}>
-            <path
-              d="M17 34 C17 29 17 25 17 20"
-              stroke="currentColor"
-              strokeWidth="2.2"
-              fill="none"
-              strokeLinecap="round"
-            />
-            <path
-              d="M17 23 C12.5 23.4 9.3 21 8.6 17.4 C12.6 17 16 19.6 17 23 Z"
-              fill="currentColor"
-              style={leafL}
-            />
-            <path
-              d="M17 23 C21.5 23.4 24.7 21 25.4 17.4 C21.4 17 18 19.6 17 23 Z"
-              fill="currentColor"
-              style={leafR}
-            />
-            <ellipse
-              cx="17"
-              cy="18"
-              rx="2.5"
-              ry="3.3"
-              fill="currentColor"
-              style={bloom}
-            />
-          </g>
-        </g>
-      )}
-      {status === 'bad' && (
-        <g style={idle('garden-wilt', '5.6s')}>
-          <g style={grow}>
-            <path
-              d="M17 34 C17 28 18.6 24 13.4 22"
-              stroke="currentColor"
-              strokeWidth="2.2"
-              fill="none"
-              strokeLinecap="round"
-            />
-            <path
-              d="M13.4 22 C9.4 21 6.7 23.2 6.3 26.6 C10.3 27 12.9 24.8 13.4 22 Z"
-              fill="currentColor"
-            />
-            <path
-              d="M18.4 28 C21.9 27.6 24.4 29.4 24.8 32 C21.4 32 19 30.6 18.4 28 Z"
-              fill="currentColor"
-              opacity=".8"
-            />
-          </g>
-        </g>
-      )}
-      {status === 'notReviewed' && (
+      {status === 'notReviewed' ? (
         <g
           style={{
             transformBox: 'fill-box',
@@ -242,6 +197,86 @@ function CropPlant({
             strokeLinecap="round"
             strokeDasharray="2 2.4"
           />
+        </g>
+      ) : shape === 'flower' ? (
+        <g style={idle('garden-sway', '4.6s')}>
+          <g style={grow}>
+            <path
+              d="M17 34 C17 27 17 20 17 13"
+              stroke="currentColor"
+              strokeWidth="2.2"
+              fill="none"
+              strokeLinecap="round"
+            />
+            <path
+              d="M17 27 C11 27.5 6.5 24 5.6 18.8 C11.2 18.4 15.7 22 17 27 Z"
+              fill="currentColor"
+              style={leafL}
+            />
+            <path
+              d="M17 27 C23 27.5 27.5 24 28.4 18.8 C22.8 18.4 18.3 22 17 27 Z"
+              fill="currentColor"
+              style={leafR}
+            />
+            <g style={bloom}>
+              <circle cx="17" cy="5.2" r="3.2" fill="currentColor" />
+              <circle cx="12.4" cy="9" r="3.2" fill="currentColor" />
+              <circle cx="21.6" cy="9" r="3.2" fill="currentColor" />
+              <circle cx="17" cy="12.6" r="3.2" fill="currentColor" />
+              <circle cx="17" cy="9" r="2.05" className="fill-[#ffd54a]" />
+            </g>
+          </g>
+        </g>
+      ) : shape === 'bud' ? (
+        <g style={idle('garden-sway-s', '5.2s')}>
+          <g style={grow}>
+            <path
+              d="M17 34 C17 29 17 25 17 20"
+              stroke="currentColor"
+              strokeWidth="2.2"
+              fill="none"
+              strokeLinecap="round"
+            />
+            <path
+              d="M17 23 C12.5 23.4 9.3 21 8.6 17.4 C12.6 17 16 19.6 17 23 Z"
+              fill="currentColor"
+              style={leafL}
+            />
+            <path
+              d="M17 23 C21.5 23.4 24.7 21 25.4 17.4 C21.4 17 18 19.6 17 23 Z"
+              fill="currentColor"
+              style={leafR}
+            />
+            <ellipse
+              cx="17"
+              cy="18"
+              rx="2.5"
+              ry="3.3"
+              fill="currentColor"
+              style={bloom}
+            />
+          </g>
+        </g>
+      ) : (
+        <g style={idle('garden-wilt', '5.6s')}>
+          <g style={grow}>
+            <path
+              d="M17 34 C17 28 18.6 24 13.4 22"
+              stroke="currentColor"
+              strokeWidth="2.2"
+              fill="none"
+              strokeLinecap="round"
+            />
+            <path
+              d="M13.4 22 C9.4 21 6.7 23.2 6.3 26.6 C10.3 27 12.9 24.8 13.4 22 Z"
+              fill="currentColor"
+            />
+            <path
+              d="M18.4 28 C21.9 27.6 24.4 29.4 24.8 32 C21.4 32 19 30.6 18.4 28 Z"
+              fill="currentColor"
+              opacity=".8"
+            />
+          </g>
         </g>
       )}
     </svg>
