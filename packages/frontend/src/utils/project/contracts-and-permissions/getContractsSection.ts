@@ -8,6 +8,8 @@ import type {
 } from '@l2beat/config'
 import type { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
+import groupBy from 'lodash/groupBy'
+import partition from 'lodash/partition'
 import uniqBy from 'lodash/uniqBy'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
@@ -76,26 +78,30 @@ export function getContractsSection(
   const contracts = Object.fromEntries(
     Object.entries(projectParams.contracts.addresses ?? {}).map(
       ([chainName, contracts]) => {
-        return [
-          contractUtils.getChainName(chainName),
-          contracts.map((contract) => {
-            const escrowKey = getEscrowKey(
-              chainName,
-              ChainSpecificAddress.address(contract.address),
-            )
-            const escrow = escrowsByAddress.get(escrowKey)
-            if (escrow) {
-              matchedEscrows.add(escrowKey)
-            }
-            return makeTechnologyContract(
+        const technologyContracts = contracts.map((contract) => {
+          const escrowKey = getEscrowKey(
+            chainName,
+            ChainSpecificAddress.address(contract.address),
+          )
+          const escrow = escrowsByAddress.get(escrowKey)
+          if (escrow) {
+            matchedEscrows.add(escrowKey)
+          }
+          return [
+            contract,
+            makeTechnologyContract(
               contract,
               projectParams,
               !contract.isVerified,
               projectChangeReport,
               contractUtils,
               escrow,
-            )
-          }),
+            ),
+          ] as const
+        })
+        return [
+          contractUtils.getChainName(chainName),
+          groupTechnologyContracts(technologyContracts),
         ]
       },
     ),
@@ -274,6 +280,51 @@ function makeTechnologyContract(
     pastUpgrades: getPastUpgradesData(pastUpgrades),
     escrow,
   }
+}
+
+function groupTechnologyContracts(
+  contracts: (readonly [ProjectContract, TechnologyContract])[],
+): TechnologyContract[] {
+  const [groupableCC, ungroupableCC] = partition(
+    contracts,
+    ([rawContract, contract]) =>
+      rawContract.upgradeability?.immutable === true &&
+      (contract.pastUpgrades?.upgrades.length ?? 0) === 0 &&
+      !contract.escrow &&
+      !contract.impactfulChange,
+  )
+  const [groupable, ungroupable] = [
+    groupableCC.map(([, c]) => c),
+    ungroupableCC.map(([, c]) => c),
+  ]
+
+  const groups = groupBy(groupable, (contract) =>
+    JSON.stringify({
+      name: contract.name,
+      description: contract.description ?? null,
+      upgradeableBy: contract.upgradeableBy ?? null,
+      upgradeConsiderations: contract.upgradeConsiderations ?? null,
+    }),
+  )
+
+  const grouped = Object.values(groups).map((contracts) => {
+    const first = contracts[0]
+    assert(first, 'Group must have at least one contract')
+    if (contracts.length === 1) {
+      return first
+    }
+    return {
+      ...first,
+      addresses: contracts.flatMap((contract) => contract.addresses),
+      usedInProjects: uniqBy(
+        contracts.flatMap((contract) => contract.usedInProjects ?? []),
+        'id',
+      ),
+      groupCount: contracts.length,
+    }
+  })
+
+  return [...ungroupable, ...grouped]
 }
 
 function getEscrowDetails(
