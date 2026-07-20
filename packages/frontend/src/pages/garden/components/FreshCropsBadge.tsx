@@ -9,7 +9,7 @@ export function FreshCropsBadge() {
     <Tooltip>
       <TooltipTrigger asChild>
         <span
-          className="inline-flex size-6 shrink-0 items-center justify-center text-base leading-none transition-transform duration-200 hover:-translate-y-0.5"
+          className="hover:-translate-y-0.5 inline-flex size-6 shrink-0 items-center justify-center text-base leading-none transition-transform duration-200"
           aria-hidden
         >
           🌱
