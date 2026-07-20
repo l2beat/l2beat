@@ -56,6 +56,8 @@ const withdrawalLimitString = `Currently, there is a general limit of ${utils.fo
 
 const chainId = 59144
 
+const v8_0UpgradeTS = UnixTime(1784201579)
+
 export const linea: ScalingProject = {
   type: 'layer2',
   id: ProjectId('linea'),
@@ -340,6 +342,29 @@ export const linea: ScalingProject = {
           functionSignature:
             'function finalizeBlocks(bytes _aggregatedProof, uint256 _proofType, tuple(bytes32 parentStateRootHash, uint256 endBlockNumber, tuple(bytes32 parentShnarf, bytes32 snarkHash, bytes32 finalStateRootHash, bytes32 dataEvaluationPoint, bytes32 dataEvaluationClaim) shnarfData, uint256 lastFinalizedTimestamp, uint256 finalTimestamp, bytes32 lastFinalizedL1RollingHash, bytes32 l1RollingHash, uint256 lastFinalizedL1RollingHashMessageNumber, uint256 l1RollingHashMessageNumber, uint256 l2MerkleTreesDepth, bytes32[] l2MerkleRoots, bytes l2MessagingBlocksOffsets) _finalizationData)',
           sinceTimestamp: UnixTime(1734357131),
+          untilTimestamp: v8_0UpgradeTS,
+        },
+      },
+      {
+        uses: [
+          {
+            type: 'liveness',
+            subtype: 'stateUpdates',
+          },
+          {
+            type: 'l2costs',
+            subtype: 'stateUpdates',
+          },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xd19d4B5d358258f05D7B411E21A1460D11B0876F',
+          ),
+          selector: '0x755bc62f',
+          functionSignature:
+            'function finalizeBlocks(bytes _aggregatedProof, uint256 _proofType, tuple(bytes32 parentStateRootHash, uint256 endBlockNumber, tuple(bytes32 parentShnarf, bytes32 snarkHash, bytes32 finalStateRootHash, bytes32 dataEvaluationPoint, bytes32 dataEvaluationClaim) shnarfData, uint256 lastFinalizedTimestamp, uint256 finalTimestamp, bytes32 lastFinalizedL1RollingHash, bytes32 l1RollingHash, uint256 lastFinalizedL1RollingHashMessageNumber, uint256 l1RollingHashMessageNumber, uint256 l2MerkleTreesDepth, uint256 lastFinalizedForcedTransactionNumber, uint256 finalForcedTransactionNumber, bytes32 lastFinalizedForcedTransactionRollingHash, bytes32[] l2MerkleRoots, address[] filteredAddresses, bytes l2MessagingBlocksOffsets) _finalizationData)',
+          sinceTimestamp: v8_0UpgradeTS,
         },
       },
     ],
