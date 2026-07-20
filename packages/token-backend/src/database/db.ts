@@ -46,7 +46,7 @@ export function makeDbLogger(tag: string) {
         ...(process.env.NODE_ENV === 'production'
           ? {
               sqlTemplate: event.query.sql,
-              parameters: event.query.parameters,
+              queryParameters: JSON.stringify(event.query.parameters),
             }
           : {}),
       })
@@ -57,7 +57,7 @@ export function makeDbLogger(tag: string) {
         ...(process.env.NODE_ENV === 'production'
           ? {
               sqlTemplate: event.query.sql,
-              parameters: event.query.parameters,
+              queryParameters: JSON.stringify(event.query.parameters),
             }
           : {}),
       })
