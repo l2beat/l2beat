@@ -41,6 +41,9 @@ authorId: manuel-gonzalez
 ---
 ## **Arbitrum**
 
+### OAT Election Results
+
+Arbitrum delegates [have elected](https://snapshot.box/#/org/arbitrum/s:arbitrumfoundation.eth/proposal/0xf2ca6637ad74a993354006def22c1e2a64468c269883616353e0c9fe8b4f4fd4) A.J. Warner, Patrick McCorry, and Pedro Breuer to serve on the Oversight and Transparency Committee (OAT) following the conclusion of the DAO's election process. The vote used Arbitrum's shutterized weighted voting system, with all candidates having passed the preliminary eligibility review before the election. We congratulate the newly elected members and look forward to their contributions to the Arbitrum DAO.
 
 ### [RFC] New state representation for Arbitrum: proof-format change and request for feedback
 
