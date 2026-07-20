@@ -1,3 +1,102 @@
+Generated with discovered.json: 0x14e2f3ee5c3bd373121b3ee06a81582fc30316c5
+
+# Diff at Mon, 20 Jul 2026 11:38:25 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@7377ac7e3e345e802eb1ede5f0ed37baf517c024 block: 1783940397
+- current timestamp: 1784545026
+
+## Description
+
+Upgraded zk lighter contract (https://disco.l2beat.com/diff/eth:0x22F05515497ce8D78f3898088C474403Ac9C668f/eth:0xaeC5dbA7C62482AAba4D330788366De60db16367). Added `indexPriceDivider` param (idk what it means) and refactored error types in additional ZKLighter contract.
+
+Also upgraded Lighter verifier and Desert verifier, their sources are not published yet.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract DesertVerifier (eth:0x2aDBd91742B64105a097bC37D20Ebbca9a496085) [N/A]
+    +++ description: None
+```
+
+```diff
+    contract Lighter (eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7) [lighter/ZkLighterWithSpot] {
+    +++ description: The main rollup contract. It processes L2 batches, manages token deposits and withdrawals, allows users to submit censorship-resistant L2 transactions and controls desert mode (escape hatch). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter.
+      sourceHashes.1:
+-        "0xea510c6fde95f555b31105692afec66f16fd2244264f4f3c1f8e553f3c14baf7"
++        "0x77b8a3298ef7712fdc6678b0e692325e1c68dd049b035d9c515f030cc2384c79"
+      values.$implementation.0:
+-        "eth:0x831EF69BaB8AF8B1037a4961B8d0674b124E7008"
++        "eth:0x9397837Fa581F7f527E0f71a0CB53eb633bF0F1B"
+      values.$implementation.1:
+-        "eth:0x22F05515497ce8D78f3898088C474403Ac9C668f"
++        "eth:0xaeC5dbA7C62482AAba4D330788366De60db16367"
+      values.additionalZkLighter:
+-        "eth:0x22F05515497ce8D78f3898088C474403Ac9C668f"
++        "eth:0xaeC5dbA7C62482AAba4D330788366De60db16367"
++++ severity: HIGH
+      values.desertVerifier:
+-        "eth:0x2aDBd91742B64105a097bC37D20Ebbca9a496085"
++        "eth:0x866418061d4C1168e1c8E8f6facE79675395E008"
+      values.getTarget:
+-        "eth:0x831EF69BaB8AF8B1037a4961B8d0674b124E7008"
++        "eth:0x9397837Fa581F7f527E0f71a0CB53eb633bF0F1B"
+      implementationNames.eth:0x831EF69BaB8AF8B1037a4961B8d0674b124E7008:
+-        "ZkLighter"
+      implementationNames.eth:0x22F05515497ce8D78f3898088C474403Ac9C668f:
+-        "AdditionalZkLighter"
+      implementationNames.eth:0x9397837Fa581F7f527E0f71a0CB53eb633bF0F1B:
++        "ZkLighter"
+      implementationNames.eth:0xaeC5dbA7C62482AAba4D330788366De60db16367:
++        "AdditionalZkLighter"
+    }
+```
+
+```diff
+    contract UpgradeGatekeeper (eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67) [lighter/UpgradeGatekeeper] {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045.
+      values.versionId:
+-        61
++        62
+    }
+```
+
+```diff
+    contract ZkLighterVerifier (eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA) [lighter/ZkLighterVerifier] {
+    +++ description: The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.
+      sourceHashes.1:
+-        "0xc6a75d062341c148fcc61fdcbf5be6050555aeafba7ce8dd3cb3a5638c9d634a"
++        "0xba3f35a68ac7f5eb875cf56eaf1e548eb868391c242a15a1726880db2c87b6ff"
+      values.$implementation:
+-        "eth:0x52277Bc0f0cd1C2f64Aa20Edd7d535d67780640D"
++        "eth:0xd33EA7286196F5fdAB5C06e9E90844e61E586428"
+      values.getTarget:
+-        "eth:0x52277Bc0f0cd1C2f64Aa20Edd7d535d67780640D"
++        "eth:0xd33EA7286196F5fdAB5C06e9E90844e61E586428"
+      implementationNames.eth:0x52277Bc0f0cd1C2f64Aa20Edd7d535d67780640D:
+-        "ZkLighterVerifier"
+      implementationNames.eth:0xd33EA7286196F5fdAB5C06e9E90844e61E586428:
++        "ZkLighterVerifier"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DesertVerifier (eth:0x866418061d4C1168e1c8E8f6facE79675395E008) [N/A]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../{.flat@1783940397 => .flat}/DesertVerifier.sol |  8 ++--
+ .../Lighter/AdditionalZkLighter.2.sol              | 50 ++++++++++-----------
+ .../Lighter/ZkLighter.1.sol                        | 52 ++++++++++------------
+ .../ZkLighterVerifier/ZkLighterVerifier.sol        |  8 ++--
+ 4 files changed, 55 insertions(+), 63 deletions(-)
+```
+
 Generated with discovered.json: 0x49419907df90d2b7672928f08eaca3077b6ccb05
 
 # Diff at Mon, 13 Jul 2026 11:01:35 GMT:

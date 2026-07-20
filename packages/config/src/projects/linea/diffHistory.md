@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x2fc0e205a09fb8cb3fdd090cda6f40537f4de2dd
+
+# Diff at Mon, 20 Jul 2026 10:28:28 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@7377ac7e3e345e802eb1ede5f0ed37baf517c024 block: 1784278215
+- current timestamp: 1784543140
+
+## Description
+
+Cleaned up spam from the v8.0 upgrade.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784278215 (main branch discovery), not current.
+
+```diff
+    contract LineaRollup (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F) [linea/LineaRollup_ForcedTrx_v8_0] {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol.
+      values.getRequiredForcedTransactionFields:
+-        {"finalizedState":"0x6af94bc910a5facbc347462f6b2bc840940b7c99ae3cb483742dfd2c74c9d60f","previousForcedTransactionRollingHash":"0x0000000000000000000000000000000000000000000000000000000000000000","previousForcedTransactionBlockDeadline":0,"currentFinalizedL2BlockNumber":31407522,"forcedTransactionFeeAmount":1000000000000000}
+    }
+```
+
 Generated with discovered.json: 0x097f79051ae4be768c4bafbba91da6ce27bf75d5
 
 # Diff at Fri, 17 Jul 2026 10:59:45 GMT:
