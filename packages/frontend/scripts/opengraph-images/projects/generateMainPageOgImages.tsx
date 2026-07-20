@@ -132,6 +132,9 @@ const mainPages: MainPage[] = [
   {
     title: 'Native Rollups',
   },
+  {
+    title: 'The Infinite Garden',
+  },
 ]
 
 export async function generateMainPageOgImages(

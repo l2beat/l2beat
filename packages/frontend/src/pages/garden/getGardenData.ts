@@ -58,7 +58,7 @@ export async function getGardenData(
           'A garden view of how projects grow across the CROPS framework: censorship resistance, open source, privacy, and security.',
         url,
         openGraph: {
-          image: '/meta-images/opengraph-image.png',
+          image: '/meta-images/the-infinite-garden/opengraph-image.png',
         },
       }),
     },
