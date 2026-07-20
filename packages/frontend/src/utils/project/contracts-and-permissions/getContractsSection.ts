@@ -313,6 +313,8 @@ function groupTechnologyContracts(
       description: contract.description ?? null,
       upgradeableBy: contract.upgradeableBy ?? null,
       upgradeConsiderations: contract.upgradeConsiderations ?? null,
+      references: contract.references,
+      usedInProjects: contract.usedInProjects ?? null,
     }),
   )
 
@@ -325,10 +327,6 @@ function groupTechnologyContracts(
     return {
       ...first,
       addresses: contracts.flatMap((contract) => contract.addresses),
-      usedInProjects: uniqBy(
-        contracts.flatMap((contract) => contract.usedInProjects ?? []),
-        'id',
-      ),
       groupCount: contracts.length,
     }
   })
