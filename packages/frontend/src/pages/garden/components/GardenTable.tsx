@@ -36,7 +36,7 @@ const TYPE_TAG: Record<
 
 export function GardenTable({ entries }: { entries: GardenEntry[] }) {
   return (
-    <Table>
+    <Table className="min-w-[680px]">
       <TableHeader>
         <TableHeaderRow>
           <TableHead className="w-0" align="right">
