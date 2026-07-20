@@ -300,7 +300,10 @@ function groupTechnologyContracts(
       rawContract.upgradeability?.immutable === true &&
       (contract.pastUpgrades?.upgrades.length ?? 0) === 0 &&
       !contract.escrow &&
-      !contract.impactfulChange,
+      !contract.impactfulChange &&
+      !contract.addresses.some(
+        (address) => address.verificationStatus === 'became-verified',
+      ),
   )
   const [groupable, ungroupable] = [
     groupableCC.map(([, c]) => c),
