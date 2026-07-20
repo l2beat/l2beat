@@ -192,8 +192,8 @@ function TokenRelationsGraph({ graph }: { graph: Graph }) {
           node.y = event.y
           redraw()
         })
-        .on('end', (event) => {
-          d3.select(event.sourceEvent.currentTarget).attr('cursor', 'grab')
+        .on('end', function () {
+          d3.select(this).attr('cursor', 'grab')
         }),
     )
   }, [graph, size.height, size.width])
