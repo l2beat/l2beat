@@ -8,8 +8,6 @@ import type {
 } from '@l2beat/config'
 import type { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
-import groupBy from 'lodash/groupBy'
-import partition from 'lodash/partition'
 import uniqBy from 'lodash/uniqBy'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
@@ -294,23 +292,19 @@ function makeTechnologyContract(
 function groupTechnologyContracts(
   contracts: (readonly [ProjectContract, TechnologyContract])[],
 ): TechnologyContract[] {
-  const [groupableCC, ungroupableCC] = partition(
-    contracts,
-    ([rawContract, contract]) =>
-      rawContract.upgradeability?.immutable === true &&
-      (contract.pastUpgrades?.upgrades.length ?? 0) === 0 &&
-      !contract.escrow &&
-      !contract.impactfulChange &&
-      !contract.addresses.some(
-        (address) => address.verificationStatus === 'became-verified',
-      ),
-  )
-  const [groupable, ungroupable] = [
-    groupableCC.map(([, c]) => c),
-    ungroupableCC.map(([, c]) => c),
-  ]
+  const isGroupable = ([rawContract, contract]: readonly [
+    ProjectContract,
+    TechnologyContract,
+  ]) =>
+    rawContract.upgradeability?.immutable === true &&
+    (contract.pastUpgrades?.upgrades.length ?? 0) === 0 &&
+    !contract.escrow &&
+    !contract.impactfulChange &&
+    !contract.addresses.some(
+      (address) => address.verificationStatus === 'became-verified',
+    )
 
-  const groups = groupBy(groupable, (contract) =>
+  const groupKey = (contract: TechnologyContract) =>
     JSON.stringify({
       name: contract.name,
       description: contract.description ?? null,
@@ -318,23 +312,36 @@ function groupTechnologyContracts(
       upgradeConsiderations: contract.upgradeConsiderations ?? null,
       references: contract.references,
       usedInProjects: contract.usedInProjects ?? null,
-    }),
-  )
+    })
 
-  const grouped = Object.values(groups).map((contracts) => {
-    const first = contracts[0]
-    assert(first, 'Group must have at least one contract')
-    if (contracts.length === 1) {
-      return first
-    }
-    return {
-      ...first,
-      addresses: contracts.flatMap((contract) => contract.addresses),
-      groupCount: contracts.length,
-    }
-  })
+  const result: TechnologyContract[] = []
+  const groupIndexByKey = new Map<string, number>()
 
-  return [...ungroupable, ...grouped]
+  for (const pair of contracts) {
+    const [, contract] = pair
+    if (!isGroupable(pair)) {
+      result.push(contract)
+      continue
+    }
+
+    const key = groupKey(contract)
+    const existingIndex = groupIndexByKey.get(key)
+    if (existingIndex === undefined) {
+      groupIndexByKey.set(key, result.length)
+      result.push(contract)
+      continue
+    }
+
+    const group = result[existingIndex]
+    assert(group, 'Group must exist')
+    result[existingIndex] = {
+      ...group,
+      addresses: [...group.addresses, ...contract.addresses],
+      groupCount: (group.groupCount ?? 1) + 1,
+    }
+  }
+
+  return result
 }
 
 function getEscrowDetails(
