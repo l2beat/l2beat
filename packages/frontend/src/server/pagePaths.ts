@@ -32,6 +32,7 @@ export const STATIC_PAGE_PATHS = [
   '/governance',
   '/governance/ethereum-connect',
   '/native-rollups',
+  '/garden',
   '/faq',
   '/about-us',
   '/brand-kit',

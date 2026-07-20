@@ -53,6 +53,7 @@ const schema = {
 
   interopConfig: 'TEXT',
   privacyInfo: 'TEXT',
+  crops: 'TEXT',
 
   tvsInfo: 'TEXT',
   tvsConfig: 'TEXT',
