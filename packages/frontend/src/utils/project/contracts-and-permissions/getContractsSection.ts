@@ -282,6 +282,15 @@ function makeTechnologyContract(
   }
 }
 
+// TODO(radomski): We know this is not the best place for this code, nor the
+// best solution. Ideally the config package owns all data manipulation and the
+// frontend only renders it. We are not doing the grouping in config because the
+// config makes many assumptions that a contract entry is a single contract tied
+// to a single address, so introducing grouped contracts there is not easy. The
+// proper fix is to simplify the contract data schema in config and move this
+// logic there. Grouping also breaks per-contract rendering that assumes a single
+// address per entry (e.g. past upgrades would need smarter handling). This is
+// the first iteration and we will work on this more if there is demand for it.
 function groupTechnologyContracts(
   contracts: (readonly [ProjectContract, TechnologyContract])[],
 ): TechnologyContract[] {
