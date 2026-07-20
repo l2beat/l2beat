@@ -7,7 +7,7 @@ authorId: manuel-gonzalez
 
 ## **TL;DR**
 
-*In* ***Arbitrum***, *governance centered on protocol infrastructure and operational security. Offchain Labs published an RFC exploring a new state representation to improve scalability and reduce node hardware requirements, while the Security Council completed a scheduled key rotation following changes to two council seats.*
+*In* ***Arbitrum***, *OAT elections ended, governance centered on protocol infrastructure and operational security. Offchain Labs published an RFC exploring a new state representation to improve scalability and reduce node hardware requirements, while the Security Council completed a scheduled key rotation following changes to two council seats.*
 
 *In* ***ZKsync***, *discussion focused on governance oversight. A community proposal calls for revoking the remaining token allocations authorized under TPP-18, arguing that future funding should be approved through milestone-based governance proposals reflecting Matter Labs' evolving roadmap and commercial strategy.*
 
