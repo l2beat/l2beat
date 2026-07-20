@@ -109,6 +109,7 @@ export const pageLoaders = {
   PublicationPage: async () =>
     (await import('./publications/PublicationPage')).PublicationPage,
   FaqPage: async () => (await import('./faq/FaqPage')).FaqPage,
+  GardenPage: async () => (await import('./garden/GardenPage')).GardenPage,
   GlossaryPage: async () =>
     (await import('./glossary/GlossaryPage')).GlossaryPage,
   AboutUsPage: async () => (await import('./about/AboutUsPage')).AboutUsPage,

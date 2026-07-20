@@ -188,6 +188,9 @@ export interface BaseProject {
   // privacy data
   privacyInfo?: ProjectPrivacyInfo
 
+  // crops data
+  crops?: ProjectCrops
+
   // feature configs
   tvsInfo?: ProjectTvsInfo
   tvsConfig?: TvsToken[]
@@ -1043,6 +1046,27 @@ export type PrivacyFlowExtractorConfig =
 
 export type PrivacyFlowExtractor = PrivacyFlowExtractorConfig['extractor']
 export type PrivacyFlowExtractorParams = PrivacyFlowExtractorConfig['params']
+
+// #endregion
+
+// #region crops data
+
+export type ProjectCropStatus = 'reviewed' | 'partiallyReviewed' | 'notReviewed'
+
+export interface ProjectCropEvaluation {
+  /** Drives the color of the crop. Not needed when `status` is `notReviewed`. */
+  sentiment?: Sentiment
+  /** Review state. Defaults to `reviewed`. Only affects the dashed styling. */
+  status?: ProjectCropStatus
+  description?: string
+}
+
+export interface ProjectCrops {
+  censorshipResistance: ProjectCropEvaluation
+  openSource: ProjectCropEvaluation
+  privacy: ProjectCropEvaluation
+  security: ProjectCropEvaluation
+}
 
 // #endregion
 

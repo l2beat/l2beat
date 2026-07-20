@@ -15,6 +15,7 @@ import type {
   ProjectBridgeRisks,
   ProjectBridgeTechnology,
   ProjectContracts,
+  ProjectCrops,
   ProjectCustomColors,
   ProjectCustomDa,
   ProjectDaTrackingConfig,
@@ -106,6 +107,8 @@ export interface ScalingProject {
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   /** Interop configuration */
   interopConfig?: InteropConfig
+  /** CROPS framework evaluation, shown in the garden */
+  crops?: ProjectCrops
 }
 
 export interface ProjectScalingConfig {

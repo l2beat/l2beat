@@ -159,6 +159,7 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
     daTrackingConfig: p.config.daTracking,
     ecosystemInfo: p.ecosystemInfo,
     interopConfig: p.interopConfig,
+    crops: p.crops,
     // tags
     archivedAt: p.archivedAt,
     hasTestnet: p.hasTestnet,

@@ -206,6 +206,29 @@ export const tornadoCash: BaseProject = {
       },
     ),
   },
+  crops: {
+    censorshipResistance: {
+      sentiment: 'good',
+      description:
+        'The protocol is permissionless: the immutable core has no admin, pause, or upgrade path and the exit window is infinite, so selective censorship, blanket censorship, and walkaway resistance are all solid. The relayer set (26 active relayers over the last month) is the weakest link, but users can always self-relay withdrawals.',
+    },
+    openSource: {
+      sentiment: 'good',
+      description:
+        'The core is GPL-3.0 licensed and reproducible: anyone can audit the published source code and run it locally to participate.',
+    },
+    privacy: {
+      sentiment: 'good',
+      description:
+        'Unstoppable user privacy with no protocol-level compliance mechanism or backdoor, and strong, clearly defined anonymity set numbers per fixed-denomination pool.',
+    },
+    security: {
+      sentiment: 'good',
+      status: 'partiallyReviewed',
+      description:
+        'A simple, well-ossified design that has been audited extensively - plausibly including by malicious actors. It is not quantum-resistant, which may expose user privacy to harvest-now-decrypt-later attacks, and immutability means bugs cannot be patched.',
+    },
+  },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
