@@ -968,6 +968,7 @@ export interface ProjectPrivacyInfo {
 
 export interface PrivacyExitWindow extends ExitWindowRisk {
   description: string
+  isWalkawayTestPassed: boolean
 }
 
 export interface PrivacySummaryValue extends TableReadyValue {

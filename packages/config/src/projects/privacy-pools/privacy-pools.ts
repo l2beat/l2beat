@@ -150,6 +150,7 @@ export const privacyPools: BaseProject = {
       orderHint: Number.MAX_SAFE_INTEGER,
       description:
         'Even if the Entrypoint or ASP turns malicious, users can always ragequit (withdraw tokens) from the immutable pool contracts, at the cost of losing privacy.',
+      isWalkawayTestPassed: false,
     },
     reproducibility: {
       value: 'Reproducible',

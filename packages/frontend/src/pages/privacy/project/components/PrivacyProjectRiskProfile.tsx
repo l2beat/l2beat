@@ -8,6 +8,7 @@ import { ProjectRiskTooltipContent } from '~/components/projects/ProjectRiskTool
 import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import { TrustedSetupRiskDot } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
 import { cn } from '~/utils/cn'
+import { PrivacyWalkawayTestIcon } from '../../PrivacyWalkawayTestIcon'
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
 import { sentimentToRiskDot } from '../../sentimentToRiskDot'
 
@@ -36,7 +37,12 @@ export function PrivacyProjectRiskProfile({
       <ProjectSummaryStat
         title="Exit window"
         tooltip="Time users have to withdraw before a malicious upgrade can take effect."
-        value={<RiskValue value={exitWindow} />}
+        value={
+          <div className="flex items-center gap-2">
+            <RiskValue value={exitWindow} />
+            <PrivacyWalkawayTestIcon passed={exitWindow.isWalkawayTestPassed} />
+          </div>
+        }
       />
       <ProjectSummaryStat
         title={PRIVACY_ASSESSMENT.title}

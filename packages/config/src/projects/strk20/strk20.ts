@@ -41,6 +41,7 @@ export const strk20: BaseProject = {
       orderHint: 0,
       description:
         'The pool implementation is immediately upgradeable, so users have no delay to withdraw before a malicious upgrade can take effect.',
+      isWalkawayTestPassed: false,
     },
     reproducibility: {
       value: 'Not published',

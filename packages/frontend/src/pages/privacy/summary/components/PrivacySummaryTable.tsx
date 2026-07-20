@@ -26,6 +26,7 @@ import { useTable } from '~/hooks/useTable'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
+import { PrivacyWalkawayTestIcon } from '../../PrivacyWalkawayTestIcon'
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
 import { PrivacyAssessmentCell } from './PrivacyAssessmentCell'
 import { PrivacyTrustedSetupCell } from './PrivacyTrustedSetupCell'
@@ -190,7 +191,12 @@ const columns = [
     id: 'exitWindow',
     header: 'Exit',
     cell: (ctx) => (
-      <PrivacyAssessmentCell value={ctx.row.original.exitWindow} showValue />
+      <div className="flex items-start justify-center gap-1">
+        <PrivacyAssessmentCell value={ctx.row.original.exitWindow} showValue />
+        <PrivacyWalkawayTestIcon
+          passed={ctx.row.original.exitWindow.isWalkawayTestPassed}
+        />
+      </div>
     ),
     sortDescFirst: true,
     sortUndefined: 'last',
