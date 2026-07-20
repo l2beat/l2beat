@@ -1,4 +1,4 @@
-import type { ProjectCropStatus, ProjectCrops } from '@l2beat/config'
+import type { ProjectCropStatus, ProjectCrops, Sentiment } from '@l2beat/config'
 
 export const CROP_COLUMNS: {
   key: keyof ProjectCrops
@@ -15,10 +15,18 @@ export const CROP_COLUMNS: {
   { key: 'security', letter: 'S', label: 'Security' },
 ]
 
-export const CROP_STATUS_LABELS: Record<ProjectCropStatus, string> = {
+// The color/quality of a crop, independent of how thoroughly it was reviewed.
+export const CROP_SENTIMENT_LABELS: Record<Sentiment, string> = {
   good: 'Good',
-  partiallyReviewed: 'Partially reviewed',
-  medium: 'Medium',
+  warning: 'Medium',
   bad: 'Bad',
+  neutral: 'Neutral',
+  UnderReview: 'Under review',
+}
+
+// The review state of a crop, independent of its sentiment/color.
+export const CROP_STATUS_LABELS: Record<ProjectCropStatus, string> = {
+  reviewed: 'Reviewed',
+  partiallyReviewed: 'Partially reviewed',
   notReviewed: 'Not reviewed',
 }
