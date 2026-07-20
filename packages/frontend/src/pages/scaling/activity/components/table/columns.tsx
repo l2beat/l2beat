@@ -97,6 +97,7 @@ export const getScalingActivityColumns = (
           <SyncStatusWrapper isSynced={data.isSynced}>
             <ValueWithPercentageChange
               change={data.pastDayCount.change}
+              changePeriod="7D"
               className="font-medium"
               containerClassName="justify-end"
             >
@@ -147,6 +148,7 @@ export const getScalingActivityColumns = (
           <SyncStatusWrapper isSynced={data.isSynced}>
             <ValueWithPercentageChange
               change={data.summedCount.change}
+              changePeriod="7D"
               className="font-medium"
               containerClassName="justify-end"
             >

@@ -15,7 +15,7 @@ export function TokenValueCell({ valueForProject, syncStatus }: Props) {
           ${formatNumberWithCommas(+valueForProject.value)}
         </div>
         {valueForProject.change !== undefined && (
-          <PercentChange value={valueForProject.change} />
+          <PercentChange value={valueForProject.change} period="7D" />
         )}
       </div>
     </SyncStatusWrapper>

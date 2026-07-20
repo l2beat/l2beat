@@ -444,6 +444,7 @@ function TvsStat({ value, change }: { value: number; change: number }) {
               className="!text-base !font-medium !leading-[100%] text-nowrap"
               changeClassName="text-label-value-14 font-bold"
               change={change}
+              changePeriod="7D"
             >
               {formatCurrency(value, 'usd')}
             </ValueWithPercentageChange>

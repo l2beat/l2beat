@@ -111,7 +111,7 @@ export const columns = [
             {formatCurrency(priceUsd.value, 'usd')}
           </div>
           {priceUsd.change !== undefined ? (
-            <PercentChange value={priceUsd.change} />
+            <PercentChange value={priceUsd.change} period="7D" />
           ) : (
             <PercentChangeNotAvailable />
           )}
@@ -188,7 +188,7 @@ function ProjectTokenValueCell({ row }: { row: TokenRow }) {
           ${formatNumberWithCommas(+row.valueForProject.value)}
         </div>
         {row.valueForProject.change !== undefined ? (
-          <PercentChange value={row.valueForProject.change} />
+          <PercentChange value={row.valueForProject.change} period="7D" />
         ) : (
           <PercentChangeNotAvailable />
         )}

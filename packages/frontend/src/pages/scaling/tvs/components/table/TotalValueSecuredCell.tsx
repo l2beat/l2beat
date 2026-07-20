@@ -19,6 +19,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { PercentageChangeTooltipContent } from '~/components/PercentChange'
 import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
@@ -69,7 +70,10 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
                     sentiment={anyBadWarnings ? 'bad' : 'warning'}
                   />
                 ) : null}
-                <ValueWithPercentageChange change={props.change}>
+                <ValueWithPercentageChange
+                  change={props.change}
+                  changePeriod={undefined}
+                >
                   {formatDollarValueNumber(props.total)}
                 </ValueWithPercentageChange>
               </div>
@@ -132,6 +136,9 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
             associatedTokens={props.associatedTokens ?? []}
           />
         )}
+        <p>
+          <PercentageChangeTooltipContent period="7D" />
+        </p>
       </TooltipContent>
     </Tooltip>
   )

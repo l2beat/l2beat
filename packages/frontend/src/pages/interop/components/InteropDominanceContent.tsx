@@ -7,14 +7,8 @@ import {
   TabsList,
   TabsTrigger,
 } from '~/components/core/Tabs'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '~/components/core/tooltip/Tooltip'
 import { PercentChange } from '~/components/PercentChange'
 import { ScrollWithGradient } from '~/components/ScrollWithGradient'
-import { InfoIcon } from '~/icons/Info'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -166,20 +160,11 @@ function DominanceRowItem({
               : formatInteger(value)}
           </span>
           {percentChange !== null && (
-            <div className="flex items-center gap-1">
-              <PercentChange
-                className="font-medium text-label-value-16"
-                value={percentChange}
-              />
-              <Tooltip>
-                <TooltipTrigger>
-                  <InfoIcon className="size-3" />
-                </TooltipTrigger>
-                <TooltipContent>
-                  Percentage change compared to the previous 24 hours.
-                </TooltipContent>
-              </Tooltip>
-            </div>
+            <PercentChange
+              className="font-medium text-label-value-16"
+              value={percentChange}
+              period="previous-24-hours"
+            />
           )}
         </div>
       </div>

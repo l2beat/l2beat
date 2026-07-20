@@ -16,6 +16,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { PercentageChangeTooltipContent } from '~/components/PercentChange'
 import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { TableLink } from '~/components/table/TableLink'
@@ -95,7 +96,10 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
             <div className="flex flex-col items-end max-md:py-1">
               <div className="flex items-center">
                 {icon}
-                <ValueWithPercentageChange change={props.change}>
+                <ValueWithPercentageChange
+                  change={props.change}
+                  changePeriod={undefined}
+                >
                   {formatDollarValueNumber(totalTvs)}
                 </ValueWithPercentageChange>
               </div>
@@ -128,6 +132,11 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
           <AdditionalTrustAssumptionsBanner
             percentage={props.additionalTrustAssumptionsPercentage}
           />
+        )}
+        {props.change !== undefined && (
+          <p>
+            <PercentageChangeTooltipContent period="7D" />
+          </p>
         )}
       </TooltipContent>
     </Tooltip>

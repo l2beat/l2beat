@@ -1,5 +1,8 @@
 import type { ReactNode } from 'react'
-import { PercentChange } from '~/components/PercentChange'
+import {
+  type PercentageChangePeriod,
+  PercentChange,
+} from '~/components/PercentChange'
 import { cn } from '~/utils/cn'
 
 interface Props {
@@ -9,6 +12,7 @@ interface Props {
   changeClassName?: string
   containerClassName?: string
   changeContainerClassName?: string
+  changePeriod: PercentageChangePeriod | undefined
 }
 
 export function ValueWithPercentageChange({
@@ -18,6 +22,7 @@ export function ValueWithPercentageChange({
   containerClassName,
   changeClassName,
   changeContainerClassName,
+  changePeriod,
 }: Props) {
   return (
     <div className={cn('flex flex-wrap items-center', containerClassName)}>
@@ -29,6 +34,7 @@ export function ValueWithPercentageChange({
           value={change}
           className={cn('font-medium', changeContainerClassName)}
           textClassName={changeClassName}
+          period={changePeriod}
         />
       )}
     </div>

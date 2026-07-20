@@ -211,6 +211,7 @@ export const publicSystemsColumns = [
         <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
           <ValueWithPercentageChange
             change={data.change}
+            changePeriod="1D"
             className="font-medium text-xs md:text-sm"
           >
             {formatBytes(data.totalPosted)}

@@ -140,7 +140,10 @@ export function getScalingSummaryColumns(opts?: ScalingSummaryColumnsOpts) {
             href={`/scaling/activity?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
           >
             <SyncStatusWrapper isSynced={data.isSynced}>
-              <ValueWithPercentageChange change={data?.change}>
+              <ValueWithPercentageChange
+                change={data?.change}
+                changePeriod="7D"
+              >
                 {formatActivityCount(ctx.getValue())}
               </ValueWithPercentageChange>
             </SyncStatusWrapper>

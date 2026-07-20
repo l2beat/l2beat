@@ -258,6 +258,7 @@ function ValueWithChange({
         </span>
         <PercentChange
           value={change}
+          period="7D"
           className="mt-1"
           textClassName="text-xs md:text-base font-semibold"
         />

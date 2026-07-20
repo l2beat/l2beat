@@ -63,6 +63,7 @@ export function TvsBreakdownSummaryBox({
         ) : (
           <ValueWithPercentageChange
             change={tvsData?.change.total}
+            changePeriod="7D"
             className="font-bold text-heading-24! text-primary leading-none lg:mr-0"
             changeClassName="text-label-value-16"
             containerClassName="lg:flex-col max-lg:items-baseline"
@@ -187,6 +188,7 @@ function StatItemContent(props: StatsItemProps) {
     <div className="flex items-center gap-1">
       <ValueWithPercentageChange
         change={props.change}
+        changePeriod="7D"
         changeContainerClassName="leading-none!"
         className="font-bold text-primary leading-none! md:text-lg"
       >
