@@ -197,6 +197,9 @@ export interface BaseProject {
   // external dependency data
   externalDependencies?: ProjectExternalDependency[]
 
+  // crops data
+  crops?: ProjectCrops
+
   // feature configs
   tvsInfo?: ProjectTvsInfo
   tvsConfig?: TvsToken[]
@@ -1094,6 +1097,29 @@ export type PrivacyFlowExtractorConfig =
 
 export type PrivacyFlowExtractor = PrivacyFlowExtractorConfig['extractor']
 export type PrivacyFlowExtractorParams = PrivacyFlowExtractorConfig['params']
+
+// #endregion
+
+// #region crops data
+
+export type ProjectCropStatus =
+  | 'notReviewed'
+  | 'partiallyReviewed'
+  | 'medium'
+  | 'bad'
+  | 'good'
+
+export interface ProjectCropEvaluation {
+  status: ProjectCropStatus
+  description?: string
+}
+
+export interface ProjectCrops {
+  censorshipResistance: ProjectCropEvaluation
+  openSource: ProjectCropEvaluation
+  privacy: ProjectCropEvaluation
+  security: ProjectCropEvaluation
+}
 
 // #endregion
 

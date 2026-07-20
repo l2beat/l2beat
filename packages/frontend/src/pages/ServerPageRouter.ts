@@ -12,6 +12,7 @@ import { createDevRouter } from './dev/DevRouter'
 import { createDonateRouter } from './donate/DonateRouter'
 import { createEcosystemsRouter } from './ecosystems/EcosystemsRouter'
 import { createFaqRouter } from './faq/FaqRouter'
+import { createGardenRouter } from './garden/GardenRouter'
 import { createGlossaryRouter } from './glossary/GlossaryRouter'
 import { createGovernanceRouter } from './governance/GovernanceRouter'
 import { createHomeRouter } from './home/HomeRouter'
@@ -63,6 +64,7 @@ export function createServerPageRouter(
     createGovernanceRouter,
     createNativeRollupsRouter,
     createFaqRouter,
+    createGardenRouter,
     createAboutUsRouter,
     createBrandKitRouter,
     createChangelogRouter,
