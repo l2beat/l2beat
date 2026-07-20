@@ -1,3 +1,4 @@
+import type { Project } from '@l2beat/config'
 import type { InteropTransferRecord } from '@l2beat/database'
 import { InteropTransferClassifier } from '@l2beat/shared'
 import { ProjectId } from '@l2beat/shared-pure'
@@ -78,14 +79,40 @@ export async function getInteropProtocolTransfers({
     getAbstractTokenIds(result.items),
   )
   return {
-    items: result.items.map((transfer) =>
-      toInteropProtocolTransferDetailsItem(
+    items: result.items.map((transfer) => {
+      const bridge = getTransferBridge(transfer, interopProjects)
+      return toInteropProtocolTransferDetailsItem(
         transfer,
         INTEROP_CHAIN_DETAILS,
         tokensDetailsMap,
-      ),
-    ),
+        bridge,
+      )
+    }),
     nextCursor: result.nextCursor,
+  }
+}
+
+export function getTransferBridge(
+  transfer: InteropTransferRecord,
+  projects: Project<'interopConfig'>[],
+): InteropProtocolTransferDetailsItem['bridge'] {
+  const classifier = new InteropTransferClassifier()
+  const matchingProjects = projects.filter((project) =>
+    classifier.createMatcher<InteropTransferRecord>(
+      project.interopConfig.plugins,
+    )(transfer),
+  )
+  const project =
+    matchingProjects.find((project) => !project.interopConfig.isAggregate) ??
+    matchingProjects[0]
+
+  if (!project) {
+    throw new Error(`No interop project found for plugin ${transfer.plugin}`)
+  }
+
+  return {
+    name: project.interopConfig.name ?? project.name,
+    href: `/interop/protocols/${project.slug}`,
   }
 }
 
@@ -93,6 +120,7 @@ export function toInteropProtocolTransferDetailsItem(
   transfer: InteropTransferRecord,
   chainDetailsById: Map<string, InteropChainDetails>,
   tokensDetailsMap: TokensDetailsMap,
+  bridge: InteropProtocolTransferDetailsItem['bridge'],
 ): InteropProtocolTransferDetailsItem {
   const srcDetails = chainDetailsById.get(transfer.srcChain)
   const dstDetails = chainDetailsById.get(transfer.dstChain)
@@ -131,6 +159,7 @@ export function toInteropProtocolTransferDetailsItem(
       tokensDetailsMap,
     ),
     valueUsd: transfer.srcValueUsd ?? transfer.dstValueUsd,
+    bridge,
     duration: transfer.duration,
     srcChain: srcDetails?.name ?? transfer.srcChain,
     srcChainIconUrl: srcDetails?.iconUrl,

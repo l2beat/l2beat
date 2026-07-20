@@ -45,6 +45,10 @@ export function getMockInteropTransfers({
         ? (INTEROP_CHAIN_DETAILS.get(dstChain)?.iconUrl ?? '')
         : ethIcon,
       valueUsd: 1_000,
+      bridge: {
+        name: 'Polygon PoS',
+        href: '/interop/protocols/polygon-pos',
+      },
       duration: 60_000,
       srcChain: isTokenMock
         ? srcChain

@@ -2,7 +2,10 @@ import type { InteropTransferRecord } from '@l2beat/database'
 import { InteropTransferClassifier } from '@l2beat/shared'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
-import { toInteropProtocolTransferDetailsItem } from './getInteropProtocolTransfers'
+import {
+  getTransferBridge,
+  toInteropProtocolTransferDetailsItem,
+} from './getInteropProtocolTransfers'
 import type {
   InteropProtocolTransfersResponse,
   InteropTokenTransfersParams,
@@ -58,13 +61,15 @@ export async function getInteropTokenTransfers({
   )
 
   return {
-    items: result.items.map((transfer) =>
-      toInteropProtocolTransferDetailsItem(
+    items: result.items.map((transfer) => {
+      const bridge = getTransferBridge(transfer, interopProjects)
+      return toInteropProtocolTransferDetailsItem(
         transfer,
         INTEROP_CHAIN_DETAILS,
         tokensDetailsMap,
-      ),
-    ),
+        bridge,
+      )
+    }),
     nextCursor: result.nextCursor,
   }
 }

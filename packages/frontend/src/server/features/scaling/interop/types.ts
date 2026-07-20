@@ -228,6 +228,10 @@ export type InteropProtocolTransferDetailsItem = {
   dstTokenIssuer: string | null
   dstTokenIconUrl: string
   valueUsd: number | undefined
+  bridge: {
+    name: string
+    href: string
+  }
   duration: number | undefined
   srcChain: string
   srcChainIconUrl: string | undefined

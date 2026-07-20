@@ -1,8 +1,12 @@
+import type { InteropPlugin, Project } from '@l2beat/config'
 import type { InteropTransferRecord } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
-import { toInteropProtocolTransferDetailsItem } from './getInteropProtocolTransfers'
+import {
+  getTransferBridge,
+  toInteropProtocolTransferDetailsItem,
+} from './getInteropProtocolTransfers'
 
 describe(toInteropProtocolTransferDetailsItem.name, () => {
   it('maps transfer details with source and destination token amounts', () => {
@@ -34,6 +38,7 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
         ],
       ]),
       new Map(),
+      { name: 'Across', href: '/interop/protocols/across' },
     )
 
     expect(result).toEqual({
@@ -50,6 +55,7 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
       dstTokenIssuer: null,
       dstTokenIconUrl: TOKEN_PLACEHOLDER_ICON_URL,
       valueUsd: 12.34,
+      bridge: { name: 'Across', href: '/interop/protocols/across' },
       duration: 60,
       srcChain: 'Ethereum',
       srcChainIconUrl: '/icons/ethereum.png',
@@ -89,6 +95,7 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
           { symbol: 'ETH', iconUrl: 'https://token/eth.png', issuer: null },
         ],
       ]),
+      { name: 'Across', href: '/interop/protocols/across' },
     )
 
     expect(result.srcTxHashHref).toEqual('https://etherscan.io/tx/0xsrc')
@@ -123,6 +130,7 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
         ],
       ]),
       new Map(),
+      { name: 'Across', href: '/interop/protocols/across' },
     )
 
     expect(result.srcTxHash).toEqual(undefined)
@@ -132,6 +140,113 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
     expect(result.duration).toEqual(undefined)
   })
 })
+
+describe(getTransferBridge.name, () => {
+  it('matches the project using the plugin configuration', () => {
+    const result = getTransferBridge(transfer({ plugin: 'across' }), [
+      project({
+        id: 'other',
+        slug: 'other',
+        name: 'Other',
+        plugins: [{ plugin: 'relay', bridgeType: 'nonMinting' }],
+      }),
+      project({
+        id: 'across',
+        slug: 'across',
+        name: 'Across',
+        plugins: [{ plugin: 'across', bridgeType: 'nonMinting' }],
+      }),
+    ])
+
+    expect(result).toEqual({
+      name: 'Across',
+      href: '/interop/protocols/across',
+    })
+  })
+
+  it('uses plugin qualifiers to distinguish projects sharing a plugin', () => {
+    const result = getTransferBridge(
+      transfer({ plugin: 'opstack', bridgeType: 'lockAndMint' }),
+      [
+        project({
+          id: 'base',
+          slug: 'base',
+          name: 'Base',
+          plugins: [
+            { plugin: 'opstack', bridgeType: 'lockAndMint', chain: 'base' },
+          ],
+        }),
+        project({
+          id: 'arbitrum',
+          slug: 'arbitrum',
+          name: 'Arbitrum One',
+          plugins: [
+            {
+              plugin: 'opstack',
+              bridgeType: 'lockAndMint',
+              chain: 'arbitrum',
+            },
+          ],
+        }),
+      ],
+    )
+
+    expect(result).toEqual({
+      name: 'Arbitrum One',
+      href: '/interop/protocols/arbitrum',
+    })
+  })
+
+  it('prefers a subgroup over an aggregate protocol', () => {
+    const result = getTransferBridge(
+      transfer({ plugin: 'layerzero-v2-ofts', bridgeType: 'lockAndMint' }),
+      [
+        project({
+          id: 'layerzero',
+          slug: 'layerzero',
+          name: 'LayerZero',
+          isAggregate: true,
+          plugins: [{ plugin: 'layerzero-v2-ofts', bridgeType: 'lockAndMint' }],
+        }),
+        project({
+          id: 'usdt0',
+          slug: 'usdt0',
+          name: 'USDT0',
+          plugins: [{ plugin: 'layerzero-v2-ofts', bridgeType: 'lockAndMint' }],
+        }),
+      ],
+    )
+
+    expect(result).toEqual({ name: 'USDT0', href: '/interop/protocols/usdt0' })
+  })
+})
+
+function project({
+  id,
+  slug,
+  name,
+  plugins,
+  isAggregate,
+}: {
+  id: string
+  slug: string
+  name: string
+  plugins: InteropPlugin[]
+  isAggregate?: boolean
+}): Project<'interopConfig'> {
+  return {
+    id: ProjectId(id),
+    slug,
+    name,
+    shortName: undefined,
+    addedAt: UnixTime(0),
+    interopConfig: {
+      plugins,
+      type: 'multichain' as const,
+      isAggregate,
+    },
+  }
+}
 
 function transfer(
   override: Partial<InteropTransferRecord> = {},
