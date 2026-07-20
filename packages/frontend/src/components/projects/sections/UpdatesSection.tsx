@@ -1,4 +1,3 @@
-import { type MouseEvent, useState } from 'react'
 import { Badge } from '~/components/badge/Badge'
 import { DiffBody } from '~/components/discovery/DiffBody'
 import { Markdown } from '~/components/markdown/Markdown'
@@ -21,6 +20,8 @@ import type { ProjectSectionProps } from './types'
 
 export interface UpdatesSectionProps extends ProjectSectionProps {
   updates: DiscoveryUpdate[]
+  selectedUpdateId?: string
+  updatesPage?: number
 }
 
 const SECTION_TITLES = {
@@ -32,29 +33,40 @@ const PAGE_SIZE = 5
 
 export function UpdatesSection({
   updates,
+  selectedUpdateId,
+  updatesPage,
   ...sectionProps
 }: UpdatesSectionProps) {
-  const [page, setPage] = useState(0)
-
   if (updates.length === 0) {
     return null
   }
 
   const pageCount = Math.ceil(updates.length / PAGE_SIZE)
+  const selectedUpdateIndex = updates.findIndex(
+    (update) => update.id === selectedUpdateId,
+  )
+  const selectedUpdatePage =
+    selectedUpdateIndex === -1
+      ? undefined
+      : Math.floor(selectedUpdateIndex / PAGE_SIZE)
+  const page = Math.min(
+    Math.max(selectedUpdatePage ?? updatesPage ?? 0, 0),
+    pageCount - 1,
+  )
   const entries = updates.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE)
 
   return (
     <ProjectSection {...sectionProps}>
       <div className="flex flex-col gap-3">
-        {entries.map((update, index) => (
-          <UpdateCard key={`${update.date}-${index}`} update={update} />
+        {entries.map((update) => (
+          <UpdateCard
+            key={update.id}
+            update={update}
+            isSelected={update.id === selectedUpdateId}
+          />
         ))}
         {pageCount > 1 && (
-          <UpdatesPagination
-            page={page}
-            pageCount={pageCount}
-            onPageChange={setPage}
-          />
+          <UpdatesPagination page={page} pageCount={pageCount} />
         )}
       </div>
     </ProjectSection>
@@ -64,24 +76,16 @@ export function UpdatesSection({
 function UpdatesPagination({
   page,
   pageCount,
-  onPageChange,
 }: {
   page: number
   pageCount: number
-  onPageChange: (page: number) => void
 }) {
-  const goToPage = (nextPage: number) => (event: MouseEvent) => {
-    event.preventDefault()
-    onPageChange(Math.min(Math.max(nextPage, 0), pageCount - 1))
-  }
-
   return (
     <Pagination className="pt-2">
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
-            href="#updates"
-            onClick={goToPage(page - 1)}
+            href={getUpdatesPageHref(Math.max(page - 1, 0))}
             aria-disabled={page === 0}
             className={cn(page === 0 && 'pointer-events-none opacity-40')}
           />
@@ -94,9 +98,8 @@ function UpdatesPagination({
           ) : (
             <PaginationItem key={item.index}>
               <PaginationLink
-                href="#updates"
+                href={getUpdatesPageHref(item.index)}
                 isActive={item.index === page}
-                onClick={goToPage(item.index)}
               >
                 {item.index + 1}
               </PaginationLink>
@@ -105,8 +108,7 @@ function UpdatesPagination({
         )}
         <PaginationItem>
           <PaginationNext
-            href="#updates"
-            onClick={goToPage(page + 1)}
+            href={getUpdatesPageHref(Math.min(page + 1, pageCount - 1))}
             aria-disabled={page === pageCount - 1}
             className={cn(
               page === pageCount - 1 && 'pointer-events-none opacity-40',
@@ -118,9 +120,23 @@ function UpdatesPagination({
   )
 }
 
-function UpdateCard({ update }: { update: DiscoveryUpdate }) {
+function getUpdatesPageHref(page: number): string {
+  return `?updatesPage=${page + 1}#updates`
+}
+
+function UpdateCard({
+  update,
+  isSelected,
+}: {
+  update: DiscoveryUpdate
+  isSelected: boolean
+}) {
   return (
-    <details className="group w-full min-w-0 overflow-hidden rounded-lg border border-divider bg-surface-primary">
+    <details
+      id={update.id}
+      open={isSelected}
+      className="group w-full min-w-0 scroll-mt-[38px] overflow-hidden rounded-lg border border-divider bg-surface-primary md:scroll-mt-14 lg:scroll-mt-4"
+    >
       <summary
         className={cn(
           'flex w-full cursor-pointer list-none flex-col gap-2 px-4 py-3 text-left text-sm marker:hidden',
@@ -129,9 +145,14 @@ function UpdateCard({ update }: { update: DiscoveryUpdate }) {
       >
         <div className="flex items-start justify-between gap-3">
           <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-2 gap-y-1">
-            <span className="shrink-0 font-medium text-primary leading-snug">
+            <a
+              href={`?update=${update.id}#${update.id}`}
+              aria-label={`Link to update from ${formatUpdateDate(update)}`}
+              title="Link to this update"
+              className="shrink-0 rounded-sm font-medium text-primary leading-snug hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+            >
               {formatUpdateDate(update)}
-            </span>
+            </a>
             {update.isHighSeverity && (
               <Badge
                 type="error"

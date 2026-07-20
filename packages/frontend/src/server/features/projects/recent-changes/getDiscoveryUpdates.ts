@@ -22,6 +22,7 @@ export interface DiscoveryUpdateSection {
 }
 
 export interface DiscoveryUpdate {
+  id: string
   date: string
   timestamp: number | null
   description: string
@@ -129,15 +130,30 @@ function toPublicDiscoveryUpdate(
   }
 
   const bodies = sections.map((section) => section.body)
+  const timestamp = getTimestamp(entry)
 
   return {
+    id: getUpdateId(entry.date, timestamp),
     date: entry.date,
-    timestamp: getTimestamp(entry),
+    timestamp,
     description: entry.description,
     isHighSeverity: bodies.some((body) => isHighSeverityDiffBody(body)),
     changeCount: bodies.reduce((sum, body) => sum + countDiffChanges(body), 0),
     sections,
   }
+}
+
+function getUpdateId(date: string, timestamp: number | null): string {
+  if (timestamp !== null) {
+    return `update-${timestamp}`
+  }
+
+  const dateSlug = date
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+
+  return `update-${dateSlug}`
 }
 
 function getTimestamp(entry: DiffHistoryEntry): number | null {

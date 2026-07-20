@@ -4,6 +4,7 @@ import express from 'express'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
+import { getProjectUpdatesQuery } from '../utils/getProjectUpdatesQuery'
 import { getScalingActivityData } from './activity/getScalingActivityData'
 import { getScalingArchivedData } from './archived/getScalingArchivedData'
 import { getScalingCostsData } from './costs/getScalingCostsData'
@@ -130,7 +131,22 @@ export function createScalingRouter(
         res.status(404).send('Not found')
         return
       }
-      const html = await render(data, req.originalUrl)
+      if (data.ssr.page !== 'ScalingProjectPage') {
+        throw new Error('Unexpected page type')
+      }
+      const html = await render(
+        {
+          ...data,
+          ssr: {
+            ...data.ssr,
+            props: {
+              ...data.ssr.props,
+              ...getProjectUpdatesQuery(req.query),
+            },
+          },
+        },
+        req.originalUrl,
+      )
       res.status(200).send(html)
     },
   )

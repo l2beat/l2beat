@@ -20,12 +20,16 @@ interface Props extends AppLayoutProps {
   projectEntry: InteropProtocolEntry
   protocolData: InteropProtocolDashboardData
   apiSelection: InteropSelection
+  selectedUpdateId?: string
+  updatesPage?: number
 }
 
 export function InteropProtocolPage({
   projectEntry,
   apiSelection,
   protocolData,
+  selectedUpdateId,
+  updatesPage,
   ...props
 }: Props) {
   return (
@@ -34,6 +38,8 @@ export function InteropProtocolPage({
         projectEntry={projectEntry}
         apiSelection={apiSelection}
         protocolData={protocolData}
+        selectedUpdateId={selectedUpdateId}
+        updatesPage={updatesPage}
       />
     </AppLayout>
   )
@@ -43,10 +49,14 @@ function Content({
   projectEntry,
   apiSelection,
   protocolData,
+  selectedUpdateId,
+  updatesPage,
 }: {
   projectEntry: InteropProtocolEntry
   apiSelection: InteropSelection
   protocolData: InteropProtocolDashboardData
+  selectedUpdateId?: string
+  updatesPage?: number
 }) {
   const navigationSections = projectDetailsToNavigationSections(
     projectEntry.sections,
@@ -105,7 +115,11 @@ function Content({
       />
 
       <HighlightableLinkContextProvider>
-        <ProjectDetails items={projectEntry.sections} />
+        <ProjectDetails
+          items={projectEntry.sections}
+          selectedUpdateId={selectedUpdateId}
+          updatesPage={updatesPage}
+        />
       </HighlightableLinkContextProvider>
     </InteropEntityPageLayout>
   )
