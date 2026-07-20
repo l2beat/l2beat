@@ -5,13 +5,16 @@ import { type RefObject, useEffect, useRef, useState } from 'react'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import { useTRPC } from '~/react-query/trpc'
+import {
+  type LayoutLink,
+  type LayoutNode,
+  layoutRelationGraph,
+} from './relationGraphLayout'
 
 type Graph = RouterOutputs['deployedTokens']['getRelationsGraph']
 type Relation = Graph['relations'][number]
-type NodeDatum = Graph['nodes'][number] & d3.SimulationNodeDatum
-type VisualLink = {
-  source: NodeDatum
-  target: NodeDatum
+type NodeDatum = Graph['nodes'][number] & LayoutNode
+type VisualLink = LayoutLink<NodeDatum> & {
   relation: Relation
   curve: number
 }
@@ -63,6 +66,7 @@ function TokenRelationsGraph({ graph }: { graph: Graph }) {
     const nodeById = new Map(nodes.map((node) => [node.id, node]))
     const visualLinks = buildVisualLinks(graph.relations, nodeById)
     const simulationLinks = buildSimulationLinks(visualLinks)
+    const layout = layoutRelationGraph(nodes, simulationLinks)
     const chainColor = d3
       .scaleOrdinal<string, string>(d3.schemeTableau10)
       .domain([...new Set(nodes.map((node) => node.chain))].sort())
@@ -94,9 +98,14 @@ function TokenRelationsGraph({ graph }: { graph: Graph }) {
       .attr('d', 'M 0 0 L 10 5 L 0 10 z')
       .attr('fill', (marker) => marker.color)
 
+    const fitScale = Math.min(
+      (size.width - 32) / layout.width,
+      (size.height - 32) / layout.height,
+      1,
+    )
     const zoom = d3
       .zoom<SVGSVGElement, unknown>()
-      .scaleExtent([0.1, 8])
+      .scaleExtent([Math.min(fitScale / 2, 0.1), 8])
       .on('zoom', (event) => {
         layer.attr('transform', event.transform.toString())
       })
@@ -158,48 +167,35 @@ function TokenRelationsGraph({ graph }: { graph: Graph }) {
           `${node.symbol} on ${node.chain}\n${formatEndpoint(node.chain, node.address)}`,
       )
 
-    const simulation = d3
-      .forceSimulation(nodes)
-      .force(
-        'link',
-        d3
-          .forceLink<NodeDatum, d3.SimulationLinkDatum<NodeDatum>>(
-            simulationLinks,
-          )
-          .id((node) => node.id)
-          .distance(100)
-          .strength(0.45),
+    function redraw() {
+      links.attr('d', linkPath)
+      node.attr('transform', (node) => `translate(${node.x},${node.y})`)
+    }
+    redraw()
+
+    const initialTransform = d3.zoomIdentity
+      .translate(
+        (size.width - layout.width * fitScale) / 2,
+        (size.height - layout.height * fitScale) / 2,
       )
-      .force('charge', d3.forceManyBody().strength(-130))
-      .force('center', d3.forceCenter(size.width / 2, size.height / 2))
-      .force('collision', d3.forceCollide<NodeDatum>().radius(26))
-      .on('tick', () => {
-        links.attr('d', linkPath)
-        node.attr('transform', (node) => `translate(${node.x},${node.y})`)
-      })
+      .scale(fitScale)
+    svg.call(zoom.transform, initialTransform)
 
     node.call(
       d3
         .drag<SVGGElement, NodeDatum>()
-        .on('start', (event, node) => {
-          if (!event.active) simulation.alphaTarget(0.3).restart()
-          node.fx = node.x
-          node.fy = node.y
+        .on('start', (event) => {
+          d3.select(event.sourceEvent.currentTarget).attr('cursor', 'grabbing')
         })
         .on('drag', (event, node) => {
-          node.fx = event.x
-          node.fy = event.y
+          node.x = event.x
+          node.y = event.y
+          redraw()
         })
-        .on('end', (event, node) => {
-          if (!event.active) simulation.alphaTarget(0)
-          node.fx = null
-          node.fy = null
+        .on('end', (event) => {
+          d3.select(event.sourceEvent.currentTarget).attr('cursor', 'grab')
         }),
     )
-
-    return () => {
-      simulation.stop()
-    }
   }, [graph, size.height, size.width])
 
   return (
@@ -239,29 +235,38 @@ function buildVisualLinks(
   const relationGroups = new Map<string, Relation[]>()
   for (const relation of relations) {
     const key = unorderedPairKey(sourceId(relation), targetId(relation))
-    relationGroups.set(key, [...(relationGroups.get(key) ?? []), relation])
+    const group = relationGroups.get(key)
+    if (group === undefined) {
+      relationGroups.set(key, [relation])
+    } else {
+      group.push(relation)
+    }
   }
 
-  return relations.flatMap((relation) => {
+  return relations.map((relation) => {
     const source = nodeById.get(sourceId(relation))
     const target = nodeById.get(targetId(relation))
-    if (!source || !target) return []
+    if (source === undefined || target === undefined) {
+      throw new Error('Relation graph contains an unknown endpoint')
+    }
 
-    const group =
-      relationGroups.get(
-        unorderedPairKey(sourceId(relation), targetId(relation)),
-      ) ?? []
+    const group = relationGroups.get(
+      unorderedPairKey(sourceId(relation), targetId(relation)),
+    )
+    if (group === undefined) {
+      throw new Error('Relation graph contains an ungrouped relation')
+    }
     const index = group.findIndex(
       (entry) => relationId(entry) === relationId(relation),
     )
     const curve = (index - (group.length - 1) / 2) * 16
 
-    return [{ source, target, relation, curve }]
+    return { source, target, relation, curve }
   })
 }
 
 function buildSimulationLinks(visualLinks: VisualLink[]) {
-  const links = new Map<string, d3.SimulationLinkDatum<NodeDatum>>()
+  const links = new Map<string, LayoutLink<NodeDatum>>()
   for (const link of visualLinks) {
     links.set(unorderedPairKey(link.source.id, link.target.id), {
       source: link.source,

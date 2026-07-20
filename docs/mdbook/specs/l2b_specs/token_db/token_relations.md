@@ -252,8 +252,16 @@ The graph page in token-ui is a catalogue-level view of the relation
 observations. A node is a deployed token, identified by `(chain, address)`
 and labelled with the deployed token's symbol. A directed edge is an
 observed token relation; hovering it shows its endpoints, plugin, and
-bridge type. Node colors distinguish chains. The layout is force-directed;
-nodes can be dragged and the canvas can be panned or zoomed.
+bridge type. Node colors distinguish chains. Nodes can be dragged and the
+canvas can be panned or zoomed.
+
+Before drawing, the UI treats every connected component as a cluster and
+sorts the clusters by deployed-token count (largest first, with a stable id
+tie-break). Each cluster gets its own force simulation, which is run to
+completion in memory so clusters do not repel each other and users never see
+the graph settle. The finished clusters are placed left-to-right in a
+square-ish grid, starting at the top-left, then the whole grid is fitted into
+the viewport.
 
 Relations can exist before either endpoint is catalogued. The graph
 currently omits a relation unless both endpoints resolve to deployed
