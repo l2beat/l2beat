@@ -133,10 +133,8 @@ export function GardenTable({ entries }: { entries: GardenEntry[] }) {
 }
 
 function isFullBloom(entry: GardenEntry): boolean {
-  return CROP_COLUMNS.every((column) => {
-    const crop = entry.crops[column.key]
-    return (
-      (crop.status ?? 'reviewed') === 'reviewed' && crop.sentiment === 'good'
-    )
-  })
+  // All crops are green, regardless of how thoroughly they were reviewed.
+  return CROP_COLUMNS.every(
+    (column) => entry.crops[column.key].sentiment === 'good',
+  )
 }
