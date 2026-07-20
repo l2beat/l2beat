@@ -12,7 +12,8 @@
     "robinhood:0x3468Dcab5a2D81Af207B3e301DFA889321989a61": "Governance",
     "robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31": "ZkLighterVerifier",
     "robinhood:0xA3c70B197AcE329D9e09C753DA7874B78F1D00f4": "ZkLighterVerifier",
-    "robinhood:0x443cc0c7f773d0955e3bd8da393b708152cfa5bc": "DesertVerifier",
+    "robinhood:0x443cc0c7f773d0955e3bd8da393b708152cfa5bc": "DesertVerifierAlwaysTrueOld",
+    "robinhood:0x56aeed6920dbb9e198c2c0072147a45684a06e10": "DesertVerifier",
     "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716": "UpgradeGatekeeper",
     "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213": "Lighter Governor",
     "robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb": "Lighter Security Council",
@@ -25,7 +26,34 @@
   },
   "overrides": {
     "robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d": {
-      "proxyType": "zkLighter proxy"
+      "proxyType": "zkLighter proxy",
+      // The v4 logic implementations (ZkLighter / AdditionalZkLighter) are not
+      // verified on Blockscout, so the ZkLighterWithSpotQuoteAsset template
+      // cannot match. Re-declare the source-independent fields the project
+      // depends on (storage slots + a constant getter) until the impls verify.
+      "fields": {
+        "PRIORITY_EXPIRATION": {
+          "handler": {
+            "type": "call",
+            "method": "function PRIORITY_EXPIRATION() view returns (uint256)",
+            "args": []
+          }
+        },
+        "verifier": {
+          "handler": { "type": "storage", "slot": 4, "returnType": "address" },
+          "severity": "HIGH"
+        },
+        "desertVerifier": {
+          "handler": { "type": "storage", "slot": 5, "returnType": "address" },
+          "severity": "HIGH"
+        },
+        "governance": {
+          "handler": { "type": "storage", "slot": 6, "returnType": "address" }
+        },
+        "additionalZkLighter": {
+          "handler": { "type": "storage", "slot": 7, "returnType": "address" }
+        }
+      }
     },
     "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7": {
       "ignoreRelatives": ["quoteAsset"]
