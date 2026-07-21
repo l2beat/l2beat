@@ -14,6 +14,18 @@ describe(AztecRpcClient.name, () => {
       const result = await client.getLatestBlockNumber()
 
       expect(result).toEqual(123)
+      expect(http.fetch).toHaveBeenOnlyCalledWith('RPC_URL', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          jsonrpc: '2.0',
+          method: 'aztec_getBlockNumber',
+          params: [],
+          id: 'unique-id',
+        }),
+        redirect: 'follow',
+        timeout: 10_000,
+      })
     })
   })
 
@@ -54,7 +66,7 @@ describe(AztecRpcClient.name, () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           jsonrpc: '2.0',
-          method: 'node_getBlocks',
+          method: 'aztec_getBlocks',
           params: [100, 50, { includeTransactions: true }],
           id: 'unique-id',
         }),

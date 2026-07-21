@@ -19,7 +19,7 @@ export class AztecRpcClient extends ClientCore implements AztecBlockClient {
   }
 
   async getLatestBlockNumber(): Promise<number> {
-    const method = 'node_getBlockNumber'
+    const method = 'aztec_getBlockNumber'
     const response = await this.query(method, [])
     const parsedResponse = AztecGetBlockNumberResponse.safeParse(response)
 
@@ -35,7 +35,7 @@ export class AztecRpcClient extends ClientCore implements AztecBlockClient {
   }
 
   async getBlocks(start: number, limit: number): Promise<AztecBlock[]> {
-    const method = 'node_getBlocks'
+    const method = 'aztec_getBlocks'
     const response = await this.query(method, [
       start,
       limit,
