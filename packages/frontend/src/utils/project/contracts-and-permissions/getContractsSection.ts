@@ -168,27 +168,30 @@ function makeTechnologyContract(
     ? new URL(item.url).origin
     : 'https://etherscan.io'
 
-  const mainContractBecameVerified = projectChangeReport?.[
-    item.chain
-  ]?.becameVerified.includes(ChainSpecificAddress.address(item.address))
-
-  const getAddress = (opts: { address: EthereumAddress; name?: string }) => {
+  const getAddress = (opts: {
+    address: EthereumAddress
+    isVerified: boolean
+    name?: string
+  }) => {
     const name =
       opts.name ?? `${opts.address.slice(0, 6)}…${opts.address.slice(38, 42)}`
+    const becameVerified = projectChangeReport?.[
+      item.chain
+    ]?.becameVerified.includes(opts.address)
 
     return {
       name: name,
       address: opts.address.toString(),
-      verificationStatus: toVerificationStatus(
-        !isUnverified,
-        mainContractBecameVerified,
-      ),
+      verificationStatus: toVerificationStatus(opts.isVerified, becameVerified),
       href: `${explorerUrl}/address/${opts.address.toString()}#code`,
     }
   }
 
   const addresses = [
-    getAddress({ address: ChainSpecificAddress.address(item.address) }),
+    getAddress({
+      address: ChainSpecificAddress.address(item.address),
+      isVerified: !isUnverified,
+    }),
   ]
 
   const implementations = item.upgradeability?.implementations ?? []
@@ -202,6 +205,10 @@ function makeTechnologyContract(
             ? `Implementation #${i + 1}${upgradeableText}`
             : `Implementation${upgradeableText}`,
         address: ChainSpecificAddress.address(implementation),
+        isVerified:
+          !item.upgradeability?.unverifiedImplementations?.includes(
+            implementation,
+          ),
       }),
     )
   }
@@ -213,6 +220,7 @@ function makeTechnologyContract(
       getAddress({
         name: admins.length > 1 ? `Admin (${i + 1})` : 'Admin',
         address: ChainSpecificAddress.address(admin),
+        isVerified: true,
       }),
     )
   }
@@ -221,7 +229,7 @@ function makeTechnologyContract(
 
   if (isUnverified) {
     let text = 'The source code of this contract is not verified on Etherscan.'
-    if (mainContractBecameVerified) {
+    if (addresses[0]?.verificationStatus === 'became-verified') {
       text =
         'The source code of this contract was recently verified. It is under review.'
     }
