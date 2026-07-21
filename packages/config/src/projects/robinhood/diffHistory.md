@@ -1,3 +1,365 @@
+Generated with discovered.json: 0x936c2f40238f505a040b9a4962fb955524287753
+
+# Diff at Tue, 21 Jul 2026 11:00:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@99b417edd2cb262b6c8d01375e81bf5aac874a53 block: 1784626795
+- current timestamp: 1784626795
+
+## Description
+
+Config change: remove category to suppress EOA warning for the non-critical infra.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784626795 (main branch discovery), not current.
+
+```diff
+    contract NVIDIA • Robinhood Token (robinhood:0xd0601CE157Db5bdC3162BbaC2a2C8aF5320D9EEC) [robinhood/rwa] {
+    +++ description: ERC-20-compatible Robinhood Stock Token logic. Transfers, approvals and permits are permissionless for addresses that are not blocked in the shared AccessControlsRegistry; there is no onchain KYC or allowlist. The registry's roles can mint, burn arbitrary holders' balances, confiscate balances even while paused or blocked, pause this token or all tokens, change metadata and the UI multiplier, and upgrade the shared beacon implementation.
+      category:
+-        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract AccessControlsRegistry (robinhood:0xe10b6f6B275de231345c20D14Ab812db62151b00) [robinhood/accessControlsRegistry] {
+    +++ description: Shared access-control registry and upgrade beacon for Robinhood Stock Tokens. Its roles apply across every token implementation that points to this registry: they control upgrades, global and per-token pauses, the shared blocklist, issuance, arbitrary holder burns, metadata and UI multipliers.
+      category:
+-        {"name":"External Bridges","priority":1}
+    }
+```
+
+Generated with discovered.json: 0xac11c67683467da72879642314dd59ea8cc02ea0
+
+# Diff at Tue, 21 Jul 2026 09:46:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1a47a1d8f7eea1d688c970ecc68d520c3181de8f block: 1784556704
+- current timestamp: 1784626795
+
+## Description
+
+Config: add rwa access control contract to the monitoring.
+
+## Watched changes
+
+```diff
+    contract ArbFilteredTransactionsManager (robinhood:0x0000000000000000000000000000000000000074) [N/A] {
+    +++ description: ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.
+      values.filteredTransactionsAdded:
+-        6086
++        6087
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784556704 (main branch discovery), not current.
+
+```diff
+    EOA  (robinhood:0x0000000000000000000000000000000000000000) {
+    +++ description: None
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"robinhood:0xd0601CE157Db5bdC3162BbaC2a2C8aF5320D9EEC","role":"admin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract NVIDIA • Robinhood Token (robinhood:0xd0601CE157Db5bdC3162BbaC2a2C8aF5320D9EEC) [robinhood/rwa]
+    +++ description: ERC-20-compatible Robinhood Stock Token logic. Transfers, approvals and permits are permissionless for addresses that are not blocked in the shared AccessControlsRegistry; there is no onchain KYC or allowlist. The registry's roles can mint, burn arbitrary holders' balances, confiscate balances even while paused or blocked, pause this token or all tokens, change metadata and the UI multiplier, and upgrade the shared beacon implementation.
+```
+
+```diff
++   Status: CREATED
+    contract AccessControlsRegistry (robinhood:0xe10b6f6B275de231345c20D14Ab812db62151b00) [robinhood/accessControlsRegistry]
+    +++ description: Shared access-control registry and upgrade beacon for Robinhood Stock Tokens. Its roles apply across every token implementation that points to this registry: they control upgrades, global and per-token pauses, the shared blocklist, issuance, arbitrary holder burns, metadata and UI multipliers.
+```
+
+Generated with discovered.json: 0x0f00f51906b21f7041f0a11a84c72d1af63e2103
+
+# Diff at Mon, 20 Jul 2026 14:13:02 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b461afee5f10587a00295a471b2542eba2686ebb block: 1784044401
+- current timestamp: 1784556704
+
+## Description
+
+Recent transaction-filtering increase due to a single wallet being blocked — the
+honeypot behind the fake "Robinhood founder seed-phrase leak". Filtered
+transactions rose from 278 to 6,086; none have been reversed.
+
+Added the L1 timelock ProxyAdmin (OpenZeppelin v5.0.0) to the ProxyAdmin template.
+
+## Watched changes
+
+```diff
+    contract ArbFilteredTransactionsManager (robinhood:0x0000000000000000000000000000000000000074) [N/A] {
+    +++ description: ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.
+      values.filteredTransactionsAdded:
+-        278
++        6086
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784044401 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x4e393071053C5d95771b1B716857d65cdf5B1839) [global/ProxyAdmin] {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","role":"admin"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","role":"admin"}]
+    }
+```
+
+```diff
+    contract UpgradeExecutor (eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.1:
++        {"permission":"act","from":"eth:0x4e393071053C5d95771b1B716857d65cdf5B1839","role":".owner"}
+    }
+```
+
+```diff
+    contract Safe (eth:0x7Ae50886c7EA0394613aa7Dcc287a5c9650784b6) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","role":"admin","via":[{"address":"eth:0x4e393071053C5d95771b1B716857d65cdf5B1839"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]}
+    }
+```
+
+```diff
+    contract TimelockController (eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 7d.
+      receivedPermissions.12:
++        {"permission":"upgrade","from":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","role":"admin","via":[{"address":"eth:0x4e393071053C5d95771b1B716857d65cdf5B1839"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]}
+    }
+```
+
+```diff
+    contract SafeL2 (robinhood:0x4C0360aFedD31e53718e4343F95E40b692402462) [GnosisSafe] {
+    +++ description: None
+      deployerAddress:
++        "robinhood:0xcFDab226f6DF33cd364Ff8E617bEB5Fe54E84Ebe"
+      sinceTimestamp:
++        1782841228
+      sinceBlock:
++        615418
+    }
+```
+
+```diff
+    contract TimelockController (robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 7d.
+      deployerAddress:
++        "robinhood:0xcFDab226f6DF33cd364Ff8E617bEB5Fe54E84Ebe"
+      sinceTimestamp:
++        1782841253
+      sinceBlock:
++        615454
+    }
+```
+
+Generated with discovered.json: 0x444b94e2ff7a4ceaf6cbbd1a0604446941743a25
+
+# Diff at Tue, 14 Jul 2026 15:55:02 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@40c68fc8d6e39f5b4f69bb2e62b69938a949b435 block: 1783461693
+- current timestamp: 1784044401
+
+## Description
+
+The ArbFilteredTransactionsManager now reports 278 added filtered transaction
+hashes, up from 2 in the previous discovery. No filtered transaction hash has
+been deleted. Transaction filtering is active: an authorized filterer can register
+a transaction hash and make the state transition fail that transaction, including
+one force-included from L1.
+
+Governance was restructured on both L1 and L2:
+
+- The single 2-of-3 admin multisig was replaced by a 7-of-8 multisig and a
+  7-day timelock. The 7-of-8 multisig remains a direct executor, so upgrades can
+  still bypass the timelock delay.
+- A separate 6-of-8 multisig can propose and cancel timelock actions.
+- The timelock and its admin contracts are now verified on Etherscan and
+  Blockscout.
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x23A19d23e89166adedbDcB432518AB01e4272D94","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.","role":".owner","via":[{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0x1A07cc4BD17E0118BdB54D70990D2158AbAD7a2D","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0x23A19d23e89166adedbDcB432518AB01e4272D94","role":"admin","via":[{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0x6a2E3a1e16FC29f27Ce61429746D558d656975bB","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0x6f38FC91105Fc9a43931DcA33450ab3315E3D4Fa","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0xBd0D173EEb87D57A09521c24388a12789F33ba96","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0xc34f4907822d1cDC6aE3038Be22e6f12DEa35bd4","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0xDf8755334ce7A73cCF6b581C02eA649AE3E864b3","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]},{"permission":"upgrade","from":"eth:0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B","role":"admin","via":[{"address":"eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf","role":".executors"}]
+    }
+```
+
+```diff
+    contract UpgradeExecutor (eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.accessControl.EXECUTOR_ROLE.members.0:
++        "eth:0x7Ae50886c7EA0394613aa7Dcc287a5c9650784b6"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "eth:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5"
++        "eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465"
+      values.executors.0:
++        "eth:0x7Ae50886c7EA0394613aa7Dcc287a5c9650784b6"
+      values.executors.0:
+-        "eth:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5"
++        "eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465"
+      directlyReceivedPermissions.2:
++        {"permission":"interact","from":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","description":"manage all access control roles.","role":".defaultAdminAC"}
+    }
+```
+
+```diff
+    contract ArbFilteredTransactionsManager (robinhood:0x0000000000000000000000000000000000000074) [N/A] {
+    +++ description: ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.
+      values.filteredTransactionsAdded:
+-        2
++        278
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SafeL2 (robinhood:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract L2UpgradeExecutor (robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09) [orbitstack/UpgradeExecutor] {
+    +++ description: ArbOS chain owner (UpgradeExecutor). Manages the ArbOwner chain-owner set and the transaction-filterer set, and can upgrade ArbOS configuration without delay.
+      values.accessControl.EXECUTOR_ROLE.members.1:
++        "robinhood:0x6b9F63817F1442e40Bb9c3C2207758934C323FdC"
+      values.accessControl.EXECUTOR_ROLE.members.1:
+-        "robinhood:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5"
++        "robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173"
+      values.executors.1:
++        "robinhood:0x6b9F63817F1442e40Bb9c3C2207758934C323FdC"
+      values.executors.1:
+-        "robinhood:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5"
++        "robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173"
+      directlyReceivedPermissions.0:
++        {"permission":"act","from":"robinhood:0x672Da8B43058D1bC78956d71d9A208E168E2a3EF","role":".owner"}
+      directlyReceivedPermissions.3:
++        {"permission":"interact","from":"robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173","description":"manage all access control roles.","role":".defaultAdminAC"}
+    }
+```
+
+```diff
+    EOA  (robinhood:0x663703B4bC1F5e896Af2854548d6380F45F1C5D0) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173","description":"manage all access control roles.","role":".defaultAdminAC","via":[{"address":"robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09"}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173","role":"admin","via":[{"address":"robinhood:0x672Da8B43058D1bC78956d71d9A208E168E2a3EF"},{"address":"robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09"}]}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x0fc5c64074641e677Fb86bCE80303a2eE64344Ac) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0x4e393071053C5d95771b1B716857d65cdf5B1839) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x7Ae50886c7EA0394613aa7Dcc287a5c9650784b6) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0xbFc2b53552513174A0B006D4799B39871fe0CA1d) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimelockController (eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465) [global/TimelockController]
+    +++ description: A timelock with access control. The current minimum delay is 7d.
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (robinhood:0x3A0C507Cc7F8785C877359ad49d0476966d17a1C) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (robinhood:0x4C0360aFedD31e53718e4343F95E40b692402462) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimelockController (robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173) [global/TimelockController]
+    +++ description: A timelock with access control. The current minimum delay is 7d.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (robinhood:0x672Da8B43058D1bC78956d71d9A208E168E2a3EF) [global/ProxyAdmin]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (robinhood:0x6b9F63817F1442e40Bb9c3C2207758934C323FdC) [GnosisSafe]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...:0x4e393071053C5d95771b1B716857d65cdf5B1839.sol |  184 +++
+ ...:0x672Da8B43058D1bC78956d71d9A208E168E2a3EF.sol |  189 +++
+ .../Safe.sol                                       |    0
+ .../SafeProxy.p.sol                                |    0
+ .../Safe.sol                                       | 1216 +++++++++++++++
+ .../SafeProxy.p.sol                                |    0
+ .../Safe.sol                                       | 1216 +++++++++++++++
+ .../SafeProxy.p.sol                                |   42 +
+ .../Safe.sol                                       | 1216 +++++++++++++++
+ .../SafeProxy.p.sol                                |   42 +
+ .../SafeL2.sol                                     |    0
+ .../SafeProxy.p.sol                                |   42 +
+ .../SafeL2.sol                                     | 1286 ++++++++++++++++
+ .../SafeProxy.p.sol                                |   42 +
+ .../SafeL2.sol                                     | 1286 ++++++++++++++++
+ .../SafeProxy.p.sol                                |   42 +
+ .../TimelockControllerUpgradeable.sol              | 1577 ++++++++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              | 1038 +++++++++++++
+ .../TimelockControllerUpgradeable.sol              | 1577 ++++++++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              | 1038 +++++++++++++
+ 20 files changed, 12033 insertions(+)
+```
+
 Generated with discovered.json: 0xd4ee2b65c075a2e41ae1b9b1350dde933a74c0ac
 
 # Diff at Tue, 07 Jul 2026 22:02:36 GMT:

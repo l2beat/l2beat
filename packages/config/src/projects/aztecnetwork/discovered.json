@@ -1,7 +1,7 @@
 {
   "name": "aztecnetwork",
-  "timestamp": 1783513321,
-  "configHash": "0x07c7b2f2b74b5df0c73bdcf1494022d87860f043eae6fd8f0a2e74b12c2eb191",
+  "timestamp": 1784623722,
+  "configHash": "0x28024f7bab180ddbb57865d5a54175f82d0d5eb092e5c324c046e4efd14c5d72",
   "entries": [
     {
       "name": "CoinIssuer",
@@ -13,11 +13,11 @@
       ],
       "proxyType": "immutable",
       "description": "Manages the inflation and minting schedule of the Aztec token. It enforces an annual percentage cap and mints new tokens for the budget.",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
-          "description": "mint unlimited amounts of the AZTEC token and transfer the ownership of the contract.",
+          "description": "mint AZTEC only through the CoinIssuer's capped issuance function. The CoinIssuer exposes no path to transfer or renounce ownership of the AZTEC token.",
           "role": ".owner"
         }
       ],
@@ -35,7 +35,8 @@
         "owner": "eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a"
       },
       "fieldMeta": {
-        "ASSET": { "description": "AZTEC token minted by this issuer." }
+        "ASSET": { "description": "AZTEC token minted by this issuer." },
+        "owner": { "description": "Owner of the CoinIssuer." }
       },
       "implementationNames": {
         "eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6": "CoinIssuer"
@@ -51,7 +52,7 @@
         "0x71cf96d5e84750d1559a917cdd144ff72a02d1545e89ffffa0e3eaadce53b381"
       ],
       "proxyType": "immutable",
-      "description": "Intermediary contract that allows the L2 Sequencers operating the canonical rollup (as defined by the Registry) to submit formal proposals to the L1 Governance contract by signalling their support of any smart contract payload on L1 with each checkpoint proposal. A signalling round comprises 1000 checkpoints. 600 signals or more during one round allow submitting the payload as a governance proposal.",
+      "description": "Intermediary contract through which the designated proposer for each L2 slot can signal support for an L1 payload. A signalling round comprises 1000 slots. A payload that receives at least 600 signals can be submitted to the L1 Governance contract within the configured lifetime.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -77,9 +78,9 @@
           "extensions": []
         },
         "EXECUTION_DELAY_IN_ROUNDS": 0,
-        "getCurrentRound": 150,
+        "getCurrentRound": 25,
         "getGovernance": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
-        "getInstance": "eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962",
+        "getInstance": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
         "GSE": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
         "LIFETIME_IN_ROUNDS": 5,
         "QUORUM_SIZE": 600,
@@ -89,7 +90,7 @@
       },
       "fieldMeta": {
         "getGovernance": {
-          "description": "Governance contract to which successful signalling rounds are submitted."
+          "description": "Current Registry owner to which successful signalling rounds are submitted."
         },
         "getInstance": {
           "description": "Rollup instance whose checkpoint proposers can signal proposals."
@@ -99,12 +100,43 @@
         },
         "REGISTRY": {
           "description": "Registry used to resolve the canonical rollup instance."
+        },
+        "ROUND_SIZE": {
+          "description": "Number of slots in one sequencer signalling round."
+        },
+        "QUORUM_SIZE": {
+          "description": "Number of signals a payload needs to win a signalling round."
+        },
+        "EXECUTION_DELAY_IN_ROUNDS": {
+          "description": "Number of complete rounds after signalling before the winning payload can be submitted to Governance."
+        },
+        "LIFETIME_IN_ROUNDS": {
+          "description": "Maximum age of a winning signalling round that can still be submitted to Governance."
         }
       },
       "implementationNames": {
         "eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef": "GovernanceProposer"
       },
       "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "HonkVerifier",
+      "address": "eth:0x098f47c00F4df22a8030746Eb11378236C24b4bC",
+      "type": "Contract",
+      "template": "aztecnetwork/HonkVerifier",
+      "sourceHashes": [
+        "0x571cb1ad009254f2861d4e9f714fd96b9650ac98914a54037baa51a782d166b3"
+      ],
+      "proxyType": "immutable",
+      "description": "ZK proof verification contract.",
+      "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
+      "sinceTimestamp": 1782803327,
+      "sinceBlock": 25428902,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x098f47c00F4df22a8030746Eb11378236C24b4bC": "HonkVerifier"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "eth:0x0Fb6215099f48D723CfB89434C2cb887357Bc871",
@@ -125,32 +157,65 @@
         {
           "permission": "interact",
           "from": "eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6",
-          "description": "mint new AZTEC in the bounds of the minting caps",
+          "description": "mint new AZTEC within the annual cap, accept ownership of the AZTEC token when pending, and transfer or renounce CoinIssuer ownership.",
           "role": ".owner",
           "via": [
             {
               "address": "eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a",
-              "condition": "the GATED_UNTIL timestamp has passed."
+              "condition": "GATED_UNTIL has passed, the oldest unmarked Governance proposal was created after the ATP-derived activation timestamp, and markNext was not called in the same block."
             }
           ]
         },
         {
           "permission": "interact",
           "from": "eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298",
-          "description": "register a new canonical rollup version and replace the reward distributor used by the network.",
+          "description": "register a new canonical rollup version, update the Registry-selected reward distributor pointer, and transfer or renounce Registry ownership. Updating the pointer does not change a distributor fixed in an already deployed Rollup.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "eth:0x64E6e9Bb9f1E33D319578B9f8a9C719Ca6D46eBb",
-          "description": "execute slashing payloads directly, bypassing the proposer address but still subject to vetoes and temporary slashing disablement.",
-          "role": ".GOVERNANCE"
+          "from": "eth:0x555bAAc4757A89f1CE0c84fA35afE9dD7aa8E1d3",
+          "description": "recover AZTEC from any implicit or earmarked accounting bucket and recover any non-AZTEC token held by the distributor.",
+          "role": ".registryOwner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a",
+          "description": "relay arbitrary calls and ETH from the ProtocolTreasury.",
+          "role": ".GOVERNANCE",
+          "condition": "GATED_UNTIL has passed, the oldest unmarked Governance proposal was created after the ATP-derived activation timestamp, and markNext was not called in the same block."
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
+          "description": "change the sequencer reward share and checkpoint reward, only increase the mana target, update proving cost within its step and cooldown bounds, update validator entry-queue limits subject to nonzero normal-phase limits and bounded bootstrap settings, queue or cancel a Slasher replacement subject to the replacement delay, set the EscapeHatch once if still unset, and transfer or renounce ownership.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
+          "description": "slash and eject validators while this contract is configured as the active Slasher.",
+          "role": ".getSlasher",
+          "condition": "the active Slasher authorizes the call under its own execution rules.",
+          "via": [
+            {
+              "address": "eth:0xCD6855470A01aBcd989126A1183Fb50673952548",
+              "condition": "slashing is enabled and the payload has not been vetoed."
+            }
+          ]
         },
         {
           "permission": "interact",
           "from": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
-          "description": "set governance once, change the proof-of-possession gas limit, and add new rollup addresses that make bonus-instance validators effective on the latest rollup.",
+          "description": "set Governance once if still unset, change the proof-of-possession gas limit (including to a value that prevents new deposits), add a new latest rollup that controls bonus-instance validators, and transfer or renounce ownership.",
           "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xCD6855470A01aBcd989126A1183Fb50673952548",
+          "description": "execute arbitrary payload actions through the Slasher, bypassing all proposer validation including ballots, quorum, target construction, delay, and lifetime.",
+          "role": ".GOVERNANCE",
+          "condition": "slashing is enabled and the payload has not been vetoed."
         }
       ],
       "directlyReceivedPermissions": [
@@ -158,7 +223,14 @@
           "permission": "act",
           "from": "eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a",
           "role": ".GOVERNANCE",
-          "condition": "the GATED_UNTIL timestamp has passed."
+          "condition": "GATED_UNTIL has passed, the oldest unmarked Governance proposal was created after the ATP-derived activation timestamp, and markNext was not called in the same block."
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xCD6855470A01aBcd989126A1183Fb50673952548",
+          "description": "execute arbitrary payload actions through the Slasher, bypassing all proposer validation including ballots, quorum, target construction, delay, and lifetime.",
+          "role": ".GOVERNANCE",
+          "condition": "slashing is enabled and the payload has not been vetoed."
         }
       ],
       "ignoreInWatchMode": ["totalPowerNow", "withdrawalCount"],
@@ -184,8 +256,8 @@
         "governanceProposer": "eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef",
         "isAllBeneficiariesAllowed": true,
         "proposalCount": 5,
-        "totalPowerNow": "667681570343130994092106830",
-        "withdrawalCount": 4812
+        "totalPowerNow": "690787570343130994092106830",
+        "withdrawalCount": 5055
       },
       "fieldMeta": {
         "ASSET": {
@@ -201,89 +273,9 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "name": "RewardBooster",
-      "address": "eth:0x1CbB707Bd7b4Fd2BcED6D96d84372fb428e93D80",
-      "type": "Contract",
-      "template": "aztecnetwork/RewardBooster",
-      "sourceHashes": [
-        "0xa55a151792fd54a06d45a214430777fdcc77649e3e3366b05a30ed49607b1d6e"
-      ],
-      "proxyType": "immutable",
-      "description": "Calculates boosted reward shares for active provers based on a configured curve, incentivizing consistent participation.",
-      "deployerAddress": "eth:0xA8aA9eb611709454601425CEc7B8C9B142781560",
-      "sinceTimestamp": 1772654159,
-      "sinceBlock": 24586322,
-      "values": {
-        "$immutable": true,
-        "getConfig": {
-          "increment": 125000,
-          "maxScore": 15000000,
-          "a": 1000,
-          "minimum": 100000,
-          "k": 1000000
-        },
-        "ROLLUP": "eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962"
-      },
-      "fieldMeta": {
-        "ROLLUP": {
-          "description": "Rollup allowed to update prover activity scores and query boosted shares during reward accounting."
-        },
-        "getConfig": {
-          "description": "Reward boost curve parameters used to convert prover activity into reward shares."
-        }
-      },
-      "implementationNames": {
-        "eth:0x1CbB707Bd7b4Fd2BcED6D96d84372fb428e93D80": "RewardBooster"
-      },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
       "address": "eth:0x23d4A9533627eA70915026638ff5989a967Be667",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "FeeJuicePortal",
-      "address": "eth:0x2891F8b941067F8B5a3F34545A30Cf71E3E23617",
-      "type": "Contract",
-      "template": "aztecnetwork/FeeJuicePortal",
-      "sourceHashes": [
-        "0xc7593f2bfd237067a4f9c2e0235082023defc4aec53c7f075d4c0e0d30c12557"
-      ],
-      "proxyType": "immutable",
-      "description": "One-way gas bridge: Escrows the fee asset (AZTEC) used to pay for L2 mana (gas). Users deposit tokens here, which are minted on L2 via the Inbox. The Rollup contract holds exclusive rights to withdraw tokens from this portal to distribute them as rewards to L1 sequencers and provers. Apart from that, this escrow does NOT afford a way to withdraw tokens.",
-      "deployerAddress": "eth:0xA8aA9eb611709454601425CEc7B8C9B142781560",
-      "sinceTimestamp": 1772654159,
-      "sinceBlock": 24586322,
-      "values": {
-        "$immutable": true,
-        "INBOX": "eth:0x8Dbf0b6ed495baAb6062f5D5365aF3C1B2ed4578",
-        "L2_TOKEN_ADDRESS": "0x0000000000000000000000000000000000000000000000000000000000000005",
-        "ROLLUP": "eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962",
-        "UNDERLYING": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
-        "VERSION": 2934756905
-      },
-      "fieldMeta": {
-        "UNDERLYING": {
-          "description": "The L1 ERC20 token serving as the native fee asset for the Aztec network."
-        },
-        "ROLLUP": {
-          "description": "The core Rollup contract, possessing exclusive permission to call distributeFees and pay out sequencers and provers."
-        },
-        "INBOX": {
-          "description": "The Inbox contract used to relay user deposit messages to the L2."
-        },
-        "L2_TOKEN_ADDRESS": {
-          "description": "The hardcoded canonical address of the fee asset on the L2."
-        },
-        "VERSION": {
-          "description": "The identifier of the Aztec instance/version to ensure deposits are routed to the correct chain."
-        }
-      },
-      "implementationNames": {
-        "eth:0x2891F8b941067F8B5a3F34545A30Cf71E3E23617": "FeeJuicePortal"
-      },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "address": "eth:0x32e90E88bb2E6Ee4382e6884cC5c299a6bA27920",
@@ -305,23 +297,23 @@
       "sinceBlock": 23786827,
       "values": {
         "$immutable": true,
-        "getCanonicalRollup": "eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962",
+        "getCanonicalRollup": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
         "getGovernance": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
-        "getRewardDistributor": "eth:0x3D6A1B00C830C5f278FC5dFb3f6Ff0b74Db6dfe0",
-        "getVersion": [0, 2934756905],
-        "numberOfVersions": 2,
+        "getRewardDistributor": "eth:0x555bAAc4757A89f1CE0c84fA35afE9dD7aa8E1d3",
+        "getVersion": [0, 2934756905, 4248422647],
+        "numberOfVersions": 3,
         "owner": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e"
       },
       "fieldMeta": {
-        "owner": { "description": "The governance owner of the registry." },
+        "owner": { "description": "Owner of the Registry." },
         "getCanonicalRollup": {
           "description": "The latest registered rollup instance, treated as canonical by the Aztec contracts."
         },
         "getGovernance": {
-          "description": "The governance contract controlling the registry."
+          "description": "The current Registry owner, which controls registration and the Registry-selected reward distributor."
         },
         "getRewardDistributor": {
-          "description": "The reward distributor currently used by the canonical rollup."
+          "description": "The Registry-selected reward distributor. An existing Rollup keeps the distributor fixed at its deployment and is not retargeted when this pointer changes."
         },
         "numberOfVersions": {
           "description": "Number of rollup versions registered in the registry."
@@ -336,24 +328,82 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
+      "name": "RewardBooster",
+      "address": "eth:0x4490cAb7Ce3499353E1b0090b9e530c1AD03B551",
+      "type": "Contract",
+      "template": "aztecnetwork/RewardBooster",
+      "sourceHashes": [
+        "0x9b088fcacec7772ba439c3b19adce12c8870e429335b88dc8113a2d527de499a"
+      ],
+      "proxyType": "immutable",
+      "description": "Calculates boosted reward shares for active provers based on a configured curve, incentivizing consistent participation.",
+      "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
+      "sinceTimestamp": 1782803327,
+      "sinceBlock": 25428902,
+      "values": {
+        "$immutable": true,
+        "getConfig": {
+          "increment": 101400,
+          "maxScore": 367500,
+          "a": 250000,
+          "minimum": 10000,
+          "k": 1000000
+        },
+        "ROLLUP": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34"
+      },
+      "fieldMeta": {
+        "ROLLUP": {
+          "description": "Rollup allowed to update prover activity scores and query boosted shares during reward accounting."
+        },
+        "getConfig": {
+          "description": "Reward boost curve parameters used to convert prover activity into reward shares."
+        }
+      },
+      "implementationNames": {
+        "eth:0x4490cAb7Ce3499353E1b0090b9e530c1AD03B551": "RewardBooster"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "RollupOperationsExtLib",
+      "address": "eth:0x516f010C9AB452d70E0c6f78b9E698249a66d2AC",
+      "type": "Contract",
+      "template": "aztecnetwork/RollupOperationsExtLib",
+      "sourceHashes": [
+        "0xa2fe91fe6d6fafc9dcda581a434ba4a895013b0561794b5975af8807e04abcd8"
+      ],
+      "proxyType": "immutable",
+      "description": "Library immutably linked into the Rollup for checkpoint proposal, proof verification, pruning, and chain-tip operations. Its functions operate on the calling Rollup's storage through DELEGATECALL, so direct getter calls on the library are ignored.",
+      "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
+      "sinceTimestamp": 1782803327,
+      "sinceBlock": 25428902,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x516f010C9AB452d70E0c6f78b9E698249a66d2AC": "RollupOperationsExtLib"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
       "name": "RewardDistributor",
-      "address": "eth:0x3D6A1B00C830C5f278FC5dFb3f6Ff0b74Db6dfe0",
+      "address": "eth:0x555bAAc4757A89f1CE0c84fA35afE9dD7aa8E1d3",
       "type": "Contract",
       "template": "aztecnetwork/RewardDistributor",
       "sourceHashes": [
-        "0xdc25555be83a4afb19d53051d224785fb0fb7eeab2471ece49c3f4b103239cb9"
+        "0x459d15c998a2f749c51abcd10cdcdaa0f4617a23f664ddb2414bfcbb4e960475"
       ],
       "proxyType": "immutable",
       "description": "Holds tokens allocated for protocol rewards. The canonical Rollup contract, as defined by the Registry, can draw from the implicit reward pool while any address can claim only funds explicitly earmarked to it.",
       "ignoreInWatchMode": ["totalEarmarkedBalance"],
-      "deployerAddress": "eth:0x85e51a78FE8FE21d881894206A9adbf54e3Df8c3",
-      "sinceTimestamp": 1762995047,
-      "sinceBlock": 23786827,
+      "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
+      "sinceTimestamp": 1782803327,
+      "sinceBlock": 25428902,
       "values": {
         "$immutable": true,
         "ASSET": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
-        "canonicalRollup": "eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962",
-        "REGISTRY": "eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298"
+        "canonicalRollup": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
+        "REGISTRY": "eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298",
+        "registryOwner": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
+        "totalEarmarkedBalance": 0
       },
       "fieldMeta": {
         "ASSET": {
@@ -365,64 +415,67 @@
         "canonicalRollup": {
           "description": "Current canonical rollup, which can claim from both the implicit reward pool and funds earmarked to it."
         },
+        "registryOwner": {
+          "description": "Current owner of the linked Registry, resolved by the RewardDistributor at call time."
+        },
         "totalEarmarkedBalance": {
           "description": "Total reward balance reserved for specific recipients rather than the canonical rollup's implicit pool."
         }
       },
       "implementationNames": {
-        "eth:0x3D6A1B00C830C5f278FC5dFb3f6Ff0b74Db6dfe0": "RewardDistributor"
+        "eth:0x555bAAc4757A89f1CE0c84fA35afE9dD7aa8E1d3": "RewardDistributor"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "eth:0x4355415548584943414c4c490000000000000000",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "Slasher",
-      "address": "eth:0x64E6e9Bb9f1E33D319578B9f8a9C719Ca6D46eBb",
+      "name": "SlashPayloadCloneable",
+      "address": "eth:0x57576AbA1932df7Cc30F971ACC9d4Fc6E86B6e87",
       "type": "Contract",
-      "template": "aztecnetwork/Slasher",
+      "template": "aztecnetwork/SlashPayloadCloneable",
       "sourceHashes": [
-        "0xb389fc4f97aaa4911b22a8cc60478f1216452f68747a3d0bd1305320a8f213a9"
+        "0x675553ce11773dc33f90165a629cf5899125e69c4272a3cf7b62b1cdcc0bc67b"
       ],
       "proxyType": "immutable",
-      "description": "The executor contract for penalties. It receives authorization to slash validator stakes, subject to an execution delay and a vetoer.",
-      "deployerAddress": "eth:0xA8aA9eb611709454601425CEc7B8C9B142781560",
-      "sinceTimestamp": 1772654159,
-      "sinceBlock": 24586322,
+      "description": "A template for specific slashing payload contracts deployed deterministically to encode one or more slashing actions (validators and amounts) that the Slasher executes.",
+      "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
+      "sinceTimestamp": 1782803327,
+      "sinceBlock": 25428902,
+      "values": { "$immutable": true, "getURI": "SlashPayload" },
+      "implementationNames": {
+        "eth:0x57576AbA1932df7Cc30F971ACC9d4Fc6E86B6e87": "SlashPayloadCloneable"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Outbox",
+      "address": "eth:0x5B062aB5fD3A66BC7e73b04CeD38587673b6A2D7",
+      "type": "Contract",
+      "template": "aztecnetwork/Outbox",
+      "sourceHashes": [
+        "0xb3356f91bb17eae75c12fb5a7c49d177731f883aceab995f62040b59867dbcce"
+      ],
+      "proxyType": "immutable",
+      "description": "Facilitates L2 to L1 communication. It stores the roots of L2 to L1 message trees per epoch, which are inserted by the Rollup contract. Users and portals can consume these messages on L1 by providing a Merkle proof against the stored root. A nullifier bitmap prevents double consumption.",
+      "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
+      "sinceTimestamp": 1782803327,
+      "sinceBlock": 25428902,
       "values": {
         "$immutable": true,
-        "GOVERNANCE": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
-        "isSlashingEnabled": true,
-        "PROPOSER": "eth:0xa4a38fD0108C00983E75616b638Ff3321FD26958",
-        "SLASHING_DISABLE_DURATION": 259200,
-        "SLASHING_DISABLE_DURATION_fmt": "3d",
-        "slashingDisabledUntil": 1776137255,
-        "VETOER": "eth:0xBbB4aF368d02827945748b28CD4b2D42e4A37480"
+        "ROLLUP": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
+        "VERSION": 4248422647
       },
       "fieldMeta": {
-        "PROPOSER": {
-          "description": "The slashing proposer allowed to execute accepted slash payloads."
+        "ROLLUP": {
+          "description": "The address of the core Rollup contract that possesses the permission to insert new L2 to L1 message tree roots."
         },
-        "VETOER": {
-          "description": "Address that can veto slash payloads or temporarily disable slashing."
-        },
-        "GOVERNANCE": {
-          "description": "Governance address with emergency authority to execute slash payloads directly."
-        },
-        "isSlashingEnabled": {
-          "description": "Whether slash payload execution is currently enabled."
-        },
-        "slashingDisabledUntil": {
-          "description": "Timestamp until which slash payload execution is disabled."
+        "VERSION": {
+          "description": "The identifier of the Aztec instance/version to prevent cross-instance replay attacks."
         }
       },
       "implementationNames": {
-        "eth:0x64E6e9Bb9f1E33D319578B9f8a9C719Ca6D46eBb": "Slasher"
+        "eth:0x5B062aB5fD3A66BC7e73b04CeD38587673b6A2D7": "Outbox"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "ProtocolTreasury",
@@ -438,7 +491,7 @@
         {
           "permission": "interact",
           "from": "eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6",
-          "description": "mint new AZTEC in the bounds of the minting caps",
+          "description": "mint new AZTEC within the annual cap, accept ownership of the AZTEC token when pending, and transfer or renounce CoinIssuer ownership.",
           "role": ".owner"
         }
       ],
@@ -461,6 +514,12 @@
         },
         "ATP_REGISTRY": {
           "description": "Registry controlling token unlocks for treasury-held AZTEC positions."
+        },
+        "GATED_UNTIL": {
+          "description": "Earliest timestamp at which the treasury relay gate can open. The additional ATP and proposal-ordering conditions still apply."
+        },
+        "getActivationTimestamp": {
+          "description": "ATP-derived cutoff timestamp. A Governance proposal relaying through the treasury must have been created after this cutoff."
         }
       },
       "implementationNames": {
@@ -469,23 +528,81 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "name": "HonkVerifier",
-      "address": "eth:0x70aEDda427f26480D240bc0f4308ceDec8d31348",
+      "name": "BaseStaker",
+      "address": "eth:0x79075C8E314Ab4A84d54F90b1c7032Dc5469082d",
       "type": "Contract",
-      "template": "aztecnetwork/HonkVerifier",
+      "template": "aztecnetwork/BaseStaker",
       "sourceHashes": [
-        "0x51de74b0f3bb93a136ac42d9ce84ea1064de040df73d36111378ddc0c1fb9508"
+        "0x75f7ca7807d6b1285ce54bfbfb61890b42309e8481aecaa288124d65f4969790"
       ],
       "proxyType": "immutable",
-      "description": "ZK proof verification contract.",
-      "deployerAddress": "eth:0xA8aA9eb611709454601425CEc7B8C9B142781560",
-      "sinceTimestamp": 1772654135,
-      "sinceBlock": 24586320,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x70aEDda427f26480D240bc0f4308ceDec8d31348": "HonkVerifier"
+      "description": "Implementation registered by the ATP Registry for upgradeable staker proxies that manage locked AZTEC positions.",
+      "deployerAddress": "eth:0xA8085a1e881c7c0F32ea69cf41A3C21b67ed5f1D",
+      "sinceTimestamp": 1756897955,
+      "sinceBlock": 23282209,
+      "values": {
+        "$immutable": true,
+        "getATP": "eth:0x000000000000000000000000000000000000dEaD",
+        "getImplementation": "eth:0x0000000000000000000000000000000000000000",
+        "proxiableUUID": "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "implementationNames": {
+        "eth:0x79075C8E314Ab4A84d54F90b1c7032Dc5469082d": "BaseStaker"
+      },
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "Inbox",
+      "address": "eth:0x7d4Ef0676c2032bbCC09227501D34d86641ab8cA",
+      "type": "Contract",
+      "template": "aztecnetwork/Inbox",
+      "sourceHashes": [
+        "0x5d6007913833accd5df70ab805f311a9155df0e3976a83b5ffd5f5a9d026c19b"
+      ],
+      "proxyType": "immutable",
+      "description": "Facilitates canonical L1 to L2 communication. It accepts messages (including fee asset deposits) from L1, accumulates them in an append-only frontier tree per checkpoint, and forces the Sequencers and the Rollup contract to sequentially consume the roots of these message trees, ensuring message inclusion.",
+      "ignoreInWatchMode": [
+        "getInProgress",
+        "getState",
+        "getTotalMessagesInserted"
+      ],
+      "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
+      "sinceTimestamp": 1782803327,
+      "sinceBlock": 25428902,
+      "values": {
+        "$immutable": true,
+        "FEE_ASSET_PORTAL": "eth:0xaf73Dd51D1eb8a079BB097f39c832cDD00ac691c",
+        "getFeeAssetPortal": "eth:0xaf73Dd51D1eb8a079BB097f39c832cDD00ac691c",
+        "getInProgress": 6877,
+        "getState": {
+          "rollingHash": "0xf22e16a8f5d7357e0ef2ef2acaede2c2",
+          "totalMessagesInserted": 57,
+          "inProgress": 6877
+        },
+        "getTotalMessagesInserted": 57,
+        "LAG": 2,
+        "ROLLUP": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
+        "VERSION": 4248422647
+      },
+      "fieldMeta": {
+        "FEE_ASSET_PORTAL": {
+          "description": "The FeeJuicePortal contract used for bridging fee assets to the L2. Messages from this portal are inserted with the canonical fee-asset L2 sender."
+        },
+        "LAG": {
+          "description": "The delay (in checkpoints) before L1 to L2 messages can be consumed by the sequencer."
+        },
+        "ROLLUP": {
+          "description": "The address of the core Rollup contract that possesses the permission to consume the message trees."
+        },
+        "VERSION": {
+          "description": "The identifier of the Aztec instance/version to prevent cross-instance message replay."
+        }
+      },
+      "implementationNames": {
+        "eth:0x7d4Ef0676c2032bbCC09227501D34d86641ab8cA": "Inbox"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "address": "eth:0x7EAbE4F636B937628A7Fe503bD7F06772C047FEe",
@@ -503,19 +620,818 @@
       "proxyType": "EOA"
     },
     {
+      "name": "SlashingProposer",
+      "address": "eth:0x8A36b8F2Ca71D8d8Bd98e03Ebf8B4D0939Daf0bA",
+      "type": "Contract",
+      "template": "aztecnetwork/SlashingProposer",
+      "sourceHashes": [
+        "0x26871597dcda5a57814fdb184bd837f661973ceff7819b4b5653cb75c12a18ff"
+      ],
+      "proxyType": "immutable",
+      "description": "Collects one signed slashing ballot from the designated proposer in each slot. After the execution delay, anyone can tally the ballots per validator and penalty level, deploy the resulting payload, and ask the Slasher to execute it before the round expires.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
+          "description": "slash and eject validators while this contract is configured as the active Slasher.",
+          "role": ".getSlasher",
+          "condition": "the active Slasher authorizes the call under its own execution rules.",
+          "via": [
+            {
+              "address": "eth:0xCD6855470A01aBcd989126A1183Fb50673952548",
+              "condition": "matching ballots meet the proposer quorum, the execution delay has elapsed, the voting round is still within its lifetime, slashing is enabled, and the payload has not been vetoed."
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xCD6855470A01aBcd989126A1183Fb50673952548",
+          "description": "execute payload actions accepted by its validator-ballot tally after the proposer-enforced delay.",
+          "role": ".PROPOSER",
+          "condition": "matching ballots meet the proposer quorum, the execution delay has elapsed, the voting round is still within its lifetime, slashing is enabled, and the payload has not been vetoed."
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xCD6855470A01aBcd989126A1183Fb50673952548",
+          "description": "execute payload actions produced from validator ballots, including validator slashes.",
+          "role": ".PROPOSER",
+          "condition": "matching ballots meet the proposer quorum, the execution delay has elapsed, the voting round is still within its lifetime, slashing is enabled, and the payload has not been vetoed."
+        }
+      ],
+      "ignoreInWatchMode": ["getCurrentRound"],
+      "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
+      "sinceTimestamp": 1782803327,
+      "sinceBlock": 25428902,
+      "values": {
+        "$immutable": true,
+        "COMMITTEE_SIZE": 48,
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "SlashingProposer",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0x8A36b8F2Ca71D8d8Bd98e03Ebf8B4D0939Daf0bA",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "EXECUTION_DELAY_IN_ROUNDS": 28,
+        "getCurrentRound": 197,
+        "INSTANCE": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
+        "LIFETIME_IN_ROUNDS": 34,
+        "MAX_ROUND_SIZE": 1024,
+        "QUORUM": 65,
+        "ROUND_SIZE": 128,
+        "ROUND_SIZE_IN_EPOCHS": 4,
+        "ROUNDABOUT_SIZE": 128,
+        "SLASH_AMOUNT_LARGE": "5000000000000000000000",
+        "SLASH_AMOUNT_MEDIUM": "5000000000000000000000",
+        "SLASH_AMOUNT_SMALL": "2000000000000000000000",
+        "SLASH_OFFSET_IN_ROUNDS": 2,
+        "SLASH_PAYLOAD_IMPLEMENTATION": "eth:0x57576AbA1932df7Cc30F971ACC9d4Fc6E86B6e87",
+        "SLASHER": "eth:0xCD6855470A01aBcd989126A1183Fb50673952548",
+        "VOTE_TYPEHASH": "0x18b6b90f234e6d028d4c9800043cedef34624eedddd14e60eba01934728014fe"
+      },
+      "fieldMeta": {
+        "INSTANCE": {
+          "description": "Rollup instance whose validator committees vote through this proposer."
+        },
+        "SLASHER": {
+          "description": "Slasher that executes accepted payloads from this proposer."
+        },
+        "SLASH_PAYLOAD_IMPLEMENTATION": {
+          "description": "Cloneable payload implementation used to deploy concrete slashing payloads."
+        },
+        "COMMITTEE_SIZE": {
+          "description": "Number of validators expected in each committee."
+        },
+        "QUORUM": {
+          "description": "Minimum number of matching ballots required for a specific validator and penalty level. Votes for a higher penalty also count toward lower penalty levels."
+        },
+        "ROUND_SIZE": {
+          "description": "Number of slots in a slashing voting round."
+        },
+        "ROUND_SIZE_IN_EPOCHS": {
+          "description": "Number of epochs covered by a slashing voting round."
+        },
+        "EXECUTION_DELAY_IN_ROUNDS": {
+          "description": "Number of rounds that must pass before an accepted slashing round can be executed."
+        },
+        "LIFETIME_IN_ROUNDS": {
+          "description": "Maximum age of a voting round that can still be tallied and executed."
+        },
+        "SLASH_OFFSET_IN_ROUNDS": {
+          "description": "Number of rounds between a voting round and the earlier committee epochs targeted by its ballots."
+        },
+        "ROUNDABOUT_SIZE": {
+          "description": "Number of round slots retained in the circular storage buffer."
+        },
+        "MAX_ROUND_SIZE": {
+          "description": "Maximum supported number of ballots in one voting round."
+        },
+        "SLASH_AMOUNT_SMALL": {
+          "description": "Small slash amount applied per voted slash unit."
+        },
+        "SLASH_AMOUNT_MEDIUM": {
+          "description": "Medium slash amount applied per voted slash unit."
+        },
+        "SLASH_AMOUNT_LARGE": {
+          "description": "Large slash amount applied per voted slash unit."
+        }
+      },
+      "implementationNames": {
+        "eth:0x8A36b8F2Ca71D8d8Bd98e03Ebf8B4D0939Daf0bA": "SlashingProposer"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Rollup",
+      "address": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
+      "type": "Contract",
+      "template": "aztecnetwork/Rollup",
+      "sourceHashes": [
+        "0xa150a0954b457e9c8594701d6b693bfd6f82e5ae7ba92810be900dc69d54b844"
+      ],
+      "proxyType": "immutable",
+      "description": "Core rollup logic contract. It processes checkpoint proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x4490cAb7Ce3499353E1b0090b9e530c1AD03B551",
+          "description": "update prover activity scores used to calculate boosted prover reward shares.",
+          "role": ".ROLLUP"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x555bAAc4757A89f1CE0c84fA35afE9dD7aa8E1d3",
+          "description": "claim protocol reward funds and direct them to sequencers and provers.",
+          "role": ".canonicalRollup"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5B062aB5fD3A66BC7e73b04CeD38587673b6A2D7",
+          "description": "insert L2 to L1 message roots that recipients later prove against to consume withdrawals or messages.",
+          "role": ".ROLLUP"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7d4Ef0676c2032bbCC09227501D34d86641ab8cA",
+          "description": "consume L1 to L2 message tree roots for checkpoint processing.",
+          "role": ".ROLLUP"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
+          "description": "deposit and withdraw validator stake for its own GSE instance and, while it is the latest Rollup, for the bonus instance; cast all available own-instance and applicable bonus-instance power as yea on qualifying sequencer-signalled proposals.",
+          "role": ".getLatestRollup"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xaf73Dd51D1eb8a079BB097f39c832cDD00ac691c",
+          "description": "distribute fee-asset funds escrowed in the portal to sequencers and provers.",
+          "role": ".ROLLUP"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xF459348962F5eA3A9A101826B03A2CE1F459E51A",
+          "description": "record submitted archives for designated escape-hatch proposers, which are later used to validate or slash them.",
+          "role": ".getRollup"
+        }
+      ],
+      "ignoreInWatchMode": [
+        "archive",
+        "getActiveAttesterCount",
+        "getAvailableValidatorFlushes",
+        "getCurrentBlobCommitmentsHash",
+        "getCurrentEpoch",
+        "getCurrentSampleSeed",
+        "getCurrentSlot",
+        "getEntryQueueFlushSize",
+        "getEntryQueueLength",
+        "getEthPerFeeAsset",
+        "getNextFlushableEpoch",
+        "getPendingCheckpointNumber",
+        "getProvenCheckpointNumber",
+        "getTips",
+        "getProvingCostPerManaInFeeAsset"
+      ],
+      "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
+      "sinceTimestamp": 1782803327,
+      "sinceBlock": 25428902,
+      "values": {
+        "$immutable": true,
+        "archive": "0x1c456aad149513d2dbeef1e09746617c92151faad54e9bdf865d18fed9f5eaeb",
+        "checkBlob": true,
+        "constructorArgs": {
+          "_feeAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
+          "_stakingAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
+          "_gse": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
+          "_epochProofVerifier": "eth:0x098f47c00F4df22a8030746Eb11378236C24b4bC",
+          "_governance": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
+          "_genesisState": {
+            "vkTreeRoot": "0x2b3b6ea4412b9c8f6457a37f91a2870306f8641e07e16a49b68bda6f8bc02892",
+            "protocolContractsHash": "0x2c075866eafc88a1f6f9addc7e337c6e64e45d1cb7fd7c0d612ebcec72aab2ca",
+            "genesisArchiveRoot": "0x177a4955b31ecaafad999753938a44e526b54c5ba5d536688227f85f15cfbdf5"
+          },
+          "_config": {
+            "aztecSlotDuration": "72",
+            "aztecEpochDuration": "32",
+            "targetCommitteeSize": "48",
+            "lagInEpochsForValidatorSet": "2",
+            "lagInEpochsForRandao": "1",
+            "aztecProofSubmissionEpochs": "1",
+            "slashingQuorum": "65",
+            "slashingRoundSize": "128",
+            "slashingLifetimeInRounds": "34",
+            "slashingExecutionDelayInRounds": "28",
+            "slashAmounts": [
+              "2000000000000000000000",
+              "5000000000000000000000",
+              "5000000000000000000000"
+            ],
+            "slashingOffsetInRounds": "2",
+            "slasherEnabled": true,
+            "slashingVetoer": "eth:0xBbB4aF368d02827945748b28CD4b2D42e4A37480",
+            "slashingDisableDuration": "259200",
+            "manaTarget": "75000000",
+            "exitDelaySeconds": "345600",
+            "version": 4248422647,
+            "provingCostPerMana": "12500000",
+            "initialEthPerFeeAsset": "9512195",
+            "rewardConfig": {
+              "rewardDistributor": "eth:0x555bAAc4757A89f1CE0c84fA35afE9dD7aa8E1d3",
+              "sequencerBps": 7000,
+              "booster": "eth:0x0000000000000000000000000000000000000000",
+              "checkpointReward": "500000000000000000000"
+            },
+            "rewardBoostConfig": {
+              "increment": 101400,
+              "maxScore": 367500,
+              "a": 250000,
+              "minimum": 10000,
+              "k": 1000000
+            },
+            "stakingQueueConfig": {
+              "bootstrapValidatorSetSize": "500",
+              "bootstrapFlushSize": "4",
+              "normalFlushSizeMin": "1",
+              "normalFlushSizeQuotient": "400",
+              "maxQueueFlushSize": "4"
+            },
+            "localEjectionThreshold": "190000000000000000000000",
+            "inboxLag": "2"
+          }
+        },
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "Aztec Rollup",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "getActivationThreshold": "200000000000000000000000",
+        "getActiveAttesterCount": 3451,
+        "getAvailableValidatorFlushes": 4,
+        "getBurnAddress": "eth:0x4355415548584943414c4c490000000000000000",
+        "getCheckpointReward": "500000000000000000000",
+        "getCurrentBlobCommitmentsHash": "0x00783bcb248744a874435205803c35752c369e9c243b5e9d9285de21d3b92e5e",
+        "getCurrentEpoch": 790,
+        "getCurrentSampleSeed": "91012152199964877581550143285158283780259672145423607747699350958248020295641",
+        "getCurrentSlot": 25283,
+        "getEjectionThreshold": "100000000000000000000000",
+        "getEntryQueueFlushSize": 4,
+        "getEntryQueueLength": 0,
+        "getEpochDuration": 32,
+        "getEpochProofVerifier": "eth:0x098f47c00F4df22a8030746Eb11378236C24b4bC",
+        "getEscapeHatch": "eth:0xF459348962F5eA3A9A101826B03A2CE1F459E51A",
+        "getEthPerFeeAsset": 7583891,
+        "getExitDelay": 345600,
+        "getFeeAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
+        "getFeeAssetPortal": "eth:0xaf73Dd51D1eb8a079BB097f39c832cDD00ac691c",
+        "getGenesisTime": 1782803327,
+        "getGSE": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
+        "getInbox": "eth:0x7d4Ef0676c2032bbCC09227501D34d86641ab8cA",
+        "getIsBootstrapped": true,
+        "getLagInEpochsForRandao": 1,
+        "getLagInEpochsForValidatorSet": 2,
+        "getLegacySlasher": {
+          "slasher": "eth:0x0000000000000000000000000000000000000000",
+          "authorizedUntil": 0
+        },
+        "getLegacySlasherDrainWindow": 2592000,
+        "getLocalEjectionThreshold": "190000000000000000000000",
+        "getManaLimit": 150000000,
+        "getManaTarget": 75000000,
+        "getNextFlushableEpoch": 774,
+        "getOutbox": "eth:0x5B062aB5fD3A66BC7e73b04CeD38587673b6A2D7",
+        "getPendingCheckpointNumber": 6874,
+        "getPendingSlasher": {
+          "slasher": "eth:0x0000000000000000000000000000000000000000",
+          "readyAt": 0
+        },
+        "getProofSubmissionEpochs": 1,
+        "getProtocolContractsHash": "0x2c075866eafc88a1f6f9addc7e337c6e64e45d1cb7fd7c0d612ebcec72aab2ca",
+        "getProvenCheckpointNumber": 6870,
+        "getProvingCostPerManaInEth": 12500000,
+        "getProvingCostPerManaInFeeAsset": 1648230440021,
+        "getRewardBooster": "eth:0x4490cAb7Ce3499353E1b0090b9e530c1AD03B551",
+        "getRewardConfig": {
+          "rewardDistributor": "eth:0x555bAAc4757A89f1CE0c84fA35afE9dD7aa8E1d3",
+          "sequencerBps": 7000,
+          "booster": "eth:0x4490cAb7Ce3499353E1b0090b9e530c1AD03B551",
+          "checkpointReward": "500000000000000000000"
+        },
+        "getRewardDistributor": "eth:0x555bAAc4757A89f1CE0c84fA35afE9dD7aa8E1d3",
+        "getSlasher": "eth:0xCD6855470A01aBcd989126A1183Fb50673952548",
+        "getSlasherExecutionDelay": 5184000,
+        "getSlotDuration": 72,
+        "getStakingAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
+        "getTargetCommitteeSize": 48,
+        "getTips": { "pending": 6874, "proven": 6870 },
+        "getVersion": 4248422647,
+        "getVkTreeRoot": "0x2b3b6ea4412b9c8f6457a37f91a2870306f8641e07e16a49b68bda6f8bc02892",
+        "L1_BLOCK_AT_GENESIS": 25428902,
+        "linkedLibraries": [
+          "eth:0x516f010C9AB452d70E0c6f78b9E698249a66d2AC",
+          "eth:0xD6E890c615d6f99681a00771C20ed04516288898",
+          "eth:0xe4F0b9769Ca04a6E3d93b5BA732b5aD80797D411"
+        ],
+        "owner": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e"
+      },
+      "fieldMeta": {
+        "owner": {
+          "description": "Owner authorized to change the bounded mutable configuration of this rollup instance."
+        },
+        "getManaLimit": {
+          "description": "Maximum mana that a checkpoint can consume. It is derived from the current mana target."
+        },
+        "latestStakingQueueConfigUpdate": {
+          "severity": "HIGH",
+          "description": "Latest owner-set validator entry-queue configuration. If absent, the deployment configuration in constructorArgs is still in effect."
+        },
+        "getEntryQueueFlushSize": {
+          "description": "Current maximum number of queued sequencers that can be moved into the active validator set during this epoch."
+        },
+        "getEscapeHatch": {
+          "description": "One-time installed fallback proposal contract used if the committee stalls. The Rollup only accepts a nonzero contract that reports this Rollup as its target."
+        },
+        "getEpochProofVerifier": {
+          "description": "The verifier contract used for epoch proof verification."
+        },
+        "getFeeAsset": {
+          "description": "The ERC20 token used to pay L2 fees."
+        },
+        "getFeeAssetPortal": {
+          "description": "The L1 portal escrowing the fee asset for deposits and fee payouts."
+        },
+        "getGSE": {
+          "description": "The global staking escrow used by this rollup."
+        },
+        "getInbox": {
+          "description": "The canonical L1 to L2 message inbox for this rollup version."
+        },
+        "getOutbox": {
+          "description": "The canonical L2 to L1 message outbox for this rollup version."
+        },
+        "getRewardBooster": {
+          "description": "The reward booster used to calculate prover reward shares."
+        },
+        "getRewardConfig": {
+          "description": "Reward distribution parameters. The distributor and booster are fixed at deployment, while the owner can change the sequencer share and checkpoint reward."
+        },
+        "getRewardDistributor": {
+          "description": "Reward distributor used by this rollup."
+        },
+        "getSlasher": {
+          "description": "Active Slasher authorized by this rollup."
+        },
+        "getPendingSlasher": {
+          "severity": "HIGH",
+          "description": "Queued replacement Slasher and the timestamp at which anyone can finalize the replacement."
+        },
+        "getLegacySlasher": {
+          "description": "Outgoing Slasher and the timestamp until which it remains authorized after replacement."
+        },
+        "getSlasherExecutionDelay": {
+          "description": "Deployment-fixed 60-day delay between queueing and finalizing a Slasher replacement."
+        },
+        "getLegacySlasherDrainWindow": {
+          "description": "Deployment-fixed 30-day period after replacement during which the outgoing Slasher remains authorized."
+        },
+        "getStakingAsset": {
+          "description": "The ERC20 token staked by validators."
+        },
+        "getCheckpointReward": {
+          "description": "The amount of reward tokens distributed per proven checkpoint."
+        },
+        "getLagInEpochsForValidatorSet": {
+          "description": "The delay in epochs for the validator set selection to become active, preventing rapid targeted restructuring."
+        },
+        "getLagInEpochsForRandao": {
+          "description": "The delay in epochs for the RANDAO seed to be applied to validator selection to prevent manipulation."
+        },
+        "constructorArgs": {
+          "description": "Full deployment configuration including slashing, fee, reward, and staking queue parameters."
+        },
+        "getManaTarget": {
+          "description": "Target mana per checkpoint. The owner can only increase this value, not decrease it."
+        },
+        "getLocalEjectionThreshold": {
+          "description": "Deployment-fixed local stake threshold. A slash that would leave a validator below it ejects the validator and withdraws its full effective stake from the GSE."
+        },
+        "getActivationThreshold": {
+          "description": "Stake needed to join as a sequencer."
+        },
+        "getExitDelay": {
+          "description": "Delay between a validator initiating an exit and its stake becoming withdrawable."
+        },
+        "linkedLibraries": {
+          "description": "Runtime libraries immutably linked into this Rollup deployment."
+        }
+      },
+      "implementationNames": {
+        "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34": "Rollup"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0x92Ba0FD39658105FaC4dF2B9BADE998B5816b350",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80",
+          "description": "add and resolve milestones, register staker implementations, set revoker roles, only decrease the execution and token unlock timestamps, and transfer or renounce ownership.",
+          "role": ".owner"
+        }
+      ]
+    },
+    {
+      "name": "AZTEC Token",
+      "address": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
+      "type": "Contract",
+      "template": "aztecnetwork/Aztec",
+      "sourceHashes": [
+        "0x6018c4d73b9151449ab94fa44cb69a1f9d6eaa71dbf36cbf9f262a54b77e20da"
+      ],
+      "proxyType": "immutable",
+      "description": "AZTEC token contract",
+      "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "eth:0xCbE23F4EBd9150e3A9d3A80442d145FAD624751d",
+      "sinceTimestamp": 1751359739,
+      "sinceBlock": 22823299,
+      "values": {
+        "$immutable": true,
+        "decimals": 18,
+        "DOMAIN_SEPARATOR": "0xa70675fc933c476d0f385b5af801a04433e3d6c4305bc61f5b1e45bc92773525",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "AZTEC",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "name": "AZTEC",
+        "owner": "eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "symbol": "AZTEC",
+        "totalSupply": "10350000000000000000000000000"
+      },
+      "fieldMeta": {
+        "owner": { "description": "Owner of the AZTEC token." },
+        "pendingOwner": {
+          "description": "Address nominated to become the AZTEC token owner."
+        }
+      },
+      "implementationNames": {
+        "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2": "Aztec"
+      },
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "GSE",
+      "address": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
+      "type": "Contract",
+      "template": "aztecnetwork/GSE",
+      "sourceHashes": [
+        "0x25ba11bed3e4573e049efd5cea98a8d47ccd23a404f2777f5cd2c6d101b1eb4f"
+      ],
+      "proxyType": "immutable",
+      "description": "Central staking manager independent of Rollup implementations. Sequencers deposit stake here through their chosen Rollup contract. Their stake is then transferred to the Governance contract and activated for voting. The GSE tracks which rollup instance validators are securing, and gives them an option to automatically move to the latest Rollup version.",
+      "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "eth:0x85e51a78FE8FE21d881894206A9adbf54e3Df8c3",
+      "sinceTimestamp": 1762995035,
+      "sinceBlock": 23786826,
+      "values": {
+        "$immutable": true,
+        "ACTIVATION_THRESHOLD": "200000000000000000000000",
+        "ASSET": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
+        "BONUS_INSTANCE_ADDRESS": "eth:0x9064Fb41156D300196d5Eb95E0B3c1f08eBc39a8",
+        "EJECTION_THRESHOLD": "100000000000000000000000",
+        "getBonusInstanceAddress": "eth:0x9064Fb41156D300196d5Eb95E0B3c1f08eBc39a8",
+        "getGovernance": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
+        "getLatestRollup": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
+        "owner": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
+        "proofOfPossessionGasLimit": 250000,
+        "totalSupply": "688802000000000000000000000"
+      },
+      "fieldMeta": {
+        "ASSET": {
+          "description": "ERC20 token staked by validators and used for governance voting power."
+        },
+        "getGovernance": {
+          "description": "One-time configured contract receiving voting power from staked validators."
+        },
+        "getLatestRollup": {
+          "description": "Latest rollup registered in the GSE. Validators assigned to the bonus instance follow this address."
+        },
+        "owner": { "description": "Owner of the GSE." }
+      },
+      "implementationNames": {
+        "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f": "GSE"
+      },
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "FeeJuicePortal",
+      "address": "eth:0xaf73Dd51D1eb8a079BB097f39c832cDD00ac691c",
+      "type": "Contract",
+      "template": "aztecnetwork/FeeJuicePortal",
+      "sourceHashes": [
+        "0x5f3748714c9334f8e282209a459470fc66e65bf29e0044b63e84d0349bd2b113"
+      ],
+      "proxyType": "immutable",
+      "description": "One-way gas bridge: Escrows the fee asset (AZTEC) used to pay for L2 mana (gas). Users deposit tokens here, which are minted on L2 via the Inbox. The Rollup contract holds exclusive rights to withdraw tokens from this portal to distribute them as rewards to L1 sequencers and provers. Apart from that, this escrow does NOT afford a way to withdraw tokens.",
+      "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
+      "sinceTimestamp": 1782803327,
+      "sinceBlock": 25428902,
+      "values": {
+        "$immutable": true,
+        "INBOX": "eth:0x7d4Ef0676c2032bbCC09227501D34d86641ab8cA",
+        "L2_TOKEN_ADDRESS": "0x0000000000000000000000000000000000000000000000000000000000000003",
+        "ROLLUP": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
+        "UNDERLYING": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
+        "VERSION": 4248422647
+      },
+      "fieldMeta": {
+        "UNDERLYING": {
+          "description": "The L1 ERC20 token serving as the native fee asset for the Aztec network."
+        },
+        "ROLLUP": {
+          "description": "The core Rollup contract, possessing exclusive permission to call distributeFees and pay out sequencers and provers."
+        },
+        "INBOX": {
+          "description": "The Inbox contract used to relay user deposit messages to the L2."
+        },
+        "L2_TOKEN_ADDRESS": {
+          "description": "The hardcoded canonical address of the fee asset on the L2."
+        },
+        "VERSION": {
+          "description": "The identifier of the Aztec instance/version to ensure deposits are routed to the correct chain."
+        }
+      },
+      "implementationNames": {
+        "eth:0xaf73Dd51D1eb8a079BB097f39c832cDD00ac691c": "FeeJuicePortal"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "eth:0xB216FcaF63c6C0f73a557B342e1Da9710C95DA81",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xb33a08eF4624eE8F409F749Ee73766E225bEd0F4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xb6Da7B7a0d8c7349630183f4Bd6F13D4a8AD9216",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "SlashVeto Council",
+      "address": "eth:0xBbB4aF368d02827945748b28CD4b2D42e4A37480",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xCD6855470A01aBcd989126A1183Fb50673952548",
+          "description": "veto specific payloads, repeatedly disable all slashing for 3d at a time, or re-enable slashing before a pause expires.",
+          "role": ".VETOER"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x7EAbE4F636B937628A7Fe503bD7F06772C047FEe",
+      "sinceTimestamp": 1762176359,
+      "sinceBlock": 23719087,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "eth:0xb33a08eF4624eE8F409F749Ee73766E225bEd0F4",
+          "eth:0xb6Da7B7a0d8c7349630183f4Bd6F13D4a8AD9216",
+          "eth:0xB216FcaF63c6C0f73a557B342e1Da9710C95DA81",
+          "eth:0x81062F03742B88923eaB121243B69D0a0092089e",
+          "eth:0x32e90E88bb2E6Ee4382e6884cC5c299a6bA27920",
+          "eth:0x23d4A9533627eA70915026638ff5989a967Be667",
+          "eth:0x8138c46A572D989E54837d5e5dEB506889edFb5D",
+          "eth:0x0Fb6215099f48D723CfB89434C2cb887357Bc871",
+          "eth:0x7EAbE4F636B937628A7Fe503bD7F06772C047FEe"
+        ],
+        "$threshold": 5,
+        "domainSeparator": "0x0ac0f33017c635adbf51e5320e2bb322a70446b7bc0ec2080bc5752ae7286b82",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "5 of 9 (56%)",
+        "nonce": 5,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "eth:0xBbB4aF368d02827945748b28CD4b2D42e4A37480": "SafeProxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      },
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "Slasher",
+      "address": "eth:0xCD6855470A01aBcd989126A1183Fb50673952548",
+      "type": "Contract",
+      "template": "aztecnetwork/Slasher",
+      "sourceHashes": [
+        "0xb389fc4f97aaa4911b22a8cc60478f1216452f68747a3d0bd1305320a8f213a9"
+      ],
+      "proxyType": "immutable",
+      "description": "Executes payload actions submitted by the authorized slashing proposer or Governance. Execution is blocked while slashing is disabled or when the vetoer has vetoed the payload; voting and execution-delay rules are enforced by the proposer, while Governance can bypass the proposer.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
+          "description": "slash and eject validators while this contract is configured as the active Slasher.",
+          "role": ".getSlasher",
+          "condition": "the active Slasher authorizes the call under its own execution rules."
+        }
+      ],
+      "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
+      "sinceTimestamp": 1782803327,
+      "sinceBlock": 25428902,
+      "values": {
+        "$immutable": true,
+        "GOVERNANCE": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
+        "isSlashingEnabled": false,
+        "PROPOSER": "eth:0x8A36b8F2Ca71D8d8Bd98e03Ebf8B4D0939Daf0bA",
+        "SLASHING_DISABLE_DURATION": 259200,
+        "SLASHING_DISABLE_DURATION_fmt": "3d",
+        "slashingDisabledUntil": 1784800907,
+        "VETOER": "eth:0xBbB4aF368d02827945748b28CD4b2D42e4A37480"
+      },
+      "fieldMeta": {
+        "PROPOSER": {
+          "description": "The slashing proposer allowed to execute accepted slash payloads."
+        },
+        "VETOER": {
+          "description": "Address that can veto slash payloads or temporarily disable slashing."
+        },
+        "GOVERNANCE": {
+          "description": "Governance address allowed to execute slash payloads directly."
+        },
+        "isSlashingEnabled": {
+          "description": "Whether slash payload execution is currently enabled."
+        },
+        "slashingDisabledUntil": {
+          "description": "Timestamp until which slash payload execution is disabled."
+        }
+      },
+      "implementationNames": {
+        "eth:0xCD6855470A01aBcd989126A1183Fb50673952548": "Slasher"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "RewardExtLib",
+      "address": "eth:0xD6E890c615d6f99681a00771C20ed04516288898",
+      "type": "Contract",
+      "template": "aztecnetwork/RewardExtLib",
+      "sourceHashes": [
+        "0x6a07ad9524a29f0c193ab7a712c898133134cea16d7c866fe5f55a642f7820e5"
+      ],
+      "proxyType": "immutable",
+      "description": "Library immutably linked into the Rollup for sequencer and prover reward accounting. Its functions operate on the calling Rollup's storage through DELEGATECALL, so direct getter calls on the library are ignored.",
+      "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
+      "sinceTimestamp": 1782803327,
+      "sinceBlock": 25428902,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xD6E890c615d6f99681a00771C20ed04516288898": "RewardExtLib"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "AztecTokenPositionRegistry_ProtocolTreasury",
+      "address": "eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80",
+      "type": "Contract",
+      "template": "aztecnetwork/AztecTokenPositionRegistry",
+      "sourceHashes": [
+        "0x6b4881b4d3b0b5aaa49b8a1e3784bd49053169584e8b661678a44b65a5b15db1"
+      ],
+      "proxyType": "immutable",
+      "description": "AZTEC token-position Registry referenced by the ProtocolTreasury for its activation cutoff and by other ecosystem vesting contracts.",
+      "deployerAddress": "eth:0xA8085a1e881c7c0F32ea69cf41A3C21b67ed5f1D",
+      "sinceTimestamp": 1756897955,
+      "sinceBlock": 23282209,
+      "values": {
+        "$immutable": true,
+        "getExecuteAllowedAt": 1794546000,
+        "getGlobalLockParams": {
+          "startTime": 1794546000,
+          "cliffDuration": 0,
+          "lockDuration": 63072000
+        },
+        "getNextMilestoneId": 3,
+        "getNextStakerVersion": 1,
+        "getRevoker": "eth:0x92Ba0FD39658105FaC4dF2B9BADE998B5816b350",
+        "getRevokerOperator": "eth:0x0000000000000000000000000000000000000000",
+        "getStakerImplementation": [
+          "eth:0x79075C8E314Ab4A84d54F90b1c7032Dc5469082d"
+        ],
+        "getUnlockStartTime": 1794546000,
+        "owner": "eth:0x92Ba0FD39658105FaC4dF2B9BADE998B5816b350",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "fieldMeta": {
+        "owner": { "description": "Owner of the ATP Registry." },
+        "pendingOwner": {
+          "description": "Address nominated to become the ATP Registry owner."
+        },
+        "getUnlockStartTime": {
+          "severity": "HIGH",
+          "description": "Start of the global AZTEC unlock schedule. The owner can only move it earlier."
+        },
+        "getExecuteAllowedAt": {
+          "severity": "HIGH",
+          "description": "Base execution-eligibility timestamp used by contracts that reference this Registry. The owner can only move it earlier."
+        },
+        "getStakerImplementation": {
+          "description": "Registered upgradeable staker implementations by version. Implementations only need to expose the required UUPS compatibility identifier."
+        },
+        "getRevoker": {
+          "description": "Address used by ATP positions as the revocation authority."
+        },
+        "getRevokerOperator": {
+          "description": "Optional operator allowed to perform revocation-related actions on behalf of the revoker."
+        }
+      },
+      "implementationNames": {
+        "eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80": "Registry"
+      },
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "ValidatorOperationsExtLib",
+      "address": "eth:0xe4F0b9769Ca04a6E3d93b5BA732b5aD80797D411",
+      "type": "Contract",
+      "template": "aztecnetwork/ValidatorOperationsExtLib",
+      "sourceHashes": [
+        "0xc88df74ecd70e3c5acf5a861fec985c5640899bc17d3d2a0d18cbfa9f9c94089"
+      ],
+      "proxyType": "immutable",
+      "description": "Library immutably linked into the Rollup for validator entry, exits, slashing, and Slasher rotation. Its functions operate on the calling Rollup's storage through DELEGATECALL, so direct getter calls on the library are ignored.",
+      "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
+      "sinceTimestamp": 1782803327,
+      "sinceBlock": 25428902,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xe4F0b9769Ca04a6E3d93b5BA732b5aD80797D411": "ValidatorOperationsExtLib"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
       "name": "EscapeHatch",
-      "address": "eth:0x8c189ead28D5987A48e522162f9225124D50AD1B",
+      "address": "eth:0xF459348962F5eA3A9A101826B03A2CE1F459E51A",
       "type": "Contract",
       "template": "aztecnetwork/EscapeHatch",
       "sourceHashes": [
-        "0x8be1af559fa2783895bf1e8e6bbd342a1a2647155053612e621b15ddcc65e015"
+        "0x8c321c556b08797474b0cbe91d7f1ce367ef3f7eb0c653221a21fc3af9cd6392"
       ],
       "proxyType": "immutable",
-      "description": "Provides a fallback mechanism for block production if the primary sequencer committee fails or censors. The committee is circumvented by allowing proposals by anyone who is able to post a large bond of 332,000,000 AZTEC. It maintains a set of bonded candidates and deterministically selects a designated proposer for a given 'hatch' period using RANDAO. If the designated proposer fails to propose and prove, their bond is slashed by 9,600,000 AZTEC. The minimum tax deducted from their bond is 1,660,000 AZTEC, even if the proposal is successful. The escape hatch regularly opens every 112 epochs, given there are any bonded candidates.",
+      "description": "Provides a fallback mechanism for block production if the primary sequencer committee fails or censors. Candidates post a bond of 332,000,000 AZTEC and enter the candidate set. For each hatch, the contract snapshots the eligible set and uses RANDAO to select one designated proposer; posting a bond does not grant immediate proposal rights. If the designated proposer fails to propose and prove, their bond is slashed by 9,600,000 AZTEC. The minimum tax deducted from their bond is 1,660,000 AZTEC, even if the proposal is successful. The escape hatch regularly opens every 112 epochs, given there are any eligible bonded candidates.",
       "ignoreInWatchMode": ["getCurrentHatch"],
-      "deployerAddress": "eth:0xA8aA9eb611709454601425CEc7B8C9B142781560",
-      "sinceTimestamp": 1772654171,
-      "sinceBlock": 24586323,
+      "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
+      "sinceTimestamp": 1782803327,
+      "sinceBlock": 25428902,
       "values": {
         "$immutable": true,
         "getActiveDuration": 2,
@@ -523,13 +1439,13 @@
         "getBondSizeFmt": "332,000,000",
         "getBondToken": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
         "getCandidateCount": 0,
-        "getCurrentHatch": 42,
+        "getCurrentHatch": 7,
         "getFailedHatchPunishment": "9600000000000000000000000",
         "getFailedHatchPunishmentFmt": "9,600,000",
         "getFrequency": 112,
         "getLagInHatches": 1,
         "getProposingExitDelay": 2592000,
-        "getRollup": "eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962",
+        "getRollup": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
         "getWithdrawalTax": "1660000000000000000000000",
         "getWithdrawalTaxFmt": "1,660,000",
         "LAG_IN_EPOCHS_FOR_RANDAO": 1,
@@ -575,671 +1491,10 @@
         }
       },
       "implementationNames": {
-        "eth:0x8c189ead28D5987A48e522162f9225124D50AD1B": "EscapeHatch"
+        "eth:0xF459348962F5eA3A9A101826B03A2CE1F459E51A": "EscapeHatch"
       },
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
       "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
-      "name": "Inbox",
-      "address": "eth:0x8Dbf0b6ed495baAb6062f5D5365aF3C1B2ed4578",
-      "type": "Contract",
-      "template": "aztecnetwork/Inbox",
-      "sourceHashes": [
-        "0x2d3743808043a53dd1ba2ed90d831a27cf0086c271251cf36846a6584bf91257"
-      ],
-      "proxyType": "immutable",
-      "description": "Facilitates canonical L1 to L2 communication. It accepts messages (including fee asset deposits) from L1, accumulates them in an append-only frontier tree per checkpoint, and forces the Sequencers and the Rollup contract to sequentially consume the roots of these message trees, ensuring message inclusion.",
-      "ignoreInWatchMode": [
-        "getInProgress",
-        "getState",
-        "getTotalMessagesInserted"
-      ],
-      "deployerAddress": "eth:0xA8aA9eb611709454601425CEc7B8C9B142781560",
-      "sinceTimestamp": 1772654159,
-      "sinceBlock": 24586322,
-      "values": {
-        "$immutable": true,
-        "FEE_ASSET_PORTAL": "eth:0x2891F8b941067F8B5a3F34545A30Cf71E3E23617",
-        "getFeeAssetPortal": "eth:0x2891F8b941067F8B5a3F34545A30Cf71E3E23617",
-        "getInProgress": 109331,
-        "getState": {
-          "rollingHash": "0x2e30d98256397919547c83e9caa688af",
-          "totalMessagesInserted": 231,
-          "inProgress": 109331
-        },
-        "getTotalMessagesInserted": 231,
-        "LAG": 1,
-        "ROLLUP": "eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962",
-        "VERSION": 2934756905
-      },
-      "fieldMeta": {
-        "FEE_ASSET_PORTAL": {
-          "description": "The FeeJuicePortal contract used for bridging fee assets to the L2. Messages from this portal are inserted with the canonical fee-asset L2 sender."
-        },
-        "LAG": {
-          "description": "The delay (in checkpoints) before L1 to L2 messages can be consumed by the sequencer."
-        },
-        "ROLLUP": {
-          "description": "The address of the core Rollup contract that possesses the permission to consume the message trees."
-        },
-        "VERSION": {
-          "description": "The identifier of the Aztec instance/version to prevent cross-instance message replay."
-        }
-      },
-      "implementationNames": {
-        "eth:0x8Dbf0b6ed495baAb6062f5D5365aF3C1B2ed4578": "Inbox"
-      },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
-    },
-    {
-      "address": "eth:0x9064Fb41156D300196d5Eb95E0B3c1f08eBc39a8",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x92Ba0FD39658105FaC4dF2B9BADE998B5816b350",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80",
-          "description": "set the time at which the ProtocolTreasury funds can be transfered and manage staker implementations referenced by this contract.",
-          "role": ".owner"
-        }
-      ]
-    },
-    {
-      "name": "AZTEC Token",
-      "address": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
-      "type": "Contract",
-      "template": "aztecnetwork/Aztec",
-      "sourceHashes": [
-        "0x6018c4d73b9151449ab94fa44cb69a1f9d6eaa71dbf36cbf9f262a54b77e20da"
-      ],
-      "proxyType": "immutable",
-      "description": "AZTEC token contract",
-      "ignoreInWatchMode": ["totalSupply"],
-      "deployerAddress": "eth:0xCbE23F4EBd9150e3A9d3A80442d145FAD624751d",
-      "sinceTimestamp": 1751359739,
-      "sinceBlock": 22823299,
-      "values": {
-        "$immutable": true,
-        "decimals": 18,
-        "DOMAIN_SEPARATOR": "0xa70675fc933c476d0f385b5af801a04433e3d6c4305bc61f5b1e45bc92773525",
-        "eip712Domain": {
-          "fields": "0x0f",
-          "name": "AZTEC",
-          "version": "1",
-          "chainId": 1,
-          "verifyingContract": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
-          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "extensions": []
-        },
-        "name": "AZTEC",
-        "owner": "eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6",
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "symbol": "AZTEC",
-        "totalSupply": "10350000000000000000000000000"
-      },
-      "implementationNames": {
-        "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2": "Aztec"
-      },
-      "category": { "name": "Governance", "priority": 3 }
-    },
-    {
-      "name": "TallySlashingProposer",
-      "address": "eth:0xa4a38fD0108C00983E75616b638Ff3321FD26958",
-      "type": "Contract",
-      "template": "aztecnetwork/TallySlashingProposer",
-      "sourceHashes": [
-        "0x3400d2f1f605f55a5f01114dcb37590633d756230f7829fa3949433b038befa2"
-      ],
-      "proxyType": "immutable",
-      "description": "Aggregates validator committee votes for slashing. Once a round reaches quorum and the execution delay has passed, it builds a slash payload and asks the Slasher to execute it.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x64E6e9Bb9f1E33D319578B9f8a9C719Ca6D46eBb",
-          "description": "execute slashing payloads that slash validators, unless slashing is currently disabled or the payload has been vetoed.",
-          "role": ".PROPOSER"
-        }
-      ],
-      "ignoreInWatchMode": ["getCurrentRound"],
-      "deployerAddress": "eth:0xA8aA9eb611709454601425CEc7B8C9B142781560",
-      "sinceTimestamp": 1772654159,
-      "sinceBlock": 24586322,
-      "values": {
-        "$immutable": true,
-        "COMMITTEE_SIZE": 48,
-        "eip712Domain": {
-          "fields": "0x0f",
-          "name": "TallySlashingProposer",
-          "version": "1",
-          "chainId": 1,
-          "verifyingContract": "eth:0xa4a38fD0108C00983E75616b638Ff3321FD26958",
-          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "extensions": []
-        },
-        "EXECUTION_DELAY_IN_ROUNDS": 28,
-        "getCurrentRound": 1178,
-        "INSTANCE": "eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962",
-        "LIFETIME_IN_ROUNDS": 34,
-        "MAX_ROUND_SIZE": 1024,
-        "QUORUM": 65,
-        "ROUND_SIZE": 128,
-        "ROUND_SIZE_IN_EPOCHS": 4,
-        "ROUNDABOUT_SIZE": 128,
-        "SLASH_AMOUNT_LARGE": "2000000000000000000000",
-        "SLASH_AMOUNT_MEDIUM": "2000000000000000000000",
-        "SLASH_AMOUNT_SMALL": "2000000000000000000000",
-        "SLASH_OFFSET_IN_ROUNDS": 2,
-        "SLASH_PAYLOAD_IMPLEMENTATION": "eth:0xAA43220b7eb7c8Ffe75bc9C483f3C07b0a55B445",
-        "SLASHER": "eth:0x64E6e9Bb9f1E33D319578B9f8a9C719Ca6D46eBb",
-        "SLASHING_PROPOSER_TYPE": 1,
-        "VOTE_TYPEHASH": "0x18b6b90f234e6d028d4c9800043cedef34624eedddd14e60eba01934728014fe"
-      },
-      "fieldMeta": {
-        "INSTANCE": {
-          "description": "Rollup instance whose validator committees vote through this proposer."
-        },
-        "SLASHER": {
-          "description": "Slasher that executes accepted payloads from this proposer."
-        },
-        "SLASH_PAYLOAD_IMPLEMENTATION": {
-          "description": "Cloneable payload implementation used to deploy concrete slashing payloads."
-        },
-        "COMMITTEE_SIZE": {
-          "description": "Number of validators expected in each committee."
-        },
-        "QUORUM": {
-          "description": "Minimum number of validator votes needed to accept a slashing round."
-        },
-        "ROUND_SIZE": {
-          "description": "Number of slots in a slashing voting round."
-        },
-        "ROUND_SIZE_IN_EPOCHS": {
-          "description": "Number of epochs covered by a slashing voting round."
-        },
-        "EXECUTION_DELAY_IN_ROUNDS": {
-          "description": "Number of rounds that must pass before an accepted slashing round can be executed."
-        },
-        "LIFETIME_IN_ROUNDS": {
-          "description": "Number of rounds for which a slashing round remains executable."
-        },
-        "SLASH_AMOUNT_SMALL": {
-          "description": "Small slash amount applied per voted slash unit."
-        },
-        "SLASH_AMOUNT_MEDIUM": {
-          "description": "Medium slash amount applied per voted slash unit."
-        },
-        "SLASH_AMOUNT_LARGE": {
-          "description": "Large slash amount applied per voted slash unit."
-        }
-      },
-      "implementationNames": {
-        "eth:0xa4a38fD0108C00983E75616b638Ff3321FD26958": "TallySlashingProposer"
-      },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
-      "name": "GSE",
-      "address": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
-      "type": "Contract",
-      "template": "aztecnetwork/GSE",
-      "sourceHashes": [
-        "0x25ba11bed3e4573e049efd5cea98a8d47ccd23a404f2777f5cd2c6d101b1eb4f"
-      ],
-      "proxyType": "immutable",
-      "description": "Central staking manager independent of Rollup implementations. Sequencers deposit stake here through their chosen Rollup contract. Their stake is then transfered to the Governance contract and activated for voting. The GSE tracks which rollup instance validators are securing, and gives them an option to automatically move to the latest Rollup version.",
-      "ignoreInWatchMode": ["totalSupply"],
-      "deployerAddress": "eth:0x85e51a78FE8FE21d881894206A9adbf54e3Df8c3",
-      "sinceTimestamp": 1762995035,
-      "sinceBlock": 23786826,
-      "values": {
-        "$immutable": true,
-        "ACTIVATION_THRESHOLD": "200000000000000000000000",
-        "ASSET": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
-        "BONUS_INSTANCE_ADDRESS": "eth:0x9064Fb41156D300196d5Eb95E0B3c1f08eBc39a8",
-        "EJECTION_THRESHOLD": "100000000000000000000000",
-        "getBonusInstanceAddress": "eth:0x9064Fb41156D300196d5Eb95E0B3c1f08eBc39a8",
-        "getGovernance": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
-        "getLatestRollup": "eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962",
-        "owner": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
-        "proofOfPossessionGasLimit": 250000,
-        "totalSupply": "665696000000000000000000000"
-      },
-      "fieldMeta": {
-        "ASSET": {
-          "description": "ERC20 token staked by validators and used for governance voting power."
-        },
-        "getGovernance": {
-          "description": "Governance contract receiving voting power from staked validators."
-        },
-        "getLatestRollup": {
-          "description": "Latest rollup registered in the GSE."
-        },
-        "owner": { "description": "Governance owner of the GSE." }
-      },
-      "implementationNames": {
-        "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f": "GSE"
-      },
-      "category": { "name": "Governance", "priority": 3 }
-    },
-    {
-      "name": "SlashPayloadCloneable",
-      "address": "eth:0xAA43220b7eb7c8Ffe75bc9C483f3C07b0a55B445",
-      "type": "Contract",
-      "template": "aztecnetwork/SlashPayloadCloneable",
-      "sourceHashes": [
-        "0x675553ce11773dc33f90165a629cf5899125e69c4272a3cf7b62b1cdcc0bc67b"
-      ],
-      "proxyType": "immutable",
-      "description": "A template for specific slashing payload contracts deployed deterministically to encode a slashing action (who to slash and how much) that the Slasher executes.",
-      "deployerAddress": "eth:0xA8aA9eb611709454601425CEc7B8C9B142781560",
-      "sinceTimestamp": 1772654159,
-      "sinceBlock": 24586322,
-      "values": { "$immutable": true, "getURI": "SlashPayload" },
-      "implementationNames": {
-        "eth:0xAA43220b7eb7c8Ffe75bc9C483f3C07b0a55B445": "SlashPayloadCloneable"
-      }
-    },
-    {
-      "name": "Rollup",
-      "address": "eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962",
-      "type": "Contract",
-      "template": "aztecnetwork/Rollup",
-      "sourceHashes": [
-        "0xa60bb5f8f4c3654fa6cc8d33bfde2b72af58a55740d815a0c52832dca5ec3a57"
-      ],
-      "proxyType": "immutable",
-      "description": "Core rollup logic contract. It processes checkpoint proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x1CbB707Bd7b4Fd2BcED6D96d84372fb428e93D80",
-          "description": "update prover activity scores used to calculate boosted prover reward shares.",
-          "role": ".ROLLUP"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x2891F8b941067F8B5a3F34545A30Cf71E3E23617",
-          "description": "distribute fee-asset funds escrowed in the portal to sequencers and provers.",
-          "role": ".ROLLUP"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x3D6A1B00C830C5f278FC5dFb3f6Ff0b74Db6dfe0",
-          "description": "claim protocol reward funds and direct them to sequencers and provers.",
-          "role": ".canonicalRollup"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x8c189ead28D5987A48e522162f9225124D50AD1B",
-          "description": "record submitted archives for designated escape-hatch proposers, which are later used to validate or slash them.",
-          "role": ".getRollup"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x8Dbf0b6ed495baAb6062f5D5365aF3C1B2ed4578",
-          "description": "consume L1 to L2 message tree roots for checkpoint processing.",
-          "role": ".ROLLUP"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc9698B7AdEf9ee63F3Bf5cFF38086e4E836579f0",
-          "description": "insert L2 to L1 message roots that recipients later prove against to consume withdrawals or messages.",
-          "role": ".ROLLUP"
-        }
-      ],
-      "ignoreInWatchMode": [
-        "archive",
-        "getActiveAttesterCount",
-        "getAvailableValidatorFlushes",
-        "getCurrentBlobCommitmentsHash",
-        "getCurrentEpoch",
-        "getCurrentSampleSeed",
-        "getCurrentSlot",
-        "getEntryQueueFlushSize",
-        "getEntryQueueLength",
-        "getEthPerFeeAsset",
-        "getNextFlushableEpoch",
-        "getPendingCheckpointNumber",
-        "getProvenCheckpointNumber",
-        "getTips",
-        "getProvingCostPerManaInFeeAsset"
-      ],
-      "deployerAddress": "eth:0xA8aA9eb611709454601425CEc7B8C9B142781560",
-      "sinceTimestamp": 1772654159,
-      "sinceBlock": 24586322,
-      "values": {
-        "$immutable": true,
-        "archive": "0x2b53dbc329caac3a905a0c4617568596b135c4410d2ba3ff5261f35d5e1b556e",
-        "checkBlob": true,
-        "constructorArgs": {
-          "_feeAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
-          "_stakingAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
-          "_gse": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
-          "_epochProofVerifier": "eth:0x70aEDda427f26480D240bc0f4308ceDec8d31348",
-          "_governance": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
-          "_genesisState": {
-            "vkTreeRoot": "0x1dd2644a17d1ddd8831287a78c5a1033b7ae35cdf2a3db833608856c062fc2ba",
-            "protocolContractsHash": "0x2672340d9a0107a7b81e6d10d25b854debe613f3272e8738e8df0ca2ff297141",
-            "genesisArchiveRoot": "0x15684c8c3d2106918d3860f777e50555b7166adff47df13cc652e2e5a50bf5c7"
-          },
-          "_config": {
-            "aztecSlotDuration": "72",
-            "aztecEpochDuration": "32",
-            "targetCommitteeSize": "48",
-            "lagInEpochsForValidatorSet": "2",
-            "lagInEpochsForRandao": "1",
-            "aztecProofSubmissionEpochs": "1",
-            "slashingQuorum": "65",
-            "slashingRoundSize": "128",
-            "slashingLifetimeInRounds": "34",
-            "slashingExecutionDelayInRounds": "28",
-            "slashAmounts": [
-              "2000000000000000000000",
-              "2000000000000000000000",
-              "2000000000000000000000"
-            ],
-            "slashingOffsetInRounds": "2",
-            "slasherFlavor": 1,
-            "slashingVetoer": "eth:0xBbB4aF368d02827945748b28CD4b2D42e4A37480",
-            "slashingDisableDuration": "259200",
-            "manaTarget": "75000000",
-            "exitDelaySeconds": "345600",
-            "version": 2934756905,
-            "provingCostPerMana": "25000000",
-            "initialEthPerFeeAsset": "11729988",
-            "rewardConfig": {
-              "rewardDistributor": "eth:0x3D6A1B00C830C5f278FC5dFb3f6Ff0b74Db6dfe0",
-              "sequencerBps": 7000,
-              "booster": "eth:0x0000000000000000000000000000000000000000",
-              "checkpointReward": "500000000000000000000"
-            },
-            "rewardBoostConfig": {
-              "increment": 125000,
-              "maxScore": 15000000,
-              "a": 1000,
-              "minimum": 100000,
-              "k": 1000000
-            },
-            "stakingQueueConfig": {
-              "bootstrapValidatorSetSize": "500",
-              "bootstrapFlushSize": "500",
-              "normalFlushSizeMin": "1",
-              "normalFlushSizeQuotient": "400",
-              "maxQueueFlushSize": "4"
-            },
-            "localEjectionThreshold": "190000000000000000000000",
-            "earliestRewardsClaimableTimestamp": "0",
-            "inboxLag": "1"
-          }
-        },
-        "eip712Domain": {
-          "fields": "0x0f",
-          "name": "Aztec Rollup",
-          "version": "1",
-          "chainId": 1,
-          "verifyingContract": "eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962",
-          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "extensions": []
-        },
-        "getActivationThreshold": "200000000000000000000000",
-        "getActiveAttesterCount": 3334,
-        "getAvailableValidatorFlushes": 4,
-        "getBurnAddress": "eth:0x4355415548584943414c4c490000000000000000",
-        "getCheckpointReward": "500000000000000000000",
-        "getCurrentBlobCommitmentsHash": "0x002a81414355de1e0d7d72b9607baf6b1a76460808f0a0dd3c82973236a1876a",
-        "getCurrentEpoch": 4713,
-        "getCurrentSampleSeed": "63359459948325246493119807842787481057668581057269888140549534136640505933970",
-        "getCurrentSlot": 150821,
-        "getEarliestRewardsClaimableTimestamp": 0,
-        "getEjectionThreshold": "100000000000000000000000",
-        "getEntryQueueFlushSize": 4,
-        "getEntryQueueLength": 0,
-        "getEpochDuration": 32,
-        "getEscapeHatch": "eth:0x8c189ead28D5987A48e522162f9225124D50AD1B",
-        "getEthPerFeeAsset": 7871926,
-        "getExitDelay": 345600,
-        "getFeeAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
-        "getFeeAssetPortal": "eth:0x2891F8b941067F8B5a3F34545A30Cf71E3E23617",
-        "getGenesisTime": 1772654159,
-        "getGSE": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
-        "getInbox": "eth:0x8Dbf0b6ed495baAb6062f5D5365aF3C1B2ed4578",
-        "getIsBootstrapped": true,
-        "getLagInEpochsForRandao": 1,
-        "getLagInEpochsForValidatorSet": 2,
-        "getLocalEjectionThreshold": "190000000000000000000000",
-        "getManaLimit": 150000000,
-        "getManaTarget": 75000000,
-        "getNextFlushableEpoch": 4709,
-        "getOutbox": "eth:0xc9698B7AdEf9ee63F3Bf5cFF38086e4E836579f0",
-        "getPendingCheckpointNumber": 109329,
-        "getProofSubmissionEpochs": 1,
-        "getProvenCheckpointNumber": 109323,
-        "getProvingCostPerManaInEth": 25000000,
-        "getProvingCostPerManaInFeeAsset": 3175842862344,
-        "getRewardBooster": "eth:0x1CbB707Bd7b4Fd2BcED6D96d84372fb428e93D80",
-        "getRewardConfig": {
-          "rewardDistributor": "eth:0x3D6A1B00C830C5f278FC5dFb3f6Ff0b74Db6dfe0",
-          "sequencerBps": 7000,
-          "booster": "eth:0x1CbB707Bd7b4Fd2BcED6D96d84372fb428e93D80",
-          "checkpointReward": "500000000000000000000"
-        },
-        "getRewardDistributor": "eth:0x3D6A1B00C830C5f278FC5dFb3f6Ff0b74Db6dfe0",
-        "getSlasher": "eth:0x64E6e9Bb9f1E33D319578B9f8a9C719Ca6D46eBb",
-        "getSlotDuration": 72,
-        "getStakingAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
-        "getTargetCommitteeSize": 48,
-        "getTips": { "pending": 109329, "proven": 109323 },
-        "getVersion": 2934756905,
-        "isRewardsClaimable": true,
-        "L1_BLOCK_AT_GENESIS": 24586322,
-        "owner": "eth:0x0000000000000000000000000000000000000000"
-      },
-      "fieldMeta": {
-        "owner": { "description": "Governance owner of the rollup instance." },
-        "getManaLimit": { "description": "gas limit" },
-        "getEntryQueueFlushSize": {
-          "description": "number of sequencers flushable per epoch: will move from the entry queue to the active validator set if flushed"
-        },
-        "getEscapeHatch": {
-          "description": "Address of the EscapeHatch contract used as a fallback for trustless proposal generation if the committee stalls."
-        },
-        "getEpochProofVerifier": {
-          "description": "The verifier contract used for epoch proof verification."
-        },
-        "getFeeAsset": {
-          "description": "The ERC20 token used to pay L2 fees."
-        },
-        "getFeeAssetPortal": {
-          "description": "The L1 portal escrowing the fee asset for deposits and fee payouts."
-        },
-        "getGSE": {
-          "description": "The global staking escrow used by this rollup."
-        },
-        "getInbox": {
-          "description": "The canonical L1 to L2 message inbox for this rollup version."
-        },
-        "getOutbox": {
-          "description": "The canonical L2 to L1 message outbox for this rollup version."
-        },
-        "getRewardBooster": {
-          "description": "The reward booster used to calculate prover reward shares."
-        },
-        "getRewardConfig": {
-          "description": "Reward distribution parameters: distributor, sequencer share, prover booster and checkpoint reward."
-        },
-        "getRewardDistributor": {
-          "description": "Reward distributor used by this rollup."
-        },
-        "getSlasher": {
-          "description": "Slasher contract authorized by this rollup."
-        },
-        "getStakingAsset": {
-          "description": "The ERC20 token staked by validators."
-        },
-        "getCheckpointReward": {
-          "description": "The amount of reward tokens distributed per proven checkpoint."
-        },
-        "getLagInEpochsForValidatorSet": {
-          "description": "The delay in epochs for the validator set selection to become active, preventing rapid targeted restructuring."
-        },
-        "getLagInEpochsForRandao": {
-          "description": "The delay in epochs for the RANDAO seed to be applied to validator selection to prevent manipulation."
-        },
-        "constructorArgs": {
-          "description": "Full deployment configuration including slashing, fee, reward, and staking queue parameters."
-        },
-        "getManaTarget": {
-          "description": "The `updateManaTarget` function can only increase the target, not decrease it."
-        },
-        "getLocalEjectionThreshold": {
-          "description": "Minimum stake before ejection. If slashed below this threshold, the validator is fully ejected. The value can be modified by governance with no bounds."
-        },
-        "getActivationThreshold": {
-          "description": "Stake needed to join as a sequencer."
-        }
-      },
-      "implementationNames": {
-        "eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962": "Rollup"
-      },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
-      "address": "eth:0xB216FcaF63c6C0f73a557B342e1Da9710C95DA81",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xb33a08eF4624eE8F409F749Ee73766E225bEd0F4",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xb6Da7B7a0d8c7349630183f4Bd6F13D4a8AD9216",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "SlashVeto Council",
-      "address": "eth:0xBbB4aF368d02827945748b28CD4b2D42e4A37480",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
-      ],
-      "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x64E6e9Bb9f1E33D319578B9f8a9C719Ca6D46eBb",
-          "description": "veto specific slashing payloads and/or disable all slashing for 3d at a time.",
-          "role": ".VETOER"
-        }
-      ],
-      "ignoreInWatchMode": ["nonce"],
-      "deployerAddress": "eth:0x7EAbE4F636B937628A7Fe503bD7F06772C047FEe",
-      "sinceTimestamp": 1762176359,
-      "sinceBlock": 23719087,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
-        "$members": [
-          "eth:0xb33a08eF4624eE8F409F749Ee73766E225bEd0F4",
-          "eth:0xb6Da7B7a0d8c7349630183f4Bd6F13D4a8AD9216",
-          "eth:0xB216FcaF63c6C0f73a557B342e1Da9710C95DA81",
-          "eth:0x81062F03742B88923eaB121243B69D0a0092089e",
-          "eth:0x32e90E88bb2E6Ee4382e6884cC5c299a6bA27920",
-          "eth:0x23d4A9533627eA70915026638ff5989a967Be667",
-          "eth:0x8138c46A572D989E54837d5e5dEB506889edFb5D",
-          "eth:0x0Fb6215099f48D723CfB89434C2cb887357Bc871",
-          "eth:0x7EAbE4F636B937628A7Fe503bD7F06772C047FEe"
-        ],
-        "$threshold": 5,
-        "domainSeparator": "0x0ac0f33017c635adbf51e5320e2bb322a70446b7bc0ec2080bc5752ae7286b82",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "5 of 9 (56%)",
-        "nonce": 4,
-        "VERSION": "1.4.1"
-      },
-      "implementationNames": {
-        "eth:0xBbB4aF368d02827945748b28CD4b2D42e4A37480": "SafeProxy",
-        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      }
-    },
-    {
-      "name": "Outbox",
-      "address": "eth:0xc9698B7AdEf9ee63F3Bf5cFF38086e4E836579f0",
-      "type": "Contract",
-      "template": "aztecnetwork/Outbox",
-      "sourceHashes": [
-        "0x5d430a5b1a91a9f29eeed4c85c3345203f05756ebe1a5bcbb57eb0af57924d6f"
-      ],
-      "proxyType": "immutable",
-      "description": "Facilitates L2 to L1 communication. It stores the roots of L2 to L1 message trees per epoch, which are inserted by the Rollup contract. Users and portals can consume these messages on L1 by providing a Merkle proof against the stored root. A nullifier bitmap prevents double consumption.",
-      "deployerAddress": "eth:0xA8aA9eb611709454601425CEc7B8C9B142781560",
-      "sinceTimestamp": 1772654159,
-      "sinceBlock": 24586322,
-      "values": {
-        "$immutable": true,
-        "ROLLUP": "eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962",
-        "VERSION": 2934756905
-      },
-      "fieldMeta": {
-        "ROLLUP": {
-          "description": "The address of the core Rollup contract that possesses the permission to insert new L2 to L1 message tree roots."
-        },
-        "VERSION": {
-          "description": "The identifier of the Aztec instance/version to prevent cross-instance replay attacks."
-        }
-      },
-      "implementationNames": {
-        "eth:0xc9698B7AdEf9ee63F3Bf5cFF38086e4E836579f0": "Outbox"
-      },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
-    },
-    {
-      "name": "AztecTokenPositionRegistry_ProtocolTreasury",
-      "address": "eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80",
-      "type": "Contract",
-      "template": "aztecnetwork/AztecTokenPositionRegistry",
-      "sourceHashes": [
-        "0x6b4881b4d3b0b5aaa49b8a1e3784bd49053169584e8b661678a44b65a5b15db1"
-      ],
-      "proxyType": "immutable",
-      "description": "Used to set the time at which AZTEC tokens owned by the ProtocolTreasury are unlocked. Is also used as source of truth for other vesting contracts in the Aztec ecosystem.",
-      "deployerAddress": "eth:0xA8085a1e881c7c0F32ea69cf41A3C21b67ed5f1D",
-      "sinceTimestamp": 1756897955,
-      "sinceBlock": 23282209,
-      "values": {
-        "$immutable": true,
-        "getExecuteAllowedAt": 1794546000,
-        "getGlobalLockParams": {
-          "startTime": 1794546000,
-          "cliffDuration": 0,
-          "lockDuration": 63072000
-        },
-        "getNextMilestoneId": 3,
-        "getNextStakerVersion": 1,
-        "getRevoker": "eth:0x92Ba0FD39658105FaC4dF2B9BADE998B5816b350",
-        "getRevokerOperator": "eth:0x0000000000000000000000000000000000000000",
-        "getStakerImplementation": [
-          "eth:0x79075C8E314Ab4A84d54F90b1c7032Dc5469082d"
-        ],
-        "getUnlockStartTime": 1794546000,
-        "owner": "eth:0x92Ba0FD39658105FaC4dF2B9BADE998B5816b350",
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
-      },
-      "fieldMeta": { "getUnlockStartTime": { "severity": "HIGH" } },
-      "implementationNames": {
-        "eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80": "Registry"
-      }
     }
   ],
   "abis": {
@@ -1307,6 +1562,10 @@
       "function signalCount(address _instance, uint256 _round, address _payload) view returns (uint256)",
       "function signalWithSig(address _payload, tuple(uint8 v, bytes32 r, bytes32 s) _sig) returns (bool)",
       "function submitRoundWinner(uint256 _roundNumber) returns (bool)"
+    ],
+    "eth:0x098f47c00F4df22a8030746Eb11378236C24b4bC": [
+      "constructor()",
+      "function verify(bytes, bytes32[]) view returns (bool)"
     ],
     "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e": [
       "constructor(address _asset, address _governanceProposer, address _beneficiary, tuple(tuple(uint256 lockDelay, uint256 lockAmount) proposeConfig, uint256 votingDelay, uint256 votingDuration, uint256 executionDelay, uint256 gracePeriod, uint256 quorum, uint256 requiredYeaMargin, uint256 minimumVotes) _configuration)",
@@ -1379,30 +1638,6 @@
       "function vote(uint256 _proposalId, uint256 _amount, bool _support)",
       "function withdrawalCount() view returns (uint256)"
     ],
-    "eth:0x1CbB707Bd7b4Fd2BcED6D96d84372fb428e93D80": [
-      "constructor(address _rollup, tuple(uint32 increment, uint32 maxScore, uint32 a, uint32 minimum, uint32 k) _config)",
-      "error RewardBooster__OnlyRollup(address caller)",
-      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
-      "function ROLLUP() view returns (address)",
-      "function getActivityScore(address _prover) view returns (tuple(uint256 time, uint32 value))",
-      "function getConfig() view returns (tuple(uint32 increment, uint32 maxScore, uint32 a, uint32 minimum, uint32 k))",
-      "function getSharesFor(address _prover) view returns (uint256)",
-      "function updateAndGetShares(address _prover) returns (uint256)"
-    ],
-    "eth:0x2891F8b941067F8B5a3F34545A30Cf71E3E23617": [
-      "constructor(address _rollup, address _underlying, address _inbox, uint256 _version)",
-      "error FeeJuicePortal__Unauthorized()",
-      "error SafeERC20FailedOperation(address token)",
-      "event DepositToAztecPublic(bytes32 indexed to, uint256 amount, bytes32 secretHash, bytes32 key, uint256 index)",
-      "event FeesDistributed(address indexed to, uint256 amount)",
-      "function INBOX() view returns (address)",
-      "function L2_TOKEN_ADDRESS() view returns (bytes32)",
-      "function ROLLUP() view returns (address)",
-      "function UNDERLYING() view returns (address)",
-      "function VERSION() view returns (uint256)",
-      "function depositToAztecPublic(bytes32 _to, uint256 _amount, bytes32 _secretHash) returns (bytes32, uint256)",
-      "function distributeFees(address _to, uint256 _amount)"
-    ],
     "eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298": [
       "constructor(address _owner, address _rewardAsset)",
       "error OwnableInvalidOwner(address owner)",
@@ -1424,16 +1659,6 @@
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)",
       "function updateRewardDistributor(address _rewardDistributor)"
-    ],
-    "eth:0x3D6A1B00C830C5f278FC5dFb3f6Ff0b74Db6dfe0": [
-      "constructor(address _asset, address _registry)",
-      "error RewardDistributor__InvalidCaller(address caller, address canonical)",
-      "error SafeERC20FailedOperation(address token)",
-      "function ASSET() view returns (address)",
-      "function REGISTRY() view returns (address)",
-      "function canonicalRollup() view returns (address)",
-      "function claim(address _to, uint256 _amount)",
-      "function recover(address _asset, address _to, uint256 _amount)"
     ],
     "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
@@ -1483,28 +1708,127 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "eth:0x64E6e9Bb9f1E33D319578B9f8a9C719Ca6D46eBb": [
-      "constructor(address _vetoer, address _governance, uint256 _slashingDisableDuration)",
-      "error Slasher__AlreadyInitialized()",
-      "error Slasher__CallerNotAuthorizedToSlash(address caller)",
-      "error Slasher__CallerNotVetoer(address caller, address vetoer)",
-      "error Slasher__PayloadVetoed(address payload)",
-      "error Slasher__ProposerZeroAddress()",
-      "error Slasher__SlashFailed(address target, bytes data, bytes returnData)",
-      "error Slasher__SlashingDisabled()",
-      "event SlashingDisabled(uint256 disabledUntil)",
-      "event VetoedPayload(address indexed payload)",
-      "function GOVERNANCE() view returns (address)",
-      "function PROPOSER() view returns (address)",
-      "function SLASHING_DISABLE_DURATION() view returns (uint256)",
-      "function VETOER() view returns (address)",
-      "function initializeProposer(address _proposer)",
-      "function isSlashingEnabled() view returns (bool)",
-      "function setSlashingEnabled(bool _enabled)",
-      "function slash(address _payload) returns (bool)",
-      "function slashingDisabledUntil() view returns (uint256)",
-      "function vetoPayload(address _payload) returns (bool)",
-      "function vetoedPayloads(address payload) view returns (bool vetoed)"
+    "eth:0x4490cAb7Ce3499353E1b0090b9e530c1AD03B551": [
+      "constructor(address _rollup, tuple(uint32 increment, uint32 maxScore, uint32 a, uint32 minimum, uint32 k) _config)",
+      "error RewardBooster__InvalidConfig()",
+      "error RewardBooster__OnlyRollup(address caller)",
+      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
+      "function ROLLUP() view returns (address)",
+      "function getActivityScore(address _prover) view returns (tuple(uint256 time, uint32 value))",
+      "function getConfig() view returns (tuple(uint32 increment, uint32 maxScore, uint32 a, uint32 minimum, uint32 k))",
+      "function getSharesFor(address _prover) view returns (uint256)",
+      "function updateAndGetShares(address _prover) returns (uint256)"
+    ],
+    "eth:0x516f010C9AB452d70E0c6f78b9E698249a66d2AC": [
+      "error AttestationLib__InvalidDataSize(uint256, uint256)",
+      "error AttestationLib__NotASignatureAtIndex(uint256 index)",
+      "error AttestationLib__SignatureIndicesSizeMismatch(uint256, uint256)",
+      "error AttestationLib__SignaturesOrAddressesSizeMismatch(uint256, uint256)",
+      "error AttestationLib__SignersSizeMismatch(uint256, uint256)",
+      "error CheckpointUnorderedInsertion()",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error FeeLib__InvalidFeeAssetPriceModifier()",
+      "error FeeLib__InvalidManaLimit(uint256 maximum, uint256 provided)",
+      "error FeeLib__InvalidManaTarget(uint256 minimum, uint256 provided)",
+      "error HeaderLib__InvalidSlotNumber(uint256 expected, uint256 actual)",
+      "error RewardLib__ZeroShares(address prover)",
+      "error Rollup__FieldElementOutOfRange(bytes32 value)",
+      "error Rollup__InvalidArchive(bytes32 expected, bytes32 actual)",
+      "error Rollup__InvalidAttestations()",
+      "error Rollup__InvalidBlobHash(bytes32 expected, bytes32 actual)",
+      "error Rollup__InvalidBlobProof(bytes32 blobHash)",
+      "error Rollup__InvalidCheckpointHeader(bytes32 expected, bytes32 actual)",
+      "error Rollup__InvalidCheckpointHeaderCount(uint256 expected, uint256 actual)",
+      "error Rollup__InvalidCheckpointNumber(uint256 expected, uint256 actual)",
+      "error Rollup__InvalidCoinbase()",
+      "error Rollup__InvalidEscapeHatchProposer(address expected, address actual)",
+      "error Rollup__InvalidFirstEpochProof()",
+      "error Rollup__InvalidInHash(bytes32 expected, bytes32 actual)",
+      "error Rollup__InvalidManaMinFee(uint256 expected, uint256 actual)",
+      "error Rollup__InvalidOutHash(bytes32 expected, bytes32 actual)",
+      "error Rollup__InvalidPreviousArchive(bytes32 expected, bytes32 actual)",
+      "error Rollup__InvalidProof()",
+      "error Rollup__InvalidTimestamp(uint256 expected, uint256 actual)",
+      "error Rollup__ManaLimitExceeded()",
+      "error Rollup__NoBlobsInCheckpoint()",
+      "error Rollup__NonZeroDaFee()",
+      "error Rollup__NothingToPrune()",
+      "error Rollup__PastDeadline(uint256 deadline, uint256 currentEpoch)",
+      "error Rollup__ProverHaveAlreadySubmitted(address prover, uint256 epoch)",
+      "error Rollup__SlotAlreadyInChain(uint256 lastSlot, uint256 proposedSlot)",
+      "error Rollup__StartAndEndNotSameEpoch(uint256 start, uint256 end)",
+      "error Rollup__StartIsNotBuildingOnProven()",
+      "error Rollup__StartIsNotFirstCheckpointOfEpoch()",
+      "error Rollup__TimestampInFuture(uint256 max, uint256 actual)",
+      "error Rollup__TooManyCheckpointsInEpoch(uint256 expected, uint256 actual)",
+      "error Rollup__UnavailableTempCheckpointLog(uint256 checkpointNumber, uint256 pendingCheckpointNumber, uint256 upperLimit)",
+      "error Rollup__UnavailableTxs(bytes32 txsHash)",
+      "error SafeCastOverflowedIntToUint(int256 value)",
+      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
+      "error SafeERC20FailedOperation(address token)",
+      "error SampleLib__SampleLargerThanIndex(uint256 sample, uint256 index)",
+      "error SignatureLib__InvalidSignature(address, address)",
+      "error ValidatorSelection__EpochNotStable(uint256 queriedEpoch, uint32 currentTimestamp)",
+      "error ValidatorSelection__InsufficientAttestations(uint256 minimumNeeded, uint256 provided)",
+      "error ValidatorSelection__InsufficientValidatorSetSize(uint256 actual, uint256 expected)",
+      "error ValidatorSelection__InvalidCommitteeCommitment(bytes32 reconstructed, bytes32 expected)",
+      "error ValidatorSelection__MissingProposerSignature(address proposer, uint256 index)",
+      "error ValidatorSelection__ProposerIndexTooLarge(uint256 index)",
+      "event CheckpointProposed(uint256 indexed checkpointNumber, bytes32 indexed archive, bytes32[] versionedBlobHashes, bytes32 payloadDigest, bytes32 attestationsHash)",
+      "event L2ProofVerified(uint256 indexed checkpointNumber, address indexed proverId)",
+      "event PrunedPending(uint256 provenCheckpointNumber, uint256 pendingCheckpointNumber)",
+      "function getBlobBaseFee() view returns (uint256)",
+      "function getEpochProofPublicInputs(uint256 _start, uint256 _end, tuple(bytes32 previousArchive, bytes32 endArchive, bytes32 outHash, address proverId) _args, tuple(bytes32 lastArchiveRoot, bytes32 blockHeadersHash, bytes32 blobsHash, bytes32 inHash, bytes32 outHash, uint256 slotNumber, uint256 timestamp, address coinbase, bytes32 feeRecipient, tuple(uint128 feePerDaGas, uint128 feePerL2Gas) gasFees, uint256 totalManaUsed, uint256 accumulatedFees)[] _headers, bytes _blobPublicInputs) view returns (bytes32[])",
+      "function validateBlobs(bytes _blobsInput, bool _checkBlob) view returns (bytes32[] blobHashes, bytes32 blobsHashesCommitment, bytes[] blobCommitments)"
+    ],
+    "eth:0x555bAAc4757A89f1CE0c84fA35afE9dD7aa8E1d3": [
+      "constructor(address _asset, address _registry)",
+      "error RewardDistributor__InsufficientAvailable(uint256 requested, uint256 available)",
+      "error RewardDistributor__InvalidCaller(address caller, address canonical)",
+      "error RewardDistributor__WrongRecoverMechanism()",
+      "error RewardDistributor__ZeroRollup()",
+      "error SafeERC20FailedOperation(address token)",
+      "event Distributed(address indexed from, address indexed to, uint256 amount, uint256 implicitAmountUsed, uint256 earmarkedAmountUsed)",
+      "event Subsidized(address indexed funder, address indexed recipient, uint256 amount)",
+      "function ASSET() view returns (address)",
+      "function REGISTRY() view returns (address)",
+      "function availableTo(address _recipient) view returns (uint256)",
+      "function canonicalRollup() view returns (address)",
+      "function claim(address _to, uint256 _amount)",
+      "function recoverFrom(address _from, address _to, uint256 _amount)",
+      "function recoverWrongAsset(address _asset, address _to, uint256 _amount)",
+      "function specificRecipientBalance(address recipient) view returns (uint256 amount)",
+      "function subsidizeAddress(address _recipient, uint256 _amount)",
+      "function totalEarmarkedBalance() view returns (uint256)"
+    ],
+    "eth:0x57576AbA1932df7Cc30F971ACC9d4Fc6E86B6e87": [
+      "function getActions() view returns (tuple(address target, bytes data)[] actions)",
+      "function getURI() pure returns (string)"
+    ],
+    "eth:0x5B062aB5fD3A66BC7e73b04CeD38587673b6A2D7": [
+      "constructor(address _rollup, uint256 _version)",
+      "error MerkleLib__InvalidIndexForPathLength()",
+      "error MerkleLib__InvalidRoot(bytes32 expected, bytes32 actual, bytes32 leaf, uint256 leafIndex)",
+      "error Outbox__AlreadyNullified(uint256 epoch, uint256 leafIndex)",
+      "error Outbox__InvalidChainId()",
+      "error Outbox__InvalidNumCheckpointsInEpoch(uint256 numCheckpointsInEpoch)",
+      "error Outbox__InvalidRecipient(address expected, address actual)",
+      "error Outbox__LeafIndexOutOfBounds(uint256 leafIndex, uint256 pathLength)",
+      "error Outbox__NothingToConsumeAtEpoch(uint256 epoch)",
+      "error Outbox__PathTooLong()",
+      "error Outbox__Unauthorized()",
+      "error Outbox__VersionMismatch(uint256 expected, uint256 actual)",
+      "event MessageConsumed(uint256 indexed epoch, bytes32 indexed root, bytes32 indexed messageHash, uint256 leafId, uint256 numCheckpointsInEpoch)",
+      "event RootAdded(uint256 indexed epoch, uint256 indexed numCheckpointsInEpoch, bytes32 root)",
+      "function ROLLUP() view returns (address)",
+      "function VERSION() view returns (uint256)",
+      "function consume(tuple(tuple(bytes32 actor, uint256 version) sender, tuple(address actor, uint256 chainId) recipient, bytes32 content) _message, uint256 _epoch, uint256 _numCheckpointsInEpoch, uint256 _leafIndex, bytes32[] _path)",
+      "function getRootData(uint256 _epoch, uint256 _numCheckpointsInEpoch) view returns (bytes32)",
+      "function getRoots(uint256 _epoch) view returns (bytes32[32])",
+      "function hasMessageBeenConsumedAtEpoch(uint256 _epoch, uint256 _leafId) view returns (bool)",
+      "function insert(uint256 _epoch, uint256 _numCheckpointsInEpoch, bytes32 _root)"
     ],
     "eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a": [
       "constructor(address _governance, address _atpRegistry, uint256 _gatedUntil)",
@@ -1525,91 +1849,42 @@
       "function owner() view returns (address)",
       "function relay(address target, bytes data, uint256 value) returns (bytes)"
     ],
-    "eth:0x70aEDda427f26480D240bc0f4308ceDec8d31348": [
-      "error InvertOfZero()",
-      "error PointAtInfinity()",
-      "error ProofLengthWrongWithLogN(uint256 logN, uint256 actualLength, uint256 expectedLength)",
-      "error PublicInputsLengthWrong()",
-      "error ShpleminiFailed()",
-      "error SumcheckFailed()",
-      "error ValueGeFieldOrder()",
-      "error ValueGeGroupOrder()",
-      "error ValueGeLimbMax()",
-      "function verify(bytes proof, bytes32[] publicInputs) view returns (bool)"
+    "eth:0x79075C8E314Ab4A84d54F90b1c7032Dc5469082d": [
+      "constructor()",
+      "error AddressEmptyCode(address target)",
+      "error AlreadyInitialized()",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error NotATP(address caller, address atp)",
+      "error NotOperator(address caller, address operator)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "error UnSupportedOperation()",
+      "error ZeroATP()",
+      "event Upgraded(address indexed implementation)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function getATP() view returns (address)",
+      "function getImplementation() view returns (address)",
+      "function getOperator() view returns (address)",
+      "function initialize(address _atp)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "eth:0x8c189ead28D5987A48e522162f9225124D50AD1B": [
-      "constructor(address _rollup, address _bondToken, uint96 _bondSize, uint96 _withdrawalTax, uint96 _failedHatchPunishment, uint256 _frequency, uint256 _activeDuration, uint256 _lagInHatches, uint256 _proposingExitDelay)",
-      "error AddressSnapshotLib__CannotAddAddressZero()",
-      "error AddressSnapshotLib__IndexOutOfBounds(uint256 index, uint256 size)",
-      "error CheckpointUnorderedInsertion()",
-      "error EscapeHatch__AlreadyInCandidateSet(address candidate)",
-      "error EscapeHatch__AlreadyValidated(uint256 hatch)",
-      "error EscapeHatch__HatchTooEarly(uint256 hatch)",
-      "error EscapeHatch__InvalidConfiguration()",
-      "error EscapeHatch__InvalidStatus(uint8 expected, uint8 actual)",
-      "error EscapeHatch__NoDesignatedProposer(uint256 hatch)",
-      "error EscapeHatch__NotExitableYet(uint256 exitableAt, uint256 currentTime)",
-      "error EscapeHatch__NotInCandidateSet(address candidate)",
-      "error EscapeHatch__OnlyRollup(address caller, address rollup)",
-      "error EscapeHatch__SetUnstable(uint256 hatch)",
-      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
-      "error SafeERC20FailedOperation(address token)",
-      "event ArchiveUpdated(address indexed proposer, uint128 checkpointNumber, bytes32 archive)",
-      "event CandidateExitInitiated(address indexed candidate, uint256 exitableAt)",
-      "event CandidateExited(address indexed candidate, uint256 amountReturned)",
-      "event CandidateJoined(address indexed candidate)",
-      "event CandidateSelected(uint256 indexed hatch, address indexed candidate)",
-      "event ProofValidated(uint256 indexed hatch, address indexed proposer, bool success, uint256 punishment)",
-      "function LAG_IN_EPOCHS_FOR_RANDAO() view returns (uint256)",
-      "function LAG_IN_EPOCHS_FOR_SET_SIZE() view returns (uint256)",
-      "function getActiveDuration() view returns (uint256)",
-      "function getBondSize() view returns (uint96)",
-      "function getBondToken() view returns (address)",
-      "function getCandidateAtIndex(uint256 _index) view returns (address)",
-      "function getCandidateAtIndexForHatch(uint256 _index, uint256 _hatch) view returns (address)",
-      "function getCandidateCount() view returns (uint256)",
-      "function getCandidateCountForHatch(uint256 _hatch) view returns (uint256)",
-      "function getCandidateInfo(address _candidate) view returns (tuple(uint8 status, uint96 amount, uint32 exitableAt, uint32 lastCheckpointNumber, bytes32 lastSubmittedArchive))",
-      "function getCurrentHatch() view returns (uint256)",
-      "function getDesignatedProposer(uint256 _hatch) view returns (address)",
-      "function getFailedHatchPunishment() view returns (uint96)",
-      "function getFirstEpoch(uint256 _hatch) view returns (uint256)",
-      "function getFrequency() view returns (uint256)",
-      "function getHatch(uint256 _epoch) view returns (uint256)",
-      "function getLagInHatches() view returns (uint256)",
-      "function getProposingExitDelay() view returns (uint256)",
-      "function getRollup() view returns (address)",
-      "function getSeedTimestamp(uint256 _hatch) view returns (uint32)",
-      "function getSetTimestamp(uint256 _hatch) view returns (uint32)",
-      "function getWithdrawalTax() view returns (uint96)",
-      "function initiateExit()",
-      "function isCandidate(address _candidate) view returns (bool)",
-      "function isHatchOpen(uint256 _epoch) view returns (bool isOpen, address proposer)",
-      "function isHatchPrepared(uint256 _hatch) view returns (bool)",
-      "function isHatchValidated(uint256 _hatch) view returns (bool)",
-      "function joinCandidateSet()",
-      "function leaveCandidateSet()",
-      "function selectCandidates()",
-      "function updateSubmittedArchive(address _proposer, uint128 _checkpointNumber, bytes32 _archive)",
-      "function validateProofSubmission(uint256 _hatch)"
-    ],
-    "eth:0x8Dbf0b6ed495baAb6062f5D5365aF3C1B2ed4578": [
+    "eth:0x7d4Ef0676c2032bbCC09227501D34d86641ab8cA": [
       "constructor(address _rollup, address _feeAsset, uint256 _version, uint256 _height, uint256 _lag)",
       "error Inbox__ActorTooLarge(bytes32 actor)",
       "error Inbox__ContentTooLarge(bytes32 content)",
-      "error Inbox__Ignition()",
       "error Inbox__MustBuildBeforeConsume()",
       "error Inbox__SecretHashTooLarge(bytes32 secretHash)",
       "error Inbox__Unauthorized()",
       "error Inbox__VersionMismatch(uint256 expected, uint256 actual)",
       "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
-      "event InboxSynchronized(uint256 indexed inProgress)",
       "event MessageSent(uint256 indexed checkpointNumber, uint256 index, bytes32 indexed hash, bytes16 rollingHash)",
       "function FEE_ASSET_PORTAL() view returns (address)",
       "function LAG() view returns (uint256)",
       "function ROLLUP() view returns (address)",
       "function VERSION() view returns (uint256)",
-      "function catchUp(uint256 _pendingCheckpointNumber)",
       "function consume(uint256 _toConsume) returns (bytes32)",
       "function getFeeAssetPortal() view returns (address)",
       "function getInProgress() view returns (uint64)",
@@ -1618,6 +1893,242 @@
       "function getTotalMessagesInserted() view returns (uint64)",
       "function sendL2Message(tuple(bytes32 actor, uint256 version) _recipient, bytes32 _content, bytes32 _secretHash) returns (bytes32, uint256)",
       "function trees(uint256 checkpointNumber) view returns (uint256 nextIndex)"
+    ],
+    "eth:0x8A36b8F2Ca71D8d8Bd98e03Ebf8B4D0939Daf0bA": [
+      "constructor(address _instance, address _slasher, uint256 _quorum, uint256 _roundSize, uint256 _lifetimeInRounds, uint256 _executionDelayInRounds, uint256[3] _slashAmounts, uint256 _committeeSize, uint256 _epochDuration, uint256 _slashOffsetInRounds)",
+      "error CloneArgumentsTooLong()",
+      "error Create2EmptyBytecode()",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error FailedDeployment()",
+      "error InsufficientBalance(uint256 balance, uint256 needed)",
+      "error InvalidShortString()",
+      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
+      "error SignatureLib__InvalidSignature(address, address)",
+      "error SlashPayload_ArraySizeMismatch(uint256 expected, uint256 actual)",
+      "error SlashingProposer__CommitteeSizeMustBeGreaterThanZero(uint256 committeeSize)",
+      "error SlashingProposer__InvalidCommitteeCommitment()",
+      "error SlashingProposer__InvalidEpochIndex(uint256 epochIndex, uint256 roundSizeInEpochs)",
+      "error SlashingProposer__InvalidNumberOfCommittees(uint256 expected, uint256 actual)",
+      "error SlashingProposer__InvalidQuorumAndRoundSize(uint256 quorum, uint256 roundSize)",
+      "error SlashingProposer__InvalidSignature()",
+      "error SlashingProposer__InvalidSlashAmounts(uint256[3] slashAmounts)",
+      "error SlashingProposer__InvalidVoteLength(uint256 expected, uint256 actual)",
+      "error SlashingProposer__LifetimeMustBeGreaterThanExecutionDelay(uint256 lifetime, uint256 executionDelay)",
+      "error SlashingProposer__LifetimeMustBeLessThanRoundabout(uint256 lifetime, uint256 roundabout)",
+      "error SlashingProposer__QuorumMustBeGreaterThanZero()",
+      "error SlashingProposer__RoundAlreadyExecuted(uint256 round)",
+      "error SlashingProposer__RoundNotComplete(uint256 round)",
+      "error SlashingProposer__RoundOutOfRange(uint256 round, uint256 currentRound)",
+      "error SlashingProposer__RoundSizeInEpochsMustBeGreaterThanZero(uint256 roundSizeInEpochs)",
+      "error SlashingProposer__RoundSizeMustBeMultipleOfEpochDuration(uint256 roundSize, uint256 epochDuration)",
+      "error SlashingProposer__RoundSizeTooLarge(uint256 roundSize, uint256 maxRoundSize)",
+      "error SlashingProposer__SlashAmountMustBeGtZero(string info)",
+      "error SlashingProposer__SlashAmountTooLarge()",
+      "error SlashingProposer__SlashOffsetMustBeGreaterThanZero(uint256 slashOffset)",
+      "error SlashingProposer__VoteAlreadyCastInCurrentSlot(uint256 slot)",
+      "error SlashingProposer__VoteSizeTooBig(uint256 voteSize, uint256 maxSize)",
+      "error SlashingProposer__VotesMustBeMultipleOf4(uint256 votes)",
+      "error SlashingProposer__VotingNotOpen(uint256 currentRound)",
+      "error StringTooLong(string str)",
+      "event EIP712DomainChanged()",
+      "event RoundExecuted(uint256 indexed round, uint256 slashCount)",
+      "event VoteCast(uint256 indexed round, uint256 indexed slot, address indexed proposer)",
+      "function COMMITTEE_SIZE() view returns (uint256)",
+      "function EXECUTION_DELAY_IN_ROUNDS() view returns (uint256)",
+      "function INSTANCE() view returns (address)",
+      "function LIFETIME_IN_ROUNDS() view returns (uint256)",
+      "function MAX_ROUND_SIZE() view returns (uint256)",
+      "function QUORUM() view returns (uint256)",
+      "function ROUNDABOUT_SIZE() view returns (uint256)",
+      "function ROUND_SIZE() view returns (uint256)",
+      "function ROUND_SIZE_IN_EPOCHS() view returns (uint256)",
+      "function SLASHER() view returns (address)",
+      "function SLASH_AMOUNT_LARGE() view returns (uint256)",
+      "function SLASH_AMOUNT_MEDIUM() view returns (uint256)",
+      "function SLASH_AMOUNT_SMALL() view returns (uint256)",
+      "function SLASH_OFFSET_IN_ROUNDS() view returns (uint256)",
+      "function SLASH_PAYLOAD_IMPLEMENTATION() view returns (address)",
+      "function VOTE_TYPEHASH() view returns (bytes32)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function executeRound(uint256 _round, address[][] _committees)",
+      "function getCurrentRound() view returns (uint256)",
+      "function getPayloadAddress(uint256 _round, tuple(address validator, uint256 slashAmount)[] _actions) view returns (address)",
+      "function getRound(uint256 _round) view returns (bool isExecuted, uint256 voteCount)",
+      "function getSlashTargetCommittees(uint256 _round) returns (address[][] committees)",
+      "function getSlashTargetEpoch(uint256 _round, uint256 _epochIndex) view returns (uint256 epochNumber)",
+      "function getTally(uint256 _round, address[][] _committees) view returns (tuple(address validator, uint256 slashAmount)[])",
+      "function getVoteSignatureDigest(bytes _votes, uint256 _slot) view returns (bytes32)",
+      "function getVotes(uint256 _round, uint256 _index) view returns (bytes)",
+      "function isRoundReadyToExecute(uint256 _round, uint256 _slot) view returns (bool)",
+      "function vote(bytes _votes, tuple(uint8 v, bytes32 r, bytes32 s) _sig)"
+    ],
+    "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34": [
+      "constructor(address _feeAsset, address _stakingAsset, address _gse, address _epochProofVerifier, address _governance, tuple(bytes32 vkTreeRoot, bytes32 protocolContractsHash, bytes32 genesisArchiveRoot) _genesisState, tuple(uint256 aztecSlotDuration, uint256 aztecEpochDuration, uint256 targetCommitteeSize, uint256 lagInEpochsForValidatorSet, uint256 lagInEpochsForRandao, uint256 aztecProofSubmissionEpochs, uint256 slashingQuorum, uint256 slashingRoundSize, uint256 slashingLifetimeInRounds, uint256 slashingExecutionDelayInRounds, uint256[3] slashAmounts, uint256 slashingOffsetInRounds, bool slasherEnabled, address slashingVetoer, uint256 slashingDisableDuration, uint256 manaTarget, uint256 exitDelaySeconds, uint32 version, uint256 provingCostPerMana, uint256 initialEthPerFeeAsset, tuple(address rewardDistributor, uint32 sequencerBps, address booster, uint96 checkpointReward) rewardConfig, tuple(uint32 increment, uint32 maxScore, uint32 a, uint32 minimum, uint32 k) rewardBoostConfig, tuple(uint256 bootstrapValidatorSetSize, uint256 bootstrapFlushSize, uint256 normalFlushSizeMin, uint256 normalFlushSizeQuotient, uint256 maxQueueFlushSize) stakingQueueConfig, uint256 localEjectionThreshold, uint256 inboxLag) _config)",
+      "error FeeLib__InvalidInitialEthPerFeeAsset(uint256 provided, uint256 minimum, uint256 maximum)",
+      "error FeeLib__InvalidManaLimit(uint256 maximum, uint256 provided)",
+      "error FeeLib__InvalidManaTarget(uint256 minimum, uint256 provided)",
+      "error FeeLib__ProvingCostAboveCeiling(uint256 provided, uint256 maximum)",
+      "error FeeLib__ProvingCostBelowFloor(uint256 provided, uint256 minimum)",
+      "error FeeLib__ProvingCostCooldown(uint256 nextAllowed)",
+      "error FeeLib__ProvingCostStepExceeded(uint256 current, uint256 requested)",
+      "error InvalidShortString()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error Rollup__FieldElementOutOfRange(bytes32 value)",
+      "error Rollup__InvalidManaTarget(uint256 minimum, uint256 provided)",
+      "error Rollup__UnavailableTempCheckpointLog(uint256 checkpointNumber, uint256 pendingCheckpointNumber, uint256 upperLimit)",
+      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
+      "error Staking__BootstrapFlushSizeAboveMax(uint256 bootstrapFlushSize, uint256 maxQueueFlushSize)",
+      "error Staking__ExitDelayAboveSlasherDelay(uint256 exitDelaySeconds, uint256 slasherExecutionDelay)",
+      "error Staking__InvalidBootstrapFlushSize()",
+      "error Staking__InvalidMaxQueueFlushSize()",
+      "error Staking__InvalidNormalFlushSizeQuotient()",
+      "error Staking__InvalidStakingQueueConfig()",
+      "error StringTooLong(string str)",
+      "event CheckpointInvalidated(uint256 indexed checkpointNumber)",
+      "event CheckpointProposed(uint256 indexed checkpointNumber, bytes32 indexed archive, bytes32[] versionedBlobHashes, bytes32 payloadDigest, bytes32 attestationsHash)",
+      "event Deposit(address indexed attester, address indexed withdrawer, tuple(uint256 x, uint256 y) publicKeyInG1, tuple(uint256 x0, uint256 x1, uint256 y0, uint256 y1) publicKeyInG2, tuple(uint256 x, uint256 y) proofOfPossession, uint256 amount)",
+      "event EIP712DomainChanged()",
+      "event EscapeHatchSet(address escapeHatch)",
+      "event FailedDeposit(address indexed attester, address indexed withdrawer, tuple(uint256 x, uint256 y) publicKeyInG1, tuple(uint256 x0, uint256 x1, uint256 y0, uint256 y1) publicKeyInG2, tuple(uint256 x, uint256 y) proofOfPossession)",
+      "event L2ProofVerified(uint256 indexed checkpointNumber, address indexed proverId)",
+      "event LegacySlasherAuthorized(address indexed legacySlasher, uint256 authorizedUntil)",
+      "event ManaTargetUpdated(uint256 indexed manaTarget)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PendingSlasherCancelled(address indexed slasher)",
+      "event PendingSlasherQueued(address indexed slasher, uint256 readyAt)",
+      "event PrunedPending(uint256 provenCheckpointNumber, uint256 pendingCheckpointNumber)",
+      "event RewardConfigUpdated(tuple(uint32 sequencerBps, uint96 checkpointReward) rewardConfig)",
+      "event Slashed(address indexed attester, uint256 amount)",
+      "event SlasherUpdated(address indexed oldSlasher, address indexed newSlasher)",
+      "event StakingQueueConfigUpdated(tuple(uint256 bootstrapValidatorSetSize, uint256 bootstrapFlushSize, uint256 normalFlushSizeMin, uint256 normalFlushSizeQuotient, uint256 maxQueueFlushSize) config)",
+      "event ValidatorQueued(address indexed attester, address indexed withdrawer)",
+      "event WithdrawFinalized(address indexed attester, address indexed recipient, uint256 amount)",
+      "event WithdrawInitiated(address indexed attester, address indexed recipient, uint256 amount)",
+      "function L1_BLOCK_AT_GENESIS() view returns (uint256)",
+      "function archive() view returns (bytes32)",
+      "function archiveAt(uint256 _checkpointNumber) view returns (bytes32)",
+      "function canProposeAtTime(uint256 _ts, bytes32 _archive, address _who) returns (uint256, uint256)",
+      "function canPruneAtTime(uint256 _ts) view returns (bool)",
+      "function cancelSetSlasher()",
+      "function checkBlob() view returns (bool)",
+      "function checkpointRandao()",
+      "function claimProverRewards(address _coinbase, uint256[] _epochs) returns (uint256)",
+      "function claimSequencerRewards(address _coinbase) returns (uint256)",
+      "function deposit(address _attester, address _withdrawer, tuple(uint256 x, uint256 y) _publicKeyInG1, tuple(uint256 x0, uint256 x1, uint256 y0, uint256 y1) _publicKeyInG2, tuple(uint256 x, uint256 y) _proofOfPossession, bool _moveWithLatestRollup)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function finalizeSetSlasher()",
+      "function finalizeWithdraw(address _attester)",
+      "function flushEntryQueue()",
+      "function flushEntryQueue(uint256 _toAdd)",
+      "function getActivationThreshold() view returns (uint256)",
+      "function getActiveAttesterCount() view returns (uint256)",
+      "function getAttesterAtIndex(uint256 _index) view returns (address)",
+      "function getAttesterView(address _attester) view returns (tuple(uint8 status, uint256 effectiveBalance, tuple(uint256 withdrawalId, uint256 amount, uint256 exitableAt, address recipientOrWithdrawer, bool isRecipient, bool exists) exit, tuple(tuple(uint256 x, uint256 y) publicKey, address withdrawer) config))",
+      "function getAvailableValidatorFlushes() view returns (uint256)",
+      "function getBlobCommitmentsHash(uint256 _checkpointNumber) view returns (bytes32)",
+      "function getBurnAddress() pure returns (address)",
+      "function getCheckpoint(uint256 _checkpointNumber) view returns (tuple(bytes32 archive, bytes32 headerHash, bytes32 blobCommitmentsHash, bytes32 outHash, bytes32 attestationsHash, bytes32 payloadDigest, uint256 slotNumber, tuple(uint256 excessMana, uint256 manaUsed, uint256 ethPerFeeAsset, uint256 congestionCost, uint256 proverCost) feeHeader))",
+      "function getCheckpointReward() view returns (uint256)",
+      "function getCollectiveProverRewardsForEpoch(uint256 _epoch) view returns (uint256)",
+      "function getCommitteeAt(uint256 _ts) returns (address[])",
+      "function getCommitteeCommitmentAt(uint256 _ts) returns (bytes32, uint256)",
+      "function getConfig(address _attester) view returns (tuple(tuple(uint256 x, uint256 y) publicKey, address withdrawer))",
+      "function getCurrentBlobCommitmentsHash() view returns (bytes32)",
+      "function getCurrentEpoch() view returns (uint256)",
+      "function getCurrentEpochCommittee() returns (address[])",
+      "function getCurrentProposer() returns (address)",
+      "function getCurrentSampleSeed() view returns (uint256)",
+      "function getCurrentSlot() view returns (uint256)",
+      "function getEjectionThreshold() view returns (uint256)",
+      "function getEntryQueueAt(uint256 _index) view returns (tuple(address attester, address withdrawer, tuple(uint256 x, uint256 y) publicKeyInG1, tuple(uint256 x0, uint256 x1, uint256 y0, uint256 y1) publicKeyInG2, tuple(uint256 x, uint256 y) proofOfPossession, bool moveWithLatestRollup))",
+      "function getEntryQueueFlushSize() view returns (uint256)",
+      "function getEntryQueueLength() view returns (uint256)",
+      "function getEpochAt(uint256 _ts) view returns (uint256)",
+      "function getEpochAtSlot(uint256 _slotNumber) view returns (uint256)",
+      "function getEpochCommittee(uint256 _epoch) returns (address[])",
+      "function getEpochCommitteeCommitment(uint256 _epoch) returns (bytes32, uint256)",
+      "function getEpochDuration() view returns (uint256)",
+      "function getEpochForCheckpoint(uint256 _checkpointNumber) view returns (uint256)",
+      "function getEpochProofPublicInputs(uint256 _start, uint256 _end, tuple(bytes32 previousArchive, bytes32 endArchive, bytes32 outHash, address proverId) _args, tuple(bytes32 lastArchiveRoot, bytes32 blockHeadersHash, bytes32 blobsHash, bytes32 inHash, bytes32 outHash, uint256 slotNumber, uint256 timestamp, address coinbase, bytes32 feeRecipient, tuple(uint128 feePerDaGas, uint128 feePerL2Gas) gasFees, uint256 totalManaUsed, uint256 accumulatedFees)[] _headers, bytes _blobPublicInputs) view returns (bytes32[])",
+      "function getEpochProofVerifier() view returns (address)",
+      "function getEscapeHatch() view returns (address)",
+      "function getEscapeHatchForEpoch(uint256 _epoch) view returns (address)",
+      "function getEthPerFeeAsset() view returns (uint256)",
+      "function getExit(address _attester) view returns (tuple(uint256 withdrawalId, uint256 amount, uint256 exitableAt, address recipientOrWithdrawer, bool isRecipient, bool exists))",
+      "function getExitDelay() view returns (uint256)",
+      "function getFeeAsset() view returns (address)",
+      "function getFeeAssetPortal() view returns (address)",
+      "function getFeeHeader(uint256 _checkpointNumber) view returns (tuple(uint256 excessMana, uint256 manaUsed, uint256 ethPerFeeAsset, uint256 congestionCost, uint256 proverCost))",
+      "function getGSE() view returns (address)",
+      "function getGenesisTime() view returns (uint256)",
+      "function getHasClaimed(address _prover, uint256 _epoch) view returns (bool)",
+      "function getHasSubmitted(uint256 _epoch, uint256 _length, address _prover) view returns (bool)",
+      "function getInbox() view returns (address)",
+      "function getIsBootstrapped() view returns (bool)",
+      "function getL1FeesAt(uint256 _timestamp) view returns (tuple(uint256 baseFee, uint256 blobFee))",
+      "function getLagInEpochsForRandao() view returns (uint256)",
+      "function getLagInEpochsForValidatorSet() view returns (uint256)",
+      "function getLegacySlasher() view returns (address slasher, uint256 authorizedUntil)",
+      "function getLegacySlasherDrainWindow() pure returns (uint256)",
+      "function getLocalEjectionThreshold() view returns (uint256)",
+      "function getManaLimit() view returns (uint256)",
+      "function getManaMinFeeAt(uint256 _timestamp, bool _inFeeAsset) view returns (uint256)",
+      "function getManaMinFeeComponentsAt(uint256 _timestamp, bool _inFeeAsset) view returns (tuple(uint256 congestionCost, uint256 congestionMultiplier, uint256 sequencerCost, uint256 proverCost))",
+      "function getManaTarget() view returns (uint256)",
+      "function getNextFlushableEpoch() view returns (uint256)",
+      "function getOutbox() view returns (address)",
+      "function getPendingCheckpointNumber() view returns (uint256)",
+      "function getPendingSlasher() view returns (address slasher, uint256 readyAt)",
+      "function getProofSubmissionEpochs() view returns (uint256)",
+      "function getProposerAt(uint256 _ts) returns (address)",
+      "function getProtocolContractsHash() view returns (bytes32)",
+      "function getProvenCheckpointNumber() view returns (uint256)",
+      "function getProvingCostPerManaInEth() view returns (uint256)",
+      "function getProvingCostPerManaInFeeAsset() view returns (uint256)",
+      "function getRewardConfig() view returns (tuple(address rewardDistributor, uint32 sequencerBps, address booster, uint96 checkpointReward))",
+      "function getRewardDistributor() view returns (address)",
+      "function getSampleSeedAt(uint256 _ts) view returns (uint256)",
+      "function getSamplingSizeAt(uint256 _ts) view returns (uint256)",
+      "function getSequencerRewards(address _sequencer) view returns (uint256)",
+      "function getSharesFor(address _prover) view returns (uint256)",
+      "function getSlasher() view returns (address)",
+      "function getSlasherExecutionDelay() pure returns (uint256)",
+      "function getSlotAt(uint256 _ts) view returns (uint256)",
+      "function getSlotDuration() view returns (uint256)",
+      "function getSpecificProverRewardsForEpoch(uint256 _epoch, address _prover) view returns (uint256)",
+      "function getStakingAsset() view returns (address)",
+      "function getStatus(address _attester) view returns (uint8)",
+      "function getTargetCommitteeSize() view returns (uint256)",
+      "function getTimestampForEpoch(uint256 _epoch) view returns (uint256)",
+      "function getTimestampForSlot(uint256 _slotNumber) view returns (uint256)",
+      "function getTips() view returns (tuple(uint256 pending, uint256 proven))",
+      "function getVersion() view returns (uint256)",
+      "function getVkTreeRoot() view returns (bytes32)",
+      "function initiateWithdraw(address _attester, address _recipient) returns (bool)",
+      "function invalidateBadAttestation(uint256 _checkpointNumber, tuple(bytes signatureIndices, bytes signaturesOrAddresses) _attestations, address[] _committee, uint256 _invalidIndex)",
+      "function invalidateInsufficientAttestations(uint256 _checkpointNumber, tuple(bytes signatureIndices, bytes signaturesOrAddresses) _attestations, address[] _committee)",
+      "function owner() view returns (address)",
+      "function propose(tuple(bytes32 archive, tuple(int256 feeAssetPriceModifier) oracleInput, tuple(bytes32 lastArchiveRoot, bytes32 blockHeadersHash, bytes32 blobsHash, bytes32 inHash, bytes32 outHash, uint256 slotNumber, uint256 timestamp, address coinbase, bytes32 feeRecipient, tuple(uint128 feePerDaGas, uint128 feePerL2Gas) gasFees, uint256 totalManaUsed, uint256 accumulatedFees) header) _args, tuple(bytes signatureIndices, bytes signaturesOrAddresses) _attestations, address[] _signers, tuple(uint8 v, bytes32 r, bytes32 s) _attestationsAndSignersSignature, bytes _blobInput)",
+      "function prune()",
+      "function queueSetSlasher(address _slasher)",
+      "function renounceOwnership()",
+      "function setEscapeHatch(address _escapeHatch)",
+      "function setProvingCostPerMana(uint256 _provingCostPerMana)",
+      "function setRewardConfig(tuple(uint32 sequencerBps, uint96 checkpointReward) _config)",
+      "function setupEpoch()",
+      "function slash(address _attester, uint256 _amount) returns (bool)",
+      "function status(uint256 _myHeaderCheckpointNumber) view returns (uint256 provenCheckpointNumber, bytes32 provenArchive, uint256 pendingCheckpointNumber, bytes32 pendingArchive, bytes32 archiveOfMyCheckpoint, uint256 provenEpochNumber)",
+      "function submitEpochRootProof(tuple(uint256 start, uint256 end, tuple(bytes32 previousArchive, bytes32 endArchive, bytes32 outHash, address proverId) args, tuple(bytes32 lastArchiveRoot, bytes32 blockHeadersHash, bytes32 blobsHash, bytes32 inHash, bytes32 outHash, uint256 slotNumber, uint256 timestamp, address coinbase, bytes32 feeRecipient, tuple(uint128 feePerDaGas, uint128 feePerL2Gas) gasFees, uint256 totalManaUsed, uint256 accumulatedFees)[] headers, tuple(bytes signatureIndices, bytes signaturesOrAddresses) attestations, bytes blobInputs, bytes proof) _args)",
+      "function transferOwnership(address newOwner)",
+      "function updateL1GasFeeOracle()",
+      "function updateManaTarget(uint256 _manaTarget)",
+      "function updateStakingQueueConfig(tuple(uint256 bootstrapValidatorSetSize, uint256 bootstrapFlushSize, uint256 normalFlushSizeMin, uint256 normalFlushSizeQuotient, uint256 maxQueueFlushSize) _config)",
+      "function validateBlobs(bytes _blobsInput) view returns (bytes32[], bytes32, bytes[])",
+      "function validateHeaderWithAttestations(tuple(bytes32 lastArchiveRoot, bytes32 blockHeadersHash, bytes32 blobsHash, bytes32 inHash, bytes32 outHash, uint256 slotNumber, uint256 timestamp, address coinbase, bytes32 feeRecipient, tuple(uint128 feePerDaGas, uint128 feePerL2Gas) gasFees, uint256 totalManaUsed, uint256 accumulatedFees) _header, tuple(bytes signatureIndices, bytes signaturesOrAddresses) _attestations, address[] _signers, tuple(uint8 v, bytes32 r, bytes32 s) _attestationsAndSignersSignature, bytes32 _digest, bytes32 _blobsHash, tuple(bool ignoreDA) _flags)",
+      "function vote(uint256 _proposalId)"
     ],
     "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2": [
       "constructor(address _initialOwner)",
@@ -1661,77 +2172,6 @@
       "function transfer(address to, uint256 value) returns (bool)",
       "function transferFrom(address from, address to, uint256 value) returns (bool)",
       "function transferOwnership(address newOwner)"
-    ],
-    "eth:0xa4a38fD0108C00983E75616b638Ff3321FD26958": [
-      "constructor(address _instance, address _slasher, uint256 _quorum, uint256 _roundSize, uint256 _lifetimeInRounds, uint256 _executionDelayInRounds, uint256[3] _slashAmounts, uint256 _committeeSize, uint256 _epochDuration, uint256 _slashOffsetInRounds)",
-      "error CloneArgumentsTooLong()",
-      "error Create2EmptyBytecode()",
-      "error ECDSAInvalidSignature()",
-      "error ECDSAInvalidSignatureLength(uint256 length)",
-      "error ECDSAInvalidSignatureS(bytes32 s)",
-      "error FailedDeployment()",
-      "error InsufficientBalance(uint256 balance, uint256 needed)",
-      "error InvalidShortString()",
-      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
-      "error SignatureLib__InvalidSignature(address, address)",
-      "error SlashPayload_ArraySizeMismatch(uint256 expected, uint256 actual)",
-      "error StringTooLong(string str)",
-      "error TallySlashingProposer__CommitteeSizeMustBeGreaterThanZero(uint256 committeeSize)",
-      "error TallySlashingProposer__InvalidCommitteeCommitment()",
-      "error TallySlashingProposer__InvalidEpochIndex(uint256 epochIndex, uint256 roundSizeInEpochs)",
-      "error TallySlashingProposer__InvalidNumberOfCommittees(uint256 expected, uint256 actual)",
-      "error TallySlashingProposer__InvalidQuorumAndRoundSize(uint256 quorum, uint256 roundSize)",
-      "error TallySlashingProposer__InvalidSignature()",
-      "error TallySlashingProposer__InvalidSlashAmounts(uint256[3] slashAmounts)",
-      "error TallySlashingProposer__InvalidVoteLength(uint256 expected, uint256 actual)",
-      "error TallySlashingProposer__LifetimeMustBeGreaterThanExecutionDelay(uint256 lifetime, uint256 executionDelay)",
-      "error TallySlashingProposer__LifetimeMustBeLessThanRoundabout(uint256 lifetime, uint256 roundabout)",
-      "error TallySlashingProposer__QuorumMustBeGreaterThanZero()",
-      "error TallySlashingProposer__RoundAlreadyExecuted(uint256 round)",
-      "error TallySlashingProposer__RoundNotComplete(uint256 round)",
-      "error TallySlashingProposer__RoundOutOfRange(uint256 round, uint256 currentRound)",
-      "error TallySlashingProposer__RoundSizeInEpochsMustBeGreaterThanZero(uint256 roundSizeInEpochs)",
-      "error TallySlashingProposer__RoundSizeMustBeMultipleOfEpochDuration(uint256 roundSize, uint256 epochDuration)",
-      "error TallySlashingProposer__RoundSizeTooLarge(uint256 roundSize, uint256 maxRoundSize)",
-      "error TallySlashingProposer__SlashAmountMustBeGtZero(string info)",
-      "error TallySlashingProposer__SlashAmountTooLarge()",
-      "error TallySlashingProposer__SlashOffsetMustBeGreaterThanZero(uint256 slashOffset)",
-      "error TallySlashingProposer__VoteAlreadyCastInCurrentSlot(uint256 slot)",
-      "error TallySlashingProposer__VoteSizeTooBig(uint256 voteSize, uint256 maxSize)",
-      "error TallySlashingProposer__VotesMustBeMultipleOf4(uint256 votes)",
-      "error TallySlashingProposer__VotingNotOpen(uint256 currentRound)",
-      "event EIP712DomainChanged()",
-      "event RoundExecuted(uint256 indexed round, uint256 slashCount)",
-      "event VoteCast(uint256 indexed round, uint256 indexed slot, address indexed proposer)",
-      "function COMMITTEE_SIZE() view returns (uint256)",
-      "function EXECUTION_DELAY_IN_ROUNDS() view returns (uint256)",
-      "function INSTANCE() view returns (address)",
-      "function LIFETIME_IN_ROUNDS() view returns (uint256)",
-      "function MAX_ROUND_SIZE() view returns (uint256)",
-      "function QUORUM() view returns (uint256)",
-      "function ROUNDABOUT_SIZE() view returns (uint256)",
-      "function ROUND_SIZE() view returns (uint256)",
-      "function ROUND_SIZE_IN_EPOCHS() view returns (uint256)",
-      "function SLASHER() view returns (address)",
-      "function SLASHING_PROPOSER_TYPE() view returns (uint8)",
-      "function SLASH_AMOUNT_LARGE() view returns (uint256)",
-      "function SLASH_AMOUNT_MEDIUM() view returns (uint256)",
-      "function SLASH_AMOUNT_SMALL() view returns (uint256)",
-      "function SLASH_OFFSET_IN_ROUNDS() view returns (uint256)",
-      "function SLASH_PAYLOAD_IMPLEMENTATION() view returns (address)",
-      "function VOTE_TYPEHASH() view returns (bytes32)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function executeRound(uint256 _round, address[][] _committees)",
-      "function getCurrentRound() view returns (uint256)",
-      "function getPayloadAddress(uint256 _round, tuple(address validator, uint256 slashAmount)[] _actions) view returns (address)",
-      "function getRound(uint256 _round) view returns (bool isExecuted, uint256 voteCount)",
-      "function getSlashTargetCommittees(uint256 _round) returns (address[][] committees)",
-      "function getSlashTargetEpoch(uint256 _round, uint256 _epochIndex) view returns (uint256 epochNumber)",
-      "function getTally(uint256 _round, address[][] _committees) view returns (tuple(address validator, uint256 slashAmount)[])",
-      "function getVoteSignatureDigest(bytes _votes, uint256 _slot) view returns (bytes32)",
-      "function getVotes(uint256 _round, uint256 _index) view returns (bytes)",
-      "function isRoundReadyToExecute(uint256 _round, uint256 _slot) view returns (bool)",
-      "function vote(bytes _votes, tuple(uint8 v, bytes32 r, bytes32 s) _sig)"
     ],
     "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f": [
       "constructor(address __owner, address _asset, uint256 _activationThreshold, uint256 _ejectionThreshold)",
@@ -1806,183 +2246,73 @@
       "function voteWithBonus(uint256 _proposalId, uint256 _amount, bool _support)",
       "function withdraw(address _attester, uint256 _amount) returns (uint256, bool, uint256)"
     ],
-    "eth:0xAA43220b7eb7c8Ffe75bc9C483f3C07b0a55B445": [
-      "function getActions() view returns (tuple(address target, bytes data)[] actions)",
-      "function getURI() pure returns (string)"
-    ],
-    "eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962": [
-      "constructor(address _feeAsset, address _stakingAsset, address _gse, address _epochProofVerifier, address _governance, tuple(bytes32 vkTreeRoot, bytes32 protocolContractsHash, bytes32 genesisArchiveRoot) _genesisState, tuple(uint256 aztecSlotDuration, uint256 aztecEpochDuration, uint256 targetCommitteeSize, uint256 lagInEpochsForValidatorSet, uint256 lagInEpochsForRandao, uint256 aztecProofSubmissionEpochs, uint256 slashingQuorum, uint256 slashingRoundSize, uint256 slashingLifetimeInRounds, uint256 slashingExecutionDelayInRounds, uint256[3] slashAmounts, uint256 slashingOffsetInRounds, uint8 slasherFlavor, address slashingVetoer, uint256 slashingDisableDuration, uint256 manaTarget, uint256 exitDelaySeconds, uint32 version, uint256 provingCostPerMana, uint256 initialEthPerFeeAsset, tuple(address rewardDistributor, uint32 sequencerBps, address booster, uint96 checkpointReward) rewardConfig, tuple(uint32 increment, uint32 maxScore, uint32 a, uint32 minimum, uint32 k) rewardBoostConfig, tuple(uint256 bootstrapValidatorSetSize, uint256 bootstrapFlushSize, uint256 normalFlushSizeMin, uint256 normalFlushSizeQuotient, uint256 maxQueueFlushSize) stakingQueueConfig, uint256 localEjectionThreshold, uint256 earliestRewardsClaimableTimestamp, uint256 inboxLag) _config)",
-      "error FeeLib__InvalidInitialEthPerFeeAsset(uint256 provided, uint256 minimum, uint256 maximum)",
-      "error FeeLib__InvalidManaLimit(uint256 maximum, uint256 provided)",
-      "error InvalidShortString()",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "error Rollup__InvalidManaTarget(uint256 minimum, uint256 provided)",
-      "error Rollup__UnavailableTempCheckpointLog(uint256 checkpointNumber, uint256 pendingCheckpointNumber, uint256 upperLimit)",
-      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
-      "error Staking__InvalidNormalFlushSizeQuotient()",
-      "error Staking__InvalidStakingQueueConfig()",
-      "error StringTooLong(string str)",
-      "event CheckpointInvalidated(uint256 indexed checkpointNumber)",
-      "event CheckpointProposed(uint256 indexed checkpointNumber, bytes32 indexed archive, bytes32[] versionedBlobHashes, bytes32 payloadDigest, bytes32 attestationsHash)",
-      "event Deposit(address indexed attester, address indexed withdrawer, tuple(uint256 x, uint256 y) publicKeyInG1, tuple(uint256 x0, uint256 x1, uint256 y0, uint256 y1) publicKeyInG2, tuple(uint256 x, uint256 y) proofOfPossession, uint256 amount)",
-      "event EIP712DomainChanged()",
-      "event EscapeHatchUpdated(address escapeHatch)",
-      "event FailedDeposit(address indexed attester, address indexed withdrawer, tuple(uint256 x, uint256 y) publicKeyInG1, tuple(uint256 x0, uint256 x1, uint256 y0, uint256 y1) publicKeyInG2, tuple(uint256 x, uint256 y) proofOfPossession)",
-      "event L2ProofVerified(uint256 indexed checkpointNumber, address indexed proverId)",
-      "event LocalEjectionThresholdUpdated(uint256 indexed oldLocalEjectionThreshold, uint256 indexed newLocalEjectionThreshold)",
-      "event ManaTargetUpdated(uint256 indexed manaTarget)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event PrunedPending(uint256 provenCheckpointNumber, uint256 pendingCheckpointNumber)",
-      "event RewardConfigUpdated(tuple(address rewardDistributor, uint32 sequencerBps, address booster, uint96 checkpointReward) rewardConfig)",
-      "event RewardsClaimableUpdated(bool isRewardsClaimable)",
-      "event Slashed(address indexed attester, uint256 amount)",
-      "event SlasherUpdated(address indexed oldSlasher, address indexed newSlasher)",
-      "event StakingQueueConfigUpdated(tuple(uint256 bootstrapValidatorSetSize, uint256 bootstrapFlushSize, uint256 normalFlushSizeMin, uint256 normalFlushSizeQuotient, uint256 maxQueueFlushSize) config)",
-      "event ValidatorQueued(address indexed attester, address indexed withdrawer)",
-      "event WithdrawFinalized(address indexed attester, address indexed recipient, uint256 amount)",
-      "event WithdrawInitiated(address indexed attester, address indexed recipient, uint256 amount)",
-      "function L1_BLOCK_AT_GENESIS() view returns (uint256)",
-      "function archive() view returns (bytes32)",
-      "function archiveAt(uint256 _checkpointNumber) view returns (bytes32)",
-      "function canProposeAtTime(uint256 _ts, bytes32 _archive, address _who) returns (uint256, uint256)",
-      "function canPruneAtTime(uint256 _ts) view returns (bool)",
-      "function checkBlob() view returns (bool)",
-      "function checkpointRandao()",
-      "function claimProverRewards(address _coinbase, uint256[] _epochs) returns (uint256)",
-      "function claimSequencerRewards(address _coinbase) returns (uint256)",
-      "function deposit(address _attester, address _withdrawer, tuple(uint256 x, uint256 y) _publicKeyInG1, tuple(uint256 x0, uint256 x1, uint256 y0, uint256 y1) _publicKeyInG2, tuple(uint256 x, uint256 y) _proofOfPossession, bool _moveWithLatestRollup)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function finalizeWithdraw(address _attester)",
-      "function flushEntryQueue()",
-      "function flushEntryQueue(uint256 _toAdd)",
-      "function getActivationThreshold() view returns (uint256)",
-      "function getActiveAttesterCount() view returns (uint256)",
-      "function getAttesterAtIndex(uint256 _index) view returns (address)",
-      "function getAttesterView(address _attester) view returns (tuple(uint8 status, uint256 effectiveBalance, tuple(uint256 withdrawalId, uint256 amount, uint256 exitableAt, address recipientOrWithdrawer, bool isRecipient, bool exists) exit, tuple(tuple(uint256 x, uint256 y) publicKey, address withdrawer) config))",
-      "function getAvailableValidatorFlushes() view returns (uint256)",
-      "function getBlobCommitmentsHash(uint256 _checkpointNumber) view returns (bytes32)",
-      "function getBurnAddress() pure returns (address)",
-      "function getCheckpoint(uint256 _checkpointNumber) view returns (tuple(bytes32 archive, bytes32 headerHash, bytes32 blobCommitmentsHash, bytes32 outHash, bytes32 attestationsHash, bytes32 payloadDigest, uint256 slotNumber, tuple(uint256 excessMana, uint256 manaUsed, uint256 ethPerFeeAsset, uint256 congestionCost, uint256 proverCost) feeHeader))",
-      "function getCheckpointReward() view returns (uint256)",
-      "function getCollectiveProverRewardsForEpoch(uint256 _epoch) view returns (uint256)",
-      "function getCommitteeAt(uint256 _ts) returns (address[])",
-      "function getCommitteeCommitmentAt(uint256 _ts) returns (bytes32, uint256)",
-      "function getConfig(address _attester) view returns (tuple(tuple(uint256 x, uint256 y) publicKey, address withdrawer))",
-      "function getCurrentBlobCommitmentsHash() view returns (bytes32)",
-      "function getCurrentEpoch() view returns (uint256)",
-      "function getCurrentEpochCommittee() returns (address[])",
-      "function getCurrentProposer() returns (address)",
-      "function getCurrentSampleSeed() view returns (uint256)",
-      "function getCurrentSlot() view returns (uint256)",
-      "function getEarliestRewardsClaimableTimestamp() view returns (uint256)",
-      "function getEjectionThreshold() view returns (uint256)",
-      "function getEntryQueueAt(uint256 _index) view returns (tuple(address attester, address withdrawer, tuple(uint256 x, uint256 y) publicKeyInG1, tuple(uint256 x0, uint256 x1, uint256 y0, uint256 y1) publicKeyInG2, tuple(uint256 x, uint256 y) proofOfPossession, bool moveWithLatestRollup))",
-      "function getEntryQueueFlushSize() view returns (uint256)",
-      "function getEntryQueueLength() view returns (uint256)",
-      "function getEpochAt(uint256 _ts) view returns (uint256)",
-      "function getEpochAtSlot(uint256 _slotNumber) view returns (uint256)",
-      "function getEpochCommittee(uint256 _epoch) returns (address[])",
-      "function getEpochCommitteeCommitment(uint256 _epoch) returns (bytes32, uint256)",
-      "function getEpochDuration() view returns (uint256)",
-      "function getEpochForCheckpoint(uint256 _checkpointNumber) view returns (uint256)",
-      "function getEpochProofPublicInputs(uint256 _start, uint256 _end, tuple(bytes32 previousArchive, bytes32 endArchive, bytes32 outHash, address proverId) _args, bytes32[] _fees, bytes _blobPublicInputs) view returns (bytes32[])",
-      "function getEscapeHatch() view returns (address)",
-      "function getEscapeHatchForEpoch(uint256 _epoch) view returns (address)",
-      "function getEthPerFeeAsset() view returns (uint256)",
-      "function getExit(address _attester) view returns (tuple(uint256 withdrawalId, uint256 amount, uint256 exitableAt, address recipientOrWithdrawer, bool isRecipient, bool exists))",
-      "function getExitDelay() view returns (uint256)",
-      "function getFeeAsset() view returns (address)",
-      "function getFeeAssetPortal() view returns (address)",
-      "function getFeeHeader(uint256 _checkpointNumber) view returns (tuple(uint256 excessMana, uint256 manaUsed, uint256 ethPerFeeAsset, uint256 congestionCost, uint256 proverCost))",
-      "function getGSE() view returns (address)",
-      "function getGenesisTime() view returns (uint256)",
-      "function getHasClaimed(address _prover, uint256 _epoch) view returns (bool)",
-      "function getHasSubmitted(uint256 _epoch, uint256 _length, address _prover) view returns (bool)",
-      "function getInbox() view returns (address)",
-      "function getIsBootstrapped() view returns (bool)",
-      "function getL1FeesAt(uint256 _timestamp) view returns (tuple(uint256 baseFee, uint256 blobFee))",
-      "function getLagInEpochsForRandao() view returns (uint256)",
-      "function getLagInEpochsForValidatorSet() view returns (uint256)",
-      "function getLocalEjectionThreshold() view returns (uint256)",
-      "function getManaLimit() view returns (uint256)",
-      "function getManaMinFeeAt(uint256 _timestamp, bool _inFeeAsset) view returns (uint256)",
-      "function getManaMinFeeComponentsAt(uint256 _timestamp, bool _inFeeAsset) view returns (tuple(uint256 congestionCost, uint256 congestionMultiplier, uint256 sequencerCost, uint256 proverCost))",
-      "function getManaTarget() view returns (uint256)",
-      "function getNextFlushableEpoch() view returns (uint256)",
-      "function getOutbox() view returns (address)",
-      "function getPendingCheckpointNumber() view returns (uint256)",
-      "function getProofSubmissionEpochs() view returns (uint256)",
-      "function getProposerAt(uint256 _ts) returns (address)",
-      "function getProvenCheckpointNumber() view returns (uint256)",
-      "function getProvingCostPerManaInEth() view returns (uint256)",
-      "function getProvingCostPerManaInFeeAsset() view returns (uint256)",
-      "function getRewardConfig() view returns (tuple(address rewardDistributor, uint32 sequencerBps, address booster, uint96 checkpointReward))",
-      "function getRewardDistributor() view returns (address)",
-      "function getSampleSeedAt(uint256 _ts) view returns (uint256)",
-      "function getSamplingSizeAt(uint256 _ts) view returns (uint256)",
-      "function getSequencerRewards(address _sequencer) view returns (uint256)",
-      "function getSharesFor(address _prover) view returns (uint256)",
-      "function getSlasher() view returns (address)",
-      "function getSlotAt(uint256 _ts) view returns (uint256)",
-      "function getSlotDuration() view returns (uint256)",
-      "function getSpecificProverRewardsForEpoch(uint256 _epoch, address _prover) view returns (uint256)",
-      "function getStakingAsset() view returns (address)",
-      "function getStatus(address _attester) view returns (uint8)",
-      "function getTargetCommitteeSize() view returns (uint256)",
-      "function getTimestampForEpoch(uint256 _epoch) view returns (uint256)",
-      "function getTimestampForSlot(uint256 _slotNumber) view returns (uint256)",
-      "function getTips() view returns (tuple(uint256 pending, uint256 proven))",
-      "function getVersion() view returns (uint256)",
-      "function initiateWithdraw(address _attester, address _recipient) returns (bool)",
-      "function invalidateBadAttestation(uint256 _checkpointNumber, tuple(bytes signatureIndices, bytes signaturesOrAddresses) _attestations, address[] _committee, uint256 _invalidIndex)",
-      "function invalidateInsufficientAttestations(uint256 _checkpointNumber, tuple(bytes signatureIndices, bytes signaturesOrAddresses) _attestations, address[] _committee)",
-      "function isRewardsClaimable() view returns (bool)",
-      "function owner() view returns (address)",
-      "function propose(tuple(bytes32 archive, tuple(int256 feeAssetPriceModifier) oracleInput, tuple(bytes32 lastArchiveRoot, bytes32 blockHeadersHash, bytes32 blobsHash, bytes32 inHash, bytes32 outHash, uint256 slotNumber, uint256 timestamp, address coinbase, bytes32 feeRecipient, tuple(uint128 feePerDaGas, uint128 feePerL2Gas) gasFees, uint256 totalManaUsed) header) _args, tuple(bytes signatureIndices, bytes signaturesOrAddresses) _attestations, address[] _signers, tuple(uint8 v, bytes32 r, bytes32 s) _attestationsAndSignersSignature, bytes _blobInput)",
-      "function prune()",
-      "function renounceOwnership()",
-      "function setLocalEjectionThreshold(uint256 _localEjectionThreshold)",
-      "function setProvingCostPerMana(uint256 _provingCostPerMana)",
-      "function setRewardConfig(tuple(address rewardDistributor, uint32 sequencerBps, address booster, uint96 checkpointReward) _config)",
-      "function setRewardsClaimable(bool _isRewardsClaimable)",
-      "function setSlasher(address _slasher)",
-      "function setupEpoch()",
-      "function slash(address _attester, uint256 _amount) returns (bool)",
-      "function status(uint256 _myHeaderCheckpointNumber) view returns (uint256 provenCheckpointNumber, bytes32 provenArchive, uint256 pendingCheckpointNumber, bytes32 pendingArchive, bytes32 archiveOfMyCheckpoint, uint256 provenEpochNumber)",
-      "function submitEpochRootProof(tuple(uint256 start, uint256 end, tuple(bytes32 previousArchive, bytes32 endArchive, bytes32 outHash, address proverId) args, bytes32[] fees, tuple(bytes signatureIndices, bytes signaturesOrAddresses) attestations, bytes blobInputs, bytes proof) _args)",
-      "function transferOwnership(address newOwner)",
-      "function updateEscapeHatch(address _escapeHatch)",
-      "function updateL1GasFeeOracle()",
-      "function updateManaTarget(uint256 _manaTarget)",
-      "function updateStakingQueueConfig(tuple(uint256 bootstrapValidatorSetSize, uint256 bootstrapFlushSize, uint256 normalFlushSizeMin, uint256 normalFlushSizeQuotient, uint256 maxQueueFlushSize) _config)",
-      "function validateBlobs(bytes _blobsInput) view returns (bytes32[], bytes32, bytes[])",
-      "function validateHeaderWithAttestations(tuple(bytes32 lastArchiveRoot, bytes32 blockHeadersHash, bytes32 blobsHash, bytes32 inHash, bytes32 outHash, uint256 slotNumber, uint256 timestamp, address coinbase, bytes32 feeRecipient, tuple(uint128 feePerDaGas, uint128 feePerL2Gas) gasFees, uint256 totalManaUsed) _header, tuple(bytes signatureIndices, bytes signaturesOrAddresses) _attestations, address[] _signers, tuple(uint8 v, bytes32 r, bytes32 s) _attestationsAndSignersSignature, bytes32 _digest, bytes32 _blobsHash, tuple(bool ignoreDA) _flags)",
-      "function vote(uint256 _proposalId)"
+    "eth:0xaf73Dd51D1eb8a079BB097f39c832cDD00ac691c": [
+      "constructor(address _rollup, address _underlying, address _inbox, uint256 _version)",
+      "error FeeJuicePortal__Unauthorized()",
+      "error SafeERC20FailedOperation(address token)",
+      "event DepositToAztecPublic(bytes32 indexed to, uint256 amount, bytes32 secretHash, bytes32 key, uint256 index)",
+      "event FeesDistributed(address indexed to, uint256 amount)",
+      "function INBOX() view returns (address)",
+      "function L2_TOKEN_ADDRESS() view returns (bytes32)",
+      "function ROLLUP() view returns (address)",
+      "function UNDERLYING() view returns (address)",
+      "function VERSION() view returns (uint256)",
+      "function depositToAztecPublic(bytes32 _to, uint256 _amount, bytes32 _secretHash) returns (bytes32, uint256)",
+      "function distributeFees(address _to, uint256 _amount)"
     ],
     "eth:0xBbB4aF368d02827945748b28CD4b2D42e4A37480": [
       "constructor(address _singleton)"
     ],
-    "eth:0xc9698B7AdEf9ee63F3Bf5cFF38086e4E836579f0": [
-      "constructor(address _rollup, uint256 _version)",
-      "error MerkleLib__InvalidIndexForPathLength()",
-      "error MerkleLib__InvalidRoot(bytes32 expected, bytes32 actual, bytes32 leaf, uint256 leafIndex)",
-      "error Outbox__AlreadyNullified(uint256 epoch, uint256 leafIndex)",
-      "error Outbox__InvalidChainId()",
-      "error Outbox__InvalidRecipient(address expected, address actual)",
-      "error Outbox__LeafIndexOutOfBounds(uint256 leafIndex, uint256 pathLength)",
-      "error Outbox__NothingToConsumeAtEpoch(uint256 epoch)",
-      "error Outbox__PathTooLong()",
-      "error Outbox__Unauthorized()",
-      "error Outbox__VersionMismatch(uint256 expected, uint256 actual)",
-      "event MessageConsumed(uint256 indexed epoch, bytes32 indexed root, bytes32 indexed messageHash, uint256 leafId)",
-      "event RootAdded(uint256 indexed epoch, bytes32 indexed root)",
-      "function ROLLUP() view returns (address)",
-      "function VERSION() view returns (uint256)",
-      "function consume(tuple(tuple(bytes32 actor, uint256 version) sender, tuple(address actor, uint256 chainId) recipient, bytes32 content) _message, uint256 _epoch, uint256 _leafIndex, bytes32[] _path)",
-      "function getRootData(uint256 _epoch) view returns (bytes32)",
-      "function hasMessageBeenConsumedAtEpoch(uint256 _epoch, uint256 _leafId) view returns (bool)",
-      "function insert(uint256 _epoch, bytes32 _root)"
+    "eth:0xCD6855470A01aBcd989126A1183Fb50673952548": [
+      "constructor(address _vetoer, address _governance, uint256 _slashingDisableDuration)",
+      "error Slasher__AlreadyInitialized()",
+      "error Slasher__CallerNotAuthorizedToSlash(address caller)",
+      "error Slasher__CallerNotVetoer(address caller, address vetoer)",
+      "error Slasher__PayloadVetoed(address payload)",
+      "error Slasher__ProposerZeroAddress()",
+      "error Slasher__SlashFailed(address target, bytes data, bytes returnData)",
+      "error Slasher__SlashingDisabled()",
+      "event SlashingDisabled(uint256 disabledUntil)",
+      "event VetoedPayload(address indexed payload)",
+      "function GOVERNANCE() view returns (address)",
+      "function PROPOSER() view returns (address)",
+      "function SLASHING_DISABLE_DURATION() view returns (uint256)",
+      "function VETOER() view returns (address)",
+      "function initializeProposer(address _proposer)",
+      "function isSlashingEnabled() view returns (bool)",
+      "function setSlashingEnabled(bool _enabled)",
+      "function slash(address _payload) returns (bool)",
+      "function slashingDisabledUntil() view returns (uint256)",
+      "function vetoPayload(address _payload) returns (bool)",
+      "function vetoedPayloads(address payload) view returns (bool vetoed)"
+    ],
+    "eth:0xD6E890c615d6f99681a00771C20ed04516288898": [
+      "error FeeLib__InvalidManaLimit(uint256 maximum, uint256 provided)",
+      "error FeeLib__InvalidManaTarget(uint256 minimum, uint256 provided)",
+      "error RewardLib__InvalidSequencerBps()",
+      "error Rollup__InvalidCheckpointNumber(uint256 expected, uint256 actual)",
+      "error Rollup__NotPastDeadline(uint256 deadline, uint256 currentEpoch)",
+      "error Rollup__UnavailableTempCheckpointLog(uint256 checkpointNumber, uint256 pendingCheckpointNumber, uint256 upperLimit)",
+      "error SafeCastOverflowedIntToUint(int256 value)",
+      "error SafeERC20FailedOperation(address token)",
+      "function canPruneAtTime(uint256 _ts) view returns (bool)",
+      "function getCheckpointReward() view returns (uint256)",
+      "function getCollectiveProverRewardsForEpoch(uint256 _epoch) view returns (uint256)",
+      "function getEpochForCheckpoint(uint256 _checkpointNumber) view returns (uint256)",
+      "function getEthPerFeeAssetAtCheckpoint(uint256 _checkpointNumber) view returns (uint256)",
+      "function getHasClaimed(address _prover, uint256 _epoch) view returns (bool)",
+      "function getHasSubmitted(uint256 _epoch, uint256 _length, address _prover) view returns (bool)",
+      "function getL1FeesAt(uint256 _timestamp) view returns (tuple(uint256 baseFee, uint256 blobFee))",
+      "function getManaLimit() view returns (uint256)",
+      "function getManaMinFeeComponentsAt(uint256 _timestamp, bool _inFeeAsset) view returns (tuple(uint256 congestionCost, uint256 congestionMultiplier, uint256 sequencerCost, uint256 proverCost))",
+      "function getManaTarget() view returns (uint256)",
+      "function getProvingCostPerMana() view returns (uint256)",
+      "function getRewardConfig() view returns (tuple(IRewardDistributor rewardDistributor, uint32 sequencerBps, IBoosterCore booster, uint96 checkpointReward))",
+      "function getRewardDistributor() view returns (IRewardDistributor)",
+      "function getSequencerRewards(address _sequencer) view returns (uint256)",
+      "function getSharesFor(address _prover) view returns (uint256)",
+      "function getSpecificProverRewardsForEpoch(uint256 _epoch, address _prover) view returns (uint256)",
+      "function summedMinFee(tuple(uint256 congestionCost, uint256 congestionMultiplier, uint256 sequencerCost, uint256 proverCost) _components) pure returns (uint256)"
     ],
     "eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80": [
       "constructor(address __owner, uint256 _unlockCliffDuration, uint256 _unlockLockDuration)",
@@ -2026,30 +2356,171 @@
       "function setRevokerOperator(address _revokerOperator)",
       "function setUnlockStartTime(uint256 _unlockStartTime)",
       "function transferOwnership(address newOwner)"
+    ],
+    "eth:0xe4F0b9769Ca04a6E3d93b5BA732b5aD80797D411": [
+      "error AttestationLib__NotASignatureAtIndex(uint256 index)",
+      "error AttestationLib__NotAnAddressAtIndex(uint256 index)",
+      "error CheckpointUnorderedInsertion()",
+      "error Rollup__AttestationsAreValid()",
+      "error Rollup__CannotInvalidateEscapeHatch()",
+      "error Rollup__CheckpointAlreadyProven()",
+      "error Rollup__CheckpointNotInPendingChain()",
+      "error Rollup__InvalidArchive(bytes32 expected, bytes32 actual)",
+      "error Rollup__InvalidAttestationIndex()",
+      "error Rollup__InvalidAttestations()",
+      "error Rollup__InvalidCheckpointNumber(uint256 expected, uint256 actual)",
+      "error Rollup__SlotAlreadyInChain(uint256 lastSlot, uint256 proposedSlot)",
+      "error Rollup__UnavailableTempCheckpointLog(uint256 checkpointNumber, uint256 pendingCheckpointNumber, uint256 upperLimit)",
+      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
+      "error SafeERC20FailedOperation(address token)",
+      "error SampleLib__SampleLargerThanIndex(uint256 sample, uint256 index)",
+      "error Staking__AlreadyExiting(address)",
+      "error Staking__BootstrapFlushSizeAboveMax(uint256 bootstrapFlushSize, uint256 maxQueueFlushSize)",
+      "error Staking__CannotSlashExitedStake(address)",
+      "error Staking__DepositOutOfGas()",
+      "error Staking__IncorrectGovProposer(uint256)",
+      "error Staking__InitiateWithdrawNeeded(address)",
+      "error Staking__InvalidBootstrapFlushSize()",
+      "error Staking__InvalidDeposit(address attester, address proposer)",
+      "error Staking__InvalidMaxQueueFlushSize()",
+      "error Staking__InvalidNormalFlushSizeQuotient()",
+      "error Staking__InvalidRecipient(address)",
+      "error Staking__InvalidStakingQueueConfig()",
+      "error Staking__NoOneToSlash(address)",
+      "error Staking__NoPendingSlasher()",
+      "error Staking__NotCanonical(address)",
+      "error Staking__NotExiting(address)",
+      "error Staking__NotOurProposal(uint256, address, address)",
+      "error Staking__NotSlasher(address, address)",
+      "error Staking__NotWithdrawer(address, address)",
+      "error Staking__NothingToExit(address)",
+      "error Staking__QueueEmpty()",
+      "error Staking__SlasherNotReady(uint256 readyAt)",
+      "error Staking__SlasherProposerNotInitialized(address slasher)",
+      "error Staking__WithdrawFailed(address)",
+      "error Staking__WithdrawalNotUnlockedYet(uint256, uint256)",
+      "error ValidatorSelection__EpochNotStable(uint256 queriedEpoch, uint32 currentTimestamp)",
+      "error ValidatorSelection__EscapeHatchAlreadySet()",
+      "error ValidatorSelection__EscapeHatchCannotBeZero()",
+      "error ValidatorSelection__EscapeHatchRollupMismatch(address expected, address actual)",
+      "error ValidatorSelection__InsufficientAttestations(uint256 minimumNeeded, uint256 provided)",
+      "error ValidatorSelection__InsufficientValidatorSetSize(uint256 actual, uint256 expected)",
+      "error ValidatorSelection__InvalidCommitteeCommitment(bytes32 reconstructed, bytes32 expected)",
+      "error ValidatorSelection__InvalidLagInEpochs(uint256 lagInEpochsForValidatorSet, uint256 lagInEpochsForRandao)",
+      "error ValidatorSelection__InvalidProposer(address expected, address actual)",
+      "event CheckpointInvalidated(uint256 indexed checkpointNumber)",
+      "event Deposit(address indexed attester, address indexed withdrawer, tuple(uint256 x, uint256 y) publicKeyInG1, tuple(uint256 x0, uint256 x1, uint256 y0, uint256 y1) publicKeyInG2, tuple(uint256 x, uint256 y) proofOfPossession, uint256 amount)",
+      "event FailedDeposit(address indexed attester, address indexed withdrawer, tuple(uint256 x, uint256 y) publicKeyInG1, tuple(uint256 x0, uint256 x1, uint256 y0, uint256 y1) publicKeyInG2, tuple(uint256 x, uint256 y) proofOfPossession)",
+      "event LegacySlasherAuthorized(address indexed legacySlasher, uint256 authorizedUntil)",
+      "event PendingSlasherCancelled(address indexed slasher)",
+      "event PendingSlasherQueued(address indexed slasher, uint256 readyAt)",
+      "event Slashed(address indexed attester, uint256 amount)",
+      "event SlasherUpdated(address indexed oldSlasher, address indexed newSlasher)",
+      "event StakingQueueConfigUpdated(tuple(uint256 bootstrapValidatorSetSize, uint256 bootstrapFlushSize, uint256 normalFlushSizeMin, uint256 normalFlushSizeQuotient, uint256 maxQueueFlushSize) config)",
+      "event ValidatorQueued(address indexed attester, address indexed withdrawer)",
+      "event WithdrawFinalized(address indexed attester, address indexed recipient, uint256 amount)",
+      "event WithdrawInitiated(address indexed attester, address indexed recipient, uint256 amount)",
+      "function getAttesterAtIndex(uint256 _index) view returns (address)",
+      "function getAttesterView(address _attester) view returns (tuple(Status status, uint256 effectiveBalance, tuple(uint256 withdrawalId, uint256 amount, uint256 exitableAt, address recipientOrWithdrawer, bool isRecipient, bool exists) exit, tuple(tuple(uint256 x, uint256 y) publicKey, address withdrawer) config))",
+      "function getAvailableValidatorFlushes() view returns (uint256)",
+      "function getConfig(address _attester) view returns (tuple(tuple(uint256 x, uint256 y) publicKey, address withdrawer))",
+      "function getEntryQueueAt(uint256 _index) view returns (tuple(address attester, address withdrawer, tuple(uint256 x, uint256 y) publicKeyInG1, tuple(uint256 x0, uint256 x1, uint256 y0, uint256 y1) publicKeyInG2, tuple(uint256 x, uint256 y) proofOfPossession, bool moveWithLatestRollup))",
+      "function getEntryQueueFlushSize() view returns (uint256)",
+      "function getEntryQueueLength() view returns (uint256)",
+      "function getEscapeHatch() view returns (IEscapeHatch)",
+      "function getEscapeHatchForEpoch(uint256 _epoch) view returns (IEscapeHatch)",
+      "function getExit(address _attester) view returns (tuple(uint256 withdrawalId, uint256 amount, uint256 exitableAt, address recipientOrWithdrawer, bool isRecipient, bool exists))",
+      "function getLagInEpochsForRandao() view returns (uint256)",
+      "function getLagInEpochsForValidatorSet() view returns (uint256)",
+      "function getNextFlushableEpoch() view returns (uint256)",
+      "function getSampleSeedAt(uint256 _epoch) view returns (uint256)",
+      "function getSamplingSizeAt(uint256 _epoch) view returns (uint256)",
+      "function getStatus(address _attester) view returns (Status)",
+      "function getTargetCommitteeSize() view returns (uint256)"
+    ],
+    "eth:0xF459348962F5eA3A9A101826B03A2CE1F459E51A": [
+      "constructor(address _rollup, address _bondToken, uint96 _bondSize, uint96 _withdrawalTax, uint96 _failedHatchPunishment, uint256 _frequency, uint256 _activeDuration, uint256 _lagInHatches, uint256 _proposingExitDelay)",
+      "error AddressSnapshotLib__CannotAddAddressZero()",
+      "error AddressSnapshotLib__IndexOutOfBounds(uint256 index, uint256 size)",
+      "error CheckpointUnorderedInsertion()",
+      "error EscapeHatch__AlreadyInCandidateSet(address candidate)",
+      "error EscapeHatch__AlreadyValidated(uint256 hatch)",
+      "error EscapeHatch__HatchTooEarly(uint256 hatch)",
+      "error EscapeHatch__InvalidConfiguration()",
+      "error EscapeHatch__InvalidStatus(uint8 expected, uint8 actual)",
+      "error EscapeHatch__NoDesignatedProposer(uint256 hatch)",
+      "error EscapeHatch__NotExitableYet(uint256 exitableAt, uint256 currentTime)",
+      "error EscapeHatch__NotInCandidateSet(address candidate)",
+      "error EscapeHatch__OnlyRollup(address caller, address rollup)",
+      "error EscapeHatch__SetUnstable(uint256 hatch)",
+      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
+      "error SafeERC20FailedOperation(address token)",
+      "event ArchiveUpdated(address indexed proposer, uint128 checkpointNumber, bytes32 archive)",
+      "event CandidateExitInitiated(address indexed candidate, uint256 exitableAt)",
+      "event CandidateExited(address indexed candidate, uint256 amountReturned)",
+      "event CandidateJoined(address indexed candidate)",
+      "event CandidateSelected(uint256 indexed hatch, address indexed candidate)",
+      "event ProofValidated(uint256 indexed hatch, address indexed proposer, bool success, uint256 punishment)",
+      "function LAG_IN_EPOCHS_FOR_RANDAO() view returns (uint256)",
+      "function LAG_IN_EPOCHS_FOR_SET_SIZE() view returns (uint256)",
+      "function getActiveDuration() view returns (uint256)",
+      "function getBondSize() view returns (uint96)",
+      "function getBondToken() view returns (address)",
+      "function getCandidateAtIndex(uint256 _index) view returns (address)",
+      "function getCandidateAtIndexForHatch(uint256 _index, uint256 _hatch) view returns (address)",
+      "function getCandidateCount() view returns (uint256)",
+      "function getCandidateCountForHatch(uint256 _hatch) view returns (uint256)",
+      "function getCandidateInfo(address _candidate) view returns (tuple(uint8 status, uint96 amount, uint32 exitableAt, uint32 lastCheckpointNumber, bytes32 lastSubmittedArchive))",
+      "function getCurrentHatch() view returns (uint256)",
+      "function getDesignatedProposer(uint256 _hatch) view returns (address)",
+      "function getFailedHatchPunishment() view returns (uint96)",
+      "function getFirstEpoch(uint256 _hatch) view returns (uint256)",
+      "function getFrequency() view returns (uint256)",
+      "function getHatch(uint256 _epoch) view returns (uint256)",
+      "function getLagInHatches() view returns (uint256)",
+      "function getProposingExitDelay() view returns (uint256)",
+      "function getRollup() view returns (address)",
+      "function getSeedTimestamp(uint256 _hatch) view returns (uint32)",
+      "function getSetTimestamp(uint256 _hatch) view returns (uint32)",
+      "function getWithdrawalTax() view returns (uint96)",
+      "function initiateExit()",
+      "function isCandidate(address _candidate) view returns (bool)",
+      "function isHatchOpen(uint256 _epoch) view returns (bool isOpen, address proposer)",
+      "function isHatchPrepared(uint256 _hatch) view returns (bool)",
+      "function isHatchValidated(uint256 _hatch) view returns (bool)",
+      "function joinCandidateSet()",
+      "function leaveCandidateSet()",
+      "function selectCandidates()",
+      "function updateSubmittedArchive(address _proposer, uint128 _checkpointNumber, bytes32 _archive)",
+      "function validateProofSubmission(uint256 _hatch)"
     ]
   },
   "usedTemplates": {
-    "aztecnetwork/Aztec": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
-    "aztecnetwork/AztecTokenPositionRegistry": "0x2d27dd3ae14c3e39c77c357b78b58cf9d4c77416f7005bb0250281b446f3e91a",
-    "aztecnetwork/CoinIssuer": "0xad402525be14cd15f55e214fbfd8755c078fcc2856db211ef4b58901bcd2f179",
-    "aztecnetwork/EscapeHatch": "0x5555b0d53e482dfd03319fb326d9f665681ce0dd11ca471f81e5625fb50474d9",
-    "aztecnetwork/FeeJuicePortal": "0x193b3bb31b560ecab87e835029c77ca8cf4fc35a58770da83aed880321dad6fc",
-    "aztecnetwork/Governance": "0xdc442dc3c042b138d88e1b5e2c4d8ba46f795e9a48c7c46477c00e01523c2fd2",
-    "aztecnetwork/GovernanceProposer": "0x7697d56ada834d7a8fd2bac871dd4f061e050e75049db151c87f5eece19cea5a",
-    "aztecnetwork/GSE": "0x912870b314d1d65815360dbc1bf26b7daee605ae8f56d9a7f19aecb329d1139c",
+    "aztecnetwork/Aztec": "0x6645b996e229c02b4737c90730c261bc0b40a8d8a0ed903fcc8c039623221cba",
+    "aztecnetwork/AztecTokenPositionRegistry": "0xbb5bddf8fb4926118d0ef3469b3086bb5dc40f9af4a17c5a9cd10623506c93c7",
+    "aztecnetwork/BaseStaker": "0xbe778bfb27d4d9585c342b646028d3bad68fb26168156c904a48c5b373ec2d57",
+    "aztecnetwork/CoinIssuer": "0x6825408743b0c7e46d0cec3f16d4748fae3fb787ca2c2b89640d7d555becde6d",
+    "aztecnetwork/EscapeHatch": "0xc36cbb4ae29d811b032b67a9e8c26ce44b3da19a440e19ae5b0a590807f5f015",
+    "aztecnetwork/FeeJuicePortal": "0x2220ce7bc91c3a23540726e62656d72722d8c8239ab644098879b5af16f4756d",
+    "aztecnetwork/Governance": "0x11a37c83761ef56358402fbc3702bdf6337b5338eec472c4121e4231e7add5c8",
+    "aztecnetwork/GovernanceProposer": "0x6e8c1a085e1fd1a85a3b2670ef57d2e0a22a7cfdfde4a43d951674f78e74a0bb",
+    "aztecnetwork/GSE": "0x0e4f7a451f9ed261f93dd5d51762a435b0a673d3d45a45b08911307ef4b4cb16",
     "aztecnetwork/HonkVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "aztecnetwork/Inbox": "0xab45f2970fd991e71ac7c0032e513847c23061a30092e3d0bea3e1338a943f39",
-    "aztecnetwork/Outbox": "0xd63b758b00060f1911371257317592562ddae4f54116af88c22cd6554be68fe9",
-    "aztecnetwork/ProtocolTreasury": "0x78ca59ebd4f7b695c2b5d0fecd58e91fe5fbbeb8ca52ea9aece4b5e2bbcadf19",
-    "aztecnetwork/Registry": "0x3cabef297c0e945a0b683ea3d9f2b600efcbf9f6a67813ac1b4b43e90227648e",
-    "aztecnetwork/RewardBooster": "0x5162095ff7caf7a33a27c7a43e68f8d3922f07ed17c56671ddc43d68664cf8e6",
-    "aztecnetwork/RewardDistributor": "0x632291cc2c4ea7e0c1673b1e90a76530d138c428b1fb9f963e6369dae46652c2",
-    "aztecnetwork/Rollup": "0x02ae625ba384749e026577f1b723c92fdb1e37a36e7e3a7031ee6106f507541f",
-    "aztecnetwork/Slasher": "0x11856da8900b5a5f0f9e18028192e22343096f44eb0387eb1f46c636f2fdeb51",
+    "aztecnetwork/Inbox": "0x26ded5aebf0bbb78b6882b2137d3ed9f4bf66d3b5f2e9aa69e2caae9f6e55af3",
+    "aztecnetwork/Outbox": "0x7580184922415986aca787f016313f146eece507d34e8a9a40486d19dc1e7b6a",
+    "aztecnetwork/ProtocolTreasury": "0x71da2f0f489ca7ecd5a6726664e7577c5bbe1f7b1f44035f7317f6e484cb9b63",
+    "aztecnetwork/Registry": "0x437e8a5971b7d95018382a3710bac26bad359cb485d438d82ff20a3ec9d60202",
+    "aztecnetwork/RewardBooster": "0x008d6f3c4e0a56a67c2b1321a470ee91733b809719f55133f46b32ca53e99cb5",
+    "aztecnetwork/RewardDistributor": "0x5db34519cfa677f6b064e107fb903172733613d58a6c80a2fa34cb92d45c9bbf",
+    "aztecnetwork/RewardExtLib": "0xea2d4759183105169e492c6bd9d5789b841a4bdcc1c2e6de98a51f3f7ad8e0c7",
+    "aztecnetwork/Rollup": "0x91a75ed550b37d29bc4bcddc5f612e317f62775dee8c8664414dc3f2f719d5e9",
+    "aztecnetwork/RollupOperationsExtLib": "0x660d5b68ddffc6256478e4e9f1d2a1630668023a810dd7ad50a5921d67011e1f",
+    "aztecnetwork/Slasher": "0x9027c14b463ac4037b2f5fa60bcb29e2b638d56894e824453f33fefa07582cde",
+    "aztecnetwork/SlashingProposer": "0x70b79a36c61b6cf4228961c38942c4583a1cea12fff8b55c4566c5961d001891",
     "aztecnetwork/SlashPayloadCloneable": "0x821354dfe974f5f53d0c4ebf4ce746144ad353e598809041e44c28c9c572fd92",
-    "aztecnetwork/TallySlashingProposer": "0xf37e4988c8b34c84395d9921831ed7268f9799075fe9cfdafd3cc19e071753e7",
+    "aztecnetwork/ValidatorOperationsExtLib": "0x85a15d05fdc1ce926a97e31cd9f09ae813b449a9982a9e5a8d7bf37cc56a95f5",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 25487818 },
-  "permissionsConfigHash": "0x2cc5d2c47983e411329eb39b1d5c60a1c88eb0643c3d5cc58bc2cc135dbbb9db"
+  "usedBlockNumbers": { "ethereum": 25580001 },
+  "permissionsConfigHash": "0x7e9a541ef06420dffc5db4164cf24bf93cd0f1a53ecd15b18f2f8fbe1d327806"
 }

@@ -1,31 +1,73 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "SHARPVerifier",
-  "description": "Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.",
+  "description": "Immutable GPS statement verifier shared by Starknet and other StarkWare systems. It verifies a STARK proof of the exact Cairo bootloader stored onchain, forces the bootloader configuration into public memory, and registers a fact for every bootloader task. A fact is also considered valid when it exists in the time-limited reference fact registry.",
   "category": "shared",
-  // "ignoreRelatives": ["referenceFactRegistry"], // referral expired: see isValidOnReference() in the contract
   "fields": {
     "bootloaderProgramContractAddress": {
+      "description": "Contract containing the full compiled Cairo outer bootloader executed by every proof. The Solidity verifier copies this program into the STARK public memory, so its onchain bytecode pins the exact program. A malicious bootloader could register arbitrary application facts even when the underlying application programs were not executed correctly.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
       "handler": {
         "type": "storage",
         "slot": 3,
         "returnType": "address"
-      }
+      },
+      "template": "shared-sharp-verifier/CairoBootloaderProgram"
     },
     "memoryPageFactRegistry": {
+      "description": "Registry used by the Solidity STARK verifier for public-memory page facts. If it accepted an invalid page fact, proof verification could use memory that was not committed to correctly.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
       "handler": {
         "type": "storage",
         "slot": 4,
         "returnType": "address"
-      }
+      },
+      "template": "shared-sharp-verifier/MemoryPageFactRegistry"
     },
     "cpuFrilessVerifiers": {
+      "description": "Immutable Solidity STARK verifiers indexed by the caller-supplied `cairoVerifierId`. Each entry fixes a Cairo CPU layout and its verifier helper contracts. Any entry that accepts an invalid execution proof can register arbitrary SHARP facts.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
       "handler": {
         "type": "dynamicArray",
         "slot": 5,
         "returnType": "address"
       },
       "template": "shared-sharp-verifier/CpuFrilessVerifier"
+    },
+    "getBootloaderConfig": {
+      "description": "The three bootloader configuration words forced into the proven program output. In modern versions they are (1) a Pedersen commitment to the ordered list of supported simple-bootloader program hashes, (2) the applicative-bootloader program hash, and (3) a Pedersen commitment to the ordered list of supported recursive Cairo-verifier program hashes. The 2024_10 verifier instead uses a direct Poseidon commitment for word 0. Reproducing a list commitment is insufficient unless its exact ordered preimage and every program behind the listed hashes are also published and reproducible. A malicious allowed program can make invalid nested tasks appear proven.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      "handler": {
+        "type": "call",
+        "method": "getBootloaderConfig",
+        "args": []
+      },
+      "edit": [
+        "shape",
+        "simpleBootloaderConfigurationCommitment",
+        "applicativeBootloaderProgramHash",
+        "supportedCairoVerifierProgramHashesCommitment"
+      ]
+    },
+    "referenceFactRegistry": {
+      "description": "Previous SHARP fact registry whose facts remain valid until `referralExpirationTime`. Its complete verifier and bootloader trust chain is therefore part of this verifier's active safety assumptions during the referral window.",
+      "severity": "HIGH",
+      "type": "EXTERNAL"
+    },
+    "referralExpirationTime": {
+      "description": "Unix timestamp after which facts from `referenceFactRegistry` stop being accepted. Before this time, either registry can satisfy a fact lookup.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "referralHasExpired": {
+      "description": "Once a referral to a verifier expires, its entry has to be removed from the all Starkware verifiers' zk catalog pages. Note that if an upstream verifier is already expired, then the current one is not reachable and could be ignored.",
+      "severity": "HIGH",
+      "copy": "referralExpirationTime",
+      "edit": ["<", ["env", "timestamp"]]
     }
   }
 }

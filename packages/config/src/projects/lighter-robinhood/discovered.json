@@ -1,0 +1,404 @@
+{
+  "name": "lighter-robinhood",
+  "timestamp": 1784545986,
+  "configHash": "0x74fe45fb2033ef91c26708241090402289381d8f144e33c694df9da88a2cfebb",
+  "entries": [
+    {
+      "name": "Lighter Validator 2",
+      "address": "robinhood:0x114E0f5a71D169DdfBAef41160A0Ac789f7015cA",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7",
+          "description": "can commit, verify, execute batches, and revert committed but not yet executed batches.",
+          "role": ".validators"
+        }
+      ]
+    },
+    {
+      "name": "Lighter Validator 1",
+      "address": "robinhood:0x19f3e744b6e8FbA3Bc3737437dC82E394638b88b",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7",
+          "description": "can commit, verify, execute batches, and revert committed but not yet executed batches.",
+          "role": ".validators"
+        }
+      ]
+    },
+    {
+      "name": "Lighter Governor",
+      "address": "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "eoaWithUpgradePermissions": true,
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7",
+          "description": "manage validators, update the address that manages the insurance fund, update the treasury address that collects fees from markets, add and update markets and assets.",
+          "role": ".networkGovernor"
+        },
+        {
+          "permission": "upgrade",
+          "from": "robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+          "role": "admin",
+          "via": [
+            {
+              "address": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
+              "delay": 1814400
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31",
+          "role": "admin",
+          "via": [
+            {
+              "address": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
+              "delay": 1814400
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7",
+          "role": "admin",
+          "via": [
+            {
+              "address": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
+              "delay": 1814400
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
+          "delay": 1814400,
+          "role": ".getMaster"
+        }
+      ]
+    },
+    {
+      "name": "UpgradeGatekeeper",
+      "address": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
+      "type": "Contract",
+      "template": "lighter/UpgradeGatekeeper",
+      "sourceHashes": [
+        "0x897bcb49a87330dfd6cf64b3848b2ecf503f7720b70c8c08b942741f952d681d"
+      ],
+      "proxyType": "immutable",
+      "description": "Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7",
+          "role": "admin"
+        }
+      ],
+      "values": {
+        "$immutable": true,
+        "approvedUpgradeNoticePeriod": 1814400,
+        "approvedUpgradeNoticePeriodFmt": "21d",
+        "getMaster": "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213",
+        "managedContracts": [
+          "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7",
+          "robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31",
+          "robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d"
+        ],
+        "nextTargets": [],
+        "noticePeriodFinishTimestamp": 0,
+        "securityCouncilAddress": "robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb",
+        "upgradeStartTimestamp": 0,
+        "upgradeStatus": 0,
+        "versionId": 4,
+        "zkLighterProxy": "robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d"
+      },
+      "fieldMeta": {
+        "getMaster": { "severity": "HIGH" },
+        "approvedUpgradeNoticePeriodFmt": {
+          "description": "upgrade delay, can be skipped by the 'securityCouncil' role."
+        }
+      },
+      "implementationNames": {
+        "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716": "UpgradeGatekeeper"
+      }
+    },
+    {
+      "name": "Lighter Security Council",
+      "address": "robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
+          "description": "can reduce the upgrade delay to zero seconds.",
+          "role": ".securityCouncilAddress"
+        }
+      ]
+    },
+    {
+      "name": "DesertVerifier",
+      "address": "robinhood:0x56aeED6920DBB9E198C2C0072147A45684A06E10",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "robinhood:0x56aeED6920DBB9E198C2C0072147A45684A06E10": ""
+      }
+    },
+    {
+      "name": "Lighter Validator 3",
+      "address": "robinhood:0x8eC9b15e83E69418350d7286e9679e4DcEf7001f",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7",
+          "description": "can commit, verify, execute batches, and revert committed but not yet executed batches.",
+          "role": ".validators"
+        }
+      ]
+    },
+    {
+      "name": "Lighter",
+      "address": "robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "zkLighter proxy",
+      "values": {
+        "$admin": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
+        "$implementation": [
+          "robinhood:0xE470e41Cacc197EA07f879577765A8c81234ED7B",
+          "robinhood:0x1be72833f96e47366610CCFb9Bec081FE69EECf5"
+        ],
+        "additionalZkLighter": "robinhood:0x1be72833f96e47366610CCFb9Bec081FE69EECf5",
+        "desertVerifier": "robinhood:0x56aeED6920DBB9E198C2C0072147A45684A06E10",
+        "getMaster": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
+        "getTarget": "robinhood:0xE470e41Cacc197EA07f879577765A8c81234ED7B",
+        "governance": "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7",
+        "PRIORITY_EXPIRATION": 1209600,
+        "verifier": "robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31"
+      },
+      "fieldMeta": {
+        "verifier": { "severity": "HIGH" },
+        "desertVerifier": { "severity": "HIGH" }
+      },
+      "implementationNames": {
+        "robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d": "Proxy",
+        "robinhood:0xE470e41Cacc197EA07f879577765A8c81234ED7B": "",
+        "robinhood:0x1be72833f96e47366610CCFb9Bec081FE69EECf5": ""
+      }
+    },
+    {
+      "name": "ZkLighterVerifier",
+      "address": "robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31",
+      "type": "Contract",
+      "template": "lighter/ZkLighterVerifier",
+      "sourceHashes": [
+        "0x317a8c60bf36af0b293fad7aaf9ae5d178a0c2ea316b493b5c8b962d4daea6f6",
+        "0x59e0ec2f0ddd3e5e201753df9c0d5acf7b63eaeffcef7037e926b825152d4278"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.",
+      "values": {
+        "$admin": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
+        "$implementation": "robinhood:0xA3c70B197AcE329D9e09C753DA7874B78F1D00f4",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "getMaster": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
+        "getTarget": "robinhood:0xA3c70B197AcE329D9e09C753DA7874B78F1D00f4"
+      },
+      "implementationNames": {
+        "robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31": "Proxy",
+        "robinhood:0xA3c70B197AcE329D9e09C753DA7874B78F1D00f4": "ZkLighterVerifier"
+      }
+    },
+    {
+      "name": "Governance",
+      "address": "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7",
+      "type": "Contract",
+      "template": "lighter/Governance",
+      "sourceHashes": [
+        "0x317a8c60bf36af0b293fad7aaf9ae5d178a0c2ea316b493b5c8b962d4daea6f6",
+        "0x8077a97b0121aacfd0e919d68968f559b6c979ab9357e7c5c61138d20d78166b"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Manages the list of validators and the network governor.",
+      "values": {
+        "$admin": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
+        "$implementation": "robinhood:0x3468Dcab5a2D81Af207B3e301DFA889321989a61",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "getMaster": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
+        "getTarget": "robinhood:0x3468Dcab5a2D81Af207B3e301DFA889321989a61",
+        "MAX_ACCOUNT_INDEX": 281474976710654,
+        "MAX_API_KEY_INDEX": 254,
+        "MAX_ASSET_INDEX": 62,
+        "MAX_BATCH_DEPOSIT_LENGTH": 1000,
+        "MAX_DEPOSIT_CAP_TICKS": "1152921504606846975",
+        "MAX_MASTER_ACCOUNT_INDEX": 140737488355327,
+        "MAX_ORDER_BASE_AMOUNT": 281474976710655,
+        "MAX_ORDER_PRICE": 4294967295,
+        "MAX_ORDER_QUOTE_AMOUNT": 281474976710655,
+        "MAX_PERPS_MARKET_INDEX": 254,
+        "MAX_POOL_SHARES_TO_MINT_OR_BURN": "1152921504606846975",
+        "MAX_SPOT_MARKET_INDEX": 4094,
+        "MAX_STAKING_SHARES_TO_MINT_OR_BURN": "1152921504606846975",
+        "MAX_TICK_SIZE": "340282366920938463463374607431768211455",
+        "MIN_ASSET_INDEX": 1,
+        "MIN_ORDER_PRICE": 1,
+        "MIN_POOL_SHARES_TO_MINT_OR_BURN": 1,
+        "MIN_SPOT_MARKET_INDEX": 2048,
+        "MIN_STAKING_SHARES_TO_MINT_OR_BURN": 1,
+        "NATIVE_ASSET_INDEX": 1,
+        "networkGovernor": "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213",
+        "NIL_ACCOUNT_INDEX": 281474976710655,
+        "PRIORITY_EXPIRATION": 1209600,
+        "QUOTE_ASSET_INDEX": 3,
+        "quoteAsset": "robinhood:0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168",
+        "validators": [
+          "robinhood:0x19f3e744b6e8FbA3Bc3737437dC82E394638b88b",
+          "robinhood:0x114E0f5a71D169DdfBAef41160A0Ac789f7015cA",
+          "robinhood:0x8eC9b15e83E69418350d7286e9679e4DcEf7001f"
+        ]
+      },
+      "fieldMeta": { "networkGovernor": { "severity": "HIGH" } },
+      "implementationNames": {
+        "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7": "Proxy",
+        "robinhood:0x3468Dcab5a2D81Af207B3e301DFA889321989a61": "Governance"
+      }
+    }
+  ],
+  "abis": {
+    "robinhood:0x3468Dcab5a2D81Af207B3e301DFA889321989a61": [
+      "constructor()",
+      "error ZkLighter_Governance_GovernorCannotBeZero()",
+      "error ZkLighter_Governance_InvalidQuoteAssetAddress()",
+      "error ZkLighter_Governance_InvalidValidator()",
+      "error ZkLighter_Governance_OnlyGovernor()",
+      "error ZkLighter_Governance_ValidatorCannotBeZero()",
+      "event Initialized(uint8 version)",
+      "event NewGovernor(address newGovernor)",
+      "event ValidatorStatusUpdate(address validatorAddress, bool isActive)",
+      "function MAX_ACCOUNT_INDEX() view returns (uint48)",
+      "function MAX_API_KEY_INDEX() view returns (uint8)",
+      "function MAX_ASSET_INDEX() view returns (uint16)",
+      "function MAX_BATCH_DEPOSIT_LENGTH() view returns (uint64)",
+      "function MAX_DEPOSIT_CAP_TICKS() view returns (uint64)",
+      "function MAX_MASTER_ACCOUNT_INDEX() view returns (uint48)",
+      "function MAX_ORDER_BASE_AMOUNT() view returns (uint48)",
+      "function MAX_ORDER_PRICE() view returns (uint32)",
+      "function MAX_ORDER_QUOTE_AMOUNT() view returns (uint48)",
+      "function MAX_PERPS_MARKET_INDEX() view returns (uint16)",
+      "function MAX_POOL_SHARES_TO_MINT_OR_BURN() view returns (uint64)",
+      "function MAX_SPOT_MARKET_INDEX() view returns (uint16)",
+      "function MAX_STAKING_SHARES_TO_MINT_OR_BURN() view returns (uint64)",
+      "function MAX_TICK_SIZE() view returns (uint128)",
+      "function MIN_ASSET_INDEX() view returns (uint16)",
+      "function MIN_ORDER_PRICE() view returns (uint32)",
+      "function MIN_POOL_SHARES_TO_MINT_OR_BURN() view returns (uint64)",
+      "function MIN_SPOT_MARKET_INDEX() view returns (uint16)",
+      "function MIN_STAKING_SHARES_TO_MINT_OR_BURN() view returns (uint64)",
+      "function NATIVE_ASSET_INDEX() view returns (uint16)",
+      "function NIL_ACCOUNT_INDEX() view returns (uint48)",
+      "function PRIORITY_EXPIRATION() view returns (uint256)",
+      "function QUOTE_ASSET_INDEX() view returns (uint16)",
+      "function changeGovernor(address _newGovernor)",
+      "function initialize(bytes initializationParameters)",
+      "function isActiveValidator(address _address) view",
+      "function networkGovernor() view returns (address)",
+      "function quoteAsset() view returns (address)",
+      "function requireGovernor(address _address) view",
+      "function setValidator(address _validator, bool _active)",
+      "function upgrade(bytes upgradeParameters)",
+      "function validators(address) view returns (bool)"
+    ],
+    "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716": [
+      "constructor(address _securityCouncilAddress, address _zkLighterProxy)",
+      "event NewUpgradable(uint256 indexed versionId, address indexed upgradeable)",
+      "event NoticePeriodChange(uint256 newNoticePeriod)",
+      "event NoticePeriodStart(uint256 indexed versionId, address[] newTargets, uint256 noticePeriod)",
+      "event PreparationStart(uint256 indexed versionId)",
+      "event UpgradeCancel(uint256 indexed versionId)",
+      "event UpgradeComplete(uint256 indexed versionId, address[] newTargets)",
+      "function addUpgradeable(address addr)",
+      "function approvedUpgradeNoticePeriod() view returns (uint256)",
+      "function cancelUpgrade()",
+      "function cutUpgradeNoticePeriod(uint256 _upgradeStartTimestamp)",
+      "function finishUpgrade(bytes[] targetsUpgradeParameters)",
+      "function getMaster() view returns (address master)",
+      "function managedContracts(uint256) view returns (address)",
+      "function nextTargets(uint256) view returns (address)",
+      "function noticePeriodFinishTimestamp() view returns (uint256)",
+      "function securityCouncilAddress() view returns (address)",
+      "function startPreparation() returns (bool)",
+      "function startUpgrade(address[] newTargets)",
+      "function transferMastership(address _newMaster)",
+      "function upgradeStartTimestamp() view returns (uint256)",
+      "function upgradeStatus() view returns (uint8)",
+      "function versionId() view returns (uint256)",
+      "function zkLighterProxy() view returns (address)"
+    ],
+    "robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d": [
+      "constructor(address target, bytes targetInitializationParameters)",
+      "function getMaster() view returns (address master)",
+      "function getTarget() view returns (address target)",
+      "function initialize(bytes) pure",
+      "function transferMastership(address _newMaster)",
+      "function upgrade(bytes) pure",
+      "function upgradeTarget(address newTarget, bytes newTargetUpgradeParameters)"
+    ],
+    "robinhood:0xA3c70B197AcE329D9e09C753DA7874B78F1D00f4": [
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function initialize(bytes)",
+      "function upgrade(bytes upgradeParameters)"
+    ],
+    "robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31": [
+      "constructor(address target, bytes targetInitializationParameters)",
+      "function getMaster() view returns (address master)",
+      "function getTarget() view returns (address target)",
+      "function initialize(bytes) pure",
+      "function transferMastership(address _newMaster)",
+      "function upgrade(bytes) pure",
+      "function upgradeTarget(address newTarget, bytes newTargetUpgradeParameters)"
+    ],
+    "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7": [
+      "constructor(address target, bytes targetInitializationParameters)",
+      "function getMaster() view returns (address master)",
+      "function getTarget() view returns (address target)",
+      "function initialize(bytes) pure",
+      "function transferMastership(address _newMaster)",
+      "function upgrade(bytes) pure",
+      "function upgradeTarget(address newTarget, bytes newTargetUpgradeParameters)"
+    ]
+  },
+  "usedTemplates": {
+    "lighter/Governance": "0x4e9f04516598b2c63a839e9e92296b4c684dadcc7a872a6e7ba64e3413d7cdec",
+    "lighter/UpgradeGatekeeper": "0x72341d695123479e7b06142a86f758d7b9488ac1cb776c7411630080ba1e9a59",
+    "lighter/ZkLighterVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+  },
+  "usedBlockNumbers": { "robinhood": 14656078 },
+  "permissionsConfigHash": "0x9b9c64773933f1e2c923a7b768e1cb7194286c7d1c2cb4990e5f6903674374db"
+}

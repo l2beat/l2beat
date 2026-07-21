@@ -627,6 +627,35 @@ describeDatabase(InteropTransferRepository.name, (db) => {
     },
   )
 
+  describe(InteropTransferRepository.prototype.getAfterSerialId.name, () => {
+    it('returns full transfers after the cursor, paged by the limit', async () => {
+      const first = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))
+      const second = transfer('plugin1', 'msg2', 'deposit', UnixTime(200))
+      const third = transfer('plugin1', 'msg3', 'deposit', UnixTime(300))
+      await repository.insertMany([first, second, third])
+
+      const firstPage = await repository.getAfterSerialId('0', 2)
+      expect(firstPage.transfers.map((t) => t.transferId)).toEqual([
+        'msg1',
+        'msg2',
+      ])
+      expect(firstPage.latestSerialId).not.toEqual(undefined)
+
+      const secondPage = await repository.getAfterSerialId(
+        firstPage.latestSerialId ?? '',
+        2,
+      )
+      expect(secondPage.transfers.map((t) => t.transferId)).toEqual(['msg3'])
+
+      const emptyPage = await repository.getAfterSerialId(
+        secondPage.latestSerialId ?? '',
+        2,
+      )
+      expect(emptyPage.transfers).toEqual([])
+      expect(emptyPage.latestSerialId).toEqual(undefined)
+    })
+  })
+
   describe(InteropTransferRepository.prototype.updateFinancials.name, () => {
     it('updates financial data and marks transfer as processed', async () => {
       const record = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))
@@ -1295,6 +1324,61 @@ describeDatabase(InteropTransferRepository.name, (db) => {
         })
 
         expect(result.map((x) => x.transferId)).toEqual(['msg1'])
+      })
+
+      it('filters by abstract token id on either side', async () => {
+        await repository.insertMany([
+          {
+            ...transfer(
+              'plugin1',
+              'msg1',
+              'deposit',
+              snapshotTimestamp - 10,
+              'ethereum',
+              'arbitrum',
+              10,
+            ),
+            srcAbstractTokenId: 'tokenA',
+            dstAbstractTokenId: 'tokenB',
+          },
+          {
+            ...transfer(
+              'plugin1',
+              'msg2',
+              'deposit',
+              snapshotTimestamp - 9,
+              'ethereum',
+              'arbitrum',
+              10,
+            ),
+            srcAbstractTokenId: 'tokenB',
+            dstAbstractTokenId: 'tokenA',
+          },
+          {
+            ...transfer(
+              'plugin1',
+              'msg3',
+              'deposit',
+              snapshotTimestamp - 8,
+              'ethereum',
+              'arbitrum',
+              10,
+            ),
+            srcAbstractTokenId: 'tokenB',
+            dstAbstractTokenId: undefined,
+          },
+        ])
+
+        const result = await repository.getProjectTransfersPage({
+          snapshotTimestamp,
+          sourceChains: ['ethereum'],
+          destinationChains: ['arbitrum'],
+          plugins: ['plugin1'],
+          abstractTokenId: 'tokenA',
+          limit: 10,
+        })
+
+        expect(result.map((x) => x.transferId)).toEqual(['msg2', 'msg1'])
       })
 
       it('excludes same-chain transfers and returns empty when plugins or chains are empty', async () => {

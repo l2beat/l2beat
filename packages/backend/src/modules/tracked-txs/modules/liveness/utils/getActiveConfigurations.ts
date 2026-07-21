@@ -2,8 +2,8 @@ import type {
   TrackedTxConfigEntry,
   TrackedTxLivenessConfig,
 } from '@l2beat/shared'
-import type { SavedConfiguration } from '@l2beat/shared-pure'
 import type { TrackedTxProject } from '../../../../../config/Config'
+import type { SavedConfiguration } from '../../../../../tools/uif/multi/types'
 import { getSyncedUntil } from '../../../utils/getSyncedUntil'
 
 export function getActiveConfigurations(

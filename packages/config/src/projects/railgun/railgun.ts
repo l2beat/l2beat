@@ -219,6 +219,7 @@ export const railgun: BaseProject = {
       sentiment: 'warning',
       orderHint: executionStartOffset,
       description: `DAO-approved upgrades wait ${formatSeconds(executionStartOffset)} before they can execute, giving users time to unshield funds if they do not approve the change.`,
+      walkawayTest: { passed: true },
     },
     reproducibility: {
       value: 'Reproducible',
@@ -227,7 +228,7 @@ export const railgun: BaseProject = {
         'The contracts, circuits, and supporting software needed to participate in the protocol are publicly available and can be run locally.',
     },
     privacy: {
-      value: 'None',
+      value: 'Optional compliance',
       sentiment: 'good',
       description:
         'Compliance is optional at the core protocol level: users can create proofs of innocence to disassociate deposits from flagged addresses, and relayers can choose to require them.',

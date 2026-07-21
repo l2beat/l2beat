@@ -1,12 +1,17 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Level2CpuFrilessVerifier",
+  "description": "Legacy immutable Solidity verifier for one Cairo CPU layout, together with its arithmetic, Merkle, FRI, OODS, and periodic-column helper contracts.",
   "category": "spam",
   "fields": {
     "constructorArgs": {
+      "description": "Immutable verifier dependencies and security parameters.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
       "handler": {
-        "type": "constructorArgs"
-      },
-      "template": "shared-sharp-verifier/ignoreComputeSpam"
+        "type": "constructorArgs",
+        "nameArgs": true
+      }
     }
   }
 }

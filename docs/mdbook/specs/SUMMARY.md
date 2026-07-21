@@ -38,4 +38,6 @@
 - [Diffovery](./l2b_specs/diffovery.md)
 - [TokenDB](./l2b_specs/token_db/README.md)
     - [Automatic token ingestion](./l2b_specs/token_db/automatic_token_ingestion.md)
+    - [Token relations](./l2b_specs/token_db/token_relations.md)
     - [Intent / Plan / Execute](./l2b_specs/token_db/intent_plan_execute.md)
+    - [Abstract token merging](./l2b_specs/token_db/abstract_token_merging.md)

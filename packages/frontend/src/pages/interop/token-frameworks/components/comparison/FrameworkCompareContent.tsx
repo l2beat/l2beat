@@ -1,13 +1,11 @@
 import { formatSeconds } from '@l2beat/shared-pure'
-import { useState } from 'react'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { TokenFrameworksData } from '~/server/features/scaling/interop/getTokenFrameworksData'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
+import { InteropCompareContent } from '../../../components/comparison/InteropCompareContent'
+import type { EntitySelectOption } from '../../../components/comparison/InteropEntitySelect'
 import type { InteropTokenFramework } from '../../getInteropTokenFrameworksData'
-import { FrameworkSelect } from './FrameworkSelect'
-import { HeadToHeadRow } from './HeadToHeadRow'
-import type { Side } from './types'
+import { type Side, toComparisonSide } from './types'
 
 export function FrameworkCompareContent({
   tokenFrameworks,
@@ -20,8 +18,12 @@ export function FrameworkCompareContent({
   frameworkTable: TokenFrameworksData['frameworkTable'] | undefined
   isLoading: boolean
 }) {
-  const [leftId, setLeftId] = useState<string>()
-  const [rightId, setRightId] = useState<string>()
+  const options: EntitySelectOption[] = tokenFrameworks.map((framework) => ({
+    id: framework.id,
+    iconUrl: framework.iconUrl,
+    label: framework.label,
+    secondaryLabel: framework.name,
+  }))
 
   const getSide = (id: string | undefined): Side | undefined => {
     const framework = tokenFrameworks.find((f) => f.id === id)
@@ -34,85 +36,53 @@ export function FrameworkCompareContent({
     return frameworkTable?.find((e) => e.id === id)?.tokens.length ?? null
   }
 
-  const left = getSide(leftId)
-  const right = getSide(rightId)
-  const showSkeleton = isLoading && (!!leftId || !!rightId)
-
   return (
-    <div>
-      <h2 className="font-bold text-heading-18 md:text-heading-20">
-        Frameworks Head-to-Head
-      </h2>
-      <p className="mt-1 font-medium text-secondary text-xs leading-[1.2]">
-        Select two frameworks & view head-to-head comparison
-      </p>
-      <HorizontalSeparator className="my-6" />
-      <div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:gap-5">
-        <FrameworkSelect
-          frameworks={tokenFrameworks}
-          value={leftId}
-          onChange={setLeftId}
-          excludeId={rightId}
-        />
-        <span className="text-center font-semibold text-base text-secondary sm:text-left">
-          vs.
-        </span>
-        <FrameworkSelect
-          frameworks={tokenFrameworks}
-          value={rightId}
-          onChange={setRightId}
-          excludeId={leftId}
-        />
-      </div>
-
-      <div className="mt-6 flex flex-col gap-5">
-        <HeadToHeadRow
-          label="Volume"
-          left={left}
-          right={right}
-          leftValue={left?.entry.volume ?? null}
-          rightValue={right?.entry.volume ?? null}
-          format={(v) => formatCurrency(v, 'usd')}
-          isLoading={showSkeleton}
-        />
-        <HeadToHeadRow
-          label="Transfers"
-          left={left}
-          right={right}
-          leftValue={left?.entry.transferCount ?? null}
-          rightValue={right?.entry.transferCount ?? null}
-          format={formatInteger}
-          isLoading={showSkeleton}
-        />
-        <HeadToHeadRow
-          label="Tokens"
-          left={left}
-          right={right}
-          leftValue={getTokenCount(leftId)}
-          rightValue={getTokenCount(rightId)}
-          format={formatInteger}
-          isLoading={showSkeleton}
-        />
-        <HeadToHeadRow
-          label="Avg. transfer time"
-          left={left}
-          right={right}
-          leftValue={left?.entry.averageDurationSeconds ?? null}
-          rightValue={right?.entry.averageDurationSeconds ?? null}
-          format={formatSeconds}
-          lowerIsBetter
-          isLoading={showSkeleton}
-        />
-        <HeadToHeadRow
-          label="Avg. transfer size"
-          left={left}
-          right={right}
-          leftValue={left?.entry.averageValue ?? null}
-          rightValue={right?.entry.averageValue ?? null}
-          format={(v) => formatCurrency(v, 'usd')}
-          isLoading={showSkeleton}
-        />
-      </div>
-    </div>
+    <InteropCompareContent
+      title="Frameworks Head-to-Head"
+      description="Select two frameworks & view head-to-head comparison"
+      options={options}
+      isLoading={isLoading}
+      getComparison={(leftId, rightId) => {
+        const left = getSide(leftId)
+        const right = getSide(rightId)
+        return {
+          leftSide: toComparisonSide(left),
+          rightSide: toComparisonSide(right),
+          rows: [
+            {
+              label: 'Volume',
+              leftValue: left?.entry.volume ?? null,
+              rightValue: right?.entry.volume ?? null,
+              format: (value) => formatCurrency(value, 'usd'),
+            },
+            {
+              label: 'Transfers',
+              leftValue: left?.entry.transferCount ?? null,
+              rightValue: right?.entry.transferCount ?? null,
+              format: formatInteger,
+            },
+            {
+              label: 'Tokens',
+              leftValue: getTokenCount(leftId),
+              rightValue: getTokenCount(rightId),
+              format: formatInteger,
+            },
+            {
+              label: 'Avg. transfer time',
+              leftValue: left?.entry.averageDurationSeconds ?? null,
+              rightValue: right?.entry.averageDurationSeconds ?? null,
+              format: formatSeconds,
+              lowerIsBetter: true,
+            },
+            {
+              label: 'Avg. transfer size',
+              leftValue: left?.entry.averageValue ?? null,
+              rightValue: right?.entry.averageValue ?? null,
+              format: (value) => formatCurrency(value, 'usd'),
+            },
+          ],
+        }
+      }}
+    />
   )
 }

@@ -63,6 +63,9 @@ export const pageLoaders = {
   InteropTokenFrameworksPage: async () =>
     (await import('./interop/token-frameworks/InteropTokenFrameworksPage'))
       .InteropTokenFrameworksPage,
+  InteropIntentBridgesPage: async () =>
+    (await import('./interop/intent-bridges/InteropIntentBridgesPage'))
+      .InteropIntentBridgesPage,
   DataAvailabilitySummaryPage: async () =>
     (await import('./data-availability/summary/DataAvailabilitySummaryPage'))
       .DataAvailabilitySummaryPage,
@@ -98,6 +101,8 @@ export const pageLoaders = {
       .EcosystemProjectPage,
   GovernancePage: async () =>
     (await import('./governance/GovernancePage')).GovernancePage,
+  NativeRollupsPage: async () =>
+    (await import('./native-rollups/NativeRollupsPage')).NativeRollupsPage,
   EthereumConnectPage: async () =>
     (await import('./governance/ethereum-connect/EthereumConnectPage'))
       .EthereumConnectPage,

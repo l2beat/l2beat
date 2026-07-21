@@ -1,8 +1,13 @@
 {
   "name": "edgex",
-  "timestamp": 1783501903,
+  "timestamp": 1783938661,
   "configHash": "0x7b612ee90a3e5afdcce8adbc1d609340a4a06b887724d5027611d9d830fd306d",
   "entries": [
+    {
+      "address": "eth:0x085F09cc1e8cfedc40F257891EeA6c572c9EAe8d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "address": "eth:0x0a7B0Ac8d40754545D5C1fD3607Ba64678a6CBC5",
       "type": "EOA",
@@ -73,7 +78,8 @@
           "eth:0x9d8F61C5635Af2FDf8088bcd0248050A3A8B0C39",
           "eth:0x81165b6504520416487E5b4935865b4D3eeaa6e5",
           "eth:0x5a68268d63a193Aaa459e532de48106F03763D09",
-          "eth:0x12ba3BE5ad1DAaF1FDDb854adC2871dcCB2A4229"
+          "eth:0x12ba3BE5ad1DAaF1FDDb854adC2871dcCB2A4229",
+          "eth:0x085F09cc1e8cfedc40F257891EeA6c572c9EAe8d"
         ],
         "constructorArgs": [
           ["eth:0xaB82EB440f459649092aAc0aF61875E5A0d58cf3"],
@@ -82,7 +88,7 @@
         "hasRegisteredFact": true,
         "identify": "StarkWare_FinalizableCommittee_2022_1",
         "isFinalized": false,
-        "signaturesRequired": 1
+        "signaturesRequired": 2
       },
       "fieldMeta": {
         "constructorArgs": {
@@ -491,7 +497,7 @@
         "FREEZE_GRACE_PERIOD": 604800,
         "getEnableWindowDuration": 1209600,
         "getGlobalConfigCode": 0,
-        "getLastBatchId": 65203,
+        "getLastBatchId": 65378,
         "getOrderRoot": "3531663064398379414392103051782416009365270089329406087415787723190509217307",
         "getOrderTreeHeight": 64,
         "getRegisteredAvailabilityVerifiers": [
@@ -502,7 +508,7 @@
         ],
         "getRollupTreeHeight": 64,
         "getRollupVaultRoot": "2342595862804194058781558162417993093531983529298102817989527487868713080358",
-        "getSequenceNumber": 65118,
+        "getSequenceNumber": 65293,
         "getUpgradeActivationDelay": 0,
         "getValidiumTreeHeight": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "getValidiumVaultRoot": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -980,6 +986,6 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "starkex/FinalizableGpsFactAdapter": "0x2c4115608421d0d7aabe41291500b1f02a4d2989db1976f2c05a07b91fe4ba47"
   },
-  "usedBlockNumbers": { "ethereum": 25486870 },
-  "permissionsConfigHash": "0x200cb118fc31d1a085cefa87422cff454d38e706224c3f156e9947ca12e899a4"
+  "usedBlockNumbers": { "ethereum": 25523123 },
+  "permissionsConfigHash": "0xf3224eece7f1cad9b47318f2ca993c86fe800e143450a669ee19bece420fbab1"
 }

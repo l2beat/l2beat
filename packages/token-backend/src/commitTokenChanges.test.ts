@@ -3,6 +3,7 @@ import type {
   DeployedTokenRecord,
   TokenDatabase,
   TokenDbHistoryEntryInsert,
+  TokenRelationRecord,
 } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
@@ -21,14 +22,24 @@ describe(commitTokenChanges.name, () => {
       updateByChainAndAddress: mockFn().resolvesTo(undefined),
       deleteByPrimaryKey: mockFn().resolvesTo(undefined),
     })
+    const tokenRelation = mockObject<TokenDatabase['tokenRelation']>({
+      insert: mockFn().resolvesTo(undefined),
+      updateByPrimaryKey: mockFn().resolvesTo(undefined),
+      deleteByPrimaryKey: mockFn().resolvesTo(undefined),
+    })
     const tokenDb = mockObject<TokenDatabase>({
       abstractToken,
       deployedToken,
+      tokenRelation,
       tokenDbHistory: mockHistory(),
     })
 
     const abstract = abstractRecord('USDC01', 'USDC')
     const deployed = deployedRecord('ethereum', '0xaaa', 'USDC01')
+    const relation = tokenRelationRecord(
+      deployed,
+      deployedRecord('arbitrum', '0xbbb', 'USDC01'),
+    )
 
     const commands: Command[] = [
       { type: 'AddAbstractTokenCommand', record: abstract },
@@ -55,11 +66,24 @@ describe(commitTokenChanges.name, () => {
         pk: { chain: deployed.chain, address: deployed.address },
         existing: deployed,
       },
+      { type: 'AddTokenRelationCommand', record: relation },
+      {
+        type: 'UpdateTokenRelationCommand',
+        pk: relationPk(relation),
+        existing: relation,
+        update: { transfer: { transferId: 'transfer-2' } },
+      },
+      {
+        type: 'DeleteTokenRelationCommand',
+        pk: relationPk(relation),
+        existing: relation,
+      },
     ]
 
     await commitTokenChanges(tokenDb, commands, {
       kind: 'manual',
       user: 'someone@x.io',
+      intent: null,
     })
 
     expect(abstractToken.insert).toHaveBeenOnlyCalledWith(abstract)
@@ -76,6 +100,14 @@ describe(commitTokenChanges.name, () => {
       chain: deployed.chain,
       address: deployed.address,
     })
+    expect(tokenRelation.insert).toHaveBeenOnlyCalledWith(relation)
+    expect(tokenRelation.updateByPrimaryKey).toHaveBeenOnlyCalledWith(
+      relationPk(relation),
+      { transfer: { transferId: 'transfer-2' } },
+    )
+    expect(tokenRelation.deleteByPrimaryKey).toHaveBeenOnlyCalledWith(
+      relationPk(relation),
+    )
   })
 
   it('passes deployed-token commands through verbatim, including any proof field', async () => {
@@ -108,7 +140,7 @@ describe(commitTokenChanges.name, () => {
           },
         },
       ],
-      { kind: 'manual', user: 'someone@x.io' },
+      { kind: 'manual', user: 'someone@x.io', intent: null },
     )
 
     expect(insert).toHaveBeenOnlyCalledWith(deployed)
@@ -154,6 +186,7 @@ describe(commitTokenChanges.name, () => {
       await commitTokenChanges(tokenDb, commands, {
         kind: 'manual',
         user: 'someone@x.io',
+        intent: { type: 'DeleteAbstractTokenIntent', id: abstract.id },
       })
 
       expect(insert).toHaveBeenCalledTimes(3)
@@ -165,6 +198,7 @@ describe(commitTokenChanges.name, () => {
         userEmail: 'someone@x.io',
         commandType: 'AddAbstractTokenCommand',
         command: commands[0],
+        intent: { type: 'DeleteAbstractTokenIntent', id: abstract.id },
         ingestionLog: null,
       })
       expect(entries[1]!).toEqual({
@@ -173,6 +207,7 @@ describe(commitTokenChanges.name, () => {
         userEmail: 'someone@x.io',
         commandType: 'UpdateDeployedTokenCommand',
         command: commands[1],
+        intent: { type: 'DeleteAbstractTokenIntent', id: abstract.id },
         ingestionLog: null,
       })
       expect(entries[2]!).toEqual({
@@ -181,6 +216,7 @@ describe(commitTokenChanges.name, () => {
         userEmail: 'someone@x.io',
         commandType: 'DeleteAbstractTokenCommand',
         command: commands[2],
+        intent: { type: 'DeleteAbstractTokenIntent', id: abstract.id },
         ingestionLog: null,
       })
     })
@@ -214,6 +250,7 @@ describe(commitTokenChanges.name, () => {
       for (const call of insert.calls) {
         expect(call.args[0].source).toEqual('ingestion')
         expect(call.args[0].userEmail).toEqual(null)
+        expect(call.args[0].intent).toEqual(null)
         expect(call.args[0].ingestionLog).toEqual(
           'step 1\nstep 2\nOutcome: write',
         )
@@ -235,10 +272,11 @@ describe(commitTokenChanges.name, () => {
       await commitTokenChanges(
         tokenDb,
         [{ type: 'AddAbstractTokenCommand', record: abstract }],
-        { kind: 'manual', user: 'someone@x.io' },
+        { kind: 'manual', user: 'someone@x.io', intent: null },
       )
 
       expect(insert.calls[0]!.args[0].ingestionLog).toEqual(null)
+      expect(insert.calls[0]!.args[0].intent).toEqual(null)
     })
   })
 })
@@ -258,6 +296,7 @@ function abstractRecord(id: string, symbol: string): AbstractTokenRecord {
     iconUrl: null,
     coingeckoId: null,
     coingeckoListingTimestamp: null,
+    additionalCoingeckoEntries: null,
     comment: null,
     reviewed: false,
     isPriceUnreliable: false,
@@ -278,5 +317,31 @@ function deployedRecord(
     deploymentTimestamp: UnixTime(1),
     comment: null,
     metadata: null,
+  }
+}
+
+function tokenRelationRecord(
+  tokenFrom: Pick<DeployedTokenRecord, 'chain' | 'address'>,
+  tokenTo: Pick<DeployedTokenRecord, 'chain' | 'address'>,
+): TokenRelationRecord {
+  return {
+    tokenFromChain: tokenFrom.chain,
+    tokenFromAddress: tokenFrom.address,
+    tokenToChain: tokenTo.chain,
+    tokenToAddress: tokenTo.address,
+    plugin: 'superbridge',
+    bridgeType: 'burnAndMint',
+    transfer: { transferId: 'transfer-1' },
+  }
+}
+
+function relationPk(relation: TokenRelationRecord) {
+  return {
+    tokenFromChain: relation.tokenFromChain,
+    tokenFromAddress: relation.tokenFromAddress,
+    tokenToChain: relation.tokenToChain,
+    tokenToAddress: relation.tokenToAddress,
+    plugin: relation.plugin,
+    bridgeType: relation.bridgeType,
   }
 }

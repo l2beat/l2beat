@@ -1,5 +1,4 @@
 import {
-  assert,
   ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
@@ -28,7 +27,6 @@ import {
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
-import type { ProjectPermissionedAccount } from '../../types'
 
 const discovery = new ProjectDiscovery('linea')
 
@@ -37,59 +35,6 @@ const timelockDelay = discovery.getContractValue<number>(
   'getMinDelay',
 )
 const timelockDelayString = formatSeconds(timelockDelay)
-
-// const zodiacRoles = discovery.getContractValue<{
-//   roles: Record<string, Record<string, boolean>>
-// }>('Roles', 'roles')
-// const zodiacPauserRole = '1'
-// const zodiacPausers: ProjectPermissionedAccount[] =
-//   discovery.formatPermissionedAccounts(
-//     Object.keys(zodiacRoles.roles[zodiacPauserRole].members),
-//   )
-// const zodiacPausersHardcoded = discovery.getPermissionedAccounts(
-//   'Roles',
-//   'pausers',
-// )
-
-// assert(
-//   zodiacPausers.length === zodiacPausersHardcoded.length &&
-//     zodiacPausers[0].address === zodiacPausersHardcoded[0].address,
-//   'disco config is wrong for the pausers, check hardcoded pausers in the Roles module',
-// )
-
-const zodiacL2Roles = discovery.getContractValue<{
-  roles: Record<string, Record<string, boolean>>
-}>('L2Roles', 'roles')
-const zodiacVoyageXpMinterRole = '1'
-const zodiacVoyageXpMinters: ProjectPermissionedAccount[] =
-  discovery.formatPermissionedAccounts(
-    Object.keys(zodiacL2Roles.roles[zodiacVoyageXpMinterRole].members),
-  )
-const zodiacVoyageXpMintersHardcoded = discovery.getPermissionedAccounts(
-  'L2Roles',
-  'voyageXpMinters',
-)
-assert(
-  zodiacVoyageXpMinters.length === zodiacVoyageXpMintersHardcoded.length &&
-    zodiacVoyageXpMinters[0].address ===
-      zodiacVoyageXpMintersHardcoded[0].address,
-  'disco config is wrong for the voyageXpMinters, check hardcoded voyageXpMinters in the L2Roles module',
-)
-
-const zodiacL2PauserRole = '2'
-const zodiacL2Pausers: ProjectPermissionedAccount[] =
-  discovery.formatPermissionedAccounts(
-    Object.keys(zodiacL2Roles.roles[zodiacL2PauserRole].members),
-  )
-const zodiacL2PausersHardcoded = discovery.getPermissionedAccounts(
-  'L2Roles',
-  'pausers',
-)
-assert(
-  zodiacL2Pausers.length === zodiacL2PausersHardcoded.length &&
-    zodiacL2Pausers[0].address === zodiacL2PausersHardcoded[0].address,
-  'disco config is wrong for the L2 pausers, check hardcoded pausers in the L2Roles module',
-)
 
 const periodInSeconds = discovery.getContractValue<number>(
   'LineaRollup',
@@ -110,6 +55,8 @@ const withdrawalLimitString = `Currently, there is a general limit of ${utils.fo
 )} time window.`
 
 const chainId = 59144
+
+const v8_0UpgradeTS = UnixTime(1784201579)
 
 export const linea: ScalingProject = {
   type: 'layer2',
@@ -395,6 +342,29 @@ export const linea: ScalingProject = {
           functionSignature:
             'function finalizeBlocks(bytes _aggregatedProof, uint256 _proofType, tuple(bytes32 parentStateRootHash, uint256 endBlockNumber, tuple(bytes32 parentShnarf, bytes32 snarkHash, bytes32 finalStateRootHash, bytes32 dataEvaluationPoint, bytes32 dataEvaluationClaim) shnarfData, uint256 lastFinalizedTimestamp, uint256 finalTimestamp, bytes32 lastFinalizedL1RollingHash, bytes32 l1RollingHash, uint256 lastFinalizedL1RollingHashMessageNumber, uint256 l1RollingHashMessageNumber, uint256 l2MerkleTreesDepth, bytes32[] l2MerkleRoots, bytes l2MessagingBlocksOffsets) _finalizationData)',
           sinceTimestamp: UnixTime(1734357131),
+          untilTimestamp: v8_0UpgradeTS,
+        },
+      },
+      {
+        uses: [
+          {
+            type: 'liveness',
+            subtype: 'stateUpdates',
+          },
+          {
+            type: 'l2costs',
+            subtype: 'stateUpdates',
+          },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xd19d4B5d358258f05D7B411E21A1460D11B0876F',
+          ),
+          selector: '0x755bc62f',
+          functionSignature:
+            'function finalizeBlocks(bytes _aggregatedProof, uint256 _proofType, tuple(bytes32 parentStateRootHash, uint256 endBlockNumber, tuple(bytes32 parentShnarf, bytes32 snarkHash, bytes32 finalStateRootHash, bytes32 dataEvaluationPoint, bytes32 dataEvaluationClaim) shnarfData, uint256 lastFinalizedTimestamp, uint256 finalTimestamp, bytes32 lastFinalizedL1RollingHash, bytes32 l1RollingHash, uint256 lastFinalizedL1RollingHashMessageNumber, uint256 l1RollingHashMessageNumber, uint256 l2MerkleTreesDepth, uint256 lastFinalizedForcedTransactionNumber, uint256 finalForcedTransactionNumber, bytes32 lastFinalizedForcedTransactionRollingHash, bytes32[] l2MerkleRoots, address[] filteredAddresses, bytes l2MessagingBlocksOffsets) _finalizationData)',
+          sinceTimestamp: v8_0UpgradeTS,
         },
       },
     ],
@@ -497,8 +467,8 @@ export const linea: ScalingProject = {
       references: [
         {
           title:
-            'LineaRollup.sol - Etherscan source code, submitBlobs() function',
-          url: 'https://etherscan.io/address/0xe68697690e8ff196a6abb3e1385156d87df85332#code',
+            'Eip4844BlobAcceptor.sol - Etherscan source code, submitBlobs() function',
+          url: 'https://etherscan.io/address/0x59290394dDC1cF84e671701A929710643c343530#code',
         },
       ],
     },
@@ -517,8 +487,8 @@ export const linea: ScalingProject = {
       references: [
         {
           title:
-            'LineaRollup.sol - Etherscan source code, onlyRole(OPERATOR_ROLE) modifier',
-          url: 'https://etherscan.io/address/0xe68697690e8ff196a6abb3e1385156d87df85332#code',
+            'Eip4844BlobAcceptor.sol - Etherscan source code, onlyRole(OPERATOR_ROLE) modifier',
+          url: 'https://etherscan.io/address/0x59290394dDC1cF84e671701A929710643c343530#code',
         },
       ],
     },
@@ -536,12 +506,12 @@ export const linea: ScalingProject = {
           {
             title:
               'L1MessageService.sol - Etherscan source code, claimMessageWithProof() function',
-            url: 'https://etherscan.io/address/0xe68697690e8ff196a6abb3e1385156d87df85332#code#F21#L92',
+            url: 'https://etherscan.io/address/0x59290394dDC1cF84e671701A929710643c343530#code#F21#L92',
           },
           {
             title:
-              'LineaRollup.sol - Etherscan source code, setLivenessRecoveryOperator() function',
-            url: 'https://etherscan.io/address/0xe68697690e8ff196a6abb3e1385156d87df85332#code#F36#L41',
+              'LivenessRecovery.sol - Etherscan source code, setLivenessRecoveryOperator() function ',
+            url: 'https://etherscan.io/address/0x59290394dDC1cF84e671701A929710643c343530#code#F36#L41',
           },
         ],
       },
@@ -587,8 +557,8 @@ export const linea: ScalingProject = {
         references: [
           {
             title:
-              'LineaRollup.sol - Etherscan source code, finalizeBlocks() and _verifyProof() calls',
-            url: 'https://etherscan.io/address/0xe68697690e8ff196a6abb3e1385156d87df85332#code#F38#L277',
+              'LineaRollupBase.sol - Etherscan source code, finalizeBlocks() and _verifyProof() calls',
+            url: 'https://etherscan.io/address/0x59290394dDC1cF84e671701A929710643c343530#code#F38#L277',
           },
           {
             title: 'PlonkVerifierMainnetFull.sol (Proof Type 0)',
@@ -596,7 +566,7 @@ export const linea: ScalingProject = {
           },
           {
             title: 'PlonkVerifierMainnetFull.sol (Proof Type 1)',
-            url: 'https://etherscan.io/address/0x0D0f070386edC441A63fB8FAe8FB937Bbd88c5Cb',
+            url: 'https://etherscan.io/address/0x09ac9f7E5Fb37e241e0B1e52aaF01eFE0a488a77',
           },
         ],
       },

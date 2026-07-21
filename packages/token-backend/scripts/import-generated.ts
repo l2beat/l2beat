@@ -36,6 +36,7 @@ function toAbstractToken(
     category: fileEntry.category as AbstractTokenRecord['category'],
     coingeckoId: fileEntry.coingeckoId,
     coingeckoListingTimestamp: fileEntry.coingeckoListingTimestamp,
+    additionalCoingeckoEntries: null,
     iconUrl: fileEntry.iconUrl,
     reviewed: fileEntry.reviewed ?? false,
     isPriceUnreliable: false,

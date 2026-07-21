@@ -41,6 +41,11 @@ export const strk20: BaseProject = {
       orderHint: 0,
       description:
         'The pool implementation is immediately upgradeable, so users have no delay to withdraw before a malicious upgrade can take effect.',
+      walkawayTest: {
+        passed: false,
+        reason:
+          'Currently, only centrally operated provers can generate ZK proofs for interacting with STRK-20.',
+      },
     },
     reproducibility: {
       value: 'Not published',
@@ -49,7 +54,7 @@ export const strk20: BaseProject = {
         'The STRK-20 protocol program and the sources for proving stack are not published. Users cannot independently verify the correctness of STRK-20 ZK program. They also cannot generate required ZK proofs locally and are forced to reveal private data to third party - the prover.',
     },
     privacy: {
-      value: 'Use undetectable',
+      value: 'Admin view key',
       sentiment: 'bad',
       description:
         'All private actions include auditor-encrypted metadata, so whoever controls the auditor private key can decrypt user activity retroactively. Users can not know whether their privacy was violated. Compliance is facilitated by this mandatory auditor-encrypted metadata.',
@@ -60,6 +65,7 @@ export const strk20: BaseProject = {
       PRIVACY_ATTRIBUTES.defi,
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
+    quantumResistant: true,
     riskSummary: readProjectMarkdown('strk20', 'riskSummary'),
     upgradesAndGovernance: readProjectMarkdown(
       'strk20',

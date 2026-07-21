@@ -95,6 +95,18 @@ export class ProjectDatabase {
       )`)
   }
 
+  async transaction<T>(callback: () => Promise<T>): Promise<T> {
+    await this.query('BEGIN TRANSACTION')
+    try {
+      const result = await callback()
+      await this.query('COMMIT')
+      return result
+    } catch (error) {
+      await this.query('ROLLBACK')
+      throw error
+    }
+  }
+
   async saveProject(project: BaseProject) {
     const keys = Object.keys(schema) as (keyof BaseProject)[]
     const valueKeys = keys.map((_) => '?')

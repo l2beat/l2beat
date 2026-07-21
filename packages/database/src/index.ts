@@ -9,7 +9,10 @@ export type {
   AbstractTokenRecord,
   AbstractTokenUpdateable,
 } from './repositories/AbstractTokenRepository'
-export type { ActivityRecord } from './repositories/ActivityRepository'
+export type {
+  ActivityRecord,
+  ActivityTotals,
+} from './repositories/ActivityRepository'
 export type {
   AggregatedInteropDeployedTokenRecord,
   AggregatedInteropDeployedTokenStats,
@@ -109,11 +112,6 @@ export type {
   SyncMetadataRecord,
 } from './repositories/SyncMetadataRepository'
 export type {
-  TokenConnectionPrimaryKey,
-  TokenConnectionRecord,
-  TokenConnectionUpdateable,
-} from './repositories/TokenConnectionRepository'
-export type {
   TokenDbHistoryEntryInsert,
   TokenDbHistoryEntryRecord,
   TokenDbHistoryPage,
@@ -127,6 +125,13 @@ export type {
   TokenIngestionQueueState,
 } from './repositories/TokenIngestionQueueRepository'
 export type { TokenMetadataRecord } from './repositories/TokenMetadataRepository'
+export type {
+  JsonValue,
+  TokenRelationPrimaryKey,
+  TokenRelationRecord,
+  TokenRelationRoute,
+  TokenRelationUpdateable,
+} from './repositories/TokenRelationRepository'
 export type {
   SummedByTimestampTokenValuePerProjectRecord,
   SummedByTimestampTokenValueRecord,

@@ -2,6 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Facilitates canonical L1 to L2 communication. It accepts messages (including fee asset deposits) from L1, accumulates them in an append-only frontier tree per checkpoint, and forces the Sequencers and the Rollup contract to sequentially consume the roots of these message trees, ensuring message inclusion.",
   "ignoreMethods": ["getRoot", "trees"],
+  "ignoreRelatives": ["getFeeAssetPortal"],
   "ignoreInWatchMode": [
     "getInProgress",
     "getState",
@@ -17,7 +18,6 @@
     },
     "ROLLUP": {
       "description": "The address of the core Rollup contract that possesses the permission to consume the message trees.",
-      "template": "aztecnetwork/Rollup",
       "permissions": [
         {
           "type": "interact",

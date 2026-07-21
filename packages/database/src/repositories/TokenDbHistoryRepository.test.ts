@@ -28,7 +28,28 @@ describeTokenDatabase(TokenDbHistoryRepository.name, (db) => {
         userEmail: 'someone@x.io',
         commandType: 'AddDeployedTokenCommand',
         command: entry.command,
+        intent: null,
         ingestionLog: null,
+      })
+    })
+
+    it('stores intent context when present', async () => {
+      const entry = manualAddDeployed(UnixTime(1000), 'someone@x.io')
+
+      await repository.insert({
+        ...entry,
+        intent: {
+          type: 'MergeAbstractTokenIntent',
+          sourceId: 'SOURCE',
+          targetId: 'TARGET',
+        },
+      })
+
+      const [stored] = await repository.getAll()
+      expect(stored!.intent).toEqual({
+        type: 'MergeAbstractTokenIntent',
+        sourceId: 'SOURCE',
+        targetId: 'TARGET',
       })
     })
 
@@ -42,6 +63,7 @@ describeTokenDatabase(TokenDbHistoryRepository.name, (db) => {
           type: 'AddAbstractTokenCommand',
           record: { id: 'ABC123', symbol: 'USDC' },
         },
+        intent: null,
         ingestionLog: '1. Resolved abstract\n2. Wrote token',
       })
 
@@ -50,6 +72,7 @@ describeTokenDatabase(TokenDbHistoryRepository.name, (db) => {
         source: 'ingestion',
         userEmail: null,
         commandType: 'AddAbstractTokenCommand',
+        intent: null,
         ingestionLog: '1. Resolved abstract\n2. Wrote token',
       })
     })
@@ -71,6 +94,7 @@ describeTokenDatabase(TokenDbHistoryRepository.name, (db) => {
             },
           },
         },
+        intent: null,
         ingestionLog: null,
       })
 
@@ -132,6 +156,7 @@ describeTokenDatabase(TokenDbHistoryRepository.name, (db) => {
             abstractTokenId: 'DAI01',
           },
         },
+        intent: null,
         ingestionLog: null,
       })
 
@@ -159,6 +184,30 @@ describeTokenDatabase(TokenDbHistoryRepository.name, (db) => {
       expect(noMatch.totalCount).toEqual(0)
       expect(noMatch.entries).toEqual([])
     })
+
+    it('filters entries by intent via search', async () => {
+      await repository.insert({
+        ...manualAddDeployed(UnixTime(1000), 'someone@x.io'),
+        intent: {
+          type: 'MergeAbstractTokenIntent',
+          sourceId: 'SOURCE',
+          targetId: 'TARGET',
+        },
+      })
+
+      const page = await repository.getPage({
+        offset: 0,
+        limit: 100,
+        search: 'MergeAbstractTokenIntent',
+      })
+
+      expect(page.totalCount).toEqual(1)
+      expect(page.entries[0]!.intent).toEqual({
+        type: 'MergeAbstractTokenIntent',
+        sourceId: 'SOURCE',
+        targetId: 'TARGET',
+      })
+    })
   })
 })
 
@@ -180,6 +229,7 @@ function manualAddDeployed(
         abstractTokenId: 'USDC01',
       },
     },
+    intent: null,
     ingestionLog: null,
   }
 }

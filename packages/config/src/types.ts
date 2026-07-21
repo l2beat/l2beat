@@ -64,8 +64,9 @@ export interface ProjectTechnologyChoice {
 }
 
 export interface ProjectSequencerSetSpec {
-  slotTime?: TableReadyValue
-  epochTime?: TableReadyValue
+  blockTime?: TableReadyValue
+  proposerRotationTime?: TableReadyValue
+  committeeRotationTime?: TableReadyValue
   sequencerCount?: TableReadyValue
   blockProductionAccess?: TableReadyValue
   stakePerValidator?: TableReadyValue
@@ -956,13 +957,23 @@ export interface ProjectPrivacyInfo {
   reproducibility: PrivacySummaryValue
   privacy: PrivacySummaryValue
   attributes?: PrivacyAttribute[]
+  /**
+   * Privacy-specific quantum-resistance flag. Distinct in meaning from
+   * ProjectZkCatalogInfo.quantumResistant
+   */
+  quantumResistant?: true
   riskSummary?: string
   upgradesAndGovernance?: string
 }
 
 export interface PrivacyExitWindow extends ExitWindowRisk {
   description: string
+  walkawayTest: PrivacyWalkawayTest
 }
+
+export type PrivacyWalkawayTest =
+  | { passed: true }
+  | { passed: false; reason: string }
 
 export interface PrivacySummaryValue extends TableReadyValue {
   description: string
@@ -1442,13 +1453,20 @@ export type InteropPluginName =
 
 export type InteropType = 'multichain' | 'intent' | 'canonical' | 'other'
 
-export interface InteropConfig {
+export interface InteropIntentConfig {
+  color: string
+  intentModel: TableReadyValue
+  userRecovery: TableReadyValue
+  solverAccess: TableReadyValue
+  settlement: TableReadyValue
+}
+
+interface InteropConfigBase {
   name?: string
   shortName?: string
   description?: string
   /** Longer markdown description visible on interop detailed pages. */
   detailedDescription?: string
-  type: InteropType
   /** If set to `unknown` we show `Unknown` for transfers time. */
   transfersTimeMode?: 'unknown'
   /** If true we show `Aggregated` as second line in table under project name. Should be configured
@@ -1471,6 +1489,17 @@ export interface InteropConfig {
    * this is intentionally a different (narrower) set than the chain page. */
   permissions?: Record<string, ProjectPermissions>
 }
+
+export type InteropConfig =
+  | (InteropConfigBase & {
+      type: 'intent'
+      /** Intent-specific properties displayed on intent bridge pages. */
+      intent: InteropIntentConfig
+    })
+  | (InteropConfigBase & {
+      type: Exclude<InteropType, 'intent'>
+      intent?: never
+    })
 
 export type InteropPlugin = {
   plugin: InteropPluginName

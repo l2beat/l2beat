@@ -16,7 +16,6 @@
     },
     "governanceProposer": {
       "description": "Address allowed to create proposals after sequencer signalling succeeds.",
-      "template": "aztecnetwork/GovernanceProposer",
       "permissions": [
         {
           "type": "interact",

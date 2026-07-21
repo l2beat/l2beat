@@ -51,14 +51,6 @@ export const INTEROP_CHAINS: InteropChain[] = [
     explorerUrl: 'https://optimistic.etherscan.io',
   },
   {
-    id: 'apechain',
-    name: 'ApeChain',
-    type: 'evm',
-    display: 'APE',
-    color: '#0054FA',
-    explorerUrl: 'https://apescan.io',
-  },
-  {
     id: 'polygonpos',
     iconSlug: 'polygon-pos',
     name: 'Polygon PoS',
@@ -167,15 +159,6 @@ export const INTEROP_CHAINS: InteropChain[] = [
     explorerUrl: 'https://uniscan.xyz',
   },
   {
-    id: 'forknet',
-    iconSlug: 'forknet',
-    name: 'Forknet',
-    type: 'evm',
-    display: 'FORK',
-    color: '#8B5CF6',
-    explorerUrl: 'https://forkscan.org',
-  },
-  {
     id: 'linea',
     name: 'Linea',
     type: 'evm',
@@ -190,6 +173,14 @@ export const INTEROP_CHAINS: InteropChain[] = [
     display: 'XLAYER',
     color: '#000000',
     explorerUrl: 'https://web3.okx.com/explorer/x-layer/evm',
+  },
+  {
+    id: 'adi',
+    name: 'ADI Chain',
+    type: 'evm',
+    display: 'ADI',
+    color: '#FD7108',
+    explorerUrl: 'https://explorer.adifoundation.ai',
   },
   {
     id: 'avalanche',
@@ -260,6 +251,7 @@ export const INTEROP_CHAINS: InteropChain[] = [
 export const INTEROP_ONE_SIDED_CHAINS = [
   'solana',
   'xlayer',
+  'adi',
   'plasma',
   'tron',
   'hyperliquid',

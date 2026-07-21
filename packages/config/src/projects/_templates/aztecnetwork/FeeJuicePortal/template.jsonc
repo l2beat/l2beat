@@ -8,7 +8,6 @@
     },
     "ROLLUP": {
       "description": "The core Rollup contract, possessing exclusive permission to call distributeFees and pay out sequencers and provers.",
-      "template": "aztecnetwork/Rollup",
       "permissions": [
         {
           "type": "interact",

@@ -23,5 +23,11 @@
     "hash": "0x2a3c7909036a30543d4aaa8e9501caab6f998a671d40cc3822f89c6239e6b8ab",
     "address": "ink:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1",
     "blockNumber": 31862238
+  },
+  "GasPriceOracle_v1_6_0_ink": {
+    "hash": "0x2a5cf70e1712c3e8ae9596f3b71055e47fa8d83c7e248050853c903ee70cb139",
+    "address": "ink:0x547d0fba434877D7237d511cF87FABe2ee26b152",
+    "chain": "ink",
+    "blockNumber": 50094988
   }
 }

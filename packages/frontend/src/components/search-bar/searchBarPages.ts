@@ -116,6 +116,12 @@ export const searchBarPages = withIndex([
     href: '/interop/burn-and-mint',
   },
   {
+    category: 'interop',
+    name: 'Intent bridges',
+    tags: ['pages', 'interop', 'interoperability', 'intent-bridges'],
+    href: '/interop/intent-bridges',
+  },
+  {
     category: 'zkCatalog',
     name: 'ZK Catalog',
     href: '/zk-catalog',
@@ -131,6 +137,12 @@ export const searchBarPages = withIndex([
     category: 'other',
     name: 'Governance',
     href: '/governance',
+    tags: ['pages'],
+  },
+  {
+    category: 'other',
+    name: 'Native Rollups',
+    href: '/native-rollups',
     tags: ['pages'],
   },
   {

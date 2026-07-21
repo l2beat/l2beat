@@ -12,6 +12,13 @@ export interface ActivityRecord {
   end: number
 }
 
+export interface ActivityTotals {
+  count: number
+  uopsCount: number
+  sinceTimestamp: UnixTime
+  uopsSinceTimestamp: UnixTime | undefined
+}
+
 export function toRecord(row: Selectable<Activity>): ActivityRecord {
   return {
     projectId: ProjectId(row.projectId),
@@ -219,7 +226,9 @@ export class ActivityRepository extends BaseRepository {
     )
   }
 
-  async getTpsTotalsForProjects(projectIds: ProjectId[]) {
+  async getActivityTotalsForProjects(
+    projectIds: ProjectId[],
+  ): Promise<Partial<Record<ProjectId, ActivityTotals>>> {
     if (projectIds.length === 0) return {}
 
     const rows = await this.db
@@ -227,7 +236,16 @@ export class ActivityRepository extends BaseRepository {
       .select([
         'projectId',
         (eb) => eb.fn.sum('count').as('total_count'),
+        (eb) =>
+          eb.fn
+            .sum(eb.fn.coalesce('Activity.uopsCount', 'Activity.count'))
+            .as('total_uops_count'),
         (eb) => eb.fn.min('timestamp').as('since_timestamp'),
+        (eb) =>
+          eb.fn
+            .min('timestamp')
+            .filterWhere('uopsCount', 'is not', null)
+            .as('uops_since_timestamp'),
       ])
       .where(
         'projectId',
@@ -242,7 +260,11 @@ export class ActivityRepository extends BaseRepository {
         ProjectId(row.projectId),
         {
           count: Number(row.total_count),
+          uopsCount: Number(row.total_uops_count),
           sinceTimestamp: UnixTime.fromDate(row.since_timestamp),
+          uopsSinceTimestamp: row.uops_since_timestamp
+            ? UnixTime.fromDate(row.uops_since_timestamp)
+            : undefined,
         },
       ]),
     )

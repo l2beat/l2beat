@@ -1,3 +1,62 @@
+Generated with discovered.json: 0xd8789fbda245a3c17479224e07aaf0334328a857
+
+# Diff at Tue, 14 Jul 2026 14:38:28 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@40c68fc8d6e39f5b4f69bb2e62b69938a949b435 block: 1780925461
+- current timestamp: 1784039829
+
+## Description
+
+Automata paused on 2026-07-13; reason unknown. The guardian EOA (`0xa5822fb7…41F4`) called `pause("shutdown")` on the `SuperchainConfigFake` ([tx](https://etherscan.io/tx/0xe805d831fd737aae90f8313d66da05b7eae1f721f55cda3fbadad22a37deb2a4)); OptimismPortal, L1CrossDomainMessenger, L1StandardBridge, and L1ERC721Bridge all read `paused: true` through it.
+
+## Watched changes
+
+```diff
+    contract L1ERC721Bridge (eth:0x00bd00c5C7F60e222D9CB8040270Ba929241A280) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.paused:
+-        false
++        true
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x825C858149F1E775a0f4Aeb172037B970bE7B736) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.paused:
+-        false
++        true
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0xD52ba64CBE1e3B44167f810622fBef36bE24d95c) [opstack/OptimismPortal] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.paused:
+-        false
++        true
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0xDf87154Ed6cF332931b70014bA3d9dF423074FfF) [opstack/SuperchainConfigFake] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      values.paused:
+-        false
++        true
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0xE639919b92AB6DD238aEACc6F2A8d6e355D17bd5) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      values.paused:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0xcde17bc23fd36a2571e374e48bb831701ab89829
 
 # Diff at Tue, 09 Jun 2026 12:43:31 GMT:

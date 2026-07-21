@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x84104a4ca3534bd1cf08716c959c78d936191899
+
+# Diff at Thu, 16 Jul 2026 09:16:34 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@e710b6c5d3cdbeb52887729e85025b32d82b88cf block: 1782901273
+- current timestamp: 1784193326
+
+## Description
+
+A proposal to upgrade zksync era to v31 is created: https://www.tally.xyz/gov/zksync/proposal/8054264069412312387384959632741848913824409307726784174607045091780823317020?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f.
+
+## Watched changes
+
+```diff
+    contract ZkProtocolGovernor (zksync:0x76705327e682F2d96943280D99464Ab61219e34f) [shared-zk-stack/ZkGovernor] {
+    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        16
++        17
+    }
+```
+
 Generated with discovered.json: 0x87ce9c1aa1fbd06398e6e14b8f6ecdae0bc8a6a8
 
 # Diff at Wed, 01 Jul 2026 10:22:19 GMT:

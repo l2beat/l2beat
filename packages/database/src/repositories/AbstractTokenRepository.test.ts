@@ -22,6 +22,13 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
         iconUrl: 'https://example.com/icon.png',
         coingeckoId: 'coin-1',
         coingeckoListingTimestamp: 10,
+        additionalCoingeckoEntries: [
+          {
+            coingeckoId: 'coin-1-bridged',
+            coingeckoListingTimestamp: 20,
+            iconUrl: 'https://example.com/bridged-icon.png',
+          },
+        ],
         comment: 'some comment',
       })
 
@@ -61,6 +68,13 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
         issuer: 'updated issuer',
         symbol: 'UPDT',
         iconUrl: 'https://example.com/updated-icon.png',
+        additionalCoingeckoEntries: [
+          {
+            coingeckoId: 'updated-coin-1',
+            coingeckoListingTimestamp: null,
+            iconUrl: null,
+          },
+        ],
         comment: 'updated comment',
       })
 
@@ -72,6 +86,13 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
         issuer: 'updated issuer',
         symbol: 'UPDT',
         iconUrl: 'https://example.com/updated-icon.png',
+        additionalCoingeckoEntries: [
+          {
+            coingeckoId: 'updated-coin-1',
+            coingeckoListingTimestamp: null,
+            iconUrl: null,
+          },
+        ],
         comment: 'updated comment',
       })
     })
@@ -108,6 +129,13 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
       const usdc = abstractToken({
         id: 'TK0003',
         coingeckoId: 'usd-coin',
+        additionalCoingeckoEntries: [
+          {
+            coingeckoId: 'bridged-usdc',
+            coingeckoListingTimestamp: null,
+            iconUrl: null,
+          },
+        ],
         symbol: 'USDC',
         category: 'stablecoin',
       })
@@ -117,6 +145,10 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
 
       const foundUsdc = await repository.findByCoingeckoId('usd-coin')
       expect(foundUsdc).toEqual(usdc)
+
+      const foundBridgedUsdc =
+        await repository.findByCoingeckoId('bridged-usdc')
+      expect(foundBridgedUsdc).toEqual(usdc)
     })
 
     it('returns undefined when coingeckoId does not exist', async () => {
@@ -210,6 +242,7 @@ function abstractToken(
     iconUrl: overrides.iconUrl ?? null,
     coingeckoId: overrides.coingeckoId ?? null,
     coingeckoListingTimestamp: overrides.coingeckoListingTimestamp ?? null,
+    additionalCoingeckoEntries: overrides.additionalCoingeckoEntries ?? null,
     comment: overrides.comment ?? null,
     reviewed: overrides.reviewed ?? false,
     isPriceUnreliable: overrides.isPriceUnreliable ?? false,

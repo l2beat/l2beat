@@ -1036,6 +1036,9 @@ In the first example, `["get", "systemConfig"]` is a filter that extracts the sy
 - `set`, updates a value at a specific key or index path.
 - `filter`, creates a new array with all elements that pass the filter.
 - `find`, returns the first element that passes the filter.
+- `<`, less-than comparison of numbers or strings.
+- `>`, greater-than comparison of numbers or strings.
+- `env`, reads a value from the discovery environment.
 - `format`, applies the selected type caster.
 - `if`, conditional logic (if/then/else).
 - `delete`, deletes removes keys/indices from objects/arrays.
@@ -1158,6 +1161,37 @@ The second argument must be a single filter expression that will be applied to e
 - Program: `["find", ["pipe", ["get", "v"], ["=", 43]]]`
 - Output: `{ a: 2, v: 43 }`
 
+### `<`
+
+Compares values, returning `true` when the first operand is less than every other operand.
+Both operands of each comparison must be two numbers or two strings, otherwise the runtime throws.
+With a single argument the input value is compared against it (`input < arg`).
+With multiple arguments only the first operand is compared against each of the rest.
+It does not compare adjacent pairs, so it is not a strict-ordering (ascending sequence) check.
+For example `["<", 0, ["get", "n"], 10]` on `{ n: 100 }` is `true` because it checks `0 < 100` and `0 < 10`, even though the sequence `0, 100, 10` is not ascending.
+Together with `=`, `!=` and `>` it forms the comparison operators.
+
+- Input: `1`
+- Program: `["<", 2]`
+- Output: `true`
+
+- Input: `{ n: 10 }`
+- Program: `["pipe", ["get", "n"], ["<", 5]]`
+- Output: `false`
+
+- Input: `{ n: 100 }`
+- Program: `["<", 0, ["get", "n"], 10]`
+- Output: `true`
+
+### `>`
+
+Works like `<` but returns `true` when the first operand is greater than every other operand.
+It compares the first operand against each of the rest, not adjacent pairs, so it is likewise not a strict-ordering check.
+
+- Input: `3`
+- Program: `[">", 2]`
+- Output: `true`
+
 ### `format`
 
 Formats a value using a type caster.
@@ -1268,6 +1302,34 @@ The filter must return a string.
 - Input: `{ a: 1, b: 2 }`
 - Program: `["map_keys", ["if", ["=", "a"], "first", "second"]]`
 - Output: `{ first: 1, second: 2 }`
+
+### `env`
+
+Reads a value from the discovery environment, ignoring the piped input value.
+The single argument is the key to read and must be one of the keys listed below, otherwise config validation fails.
+Reading a key whose value is unavailable in the current run (e.g. `timestamp` when no timestamp is set) throws an error.
+
+- `blockNumber` - the block number the discovery is running on.
+- `timestamp` - the UNIX timestamp (in seconds) of that block.
+- `chainName` - the name of the chain being discovered (e.g. `ethereum`).
+- `address` - the address of the contract the field belongs to.
+
+Because environment access is an explicit filter, plain strings are never treated as environment references. A literal such as `"$admin"` stays a literal, so patterns like `["pick", "$admin"]` keep working.
+
+- Input: `anything`
+- Program: `["env", "chainName"]`
+- Output: `"ethereum"`
+
+For example, to derive a boolean `hasExpired` field that becomes `true` once a stored expiration timestamp is in the past, `copy` the timestamp field and compare it against the environment timestamp:
+
+```json
+{
+  "hasExpired": {
+    "copy": "referralExpirationTime",
+    "edit": ["<", ["env", "timestamp"]]
+  }
+}
+```
 
 ### Copy feature
 

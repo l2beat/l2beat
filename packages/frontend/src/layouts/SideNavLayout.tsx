@@ -121,6 +121,10 @@ export function SideNavLayout({
               title: 'Token frameworks',
               href: '/interop/token-frameworks',
             },
+            {
+              title: 'Intent bridges',
+              href: '/interop/intent-bridges',
+            },
           ],
         },
         {
@@ -240,6 +244,10 @@ export function SideNavLayout({
         {
           title: 'Governance',
           href: '/governance',
+        },
+        {
+          title: 'Native Rollups',
+          href: '/native-rollups',
         },
         {
           title: 'Tools',

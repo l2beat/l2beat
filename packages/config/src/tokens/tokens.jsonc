@@ -2226,12 +2226,19 @@
       "deploymentTimestamp": 1781812885
     },
     {
+      "symbol": "ETH",
+      "source": "canonical",
+      "supply": "zero",
+      "category": "ether",
+      "deploymentTimestamp": 1777567931
+    },
+    {
       "symbol": "AAPL",
       "address": "0xaF3D76f1834A1d425780943C99Ea8A608f8a93f9",
       "coingeckoId": "apple-robinhood-tokenized-stock",
       "source": "native",
       "supply": "totalSupply",
-      "category": "rwaRestricted",
+      "category": "rwaPublic",
       "deploymentTimestamp": 1781105102
     },
     {
@@ -2240,7 +2247,7 @@
       "coingeckoId": "amd-robinhood-tokenized-stock",
       "source": "native",
       "supply": "totalSupply",
-      "category": "rwaRestricted",
+      "category": "rwaPublic",
       "deploymentTimestamp": 1781105109
     },
     {
@@ -2249,7 +2256,7 @@
       "coingeckoId": "amazon-robinhood-tokenized-stock",
       "source": "native",
       "supply": "totalSupply",
-      "category": "rwaRestricted",
+      "category": "rwaPublic",
       "deploymentTimestamp": 1781105205
     },
     {
@@ -2258,7 +2265,7 @@
       "coingeckoId": "asml-holding-nv-robinhood-tokenized-stock",
       "source": "native",
       "supply": "totalSupply",
-      "category": "rwaRestricted",
+      "category": "rwaPublic",
       "deploymentTimestamp": 1781039713
     },
     {
@@ -2267,7 +2274,7 @@
       "coingeckoId": "alibaba-robinhood-tokenized-stock",
       "source": "native",
       "supply": "totalSupply",
-      "category": "rwaRestricted",
+      "category": "rwaPublic",
       "deploymentTimestamp": 1781105034
     },
     {
@@ -2276,7 +2283,7 @@
       "coingeckoId": "cleanspark-robinhood-tokenized-stock",
       "source": "native",
       "supply": "totalSupply",
-      "category": "rwaRestricted",
+      "category": "rwaPublic",
       "deploymentTimestamp": 1781039599
     },
     {
@@ -2285,7 +2292,7 @@
       "coingeckoId": "coinbase-robinhood-tokenized-stock",
       "source": "native",
       "supply": "totalSupply",
-      "category": "rwaRestricted",
+      "category": "rwaPublic",
       "deploymentTimestamp": 1781106177
     },
     {
@@ -2294,7 +2301,7 @@
       "coingeckoId": "circle-internet-group-robinhood-tokenized-stock",
       "source": "native",
       "supply": "totalSupply",
-      "category": "rwaRestricted",
+      "category": "rwaPublic",
       "deploymentTimestamp": 1781105147
     },
     {
@@ -2303,7 +2310,7 @@
       "coingeckoId": "coreweave-robinhood-tokenized-stock",
       "source": "native",
       "supply": "totalSupply",
-      "category": "rwaRestricted",
+      "category": "rwaPublic",
       "deploymentTimestamp": 1781105154
     },
     {
@@ -2312,7 +2319,7 @@
       "coingeckoId": "ishares-msci-south-korea-fund-robinhood-tokenized-stock",
       "source": "native",
       "supply": "totalSupply",
-      "category": "rwaRestricted",
+      "category": "rwaPublic",
       "deploymentTimestamp": 1781105044
     },
     {
@@ -2321,7 +2328,7 @@
       "coingeckoId": "gamestop-robinhood-tokenized-stock",
       "source": "native",
       "supply": "totalSupply",
-      "category": "rwaRestricted",
+      "category": "rwaPublic",
       "deploymentTimestamp": 1781104998
     },
     {
@@ -2330,7 +2337,7 @@
       "coingeckoId": "alphabet-class-a-robinhood-tokenized-stock",
       "source": "native",
       "supply": "totalSupply",
-      "category": "rwaRestricted",
+      "category": "rwaPublic",
       "deploymentTimestamp": 1781105160
     },
     {
@@ -2339,7 +2346,7 @@
       "coingeckoId": "intel-robinhood-tokenized-stock",
       "source": "native",
       "supply": "totalSupply",
-      "category": "rwaRestricted",
+      "category": "rwaPublic",
       "deploymentTimestamp": 1781105167
     },
     {
@@ -2348,7 +2355,7 @@
       "coingeckoId": "ionq-robinhood-tokenized-stock",
       "source": "native",
       "supply": "totalSupply",
-      "category": "rwaRestricted",
+      "category": "rwaPublic",
       "deploymentTimestamp": 1781039680
     },
     {
@@ -2357,7 +2364,7 @@
       "coingeckoId": "meta-platforms-robinhood-tokenized-stock",
       "source": "native",
       "supply": "totalSupply",
-      "category": "rwaRestricted",
+      "category": "rwaPublic",
       "deploymentTimestamp": 1781105150
     },
     {
@@ -2366,7 +2373,7 @@
       "coingeckoId": "microsoft-robinhood-tokenized-stock",
       "source": "native",
       "supply": "totalSupply",
-      "category": "rwaRestricted",
+      "category": "rwaPublic",
       "deploymentTimestamp": 1781105099
     },
     {
@@ -2375,7 +2382,7 @@
       "coingeckoId": "strategy-inc-robinhood-tokenized-stock",
       "source": "native",
       "supply": "totalSupply",
-      "category": "rwaRestricted",
+      "category": "rwaPublic",
       "deploymentTimestamp": 1781104904
     },
     {
@@ -2384,7 +2391,7 @@
       "coingeckoId": "micron-technology-robinhood-tokenized-stock",
       "source": "native",
       "supply": "totalSupply",
-      "category": "rwaRestricted",
+      "category": "rwaPublic",
       "deploymentTimestamp": 1781105219
     },
     {
@@ -2393,7 +2400,7 @@
       "coingeckoId": "nebius-group-robinhood-tokenized-stock",
       "source": "native",
       "supply": "totalSupply",
-      "category": "rwaRestricted",
+      "category": "rwaPublic",
       "deploymentTimestamp": 1781105048
     },
     {
@@ -2402,7 +2409,7 @@
       "coingeckoId": "nvidia-robinhood-tokenized-stock",
       "source": "native",
       "supply": "totalSupply",
-      "category": "rwaRestricted",
+      "category": "rwaPublic",
       "deploymentTimestamp": 1781031216
     },
     {
@@ -2411,7 +2418,7 @@
       "coingeckoId": "oracle-robinhood-tokenized-stock",
       "source": "native",
       "supply": "totalSupply",
-      "category": "rwaRestricted",
+      "category": "rwaPublic",
       "deploymentTimestamp": 1781105209
     },
     {
@@ -2420,7 +2427,7 @@
       "coingeckoId": "palantir-technologies-robinhood-tokenized-stock",
       "source": "native",
       "supply": "totalSupply",
-      "category": "rwaRestricted",
+      "category": "rwaPublic",
       "deploymentTimestamp": 1781105164
     },
     {
@@ -2429,7 +2436,7 @@
       "coingeckoId": "invesco-qqq-robinhood-tokenized-stock",
       "source": "native",
       "supply": "totalSupply",
-      "category": "rwaRestricted",
+      "category": "rwaPublic",
       "deploymentTimestamp": 1781105170
     },
     {
@@ -2438,7 +2445,7 @@
       "coingeckoId": "rigetti-computing-robinhood-tokenized-stock",
       "source": "native",
       "supply": "totalSupply",
-      "category": "rwaRestricted",
+      "category": "rwaPublic",
       "deploymentTimestamp": 1781104854
     },
     {
@@ -2447,8 +2454,17 @@
       "coingeckoId": "rocket-lab-corporation-robinhood-tokenized-stock",
       "source": "native",
       "supply": "totalSupply",
-      "category": "rwaRestricted",
+      "category": "rwaPublic",
       "deploymentTimestamp": 1781104864
+    },
+    {
+      "symbol": "SGOV",
+      "address": "0x92FD66527192E3e61d4DDd13322Aa222DE86F9B5",
+      "coingeckoId": "ishares-0-3-month-treasury-bond-etf-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaPublic",
+      "deploymentTimestamp": 1781105212
     },
     {
       "symbol": "SLV",
@@ -2456,7 +2472,7 @@
       "coingeckoId": "ishares-silver-trust-robinhood-tokenized-stock",
       "source": "native",
       "supply": "totalSupply",
-      "category": "rwaRestricted",
+      "category": "rwaPublic",
       "deploymentTimestamp": 1781105112
     },
     {
@@ -2465,7 +2481,7 @@
       "coingeckoId": "sandisk-corporation-robinhood-tokenized-stock",
       "source": "native",
       "supply": "totalSupply",
-      "category": "rwaRestricted",
+      "category": "rwaPublic",
       "deploymentTimestamp": 1781105223
     },
     {
@@ -2474,7 +2490,7 @@
       "coingeckoId": "spacex-robinhood-tokenized-stock",
       "source": "native",
       "supply": "totalSupply",
-      "category": "rwaRestricted",
+      "category": "rwaPublic",
       "deploymentTimestamp": 1781535194
     },
     {
@@ -2483,7 +2499,7 @@
       "coingeckoId": "spdr-s-p-500-etf-trust-robinhood-tokenized-stock",
       "source": "native",
       "supply": "totalSupply",
-      "category": "rwaRestricted",
+      "category": "rwaPublic",
       "deploymentTimestamp": 1781105226
     },
     {
@@ -2492,7 +2508,7 @@
       "coingeckoId": "tesla-robinhood-tokenized-stock",
       "source": "native",
       "supply": "totalSupply",
-      "category": "rwaRestricted",
+      "category": "rwaPublic",
       "deploymentTimestamp": 1780668515
     },
     {
@@ -2501,8 +2517,17 @@
       "coingeckoId": "taiwan-semiconductor-manufacturing-robinhood-tokenized-stock",
       "source": "native",
       "supply": "totalSupply",
-      "category": "rwaRestricted",
+      "category": "rwaPublic",
       "deploymentTimestamp": 1781104994
+    },
+    {
+      "symbol": "USAR",
+      "address": "0xd917B029C761D264c6A312BBbcDA868658eF86a6",
+      "coingeckoId": "usa-rare-earth-robinhood-tokenized-stock",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaPublic",
+      "deploymentTimestamp": 1781105215
     },
     {
       "symbol": "USO",
@@ -2510,7 +2535,7 @@
       "coingeckoId": "united-states-oil-fund-robinhood-tokenized-stock",
       "source": "native",
       "supply": "totalSupply",
-      "category": "rwaRestricted",
+      "category": "rwaPublic",
       "deploymentTimestamp": 1781105106
     }
   ],
@@ -2804,7 +2829,7 @@
       "symbol": "RAIN",
       "address": "0x25118290e6A5f4139381D072181157035864099d",
       "source": "native",
-      "supply": "circulatingSupply"
+      "supply": "circulatingSupply" // overridden by a custom TVS formula excluding controlled allocation balances
     },
     {
       "symbol": "syrupUSDC",

@@ -1,5 +1,13 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Bootloader program for the SHARPVerifier.",
-  "category": "spam"
+  "displayName": "CairoBootloaderProgram",
+  "description": "Stores the complete compiled Cairo outer bootloader used as the top-level program of a SHARP proof. The SHARP verifier copies these words into public memory, pinning this exact executable onchain independently of the separately committed simple, applicative, and recursive-verifier programs.",
+  "category": "shared",
+  "fields": {
+    "getCompiledProgram": {
+      "description": "The full compiled Cairo outer-bootloader instruction array. Source-level reproducibility requires rebuilding this exact array, not merely publishing similar Cairo source.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE"
+    }
+  }
 }

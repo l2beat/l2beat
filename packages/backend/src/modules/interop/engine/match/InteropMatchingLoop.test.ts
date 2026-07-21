@@ -22,6 +22,7 @@ const TOKEN_A = {
   iconUrl: null,
   coingeckoId: null,
   coingeckoListingTimestamp: null,
+  additionalCoingeckoEntries: null,
   comment: null,
   reviewed: false,
   isPriceUnreliable: false,
