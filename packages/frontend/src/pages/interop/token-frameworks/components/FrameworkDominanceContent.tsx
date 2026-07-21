@@ -1,7 +1,7 @@
 import type {
   FrameworkDominanceEntry,
   TokenFrameworksData,
-} from '~/server/features/scaling/interop/getTokenFrameworksData'
+} from '~/server/features/layer2s/interop/getTokenFrameworksData'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import {
   type DominanceRow,

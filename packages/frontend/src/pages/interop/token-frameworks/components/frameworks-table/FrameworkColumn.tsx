@@ -1,4 +1,4 @@
-import type { FrameworkTableEntry } from '~/server/features/scaling/interop/getTokenFrameworksData'
+import type { FrameworkTableEntry } from '~/server/features/layer2s/interop/getTokenFrameworksData'
 import { cn } from '~/utils/cn'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import type { InteropTransferDefaults } from '../../../components/InteropTransferTrigger'

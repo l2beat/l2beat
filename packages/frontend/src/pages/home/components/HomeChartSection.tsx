@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-/** Grid of chart sections inside the Scaling / Ethereum cards: side by side
+/** Grid of chart sections inside the Layer 2s / Ethereum cards: side by side
  * from tablet up through the xl row layout, stacked and sharing the card's
  * height in the 2xl column layout. */
 export const HOME_CHART_SECTION_GRID_CLASS =

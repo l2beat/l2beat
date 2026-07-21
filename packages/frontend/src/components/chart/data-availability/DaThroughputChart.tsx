@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { Checkbox } from '~/components/core/Checkbox'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
-import { useIncludeScalingOnly } from '~/pages/data-availability/throughput/components/DaThroughputContext'
+import { useIncludeLayer2sOnly } from '~/pages/data-availability/throughput/components/DaThroughputContext'
 import { useTRPC } from '~/trpc/React'
 import {
   type ChartRange,
@@ -20,12 +20,12 @@ export function DaThroughputChart() {
   const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
   const [metric, setMetric] = useState<'percentage' | 'absolute'>('percentage')
-  const { includeScalingOnly, setIncludeScalingOnly } = useIncludeScalingOnly()
+  const { includeLayer2sOnly, setIncludeLayer2sOnly } = useIncludeLayer2sOnly()
 
   const { data: chartData, isLoading } = useQuery(
     trpc.da.chart.queryOptions({
       range,
-      includeScalingOnly,
+      includeLayer2sOnly,
     }),
   )
 
@@ -53,7 +53,7 @@ export function DaThroughputChart() {
         <DaPercentageThroughputChart
           data={chartData?.data}
           isLoading={isLoading}
-          includeScalingOnly={includeScalingOnly}
+          includeLayer2sOnly={includeLayer2sOnly}
           syncStatus={chartData?.syncStatus}
           resolution={resolution}
           range={range}
@@ -62,7 +62,7 @@ export function DaThroughputChart() {
         <DaAbsoluteThroughputChart
           data={chartData?.data}
           isLoading={isLoading}
-          includeScalingOnly={includeScalingOnly}
+          includeLayer2sOnly={includeLayer2sOnly}
           syncStatus={chartData?.syncStatus}
           resolution={resolution}
         />
@@ -78,10 +78,10 @@ export function DaThroughputChart() {
             <RadioGroupItem value="absolute">Absolute</RadioGroupItem>
           </RadioGroup>
           <Checkbox
-            name="include-scaling-only"
-            checked={includeScalingOnly}
+            name="include-layer2s-only"
+            checked={includeLayer2sOnly}
             onCheckedChange={(checked) =>
-              setIncludeScalingOnly(
+              setIncludeLayer2sOnly(
                 checked === 'indeterminate' ? false : checked,
               )
             }

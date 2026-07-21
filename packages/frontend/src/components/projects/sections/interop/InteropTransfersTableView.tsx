@@ -15,7 +15,7 @@ import {
   getTransferColumns,
   type TransferRow,
 } from '~/pages/interop/components/table/transfer-count-cell/columns'
-import type { InteropScope } from '~/server/features/scaling/interop/types'
+import type { InteropScope } from '~/server/features/layer2s/interop/types'
 import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 

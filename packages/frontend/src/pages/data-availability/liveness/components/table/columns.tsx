@@ -15,7 +15,7 @@ import { TableLink } from '~/components/table/TableLink'
 import { env } from '~/env'
 import { InfoIcon } from '~/icons/Info'
 import { BridgeNameCell } from '~/pages/data-availability/summary/components/table/BridgeNameCell'
-import { AnomalyIndicator } from '~/pages/scaling/liveness/components/AnomalyIndicator'
+import { AnomalyIndicator } from '~/pages/layer2s/liveness/components/AnomalyIndicator'
 import { DaLivenessIntervalCell } from './DaLivenessIntervalCell'
 import type { DaLivenessTableEntry } from './toDaLivenessTableEntry'
 

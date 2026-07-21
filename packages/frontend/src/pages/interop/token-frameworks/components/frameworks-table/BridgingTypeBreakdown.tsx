@@ -3,7 +3,7 @@ import {
   INTEROP_TYPE_TO_BG_COLOR,
   TRANSFER_TYPE_DISPLAY,
 } from '~/pages/interop/utils/display'
-import type { FrameworkBridgingTypeItem } from '~/server/features/scaling/interop/getTokenFrameworksData'
+import type { FrameworkBridgingTypeItem } from '~/server/features/layer2s/interop/getTokenFrameworksData'
 import { cn } from '~/utils/cn'
 import { RowStats } from './Rows'
 

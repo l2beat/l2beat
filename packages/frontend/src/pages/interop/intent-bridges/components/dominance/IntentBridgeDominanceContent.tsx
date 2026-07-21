@@ -1,4 +1,4 @@
-import type { IntentBridgesData } from '~/server/features/scaling/interop/getIntentBridgesData'
+import type { IntentBridgesData } from '~/server/features/layer2s/interop/getIntentBridgesData'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import {
   type DominanceMetric,

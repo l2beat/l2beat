@@ -1,5 +1,5 @@
 import { formatSeconds } from '@l2beat/shared-pure'
-import type { TokenFrameworksData } from '~/server/features/scaling/interop/getTokenFrameworksData'
+import type { TokenFrameworksData } from '~/server/features/layer2s/interop/getTokenFrameworksData'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { InteropCompareContent } from '../../../components/comparison/InteropCompareContent'

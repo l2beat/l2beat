@@ -1,16 +1,16 @@
 import { useMemo } from 'react'
 import { useSelectedTokenContext } from '~/components/chart/tvs/token/SelectedTokenContext'
 import { TokenCombobox } from '~/components/TokenCombobox'
-import { ExcludeRwaRestrictedTokensCheckbox } from '~/pages/scaling/components/ExcludeRwaRestrictedTokensCheckbox'
-import { useScalingRwaRestrictedTokensContext } from '~/pages/scaling/components/ScalingRwaRestrictedTokensContext'
-import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
+import { ExcludeRwaRestrictedTokensCheckbox } from '~/pages/layer2s/components/ExcludeRwaRestrictedTokensCheckbox'
+import { useLayer2sRwaRestrictedTokensContext } from '~/pages/layer2s/components/Layer2sRwaRestrictedTokensContext'
+import type { ProjectToken } from '~/server/features/layer2s/tvs/tokens/getTokensForProject'
 
 export function TokensControls({
   tokens,
 }: {
   tokens: ProjectToken[] | undefined
 }) {
-  const { excludeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
+  const { excludeRwaRestrictedTokens } = useLayer2sRwaRestrictedTokensContext()
   const { selectedToken, setSelectedToken } = useSelectedTokenContext()
   const filteredTokens = useMemo(
     () =>

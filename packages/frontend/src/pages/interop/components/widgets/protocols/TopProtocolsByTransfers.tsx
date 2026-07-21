@@ -1,4 +1,4 @@
-import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
+import type { InteropDashboardData } from '~/server/features/layer2s/interop/getInteropDashboardData'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { TopProtocolsWidget } from './TopProtocolsWidget'
 

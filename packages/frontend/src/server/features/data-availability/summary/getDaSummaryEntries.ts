@@ -16,12 +16,12 @@ import {
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
 import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
+import { getLiveness } from '../../layer2s/liveness/getLiveness'
+import type { LivenessResponse } from '../../layer2s/liveness/types'
 import {
   getProjectsChangeReport,
   type ProjectsChangeReport,
 } from '../../projects-change-report/getProjectsChangeReport'
-import { getLiveness } from '../../scaling/liveness/getLiveness'
-import type { LivenessResponse } from '../../scaling/liveness/types'
 import { getProjectVerificationWarnings } from '../../utils/getIsProjectVerified'
 import {
   type CommonDaEntry,
@@ -156,7 +156,7 @@ function getDaSummaryEntry(
         .map((project) => ({
           ...project,
           icon: manifest.getUrl(`/icons/${project.slug}.png`),
-          url: `/scaling/projects/${project.slug}`,
+          url: `/layer2s/projects/${project.slug}`,
         })),
       dacInfo: undefined,
     }
@@ -177,7 +177,7 @@ function getDaSummaryEntry(
         .map((project) => ({
           ...project,
           icon: manifest.getUrl(`/icons/${project.slug}.png`),
-          url: `/scaling/projects/${project.slug}`,
+          url: `/layer2s/projects/${project.slug}`,
         })),
       dacInfo: undefined,
     })
@@ -235,7 +235,7 @@ function getDacEntry(
   const bridgeEntry: DaBridgeSummaryEntry = {
     name: project.customDa.name ?? `${project.name} DAC`,
     slug: project.slug,
-    href: `/scaling/projects/${project.slug}`,
+    href: `/layer2s/projects/${project.slug}`,
     statuses: {},
     tvs,
     risks: mapBridgeRisksToRosetteValues(project.customDa.risks),
@@ -243,7 +243,7 @@ function getDacEntry(
     usedIn: usedIn.map((project) => ({
       ...project,
       icon: manifest.getUrl(`/icons/${project.slug}.png`),
-      url: `/scaling/projects/${project.slug}`,
+      url: `/layer2s/projects/${project.slug}`,
     })),
   }
 
@@ -297,7 +297,7 @@ function getEthereumEntry(
           .map((project) => ({
             ...project,
             icon: manifest.getUrl(`/icons/${project.slug}.png`),
-            url: `/scaling/projects/${project.slug}`,
+            url: `/layer2s/projects/${project.slug}`,
           })),
       },
     ],

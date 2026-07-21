@@ -12,7 +12,7 @@ import type {
   InteropDashboardData,
   InteropDashboardFlow,
   InteropDashboardFlowChain,
-} from '~/server/features/scaling/interop/getInteropDashboardData'
+} from '~/server/features/layer2s/interop/getInteropDashboardData'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'

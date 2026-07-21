@@ -1,7 +1,7 @@
 import type { Project } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
-import type { ActivityLatestUopsData } from '../scaling/activity/getActivityLatestTps'
-import type { ProjectSevenDayTvsBreakdown } from '../scaling/tvs/get7dTvsBreakdown'
+import type { ActivityLatestUopsData } from '../layer2s/activity/getActivityLatestTps'
+import type { ProjectSevenDayTvsBreakdown } from '../layer2s/tvs/get7dTvsBreakdown'
 import { generateTimestamps } from '../utils/generateTimestamps'
 import { getActiveEcosystemProjects } from './getActiveEcosystemProjects'
 
@@ -19,7 +19,7 @@ export type EcosystemProjectsCountData = {
 
 export function getEcosystemProjectsChartData(
   entries: Project<'ecosystemInfo', 'archivedAt'>[],
-  allScalingProjectsCount: number,
+  allLayer2sProjectsCount: number,
   projectsTvs: Record<string, ProjectSevenDayTvsBreakdown>,
   projectsActivity: ActivityLatestUopsData,
   startedAt: UnixTime | undefined,
@@ -50,7 +50,7 @@ export function getEcosystemProjectsChartData(
   return {
     chart,
     marketShare: mostRecentProjectCount
-      ? mostRecentProjectCount / allScalingProjectsCount
+      ? mostRecentProjectCount / allLayer2sProjectsCount
       : 0,
     stats: {
       tvsGreaterThanHundredMillion: entries.filter((p) => {

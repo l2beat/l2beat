@@ -27,7 +27,7 @@ export type ProjectDaThroughputChartPoint = [
 
 export const ProjectDaThroughputChartParams = v.object({
   range: ChartRange,
-  includeScalingOnly: v.boolean(),
+  includeLayer2sOnly: v.boolean(),
   projectId: v.string(),
 })
 export type ProjectDaThroughputChartParams = v.infer<
@@ -64,7 +64,7 @@ export async function getProjectDaThroughputChart(
 export async function getProjectDaThroughputChartData({
   range,
   projectId,
-  includeScalingOnly,
+  includeLayer2sOnly,
 }: ProjectDaThroughputChartParams) {
   const db = getDb()
   const resolution = rangeToResolution(range)
@@ -77,14 +77,14 @@ export async function getProjectDaThroughputChartData({
     daLayer?.daLayer.sovereignProjectsTrackingConfig?.map((c) => c.projectId)
 
   const [throughput, firstTimestamp] = await Promise.all([
-    includeScalingOnly
+    includeLayer2sOnly
       ? db.dataAvailability.getSummedProjectsByDaLayersAndTimeRange(
           [projectId],
           range,
           sovereignProjectsIds,
         )
       : db.dataAvailability.getByProjectIdsAndTimeRange([projectId], range),
-    includeScalingOnly
+    includeLayer2sOnly
       ? db.dataAvailability.getFirstTimestampOfSummedProjectsByDaLayers(
           [projectId],
           sovereignProjectsIds,

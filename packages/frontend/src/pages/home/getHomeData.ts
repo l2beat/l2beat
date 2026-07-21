@@ -2,13 +2,13 @@ import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getHomeEthereumCharts } from '~/server/features/home/getHomeEthereumCharts'
-import { getHomeScalingCharts } from '~/server/features/home/getHomeScalingCharts'
+import { getHomeLayer2sCharts } from '~/server/features/home/getHomeLayer2sCharts'
 import { getHomeTopChainsTvsData } from '~/server/features/home/getHomeTopChainsTvsData'
+import { getInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
+import { TOP_PROTOCOLS_LIMIT } from '~/server/features/layer2s/interop/utils/pickTopProtocolEntries'
+import { getOngoingAnomaliesOverview } from '~/server/features/layer2s/liveness/getOngoingAnomaliesOverview'
+import { getLayer2sSummaryData } from '~/server/features/layer2s/summary/getLayer2sSummaryEntries'
 import { getRecentChangesOverview } from '~/server/features/projects/recent-changes/getRecentChangesOverview'
-import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
-import { TOP_PROTOCOLS_LIMIT } from '~/server/features/scaling/interop/utils/pickTopProtocolEntries'
-import { getOngoingAnomaliesOverview } from '~/server/features/scaling/liveness/getOngoingAnomaliesOverview'
-import { getScalingSummaryData } from '~/server/features/scaling/summary/getScalingSummaryEntries'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -53,7 +53,7 @@ export async function getHomeData(
           'Bird-eye view of the Ethereum scaling ecosystem: total value secured, activity, interoperability, recent additions and what L2BEAT is currently tracking.',
         url: req.originalUrl,
         openGraph: {
-          image: '/meta-images/scaling/summary/opengraph-image.png',
+          image: '/meta-images/layer2s/summary/opengraph-image.png',
         },
       }),
     },
@@ -104,16 +104,16 @@ async function getCachedData(manifest: Manifest) {
     interopProtocols,
     recentChanges,
     ongoingAnomalies,
-    scalingCharts,
+    layer2sCharts,
     ethereumCharts,
   ] = await Promise.all([
-    getScalingSummaryData(),
+    getLayer2sSummaryData(),
     getRecentProjectsForHome(manifest),
     getHomeProjectCounts(),
     interopProtocolsPromise,
     getRecentChangesOverview(),
     getOngoingAnomaliesOverview(),
-    getHomeScalingCharts(chartRange),
+    getHomeLayer2sCharts(chartRange),
     getHomeEthereumCharts(chartRange),
     defaultSelectedFlowChains.length > 0
       ? helpers.queryClient.prefetchQuery(
@@ -142,7 +142,7 @@ async function getCachedData(manifest: Manifest) {
   ])
 
   const summaryTabs = summaryData.tabs
-  const scalingCategoryCounts = {
+  const layer2sCategoryCounts = {
     rollups: summaryTabs.rollups.length,
     validiumsAndOptimiums: summaryTabs.validiumsAndOptimiums.length,
     others: summaryTabs.others.length,
@@ -166,13 +166,13 @@ async function getCachedData(manifest: Manifest) {
     projectCounts,
     topChains,
     topChainsTvsData,
-    scalingCharts,
+    layer2sCharts,
     ethereumCharts,
     recentProjects,
     interopChains: sortedChains,
     interopProtocols: protocols,
     defaultSelectedFlowChains,
-    scalingCategoryCounts,
+    layer2sCategoryCounts,
     // Only the count is serialized — the groups (full diff bodies) are heavy
     // and fetched lazily via trpc.projects.recentChanges when the dialog opens.
     recentChangesCount: recentChanges.count,
@@ -185,8 +185,8 @@ export interface HomeRecentProject {
   name: string
   href: string
   iconUrl: string
-  category: 'scaling' | 'da' | 'zkCatalog' | 'ecosystems'
-  scalingCategory: string | undefined
+  category: 'layer2s' | 'da' | 'zkCatalog' | 'ecosystems'
+  layer2sCategory: string | undefined
 }
 
 async function getRecentProjectsForHome(
@@ -212,10 +212,10 @@ async function getRecentProjectsForHome(
         return {
           id: project.id.toString(),
           name: project.name,
-          href: `/scaling/projects/${project.slug}`,
+          href: `/layer2s/projects/${project.slug}`,
           iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-          category: 'scaling' as const,
-          scalingCategory: project.scalingInfo.type,
+          category: 'layer2s' as const,
+          layer2sCategory: project.scalingInfo.type,
         }
       }
       if (project.daLayer) {
@@ -225,7 +225,7 @@ async function getRecentProjectsForHome(
           href: `/data-availability/projects/${project.slug}/no-bridge`,
           iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
           category: 'da' as const,
-          scalingCategory: undefined,
+          layer2sCategory: undefined,
         }
       }
       if (project.zkCatalogInfo) {
@@ -235,7 +235,7 @@ async function getRecentProjectsForHome(
           href: `/zk-catalog/${project.slug}`,
           iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
           category: 'zkCatalog' as const,
-          scalingCategory: undefined,
+          layer2sCategory: undefined,
         }
       }
       return {
@@ -244,7 +244,7 @@ async function getRecentProjectsForHome(
         href: `/ecosystems/${project.slug}`,
         iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
         category: 'ecosystems' as const,
-        scalingCategory: undefined,
+        layer2sCategory: undefined,
       }
     })
 }

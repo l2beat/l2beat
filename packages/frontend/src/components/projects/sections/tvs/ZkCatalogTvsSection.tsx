@@ -9,19 +9,19 @@ import type { ChartProject } from '~/components/core/chart/Chart'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
-import { ExcludeRwaRestrictedTokensCheckbox } from '~/pages/scaling/components/ExcludeRwaRestrictedTokensCheckbox'
+import { ExcludeRwaRestrictedTokensCheckbox } from '~/pages/layer2s/components/ExcludeRwaRestrictedTokensCheckbox'
 import {
-  ScalingRwaRestrictedTokensContextProvider,
-  useScalingRwaRestrictedTokensContext,
-} from '~/pages/scaling/components/ScalingRwaRestrictedTokensContext'
+  Layer2sRwaRestrictedTokensContextProvider,
+  useLayer2sRwaRestrictedTokensContext,
+} from '~/pages/layer2s/components/Layer2sRwaRestrictedTokensContext'
 import {
   TvsBreakdownSummaryBox,
   type TvsData,
-} from '~/pages/scaling/project/tvs-breakdown/components/TvsBreakdownSummaryBox'
+} from '~/pages/layer2s/project/tvs-breakdown/components/TvsBreakdownSummaryBox'
 import type {
   DetailedTvsChartWithProjectRangesDataPoint,
   DetailedTvsChartWithProjectsRangesData,
-} from '~/server/features/scaling/tvs/getDetailedTvsChartWithProjectsRanges'
+} from '~/server/features/layer2s/tvs/getDetailedTvsChartWithProjectsRanges'
 import { useTRPC } from '~/trpc/React'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
@@ -58,7 +58,7 @@ export function ZkCatalogTvsSection({
 }: ZkCatalogTvsSectionProps) {
   return (
     <ProjectSection {...sectionProps}>
-      <ScalingRwaRestrictedTokensContextProvider>
+      <Layer2sRwaRestrictedTokensContextProvider>
         <TvsChartControlsContextProvider defaultRange={defaultRange}>
           <ChartControls projectsForTvs={projectsForTvs} />
           <div className="mt-4 mb-3">
@@ -73,7 +73,7 @@ export function ZkCatalogTvsSection({
           </div>
           <TvsProjectStats tvsInfo={tvsInfo} projectsForTvs={projectsForTvs} />
         </TvsChartControlsContextProvider>
-      </ScalingRwaRestrictedTokensContextProvider>
+      </Layer2sRwaRestrictedTokensContextProvider>
     </ProjectSection>
   )
 }
@@ -90,7 +90,7 @@ function ChartControls({
 }) {
   const trpc = useTRPC()
   const { range, unit, setUnit, setRange } = useTvsChartControlsContext()
-  const { excludeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
+  const { excludeRwaRestrictedTokens } = useLayer2sRwaRestrictedTokensContext()
 
   const { data } = useQuery(
     trpc.tvs.detailedChartWithProjectsRanges.queryOptions({
@@ -232,7 +232,7 @@ function TvsProjectStats({
   }[]
 }) {
   const trpc = useTRPC()
-  const { excludeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
+  const { excludeRwaRestrictedTokens } = useLayer2sRwaRestrictedTokensContext()
   const { data, isLoading } = useQuery(
     trpc.tvs.detailedChartWithProjectsRanges.queryOptions({
       projects: projectsForTvs,

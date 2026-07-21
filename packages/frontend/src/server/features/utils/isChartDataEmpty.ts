@@ -1,6 +1,6 @@
-import type { ActivityChartData } from '../scaling/activity/getActivityChart'
-import type { DetailedTvsChartData } from '../scaling/tvs/getDetailedTvsChart'
-import type { TvsChartData } from '../scaling/tvs/getTvsChartData'
+import type { ActivityChartData } from '../layer2s/activity/getActivityChart'
+import type { DetailedTvsChartData } from '../layer2s/tvs/getDetailedTvsChart'
+import type { TvsChartData } from '../layer2s/tvs/getTvsChartData'
 
 export function isTvsChartDataEmpty(data: TvsChartData['chart']) {
   return data.every(

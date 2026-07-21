@@ -145,9 +145,9 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
                       <div className="font-medium text-sm leading-none tracking-[-1%]">
                         {project.name}
                       </div>
-                      {project.scalingCategory && (
+                      {project.layer2sCategory && (
                         <div className="font-medium text-2xs text-secondary leading-none tracking-[-1%]">
-                          {project.scalingCategory}
+                          {project.layer2sCategory}
                         </div>
                       )}
                     </div>
@@ -194,9 +194,9 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
                         <div className="font-medium text-sm leading-none tracking-[-1%]">
                           {item.name}
                         </div>
-                        {item.type === 'project' && item.scalingCategory && (
+                        {item.type === 'project' && item.layer2sCategory && (
                           <div className="font-medium text-2xs text-secondary leading-none tracking-[-1%]">
-                            {item.scalingCategory}
+                            {item.layer2sCategory}
                           </div>
                         )}
                       </div>

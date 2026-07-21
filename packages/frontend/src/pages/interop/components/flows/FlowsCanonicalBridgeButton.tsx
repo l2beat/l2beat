@@ -1,5 +1,5 @@
 import { CheckIcon } from '~/icons/Check'
-import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
+import type { ProtocolDisplayable } from '~/server/features/layer2s/interop/types'
 import { cn } from '~/utils/cn'
 import { useInteropFlows } from './utils/InteropFlowsContext'
 

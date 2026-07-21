@@ -2,8 +2,8 @@ import type { InteropChainWithIcon } from '~/pages/interop/components/chain-sele
 import { MultipleChainsStats } from '~/pages/interop/components/flows/selection-panel/MultipleChainsStats'
 import { SingleChainStats } from '~/pages/interop/components/flows/selection-panel/SingleChainStats'
 import { useInteropFlows } from '~/pages/interop/components/flows/utils/InteropFlowsContext'
-import type { InteropFlowsData } from '~/server/features/scaling/interop/getInteropFlows'
-import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
+import type { InteropFlowsData } from '~/server/features/layer2s/interop/getInteropFlows'
+import type { ProtocolDisplayable } from '~/server/features/layer2s/interop/types'
 import { BridgeFlowStats } from './BridgeFlowStats'
 
 interface FlowsStatsPanelProps {

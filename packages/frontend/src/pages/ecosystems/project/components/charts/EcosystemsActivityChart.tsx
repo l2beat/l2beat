@@ -26,7 +26,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { InfoIcon } from '~/icons/Info'
-import { ActivityChartRangeControls } from '~/pages/scaling/activity/components/ActivityChartRangeControls'
+import { ActivityChartRangeControls } from '~/pages/layer2s/activity/components/ActivityChartRangeControls'
 import type {
   EcosystemEntry,
   EcosystemMilestone,
@@ -46,14 +46,14 @@ export function EcosystemsActivityChart({
   id,
   name,
   entries,
-  allScalingProjectsUops,
+  allLayer2sProjectsUops,
   className,
   ecosystemMilestones,
 }: {
   id: string
   name: string
   entries: EcosystemEntry['liveProjects']
-  allScalingProjectsUops: number
+  allLayer2sProjectsUops: number
   className?: string
   ecosystemMilestones: EcosystemMilestone[]
 }) {
@@ -104,7 +104,7 @@ export function EcosystemsActivityChart({
     [data?.data],
   )
 
-  const stats = getStats(chartData, allScalingProjectsUops)
+  const stats = getStats(chartData, allLayer2sProjectsUops)
   const timeRange = getChartTimeRangeFromData(chartData, { bucket: 'day' })
 
   return (
@@ -243,7 +243,7 @@ function Header({
 
 function getStats(
   chartData: { projects: number | null }[] | undefined,
-  allScalingProjectsUops: number,
+  allLayer2sProjectsUops: number,
 ) {
   if (!chartData) {
     return undefined
@@ -259,6 +259,6 @@ function getStats(
 
   return {
     latestUops: lastWithData.projects,
-    marketShare: lastWithData.projects / allScalingProjectsUops,
+    marketShare: lastWithData.projects / allLayer2sProjectsUops,
   }
 }

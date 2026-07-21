@@ -40,7 +40,7 @@ import {
 } from '~/components/core/chart/defs/YellowGradientDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import type { ActivityMetric } from '~/pages/scaling/activity/components/ActivityMetricContext'
+import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
 import { formatRange } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { formatInteger } from '~/utils/number-format/formatInteger'

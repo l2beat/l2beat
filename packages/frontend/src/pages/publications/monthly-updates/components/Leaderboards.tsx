@@ -75,7 +75,7 @@ function LeaderboardTvsItem({
     <div className="grid grid-cols-4 items-center">
       <a
         className="col-span-2 flex w-fit items-center gap-1.5 rounded-[4px] p-1 hover:bg-primary/10"
-        href={`/scaling/projects/${item.slug}`}
+        href={`/layer2s/projects/${item.slug}`}
       >
         <img
           src={item.iconUrl}
@@ -102,7 +102,7 @@ function LeaderboardActivityItem({
     <div className="grid grid-cols-4 items-center">
       <a
         className="col-span-2 flex w-fit items-center gap-1.5 rounded-[4px] p-1 hover:bg-primary/10"
-        href={`/scaling/projects/${item.slug}`}
+        href={`/layer2s/projects/${item.slug}`}
       >
         <img
           src={item.iconUrl}

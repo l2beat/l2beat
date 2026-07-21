@@ -17,7 +17,7 @@ import {
   getUnderReviewStatus,
   type UnderReviewStatus,
 } from '~/utils/project/underReview'
-import { get7dTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
+import { get7dTvsBreakdown } from '../../layer2s/tvs/get7dTvsBreakdown'
 import {
   getTrustedSetupsWithVerifiersAndAttesters,
   type TrustedSetupsByProofSystem,

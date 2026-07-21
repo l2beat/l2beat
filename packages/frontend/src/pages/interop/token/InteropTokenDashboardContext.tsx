@@ -1,5 +1,5 @@
 import { createContext, type ReactNode, useContext } from 'react'
-import type { InteropTokenDashboardData } from '~/server/features/scaling/interop/getInteropTokenData'
+import type { InteropTokenDashboardData } from '~/server/features/layer2s/interop/getInteropTokenData'
 import type { InteropSelection } from '../utils/types'
 
 interface InteropTokenDashboardContextValue {

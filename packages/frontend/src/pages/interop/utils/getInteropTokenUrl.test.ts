@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { UNKNOWN_ABSTRACT_TOKEN_ID } from '~/server/features/scaling/interop/consts'
+import { UNKNOWN_ABSTRACT_TOKEN_ID } from '~/server/features/layer2s/interop/consts'
 import { getInteropTokenUrl } from './getInteropTokenUrl'
 
 describe(getInteropTokenUrl.name, () => {

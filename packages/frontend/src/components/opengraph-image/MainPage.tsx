@@ -1,6 +1,6 @@
 export interface MainPage {
-  type?: 'scaling' | 'data-availability' | 'interop' | 'privacy'
-  /** Appended to the `type` caption after a divider, e.g. "SCALING | RISKS". */
+  type?: 'layer2s' | 'data-availability' | 'interop' | 'privacy'
+  /** Appended to the `type` caption after a divider, e.g. "LAYER 2S | RISKS". */
   secondaryLabel?: string
   title: string
 }
@@ -106,7 +106,9 @@ export function MainPageOpengraphImage({
               }}
             >
               {typeToIcon[type]}
-              {type.toUpperCase().split('-').join(' ')}
+              {type === 'layer2s'
+                ? 'LAYER 2S'
+                : type.toUpperCase().split('-').join(' ')}
               {secondaryLabel
                 ? [
                     <div
@@ -142,7 +144,7 @@ export function MainPageOpengraphImage({
 }
 
 const typeToIcon: Record<NonNullable<MainPage['type']>, React.ReactNode> = {
-  scaling: (
+  layer2s: (
     <svg width="39" height="40" viewBox="0 0 39 40" fill="none">
       <path
         d="M4.209 21.774h13.522c.16 0 .29.13.29.29v13.522c0 .16-.13.29-.29.29H4.208a.29.29 0 01-.29-.29V22.064c0-.16.13-.29.29-.29"

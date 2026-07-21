@@ -1,0 +1,169 @@
+import type { Milestone } from '@l2beat/config'
+import { useQuery } from '@tanstack/react-query'
+import { useMemo, useState } from 'react'
+import { Layer2sAssetCategoryTvsChart } from '~/components/chart/tvs/stacked/Layer2sAssetCategoryTvsChart'
+import { Layer2sBridgeTypeTvsChart } from '~/components/chart/tvs/stacked/Layer2sBridgeTypeTvsChart'
+import { TvsChartHeader } from '~/components/chart/tvs/TvsChartHeader'
+import { TvsChartRangeControls } from '~/components/chart/tvs/TvsChartRangeControls'
+import { TvsChartUnitControls } from '~/components/chart/tvs/TvsChartUnitControls'
+import type { ChartUnit } from '~/components/chart/types'
+import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
+import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
+import { useTvsDisplayControlsContext } from '~/components/table/display/contexts/TvsDisplayControlsContext'
+import type { Layer2sTvsEntry } from '~/server/features/layer2s/tvs/getLayer2sTvsEntries'
+import type { TvsProjectFilter } from '~/server/features/layer2s/tvs/utils/projectFilterUtils'
+import { useTRPC } from '~/trpc/React'
+import { ChartTabs } from '../../summary/components/ChartTabs'
+import { useLayer2sTvsTimeRangeContext } from './Layer2sTvsTimeRangeContext'
+
+interface Props {
+  entries: Layer2sTvsEntry[]
+  milestones: Milestone[]
+}
+
+export function Layer2sTvsCharts({ entries, milestones }: Props) {
+  const trpc = useTRPC()
+  const { display } = useTvsDisplayControlsContext()
+  const { range, setRange } = useLayer2sTvsTimeRangeContext()
+  const [unit, setUnit] = useState<ChartUnit>('usd')
+
+  const filter = useMemo<TvsProjectFilter>(() => {
+    return {
+      type: 'projects',
+      projectIds: entries.map((project) => project.id),
+    }
+  }, [entries])
+
+  const { data } = useQuery(
+    trpc.tvs.detailedChart.queryOptions({
+      range,
+      filter,
+      excludeAssociatedTokens: display.excludeAssociatedTokens,
+      excludeRwaRestrictedTokens: display.excludeRwaRestrictedTokens,
+    }),
+  )
+
+  const timeRange = getChartTimeRangeFromData(
+    data?.chart.map(([timestamp]) => ({
+      timestamp,
+    })),
+  )
+  const stats = getStats(data?.chart)
+
+  const byBridgeTypeChart = (
+    <Layer2sBridgeTypeTvsChart
+      unit={unit}
+      filter={filter}
+      range={range}
+      excludeAssociatedTokens={display.excludeAssociatedTokens}
+      excludeRwaRestrictedTokens={display.excludeRwaRestrictedTokens}
+      milestones={milestones}
+    />
+  )
+
+  const byAssetSourceChart = (
+    <Layer2sAssetCategoryTvsChart
+      unit={unit}
+      filter={filter}
+      range={range}
+      excludeAssociatedTokens={display.excludeAssociatedTokens}
+      excludeRwaRestrictedTokens={display.excludeRwaRestrictedTokens}
+      milestones={milestones}
+    />
+  )
+
+  return (
+    <div>
+      <TvsChartHeader
+        unit={unit}
+        value={stats?.total}
+        change={stats?.change}
+        range={range}
+        timeRange={timeRange}
+      />
+      <div className="mt-4 mb-3 grid grid-cols-2 gap-x-6 max-lg:hidden">
+        {byBridgeTypeChart}
+        {byAssetSourceChart}
+      </div>
+      <ChartTabs
+        className="-mx-4 md:-mx-6 pb-1! lg:hidden"
+        charts={[byBridgeTypeChart, byAssetSourceChart]}
+      />
+      <ChartControlsWrapper>
+        <TvsChartUnitControls unit={unit} setUnit={setUnit} />
+        <TvsChartRangeControls range={range} setRange={setRange} />
+      </ChartControlsWrapper>
+    </div>
+  )
+}
+
+function getStats(
+  data:
+    | [
+        number,
+        number | null,
+        number | null,
+        number | null,
+        number | null,
+        number | null,
+        number | null,
+        number | null,
+        number | null,
+        number | null,
+        number | null,
+      ][]
+    | undefined,
+) {
+  const pointsWithData = data?.filter(
+    ([
+      _,
+      __,
+      native,
+      canonical,
+      external,
+      ether,
+      stablecoin,
+      btc,
+      other,
+      rwaRestricted,
+      rwaPublic,
+    ]) =>
+      native !== null &&
+      canonical !== null &&
+      external !== null &&
+      ether !== null &&
+      stablecoin !== null &&
+      btc !== null &&
+      other !== null &&
+      rwaRestricted !== null &&
+      rwaPublic !== null,
+  ) as [
+    number,
+    number | null,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+  ][]
+
+  const oldestDataPoint = pointsWithData?.at(0)
+  const newestDataPoint = pointsWithData?.at(-1)
+  if (!oldestDataPoint || !newestDataPoint) {
+    return undefined
+  }
+
+  const total = newestDataPoint[2] + newestDataPoint[3] + newestDataPoint[4]
+  const oldestTotal =
+    oldestDataPoint[2] + oldestDataPoint[3] + oldestDataPoint[4]
+  const change = (oldestTotal === 0 ? 0 : total / oldestTotal) - 1
+
+  return {
+    total,
+    change,
+  }
+}

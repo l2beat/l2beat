@@ -78,10 +78,10 @@ export function getSearchBarProjectEntries<
   if (project.scalingInfo) {
     results.push({
       ...common,
-      href: `/scaling/projects/${project.slug}`,
-      category: 'scaling',
+      href: `/layer2s/projects/${project.slug}`,
+      category: 'layer2s',
       kind: project.scalingInfo?.layer ?? 'layer2',
-      scalingCategory: project.scalingInfo?.type,
+      layer2sCategory: project.scalingInfo?.type,
       tags: project.interopConfig
         ? dedupeTags([
             ...commonTags,

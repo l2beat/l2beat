@@ -21,7 +21,7 @@ import {
   PinkFillGradientDef,
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/PinkGradientDef'
-import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
+import type { ProjectToken } from '~/server/features/layer2s/tvs/tokens/getTokensForProject'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 

@@ -16,7 +16,7 @@ describe(normalizeIconPreviewModules.name, () => {
       return null
     }
 
-    function ScalingIcon() {
+    function Layer2sIcon() {
       return null
     }
 
@@ -35,7 +35,7 @@ describe(normalizeIconPreviewModules.name, () => {
         helper: () => null,
       },
       '/src/icons/PolygonLogo.tsx': { PolygonLogo },
-      '/src/icons/pages/Scaling.tsx': { ScalingIcon },
+      '/src/icons/pages/Layer2s.tsx': { Layer2sIcon },
       '/src/icons/products/Github.tsx': { GithubIcon },
       '/src/icons/providers/SuperchainIcon.tsx': { SuperchainIcon },
     })
@@ -64,8 +64,8 @@ describe(normalizeIconPreviewModules.name, () => {
       },
       {
         category: 'Pages',
-        exportName: 'ScalingIcon',
-        sourcePath: 'pages/Scaling.tsx',
+        exportName: 'Layer2sIcon',
+        sourcePath: 'pages/Layer2s.tsx',
       },
       {
         category: 'Products',

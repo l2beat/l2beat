@@ -15,7 +15,7 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { DaThroughputEntry } from '~/server/features/data-availability/throughput/getDaThroughputEntries'
 import { PublicSystemInfo } from '../components/DaCategoryInfo'
-import { IncludeScalingOnlyProvider } from './components/DaThroughputContext'
+import { IncludeLayer2sOnlyProvider } from './components/DaThroughputContext'
 import { DaThroughputPublicTable } from './components/table/DaThroughputPublicTable'
 
 interface Props extends AppLayoutProps {
@@ -34,7 +34,7 @@ export function DataAvailabilityThroughputPage({
         <SideNavLayout>
           <MainPageHeader>Throughput</MainPageHeader>
           <div className="lg:-mt-4 flex flex-col gap-6">
-            <IncludeScalingOnlyProvider>
+            <IncludeLayer2sOnlyProvider>
               <DirectoryTabs defaultValue="public">
                 <DirectoryTabsList>
                   <DirectoryTabsTrigger value="public">
@@ -48,7 +48,7 @@ export function DataAvailabilityThroughputPage({
                   <DaThroughputPublicTable items={entries} />
                 </DirectoryTabsContent>
               </DirectoryTabs>
-            </IncludeScalingOnlyProvider>
+            </IncludeLayer2sOnlyProvider>
           </div>
         </SideNavLayout>
       </HydrationBoundary>

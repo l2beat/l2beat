@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react'
-import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
+import type { ProjectToken } from '~/server/features/layer2s/tvs/tokens/getTokensForProject'
 
 type SelectedTokenContextValue = {
   selectedToken: ProjectToken | undefined

@@ -38,7 +38,7 @@ function NewProject({
         <div className="grid grid-cols-5 items-center text-sm">
           <a
             className="flex w-fit items-center gap-2 rounded-[4px] p-1 hover:bg-primary/10"
-            href={`/scaling/projects/${project.slug}`}
+            href={`/layer2s/projects/${project.slug}`}
           >
             <img
               src={project.iconUrl}

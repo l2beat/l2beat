@@ -2,8 +2,8 @@ import { UnixTime } from '@l2beat/shared-pure'
 import type { CollectionEntry } from '~/content/getCollection'
 import { ps } from '~/server/projects'
 import { formatPublicationDate } from '~/utils/dates'
-import { getActivityLatestUops } from '../scaling/activity/getActivityLatestTps'
-import { get7dTvsBreakdown } from '../scaling/tvs/get7dTvsBreakdown'
+import { getActivityLatestUops } from '../layer2s/activity/getActivityLatestTps'
+import { get7dTvsBreakdown } from '../layer2s/tvs/get7dTvsBreakdown'
 import {
   type DaMonthlyUpdateEntry,
   getDaMonthlyUpdateEntries,
@@ -34,19 +34,19 @@ export async function getMonthlyUpdateEntry(
   const from = UnixTime.fromDate(entry.data.startDate)
   const to = UnixTime.fromDate(entry.data.endDate)
 
-  const allScalingProjects = await ps.getProjects({
+  const allLayer2sProjects = await ps.getProjects({
     select: ['scalingInfo'],
   })
 
   const [tvs, activity] = await Promise.all([
     get7dTvsBreakdown({ type: 'layer2', customTarget: to }),
-    getActivityLatestUops(allScalingProjects, [from, to]),
+    getActivityLatestUops(allLayer2sProjects, [from, to]),
   ])
 
   const [ecosystemsUpdatesEntries, daUpdatesEntries] = await Promise.all([
     getEcosystemMonthlyUpdateEntries(
       entry.data.updates.filter((update) => update.type === 'ecosystem'),
-      allScalingProjects,
+      allLayer2sProjects,
       tvs,
       activity,
       from,

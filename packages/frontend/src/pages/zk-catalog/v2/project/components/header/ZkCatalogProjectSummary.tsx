@@ -65,7 +65,7 @@ export function TrustedSetupsByProofSystemSection({
   variant = 'zkCatalog',
 }: {
   trustedSetupsByProofSystem: TrustedSetupsByProofSystem
-  variant?: 'zkCatalog' | 'scaling'
+  variant?: 'zkCatalog' | 'layer2s'
 }) {
   return (
     <div className="flex flex-col gap-2 md:gap-3">
@@ -88,7 +88,7 @@ export function TrustedSetupsByProofSystemSection({
                   trustedSetups={trustedSetups}
                   dotSize="lg"
                   displayType={
-                    variant === 'scaling' ? 'typeAndName' : undefined
+                    variant === 'layer2s' ? 'typeAndName' : undefined
                   }
                 />
                 <MobileTrustedSetupsDetails
@@ -118,19 +118,19 @@ export function TrustedSetupsByProofSystemSection({
                   <tr
                     key={key}
                     className={
-                      variant === 'scaling' ? 'align-top' : 'h-8 align-middle'
+                      variant === 'layer2s' ? 'align-top' : 'h-8 align-middle'
                     }
                   >
                     <td
                       className={
-                        variant === 'scaling' ? 'align-top' : undefined
+                        variant === 'layer2s' ? 'align-top' : undefined
                       }
                     >
                       <TrustedSetupCell
                         trustedSetups={trustedSetups}
                         dotSize="lg"
                         displayType={
-                          variant === 'scaling' ? 'typeAndName' : undefined
+                          variant === 'layer2s' ? 'typeAndName' : undefined
                         }
                       />
                     </td>
@@ -157,12 +157,12 @@ function MobileTrustedSetupsDetails({
   projectsUsedIn,
   verifiers,
 }: {
-  variant: 'zkCatalog' | 'scaling'
+  variant: 'zkCatalog' | 'layer2s'
   onchainVerifiers: TrustedSetupsByProofSystem[string]['onchainVerifiers']
   projectsUsedIn: TrustedSetupsByProofSystem[string]['projectsUsedIn']
   verifiers: TrustedSetupsByProofSystem[string]['verifiers']
 }) {
-  if (variant === 'scaling') {
+  if (variant === 'layer2s') {
     return (
       <>
         <MergedOnchainVerifierBlock
@@ -189,12 +189,12 @@ function DesktopTrustedSetupsCells({
   projectsUsedIn,
   verifiers,
 }: {
-  variant: 'zkCatalog' | 'scaling'
+  variant: 'zkCatalog' | 'layer2s'
   onchainVerifiers: TrustedSetupsByProofSystem[string]['onchainVerifiers']
   projectsUsedIn: TrustedSetupsByProofSystem[string]['projectsUsedIn']
   verifiers: TrustedSetupsByProofSystem[string]['verifiers']
 }) {
-  if (variant === 'scaling') {
+  if (variant === 'layer2s') {
     return (
       <>
         <td className="min-w-0 align-top">

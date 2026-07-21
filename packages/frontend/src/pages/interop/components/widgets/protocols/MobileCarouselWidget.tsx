@@ -8,7 +8,7 @@ import {
   useCarousel,
 } from '~/components/core/Carousel'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
-import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
+import type { InteropDashboardData } from '~/server/features/layer2s/interop/getInteropDashboardData'
 import { cn } from '~/utils/cn'
 import { TopProtocolsByTransfers } from './TopProtocolsByTransfers'
 import { TopProtocolsByVolume } from './TopProtocolsByVolume'

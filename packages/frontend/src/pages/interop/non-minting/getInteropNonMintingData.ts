@@ -1,7 +1,7 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
+import { getInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'

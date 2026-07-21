@@ -6,7 +6,7 @@ import { HomeCard } from './HomeCard'
 const VISIBLE_RECENT_PROJECTS_COUNT = 5
 
 const CATEGORY_LABEL: Record<HomeRecentProject['category'], string> = {
-  scaling: 'Scaling project',
+  layer2s: 'Layer 2 project',
   da: 'Data Availability',
   zkCatalog: 'ZK Catalog',
   ecosystems: 'Ecosystem',
@@ -39,8 +39,8 @@ export function HomeRecentProjectsCard({ projects, className }: Props) {
 
 function RecentProjectCard({ project }: { project: HomeRecentProject }) {
   const subtitle =
-    project.category === 'scaling' && project.scalingCategory
-      ? project.scalingCategory
+    project.category === 'layer2s' && project.layer2sCategory
+      ? project.layer2sCategory
       : CATEGORY_LABEL[project.category]
   return (
     <a

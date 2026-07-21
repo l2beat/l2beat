@@ -57,7 +57,7 @@ export function getCommonDacDaEntry({
     icon: manifest.getUrl(`/icons/${project.slug}.png`),
     name: project.customDa.name ?? `${project.name} DAC`,
     nameSecondLine: project.customDa.type,
-    href: `/scaling/projects/${project.slug}`,
+    href: `/layer2s/projects/${project.slug}`,
     tab: 'custom',
     backgroundColor: getRowBackgroundColor(statuses),
     statuses,

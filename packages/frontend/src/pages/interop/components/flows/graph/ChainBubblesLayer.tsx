@@ -1,4 +1,4 @@
-import type { ChainData } from '~/server/features/scaling/interop/getInteropFlows'
+import type { ChainData } from '~/server/features/layer2s/interop/getInteropFlows'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { InteropChainWithIcon } from '../../chain-selector/types'

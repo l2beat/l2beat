@@ -4,7 +4,7 @@ import { BasicTable } from '~/components/table/BasicTable'
 import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { useTable } from '~/hooks/useTable'
 import type { DaThroughputEntry } from '~/server/features/data-availability/throughput/getDaThroughputEntries'
-import { useIncludeScalingOnly } from '../DaThroughputContext'
+import { useIncludeLayer2sOnly } from '../DaThroughputContext'
 import type { DaThroughputTableData } from './columns'
 import { publicSystemsColumns } from './columns'
 
@@ -13,11 +13,11 @@ interface Props {
 }
 
 export function DaThroughputPublicTable({ items }: Props) {
-  const { includeScalingOnly } = useIncludeScalingOnly()
+  const { includeLayer2sOnly } = useIncludeLayer2sOnly()
 
   const tableEntries = useMemo(
-    () => items.map((item) => toTableEntry(item, includeScalingOnly)),
-    [items, includeScalingOnly],
+    () => items.map((item) => toTableEntry(item, includeLayer2sOnly)),
+    [items, includeLayer2sOnly],
   )
 
   const table = useTable({
@@ -43,10 +43,10 @@ export function DaThroughputPublicTable({ items }: Props) {
 
 function toTableEntry(
   entry: DaThroughputEntry,
-  includeScalingOnly: boolean,
+  includeLayer2sOnly: boolean,
 ): DaThroughputTableData {
   return {
     ...entry,
-    data: includeScalingOnly ? entry.scalingOnlyData : entry.data,
+    data: includeLayer2sOnly ? entry.layer2sOnlyData : entry.data,
   }
 }

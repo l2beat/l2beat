@@ -3,14 +3,14 @@ import {
   getDaThroughputChart,
 } from '~/server/features/data-availability/throughput/getDaThroughputChart'
 import {
+  getLayer2sProjectDaThroughputChart,
+  Layer2sProjectDaThroughputChartParams,
+} from '~/server/features/data-availability/throughput/getLayer2sProjectDaThroughtputChart'
+import {
   getProjectDaThroughputChartData,
   ProjectDaThroughputChartDataParams,
 } from '~/server/features/data-availability/throughput/getProjectDaThroughputChartData'
 import { getProjectDaThroughputCharts } from '~/server/features/data-availability/throughput/getProjectDaThroughputCharts'
-import {
-  getScalingProjectDaThroughputChart,
-  ScalingProjectDaThroughputChartParams,
-} from '~/server/features/data-availability/throughput/getScalingProjectDaThroughtputChart'
 import { procedure, router } from '../trpc'
 
 export const daRouter = router({
@@ -25,7 +25,7 @@ export const daRouter = router({
     .input(ProjectDaThroughputChartDataParams)
     .query(async ({ input }) => getProjectDaThroughputCharts(input)),
 
-  scalingProjectChart: procedure
-    .input(ScalingProjectDaThroughputChartParams)
-    .query(async ({ input }) => getScalingProjectDaThroughputChart(input)),
+  layer2sProjectChart: procedure
+    .input(Layer2sProjectDaThroughputChartParams)
+    .query(async ({ input }) => getLayer2sProjectDaThroughputChart(input)),
 })

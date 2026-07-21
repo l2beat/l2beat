@@ -36,7 +36,7 @@ export function ProofSystemCell({
           ? undefined
           : proofSystem?.zkCatalogId
             ? `/zk-catalog?highlight=${proofSystem?.zkCatalogId}`
-            : `/scaling/projects/${slug}#state-validation`
+            : `/layer2s/projects/${slug}#state-validation`
       }
     >
       <TwoRowCell>

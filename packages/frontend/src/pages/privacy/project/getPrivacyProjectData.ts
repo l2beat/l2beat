@@ -9,6 +9,8 @@ import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
+import type { SevenDayTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
+import { get7dTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
 import { getPrivacyProjectDetails } from '~/server/features/privacy/getPrivacyProjectDetails'
 import {
   getPrivacyTrustedSetup,
@@ -16,8 +18,6 @@ import {
   toTrustedSetupSummaryValue,
 } from '~/server/features/privacy/utils/getPrivacyTrustedSetup'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
-import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
-import { get7dTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getProjectMetadataDescription } from '~/ssr/head/getProjectMetadataDescription'

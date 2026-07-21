@@ -171,7 +171,7 @@ function SummaryThroughputBox({
       </div>
       <div className="mt-2.5 md:mt-[25px] md:mb-6">
         <ValueWithChange
-          label="Scaling projects' past day data posted to DA Layers with public APIs"
+          label="Layer 2 projects' past day data posted to DA Layers with public APIs"
           value={formatBytes(totalPosted)}
           change={calculatePercentageChange(totalPosted, totalPosted7d)}
           tooltip="The total size of the data posted over the past day by Ethereum scaling projects to DA solutions that have provided public APIs, displayed along with the percentage change compared to 7D ago."

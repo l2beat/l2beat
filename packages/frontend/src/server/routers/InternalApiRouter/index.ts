@@ -1,7 +1,7 @@
 import { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import express from 'express'
-import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
+import { getInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
 import { validateRoute } from '~/utils/validateRoute'
 import { getDiscolupeProjects } from './getDiscolupeProjects'
 import { getInternalTokenBreakdown } from './getInternalTokenBreakdown'

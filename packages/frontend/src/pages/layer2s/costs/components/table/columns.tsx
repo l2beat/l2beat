@@ -1,0 +1,221 @@
+import { assertUnreachable } from '@l2beat/shared-pure'
+import { createColumnHelper } from '@tanstack/react-table'
+import { NoDataBadge } from '~/components/badge/NoDataBadge'
+import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
+import { Skeleton } from '~/components/core/Skeleton'
+import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
+import { getLayer2sCommonProjectColumns } from '~/components/table/common-project-columns/Layer2sCommonProjectColumns'
+import { TableLink } from '~/components/table/TableLink'
+import type { Layer2sCostsEntry } from '~/server/features/layer2s/costs/getLayer2sCostsEntries'
+import { formatNumber } from '~/utils/number-format/formatNumber'
+import { getColumnHeaderUnderline } from '~/utils/table/getColumnHeaderUnderline'
+import { CostsBreakdownValueCell } from '../CostsBreakdownValueCell'
+import type { CostsMetric } from '../CostsMetricContext'
+import { CostsTotalCell } from '../CostsTotalCell'
+
+export type Layer2sCostsTableEntry = Layer2sCostsEntry & {
+  data: CostsData
+}
+
+export type CostsData = CostsAvailableData | CostsNotAvailableData
+
+type CostsAvailableData = {
+  type: 'available'
+  total: number
+  calldata: number
+  blobs: number | null
+  compute: number
+  overhead: number
+  uopsCount: number | undefined
+  isSynced: boolean
+}
+
+type CostsNotAvailableData = {
+  type: 'not-available'
+  reason: 'loading' | 'no-data'
+  syncStatus?: never
+}
+
+const columnHelper = createColumnHelper<Layer2sCostsTableEntry>()
+
+export function getLayer2sCostsColumns(metric: CostsMetric) {
+  return [
+    ...getLayer2sCommonProjectColumns(
+      columnHelper,
+      (row) => `/layer2s/projects/${row.slug}#onchain-costs`,
+    ),
+    columnHelper.group({
+      id: 'total-cost-group',
+      header: undefined,
+      columns: [
+        columnHelper.accessor('data.total', {
+          id: 'total-cost',
+          header: metric === 'total' ? 'Total cost' : 'Avg PER L2 User op',
+          cell: (ctx) => (
+            <SyncStatusWrapper
+              isSynced={
+                ctx.row.original.data.type === 'available' &&
+                ctx.row.original.data.isSynced
+              }
+            >
+              <CostsTotalCell
+                data={ctx.row.original.data}
+                warning={ctx.row.original.costsWarning}
+              />
+            </SyncStatusWrapper>
+          ),
+          sortUndefined: 'last',
+          meta: {
+            align: 'center',
+            tooltip: `The ${metric === 'total' ? 'total cost' : 'average cost per L2 user operation'} that is a sum of the costs for calldata, computation, blobs, and overhead.`,
+          },
+        }),
+      ],
+    }),
+    columnHelper.accessor('data.calldata', {
+      header: 'Calldata',
+      cell: (ctx) => (
+        <SyncStatusWrapper
+          isSynced={
+            ctx.row.original.data.type === 'available' &&
+            ctx.row.original.data.isSynced
+          }
+        >
+          <CostsBreakdownValueCell
+            data={ctx.row.original.data}
+            type="calldata"
+          />
+        </SyncStatusWrapper>
+      ),
+      sortUndefined: 'last',
+      meta: {
+        align: 'right',
+        headClassName: getColumnHeaderUnderline(
+          'w-[132px]',
+          'before:bg-chart-stacked-blue',
+        ),
+        tooltip:
+          'The cost for posting data as calldata on Ethereum for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.',
+      },
+    }),
+    columnHelper.accessor('data.blobs', {
+      header: 'Blobs',
+      cell: (ctx) => {
+        if (
+          ctx.row.original.data.type === 'available' &&
+          ctx.row.original.data.blobs === null
+        ) {
+          return <NotApplicableBadge />
+        }
+
+        return (
+          <SyncStatusWrapper
+            isSynced={
+              ctx.row.original.data.type === 'available' &&
+              ctx.row.original.data.isSynced
+            }
+          >
+            <CostsBreakdownValueCell
+              data={ctx.row.original.data}
+              type="blobs"
+            />
+          </SyncStatusWrapper>
+        )
+      },
+      sortUndefined: 'last',
+      meta: {
+        align: 'right',
+        headClassName: getColumnHeaderUnderline(
+          'w-[132px]',
+          'before:bg-chart-stacked-yellow',
+        ),
+        tooltip:
+          'The cost for posting data as blobs on Ethereum for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.',
+      },
+    }),
+    columnHelper.accessor('data.compute', {
+      header: 'Compute',
+      cell: (ctx) => (
+        <SyncStatusWrapper
+          isSynced={
+            ctx.row.original.data.type === 'available' &&
+            ctx.row.original.data.isSynced
+          }
+        >
+          <CostsBreakdownValueCell
+            data={ctx.row.original.data}
+            type="compute"
+          />
+        </SyncStatusWrapper>
+      ),
+      sortUndefined: 'last',
+      meta: {
+        align: 'right',
+        headClassName: getColumnHeaderUnderline(
+          'w-[132px]',
+          'before:bg-chart-stacked-pink',
+        ),
+        tooltip:
+          "The transaction gas cost excluding calldata, blobs and the 21'000 intrinsic gas overhead for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.",
+      },
+    }),
+    columnHelper.accessor('data.overhead', {
+      header: 'Overhead',
+      cell: (ctx) => (
+        <SyncStatusWrapper
+          isSynced={
+            ctx.row.original.data.type === 'available' &&
+            ctx.row.original.data.isSynced
+          }
+        >
+          <CostsBreakdownValueCell
+            data={ctx.row.original.data}
+            type="overhead"
+          />
+        </SyncStatusWrapper>
+      ),
+      sortUndefined: 'last',
+      meta: {
+        align: 'right',
+        headClassName: getColumnHeaderUnderline(
+          'w-[132px]',
+          'before:bg-chart-stacked-purple',
+        ),
+        tooltip:
+          "The cost of the fixed 21'000 intrinsic gas cost per L1 transaction for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.",
+      },
+    }),
+
+    columnHelper.accessor('data.uopsCount', {
+      header: 'L2 User ops count',
+      cell: (ctx) => {
+        const data = ctx.row.original.data
+        if (data.type === 'available') {
+          const value = data.uopsCount
+          if (value === undefined) return <NoDataBadge />
+          return (
+            <TableLink
+              href={`/layer2s/activity?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
+            >
+              {formatNumber(value)}
+            </TableLink>
+          )
+        }
+
+        switch (data.reason) {
+          case 'loading':
+            return <Skeleton className="ml-auto h-6 w-24" />
+          case 'no-data':
+            return <NoDataBadge />
+          default:
+            assertUnreachable(data.reason)
+        }
+      },
+      sortUndefined: 'last',
+      meta: {
+        align: 'right',
+        tooltip: 'Total number of L2 User ops over the selected time period.',
+      },
+    }),
+  ]
+}

@@ -1,10 +1,10 @@
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import { INTEROP_PAIR_SEPARATOR } from '~/server/features/scaling/interop/consts'
+import { INTEROP_PAIR_SEPARATOR } from '~/server/features/layer2s/interop/consts'
 import type {
   ChainData,
   Flow,
-} from '~/server/features/scaling/interop/getInteropFlows'
+} from '~/server/features/layer2s/interop/getInteropFlows'
 import { BASE_DURATION_S, DOLLARS_PER_PARTICLE } from '../../consts'
 import { computeGraphLayout } from './computeGraphLayout'
 import { getScaledParticleCounts } from './getScaledParticleCounts'

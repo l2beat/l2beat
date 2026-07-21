@@ -1,6 +1,6 @@
 import type { Project } from '@l2beat/config'
 import type { StateValidationSectionProps } from '~/components/projects/sections/state-validation/StateValidationSection'
-import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
+import type { SevenDayTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
 import type { ContractUtils } from '../../contracts-and-permissions/getContractUtils'
 import { getProgramHashes } from '../../contracts-and-permissions/getProgramHashes'
 import { getDiagramParams } from '../../getDiagramParams'

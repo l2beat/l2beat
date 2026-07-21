@@ -13,8 +13,8 @@ describe(getSearchBarProjects.name, () => {
   it('keeps only direct project matches when they exist', async () => {
     ps.getProjects = async () =>
       [
-        scalingProject('ethereal', 'Ethereal', 'Other', 'layer3'),
-        scalingProject('jetstreamchain', 'Jetstream'),
+        layer2sProject('ethereal', 'Ethereal', 'Other', 'layer3'),
+        layer2sProject('jetstreamchain', 'Jetstream'),
         daLayerProject('ethereum', 'Ethereum'),
         daBridgeProject('enshrined-bridge', 'Enshrined Bridge', 'ethereum'),
       ] as never
@@ -33,7 +33,7 @@ describe(getSearchBarProjects.name, () => {
 
   it('falls back to fuzzy project matches when there are no direct matches', async () => {
     ps.getProjects = async () =>
-      [scalingProject('jetstreamchain', 'Jetstream')] as never
+      [layer2sProject('jetstreamchain', 'Jetstream')] as never
 
     const result = await getSearchBarProjects('jtsrm')
 
@@ -42,10 +42,10 @@ describe(getSearchBarProjects.name, () => {
   })
 })
 
-function scalingProject(
+function layer2sProject(
   slug: string,
   name: string,
-  scalingCategory: 'Other' | 'Optimistic Rollup' = 'Other',
+  layer2sCategory: 'Other' | 'Optimistic Rollup' = 'Other',
   layer: 'layer2' | 'layer3' = 'layer2',
 ) {
   return {
@@ -54,7 +54,7 @@ function scalingProject(
     name,
     scalingInfo: {
       layer,
-      type: scalingCategory,
+      type: layer2sCategory,
     },
   }
 }

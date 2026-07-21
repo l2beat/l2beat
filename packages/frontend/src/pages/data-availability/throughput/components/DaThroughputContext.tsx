@@ -1,37 +1,37 @@
 import { createContext, type ReactNode, useContext, useState } from 'react'
 
-interface IncludeScalingOnlyContextType {
-  includeScalingOnly: boolean
-  setIncludeScalingOnly: (value: boolean) => void
+interface IncludeLayer2sOnlyContextType {
+  includeLayer2sOnly: boolean
+  setIncludeLayer2sOnly: (value: boolean) => void
 }
 
-const IncludeScalingOnlyContext = createContext<
-  IncludeScalingOnlyContextType | undefined
+const IncludeLayer2sOnlyContext = createContext<
+  IncludeLayer2sOnlyContextType | undefined
 >(undefined)
 
-interface IncludeScalingOnlyProviderProps {
+interface IncludeLayer2sOnlyProviderProps {
   children: ReactNode
 }
 
-export function IncludeScalingOnlyProvider({
+export function IncludeLayer2sOnlyProvider({
   children,
-}: IncludeScalingOnlyProviderProps) {
-  const [includeScalingOnly, setIncludeScalingOnly] = useState(true)
+}: IncludeLayer2sOnlyProviderProps) {
+  const [includeLayer2sOnly, setIncludeLayer2sOnly] = useState(true)
 
   return (
-    <IncludeScalingOnlyContext.Provider
-      value={{ includeScalingOnly, setIncludeScalingOnly }}
+    <IncludeLayer2sOnlyContext.Provider
+      value={{ includeLayer2sOnly, setIncludeLayer2sOnly }}
     >
       {children}
-    </IncludeScalingOnlyContext.Provider>
+    </IncludeLayer2sOnlyContext.Provider>
   )
 }
 
-export function useIncludeScalingOnly() {
-  const context = useContext(IncludeScalingOnlyContext)
+export function useIncludeLayer2sOnly() {
+  const context = useContext(IncludeLayer2sOnlyContext)
   if (!context) {
     throw new Error(
-      'useIncludeScalingOnly must be used within IncludeScalingOnlyProvider',
+      'useIncludeLayer2sOnly must be used within IncludeLayer2sOnlyProvider',
     )
   }
   return context

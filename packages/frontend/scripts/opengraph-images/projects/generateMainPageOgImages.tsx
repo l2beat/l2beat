@@ -10,52 +10,52 @@ const mainPages: MainPage[] = [
     title: 'Home',
   },
   {
-    type: 'scaling',
+    type: 'layer2s',
     title: 'Summary',
   },
   {
-    type: 'scaling',
+    type: 'layer2s',
     secondaryLabel: 'RISKS',
     title: 'Overview',
   },
   {
-    type: 'scaling',
+    type: 'layer2s',
     secondaryLabel: 'RISKS',
     title: 'Data Availability',
   },
   {
-    type: 'scaling',
+    type: 'layer2s',
     secondaryLabel: 'RISKS',
     title: 'State Validation',
   },
   {
-    type: 'scaling',
+    type: 'layer2s',
     secondaryLabel: 'RISKS',
     title: 'Sequencing',
   },
   {
-    type: 'scaling',
+    type: 'layer2s',
     title: 'Value Secured',
   },
   {
-    type: 'scaling',
+    type: 'layer2s',
     title: 'Activity',
   },
 
   {
-    type: 'scaling',
+    type: 'layer2s',
     title: 'Liveness',
   },
   {
-    type: 'scaling',
+    type: 'layer2s',
     title: 'Costs',
   },
   {
-    type: 'scaling',
+    type: 'layer2s',
     title: 'Upcoming',
   },
   {
-    type: 'scaling',
+    type: 'layer2s',
     title: 'Archived',
   },
   {

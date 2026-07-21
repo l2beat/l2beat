@@ -3,9 +3,9 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import type { ChartRange } from '~/utils/range/range'
-import { countPerSecond } from '../scaling/activity/utils/countPerSecond'
-import { getActivitySyncInfo } from '../scaling/activity/utils/getActivitySyncInfo'
-import { getFullySyncedActivityRange } from '../scaling/activity/utils/getFullySyncedActivityRange'
+import { countPerSecond } from '../layer2s/activity/utils/countPerSecond'
+import { getActivitySyncInfo } from '../layer2s/activity/utils/getActivitySyncInfo'
+import { getFullySyncedActivityRange } from '../layer2s/activity/utils/getFullySyncedActivityRange'
 import { computeSeriesChange } from './computeSeriesChange'
 
 export interface HomeEthereumCharts {

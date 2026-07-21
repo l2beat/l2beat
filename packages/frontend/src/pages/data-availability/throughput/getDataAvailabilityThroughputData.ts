@@ -18,7 +18,7 @@ export async function getDataAvailabilityThroughputData(
     helpers.queryClient.prefetchQuery(
       helpers.trpc.da.chart.queryOptions({
         range: optionToRange('1y'),
-        includeScalingOnly: true,
+        includeLayer2sOnly: true,
       }),
     ),
   ])

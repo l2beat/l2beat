@@ -5,8 +5,8 @@ import { EM_DASH } from '~/consts/characters'
 import { InteropNoDataBadge } from '~/pages/interop/components/InteropNoDataBadge'
 import { TopTokensCell } from '~/pages/interop/components/tokens/TopTokensCell'
 import type { InteropSelection } from '~/pages/interop/utils/types'
-import type { TokenData } from '~/server/features/scaling/interop/types'
-import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
+import type { TokenData } from '~/server/features/layer2s/interop/types'
+import type { TopItems } from '~/server/features/layer2s/interop/utils/getTopItems'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type {
   BurnAndMintProtocolEntry,

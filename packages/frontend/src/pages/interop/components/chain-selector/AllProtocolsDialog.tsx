@@ -11,7 +11,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
+import type { ProtocolDisplayable } from '~/server/features/layer2s/interop/types'
 import { cn } from '~/utils/cn'
 
 export function AllProtocolsDialog({

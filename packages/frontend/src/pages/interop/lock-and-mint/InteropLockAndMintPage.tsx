@@ -7,7 +7,7 @@ import {
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
+import type { ProtocolDisplayable } from '~/server/features/layer2s/interop/types'
 import { useTRPC } from '~/trpc/React'
 import type { WithProjectIcon } from '~/utils/withProjectIcon'
 import { AllProtocolsCard } from '../components/AllProtocolsCard'
