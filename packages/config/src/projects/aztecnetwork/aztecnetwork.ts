@@ -335,7 +335,7 @@ export const aztecnetwork: ScalingProject = {
     activityConfig: {
       type: 'block',
       startBlock: 1,
-      batchSize: 50,
+      batchSize: 49,
     },
     escrows: [
       discovery.getEscrowDetails({
