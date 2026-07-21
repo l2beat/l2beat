@@ -1560,12 +1560,19 @@ function getRiskViewStateValidation(
       }
     }
     case 'OpSuccinctFDP': {
+      const challengers =
+        templateVars.discovery.getContractValueOrUndefined<string[]>(
+          'AccessManager',
+          'challengers',
+        ) ?? []
       return {
         ...RISK_VIEW.STATE_FP_1R_ZK,
         sentiment: 'warning', // whitelist for challengers!
         description:
           RISK_VIEW.STATE_FP_1R_ZK.description +
-          ' The system currently operates with at least 5 whitelisted challengers external to the team.',
+          (challengers.length >= 5
+            ? ' The system currently operates with at least 5 whitelisted challengers external to the team.'
+            : ` The system currently operates with a closed set of ${challengers.length} whitelisted challenger${challengers.length === 1 ? '' : 's'}.`),
         executionDelay: getExecutionDelay(templateVars),
         challengeDelay: getChallengePeriod(templateVars),
         initialBond: {

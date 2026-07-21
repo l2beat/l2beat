@@ -350,6 +350,16 @@ Verify:
 4. From the \`op-succinct\` dir run \`cargo run --bin config --release --features eigenda\` to print the verification key hashes.
     `,
   },
+  '0x0061b26157718f96a20ea50c52a485dea3b6967139328dc7e07fece56f557bda': {
+    ...OP_SUCCINCT_FDP_AGG_EIGENDA(''), // Rise, exact version of their op-succinct fork unidentified
+    programUrl: 'https://github.com/risechain/op-succinct',
+    verificationStatus: 'notVerified',
+  },
+  '0x02850d082ab676631569bfa7057944a05f22f42c12ffa15b0ae30a6153dfe162': {
+    ...OP_SUCCINCT_FDP_RANGE_EIGENDA(''), // Rise, exact version of their op-succinct fork unidentified
+    programUrl: 'https://github.com/risechain/op-succinct',
+    verificationStatus: 'notVerified',
+  },
   '0x003991487ea72a40a1caa7c234b12c0da52fc4ccc748a07f6ebd354bbb54772e': {
     ...OP_SUCCINCT_AGG_BLOBS,
     proverSystemProject: ProjectId('sp1hypercube'),

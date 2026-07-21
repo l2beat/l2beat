@@ -143,6 +143,14 @@ export const INTEROP_CHAINS: InteropChain[] = [
     explorerUrl: 'https://worldscan.org',
   },
   {
+    id: 'rise',
+    name: 'RISE',
+    type: 'evm',
+    display: 'RISE',
+    color: '#04DF83',
+    explorerUrl: 'https://explorer.risechain.com',
+  },
+  {
     id: 'celo',
     name: 'Celo',
     type: 'evm',

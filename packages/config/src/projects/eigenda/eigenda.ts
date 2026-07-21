@@ -262,17 +262,6 @@ export const eigenda: BaseProject = {
         ],
       },
       {
-        projectId: ProjectId('rise'),
-        name: 'Rise',
-        daTrackingConfig: [
-          {
-            type: 'eigen-da',
-            sinceTimestamp: 1767607200, // 2026-01-05T10:00:00Z
-            customerId: '0x78d5974216f751eb328018f003067f77e8be2fc4',
-          },
-        ],
-      },
-      {
         projectId: ProjectId('conduit-2'),
         name: 'Conduit',
         daTrackingConfig: [

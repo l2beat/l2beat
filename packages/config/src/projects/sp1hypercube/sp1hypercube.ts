@@ -96,6 +96,10 @@ export const sp1hypercube: BaseProject = {
         sinceTimestamp: UnixTime(1771445567),
       },
       {
+        projectId: ProjectId('rise'),
+        sinceTimestamp: UnixTime(1767605759), // mainnet genesis 2026-01-05
+      },
+      {
         projectId: ProjectId('vector'),
         sinceTimestamp: UnixTime(1771445567),
       },
