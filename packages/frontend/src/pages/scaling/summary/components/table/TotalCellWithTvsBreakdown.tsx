@@ -96,10 +96,7 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
             <div className="flex flex-col items-end max-md:py-1">
               <div className="flex items-center">
                 {icon}
-                <ValueWithPercentageChange
-                  change={props.change}
-                  changePeriod={undefined}
-                >
+                <ValueWithPercentageChange change={props.change}>
                   {formatDollarValueNumber(totalTvs)}
                 </ValueWithPercentageChange>
               </div>

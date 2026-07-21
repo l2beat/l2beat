@@ -163,7 +163,7 @@ function DominanceRowItem({
             <PercentChange
               className="font-medium text-label-value-16"
               value={percentChange}
-              period="previous-24-hours"
+              period="last24h"
             />
           )}
         </div>

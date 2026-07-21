@@ -13,6 +13,7 @@ import type { CommonProjectColumnsOptions } from '~/components/table/common-proj
 import { getScalingCommonProjectColumns } from '~/components/table/common-project-columns/ScalingCommonProjectColumns'
 import { EM_DASH } from '~/consts/characters'
 import type { ScalingActivityEntry } from '~/server/features/scaling/activity/getScalingActivityEntries'
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { formatTimestamp } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { formatInteger } from '~/utils/number-format/formatInteger'
@@ -27,10 +28,12 @@ type ScalingActivityTableEntry = ScalingActivityEntry & {
         pastDayCount: {
           value: number
           change: number
+          changePeriod: PercentageChangePeriod
         }
         summedCount: {
           value: number
           change: number
+          changePeriod: PercentageChangePeriod
         }
         maxCount: {
           value: number
@@ -97,7 +100,7 @@ export const getScalingActivityColumns = (
           <SyncStatusWrapper isSynced={data.isSynced}>
             <ValueWithPercentageChange
               change={data.pastDayCount.change}
-              changePeriod="7D"
+              changePeriod={data.pastDayCount.changePeriod}
               className="font-medium"
               containerClassName="justify-end"
             >
@@ -148,7 +151,7 @@ export const getScalingActivityColumns = (
           <SyncStatusWrapper isSynced={data.isSynced}>
             <ValueWithPercentageChange
               change={data.summedCount.change}
-              changePeriod="7D"
+              changePeriod={data.summedCount.changePeriod}
               className="font-medium"
               containerClassName="justify-end"
             >

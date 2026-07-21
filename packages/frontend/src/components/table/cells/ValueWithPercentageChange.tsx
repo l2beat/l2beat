@@ -1,8 +1,6 @@
 import type { ReactNode } from 'react'
-import {
-  type PercentageChangePeriod,
-  PercentChange,
-} from '~/components/PercentChange'
+import { PercentChange } from '~/components/PercentChange'
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 
 interface Props {
@@ -12,7 +10,7 @@ interface Props {
   changeClassName?: string
   containerClassName?: string
   changeContainerClassName?: string
-  changePeriod: PercentageChangePeriod | undefined
+  changePeriod?: PercentageChangePeriod
   disabledOnMobile?: boolean
 }
 

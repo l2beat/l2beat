@@ -1,20 +1,25 @@
 import { EM_DASH } from '~/consts/characters'
 import { TrendArrowDownIcon, TrendArrowUpIcon } from '~/icons/TrendArrow'
-import { formatPercent } from '~/utils/calculatePercentageChange'
+import {
+  formatPercent,
+  type PercentageChangePeriod,
+} from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import { Tooltip, TooltipContent, TooltipTrigger } from './core/tooltip/Tooltip'
 
-export type PercentageChangePeriod = '1D' | '7D' | 'previous-24-hours'
+const COMPARISON_PERIOD_LABELS: Record<PercentageChangePeriod, string> = {
+  '1D': 'one day ago',
+  '7D': 'seven days ago',
+  last24h: 'the previous 24 hours',
+  last30d: 'the previous 30 days',
+}
 
 export function PercentageChangeTooltipContent({
   period,
 }: {
   period: PercentageChangePeriod
 }) {
-  const comparisonPeriod =
-    period === 'previous-24-hours' ? 'the previous 24 hours' : `${period} ago`
-
-  return <>Percentage change compared to {comparisonPeriod}.</>
+  return <>Percentage change compared to {COMPARISON_PERIOD_LABELS[period]}.</>
 }
 
 interface Props {

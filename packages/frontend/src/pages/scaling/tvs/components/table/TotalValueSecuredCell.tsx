@@ -70,10 +70,7 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
                     sentiment={anyBadWarnings ? 'bad' : 'warning'}
                   />
                 ) : null}
-                <ValueWithPercentageChange
-                  change={props.change}
-                  changePeriod={undefined}
-                >
+                <ValueWithPercentageChange change={props.change}>
                   {formatDollarValueNumber(props.total)}
                 </ValueWithPercentageChange>
               </div>
