@@ -1,4 +1,8 @@
-import type { ProjectUpgradeableActor, ReferenceLink } from '@l2beat/config'
+import type {
+  ProjectPermissionImpactScenario,
+  ProjectUpgradeableActor,
+  ReferenceLink,
+} from '@l2beat/config'
 import { Badge } from '~/components/badge/Badge'
 import { Callout } from '~/components/Callout'
 import {
@@ -19,6 +23,7 @@ import { type PastUpgradesData, PastUpgradesDialog } from './PastUpgradesDialog'
 import { GroupedActorAddresses } from './permissions/GroupedActorAddresses'
 import type { Participant } from './permissions/Participants'
 import { ParticipantsEntry } from './permissions/Participants'
+import { PermissionDescription } from './permissions/PermissionDescription'
 import { UpgradeConsiderations } from './permissions/UpgradeConsiderations'
 import type { UsedInProject } from './permissions/UsedInProject'
 import { UsedInProjectEntry } from './permissions/UsedInProject'
@@ -31,6 +36,7 @@ export interface TechnologyContract {
   admins: TechnologyContractAddress[]
   chain: string
   description?: string
+  impactScenarios?: ProjectPermissionImpactScenario[]
   upgradeableBy?: ProjectUpgradeableActor[]
   upgradeDelay?: string
   usedInProjects?: UsedInProject[]
@@ -64,12 +70,14 @@ interface ContractEntryProps {
   contract: TechnologyContract
   className?: string
   expandableAddresses?: boolean
+  descriptionType?: 'default' | 'permission'
 }
 
 export function ContractEntry({
   contract,
   className,
   expandableAddresses = false,
+  descriptionType = 'default',
 }: ContractEntryProps) {
   const sharedProxies = contract.usedInProjects?.filter(
     (c) => c.type === 'proxy',
@@ -139,11 +147,19 @@ export function ContractEntry({
             contract.pastUpgrades.upgrades.length > 0 && (
               <PastUpgradesDialog pastUpgrades={contract.pastUpgrades} />
             )}
-          {contract.description && (
-            <Markdown className="word-break-word mt-2 text-paragraph-15 md:text-paragraph-16">
-              {contract.description}
-            </Markdown>
-          )}
+          {contract.description &&
+            (descriptionType === 'permission' ? (
+              <PermissionDescription
+                className="mt-2"
+                impactScenarios={contract.impactScenarios}
+              >
+                {contract.description}
+              </PermissionDescription>
+            ) : (
+              <Markdown className="word-break-word mt-2 text-paragraph-15 md:text-paragraph-16">
+                {contract.description}
+              </Markdown>
+            ))}
           {contract.escrow && <EscrowDetailsEntry escrow={contract.escrow} />}
           {contract.upgradeableBy && contract.upgradeableBy.length > 0 && (
             <div className="mt-2 flex flex-wrap text-paragraph-15 md:text-paragraph-16">
@@ -326,6 +342,9 @@ export function ContractsWithImpactfulChanges(props: {
           className="my-4 p-0"
           expandableAddresses={
             props.expandableAddresses && contract.addresses.length > 1
+          }
+          descriptionType={
+            props.type === 'permissions' ? 'permission' : 'default'
           }
         />
       ))}

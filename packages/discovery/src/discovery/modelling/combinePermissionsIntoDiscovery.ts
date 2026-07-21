@@ -5,6 +5,7 @@ import type {
   EntryParameters,
   PermissionsOutput,
   ReceivedPermission,
+  ResolvedPermissionGroup,
 } from '../output/types'
 import type { DiscoveryTimestamps } from './modelPermissions'
 
@@ -17,6 +18,31 @@ export function combinePermissionsIntoDiscovery(
   permissionsOutput: PermissionsOutput,
   options: { skipDependentDiscoveries?: boolean } = {},
 ) {
+  const permissionsFor = (
+    receiver: ChainSpecificAddress,
+    isFinal: boolean,
+  ): ReceivedPermission[] | undefined => {
+    const matching = permissionsOutput.permissions.filter(
+      (permission) =>
+        permission.receiver.toLowerCase() === receiver.toLowerCase() &&
+        permission.isFinal === isFinal,
+    )
+
+    if (matching.length === 0) {
+      return undefined
+    }
+
+    return reverseVia(
+      sortReceivedPermissions(
+        matching.map((permission) => {
+          // Remove some fields for backwards compatibility
+          const { receiver: _, isFinal: __, ...rest } = permission
+          return rest
+        }),
+      ),
+    )
+  }
+
   const updateRelevantField = (
     entry: EntryParameters,
     field: keyof EntryParameters,
@@ -32,36 +58,28 @@ export function combinePermissionsIntoDiscovery(
   }
 
   discovery.permissionsConfigHash = permissionsOutput.permissionsConfigHash
+  discovery.impactScenarios = permissionsOutput.impactScenarios
 
   const allAddresses = new Set(
     discovery.entries.map((e) => e.address.toLowerCase()),
   )
+  const concreteAddresses = new Set(
+    discovery.entries
+      .filter((entry) => entry.type !== 'Reference')
+      .map((entry) => entry.address.toLowerCase()),
+  )
 
   for (const entry of discovery.entries) {
-    const permissionKeys: (keyof EntryParameters)[] = [
+    updateRelevantField(
+      entry,
       'receivedPermissions',
+      permissionsFor(entry.address, true),
+    )
+    updateRelevantField(
+      entry,
       'directlyReceivedPermissions',
-    ]
-    for (const key of permissionKeys) {
-      const ultimatePermissionsForEntry = permissionsOutput.permissions.filter(
-        (p) =>
-          p.receiver.startsWith(entry.address) &&
-          (key === 'receivedPermissions' ? p.isFinal : !p.isFinal),
-      )
-      const permissions =
-        ultimatePermissionsForEntry.length === 0
-          ? undefined
-          : reverseVia(
-              sortReceivedPermissions(
-                ultimatePermissionsForEntry.map((p) => {
-                  // Remove some fields for backwards compatibility
-                  const { receiver: _, isFinal: __, ...rest } = p
-                  return rest
-                }),
-              ),
-            )
-      updateRelevantField(entry, key, permissions)
-    }
+      permissionsFor(entry.address, false),
+    )
 
     entry.eoaWithUpgradePermissions =
       permissionsOutput.eoasWithUpgradePermissions?.includes(entry.address) &&
@@ -71,6 +89,76 @@ export function combinePermissionsIntoDiscovery(
         ? true
         : undefined
   }
+
+  const permissionGroups = permissionsOutput.permissionGroups ?? []
+  const impactGroupPrincipals = new Set(
+    (permissionsOutput.impactScenarios ?? []).flatMap((scenario) =>
+      scenario.principals.flatMap((principal) =>
+        principal.type === 'group' ? [principal.key] : [],
+      ),
+    ),
+  )
+  const localPermissionGroups = permissionGroups.filter((group) =>
+    concreteAddresses.has(group.permission.from.toLowerCase()),
+  )
+  const externalPermissionGroups = permissionGroups.filter(
+    (group) =>
+      (permissionsOutput.impactScenarios === undefined
+        ? group.isProjectScoped === true
+        : impactGroupPrincipals.has(
+            `group:${group.permission.from.toLowerCase()}:${group.id}`,
+          )) && !concreteAddresses.has(group.permission.from.toLowerCase()),
+  )
+  discovery.permissionGroups = isEmpty(localPermissionGroups)
+    ? undefined
+    : localPermissionGroups.map(withoutProjectScope)
+  discovery.externalPermissionGroups = isEmpty(externalPermissionGroups)
+    ? undefined
+    : externalPermissionGroups.map(withoutProjectScope)
+
+  const externalReceivers = new Set(
+    permissionsOutput.permissions
+      .filter(
+        (permission) =>
+          !concreteAddresses.has(permission.receiver.toLowerCase()) &&
+          concreteAddresses.has(permission.from.toLowerCase()),
+      )
+      .map((permission) => permission.receiver),
+  )
+  for (const scenario of permissionsOutput.impactScenarios ?? []) {
+    for (const principal of scenario.principals) {
+      if (
+        principal.type === 'address' &&
+        !concreteAddresses.has(principal.address.toLowerCase()) &&
+        permissionsOutput.permissions.some(
+          (permission) =>
+            permission.receiver.toLowerCase() ===
+              principal.address.toLowerCase() && permission.isFinal,
+        )
+      ) {
+        externalReceivers.add(principal.address)
+      }
+    }
+  }
+
+  const externalPermissions = Object.fromEntries(
+    Array.from(externalReceivers)
+      .sort()
+      .map((receiver) => [
+        receiver,
+        {
+          receivedPermissions: permissionsFor(receiver, true),
+          directlyReceivedPermissions: permissionsFor(receiver, false),
+          eoaWithUpgradePermissions:
+            permissionsOutput.eoasWithUpgradePermissions?.some(
+              (address) => address.toLowerCase() === receiver.toLowerCase(),
+            ) || undefined,
+        },
+      ]),
+  )
+  discovery.externalPermissions = isEmpty(externalPermissions)
+    ? undefined
+    : externalPermissions
 
   if (!options.skipDependentDiscoveries) {
     const timestampsWithoutCurProj: DiscoveryTimestamps = {}
@@ -86,6 +174,13 @@ export function combinePermissionsIntoDiscovery(
       ? undefined // remove entry if there are no dependent discoveries
       : timestampsWithoutCurProj
   }
+}
+
+function withoutProjectScope(
+  group: ResolvedPermissionGroup,
+): ResolvedPermissionGroup {
+  const { isProjectScoped: _, ...rest } = group
+  return rest
 }
 
 // Renounced admin slots point at the zero address, which the modelling

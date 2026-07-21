@@ -91,6 +91,13 @@ export type {
   DiscoveryOutput,
   EntryParameters,
   ReceivedPermission,
+  ResolvedImpactPath,
+  ResolvedImpactPrincipal,
+  ResolvedImpactScenario,
+  ResolvedImpactSource,
+  ResolvedImpactStep,
+  ResolvedImpactTrace,
+  ResolvedPermissionGroup,
   ResolvedPermissionPath,
 } from './discovery/output/types'
 export { AllProviders } from './discovery/provider/AllProviders'

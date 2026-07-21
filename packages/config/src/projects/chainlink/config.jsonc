@@ -18,8 +18,9 @@
     "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA": "ChainlinkOracleMultisig"
   },
   "overrides": {
-    "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA": {
-      "description": "The Gnosis Safe that Chainlink uses to administer these three price feeds. It owns both the feed proxies and their aggregators, so it can swap the aggregator behind any feed and replace the set of oracle signers and how many of them must sign a price. In effect it can set the ETH, stETH, and rETH prices these feeds report, or push a feed into a stale, zero, or reverting state, which makes it their single point of control, held by Chainlink."
+    "eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b": {
+      // This module only executes transactions already confirmed by the Safe.
+      "canActIndependently": false
     }
   }
 }

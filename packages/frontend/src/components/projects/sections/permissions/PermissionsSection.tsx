@@ -61,6 +61,7 @@ export function PermissionsSection({
                       key={technologyContractKey(permission)}
                       contract={permission}
                       className="my-4"
+                      descriptionType="permission"
                     />
                   ))}
                   {changedRoles.length > 0 && (
@@ -80,6 +81,7 @@ export function PermissionsSection({
                       contract={permission}
                       className="my-4"
                       expandableAddresses={permission.addresses.length > 1}
+                      descriptionType="permission"
                     />
                   ))}
                   {changedActors.length > 0 && (

@@ -8,6 +8,7 @@ import {
 import { combinePermissionsIntoDiscovery } from '../discovery/modelling/combinePermissionsIntoDiscovery'
 import {
   DiscoveryRegistry,
+  getDependenciesToDiscoverForProject,
   modelPermissions,
 } from '../discovery/modelling/modelPermissions'
 import { saveDiscoveredJson } from '../discovery/output/saveDiscoveryResult'
@@ -29,7 +30,10 @@ export async function modelPermissionsCommand(
 
   logger.info(`Modelling: ${project}`)
   logger.info('Reading all related discoveries:')
-  const dependencies: string[] = [project]
+  const dependencies = getDependenciesToDiscoverForProject(
+    project,
+    configReader,
+  )
   const discoveries = new DiscoveryRegistry()
   for (const dependency of dependencies) {
     const discovery = configReader.readDiscovery(dependency)

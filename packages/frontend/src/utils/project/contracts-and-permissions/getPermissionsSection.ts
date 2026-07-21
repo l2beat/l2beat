@@ -178,9 +178,11 @@ function toTechnologyContract(
   }
 
   const allEoas = permission.accounts.every((account) => account.type === 'EOA')
-  const name = isGrouped
-    ? `${permission.accounts.length} ${allEoas ? 'EOAs' : 'actors'}`
-    : permission.name
+  const name =
+    permission.displayName ??
+    (isGrouped
+      ? `${permission.accounts.length} ${allEoas ? 'EOAs' : 'actors'}`
+      : permission.name)
 
   const participants = permission.participants?.map((account) => ({
     name: account.name,
@@ -207,6 +209,7 @@ function toTechnologyContract(
       usedInProjects,
       chain: permission.chain,
       description: permission.description,
+      impactScenarios: permission.impactScenarios,
       participants,
       references: permission.references ?? [],
       impactfulChange,

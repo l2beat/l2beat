@@ -31,7 +31,7 @@ transitivePermission(Receiver, Permission, Giver, Delay, Description, Role, Cond
   permission(Receiver, Permission, Giver, Delay, Description, Role),
   defaultedPermissionCondition(Receiver, Permission, Giver, Delay, Description, Role, Condition).
 
-transitivePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalDescription, OriginalRole, OriginalCondition, TotalDelay, (cons(tuple(Via, ViaPermission, ViaDelay, ViaCondition), IndirectVia))) :-
+transitivePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalDescription, OriginalRole, OriginalCondition, TotalDelay, (cons(tuple(Via, ViaPermission, ViaDelay, ViaDescription, ViaRole, ViaCondition), IndirectVia))) :-
   Receiver != Via, % deal with self-loops (e.g. timelock can act on timelock)
   transitivePermission(Via, OriginalPermission, Giver, OriginalDelay, OriginalDescription, OriginalRole, OriginalCondition, PreviousTotalDelay, IndirectVia),
   permission(Receiver, ViaPermission, Via, ViaDelay, ViaDescription, ViaRole),
@@ -68,5 +68,6 @@ eoaWithUpgradePermissions(Eoa) :-
 % #show canActIndependently/1.
 % #show transitivePermission/9.
 #show ultimatePermission/10.
+#show permissionGroup/11.
 
 #show eoaWithUpgradePermissions/1.

@@ -1,13 +1,13 @@
-Generated with discovered.json: 0x6ce3950f6612155dbf4d458f1a2482e41b97e939
+Generated with discovered.json: 0x4796d5cb38591fe63b24da0e397a0c627c58746f
 
-# Diff at Thu, 09 Jul 2026 12:38:38 GMT:
+# Diff at Tue, 21 Jul 2026 08:20:44 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - current timestamp: 1781962796
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Model OCR signers and transmitters as thresholded permission groups
 
 ## Initial discovery
 
@@ -44,7 +44,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract ChainlinkOracleMultisig (eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA) [GnosisSafe]
-    +++ description: The Gnosis Safe that Chainlink uses to administer these three price feeds. It owns both the feed proxies and their aggregators, so it can swap the aggregator behind any feed and replace the set of oracle signers and how many of them must sign a price. In effect it can set the ETH, stETH, and rETH prices these feeds report, or push a feed into a stale, zero, or reverting state, which makes it their single point of control, held by Chainlink.
+    +++ description: None
 ```
 
 ```diff
@@ -56,7 +56,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract Chainlink_stETH_USD_Aggregator (eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f) [ChainlinkOCR2Aggregator]
-    +++ description: A Chainlink OCR2 aggregator producing a price feed. Each update is the median of a report signed by a quorum (f+1) of its signers and relayed onchain by one of its transmitters, accepted only within a fixed min/max band. A colluding signer quorum can move the reported price anywhere within that band, while a transmitter only relays an already-signed report. Its owner sets the signer and transmitter sets and the quorum size, so it controls who can report the price.
+    +++ description: A Chainlink OCR2 aggregator. It accepts reports signed by its configured quorum and submitted by a configured transmitter, and stores their median answer within its fixed min/max bounds.
 ```
 
 ```diff
@@ -182,7 +182,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract Chainlink_ETH_USD_Aggregator (eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5) [ChainlinkOCR2Aggregator]
-    +++ description: A Chainlink OCR2 aggregator producing a price feed. Each update is the median of a report signed by a quorum (f+1) of its signers and relayed onchain by one of its transmitters, accepted only within a fixed min/max band. A colluding signer quorum can move the reported price anywhere within that band, while a transmitter only relays an already-signed report. Its owner sets the signer and transmitter sets and the quorum size, so it controls who can report the price.
+    +++ description: A Chainlink OCR2 aggregator. It accepts reports signed by its configured quorum and submitted by a configured transmitter, and stores their median answer within its fixed min/max bounds.
 ```
 
 ```diff
@@ -236,7 +236,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract Chainlink_rETH_ETH_Aggregator (eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d) [ChainlinkOCR2Aggregator]
-    +++ description: A Chainlink OCR2 aggregator producing a price feed. Each update is the median of a report signed by a quorum (f+1) of its signers and relayed onchain by one of its transmitters, accepted only within a fixed min/max band. A colluding signer quorum can move the reported price anywhere within that band, while a transmitter only relays an already-signed report. Its owner sets the signer and transmitter sets and the quorum size, so it controls who can report the price.
+    +++ description: A Chainlink OCR2 aggregator. It accepts reports signed by its configured quorum and submitted by a configured transmitter, and stores their median answer within its fixed min/max bounds.
 ```
 
 ```diff

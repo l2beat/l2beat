@@ -27,5 +27,17 @@
         "set": { "event": "PriceFeedAddressChanged" }
       }
     }
-  }
+  },
+  "effectRules": [
+    {
+      "id": "withdrawalsRemainAvailableAfterShutdown",
+      "inputs": [
+        { "field": "priceFeed", "effect": "branch.shutdown.requested" }
+      ],
+      "output": "mitigation.stabilityPool.withdrawals",
+      "description": "Branch shutdown does not disable this contract's deposit-withdrawal path.",
+      "mitigation": "Stability Pool deposit withdrawals remain available after branch shutdown.",
+      "terminal": true
+    }
+  ]
 }

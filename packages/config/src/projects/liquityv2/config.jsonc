@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "liquityv2",
+  "modelCrossChainPermissions": true,
   "import": ["../globalConfig.jsonc"],
   "maxAddresses": 70,
   "initialAddresses": ["eth:0x6440f144b7e50D6a8439336510312d2F54beB01D"],

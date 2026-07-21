@@ -96,5 +96,38 @@
       "edit": ["format", "Undecimal16"],
       "description": "Batch Collateral Ratio buffer (%). Batched troves must stay above MCR + BCR."
     }
-  }
+  },
+  "effectRules": [
+    {
+      "id": "overstatedPriceWeakensBorrowingChecks",
+      "inputs": [
+        { "field": "priceFeed", "effect": "price.primary.overstated" }
+      ],
+      "output": "impact.borrowing.unsafe",
+      "description": "This contract uses the PriceFeed's primary price to calculate individual collateral ratios and the branch total collateral ratio when enforcing MCR, CCR, and SCR checks.",
+      "impact": "Borrowers can draw more BOLD or withdraw more collateral than the configured MCR, CCR, and SCR checks would permit at the correct price.",
+      "terminal": true
+    },
+    {
+      "id": "understatedPriceRestrictsBorrowing",
+      "inputs": [
+        { "field": "priceFeed", "effect": "price.primary.understated" }
+      ],
+      "output": "impact.borrowing.restricted",
+      "description": "This contract uses the PriceFeed's primary price to calculate individual collateral ratios and the branch total collateral ratio when enforcing MCR, CCR, and SCR checks.",
+      "impact": "Otherwise valid trove openings and adjustments can be rejected, and the branch can appear to cross its restricted-mode or shutdown thresholds.",
+      "terminal": true
+    },
+    {
+      "id": "applyOracleFailureShutdown",
+      "inputs": [
+        { "field": "priceFeed", "effect": "branch.shutdown.requested" }
+      ],
+      "output": "branch.shutdown.active",
+      "description": "This contract accepts the shutdown signal only from its configured PriceFeed, records the shutdown, settles aggregate interest once, and tells the TroveManager to shut down.",
+      "impact": "The branch can no longer open troves or perform borrower operations guarded by the live-branch check.",
+      "mitigation": "Trove closure and collateral-surplus claims remain available after shutdown.",
+      "terminal": true
+    }
+  ]
 }

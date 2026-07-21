@@ -19,8 +19,10 @@ import { KnowledgeBase } from './KnowledgeBase'
 import { ModelIdRegistry } from './ModelIdRegistry'
 import {
   parseEoaWithUpgradePermissionsFacts,
+  parsePermissionGroupFacts,
   parseUltimatePermissionFact,
 } from './parseUltimatePermissionFact'
+import { resolveImpactScenarios } from './resolveImpactScenarios'
 import { runClingo } from './runClingo'
 
 export type DiscoveryTimestamps = {
@@ -93,11 +95,20 @@ export async function modelPermissions(
       paths,
       options,
     )
-  return buildPermissionsOutput(
+  const output = buildPermissionsOutput(
     permissionFacts,
     permissionsConfigHash,
     discoveries,
   )
+  output.impactScenarios = resolveImpactScenarios(
+    discoveries.getSortedProjects().map((dependencyProject) => ({
+      discovery: discoveries.get(dependencyProject).discoveryOutput,
+      permissions: configReader.readConfig(dependencyProject).permission,
+    })),
+    output,
+    templateService,
+  )
+  return output
 }
 
 export function buildPermissionsOutput(
@@ -115,10 +126,15 @@ export function buildPermissionsOutput(
     kb.getFacts('eoaWithUpgradePermissions'),
     modelIdRegistry,
   )
+  const permissionGroups = parsePermissionGroupFacts(
+    kb.getFacts('permissionGroup'),
+    modelIdRegistry,
+  )
   return {
     permissionsConfigHash,
     permissions: ultimatePermissions,
     eoasWithUpgradePermissions,
+    permissionGroups,
     dependentTimestamps: discoveries.getTimestamps(),
   }
 }
@@ -195,15 +211,22 @@ export function generateClingoForDiscoveries(
   templateService: TemplateService,
 ): string {
   const generatedClingo: string[] = []
+  const projects = discoveries.getSortedProjects()
+  const addressToNameMap = buildAddressToNameMap(
+    projects.flatMap(
+      (project) => discoveries.get(project).discoveryOutput.entries,
+    ),
+  )
 
-  for (const project of discoveries.getSortedProjects()) {
-    const discovery = discoveries.get(project).discoveryOutput
-    const config = configReader.readConfig(project)
+  for (const dependencyProject of projects) {
+    const discovery = discoveries.get(dependencyProject).discoveryOutput
+    const config = configReader.readConfig(dependencyProject)
     const permissionsInClingo = generateClingoForProjectOnChain(
       config.permission,
       configReader,
       discovery,
       templateService,
+      addressToNameMap,
     )
     generatedClingo.push(permissionsInClingo)
   }
@@ -216,10 +239,9 @@ export function generateClingoForProjectOnChain(
   configReader: ConfigReader,
   discovery: DiscoveryOutput,
   templateService: TemplateService,
+  addressToNameMap = buildAddressToNameMap(discovery.entries),
 ) {
   const generatedClingo: string[] = []
-
-  const addressToNameMap = buildAddressToNameMap(discovery.entries)
 
   const projectSpecificModelLp = getProjectSpecificModelLp(
     discovery.name,
@@ -256,7 +278,14 @@ export function generateClingoForProjectOnChain(
 
 export function getDependenciesToDiscoverForProject(
   project: string,
-  _configReader: ConfigReader,
+  configReader: ConfigReader,
 ): string[] {
-  return [project]
+  const config = configReader.readRawConfig(project)
+  if (!config.modelCrossChainPermissions) {
+    return [project]
+  }
+
+  return configReader
+    .readDiscoveryWithReferences(project)
+    .map((discovery) => discovery.name)
 }

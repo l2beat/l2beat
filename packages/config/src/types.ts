@@ -1274,8 +1274,12 @@ export interface ProjectPermission {
   accounts: ProjectPermissionedAccount[]
   /** Name of this group */
   name: string
+  /** Optional semantic label to preserve when rendering a multi-account group */
+  displayName?: string
   /** Description of the permissions */
   description: string
+  /** Mechanically composed impact proofs derived from discovery */
+  impactScenarios?: ProjectPermissionImpactScenario[]
   /** Name of the chain of this address. Optional for backwards compatibility */
   chain: string
   /** List of source code permalinks and useful materials */
@@ -1284,6 +1288,39 @@ export interface ProjectPermission {
   participants?: ProjectPermissionedAccount[]
   /** Indicates whether the generation of contained data was driven by discovery */
   discoveryDrivenData?: boolean
+}
+
+export interface ProjectPermissionImpactScenario {
+  id: string
+  requires?: string[]
+  capabilities: {
+    actor: string
+    component: string
+    descriptions: string[]
+  }[]
+  impacts: {
+    /** Stable identity of the terminal outcome across capability scenarios */
+    id: string
+    components: string[]
+    description: string
+    mitigation?: string
+    paths: ProjectPermissionImpactTrace[]
+  }[]
+  protections: {
+    /** Stable identity of the terminal protection across capability scenarios */
+    id: string
+    components: string[]
+    description: string
+    paths: ProjectPermissionImpactTrace[]
+  }[]
+}
+
+export interface ProjectPermissionImpactTrace {
+  component: string
+  effect: string
+  description?: string
+  mitigation?: string
+  inputs: ProjectPermissionImpactTrace[]
 }
 
 export interface ProjectPermissionedAccount {

@@ -1,13 +1,13 @@
-Generated with discovered.json: 0x46bb80754b1d1fbc24b3d5f2aaff1f2f2d778aad
+Generated with discovered.json: 0xff85aa601d584abfcbd3a51d0ede68b1afdb865d
 
-# Diff at Thu, 09 Jul 2026 12:41:23 GMT:
+# Diff at Tue, 21 Jul 2026 11:20:22 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - current timestamp: 1781962796
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Model Chainlink signer and transmitter compromise impact
 
 ## Initial discovery
 

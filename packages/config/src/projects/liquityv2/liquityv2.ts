@@ -38,7 +38,7 @@ export const liquityv2: BaseProject = {
   },
   display: {
     description:
-      'Liquity V2 is a borrowing protocol where users draw the BOLD stablecoin against ETH, wstETH, and rETH collateral at a user-set interest rate, each collateral held in its own isolated branch with a dedicated Stability Pool. Its contracts are immutable and adminless, so the protocol adds no trust assumptions of its own; the only one it carries is the externally controlled Chainlink price feed that each branch relies on to value its collateral.',
+      'Liquity V2 is a borrowing protocol where users draw the BOLD stablecoin against ETH, wstETH, and rETH collateral at a user-set interest rate, each collateral held in its own isolated branch with a dedicated Stability Pool. Its contracts are immutable and adminless, so its trust surface comes from the external price feeds and collateral systems on which those branches depend.',
     detailedDescription: readProjectMarkdown(
       'liquityv2',
       'detailedDescription',
@@ -103,19 +103,19 @@ export const liquityv2: BaseProject = {
     {
       project: ProjectId('chainlink'),
       description:
-        'Supplies the price feeds each branch reads to value its ETH, wstETH, or rETH collateral. A stale, zero, or reverting feed shuts that branch down.',
+        'Impact: Chainlink controls the market-price inputs used by every branch; a plausible wrong answer can cause unsafe borrowing, missed or wrongful liquidations, and incorrect redemptions, while a stale, non-positive, or reverting answer shuts affected branches down. Mitigation: Liquity applies input-specific staleness checks, LST cross-checks, and shutdown fallbacks. The exact Chainlink admin and signer-quorum paths are analyzed in Permissions below.',
     },
     {
       name: 'Rocket Pool rETH',
       icon: 'reth',
       description:
-        "The rETH branch values its collateral partly from the rETH-to-ETH exchange rate reported by Rocket Pool's rETH token. A wrong rate misprices the branch, and a failing one shuts it down.",
+        "Impact: Rocket Pool is treated as a black box. If rETH loses its backing or becomes inaccessible, the rETH branch can accrue bad debt; a wrong canonical rETH/ETH rate can underprice collateral, and a reverting or non-positive rate shuts the branch down. Mitigation: Liquity isolates rETH in its own branch, caps upward market-feed manipulation by using the lower of Chainlink's rETH/ETH price and the canonical rate, and retains closure, claims, and Stability Pool withdrawals after shutdown. These mechanisms cannot restore value to failed rETH collateral.",
     },
     {
       name: 'Lido wstETH',
       icon: 'wsteth',
       description:
-        "The wstETH branch values its collateral from Lido's wstETH-to-stETH exchange rate reported by the wstETH token. A wrong rate misprices the branch, and a failing one shuts it down.",
+        'Impact: Lido is treated as a black box. If wstETH loses its backing or becomes inaccessible, the wstETH branch can accrue bad debt; a wrong canonical wstETH/stETH rate directly misprices collateral, and a reverting or non-positive rate shuts the branch down. Mitigation: Liquity isolates wstETH in its own branch and retains closure, claims, and Stability Pool withdrawals after shutdown, but it has no independent source with which to validate the canonical rate or restore value to failed wstETH collateral.',
     },
   ],
   permissions: discovery.getDiscoveredPermissions(),

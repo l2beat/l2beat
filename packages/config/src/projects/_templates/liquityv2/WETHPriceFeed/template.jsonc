@@ -14,18 +14,7 @@
       "copy": "constructorArgs",
       "edit": ["get", "_borrowerOperationsAddress"]
     },
-    "ethUsdOracle": {
-      "permissions": [
-        {
-          "type": "interact",
-          "description": "Supplies the ETH price this PriceFeed reads."
-        },
-        {
-          "type": "interact",
-          "description": "Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions."
-        }
-      ]
-    },
+    "ethUsdOracle": {},
     "ethUsdStaleness": {
       "copy": "ethUsdOracle",
       "edit": [
@@ -35,5 +24,58 @@
       ],
       "description": "How long the ETH/USD feed may go without an update before the branch shuts down."
     }
-  }
+  },
+  "effectAssumptions": [
+    {
+      "field": "ethUsdOracle",
+      "description": "supply the ETH/USD value and update timestamp read by this contract.",
+      "effects": [
+        {
+          "id": "value.overstated",
+          "description": "As an undiscovered dependency, this input is treated as a black box that can return an overstated value."
+        },
+        {
+          "id": "value.understated",
+          "description": "As an undiscovered dependency, this input is treated as a black box that can return an understated value."
+        },
+        {
+          "id": "value.unavailable",
+          "description": "As an undiscovered dependency, this input is treated as a black box that can revert, return a non-positive value, or stop producing fresh updates."
+        }
+      ]
+    }
+  ],
+  "effectRules": [
+    {
+      "id": "overstatedPrimaryPrice",
+      "inputs": [{ "field": "ethUsdOracle", "effect": "value.overstated" }],
+      "output": "price.primary.overstated",
+      "description": "This contract uses the positive, fresh ETH/USD input directly as its primary collateral price; it has no independent value cross-check."
+    },
+    {
+      "id": "understatedPrimaryPrice",
+      "inputs": [{ "field": "ethUsdOracle", "effect": "value.understated" }],
+      "output": "price.primary.understated",
+      "description": "This contract uses the positive, fresh ETH/USD input directly as its primary collateral price; it has no independent value cross-check."
+    },
+    {
+      "id": "overstatedRedemptionPrice",
+      "inputs": [{ "field": "ethUsdOracle", "effect": "value.overstated" }],
+      "output": "price.redemption.overstated",
+      "description": "This contract uses the same ETH/USD input as its redemption price."
+    },
+    {
+      "id": "understatedRedemptionPrice",
+      "inputs": [{ "field": "ethUsdOracle", "effect": "value.understated" }],
+      "output": "price.redemption.understated",
+      "description": "This contract uses the same ETH/USD input as its redemption price."
+    },
+    {
+      "id": "oracleFailureRequestsShutdown",
+      "inputs": [{ "field": "ethUsdOracle", "effect": "value.unavailable" }],
+      "output": "branch.shutdown.requested",
+      "description": "A reverting or non-positive ETH/USD read, or an answer older than {{ ethUsdStaleness }}, makes this contract signal its configured BorrowerOperations contract to shut the branch down and permanently switch to the last recorded good price.",
+      "mitigation": "The input is checked for call success, a positive answer, and freshness before it is accepted."
+    }
+  ]
 }
