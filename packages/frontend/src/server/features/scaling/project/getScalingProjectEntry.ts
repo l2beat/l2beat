@@ -35,6 +35,7 @@ import {
   getProjectPastUpgrades,
 } from '~/utils/project/contracts-and-permissions/getPastUpgradesData'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
+import { getUnverifiedContractEntries } from '~/utils/project/contracts-and-permissions/getUnverifiedContractEntries'
 import { getCostsSection } from '~/utils/project/costs/getCostsSection'
 import { getDataPostedSection } from '~/utils/project/data-posted/getDataPostedSection'
 import { getBadgeWithParamsAndLink } from '~/utils/project/getBadgeWithParams'
@@ -504,6 +505,10 @@ export async function getScalingProjectEntry(
     project,
     changes,
   )
+  const unverifiedContracts = getUnverifiedContractEntries(
+    project.contracts,
+    project.permissions,
+  )
 
   const riskSummary = getScalingRiskSummarySection(
     project,
@@ -518,6 +523,7 @@ export async function getScalingProjectEntry(
         title: 'Risk summary',
         hostChainWarning: hostChainWarningWithRiskCount,
         isUnderReview: !!project.statuses.reviewStatus,
+        unverifiedContracts,
       },
     })
   }
@@ -541,6 +547,7 @@ export async function getScalingProjectEntry(
         redWarning: project.statuses.redWarning,
         isVerified: !projectVerificationWarnings.contracts,
         isUnderReview: !!project.statuses.reviewStatus,
+        unverifiedContracts,
       },
     })
   } else {
@@ -554,6 +561,7 @@ export async function getScalingProjectEntry(
         redWarning: project.statuses.redWarning,
         isVerified: !projectVerificationWarnings.contracts,
         isUnderReview: !!project.statuses.reviewStatus,
+        unverifiedContracts,
       },
     })
   }

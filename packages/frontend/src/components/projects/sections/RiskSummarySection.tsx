@@ -6,8 +6,10 @@ import { ShieldIcon } from '~/icons/Shield'
 import { UnverifiedIcon } from '~/icons/Unverified'
 import type { ProjectVerificationWarnings } from '~/server/features/utils/getCommonProjectEntry'
 import { cn } from '~/utils/cn'
+import type { UnverifiedContractEntry } from '~/utils/project/contracts-and-permissions/getUnverifiedContractEntries'
 import { ProjectSection } from './ProjectSection'
 import type { ProjectSectionProps } from './types'
+import { UnverifiedContractsWarning } from './UnverifiedContractsWarning'
 
 export interface RiskSummarySectionProps extends ProjectSectionProps {
   riskGroups: RiskGroup[]
@@ -15,6 +17,7 @@ export interface RiskSummarySectionProps extends ProjectSectionProps {
   verificationWarnings: ProjectVerificationWarnings
   redWarning: ProjectRedWarning | undefined
   hostChainWarning?: HostChainRisksWarningProps
+  unverifiedContracts?: UnverifiedContractEntry[]
 }
 
 export interface RiskGroup {
@@ -35,6 +38,7 @@ export function RiskSummarySection({
   redWarning,
   warning,
   hostChainWarning,
+  unverifiedContracts,
   ...sectionProps
 }: RiskSummarySectionProps) {
   if (riskGroups.length === 0) {
@@ -44,12 +48,9 @@ export function RiskSummarySection({
     <ProjectSection {...sectionProps}>
       {hostChainWarning && <HostChainRisksWarning {...hostChainWarning} />}
       {verificationWarnings.contracts && (
-        <WarningBar
-          text={verificationWarnings.contracts}
-          color="red"
-          isCritical={true}
+        <UnverifiedContractsWarning
+          entries={unverifiedContracts}
           className="mt-4 text-paragraph-15 md:text-paragraph-16"
-          icon={UnverifiedIcon}
         />
       )}
       {verificationWarnings.programHashes && (
