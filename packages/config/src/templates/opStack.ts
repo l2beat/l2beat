@@ -2238,7 +2238,7 @@ function getLiveness(
       fraudProofType === 'OpSuccinct'
         ? isEthereumDA
           ? 'a ZK rollup'
-          : 'a ZK Optimium'
+          : 'a Validium'
         : isEthereumDA
           ? 'an optimistic rollup with ZK fault proofs'
           : 'an Optimium with ZK fault proofs'
