@@ -1,5 +1,6 @@
 import { type MouseEvent, useState } from 'react'
 import { Badge } from '~/components/badge/Badge'
+import { CopyButton } from '~/components/CopyButton'
 import { DiffBody } from '~/components/discovery/DiffBody'
 import { Markdown } from '~/components/markdown/Markdown'
 import {
@@ -12,6 +13,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '~/components/Pagination'
+import { usePathname } from '~/hooks/usePathname'
 import { ChevronIcon } from '~/icons/Chevron'
 import type { DiscoveryUpdate } from '~/server/features/projects/recent-changes/getDiscoveryUpdates'
 import { cn } from '~/utils/cn'
@@ -138,6 +140,8 @@ function UpdateCard({
   update: DiscoveryUpdate
   isSelected: boolean
 }) {
+  const pathname = usePathname()
+
   return (
     <details
       id={update.id}
@@ -152,14 +156,17 @@ function UpdateCard({
       >
         <div className="flex items-start justify-between gap-3">
           <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-2 gap-y-1">
-            <a
-              href={`?update=${update.id}#${update.id}`}
-              aria-label={`Link to update from ${formatUpdateDate(update)}`}
-              title="Link to this update"
-              className="shrink-0 rounded-sm font-medium text-primary leading-snug hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"
-            >
-              {formatUpdateDate(update)}
-            </a>
+            <div className="flex shrink-0 items-center gap-1">
+              <span className="font-medium text-primary leading-snug">
+                {formatUpdateDate(update)}
+              </span>
+              <CopyButton
+                toCopy={`https://l2beat.com${pathname}${getUpdateHref(update.id)}`}
+                copyText="Copy link to update"
+                className="rounded-sm text-secondary hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                iconClassName="size-3.5"
+              />
+            </div>
             {update.isHighSeverity && (
               <Badge
                 type="error"
@@ -231,6 +238,11 @@ function UpdateCard({
       </div>
     </details>
   )
+}
+
+function getUpdateHref(updateId: string): string {
+  const encodedId = encodeURIComponent(updateId)
+  return `?update=${encodedId}#${encodedId}`
 }
 
 function formatUpdateDate(update: DiscoveryUpdate): string {
