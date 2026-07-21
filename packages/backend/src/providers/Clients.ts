@@ -1,6 +1,8 @@
 import { type Logger, RateLimiter } from '@l2beat/backend-tools'
 import {
   AvailWsClient,
+  type AztecBlockClient,
+  AztecRpcClient,
   BeaconChainClient,
   type BlockClient,
   BlockIndexerClient,
@@ -37,6 +39,7 @@ export interface Clients {
   block: BlockClient[]
   logs: LogsClient[]
   svmBlock: SvmBlockClient[]
+  aztecBlock: AztecBlockClient[]
   indexer: BlockIndexerClient[]
   voyager: VoyagerClient | undefined
   lighter: LighterClient | undefined
@@ -84,6 +87,7 @@ export function initClients(config: Config, logger: Logger): Clients {
   const blockClients: BlockClient[] = []
   const logsClients: LogsClient[] = []
   const svmBlockClients: SvmBlockClient[] = []
+  const aztecBlockClients: AztecBlockClient[] = []
   const indexerClients: BlockIndexerClient[] = []
   const rpcClients: IRpcClient[] = []
 
@@ -221,6 +225,18 @@ export function initClients(config: Config, logger: Logger): Clients {
             logger,
           })
           svmBlockClients.push(client)
+          break
+        }
+        case 'aztec-rpc': {
+          const client = new AztecRpcClient({
+            sourceName: chain.name,
+            url: blockApi.url,
+            http,
+            callsPerMinute: blockApi.callsPerMinute,
+            retryStrategy: blockApi.retryStrategy,
+            logger,
+          })
+          aztecBlockClients.push(client)
           break
         }
         default:
@@ -381,6 +397,7 @@ export function initClients(config: Config, logger: Logger): Clients {
     block: blockClients,
     logs: logsClients,
     svmBlock: svmBlockClients,
+    aztecBlock: aztecBlockClients,
     indexer: indexerClients,
     starkex: starkexClient,
     loopring: loopringClient,

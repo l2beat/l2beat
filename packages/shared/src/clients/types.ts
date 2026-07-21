@@ -17,6 +17,18 @@ export interface SvmBlockClient {
   chain: string
 }
 
+export interface AztecBlock {
+  number: number
+  timestamp: number
+  txEffectsCount: number
+}
+
+export interface AztecBlockClient {
+  getLatestBlockNumber(): Promise<number>
+  getBlocks(start: number, limit: number): Promise<AztecBlock[]>
+  chain: string
+}
+
 export interface LogsClient {
   getLogs(
     from: number,
