@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x346812ba409605f633cb86a94abc49bd9a480012
+
+# Diff at Mon, 20 Jul 2026 15:35:42 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@ab4290b6bc5b6a34b8b091245cd07a7a94441102 block: 1784122559
+- current timestamp: 1784561613
+
+## Description
+
+Base Multisig 1: one member added, two removed. Threshold 3/13 → 3/12.
+
+## Watched changes
+
+```diff
+    contract Base Multisig 1 (eth:0x14536667Cd30e52C0b458BaACcB9faDA7046E056) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x7eA56fBD8320F032014C8889C4F6cDC86796Db04"
+      values.$members.11:
+-        "eth:0xa3D3c103442F162856163d564b983ae538c6202D"
+      values.$members.12:
+-        "eth:0x49243DcE94e0f5A1B08b9556bBEc5a84363c3839"
+      values.multisigThreshold:
+-        "3 of 13 (23%)"
++        "3 of 12 (25%)"
+    }
+```
+
 Generated with discovered.json: 0xc2d032883b0a42eeda70a6bb3e093ba704d58be2
 
 # Diff at Wed, 15 Jul 2026 13:37:55 GMT:
