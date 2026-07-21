@@ -26,13 +26,12 @@ export const rise: ScalingProject = opStackL2({
     stacks: ['OP Stack'],
     links: {
       websites: ['https://risechain.com/'],
-      bridges: ['https://portal.risechain.com/'],
+      bridges: ['https://portal.risechain.com/bridge'],
       documentation: ['https://docs.risechain.com/'],
       explorers: ['https://explorer.risechain.com/'],
       repositories: ['https://github.com/risechain'],
       socialMedia: [
         'https://x.com/risechain',
-        'https://discord.com/invite/risechain',
         'https://t.me/risexannouncement',
         'https://blog.risechain.com/',
       ],
@@ -72,7 +71,7 @@ export const rise: ScalingProject = opStackL2({
   milestones: [
     {
       title: 'RISE public mainnet launch',
-      url: 'https://medium.com/@rise_chain/rise-launch-philosophy-59c1509fa215',
+      url: 'https://blog.risechain.com/rise-launch-philosophy/',
       date: '2026-05-01T00:00:00.00Z',
       description:
         'RISE opens its mainnet (genesis on January 5th 2026) to the public together with the RISEx exchange.',
