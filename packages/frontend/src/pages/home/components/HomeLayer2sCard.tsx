@@ -16,13 +16,14 @@ import {
 } from './HomeChartSection'
 import { HomeStatValue } from './HomeStatValue'
 
+export interface HomeLayer2sCategoryCounts {
+  rollups: number
+  validiumsAndOptimiums: number
+}
+
 interface Props {
   charts: HomeLayer2sCharts
-  layer2sCategoryCounts: {
-    rollups: number
-    validiumsAndOptimiums: number
-    others: number
-  }
+  layer2sCategoryCounts: HomeLayer2sCategoryCounts
 }
 
 export function HomeLayer2sCard({ charts, layer2sCategoryCounts }: Props) {
@@ -61,10 +62,11 @@ export function HomeLayer2sCard({ charts, layer2sCategoryCounts }: Props) {
     [charts.activity.chart],
   )
 
-  const pastDayActivityUops = useMemo(() => {
-    const last = [...activitySparkline].reverse().find((d) => d.value !== null)
-    return last?.value ?? undefined
-  }, [activitySparkline])
+  const pastDayActivityUops = useMemo(
+    () =>
+      activitySparkline.findLast((d) => d.value !== null)?.value ?? undefined,
+    [activitySparkline],
+  )
 
   return (
     <HomeCard className="flex h-full flex-col pb-4 xl:py-4">
@@ -127,15 +129,7 @@ export function HomeLayer2sCard({ charts, layer2sCategoryCounts }: Props) {
   )
 }
 
-function CountsLine({
-  counts,
-}: {
-  counts: {
-    rollups: number
-    validiumsAndOptimiums: number
-    others: number
-  }
-}) {
+function CountsLine({ counts }: { counts: HomeLayer2sCategoryCounts }) {
   const items = [
     { label: 'Rollups', value: counts.rollups, dot: 'bg-pink-100' },
     {

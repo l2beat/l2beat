@@ -15,6 +15,7 @@ import type { InteropFlowsProtocol } from '../interop/components/flows/utils/Int
 import { HomeAnomaliesTile } from './components/HomeAnomaliesTile'
 import { HomeEthereumCard } from './components/HomeEthereumCard'
 import { HomeInteropCard } from './components/HomeInteropCard'
+import type { HomeLayer2sCategoryCounts } from './components/HomeLayer2sCard'
 import { HomeLayer2sCard } from './components/HomeLayer2sCard'
 import { HomeRecentChangesTile } from './components/HomeRecentChangesTile'
 import { HomeRecentProjectsCard } from './components/HomeRecentProjectsCard'
@@ -36,11 +37,7 @@ interface Props extends AppLayoutProps {
   interopChains: InteropChainWithIcon[]
   interopProtocols: InteropFlowsProtocol[]
   defaultSelectedFlowChains: string[]
-  layer2sCategoryCounts: {
-    rollups: number
-    validiumsAndOptimiums: number
-    others: number
-  }
+  layer2sCategoryCounts: HomeLayer2sCategoryCounts
   recentChangesCount: number
   ongoingAnomalies: OngoingAnomaliesOverview
 }
