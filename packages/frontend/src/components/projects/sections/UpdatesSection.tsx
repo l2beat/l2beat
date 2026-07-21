@@ -1,3 +1,4 @@
+import { type MouseEvent, useState } from 'react'
 import { Badge } from '~/components/badge/Badge'
 import { DiffBody } from '~/components/discovery/DiffBody'
 import { Markdown } from '~/components/markdown/Markdown'
@@ -21,7 +22,6 @@ import type { ProjectSectionProps } from './types'
 export interface UpdatesSectionProps extends ProjectSectionProps {
   updates: DiscoveryUpdate[]
   selectedUpdateId?: string
-  updatesPage?: number
 }
 
 const SECTION_TITLES = {
@@ -34,25 +34,22 @@ const PAGE_SIZE = 5
 export function UpdatesSection({
   updates,
   selectedUpdateId,
-  updatesPage,
   ...sectionProps
 }: UpdatesSectionProps) {
+  const [page, setPage] = useState(() => {
+    const selectedUpdateIndex = updates.findIndex(
+      (update) => update.id === selectedUpdateId,
+    )
+    return selectedUpdateIndex === -1
+      ? 0
+      : Math.floor(selectedUpdateIndex / PAGE_SIZE)
+  })
+
   if (updates.length === 0) {
     return null
   }
 
   const pageCount = Math.ceil(updates.length / PAGE_SIZE)
-  const selectedUpdateIndex = updates.findIndex(
-    (update) => update.id === selectedUpdateId,
-  )
-  const selectedUpdatePage =
-    selectedUpdateIndex === -1
-      ? undefined
-      : Math.floor(selectedUpdateIndex / PAGE_SIZE)
-  const page = Math.min(
-    Math.max(selectedUpdatePage ?? updatesPage ?? 0, 0),
-    pageCount - 1,
-  )
   const entries = updates.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE)
 
   return (
@@ -66,7 +63,11 @@ export function UpdatesSection({
           />
         ))}
         {pageCount > 1 && (
-          <UpdatesPagination page={page} pageCount={pageCount} />
+          <UpdatesPagination
+            page={page}
+            pageCount={pageCount}
+            onPageChange={setPage}
+          />
         )}
       </div>
     </ProjectSection>
@@ -76,16 +77,24 @@ export function UpdatesSection({
 function UpdatesPagination({
   page,
   pageCount,
+  onPageChange,
 }: {
   page: number
   pageCount: number
+  onPageChange: (page: number) => void
 }) {
+  const goToPage = (nextPage: number) => (event: MouseEvent) => {
+    event.preventDefault()
+    onPageChange(Math.min(Math.max(nextPage, 0), pageCount - 1))
+  }
+
   return (
     <Pagination className="pt-2">
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
-            href={getUpdatesPageHref(Math.max(page - 1, 0))}
+            href="#updates"
+            onClick={goToPage(page - 1)}
             aria-disabled={page === 0}
             className={cn(page === 0 && 'pointer-events-none opacity-40')}
           />
@@ -98,8 +107,9 @@ function UpdatesPagination({
           ) : (
             <PaginationItem key={item.index}>
               <PaginationLink
-                href={getUpdatesPageHref(item.index)}
+                href="#updates"
                 isActive={item.index === page}
+                onClick={goToPage(item.index)}
               >
                 {item.index + 1}
               </PaginationLink>
@@ -108,7 +118,8 @@ function UpdatesPagination({
         )}
         <PaginationItem>
           <PaginationNext
-            href={getUpdatesPageHref(Math.min(page + 1, pageCount - 1))}
+            href="#updates"
+            onClick={goToPage(page + 1)}
             aria-disabled={page === pageCount - 1}
             className={cn(
               page === pageCount - 1 && 'pointer-events-none opacity-40',
@@ -118,10 +129,6 @@ function UpdatesPagination({
       </PaginationContent>
     </Pagination>
   )
-}
-
-function getUpdatesPageHref(page: number): string {
-  return `?updatesPage=${page + 1}#updates`
 }
 
 function UpdateCard({

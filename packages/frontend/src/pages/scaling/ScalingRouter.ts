@@ -4,7 +4,7 @@ import express from 'express'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
-import { getProjectUpdatesQuery } from '../utils/getProjectUpdatesQuery'
+import { getSelectedUpdateId } from '../utils/getSelectedUpdateId'
 import { getScalingActivityData } from './activity/getScalingActivityData'
 import { getScalingArchivedData } from './archived/getScalingArchivedData'
 import { getScalingCostsData } from './costs/getScalingCostsData'
@@ -141,7 +141,7 @@ export function createScalingRouter(
             ...data.ssr,
             props: {
               ...data.ssr.props,
-              ...getProjectUpdatesQuery(req.query),
+              selectedUpdateId: getSelectedUpdateId(req.query),
             },
           },
         },

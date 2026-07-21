@@ -25,14 +25,12 @@ interface Props extends AppLayoutProps {
   projectEntry: ProjectScalingEntry
   queryState: DehydratedState
   selectedUpdateId?: string
-  updatesPage?: number
 }
 
 export function ScalingProjectPage({
   projectEntry,
   queryState,
   selectedUpdateId,
-  updatesPage,
   ...props
 }: Props) {
   const navigationSections = projectDetailsToNavigationSections(
@@ -128,7 +126,6 @@ export function ScalingProjectPage({
                     <ProjectDetails
                       items={projectEntry.sections}
                       selectedUpdateId={selectedUpdateId}
-                      updatesPage={updatesPage}
                     />
                   </HighlightableLinkContextProvider>
                 </div>

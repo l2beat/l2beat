@@ -5,7 +5,7 @@ import { ps } from '~/server/projects'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
-import { getProjectUpdatesQuery } from '../utils/getProjectUpdatesQuery'
+import { getSelectedUpdateId } from '../utils/getSelectedUpdateId'
 import { getInteropBurnAndMintData } from './burn-and-mint/getInteropBurnAndMintData'
 import { getInteropIntentBridgesData } from './intent-bridges/getInteropIntentBridgesData'
 import { getInteropLockAndMintData } from './lock-and-mint/getInteropLockAndMintData'
@@ -133,7 +133,7 @@ export function createInteropRouter(
             ...data.ssr,
             props: {
               ...data.ssr.props,
-              ...getProjectUpdatesQuery(req.query),
+              selectedUpdateId: getSelectedUpdateId(req.query),
             },
           },
         },
