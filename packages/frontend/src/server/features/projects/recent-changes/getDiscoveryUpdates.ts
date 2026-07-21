@@ -133,7 +133,7 @@ function toPublicDiscoveryUpdate(
   const timestamp = getTimestamp(entry)
 
   return {
-    id: getUpdateId(entry.date, timestamp),
+    id: getUpdateId(entry, timestamp),
     date: entry.date,
     timestamp,
     description: entry.description,
@@ -143,15 +143,22 @@ function toPublicDiscoveryUpdate(
   }
 }
 
-function getUpdateId(date: string, timestamp: number | null): string {
-  if (timestamp !== null) {
-    return `update-${timestamp}`
-  }
-
-  const dateSlug = date
+function getUpdateId(
+  entry: DiffHistoryEntry,
+  timestamp: number | null,
+): string {
+  const dateSlug = entry.date
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '')
+
+  if (entry.discoveryHash !== null) {
+    return `update-${timestamp ?? dateSlug}-${entry.discoveryHash}`
+  }
+
+  if (timestamp !== null) {
+    return `update-${timestamp}-${dateSlug}`
+  }
 
   return `update-${dateSlug}`
 }

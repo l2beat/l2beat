@@ -44,7 +44,7 @@ describe(parseDiscoveryUpdates.name, () => {
 
     expect(updates.length).toEqual(1)
     expect(updates[0]?.id).toEqual(
-      `update-${Math.floor(Date.parse('Tue, 21 Jan 2026 09:00:00 GMT') / 1000)}`,
+      `update-${Math.floor(Date.parse('Tue, 21 Jan 2026 09:00:00 GMT') / 1000)}-tue-21-jan-2026-09-00-00-gmt`,
     )
     expect(updates[0]?.description).toEqual('A public update.')
     expect(updates[0]?.sections).toEqual([
@@ -146,7 +146,43 @@ describe(parseDiscoveryUpdates.name, () => {
     )
 
     expect(updates[0]?.timestamp).toEqual(1700000000)
-    expect(updates[0]?.id).toEqual('update-1700000000')
+    expect(updates[0]?.id).toEqual(
+      'update-1700000000-tue-21-jan-2026-09-00-00-gmt',
+    )
+  })
+
+  it('creates unique ids for entries with the same discovery timestamp and date', () => {
+    const updates = parseDiscoveryUpdates(
+      [
+        'Generated with discovered.json: 0x111',
+        '# Diff at Tue, 21 Jan 2026 09:00:00 GMT:',
+        '',
+        '- current timestamp: 1700000000',
+        '',
+        '## Watched changes',
+        '',
+        '```diff',
+        '+ first',
+        '```',
+        '',
+        'Generated with discovered.json: 0x222',
+        '# Diff at Tue, 21 Jan 2026 09:00:00 GMT:',
+        '',
+        '- current timestamp: 1700000000',
+        '',
+        '## Watched changes',
+        '',
+        '```diff',
+        '+ second',
+        '```',
+        '',
+      ].join('\n'),
+    )
+
+    expect(updates.map((update) => update.id)).toEqual([
+      'update-1700000000-0x111',
+      'update-1700000000-0x222',
+    ])
   })
 
   it('creates a linkable id for legacy entries with an invalid date', () => {
