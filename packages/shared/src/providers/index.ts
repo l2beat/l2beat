@@ -1,6 +1,6 @@
 export * from './balance/BalanceProvider'
-export * from './block/BlockProvider'
 export * from './block/AztecBlockProvider'
+export * from './block/BlockProvider'
 export * from './block/SvmBlockProvider'
 export * from './blockTimestamp/BlockTimestampProvider'
 export * from './circulating-supply/CirculatingSupplyProvider'
