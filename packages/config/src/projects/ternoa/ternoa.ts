@@ -8,8 +8,11 @@ import { agglayer } from '../../templates/agglayer'
 const discovery = new ProjectDiscovery('ternoa')
 const bridge = discovery.getContract('AgglayerBridge')
 
+const archivedAt = UnixTime(1783879200) // 2026-07-12T18:00:00Z
+
 export const ternoa: ScalingProject = agglayer({
   addedAt: UnixTime(1727455020), // 2024-09-27T17:09:00Z
+  archivedAt,
   additionalBadges: [BADGES.RaaS.Zeeve],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   additionalPurposes: ['Payments'],
@@ -40,6 +43,7 @@ export const ternoa: ScalingProject = agglayer({
     chainId: 752025,
     explorerUrl: 'https://explorer-mainnet.zkevm.ternoa.network',
     sinceTimestamp: UnixTime(1735650935),
+    untilTimestamp: archivedAt,
     gasTokens: ['CAPS'],
     apis: [
       {
