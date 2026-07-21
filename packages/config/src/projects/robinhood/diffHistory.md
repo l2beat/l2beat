@@ -1,3 +1,52 @@
+Generated with discovered.json: 0xac11c67683467da72879642314dd59ea8cc02ea0
+
+# Diff at Tue, 21 Jul 2026 09:46:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1a47a1d8f7eea1d688c970ecc68d520c3181de8f block: 1784556704
+- current timestamp: 1784626795
+
+## Description
+
+Config: add rwa access control contract to the monitoring.
+
+## Watched changes
+
+```diff
+    contract ArbFilteredTransactionsManager (robinhood:0x0000000000000000000000000000000000000074) [N/A] {
+    +++ description: ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.
+      values.filteredTransactionsAdded:
+-        6086
++        6087
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784556704 (main branch discovery), not current.
+
+```diff
+    EOA  (robinhood:0x0000000000000000000000000000000000000000) {
+    +++ description: None
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"robinhood:0xd0601CE157Db5bdC3162BbaC2a2C8aF5320D9EEC","role":"admin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract NVIDIA • Robinhood Token (robinhood:0xd0601CE157Db5bdC3162BbaC2a2C8aF5320D9EEC) [robinhood/rwa]
+    +++ description: ERC-20-compatible Robinhood Stock Token logic. Transfers, approvals and permits are permissionless for addresses that are not blocked in the shared AccessControlsRegistry; there is no onchain KYC or allowlist. The registry's roles can mint, burn arbitrary holders' balances, confiscate balances even while paused or blocked, pause this token or all tokens, change metadata and the UI multiplier, and upgrade the shared beacon implementation.
+```
+
+```diff
++   Status: CREATED
+    contract AccessControlsRegistry (robinhood:0xe10b6f6B275de231345c20D14Ab812db62151b00) [robinhood/accessControlsRegistry]
+    +++ description: Shared access-control registry and upgrade beacon for Robinhood Stock Tokens. Its roles apply across every token implementation that points to this registry: they control upgrades, global and per-token pauses, the shared blocklist, issuance, arbitrary holder burns, metadata and UI multipliers.
+```
+
 Generated with discovered.json: 0x0f00f51906b21f7041f0a11a84c72d1af63e2103
 
 # Diff at Mon, 20 Jul 2026 14:13:02 GMT:
