@@ -115,6 +115,7 @@ export function getScalingSummaryColumns(opts?: ScalingSummaryColumnsOpts) {
                 value.additionalTrustAssumptionsPercentage
               }
               change={value.change?.total}
+              changePeriod={value.changePeriod}
               syncWarning={value.syncWarning}
             />
           )
@@ -142,7 +143,7 @@ export function getScalingSummaryColumns(opts?: ScalingSummaryColumnsOpts) {
             <SyncStatusWrapper isSynced={data.isSynced}>
               <ValueWithPercentageChange
                 change={data?.change}
-                changePeriod="7D"
+                changePeriod={data.changePeriod}
                 disabledOnMobile
               >
                 {formatActivityCount(ctx.getValue())}

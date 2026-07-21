@@ -38,7 +38,7 @@ export function EcosystemToken({ token, className }: Props) {
           <PercentChange
             className="ml-0.5"
             value={token.data.price.change}
-            period="7D"
+            period={token.data.price.changePeriod}
           />
         </DataTile>
         <DataTile label="Market Cap">
@@ -46,7 +46,7 @@ export function EcosystemToken({ token, className }: Props) {
           <PercentChange
             className="ml-0.5"
             value={token.data.marketCap.change}
-            period="7D"
+            period={token.data.marketCap.changePeriod}
           />
         </DataTile>
         <DataTile label="Circulating Supply">
@@ -54,7 +54,7 @@ export function EcosystemToken({ token, className }: Props) {
           <PercentChange
             className="ml-0.5"
             value={token.data.circulatingSupply.change}
-            period="7D"
+            period={token.data.circulatingSupply.changePeriod}
           />
         </DataTile>
       </div>

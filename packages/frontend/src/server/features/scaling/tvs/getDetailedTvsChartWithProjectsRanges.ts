@@ -6,6 +6,7 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { getChartStartTimestamp } from '~/server/features/utils/getChartStartTimestamp'
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { ChartRange, rangeToResolution } from '~/utils/range/range'
 import { getEthPrices } from './utils/getEthPrices'
 import { isTvsSynced } from './utils/isTvsSynced'
@@ -56,6 +57,7 @@ export type DetailedTvsChartWithProjectsRangesData = {
   chart: DetailedTvsChartWithProjectRangesDataPoint[]
   projects: ChartProjectRange[]
   syncedUntil: number
+  changePeriod: PercentageChangePeriod
 }
 
 /**
@@ -78,7 +80,12 @@ export async function getDetailedTvsChartWithProjectsRanges({
   const db = getDb()
 
   if (projects.length === 0) {
-    return { chart: [], projects: [], syncedUntil: UnixTime.now() }
+    return {
+      chart: [],
+      projects: [],
+      syncedUntil: UnixTime.now(),
+      changePeriod: '7D',
+    }
   }
 
   // Round each project's `sinceTimestamp` down to the active resolution so the
@@ -127,7 +134,7 @@ export async function getDetailedTvsChartWithProjectsRanges({
     firstProjectTimestamp,
   )
 
-  return { chart, projects: projectRanges, syncedUntil }
+  return { chart, projects: projectRanges, syncedUntil, changePeriod: '7D' }
 }
 
 function getChartData(
@@ -272,6 +279,7 @@ function getMockDetailedTvsChartWithProjectsRangesData({
     ]),
     projects: projectRanges,
     syncedUntil: timestamps[timestamps.length - 1] ?? 0,
+    changePeriod: '7D',
   }
 }
 

@@ -200,9 +200,11 @@ export function ProjectScalingSummary({ project }: Props) {
                       Click to view TVS breakdown
                     </p>
                   )}
-                  {project.header.tvs && (
+                  {project.header.tvs?.breakdown && (
                     <p>
-                      <PercentageChangeTooltipContent period="7D" />
+                      <PercentageChangeTooltipContent
+                        period={project.header.tvs.breakdown.totalChangePeriod}
+                      />
                     </p>
                   )}
                 </TooltipContent>

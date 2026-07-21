@@ -14,6 +14,7 @@ import {
   mapLayerRisksToRosetteValues,
 } from '~/pages/data-availability/utils/MapRisksToRosetteValues'
 import { ps } from '~/server/projects'
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { manifest } from '~/utils/Manifest'
 import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
 import {
@@ -96,6 +97,7 @@ export interface DaSummaryEntry extends CommonDaEntry {
   tvs: {
     latest: number
     sevenDaysAgo: number
+    changePeriod: PercentageChangePeriod
   }
   bridges: DaBridgeSummaryEntry[]
 }
@@ -105,6 +107,7 @@ export interface DaBridgeSummaryEntry
   tvs: {
     latest: number
     sevenDaysAgo: number
+    changePeriod: PercentageChangePeriod
   }
   risks: RosetteValue[]
   usedIn: UsedInProjectWithIcon[]
@@ -124,6 +127,7 @@ function getDaSummaryEntry(
   getTvs: (projectIds: ProjectId[]) => {
     latest: number
     sevenDaysAgo: number
+    changePeriod: PercentageChangePeriod
   },
   projectsChangeReport: ProjectsChangeReport,
   liveness: LivenessResponse,
@@ -212,6 +216,7 @@ function getDacEntry(
   getTvs: (projectIds: ProjectId[]) => {
     latest: number
     sevenDaysAgo: number
+    changePeriod: PercentageChangePeriod
   },
 ): DaSummaryEntry {
   const usedIn: UsedInProject[] = [
@@ -265,6 +270,7 @@ function getEthereumEntry(
   getTvs: (projectIds: ProjectId[]) => {
     latest: number
     sevenDaysAgo: number
+    changePeriod: PercentageChangePeriod
   },
 ): DaSummaryEntry {
   const bridge = bridges[0]

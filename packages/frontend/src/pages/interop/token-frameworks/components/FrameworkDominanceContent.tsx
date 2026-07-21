@@ -25,10 +25,12 @@ type DisplayItem = {
 export function FrameworkDominanceContent({
   tokenFrameworks,
   frameworkDominance,
+  changePeriod,
   isLoading,
 }: {
   tokenFrameworks: InteropTokenFramework[]
   frameworkDominance: TokenFrameworksData['frameworkDominance'] | undefined
+  changePeriod: TokenFrameworksData['changePeriod'] | undefined
   isLoading: boolean
 }) {
   const frameworksById = new Map(tokenFrameworks.map((f) => [f.id, f]))
@@ -40,6 +42,7 @@ export function FrameworkDominanceContent({
       transfersStatLabel="Number of transfers"
       emptyState="No data for the selected chains."
       isLoading={isLoading}
+      changePeriod={changePeriod}
       getMetricData={(metric) => {
         const metricData = frameworkDominance
           ? metric === 'volume'

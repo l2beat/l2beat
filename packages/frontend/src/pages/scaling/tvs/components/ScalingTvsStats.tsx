@@ -5,6 +5,7 @@ import { PercentChange } from '~/components/PercentChange'
 import { useTvsDisplayControlsContext } from '~/components/table/display/contexts/TvsDisplayControlsContext'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
 import { useTRPC } from '~/trpc/React'
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 type StatType = 'total' | 'rollups' | 'validiumsAndOptimiums' | 'others'
@@ -60,24 +61,28 @@ export function ScalingTvsStats({
         type="rollups"
         value={stats?.rollups.value}
         change={stats?.rollups.change}
+        changePeriod={stats?.rollups.changePeriod}
         isLoading={isLoading}
       />
       <Stat
         type="validiumsAndOptimiums"
         value={stats?.validiumsAndOptimiums.value}
         change={stats?.validiumsAndOptimiums.change}
+        changePeriod={stats?.validiumsAndOptimiums.changePeriod}
         isLoading={isLoading}
       />
       <Stat
         type="others"
         value={stats?.others.value}
         change={stats?.others.change}
+        changePeriod={stats?.others.changePeriod}
         isLoading={isLoading}
       />
       <Stat
         type="total"
         value={stats?.total.value}
         change={stats?.total.change}
+        changePeriod={stats?.total.changePeriod}
         isLoading={isLoading}
       />
     </StatsGrid>
@@ -88,11 +93,13 @@ function Stat({
   type,
   value,
   change,
+  changePeriod,
   isLoading,
 }: {
   type: StatType
   value: number | undefined
   change: number | undefined
+  changePeriod: PercentageChangePeriod | undefined
   isLoading: boolean
 }) {
   const meta = statsMeta[type]
@@ -103,11 +110,11 @@ function Stat({
         <div className="whitespace-nowrap font-bold text-heading-18 md:text-heading-24">
           {value !== undefined ? formatCurrency(value, 'usd') : 'No data'}
         </div>
-        {change !== undefined ? (
+        {change !== undefined && changePeriod !== undefined ? (
           <PercentChange
             textClassName="cursor-default md:text-heading-20 w-full text-heading-16"
             value={change}
-            period="7D"
+            period={changePeriod}
           />
         ) : null}
       </div>

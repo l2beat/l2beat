@@ -31,6 +31,7 @@ export function IntentBridgeDominanceContent({
       transfersStatLabel="Transfers"
       emptyState="No intent bridge activity found."
       isLoading={isLoading}
+      changePeriod={data?.changePeriod}
       className="lg:flex lg:h-full lg:flex-col"
       tabsClassName="lg:flex lg:min-h-0 lg:flex-1 lg:flex-col"
       tabsContentClassName="lg:min-h-0 lg:flex-1"

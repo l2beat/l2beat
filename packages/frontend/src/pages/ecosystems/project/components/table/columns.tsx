@@ -110,6 +110,7 @@ export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
               tvsWarnings={value.warnings}
               breakdown={tvsData?.breakdown}
               change={tvsData?.change.total}
+              changePeriod={tvsData?.changePeriod}
               syncWarning={ctx.row.original.tvsSyncWarning}
             />
           )
@@ -136,7 +137,7 @@ export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
             <SyncStatusWrapper isSynced={data.isSynced}>
               <ValueWithPercentageChange
                 change={data?.change}
-                changePeriod="7D"
+                changePeriod={data.changePeriod}
                 disabledOnMobile
               >
                 {formatActivityCount(ctx.getValue())}

@@ -9,6 +9,7 @@ import {
 } from '~/components/core/Tabs'
 import { PercentChange } from '~/components/PercentChange'
 import { ScrollWithGradient } from '~/components/ScrollWithGradient'
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -35,6 +36,7 @@ export function InteropDominanceContent({
   transfersStatLabel,
   emptyState,
   isLoading,
+  changePeriod,
   getMetricData,
   className,
   tabsClassName,
@@ -46,6 +48,7 @@ export function InteropDominanceContent({
   transfersStatLabel: string
   emptyState: string
   isLoading: boolean
+  changePeriod: PercentageChangePeriod | undefined
   getMetricData: (metric: DominanceMetric) => {
     total: number
     rows: DominanceRow[]
@@ -107,6 +110,7 @@ export function InteropDominanceContent({
                   metric={metric}
                   total={total}
                   transfersStatLabel={transfersStatLabel}
+                  changePeriod={changePeriod}
                 />
               ))}
             </ScrollWithGradient>
@@ -119,6 +123,7 @@ export function InteropDominanceContent({
                   metric={metric}
                   total={total}
                   transfersStatLabel={transfersStatLabel}
+                  changePeriod={changePeriod}
                 />
               ))}
             </div>
@@ -134,11 +139,13 @@ function DominanceRowItem({
   metric,
   total,
   transfersStatLabel,
+  changePeriod,
 }: {
   row: DominanceRow
   metric: DominanceMetric
   total: number
   transfersStatLabel: string
+  changePeriod: PercentageChangePeriod | undefined
 }) {
   const value = metric === 'volume' ? row.volume : row.transferCount
   const previousValue =
@@ -159,11 +166,11 @@ function DominanceRowItem({
               ? formatCurrency(value, 'usd', { decimals: 2 })
               : formatInteger(value)}
           </span>
-          {percentChange !== null && (
+          {percentChange !== null && changePeriod !== undefined && (
             <PercentChange
               className="font-medium text-label-value-16"
               value={percentChange}
-              period="last24h"
+              period={changePeriod}
             />
           )}
         </div>
