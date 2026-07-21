@@ -12,11 +12,11 @@ export const rise: ScalingProject = opStackL2({
   discovery,
   capability: 'universal',
   additionalBadges: [BADGES.Stack.OPSuccinct],
-  daProvider: EIGENDA_DA_PROVIDER(false, DA_LAYERS.ETH_BLOBS),
-  reasonsForBeingOther: [
-    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-  ],
+  // the deployed SP1 programs are reproducibly built from the eigenda-featured
+  // fork (v3.4.1-rise.7), whose range program verifies EigenDA DA certificates
+  // in-circuit via hokulea and canoe (see programHashes.ts)
+  daProvider: EIGENDA_DA_PROVIDER(true, DA_LAYERS.ETH_BLOBS),
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   proverSourceLink: 'https://github.com/succinctlabs/sp1',
   display: {
     name: 'RISE',
