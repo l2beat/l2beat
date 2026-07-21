@@ -97,10 +97,13 @@ export function ContractEntry({
               id={contract.id}
               className="word-break-word scroll-mt-14 md:scroll-mt-10"
             >
-              {contract.groupCount && contract.groupCount > 1
-                ? `${contract.name} (${contract.groupCount})`
-                : contract.name}
+              {contract.name}
             </strong>
+            {contract.groupCount && contract.groupCount > 1 ? (
+              <Badge type="gray" size="small">
+                {contract.groupCount} instances
+              </Badge>
+            ) : null}
             {contract.escrow && (
               <EscrowBadge isCustom={contract.escrow.isCustom} />
             )}
