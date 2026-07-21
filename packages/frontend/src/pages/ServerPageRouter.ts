@@ -41,7 +41,10 @@ export function createServerPageRouter(
   })
 
   router.get('/', (_req, res) => {
-    res.redirect(301, '/scaling/summary')
+    // Temporary, non-cacheable redirect so browsers drop the previously
+    // cached 301 before "/" starts serving the home page.
+    res.set('Cache-Control', 'no-store')
+    res.redirect(307, '/scaling/summary')
   })
 
   const routers = [
