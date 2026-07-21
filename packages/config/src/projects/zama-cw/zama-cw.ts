@@ -173,6 +173,7 @@ export const zamaCw: BaseProject = {
         'The confidential token contracts and system contracts are upgradeable without an onchain delay, so users do not get a guaranteed withdrawal window before changes take effect.',
       walkawayTest: {
         passed: false,
+        reason: `Only KMS ${kmsThreshold}/${kmsSignerCount} multisig members can decrypt FHE ciphertext. Also, FHE coprocessor operator is currently essential for protocol liveness.`,
       },
     },
     reproducibility: {

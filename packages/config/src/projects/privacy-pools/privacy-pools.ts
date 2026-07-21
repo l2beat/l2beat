@@ -152,6 +152,8 @@ export const privacyPools: BaseProject = {
         'Even if the Entrypoint or ASP turns malicious, users can always ragequit (withdraw tokens) from the immutable pool contracts, at the cost of losing privacy.',
       walkawayTest: {
         passed: false,
+        reason:
+          'Association Set Providers must explicitly approve deposited funds before private withdrawals.',
       },
     },
     reproducibility: {
