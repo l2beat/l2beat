@@ -1,7 +1,7 @@
 {
   "name": "robinhood",
-  "timestamp": 1784556704,
-  "configHash": "0xcc9d094fa77db745a97783825475026653597e8bd7d7fdfc3f24fd1a4b372888",
+  "timestamp": 1784626795,
+  "configHash": "0x45d1f46d19c7d77369b23a132f6ec5489efa0d0a35fd01a4896cdfeace31d988",
   "entries": [
     {
       "address": "eth:0x026F0df4b04a258207337fBB05790F0E1283e526",
@@ -259,7 +259,7 @@
         ],
         "inbox": "eth:0x1A07cc4BD17E0118BdB54D70990D2158AbAD7a2D",
         "isPostBoLD": true,
-        "latestConfirmed": "0x22cae3145acd773588b8049a13f54f07d80b9c8d677aa2a49d33ed85c60163e2",
+        "latestConfirmed": "0xd9537f1afb02fe350e24d562051c629bd6bfe2756d932ee5ba4380d2018f9f45",
         "loserStakeEscrow": "eth:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9",
@@ -929,7 +929,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 36159,
+        "batchCount": 38497,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": ["eth:0xDaa526086787d9DEbE1D7F3FFdb1fE50cf8687F4"],
         "bridge": "eth:0xDf8755334ce7A73cCF6b581C02eA649AE3E864b3",
@@ -968,7 +968,7 @@
         "rollup": "eth:0x23A19d23e89166adedbDcB432518AB01e4272D94",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 48139,
+        "totalDelayedMessagesRead": 50711,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1054,7 +1054,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2399511347475518770317973"
+        "totalSupply": "2385566271399255535818402"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -1162,7 +1162,7 @@
           "eth:0xc34f4907822d1cDC6aE3038Be22e6f12DEa35bd4"
         ],
         "allowedOutboxList": ["eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9"],
-        "delayedMessageCount": 48157,
+        "delayedMessageCount": 50738,
         "inboxHistory": [
           "eth:0x1A07cc4BD17E0118BdB54D70990D2158AbAD7a2D",
           "eth:0xc34f4907822d1cDC6aE3038Be22e6f12DEa35bd4"
@@ -1170,8 +1170,8 @@
         "outboxHistory": ["eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9"],
         "rollup": "eth:0x23A19d23e89166adedbDcB432518AB01e4272D94",
         "sequencerInbox": "eth:0xBd0D173EEb87D57A09521c24388a12789F33ba96",
-        "sequencerMessageCount": 36159,
-        "sequencerReportedSubMessageCount": 14762317
+        "sequencerMessageCount": 38497,
+        "sequencerReportedSubMessageCount": 15461824
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1599,6 +1599,11 @@
               "delay": 604800
             }
           ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "robinhood:0xd0601CE157Db5bdC3162BbaC2a2C8aF5320D9EEC",
+          "role": "admin"
         }
       ],
       "directlyReceivedPermissions": [
@@ -1621,7 +1626,7 @@
       "description": "ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.",
       "values": {
         "$immutable": true,
-        "filteredTransactionsAdded": 6086,
+        "filteredTransactionsAdded": 6087,
         "filteredTransactionsDeleted": 0,
         "transactionFilterers": [
           "robinhood:0xebDc18A1F5C42fC25552eA233fAcf4054DF224b7"
@@ -1738,6 +1743,19 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
+      "address": "robinhood:0x2b94105fFf37630f98e1f24811daD588FC5C3A87",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "robinhood:0xe10b6f6B275de231345c20D14Ab812db62151b00",
+          "description": "mint an uncapped amount of any connected Stock Token to any non-blocked address while the token is not paused.",
+          "role": ".minters"
+        }
+      ]
+    },
+    {
       "name": "SafeL2",
       "address": "robinhood:0x3A0C507Cc7F8785C877359ad49d0476966d17a1C",
       "type": "Contract",
@@ -1831,6 +1849,19 @@
         "robinhood:0x4C0360aFedD31e53718e4343F95E40b692402462": "SafeProxy",
         "robinhood:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
       }
+    },
+    {
+      "address": "robinhood:0x5516B3451d4d6C9f63353Fe7Bc9537477ECCE000",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "robinhood:0xe10b6f6B275de231345c20D14Ab812db62151b00",
+          "description": "deploy and initialize new Stock Token beacon proxies with arbitrary product identifiers, names and symbols through the StockFactory.",
+          "role": ".tokenDeployers"
+        }
+      ]
     },
     {
       "name": "TimelockController",
@@ -2013,6 +2044,19 @@
       "proxyType": "EOA"
     },
     {
+      "address": "robinhood:0x697e774d60c1a3769f2eD0b919AAcf17be0ae553",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "robinhood:0xe10b6f6B275de231345c20D14Ab812db62151b00",
+          "description": "upgrade the external StockFactory that deploys and initializes new Stock Tokens.",
+          "role": ".factoryUpgraders"
+        }
+      ]
+    },
+    {
       "name": "SafeL2",
       "address": "robinhood:0x6b9F63817F1442e40Bb9c3C2207758934C323FdC",
       "type": "Contract",
@@ -2107,6 +2151,32 @@
       }
     },
     {
+      "address": "robinhood:0x6E40B50A40C1db42A85a0E8fe8FF7d9CbFc2D8C1",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "robinhood:0xe10b6f6B275de231345c20D14Ab812db62151b00",
+          "description": "burn arbitrary holders' balances without allowance on any connected Stock Token while neither the caller nor holder is blocked and the token is not paused.",
+          "role": ".burners"
+        }
+      ]
+    },
+    {
+      "address": "robinhood:0x7369d100c00F28E45D779ac9d4b1c7afa61e4aBC",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "robinhood:0xe10b6f6B275de231345c20D14Ab812db62151b00",
+          "description": "toggle the oraclePaused flag on any connected Stock Token; the current implementation does not enforce this flag internally.",
+          "role": ".oraclePausers"
+        }
+      ]
+    },
+    {
       "address": "robinhood:0x7957e74a59Af4404f64B454cDfaF08F7047021DD",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2115,6 +2185,45 @@
       "address": "robinhood:0x90a0eb0337224f74D694c04648f0Ab8a80E37029",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "robinhood:0x913cA87347391218e5De2C17c5A0AEba8B0b28fD",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "robinhood:0xe10b6f6B275de231345c20D14Ab812db62151b00",
+          "description": "block and unblock arbitrary addresses across all Stock Tokens, preventing them from sending, receiving, approving, spending or submitting permits.",
+          "role": ".blockers"
+        }
+      ]
+    },
+    {
+      "address": "robinhood:0x92905e8d0e2301BA143215B8D86D63fFD4188143",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "robinhood:0xe10b6f6B275de231345c20D14Ab812db62151b00",
+          "description": "set or schedule any nonzero UI multiplier for any unpaused Stock Token; standard ERC-20 balances and supply are unaffected.",
+          "role": ".multiplierUpdaters"
+        }
+      ]
+    },
+    {
+      "address": "robinhood:0x957B6de6525C63349f7619743Ef1E0ad93cd74D4",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "robinhood:0xe10b6f6B275de231345c20D14Ab812db62151b00",
+          "description": "confiscate arbitrary holders' balances without allowance on any connected Stock Token, even when the token is paused or either address is blocked.",
+          "role": ".adminBurners"
+        }
+      ]
     },
     {
       "address": "robinhood:0x9b6488FBa4ed8fD4840F37345311eCCA1B09740C",
@@ -2161,9 +2270,473 @@
       "proxyType": "EOA"
     },
     {
+      "address": "robinhood:0xcba16C2b9048AF033c5b34E43dd1D47D1358524A",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "robinhood:0xe10b6f6B275de231345c20D14Ab812db62151b00",
+          "description": "change the name and symbol of any connected Stock Token, which also changes its EIP-712 permit domain.",
+          "role": ".metadataUpdaters"
+        }
+      ]
+    },
+    {
+      "address": "robinhood:0xCd8C6182e7C6Ca3B5156D6a90a67719d7e2Be094",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "eoaWithUpgradePermissions": true,
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "robinhood:0xe10b6f6B275de231345c20D14Ab812db62151b00",
+          "description": "replace the implementation used by all Stock Token beacon proxies without a delay.",
+          "role": ".beaconUpgraders"
+        }
+      ]
+    },
+    {
+      "name": "NVIDIA • Robinhood Token",
+      "address": "robinhood:0xd0601CE157Db5bdC3162BbaC2a2C8aF5320D9EEC",
+      "type": "Contract",
+      "template": "robinhood/rwa",
+      "sourceHashes": [
+        "0x86b1c1bfa32684d9a62fdf1ddc778efc6f8b2d3b0751f7bc9b6b7aee0b4e6c00",
+        "0x352e1cdde7e07c1bcfe58a4012d6be81d7d52c147e5ec8a1404bd4db54c0af4b"
+      ],
+      "proxyType": "Beacon proxy",
+      "description": "ERC-20-compatible Robinhood Stock Token logic. Transfers, approvals and permits are permissionless for addresses that are not blocked in the shared AccessControlsRegistry; there is no onchain KYC or allowlist. The registry's roles can mint, burn arbitrary holders' balances, confiscate balances even while paused or blocked, pause this token or all tokens, change metadata and the UI multiplier, and upgrade the shared beacon implementation.",
+      "ignoreInWatchMode": ["totalSupply", "totalSupplyUI"],
+      "values": {
+        "$admin": "robinhood:0x0000000000000000000000000000000000000000",
+        "$beacon": "robinhood:0xe10b6f6B275de231345c20D14Ab812db62151b00",
+        "$implementation": "robinhood:0xb35490d6f9163DE4F80d88dc75c3516eb64C5aE2",
+        "$pastUpgrades": [
+          [
+            "2026-05-21T22:44:08.000Z",
+            "0xd97e3d6483547c0b5ec7d0b83df3bd2cbff5a978a012e599513274e6257107a9",
+            ["robinhood:0xb35490d6f9163DE4F80d88dc75c3516eb64C5aE2"]
+          ],
+          [
+            "2026-07-01T00:38:56.000Z",
+            "0x6960b46f7020ce38aec873dddd0d7e88270c4d42e469643407b26b7386c6d11a",
+            ["robinhood:0xb35490d6f9163DE4F80d88dc75c3516eb64C5aE2"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "ACCESS_CONTROLLED_REGISTRY": "robinhood:0xe10b6f6B275de231345c20D14Ab812db62151b00",
+        "decimals": 18,
+        "DOMAIN_SEPARATOR": "0x9561b23bbb0b6a2c7eecb765b6ae196568c31251e7086d435234d3017abcf6f7",
+        "effectiveAt": 0,
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "NVIDIA • Robinhood Token",
+          "version": "1",
+          "chainId": 4663,
+          "verifyingContract": "robinhood:0xd0601CE157Db5bdC3162BbaC2a2C8aF5320D9EEC",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "name": "NVIDIA • Robinhood Token",
+        "newUIMultiplier": "1000000000000000000",
+        "oraclePaused": false,
+        "paused": false,
+        "symbol": "NVDA",
+        "terms": "https://robinhood.com/stocktoken/rhj",
+        "tokenPaused": false,
+        "totalSupply": "11636176000000000000000",
+        "totalSupplyUI": "11636176000000000000000",
+        "uid": "0x00000000000000000000000000000000915f477416294f5099a5e0e09f327ce5",
+        "uiMultiplier": "1000000000000000000"
+      },
+      "fieldMeta": {
+        "ACCESS_CONTROLLED_REGISTRY": {
+          "severity": "HIGH",
+          "description": "Shared access-control registry and upgrade beacon. It stores the global pause and blocklist and supplies every privileged role used by this token."
+        },
+        "paused": {
+          "severity": "HIGH",
+          "description": "Whether ordinary token operations are paused, either locally or through the shared registry. A pause disables transfers, approvals, permits, minting, regular burning and multiplier updates, but not adminBurn(), metadata changes or oracle-flag changes."
+        },
+        "tokenPaused": {
+          "severity": "HIGH",
+          "description": "Whether this token is locally paused. The effective paused state also includes the registry-wide pause."
+        },
+        "oraclePaused": {
+          "description": "Oracle-status flag controlled by ORACLE_PAUSER_ROLE. This flag is not consulted by any function in this token implementation and has no direct effect on ERC-20 operations."
+        },
+        "uiMultiplier": {
+          "severity": "HIGH",
+          "description": "Current multiplier used only by balanceOfUI(), totalSupplyUI() and TransferWithScaledUI events. It does not rebase or change standard ERC-20 balances or total supply."
+        },
+        "newUIMultiplier": {
+          "severity": "HIGH",
+          "description": "Pending UI multiplier, which can be set to any nonzero value by MULTIPLIER_UPDATER_ROLE."
+        },
+        "effectiveAt": {
+          "severity": "HIGH",
+          "description": "Timestamp at which newUIMultiplier becomes the active UI multiplier. It cannot be scheduled in the past."
+        },
+        "terms": {
+          "description": "Hardcoded URL for the legal terms associated with Robinhood Assets (Jersey) Stock Tokens."
+        },
+        "uid": {
+          "description": "Immutable-per-proxy product identifier assigned during initialization."
+        },
+        "totalSupply": {
+          "description": "Standard ERC-20 supply. It can be increased without an onchain cap by MINTER_ROLE and reduced from arbitrary accounts by BURNER_ROLE or ADMIN_BURNER_ROLE."
+        }
+      },
+      "implementationNames": {
+        "robinhood:0xd0601CE157Db5bdC3162BbaC2a2C8aF5320D9EEC": "BeaconProxy",
+        "robinhood:0xb35490d6f9163DE4F80d88dc75c3516eb64C5aE2": "Stock"
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
+    },
+    {
+      "address": "robinhood:0xD6f8378F8e440c65F8382F5f2728c78DfD55B66d",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "robinhood:0xe10b6f6B275de231345c20D14Ab812db62151b00",
+          "description": "grant and revoke every registry and Stock Token role, including the ability to grant these powers to themselves.",
+          "role": ".defaultAdmins"
+        }
+      ]
+    },
+    {
       "address": "robinhood:0xd857d3f06D53d1449E6D2b2A6f61ec33c8577bB1",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "AccessControlsRegistry",
+      "address": "robinhood:0xe10b6f6B275de231345c20D14Ab812db62151b00",
+      "type": "Contract",
+      "template": "robinhood/accessControlsRegistry",
+      "sourceHashes": [
+        "0x6d4b46dee5476f815c89d313c5eed8422b0e250b1eee959f79e6c74d0add1cec"
+      ],
+      "proxyType": "immutable",
+      "description": "Shared access-control registry and upgrade beacon for Robinhood Stock Tokens. Its roles apply across every token implementation that points to this registry: they control upgrades, global and per-token pauses, the shared blocklist, issuance, arbitrary holder burns, metadata and UI multipliers.",
+      "ignoreInWatchMode": ["blockedAccounts"],
+      "values": {
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["robinhood:0xD6f8378F8e440c65F8382F5f2728c78DfD55B66d"]
+          },
+          "BEACON_UPGRADER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["robinhood:0xCd8C6182e7C6Ca3B5156D6a90a67719d7e2Be094"]
+          },
+          "MINTER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["robinhood:0x2b94105fFf37630f98e1f24811daD588FC5C3A87"]
+          },
+          "BURNER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["robinhood:0x6E40B50A40C1db42A85a0E8fe8FF7d9CbFc2D8C1"]
+          },
+          "ADMIN_BURNER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["robinhood:0x957B6de6525C63349f7619743Ef1E0ad93cd74D4"]
+          },
+          "PAUSER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["robinhood:0xe7BCB188254Bc6eBBfF63014DfED4cD4A024F22A"]
+          },
+          "TOKEN_PAUSER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["robinhood:0xFCcF56B674113d9C4eb0F9B3370930ceD9E6Ab23"]
+          },
+          "ORACLE_PAUSER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["robinhood:0x7369d100c00F28E45D779ac9d4b1c7afa61e4aBC"]
+          },
+          "TOKEN_DEPLOYER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["robinhood:0x5516B3451d4d6C9f63353Fe7Bc9537477ECCE000"]
+          },
+          "FACTORY_UPGRADER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["robinhood:0x697e774d60c1a3769f2eD0b919AAcf17be0ae553"]
+          },
+          "MULTIPLIER_UPDATER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["robinhood:0x92905e8d0e2301BA143215B8D86D63fFD4188143"]
+          },
+          "METADATA_UPDATER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["robinhood:0xcba16C2b9048AF033c5b34E43dd1D47D1358524A"]
+          },
+          "BLOCKER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["robinhood:0x913cA87347391218e5De2C17c5A0AEba8B0b28fD"]
+          }
+        },
+        "adminBurners": [
+          "robinhood:0x957B6de6525C63349f7619743Ef1E0ad93cd74D4"
+        ],
+        "beaconUpgraders": [
+          "robinhood:0xCd8C6182e7C6Ca3B5156D6a90a67719d7e2Be094"
+        ],
+        "blockedAccounts": [
+          "robinhood:0x19Aa5Fe80D33a56D56c78e82eA5E50E5d80b4Dff",
+          "robinhood:0x1da5821544e25c636c1417Ba96Ade4Cf6D2f9B5A",
+          "robinhood:0x2f389cE8bD8ff92De3402FFCe4691d17fC4f6535",
+          "robinhood:0x308eD4B7b49797e1A98D3818bFF6fe5385410370",
+          "robinhood:0x3CBdeD43EFdAf0FC77b9C55F6fC9988fCC9b757d",
+          "robinhood:0x48549A34AE37b12F6a30566245176994e17C6b4A",
+          "robinhood:0x5512d943eD1f7c8a43F3435C85F7aB68b30121b0",
+          "robinhood:0x67d40EE1A85bf4a4Bb7Ffae16De985e8427B6b45",
+          "robinhood:0x6aCDFBA02D390b97Ac2b2d42A63E85293BCc160e",
+          "robinhood:0x6F1cA141A28907F78Ebaa64fb83A9088b02A8352",
+          "robinhood:0x72a5843cc08275C8171E582972Aa4fDa8C397B2A",
+          "robinhood:0x7Db418b5D567A4e0E8c59Ad71BE1FcE48f3E6107",
+          "robinhood:0x7F19720A857F834887FC9A7bC0a0fBe7Fc7f8102",
+          "robinhood:0x7F367cC41522cE07553e823bf3be79A889DEbe1B",
+          "robinhood:0x8576aCC5C05D6Ce88f4e49bf65BdF0C62F91353C",
+          "robinhood:0x901bb9583b24D97e995513C6778dc6888AB6870e",
+          "robinhood:0x9F4cda013E354b8fC285BF4b9A60460cEe7f7Ea9",
+          "robinhood:0xA7e5d5A720f06526557c513402f2e6B5fA20b008",
+          "robinhood:0xC455f7fd3e0e12afd51fba5c106909934D8A0e4a",
+          "robinhood:0xd882cFc20F52f2599D84b8e8D58C7FB62cfE344b",
+          "robinhood:0xe7aa314c77F4233C18C6CC84384A9247c0cf367B",
+          "robinhood:0xfEC8A60023265364D066a1212fDE3930F6Ae8da7",
+          "robinhood:0x7FF9cFad3877F21d41Da833E2F775dB0569eE3D9",
+          "robinhood:0x098B716B8Aaf21512996dC57EB0615e2383E2f96",
+          "robinhood:0xa0e1c89Ef1a489c9C7dE96311eD5Ce5D32c20E4B",
+          "robinhood:0x3Cffd56B47B7b41c56258D9C7731ABaDc360E073",
+          "robinhood:0x53b6936513e738f44FB50d2b9476730C0Ab3Bfc1",
+          "robinhood:0x35fB6f6DB4fb05e6A4cE86f2C93691425626d4b1",
+          "robinhood:0xF7B31119c2682c88d88D455dBb9d5932c65Cf1bE",
+          "robinhood:0x3e37627dEAA754090fBFbb8bd226c1CE66D255e9",
+          "robinhood:0x08723392Ed15743cc38513C4925f5e6be5c17243",
+          "robinhood:0x8589427373D6D84E98730D7795D8f6f8731FDA16",
+          "robinhood:0x722122dF12D4e14e13Ac3b6895a86e84145b6967",
+          "robinhood:0xDD4c48C0B24039969fC16D1cdF626eaB821d3384",
+          "robinhood:0xd90e2f925DA726b50C4Ed8D0Fb90Ad053324F31b",
+          "robinhood:0xd96f2B1c14Db8458374d9Aca76E26c3D18364307",
+          "robinhood:0x4736dCf1b7A3d580672CcE6E7c65cd5cc9cFBa9D",
+          "robinhood:0xD4B88Df4D29F5CedD6857912842cff3b20C8Cfa3",
+          "robinhood:0x910Cbd523D972eb0a6f4cAe4618aD62622b39DbF",
+          "robinhood:0xA160cdAB225685dA1d56aa342Ad8841c3b53f291",
+          "robinhood:0xFD8610d20aA15b7B2E3Be39B396a1bC3516c7144",
+          "robinhood:0xF60dD140cFf0706bAE9Cd734Ac3ae76AD9eBC32A",
+          "robinhood:0x22aaA7720ddd5388A3c0A3333430953C68f1849b",
+          "robinhood:0xBA214C1c1928a32Bffe790263E38B4Af9bFCD659",
+          "robinhood:0xb1C8094B234DcE6e03f10a5b673c1d8C69739A00",
+          "robinhood:0x527653eA119F3E6a1F5BD18fbF4714081D7B31ce",
+          "robinhood:0x58E8dCC13BE9780fC42E8723D8EaD4CF46943dF2",
+          "robinhood:0xD691F27f38B395864Ea86CfC7253969B409c362d",
+          "robinhood:0xaEaaC358560e11f52454D997AAFF2c5731B6f8a6",
+          "robinhood:0x1356c899D8C9467C7f71C195612F8A395aBf2f0a",
+          "robinhood:0xA60C772958a3eD56c1F15dD055bA37AC8e523a0D",
+          "robinhood:0x169AD27A470D064DEDE56a2D3ff727986b15D52B",
+          "robinhood:0x0836222F2B2B24A3F36f98668Ed8F0B38D1a872f",
+          "robinhood:0xF67721A2D8F736E75a49FdD7FAd2e31D8676542a",
+          "robinhood:0x9AD122c22B14202B4490eDAf288FDb3C7cb3ff5E",
+          "robinhood:0x905b63Fff465B9fFBF41DeA908CEb12478ec7601",
+          "robinhood:0x07687e702b410Fa43f4cB4Af7FA097918ffD2730",
+          "robinhood:0x94A1B5CdB22c43faab4AbEb5c74999895464Ddaf",
+          "robinhood:0xb541fc07bC7619fD4062A54d96268525cBC6FfEF",
+          "robinhood:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc",
+          "robinhood:0x47CE0C6eD5B0Ce3d3A51fdb1C52DC66a7c3c2936",
+          "robinhood:0x23773E65ed146A459791799d01336DB287f25334",
+          "robinhood:0xD21be7248e0197Ee08E0c20D4a96DEBdaC3D20Af",
+          "robinhood:0x610B717796ad172B316836AC95a2ffad065CeaB4",
+          "robinhood:0x178169B423a011fff22B9e3F3abeA13414dDD0F1",
+          "robinhood:0xbB93e510BbCD0B7beb5A853875f9eC60275CF498",
+          "robinhood:0x2717c5e28cf931547B621a5dddb772Ab6A35B701",
+          "robinhood:0x03893a7c7463AE47D46bc7f091665f1893656003",
+          "robinhood:0xCa0840578f57fE71599D29375e16783424023357",
+          "robinhood:0xc2a3829F459B3Edd87791c74cD45402BA0a20Be3",
+          "robinhood:0x3AD9dB589d201A710Ed237c829c7860Ba86510Fc",
+          "robinhood:0x1E34A77868E19A6647b1f2F47B51ed72dEDE95DD",
+          "robinhood:0xd47438C816c9E7f2E2888E060936a499Af9582b3",
+          "robinhood:0x179f48C78f57A3A78f0608cC9197B8972921d1D2",
+          "robinhood:0x77777FeDdddFfC19Ff86DB637967013e6C6A116C",
+          "robinhood:0x3eFA30704D2b8BBAc821307230376556cF8CC39e",
+          "robinhood:0x746Aebc06D2aE31B71ac51429A19D54E797878E9",
+          "robinhood:0x2F50508a8a3D323B91336FA3eA6ae50E55f32185",
+          "robinhood:0xffbaC21a641Dcfe4552920138D90F3638B3c9fba",
+          "robinhood:0x5f6c97C6AD7bdd0AE7E0Dd4ca33A4ED3fDabD4D7",
+          "robinhood:0xf4B067dD14e95Bab89Be928c07Cb22E3c94E0DAA",
+          "robinhood:0x05E0b5B40B7b66098C2161A5EE11C5740A3A7C45",
+          "robinhood:0x23173fE8b96A4Ad8d2E17fB83EA5dcccdCa1Ae52",
+          "robinhood:0x538Ab61E8A9fc1b2f93b3dd9011d662d89bE6FE6",
+          "robinhood:0x94Be88213a387E992Dd87DE56950a9aef34b9448",
+          "robinhood:0xb04E030140b30C27bcdfaafFFA98C57d80eDa7B4",
+          "robinhood:0x6Bf694a291DF3FeC1f7e69701E3ab6c592435Ae7",
+          "robinhood:0x3aac1cC67c2ec5Db4eA850957b967Ba153aD6279",
+          "robinhood:0x723B78e67497E85279CB204544566F4dC5d2acA0",
+          "robinhood:0x0E3A09dDA6B20aFbB34aC7cD4A6881493f3E7bf7",
+          "robinhood:0x76D85B4C0Fc497EeCc38902397aC608000A06607",
+          "robinhood:0xCC84179FFD19A1627E79F8648d09e095252Bc418",
+          "robinhood:0xD5d6f8D9e784d0e26222ad3834500801a68D027D",
+          "robinhood:0x776198CCF446DFa168347089d7338879273172cF",
+          "robinhood:0xeDC5d01286f99A066559F60a585406f3878a033e",
+          "robinhood:0xD692Fd2D0b2Fbd2e52CFa5B5b9424bC981C30696",
+          "robinhood:0xDF3A408c53E5078af6e8fb2A85088D46Ee09A61b",
+          "robinhood:0x743494b60097A2230018079c02fe21a7B687EAA5",
+          "robinhood:0x94C92F096437ab9958fC0A37F09348f30389Ae79",
+          "robinhood:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce",
+          "robinhood:0xCEe71753C9820f063b38FDbE4cFDAf1d3D928A80",
+          "robinhood:0x88fd245fEdeC4A936e700f9173454D1931B4C307",
+          "robinhood:0x09193888b3f38C82dEdfda55259A82C0E7De875E",
+          "robinhood:0x5cab7692D4E94096462119ab7bF57319726Eed2A",
+          "robinhood:0x756C4628E57F7e7f8a459EC2752968360Cf4D1AA",
+          "robinhood:0xD82ed8786D7c69DC7e052F7A542AB047971E73d2",
+          "robinhood:0xB20c66C4DE72433F3cE747b58B86830c459CA911",
+          "robinhood:0x2573BAc39EBe2901B4389CD468F2872cF7767FAF",
+          "robinhood:0x653477c392c16b0765603074f157314Cc4f40c32",
+          "robinhood:0x407CcEeaA7c95d2FE2250Bf9F2c105aA7AAFB512",
+          "robinhood:0x833481186f16Cece3f1Eeea1a694c42034c3a0dB",
+          "robinhood:0xd8D7DE3349ccaA0Fde6298fe6D7b7d0d34586193",
+          "robinhood:0x8281Aa6795aDE17C8973e1aedcA380258Bc124F9",
+          "robinhood:0x57b2B8c82F065de8Ef5573f9730fC1449B403C9f",
+          "robinhood:0x84443CFd09A48AF6eF360C6976C5392aC5023a1F",
+          "robinhood:0x330bdFADE01eE9bF63C209Ee33102DD334618e0a",
+          "robinhood:0xdf231d99Ff8b6c6CBF4E9B9a945CBAcEF9339178",
+          "robinhood:0xaf4c0B70B2Ea9FB7487C7CbB37aDa259579fe040",
+          "robinhood:0xa5C2254e4253490C54cef0a4347fddb8f75A4998",
+          "robinhood:0xaf8d1839c3c67cf571aa74B5c12398d4901147B3",
+          "robinhood:0x242654336ca2205714071898f67E254EB49ACdCe",
+          "robinhood:0x01e2919679362dFBC9ee1644Ba9C6da6D6245BB1",
+          "robinhood:0x2FC93484614a34f26F7970CBB94615bA109BB4bf",
+          "robinhood:0x26903a5a198D571422b2b4EA08b56a37cbD68c89",
+          "robinhood:0x433830Bf9f152C4bfD444aFC684450Fd9F33494f",
+          "robinhood:0x96Ad914cBA965130B19610f9cF0AC405c2b6661C",
+          "robinhood:0xDc450aa52D6B3918d3f6f89a13F3F2f28871479E",
+          "robinhood:0xc5873E3ed3bA425acD18dcc6b4Af99A02897363E",
+          "robinhood:0x6baD91120e2171950A7d9a70c15e816cf48cE0de",
+          "robinhood:0x39D908dac893CBCB53Cc86e0ECc369aA4DeF1A29",
+          "robinhood:0x5d4163fAF150D2Ba76F5D15B18cE841169AcDaC1",
+          "robinhood:0x818FaAbD112FE24cC5d8B56A2B8dd0E1f370f330",
+          "robinhood:0xa108dfde99962808a7eD5C92439ec330717170ac",
+          "robinhood:0x1482CDf06702CA71eb8908ae699f0B36A2b16f2f",
+          "robinhood:0x4F47Bc496083C727c5fbe3CE9CDf2B0f6496270c",
+          "robinhood:0xdcbEfFBECcE100cCE9E4b153C4e15cB885643193",
+          "robinhood:0x5f48C2A71B2CC96e3F0CCae4E39318Ff0dc375b2",
+          "robinhood:0x5A7a51bFb49F190e5A6060a5bc6052Ac14a3b59f",
+          "robinhood:0xeD6e0A7e4Ac94D976eeBfB82ccf777A3c6baD921",
+          "robinhood:0x797d7Ae72EbddCDea2a346c1834E04d1F8dF102b",
+          "robinhood:0x931546D9e66836AbF687d2bc64B30407bAc8C568",
+          "robinhood:0x43fa21d92141BA9db43052492E0DeEE5aa5f0A93",
+          "robinhood:0x6Be0aE71e6c41f2f9D0D1A3B8d0f75E6f6A0b46e",
+          "robinhood:0x9C2Bc757B66F24D60F016B6237F8CdD414a879Fa",
+          "robinhood:0x38735f03b30FbC022DdD06ABED01F0Ca823C6a94",
+          "robinhood:0x97B1043ABD9E6FC31681635166d430a458D14F9C",
+          "robinhood:0xb6f5ec1A0a9cd1526536D3F0426c429529471F40",
+          "robinhood:0x530A64c0Ce595026a4A556b703644228179E2d57",
+          "robinhood:0xFAC583C0cF07Ea434052c49115a4682172aB6b4F",
+          "robinhood:0x983a81ca6FB1e441266D2FbcB7D8E530AC2E05A2",
+          "robinhood:0xf3701F445b6BDaFeDbcA97D1e477357839e4120D",
+          "robinhood:0xE950DC316b836e4EeFb8308bf32Bf7C72a1358FF",
+          "robinhood:0x21B8d56BDA776bbE68655A16895afd96F5534feD",
+          "robinhood:0x175d44451403Edf28469dF03A9280c1197ADb92c",
+          "robinhood:0x19F8f2B0915Daa12a3f5C9CF01dF9E24D53794F7",
+          "robinhood:0xE1D865c3D669dCc8c57c8D023140CB204e672ee4",
+          "robinhood:0x0931cA4D13BB4ba75D9B7132AB690265D749a5E7",
+          "robinhood:0x1999EF52700c34De7EC2b68a28aAFB37db0C5ade",
+          "robinhood:0x3051Ca7cB7f6C599fA2f27385AD75010cf0f2bbF",
+          "robinhood:0x002471b8A185f9980708d0eAEC5B289714F56f8d",
+          "robinhood:0xd5ED34b52AC4ab84d8FA8A231a3218bbF01Ed510",
+          "robinhood:0x12de548F79a50D2bd05481C8515C1eF5183666a9",
+          "robinhood:0xE3D35f68383732649669aA990832E017340DbcA5",
+          "robinhood:0x532B77B33A040587e9FD1800088225f99b8B0E8A",
+          "robinhood:0xDb2720ebAd55399117ddB4C4a4afd9a4CCAda8fE",
+          "robinhood:0xFda1Ec4A6178d4916b001a065422D31EBE5F62FF",
+          "robinhood:0xcB74874f1e06Fcf80A306e06e5379A44B488bA2D",
+          "robinhood:0x95584C303FCd48AF5c6B9873015f2AD0ca84EaE3",
+          "robinhood:0x9Be599d7867f5E1a2D7Ec6dB9710dF2b98A15573",
+          "robinhood:0x76EA76CA4Eb727f18956aB93445a94c5280412B9",
+          "robinhood:0x0330070FD38Ec3bB94F58FA55D40368271E9e54A",
+          "robinhood:0x747AFB5c7A7fc34B547cD0FDEbf9b91759C5a52b",
+          "robinhood:0xd04E33461FEA8302c5E1e13895b60cEe8AEfda7F",
+          "robinhood:0xb637F84b66876ebf609C2A4208905F9ddAC9d075",
+          "robinhood:0xFb3eFf152ea55D1BfA04Dbdd509A80fD7b72cdEB"
+        ],
+        "blockers": ["robinhood:0x913cA87347391218e5De2C17c5A0AEba8B0b28fD"],
+        "burners": ["robinhood:0x6E40B50A40C1db42A85a0E8fe8FF7d9CbFc2D8C1"],
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdmins": [
+          "robinhood:0xD6f8378F8e440c65F8382F5f2728c78DfD55B66d"
+        ],
+        "factoryUpgraders": [
+          "robinhood:0x697e774d60c1a3769f2eD0b919AAcf17be0ae553"
+        ],
+        "globalPausers": [
+          "robinhood:0xe7BCB188254Bc6eBBfF63014DfED4cD4A024F22A"
+        ],
+        "implementation": "robinhood:0xb35490d6f9163DE4F80d88dc75c3516eb64C5aE2",
+        "metadataUpdaters": [
+          "robinhood:0xcba16C2b9048AF033c5b34E43dd1D47D1358524A"
+        ],
+        "minters": ["robinhood:0x2b94105fFf37630f98e1f24811daD588FC5C3A87"],
+        "multiplierUpdaters": [
+          "robinhood:0x92905e8d0e2301BA143215B8D86D63fFD4188143"
+        ],
+        "oraclePausers": [
+          "robinhood:0x7369d100c00F28E45D779ac9d4b1c7afa61e4aBC"
+        ],
+        "paused": false,
+        "tokenDeployers": [
+          "robinhood:0x5516B3451d4d6C9f63353Fe7Bc9537477ECCE000"
+        ],
+        "tokenPausers": ["robinhood:0xFCcF56B674113d9C4eb0F9B3370930ceD9E6Ab23"]
+      },
+      "fieldMeta": {
+        "implementation": {
+          "severity": "HIGH",
+          "description": "Implementation used by every beacon proxy pointing to this registry."
+        },
+        "paused": {
+          "severity": "HIGH",
+          "description": "Registry-wide pause. When true, all connected Stock Tokens treat themselves as paused."
+        },
+        "blockedAccounts": {
+          "description": "Addresses in the shared denylist, reconstructed from Blocked and Unblocked events. A blocked sender, receiver, spender or transaction caller cannot use transfers, approvals or permits on any connected token."
+        },
+        "accessControl": {
+          "description": "Current admin relationships and membership for every registry and Stock Token role."
+        },
+        "defaultAdmins": { "severity": "HIGH", "type": "PERMISSION" },
+        "beaconUpgraders": { "severity": "HIGH", "type": "PERMISSION" },
+        "globalPausers": { "severity": "HIGH", "type": "PERMISSION" },
+        "blockers": { "severity": "HIGH", "type": "PERMISSION" },
+        "tokenDeployers": { "severity": "HIGH", "type": "PERMISSION" },
+        "factoryUpgraders": { "severity": "HIGH", "type": "PERMISSION" },
+        "minters": { "severity": "HIGH", "type": "PERMISSION" },
+        "burners": { "severity": "HIGH", "type": "PERMISSION" },
+        "adminBurners": { "severity": "HIGH", "type": "PERMISSION" },
+        "tokenPausers": { "severity": "HIGH", "type": "PERMISSION" },
+        "multiplierUpdaters": { "severity": "HIGH", "type": "PERMISSION" },
+        "oraclePausers": { "severity": "HIGH", "type": "PERMISSION" },
+        "metadataUpdaters": { "severity": "HIGH", "type": "PERMISSION" }
+      },
+      "implementationNames": {
+        "robinhood:0xe10b6f6B275de231345c20D14Ab812db62151b00": "AccessControlsRegistry"
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
+    },
+    {
+      "address": "robinhood:0xe7BCB188254Bc6eBBfF63014DfED4cD4A024F22A",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "robinhood:0xe10b6f6B275de231345c20D14Ab812db62151b00",
+          "description": "pause and unpause ordinary operations across all Stock Tokens connected to this registry.",
+          "role": ".globalPausers"
+        }
+      ]
     },
     {
       "address": "robinhood:0xe94aCAa305ce4DF3862585AD0B8Ed05C8C808d6A",
@@ -2188,6 +2761,19 @@
       "address": "robinhood:0xFA677559d43856af84E9ceA929E36BF126da4562",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "robinhood:0xFCcF56B674113d9C4eb0F9B3370930ceD9E6Ab23",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "robinhood:0xe10b6f6B275de231345c20D14Ab812db62151b00",
+          "description": "pause and unpause any individual Stock Token connected to this registry.",
+          "role": ".tokenPausers"
+        }
+      ]
     }
   ],
   "abis": {
@@ -3246,6 +3832,111 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "robinhood:0xb35490d6f9163DE4F80d88dc75c3516eb64C5aE2": [
+      "constructor(address registry)",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error Blocked(address account)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
+      "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
+      "error ERC20InvalidApprover(address approver)",
+      "error ERC20InvalidReceiver(address receiver)",
+      "error ERC20InvalidSender(address sender)",
+      "error ERC20InvalidSpender(address spender)",
+      "error ERC2612ExpiredSignature(uint256 deadline)",
+      "error ERC2612InvalidSigner(address signer, address owner)",
+      "error InvalidAccountNonce(address account, uint256 currentNonce)",
+      "error InvalidInitialization()",
+      "error IsPaused()",
+      "error NotInitializing()",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event EIP712DomainChanged()",
+      "event Initialized(uint64 version)",
+      "event MetaDataUpdated(string name, string symbol)",
+      "event OraclePaused()",
+      "event OracleUnpaused()",
+      "event Paused()",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event TransferWithScaledUI(address indexed from, address indexed to, uint256 value, uint256 uiValue)",
+      "event UIMultiplierUpdated(uint256 oldMultiplier, uint256 newMultiplier, uint256 effectiveAtTimestamp)",
+      "event Unpaused()",
+      "function ACCESS_CONTROLLED_REGISTRY() view returns (address)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function adminBurn(address from, uint256 amount)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 value) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function balanceOfUI(address account) view returns (uint256)",
+      "function burn(address from, uint256 amount)",
+      "function decimals() view returns (uint8)",
+      "function effectiveAt() view returns (uint256)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function initialize(bytes32 uid_, string name_, string symbol_)",
+      "function mint(address to, uint256 amount)",
+      "function name() view returns (string)",
+      "function newUIMultiplier() view returns (uint256)",
+      "function nonces(address owner) view returns (uint256)",
+      "function oraclePaused() view returns (bool)",
+      "function pause()",
+      "function pauseOracle()",
+      "function paused() view returns (bool)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function setMetadata(string _name, string _symbol)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function symbol() view returns (string)",
+      "function terms() pure returns (string)",
+      "function tokenPaused() view returns (bool)",
+      "function totalSupply() view returns (uint256)",
+      "function totalSupplyUI() view returns (uint256)",
+      "function transfer(address to, uint256 value) returns (bool)",
+      "function transferFrom(address from, address to, uint256 value) returns (bool)",
+      "function uiMultiplier() view returns (uint256)",
+      "function uid() view returns (bytes32)",
+      "function unpause()",
+      "function unpauseOracle()",
+      "function updateMultiplier(uint256 newMultiplier)",
+      "function updateMultiplier(uint256 newMultiplier, uint256 effectiveAt_)"
+    ],
+    "robinhood:0xd0601CE157Db5bdC3162BbaC2a2C8aF5320D9EEC": [
+      "constructor(address beacon, bytes data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidBeacon(address beacon)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "event BeaconUpgraded(address indexed beacon)"
+    ],
+    "robinhood:0xe10b6f6B275de231345c20D14Ab812db62151b00": [
+      "constructor()",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error BeaconInvalidImplementation(address implementation)",
+      "event Blocked(address indexed account)",
+      "event Paused()",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event Unblocked(address indexed account)",
+      "event Unpaused()",
+      "event Upgraded(address indexed implementation)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function blockAccounts(address[] accounts)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function implementation() view returns (address)",
+      "function isBlocked(address) view returns (bool)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function unblockAccounts(address[] accounts)",
+      "function unpause()",
+      "function upgradeTo(address newImplementation)"
     ]
   },
   "usedTemplates": {
@@ -3266,8 +3957,10 @@
     "orbitstack/RollupEventInbox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/RollupProxyBoLD": "0x2698d3d5c271b76e0481b26e00170b2cee6acdd8288354954fa73af2825ede23",
     "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
-    "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
+    "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
+    "robinhood/accessControlsRegistry": "0xa1fbf84eb609ea4cdccdf8a5051375ec6540a6484aa187e4fc021e7231538e24",
+    "robinhood/rwa": "0x6a4b6026d07de4fbe785cf745eed6aab91d27bef2776ed3280a828368f1bf7b2"
   },
-  "usedBlockNumbers": { "ethereum": 25574438, "robinhood": 14762923 },
-  "permissionsConfigHash": "0xd5c71e3e8c6e84682ff855379a8db3ed952ed14b74316054abc650900e680d39"
+  "usedBlockNumbers": { "ethereum": 25580257, "robinhood": 15462208 },
+  "permissionsConfigHash": "0x520b503f3c9bb5253b5b60876b8bc989e1134376a9b01ce981bf188bacf2f3f0"
 }

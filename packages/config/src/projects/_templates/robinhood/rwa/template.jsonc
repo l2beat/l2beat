@@ -1,0 +1,44 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "bridge-external",
+  "description": "ERC-20-compatible Robinhood Stock Token logic. Transfers, approvals and permits are permissionless for addresses that are not blocked in the shared AccessControlsRegistry; there is no onchain KYC or allowlist. The registry's roles can mint, burn arbitrary holders' balances, confiscate balances even while paused or blocked, pause this token or all tokens, change metadata and the UI multiplier, and upgrade the shared beacon implementation.",
+  "fields": {
+    "ACCESS_CONTROLLED_REGISTRY": {
+      "severity": "HIGH",
+      "description": "Shared access-control registry and upgrade beacon. It stores the global pause and blocklist and supplies every privileged role used by this token."
+    },
+    "paused": {
+      "severity": "HIGH",
+      "description": "Whether ordinary token operations are paused, either locally or through the shared registry. A pause disables transfers, approvals, permits, minting, regular burning and multiplier updates, but not adminBurn(), metadata changes or oracle-flag changes."
+    },
+    "tokenPaused": {
+      "severity": "HIGH",
+      "description": "Whether this token is locally paused. The effective paused state also includes the registry-wide pause."
+    },
+    "oraclePaused": {
+      "description": "Oracle-status flag controlled by ORACLE_PAUSER_ROLE. This flag is not consulted by any function in this token implementation and has no direct effect on ERC-20 operations."
+    },
+    "uiMultiplier": {
+      "severity": "HIGH",
+      "description": "Current multiplier used only by balanceOfUI(), totalSupplyUI() and TransferWithScaledUI events. It does not rebase or change standard ERC-20 balances or total supply."
+    },
+    "newUIMultiplier": {
+      "severity": "HIGH",
+      "description": "Pending UI multiplier, which can be set to any nonzero value by MULTIPLIER_UPDATER_ROLE."
+    },
+    "effectiveAt": {
+      "severity": "HIGH",
+      "description": "Timestamp at which newUIMultiplier becomes the active UI multiplier. It cannot be scheduled in the past."
+    },
+    "terms": {
+      "description": "Hardcoded URL for the legal terms associated with Robinhood Assets (Jersey) Stock Tokens."
+    },
+    "uid": {
+      "description": "Immutable-per-proxy product identifier assigned during initialization."
+    },
+    "totalSupply": {
+      "description": "Standard ERC-20 supply. It can be increased without an onchain cap by MINTER_ROLE and reduced from arbitrary accounts by BURNER_ROLE or ADMIN_BURNER_ROLE."
+    }
+  },
+  "ignoreInWatchMode": ["totalSupply", "totalSupplyUI"]
+}
