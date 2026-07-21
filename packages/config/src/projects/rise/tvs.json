@@ -53,6 +53,32 @@
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "rise-USDC.e",
+      "priceId": "usd-coin",
+      "symbol": "USDC.e",
+      "name": "Bridged USDC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xe436820ba0C69702c1d3E601d421c0eF38262739",
+        "chain": "rise",
+        "decimals": 6,
+        "sinceTimestamp": 1773056676
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     }
   ]
 }
