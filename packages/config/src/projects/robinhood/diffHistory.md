@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x936c2f40238f505a040b9a4962fb955524287753
+
+# Diff at Tue, 21 Jul 2026 11:00:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@99b417edd2cb262b6c8d01375e81bf5aac874a53 block: 1784626795
+- current timestamp: 1784626795
+
+## Description
+
+Config change: remove category to suppress EOA warning for the non-critical infra.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784626795 (main branch discovery), not current.
+
+```diff
+    contract NVIDIA • Robinhood Token (robinhood:0xd0601CE157Db5bdC3162BbaC2a2C8aF5320D9EEC) [robinhood/rwa] {
+    +++ description: ERC-20-compatible Robinhood Stock Token logic. Transfers, approvals and permits are permissionless for addresses that are not blocked in the shared AccessControlsRegistry; there is no onchain KYC or allowlist. The registry's roles can mint, burn arbitrary holders' balances, confiscate balances even while paused or blocked, pause this token or all tokens, change metadata and the UI multiplier, and upgrade the shared beacon implementation.
+      category:
+-        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract AccessControlsRegistry (robinhood:0xe10b6f6B275de231345c20D14Ab812db62151b00) [robinhood/accessControlsRegistry] {
+    +++ description: Shared access-control registry and upgrade beacon for Robinhood Stock Tokens. Its roles apply across every token implementation that points to this registry: they control upgrades, global and per-token pauses, the shared blocklist, issuance, arbitrary holder burns, metadata and UI multipliers.
+      category:
+-        {"name":"External Bridges","priority":1}
+    }
+```
+
 Generated with discovered.json: 0xac11c67683467da72879642314dd59ea8cc02ea0
 
 # Diff at Tue, 21 Jul 2026 09:46:50 GMT:
