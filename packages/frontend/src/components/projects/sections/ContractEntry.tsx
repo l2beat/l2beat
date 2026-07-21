@@ -40,6 +40,7 @@ export interface TechnologyContract {
   impactfulChange: boolean
   pastUpgrades?: PastUpgradesData
   escrow?: TechnologyContractEscrow
+  groupCount?: number
 }
 
 export interface TechnologyContractAddress {
@@ -98,6 +99,11 @@ export function ContractEntry({
             >
               {contract.name}
             </strong>
+            {contract.groupCount && contract.groupCount > 1 ? (
+              <Badge type="gray" size="small">
+                {contract.groupCount} instances
+              </Badge>
+            ) : null}
             {contract.escrow && (
               <EscrowBadge isCustom={contract.escrow.isCustom} />
             )}
