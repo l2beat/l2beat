@@ -194,8 +194,112 @@ describe('deployedTokensRouter', () => {
     })
   })
 
+  describe('getRelationsGraphNodeDetails', () => {
+    it('returns one deployed token and its abstract token', async () => {
+      const token = deployedToken({
+        chain: 'ethereum',
+        address: '0xaaa',
+        symbol: 'USDC',
+        abstractTokenId: 'USDC',
+      })
+      const abstractToken = {
+        id: 'USDC',
+        symbol: 'USDC',
+        issuer: 'Circle',
+        category: 'stablecoin',
+        iconUrl: null,
+        coingeckoId: 'usd-coin',
+        coingeckoListingTimestamp: null,
+        additionalCoingeckoEntries: null,
+        comment: null,
+        reviewed: true,
+        isPriceUnreliable: false,
+      } satisfies AbstractTokenRecord
+      const findDeployedToken = mockFn().resolvesTo(token)
+      const findAbstractToken = mockFn().resolvesTo(abstractToken)
+      const mockTokenDb = mockObject<TokenDatabase>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
+          findByChainAndAddress: findDeployedToken,
+        }),
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
+          findById: findAbstractToken,
+        }),
+      })
+
+      const caller = createRouter(
+        mockTokenDb,
+        mockObject<Database>({}),
+        mockObject<CoingeckoClient>({}),
+      )
+
+      expect(
+        await caller.getRelationsGraphNodeDetails({
+          chain: token.chain,
+          address: token.address,
+        }),
+      ).toEqual({ deployedToken: token, abstractToken })
+      expect(findAbstractToken).toHaveBeenCalledWith('USDC')
+    })
+
+    it('returns null details for an uncatalogued endpoint', async () => {
+      const mockTokenDb = mockObject<TokenDatabase>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
+          findByChainAndAddress: mockFn().resolvesTo(undefined),
+        }),
+      })
+      const caller = createRouter(
+        mockTokenDb,
+        mockObject<Database>({}),
+        mockObject<CoingeckoClient>({}),
+      )
+
+      expect(
+        await caller.getRelationsGraphNodeDetails({
+          chain: 'optimism',
+          address: '0xccc',
+        }),
+      ).toEqual({ deployedToken: null, abstractToken: null })
+    })
+  })
+
+  describe('getRelationsGraphRelationDetails', () => {
+    it('loads transfer evidence only for the selected relation', async () => {
+      const route = tokenRelationRoute({
+        tokenFromChain: 'ethereum',
+        tokenFromAddress: '0xaaa',
+        tokenToChain: 'base',
+        tokenToAddress: '0xbbb',
+        plugin: 'test-plugin',
+      })
+      const relation = {
+        ...route,
+        transfer: {
+          transferId: 'transfer-1',
+          srcTxHash: '0xsrc',
+          dstTxHash: '0xdst',
+        },
+      } satisfies TokenRelationRecord
+      const findRelation = mockFn().resolvesTo(relation)
+      const mockTokenDb = mockObject<TokenDatabase>({
+        tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
+          findByPrimaryKey: findRelation,
+        }),
+      })
+      const caller = createRouter(
+        mockTokenDb,
+        mockObject<Database>({}),
+        mockObject<CoingeckoClient>({}),
+      )
+
+      expect(await caller.getRelationsGraphRelationDetails(route)).toEqual(
+        relation,
+      )
+      expect(findRelation).toHaveBeenCalledWith(route)
+    })
+  })
+
   describe('getRelationsGraph', () => {
-    it('returns resolved relation endpoints and lightweight edges', async () => {
+    it('returns deployed relation endpoints and lightweight edges', async () => {
       const relations = [
         tokenRelationRoute({
           tokenFromChain: 'base',
@@ -249,12 +353,14 @@ describe('deployedTokensRouter', () => {
             chain: 'base',
             address: '0xbbb',
             symbol: 'USDC',
+            isDeployed: true,
           },
           {
             id: 'ethereum:0xaaa',
             chain: 'ethereum',
             address: '0xaaa',
             symbol: 'USDC',
+            isDeployed: true,
           },
         ],
         relations: relations.map((relation) => ({
@@ -269,7 +375,7 @@ describe('deployedTokensRouter', () => {
       ])
     })
 
-    it('skips unresolved relations and marks different abstract tokens as conflicts', async () => {
+    it('includes missing endpoints and marks different abstract tokens as conflicts', async () => {
       const conflict = tokenRelationRoute({
         tokenFromChain: 'ethereum',
         tokenFromAddress: '0xaaa',
@@ -320,16 +426,87 @@ describe('deployedTokensRouter', () => {
             chain: 'ethereum',
             address: '0xaaa',
             symbol: 'USDC',
+            isDeployed: true,
           },
           {
             id: 'base:0xbbb',
             chain: 'base',
             address: '0xbbb',
             symbol: 'USDC',
+            isDeployed: true,
+          },
+          {
+            id: 'optimism:0xccc',
+            chain: 'optimism',
+            address: '0xccc',
+            symbol: null,
+            isDeployed: false,
           },
         ],
-        relations: [{ ...conflict, isConflict: true }],
+        relations: [
+          { ...conflict, isConflict: true },
+          { ...unresolved, isConflict: false },
+        ],
       })
+    })
+
+    it('excludes bridge types the graph does not render', async () => {
+      const supported = tokenRelationRoute({
+        tokenFromChain: 'ethereum',
+        tokenFromAddress: '0xaaa',
+        tokenToChain: 'base',
+        tokenToAddress: '0xbbb',
+        plugin: 'supported',
+      })
+      const unsupported = {
+        ...tokenRelationRoute({
+          tokenFromChain: 'arbitrum',
+          tokenFromAddress: '0xccc',
+          tokenToChain: 'optimism',
+          tokenToAddress: '0xddd',
+          plugin: 'unsupported',
+        }),
+        bridgeType: 'nonMinting' as const,
+      }
+      const getTokens = mockFn().resolvesTo([])
+      const mockTokenDb = mockObject<TokenDatabase>({
+        tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
+          getAllRoutes: mockFn().resolvesTo([supported, unsupported]),
+        }),
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
+          getByPrimaryKeys: getTokens,
+        }),
+      })
+
+      const caller = createRouter(
+        mockTokenDb,
+        mockObject<Database>({}),
+        mockObject<CoingeckoClient>({}),
+      )
+
+      expect(await caller.getRelationsGraph()).toEqual({
+        nodes: [
+          {
+            id: 'ethereum:0xaaa',
+            chain: 'ethereum',
+            address: '0xaaa',
+            symbol: null,
+            isDeployed: false,
+          },
+          {
+            id: 'base:0xbbb',
+            chain: 'base',
+            address: '0xbbb',
+            symbol: null,
+            isDeployed: false,
+          },
+        ],
+        relations: [{ ...supported, isConflict: false }],
+      })
+      expect(getTokens).toHaveBeenCalledWith([
+        { chain: 'ethereum', address: '0xaaa' },
+        { chain: 'base', address: '0xbbb' },
+      ])
     })
   })
 

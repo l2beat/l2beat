@@ -248,35 +248,51 @@ read-time cost is the entire price paid for the foreign-key decision above.
 
 ## Relations graph
 
-The graph page in token-ui is a catalogue-level view of the relation
-observations. A node is a deployed token, identified by `(chain, address)`
-and labelled with the deployed token's symbol. A directed edge is an
-observed token relation; hovering it shows its endpoints, plugin, and
-bridge type. Node colors distinguish chains. Nodes can be dragged and the
-canvas can be panned or zoomed.
+The graph page in token-ui is a view of the relation observations resolved
+against the current token catalogue. Every observed `(chain, address)`
+endpoint is a node, including endpoints that do not yet have a
+`DeployedToken` row. Catalogued nodes are green and labelled with their
+deployed token symbol; uncatalogued nodes are orange and use a shortened
+address as their label. A directed edge is an observed token relation:
+burn-and-mint edges are blue and lock-and-mint edges are pink. Arrowheads
+preserve the observed `tokenFrom` to `tokenTo` direction for both bridge
+types. Nodes can be dragged and the canvas can be panned or zoomed.
 
 Before drawing, the UI treats every connected component as a cluster and
-sorts the clusters by deployed-token count (largest first, with a stable id
+sorts the clusters by endpoint count (largest first, with a stable id
 tie-break). Each cluster gets its own force simulation, which is run to
 completion in memory so clusters do not repel each other and users never see
 the graph settle. The finished clusters are placed left-to-right in a
 square-ish grid, starting at the top-left, then the whole grid is fitted into
-the viewport.
+the viewport. At low zoom levels each cluster is overlaid with its most common
+catalogued deployed-token symbol. The overlay stays a constant screen size as
+the graph scales, making cluster identities easier to scan when individual
+node labels are too small.
 
-Relations can exist before either endpoint is catalogued. The graph
-currently omits a relation unless both endpoints resolve to deployed
-tokens, and omits nodes left without a displayed relation. The observation
-stays in `TokenRelation` and can appear automatically once its missing
-endpoint is catalogued.
+Clicking a node keeps the node, its incoming/outgoing edges, and its neighbors
+prominent while dimming the rest of the graph. A non-modal details panel loads
+that one deployed token and its abstract token on demand; the initial graph
+payload does not contain full token records. The panel also lists the incoming
+and outgoing relations already present in the graph rather than issuing a
+second database query for the neighborhood. Uncatalogued nodes show their raw
+endpoint information instead of token details.
 
-An edge is red when both endpoints are assigned to abstract tokens and
-those abstract token IDs differ. This is a conflict between the observed
-non-swapping relation and the current catalogue assignments. An unassigned
-endpoint is not considered a conflict.
+Edges are independently hoverable and clickable. Clicking one highlights its
+two endpoints and loads only that relation's full transfer evidence, including
+source and destination transaction hashes used for explorer links. This keeps
+the evidence JSON out of the initial graph response.
 
-The graph query reads only relation identity fields. It deliberately
-excludes the full transfer evidence JSON used by deployed-token relation
-details, because the graph neither displays nor interprets that evidence.
+An edge is an assignment anomaly when both endpoints are assigned to abstract
+tokens and those abstract token IDs differ. An unassigned or uncatalogued
+endpoint is not considered an anomaly. The default view keeps the bridge-type
+colors and does not draw anomalies red. An anomaly switch changes conflicting
+edges to red and mutes other edges to gray, so anomaly inspection does not
+compete with the default bridge-mechanism view.
+
+The initial graph query reads only relation identity fields and the minimal
+endpoint display data. It deliberately excludes full deployed/abstract token
+records and the transfer evidence JSON; dedicated selection-time queries fetch
+one node or one relation detail record when requested.
 
 ## Human edits
 
