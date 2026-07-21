@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import { useTRPC } from '~/react-query/trpc'
 import { cn } from '~/utils/cn'
 import {
+  getExistingRelationGraphSelection,
   NODE_COLORS,
   RELATION_COLORS,
   type RelationGraph,
@@ -22,6 +23,20 @@ export function TokenRelationsGraphPage() {
   )
   const chainsQuery = useQuery(trpc.chains.getAll.queryOptions())
   const graph = graphQuery.data
+  const graphSelection =
+    graph === undefined
+      ? undefined
+      : getExistingRelationGraphSelection(graph, selection)
+
+  useEffect(() => {
+    if (
+      graph !== undefined &&
+      selection !== undefined &&
+      graphSelection === undefined
+    ) {
+      setSelection(undefined)
+    }
+  }, [graph, graphSelection, selection])
 
   return (
     <AppLayout className="min-h-svh">
@@ -59,16 +74,16 @@ export function TokenRelationsGraphPage() {
           ) : (
             <TokenRelationsGraph
               graph={graph}
-              selection={selection}
+              selection={graphSelection}
               highlightAnomalies={highlightAnomalies}
               onSelectionChange={setSelection}
             />
           )}
-          {graph && selection && (
+          {graph && graphSelection && (
             <TokenRelationsGraphDetailsPanel
               graph={graph}
               chains={chainsQuery.data ?? []}
-              selection={selection}
+              selection={graphSelection}
               highlightAnomalies={highlightAnomalies}
               onSelectionChange={setSelection}
               onClose={() => setSelection(undefined)}

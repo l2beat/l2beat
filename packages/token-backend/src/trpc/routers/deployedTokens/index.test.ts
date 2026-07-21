@@ -449,6 +449,65 @@ describe('deployedTokensRouter', () => {
         ],
       })
     })
+
+    it('excludes bridge types the graph does not render', async () => {
+      const supported = tokenRelationRoute({
+        tokenFromChain: 'ethereum',
+        tokenFromAddress: '0xaaa',
+        tokenToChain: 'base',
+        tokenToAddress: '0xbbb',
+        plugin: 'supported',
+      })
+      const unsupported = {
+        ...tokenRelationRoute({
+          tokenFromChain: 'arbitrum',
+          tokenFromAddress: '0xccc',
+          tokenToChain: 'optimism',
+          tokenToAddress: '0xddd',
+          plugin: 'unsupported',
+        }),
+        bridgeType: 'nonMinting' as const,
+      }
+      const getTokens = mockFn().resolvesTo([])
+      const mockTokenDb = mockObject<TokenDatabase>({
+        tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
+          getAllRoutes: mockFn().resolvesTo([supported, unsupported]),
+        }),
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
+          getByPrimaryKeys: getTokens,
+        }),
+      })
+
+      const caller = createRouter(
+        mockTokenDb,
+        mockObject<Database>({}),
+        mockObject<CoingeckoClient>({}),
+      )
+
+      expect(await caller.getRelationsGraph()).toEqual({
+        nodes: [
+          {
+            id: 'ethereum:0xaaa',
+            chain: 'ethereum',
+            address: '0xaaa',
+            symbol: null,
+            isDeployed: false,
+          },
+          {
+            id: 'base:0xbbb',
+            chain: 'base',
+            address: '0xbbb',
+            symbol: null,
+            isDeployed: false,
+          },
+        ],
+        relations: [{ ...supported, isConflict: false }],
+      })
+      expect(getTokens).toHaveBeenCalledWith([
+        { chain: 'ethereum', address: '0xaaa' },
+        { chain: 'base', address: '0xbbb' },
+      ])
+    })
   })
 
   describe('checks', () => {

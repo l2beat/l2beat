@@ -117,7 +117,9 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) =>
 
     getRelationsGraph: readOnlyProcedure.query(async ({ ctx }) => {
       const relations = sortRelations(
-        await ctx.tokenDb.tokenRelation.getAllRoutes(),
+        (await ctx.tokenDb.tokenRelation.getAllRoutes()).filter(
+          isGraphRelation,
+        ),
       )
       const tokenKeys = uniqueTokenKeys(
         relations.flatMap((relation) => [
@@ -219,6 +221,13 @@ function sortRelations<
           b.tokenToAddress,
         ].join(':'),
       ),
+  )
+}
+
+function isGraphRelation(relation: { bridgeType: string }): boolean {
+  return (
+    relation.bridgeType === 'burnAndMint' ||
+    relation.bridgeType === 'lockAndMint'
   )
 }
 

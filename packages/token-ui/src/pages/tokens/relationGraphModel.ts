@@ -126,6 +126,21 @@ export function getClusterLabelStyle(scale: number) {
   }
 }
 
+export function getExistingRelationGraphSelection(
+  graph: RelationGraph,
+  selection: RelationGraphSelection | undefined,
+): RelationGraphSelection | undefined {
+  if (selection === undefined) return undefined
+
+  const exists =
+    selection.type === 'node'
+      ? graph.nodes.some((node) => node.id === selection.id)
+      : graph.relations.some(
+          (relation) => relationId(relation) === selection.id,
+        )
+  return exists ? selection : undefined
+}
+
 function clusterLabelOpacity(scale: number) {
   if (scale <= CLUSTER_LABEL_FADE_OUT_SCALE) return 0
   if (scale < CLUSTER_LABEL_FULL_OPACITY_SCALE) {

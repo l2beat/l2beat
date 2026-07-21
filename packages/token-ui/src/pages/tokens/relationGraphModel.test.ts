@@ -1,6 +1,7 @@
 import { expect } from 'earl'
 import {
   getClusterLabelStyle,
+  getExistingRelationGraphSelection,
   getRelationGraphFocus,
   mostCommonDeployedSymbol,
   type RelationGraph,
@@ -61,23 +62,49 @@ describe(getClusterLabelStyle.name, () => {
   })
 })
 
-describe(getRelationGraphFocus.name, () => {
-  const relations = [
-    relation('ethereum', '0xaaa', 'base', '0xbbb', 'first'),
-    relation('ethereum', '0xaaa', 'optimism', '0xccc', 'second'),
-    relation('arbitrum', '0xddd', 'linea', '0xeee', 'unrelated'),
-  ]
-  const graph: RelationGraph = {
-    nodes: [
-      graphNode('ethereum', '0xaaa'),
-      graphNode('base', '0xbbb'),
-      graphNode('optimism', '0xccc'),
-      graphNode('arbitrum', '0xddd'),
-      graphNode('linea', '0xeee'),
-    ],
-    relations,
-  }
+const relations = [
+  relation('ethereum', '0xaaa', 'base', '0xbbb', 'first'),
+  relation('ethereum', '0xaaa', 'optimism', '0xccc', 'second'),
+  relation('arbitrum', '0xddd', 'linea', '0xeee', 'unrelated'),
+]
+const graph: RelationGraph = {
+  nodes: [
+    graphNode('ethereum', '0xaaa'),
+    graphNode('base', '0xbbb'),
+    graphNode('optimism', '0xccc'),
+    graphNode('arbitrum', '0xddd'),
+    graphNode('linea', '0xeee'),
+  ],
+  relations,
+}
 
+describe(getExistingRelationGraphSelection.name, () => {
+  it('keeps selections that exist in the graph', () => {
+    const selectedNode = graph.nodes[0]
+    if (selectedNode === undefined) throw new Error('Missing test node')
+    const selection = { type: 'node', id: selectedNode.id } as const
+    expect(getExistingRelationGraphSelection(graph, selection)).toEqual(
+      selection,
+    )
+  })
+
+  it('clears selections that no longer exist in the graph', () => {
+    expect(
+      getExistingRelationGraphSelection(graph, {
+        type: 'node',
+        id: 'missing:node',
+      }),
+    ).toEqual(undefined)
+    expect(
+      getExistingRelationGraphSelection(graph, {
+        type: 'relation',
+        id: 'missing:relation',
+      }),
+    ).toEqual(undefined)
+  })
+})
+
+describe(getRelationGraphFocus.name, () => {
   it('collects a selected node, its neighbors, and its incident relations', () => {
     const focus = requiredFocus(
       getRelationGraphFocus(graph, {
