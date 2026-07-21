@@ -968,7 +968,12 @@ export interface ProjectPrivacyInfo {
 
 export interface PrivacyExitWindow extends ExitWindowRisk {
   description: string
+  walkawayTest: PrivacyWalkawayTest
 }
+
+export type PrivacyWalkawayTest =
+  | { passed: true }
+  | { passed: false; reason: string }
 
 export interface PrivacySummaryValue extends TableReadyValue {
   description: string
