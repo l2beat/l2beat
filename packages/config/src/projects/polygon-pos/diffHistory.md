@@ -1,3 +1,34 @@
+Generated with discovered.json: 0xb5bb5746765c2dee75d2e4ff8881f0076e035496
+
+# Diff at Tue, 21 Jul 2026 08:56:45 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f20722ea086c21a6e3dedded355fc3e24528daf0 block: 1784274549
+- current timestamp: 1784624105
+
+## Description
+
+Add 4 signers to Multisig.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (eth:0x424bDE99FCfB68c5a1218fd3215caFfD031f19C4) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x9f02595fBFD199C4cBC02878fc9B2b2E07b0840C"
+      values.$members.1:
++        "eth:0x1319279d6d54dB0883F7bAF822191c7184Db0c3d"
+      values.$members.2:
++        "eth:0x6Ab87a62E250A5EB09a53Fca832B9Bda480c3890"
+      values.$members.3:
++        "eth:0x573D7a729cfcF20B81D70732d625Ae31549B8b91"
+      values.multisigThreshold:
+-        "4 of 10 (40%)"
++        "4 of 14 (29%)"
+    }
+```
+
 Generated with discovered.json: 0xc023a2c345d34755c8f4245b3685c9cdf9cad819
 
 # Diff at Fri, 17 Jul 2026 07:50:25 GMT:
