@@ -65,9 +65,8 @@ export function HomePage({
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
         <SideNavLayout
-          homepageLayout
+          variant="home"
           childrenWrapperClassName="max-md:bg-surface-primary"
-          contentAreaClassName="max-md:px-0 2xl:max-w-[1840px]"
         >
           <header className="flex items-center gap-4 pt-[18px] pb-5 max-lg:hidden">
             <h1 className="font-bold text-[26px]">Home</h1>
