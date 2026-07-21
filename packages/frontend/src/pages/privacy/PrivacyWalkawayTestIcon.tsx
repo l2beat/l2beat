@@ -1,8 +1,4 @@
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '~/components/core/tooltip/Tooltip'
+import { Callout } from '~/components/Callout'
 import { WalkAwayNotPassedIcon } from '~/icons/WalkAwayNotPassed'
 import { WalkAwayPassedIcon } from '~/icons/WalkAwayPassed'
 import { cn } from '~/utils/cn'
@@ -21,24 +17,32 @@ export function PrivacyWalkawayTestIcon({
   passed: boolean
   className?: string
 }) {
-  const tooltip = passed
-    ? PRIVACY_WALKAWAY_TEST_TOOLTIPS.passed
-    : PRIVACY_WALKAWAY_TEST_TOOLTIPS.notPassed
+  return passed ? (
+    <WalkAwayPassedIcon
+      className={cn('size-5 shrink-0 fill-positive', className)}
+    />
+  ) : (
+    <WalkAwayNotPassedIcon
+      className={cn('size-5 shrink-0 fill-negative', className)}
+    />
+  )
+}
 
+export function PrivacyWalkawayTestTooltipContent({
+  passed,
+}: {
+  passed: boolean
+}) {
   return (
-    <Tooltip>
-      <TooltipTrigger aria-label={tooltip} className="shrink-0">
-        {passed ? (
-          <WalkAwayPassedIcon
-            className={cn('size-5 fill-positive', className)}
-          />
-        ) : (
-          <WalkAwayNotPassedIcon
-            className={cn('size-5 fill-negative', className)}
-          />
-        )}
-      </TooltipTrigger>
-      <TooltipContent>{tooltip}</TooltipContent>
-    </Tooltip>
+    <Callout
+      className="mt-2 px-3 py-2"
+      color={passed ? 'green' : 'red'}
+      icon={<PrivacyWalkawayTestIcon passed={passed} />}
+      body={
+        passed
+          ? PRIVACY_WALKAWAY_TEST_TOOLTIPS.passed
+          : PRIVACY_WALKAWAY_TEST_TOOLTIPS.notPassed
+      }
+    />
   )
 }
