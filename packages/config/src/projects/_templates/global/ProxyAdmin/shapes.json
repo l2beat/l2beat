@@ -9,6 +9,11 @@
     "address": "eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019",
     "blockNumber": 22188285
   },
+  "ProxyAdmin_v5_0_0": {
+    "hash": "0xb54118700b2ea64a4223c8fc75eb11fed7e389c7f449594dc400155f40d44d06",
+    "address": "eth:0x4e393071053C5d95771b1B716857d65cdf5B1839",
+    "blockNumber": 25432046
+  },
   "ProxyAdmin_Blast": {
     "hash": "0x68f4fccce7d06f884dca696ec976dcdecc0c4b7a2eb20d8408b860132263d170",
     "address": "eth:0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
