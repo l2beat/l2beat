@@ -350,14 +350,21 @@ Verify:
 4. From the \`op-succinct\` dir run \`cargo run --bin config --release --features eigenda\` to print the verification key hashes.
     `,
   },
+  // Rise: vkeys don't match upstream v3.4.1 (fork-built). The game impl carrying
+  // them was deployed 2026-01-26 (tx 0xa5003e613391819cbc3bec61eb3ca1418758714dced3343ddb0efd1b4ab073b3);
+  // v3.4.1-rise.7 (2026-01-23) was the current fork tag at deployment and
+  // v3.4.1-rise.8 (2026-01-29) published different vkeys, bounding the build to
+  // rise.6/rise.7. Not reproduced locally, hence notVerified.
   '0x0061b26157718f96a20ea50c52a485dea3b6967139328dc7e07fece56f557bda': {
-    ...OP_SUCCINCT_FDP_AGG_EIGENDA(''), // Rise, exact version of their op-succinct fork unidentified
-    programUrl: 'https://github.com/risechain/op-succinct',
+    ...OP_SUCCINCT_FDP_AGG_EIGENDA('v3.4.1-rise.7'),
+    programUrl:
+      'https://github.com/risechain/op-succinct/tree/v3.4.1-rise.7/programs/aggregation',
     verificationStatus: 'notVerified',
   },
   '0x02850d082ab676631569bfa7057944a05f22f42c12ffa15b0ae30a6153dfe162': {
-    ...OP_SUCCINCT_FDP_RANGE_EIGENDA(''), // Rise, exact version of their op-succinct fork unidentified
-    programUrl: 'https://github.com/risechain/op-succinct',
+    ...OP_SUCCINCT_FDP_RANGE_EIGENDA('v3.4.1-rise.7'),
+    programUrl:
+      'https://github.com/risechain/op-succinct/tree/v3.4.1-rise.7/programs/range/eigenda',
     verificationStatus: 'notVerified',
   },
   '0x003991487ea72a40a1caa7c234b12c0da52fc4ccc748a07f6ebd354bbb54772e': {
