@@ -1,3 +1,92 @@
+Generated with discovered.json: 0x48c60344f53c58fd454008ac622d4423cae8ff53
+
+# Diff at Tue, 21 Jul 2026 15:40:47 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@fc28078e744c0eaf2d65858a6073cbf1fe48622d block: 1784286086
+- current timestamp: 1784648370
+
+## Description
+
+Security Council roster synced across L1 (Arbitrum Security Council) and L2 (L2SecurityCouncilEmergency + L2SecurityCouncilPropose, plus SecurityCouncilManager cohort update): 2 members added, 2 removed. Executes the batch scheduled on 2026-07-17.
+
+## Watched changes
+
+```diff
+    contract L2SecurityCouncilEmergency (arb1:0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641) [orbitstack/layer2/L2SecurityCouncilEmergency] {
+    +++ description: None
+      values.$members.0:
++        "arb1:0xEEFFd9041F8C4411C3Ad90310e61aDd65e0b7C1E"
+      values.$members.1:
++        "arb1:0xeEB8886c48490355D6473901E2C1Ea03f9cc8398"
+      values.$members.2:
+-        "arb1:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
+      values.$members.6:
+-        "arb1:0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D"
+    }
+```
+
+```diff
+    contract L2SecurityCouncilPropose (arb1:0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941) [orbitstack/layer2/L2SecurityCouncilPropose] {
+    +++ description: None
+      values.$members.0:
++        "arb1:0xEEFFd9041F8C4411C3Ad90310e61aDd65e0b7C1E"
+      values.$members.1:
++        "arb1:0xeEB8886c48490355D6473901E2C1Ea03f9cc8398"
+      values.$members.2:
+-        "arb1:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
+      values.$members.6:
+-        "arb1:0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D"
+    }
+```
+
+```diff
+    contract SecurityCouncilManager (arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) [orbitstack/layer2/SecurityCouncilManager] {
+    +++ description: This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: LOW
+      values.getBothCohorts.5:
+-        "arb1:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
++        "arb1:0xeEB8886c48490355D6473901E2C1Ea03f9cc8398"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: LOW
+      values.getBothCohorts.8:
+-        "arb1:0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D"
++        "arb1:0xBBD2E01eFB88ce00F8f5b6B9a696966070089392"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: LOW
+      values.getBothCohorts.11:
+-        "arb1:0xBBD2E01eFB88ce00F8f5b6B9a696966070089392"
++        "arb1:0xEEFFd9041F8C4411C3Ad90310e61aDd65e0b7C1E"
+      values.getFirstCohort.5:
+-        "arb1:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
++        "arb1:0xeEB8886c48490355D6473901E2C1Ea03f9cc8398"
+      values.getSecondCohort.2:
+-        "arb1:0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D"
++        "arb1:0xBBD2E01eFB88ce00F8f5b6B9a696966070089392"
+      values.getSecondCohort.5:
+-        "arb1:0xBBD2E01eFB88ce00F8f5b6B9a696966070089392"
++        "arb1:0xEEFFd9041F8C4411C3Ad90310e61aDd65e0b7C1E"
+      values.updateNonce:
+-        16
++        18
+    }
+```
+
+```diff
+    contract Arbitrum Security Council (eth:0xF06E95eF589D9c38af242a8AAee8375f14023F85) [orbitstack/SecurityCouncil] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xEEFFd9041F8C4411C3Ad90310e61aDd65e0b7C1E"
+      values.$members.1:
++        "eth:0xeEB8886c48490355D6473901E2C1Ea03f9cc8398"
+      values.$members.2:
+-        "eth:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
+      values.$members.6:
+-        "eth:0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D"
+    }
+```
+
 Generated with discovered.json: 0xea93195e8dd07d4c4b38d5939a37cb22d8e744fd
 
 # Diff at Fri, 17 Jul 2026 11:04:02 GMT:
