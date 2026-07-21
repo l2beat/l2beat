@@ -1,6 +1,5 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "category": "bridge-external",
   "description": "Shared access-control registry and upgrade beacon for Robinhood Stock Tokens. Its roles apply across every token implementation that points to this registry: they control upgrades, global and per-token pauses, the shared blocklist, issuance, arbitrary holder burns, metadata and UI multipliers.",
   "ignoreRelatives": ["implementation"],
   "fields": {

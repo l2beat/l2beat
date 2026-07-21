@@ -2391,8 +2391,7 @@
       "implementationNames": {
         "robinhood:0xd0601CE157Db5bdC3162BbaC2a2C8aF5320D9EEC": "BeaconProxy",
         "robinhood:0xb35490d6f9163DE4F80d88dc75c3516eb64C5aE2": "Stock"
-      },
-      "category": { "name": "External Bridges", "priority": 1 }
+      }
     },
     {
       "address": "robinhood:0xD6f8378F8e440c65F8382F5f2728c78DfD55B66d",
@@ -2722,8 +2721,7 @@
       },
       "implementationNames": {
         "robinhood:0xe10b6f6B275de231345c20D14Ab812db62151b00": "AccessControlsRegistry"
-      },
-      "category": { "name": "External Bridges", "priority": 1 }
+      }
     },
     {
       "address": "robinhood:0xe7BCB188254Bc6eBBfF63014DfED4cD4A024F22A",
