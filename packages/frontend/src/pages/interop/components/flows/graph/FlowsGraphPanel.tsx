@@ -4,6 +4,7 @@ import { Logo } from '~/components/Logo'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
 import { CursorClickIcon } from '~/icons/CursorClick'
 import type { InteropFlowsData } from '~/server/features/scaling/interop/getInteropFlows'
+import { cn } from '~/utils/cn'
 import type { InteropChainWithIcon } from '../../chain-selector/types'
 import { MIN_SELECTED_CHAINS, MIN_SELECTED_PROTOCOLS } from '../consts'
 import { FlowsGraph } from './FlowsGraph'
@@ -17,6 +18,7 @@ interface FlowsGraphPanelProps {
   isLoading: boolean
   baseDollarsPerParticle?: number
   topChainId?: string
+  className?: string
 }
 
 export function FlowsGraphPanel({
@@ -27,6 +29,7 @@ export function FlowsGraphPanel({
   isLoading,
   baseDollarsPerParticle,
   topChainId,
+  className,
 }: FlowsGraphPanelProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const { width, height } = useResizeObserver({ ref: containerRef })
@@ -36,7 +39,12 @@ export function FlowsGraphPanel({
   const isSmallScreen = size ? size <= 500 : false
 
   return (
-    <div className="flex min-h-0 w-full flex-1 flex-col items-center pb-10 max-lg:order-2">
+    <div
+      className={cn(
+        'flex min-h-0 w-full flex-1 flex-col items-center pb-10 max-lg:order-2',
+        className,
+      )}
+    >
       <div className="flex min-h-0 w-full min-w-0 flex-1 items-center justify-center">
         <div
           id="flows-graph"
@@ -97,5 +105,8 @@ function SelectionOverlay({ message }: { message: string }) {
 const RESIZE_STEP = 50
 
 function getSteppedSize(size: number) {
-  return Math.max(Math.round(size / RESIZE_STEP) * RESIZE_STEP, 350)
+  const stepped = Math.max(Math.round(size / RESIZE_STEP) * RESIZE_STEP, 350)
+  // Never exceed the container, otherwise the graph overflows the page
+  // horizontally on narrow screens.
+  return Math.min(stepped, Math.floor(size))
 }

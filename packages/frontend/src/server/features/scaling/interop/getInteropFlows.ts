@@ -76,7 +76,7 @@ interface FlowsStats {
   activeFlows: number
   tokenCount: number
   topTokens: TopItems<TokenData>
-  topRoute: { srcChain: string; dstChain: string } | undefined
+  topRoute: { srcChain: string; dstChain: string; volume: number } | undefined
   topChain: FlowChain | undefined
   topToken: FlowToken | undefined
   topProtocol: FlowProtocol | undefined
@@ -285,7 +285,11 @@ export async function getInteropFlows(
       tokenCount: summaryTokens.length,
       topTokens: getTopItems(summaryTokens, 5),
       topRoute: topFlow
-        ? { srcChain: topFlow.srcChain, dstChain: topFlow.dstChain }
+        ? {
+            srcChain: topFlow.srcChain,
+            dstChain: topFlow.dstChain,
+            volume: topFlow.volume,
+          }
         : undefined,
       topChain: topChain
         ? {
@@ -465,7 +469,11 @@ function getMockInteropFlows(): InteropFlowsData {
         remainingCount: 0,
       },
       topRoute: flows[0]
-        ? { srcChain: flows[0].srcChain, dstChain: flows[0].dstChain }
+        ? {
+            srcChain: flows[0].srcChain,
+            dstChain: flows[0].dstChain,
+            volume: flows[0].volume,
+          }
         : undefined,
       topChain: chainData[0]
         ? {

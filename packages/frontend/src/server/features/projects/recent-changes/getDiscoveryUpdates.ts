@@ -4,7 +4,7 @@ import {
   type DiffHistorySectionKind,
 } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import { existsSync, readFileSync } from 'fs'
+import { existsSync, readFileSync, statSync } from 'fs'
 import path from 'path'
 import {
   countDiffChanges,
@@ -41,6 +41,15 @@ const RECENT_UPDATES_WINDOW_SECONDS = 7 * 24 * 60 * 60
 
 const diffHistoryParser = new DiffHistoryParser()
 
+/**
+ * Parsing diffHistory.md is expensive and the overview fetcher calls this for
+ * every project on each render, so cache the full parse per file mtime.
+ */
+const parseCache = new Map<
+  string,
+  { mtimeMs: number; updates: DiscoveryUpdate[] }
+>()
+
 export function getDiscoveryUpdates(
   projectId: string,
   limit = DEFAULT_LIMIT,
@@ -49,12 +58,22 @@ export function getDiscoveryUpdates(
     return []
   }
 
-  const content = readDiffHistoryContent(projectId)
-  if (content === undefined) {
+  const diffHistoryPath = getDiffHistoryPath(projectId)
+  if (!existsSync(diffHistoryPath)) {
     return []
   }
 
-  return parseDiscoveryUpdates(content, limit)
+  const mtimeMs = statSync(diffHistoryPath).mtimeMs
+  const cached = parseCache.get(projectId)
+  if (cached && cached.mtimeMs === mtimeMs) {
+    return cached.updates.slice(0, limit)
+  }
+
+  const content = readFileSync(diffHistoryPath, 'utf-8')
+  const updates = parseDiscoveryUpdates(content, Number.POSITIVE_INFINITY)
+  parseCache.set(projectId, { mtimeMs, updates })
+
+  return updates.slice(0, limit)
 }
 
 export function parseDiscoveryUpdates(
@@ -87,19 +106,13 @@ export function countRecentDiscoveryUpdates(
   ).length
 }
 
-function readDiffHistoryContent(projectId: string): string | undefined {
-  const diffHistoryPath = path.join(
+function getDiffHistoryPath(projectId: string): string {
+  return path.join(
     process.cwd(),
     '../config/src/projects',
     projectId,
     'diffHistory.md',
   )
-
-  if (!existsSync(diffHistoryPath)) {
-    return undefined
-  }
-
-  return readFileSync(diffHistoryPath, 'utf-8')
 }
 
 function toPublicDiscoveryUpdate(

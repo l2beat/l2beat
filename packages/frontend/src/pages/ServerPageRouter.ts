@@ -13,6 +13,7 @@ import { createEcosystemsRouter } from './ecosystems/EcosystemsRouter'
 import { createFaqRouter } from './faq/FaqRouter'
 import { createGlossaryRouter } from './glossary/GlossaryRouter'
 import { createGovernanceRouter } from './governance/GovernanceRouter'
+import { createHomeRouter } from './home/HomeRouter'
 import { createInteropRouter } from './interop/InteropRouter'
 import { createMultisigReportRouter } from './multisig-report/MutlisigReportRouter'
 import { createNativeRollupsRouter } from './native-rollups/NativeRollupsRouter'
@@ -40,11 +41,8 @@ export function createServerPageRouter(
     next()
   })
 
-  router.get('/', (_req, res) => {
-    res.redirect(301, '/scaling/summary')
-  })
-
   const routers = [
+    createHomeRouter,
     createScalingRouter,
     createInteropRouter,
     createDataAvailabilityRouter,

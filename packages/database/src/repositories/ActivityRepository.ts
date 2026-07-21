@@ -170,8 +170,53 @@ export class ActivityRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getMaxCountsForProjects() {
-    const uopsSubquery = this.db
+  /**
+   * Sums counts across projects per timestamp in the database instead of
+   * returning raw per-project rows — use when only the aggregate series is
+   * needed (e.g. sparkline charts).
+   */
+  async getSummedByTimestamp(
+    projectIds: ProjectId[],
+    timeRange: [UnixTime | null, UnixTime],
+  ): Promise<{ timestamp: UnixTime; count: number; uopsCount: number }[]> {
+    if (projectIds.length === 0) return []
+
+    const [from, to] = timeRange
+    let query = this.db
+      .selectFrom('Activity')
+      .where(
+        'projectId',
+        'in',
+        projectIds.map((p) => p.toString()),
+      )
+      .where('timestamp', '<=', UnixTime.toDate(to))
+      .select('timestamp')
+      .select((eb) => eb.fn.sum('count').as('count'))
+      .select((eb) =>
+        eb.fn
+          .sum(eb.fn.coalesce('Activity.uopsCount', 'Activity.count'))
+          .as('uopsCount'),
+      )
+      .groupBy('timestamp')
+      .orderBy('timestamp', 'asc')
+
+    if (from !== null) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(from))
+    }
+
+    const rows = await query.execute()
+
+    return rows.map((row) => ({
+      timestamp: UnixTime.fromDate(row.timestamp),
+      count: Number(row.count),
+      uopsCount: Number(row.uopsCount),
+    }))
+  }
+
+  async getMaxCountsForProjects(projectIds?: ProjectId[]) {
+    if (projectIds && projectIds.length === 0) return {}
+
+    let uopsSubqueryBase = this.db
       .selectFrom('Activity')
       .select([
         'projectId',
@@ -181,9 +226,17 @@ export class ActivityRepository extends BaseRepository {
             .as('max_uops_count'),
       ])
       .groupBy('projectId')
-      .as('t2')
 
-    const rows = await this.db
+    if (projectIds) {
+      uopsSubqueryBase = uopsSubqueryBase.where(
+        'projectId',
+        'in',
+        projectIds.map((p) => p.toString()),
+      )
+    }
+    const uopsSubquery = uopsSubqueryBase.as('t2')
+
+    let query = this.db
       .selectFrom('Activity as t1')
       .innerJoin(uopsSubquery, (join) =>
         join
@@ -211,7 +264,16 @@ export class ActivityRepository extends BaseRepository {
         'count_table.count as max_count',
         'count_table.timestamp as count_timestamp',
       ])
-      .execute()
+
+    if (projectIds) {
+      query = query.where(
+        't1.projectId',
+        'in',
+        projectIds.map((p) => p.toString()),
+      )
+    }
+
+    const rows = await query.execute()
 
     return Object.fromEntries(
       rows.map((row) => [
