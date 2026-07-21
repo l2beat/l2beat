@@ -1,3 +1,4 @@
+import type { PrivacyWalkawayTest } from '@l2beat/config'
 import { Callout } from '~/components/Callout'
 import { WalkAwayNotPassedIcon } from '~/icons/WalkAwayNotPassed'
 import { WalkAwayPassedIcon } from '~/icons/WalkAwayPassed'
@@ -29,19 +30,24 @@ export function PrivacyWalkawayTestIcon({
 }
 
 export function PrivacyWalkawayTestTooltipContent({
-  passed,
+  walkawayTest,
 }: {
-  passed: boolean
+  walkawayTest: PrivacyWalkawayTest
 }) {
   return (
     <Callout
       className="mt-2 px-3 py-2"
-      color={passed ? 'green' : 'red'}
-      icon={<PrivacyWalkawayTestIcon passed={passed} />}
+      color={walkawayTest.passed ? 'green' : 'red'}
+      icon={<PrivacyWalkawayTestIcon passed={walkawayTest.passed} />}
       body={
-        passed
-          ? PRIVACY_WALKAWAY_TEST_TOOLTIPS.passed
-          : PRIVACY_WALKAWAY_TEST_TOOLTIPS.notPassed
+        walkawayTest.passed ? (
+          PRIVACY_WALKAWAY_TEST_TOOLTIPS.passed
+        ) : (
+          <div className="flex flex-col gap-1">
+            <span>{PRIVACY_WALKAWAY_TEST_TOOLTIPS.notPassed}</span>
+            <span>{walkawayTest.reason}</span>
+          </div>
+        )
       }
     />
   )

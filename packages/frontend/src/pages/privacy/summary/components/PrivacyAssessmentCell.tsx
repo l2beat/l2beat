@@ -1,4 +1,8 @@
-import type { PrivacyExitWindow, PrivacySummaryValue } from '@l2beat/config'
+import type {
+  PrivacyExitWindow,
+  PrivacySummaryValue,
+  PrivacyWalkawayTest,
+} from '@l2beat/config'
 import {
   Tooltip,
   TooltipContent,
@@ -18,11 +22,11 @@ type PrivacyAssessmentValue = PrivacyExitWindow | PrivacySummaryValue
 export function PrivacyAssessmentCell({
   value,
   showValue = false,
-  isWalkawayTestPassed,
+  walkawayTest,
 }: {
   value: PrivacyAssessmentValue
   showValue?: boolean
-  isWalkawayTestPassed?: boolean
+  walkawayTest?: PrivacyWalkawayTest
 }) {
   return (
     <Tooltip>
@@ -39,9 +43,9 @@ export function PrivacyAssessmentCell({
             size="sm"
             className="shrink-0"
           />
-          {isWalkawayTestPassed !== undefined && (
+          {walkawayTest && (
             <PrivacyWalkawayTestIcon
-              passed={isWalkawayTestPassed}
+              passed={walkawayTest.passed}
               className="-right-6 -translate-y-1/2 absolute top-1/2"
             />
           )}
@@ -54,8 +58,8 @@ export function PrivacyAssessmentCell({
       </TooltipTrigger>
       <TooltipContent className="max-w-[320px]">
         <ProjectRiskTooltipContent risk={value} variant="table" />
-        {isWalkawayTestPassed !== undefined && (
-          <PrivacyWalkawayTestTooltipContent passed={isWalkawayTestPassed} />
+        {walkawayTest && (
+          <PrivacyWalkawayTestTooltipContent walkawayTest={walkawayTest} />
         )}
       </TooltipContent>
     </Tooltip>

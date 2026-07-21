@@ -171,7 +171,9 @@ export const zamaCw: BaseProject = {
       orderHint: 0,
       description:
         'The confidential token contracts and system contracts are upgradeable without an onchain delay, so users do not get a guaranteed withdrawal window before changes take effect.',
-      isWalkawayTestPassed: false,
+      walkawayTest: {
+        passed: false,
+      },
     },
     reproducibility: {
       value: 'Partially reproducible',

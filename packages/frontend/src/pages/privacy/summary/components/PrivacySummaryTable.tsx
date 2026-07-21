@@ -193,7 +193,7 @@ const columns = [
       <PrivacyAssessmentCell
         value={ctx.row.original.exitWindow}
         showValue
-        isWalkawayTestPassed={ctx.row.original.exitWindow.isWalkawayTestPassed}
+        walkawayTest={ctx.row.original.exitWindow.walkawayTest}
       />
     ),
     sortDescFirst: true,
