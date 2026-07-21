@@ -5,7 +5,6 @@ import type { HomeEthereumCharts } from '~/server/features/home/getHomeEthereumC
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { formatBytes } from '~/utils/number-format/formatBytes'
-import { computeSparklineChange } from '../utils/computeSparklineChange'
 import { HomeSparkline } from './charts/HomeSparkline'
 import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'
@@ -49,8 +48,8 @@ export function HomeEthereumCard({ charts }: Props) {
 
   const pastDayUops = charts.activity.pastDayUops
   const rollupShare = charts.da.trackedShare
-  const uopsChange = computeSparklineChange(activitySparkline)
-  const dataPostedChange = computeSparklineChange(dataPostedSparkline)
+  const uopsChange = charts.activity.change
+  const dataPostedChange = charts.da.change
 
   return (
     <HomeCard className="flex h-full flex-col pb-4 xl:py-4">

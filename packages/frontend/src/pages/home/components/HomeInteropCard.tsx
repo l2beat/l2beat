@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import type { ReactNode } from 'react'
+import { type ReactNode, useMemo } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { EM_DASH } from '~/consts/characters'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
@@ -66,10 +66,14 @@ function HomeInteropCardContent({
     ),
   )
 
-  const activeIds = new Set<string>(
-    (data?.chainData ?? [])
-      .filter((chain) => chain.totalVolume > 0)
-      .map((chain) => chain.chainId),
+  const activeIds = useMemo(
+    () =>
+      new Set<string>(
+        (data?.chainData ?? [])
+          .filter((chain) => chain.totalVolume > 0)
+          .map((chain) => chain.chainId),
+      ),
+    [data?.chainData],
   )
 
   const visibleHighlightedChains = isLoading
@@ -77,32 +81,38 @@ function HomeInteropCardContent({
     : highlightedChains.filter((chainId) => activeIds.has(chainId))
   const hasSelection = visibleHighlightedChains.length > 0
 
-  const selectedChainsWithIcons = interopChains.filter((chain) =>
-    selectedChains.includes(chain.id),
+  const activeChains = useMemo(
+    () =>
+      interopChains.filter(
+        (chain) => selectedChains.includes(chain.id) && activeIds.has(chain.id),
+      ),
+    [interopChains, selectedChains, activeIds],
   )
-  const activeChains = selectedChainsWithIcons.filter((chain) =>
-    activeIds.has(chain.id),
-  )
-
-  const totalVolume = data?.flows.reduce((acc, flow) => acc + flow.volume, 0)
 
   const stats = data?.stats
+  const totalVolume = stats?.totalVolume
+  const { topChainData, topChainShare, srcChain, dstChain } = useMemo(() => {
+    const topChain = stats?.topChain
+    const topRoute = stats?.topRoute
+    return {
+      topChainData: topChain
+        ? allChains.find((c) => c.id === topChain.chainId)
+        : undefined,
+      topChainShare:
+        topChain && stats?.totalVolume
+          ? topChain.totalVolume / stats.totalVolume
+          : 0,
+      srcChain: topRoute
+        ? allChains.find((c) => c.id === topRoute.srcChain)
+        : undefined,
+      dstChain: topRoute
+        ? allChains.find((c) => c.id === topRoute.dstChain)
+        : undefined,
+    }
+  }, [stats, allChains])
   const topChain = stats?.topChain
-  const topChainData = topChain
-    ? allChains.find((c) => c.id === topChain.chainId)
-    : undefined
-  const topChainShare =
-    topChain && stats?.totalVolume
-      ? topChain.totalVolume / stats.totalVolume
-      : 0
   const topToken = stats?.topToken
   const topRoute = stats?.topRoute
-  const srcChain = topRoute
-    ? allChains.find((c) => c.id === topRoute.srcChain)
-    : undefined
-  const dstChain = topRoute
-    ? allChains.find((c) => c.id === topRoute.dstChain)
-    : undefined
 
   const statsLoading = isLoading && data === undefined
 

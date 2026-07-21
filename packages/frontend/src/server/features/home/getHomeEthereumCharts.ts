@@ -6,6 +6,7 @@ import type { ChartRange } from '~/utils/range/range'
 import { countPerSecond } from '../scaling/activity/utils/countPerSecond'
 import { getActivitySyncInfo } from '../scaling/activity/utils/getActivitySyncInfo'
 import { getFullySyncedActivityRange } from '../scaling/activity/utils/getFullySyncedActivityRange'
+import { computeSeriesChange } from './computeSeriesChange'
 
 export interface HomeEthereumCharts {
   activity: {
@@ -14,6 +15,8 @@ export interface HomeEthereumCharts {
     syncedUntil: number
     /** Past day UOPS per second, for the stat next to the sparkline. */
     pastDayUops: number | undefined
+    /** Relative change of the series over the chart range. */
+    change: number | undefined
   }
   da: {
     /** [timestamp, bytes] — data posted per day */
@@ -21,6 +24,8 @@ export interface HomeEthereumCharts {
     syncedUntil: number
     /** Share of the latest day's data posted by tracked projects. */
     trackedShare: number | undefined
+    /** Relative change of the series over the chart range. */
+    change: number | undefined
   }
 }
 
@@ -60,6 +65,7 @@ async function getEthereumActivitySparkline(
       chart: [],
       syncedUntil: adjustedRange[1],
       pastDayUops: undefined,
+      change: undefined,
     }
   }
 
@@ -87,6 +93,7 @@ async function getEthereumActivitySparkline(
     syncedUntil,
     pastDayUops:
       pastDayCount !== undefined ? countPerSecond(pastDayCount) : undefined,
+    change: computeSeriesChange(chart.map(([_, value]) => value)),
   }
 }
 
@@ -103,7 +110,12 @@ async function getEthereumDaSparkline(
   )
 
   if (totalRecords.length === 0) {
-    return { chart: [], syncedUntil: range[1], trackedShare: undefined }
+    return {
+      chart: [],
+      syncedUntil: range[1],
+      trackedShare: undefined,
+      change: undefined,
+    }
   }
 
   const totalByDay = new Map<number, number>()
@@ -116,7 +128,12 @@ async function getEthereumDaSparkline(
   const firstDay = days[0]
   const lastDay = days[days.length - 1]
   if (firstDay === undefined || lastDay === undefined) {
-    return { chart: [], syncedUntil: range[1], trackedShare: undefined }
+    return {
+      chart: [],
+      syncedUntil: range[1],
+      trackedShare: undefined,
+      change: undefined,
+    }
   }
 
   const chart: [number, number | null][] = generateTimestamps(
@@ -143,6 +160,7 @@ async function getEthereumDaSparkline(
     chart,
     syncedUntil: totalRecords[totalRecords.length - 1]?.timestamp ?? lastDay,
     trackedShare,
+    change: computeSeriesChange(chart.map(([_, value]) => value)),
   }
 }
 
@@ -155,11 +173,13 @@ function getMockHomeEthereumCharts(range: ChartRange): HomeEthereumCharts {
       chart: timestamps.map((timestamp) => [+timestamp, 950_400]),
       syncedUntil: adjustedRange[1],
       pastDayUops: 11,
+      change: 0,
     },
     da: {
       chart: timestamps.map((timestamp) => [+timestamp, 250_000_000_000]),
       syncedUntil: adjustedRange[1],
       trackedShare: 0.87,
+      change: 0,
     },
   }
 }

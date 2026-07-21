@@ -8,17 +8,22 @@ import { getFullySyncedActivityRange } from '../scaling/activity/utils/getFullyS
 import { getSummedTvsValues } from '../scaling/tvs/utils/getSummedTvsValues'
 import { getTvsProjects } from '../scaling/tvs/utils/getTvsProjects'
 import { createTvsProjectsFilter } from '../scaling/tvs/utils/projectFilterUtils'
+import { computeSeriesChange } from './computeSeriesChange'
 
 export interface HomeScalingCharts {
   /** [timestamp, rollups, validiumsAndOptimiums] */
   tvs: {
     chart: [number, number | null, number | null][]
     syncedUntil: number
+    /** Relative change of the summed series over the chart range. */
+    change: number | undefined
   }
   /** [timestamp, rollupsUopsCount, validiumsAndOptimiumsUopsCount] */
   activity: {
     chart: [number, number | null, number | null][]
     syncedUntil: number
+    /** Relative change of the summed series over the chart range. */
+    change: number | undefined
   }
 }
 
@@ -94,7 +99,7 @@ async function getHomeTvsChart(
     chart.findLast(([_, r, v]) => r !== null || v !== null)?.[0] ??
     UnixTime.now()
 
-  return { chart, syncedUntil }
+  return { chart, syncedUntil, change: computeSummedSeriesChange(chart) }
 }
 
 async function getHomeActivityChart(
@@ -146,7 +151,21 @@ async function getHomeActivityChart(
       vAndOUops,
     ])
 
-  return { chart, syncedUntil: adjustedRange[1] }
+  return {
+    chart,
+    syncedUntil: adjustedRange[1],
+    change: computeSummedSeriesChange(chart),
+  }
+}
+
+function computeSummedSeriesChange(
+  chart: [number, number | null, number | null][],
+): number | undefined {
+  return computeSeriesChange(
+    chart.map(([_, rollups, vAndO]) =>
+      rollups !== null || vAndO !== null ? (rollups ?? 0) + (vAndO ?? 0) : null,
+    ),
+  )
 }
 
 function getMockHomeScalingCharts(range: ChartRange): HomeScalingCharts {
@@ -157,10 +176,12 @@ function getMockHomeScalingCharts(range: ChartRange): HomeScalingCharts {
     tvs: {
       chart: timestamps.map((timestamp) => [+timestamp, 3000, 2000]),
       syncedUntil: adjustedRange[1],
+      change: 0,
     },
     activity: {
       chart: timestamps.map((timestamp) => [+timestamp, 14000, 10000]),
       syncedUntil: adjustedRange[1],
+      change: 0,
     },
   }
 }

@@ -6,7 +6,6 @@ import { cn } from '~/utils/cn'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
-import { computeSparklineChange } from '../utils/computeSparklineChange'
 import type { HomeSparklineDataPoint } from './charts/HomeSparkline'
 import { HomeSparkline } from './charts/HomeSparkline'
 import { HomeCard } from './HomeCard'
@@ -44,16 +43,10 @@ export function HomeScalingCard({ charts, scalingCategoryCounts }: Props) {
     [charts.tvs.chart],
   )
 
-  const tvsStats = useMemo(() => {
-    const withData = tvsChartData.filter((d) => d.value !== null)
-    const first = withData.at(0)
-    const last = withData.at(-1)
-    if (!first || !last || first.value === null || last.value === null) {
-      return undefined
-    }
-    const change = first.value === 0 ? 0 : last.value / first.value - 1
-    return { total: last.value, change }
-  }, [tvsChartData])
+  const latestTvs = useMemo(
+    () => tvsChartData.findLast((d) => d.value !== null)?.value ?? undefined,
+    [tvsChartData],
+  )
 
   const activitySparkline = useMemo(
     () =>
@@ -73,11 +66,6 @@ export function HomeScalingCard({ charts, scalingCategoryCounts }: Props) {
     return last?.value ?? undefined
   }, [activitySparkline])
 
-  const activityUopsChange = useMemo(
-    () => computeSparklineChange(activitySparkline),
-    [activitySparkline],
-  )
-
   return (
     <HomeCard className="flex h-full flex-col pb-4 xl:py-4">
       <div className="flex flex-col gap-2.5">
@@ -92,11 +80,11 @@ export function HomeScalingCard({ charts, scalingCategoryCounts }: Props) {
             <HomeStatValue
               isLoading={false}
               value={
-                tvsStats !== undefined
-                  ? formatCurrency(tvsStats.total, 'usd')
+                latestTvs !== undefined
+                  ? formatCurrency(latestTvs, 'usd')
                   : undefined
               }
-              change={tvsStats?.change}
+              change={charts.tvs.change}
             />
           }
         >
@@ -119,7 +107,7 @@ export function HomeScalingCard({ charts, scalingCategoryCounts }: Props) {
                   ? `${formatActivityCount(pastDayActivityUops)} UOPS`
                   : undefined
               }
-              change={activityUopsChange}
+              change={charts.activity.change}
             />
           }
         >
