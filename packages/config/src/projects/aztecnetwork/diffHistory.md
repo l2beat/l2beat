@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x0346938a2615d99eda2e2a0258121efa05014fd2
+
+# Diff at Tue, 21 Jul 2026 08:50:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f20722ea086c21a6e3dedded355fc3e24528daf0 block: 1784111155
+- current timestamp: 1784623722
+
+## Description
+
+Slashing vetoed for 3d (will be extended to cover payloads targeting epochs until incl. july 21 10pm).
+
+Reason: The grace period after the v5 upgrade was miscommunicated to be 1 week while it was actually 1 day only.
+
+## Watched changes
+
+```diff
+    contract Slasher (eth:0xCD6855470A01aBcd989126A1183Fb50673952548) [aztecnetwork/Slasher] {
+    +++ description: Executes payload actions submitted by the authorized slashing proposer or Governance. Execution is blocked while slashing is disabled or when the vetoer has vetoed the payload; voting and execution-delay rules are enforced by the proposer, while Governance can bypass the proposer.
++++ description: Whether slash payload execution is currently enabled.
+      values.isSlashingEnabled:
+-        true
++        false
++++ description: Timestamp until which slash payload execution is disabled.
+      values.slashingDisabledUntil:
+-        0
++        1784800907
+    }
+```
+
 Generated with discovered.json: 0x467ebd7439da328770b5b8a8eb9a5e19dfbedfde
 
 # Diff at Wed, 15 Jul 2026 14:36:45 GMT:

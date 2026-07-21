@@ -1,3 +1,34 @@
+Generated with discovered.json: 0x3764918832c27dab005c4d053470bd707a605edd
+
+# Diff at Tue, 21 Jul 2026 08:43:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f20722ea086c21a6e3dedded355fc3e24528daf0 block: 1784270104
+- current timestamp: 1784623318
+
+## Description
+
+4 multisig signers added.
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0xFA58659F64a393A6E1A548ABc70Ad2CfE1e8f9Cb) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x9f02595fBFD199C4cBC02878fc9B2b2E07b0840C"
+      values.$members.1:
++        "eth:0x1319279d6d54dB0883F7bAF822191c7184Db0c3d"
+      values.$members.2:
++        "eth:0x6Ab87a62E250A5EB09a53Fca832B9Bda480c3890"
+      values.$members.3:
++        "eth:0x573D7a729cfcF20B81D70732d625Ae31549B8b91"
+      values.multisigThreshold:
+-        "2 of 6 (33%)"
++        "2 of 10 (20%)"
+    }
+```
+
 Generated with discovered.json: 0x895a031da67f7bef95be8dd5a12869edd4b7c915
 
 # Diff at Fri, 17 Jul 2026 07:35:16 GMT:
