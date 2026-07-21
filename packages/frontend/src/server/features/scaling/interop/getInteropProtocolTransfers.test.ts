@@ -34,6 +34,7 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
         ],
       ]),
       new Map(),
+      { name: 'Across', href: '/interop/protocols/across' },
     )
 
     expect(result).toEqual({
@@ -50,6 +51,7 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
       dstTokenIssuer: null,
       dstTokenIconUrl: TOKEN_PLACEHOLDER_ICON_URL,
       valueUsd: 12.34,
+      bridge: { name: 'Across', href: '/interop/protocols/across' },
       duration: 60,
       srcChain: 'Ethereum',
       srcChainIconUrl: '/icons/ethereum.png',
@@ -89,6 +91,7 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
           { symbol: 'ETH', iconUrl: 'https://token/eth.png', issuer: null },
         ],
       ]),
+      { name: 'Across', href: '/interop/protocols/across' },
     )
 
     expect(result.srcTxHashHref).toEqual('https://etherscan.io/tx/0xsrc')
@@ -123,6 +126,7 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
         ],
       ]),
       new Map(),
+      { name: 'Across', href: '/interop/protocols/across' },
     )
 
     expect(result.srcTxHash).toEqual(undefined)

@@ -8,11 +8,13 @@ import type {
   InteropProtocolTransferDetailsItem,
   InteropProtocolTransfersParams,
   InteropProtocolTransfersResponse,
+  InteropTransferBridge,
 } from './types'
 import {
   buildTokensDetailsMap,
   type TokensDetailsMap,
 } from './utils/buildTokensDetailsMap'
+import { createTransferBridgeResolver } from './utils/createTransferBridgeResolver'
 import { getAbstractTokenIds } from './utils/getAbstractTokenIds'
 import { getFilteredInteropTransfersPage } from './utils/getFilteredInteropTransfersPage'
 import { getMockInteropTransfers } from './utils/getMockInteropTransfers'
@@ -77,12 +79,14 @@ export async function getInteropProtocolTransfers({
   const tokensDetailsMap = await buildTokensDetailsMap(
     getAbstractTokenIds(result.items),
   )
+  const resolveTransferBridge = createTransferBridgeResolver(interopProjects)
   return {
     items: result.items.map((transfer) =>
       toInteropProtocolTransferDetailsItem(
         transfer,
         INTEROP_CHAIN_DETAILS,
         tokensDetailsMap,
+        resolveTransferBridge(transfer),
       ),
     ),
     nextCursor: result.nextCursor,
@@ -93,6 +97,7 @@ export function toInteropProtocolTransferDetailsItem(
   transfer: InteropTransferRecord,
   chainDetailsById: Map<string, InteropChainDetails>,
   tokensDetailsMap: TokensDetailsMap,
+  bridge: InteropTransferBridge,
 ): InteropProtocolTransferDetailsItem {
   const srcDetails = chainDetailsById.get(transfer.srcChain)
   const dstDetails = chainDetailsById.get(transfer.dstChain)
@@ -131,6 +136,7 @@ export function toInteropProtocolTransferDetailsItem(
       tokensDetailsMap,
     ),
     valueUsd: transfer.srcValueUsd ?? transfer.dstValueUsd,
+    bridge,
     duration: transfer.duration,
     srcChain: srcDetails?.name ?? transfer.srcChain,
     srcChainIconUrl: srcDetails?.iconUrl,

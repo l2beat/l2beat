@@ -101,6 +101,25 @@ export function getTransferColumns(selectedChains?: InteropSelection) {
         tooltip: 'The USD value of the transfer.',
       },
     }),
+    columnHelper.accessor('bridge', {
+      header: 'Bridge',
+      enableSorting: false,
+      cell: (ctx) => {
+        const { bridge } = ctx.row.original
+        return (
+          <a
+            href={bridge.href}
+            className="font-medium text-label-value-14 text-link hover:underline"
+          >
+            {bridge.name}
+          </a>
+        )
+      },
+      meta: {
+        headClassName: 'text-2xs',
+        tooltip: 'The interoperability protocol used for the transfer.',
+      },
+    }),
     columnHelper.accessor('duration', {
       header: 'Transfer time',
       enableSorting: false,
