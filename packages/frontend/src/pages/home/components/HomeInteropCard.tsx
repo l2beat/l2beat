@@ -212,9 +212,10 @@ function HomeInteropCardContent({
           className="pb-2"
         />
       </div>
-      {/* Always reserve the bottom panel so the graph doesn't jump when a
-          chain is (de)selected. */}
-      <div className="mt-4">
+      {/* Always reserve the bottom panel height (min-h matches the tallest
+          selected-path state) so the graph doesn't jump when a chain is
+          (de)selected. */}
+      <div className="mt-4 flex min-h-[180px] flex-col">
         {hasSelection && data ? (
           <HomeInteropSelectedPath
             data={data}
@@ -223,7 +224,7 @@ function HomeInteropCardContent({
             visibleHighlightedChains={visibleHighlightedChains}
           />
         ) : (
-          <div className="flex items-center justify-center rounded-lg bg-surface-secondary p-4 dark:bg-header-secondary">
+          <div className="flex flex-1 items-center justify-center rounded-lg bg-surface-secondary p-4 dark:bg-header-secondary">
             <SelectInfo
               highlightedChainsNumber={visibleHighlightedChains.length}
             />
