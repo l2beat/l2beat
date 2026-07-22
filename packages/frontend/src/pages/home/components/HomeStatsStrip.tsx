@@ -99,7 +99,7 @@ function StatTile({ tile }: { tile: Tile }) {
     >
       <div
         className={cn(
-          'flex size-8 shrink-0 items-center justify-center rounded-md transition-transform duration-200 group-hover:scale-110 xl:size-7 xl:rounded [&>svg]:xl:size-4',
+          'flex size-6 shrink-0 items-center justify-center rounded-md transition-transform duration-200 group-hover:scale-110 xl:size-7 xl:rounded [&>svg]:xl:size-4',
           tile.iconBgClassName,
         )}
       >
