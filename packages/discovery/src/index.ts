@@ -38,6 +38,8 @@ export {
 export { hashJsonStable } from './discovery/config/hashJsonStable'
 export {
   BasePermissionEntries,
+  ImpactCategories,
+  type ImpactCategory,
   Permission,
 } from './discovery/config/PermissionConfig'
 export {

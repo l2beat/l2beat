@@ -122,22 +122,21 @@
       "id": "marketRateUnderstatesPrimaryPrice",
       "inputs": [{ "field": "rEthEthOracle", "effect": "value.understated" }],
       "output": "price.primary.understated",
-      "description": "The primary price uses the lower of the market rETH/ETH input and the canonical rate, so an understated market input lowers the result.",
-      "mitigation": "An overstated market input alone is capped by the canonical rate."
+      "description": "The primary price uses the lower of the market rETH/ETH input and the canonical rate, so an understated market input lowers the result."
     },
     {
       "id": "marketRateUnderstatesRedemptionPrice",
       "inputs": [{ "field": "rEthEthOracle", "effect": "value.understated" }],
       "output": "price.redemption.understated",
       "description": "For redemptions, a market rate more than 2% below the canonical rate becomes the lower input and lowers the result.",
-      "mitigation": "Within the 2% deviation window the redemption calculation uses the higher input."
+      "limitation": "Within the 2% deviation window the redemption calculation uses the higher input."
     },
     {
       "id": "marketRateCanBoundedlyOverstateRedemptionPrice",
       "inputs": [{ "field": "rEthEthOracle", "effect": "value.overstated" }],
       "output": "price.redemption.overstated",
       "description": "For redemptions, an overstated market rate can raise the result only while it remains within 2% of the canonical rate.",
-      "mitigation": "Outside that deviation window the calculation uses the lower of the market and canonical rates."
+      "limitation": "Outside that deviation window the calculation uses the lower of the market and canonical rates."
     },
     {
       "id": "canonicalRateUnderstatesPrimaryPrice",
@@ -162,7 +161,7 @@
       ],
       "output": "price.redemption.overstated",
       "description": "For redemptions, an overstated canonical rate can raise the result only while it remains within 2% of the market rate.",
-      "mitigation": "Outside that deviation window the calculation uses the lower of the market and canonical rates."
+      "limitation": "Outside that deviation window the calculation uses the lower of the market and canonical rates."
     },
     {
       "id": "bothRatesOverstatePrimaryPrice",
@@ -178,14 +177,14 @@
       "inputs": [{ "field": "ethUsdOracle", "effect": "value.unavailable" }],
       "output": "branch.shutdown.requested",
       "description": "A reverting or non-positive ETH/USD read, or an answer older than {{ ethUsdStaleness }}, makes this contract signal branch shutdown and permanently use its last recorded good price.",
-      "mitigation": "The input is checked for call success, a positive answer, and freshness before it is accepted."
+      "limitation": "The input is checked for call success, a positive answer, and freshness before it is accepted."
     },
     {
       "id": "marketRateFailureRequestsShutdown",
       "inputs": [{ "field": "rEthEthOracle", "effect": "value.unavailable" }],
       "output": "branch.shutdown.requested",
       "description": "A reverting or non-positive rETH/ETH read, or an answer older than {{ rEthEthStaleness }}, makes this contract signal branch shutdown and switch to ETH/USD multiplied by the canonical rate, never increasing above the last recorded good price.",
-      "mitigation": "The fallback no longer depends on the failed market rETH/ETH input."
+      "limitation": "The fallback no longer depends on the failed market rETH/ETH input."
     },
     {
       "id": "canonicalRateFailureRequestsShutdown",

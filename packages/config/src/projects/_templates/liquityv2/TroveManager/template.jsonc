@@ -101,6 +101,7 @@
       "output": "impact.liquidation.delayed",
       "description": "This contract uses the PriceFeed's primary price to compute each trove's collateral ratio when determining whether it is below the liquidation threshold.",
       "impact": "Troves that are below the configured liquidation threshold at the correct price can remain unliquidated.",
+      "categories": ["funds-can-lose-value"],
       "terminal": true
     },
     {
@@ -111,6 +112,7 @@
       "output": "impact.liquidation.healthyTroves",
       "description": "This contract uses the PriceFeed's primary price to compute each trove's collateral ratio when determining whether it is below the liquidation threshold.",
       "impact": "Troves that are healthy at the correct price can become liquidatable.",
+      "categories": ["funds-can-be-stolen"],
       "terminal": true
     },
     {
@@ -121,6 +123,7 @@
       "output": "impact.redemption.underpaid",
       "description": "This contract uses the PriceFeed's redemption price to calculate how much collateral is exchanged for redeemed BOLD.",
       "impact": "Redeemers can receive less collateral than they would at the correct price.",
+      "categories": ["funds-can-lose-value"],
       "terminal": true
     },
     {
@@ -131,6 +134,7 @@
       "output": "impact.redemption.excessCollateral",
       "description": "This contract uses the PriceFeed's redemption price to calculate how much collateral is exchanged for redeemed BOLD.",
       "impact": "Redemptions can remove excess collateral from troves compared with the correct price.",
+      "categories": ["funds-can-be-stolen"],
       "terminal": true
     },
     {
@@ -144,7 +148,20 @@
       "output": "impact.redemption.urgentMode",
       "description": "Shutdown records the current timestamp and makes urgent redemption available through this contract.",
       "impact": "BOLD holders can redeem against chosen troves in urgent mode using the PriceFeed's shutdown price and receive the configured {{ urgentRedemptionBonus }}% collateral bonus.",
-      "mitigation": "Urgent redemption remains available to clear branch debt after normal borrower operations stop.",
+      "categories": ["funds-can-lose-value"],
+      "terminal": true
+    },
+    {
+      "id": "urgentRedemptionsCanClearDebtAfterShutdown",
+      "inputs": [
+        {
+          "field": "borrowerOperations",
+          "effect": "branch.shutdown.active"
+        }
+      ],
+      "output": "protection.redemption.debtClearance",
+      "description": "Shutdown makes urgent redemption available through this contract.",
+      "protection": "Urgent redemption remains available to clear branch debt after normal borrower operations stop.",
       "terminal": true
     }
   ]

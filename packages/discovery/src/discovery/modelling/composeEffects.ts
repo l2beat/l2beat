@@ -1,4 +1,5 @@
 import { createHash } from 'crypto'
+import type { ImpactCategory } from '../config/PermissionConfig'
 
 /** A component-local effect. The pair is its identity in the effect graph. */
 export interface EffectKey {
@@ -15,7 +16,9 @@ export interface EffectKey {
 export interface LocalEffectFragment {
   description?: string
   impact?: string
-  mitigation?: string
+  categories?: ImpactCategory[]
+  limitation?: string
+  protection?: string
 }
 
 /**

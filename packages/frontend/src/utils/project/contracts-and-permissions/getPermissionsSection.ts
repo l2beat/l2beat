@@ -210,6 +210,14 @@ function toTechnologyContract(
       chain: permission.chain,
       description: permission.description,
       impactScenarios: permission.impactScenarios,
+      permissionOrigins: permission.permissionOrigins?.map((origin) => {
+        const projectId =
+          origin.type === 'project' ? projectParams.id : origin.projectId
+        const project = projectId
+          ? contractUtils.getProject(projectId.toString())
+          : undefined
+        return project === undefined ? origin : { ...origin, project }
+      }),
       participants,
       references: permission.references ?? [],
       impactfulChange,

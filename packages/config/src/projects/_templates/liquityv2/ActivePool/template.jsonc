@@ -21,6 +21,7 @@
       "output": "impact.interest.stopped",
       "description": "The TroveManager sets this pool's shutdown timestamp as part of branch shutdown; aggregate interest calculations return no further interest after that timestamp.",
       "impact": "Borrower interest and the corresponding Stability Pool and InterestRouter yield stop accruing for this branch.",
+      "categories": ["yield-can-stop"],
       "terminal": true
     }
   ]

@@ -13,9 +13,9 @@
           "effect": "branch.shutdown.active"
         }
       ],
-      "output": "mitigation.collateralSurplus.claims",
+      "output": "protection.collateralSurplus.claims",
       "description": "After branch shutdown, this contract continues to hold liquidation-surplus balances that owners claim through BorrowerOperations.",
-      "mitigation": "Collateral credited as liquidation surplus remains claimable through BorrowerOperations after branch shutdown.",
+      "protection": "Collateral credited as liquidation surplus remains claimable through BorrowerOperations after branch shutdown.",
       "terminal": true
     }
   ]

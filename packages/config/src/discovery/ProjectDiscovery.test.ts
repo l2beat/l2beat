@@ -309,6 +309,11 @@ describe(ProjectDiscovery.name, () => {
                   },
                 ],
               },
+              {
+                permission: 'interact' as const,
+                from: dependencyTarget,
+                description: 'manage the dependency input.',
+              },
             ],
           },
         },
@@ -366,10 +371,19 @@ describe(ProjectDiscovery.name, () => {
       expect(actors[0].description).toInclude(
         'provide the input consumed by the project',
       )
+      expect(actors[0].description).toInclude('manage the dependency input')
       expect(actors[0].description).toInclude('External actor details.')
       expect(actors[0].description).not.toInclude(
         'Unrelated dependency permission.',
       )
+      expect(actors[0].permissionOrigins).toEqual([
+        { type: 'project' },
+        {
+          type: 'dependency',
+          name: 'dependency',
+          projectId: 'dependency',
+        },
+      ])
     })
 
     it('shows modeled capabilities only inside their impact scenarios', () => {
@@ -479,6 +493,7 @@ describe(ProjectDiscovery.name, () => {
       expect(
         actors[0].impactScenarios?.[0]?.capabilities[0]?.descriptions,
       ).toEqual([modeledCapability])
+      expect(actors[0].permissionOrigins).toEqual([{ type: 'project' }])
     })
 
     it('groups instances of one impact rule without grouping matching prose from another rule', () => {
@@ -577,7 +592,7 @@ describe(ProjectDiscovery.name, () => {
                 inputs: [{ address: oracle, effect: 'value.wrong' }],
                 output: 'exit.guarded',
                 description: 'The oracle guards the exit path.',
-                mitigation: 'Out-of-bounds values cannot block the exit path.',
+                limitation: 'Out-of-bounds values cannot block the exit path.',
               },
               {
                 ruleId: 'remaining-protection',
@@ -589,7 +604,7 @@ describe(ProjectDiscovery.name, () => {
                 inputs: [{ address: oracle, effect: 'exit.guarded' }],
                 output: 'protection.exit.available',
                 description: 'The consumer keeps its exit path available.',
-                mitigation: 'Users can still exit through ConsumerA.',
+                protection: 'Users can still exit through ConsumerA.',
               },
             ],
             terminals: [
@@ -654,10 +669,7 @@ describe(ProjectDiscovery.name, () => {
       expect(protections[0]?.description).toEqual(
         'Users can still exit through ConsumerA.',
       )
-      expect(protections[0]?.paths[0]?.mitigation).toEqual(
-        'Users can still exit through ConsumerA.',
-      )
-      expect(protections[0]?.paths[0]?.inputs[0]?.mitigation).toEqual(
+      expect(protections[0]?.paths[0]?.inputs[0]?.limitation).toEqual(
         'Out-of-bounds values cannot block the exit path.',
       )
     })
@@ -835,7 +847,8 @@ describe(ProjectDiscovery.name, () => {
                 output: 'value.overstated',
                 description: 'The aggregator accepts the report.',
                 impact: 'A false price can be reported.',
-                mitigation: 'The configured threshold is required.',
+                categories: ['funds-can-be-stolen' as const],
+                limitation: 'The configured threshold is required.',
               },
             ],
             terminals: [{ address: aggregator, effect: 'value.overstated' }],
@@ -908,6 +921,13 @@ describe(ProjectDiscovery.name, () => {
         'OracleAdmin can replace the members',
       )
       expect(actors[0].description).not.toInclude('authorize reports')
+      expect(actors[0].permissionOrigins).toEqual([
+        {
+          type: 'dependency',
+          name: 'dependency',
+          projectId: 'dependency',
+        },
+      ])
       const impactId = actors[0].impactScenarios?.[0]?.impacts[0]?.id
       assert(impactId !== undefined)
       expect(impactId.startsWith('0x')).toEqual(true)
@@ -927,13 +947,14 @@ describe(ProjectDiscovery.name, () => {
               id: impactId,
               components: ['ETH_USD_Aggregator'],
               description: 'A false price can be reported.',
-              mitigation: 'The configured threshold is required.',
+              categories: ['funds-can-be-stolen'],
+              limitation: 'The configured threshold is required.',
               paths: [
                 {
                   component: 'ETH_USD_Aggregator',
                   effect: 'value.overstated',
                   description: 'The aggregator accepts the report.',
-                  mitigation: 'The configured threshold is required.',
+                  limitation: 'The configured threshold is required.',
                   inputs: [
                     {
                       component: 'ETH_USD_Aggregator',

@@ -8,6 +8,13 @@ export interface ContractUtils {
   getChainName(chain: string): string
 
   getUsedIn(chain: string, address: EthereumAddress | string): UsedInProject[]
+
+  getProject(projectId: string): ProjectReference | undefined
+}
+
+export interface ProjectReference {
+  name: string
+  icon: string
 }
 
 let contractUtils: ContractUtils | undefined
@@ -17,12 +24,16 @@ export async function getContractUtils(): Promise<ContractUtils> {
     return contractUtils
   }
 
-  const [chainNameMap, usageMap] = await Promise.all([
+  const [chainNameMap, contractData] = await Promise.all([
     getChainNameMap(),
-    getContractUsageMap(),
+    getContractData(),
   ])
 
-  contractUtils = createContractUtils(chainNameMap, usageMap)
+  contractUtils = createContractUtils(
+    chainNameMap,
+    contractData.usageMap,
+    contractData.projectMap,
+  )
   return contractUtils
 }
 
@@ -35,8 +46,9 @@ async function getChainNameMap() {
   return chainNameMap
 }
 
-async function getContractUsageMap() {
+async function getContractData() {
   const usageMap = new Map<string, Map<EthereumAddress, UsedInProject[]>>()
+  const projectMap = new Map<string, ProjectReference>()
   function addUsage(
     chain: string,
     address: EthereumAddress,
@@ -76,6 +88,7 @@ async function getContractUsageMap() {
       icon: manifest.getUrl(`/icons/${project.slug}.png`),
       url,
     }
+    projectMap.set(project.id, { name: project.name, icon: basic.icon })
 
     for (const chain in project.contracts.addresses) {
       for (const contract of project.contracts.addresses[chain] ?? []) {
@@ -114,12 +127,13 @@ async function getContractUsageMap() {
     }
   }
 
-  return usageMap
+  return { usageMap, projectMap }
 }
 
 function createContractUtils(
   chainNameMap: Map<string, string>,
   usageMap: Map<string, Map<EthereumAddress | string, UsedInProject[]>>,
+  projectMap: Map<string, ProjectReference>,
 ): ContractUtils {
   return {
     getChainName(chain) {
@@ -131,6 +145,9 @@ function createContractUtils(
     },
     getUsedIn(chain, address) {
       return usageMap.get(chain)?.get(address) ?? []
+    },
+    getProject(projectId) {
+      return projectMap.get(projectId)
     },
   }
 }

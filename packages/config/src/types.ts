@@ -1,3 +1,4 @@
+import type { ImpactCategory } from '@l2beat/discovery'
 import type { RetryHandlerVariant, TrackedTxConfigEntry } from '@l2beat/shared'
 import {
   type ChainSpecificAddress,
@@ -1280,6 +1281,8 @@ export interface ProjectPermission {
   description: string
   /** Mechanically composed impact proofs derived from discovery */
   impactScenarios?: ProjectPermissionImpactScenario[]
+  /** Where the permissioned capabilities controlled by this actor originate. */
+  permissionOrigins?: ProjectPermissionOrigin[]
   /** Name of the chain of this address. Optional for backwards compatibility */
   chain: string
   /** List of source code permalinks and useful materials */
@@ -1289,6 +1292,10 @@ export interface ProjectPermission {
   /** Indicates whether the generation of contained data was driven by discovery */
   discoveryDrivenData?: boolean
 }
+
+export type ProjectPermissionOrigin =
+  | { type: 'project' }
+  | { type: 'dependency'; name: string; projectId?: string }
 
 export interface ProjectPermissionImpactScenario {
   id: string
@@ -1303,7 +1310,8 @@ export interface ProjectPermissionImpactScenario {
     id: string
     components: string[]
     description: string
-    mitigation?: string
+    categories: ImpactCategory[]
+    limitation?: string
     paths: ProjectPermissionImpactTrace[]
   }[]
   protections: {
@@ -1319,7 +1327,7 @@ export interface ProjectPermissionImpactTrace {
   component: string
   effect: string
   description?: string
-  mitigation?: string
+  limitation?: string
   inputs: ProjectPermissionImpactTrace[]
 }
 

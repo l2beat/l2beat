@@ -234,7 +234,7 @@ function addPermissionEffects(
     const fragment = interpolateFragment(
       {
         description: effect.description,
-        mitigation: effect.mitigation,
+        limitation: effect.limitation,
       },
       entry,
     )
@@ -271,13 +271,41 @@ function resolveEffectRules(
         `Effect rule "${rule.id}" on ${contract.entry.name ?? contract.entry.address} defines an impact but is not terminal`,
       )
     }
+    if (rule.categories !== undefined && rule.impact === undefined) {
+      throw new Error(
+        `Effect rule "${rule.id}" on ${contract.entry.name ?? contract.entry.address} defines impact categories but no impact`,
+      )
+    }
+    if (rule.categories?.length === 0) {
+      throw new Error(
+        `Effect rule "${rule.id}" on ${contract.entry.name ?? contract.entry.address} defines an empty impact category list`,
+      )
+    }
+    if (
+      rule.categories !== undefined &&
+      new Set(rule.categories).size !== rule.categories.length
+    ) {
+      throw new Error(
+        `Effect rule "${rule.id}" on ${contract.entry.name ?? contract.entry.address} defines duplicate impact categories`,
+      )
+    }
+    if (rule.protection !== undefined && !rule.terminal) {
+      throw new Error(
+        `Effect rule "${rule.id}" on ${contract.entry.name ?? contract.entry.address} defines a protection but is not terminal`,
+      )
+    }
+    if (rule.impact !== undefined && rule.protection !== undefined) {
+      throw new Error(
+        `Terminal effect rule "${rule.id}" on ${contract.entry.name ?? contract.entry.address} cannot define both an impact and a protection`,
+      )
+    }
     if (
       rule.terminal &&
       rule.impact === undefined &&
-      rule.mitigation === undefined
+      rule.protection === undefined
     ) {
       throw new Error(
-        `Terminal effect rule "${rule.id}" on ${contract.entry.name ?? contract.entry.address} must define an impact or mitigation`,
+        `Terminal effect rule "${rule.id}" on ${contract.entry.name ?? contract.entry.address} must define an impact or protection`,
       )
     }
 
@@ -314,7 +342,9 @@ function resolveEffectRules(
         {
           description: rule.description,
           impact: rule.impact,
-          mitigation: rule.mitigation,
+          categories: rule.categories,
+          limitation: rule.limitation,
+          protection: rule.protection,
         },
         contract.entry,
       )
@@ -409,7 +439,7 @@ function resolveBlackBoxAssumptions(
           const fragment = interpolateFragment(
             {
               description: effect.description,
-              mitigation: effect.mitigation,
+              limitation: effect.limitation,
             },
             contract.entry,
           )
@@ -613,7 +643,9 @@ function interpolateFragment(
   const result = {
     description: interpolateString(fragment.description, entry),
     impact: interpolateString(fragment.impact, entry),
-    mitigation: interpolateString(fragment.mitigation, entry),
+    categories: fragment.categories,
+    limitation: interpolateString(fragment.limitation, entry),
+    protection: interpolateString(fragment.protection, entry),
   }
   return Object.values(result).some((value) => value !== undefined)
     ? result

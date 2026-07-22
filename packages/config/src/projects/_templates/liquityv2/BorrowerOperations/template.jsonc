@@ -106,6 +106,7 @@
       "output": "impact.borrowing.unsafe",
       "description": "This contract uses the PriceFeed's primary price to calculate individual collateral ratios and the branch total collateral ratio when enforcing MCR, CCR, and SCR checks.",
       "impact": "Borrowers can draw more BOLD or withdraw more collateral than the configured MCR, CCR, and SCR checks would permit at the correct price.",
+      "categories": ["funds-can-be-stolen", "funds-can-lose-value"],
       "terminal": true
     },
     {
@@ -116,6 +117,7 @@
       "output": "impact.borrowing.restricted",
       "description": "This contract uses the PriceFeed's primary price to calculate individual collateral ratios and the branch total collateral ratio when enforcing MCR, CCR, and SCR checks.",
       "impact": "Otherwise valid trove openings and adjustments can be rejected, and the branch can appear to cross its restricted-mode or shutdown thresholds.",
+      "categories": ["users-can-be-censored"],
       "terminal": true
     },
     {
@@ -126,7 +128,15 @@
       "output": "branch.shutdown.active",
       "description": "This contract accepts the shutdown signal only from its configured PriceFeed, records the shutdown, settles aggregate interest once, and tells the TroveManager to shut down.",
       "impact": "The branch can no longer open troves or perform borrower operations guarded by the live-branch check.",
-      "mitigation": "Trove closure and collateral-surplus claims remain available after shutdown.",
+      "categories": ["users-can-be-censored"],
+      "terminal": true
+    },
+    {
+      "id": "preserveTroveClosureAfterShutdown",
+      "inputs": [{ "effect": "branch.shutdown.active" }],
+      "output": "protection.troveClosure.available",
+      "description": "Branch shutdown does not disable trove closure through this contract.",
+      "protection": "Trove closure remains available after branch shutdown.",
       "terminal": true
     }
   ]

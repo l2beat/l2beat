@@ -100,6 +100,7 @@ describe(resolveImpactScenarios.name, () => {
       template: 'ConsumerTemplate',
       id: 'consumeOverstatedValue',
     })
+    expect(result?.[0]?.steps[0]?.categories).toEqual(['funds-can-lose-value'])
     expect(result?.[0]?.paths).toEqual([
       {
         terminal: {
@@ -249,7 +250,7 @@ describe(resolveImpactScenarios.name, () => {
     )
   })
 
-  it('requires every terminal rule to expose an impact or mitigation', () => {
+  it('requires every terminal rule to expose an impact or protection', () => {
     const projects = [
       project([{ type: 'Contract', address: consumer, name: 'Consumer' }], {
         overrides: {
@@ -276,7 +277,171 @@ describe(resolveImpactScenarios.name, () => {
         {} as TemplateService,
       ),
     ).toThrow(
-      'Terminal effect rule "unexplainedTerminal" on Consumer must define an impact or mitigation',
+      'Terminal effect rule "unexplainedTerminal" on Consumer must define an impact or protection',
+    )
+  })
+
+  it('rejects a protection on a nonterminal rule', () => {
+    const projects = [
+      project([{ type: 'Contract', address: consumer, name: 'Consumer' }], {
+        overrides: {
+          [consumer]: {
+            fields: {},
+            effectRules: [
+              {
+                id: 'hiddenProtection',
+                inputs: [{ effect: 'input' }],
+                output: 'output',
+                description: 'Transform the input locally.',
+                protection: 'Users retain an exit.',
+                terminal: false,
+              },
+            ],
+          },
+        },
+      }),
+    ]
+
+    expect(() =>
+      resolveImpactScenarios(
+        projects,
+        permissionsOutput([]),
+        {} as TemplateService,
+      ),
+    ).toThrow(
+      'Effect rule "hiddenProtection" on Consumer defines a protection but is not terminal',
+    )
+  })
+
+  it('keeps impact and protection terminals separate', () => {
+    const projects = [
+      project([{ type: 'Contract', address: consumer, name: 'Consumer' }], {
+        overrides: {
+          [consumer]: {
+            fields: {},
+            effectRules: [
+              {
+                id: 'ambiguousTerminal',
+                inputs: [{ effect: 'input' }],
+                output: 'output',
+                description: 'Transform the input locally.',
+                impact: 'Users are harmed.',
+                protection: 'Users retain an exit.',
+                terminal: true,
+              },
+            ],
+          },
+        },
+      }),
+    ]
+
+    expect(() =>
+      resolveImpactScenarios(
+        projects,
+        permissionsOutput([]),
+        {} as TemplateService,
+      ),
+    ).toThrow(
+      'Terminal effect rule "ambiguousTerminal" on Consumer cannot define both an impact and a protection',
+    )
+  })
+
+  it('requires impact categories to classify an impact', () => {
+    const projects = [
+      project([{ type: 'Contract', address: consumer, name: 'Consumer' }], {
+        overrides: {
+          [consumer]: {
+            fields: {},
+            effectRules: [
+              {
+                id: 'misplacedCategories',
+                inputs: [{ effect: 'input' }],
+                output: 'output',
+                description: 'Transform the input locally.',
+                categories: ['funds-can-be-frozen'],
+                protection: 'Users retain an exit.',
+                terminal: true,
+              },
+            ],
+          },
+        },
+      }),
+    ]
+
+    expect(() =>
+      resolveImpactScenarios(
+        projects,
+        permissionsOutput([]),
+        {} as TemplateService,
+      ),
+    ).toThrow(
+      'Effect rule "misplacedCategories" on Consumer defines impact categories but no impact',
+    )
+  })
+
+  it('rejects duplicate impact categories', () => {
+    const projects = [
+      project([{ type: 'Contract', address: consumer, name: 'Consumer' }], {
+        overrides: {
+          [consumer]: {
+            fields: {},
+            effectRules: [
+              {
+                id: 'duplicateCategories',
+                inputs: [{ effect: 'input' }],
+                output: 'output',
+                description: 'Transform the input locally.',
+                impact: 'Users are harmed.',
+                categories: ['funds-can-lose-value', 'funds-can-lose-value'],
+                terminal: true,
+              },
+            ],
+          },
+        },
+      }),
+    ]
+
+    expect(() =>
+      resolveImpactScenarios(
+        projects,
+        permissionsOutput([]),
+        {} as TemplateService,
+      ),
+    ).toThrow(
+      'Effect rule "duplicateCategories" on Consumer defines duplicate impact categories',
+    )
+  })
+
+  it('rejects an empty impact category list', () => {
+    const projects = [
+      project([{ type: 'Contract', address: consumer, name: 'Consumer' }], {
+        overrides: {
+          [consumer]: {
+            fields: {},
+            effectRules: [
+              {
+                id: 'emptyCategories',
+                inputs: [{ effect: 'input' }],
+                output: 'output',
+                description: 'Transform the input locally.',
+                impact: 'Users are harmed.',
+                categories: [],
+                terminal: true,
+              },
+            ],
+          },
+        },
+      }),
+    ]
+
+    expect(() =>
+      resolveImpactScenarios(
+        projects,
+        permissionsOutput([]),
+        {} as TemplateService,
+      ),
+    ).toThrow(
+      'Effect rule "emptyCategories" on Consumer defines an empty impact category list',
     )
   })
 
@@ -305,6 +470,7 @@ describe(resolveImpactScenarios.name, () => {
           output: 'impact.consumer.changed',
           description: 'The consumer uses the dependency value.',
           impact: 'The consumer is affected.',
+          categories: ['funds-can-lose-value'],
           terminal: true,
         },
       ],

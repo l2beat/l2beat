@@ -103,19 +103,19 @@ export const liquityv2: BaseProject = {
     {
       project: ProjectId('chainlink'),
       description:
-        'Impact: Chainlink controls the market-price inputs used by every branch; a plausible wrong answer can cause unsafe borrowing, missed or wrongful liquidations, and incorrect redemptions, while a stale, non-positive, or reverting answer shuts affected branches down. Mitigation: Liquity applies input-specific staleness checks, LST cross-checks, and shutdown fallbacks. The exact Chainlink admin and signer-quorum paths are analyzed in Permissions below.',
+        'Impact: Chainlink controls the market-price inputs used by every branch; a plausible wrong answer can cause unsafe borrowing, missed or wrongful liquidations, and incorrect redemptions, while a stale, non-positive, or reverting answer shuts affected branches down. Limitations: Liquity applies input-specific staleness checks, LST cross-checks, and shutdown fallbacks, but these do not fully prevent the impacts above. The exact Chainlink admin and signer-quorum paths are analyzed in Permissions below.',
     },
     {
       name: 'Rocket Pool rETH',
       icon: 'reth',
       description:
-        "Impact: Rocket Pool is treated as a black box. If rETH loses its backing or becomes inaccessible, the rETH branch can accrue bad debt; a wrong canonical rETH/ETH rate can underprice collateral, and a reverting or non-positive rate shuts the branch down. Mitigation: Liquity isolates rETH in its own branch, caps upward market-feed manipulation by using the lower of Chainlink's rETH/ETH price and the canonical rate, and retains closure, claims, and Stability Pool withdrawals after shutdown. These mechanisms cannot restore value to failed rETH collateral.",
+        "Impact: Rocket Pool is treated as a black box. If rETH loses its backing or becomes inaccessible, the rETH branch can accrue bad debt; a wrong canonical rETH/ETH rate can underprice collateral, and a reverting or non-positive rate shuts the branch down. Limitations and remaining protections: Liquity isolates rETH in its own branch, caps upward market-feed manipulation by using the lower of Chainlink's rETH/ETH price and the canonical rate, and retains closure, claims, and Stability Pool withdrawals after shutdown. These mechanisms cannot restore value to failed rETH collateral.",
     },
     {
       name: 'Lido wstETH',
       icon: 'wsteth',
       description:
-        'Impact: Lido is treated as a black box. If wstETH loses its backing or becomes inaccessible, the wstETH branch can accrue bad debt; a wrong canonical wstETH/stETH rate directly misprices collateral, and a reverting or non-positive rate shuts the branch down. Mitigation: Liquity isolates wstETH in its own branch and retains closure, claims, and Stability Pool withdrawals after shutdown, but it has no independent source with which to validate the canonical rate or restore value to failed wstETH collateral.',
+        'Impact: Lido is treated as a black box. If wstETH loses its backing or becomes inaccessible, the wstETH branch can accrue bad debt; a wrong canonical wstETH/stETH rate directly misprices collateral, and a reverting or non-positive rate shuts the branch down. Limitations and remaining protections: Liquity isolates wstETH in its own branch and retains closure, claims, and Stability Pool withdrawals after shutdown, but it has no independent source with which to validate the canonical rate or restore value to failed wstETH collateral.',
     },
   ],
   permissions: discovery.getDiscoveredPermissions(),

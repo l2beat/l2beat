@@ -31,7 +31,7 @@ describe(composeEffects.name, () => {
           output,
           fragment: {
             impact: 'The returned collateral price is scaled incorrectly.',
-            mitigation: 'Non-positive answers are rejected.',
+            limitation: 'Non-positive answers are rejected.',
           },
         },
       ],
@@ -39,7 +39,10 @@ describe(composeEffects.name, () => {
         {
           id: 'borrowing-impact',
           effect: output,
-          fragment: { impact: 'Borrowing checks use the wrong price.' },
+          fragment: {
+            impact: 'Borrowing checks use the wrong price.',
+            categories: ['funds-can-be-stolen'],
+          },
         },
       ],
     })
@@ -58,13 +61,14 @@ describe(composeEffects.name, () => {
         id: 'scale-answer',
         effect: output,
         impact: 'The returned collateral price is scaled incorrectly.',
-        mitigation: 'Non-positive answers are rejected.',
+        limitation: 'Non-positive answers are rejected.',
       },
       {
         type: 'terminal',
         id: 'borrowing-impact',
         effect: output,
         impact: 'Borrowing checks use the wrong price.',
+        categories: ['funds-can-be-stolen'],
       },
     ])
   })
@@ -105,6 +109,51 @@ describe(composeEffects.name, () => {
       ['safe', 'transmitters'],
       ['safe', 'signers'],
       ['signers', 'transmitters'],
+    ])
+  })
+
+  it('keeps combined limitations attached to their individual path nodes', () => {
+    const sourceEffect = effect('oracle', 'bounded wrong answer')
+    const intermediateEffect = effect('price-feed', 'bounded wrong price')
+    const terminalEffect = effect('borrower-operations', 'unsafe borrowing')
+
+    const result = composeEffects({
+      sources: [
+        {
+          id: 'oracle-controller',
+          effect: sourceEffect,
+          principals: ['controller'],
+          fragment: {
+            limitation: 'The oracle enforces fixed min/max answer bounds.',
+          },
+        },
+      ],
+      rules: [
+        {
+          id: 'price-feed-check',
+          inputs: [sourceEffect],
+          output: intermediateEffect,
+          fragment: {
+            limitation: 'The price feed rejects non-positive answers.',
+          },
+        },
+        {
+          id: 'borrowing-impact',
+          inputs: [intermediateEffect],
+          output: terminalEffect,
+          fragment: { impact: 'Borrowing checks use the wrong price.' },
+        },
+      ],
+      terminals: [{ id: 'unsafe-borrowing', effect: terminalEffect }],
+    })
+
+    expect(
+      result.terminals[0]?.fragments
+        .map((fragment) => fragment.limitation)
+        .filter((limitation) => limitation !== undefined),
+    ).toEqual([
+      'The oracle enforces fixed min/max answer bounds.',
+      'The price feed rejects non-positive answers.',
     ])
   })
 

@@ -95,7 +95,7 @@
                           "properties": {
                             "id": { "type": "string" },
                             "description": { "type": "string" },
-                            "mitigation": { "type": "string" }
+                            "limitation": { "type": "string" }
                           },
                           "required": ["id"]
                         }
@@ -812,7 +812,23 @@
                 "output": { "type": "string" },
                 "description": { "type": "string" },
                 "impact": { "type": "string" },
-                "mitigation": { "type": "string" },
+                "categories": {
+                  "type": "array",
+                  "items": {
+                    "enum": [
+                      "funds-can-be-stolen",
+                      "funds-can-be-lost",
+                      "funds-can-be-frozen",
+                      "funds-can-lose-value",
+                      "users-can-be-censored",
+                      "mev-can-be-extracted",
+                      "withdrawals-can-be-delayed",
+                      "yield-can-stop"
+                    ]
+                  }
+                },
+                "limitation": { "type": "string" },
+                "protection": { "type": "string" },
                 "terminal": { "type": "boolean" }
               },
               "required": ["id", "inputs", "output", "description"]
@@ -833,7 +849,7 @@
                     "properties": {
                       "id": { "type": "string" },
                       "description": { "type": "string" },
-                      "mitigation": { "type": "string" }
+                      "limitation": { "type": "string" }
                     },
                     "required": ["id"]
                   }

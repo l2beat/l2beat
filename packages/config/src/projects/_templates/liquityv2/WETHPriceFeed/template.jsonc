@@ -75,7 +75,7 @@
       "inputs": [{ "field": "ethUsdOracle", "effect": "value.unavailable" }],
       "output": "branch.shutdown.requested",
       "description": "A reverting or non-positive ETH/USD read, or an answer older than {{ ethUsdStaleness }}, makes this contract signal its configured BorrowerOperations contract to shut the branch down and permanently switch to the last recorded good price.",
-      "mitigation": "The input is checked for call success, a positive answer, and freshness before it is accepted."
+      "limitation": "The input is checked for call success, a positive answer, and freshness before it is accepted."
     }
   ]
 }

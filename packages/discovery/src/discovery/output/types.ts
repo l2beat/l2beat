@@ -1,7 +1,7 @@
 import type { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { ContractValueType } from '../config/ColorConfig'
-import type { Permission } from '../config/PermissionConfig'
+import type { ImpactCategory, Permission } from '../config/PermissionConfig'
 import type { ContractFieldSeverity } from '../config/StructureConfig'
 import type { DiscoveryTimestamps } from '../modelling/modelPermissions'
 
@@ -113,7 +113,7 @@ export interface ResolvedImpactSource {
   dependencyName?: string
   capability?: string
   description?: string
-  mitigation?: string
+  limitation?: string
 }
 
 export interface ResolvedImpactStep {
@@ -128,7 +128,9 @@ export interface ResolvedImpactStep {
   output: string
   description?: string
   impact?: string
-  mitigation?: string
+  categories?: ImpactCategory[]
+  limitation?: string
+  protection?: string
 }
 
 /**

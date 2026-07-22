@@ -36,6 +36,7 @@ import type {
   ProjectPermissionedAccount,
   ProjectPermissionImpactScenario,
   ProjectPermissionImpactTrace,
+  ProjectPermissionOrigin,
   ProjectPermissions,
   ProjectUpgradeableActor,
   ReferenceLink,
@@ -874,9 +875,13 @@ export class ProjectDiscovery {
         false,
         this.getImpactPermissionFilter(principalKeys, scenariosByPrincipal),
       )
+      const permissionOrigins = this.getPermissionOriginsForTargets(
+        (eoa.receivedPermissions ?? []).map((permission) => permission.from),
+      )
       const groupingKey = JSON.stringify([
         this.describeContractOrEoa(eoa, false),
         description,
+        permissionOrigins,
       ])
       const name = eoa.name ?? this.getEOAName(eoa.address)
       return {
@@ -888,6 +893,7 @@ export class ProjectDiscovery {
         ),
         chain: ChainSpecificAddress.longChain(eoa.address),
         description,
+        permissionOrigins,
         groupingKey,
       }
     })
@@ -927,6 +933,10 @@ export class ProjectDiscovery {
           accounts: chainEoas.flatMap((eoa) => eoa.accounts),
           chain: chain,
           description: chainEoas[0]?.description ?? '',
+          permissionOrigins: uniqueBy(
+            chainEoas.flatMap((eoa) => eoa.permissionOrigins),
+            permissionOriginKey,
+          ).sort(comparePermissionOrigins),
         })
       }
     }
@@ -978,6 +988,14 @@ export class ProjectDiscovery {
       } else {
         actor = this.contractAsPermissioned(contract, description)
       }
+      actor = this.withPermissionOrigins(
+        actor,
+        this.getPermissionOriginsForTargets(
+          (contract.receivedPermissions ?? []).map(
+            (permission) => permission.from,
+          ),
+        ),
+      )
       contractActors.push(
         this.withImpactScenarios(actor, principalKeys, impactScenarios),
       )
@@ -1153,6 +1171,9 @@ export class ProjectDiscovery {
       chain: ChainSpecificAddress.longChain(group.permission.from),
       references: [],
       description: `A ${group.threshold}/${group.members.length} permissioned ${group.memberName.toLowerCase()} group. ${thresholdDescription} ${administration}${permissionDescription}`,
+      permissionOrigins: this.getPermissionOriginsForTargets([
+        group.permission.from,
+      ]),
     }
   }
 
@@ -1201,6 +1222,58 @@ export class ProjectDiscovery {
       )
   }
 
+  private getPermissionOriginsForTargets(
+    targets: ChainSpecificAddress[],
+  ): ProjectPermissionOrigin[] {
+    const origins = targets.flatMap((target) => {
+      const owners = this.discoveries.flatMap((discovery, index) =>
+        discovery.entries.some(
+          (entry) => entry.address.toLowerCase() === target.toLowerCase(),
+        )
+          ? [{ discovery, index }]
+          : [],
+      )
+      assert(
+        owners.length > 0,
+        `Cannot determine the permission origin of ${target.toString()} in ${this.projectName}`,
+      )
+      return owners.map(
+        ({ discovery, index }): ProjectPermissionOrigin =>
+          index === 0
+            ? { type: 'project' }
+            : {
+                type: 'dependency',
+                name: discovery.name,
+                projectId: discovery.name,
+              },
+      )
+    })
+
+    return uniqueBy(origins, permissionOriginKey).sort(comparePermissionOrigins)
+  }
+
+  private getPermissionOriginsForSource(
+    source: ResolvedImpactSource,
+  ): ProjectPermissionOrigin[] {
+    if (source.dependencyName !== undefined) {
+      return [{ type: 'dependency', name: source.dependencyName }]
+    }
+    return this.getPermissionOriginsForTargets([source.contract])
+  }
+
+  private withPermissionOrigins(
+    actor: ProjectPermission,
+    origins: ProjectPermissionOrigin[],
+  ): ProjectPermission {
+    const permissionOrigins = uniqueBy(
+      [...(actor.permissionOrigins ?? []), ...origins],
+      permissionOriginKey,
+    ).sort(comparePermissionOrigins)
+    return permissionOrigins.length === 0
+      ? actor
+      : { ...actor, permissionOrigins }
+  }
+
   private withImpactScenarios(
     actor: ProjectPermission,
     principalKeys: string[],
@@ -1213,11 +1286,23 @@ export class ProjectDiscovery {
     if (scenarios.length === 0) {
       return actor
     }
+    const actorPrincipalKeys = new Set(principalKeys)
+    const actorWithOrigins = this.withPermissionOrigins(
+      actor,
+      uniqueBy(
+        scenarios.flatMap((scenario) =>
+          scenario.sources
+            .filter((source) => actorPrincipalKeys.has(source.principal))
+            .flatMap((source) => this.getPermissionOriginsForSource(source)),
+        ),
+        permissionOriginKey,
+      ),
+    )
     return {
-      ...actor,
+      ...actorWithOrigins,
       impactScenarios: this.projectImpactScenarios(
         scenarios,
-        new Set(principalKeys),
+        actorPrincipalKeys,
       ),
     }
   }
@@ -1306,9 +1391,9 @@ export class ProjectDiscovery {
         const protectionStepGroups = Object.values(
           groupBy(
             steps.filter(
-              (step): step is typeof step & { mitigation: string } =>
+              (step): step is typeof step & { protection: string } =>
                 step.impact === undefined &&
-                step.mitigation !== undefined &&
+                step.protection !== undefined &&
                 terminalRuleIds.has(step.ruleId),
             ),
             outcomeStepGroupKey,
@@ -1330,8 +1415,9 @@ export class ProjectDiscovery {
                 ),
               ),
               description: first.impact,
-              ...(first.mitigation !== undefined
-                ? { mitigation: first.mitigation }
+              categories: first.categories ?? [],
+              ...(first.limitation !== undefined
+                ? { limitation: first.limitation }
                 : {}),
               paths: uniqueBy(
                 impactSteps.flatMap((step) =>
@@ -1355,7 +1441,7 @@ export class ProjectDiscovery {
                   this.getImpactComponentName(step.contract),
                 ),
               ),
-              description: first.mitigation,
+              description: first.protection,
               paths: uniqueBy(
                 protectionSteps.flatMap((step) =>
                   traces.flatMap((trace) =>
@@ -1392,8 +1478,8 @@ export class ProjectDiscovery {
         ),
         effect: source.effect,
         description: source.description,
-        ...(source.mitigation !== undefined
-          ? { mitigation: source.mitigation }
+        ...(source.limitation !== undefined
+          ? { limitation: source.limitation }
           : {}),
         inputs: [],
       }
@@ -1405,7 +1491,7 @@ export class ProjectDiscovery {
       component: this.getImpactComponentName(step.contract),
       effect: step.output,
       description: step.description,
-      ...(step.mitigation !== undefined ? { mitigation: step.mitigation } : {}),
+      ...(step.limitation !== undefined ? { limitation: step.limitation } : {}),
       inputs: trace.inputs.map((input) =>
         this.projectImpactTrace(input, sources, steps),
       ),
@@ -1697,6 +1783,25 @@ function impactCapabilityKey(
   return JSON.stringify([contract.toLowerCase(), capability])
 }
 
+function permissionOriginKey(origin: ProjectPermissionOrigin): string {
+  return origin.type === 'project'
+    ? origin.type
+    : `${origin.type}:${origin.name}`
+}
+
+function comparePermissionOrigins(
+  a: ProjectPermissionOrigin,
+  b: ProjectPermissionOrigin,
+): number {
+  if (a.type !== b.type) {
+    return a.type === 'project' ? -1 : 1
+  }
+  if (a.type === 'dependency' && b.type === 'dependency') {
+    return a.name.localeCompare(b.name)
+  }
+  return 0
+}
+
 function outcomeStepGroupKey(step: ResolvedImpactStep): string {
   const definitionScope = step.ruleDefinition.template
     ? ['template', step.ruleDefinition.template]
@@ -1708,7 +1813,9 @@ function outcomeStepGroupKey(step: ResolvedImpactStep): string {
     step.output,
     step.description ?? null,
     step.impact ?? null,
-    step.mitigation ?? null,
+    step.categories ?? null,
+    step.limitation ?? null,
+    step.protection ?? null,
   ])
 }
 

@@ -1,5 +1,6 @@
 import type { ProjectPermissionImpactScenario } from '@l2beat/config'
-import type { ReactNode } from 'react'
+import { Fragment, type ReactNode } from 'react'
+import { Badge } from '~/components/badge/Badge'
 import { Markdown } from '~/components/markdown/Markdown'
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
@@ -11,6 +12,7 @@ interface PermissionDescriptionProps {
 }
 
 type ImpactValue = ProjectPermissionImpactScenario['impacts'][number]
+type ImpactCategory = ImpactValue['categories'][number]
 type ProtectionValue = ProjectPermissionImpactScenario['protections'][number]
 type Capability = ProjectPermissionImpactScenario['capabilities'][number]
 type ImpactTraceData = ImpactValue['paths'][number]
@@ -26,7 +28,8 @@ interface OutcomeRoute {
 interface ImpactOutcome {
   id: string
   description: string
-  mitigation?: string
+  categories: ImpactCategory[]
+  limitation?: string
   routes: OutcomeRoute[]
 }
 
@@ -43,6 +46,10 @@ export function PermissionDescription({
 }: PermissionDescriptionProps) {
   const impactOutcomes = groupImpactOutcomes(impactScenarios ?? [])
   const protectionOutcomes = groupProtectionOutcomes(impactScenarios ?? [])
+  const impactCategories = getImpactCategories(impactOutcomes)
+  const hasUncategorizedImpact = impactOutcomes.some(
+    (outcome) => outcome.categories.length === 0,
+  )
 
   return (
     <div className={cn('space-y-4', className)}>
@@ -56,7 +63,12 @@ export function PermissionDescription({
       {impactOutcomes.length > 0 && (
         <section>
           <DetailLabel sentiment="negative">Impact if compromised</DetailLabel>
-          <div className="mt-2 space-y-3">
+          <ImpactCategoryBadges
+            categories={impactCategories}
+            uncategorized={hasUncategorizedImpact}
+            className="mt-2"
+          />
+          <div className="mt-3 space-y-3">
             {impactOutcomes.map((outcome) => (
               <ImpactOutcomeEntry key={outcome.id} outcome={outcome} />
             ))}
@@ -79,18 +91,24 @@ export function PermissionDescription({
 
 function ImpactOutcomeEntry({ outcome }: { outcome: ImpactOutcome }) {
   return (
-    <article className="rounded-lg border border-divider">
+    <article className="overflow-hidden rounded-lg border border-divider bg-surface-primary">
       <div className="p-3 text-paragraph-14 md:text-paragraph-15">
+        <ImpactCategoryBadges
+          categories={outcome.categories}
+          uncategorized={outcome.categories.length === 0}
+          size="extraSmall"
+          className="mb-2"
+        />
         <Markdown className="border-negative border-l-2 pl-3 text-primary">
           {outcome.description}
         </Markdown>
-        {outcome.mitigation ? (
-          <LinkedMitigation description={outcome.mitigation} />
+        {outcome.limitation ? (
+          <ImpactLimitation description={outcome.limitation} />
         ) : (
-          <MissingMitigation
-            localSafeguardRoutes={
+          <MissingLimitation
+            localLimitationRoutes={
               outcome.routes.filter((route) =>
-                pathsHaveLocalMitigations(route.paths),
+                pathsHaveLocalLimitations(route.paths),
               ).length
             }
             totalRoutes={outcome.routes.length}
@@ -100,16 +118,65 @@ function ImpactOutcomeEntry({ outcome }: { outcome: ImpactOutcome }) {
       <PermissionDetail label="This can happen through">
         <OutcomeRoutes
           routes={outcome.routes}
-          suppressRootMitigation={outcome.mitigation !== undefined}
+          suppressRootLimitation={outcome.limitation !== undefined}
         />
       </PermissionDetail>
     </article>
   )
 }
 
+const IMPACT_CATEGORY_ORDER: ImpactCategory[] = [
+  'funds-can-be-stolen',
+  'funds-can-be-lost',
+  'funds-can-be-frozen',
+  'funds-can-lose-value',
+  'users-can-be-censored',
+  'mev-can-be-extracted',
+  'withdrawals-can-be-delayed',
+  'yield-can-stop',
+]
+
+const IMPACT_CATEGORY_LABELS: Record<ImpactCategory, string> = {
+  'funds-can-be-stolen': 'Funds can be stolen',
+  'funds-can-be-lost': 'Funds can be lost',
+  'funds-can-be-frozen': 'Funds can be frozen',
+  'funds-can-lose-value': 'Funds can lose value',
+  'users-can-be-censored': 'Users can be censored',
+  'mev-can-be-extracted': 'MEV can be extracted',
+  'withdrawals-can-be-delayed': 'Withdrawals can be delayed',
+  'yield-can-stop': 'Yield can stop',
+}
+
+function ImpactCategoryBadges({
+  categories,
+  uncategorized = false,
+  size = 'small',
+  className,
+}: {
+  categories: ImpactCategory[]
+  uncategorized?: boolean
+  size?: 'extraSmall' | 'small'
+  className?: string
+}) {
+  return (
+    <div className={cn('flex flex-wrap gap-1.5', className)}>
+      {categories.map((category) => (
+        <Badge key={category} type="gray" size={size}>
+          {IMPACT_CATEGORY_LABELS[category]}
+        </Badge>
+      ))}
+      {uncategorized && (
+        <Badge type="gray" size={size}>
+          Uncategorized impact
+        </Badge>
+      )}
+    </div>
+  )
+}
+
 function ProtectionOutcomeEntry({ outcome }: { outcome: ProtectionOutcome }) {
   return (
-    <article className="rounded-lg border border-divider">
+    <article className="overflow-hidden rounded-lg border border-divider bg-surface-primary">
       <div className="p-3 text-paragraph-14 md:text-paragraph-15">
         <Markdown className="border-positive border-l-2 pl-3 text-primary">
           {outcome.description}
@@ -119,7 +186,7 @@ function ProtectionOutcomeEntry({ outcome }: { outcome: ProtectionOutcome }) {
         <OutcomeRoutes
           routes={outcome.routes}
           protection
-          suppressRootMitigation
+          suppressRootLimitation
         />
       </PermissionDetail>
     </article>
@@ -134,12 +201,15 @@ function PermissionDetail({
   children: ReactNode
 }) {
   return (
-    <div className="border-divider border-t p-3">
-      <DetailLabel>{label}</DetailLabel>
-      <div className="mt-2 min-w-0 text-paragraph-14 text-primary md:text-paragraph-15">
+    <Disclosure
+      className="border-divider border-t"
+      summaryClassName="gap-2 px-3 py-2.5 transition-colors hover:bg-surface-primary-hover"
+      summary={<DetailLabel>{label}</DetailLabel>}
+    >
+      <div className="min-w-0 px-3 pt-1 pb-3 text-paragraph-14 text-primary md:text-paragraph-15">
         {children}
       </div>
-    </div>
+    </Disclosure>
   )
 }
 
@@ -173,14 +243,37 @@ function Bullet() {
   )
 }
 
+/**
+ * Component identifiers like Chainlink_rETH_ETH_Aggregator contain no
+ * break opportunities (underscores do not allow line breaks), so narrow
+ * layouts overflow. Inserts <wbr> after each underscore so names wrap at
+ * segment boundaries.
+ */
+function BreakableToken({ children }: { children: string }) {
+  const segments = children.split(/(?<=_)/)
+  if (segments.length === 1) {
+    return children
+  }
+  return (
+    <>
+      {segments.map((segment, index) => (
+        <Fragment key={index}>
+          {index > 0 && <wbr />}
+          {segment}
+        </Fragment>
+      ))}
+    </>
+  )
+}
+
 function OutcomeRoutes({
   routes,
   protection = false,
-  suppressRootMitigation = false,
+  suppressRootLimitation = false,
 }: {
   routes: OutcomeRoute[]
   protection?: boolean
-  suppressRootMitigation?: boolean
+  suppressRootLimitation?: boolean
 }) {
   return (
     <div className="space-y-2">
@@ -189,7 +282,7 @@ function OutcomeRoutes({
           key={route.id}
           route={route}
           protection={protection}
-          suppressRootMitigation={suppressRootMitigation}
+          suppressRootLimitation={suppressRootLimitation}
         />
       ))}
     </div>
@@ -199,11 +292,11 @@ function OutcomeRoutes({
 function CapabilityRoute({
   route,
   protection,
-  suppressRootMitigation,
+  suppressRootLimitation,
 }: {
   route: OutcomeRoute
   protection: boolean
-  suppressRootMitigation: boolean
+  suppressRootLimitation: boolean
 }) {
   const componentCount = route.components.length
 
@@ -220,10 +313,10 @@ function CapabilityRoute({
                 key={`${capability.actor}-${capability.component}-${index}`}
                 className={cn('block', index > 0 && 'mt-2')}
               >
-                <span className="block font-semibold text-primary text-xs">
-                  {capability.actor}{' '}
+                <span className="block break-words font-semibold text-primary text-xs">
+                  <BreakableToken>{capability.actor}</BreakableToken>{' '}
                   <span className="font-normal text-secondary">through</span>{' '}
-                  {capability.component}
+                  <BreakableToken>{capability.component}</BreakableToken>
                 </span>
                 <span className="mt-0.5 block text-paragraph-14 text-secondary">
                   <Markdown inline ignoreGlossary>
@@ -259,7 +352,7 @@ function CapabilityRoute({
             />
             <ImpactPropagation
               paths={route.paths}
-              suppressRootMitigation={suppressRootMitigation}
+              suppressRootLimitation={suppressRootLimitation}
             />
           </>
         )}
@@ -283,39 +376,39 @@ function OutcomeComponents({
           key={component}
           className="min-w-0 break-words rounded bg-surface-secondary px-1.5 py-1 font-medium text-label-value-13 text-primary"
         >
-          {component}
+          <BreakableToken>{component}</BreakableToken>
         </span>
       ))}
     </div>
   )
 }
 
-function LinkedMitigation({ description }: { description: string }) {
+function ImpactLimitation({ description }: { description: string }) {
   return (
     <div className="mt-3 rounded-r-md border-positive border-l-2 bg-surface-positive px-3 py-2.5">
-      <DetailLabel sentiment="positive">Mitigation</DetailLabel>
+      <DetailLabel sentiment="positive">Impact limitation</DetailLabel>
       <Markdown className="mt-1.5 text-primary">{description}</Markdown>
     </div>
   )
 }
 
-function MissingMitigation({
-  localSafeguardRoutes,
+function MissingLimitation({
+  localLimitationRoutes,
   totalRoutes,
 }: {
-  localSafeguardRoutes: number
+  localLimitationRoutes: number
   totalRoutes: number
 }) {
   const description =
-    localSafeguardRoutes === 0
-      ? 'No mitigation identified for this impact or its propagation paths.'
-      : localSafeguardRoutes === totalRoutes
-        ? 'No direct mitigation identified. Local safeguards are documented in each propagation route.'
-        : `No direct mitigation identified. Local safeguards are documented in ${localSafeguardRoutes} of ${totalRoutes} capability routes.`
+    localLimitationRoutes === 0
+      ? 'No limitation identified for this impact or its propagation paths.'
+      : localLimitationRoutes === totalRoutes
+        ? 'No impact-level limitation identified. Local limitations are documented in each propagation route.'
+        : `No impact-level limitation identified. Local limitations are documented in ${localLimitationRoutes} of ${totalRoutes} capability routes.`
 
   return (
     <div className="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1">
-      <DetailLabel className="shrink-0">Mitigation</DetailLabel>
+      <DetailLabel className="shrink-0">Impact limitation</DetailLabel>
       <span className="text-secondary">{description}</span>
     </div>
   )
@@ -369,9 +462,9 @@ function ConditionSet({
         {conditions.map((condition) => (
           <li key={conditionKey(condition)} className="flex items-start gap-2">
             <Bullet />
-            <div className="min-w-0">
+            <div className="min-w-0 break-words">
               <span className="font-semibold text-primary">
-                {condition.component}:{' '}
+                <BreakableToken>{condition.component}</BreakableToken>:{' '}
               </span>
               {condition.description ? (
                 <Markdown inline className="text-primary">
@@ -424,10 +517,10 @@ function Disclosure({
 
 function ImpactPropagation({
   paths,
-  suppressRootMitigation = false,
+  suppressRootLimitation = false,
 }: {
   paths: ImpactTraceData[]
-  suppressRootMitigation?: boolean
+  suppressRootLimitation?: boolean
 }) {
   const pathsByComponent = groupPathsByComponent(paths)
   const summary =
@@ -456,7 +549,7 @@ function ImpactPropagation({
               key={component}
               component={component}
               paths={paths}
-              suppressRootMitigation={suppressRootMitigation}
+              suppressRootLimitation={suppressRootLimitation}
             />
           ))}
         </div>
@@ -464,7 +557,7 @@ function ImpactPropagation({
         <div className="mt-1 border-divider border-l pl-3">
           <ImpactPaths
             paths={paths}
-            suppressRootMitigation={suppressRootMitigation}
+            suppressRootLimitation={suppressRootLimitation}
           />
         </div>
       )}
@@ -475,11 +568,11 @@ function ImpactPropagation({
 function ComponentPathDisclosure({
   component,
   paths,
-  suppressRootMitigation,
+  suppressRootLimitation,
 }: {
   component: string
   paths: ImpactTraceData[]
-  suppressRootMitigation: boolean
+  suppressRootLimitation: boolean
 }) {
   return (
     <Disclosure
@@ -487,7 +580,7 @@ function ComponentPathDisclosure({
       summary={
         <>
           <span className="min-w-0 break-words font-semibold text-primary text-xs">
-            {component}
+            <BreakableToken>{component}</BreakableToken>
           </span>
           {paths.length > 1 && (
             <span className="ml-auto shrink-0 font-medium text-2xs">
@@ -500,7 +593,7 @@ function ComponentPathDisclosure({
       <div className="mt-1 mb-2 border-divider border-l pl-3">
         <ImpactPaths
           paths={paths}
-          suppressRootMitigation={suppressRootMitigation}
+          suppressRootLimitation={suppressRootLimitation}
         />
       </div>
     </Disclosure>
@@ -509,10 +602,10 @@ function ComponentPathDisclosure({
 
 function ImpactPaths({
   paths,
-  suppressRootMitigation,
+  suppressRootLimitation,
 }: {
   paths: ImpactTraceData[]
-  suppressRootMitigation: boolean
+  suppressRootLimitation: boolean
 }) {
   return (
     <div className="space-y-2.5">
@@ -525,7 +618,7 @@ function ImpactPaths({
           )}
           <ImpactTrace
             trace={path}
-            suppressOwnMitigation={suppressRootMitigation}
+            suppressOwnLimitation={suppressRootLimitation}
           />
         </div>
       ))}
@@ -535,13 +628,13 @@ function ImpactPaths({
 
 function ImpactTrace({
   trace,
-  suppressOwnMitigation = false,
+  suppressOwnLimitation = false,
 }: {
   trace: ImpactTraceData
-  suppressOwnMitigation?: boolean
+  suppressOwnLimitation?: boolean
 }) {
   return (
-    <div>
+    <div className="min-w-0">
       {trace.inputs.length > 0 && (
         <>
           <div
@@ -557,20 +650,20 @@ function ImpactTrace({
           <TraceConnector conjunctive={trace.inputs.length > 1} />
         </>
       )}
-      <div className="rounded-md border border-divider px-3 py-2">
-        <div className="font-semibold text-primary text-xs">
-          {trace.component}
+      <div className="min-w-0 rounded-md border border-divider px-3 py-2">
+        <div className="break-words font-semibold text-primary text-xs">
+          <BreakableToken>{trace.component}</BreakableToken>
         </div>
         {trace.description && (
           <Markdown className="mt-1 text-paragraph-14 text-secondary">
             {trace.description}
           </Markdown>
         )}
-        {trace.mitigation && !suppressOwnMitigation && (
+        {trace.limitation && !suppressOwnLimitation && (
           <div className="mt-2 border-positive border-l-2 pl-2.5">
-            <DetailLabel sentiment="positive">Local mitigation</DetailLabel>
+            <DetailLabel sentiment="positive">Local limitation</DetailLabel>
             <Markdown className="mt-1 text-paragraph-14 text-primary">
-              {trace.mitigation}
+              {trace.limitation}
             </Markdown>
           </div>
         )}
@@ -597,12 +690,12 @@ function getSourceConditions(trace: ImpactTraceData): ImpactTraceData[] {
   return uniqueConditions(trace.inputs.flatMap(getSourceConditions))
 }
 
-function pathsHaveLocalMitigations(paths: ImpactTraceData[]): boolean {
-  return paths.some((path) => path.inputs.some(traceHasMitigation))
+function pathsHaveLocalLimitations(paths: ImpactTraceData[]): boolean {
+  return paths.some((path) => path.inputs.some(traceHasLimitation))
 }
 
-function traceHasMitigation(trace: ImpactTraceData): boolean {
-  return trace.mitigation !== undefined || trace.inputs.some(traceHasMitigation)
+function traceHasLimitation(trace: ImpactTraceData): boolean {
+  return trace.limitation !== undefined || trace.inputs.some(traceHasLimitation)
 }
 
 function groupPathsByComponent(
@@ -666,7 +759,8 @@ function groupImpactOutcomes(
         outcomes.set(impact.id, {
           id: impact.id,
           description: impact.description,
-          mitigation: impact.mitigation,
+          categories: impact.categories,
+          limitation: impact.limitation,
           routes: [route],
         })
       }
@@ -674,6 +768,11 @@ function groupImpactOutcomes(
   }
 
   return Array.from(outcomes.values())
+}
+
+function getImpactCategories(outcomes: ImpactOutcome[]): ImpactCategory[] {
+  const present = new Set(outcomes.flatMap((outcome) => outcome.categories))
+  return IMPACT_CATEGORY_ORDER.filter((category) => present.has(category))
 }
 
 function groupProtectionOutcomes(

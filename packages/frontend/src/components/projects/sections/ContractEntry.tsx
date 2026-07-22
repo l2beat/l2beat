@@ -1,5 +1,6 @@
 import type {
   ProjectPermissionImpactScenario,
+  ProjectPermissionOrigin,
   ProjectUpgradeableActor,
   ReferenceLink,
 } from '@l2beat/config'
@@ -37,6 +38,7 @@ export interface TechnologyContract {
   chain: string
   description?: string
   impactScenarios?: ProjectPermissionImpactScenario[]
+  permissionOrigins?: TechnologyContractPermissionOrigin[]
   upgradeableBy?: ProjectUpgradeableActor[]
   upgradeDelay?: string
   usedInProjects?: UsedInProject[]
@@ -46,6 +48,13 @@ export interface TechnologyContract {
   impactfulChange: boolean
   pastUpgrades?: PastUpgradesData
   escrow?: TechnologyContractEscrow
+}
+
+export type TechnologyContractPermissionOrigin = ProjectPermissionOrigin & {
+  project?: {
+    name: string
+    icon: string
+  }
 }
 
 export interface TechnologyContractAddress {
@@ -109,6 +118,13 @@ export function ContractEntry({
             {contract.escrow && (
               <EscrowBadge isCustom={contract.escrow.isCustom} />
             )}
+            {descriptionType === 'permission' &&
+              contract.permissionOrigins?.map((origin) => (
+                <PermissionOriginBadge
+                  key={permissionOriginKey(origin)}
+                  origin={origin}
+                />
+              ))}
             {expandableAddresses ? (
               <GroupedActorAddresses
                 addresses={contract.addresses}
@@ -228,6 +244,59 @@ export function ContractEntry({
       }
     />
   )
+}
+
+function PermissionOriginBadge({
+  origin,
+}: {
+  origin: TechnologyContractPermissionOrigin
+}) {
+  if (origin.type === 'project') {
+    return (
+      <span className="inline-flex items-center gap-1 rounded bg-surface-info px-1.5 py-1 font-medium text-label-value-13 text-link leading-none">
+        {origin.project && (
+          <img
+            src={origin.project.icon}
+            alt=""
+            className="size-3.5 rounded-full bg-white"
+          />
+        )}
+        This project
+      </span>
+    )
+  }
+
+  return (
+    <span className="inline-flex items-center gap-1.5 rounded bg-surface-secondary px-1.5 py-1 text-label-value-13 leading-none">
+      <span className="text-secondary">Dependency</span>
+      <span className="inline-flex min-w-0 items-center gap-1 font-medium text-primary">
+        {origin.project && (
+          <img
+            src={origin.project.icon}
+            alt=""
+            className="size-3.5 rounded-full bg-white"
+          />
+        )}
+        {origin.project?.name ?? formatDependencyName(origin.name)}
+      </span>
+    </span>
+  )
+}
+
+function permissionOriginKey(origin: ProjectPermissionOrigin): string {
+  return origin.type === 'project'
+    ? origin.type
+    : `${origin.type}:${origin.name}`
+}
+
+function formatDependencyName(name: string): string {
+  if (name.includes(' ') || /[A-Z]/.test(name)) {
+    return name
+  }
+  return name
+    .split('-')
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ')
 }
 
 function EscrowBadge({ isCustom }: { isCustom?: boolean }) {
