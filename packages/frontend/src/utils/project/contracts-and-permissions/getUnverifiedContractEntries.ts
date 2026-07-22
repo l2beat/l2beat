@@ -1,8 +1,4 @@
-import type {
-  ProjectContract,
-  ProjectContracts,
-  ProjectPermissions,
-} from '@l2beat/config'
+import type { ProjectContracts, ProjectPermissions } from '@l2beat/config'
 import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 
 export interface UnverifiedContractEntry {
@@ -10,7 +6,6 @@ export interface UnverifiedContractEntry {
   contractName: string
   href: string
   targetId: string
-  type: 'proxy' | 'implementation' | 'standalone' | 'permission'
 }
 
 export function getUnverifiedContractEntries(
@@ -32,8 +27,8 @@ export function getUnverifiedContractEntries(
 function getUnverifiedContracts(
   contracts: ProjectContracts,
 ): UnverifiedContractEntry[] {
-  const contractsList = Object.values(contracts.addresses).flat()
-  const contractEntries: UnverifiedContractEntry[] = contractsList
+  return Object.values(contracts.addresses)
+    .flat()
     .filter((contract) => !contract.isVerified)
     .map((contract) => {
       assert(contract.url, `Missing explorer URL for ${contract.name}`)
@@ -42,36 +37,8 @@ function getUnverifiedContracts(
         contractName: contract.name,
         href: contract.url,
         targetId: contract.name,
-        type: contract.upgradeability
-          ? ('proxy' as const)
-          : ('standalone' as const),
       }
     })
-
-  const implementationEntries = contractsList.flatMap((contract) =>
-    (contract.upgradeability?.unverifiedImplementations ?? []).map((address) =>
-      toImplementationEntry(contract, address),
-    ),
-  )
-
-  return contractEntries.concat(implementationEntries)
-}
-
-function toImplementationEntry(
-  contract: ProjectContract,
-  address: ChainSpecificAddress,
-): UnverifiedContractEntry {
-  assert(contract.url, `Missing explorer URL for ${contract.name}`)
-  const explorerUrl = new URL(contract.url).origin
-  const ethereumAddress = ChainSpecificAddress.address(address)
-
-  return {
-    address: ethereumAddress,
-    contractName: contract.name,
-    href: `${explorerUrl}/address/${ethereumAddress}#code`,
-    targetId: contract.name,
-    type: 'implementation',
-  }
 }
 
 function getUnverifiedPermissions(
@@ -89,7 +56,6 @@ function getUnverifiedPermissions(
         contractName: permission.name,
         href: account.url,
         targetId: permission.id,
-        type: 'permission' as const,
       })),
   )
 }

@@ -136,7 +136,7 @@ export class ProjectDiscovery {
       name: contract.name ?? contract.address,
       isVerified: isEntryVerified(contract),
       address: contract.address,
-      upgradeability: getUpgradeability(contract, this.getEntries()),
+      upgradeability: getUpgradeability(contract),
       chain: ChainSpecificAddress.longChain(contract.address),
       references: contract.references?.map((x) => ({
         title: x.text,
@@ -544,7 +544,7 @@ export class ProjectDiscovery {
       address: contract.address,
       isVerified: isEntryVerified(contract),
       name: contract.name ?? contract.address,
-      upgradeability: getUpgradeability(contract, this.getEntries()),
+      upgradeability: getUpgradeability(contract),
       chain: ChainSpecificAddress.longChain(contract.address),
       ...descriptionOrOptions,
     }
@@ -554,13 +554,10 @@ export class ProjectDiscovery {
     contract: EntryParameters,
     description: string,
   ): ProjectPermission {
-    const [account] = this.formatPermissionedAccounts([contract.address])
-    assert(account, 'Permissioned contract account should exist')
-
     return {
-      id: contract.name || contract.address,
-      name: contract.name || account.name,
-      accounts: [account],
+      id: contract.name ?? contract.address,
+      name: contract.name ?? contract.address,
+      accounts: this.formatPermissionedAccounts([contract.address]),
       chain: ChainSpecificAddress.longChain(contract.address),
       references: contract.references?.map((x) => ({
         title: x.text,
@@ -1085,23 +1082,14 @@ export class ProjectDiscovery {
 
 function getUpgradeability(
   contract: EntryParameters,
-  entries: EntryParameters[],
 ): ProjectContractUpgradeability | undefined {
   if (!contract.proxyType) {
     return undefined
   }
-  const implementations = get$Implementations(contract.values)
-  const unverifiedImplementations = implementations.filter((address) => {
-    const implementation = entries.find((entry) => entry.address === address)
-    return implementation !== undefined && !isEntryVerified(implementation)
-  })
   const upgradeability: ProjectContractUpgradeability = {
     proxyType: contract.proxyType,
     admins: get$Admins(contract.values),
-    implementations,
-    ...(unverifiedImplementations.length > 0
-      ? { unverifiedImplementations }
-      : {}),
+    implementations: get$Implementations(contract.values),
   }
   if (contract.values?.$immutable !== undefined) {
     upgradeability.immutable = !!contract.values.$immutable

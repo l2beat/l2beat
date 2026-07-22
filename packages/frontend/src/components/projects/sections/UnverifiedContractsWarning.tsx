@@ -59,17 +59,15 @@ export function UnverifiedContractsWarning({ entries, className }: Props) {
                 key={`${entry.targetId}-${entry.address}`}
                 className="flex flex-col gap-0.5 text-sm sm:flex-row sm:items-center sm:justify-between sm:gap-3"
               >
-                <div className="min-w-0">
-                  <a
-                    href={`#${entry.targetId}`}
-                    className={linkVariants({ variant: 'plain' })}
-                  >
-                    {entry.contractName || formatAddress(entry.address)}
-                  </a>{' '}
-                  <span className="font-normal text-secondary">
-                    · {typeLabels[entry.type]}
-                  </span>
-                </div>
+                <a
+                  href={`#${entry.targetId}`}
+                  className={linkVariants({
+                    variant: 'plain',
+                    className: 'min-w-0 underline',
+                  })}
+                >
+                  {entry.contractName}
+                </a>
                 <HighlightableLink
                   href={entry.href}
                   address={entry.address}
@@ -86,11 +84,4 @@ export function UnverifiedContractsWarning({ entries, className }: Props) {
       </Collapsible>
     </div>
   )
-}
-
-const typeLabels: Record<UnverifiedContractEntry['type'], string> = {
-  proxy: 'Proxy',
-  implementation: 'Implementation',
-  standalone: 'Standalone',
-  permission: 'Permission',
 }

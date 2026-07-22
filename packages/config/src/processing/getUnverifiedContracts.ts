@@ -9,10 +9,8 @@ function getUnverifiedContracts(
 ): ChainSpecificAddress[] {
   return Object.values(project.contracts?.addresses ?? {})
     .flat()
-    .flatMap((contract) => [
-      ...(!contract.isVerified ? [contract.address] : []),
-      ...(contract.upgradeability?.unverifiedImplementations ?? []),
-    ])
+    .filter((c) => !c.isVerified)
+    .map((c) => c.address)
 }
 
 function getUnverifiedPermissions(

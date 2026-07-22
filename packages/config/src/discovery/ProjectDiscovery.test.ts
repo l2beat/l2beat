@@ -58,59 +58,6 @@ describe(ProjectDiscovery.name, () => {
     })
   })
 
-  describe(ProjectDiscovery.prototype.getContractDetails.name, () => {
-    it('includes unverified proxy implementations', () => {
-      const proxyAddress = ChainSpecificAddress(
-        'eth:0x1111111111111111111111111111111111111111',
-      )
-      const implementationAddress = ChainSpecificAddress(
-        'eth:0x2222222222222222222222222222222222222222',
-      )
-      const configReader = mockObject<ConfigReader>({
-        readConfig: (projectName: string) => mockConfig(projectName),
-        readDiscoveryWithReferences: () => [
-          {
-            ...discoveredJsonStub,
-            entries: [
-              {
-                type: 'Contract',
-                name: 'Proxy',
-                address: proxyAddress,
-                proxyType: 'EIP1967 proxy',
-                values: { $implementation: implementationAddress },
-              },
-              {
-                type: 'Contract',
-                name: 'Implementation',
-                address: implementationAddress,
-                unverified: true,
-              },
-            ],
-          },
-        ],
-      })
-      const discovery = new ProjectDiscovery('ProxyProject', configReader)
-
-      const result = discovery.getContractDetails('Proxy')
-
-      expect(result.upgradeability?.unverifiedImplementations).toEqual([
-        implementationAddress,
-      ])
-    })
-  })
-
-  describe(ProjectDiscovery.prototype.contractAsPermissioned.name, () => {
-    it('uses the address when the contract name is empty', () => {
-      const result = discovery.contractAsPermissioned(
-        { ...contractStub, name: '' },
-        'Can upgrade the system.',
-      )
-
-      expect(result.id).toEqual(contractStub.address)
-      expect(result.name).toEqual('0x0D4C…72ac')
-    })
-  })
-
   describe(ProjectDiscovery.prototype.getContractValue.name, () => {
     it('should return given contract value', () => {
       assert(contractStub.name !== undefined)

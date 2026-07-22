@@ -1329,7 +1329,6 @@ export interface ProjectContractUpgradeability {
   immutable?: boolean
   admins: ChainSpecificAddress[]
   implementations: ChainSpecificAddress[]
-  unverifiedImplementations?: ChainSpecificAddress[]
 }
 
 export interface ProjectUpgradeableActor {
