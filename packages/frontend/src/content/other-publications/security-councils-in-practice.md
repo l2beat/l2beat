@@ -7,10 +7,6 @@ authorId: l2beat_research
 tag: Research
 ---
 
-Security Councils are multisigs entrusted with critical powers over a rollup - typically emergency upgrades, pausing, and vetoing or enforcing DAO decisions. At L2BEAT, we have a first-hand view of how Security Councils operate day to day, and here we'll explore the different designs: how members are selected, the scope of powers the council holds, the tooling and monitoring available to members, whether DAO decisions are enforced onchain or rely on the council to comply, and the process governing structural changes to the council itself.
-
-From our experience, here's how some Security Councils work in practice, what they get right, and where they fall short.
-
 ## Table of Contents
 
 - [Arbitrum](#arbitrum)
