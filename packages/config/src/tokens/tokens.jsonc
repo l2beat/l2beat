@@ -9242,6 +9242,24 @@
       "supply": "zero"
     }
   ],
+  "adi": [
+    {
+      "symbol": "USDC.e",
+      "address": "0x9cb8142aEBBcdc60AF7c97Af897A67A8f3CA71C2",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "ccip"
+          }
+        ]
+      }
+    }
+  ],
   "xlayer": [
     {
       "symbol": "USD₮0",
