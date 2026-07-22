@@ -49,7 +49,7 @@ export async function getEthereumActivityChart(
 
   const [entries, maxCounts, syncInfo, activityTotals] = await Promise.all([
     db.activity.getByProjectsAndTimeRange([ProjectId.ETHEREUM], adjustedRange),
-    db.activity.getMaxCountsForProjects([ProjectId.ETHEREUM]),
+    db.activity.getMaxCountsForProject(ProjectId.ETHEREUM),
     getActivitySyncInfo(ProjectId.ETHEREUM, adjustedRange[1]),
     db.activity.getActivityTotalsForProjects([ProjectId.ETHEREUM]),
   ])
@@ -114,18 +114,16 @@ export async function getEthereumActivityChart(
 function getEthereumActivityChartStats(
   data: EthereumActivityChartDataPoint[],
   syncedUntil: UnixTime,
-  maxCountsByProject: Record<
-    ProjectId,
-    {
-      uopsCount: number
-      uopsTimestamp: number
-      count: number
-      countTimestamp: number
-    }
-  >,
+  maxCounts:
+    | {
+        uopsCount: number
+        uopsTimestamp: number
+        count: number
+        countTimestamp: number
+      }
+    | undefined,
   totals: ActivityTotals | undefined,
 ): ActivityProjectChartStats | undefined {
-  const maxCounts = maxCountsByProject[ProjectId.ETHEREUM]
   if (!maxCounts) return undefined
 
   const currentData = data.find(([timestamp]) => timestamp === syncedUntil)

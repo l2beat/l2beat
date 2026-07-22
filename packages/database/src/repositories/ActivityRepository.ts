@@ -170,11 +170,6 @@ export class ActivityRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  /**
-   * Sums counts across projects per timestamp in the database instead of
-   * returning raw per-project rows — use when only the aggregate series is
-   * needed (e.g. sparkline charts).
-   */
   async getSummedByTimestamp(
     projectIds: ProjectId[],
     timeRange: [UnixTime | null, UnixTime],
@@ -213,10 +208,8 @@ export class ActivityRepository extends BaseRepository {
     }))
   }
 
-  async getMaxCountsForProjects(projectIds?: ProjectId[]) {
-    if (projectIds && projectIds.length === 0) return {}
-
-    let uopsSubqueryBase = this.db
+  async getMaxCountsForProjects() {
+    const uopsSubquery = this.db
       .selectFrom('Activity')
       .select([
         'projectId',
@@ -226,17 +219,9 @@ export class ActivityRepository extends BaseRepository {
             .as('max_uops_count'),
       ])
       .groupBy('projectId')
+      .as('t2')
 
-    if (projectIds) {
-      uopsSubqueryBase = uopsSubqueryBase.where(
-        'projectId',
-        'in',
-        projectIds.map((p) => p.toString()),
-      )
-    }
-    const uopsSubquery = uopsSubqueryBase.as('t2')
-
-    let query = this.db
+    const query = this.db
       .selectFrom('Activity as t1')
       .innerJoin(uopsSubquery, (join) =>
         join
@@ -265,14 +250,6 @@ export class ActivityRepository extends BaseRepository {
         'count_table.timestamp as count_timestamp',
       ])
 
-    if (projectIds) {
-      query = query.where(
-        't1.projectId',
-        'in',
-        projectIds.map((p) => p.toString()),
-      )
-    }
-
     const rows = await query.execute()
 
     return Object.fromEntries(
@@ -286,6 +263,50 @@ export class ActivityRepository extends BaseRepository {
         },
       ]),
     )
+  }
+
+  async getMaxCountsForProject(projectId: ProjectId): Promise<
+    | {
+        uopsCount: number
+        uopsTimestamp: UnixTime
+        count: number
+        countTimestamp: UnixTime
+      }
+    | undefined
+  > {
+    const uopsRow = await this.db
+      .selectFrom('Activity')
+      .select([
+        (eb) =>
+          eb.fn
+            .coalesce('Activity.uopsCount', 'Activity.count')
+            .as('uopsCount'),
+        'timestamp',
+      ])
+      .where('projectId', '=', projectId.toString())
+      .orderBy(
+        (eb) => eb.fn.coalesce('Activity.uopsCount', 'Activity.count'),
+        'desc',
+      )
+      .limit(1)
+      .executeTakeFirst()
+
+    const countRow = await this.db
+      .selectFrom('Activity')
+      .select(['count', 'timestamp'])
+      .where('projectId', '=', projectId.toString())
+      .orderBy('count', 'desc')
+      .limit(1)
+      .executeTakeFirst()
+
+    if (!uopsRow || !countRow) return undefined
+
+    return {
+      uopsCount: Number(uopsRow.uopsCount),
+      uopsTimestamp: UnixTime.fromDate(uopsRow.timestamp),
+      count: Number(countRow.count),
+      countTimestamp: UnixTime.fromDate(countRow.timestamp),
+    }
   }
 
   async getActivityTotalsForProjects(
