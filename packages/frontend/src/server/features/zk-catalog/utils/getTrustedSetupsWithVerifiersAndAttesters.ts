@@ -249,7 +249,7 @@ function getOnchainVerifier(
     ) ??
     chainContracts.find((c) =>
       c.upgradeability?.implementations.some(
-        (impl) => ChainSpecificAddress.address(impl.address) === addressKey,
+        (impl) => ChainSpecificAddress.address(impl) === addressKey,
       ),
     )
 

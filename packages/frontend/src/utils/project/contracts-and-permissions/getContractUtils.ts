@@ -88,7 +88,7 @@ async function getContractUsageMap() {
           type: isMutable ? 'proxy' : 'implementation',
         })
         for (const impl of contract.upgradeability?.implementations ?? []) {
-          addUsage(chain, ChainSpecificAddress.address(impl.address), {
+          addUsage(chain, ChainSpecificAddress.address(impl), {
             ...basic,
             targetName: contract.name,
             type: 'implementation',

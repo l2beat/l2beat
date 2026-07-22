@@ -59,15 +59,12 @@ describe(ProjectDiscovery.name, () => {
   })
 
   describe(ProjectDiscovery.prototype.getContractDetails.name, () => {
-    it('includes verification status for upgradeability addresses', () => {
+    it('includes unverified proxy implementations', () => {
       const proxyAddress = ChainSpecificAddress(
         'eth:0x1111111111111111111111111111111111111111',
       )
       const implementationAddress = ChainSpecificAddress(
         'eth:0x2222222222222222222222222222222222222222',
-      )
-      const adminAddress = ChainSpecificAddress(
-        'eth:0x3333333333333333333333333333333333333333',
       )
       const configReader = mockObject<ConfigReader>({
         readConfig: (projectName: string) => mockConfig(projectName),
@@ -80,21 +77,12 @@ describe(ProjectDiscovery.name, () => {
                 name: 'Proxy',
                 address: proxyAddress,
                 proxyType: 'EIP1967 proxy',
-                values: {
-                  $admin: adminAddress,
-                  $implementation: implementationAddress,
-                },
+                values: { $implementation: implementationAddress },
               },
               {
                 type: 'Contract',
                 name: 'Implementation',
                 address: implementationAddress,
-                unverified: true,
-              },
-              {
-                type: 'Contract',
-                name: 'Admin',
-                address: adminAddress,
                 unverified: true,
               },
             ],
@@ -105,11 +93,8 @@ describe(ProjectDiscovery.name, () => {
 
       const result = discovery.getContractDetails('Proxy')
 
-      expect(result.upgradeability?.implementations).toEqual([
-        { address: implementationAddress, isVerified: false },
-      ])
-      expect(result.upgradeability?.admins).toEqual([
-        { address: adminAddress, isVerified: false },
+      expect(result.upgradeability?.unverifiedImplementations).toEqual([
+        implementationAddress,
       ])
     })
   })
@@ -122,7 +107,7 @@ describe(ProjectDiscovery.name, () => {
       )
 
       expect(result.id).toEqual(contractStub.address)
-      expect(result.name).toEqual('0x0D4C...72ac')
+      expect(result.name).toEqual('0x0D4C…72ac')
     })
   })
 

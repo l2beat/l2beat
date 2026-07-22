@@ -48,7 +48,6 @@ export interface TechnologyContractAddress {
   href: string
   address: string
   verificationStatus: VerificationStatus
-  contractType?: 'proxy' | 'implementation' | 'standalone'
 }
 
 export interface TechnologyContractEscrow {

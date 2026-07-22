@@ -87,6 +87,7 @@ export async function getRegularDaProjectSections({
     getContractsSection(
       {
         id: bridge.id,
+        isVerified,
         slug: bridge.slug,
         contracts: bridge.contracts ?? {},
         isUnderReview: !!layer.statuses.reviewStatus,

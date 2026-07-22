@@ -9,7 +9,7 @@ import type {
   ReasonForBeingInOther,
   WarningWithSentiment,
 } from '@l2beat/config'
-import { assert, ProjectId, type UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
@@ -505,45 +505,10 @@ export async function getScalingProjectEntry(
     project,
     changes,
   )
-  const permissionsSection = getPermissionsSection(
-    {
-      id: project.id,
-      hostChain: hostChain?.id,
-      isUnderReview: !!project.statuses.reviewStatus,
-      permissions: project.permissions,
-    },
-    contractUtils,
-    projectsChangeReport,
+  const unverifiedContracts = getUnverifiedContractEntries(
+    project.contracts,
+    project.permissions,
   )
-  const contractsSection = getContractsSection(
-    {
-      id: project.id,
-      slug: project.slug,
-      contracts: project.contracts,
-      tvsConfig: project.tvsConfig,
-      isUnderReview: !!project.statuses.reviewStatus,
-      architectureImage: project.scalingTechnology.architectureImage,
-    },
-    contractUtils,
-    projectsChangeReport,
-    zkCatalogProjects,
-    allProjectsWithContracts,
-    tvsStats,
-  )
-  const unverifiedContractEntries = getUnverifiedContractEntries(
-    contractsSection,
-    permissionsSection,
-  )
-  const hasUnverifiedContractWarning =
-    projectVerificationWarnings.contracts !== undefined
-  const hasUnverifiedContractEntries = unverifiedContractEntries.length > 0
-  assert(
-    hasUnverifiedContractWarning === hasUnverifiedContractEntries,
-    `Unverified contract warning does not match entries for ${project.slug}`,
-  )
-  const unverifiedContracts = hasUnverifiedContractEntries
-    ? unverifiedContractEntries
-    : undefined
 
   const riskSummary = getScalingRiskSummarySection(
     project,
@@ -580,6 +545,7 @@ export async function getScalingProjectEntry(
         combined: common.rosette.stacked,
         warning: project.scalingTechnology.warning,
         redWarning: project.statuses.redWarning,
+        isVerified: !projectVerificationWarnings.contracts,
         isUnderReview: !!project.statuses.reviewStatus,
         unverifiedContracts,
       },
@@ -593,6 +559,7 @@ export async function getScalingProjectEntry(
         rosetteValues: common.rosette.self,
         warning: project.scalingTechnology.warning,
         redWarning: project.statuses.redWarning,
+        isVerified: !projectVerificationWarnings.contracts,
         isUnderReview: !!project.statuses.reviewStatus,
         unverifiedContracts,
       },
@@ -754,6 +721,17 @@ export async function getScalingProjectEntry(
     })
   }
 
+  const permissionsSection = getPermissionsSection(
+    {
+      id: project.id,
+      hostChain: hostChain?.id,
+      isUnderReview: !!project.statuses.reviewStatus,
+      permissions: project.permissions,
+    },
+    contractUtils,
+    projectsChangeReport,
+  )
+
   const discoUi = common.discoUiHref
     ? {
         href: common.discoUiHref,
@@ -779,6 +757,22 @@ export async function getScalingProjectEntry(
     })
   }
 
+  const contractsSection = getContractsSection(
+    {
+      id: project.id,
+      isVerified: !hostChainVerificationWarnings.contracts,
+      slug: project.slug,
+      contracts: project.contracts,
+      tvsConfig: project.tvsConfig,
+      isUnderReview: !!project.statuses.reviewStatus,
+      architectureImage: project.scalingTechnology.architectureImage,
+    },
+    contractUtils,
+    projectsChangeReport,
+    zkCatalogProjects,
+    allProjectsWithContracts,
+    tvsStats,
+  )
   if (contractsSection) {
     sections.push({
       type: 'ContractsSection',
