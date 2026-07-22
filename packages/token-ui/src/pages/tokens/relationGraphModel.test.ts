@@ -9,6 +9,7 @@ import {
   type RelationGraphNode,
   type RelationGraphRelation,
   relationId,
+  searchRelationGraphNodes,
   tokenId,
 } from './relationGraphModel'
 
@@ -104,6 +105,35 @@ describe(getExistingRelationGraphSelection.name, () => {
   })
 })
 
+describe(searchRelationGraphNodes.name, () => {
+  const nodes = [
+    node('ethereum:0xaaa', 'USDC'),
+    node('base:0xbbb', 'USDC'),
+    node('arbitrum:0xccc', 'USDT'),
+    missingNode('optimism:0xddd'),
+  ]
+
+  it('searches deployed tokens by symbol, chain, and address', () => {
+    expect(
+      searchRelationGraphNodes(nodes, 'usdc').map((node) => node.id),
+    ).toEqual(['base:0xbbb', 'ethereum:0xaaa'])
+    expect(
+      searchRelationGraphNodes(nodes, 'base usdc').map((node) => node.id),
+    ).toEqual(['base:0xbbb'])
+    expect(
+      searchRelationGraphNodes(nodes, '0xCCC').map((node) => node.id),
+    ).toEqual(['arbitrum:0xccc'])
+    expect(
+      searchRelationGraphNodes(nodes, 'arbitrum:0xccc').map((node) => node.id),
+    ).toEqual(['arbitrum:0xccc'])
+  })
+
+  it('ignores missing endpoints and queries shorter than two characters', () => {
+    expect(searchRelationGraphNodes(nodes, '0xddd')).toEqual([])
+    expect(searchRelationGraphNodes(nodes, 'u')).toEqual([])
+  })
+})
+
 describe(getRelationGraphFocus.name, () => {
   it('collects a selected node, its neighbors, and its incident relations', () => {
     const focus = requiredFocus(
@@ -151,21 +181,29 @@ describe(getRelationGraphFocus.name, () => {
 })
 
 function node(id: string, symbol: string): RelationGraphNode {
+  const [chain, address] = id.split(':')
+  if (chain === undefined || address === undefined) {
+    throw new Error(`Invalid test node id ${id}`)
+  }
   return {
     id,
     symbol,
-    chain: id.split(':')[0] ?? '',
-    address: id,
+    chain,
+    address,
     isDeployed: true,
   }
 }
 
 function missingNode(id: string): RelationGraphNode {
+  const [chain, address] = id.split(':')
+  if (chain === undefined || address === undefined) {
+    throw new Error(`Invalid test node id ${id}`)
+  }
   return {
     id,
     symbol: null,
-    chain: id.split(':')[0] ?? '',
-    address: id,
+    chain,
+    address,
     isDeployed: false,
   }
 }

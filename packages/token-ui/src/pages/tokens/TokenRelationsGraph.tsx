@@ -32,6 +32,11 @@ type VisualLink = LayoutLink<NodeDatum> & {
 
 type HoveredItem = RelationGraphSelection | undefined
 
+const SEARCH_ZOOM_SCALE = 2
+const SEARCH_ZOOM_DURATION_MS = 300
+const DETAILS_PANEL_MAX_WIDTH = 440
+const DETAILS_PANEL_WIDTH_RATIO = 0.92
+
 interface GraphStyleState {
   focus: RelationGraphFocus | undefined
   highlightAnomalies: boolean
@@ -42,16 +47,21 @@ interface GraphStyleState {
 export function TokenRelationsGraph({
   graph,
   selection,
+  zoomTarget,
   highlightAnomalies,
   onSelectionChange,
 }: {
   graph: RelationGraph
   selection: RelationGraphSelection | undefined
+  zoomTarget: { nodeId: string } | undefined
   highlightAnomalies: boolean
   onSelectionChange: (selection: RelationGraphSelection | undefined) => void
 }) {
   const containerRef = useRef<HTMLDivElement>(null)
   const svgRef = useRef<SVGSVGElement>(null)
+  const zoomToNodeRef = useRef<((nodeId: string) => void) | undefined>(
+    undefined,
+  )
   const onSelectionChangeRef = useRef(onSelectionChange)
   const [hovered, setHovered] = useState<HoveredItem>()
   const size = useElementSize(containerRef)
@@ -249,6 +259,32 @@ export function TokenRelationsGraph({
       .scale(fitScale)
     svg.call(zoom.transform, initialTransform)
 
+    zoomToNodeRef.current = (nodeId) => {
+      const target = nodeById.get(nodeId)
+      if (target === undefined) {
+        throw new Error(`Cannot zoom to missing graph node ${nodeId}`)
+      }
+      if (target.x === undefined || target.y === undefined) {
+        throw new Error(`Graph node ${nodeId} has no layout position`)
+      }
+
+      const detailsPanelWidth = Math.min(
+        size.width * DETAILS_PANEL_WIDTH_RATIO,
+        DETAILS_PANEL_MAX_WIDTH,
+      )
+      const visibleCenterX = (size.width - detailsPanelWidth) / 2
+      const transform = d3.zoomIdentity
+        .translate(
+          visibleCenterX - target.x * SEARCH_ZOOM_SCALE,
+          size.height / 2 - target.y * SEARCH_ZOOM_SCALE,
+        )
+        .scale(SEARCH_ZOOM_SCALE)
+      svg
+        .transition()
+        .duration(SEARCH_ZOOM_DURATION_MS)
+        .call(zoom.transform, transform)
+    }
+
     node.call(
       d3
         .drag<SVGGElement, NodeDatum>()
@@ -265,7 +301,20 @@ export function TokenRelationsGraph({
         }),
     )
     updateGraphStyles(svgElement, styleStateRef.current)
+    return () => {
+      svg.interrupt()
+      zoomToNodeRef.current = undefined
+    }
   }, [graph, size.height, size.width])
+
+  useEffect(() => {
+    if (zoomTarget === undefined) return
+    const zoomToNode = zoomToNodeRef.current
+    if (zoomToNode === undefined) {
+      throw new Error('Relation graph zoom is not initialized')
+    }
+    zoomToNode(zoomTarget.nodeId)
+  }, [zoomTarget])
 
   useEffect(() => {
     const svgElement = svgRef.current

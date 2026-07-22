@@ -29,6 +29,7 @@ const CLUSTER_LABEL_MIN_SCALE = 0.25
 const CLUSTER_LABEL_FADE_OUT_SCALE = 0.05
 const CLUSTER_LABEL_FULL_OPACITY_SCALE = 0.2
 const CLUSTER_LABEL_MAX_OPACITY = 0.8
+const SEARCH_RESULT_LIMIT = 12
 
 export function relationId(relation: RelationGraphRelation) {
   return [
@@ -139,6 +140,43 @@ export function getExistingRelationGraphSelection(
           (relation) => relationId(relation) === selection.id,
         )
   return exists ? selection : undefined
+}
+
+export function searchRelationGraphNodes(
+  nodes: RelationGraphNode[],
+  query: string,
+): RelationGraphNode[] {
+  const normalizedQuery = query.trim().toLowerCase()
+  if (normalizedQuery.length < 2) return []
+
+  const terms = normalizedQuery.split(/\s+/)
+  return nodes
+    .filter((node) => {
+      if (!node.isDeployed) return false
+      const searchable = [node.symbol ?? '', node.chain, node.address, node.id]
+        .join(' ')
+        .toLowerCase()
+      return terms.every((term) => searchable.includes(term))
+    })
+    .sort(
+      (a, b) =>
+        searchMatchRank(a, normalizedQuery) -
+          searchMatchRank(b, normalizedQuery) ||
+        nodeLabel(a).localeCompare(nodeLabel(b)) ||
+        a.chain.localeCompare(b.chain) ||
+        a.address.localeCompare(b.address),
+    )
+    .slice(0, SEARCH_RESULT_LIMIT)
+}
+
+function searchMatchRank(node: RelationGraphNode, query: string) {
+  const symbol = node.symbol?.toLowerCase()
+  const address = node.address.toLowerCase()
+  if (address === query || node.id.toLowerCase() === query) return 0
+  if (symbol === query) return 1
+  if (symbol?.startsWith(query)) return 2
+  if (address.startsWith(query)) return 3
+  return 4
 }
 
 function clusterLabelOpacity(scale: number) {

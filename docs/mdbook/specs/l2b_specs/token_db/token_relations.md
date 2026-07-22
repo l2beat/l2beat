@@ -282,6 +282,12 @@ two endpoints and loads only that relation's full transfer evidence, including
 source and destination transaction hashes used for explorer links. This keeps
 the evidence JSON out of the initial graph response.
 
+The graph header can search catalogued deployed tokens by symbol, chain, or
+address using the already-loaded graph payload. Choosing a result selects the
+node, opens its existing details panel, and animates the viewport to a readable
+zoom around it. Full token and abstract-token details remain selection-time
+queries rather than being added to the initial payload.
+
 An edge is an assignment anomaly when both endpoints are assigned to abstract
 tokens and those abstract token IDs differ. An unassigned or uncatalogued
 endpoint is not considered an anomaly. The default view keeps the bridge-type
