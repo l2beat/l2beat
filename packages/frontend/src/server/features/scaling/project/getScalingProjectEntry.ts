@@ -35,7 +35,10 @@ import {
   getProjectPastUpgrades,
 } from '~/utils/project/contracts-and-permissions/getPastUpgradesData'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
-import { getUnverifiedContractEntries } from '~/utils/project/contracts-and-permissions/getUnverifiedContractEntries'
+import {
+  getUnverifiedContractEntries,
+  hasCompleteUnverifiedContractEntries,
+} from '~/utils/project/contracts-and-permissions/getUnverifiedContractEntries'
 import { getCostsSection } from '~/utils/project/costs/getCostsSection'
 import { getDataPostedSection } from '~/utils/project/data-posted/getDataPostedSection'
 import { getBadgeWithParamsAndLink } from '~/utils/project/getBadgeWithParams'
@@ -57,7 +60,10 @@ import {
 } from '~/utils/project/underReview'
 import { withProjectIcon } from '~/utils/withProjectIcon'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
-import { getProjectVerificationWarnings } from '../../utils/getIsProjectVerified'
+import {
+  getProjectVerificationWarnings,
+  getUnresolvedUnverifiedContracts,
+} from '../../utils/getIsProjectVerified'
 import { getActivityProjectStats } from '../activity/getActivityProjectStats'
 import {
   getProjectInteropData,
@@ -505,6 +511,10 @@ export async function getScalingProjectEntry(
     project,
     changes,
   )
+  const unresolvedUnverifiedContracts = getUnresolvedUnverifiedContracts(
+    project.statuses.unverifiedContracts,
+    changes,
+  )
   const permissionsSection = getPermissionsSection(
     {
       id: project.id,
@@ -534,9 +544,17 @@ export async function getScalingProjectEntry(
     contractsSection,
     permissionsSection,
   )
-  const unverifiedContracts = projectVerificationWarnings.contracts
-    ? unverifiedContractEntries
-    : undefined
+  const hasCompleteUnverifiedContractDetails =
+    hasCompleteUnverifiedContractEntries(
+      unverifiedContractEntries,
+      unresolvedUnverifiedContracts,
+    )
+  const unverifiedContracts =
+    unresolvedUnverifiedContracts.length === 0
+      ? undefined
+      : hasCompleteUnverifiedContractDetails
+        ? unverifiedContractEntries
+        : []
 
   const riskSummary = getScalingRiskSummarySection(
     project,

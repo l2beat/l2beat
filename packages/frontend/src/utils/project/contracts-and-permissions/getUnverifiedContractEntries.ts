@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import type {
   TechnologyContract,
   TechnologyContractAddress,
@@ -8,6 +8,7 @@ import type { PermissionSection } from './getPermissionsSection'
 
 export interface UnverifiedContractEntry {
   address: string
+  chain: string
   contractName: string
   href: string
   targetId: string
@@ -29,6 +30,32 @@ export function getUnverifiedContractEntries(
   ]
 }
 
+export function hasCompleteUnverifiedContractEntries(
+  entries: UnverifiedContractEntry[],
+  unverifiedContracts: ChainSpecificAddress[],
+): boolean {
+  const entryKeys = new Set(
+    entries.map((entry) => getAddressKey(entry.chain, entry.address)),
+  )
+  const contractKeys = new Set(
+    unverifiedContracts.map((contract) =>
+      getAddressKey(
+        ChainSpecificAddress.longChain(contract),
+        ChainSpecificAddress.address(contract),
+      ),
+    ),
+  )
+
+  return (
+    entryKeys.size === contractKeys.size &&
+    [...entryKeys].every((key) => contractKeys.has(key))
+  )
+}
+
+function getAddressKey(chain: string, address: string): string {
+  return `${chain}:${address.toLowerCase()}`
+}
+
 function getUnverifiedContractAddresses(
   contract: TechnologyContract,
 ): UnverifiedContractEntry[] {
@@ -38,6 +65,7 @@ function getUnverifiedContractAddresses(
       assert(address.contractType, 'Contract address type is required')
       return {
         address: address.address,
+        chain: contract.chain,
         contractName: contract.name,
         href: address.href,
         targetId: contract.id,
@@ -53,6 +81,7 @@ function getUnverifiedPermissionAddresses(
     .filter((address) => address.verificationStatus === 'unverified')
     .map((address) => ({
       address: address.address,
+      chain: permission.chain,
       contractName: permission.name,
       href: address.href,
       targetId: permission.id,
