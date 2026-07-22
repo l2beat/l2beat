@@ -11,7 +11,7 @@ export interface UsedInProject {
   slug: string
   url: string
   icon: string
-  targetName: string
+  targetId: string
   type: 'implementation' | 'proxy' | 'permission'
 }
 
@@ -29,10 +29,7 @@ export function UsedInProjectEntry({
         {implementations.map((project, i) => (
           <Tooltip key={i}>
             <TooltipTrigger disabledOnMobile>
-              <a
-                href={`${project.url}#${project.targetName}`}
-                className="size-5"
-              >
+              <a href={`${project.url}#${project.targetId}`} className="size-5">
                 <img
                   width={20}
                   height={20}

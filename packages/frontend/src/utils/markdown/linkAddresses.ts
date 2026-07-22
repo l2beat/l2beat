@@ -1,4 +1,5 @@
 import type { ProjectContracts, ProjectPermissions } from '@l2beat/config'
+import { getProjectContractId } from '../project/contracts-and-permissions/getProjectContractId'
 
 /**
  * replaces ChainSpecificAddress occurrences (e.g., eth:0xB272B188855128c10a933Edb62CC64c22B1f3754)
@@ -38,7 +39,7 @@ function buildAddressToDetailsMap(
     for (const chainContracts of Object.values(contracts.addresses)) {
       for (const contract of chainContracts) {
         addressToDetails.set(contract.address.toString(), {
-          id: contract.name,
+          id: getProjectContractId(contract),
           name: contract.name,
         })
       }

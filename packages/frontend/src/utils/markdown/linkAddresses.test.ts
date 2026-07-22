@@ -104,6 +104,28 @@ describe(linkAddresses.name, () => {
         `See [My Contract Name](#${encodeURIComponent('My Contract Name')}).`,
       )
     })
+
+    it('should use the stable contract ID instead of its display name', () => {
+      const contractsWithStableId = mockObject<ProjectContracts>({
+        addresses: {
+          ethereum: [
+            mockObject<ProjectContract>({
+              id: mockContractAddress,
+              address: mockContractAddress,
+              name: '0xB272...3754',
+              chain: 'ethereum',
+            }),
+          ],
+        },
+      })
+
+      const input = `See ${mockContractAddress.toString()}.`
+      const output = linkAddresses(input, contractsWithStableId, undefined)
+
+      expect(output).toEqual(
+        `See [0xB272...3754](#${encodeURIComponent(mockContractAddress)}).`,
+      )
+    })
   })
 
   describe('permissions', () => {
