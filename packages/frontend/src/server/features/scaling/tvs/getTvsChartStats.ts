@@ -1,4 +1,5 @@
 import { v } from '@l2beat/validate'
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { optionToRange } from '~/utils/range/range'
 import { getRecategorisedTvsChart } from './getRecategorisedTvsChartData'
@@ -22,6 +23,7 @@ export type TvsChartStats = {
 type TvsStat = {
   value: number
   change: number | undefined
+  changePeriod: PercentageChangePeriod
 }
 
 export async function getTvsChartStats({
@@ -51,6 +53,7 @@ export async function getTvsChartStats({
   const stat = (now: number, then: number): TvsStat => ({
     value: now,
     change: calculatePercentageChange(now, then),
+    changePeriod: '7D',
   })
 
   return {

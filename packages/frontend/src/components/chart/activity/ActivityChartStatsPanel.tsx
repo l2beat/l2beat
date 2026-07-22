@@ -61,6 +61,7 @@ export function ActivityChartStatsPanel({
         metricStats.pastDayCount !== null ? (
           <ValueWithPercentageChange
             change={metricStats.pastDayChange}
+            changePeriod={metricStats.pastDayChangePeriod}
             className="text-sm xs:text-lg md:text-lg"
             changeClassName="text-xs"
           >

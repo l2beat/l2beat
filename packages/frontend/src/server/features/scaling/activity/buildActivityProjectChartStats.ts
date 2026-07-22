@@ -1,5 +1,8 @@
 import type { ActivityTotals } from '@l2beat/database'
-import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
+import {
+  calculatePercentageChange,
+  type PercentageChangePeriod,
+} from '~/utils/calculatePercentageChange'
 import { countPerSecond } from './utils/countPerSecond'
 
 interface TotalCount {
@@ -10,6 +13,7 @@ interface TotalCount {
 export interface ActivityMetricStats {
   pastDayCount: number | null
   pastDayChange: number
+  pastDayChangePeriod: PercentageChangePeriod
   pastDaySum: number | null
   maxCount: {
     value: number
@@ -94,6 +98,7 @@ function buildMetricStats({
       pastDaySum !== null
         ? calculatePercentageChange(pastDaySum, sevenDaysAgoSum)
         : 0,
+    pastDayChangePeriod: '7D',
     maxCount: {
       value: countPerSecond(maxCount),
       timestamp: maxTimestamp,

@@ -38,6 +38,7 @@ export function getZkCatalogProjectTvs(
     tvs: projectTvs,
     numberOfProjects: projectsForTodayTvs.length,
     change: calculatePercentageChange(projectTvs, tvs7d),
+    changePeriod: '7D' as const,
   }
 }
 

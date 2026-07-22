@@ -17,7 +17,10 @@ import { env } from '~/env'
 import { categoryToLabel } from '~/pages/scaling/project/tvs-breakdown/components/tables/categoryToLabel'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
-import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
+import {
+  calculatePercentageChange,
+  type PercentageChangePeriod,
+} from '~/utils/calculatePercentageChange'
 import { formatTimestamp } from '~/utils/dates'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import { getTvsTargetTimestamp } from '../utils/getTvsTargetTimestamp'
@@ -38,10 +41,18 @@ export interface ProjectTvsBreakdownTokenEntry extends FilterableEntry {
   name: string
   symbol: TvsToken['symbol']
   iconUrl: string
-  valueForProject: { value: number; change?: number }
+  valueForProject: {
+    value: number
+    change?: number
+    changePeriod?: PercentageChangePeriod
+  }
   value: number
   amount: number
-  priceUsd: { value: number; change?: number }
+  priceUsd: {
+    value: number
+    change?: number
+    changePeriod?: PercentageChangePeriod
+  }
   category: TvsToken['category']
   source: TvsToken['source']
   isAssociated: TvsToken['isAssociated']
@@ -146,6 +157,7 @@ function getEntries(
       iconUrl: token.iconUrl ?? TOKEN_PLACEHOLDER_ICON_URL,
       priceUsd: {
         value: tokenValue.priceUsd,
+        changePeriod: '7D',
         change: matchedSevenDaysAgo
           ? calculatePercentageChange(
               tokenValue.priceUsd,
@@ -155,6 +167,7 @@ function getEntries(
       },
       valueForProject: {
         value: tokenValue.valueForProject,
+        changePeriod: '7D',
         change: matchedSevenDaysAgo
           ? calculatePercentageChange(
               tokenValue.valueForProject,

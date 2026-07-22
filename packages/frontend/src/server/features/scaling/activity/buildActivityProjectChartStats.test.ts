@@ -30,6 +30,7 @@ describe(buildActivityProjectChartStats.name, () => {
       tps: {
         pastDayCount: 2,
         pastDayChange: 1,
+        pastDayChangePeriod: '7D',
         pastDaySum: 2 * UnixTime.DAY,
         maxCount: { value: 4, timestamp: 100 },
         totalCount: { value: 100, sinceTimestamp: SINCE },
@@ -37,6 +38,7 @@ describe(buildActivityProjectChartStats.name, () => {
       uops: {
         pastDayCount: 3,
         pastDayChange: 2,
+        pastDayChangePeriod: '7D',
         pastDaySum: 3 * UnixTime.DAY,
         maxCount: { value: 5, timestamp: 200 },
         totalCount: { value: 0, sinceTimestamp: SINCE },

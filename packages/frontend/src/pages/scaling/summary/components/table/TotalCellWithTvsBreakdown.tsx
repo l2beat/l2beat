@@ -16,11 +16,13 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { PercentageChangeTooltipContent } from '~/components/PercentChange'
 import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { TableLink } from '~/components/table/TableLink'
 import { sentimentToWarningBarColor, WarningBar } from '~/components/WarningBar'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { formatDollarValueNumber } from '~/utils/number-format/formatDollarValueNumber'
 
 interface TotalCellProps {
@@ -38,6 +40,7 @@ interface TotalCellProps {
   syncWarning: string | undefined
   href: string
   change?: number
+  changePeriod?: PercentageChangePeriod
   tvsWarnings?: WarningWithSentiment[]
 }
 
@@ -95,7 +98,10 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
             <div className="flex flex-col items-end max-md:py-1">
               <div className="flex items-center">
                 {icon}
-                <ValueWithPercentageChange change={props.change}>
+                <ValueWithPercentageChange
+                  change={props.change}
+                  changePeriod={props.changePeriod}
+                >
                   {formatDollarValueNumber(totalTvs)}
                 </ValueWithPercentageChange>
               </div>
@@ -128,6 +134,11 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
           <AdditionalTrustAssumptionsBanner
             percentage={props.additionalTrustAssumptionsPercentage}
           />
+        )}
+        {props.change !== undefined && props.changePeriod !== undefined && (
+          <p>
+            <PercentageChangeTooltipContent period={props.changePeriod} />
+          </p>
         )}
       </TooltipContent>
     </Tooltip>

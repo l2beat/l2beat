@@ -19,6 +19,7 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { VerticalSeparator } from '~/components/core/VerticalSeparator'
 import { CustomLink } from '~/components/link/CustomLink'
+import { PercentageChangeTooltipContent } from '~/components/PercentChange'
 import { DiscoUiLink } from '~/components/projects/links/DiscoUiLink'
 import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLinks'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
@@ -197,6 +198,13 @@ export function ProjectScalingSummary({ project }: Props) {
                   {project.header.tvs && (
                     <p className="text-label-value-13 text-secondary max-md:hidden">
                       Click to view TVS breakdown
+                    </p>
+                  )}
+                  {project.header.tvs?.breakdown && (
+                    <p>
+                      <PercentageChangeTooltipContent
+                        period={project.header.tvs.breakdown.totalChangePeriod}
+                      />
                     </p>
                   )}
                 </TooltipContent>
