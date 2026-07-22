@@ -274,7 +274,7 @@ function StatTile({
   return (
     <div
       className={cn(
-        'flex flex-col gap-1 rounded-lg border border-divider bg-surface-primary px-3 py-2',
+        'flex flex-col items-center gap-1 rounded-lg border border-divider bg-surface-primary px-3 py-2 text-center',
         className,
       )}
     >
@@ -290,12 +290,12 @@ function StatTile({
         <>
           <div
             className={cn(
-              'flex min-w-0 items-center gap-1.5 font-bold',
+              'flex min-w-0 items-center justify-center gap-1.5 font-bold',
               emphasized ? 'flex-1 text-label-value-20' : 'text-label-value-15',
             )}
           >
             {icon}
-            <span className="w-full truncate">{primary}</span>
+            <span className="min-w-0 truncate">{primary}</span>
           </div>
           {secondary !== undefined && (
             <span className="truncate font-medium text-label-value-12 text-secondary">
