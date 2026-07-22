@@ -105,11 +105,6 @@ export class ProjectDiscovery {
     return getEntryName(entry)
   }
 
-  getId(address: ChainSpecificAddress): string {
-    const entry = this.getEntryByAddress(address)
-    return entry ? getEntryId(entry) : address
-  }
-
   getEOAName(address: ChainSpecificAddress): string {
     if (!(address in this.eoaIDMap)) {
       this.eoaIDMap[address] = `EOA ${Object.keys(this.eoaIDMap).length + 1}`
@@ -139,7 +134,6 @@ export class ProjectDiscovery {
     }
 
     return {
-      id: getEntryId(contract),
       name: getEntryName(contract),
       isVerified: isEntryVerified(contract),
       address: contract.address,
@@ -548,7 +542,6 @@ export class ProjectDiscovery {
       descriptionOrOptions = { description: descriptionOrOptions }
     }
     return {
-      id: getEntryId(contract),
       address: contract.address,
       isVerified: isEntryVerified(contract),
       name: getEntryName(contract),
@@ -1019,15 +1012,25 @@ export class ProjectDiscovery {
     upgradableBy: ProjectUpgradeableActor[],
     eoaActors: ProjectPermission[],
   ): ProjectUpgradeableActor[] {
+    const contractActors = this.getReachableContracts()
     return upgradableBy.map((upgradableBy) => {
-      if (upgradableBy.unreachable === true || upgradableBy.id !== undefined) {
+      if (upgradableBy.unreachable === true) {
         return upgradableBy
       }
       const eoaActor = eoaActors.find((e) => e.name === upgradableBy.name)
       if (eoaActor) {
         return {
-          ...upgradableBy,
           id: eoaActor.id,
+          ...upgradableBy,
+        }
+      }
+      const contractActor = contractActors.find(
+        (contract) => getEntryName(contract) === upgradableBy.name,
+      )
+      if (contractActor) {
+        return {
+          id: getEntryId(contractActor),
+          ...upgradableBy,
         }
       }
       return upgradableBy

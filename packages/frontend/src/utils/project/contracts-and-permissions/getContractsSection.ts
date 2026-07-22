@@ -20,7 +20,6 @@ import { toTechnologyRisk } from '../risk-summary/toTechnologyRisk'
 import type { ContractUtils } from './getContractUtils'
 import { getPastUpgradesData } from './getPastUpgradesData'
 import { getProgramHashes } from './getProgramHashes'
-import { getProjectContractId } from './getProjectContractId'
 import { getTechnologyContractAddresses } from './getTechnologyContractAddresses'
 
 type ProjectParams = {
@@ -218,7 +217,7 @@ function makeTechnologyContract(
   }))
 
   return {
-    id: getProjectContractId(item),
+    id: item.name,
     name: item.name,
     addresses,
     admins,
@@ -260,7 +259,6 @@ function groupTechnologyContracts(
 
   const groupKey = (contract: TechnologyContract) =>
     JSON.stringify({
-      id: contract.id,
       name: contract.name,
       description: contract.description ?? null,
       upgradeableBy: contract.upgradeableBy ?? null,

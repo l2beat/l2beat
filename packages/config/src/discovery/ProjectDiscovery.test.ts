@@ -126,67 +126,6 @@ describe(ProjectDiscovery.name, () => {
     })
   })
 
-  describe(ProjectDiscovery.prototype.getDiscoveredContracts.name, () => {
-    it('keeps unnamed upgrader identities separate from their display names', () => {
-      const targetAddress = ChainSpecificAddress(
-        'eth:0x9999999999999999999999999999999999999999',
-      )
-      const firstUpgraderAddress = ChainSpecificAddress(
-        'eth:0x1111000000000000000000000000000000002222',
-      )
-      const secondUpgraderAddress = ChainSpecificAddress(
-        'eth:0x1111aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa2222',
-      )
-      const configReader = mockObject<ConfigReader>({
-        readConfig: (projectName: string) => mockConfig(projectName),
-        readDiscoveryWithReferences: () => [
-          {
-            ...discoveredJsonStub,
-            entries: [
-              {
-                type: 'Contract',
-                name: 'Target',
-                address: targetAddress,
-              },
-              {
-                type: 'Contract',
-                name: '',
-                address: firstUpgraderAddress,
-                receivedPermissions: [
-                  { permission: 'upgrade', from: targetAddress },
-                ],
-              },
-              {
-                type: 'Contract',
-                name: '',
-                address: secondUpgraderAddress,
-                receivedPermissions: [
-                  { permission: 'upgrade', from: targetAddress },
-                ],
-              },
-            ],
-          },
-        ],
-      })
-      const discovery = new ProjectDiscovery('UpgraderProject', configReader)
-
-      const result = discovery.getDiscoveredContracts().ethereum?.[0]
-
-      expect(result?.upgradableBy).toEqual([
-        {
-          id: firstUpgraderAddress,
-          name: '0x1111...2222',
-          delay: 'no',
-        },
-        {
-          id: secondUpgraderAddress,
-          name: '0x1111...2222',
-          delay: 'no',
-        },
-      ])
-    })
-  })
-
   describe(ProjectDiscovery.prototype.getContractValue.name, () => {
     it('should return given contract value', () => {
       assert(contractStub.name !== undefined)

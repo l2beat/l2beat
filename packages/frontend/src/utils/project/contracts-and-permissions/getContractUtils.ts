@@ -3,7 +3,6 @@ import type { UsedInProject } from '~/components/projects/sections/permissions/U
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
 import { getProjectUrl } from '~/utils/project/getProjectUrl'
-import { getProjectContractId } from './getProjectContractId'
 
 export interface ContractUtils {
   getChainName(chain: string): string
@@ -85,13 +84,13 @@ async function getContractUsageMap() {
 
         addUsage(chain, ChainSpecificAddress.address(contract.address), {
           ...basic,
-          targetId: getProjectContractId(contract),
+          targetName: contract.name,
           type: isMutable ? 'proxy' : 'implementation',
         })
         for (const impl of contract.upgradeability?.implementations ?? []) {
           addUsage(chain, ChainSpecificAddress.address(impl.address), {
             ...basic,
-            targetId: getProjectContractId(contract),
+            targetName: contract.name,
             type: 'implementation',
           })
         }
@@ -107,7 +106,7 @@ async function getContractUsageMap() {
         for (const account of permission.accounts) {
           addUsage(chain, ChainSpecificAddress.address(account.address), {
             ...basic,
-            targetId: permission.id,
+            targetName: permission.name,
             type: 'permission',
           })
         }

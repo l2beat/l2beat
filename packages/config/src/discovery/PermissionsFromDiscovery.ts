@@ -211,39 +211,26 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
 
     const upgradersWithDelay: Record<
       string,
-      {
-        name: string
-        id: string | undefined
-        delay: number
-        unreachable: boolean
-      }
+      { delay: number; unreachable: boolean }
     > = Object.fromEntries(
       issuedPermissions
         ?.filter((p) => p.permission === 'upgrade')
         .map((p) => {
-          const unreachable = !this.projectDiscovery.isReachable(p.to)
-          const isContract =
-            this.projectDiscovery.getEntryByAddress(p.to)?.type === 'Contract'
+          const actor = this.projectDiscovery.getName(p.to)
           const delay =
             (p.delay ?? 0) + sum(p.via?.map((v) => v.delay ?? 0) ?? [])
           return [
-            p.to,
+            actor,
             {
-              name: this.projectDiscovery.getName(p.to),
-              id:
-                isContract && !unreachable
-                  ? this.projectDiscovery.getId(p.to)
-                  : undefined,
               delay,
-              unreachable,
+              unreachable: !this.projectDiscovery.isReachable(p.to),
             },
           ]
         }) ?? [],
     )
 
-    return Object.values(upgradersWithDelay).map((value) => ({
-      name: value.name,
-      ...(value.id ? { id: value.id } : {}),
+    return Object.entries(upgradersWithDelay).map(([actor, value]) => ({
+      name: actor,
       delay: value.delay === 0 ? 'no' : formatSeconds(value.delay),
       ...(value.unreachable ? { unreachable: true } : {}),
     }))

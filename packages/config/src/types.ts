@@ -1289,8 +1289,6 @@ export interface ProjectContracts {
 export interface ProjectContract {
   /** Address of the contract */
   address: ChainSpecificAddress
-  /** Stable identifier used for links. Optional for backwards compatibility. */
-  id?: string
   /** Verification status of the contract */
   isVerified: boolean
   /** Name of the chain of this address. Optional for backwards compatibility */
