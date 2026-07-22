@@ -1,19 +1,14 @@
-import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import type { TechnologyContract } from '~/components/projects/sections/ContractEntry'
 import type { ContractsSection } from './getContractsSection'
 import type { PermissionSection } from './getPermissionsSection'
-import {
-  getUnverifiedContractEntries,
-  hasCompleteUnverifiedContractEntries,
-} from './getUnverifiedContractEntries'
+import { getUnverifiedContractEntries } from './getUnverifiedContractEntries'
 
 describe(getUnverifiedContractEntries.name, () => {
   it('returns the unverified addresses from contract and permission sections', () => {
     const standalone = mockObject<TechnologyContract>({
       id: 'StandaloneContract',
       name: 'StandaloneContract',
-      chain: 'ethereum',
       addresses: [
         {
           name: '0x1111…1111',
@@ -28,7 +23,6 @@ describe(getUnverifiedContractEntries.name, () => {
     const proxy = mockObject<TechnologyContract>({
       id: 'RollupProxy',
       name: 'RollupProxy',
-      chain: 'ethereum',
       addresses: [
         {
           name: '0x2222…2222',
@@ -57,7 +51,6 @@ describe(getUnverifiedContractEntries.name, () => {
     const permission = mockObject<TechnologyContract>({
       id: 'ProxyAdmin',
       name: 'ProxyAdmin',
-      chain: 'ethereum',
       addresses: [
         {
           name: '0x5555…5555',
@@ -85,7 +78,6 @@ describe(getUnverifiedContractEntries.name, () => {
     expect(result).toEqual([
       {
         address: '0x1111111111111111111111111111111111111111',
-        chain: 'ethereum',
         contractName: 'StandaloneContract',
         href: 'https://etherscan.io/address/0x1111#code',
         targetId: 'StandaloneContract',
@@ -93,7 +85,6 @@ describe(getUnverifiedContractEntries.name, () => {
       },
       {
         address: '0x2222222222222222222222222222222222222222',
-        chain: 'ethereum',
         contractName: 'RollupProxy',
         href: 'https://etherscan.io/address/0x2222#code',
         targetId: 'RollupProxy',
@@ -101,7 +92,6 @@ describe(getUnverifiedContractEntries.name, () => {
       },
       {
         address: '0x4444444444444444444444444444444444444444',
-        chain: 'ethereum',
         contractName: 'RollupProxy',
         href: 'https://etherscan.io/address/0x4444#code',
         targetId: 'RollupProxy',
@@ -109,33 +99,11 @@ describe(getUnverifiedContractEntries.name, () => {
       },
       {
         address: '0x5555555555555555555555555555555555555555',
-        chain: 'ethereum',
         contractName: 'ProxyAdmin',
         href: 'https://etherscan.io/address/0x5555#code',
         targetId: 'ProxyAdmin',
         type: 'permission',
       },
     ])
-
-    const matchingContracts = [
-      ChainSpecificAddress('eth:0x1111111111111111111111111111111111111111'),
-      ChainSpecificAddress('eth:0x2222222222222222222222222222222222222222'),
-      ChainSpecificAddress('eth:0x4444444444444444444444444444444444444444'),
-      ChainSpecificAddress('eth:0x5555555555555555555555555555555555555555'),
-      ChainSpecificAddress('eth:0x1111111111111111111111111111111111111111'),
-    ]
-    expect(
-      hasCompleteUnverifiedContractEntries(result, matchingContracts),
-    ).toEqual(true)
-
-    const externalContract = ChainSpecificAddress(
-      'arb1:0x1111111111111111111111111111111111111111',
-    )
-    expect(
-      hasCompleteUnverifiedContractEntries(result, [
-        ...matchingContracts,
-        externalContract,
-      ]),
-    ).toEqual(false)
   })
 })
