@@ -2179,6 +2179,26 @@
       "coingeckoId": "renzo-restaked-lst"
     }
   ],
+  "rise": [
+    {
+      // Bridged USDC Standard (Circle FiatTokenProxy), minted on Rise via a
+      // LayerZero OFT bridge (mints via lzReceive), not the canonical bridge.
+      "symbol": "USDC.e",
+      "address": "0xe436820ba0C69702c1d3E601d421c0eF38262739",
+      "category": "stablecoin",
+      "coingeckoId": "usd-coin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    }
+  ],
   "robinhood": [
     {
       // Natively minted on Robinhood Chain (no L1 escrow, no LayerZero/OFT, not

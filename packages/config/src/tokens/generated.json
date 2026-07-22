@@ -11194,6 +11194,28 @@
       }
     },
     {
+      "name": "Bridged USDC",
+      "coingeckoId": "usd-coin",
+      "address": "0xe436820ba0C69702c1d3E601d421c0eF38262739",
+      "symbol": "USDC.e",
+      "decimals": 6,
+      "deploymentTimestamp": 1773056676,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 4153,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "Cap USD",
       "coingeckoId": "cap-usd",
       "address": "0xcCcc62962d17b8914c62D74FfB843d73B2a3cccC",
