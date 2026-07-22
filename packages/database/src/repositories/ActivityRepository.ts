@@ -221,7 +221,7 @@ export class ActivityRepository extends BaseRepository {
       .groupBy('projectId')
       .as('t2')
 
-    const query = this.db
+    const rows = await this.db
       .selectFrom('Activity as t1')
       .innerJoin(uopsSubquery, (join) =>
         join
@@ -249,8 +249,7 @@ export class ActivityRepository extends BaseRepository {
         'count_table.count as max_count',
         'count_table.timestamp as count_timestamp',
       ])
-
-    const rows = await query.execute()
+      .execute()
 
     return Object.fromEntries(
       rows.map((row) => [
