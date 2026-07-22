@@ -1,6 +1,7 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { getChangelogEntries } from '~/server/features/changelog/getChangelogEntries'
 import { getHomeEthereumCharts } from '~/server/features/home/getHomeEthereumCharts'
 import { getHomeScalingCharts } from '~/server/features/home/getHomeScalingCharts'
 import { getHomeTopChainsTvsData } from '~/server/features/home/getHomeTopChainsTvsData'
@@ -22,6 +23,7 @@ import {
   MIN_SELECTED_PROTOCOLS,
 } from '../interop/components/flows/consts'
 import type { HomeScalingCategoryCounts } from './components/HomeScalingCard'
+import type { HomeWhatsNewItem } from './components/HomeWhatsNewCard'
 import { getHomeProjectCounts } from './getHomeProjectCounts'
 import { HOME_CHART_RANGE } from './homeChartRanges'
 
@@ -177,7 +179,27 @@ async function getCachedData(manifest: Manifest) {
     // and fetched lazily via trpc.projects.recentChanges when the dialog opens.
     recentChangesCount: recentChanges.count,
     ongoingAnomalies,
+    whatsNewItems: getHomeWhatsNewItems(),
   }
+}
+
+// Unlike the closeable nav widget, the home card ignores expiresAt — it always
+// shows the latest changelog entry flagged with whatsNew.
+function getHomeWhatsNewItems(): HomeWhatsNewItem[] {
+  const entry = getChangelogEntries().find((entry) => entry.whatsNew)
+  if (!entry?.whatsNew) {
+    return []
+  }
+  return [
+    {
+      id: entry.id,
+      title: entry.title,
+      description: entry.summary,
+      href: entry.whatsNew.href ?? `/changelog#${entry.id}`,
+      imageSrc: entry.whatsNew.image,
+      imageAlt: entry.whatsNew.alt,
+    },
+  ]
 }
 
 export interface HomeRecentProject {

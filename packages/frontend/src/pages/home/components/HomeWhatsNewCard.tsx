@@ -2,37 +2,30 @@ import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { cn } from '~/utils/cn'
 import { HomeCard } from './HomeCard'
 
-interface WhatsNewItem {
+export interface HomeWhatsNewItem {
   id: string
   title: string
-  description: string
+  description: string | undefined
   href: string
   imageSrc: string
   imageAlt: string
 }
 
-const WHATS_NEW_ITEMS: WhatsNewItem[] = [
-  {
-    id: 'interop-flows',
-    title: 'Interop Flows',
-    description:
-      'Explore live cross-chain volume, top routes, and bridges across all tracked L2s.',
-    href: '/interop/summary',
-    imageSrc:
-      '/meta-images/publications/interop-interactive-summary-banner.png',
-    imageAlt: 'Interactive Interop banner',
-  },
-]
-
-export function HomeWhatsNewCard({ className }: { className?: string }) {
-  if (WHATS_NEW_ITEMS.length === 0) {
+export function HomeWhatsNewCard({
+  items,
+  className,
+}: {
+  items: HomeWhatsNewItem[]
+  className?: string
+}) {
+  if (items.length === 0) {
     return null
   }
   return (
     <HomeCard className={cn('flex flex-col gap-3', className)}>
       <h2 className="font-bold text-xl">What's new</h2>
       <ul className="flex flex-1 flex-col gap-2">
-        {WHATS_NEW_ITEMS.map((item) => (
+        {items.map((item) => (
           <li key={item.id} className="flex flex-1">
             <WhatsNewItemCard item={item} />
           </li>
@@ -42,7 +35,7 @@ export function HomeWhatsNewCard({ className }: { className?: string }) {
   )
 }
 
-function WhatsNewItemCard({ item }: { item: WhatsNewItem }) {
+function WhatsNewItemCard({ item }: { item: HomeWhatsNewItem }) {
   return (
     <a
       href={item.href}
@@ -62,9 +55,11 @@ function WhatsNewItemCard({ item }: { item: WhatsNewItem }) {
         <span className="font-bold text-label-value-14 leading-tight md:text-heading-16">
           {item.title}
         </span>
-        <p className="line-clamp-2 text-label-value-12 text-secondary leading-snug md:text-label-value-13">
-          {item.description}
-        </p>
+        {item.description && (
+          <p className="line-clamp-2 text-label-value-12 text-secondary leading-snug md:text-label-value-13">
+            {item.description}
+          </p>
+        )}
         <span className="mt-0.5 flex items-center gap-1 font-bold text-link text-xs xl:mt-auto xl:pt-1">
           Explore
           <ArrowRightIcon className="size-3 fill-current transition-transform group-hover:translate-x-0.5" />

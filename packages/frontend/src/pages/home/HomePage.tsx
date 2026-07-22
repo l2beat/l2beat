@@ -22,6 +22,7 @@ import { HomeScalingCard } from './components/HomeScalingCard'
 import { HomeStatsStrip } from './components/HomeStatsStrip'
 import { HomeTopChainsCard } from './components/HomeTopChainsCard'
 import { HomeTopInteropProtocolsCard } from './components/HomeTopInteropProtocolsCard'
+import type { HomeWhatsNewItem } from './components/HomeWhatsNewCard'
 import { HomeWhatsNewCard } from './components/HomeWhatsNewCard'
 import type { HomeRecentProject } from './getHomeData'
 import type { HomeProjectCounts } from './getHomeProjectCounts'
@@ -40,6 +41,7 @@ interface Props extends AppLayoutProps {
   scalingCategoryCounts: HomeScalingCategoryCounts
   recentChangesCount: number
   ongoingAnomalies: OngoingAnomaliesOverview
+  whatsNewItems: HomeWhatsNewItem[]
 }
 
 export function HomePage({
@@ -56,6 +58,7 @@ export function HomePage({
   scalingCategoryCounts,
   recentChangesCount,
   ongoingAnomalies,
+  whatsNewItems,
   ...props
 }: Props) {
   return (
@@ -86,7 +89,10 @@ export function HomePage({
                   className="hidden h-auto xl:flex"
                   projects={recentProjects}
                 />
-                <HomeWhatsNewCard className="min-h-0 xl:flex-1" />
+                <HomeWhatsNewCard
+                  items={whatsNewItems}
+                  className="min-h-0 xl:flex-1"
+                />
               </div>
               <div className="flex h-full min-h-0 min-w-0 flex-col md:gap-4 xl:gap-6">
                 <div className="flex min-h-0 flex-col xl:flex-1">
