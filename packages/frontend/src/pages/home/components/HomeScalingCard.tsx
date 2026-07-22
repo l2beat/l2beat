@@ -16,13 +16,14 @@ import {
 } from './HomeChartSection'
 import { HomeStatValue } from './HomeStatValue'
 
+export interface HomeScalingCategoryCounts {
+  rollups: number
+  validiumsAndOptimiums: number
+}
+
 interface Props {
   charts: HomeScalingCharts
-  scalingCategoryCounts: {
-    rollups: number
-    validiumsAndOptimiums: number
-    others: number
-  }
+  scalingCategoryCounts: HomeScalingCategoryCounts
 }
 
 export function HomeScalingCard({ charts, scalingCategoryCounts }: Props) {
@@ -61,10 +62,11 @@ export function HomeScalingCard({ charts, scalingCategoryCounts }: Props) {
     [charts.activity.chart],
   )
 
-  const pastDayActivityUops = useMemo(() => {
-    const last = [...activitySparkline].reverse().find((d) => d.value !== null)
-    return last?.value ?? undefined
-  }, [activitySparkline])
+  const pastDayActivityUops = useMemo(
+    () =>
+      activitySparkline.findLast((d) => d.value !== null)?.value ?? undefined,
+    [activitySparkline],
+  )
 
   return (
     <HomeCard className="flex h-full flex-col pb-4 xl:py-4">
@@ -127,15 +129,7 @@ export function HomeScalingCard({ charts, scalingCategoryCounts }: Props) {
   )
 }
 
-function CountsLine({
-  counts,
-}: {
-  counts: {
-    rollups: number
-    validiumsAndOptimiums: number
-    others: number
-  }
-}) {
+function CountsLine({ counts }: { counts: HomeScalingCategoryCounts }) {
   const items = [
     { label: 'Rollups', value: counts.rollups, dot: 'bg-pink-100' },
     {

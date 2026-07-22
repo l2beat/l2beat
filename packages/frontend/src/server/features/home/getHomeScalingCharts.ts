@@ -72,28 +72,7 @@ async function getHomeTvsChart(
     getSummedTvsValues(validiumsAndOptimiums, range, options),
   ])
 
-  const byTimestamp = new Map<number, [number | null, number | null]>()
-  for (const value of rollupValues) {
-    byTimestamp.set(value.timestamp, [value.value, null])
-  }
-  for (const value of validiumAndOptimiumValues) {
-    const entry = byTimestamp.get(value.timestamp)
-    if (entry) {
-      entry[1] = value.value
-    } else {
-      byTimestamp.set(value.timestamp, [null, value.value])
-    }
-  }
-
-  const chart: [number, number | null, number | null][] = [
-    ...byTimestamp.entries(),
-  ]
-    .sort(([a], [b]) => a - b)
-    .map(([timestamp, [rollupsValue, vAndOValue]]) => [
-      timestamp,
-      rollupsValue,
-      vAndOValue,
-    ])
+  const chart = mergeSeriesByTimestamp(rollupValues, validiumAndOptimiumValues)
 
   const syncedUntil =
     chart.findLast(([_, r, v]) => r !== null || v !== null)?.[0] ??
@@ -128,34 +107,46 @@ async function getHomeActivityChart(
     db.activity.getSummedByTimestamp(validiumsAndOptimiums, adjustedRange),
   ])
 
-  const byTimestamp = new Map<number, [number | null, number | null]>()
-  for (const entry of rollupEntries) {
-    byTimestamp.set(entry.timestamp, [entry.uopsCount, null])
-  }
-  for (const entry of validiumAndOptimiumEntries) {
-    const existing = byTimestamp.get(entry.timestamp)
-    if (existing) {
-      existing[1] = entry.uopsCount
-    } else {
-      byTimestamp.set(entry.timestamp, [null, entry.uopsCount])
-    }
-  }
-
-  const chart: [number, number | null, number | null][] = [
-    ...byTimestamp.entries(),
-  ]
-    .sort(([a], [b]) => a - b)
-    .map(([timestamp, [rollupsUops, vAndOUops]]) => [
-      timestamp,
-      rollupsUops,
-      vAndOUops,
-    ])
+  const toSeries = (entries: { timestamp: number; uopsCount: number }[]) =>
+    entries.map((entry) => ({
+      timestamp: entry.timestamp,
+      value: entry.uopsCount,
+    }))
+  const chart = mergeSeriesByTimestamp(
+    toSeries(rollupEntries),
+    toSeries(validiumAndOptimiumEntries),
+  )
 
   return {
     chart,
     syncedUntil: adjustedRange[1],
     change: computeSummedSeriesChange(chart),
   }
+}
+
+/**
+ * Zip two per-timestamp series into [timestamp, a, b] rows sorted by
+ * timestamp. A timestamp present in only one series gets null for the other.
+ */
+export function mergeSeriesByTimestamp(
+  seriesA: { timestamp: number; value: number | null }[],
+  seriesB: { timestamp: number; value: number | null }[],
+): [number, number | null, number | null][] {
+  const byTimestamp = new Map<number, [number | null, number | null]>()
+  for (const { timestamp, value } of seriesA) {
+    byTimestamp.set(timestamp, [value, null])
+  }
+  for (const { timestamp, value } of seriesB) {
+    const entry = byTimestamp.get(timestamp)
+    if (entry) {
+      entry[1] = value
+    } else {
+      byTimestamp.set(timestamp, [null, value])
+    }
+  }
+  return [...byTimestamp.entries()]
+    .sort(([a], [b]) => a - b)
+    .map(([timestamp, [a, b]]) => [timestamp, a, b])
 }
 
 function computeSummedSeriesChange(
