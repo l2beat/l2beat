@@ -43,9 +43,7 @@ describe(parseDiscoveryUpdates.name, () => {
     )
 
     expect(updates.length).toEqual(1)
-    expect(updates[0]?.id).toEqual(
-      `update-${Math.floor(Date.parse('Tue, 21 Jan 2026 09:00:00 GMT') / 1000)}-tue-21-jan-2026-09-00-00-gmt`,
-    )
+    expect(updates[0]?.id.startsWith('update-1768986000-0x')).toEqual(true)
     expect(updates[0]?.description).toEqual('A public update.')
     expect(updates[0]?.sections).toEqual([
       {
@@ -146,9 +144,7 @@ describe(parseDiscoveryUpdates.name, () => {
     )
 
     expect(updates[0]?.timestamp).toEqual(1700000000)
-    expect(updates[0]?.id).toEqual(
-      'update-1700000000-tue-21-jan-2026-09-00-00-gmt',
-    )
+    expect(updates[0]?.id.startsWith('update-1700000000-0x')).toEqual(true)
   })
 
   it('creates unique ids for entries with the same discovery timestamp and date', () => {
@@ -185,6 +181,38 @@ describe(parseDiscoveryUpdates.name, () => {
     ])
   })
 
+  it('creates stable unique ids without a discovery hash', () => {
+    const content = [
+      '# Diff at Tue, 21 Jan 2026 09:00:00 GMT:',
+      '',
+      '- current timestamp: 1700000000',
+      '',
+      '## Watched changes',
+      '',
+      '```diff',
+      '+ first',
+      '```',
+      '',
+      '# Diff at Tue, 21 Jan 2026 09:00:00 GMT:',
+      '',
+      '- current timestamp: 1700000000',
+      '',
+      '## Watched changes',
+      '',
+      '```diff',
+      '+ second',
+      '```',
+      '',
+    ].join('\n')
+    const updates = parseDiscoveryUpdates(content)
+    const repeated = parseDiscoveryUpdates(content)
+
+    expect(updates[0]?.id).not.toEqual(updates[1]?.id)
+    expect(repeated.map((update) => update.id)).toEqual(
+      updates.map((update) => update.id),
+    )
+  })
+
   it('creates a linkable id for legacy entries with an invalid date', () => {
     const updates = parseDiscoveryUpdates(
       [
@@ -200,7 +228,7 @@ describe(parseDiscoveryUpdates.name, () => {
     )
 
     expect(updates[0]?.timestamp).toEqual(null)
-    expect(updates[0]?.id).toEqual('update-legacy-entry')
+    expect(updates[0]?.id.startsWith('update-legacy-entry-0x')).toEqual(true)
   })
 
   it('respects the result limit', () => {

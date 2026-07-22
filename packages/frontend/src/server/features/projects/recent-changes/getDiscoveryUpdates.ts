@@ -2,6 +2,7 @@ import {
   type DiffHistoryEntry,
   DiffHistoryParser,
   type DiffHistorySectionKind,
+  hashJson,
 } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { existsSync, readFileSync } from 'fs'
@@ -66,11 +67,11 @@ export function parseDiscoveryUpdates(
 
   for (const entry of diffHistoryParser.parse(content)) {
     const update = toPublicDiscoveryUpdate(entry)
-    if (update !== null) {
-      updates.push(update)
-      if (updates.length >= limit) {
-        break
-      }
+    if (update === null) continue
+
+    updates.push(update)
+    if (updates.length >= limit) {
+      break
     }
   }
 
@@ -156,11 +157,15 @@ function getUpdateId(
     return `update-${timestamp ?? dateSlug}-${entry.discoveryHash}`
   }
 
-  if (timestamp !== null) {
-    return `update-${timestamp}-${dateSlug}`
-  }
+  const fingerprint = hashJson([
+    entry.date,
+    entry.current?.kind ?? null,
+    entry.current?.value ?? null,
+    entry.description,
+    entry.sections.flatMap((section) => [section.kind, section.body]),
+  ])
 
-  return `update-${dateSlug}`
+  return `update-${timestamp ?? dateSlug}-${fingerprint}`
 }
 
 function getTimestamp(entry: DiffHistoryEntry): number | null {

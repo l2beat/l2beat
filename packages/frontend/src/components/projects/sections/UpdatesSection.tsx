@@ -246,7 +246,7 @@ function UpdateCard({
 }
 
 function getUpdateHref(updateId: string): string {
-  return `?update=${encodeURIComponent(updateId)}`
+  return `?update=${updateId}`
 }
 
 function formatUpdateDate(update: DiscoveryUpdate): string {
