@@ -1,5 +1,9 @@
 import { assert, type UnixTime } from '@l2beat/shared-pure'
-import type { AztecBlock, AztecBlockClient } from '../../clients'
+import {
+  AZTEC_MAX_BLOCKS_PER_REQUEST,
+  type AztecBlock,
+  type AztecBlockClient,
+} from '../../clients'
 import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 
 export class AztecBlockProvider {
@@ -16,7 +20,18 @@ export class AztecBlockProvider {
 
   async getBlocks(start: number, limit: number): Promise<AztecBlock[]> {
     return await this.withClient(async (client) => {
-      const blocks = await client.getBlocks(start, limit)
+      const blocks: AztecBlock[] = []
+      for (
+        let offset = 0;
+        offset < limit;
+        offset += AZTEC_MAX_BLOCKS_PER_REQUEST
+      ) {
+        const chunkLimit = Math.min(
+          AZTEC_MAX_BLOCKS_PER_REQUEST,
+          limit - offset,
+        )
+        blocks.push(...(await client.getBlocks(start + offset, chunkLimit)))
+      }
       assert(
         blocks.length === limit,
         `Expected ${limit} blocks starting from ${start}, got ${blocks.length}`,
@@ -44,7 +59,7 @@ export class AztecBlockProvider {
         effectiveStart,
         end,
         async (number) => {
-          const [block] = await client.getBlocks(number, 1)
+          const [block] = await client.getBlockHeaders(number, 1)
           assert(block, `Block ${number} not found`)
           assert(
             block.number === number,

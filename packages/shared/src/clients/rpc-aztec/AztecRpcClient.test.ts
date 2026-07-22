@@ -50,9 +50,7 @@ describe(AztecRpcClient.name, () => {
         { number: 100, timestamp: 1234567890, txEffectsCount: 2 },
       ])
     })
-  })
 
-  describe(AztecRpcClient.prototype.query.name, () => {
     it('requests blocks with transaction effects included', async () => {
       const http = mockObject<HttpClient>({
         fetch: mockFn().resolvesToOnce({ result: [] }),
@@ -68,6 +66,38 @@ describe(AztecRpcClient.name, () => {
           jsonrpc: '2.0',
           method: 'aztec_getBlocks',
           params: [100, 50, { includeTransactions: true }],
+          id: 'unique-id',
+        }),
+        redirect: 'follow',
+        timeout: 10_000,
+      })
+    })
+  })
+
+  describe(AztecRpcClient.prototype.getBlockHeaders.name, () => {
+    it('returns block headers without transaction effects', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: mockFn().resolvesToOnce({
+          result: [
+            {
+              number: 100,
+              header: { globalVariables: { timestamp: '1234567890' } },
+            },
+          ],
+        }),
+      })
+      const client = mockClient({ http })
+
+      const result = await client.getBlockHeaders(100, 1)
+
+      expect(result).toEqual([{ number: 100, timestamp: 1234567890 }])
+      expect(http.fetch).toHaveBeenOnlyCalledWith('RPC_URL', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          jsonrpc: '2.0',
+          method: 'aztec_getBlocks',
+          params: [100, 1, { includeTransactions: false }],
           id: 'unique-id',
         }),
         redirect: 'follow',

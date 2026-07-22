@@ -1,4 +1,4 @@
-import type { Block, Log } from '@l2beat/shared-pure'
+import type { Block, Log, UnixTime } from '@l2beat/shared-pure'
 import type { SvmBlock } from './rpc-svm/types'
 
 export interface BlockClient {
@@ -17,15 +17,21 @@ export interface SvmBlockClient {
   chain: string
 }
 
-export interface AztecBlock {
+export const AZTEC_MAX_BLOCKS_PER_REQUEST = 50
+
+export interface AztecBlockHeader {
   number: number
-  timestamp: number
+  timestamp: UnixTime
+}
+
+export interface AztecBlock extends AztecBlockHeader {
   txEffectsCount: number
 }
 
 export interface AztecBlockClient {
   getLatestBlockNumber(): Promise<number>
   getBlocks(start: number, limit: number): Promise<AztecBlock[]>
+  getBlockHeaders(start: number, limit: number): Promise<AztecBlockHeader[]>
   chain: string
 }
 

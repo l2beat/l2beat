@@ -3,9 +3,39 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { UopsAnalyzer } from '../modules/activity/services/uops/types'
 import {
+  ActivityBlockProviders,
   AztecActivityBlockProvider,
   StandardActivityBlockProvider,
 } from './ActivityBlockProviders'
+import type { AztecBlockProviders } from './AztecBlockProviders'
+import type { BlockProviders } from './BlockProviders'
+import type { UopsAnalyzers } from './UopsAnalyzers'
+
+describe(ActivityBlockProviders.name, () => {
+  it('rejects duplicate chain providers', () => {
+    const blockProvider = mockObject<BlockProvider>({
+      chain: 'aztecnetwork',
+    })
+    const aztecBlockProvider = mockObject<AztecBlockProvider>({
+      chain: 'aztecnetwork',
+    })
+
+    expect(
+      () =>
+        new ActivityBlockProviders(
+          mockObject<BlockProviders>({
+            getAll: () => [blockProvider],
+          }),
+          mockObject<AztecBlockProviders>({
+            getAll: () => [aztecBlockProvider],
+          }),
+          mockObject<UopsAnalyzers>({
+            getUopsAnalyzer: () => undefined,
+          }),
+        ),
+    ).toThrow('ActivityBlockProvider already exists: aztecnetwork')
+  })
+})
 
 describe(StandardActivityBlockProvider.name, () => {
   it('maps normalized block transactions and uops to activity blocks', async () => {

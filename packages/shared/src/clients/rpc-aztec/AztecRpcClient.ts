@@ -1,10 +1,11 @@
 import type { json } from '@l2beat/shared-pure'
 import { generateId } from '../../tools/generateId'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
-import type { AztecBlock, AztecBlockClient } from '../types'
+import type { AztecBlock, AztecBlockClient, AztecBlockHeader } from '../types'
 import {
   AztecGetBlockNumberResponse,
   AztecGetBlocksResponse,
+  AztecGetBlockHeadersResponse,
   AztecRpcErrorResponse,
 } from './types'
 
@@ -42,6 +43,31 @@ export class AztecRpcClient extends ClientCore implements AztecBlockClient {
       { includeTransactions: true },
     ])
     const parsedResponse = AztecGetBlocksResponse.safeParse(response)
+
+    if (!parsedResponse.success) {
+      this.$.logger.warn('Invalid response', {
+        method,
+        start,
+        limit,
+        response: JSON.stringify(response),
+      })
+      throw new Error(`${method}: Error during parsing`)
+    }
+
+    return parsedResponse.data.result
+  }
+
+  async getBlockHeaders(
+    start: number,
+    limit: number,
+  ): Promise<AztecBlockHeader[]> {
+    const method = 'aztec_getBlocks'
+    const response = await this.query(method, [
+      start,
+      limit,
+      { includeTransactions: false },
+    ])
+    const parsedResponse = AztecGetBlockHeadersResponse.safeParse(response)
 
     if (!parsedResponse.success) {
       this.$.logger.warn('Invalid response', {

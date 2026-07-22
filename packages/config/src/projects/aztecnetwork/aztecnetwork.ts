@@ -335,6 +335,7 @@ export const aztecnetwork: ScalingProject = {
     activityConfig: {
       type: 'block',
       startBlock: 1,
+      // The indexer range is inclusive; 49 produces one 50-block RPC request.
       batchSize: 49,
     },
     escrows: [
@@ -380,7 +381,7 @@ export const aztecnetwork: ScalingProject = {
   chainConfig: {
     gasTokens: ['AZTEC'],
     name: 'aztecnetwork',
-    chainId: 677868, // TODO: verify
+    chainId: 677868, // on chainlist, but aztec is not evm
     apis: [
       {
         type: 'aztec-rpc',
