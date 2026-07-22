@@ -13753,6 +13753,28 @@
       }
     },
     {
+      "name": "USDC.e",
+      "coingeckoId": "usd-coin",
+      "address": "0x9cb8142aEBBcdc60AF7c97Af897A67A8f3CA71C2",
+      "symbol": "USDC.e",
+      "decimals": 6,
+      "deploymentTimestamp": 1775297696,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 36900,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "ccip"
+          }
+        ]
+      }
+    },
+    {
       "name": "Blend Token",
       "coingeckoId": "blend-3",
       "address": "0x526E8a66E357FFeaEeEc6d7Be1E5eA44a788dd1d",
