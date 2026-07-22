@@ -18,13 +18,16 @@ export function getProjectVerificationWarnings(
   project: Project<'statuses', 'contracts'>,
   changes: ProjectChanges | undefined,
 ): ProjectVerificationWarnings {
+  const unverifiedContracts = getUnresolvedUnverifiedContracts(
+    project.statuses.unverifiedContracts,
+    changes,
+  )
+
   return {
-    contracts: areContractsVerified(
-      project.statuses.unverifiedContracts,
-      changes,
-    )
-      ? undefined
-      : UNVERIFIED_CONTRACTS_WARNING,
+    contracts:
+      unverifiedContracts.length === 0
+        ? undefined
+        : UNVERIFIED_CONTRACTS_WARNING,
     programHashes: project.contracts?.programHashes?.some(
       (hash) => hash.verificationStatus === 'unsuccessful',
     )
@@ -38,22 +41,19 @@ export function getProjectVerificationWarnings(
   }
 }
 
-function areContractsVerified(
-  becameVerifiedContracts: ChainSpecificAddress[],
+export function getUnresolvedUnverifiedContracts(
+  unverifiedContracts: ChainSpecificAddress[],
   changes: ProjectChanges | undefined,
-): boolean {
-  if (becameVerifiedContracts.length === 0) {
-    return true
-  }
+): ChainSpecificAddress[] {
   if (!changes) {
-    return false
+    return unverifiedContracts
   }
 
-  return becameVerifiedContracts.every((c) => {
-    const chain = ChainSpecificAddress.longChain(c)
+  return unverifiedContracts.filter((contract) => {
+    const chain = ChainSpecificAddress.longChain(contract)
 
-    return changes.becameVerifiedContracts[chain]?.includes(
-      ChainSpecificAddress.address(c),
+    return !changes.becameVerifiedContracts[chain]?.includes(
+      ChainSpecificAddress.address(contract),
     )
   })
 }

@@ -45,20 +45,31 @@ describe(getUnverifiedContractEntries.name, () => {
       },
     })
 
-    const result = getUnverifiedContractEntries(contracts, permissions)
+    const entries = getUnverifiedContractEntries(
+      [
+        ChainSpecificAddress('eth:0x1111111111111111111111111111111111111111'),
+        ChainSpecificAddress('eth:0x3333333333333333333333333333333333333333'),
+        ChainSpecificAddress('eth:0x4444444444444444444444444444444444444444'),
+      ],
+      contracts,
+      permissions,
+    )
 
-    expect(result).toEqual([
+    expect(entries).toEqual([
       {
         address: '0x1111111111111111111111111111111111111111',
         contractName: 'RollupProxy',
-        href: 'https://etherscan.io/address/0x1111#code',
         targetId: 'RollupProxy',
       },
       {
         address: '0x3333333333333333333333333333333333333333',
         contractName: 'ProxyAdmin',
-        href: 'https://etherscan.io/address/0x3333#code',
         targetId: 'ProxyAdmin',
+      },
+      {
+        address: '0x4444444444444444444444444444444444444444',
+        contractName: '0x4444...4444',
+        targetId: undefined,
       },
     ])
   })

@@ -5,9 +5,7 @@ import {
   CollapsibleTrigger,
 } from '~/components/core/Collapsible'
 import { linkVariants } from '~/components/link/CustomLink'
-import { HighlightableLink } from '~/components/link/highlightable/HighlightableLink'
 import { ChevronIcon } from '~/icons/Chevron'
-import { CustomLinkIcon } from '~/icons/Outlink'
 import { UnverifiedIcon } from '~/icons/Unverified'
 import { cn } from '~/utils/cn'
 import type { UnverifiedContractEntry } from '~/utils/project/contracts-and-permissions/getUnverifiedContractEntries'
@@ -56,27 +54,27 @@ export function UnverifiedContractsWarning({ entries, className }: Props) {
           <ul className="mt-3 space-y-2 border-divider border-t pt-3">
             {entries.map((entry) => (
               <li
-                key={`${entry.targetId}-${entry.address}`}
+                key={entry.address}
                 className="flex flex-col gap-0.5 text-sm sm:flex-row sm:items-center sm:justify-between sm:gap-3"
               >
-                <a
-                  href={`#${entry.targetId}`}
-                  className={linkVariants({
-                    variant: 'plain',
-                    className: 'min-w-0 underline',
-                  })}
-                >
-                  {entry.contractName}
-                </a>
-                <HighlightableLink
-                  href={entry.href}
-                  address={entry.address}
-                  variant="danger"
-                  className="flex shrink-0 items-center gap-1"
-                >
-                  {formatAddress(entry.address)}
-                  <CustomLinkIcon className="size-3.5" />
-                </HighlightableLink>
+                {entry.targetId ? (
+                  <>
+                    <a
+                      href={`#${entry.targetId}`}
+                      className={linkVariants({
+                        variant: 'plain',
+                        className: 'min-w-0 underline',
+                      })}
+                    >
+                      {entry.contractName}
+                    </a>
+                    <span className="shrink-0">
+                      {formatAddress(entry.address)}
+                    </span>
+                  </>
+                ) : (
+                  <span>{entry.contractName}</span>
+                )}
               </li>
             ))}
           </ul>

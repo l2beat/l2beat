@@ -57,7 +57,10 @@ import {
 } from '~/utils/project/underReview'
 import { withProjectIcon } from '~/utils/withProjectIcon'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
-import { getProjectVerificationWarnings } from '../../utils/getIsProjectVerified'
+import {
+  getProjectVerificationWarnings,
+  getUnresolvedUnverifiedContracts,
+} from '../../utils/getIsProjectVerified'
 import { getActivityProjectStats } from '../activity/getActivityProjectStats'
 import {
   getProjectInteropData,
@@ -505,7 +508,12 @@ export async function getScalingProjectEntry(
     project,
     changes,
   )
+  const unresolvedUnverifiedContracts = getUnresolvedUnverifiedContracts(
+    project.statuses.unverifiedContracts,
+    changes,
+  )
   const unverifiedContracts = getUnverifiedContractEntries(
+    unresolvedUnverifiedContracts,
     project.contracts,
     project.permissions,
   )
