@@ -9,7 +9,7 @@ import type {
   ReasonForBeingInOther,
   WarningWithSentiment,
 } from '@l2beat/config'
-import { assert, ProjectId, type UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
@@ -534,14 +534,7 @@ export async function getScalingProjectEntry(
     contractsSection,
     permissionsSection,
   )
-  const hasUnverifiedContractWarning =
-    projectVerificationWarnings.contracts !== undefined
-  const hasUnverifiedContractEntries = unverifiedContractEntries.length > 0
-  assert(
-    hasUnverifiedContractWarning === hasUnverifiedContractEntries,
-    `Unverified contract warning does not match entries for ${project.slug}`,
-  )
-  const unverifiedContracts = hasUnverifiedContractEntries
+  const unverifiedContracts = projectVerificationWarnings.contracts
     ? unverifiedContractEntries
     : undefined
 
