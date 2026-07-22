@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import type {
   Field as ApiField,
@@ -15,6 +15,7 @@ import type { AutoGroup } from './store/actions/loadNodes'
 import type { Field, Node } from './store/State'
 import { useStore as useNodeStore, useStore } from './store/store'
 import { NODE_WIDTH } from './store/utils/constants'
+import { getGraphProjection } from './store/utils/graphProjection'
 import { topLevelByDescendant } from './store/utils/subnodes'
 import { Viewport } from './view/Viewport'
 
@@ -165,12 +166,15 @@ function useSynchronizeSelection() {
   const selectGlobal = usePanelStore((state) => state.select)
   const selectedNodes = useStore((state) => state.selected)
   const nodes = useStore((state) => state.nodes)
-  const hiddenNodes = useStore((state) => state.hidden)
+  const hiddenNodes = useMemo(
+    () => getGraphProjection(nodes).hiddenNodeIds,
+    [nodes],
+  )
   const selectAndFocus = useStore((state) => state.selectAndFocus)
 
   useEffect(() => {
     const visibleSelectedNodes = selectedNodes.filter(
-      (id) => !hiddenNodes.includes(id),
+      (id) => !hiddenNodes.has(id),
     )
     highlightGlobal(visibleSelectedNodes)
   }, [selectedNodes, hiddenNodes, highlightGlobal])
@@ -200,6 +204,7 @@ function useSynchronizeSelection() {
     selectGlobal,
     selectedNodes,
     hiddenNodes,
+    nodes,
     selectAndFocus,
     loaded,
   ])
@@ -209,10 +214,15 @@ function toNodeFields(input: ApiField[]): Field[] {
   const implementation = input.find((x) => x.name === '$implementation')
   const bannedKeys: string[] = ['$pastUpgrades']
   const bannedValues: string[] = getAddresses(implementation?.value)
-
-  return input.flatMap((x) =>
+  const fields = input.flatMap((x) =>
     getNodeFields(x.name, x.value, bannedKeys, bannedValues),
   )
+  const names = new Set<string>()
+  return fields.filter((field) => {
+    if (names.has(field.name)) return false
+    names.add(field.name)
+    return true
+  })
 }
 
 function getNodeFields(

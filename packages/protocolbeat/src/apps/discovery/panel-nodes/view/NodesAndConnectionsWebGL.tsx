@@ -14,6 +14,7 @@ import {
 import {
   buildRenderGraph,
   type GroupContainer,
+  isFieldConnectionLive,
 } from '../store/utils/renderGraph'
 import { topLevelByDescendant } from '../store/utils/subnodes'
 import { getColor } from './colors/colors'
@@ -106,6 +107,7 @@ interface DrawData {
   enableDimming: boolean
   markUnreachableEntries: boolean
   anyNodeSelected: boolean
+  liveGroupTargets: ReadonlyMap<string, ReadonlySet<string>>
 }
 
 interface VisibleField {
@@ -1286,7 +1288,9 @@ class WebGLRenderer {
   private buildFieldText(renderNodes: readonly RenderNode[]): number {
     let maxChars = 0
     for (const rn of renderNodes) {
-      for (const { field } of rn.visibleFields) maxChars += field.name.length
+      for (const { field } of rn.visibleFields) {
+        maxChars += (field.label ?? field.name).length
+      }
     }
     if (maxChars === 0) return 0
     const buf = this.ensureText(maxChars)
@@ -1303,7 +1307,7 @@ class WebGLRenderer {
         n += writeStringInstances(
           buf,
           n,
-          field.name,
+          field.label ?? field.name,
           node.box.x + HEADER_PADDING,
           baselineY,
           atlas,
@@ -1373,8 +1377,9 @@ class WebGLRenderer {
     data: DrawData,
   ): number {
     let maxVertices = 0
-    for (const { flags, visibleFields } of renderNodes) {
+    for (const { node, flags, visibleFields } of renderNodes) {
       for (const { field, index } of visibleFields) {
+        if (!isFieldConnectionLive(node, field, data.liveGroupTargets)) continue
         if (flags.fieldTargetHidden[index]) continue
         const target = data.visibleById.get(field.target)
         if (!target) continue
@@ -1401,6 +1406,7 @@ class WebGLRenderer {
     let v = 0
     for (const { node, flags, visibleFields } of renderNodes) {
       for (const { field, index } of visibleFields) {
+        if (!isFieldConnectionLive(node, field, data.liveGroupTargets)) continue
         if (flags.fieldTargetHidden[index]) continue
         const target = data.visibleById.get(field.target)
         if (!target) continue
@@ -2224,17 +2230,17 @@ function getVisibleFields(node: Node): VisibleField[] {
 function buildDrawData(
   nodes: readonly Node[],
   containers: GroupContainer[],
-  hidden: readonly string[],
+  hidden: ReadonlySet<string>,
+  liveGroupTargets: ReadonlyMap<string, ReadonlySet<string>>,
   selected: readonly string[],
   enableDimming: boolean,
   highlightOverlapping: boolean,
   markUnreachableEntries: boolean,
 ): DrawData {
-  const hiddenSet = new Set(hidden)
   const selectedSet = new Set(selected)
   const visible: Node[] = []
   for (const node of nodes) {
-    if (!hiddenSet.has(node.id)) {
+    if (!hidden.has(node.id)) {
       visible.push(node)
     }
   }
@@ -2250,12 +2256,16 @@ function buildDrawData(
     for (const node of visible) {
       if (!selectedSet.has(node.id)) continue
       for (const { field } of getVisibleFields(node)) {
+        if (!isFieldConnectionLive(node, field, liveGroupTargets)) continue
+        if (hidden.has(field.target)) continue
         highlightedSet.add(field.target)
       }
     }
     for (const node of visible) {
       if (highlightedSet.has(node.id)) continue
       for (const { field } of getVisibleFields(node)) {
+        if (!isFieldConnectionLive(node, field, liveGroupTargets)) continue
+        if (hidden.has(field.target)) continue
         if (selectedSet.has(field.target)) {
           highlightedSet.add(node.id)
         }
@@ -2274,7 +2284,7 @@ function buildDrawData(
       if (selectedSet.has(field.target)) {
         fieldHighlighted[i] = 1
       }
-      if (hiddenSet.has(field.target)) fieldTargetHidden[i] = 1
+      if (hidden.has(field.target)) fieldTargetHidden[i] = 1
     }
     flags.set(node.id, {
       isSelected: selectedSet.has(node.id),
@@ -2300,6 +2310,7 @@ function buildDrawData(
     enableDimming,
     markUnreachableEntries,
     anyNodeSelected,
+    liveGroupTargets,
   }
 }
 
@@ -2344,7 +2355,6 @@ export function NodesAndConnectionsWebGL() {
   const dataRef = useRef<DrawData | null>(null)
 
   const nodes = useStore((s) => s.nodes)
-  const hidden = useStore((s) => s.hidden)
   const selected = useStore((s) => s.selected)
   const enableDimming = useStore(
     ({ userPreferences }) => userPreferences.enableDimming,
@@ -2356,14 +2366,15 @@ export function NodesAndConnectionsWebGL() {
     (s) => s.markUnreachableEntries,
   )
 
-  const graph = useMemo(() => buildRenderGraph(nodes, hidden), [nodes, hidden])
+  const graph = useMemo(() => buildRenderGraph(nodes), [nodes])
 
   const data = useMemo(
     () =>
       buildDrawData(
         graph.nodes,
         graph.containers,
-        hidden,
+        graph.hidden,
+        graph.liveGroupTargets,
         selected,
         enableDimming,
         highlightOverlapping,
@@ -2371,7 +2382,6 @@ export function NodesAndConnectionsWebGL() {
       ),
     [
       graph,
-      hidden,
       selected,
       enableDimming,
       highlightOverlapping,

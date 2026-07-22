@@ -20,6 +20,20 @@ describe(buildFieldTree.name, () => {
     ])
   })
 
+  it('uses a display label without changing the hidden-field identity', () => {
+    const tree = buildFieldTree([
+      field({ name: 'group-field:target', label: 'Member' }),
+    ])
+
+    expect(tree).toEqual([
+      {
+        type: 'simple',
+        property: 'Member',
+        fullKey: 'group-field:target',
+      },
+    ])
+  })
+
   it('nested fields with simple fields', () => {
     const fields = [
       field({ name: 'a.b' }),
@@ -131,6 +145,7 @@ function field(f: Partial<Field>): Field {
   return mockObject<Field>({
     target: '0x0',
     name: 'change_me',
+    label: undefined,
     ...f,
   })
 }

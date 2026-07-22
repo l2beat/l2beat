@@ -4,7 +4,10 @@ import { AddressIcon } from '../../../../components/AddressIcon'
 import { useGlobalSettingsStore } from '../../store/global-settings-store'
 import type { Node } from '../store/State'
 import { useStore } from '../store/store'
-import { buildRenderGraph } from '../store/utils/renderGraph'
+import {
+  buildRenderGraph,
+  isFieldConnectionLive,
+} from '../store/utils/renderGraph'
 import { Connection, type ConnectionProps } from './Connection'
 import { NodeView } from './NodeView'
 
@@ -30,7 +33,6 @@ interface DerivedView {
 
 export function NodesAndConnections() {
   const nodes = useStore((s) => s.nodes)
-  const hidden = useStore((s) => s.hidden)
   const selected = useStore((s) => s.selected)
   const enableDimming = useStore(
     ({ userPreferences }) => userPreferences.enableDimming,
@@ -42,13 +44,14 @@ export function NodesAndConnections() {
     (s) => s.markUnreachableEntries,
   )
 
-  const graph = useMemo(() => buildRenderGraph(nodes, hidden), [nodes, hidden])
+  const graph = useMemo(() => buildRenderGraph(nodes), [nodes])
 
   const view = useMemo<DerivedView>(
     () =>
       buildView(
         graph.nodes,
-        hidden,
+        graph.hidden,
+        graph.liveGroupTargets,
         selected,
         enableDimming,
         highlightOverlapping,
@@ -56,7 +59,6 @@ export function NodesAndConnections() {
       ),
     [
       graph,
-      hidden,
       selected,
       enableDimming,
       highlightOverlapping,
@@ -172,13 +174,14 @@ function computeOverlappingIds(nodes: readonly Node[]): Set<string> {
 
 function buildView(
   nodes: readonly Node[],
-  hidden: readonly string[],
+  hidden: ReadonlySet<string>,
+  liveGroupTargets: ReadonlyMap<string, ReadonlySet<string>>,
   selected: readonly string[],
   enableDimming: boolean,
   highlightOverlapping: boolean,
   markUnreachableEntries: boolean,
 ): DerivedView {
-  const hiddenSet = new Set(hidden)
+  const hiddenSet = hidden
   const selectedSet = new Set(selected)
   const visible: Node[] = []
   const visibleById = new Map<string, Node>()
@@ -201,19 +204,17 @@ function buildView(
   if (enableDimming && selected.length > 0) {
     for (const node of visible) {
       if (!selectedSet.has(node.id)) continue
-      const hiddenFields =
-        node.hiddenFields.length > 0 ? new Set(node.hiddenFields) : undefined
       for (const field of node.fields) {
-        if (hiddenFields?.has(field.name)) continue
+        if (!isFieldConnectionLive(node, field, liveGroupTargets)) continue
+        if (hiddenSet.has(field.target)) continue
         highlightedSet.add(field.target)
       }
     }
     for (const node of visible) {
       if (highlightedSet.has(node.id)) continue
-      const hiddenFields =
-        node.hiddenFields.length > 0 ? new Set(node.hiddenFields) : undefined
       for (const field of node.fields) {
-        if (hiddenFields?.has(field.name)) continue
+        if (!isFieldConnectionLive(node, field, liveGroupTargets)) continue
+        if (hiddenSet.has(field.target)) continue
         if (selectedSet.has(field.target)) {
           highlightedSet.add(node.id)
           break
@@ -236,9 +237,6 @@ function buildView(
     const isGrayedOut = markUnreachableEntries && !node.isReachable
     const isOverlapping = overlappingIds.has(node.id)
 
-    const hiddenFieldsSet =
-      node.hiddenFields.length > 0 ? new Set(node.hiddenFields) : undefined
-
     let fieldHighlightedMask = ''
     let fieldTargetHiddenMask = ''
 
@@ -251,8 +249,8 @@ function buildView(
       fieldHighlightedMask += targetSelected ? '1' : '0'
       fieldTargetHiddenMask += targetHidden ? '1' : '0'
 
-      const fieldHidden = hiddenFieldsSet?.has(field.name) ?? false
-      if (fieldHidden || targetHidden) continue
+      if (!isFieldConnectionLive(node, field, liveGroupTargets) || targetHidden)
+        continue
 
       const targetNode = visibleById.get(field.target)
       const isDashed =

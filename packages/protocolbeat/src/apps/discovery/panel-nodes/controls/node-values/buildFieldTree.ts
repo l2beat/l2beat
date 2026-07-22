@@ -34,7 +34,7 @@ export function buildFieldTree(
 
   const simple: SimpleField[] = simpleFields.map((field) => ({
     type: 'simple',
-    property: field.name,
+    property: field.label ?? field.name,
     fullKey: normalizePath(startingPath, field.name),
   }))
 
