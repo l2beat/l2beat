@@ -18,4 +18,8 @@ export class BlockProviders {
     assert(blockProvider, `BlockProvider not found: ${chain}`)
     return blockProvider
   }
+
+  getAll(): BlockProvider[] {
+    return [...this.blockProviders.values()]
+  }
 }

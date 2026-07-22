@@ -57,14 +57,12 @@ export function initActivityModule({
           },
         )
 
-        const provider = providers.block.getBlockProvider(project.chainName)
-        const analyzer = providers.uops.getUopsAnalyzer(project.chainName)
+        const provider = providers.activityBlock.getProvider(project.chainName)
         const txsCountService = new BlockTxsCountService(
           {
             provider,
             projectId: project.id,
             assessCount: assessCount(project.activityConfig.adjustCount),
-            uopsAnalyzer: analyzer,
           },
           logger,
         )
