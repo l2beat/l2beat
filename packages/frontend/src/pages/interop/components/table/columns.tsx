@@ -51,6 +51,7 @@ const logoColumn = columnHelper.display({
 function makeNameColumn(opts?: {
   nameMaxWidthClass?: string
   headClassName?: string
+  linkClassName?: string
 }) {
   return columnHelper.accessor('name', {
     header: 'Name',
@@ -60,7 +61,10 @@ function makeNameColumn(opts?: {
           projectName={ctx.row.original.name}
           description={ctx.row.original.description}
         >
-          <TableLink href={`/interop/protocols/${ctx.row.original.slug}`}>
+          <TableLink
+            href={`/interop/protocols/${ctx.row.original.slug}`}
+            className={opts?.linkClassName}
+          >
             <TwoRowCell>
               <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
                 <div
@@ -97,6 +101,7 @@ const homeCommonColumns = [
   makeNameColumn({
     nameMaxWidthClass: 'max-w-[112px]',
     headClassName: 'min-w-[7.5rem]',
+    linkClassName: 'md:-ml-1.5 md:pl-1.5',
   }),
 ]
 

@@ -84,7 +84,10 @@ function getHomeTopChainsColumns() {
       cell: (ctx) => (
         <div className="flex h-full items-center">
           <ProjectNameInfoTooltip project={ctx.row.original}>
-            <TableLink href={`/scaling/projects/${ctx.row.original.slug}`}>
+            <TableLink
+              href={`/scaling/projects/${ctx.row.original.slug}`}
+              className="md:-ml-1.5 md:pl-1.5"
+            >
               <ProjectNameCell project={ctx.row.original} withInfoTooltip />
             </TableLink>
           </ProjectNameInfoTooltip>
