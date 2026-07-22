@@ -21,6 +21,7 @@ import {
   MIN_SELECTED_CHAINS,
   MIN_SELECTED_PROTOCOLS,
 } from '../interop/components/flows/consts'
+import type { HomeScalingCategoryCounts } from './components/HomeScalingCard'
 import { getHomeProjectCounts } from './getHomeProjectCounts'
 import { HOME_CHART_RANGE } from './homeChartRanges'
 
@@ -142,10 +143,9 @@ async function getCachedData(manifest: Manifest) {
   ])
 
   const summaryTabs = summaryData.tabs
-  const scalingCategoryCounts = {
+  const scalingCategoryCounts: HomeScalingCategoryCounts = {
     rollups: summaryTabs.rollups.length,
     validiumsAndOptimiums: summaryTabs.validiumsAndOptimiums.length,
-    others: summaryTabs.others.length,
   }
 
   const protocols = interopProtocols.map((protocol) => ({

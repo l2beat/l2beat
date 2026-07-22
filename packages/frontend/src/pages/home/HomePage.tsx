@@ -17,6 +17,7 @@ import { HomeEthereumCard } from './components/HomeEthereumCard'
 import { HomeInteropCard } from './components/HomeInteropCard'
 import { HomeRecentChangesTile } from './components/HomeRecentChangesTile'
 import { HomeRecentProjectsCard } from './components/HomeRecentProjectsCard'
+import type { HomeScalingCategoryCounts } from './components/HomeScalingCard'
 import { HomeScalingCard } from './components/HomeScalingCard'
 import { HomeStatsStrip } from './components/HomeStatsStrip'
 import { HomeTopChainsCard } from './components/HomeTopChainsCard'
@@ -36,11 +37,7 @@ interface Props extends AppLayoutProps {
   interopChains: InteropChainWithIcon[]
   interopProtocols: InteropFlowsProtocol[]
   defaultSelectedFlowChains: string[]
-  scalingCategoryCounts: {
-    rollups: number
-    validiumsAndOptimiums: number
-    others: number
-  }
+  scalingCategoryCounts: HomeScalingCategoryCounts
   recentChangesCount: number
   ongoingAnomalies: OngoingAnomaliesOverview
 }
