@@ -14,7 +14,7 @@ export function HomeRecentChangesTile({
   const disabled = recentChangesCount === 0
 
   return (
-    <HomeCard className="p-0">
+    <HomeCard className="p-0 md:p-0">
       <button
         type="button"
         onClick={() => setDialogOpen(true)}
