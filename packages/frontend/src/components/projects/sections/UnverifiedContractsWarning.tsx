@@ -11,26 +11,13 @@ import { CustomLinkIcon } from '~/icons/Outlink'
 import { UnverifiedIcon } from '~/icons/Unverified'
 import { cn } from '~/utils/cn'
 import type { UnverifiedContractEntry } from '~/utils/project/contracts-and-permissions/getUnverifiedContractEntries'
-import { WarningBar } from '../../WarningBar'
 
 interface Props {
-  entries?: UnverifiedContractEntry[]
+  entries: UnverifiedContractEntry[]
   className?: string
 }
 
 export function UnverifiedContractsWarning({ entries, className }: Props) {
-  if (!entries || entries.length === 0) {
-    return (
-      <WarningBar
-        text="This project includes unverified contracts."
-        color="red"
-        isCritical
-        className={className}
-        icon={UnverifiedIcon}
-      />
-    )
-  }
-
   return (
     <div
       className={cn(
@@ -65,9 +52,10 @@ export function UnverifiedContractsWarning({ entries, className }: Props) {
                     className={linkVariants({ variant: 'plain' })}
                   >
                     {entry.contractName || formatAddress(entry.address)}
-                  </a>{' '}
-                  <span className="font-normal text-secondary">
-                    · {typeLabels[entry.type]}
+                  </a>
+                  <span className="font-normal text-secondary capitalize">
+                    {' '}
+                    · {entry.type}
                   </span>
                 </div>
                 <HighlightableLink
@@ -86,11 +74,4 @@ export function UnverifiedContractsWarning({ entries, className }: Props) {
       </Collapsible>
     </div>
   )
-}
-
-const typeLabels: Record<UnverifiedContractEntry['type'], string> = {
-  proxy: 'Proxy',
-  implementation: 'Implementation',
-  standalone: 'Standalone',
-  permission: 'Permission',
 }

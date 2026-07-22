@@ -1,77 +1,79 @@
-import type { ProjectContracts, ProjectPermissions } from '@l2beat/config'
-import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
+import type { TechnologyContract } from '~/components/projects/sections/ContractEntry'
+import type { ContractsSection } from './getContractsSection'
+import type { PermissionSection } from './getPermissionsSection'
 import { getUnverifiedContractEntries } from './getUnverifiedContractEntries'
 
 describe(getUnverifiedContractEntries.name, () => {
-  it('returns unverified contracts and permission accounts', () => {
-    const contracts = mockObject<ProjectContracts>({
-      addresses: {
-        ethereum: [
-          {
-            name: 'StandaloneContract',
-            chain: 'ethereum',
-            address: ChainSpecificAddress(
-              'eth:0x1111111111111111111111111111111111111111',
-            ),
-            isVerified: false,
-            url: 'https://etherscan.io/address/0x1111#code',
-          },
-          {
-            name: 'RollupProxy',
-            chain: 'ethereum',
-            address: ChainSpecificAddress(
-              'eth:0x2222222222222222222222222222222222222222',
-            ),
-            isVerified: false,
-            url: 'https://etherscan.io/address/0x2222#code',
-            upgradeability: {
-              proxyType: 'EIP1967 proxy',
-              admins: [],
-              implementations: [
-                ChainSpecificAddress(
-                  'eth:0x3333333333333333333333333333333333333333',
-                ),
-                ChainSpecificAddress(
-                  'eth:0x4444444444444444444444444444444444444444',
-                ),
-              ],
-              unverifiedImplementations: [
-                ChainSpecificAddress(
-                  'eth:0x4444444444444444444444444444444444444444',
-                ),
-              ],
-            },
-          },
-        ],
-      },
+  it('returns the unverified addresses from contract and permission sections', () => {
+    const standalone = mockObject<TechnologyContract>({
+      id: 'StandaloneContract',
+      name: 'StandaloneContract',
+      addresses: [
+        {
+          name: '0x1111…1111',
+          address: '0x1111111111111111111111111111111111111111',
+          href: 'https://etherscan.io/address/0x1111#code',
+          verificationStatus: 'unverified',
+          contractType: 'standalone',
+        },
+      ],
+      admins: [],
     })
-    const permissions = mockObject<Record<string, ProjectPermissions>>({
-      ethereum: {
-        roles: [],
-        actors: [
-          {
-            id: 'ProxyAdmin',
-            name: 'ProxyAdmin',
-            chain: 'ethereum',
-            description: 'Can upgrade contracts.',
-            accounts: [
-              {
-                name: 'ProxyAdmin',
-                address: ChainSpecificAddress(
-                  'eth:0x5555555555555555555555555555555555555555',
-                ),
-                url: 'https://etherscan.io/address/0x5555#code',
-                isVerified: false,
-                type: 'Contract',
-              },
-            ],
-          },
-        ],
+    const proxy = mockObject<TechnologyContract>({
+      id: 'RollupProxy',
+      name: 'RollupProxy',
+      addresses: [
+        {
+          name: '0x2222…2222',
+          address: '0x2222222222222222222222222222222222222222',
+          href: 'https://etherscan.io/address/0x2222#code',
+          verificationStatus: 'unverified',
+          contractType: 'proxy',
+        },
+        {
+          name: 'Implementation #1',
+          address: '0x3333333333333333333333333333333333333333',
+          href: 'https://etherscan.io/address/0x3333#code',
+          verificationStatus: 'verified',
+          contractType: 'implementation',
+        },
+        {
+          name: 'Implementation #2',
+          address: '0x4444444444444444444444444444444444444444',
+          href: 'https://etherscan.io/address/0x4444#code',
+          verificationStatus: 'unverified',
+          contractType: 'implementation',
+        },
+      ],
+      admins: [],
+    })
+    const permission = mockObject<TechnologyContract>({
+      id: 'ProxyAdmin',
+      name: 'ProxyAdmin',
+      addresses: [
+        {
+          name: '0x5555…5555',
+          address: '0x5555555555555555555555555555555555555555',
+          href: 'https://etherscan.io/address/0x5555#code',
+          verificationStatus: 'unverified',
+        },
+      ],
+      admins: [],
+    })
+    const contractsSection = mockObject<ContractsSection>({
+      contracts: { Ethereum: [standalone, proxy] },
+    })
+    const permissionsSection = mockObject<PermissionSection>({
+      permissionsByChain: {
+        Ethereum: { roles: [], actors: [permission] },
       },
     })
 
-    const result = getUnverifiedContractEntries(contracts, permissions)
+    const result = getUnverifiedContractEntries(
+      contractsSection,
+      permissionsSection,
+    )
 
     expect(result).toEqual([
       {
@@ -91,7 +93,7 @@ describe(getUnverifiedContractEntries.name, () => {
       {
         address: '0x4444444444444444444444444444444444444444',
         contractName: 'RollupProxy',
-        href: 'https://etherscan.io/address/0x4444444444444444444444444444444444444444#code',
+        href: 'https://etherscan.io/address/0x4444#code',
         targetId: 'RollupProxy',
         type: 'implementation',
       },

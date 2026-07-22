@@ -1327,9 +1327,13 @@ export interface ProjectContract {
 export interface ProjectContractUpgradeability {
   proxyType: string
   immutable?: boolean
-  admins: ChainSpecificAddress[]
-  implementations: ChainSpecificAddress[]
-  unverifiedImplementations?: ChainSpecificAddress[]
+  admins: ProjectContractAddress[]
+  implementations: ProjectContractAddress[]
+}
+
+export interface ProjectContractAddress {
+  address: ChainSpecificAddress
+  isVerified: boolean | undefined
 }
 
 export interface ProjectUpgradeableActor {

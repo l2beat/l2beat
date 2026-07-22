@@ -12,6 +12,7 @@ import {
 import {
   assert,
   ChainSpecificAddress,
+  formatAddress,
   type LegacyTokenBridgedUsing,
   notUndefined,
   UnixTime,
@@ -98,10 +99,10 @@ export class ProjectDiscovery {
   }
 
   getName(address: ChainSpecificAddress): string {
-    return (
-      this.getEntryByAddress(address)?.name ??
-      (this.isEOA(address) ? this.getEOAName(address) : address.toString())
-    )
+    const entry = this.getEntryByAddress(address)
+    if (!entry) return address.toString()
+    if (entry.type === 'EOA' && !entry.name) return this.getEOAName(address)
+    return getEntryName(entry)
   }
 
   getEOAName(address: ChainSpecificAddress): string {
@@ -133,7 +134,7 @@ export class ProjectDiscovery {
     }
 
     return {
-      name: contract.name ?? contract.address,
+      name: getEntryName(contract),
       isVerified: isEntryVerified(contract),
       address: contract.address,
       upgradeability: getUpgradeability(contract, this.getEntries()),
@@ -289,8 +290,8 @@ export class ProjectDiscovery {
     ]
 
     return {
-      id: contract.name ?? contract.address,
-      name: contract.name ?? contract.address,
+      id: getEntryId(contract),
+      name: getEntryName(contract),
       description: combinedDescriptions.join('\n'),
       accounts: this.formatPermissionedAccounts([contract.address]),
       chain: ChainSpecificAddress.longChain(contract.address),
@@ -441,7 +442,7 @@ export class ProjectDiscovery {
 
       const raw = ChainSpecificAddress.address(address)
       const chain = ChainSpecificAddress.longChain(address)
-      const name = `${raw.slice(0, 6)}…${raw.slice(38, 42)}`
+      const name = formatAddress(raw)
       const explorerUrl = EXPLORER_URLS[chain]
       assert(
         isNonNullable(explorerUrl),
@@ -543,7 +544,7 @@ export class ProjectDiscovery {
     return {
       address: contract.address,
       isVerified: isEntryVerified(contract),
-      name: contract.name ?? contract.address,
+      name: getEntryName(contract),
       upgradeability: getUpgradeability(contract, this.getEntries()),
       chain: ChainSpecificAddress.longChain(contract.address),
       ...descriptionOrOptions,
@@ -554,13 +555,10 @@ export class ProjectDiscovery {
     contract: EntryParameters,
     description: string,
   ): ProjectPermission {
-    const [account] = this.formatPermissionedAccounts([contract.address])
-    assert(account, 'Permissioned contract account should exist')
-
     return {
-      id: contract.name || contract.address,
-      name: contract.name || account.name,
-      accounts: [account],
+      id: getEntryId(contract),
+      name: getEntryName(contract),
+      accounts: this.formatPermissionedAccounts([contract.address]),
       chain: ChainSpecificAddress.longChain(contract.address),
       references: contract.references?.map((x) => ({
         title: x.text,
@@ -575,8 +573,8 @@ export class ProjectDiscovery {
     description: string,
   ): ProjectPermission {
     return {
-      id: eoa.name ?? eoa.address,
-      name: eoa.name ?? eoa.address,
+      id: getEntryId(eoa),
+      name: getEntryName(eoa),
       accounts: this.formatPermissionedAccounts([eoa.address]),
       chain: ChainSpecificAddress.longChain(eoa.address),
       references: eoa.references?.map((x) => ({
@@ -763,15 +761,14 @@ export class ProjectDiscovery {
           contractOrEoa.address,
         ),
       )
-      .map((contract) => contract.name)
+      .map(getEntryName)
     return safesWithThisMember.length === 0
       ? undefined
       : `Member of ${safesWithThisMember.join(', ')}.`
   }
 
   formatViaPath(path: ResolvedPermissionPath, skipName = false): string {
-    const name =
-      this.getContractByAddress(path.address)?.name ?? path.address.toString()
+    const name = this.getName(path.address)
 
     const result = skipName ? [] : [name]
     if (path.delay) {
@@ -1015,6 +1012,7 @@ export class ProjectDiscovery {
     upgradableBy: ProjectUpgradeableActor[],
     eoaActors: ProjectPermission[],
   ): ProjectUpgradeableActor[] {
+    const contractActors = this.getReachableContracts()
     return upgradableBy.map((upgradableBy) => {
       if (upgradableBy.unreachable === true) {
         return upgradableBy
@@ -1023,6 +1021,15 @@ export class ProjectDiscovery {
       if (eoaActor) {
         return {
           id: eoaActor.id,
+          ...upgradableBy,
+        }
+      }
+      const contractActor = contractActors.find(
+        (contract) => getEntryName(contract) === upgradableBy.name,
+      )
+      if (contractActor) {
+        return {
+          id: getEntryId(contractActor),
           ...upgradableBy,
         }
       }
@@ -1090,23 +1097,40 @@ function getUpgradeability(
   if (!contract.proxyType) {
     return undefined
   }
-  const implementations = get$Implementations(contract.values)
-  const unverifiedImplementations = implementations.filter((address) => {
-    const implementation = entries.find((entry) => entry.address === address)
-    return implementation !== undefined && !isEntryVerified(implementation)
-  })
   const upgradeability: ProjectContractUpgradeability = {
     proxyType: contract.proxyType,
-    admins: get$Admins(contract.values),
-    implementations,
-    ...(unverifiedImplementations.length > 0
-      ? { unverifiedImplementations }
-      : {}),
+    admins: get$Admins(contract.values).map((address) =>
+      getContractAddress(address, entries),
+    ),
+    implementations: get$Implementations(contract.values).map((address) =>
+      getContractAddress(address, entries),
+    ),
   }
   if (contract.values?.$immutable !== undefined) {
     upgradeability.immutable = !!contract.values.$immutable
   }
   return upgradeability
+}
+
+function getContractAddress(
+  address: ChainSpecificAddress,
+  entries: EntryParameters[],
+): ProjectContractUpgradeability['implementations'][number] {
+  const entry = entries.find((entry) => entry.address === address)
+  return {
+    address,
+    isVerified: entry?.type === 'Contract' ? isEntryVerified(entry) : undefined,
+  }
+}
+
+function getEntryId(entry: EntryParameters): string {
+  return entry.name || entry.address
+}
+
+function getEntryName(entry: EntryParameters): string {
+  return (
+    entry.name || formatAddress(ChainSpecificAddress.address(entry.address))
+  )
 }
 
 function getPastUpgrades(

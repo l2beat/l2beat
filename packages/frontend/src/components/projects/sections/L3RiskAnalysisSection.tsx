@@ -27,7 +27,6 @@ export interface L3RiskAnalysisSectionProps extends ProjectSectionProps {
   }
   combined?: RosetteValueTuple
   warning: string | undefined
-  isVerified: boolean | undefined
   redWarning: ProjectRedWarning | undefined
   unverifiedContracts?: UnverifiedContractEntry[]
 }
@@ -37,7 +36,6 @@ export function L3RiskAnalysisSection({
   l3,
   combined,
   warning,
-  isVerified,
   redWarning,
   unverifiedContracts,
   ...sectionProps
@@ -54,7 +52,7 @@ export function L3RiskAnalysisSection({
         The L3 risks depend on the individual properties of L3 and those of the
         host chain combined.
       </div>
-      {isVerified === false && (
+      {unverifiedContracts && (
         <UnverifiedContractsWarning
           entries={unverifiedContracts}
           className="mt-4 text-paragraph-15 md:text-paragraph-16"

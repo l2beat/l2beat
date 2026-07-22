@@ -139,7 +139,9 @@ function getUniqueContractsFromList(
   const mainAddresses = contracts.flatMap((c) => c.address)
   const upgradeabilityAddresses = contracts
     .filter((c) => !!c.upgradeability) // remove undefined
-    .flatMap((c) => (c.upgradeability?.implementations ?? []).flatMap((a) => a))
+    .flatMap((c) =>
+      (c.upgradeability?.implementations ?? []).map((a) => a.address),
+    )
   return withoutDuplicates([...mainAddresses, ...upgradeabilityAddresses])
 }
 

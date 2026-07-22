@@ -860,7 +860,7 @@ function getUsageMap(projects: BaseProject[]) {
       for (const contract of contracts) {
         addUsage(contract.address, project.id)
         for (const impl of contract.upgradeability?.implementations ?? []) {
-          addUsage(impl, project.id)
+          addUsage(impl.address, project.id)
         }
       }
     }

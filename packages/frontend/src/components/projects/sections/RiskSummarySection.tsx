@@ -47,7 +47,7 @@ export function RiskSummarySection({
   return (
     <ProjectSection {...sectionProps}>
       {hostChainWarning && <HostChainRisksWarning {...hostChainWarning} />}
-      {verificationWarnings.contracts && (
+      {unverifiedContracts && (
         <UnverifiedContractsWarning
           entries={unverifiedContracts}
           className="mt-4 text-paragraph-15 md:text-paragraph-16"

@@ -154,7 +154,6 @@ export async function getPrivacyProjectData(
       id: details.id,
       slug: details.slug,
       contracts: details.contracts,
-      isVerified: true,
       isUnderReview: !!details.statuses.reviewStatus,
     },
     contractUtils,

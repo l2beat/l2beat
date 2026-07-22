@@ -20,13 +20,12 @@ import { toTechnologyRisk } from '../risk-summary/toTechnologyRisk'
 import type { ContractUtils } from './getContractUtils'
 import { getPastUpgradesData } from './getPastUpgradesData'
 import { getProgramHashes } from './getProgramHashes'
-import { toVerificationStatus } from './toVerificationStatus'
+import { getTechnologyContractAddresses } from './getTechnologyContractAddresses'
 
 type ProjectParams = {
   id: ProjectId
   slug: string
   isUnderReview?: boolean
-  isVerified: boolean
   architectureImage?: string
   contracts?: ProjectContracts
   tvsConfig?: TvsToken[]
@@ -90,7 +89,6 @@ export function getContractsSection(
             makeTechnologyContract(
               contract,
               projectParams,
-              !contract.isVerified,
               projectChangeReport,
               contractUtils,
               escrow,
@@ -123,7 +121,6 @@ export function getContractsSection(
       makeTechnologyContract(
         contract,
         projectParams,
-        !contract.isVerified,
         projectChangeReport,
         contractUtils,
         escrowDetails,
@@ -155,7 +152,6 @@ export function getContractsSection(
 function makeTechnologyContract(
   item: ProjectContract,
   projectParams: ProjectParams,
-  isUnverified: boolean,
   projectChangeReport: ProjectsChangeReport['projects'][string] | undefined,
   contractUtils: ContractUtils,
   escrow?: TechnologyContract['escrow'],
@@ -167,67 +163,14 @@ function makeTechnologyContract(
   const explorerUrl = item.url
     ? new URL(item.url).origin
     : 'https://etherscan.io'
-
-  const getAddress = (opts: {
-    address: EthereumAddress
-    isVerified: boolean
-    name?: string
-  }) => {
-    const name =
-      opts.name ?? `${opts.address.slice(0, 6)}…${opts.address.slice(38, 42)}`
-    const becameVerified = projectChangeReport?.[
-      item.chain
-    ]?.becameVerified.includes(opts.address)
-
-    return {
-      name: name,
-      address: opts.address.toString(),
-      verificationStatus: toVerificationStatus(opts.isVerified, becameVerified),
-      href: `${explorerUrl}/address/${opts.address.toString()}#code`,
-    }
-  }
-
-  const addresses = [
-    getAddress({
-      address: ChainSpecificAddress.address(item.address),
-      isVerified: !isUnverified,
-    }),
-  ]
-
-  const implementations = item.upgradeability?.implementations ?? []
-  for (const [i, implementation] of implementations.entries()) {
-    const upgradable = !item.upgradeability?.immutable
-    const upgradeableText = upgradable ? ' (Upgradable)' : ''
-    addresses.push(
-      getAddress({
-        name:
-          implementations.length > 1
-            ? `Implementation #${i + 1}${upgradeableText}`
-            : `Implementation${upgradeableText}`,
-        address: ChainSpecificAddress.address(implementation),
-        isVerified:
-          !item.upgradeability?.unverifiedImplementations?.includes(
-            implementation,
-          ),
-      }),
-    )
-  }
-
-  const adminAddresses = item.upgradeability?.admins ?? []
-  const admins = []
-  for (const [i, admin] of adminAddresses.entries()) {
-    admins.push(
-      getAddress({
-        name: admins.length > 1 ? `Admin (${i + 1})` : 'Admin',
-        address: ChainSpecificAddress.address(admin),
-        isVerified: true,
-      }),
-    )
-  }
+  const { addresses, admins } = getTechnologyContractAddresses(
+    item,
+    projectChangeReport,
+  )
 
   let description = item.description
 
-  if (isUnverified) {
+  if (!item.isVerified) {
     let text = 'The source code of this contract is not verified on Etherscan.'
     if (addresses[0]?.verificationStatus === 'became-verified') {
       text =
@@ -253,11 +196,13 @@ function makeTechnologyContract(
 
   const additionalReferences: ReferenceLink[] = []
   const usedInProjects = uniqBy(
-    [item.address, ...(item.upgradeability?.implementations ?? [])].flatMap(
-      (address) =>
-        contractUtils
-          .getUsedIn(item.chain, ChainSpecificAddress.address(address))
-          .filter((x) => x.id !== projectParams.id),
+    [
+      item.address,
+      ...(item.upgradeability?.implementations.map((x) => x.address) ?? []),
+    ].flatMap((address) =>
+      contractUtils
+        .getUsedIn(item.chain, ChainSpecificAddress.address(address))
+        .filter((x) => x.id !== projectParams.id),
     ),
     'id',
   )

@@ -11,7 +11,9 @@ function getUnverifiedContracts(
     .flat()
     .flatMap((contract) => [
       ...(!contract.isVerified ? [contract.address] : []),
-      ...(contract.upgradeability?.unverifiedImplementations ?? []),
+      ...(contract.upgradeability?.implementations
+        .filter((implementation) => implementation.isVerified === false)
+        .map((implementation) => implementation.address) ?? []),
     ])
 }
 

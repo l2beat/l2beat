@@ -175,7 +175,6 @@ export async function getInteropProtocolEntry(
         id: project.id,
         slug: project.slug,
         isUnderReview,
-        isVerified: true,
         contracts: project.interopConfig.contracts,
       },
       contractUtils,
