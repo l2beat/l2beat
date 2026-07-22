@@ -14,13 +14,13 @@ export function HomeRecentChangesTile({
   const disabled = recentChangesCount === 0
 
   return (
-    <HomeCard className="p-0 md:p-3">
+    <HomeCard className="p-0">
       <button
         type="button"
         onClick={() => setDialogOpen(true)}
         disabled={disabled}
         className={cn(
-          'group flex w-full items-center gap-3 rounded-lg px-4 py-3 text-left transition-colors md:py-2',
+          'group flex w-full items-center gap-3 px-4 py-3 text-left transition-colors md:rounded-xl md:px-7 md:py-5',
           !disabled && 'hover:bg-surface-secondary/50',
           disabled && 'cursor-default',
         )}

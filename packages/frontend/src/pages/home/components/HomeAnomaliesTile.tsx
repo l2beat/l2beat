@@ -16,10 +16,10 @@ export function HomeAnomaliesTile({
   const first = items[0]
 
   return (
-    <HomeCard className="p-0 md:p-3">
+    <HomeCard className="p-0">
       <a
         href="/scaling/liveness"
-        className="group flex items-center gap-3 px-4 py-3 transition-colors hover:bg-surface-secondary/50 md:rounded-lg md:py-2"
+        className="group flex items-center gap-3 px-4 py-3 transition-colors hover:bg-surface-secondary/50 md:rounded-xl md:px-7 md:py-5"
       >
         <LiveIndicator size="md" disabled={!isOngoing} />
         <div className="flex min-w-0 flex-1 flex-col">
