@@ -1,4 +1,4 @@
-import { formatAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, formatAddress } from '@l2beat/shared-pure'
 import {
   Collapsible,
   CollapsibleContent,
@@ -9,26 +9,13 @@ import { ChevronIcon } from '~/icons/Chevron'
 import { UnverifiedIcon } from '~/icons/Unverified'
 import { cn } from '~/utils/cn'
 import type { UnverifiedContractEntry } from '~/utils/project/contracts-and-permissions/getUnverifiedContractEntries'
-import { WarningBar } from '../../WarningBar'
 
 interface Props {
-  entries?: UnverifiedContractEntry[]
+  entries: UnverifiedContractEntry[]
   className?: string
 }
 
 export function UnverifiedContractsWarning({ entries, className }: Props) {
-  if (!entries || entries.length === 0) {
-    return (
-      <WarningBar
-        text="This project includes unverified contracts."
-        color="red"
-        isCritical
-        className={className}
-        icon={UnverifiedIcon}
-      />
-    )
-  }
-
   return (
     <div
       className={cn(
@@ -57,23 +44,27 @@ export function UnverifiedContractsWarning({ entries, className }: Props) {
                 key={entry.address}
                 className="flex flex-col gap-0.5 text-sm sm:flex-row sm:items-center sm:justify-between sm:gap-3"
               >
-                {entry.targetId ? (
+                {entry.target ? (
                   <>
                     <a
-                      href={`#${entry.targetId}`}
+                      href={`#${entry.target.id}`}
                       className={linkVariants({
                         variant: 'plain',
                         className: 'min-w-0 underline',
                       })}
                     >
-                      {entry.contractName}
+                      {entry.target.label}
                     </a>
                     <span className="shrink-0">
-                      {formatAddress(entry.address)}
+                      {formatAddress(
+                        ChainSpecificAddress.address(entry.address),
+                      )}
                     </span>
                   </>
                 ) : (
-                  <span>{entry.contractName}</span>
+                  <span>
+                    {formatAddress(ChainSpecificAddress.address(entry.address))}
+                  </span>
                 )}
               </li>
             ))}

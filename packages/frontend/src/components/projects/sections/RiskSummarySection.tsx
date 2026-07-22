@@ -14,10 +14,13 @@ import { UnverifiedContractsWarning } from './UnverifiedContractsWarning'
 export interface RiskSummarySectionProps extends ProjectSectionProps {
   riskGroups: RiskGroup[]
   warning: string | undefined
-  verificationWarnings: ProjectVerificationWarnings
+  verificationWarnings: Pick<
+    ProjectVerificationWarnings,
+    'programHashes' | 'programHashesDescription'
+  >
   redWarning: ProjectRedWarning | undefined
   hostChainWarning?: HostChainRisksWarningProps
-  unverifiedContracts?: UnverifiedContractEntry[]
+  unverifiedContracts: UnverifiedContractEntry[]
 }
 
 export interface RiskGroup {
@@ -47,7 +50,7 @@ export function RiskSummarySection({
   return (
     <ProjectSection {...sectionProps}>
       {hostChainWarning && <HostChainRisksWarning {...hostChainWarning} />}
-      {verificationWarnings.contracts && (
+      {unverifiedContracts.length > 0 && (
         <UnverifiedContractsWarning
           entries={unverifiedContracts}
           className="mt-4 text-paragraph-15 md:text-paragraph-16"

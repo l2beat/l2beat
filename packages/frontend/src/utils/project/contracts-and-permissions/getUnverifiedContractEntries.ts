@@ -2,9 +2,13 @@ import type { ProjectContracts, ProjectPermissions } from '@l2beat/config'
 import { ChainSpecificAddress, formatAddress } from '@l2beat/shared-pure'
 
 export interface UnverifiedContractEntry {
-  address: string
-  contractName: string
-  targetId: string | undefined
+  address: ChainSpecificAddress
+  target?: UnverifiedContractTarget
+}
+
+interface UnverifiedContractTarget {
+  id: string
+  label: string
 }
 
 export function getUnverifiedContractEntries(
@@ -12,41 +16,37 @@ export function getUnverifiedContractEntries(
   contracts: ProjectContracts | undefined,
   permissions: Record<string, ProjectPermissions> | undefined,
 ): UnverifiedContractEntry[] {
-  const projectContracts = Object.values(contracts?.addresses ?? {}).flat()
+  const targetByAddress = new Map<
+    ChainSpecificAddress,
+    UnverifiedContractTarget
+  >()
+
   const projectPermissions = Object.values(permissions ?? {}).flatMap(
     ({ roles = [], actors = [] }) => roles.concat(actors),
   )
-
-  return unverifiedContracts.map((unverifiedContract) => {
-    const address = ChainSpecificAddress.address(unverifiedContract)
-    const contract = projectContracts.find(
-      (contract) => contract.address === unverifiedContract,
-    )
-    if (contract) {
-      return {
-        address,
-        contractName: contract.name || formatAddress(address),
-        targetId: contract.name || undefined,
-      }
+  for (const permission of projectPermissions) {
+    if (!permission.id) continue
+    for (const account of permission.accounts) {
+      targetByAddress.set(account.address, {
+        id: permission.id,
+        label:
+          permission.name ||
+          formatAddress(ChainSpecificAddress.address(account.address)),
+      })
     }
+  }
 
-    const permission = projectPermissions.find((permission) =>
-      permission.accounts.some(
-        (account) => account.address === unverifiedContract,
-      ),
-    )
-    if (permission) {
-      return {
-        address,
-        contractName: permission.name || formatAddress(address),
-        targetId: permission.id || undefined,
-      }
-    }
+  const projectContracts = Object.values(contracts?.addresses ?? {}).flat()
+  for (const contract of projectContracts) {
+    if (!contract.name) continue
+    targetByAddress.set(contract.address, {
+      id: contract.name,
+      label: contract.name,
+    })
+  }
 
-    return {
-      address,
-      contractName: formatAddress(address),
-      targetId: undefined,
-    }
-  })
+  return [...new Set(unverifiedContracts)].map((address) => ({
+    address,
+    target: targetByAddress.get(address),
+  }))
 }

@@ -12,16 +12,14 @@ import { UnverifiedContractsWarning } from './UnverifiedContractsWarning'
 export interface RiskAnalysisSectionProps extends ProjectSectionProps {
   rosetteValues: RosetteValue[]
   warning: string | undefined
-  isVerified: boolean | undefined
   redWarning: ProjectRedWarning | undefined
   shouldHideRosette?: boolean | undefined
-  unverifiedContracts?: UnverifiedContractEntry[]
+  unverifiedContracts: UnverifiedContractEntry[]
 }
 
 export function RiskAnalysisSection({
   rosetteValues,
   warning,
-  isVerified,
   redWarning,
   shouldHideRosette,
   unverifiedContracts,
@@ -34,7 +32,7 @@ export function RiskAnalysisSection({
     )
   return (
     <ProjectSection {...sectionProps} isUnderReview={isUnderReview}>
-      {isVerified === false && (
+      {unverifiedContracts.length > 0 && (
         <UnverifiedContractsWarning
           entries={unverifiedContracts}
           className="mt-4 text-paragraph-15 md:text-paragraph-16"

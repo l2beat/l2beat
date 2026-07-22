@@ -3,19 +3,26 @@ import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { getUnverifiedContractEntries } from './getUnverifiedContractEntries'
 
+const contractAddress = ChainSpecificAddress(
+  'eth:0x1111111111111111111111111111111111111111',
+)
+const permissionAddress = ChainSpecificAddress(
+  'eth:0x3333333333333333333333333333333333333333',
+)
+const unknownAddress = ChainSpecificAddress(
+  'eth:0x4444444444444444444444444444444444444444',
+)
+
 describe(getUnverifiedContractEntries.name, () => {
-  it('returns unverified contracts and permission accounts', () => {
+  it('links known addresses to their sections and leaves unknown addresses plain', () => {
     const contracts = mockObject<ProjectContracts>({
       addresses: {
         ethereum: [
           {
             name: 'RollupProxy',
             chain: 'ethereum',
-            address: ChainSpecificAddress(
-              'eth:0x1111111111111111111111111111111111111111',
-            ),
+            address: contractAddress,
             isVerified: false,
-            url: 'https://etherscan.io/address/0x1111#code',
           },
         ],
       },
@@ -32,9 +39,7 @@ describe(getUnverifiedContractEntries.name, () => {
             accounts: [
               {
                 name: 'ProxyAdmin',
-                address: ChainSpecificAddress(
-                  'eth:0x3333333333333333333333333333333333333333',
-                ),
+                address: permissionAddress,
                 url: 'https://etherscan.io/address/0x3333#code',
                 isVerified: false,
                 type: 'Contract',
@@ -45,32 +50,72 @@ describe(getUnverifiedContractEntries.name, () => {
       },
     })
 
-    const entries = getUnverifiedContractEntries(
-      [
-        ChainSpecificAddress('eth:0x1111111111111111111111111111111111111111'),
-        ChainSpecificAddress('eth:0x3333333333333333333333333333333333333333'),
-        ChainSpecificAddress('eth:0x4444444444444444444444444444444444444444'),
-      ],
+    const result = getUnverifiedContractEntries(
+      [contractAddress, permissionAddress, unknownAddress],
       contracts,
       permissions,
     )
 
-    expect(entries).toEqual([
+    expect(result).toEqual([
       {
-        address: '0x1111111111111111111111111111111111111111',
-        contractName: 'RollupProxy',
-        targetId: 'RollupProxy',
+        address: contractAddress,
+        target: { id: 'RollupProxy', label: 'RollupProxy' },
       },
       {
-        address: '0x3333333333333333333333333333333333333333',
-        contractName: 'ProxyAdmin',
-        targetId: 'ProxyAdmin',
+        address: permissionAddress,
+        target: { id: 'ProxyAdmin', label: 'ProxyAdmin' },
       },
-      {
-        address: '0x4444444444444444444444444444444444444444',
-        contractName: '0x4444...4444',
-        targetId: undefined,
-      },
+      { address: unknownAddress, target: undefined },
     ])
+  })
+
+  it('deduplicates chain-specific addresses', () => {
+    const result = getUnverifiedContractEntries(
+      [contractAddress, contractAddress],
+      undefined,
+      undefined,
+    )
+
+    expect(result).toEqual([{ address: contractAddress, target: undefined }])
+  })
+
+  it('keeps the same address on different chains distinct', () => {
+    const baseAddress = ChainSpecificAddress(
+      'base:0x1111111111111111111111111111111111111111',
+    )
+
+    const result = getUnverifiedContractEntries(
+      [contractAddress, baseAddress],
+      undefined,
+      undefined,
+    )
+
+    expect(result).toEqual([
+      { address: contractAddress, target: undefined },
+      { address: baseAddress, target: undefined },
+    ])
+  })
+
+  it('does not create section links from empty ids', () => {
+    const contracts = mockObject<ProjectContracts>({
+      addresses: {
+        ethereum: [
+          {
+            name: '',
+            chain: 'ethereum',
+            address: contractAddress,
+            isVerified: false,
+          },
+        ],
+      },
+    })
+
+    const result = getUnverifiedContractEntries(
+      [contractAddress],
+      contracts,
+      undefined,
+    )
+
+    expect(result).toEqual([{ address: contractAddress, target: undefined }])
   })
 })

@@ -58,8 +58,8 @@ import {
 import { withProjectIcon } from '~/utils/withProjectIcon'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import {
+  getProjectVerification,
   getProjectVerificationWarnings,
-  getUnresolvedUnverifiedContracts,
 } from '../../utils/getIsProjectVerified'
 import { getActivityProjectStats } from '../activity/getActivityProjectStats'
 import {
@@ -504,16 +504,10 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const projectVerificationWarnings = getProjectVerificationWarnings(
-    project,
-    changes,
-  )
-  const unresolvedUnverifiedContracts = getUnresolvedUnverifiedContracts(
-    project.statuses.unverifiedContracts,
-    changes,
-  )
+  const projectVerification = getProjectVerification(project, changes)
+  const projectVerificationWarnings = projectVerification.warnings
   const unverifiedContracts = getUnverifiedContractEntries(
-    unresolvedUnverifiedContracts,
+    projectVerification.unverifiedContracts,
     project.contracts,
     project.permissions,
   )
@@ -553,7 +547,6 @@ export async function getScalingProjectEntry(
         combined: common.rosette.stacked,
         warning: project.scalingTechnology.warning,
         redWarning: project.statuses.redWarning,
-        isVerified: !projectVerificationWarnings.contracts,
         isUnderReview: !!project.statuses.reviewStatus,
         unverifiedContracts,
       },
@@ -567,7 +560,6 @@ export async function getScalingProjectEntry(
         rosetteValues: common.rosette.self,
         warning: project.scalingTechnology.warning,
         redWarning: project.statuses.redWarning,
-        isVerified: !projectVerificationWarnings.contracts,
         isUnderReview: !!project.statuses.reviewStatus,
         unverifiedContracts,
       },
