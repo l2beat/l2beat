@@ -146,6 +146,11 @@ function UpdateCard({
     <details
       id={update.id}
       open={isSelected}
+      ref={(node) => {
+        if (node && isSelected) {
+          node.scrollIntoView({ block: 'start' })
+        }
+      }}
       className="group w-full min-w-0 scroll-mt-[38px] overflow-hidden rounded-lg border border-divider bg-surface-primary md:scroll-mt-14 lg:scroll-mt-4"
     >
       <summary
@@ -241,8 +246,7 @@ function UpdateCard({
 }
 
 function getUpdateHref(updateId: string): string {
-  const encodedId = encodeURIComponent(updateId)
-  return `?update=${encodedId}#${encodedId}`
+  return `?update=${encodeURIComponent(updateId)}`
 }
 
 function formatUpdateDate(update: DiscoveryUpdate): string {
