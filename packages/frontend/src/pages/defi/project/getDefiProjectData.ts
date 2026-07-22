@@ -1,4 +1,4 @@
-import type { ProjectRedWarning } from '@l2beat/config'
+import type { ProjectPermissions, ProjectRedWarning } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ProjectLink } from '~/components/projects/links/types'
@@ -54,6 +54,29 @@ const EMPTY_PROJECTS_CHANGE_REPORT: ProjectsChangeReport = {
 const EMPTY_TVS_BREAKDOWN: SevenDayTvsBreakdown = {
   total: 0,
   projects: {},
+}
+
+/** Counts how many permissions originate from the given reviewed dependency. */
+function countDependencyPermissions(
+  permissions: Record<string, ProjectPermissions> | 'UnderReview' | undefined,
+  dependencyId: ProjectId,
+): number {
+  if (!permissions || permissions === 'UnderReview') return 0
+  let count = 0
+  for (const perChain of Object.values(permissions)) {
+    for (const permission of [
+      ...(perChain.roles ?? []),
+      ...(perChain.actors ?? []),
+    ]) {
+      const matches = permission.permissionOrigins?.some(
+        (origin) =>
+          origin.type === 'dependency' &&
+          (origin.projectId ?? origin.name) === dependencyId,
+      )
+      if (matches) count++
+    }
+  }
+  return count
 }
 
 export async function getDefiProjectData(
@@ -185,6 +208,10 @@ export async function getDefiProjectData(
             icon: manifest.getUrl(`/icons/${dependencyProject.slug}.png`),
             href: `/defi/projects/${dependencyProject.slug}`,
             reviewed: true,
+            additionalPermissionsCount: countDependencyPermissions(
+              project.permissions,
+              dependency.project,
+            ),
           },
         ]
       }
