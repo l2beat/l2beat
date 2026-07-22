@@ -176,7 +176,7 @@ export const adi: ScalingProject = {
   chainConfig: {
     name: 'adi',
     chainId,
-    explorerUrl: 'https://explorer.adifoundation.ai',
+    explorerUrl: 'https://explorer-bls.adifoundation.ai',
     sinceTimestamp: UnixTime(1764062519),
     gasTokens: ['ADI'],
     apis: [
