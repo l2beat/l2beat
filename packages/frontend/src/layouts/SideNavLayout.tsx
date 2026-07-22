@@ -11,29 +11,61 @@ import { cn } from '~/utils/cn'
 
 const LOGO_LINK = '/'
 
+export type SideNavLayoutVariant = 'default' | 'wide' | 'home'
+
+/**
+ * Per-surface classes for each layout variant. 'home' is the full-width
+ * homepage treatment: the content area owns its padding and the footer
+ * spans the whole page.
+ */
+const VARIANT_CLASSES: Record<
+  SideNavLayoutVariant,
+  {
+    topBanner?: string
+    bannerWrapper: string
+    contentArea: string
+    footer: string
+    footerInner: string
+  }
+> = {
+  default: {
+    bannerWrapper: 'lg:mr-3',
+    contentArea: 'md:px-5 lg:pl-0 max-w-(--breakpoint-lg)',
+    footer: 'md:px-12 md:pt-8 lg:pr-9 lg:pl-6',
+    footerInner: 'max-w-[1142px]',
+  },
+  wide: {
+    bannerWrapper: 'lg:mr-3',
+    contentArea: 'md:px-5 lg:pl-0 max-w-412',
+    footer: 'md:px-12 md:pt-8 lg:pr-9 lg:pl-6',
+    footerInner: 'max-w-[1142px]',
+  },
+  home: {
+    topBanner: 'lg:mr-0',
+    bannerWrapper: 'lg:mr-0',
+    contentArea:
+      'max-w-none px-4 pb-6 max-md:px-0 md:px-6 lg:px-8 xl:px-10 2xl:max-w-[1840px]',
+    footer: 'md:px-8 md:pt-10 lg:px-16 lg:pt-12 lg:pb-6',
+    footerInner: 'max-w-none',
+  },
+}
+
 export interface SideNavLayoutProps {
   children: React.ReactNode
   childrenWrapperClassName?: string
-  contentAreaClassName?: string
-  maxWidth?: 'default' | 'wide'
-  /** Full-width content, top bar on mobile. */
-  homepageLayout?: boolean
+  variant?: SideNavLayoutVariant
 }
 
 export function SideNavLayout({
   children,
   childrenWrapperClassName,
-  contentAreaClassName,
-  maxWidth = 'default',
-  homepageLayout = false,
+  variant = 'default',
 }: SideNavLayoutProps) {
   const whatsNew = useWhatsNewContext()
+  const classes = VARIANT_CLASSES[variant]
   const topChildren = (
     <TopBanner
-      className={cn(
-        'lg:rounded-b-xl 2xl:rounded-br-none',
-        homepageLayout && 'lg:mr-0',
-      )}
+      className={cn('lg:rounded-b-xl 2xl:rounded-br-none', classes.topBanner)}
     />
   )
 
@@ -58,37 +90,22 @@ export function SideNavLayout({
           )}
         >
           <div
-            className={cn(
-              'hidden lg:block 2xl:mr-0',
-              homepageLayout ? 'lg:mr-0' : 'lg:mr-3',
-            )}
+            className={cn('hidden lg:block 2xl:mr-0', classes.bannerWrapper)}
           >
             {topChildren}
           </div>
           <div
             className={cn(
               'mx-auto flex w-full min-w-0 grow flex-col',
-              homepageLayout
-                ? 'max-w-none px-4 pb-6 md:px-6 lg:px-8 xl:px-10'
-                : 'md:px-5 lg:pl-0',
-              !homepageLayout &&
-                maxWidth === 'default' &&
-                'max-w-(--breakpoint-lg)',
-              !homepageLayout && maxWidth === 'wide' && 'max-w-412',
-              contentAreaClassName,
+              classes.contentArea,
             )}
           >
             {children}
             {whatsNew && <WhatsNewWidgetCloseable whatsNew={whatsNew} />}
           </div>
           <Footer
-            className={cn(
-              homepageLayout && 'md:px-8 md:pt-10 lg:px-16 lg:pt-12 lg:pb-6',
-              !homepageLayout && 'md:px-12 md:pt-8 lg:pr-9 lg:pl-6',
-            )}
-            innerContainerClassName={
-              homepageLayout ? 'max-w-none' : 'max-w-[1142px]'
-            }
+            className={classes.footer}
+            innerContainerClassName={classes.footerInner}
           />
         </div>
       </div>
