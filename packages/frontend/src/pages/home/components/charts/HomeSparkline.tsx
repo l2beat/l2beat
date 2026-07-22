@@ -123,7 +123,7 @@ export function HomeSparkline({
           <AreaChart
             responsive
             data={data}
-            margin={{ top: 14, right: 0, bottom: 0, left: 0 }}
+            margin={{ top: 14, right: 1, bottom: 0, left: 1 }}
           >
             <defs>
               {color === 'pink' && <PinkFillGradientDef id={fillId} />}
