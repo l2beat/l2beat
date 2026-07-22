@@ -180,7 +180,7 @@ export const INTEROP_CHAINS: InteropChain[] = [
     type: 'evm',
     display: 'ADI',
     color: '#FD7108',
-    explorerUrl: 'https://explorer.adifoundation.ai',
+    explorerUrl: 'https://explorer-bls.adifoundation.ai',
   },
   {
     id: 'avalanche',
