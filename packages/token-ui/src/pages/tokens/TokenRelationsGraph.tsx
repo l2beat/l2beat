@@ -39,6 +39,7 @@ const SEARCH_ZOOM_SCALE = 2
 const SEARCH_ZOOM_DURATION_MS = 300
 const DETAILS_PANEL_MAX_WIDTH = 440
 const DETAILS_PANEL_WIDTH_RATIO = 0.92
+const RELATION_ARROW_POSITION = 0.65
 
 interface GraphStyleState {
   focus: RelationGraphFocus | undefined
@@ -121,7 +122,9 @@ export function TokenRelationsGraph({
 
     const layer = svg.append('g')
     const linksLayer = layer.append('g')
-    const relationLabelsLayer = layer.append('g')
+    const relationLabelsLayer = layer
+      .append('g')
+      .attr('class', 'relation-labels-layer')
     const nodesLayer = layer.append('g')
     const clusterLabelsLayer = layer.append('g')
 
@@ -136,7 +139,7 @@ export function TokenRelationsGraph({
       .attr('stroke-width', 1.4)
       .attr('vector-effect', 'non-scaling-stroke')
       .attr('opacity', 0.55)
-      .attr('marker-end', (link) => markerUrl(link.relation, false))
+      .attr('marker-mid', (link) => markerUrl(link.relation, false))
 
     links.append('title').text((link) => {
       const relation = link.relation
@@ -179,6 +182,8 @@ export function TokenRelationsGraph({
       .attr('font-weight', 600)
       .attr('pointer-events', 'none')
       .attr('opacity', 0)
+      .attr('x', (link) => linkLabelPosition(link).x)
+      .attr('y', (link) => linkLabelPosition(link).y)
       .text((link) => link.relation.plugin)
 
     const clusterLabels = clusterLabelsLayer
@@ -249,16 +254,16 @@ export function TokenRelationsGraph({
           `${nodeLabel(node)} on ${node.chain}\n${node.chain}:${node.address}\n${node.isDeployed ? 'Deployed token exists' : 'Missing deployed token'}`,
       )
 
-    function redrawRelations(scale: number) {
-      links.attr('d', (link) => linkPath(link, scale))
-      linkHits.attr('d', (link) => linkPath(link, scale))
+    function redrawRelations() {
+      links.attr('d', linkPath)
+      linkHits.attr('d', linkPath)
       relationLabels
-        .attr('x', (link) => linkLabelPosition(link, scale).x)
-        .attr('y', (link) => linkLabelPosition(link, scale).y)
+        .attr('x', (link) => linkLabelPosition(link).x)
+        .attr('y', (link) => linkLabelPosition(link).y)
     }
 
     function redraw() {
-      redrawRelations(zoomScaleRef.current)
+      redrawRelations()
       node.attr('transform', (node) => `translate(${node.x},${node.y})`)
       clusterLabels
         .attr('x', (label) => clusterCenter(label.nodes).x)
@@ -271,8 +276,7 @@ export function TokenRelationsGraph({
       (size.height - 32) / layout.height,
       1,
     )
-    let previousNodeVisualScale = 1
-    let relationLabelsWereVisible = false
+    let previousScale: number | undefined
     const zoom = d3
       .zoom<SVGSVGElement, unknown>()
       .scaleExtent([Math.min(fitScale / 2, 0.1), 8])
@@ -281,22 +285,19 @@ export function TokenRelationsGraph({
         const scale = event.transform.k
         zoomScaleRef.current = scale
         layer.attr('transform', event.transform.toString())
-        const nodeVisualScale = getNodeVisualScale(scale)
-        if (nodeVisualScale < 1 || previousNodeVisualScale < 1) {
-          redrawRelations(scale)
-          nodeVisual.attr('transform', `scale(${nodeVisualScale})`)
-        }
+
+        // D3 also emits zoom events while panning. The graph's scale-dependent
+        // styles do not change then, so avoid touching every SVG element.
+        if (scale === previousScale) return
+
+        nodeVisual.attr('transform', `scale(${getNodeVisualScale(scale)})`)
         updateClusterLabelScale(clusterLabels, scale)
-        const relationLabelsVisible = getRelationLabelStyle(scale).visible
-        if (relationLabelsVisible || relationLabelsWereVisible) {
-          updateRelationLabelStyles(svgElement, scale, styleStateRef.current)
-        }
+        updateRelationLabelScale(relationLabelsLayer, scale)
         const markerSize = 6 / Math.max(scale, 1)
         arrowMarkers
           .attr('markerWidth', markerSize)
           .attr('markerHeight', markerSize)
-        previousNodeVisualScale = nodeVisualScale
-        relationLabelsWereVisible = relationLabelsVisible
+        previousScale = scale
       })
       .on('end', () => background.attr('cursor', 'grab'))
     svg.call(zoom)
@@ -350,7 +351,7 @@ export function TokenRelationsGraph({
           d3.select(event.sourceEvent.currentTarget).attr('cursor', 'pointer')
         }),
     )
-    updateGraphStyles(svgElement, styleStateRef.current, zoomScaleRef.current)
+    updateGraphStyles(svgElement, styleStateRef.current)
     return () => {
       svg.interrupt()
       zoomScaleRef.current = 1
@@ -370,16 +371,12 @@ export function TokenRelationsGraph({
   useEffect(() => {
     const svgElement = svgRef.current
     if (!svgElement) return
-    updateGraphStyles(
-      svgElement,
-      {
-        focus,
-        highlightAnomalies,
-        hovered,
-        selection,
-      },
-      zoomScaleRef.current,
-    )
+    updateGraphStyles(svgElement, {
+      focus,
+      highlightAnomalies,
+      hovered,
+      selection,
+    })
   }, [focus, highlightAnomalies, hovered, selection])
 
   return (
@@ -389,11 +386,7 @@ export function TokenRelationsGraph({
   )
 }
 
-function updateGraphStyles(
-  svgElement: SVGSVGElement,
-  state: GraphStyleState,
-  scale: number,
-) {
+function updateGraphStyles(svgElement: SVGSVGElement, state: GraphStyleState) {
   const { focus, highlightAnomalies, hovered, selection } = state
   const svg = d3.select(svgElement)
   const links = svg.selectAll<SVGPathElement, VisualLink>('.relation-link')
@@ -403,7 +396,7 @@ function updateGraphStyles(
     .attr('stroke', (link) =>
       displayedRelationColor(link.relation, highlightAnomalies),
     )
-    .attr('marker-end', (link) => markerUrl(link.relation, highlightAnomalies))
+    .attr('marker-mid', (link) => markerUrl(link.relation, highlightAnomalies))
     .attr('opacity', (link) => linkOpacity(link, state))
     .attr('stroke-width', (link) => {
       if (isLinkActive(link, hovered)) return 3
@@ -412,7 +405,7 @@ function updateGraphStyles(
       return 1.4
     })
 
-  updateRelationLabelStyles(svgElement, scale, state)
+  updateRelationLabelStyles(svgElement, state)
 
   nodes
     .attr('opacity', (node) =>
@@ -442,21 +435,14 @@ function updateGraphStyles(
 
 function updateRelationLabelStyles(
   svgElement: SVGSVGElement,
-  scale: number,
   state: GraphStyleState,
 ) {
-  const style = getRelationLabelStyle(scale)
   d3.select(svgElement)
     .selectAll<SVGTextElement, VisualLink>('.relation-label')
-    .attr('font-size', style.fontSize)
-    .attr('stroke-width', style.strokeWidth)
-    .attr('dy', style.offset)
     .attr('fill', (link) =>
       displayedRelationColor(link.relation, state.highlightAnomalies),
     )
-    .attr('opacity', (link) =>
-      style.visible ? Math.min(linkOpacity(link, state), 0.8) : 0,
-    )
+    .attr('opacity', (link) => Math.min(linkOpacity(link, state), 0.8))
 }
 
 function displayedRelationColor(
@@ -548,6 +534,18 @@ function updateClusterLabelScale(
     .attr('opacity', style.opacity)
 }
 
+function updateRelationLabelScale(
+  labelsLayer: d3.Selection<SVGGElement, unknown, null, undefined>,
+  scale: number,
+) {
+  const style = getRelationLabelStyle(scale)
+  labelsLayer
+    .attr('visibility', style.visible ? 'visible' : 'hidden')
+    .attr('font-size', style.fontSize)
+    .attr('stroke-width', style.strokeWidth)
+    .attr('transform', `translate(0,${style.offset})`)
+}
+
 function clusterCenter(nodes: NodeDatum[]) {
   return {
     x: d3.mean(nodes, (node) => node.x ?? 0) ?? 0,
@@ -636,7 +634,7 @@ interface LinkGeometry {
   control: { x: number; y: number } | undefined
 }
 
-function linkGeometry(link: VisualLink, scale: number): LinkGeometry {
+function linkGeometry(link: VisualLink): LinkGeometry {
   const sourceX = link.source.x
   const sourceY = link.source.y
   const targetX = link.target.x
@@ -663,18 +661,13 @@ function linkGeometry(link: VisualLink, scale: number): LinkGeometry {
 
   const ux = dx / distance
   const uy = dy / distance
-  const visualScale = getNodeVisualScale(scale)
-  const sourceOffset = (nodeRadius() + 2) * visualScale
-  const targetOffset =
-    (nodeRadius() + (relationIsDirectional(link.relation) ? 7 : 2)) *
-    visualScale
   const source = {
-    x: sourceX + ux * sourceOffset,
-    y: sourceY + uy * sourceOffset,
+    x: sourceX,
+    y: sourceY,
   }
   const target = {
-    x: targetX - ux * targetOffset,
-    y: targetY - uy * targetOffset,
+    x: targetX,
+    y: targetY,
   }
 
   if (link.curve === 0) {
@@ -690,16 +683,38 @@ function linkGeometry(link: VisualLink, scale: number): LinkGeometry {
   return { source, target, control }
 }
 
-function linkPath(link: VisualLink, scale: number) {
-  const { source, target, control } = linkGeometry(link, scale)
+function linkPath(link: VisualLink) {
+  const { source, target, control } = linkGeometry(link)
   if (control === undefined) {
+    if (relationIsDirectional(link.relation)) {
+      const arrow = interpolatePoint(source, target, RELATION_ARROW_POSITION)
+      return `M${source.x},${source.y} L${arrow.x},${arrow.y} L${target.x},${target.y}`
+    }
     return `M${source.x},${source.y} L${target.x},${target.y}`
+  }
+  if (relationIsDirectional(link.relation)) {
+    const firstControl = interpolatePoint(
+      source,
+      control,
+      RELATION_ARROW_POSITION,
+    )
+    const secondControl = interpolatePoint(
+      control,
+      target,
+      RELATION_ARROW_POSITION,
+    )
+    const arrow = interpolatePoint(
+      firstControl,
+      secondControl,
+      RELATION_ARROW_POSITION,
+    )
+    return `M${source.x},${source.y} Q${firstControl.x},${firstControl.y} ${arrow.x},${arrow.y} Q${secondControl.x},${secondControl.y} ${target.x},${target.y}`
   }
   return `M${source.x},${source.y} Q${control.x},${control.y} ${target.x},${target.y}`
 }
 
-function linkLabelPosition(link: VisualLink, scale: number) {
-  const { source, target, control } = linkGeometry(link, scale)
+function linkLabelPosition(link: VisualLink) {
+  const { source, target, control } = linkGeometry(link)
   if (control === undefined) {
     return {
       x: (source.x + target.x) / 2,
@@ -709,6 +724,17 @@ function linkLabelPosition(link: VisualLink, scale: number) {
   return {
     x: source.x * 0.25 + control.x * 0.5 + target.x * 0.25,
     y: source.y * 0.25 + control.y * 0.5 + target.y * 0.25,
+  }
+}
+
+function interpolatePoint(
+  from: { x: number; y: number },
+  to: { x: number; y: number },
+  position: number,
+) {
+  return {
+    x: from.x + (to.x - from.x) * position,
+    y: from.y + (to.y - from.y) * position,
   }
 }
 

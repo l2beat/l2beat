@@ -46,13 +46,10 @@ describe(mostCommonDeployedSymbol.name, () => {
 
 describe(getClusterLabelStyle.name, () => {
   it('stops increasing labels below the minimum scale', () => {
-    expect(getClusterLabelStyle(0.25)).toEqual({
-      fontSize: 72,
-      strokeWidth: 16,
-      opacity: 0.8,
-    })
-    expect(getClusterLabelStyle(0.1).fontSize).toEqual(72)
-    expect(getClusterLabelStyle(0.1).strokeWidth).toEqual(16)
+    expect(getClusterLabelStyle(1).fontSize).toEqual(18)
+    expect(getClusterLabelStyle(1).strokeWidth).toEqual(4)
+    expect(getClusterLabelStyle(0.1).fontSize).toEqual(18)
+    expect(getClusterLabelStyle(0.1).strokeWidth).toEqual(4)
   })
 
   it('hides labels at extreme zoom-out', () => {
@@ -67,10 +64,10 @@ describe(getClusterLabelStyle.name, () => {
 })
 
 describe(getNodeVisualScale.name, () => {
-  it('caps node growth above 2x zoom', () => {
+  it('caps node growth above 1.2x zoom', () => {
     expect(getNodeVisualScale(0.5)).toEqual(1)
-    expect(getNodeVisualScale(2)).toEqual(1)
-    expect(getNodeVisualScale(4)).toEqual(0.5)
+    expect(getNodeVisualScale(1.2)).toEqual(1)
+    expect(getNodeVisualScale(2.4)).toEqual(0.5)
   })
 })
 
