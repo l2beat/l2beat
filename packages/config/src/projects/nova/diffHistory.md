@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x8126fb7f1907d46e53d88b580c3d128e93db14fe
+
+# Diff at Tue, 21 Jul 2026 15:41:13 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@fc28078e744c0eaf2d65858a6073cbf1fe48622d block: 1784286182
+- current timestamp: 1784648388
+
+## Description
+
+Security Council roster synced across L1 (shared Arbitrum Security Council) and L2 (L2SecurityCouncilEmergency on arb-nova): 2 members added, 2 removed. Executes the batch scheduled on 2026-07-17.
+
+## Watched changes
+
+```diff
+    contract L2SecurityCouncilEmergency (arb-nova:0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3) [orbitstack/layer2/L2SecurityCouncilEmergency] {
+    +++ description: None
+      values.$members.0:
++        "arb-nova:0xEEFFd9041F8C4411C3Ad90310e61aDd65e0b7C1E"
+      values.$members.1:
++        "arb-nova:0xeEB8886c48490355D6473901E2C1Ea03f9cc8398"
+      values.$members.2:
+-        "arb-nova:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
+      values.$members.6:
+-        "arb-nova:0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D"
+    }
+```
+
+```diff
+    contract SecurityCouncil (eth:0xF06E95eF589D9c38af242a8AAee8375f14023F85) [orbitstack/SecurityCouncil] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xEEFFd9041F8C4411C3Ad90310e61aDd65e0b7C1E"
+      values.$members.1:
++        "eth:0xeEB8886c48490355D6473901E2C1Ea03f9cc8398"
+      values.$members.2:
+-        "eth:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
+      values.$members.6:
+-        "eth:0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D"
+    }
+```
+
 Generated with discovered.json: 0x49297aa3464f95b985feb8b9aab14c8dc0b859af
 
 # Diff at Fri, 17 Jul 2026 11:04:50 GMT:

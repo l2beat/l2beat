@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x7e581d26aafe957a80fffad47c401c81fe7c567c
+
+# Diff at Tue, 21 Jul 2026 15:40:29 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@fc28078e744c0eaf2d65858a6073cbf1fe48622d block: 1778535511
+- current timestamp: 1784648359
+
+## Description
+
+EigenDAOperationsMultisig: new signer added. Threshold 3/4 → 3/5.
+
+## Watched changes
+
+```diff
+    contract EigenDAOperationsMultisig (eth:0x002721B4790d97dC140a049936aA710152Ba92D5) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xB646A0871af2b2c6e115b24D7E36d406780b6ca8"
+      values.multisigThreshold:
+-        "3 of 4 (75%)"
++        "3 of 5 (60%)"
+    }
+```
+
 Generated with discovered.json: 0xe7a7b5dfd1167507be380e508515052476a7a63e
 
 # Diff at Wed, 01 Jul 2026 10:34:27 GMT:
