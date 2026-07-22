@@ -3,9 +3,9 @@ import { generateId } from '../../tools/generateId'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import type { AztecBlock, AztecBlockClient, AztecBlockHeader } from '../types'
 import {
+  AztecGetBlockHeadersResponse,
   AztecGetBlockNumberResponse,
   AztecGetBlocksResponse,
-  AztecGetBlockHeadersResponse,
   AztecRpcErrorResponse,
 } from './types'
 
