@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "UniswapV3Pool",
+  "description": "A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on price ranges expressed as ticks; the pool tracks the current price as sqrtPriceX96 in slot0 and crosses initialized ticks as swaps move the price. Swap fees accrue to in-range positions; if the protocol fee is switched on (factory owner only), up to 1/4 of the swap fee per side is diverted to protocolFees for collection by the factory owner. Each pool also embeds a TWAP oracle: a ring buffer of price observations whose cardinality anyone can grow by paying the gas.",
+  "ignoreMethods": ["observations", "ticks", "tickBitmap", "positions"],
+  "fields": {
+    "slot0": {
+      "ignoreInWatchMode": true,
+      "description": "Current sqrtPriceX96, tick, oracle observation index/cardinality, protocol fee setting, and the reentrancy lock; changes with every swap."
+    },
+    "liquidity": { "ignoreInWatchMode": true },
+    "feeGrowthGlobal0X128": { "ignoreInWatchMode": true },
+    "feeGrowthGlobal1X128": { "ignoreInWatchMode": true },
+    "protocolFees": {
+      "ignoreInWatchMode": true,
+      "description": "Protocol fees accrued and not yet collected to the TokenJar; anyone can trigger collection through the V3OpenFeeAdapter."
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "GovernorBravoDelegate",
+  "description": "Implementation logic behind the GovernorBravoDelegator proxy. Read through the proxy for live values; the values on this address itself are uninitialized storage.",
+  "ignoreMethods": ["getActions", "proposals", "state"],
+  "fields": {}
+}

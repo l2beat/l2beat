@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Permit2",
+  "description": "Canonical signature-based token approval hub (same address on all chains, deployed via CREATE2). Users grant it a one-time ERC20 approval, then issue time-bounded, amount-bounded, spender-bounded permits by signature (SignatureTransfer for one-offs, AllowanceTransfer for standing allowances that can be revoked via lockdown). Immutable and ownerless; the risk it concentrates is that any spender a user signs a permit for can pull the permitted amount while it is valid.",
+  "fields": {}
+}

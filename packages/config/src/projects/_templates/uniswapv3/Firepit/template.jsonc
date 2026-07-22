@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Firepit",
+  "description": "The UNI burn engine: anyone can transfer the threshold amount of UNI (currently 4,000) to the 0xdead burn address and in exchange release up to 20 chosen asset balances from the TokenJar to themselves. Searchers arbitrage accumulated fees against the UNI burn cost, so protocol fees are continuously converted into UNI burned. The thresholdSetter (the Timelock) can retune the threshold.",
+  "fields": {
+    "threshold": {
+      "description": "UNI amount burned per release call.",
+      "severity": "LOW"
+    },
+    "thresholdSetter": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can change the UNI amount required per TokenJar release."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "nonce": { "ignoreInWatchMode": true }
+  }
+}

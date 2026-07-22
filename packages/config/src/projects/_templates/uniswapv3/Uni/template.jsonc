@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Uni",
+  "description": "The UNI governance token (ERC20 with delegation-based checkpoint voting). Fixed 1B initial supply; the minter (the governance Timelock) can mint at most 2% of the supply per year, no earlier than once every 365 days. Votes must be self-delegated or delegated to count. Token balances at a past block, via delegated checkpoints, are what GovernorBravo counts for proposals and voting.",
+  "fields": {
+    "minter": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can mint up to 2% of the UNI supply per year (at most once per year) and set a new minter."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "totalSupply": { "ignoreInWatchMode": true }
+  }
+}

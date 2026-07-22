@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SwapRouter02",
+  "description": "Second-generation swap router that can route a single trade across both Uniswap v2 and v3 pools and supports multicall batching with permits. Immutable, stateless between transactions, and unprivileged: it only moves funds of callers who approved it, along routes the caller encodes.",
+  "fields": {}
+}

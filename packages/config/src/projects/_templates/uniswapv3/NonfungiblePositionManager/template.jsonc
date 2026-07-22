@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "NonfungiblePositionManager",
+  "description": "Periphery contract that wraps raw pool positions into ERC721 NFTs. It is the registered owner of the underlying positions in the pools and tracks each tokenId's range, liquidity, and uncollected fees; the NFT holder can add/remove liquidity and collect fees. Immutable and unprivileged: it holds no special rights in the pools, and interacting with pools directly (without the NFT wrapper) is equally possible.",
+  "ignoreMethods": [
+    "positions",
+    "ownerOf",
+    "getApproved",
+    "tokenByIndex",
+    "tokenOfOwnerByIndex",
+    "tokenURI"
+  ],
+  "fields": {
+    "totalSupply": {
+      "ignoreInWatchMode": true,
+      "description": "Number of position NFTs minted so far."
+    }
+  }
+}
