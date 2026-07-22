@@ -3,6 +3,7 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import type { ChartRange } from '~/utils/range/range'
+import { getFullySyncedDaRange } from '../data-availability/throughput/utils/getFullySyncedDaRange'
 import { countPerSecond } from '../scaling/activity/utils/countPerSecond'
 import { getActivitySyncInfo } from '../scaling/activity/utils/getActivitySyncInfo'
 import { getFullySyncedActivityRange } from '../scaling/activity/utils/getFullySyncedActivityRange'
@@ -102,17 +103,20 @@ async function getEthereumDaSparkline(
 ): Promise<HomeEthereumCharts['da']> {
   const db = getDb()
 
+  // Only show fully synced days — the current day's data is partial.
+  const adjustedRange = getFullySyncedDaRange(range)
+
   // The 'ethereum' projectId rows are the DA layer's own totals, so this is
   // a small query even over a year.
   const totalRecords = await db.dataAvailability.getByProjectIdsAndTimeRange(
     ['ethereum'],
-    range,
+    adjustedRange,
   )
 
   if (totalRecords.length === 0) {
     return {
       chart: [],
-      syncedUntil: range[1],
+      syncedUntil: adjustedRange[1],
       trackedShare: undefined,
       change: undefined,
     }
@@ -130,7 +134,7 @@ async function getEthereumDaSparkline(
   if (firstDay === undefined || lastDay === undefined) {
     return {
       chart: [],
-      syncedUntil: range[1],
+      syncedUntil: adjustedRange[1],
       trackedShare: undefined,
       change: undefined,
     }
