@@ -51,7 +51,7 @@ const logoColumn = columnHelper.display({
 function makeNameColumn(opts?: {
   nameMaxWidthClass?: string
   headClassName?: string
-  linkClassName?: string
+  cellClassName?: string
 }) {
   return columnHelper.accessor('name', {
     header: 'Name',
@@ -61,10 +61,7 @@ function makeNameColumn(opts?: {
           projectName={ctx.row.original.name}
           description={ctx.row.original.description}
         >
-          <TableLink
-            href={`/interop/protocols/${ctx.row.original.slug}`}
-            className={opts?.linkClassName}
-          >
+          <TableLink href={`/interop/protocols/${ctx.row.original.slug}`}>
             <TwoRowCell>
               <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
                 <div
@@ -88,7 +85,7 @@ function makeNameColumn(opts?: {
       )
     },
     meta: {
-      cellClassName: 'whitespace-normal',
+      cellClassName: cn('whitespace-normal', opts?.cellClassName),
       headClassName: cn('text-2xs', opts?.headClassName),
     },
   })
@@ -101,7 +98,7 @@ const homeCommonColumns = [
   makeNameColumn({
     nameMaxWidthClass: 'max-w-[112px]',
     headClassName: 'min-w-[7.5rem]',
-    linkClassName: 'md:-ml-1.5 md:pl-1.5',
+    cellClassName: 'lg:pl-2.5',
   }),
 ]
 

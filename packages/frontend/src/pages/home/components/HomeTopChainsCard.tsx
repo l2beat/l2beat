@@ -84,15 +84,15 @@ function getHomeTopChainsColumns() {
       cell: (ctx) => (
         <div className="flex h-full items-center">
           <ProjectNameInfoTooltip project={ctx.row.original}>
-            <TableLink
-              href={`/scaling/projects/${ctx.row.original.slug}`}
-              className="md:-ml-1.5 md:pl-1.5"
-            >
+            <TableLink href={`/scaling/projects/${ctx.row.original.slug}`}>
               <ProjectNameCell project={ctx.row.original} withInfoTooltip />
             </TableLink>
           </ProjectNameInfoTooltip>
         </div>
       ),
+      meta: {
+        cellClassName: 'lg:pl-2.5',
+      },
       enableHiding: false,
     }),
     columnHelper.display({
