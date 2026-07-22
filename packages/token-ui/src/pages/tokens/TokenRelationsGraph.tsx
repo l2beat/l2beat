@@ -7,7 +7,9 @@ import {
 } from './relationGraphLayout'
 import {
   getClusterLabelStyle,
+  getNodeVisualScale,
   getRelationGraphFocus,
+  getRelationLabelStyle,
   mostCommonDeployedSymbol,
   nodeColor,
   nodeLabel,
@@ -18,6 +20,7 @@ import {
   type RelationGraphSelection,
   relationColor,
   relationId,
+  relationIsDirectional,
   relationTypeLabel,
   sourceId,
   targetId,
@@ -62,6 +65,7 @@ export function TokenRelationsGraph({
   const zoomToNodeRef = useRef<((nodeId: string) => void) | undefined>(
     undefined,
   )
+  const zoomScaleRef = useRef(1)
   const onSelectionChangeRef = useRef(onSelectionChange)
   const [hovered, setHovered] = useState<HoveredItem>()
   const size = useElementSize(containerRef)
@@ -105,7 +109,7 @@ export function TokenRelationsGraph({
     svg.selectAll('*').remove()
     svg.attr('viewBox', `0 0 ${size.width} ${size.height}`)
 
-    appendArrowMarkers(svg)
+    const arrowMarkers = appendArrowMarkers(svg)
 
     const background = svg
       .append('rect')
@@ -117,6 +121,7 @@ export function TokenRelationsGraph({
 
     const layer = svg.append('g')
     const linksLayer = layer.append('g')
+    const relationLabelsLayer = layer.append('g')
     const nodesLayer = layer.append('g')
     const clusterLabelsLayer = layer.append('g')
 
@@ -129,6 +134,7 @@ export function TokenRelationsGraph({
       .attr('stroke', (link) => relationColor(link.relation))
       .attr('stroke-linecap', 'round')
       .attr('stroke-width', 1.4)
+      .attr('vector-effect', 'non-scaling-stroke')
       .attr('opacity', 0.55)
       .attr('marker-end', (link) => markerUrl(link.relation, false))
 
@@ -145,6 +151,7 @@ export function TokenRelationsGraph({
       .attr('fill', 'none')
       .attr('stroke', 'transparent')
       .attr('stroke-width', 14)
+      .attr('vector-effect', 'non-scaling-stroke')
       .attr('pointer-events', 'stroke')
       .attr('cursor', 'pointer')
       .on('mouseenter', (_, link) =>
@@ -158,6 +165,21 @@ export function TokenRelationsGraph({
           id: relationId(link.relation),
         })
       })
+
+    const relationLabels = relationLabelsLayer
+      .selectAll<SVGTextElement, VisualLink>('text.relation-label')
+      .data(visualLinks, (link) => relationId(link.relation))
+      .join('text')
+      .attr('class', 'relation-label')
+      .attr('text-anchor', 'middle')
+      .attr('dominant-baseline', 'central')
+      .attr('paint-order', 'stroke')
+      .attr('stroke', 'var(--background)')
+      .attr('fill', (link) => relationColor(link.relation))
+      .attr('font-weight', 600)
+      .attr('pointer-events', 'none')
+      .attr('opacity', 0)
+      .text((link) => link.relation.plugin)
 
     const clusterLabels = clusterLabelsLayer
       .selectAll<SVGTextElement, (typeof clusterLabelData)[number]>('text')
@@ -186,7 +208,9 @@ export function TokenRelationsGraph({
         onSelectionChangeRef.current({ type: 'node', id: node.id })
       })
 
-    node
+    const nodeVisual = node.append('g').attr('class', 'node-visual')
+
+    nodeVisual
       .append('circle')
       .attr('class', 'node-ring')
       .attr('r', nodeRadius() + 5)
@@ -195,7 +219,7 @@ export function TokenRelationsGraph({
       .attr('stroke-width', 2.5)
       .attr('opacity', 0)
 
-    node
+    nodeVisual
       .append('circle')
       .attr('class', 'node-core')
       .attr('r', nodeRadius())
@@ -203,7 +227,7 @@ export function TokenRelationsGraph({
       .attr('stroke', 'var(--background)')
       .attr('stroke-width', 2)
 
-    node
+    nodeVisual
       .append('text')
       .attr('class', 'node-label')
       .attr('x', 0)
@@ -225,9 +249,16 @@ export function TokenRelationsGraph({
           `${nodeLabel(node)} on ${node.chain}\n${node.chain}:${node.address}\n${node.isDeployed ? 'Deployed token exists' : 'Missing deployed token'}`,
       )
 
+    function redrawRelations(scale: number) {
+      links.attr('d', (link) => linkPath(link, scale))
+      linkHits.attr('d', (link) => linkPath(link, scale))
+      relationLabels
+        .attr('x', (link) => linkLabelPosition(link, scale).x)
+        .attr('y', (link) => linkLabelPosition(link, scale).y)
+    }
+
     function redraw() {
-      links.attr('d', linkPath)
-      linkHits.attr('d', linkPath)
+      redrawRelations(zoomScaleRef.current)
       node.attr('transform', (node) => `translate(${node.x},${node.y})`)
       clusterLabels
         .attr('x', (label) => clusterCenter(label.nodes).x)
@@ -240,13 +271,32 @@ export function TokenRelationsGraph({
       (size.height - 32) / layout.height,
       1,
     )
+    let previousNodeVisualScale = 1
+    let relationLabelsWereVisible = false
     const zoom = d3
       .zoom<SVGSVGElement, unknown>()
       .scaleExtent([Math.min(fitScale / 2, 0.1), 8])
       .on('start', () => background.attr('cursor', 'grabbing'))
       .on('zoom', (event) => {
+        const scale = event.transform.k
+        zoomScaleRef.current = scale
         layer.attr('transform', event.transform.toString())
-        updateClusterLabelScale(clusterLabels, event.transform.k)
+        const nodeVisualScale = getNodeVisualScale(scale)
+        if (nodeVisualScale < 1 || previousNodeVisualScale < 1) {
+          redrawRelations(scale)
+          nodeVisual.attr('transform', `scale(${nodeVisualScale})`)
+        }
+        updateClusterLabelScale(clusterLabels, scale)
+        const relationLabelsVisible = getRelationLabelStyle(scale).visible
+        if (relationLabelsVisible || relationLabelsWereVisible) {
+          updateRelationLabelStyles(svgElement, scale, styleStateRef.current)
+        }
+        const markerSize = 6 / Math.max(scale, 1)
+        arrowMarkers
+          .attr('markerWidth', markerSize)
+          .attr('markerHeight', markerSize)
+        previousNodeVisualScale = nodeVisualScale
+        relationLabelsWereVisible = relationLabelsVisible
       })
       .on('end', () => background.attr('cursor', 'grab'))
     svg.call(zoom)
@@ -300,9 +350,10 @@ export function TokenRelationsGraph({
           d3.select(event.sourceEvent.currentTarget).attr('cursor', 'pointer')
         }),
     )
-    updateGraphStyles(svgElement, styleStateRef.current)
+    updateGraphStyles(svgElement, styleStateRef.current, zoomScaleRef.current)
     return () => {
       svg.interrupt()
+      zoomScaleRef.current = 1
       zoomToNodeRef.current = undefined
     }
   }, [graph, size.height, size.width])
@@ -319,12 +370,16 @@ export function TokenRelationsGraph({
   useEffect(() => {
     const svgElement = svgRef.current
     if (!svgElement) return
-    updateGraphStyles(svgElement, {
-      focus,
-      highlightAnomalies,
-      hovered,
-      selection,
-    })
+    updateGraphStyles(
+      svgElement,
+      {
+        focus,
+        highlightAnomalies,
+        hovered,
+        selection,
+      },
+      zoomScaleRef.current,
+    )
   }, [focus, highlightAnomalies, hovered, selection])
 
   return (
@@ -336,38 +391,28 @@ export function TokenRelationsGraph({
 
 function updateGraphStyles(
   svgElement: SVGSVGElement,
-  { focus, highlightAnomalies, hovered, selection }: GraphStyleState,
+  state: GraphStyleState,
+  scale: number,
 ) {
+  const { focus, highlightAnomalies, hovered, selection } = state
   const svg = d3.select(svgElement)
   const links = svg.selectAll<SVGPathElement, VisualLink>('.relation-link')
   const nodes = svg.selectAll<SVGGElement, NodeDatum>('.relation-node')
-  const hasSelection = focus !== undefined
 
   links
     .attr('stroke', (link) =>
-      highlightAnomalies
-        ? link.relation.isConflict
-          ? RELATION_COLORS.conflict
-          : RELATION_COLORS.muted
-        : relationColor(link.relation),
+      displayedRelationColor(link.relation, highlightAnomalies),
     )
     .attr('marker-end', (link) => markerUrl(link.relation, highlightAnomalies))
-    .attr('opacity', (link) => {
-      const isHovered = isLinkActive(link, hovered)
-      const isSelected = focus?.relationIds.has(relationId(link.relation))
-      if (isHovered || isSelected) return 0.95
-      if (hasSelection) return 0.08
-      if (highlightAnomalies) {
-        return link.relation.isConflict ? 0.95 : 0.22
-      }
-      return 0.55
-    })
+    .attr('opacity', (link) => linkOpacity(link, state))
     .attr('stroke-width', (link) => {
       if (isLinkActive(link, hovered)) return 3
       if (focus?.relationIds.has(relationId(link.relation))) return 2.8
       if (highlightAnomalies && link.relation.isConflict) return 2.2
       return 1.4
     })
+
+  updateRelationLabelStyles(svgElement, scale, state)
 
   nodes
     .attr('opacity', (node) =>
@@ -395,47 +440,91 @@ function updateGraphStyles(
     )
 }
 
+function updateRelationLabelStyles(
+  svgElement: SVGSVGElement,
+  scale: number,
+  state: GraphStyleState,
+) {
+  const style = getRelationLabelStyle(scale)
+  d3.select(svgElement)
+    .selectAll<SVGTextElement, VisualLink>('.relation-label')
+    .attr('font-size', style.fontSize)
+    .attr('stroke-width', style.strokeWidth)
+    .attr('dy', style.offset)
+    .attr('fill', (link) =>
+      displayedRelationColor(link.relation, state.highlightAnomalies),
+    )
+    .attr('opacity', (link) =>
+      style.visible ? Math.min(linkOpacity(link, state), 0.8) : 0,
+    )
+}
+
+function displayedRelationColor(
+  relation: RelationGraphRelation,
+  highlightAnomalies: boolean,
+) {
+  if (!highlightAnomalies) return relationColor(relation)
+  return relation.isConflict ? RELATION_COLORS.conflict : RELATION_COLORS.muted
+}
+
+function linkOpacity(link: VisualLink, state: GraphStyleState) {
+  const { focus, highlightAnomalies, hovered } = state
+  const isHovered = isLinkActive(link, hovered)
+  const isSelected = focus?.relationIds.has(relationId(link.relation))
+  if (isHovered || isSelected) return 0.95
+  if (focus !== undefined) return 0.08
+  if (highlightAnomalies) {
+    return link.relation.isConflict ? 0.95 : 0.22
+  }
+  return 0.55
+}
+
 function appendArrowMarkers(
   svg: d3.Selection<SVGSVGElement, unknown, null, undefined>,
 ) {
   const markers = [
-    { id: 'relation-arrow-burn-and-mint', color: RELATION_COLORS.burnAndMint },
     { id: 'relation-arrow-lock-and-mint', color: RELATION_COLORS.lockAndMint },
     { id: 'relation-arrow-conflict', color: RELATION_COLORS.conflict },
     { id: 'relation-arrow-muted', color: RELATION_COLORS.muted },
   ]
 
-  svg
+  const selection = svg
     .append('defs')
     .selectAll('marker')
     .data(markers)
     .join('marker')
     .attr('id', (marker) => marker.id)
+    .attr('markerUnits', 'userSpaceOnUse')
     .attr('viewBox', '0 0 10 10')
     .attr('refX', 8)
     .attr('refY', 5)
     .attr('markerWidth', 6)
     .attr('markerHeight', 6)
     .attr('orient', 'auto')
+
+  selection
     .append('path')
     .attr('d', 'M 0 0 L 10 5 L 0 10 z')
     .attr('fill', (marker) => marker.color)
+
+  return selection
 }
 
 function markerUrl(
   relation: RelationGraphRelation,
   highlightAnomalies: boolean,
 ) {
+  if (!relationIsDirectional(relation)) return null
   if (highlightAnomalies) {
     return relation.isConflict
       ? 'url(#relation-arrow-conflict)'
       : 'url(#relation-arrow-muted)'
   }
   switch (relation.bridgeType) {
-    case 'burnAndMint':
-      return 'url(#relation-arrow-burn-and-mint)'
     case 'lockAndMint':
       return 'url(#relation-arrow-lock-and-mint)'
+    case 'burnAndMint':
+      throw new Error('Burn & Mint relation unexpectedly requested an arrow')
     default:
       throw new Error(
         `Unexpected bridge type in relations graph: ${relation.bridgeType}`,
@@ -541,33 +630,86 @@ function buildSimulationLinks(visualLinks: VisualLink[]) {
   return [...links.values()]
 }
 
-function linkPath(link: VisualLink) {
-  const sourceX = link.source.x ?? 0
-  const sourceY = link.source.y ?? 0
-  const targetX = link.target.x ?? 0
-  const targetY = link.target.y ?? 0
+interface LinkGeometry {
+  source: { x: number; y: number }
+  target: { x: number; y: number }
+  control: { x: number; y: number } | undefined
+}
+
+function linkGeometry(link: VisualLink, scale: number): LinkGeometry {
+  const sourceX = link.source.x
+  const sourceY = link.source.y
+  const targetX = link.target.x
+  const targetY = link.target.y
+  if (
+    sourceX === undefined ||
+    sourceY === undefined ||
+    targetX === undefined ||
+    targetY === undefined
+  ) {
+    throw new Error('Relation graph link has an endpoint without a position')
+  }
+
   const dx = targetX - sourceX
   const dy = targetY - sourceY
   const distance = Math.sqrt(dx * dx + dy * dy)
-  if (distance === 0) return `M${sourceX},${sourceY}`
+  if (distance === 0) {
+    return {
+      source: { x: sourceX, y: sourceY },
+      target: { x: targetX, y: targetY },
+      control: undefined,
+    }
+  }
 
   const ux = dx / distance
   const uy = dy / distance
-  const sx = sourceX + ux * (nodeRadius() + 2)
-  const sy = sourceY + uy * (nodeRadius() + 2)
-  const tx = targetX - ux * (nodeRadius() + 7)
-  const ty = targetY - uy * (nodeRadius() + 7)
+  const visualScale = getNodeVisualScale(scale)
+  const sourceOffset = (nodeRadius() + 2) * visualScale
+  const targetOffset =
+    (nodeRadius() + (relationIsDirectional(link.relation) ? 7 : 2)) *
+    visualScale
+  const source = {
+    x: sourceX + ux * sourceOffset,
+    y: sourceY + uy * sourceOffset,
+  }
+  const target = {
+    x: targetX - ux * targetOffset,
+    y: targetY - uy * targetOffset,
+  }
 
   if (link.curve === 0) {
-    return `M${sx},${sy} L${tx},${ty}`
+    return { source, target, control: undefined }
   }
 
   const nx = -uy
   const ny = ux
-  const mx = (sx + tx) / 2 + nx * link.curve
-  const my = (sy + ty) / 2 + ny * link.curve
+  const control = {
+    x: (source.x + target.x) / 2 + nx * link.curve,
+    y: (source.y + target.y) / 2 + ny * link.curve,
+  }
+  return { source, target, control }
+}
 
-  return `M${sx},${sy} Q${mx},${my} ${tx},${ty}`
+function linkPath(link: VisualLink, scale: number) {
+  const { source, target, control } = linkGeometry(link, scale)
+  if (control === undefined) {
+    return `M${source.x},${source.y} L${target.x},${target.y}`
+  }
+  return `M${source.x},${source.y} Q${control.x},${control.y} ${target.x},${target.y}`
+}
+
+function linkLabelPosition(link: VisualLink, scale: number) {
+  const { source, target, control } = linkGeometry(link, scale)
+  if (control === undefined) {
+    return {
+      x: (source.x + target.x) / 2,
+      y: (source.y + target.y) / 2,
+    }
+  }
+  return {
+    x: source.x * 0.25 + control.x * 0.5 + target.x * 0.25,
+    y: source.y * 0.25 + control.y * 0.5 + target.y * 0.25,
+  }
 }
 
 function nodeRadius() {

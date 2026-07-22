@@ -25,11 +25,13 @@ export const NODE_COLORS = {
   missing: '#f97316',
 } as const
 
-const CLUSTER_LABEL_MIN_SCALE = 0.25
+const CLUSTER_LABEL_MIN_SCALE = 1
 const CLUSTER_LABEL_FADE_OUT_SCALE = 0.05
 const CLUSTER_LABEL_FULL_OPACITY_SCALE = 0.2
 const CLUSTER_LABEL_MAX_OPACITY = 0.8
-const SEARCH_RESULT_LIMIT = 12
+const SEARCH_RESULT_LIMIT = 5 
+const NODE_VISUAL_MAX_SCALE = 1.2
+const RELATION_LABEL_MIN_SCALE = 2.5
 
 export function relationId(relation: RelationGraphRelation) {
   return [
@@ -91,6 +93,19 @@ export function relationTypeLabel(relation: RelationGraphRelation) {
   }
 }
 
+export function relationIsDirectional(relation: RelationGraphRelation) {
+  switch (relation.bridgeType) {
+    case 'burnAndMint':
+      return false
+    case 'lockAndMint':
+      return true
+    default:
+      throw new Error(
+        `Unexpected bridge type in relations graph: ${relation.bridgeType}`,
+      )
+  }
+}
+
 export function nodeColor(node: RelationGraphNode) {
   return node.isDeployed ? NODE_COLORS.deployed : NODE_COLORS.missing
 }
@@ -115,15 +130,28 @@ export function mostCommonDeployedSymbol(nodes: RelationGraphNode[]) {
 }
 
 export function getClusterLabelStyle(scale: number) {
-  if (!Number.isFinite(scale) || scale <= 0) {
-    throw new Error('Graph scale must be a positive finite number')
-  }
+  assertGraphScale(scale)
 
   const clampedScale = Math.max(scale, CLUSTER_LABEL_MIN_SCALE)
   return {
     fontSize: 18 / clampedScale,
     strokeWidth: 4 / clampedScale,
     opacity: clusterLabelOpacity(scale),
+  }
+}
+
+export function getNodeVisualScale(scale: number) {
+  assertGraphScale(scale)
+  return Math.min(1, NODE_VISUAL_MAX_SCALE / scale)
+}
+
+export function getRelationLabelStyle(scale: number) {
+  assertGraphScale(scale)
+  return {
+    visible: scale > RELATION_LABEL_MIN_SCALE,
+    fontSize: 10 / scale,
+    strokeWidth: 3 / scale,
+    offset: -5 / scale,
   }
 }
 
@@ -177,6 +205,12 @@ function searchMatchRank(node: RelationGraphNode, query: string) {
   if (symbol?.startsWith(query)) return 2
   if (address.startsWith(query)) return 3
   return 4
+}
+
+function assertGraphScale(scale: number) {
+  if (!Number.isFinite(scale) || scale <= 0) {
+    throw new Error('Graph scale must be a positive finite number')
+  }
 }
 
 function clusterLabelOpacity(scale: number) {

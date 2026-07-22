@@ -2,13 +2,16 @@ import { expect } from 'earl'
 import {
   getClusterLabelStyle,
   getExistingRelationGraphSelection,
+  getNodeVisualScale,
   getRelationGraphFocus,
+  getRelationLabelStyle,
   mostCommonDeployedSymbol,
   type RelationGraph,
   type RelationGraphFocus,
   type RelationGraphNode,
   type RelationGraphRelation,
   relationId,
+  relationIsDirectional,
   searchRelationGraphNodes,
   tokenId,
 } from './relationGraphModel'
@@ -60,6 +63,39 @@ describe(getClusterLabelStyle.name, () => {
     expect(() => getClusterLabelStyle(0)).toThrow(
       'Graph scale must be a positive finite number',
     )
+  })
+})
+
+describe(getNodeVisualScale.name, () => {
+  it('caps node growth above 2x zoom', () => {
+    expect(getNodeVisualScale(0.5)).toEqual(1)
+    expect(getNodeVisualScale(2)).toEqual(1)
+    expect(getNodeVisualScale(4)).toEqual(0.5)
+  })
+})
+
+describe(getRelationLabelStyle.name, () => {
+  it('shows constant-size labels above 2.5x zoom', () => {
+    expect(getRelationLabelStyle(2.5).visible).toEqual(false)
+    const style = getRelationLabelStyle(4)
+    expect(style.visible).toEqual(true)
+    expect(style.fontSize * 4).toEqual(10)
+    expect(style.strokeWidth * 4).toEqual(3)
+  })
+})
+
+describe(relationIsDirectional.name, () => {
+  it('only treats Lock & Mint relations as directional', () => {
+    expect(
+      relationIsDirectional(
+        relation('ethereum', '0xaaa', 'base', '0xbbb', 'lock', 'lockAndMint'),
+      ),
+    ).toEqual(true)
+    expect(
+      relationIsDirectional(
+        relation('ethereum', '0xaaa', 'base', '0xbbb', 'burn', 'burnAndMint'),
+      ),
+    ).toEqual(false)
   })
 })
 
@@ -224,6 +260,7 @@ function relation(
   tokenToChain: string,
   tokenToAddress: string,
   plugin: string,
+  bridgeType: RelationGraphRelation['bridgeType'] = 'lockAndMint',
 ): RelationGraphRelation {
   return {
     tokenFromChain,
@@ -231,7 +268,7 @@ function relation(
     tokenToChain,
     tokenToAddress,
     plugin,
-    bridgeType: 'lockAndMint',
+    bridgeType,
     isConflict: false,
   }
 }
