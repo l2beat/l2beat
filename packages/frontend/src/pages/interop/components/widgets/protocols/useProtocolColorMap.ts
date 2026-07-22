@@ -1,6 +1,6 @@
 import uniq from 'lodash/uniq'
 import { useMemo } from 'react'
-import type { InteropProtocolData } from '~/server/features/scaling/interop/utils/getTopProtocols'
+import type { InteropProtocolData } from '~/server/features/layer2s/interop/utils/getTopProtocols'
 import { generateAccessibleColors } from '~/utils/generateColors'
 
 export const OTHERS_PROTOCOL_NAME = 'Others'

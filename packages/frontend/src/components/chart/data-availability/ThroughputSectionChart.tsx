@@ -6,7 +6,7 @@ import type { ChartProject } from '~/components/core/chart/Chart'
 import { ChartRangeControls } from '~/components/core/chart/ChartRangeControls'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
-import { useIncludeScalingOnly } from '~/pages/data-availability/throughput/components/DaThroughputContext'
+import { useIncludeLayer2sOnly } from '~/pages/data-availability/throughput/components/DaThroughputContext'
 import type { ProjectDaThroughputChartPoint } from '~/server/features/data-availability/throughput/getProjectDaThroughputChartData'
 import { useTRPC } from '~/trpc/React'
 import {
@@ -38,14 +38,14 @@ export function ThroughputSectionChart({
   milestones,
 }: Props) {
   const trpc = useTRPC()
-  const { includeScalingOnly, setIncludeScalingOnly } = useIncludeScalingOnly()
+  const { includeLayer2sOnly, setIncludeLayer2sOnly } = useIncludeLayer2sOnly()
   const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
 
   const { data, isLoading } = useQuery(
     trpc.da.projectCharts.queryOptions({
       range,
       projectId: project.id,
-      includeScalingOnly,
+      includeLayer2sOnly,
     }),
   )
 
@@ -73,9 +73,9 @@ export function ThroughputSectionChart({
       )}
       <div className="mt-2 space-y-1">
         <EthereumProjectsOnlyCheckbox
-          name="projectThroughputIncludeScalingOnly"
-          checked={includeScalingOnly}
-          onCheckedChange={setIncludeScalingOnly}
+          name="projectThroughputIncludeLayer2sOnly"
+          checked={includeLayer2sOnly}
+          onCheckedChange={setIncludeLayer2sOnly}
         />
         <div className="flex justify-between gap-x-1">
           <ProjectChartTimeRange timeRange={timeRange} />

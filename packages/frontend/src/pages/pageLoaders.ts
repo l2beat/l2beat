@@ -2,49 +2,49 @@ export const pageLoaders = {
   IconPreviewPage: async () =>
     (await import('./dev/icons/IconPreviewPage')).IconPreviewPage,
   HomePage: async () => (await import('./home/HomePage')).HomePage,
-  ScalingSummaryPage: async () =>
-    (await import('./scaling/summary/ScalingSummaryPage')).ScalingSummaryPage,
-  ScalingRiskPage: async () =>
-    (await import('./scaling/risk/ScalingRiskPage')).ScalingRiskPage,
-  ScalingTvsPage: async () =>
-    (await import('./scaling/tvs/ScalingTvsPage')).ScalingTvsPage,
-  ScalingTvsBreakdownPage: async () =>
-    (await import('./scaling/tvs/breakdown/ScalingTvsBreakdownPage'))
-      .ScalingTvsBreakdownPage,
-  ScalingActivityPage: async () =>
-    (await import('./scaling/activity/ScalingActivityPage'))
-      .ScalingActivityPage,
-  ScalingRiskDataAvailabilityPage: async () =>
+  Layer2sSummaryPage: async () =>
+    (await import('./layer2s/summary/Layer2sSummaryPage')).Layer2sSummaryPage,
+  Layer2sRiskPage: async () =>
+    (await import('./layer2s/risk/Layer2sRiskPage')).Layer2sRiskPage,
+  Layer2sTvsPage: async () =>
+    (await import('./layer2s/tvs/Layer2sTvsPage')).Layer2sTvsPage,
+  Layer2sTvsBreakdownPage: async () =>
+    (await import('./layer2s/tvs/breakdown/Layer2sTvsBreakdownPage'))
+      .Layer2sTvsBreakdownPage,
+  Layer2sActivityPage: async () =>
+    (await import('./layer2s/activity/Layer2sActivityPage'))
+      .Layer2sActivityPage,
+  Layer2sRiskDataAvailabilityPage: async () =>
     (
       await import(
-        './scaling/risk/data-availability/ScalingRiskDataAvailabilityPage'
+        './layer2s/risk/data-availability/Layer2sRiskDataAvailabilityPage'
       )
-    ).ScalingRiskDataAvailabilityPage,
-  ScalingRiskSequencingPage: async () =>
-    (await import('./scaling/risk/sequencing/ScalingRiskSequencingPage'))
-      .ScalingRiskSequencingPage,
-  ScalingLivenessPage: async () =>
-    (await import('./scaling/liveness/ScalingLivenessPage'))
-      .ScalingLivenessPage,
-  ScalingCostsPage: async () =>
-    (await import('./scaling/costs/ScalingCostsPage')).ScalingCostsPage,
-  ScalingArchivedPage: async () =>
-    (await import('./scaling/archived/ScalingArchivedPage'))
-      .ScalingArchivedPage,
-  ScalingProjectPage: async () =>
-    (await import('./scaling/project/ScalingProjectPage')).ScalingProjectPage,
-  ScalingProjectTvsBreakdownPage: async () =>
+    ).Layer2sRiskDataAvailabilityPage,
+  Layer2sRiskSequencingPage: async () =>
+    (await import('./layer2s/risk/sequencing/Layer2sRiskSequencingPage'))
+      .Layer2sRiskSequencingPage,
+  Layer2sLivenessPage: async () =>
+    (await import('./layer2s/liveness/Layer2sLivenessPage'))
+      .Layer2sLivenessPage,
+  Layer2sCostsPage: async () =>
+    (await import('./layer2s/costs/Layer2sCostsPage')).Layer2sCostsPage,
+  Layer2sArchivedPage: async () =>
+    (await import('./layer2s/archived/Layer2sArchivedPage'))
+      .Layer2sArchivedPage,
+  Layer2sProjectPage: async () =>
+    (await import('./layer2s/project/Layer2sProjectPage')).Layer2sProjectPage,
+  Layer2sProjectTvsBreakdownPage: async () =>
     (
       await import(
-        './scaling/project/tvs-breakdown/ScalingProjectTvsBreakdownPage'
+        './layer2s/project/tvs-breakdown/Layer2sProjectTvsBreakdownPage'
       )
-    ).ScalingProjectTvsBreakdownPage,
-  ScalingRiskStateValidationPage: async () =>
+    ).Layer2sProjectTvsBreakdownPage,
+  Layer2sRiskStateValidationPage: async () =>
     (
       await import(
-        './scaling/risk/state-validation/ScalingRiskStateValidationPage'
+        './layer2s/risk/state-validation/Layer2sRiskStateValidationPage'
       )
-    ).ScalingRiskStateValidationPage,
+    ).Layer2sRiskStateValidationPage,
   InteropSummaryPage: async () =>
     (await import('./interop/summary/InteropSummaryPage')).InteropSummaryPage,
   InteropNonMintingPage: async () =>

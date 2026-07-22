@@ -3,7 +3,7 @@ import type { InMemoryCache } from '@l2beat/shared-pure'
 import { ProjectId } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
+import { getInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -25,11 +25,11 @@ export async function getInteropSummaryData(
   const interopChains = getInteropChains()
   const interopChainsIds = interopChains.map((chain) => chain.id)
 
-  const scalingProjects = await ps.getProjects({
+  const layer2sProjects = await ps.getProjects({
     select: ['scalingInfo'],
   })
-  const scalingProjectSlugById = new Map(
-    scalingProjects.map((p) => [p.id, p.slug]),
+  const layer2sProjectSlugById = new Map(
+    layer2sProjects.map((p) => [p.id, p.slug]),
   )
 
   const interopChainsWithIcons = mapInteropChainsToWithIcons(
@@ -37,7 +37,7 @@ export async function getInteropSummaryData(
     interopChains,
   ).map((chain) => ({
     ...chain,
-    href: getInteropChainHref(chain.id, scalingProjectSlugById),
+    href: getInteropChainHref(chain.id, layer2sProjectSlugById),
   }))
 
   const activeInteropChains = interopChainsWithIcons.filter(
@@ -106,13 +106,13 @@ export async function getInteropSummaryData(
 
 function getInteropChainHref(
   chainId: string,
-  scalingProjectSlugById: Map<ProjectId, string>,
+  layer2sProjectSlugById: Map<ProjectId, string>,
 ): string | undefined {
   if (chainId === ProjectId.ETHEREUM) {
     return '/data-availability/projects/ethereum/ethereum'
   }
-  const slug = scalingProjectSlugById.get(chainToProjectId(chainId))
-  return slug ? `/scaling/projects/${slug}` : undefined
+  const slug = layer2sProjectSlugById.get(chainToProjectId(chainId))
+  return slug ? `/layer2s/projects/${slug}` : undefined
 }
 
 async function getCachedData(

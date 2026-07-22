@@ -7,14 +7,14 @@ import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import { ProofSystemCell } from '~/components/table/cells/ProofSystemCell'
 import { StageCell } from '~/components/table/cells/stage/StageCell'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
-import { getScalingCommonProjectColumns } from '~/components/table/common-project-columns/ScalingCommonProjectColumns'
+import { getLayer2sCommonProjectColumns } from '~/components/table/common-project-columns/Layer2sCommonProjectColumns'
 import { sortStages } from '~/components/table/sorting/sortStages'
 import { TableLink } from '~/components/table/TableLink'
 import {
   WALK_AWAY_NOT_PASSED_PROJECTS,
   WALK_AWAY_PASSED_PROJECTS,
 } from '~/consts/walkAwayProjects'
-import { TotalCellWithTvsBreakdown } from '~/pages/scaling/summary/components/table/TotalCellWithTvsBreakdown'
+import { TotalCellWithTvsBreakdown } from '~/pages/layer2s/summary/components/table/TotalCellWithTvsBreakdown'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import type { EcosystemProjectsTableRow } from '../utils/toTableRows'
 
@@ -22,15 +22,15 @@ const columnHelper = createColumnHelper<EcosystemProjectsTableRow>()
 
 export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
   return compact([
-    ...getScalingCommonProjectColumns(
+    ...getLayer2sCommonProjectColumns(
       columnHelper,
-      (row) => `/scaling/projects/${row.slug}`,
+      (row) => `/layer2s/projects/${row.slug}`,
     ),
     columnHelper.display({
       header: 'Risks',
       cell: (ctx) => (
         <PizzaRosetteCell
-          href={`/scaling/risk?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
+          href={`/layer2s/risk?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
           values={ctx.row.original.risks}
           isUnderReview={ctx.row.original.statuses?.underReview === 'config'}
         />
@@ -61,7 +61,7 @@ export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
         id: 'stage',
         cell: (ctx) => (
           <StageCell
-            href={`/scaling/projects/${ctx.row.original.slug}#stage`}
+            href={`/layer2s/projects/${ctx.row.original.slug}#stage`}
             stageConfig={ctx.row.original.stage}
             isAppchain={ctx.row.original.capability === 'appchain'}
             emergencyWarning={ctx.row.original.statuses?.emergencyWarning}
@@ -102,7 +102,7 @@ export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
 
           return (
             <TotalCellWithTvsBreakdown
-              href={`/scaling/tvs?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
+              href={`/layer2s/tvs?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
               associatedTokens={value.associatedTokens}
               additionalTrustAssumptionsPercentage={
                 tvsData?.additionalTrustAssumptionsPercentage
@@ -131,7 +131,7 @@ export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
 
         return (
           <TableLink
-            href={`/scaling/activity?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
+            href={`/layer2s/activity?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
           >
             <SyncStatusWrapper isSynced={data.isSynced}>
               <ValueWithPercentageChange change={data?.change}>

@@ -9,7 +9,7 @@ import type {
   FlowProtocol,
   FlowToken,
   InteropFlowsData,
-} from '~/server/features/scaling/interop/getInteropFlows'
+} from '~/server/features/layer2s/interop/getInteropFlows'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 

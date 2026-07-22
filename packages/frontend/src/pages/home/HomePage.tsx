@@ -6,18 +6,18 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { HomeEthereumCharts } from '~/server/features/home/getHomeEthereumCharts'
-import type { HomeScalingCharts } from '~/server/features/home/getHomeScalingCharts'
-import type { OngoingAnomaliesOverview } from '~/server/features/scaling/liveness/getOngoingAnomaliesOverview'
-import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
-import type { TvsTableData } from '~/server/features/scaling/tvs/getTvsTableData'
+import type { HomeLayer2sCharts } from '~/server/features/home/getHomeLayer2sCharts'
+import type { OngoingAnomaliesOverview } from '~/server/features/layer2s/liveness/getOngoingAnomaliesOverview'
+import type { Layer2sSummaryEntry } from '~/server/features/layer2s/summary/getLayer2sSummaryEntries'
+import type { TvsTableData } from '~/server/features/layer2s/tvs/getTvsTableData'
 import type { InteropChainWithIcon } from '../interop/components/chain-selector/types'
 import type { InteropFlowsProtocol } from '../interop/components/flows/utils/InteropFlowsContext'
 import { HomeAnomaliesTile } from './components/HomeAnomaliesTile'
 import { HomeEthereumCard } from './components/HomeEthereumCard'
 import { HomeInteropCard } from './components/HomeInteropCard'
+import { HomeLayer2sCard } from './components/HomeLayer2sCard'
 import { HomeRecentChangesTile } from './components/HomeRecentChangesTile'
 import { HomeRecentProjectsCard } from './components/HomeRecentProjectsCard'
-import { HomeScalingCard } from './components/HomeScalingCard'
 import { HomeStatsStrip } from './components/HomeStatsStrip'
 import { HomeTopChainsCard } from './components/HomeTopChainsCard'
 import { HomeTopInteropProtocolsCard } from './components/HomeTopInteropProtocolsCard'
@@ -28,15 +28,15 @@ import type { HomeProjectCounts } from './getHomeProjectCounts'
 interface Props extends AppLayoutProps {
   queryState: DehydratedState
   projectCounts: HomeProjectCounts
-  topChains: ScalingSummaryEntry[]
+  topChains: Layer2sSummaryEntry[]
   topChainsTvsData: TvsTableData
-  scalingCharts: HomeScalingCharts
+  layer2sCharts: HomeLayer2sCharts
   ethereumCharts: HomeEthereumCharts
   recentProjects: HomeRecentProject[]
   interopChains: InteropChainWithIcon[]
   interopProtocols: InteropFlowsProtocol[]
   defaultSelectedFlowChains: string[]
-  scalingCategoryCounts: {
+  layer2sCategoryCounts: {
     rollups: number
     validiumsAndOptimiums: number
     others: number
@@ -50,13 +50,13 @@ export function HomePage({
   projectCounts,
   topChains,
   topChainsTvsData,
-  scalingCharts,
+  layer2sCharts,
   ethereumCharts,
   recentProjects,
   interopChains,
   interopProtocols,
   defaultSelectedFlowChains,
-  scalingCategoryCounts,
+  layer2sCategoryCounts,
   recentChangesCount,
   ongoingAnomalies,
   ...props
@@ -80,7 +80,7 @@ export function HomePage({
                 switches to real cards on the grey page background. */}
           <div className="flex flex-col md:gap-6 [&_.primary-card]:max-md:rounded-none [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b">
             {/* xl: stacked rows — the three sidebar cards side by side on
-                  top, then Scaling, Ethereum and Interop as full-width rows;
+                  top, then Layer 2s, Ethereum and Interop as full-width rows;
                   2xl switches to three columns (sidebar / charts / Interop). */}
             <div className="grid grid-cols-1 items-stretch md:gap-4 xl:gap-6 2xl:grid-cols-[minmax(260px,340px)_minmax(340px,1fr)_minmax(400px,1.35fr)]">
               <div className="flex h-full min-w-0 flex-col md:gap-4 xl:grid xl:grid-cols-3 xl:gap-6 2xl:flex">
@@ -93,9 +93,9 @@ export function HomePage({
               </div>
               <div className="flex h-full min-h-0 min-w-0 flex-col md:gap-4 xl:gap-6">
                 <div className="flex min-h-0 flex-col xl:flex-1">
-                  <HomeScalingCard
-                    charts={scalingCharts}
-                    scalingCategoryCounts={scalingCategoryCounts}
+                  <HomeLayer2sCard
+                    charts={layer2sCharts}
+                    layer2sCategoryCounts={layer2sCategoryCounts}
                   />
                 </div>
                 <div className="flex min-h-0 flex-col xl:flex-1">

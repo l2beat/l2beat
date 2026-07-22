@@ -1,5 +1,5 @@
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
-import type { ScalingProjectDaThroughputChart } from '~/server/features/data-availability/throughput/getScalingProjectDaThroughtputChart'
+import type { Layer2sProjectDaThroughputChart } from '~/server/features/data-availability/throughput/getLayer2sProjectDaThroughtputChart'
 import { formatBytes } from '~/utils/number-format/formatBytes'
 
 export function ProjectDataPostedChartStats({
@@ -7,7 +7,7 @@ export function ProjectDataPostedChartStats({
   data,
 }: {
   isLoading: boolean
-  data: ScalingProjectDaThroughputChart['stats'] | undefined
+  data: Layer2sProjectDaThroughputChart['stats'] | undefined
 }) {
   return (
     <ChartStats className="lg:grid-cols-3">

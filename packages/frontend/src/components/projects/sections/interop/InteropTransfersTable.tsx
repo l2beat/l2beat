@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import type { InteropSelection } from '~/pages/interop/utils/types'
-import type { InteropScope } from '~/server/features/scaling/interop/types'
+import type { InteropScope } from '~/server/features/layer2s/interop/types'
 import { ChainMultiSelect } from './ChainMultiSelect'
 import { InteropTransfersTableView } from './InteropTransfersTableView'
 

@@ -29,7 +29,7 @@ import { getDaChartMeta } from './meta'
 interface Props {
   data: DaThroughputDataPoint[] | undefined
   isLoading: boolean
-  includeScalingOnly: boolean
+  includeLayer2sOnly: boolean
   syncStatus?: Record<string, number>
   resolution: ChartResolution
 }
@@ -37,7 +37,7 @@ interface Props {
 export function DaAbsoluteThroughputChart({
   data,
   isLoading,
-  includeScalingOnly,
+  includeLayer2sOnly,
   syncStatus,
   resolution,
 }: Props) {
@@ -159,7 +159,7 @@ export function DaAbsoluteThroughputChart({
           content={
             <CustomTooltip
               unit={unit}
-              includeScalingOnly={includeScalingOnly}
+              includeLayer2sOnly={includeLayer2sOnly}
               syncStatus={syncStatus}
               resolution={resolution}
             />
@@ -174,12 +174,12 @@ function CustomTooltip({
   payload,
   label,
   unit,
-  includeScalingOnly,
+  includeLayer2sOnly,
   syncStatus,
   resolution,
 }: CustomChartTooltipProps & {
   unit: string
-  includeScalingOnly: boolean
+  includeLayer2sOnly: boolean
   syncStatus?: Record<string, number>
   resolution: ChartResolution
 }) {
@@ -233,9 +233,9 @@ function CustomTooltip({
           )
         })}
       </div>
-      {includeScalingOnly && isCurrentDay && (
+      {includeLayer2sOnly && isCurrentDay && (
         <div className="mt-2 max-w-[230px] font-medium text-label-value-13 text-secondary leading-[130%]">
-          Scaling project usage data for EigenDA is only available for the past
+          Layer 2 project usage data for EigenDA is only available for the past
           day.
         </div>
       )}

@@ -21,7 +21,7 @@ import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { useScalingRwaRestrictedTokensContext } from '~/pages/scaling/components/ScalingRwaRestrictedTokensContext'
+import { useLayer2sRwaRestrictedTokensContext } from '~/pages/layer2s/components/Layer2sRwaRestrictedTokensContext'
 import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatTimestamp } from '~/utils/dates'
@@ -46,7 +46,7 @@ export function ZkCatalogProjectsTvsChart({
 }: ZkCatalogProjectsTvsChartProps) {
   const trpc = useTRPC()
   const { range, unit } = useTvsChartControlsContext()
-  const { excludeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
+  const { excludeRwaRestrictedTokens } = useLayer2sRwaRestrictedTokensContext()
 
   const { data, isLoading } = useQuery(
     trpc.tvs.detailedChartWithProjectsRanges.queryOptions({

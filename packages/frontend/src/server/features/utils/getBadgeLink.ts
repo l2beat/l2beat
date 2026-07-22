@@ -1,6 +1,6 @@
 import type { Badge, Project } from '@l2beat/config'
 import { getFilterSearchParams } from '~/components/table/filters/utils/getFilterSearchParams'
-import { getScalingTab } from '../scaling/getCommonScalingEntry'
+import { getLayer2sTab } from '../layer2s/getCommonLayer2sEntry'
 
 export function getBadgeLink(
   badge: Badge,
@@ -8,7 +8,7 @@ export function getBadgeLink(
 ): string | undefined {
   if (!badge.action) return undefined
   if (badge.action.type === 'scalingFilter') {
-    return `/scaling/summary?filters=${getFilterSearchParams({
+    return `/layer2s/summary?filters=${getFilterSearchParams({
       [badge.action.id]: {
         values: [badge.action.value],
       },
@@ -16,7 +16,7 @@ export function getBadgeLink(
   }
 
   if (badge.action.type === 'selfScalingFilter') {
-    return `/scaling/summary?filters=${getFilterSearchParams({
+    return `/layer2s/summary?filters=${getFilterSearchParams({
       [badge.action.id]: {
         values: [project.name],
       },
@@ -28,6 +28,6 @@ export function getBadgeLink(
   }
 
   if (badge.action.type === 'selfDaHighlight') {
-    return `/scaling/risk/data-availability?tab=${getScalingTab(project)}&highlight=${project.slug}`
+    return `/layer2s/risk/data-availability?tab=${getLayer2sTab(project)}&highlight=${project.slug}`
   }
 }

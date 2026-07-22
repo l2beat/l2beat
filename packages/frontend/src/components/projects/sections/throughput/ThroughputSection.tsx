@@ -8,8 +8,8 @@ import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { ClockIcon } from '~/icons/Clock'
 import {
-  IncludeScalingOnlyProvider,
-  useIncludeScalingOnly,
+  IncludeLayer2sOnlyProvider,
+  useIncludeLayer2sOnly,
 } from '~/pages/data-availability/throughput/components/DaThroughputContext'
 import { useTRPC } from '~/trpc/React'
 import { formatBpsToMbps, formatBytes } from '~/utils/number-format/formatBytes'
@@ -38,7 +38,7 @@ export function ThroughputSection({
 }: ThroughputSectionProps) {
   return (
     <ProjectSection {...sectionProps}>
-      <IncludeScalingOnlyProvider>
+      <IncludeLayer2sOnlyProvider>
         {syncStatus.warning && (
           <div className="my-3.5 flex items-start gap-3 rounded-lg bg-surface-secondary p-4">
             <ClockIcon className="mt-px size-[18px] shrink-0" />
@@ -61,7 +61,7 @@ export function ThroughputSection({
         />
         <HorizontalSeparator className="my-4" />
         <ThroughputChartStats projectId={project.id} syncStatus={syncStatus} />
-      </IncludeScalingOnlyProvider>
+      </IncludeLayer2sOnlyProvider>
     </ProjectSection>
   )
 }
@@ -77,12 +77,12 @@ function ThroughputChartStats({
   }
 }) {
   const trpc = useTRPC()
-  const { includeScalingOnly } = useIncludeScalingOnly()
+  const { includeLayer2sOnly } = useIncludeLayer2sOnly()
   const { data, isLoading } = useQuery(
     trpc.da.projectCharts.queryOptions({
       range: optionToRange('1y'),
       projectId,
-      includeScalingOnly,
+      includeLayer2sOnly,
     }),
   )
 

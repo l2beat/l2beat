@@ -50,7 +50,7 @@ export function ProverInfo({
       </div>
       <TrustedSetupsByProofSystemSection
         trustedSetupsByProofSystem={proverInfo.trustedSetups}
-        variant="scaling"
+        variant="layer2s"
       />
     </div>
   )

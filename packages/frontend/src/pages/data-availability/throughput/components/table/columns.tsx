@@ -13,7 +13,7 @@ import type { DaThroughputEntry } from '~/server/features/data-availability/thro
 import { formatTimestamp } from '~/utils/dates'
 import { formatBpsToMbps, formatBytes } from '~/utils/number-format/formatBytes'
 
-export type DaThroughputTableData = Omit<DaThroughputEntry, 'scalingOnlyData'>
+export type DaThroughputTableData = Omit<DaThroughputEntry, 'layer2sOnlyData'>
 
 const columnHelper = createColumnHelper<DaThroughputTableData>()
 

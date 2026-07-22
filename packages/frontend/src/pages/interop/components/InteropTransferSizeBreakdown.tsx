@@ -7,7 +7,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { EM_DASH } from '~/consts/characters'
-import type { TransferSizeDistribution } from '~/server/features/scaling/interop/utils/getTransferSizeChartData'
+import type { TransferSizeDistribution } from '~/server/features/layer2s/interop/utils/getTransferSizeChartData'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { transferSizeBuckets } from '../utils/transferSizeBuckets'

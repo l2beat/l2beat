@@ -4,18 +4,18 @@ import type { TabbedDaEntries } from '~/pages/data-availability/utils/groupByDaT
 import { groupByDaTabs } from '~/pages/data-availability/utils/groupByDaTabs'
 import { ps } from '~/server/projects'
 import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
+import { getLowestSyncedUntil } from '../../layer2s/liveness/getLayer2sLivenessEntries'
+import { getLiveness } from '../../layer2s/liveness/getLiveness'
+import type {
+  LivenessAnomaly,
+  LivenessResponse,
+} from '../../layer2s/liveness/types'
+import { getHasTrackedContractChanged } from '../../layer2s/liveness/utils/getHasTrackedContractChanged'
+import { getLivenessSyncWarning } from '../../layer2s/liveness/utils/isLivenessSynced'
 import {
   getProjectsChangeReport,
   type ProjectsChangeReport,
 } from '../../projects-change-report/getProjectsChangeReport'
-import { getLiveness } from '../../scaling/liveness/getLiveness'
-import { getLowestSyncedUntil } from '../../scaling/liveness/getScalingLivenessEntries'
-import type {
-  LivenessAnomaly,
-  LivenessResponse,
-} from '../../scaling/liveness/types'
-import { getHasTrackedContractChanged } from '../../scaling/liveness/utils/getHasTrackedContractChanged'
-import { getLivenessSyncWarning } from '../../scaling/liveness/utils/isLivenessSynced'
 import { getProjectVerificationWarnings } from '../../utils/getIsProjectVerified'
 import { type CommonDaEntry, getCommonDaEntry } from '../getCommonDaEntry'
 import { getDaProjectsTvs, pickTvsForProjects } from '../utils/getDaProjectsTvs'

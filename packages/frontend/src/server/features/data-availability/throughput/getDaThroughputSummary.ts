@@ -35,13 +35,13 @@ const getDaThroughputSummaryData = async (
     [from, to],
   )
 
-  const scalingOnlyRecords = throughput.filter((r) => r.daLayer !== r.projectId)
-  if (scalingOnlyRecords.length === 0) {
+  const layer2sOnlyRecords = throughput.filter((r) => r.daLayer !== r.projectId)
+  if (layer2sOnlyRecords.length === 0) {
     return undefined
   }
 
   const { grouped, minTimestamp } = groupByTimestampAndDaLayerId(
-    scalingOnlyRecords,
+    layer2sOnlyRecords,
     'day',
   )
 

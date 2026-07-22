@@ -54,7 +54,7 @@ export async function generateProjectOgImages(
 
 async function generateProjectOgImage(
   project: Project<never, 'interopConfig'>,
-  type: 'scaling' | 'zk-catalog' | 'data-availability' | 'interop' | 'privacy',
+  type: 'layer2s' | 'zk-catalog' | 'data-availability' | 'interop' | 'privacy',
   size: { width: number; height: number },
   fonts: {
     robotoMedium: Buffer
@@ -107,14 +107,14 @@ export function getOpengraphProjectTypes(
   >,
 ) {
   const types: (
-    | 'scaling'
+    | 'layer2s'
     | 'zk-catalog'
     | 'data-availability'
     | 'interop'
     | 'privacy'
   )[] = []
   if (project.scalingInfo) {
-    types.push('scaling')
+    types.push('layer2s')
   }
   if (project.zkCatalogInfo) {
     types.push('zk-catalog')

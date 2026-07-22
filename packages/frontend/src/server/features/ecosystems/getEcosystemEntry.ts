@@ -17,16 +17,16 @@ import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getImageParams } from '~/utils/project/getImageParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { optionToRange } from '~/utils/range/range'
-import { getProjectsChangeReport } from '../projects-change-report/getProjectsChangeReport'
-import { getActivityLatestUops } from '../scaling/activity/getActivityLatestTps'
-import { getApprovedOngoingAnomalies } from '../scaling/liveness/getApprovedOngoingAnomalies'
+import { getActivityLatestUops } from '../layer2s/activity/getActivityLatestTps'
+import { getApprovedOngoingAnomalies } from '../layer2s/liveness/getApprovedOngoingAnomalies'
 import {
-  getScalingSummaryEntry,
-  type ScalingSummaryEntry,
-} from '../scaling/summary/getScalingSummaryEntries'
-import type { ProjectSevenDayTvsBreakdown } from '../scaling/tvs/get7dTvsBreakdown'
-import { getTvsTableData } from '../scaling/tvs/getTvsTableData'
-import { getTvsSyncWarning } from '../scaling/tvs/utils/syncStatus'
+  getLayer2sSummaryEntry,
+  type Layer2sSummaryEntry,
+} from '../layer2s/summary/getLayer2sSummaryEntries'
+import type { ProjectSevenDayTvsBreakdown } from '../layer2s/tvs/get7dTvsBreakdown'
+import { getTvsTableData } from '../layer2s/tvs/getTvsTableData'
+import { getTvsSyncWarning } from '../layer2s/tvs/utils/syncStatus'
+import { getProjectsChangeReport } from '../projects-change-report/getProjectsChangeReport'
 import { type BlobsData, getBlobsData } from './getBlobsData'
 import { getEcosystemLogo } from './getEcosystemLogo'
 import type { EcosystemProjectsCountData } from './getEcosystemProjectsChartData'
@@ -60,7 +60,7 @@ export interface EcosystemEntry {
   colors: ProjectCustomColors
   liveProjects: EcosystemProjectEntry[]
   projectsChartData: EcosystemProjectsCountData
-  allScalingProjects: {
+  allLayer2sProjects: {
     tvs: {
       withRwaRestricted: number
       withoutRwaRestricted: number
@@ -104,7 +104,7 @@ export interface EcosystemEntry {
   ecosystemMilestones: EcosystemMilestone[]
 }
 
-export interface EcosystemProjectEntry extends ScalingSummaryEntry {
+export interface EcosystemProjectEntry extends Layer2sSummaryEntry {
   ecosystemInfo: ProjectEcosystemInfo
   gasTokens?: string[]
   tvsData: {
@@ -131,7 +131,7 @@ export async function getEcosystemEntry(
     return undefined
   }
 
-  const [allScalingProjects, projects, zkCatalogProjects] = await Promise.all([
+  const [allLayer2sProjects, projects, zkCatalogProjects] = await Promise.all([
     ps.getProjects({
       where: ['scalingInfo'],
       whereNot: ['archivedAt'],
@@ -183,7 +183,7 @@ export async function getEcosystemEntry(
     getProjectsChangeReport(),
     getTvsTableData({ type: 'layer2' }),
     getTvsTableData({ type: 'layer2', excludeRwaRestrictedTokens: false }),
-    getActivityLatestUops(allScalingProjects),
+    getActivityLatestUops(allLayer2sProjects),
     getApprovedOngoingAnomalies(),
     getBlobsData(liveProjects),
     getEcosystemToken(ecosystem, liveProjects),
@@ -204,7 +204,7 @@ export async function getEcosystemEntry(
         .rwaRestricted ?? 0) > 0,
   )
 
-  const allScalingProjectsUops = allScalingProjects.reduce(
+  const allLayer2sProjectsUops = allLayer2sProjects.reduce(
     (acc, curr) =>
       acc + (projectsActivity[curr.id.toString()]?.pastDayUops ?? 0),
     0,
@@ -225,12 +225,12 @@ export async function getEcosystemEntry(
       ecosystemUpdate: getEcosystemUpdateLink(ecosystem),
     },
     hasRwaRestrictedTvs,
-    allScalingProjects: {
+    allLayer2sProjects: {
       tvs: {
         withoutRwaRestricted: tvs.total,
         withRwaRestricted: tvsWithRwasRestricted.total,
       },
-      uops: allScalingProjectsUops,
+      uops: allLayer2sProjectsUops,
     },
     tvsByStage: {
       withoutRwaRestricted: getTvsByStage(liveProjects, tvs),
@@ -246,7 +246,7 @@ export async function getEcosystemEntry(
     token,
     projectsChartData: getEcosystemProjectsChartData(
       [...archivedProjects, ...liveProjects],
-      allScalingProjects.length,
+      allLayer2sProjects.length,
       tvs.projects,
       projectsActivity,
       ecosystem.ecosystemConfig.startedAt,
@@ -256,7 +256,7 @@ export async function getEcosystemEntry(
       secondBanner: ecosystem.ecosystemConfig.secondBanner,
     },
     liveProjects: liveProjects.map((project) => {
-      const entry = getScalingSummaryEntry(
+      const entry = getLayer2sSummaryEntry(
         project,
         projectsChangeReport.getChanges(project.id),
         tvs.projects[project.id.toString()],

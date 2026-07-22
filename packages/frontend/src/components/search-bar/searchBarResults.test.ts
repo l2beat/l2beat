@@ -12,7 +12,7 @@ describe(searchEntries.name, () => {
       projectEntry({
         name: 'Ethereal',
         tags: ['ethereal', 'Ethereal'],
-        category: 'scaling',
+        category: 'layer2s',
       }),
       projectEntry({
         name: 'Ethereum with Enshrined Bridge',
@@ -22,7 +22,7 @@ describe(searchEntries.name, () => {
       projectEntry({
         name: 'Jetstream',
         tags: ['jetstreamchain', 'Jetstream'],
-        category: 'scaling',
+        category: 'layer2s',
       }),
     ]
 
@@ -84,7 +84,7 @@ describe(groupSearchResults.name, () => {
         projectEntry({
           name: 'Ethereal',
           tags: ['ethereal', 'Ethereal'],
-          category: 'scaling',
+          category: 'layer2s',
         }),
         projectEntry({
           name: 'Ethereum with Enshrined Bridge',
@@ -94,12 +94,12 @@ describe(groupSearchResults.name, () => {
         projectEntry({
           name: 'Jetstream',
           tags: ['jetstreamchain', 'Jetstream'],
-          category: 'scaling',
+          category: 'layer2s',
         }),
       ]),
     )
 
-    expect(grouped.map(([category]) => category)).toEqual(['scaling', 'da'])
+    expect(grouped.map(([category]) => category)).toEqual(['layer2s', 'da'])
     expect(
       grouped.flatMap(([, entries]) => entries.map((entry) => entry.name)),
     ).toEqual(['Ethereal', 'Ethereum with Enshrined Bridge'])
@@ -109,11 +109,11 @@ describe(groupSearchResults.name, () => {
 function projectEntry({
   name,
   tags,
-  category = 'scaling',
+  category = 'layer2s',
 }: {
   name: string
   tags: string[]
-  category?: 'scaling' | 'da'
+  category?: 'layer2s' | 'da'
 }) {
   return {
     type: 'project' as const,

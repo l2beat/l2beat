@@ -1,4 +1,4 @@
-import type { ProtocolEntry } from '~/server/features/scaling/interop/types'
+import type { ProtocolEntry } from '~/server/features/layer2s/interop/types'
 
 export interface TransferTypeBreakdown {
   volume: {

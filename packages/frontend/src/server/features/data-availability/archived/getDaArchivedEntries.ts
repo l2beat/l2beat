@@ -132,7 +132,7 @@ function getDacEntry(
   const bridgeEntry: DaBridgeArchivedEntry = {
     name: project.customDa.name ?? `${project.name} DAC`,
     slug: project.slug,
-    href: `/scaling/projects/${project.slug}`,
+    href: `/layer2s/projects/${project.slug}`,
     statuses: {},
     risks: project.customDa.risks,
   }

@@ -7,7 +7,7 @@ import {
   useState,
 } from 'react'
 import { useQueryParam } from '~/hooks/useQueryParam'
-import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
+import type { ProtocolDisplayable } from '~/server/features/layer2s/interop/types'
 import type { InteropChainWithIcon } from '../../chain-selector/types'
 import { MAX_SELECTED_CHAINS } from '../consts'
 

@@ -7,8 +7,8 @@ import type {
 import { assert, type ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { EcosystemUpdate } from '~/content/monthly-updates'
-import type { ActivityLatestUopsData } from '~/server/features/scaling/activity/getActivityLatestTps'
-import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
+import type { ActivityLatestUopsData } from '~/server/features/layer2s/activity/getActivityLatestTps'
+import type { SevenDayTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
@@ -41,7 +41,7 @@ export interface EcosystemMonthlyUpdateEntry
   colors: ProjectCustomColors
   projects: ProjectId[]
   bannerImg?: string
-  allScalingProjects: {
+  allLayer2sProjects: {
     tvs: number
     uops: number
   }
@@ -70,7 +70,7 @@ export interface EcosystemMonthlyUpdateEntry
 
 export async function getEcosystemMonthlyUpdateEntries(
   ecosystemUpdateEntries: EcosystemUpdate[],
-  allScalingProjects: Project<'scalingInfo'>[],
+  allLayer2sProjects: Project<'scalingInfo'>[],
   tvs: SevenDayTvsBreakdown,
   activity: ActivityLatestUopsData,
   from: UnixTime,
@@ -110,7 +110,7 @@ export async function getEcosystemMonthlyUpdateEntries(
     ),
   ])
 
-  const allScalingProjectsUops = allScalingProjects.reduce(
+  const allLayer2sProjectsUops = allLayer2sProjects.reduce(
     (acc, curr) => acc + (activity[curr.id.toString()]?.pastDayUops ?? 0),
     0,
   )
@@ -129,7 +129,7 @@ export async function getEcosystemMonthlyUpdateEntries(
       projects,
       tvs,
       activity,
-      allScalingProjectsUops,
+      allLayer2sProjectsUops,
       newProjects,
       tvsLeaderboard,
       activityLeaderboard,
@@ -143,7 +143,7 @@ function getEcosystemMonthlyUpdateEntry(
   projects: Project<'ecosystemInfo'>[],
   tvs: SevenDayTvsBreakdown,
   activity: ActivityLatestUopsData,
-  allScalingProjectsUops: number,
+  allLayer2sProjectsUops: number,
   newProjects: Project<'scalingStage' | 'display' | 'scalingInfo'>[],
   tvsLeaderboardData: TvsLeaderboard,
   activityLeaderboardData: ActivityLeaderboard,
@@ -192,9 +192,9 @@ function getEcosystemMonthlyUpdateEntry(
         }
       }) ?? [],
     colors: ecosystem.colors,
-    allScalingProjects: {
+    allLayer2sProjects: {
       tvs: tvs.total,
-      uops: allScalingProjectsUops,
+      uops: allLayer2sProjectsUops,
     },
     projects: ecosystemProjects.map((project) => project.id),
     tvsLeaderboard,

@@ -1,0 +1,781 @@
+import type {
+  Project,
+  ProjectAssociatedToken,
+  ProjectCustomColors,
+  ProjectRedWarning,
+  ProjectScalingCategory,
+  ProjectScalingProofSystem,
+  ProjectScalingStage,
+  ReasonForBeingInOther,
+  WarningWithSentiment,
+} from '@l2beat/config'
+import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
+import compact from 'lodash/compact'
+import type { ProjectLink } from '~/components/projects/links/types'
+import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
+import type { ProjectDetailsSection } from '~/components/projects/sections/types'
+import {
+  WALK_AWAY_NOT_PASSED_PROJECTS,
+  WALK_AWAY_PASSED_PROJECTS,
+} from '~/consts/walkAwayProjects'
+import { env } from '~/env'
+import {
+  countRecentDiscoveryUpdates,
+  getDiscoveryUpdates,
+} from '~/server/features/projects/recent-changes/getDiscoveryUpdates'
+import { ps } from '~/server/projects'
+import type { SsrHelpers } from '~/trpc/server'
+import { manifest } from '~/utils/Manifest'
+import { linkAddresses } from '~/utils/markdown/linkAddresses'
+import { getActivitySection } from '~/utils/project/activity/getActivitySection'
+import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
+import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
+import {
+  getPastUpgradesData,
+  getProjectPastUpgrades,
+} from '~/utils/project/contracts-and-permissions/getPastUpgradesData'
+import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
+import { getCostsSection } from '~/utils/project/costs/getCostsSection'
+import { getDataPostedSection } from '~/utils/project/data-posted/getDataPostedSection'
+import { getBadgeWithParamsAndLink } from '~/utils/project/getBadgeWithParams'
+import { getDiagramParams } from '~/utils/project/getDiagramParams'
+import { getProjectLinks } from '~/utils/project/getProjectLinks'
+import { getLivenessSection } from '~/utils/project/liveness/getLivenessSection'
+import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
+import { getLayer2sRiskSummarySection } from '~/utils/project/risk-summary/getLayer2sRiskSummary'
+import { getDataAvailabilitySection } from '~/utils/project/technology/getDataAvailabilitySection'
+import { getOperatorSection } from '~/utils/project/technology/getOperatorSection'
+import { getOtherConsiderationsSection } from '~/utils/project/technology/getOtherConsiderationsSection'
+import { getSequencingSection } from '~/utils/project/technology/getSequencingSection'
+import { getWithdrawalsSection } from '~/utils/project/technology/getWithdrawalsSection'
+import { getStateValidationSection } from '~/utils/project/technology/state-validation/getStateValidationSection'
+import { getLayer2sTvsSection } from '~/utils/project/tvs/getLayer2sTvsSection'
+import {
+  getUnderReviewStatus,
+  type UnderReviewStatus,
+} from '~/utils/project/underReview'
+import { withProjectIcon } from '~/utils/withProjectIcon'
+import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
+import { getProjectVerificationWarnings } from '../../utils/getIsProjectVerified'
+import { getActivityProjectStats } from '../activity/getActivityProjectStats'
+import {
+  getProjectInteropData,
+  type ProjectInteropData,
+} from '../interop/getProjectInteropData'
+import { getLiveness } from '../liveness/getLiveness'
+import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
+import { getTokensForProject } from '../tvs/tokens/getTokensForProject'
+import { getAssociatedTokenWarning } from '../tvs/utils/getAssociatedTokenWarning'
+import { getLayer2sDaSolutions } from './getLayer2sDaSolutions'
+import type { Layer2sRosette } from './getLayer2sRosetteValues'
+import { getLayer2sRosette } from './getLayer2sRosetteValues'
+
+export interface ProjectLayer2sEntry {
+  id: ProjectId
+  type: 'layer3' | 'layer2'
+  name: string
+  shortName: string | undefined
+  slug: string
+  icon: string
+  archivedAt: UnixTime | undefined
+  isAppchain: boolean
+  colors:
+    | {
+        project: ProjectCustomColors | undefined
+        ecosystem: ProjectCustomColors | undefined
+      }
+    | undefined
+  underReviewStatus: UnderReviewStatus
+  header: {
+    warning?: string
+    redWarning?: ProjectRedWarning
+    emergencyWarning?: string
+    ongoingAnomaly?: 'single' | 'multiple'
+    recentUpdatesCount: number
+    description?: string
+    badges?: BadgeWithParams[]
+    links: ProjectLink[]
+    hostChain?: string
+    chainId?: number
+    category?: ProjectScalingCategory
+    proofSystemType?: ProjectScalingProofSystem['type']
+    purposes: string[]
+    tvs?: {
+      breakdown?: {
+        total: number
+        native: number
+        canonical: number
+        external: number
+        totalChange: number
+      }
+      warning?: WarningWithSentiment
+      additionalTrustAssumptionsPercentage: number
+      tokens: {
+        breakdown?: {
+          total: number
+          ether: number
+          stablecoin: number
+          associated: number
+          btc: number
+          other: number
+          rwaPublic: number
+          rwaRestricted: number
+        }
+        warnings: WarningWithSentiment[]
+        associatedTokens: ProjectAssociatedToken[]
+      }
+    }
+    activity?: {
+      lastDayUops: number
+      uopsWeeklyChange: number
+    }
+    gasTokens?: string[]
+    interop?: ProjectInteropData['summary']
+  }
+  rosette: Layer2sRosette
+  sections: ProjectDetailsSection[]
+  reasonsForBeingOther?: ReasonForBeingInOther[]
+  hostChainName: string
+  stageConfig: ProjectScalingStage
+  discoUiHref: string | undefined
+}
+
+export async function getLayer2sProjectEntry(
+  project: Project<
+    | 'display'
+    | 'statuses'
+    | 'scalingInfo'
+    | 'scalingRisks'
+    | 'scalingStage'
+    | 'scalingTechnology'
+    | 'tvsInfo',
+    // optional
+    | 'contracts'
+    | 'tvsConfig'
+    | 'permissions'
+    | 'scalingDa'
+    | 'customDa'
+    | 'chainConfig'
+    | 'archivedAt'
+    | 'milestones'
+    | 'trackedTxsConfig'
+    | 'livenessInfo'
+    | 'livenessConfig'
+    | 'costsInfo'
+    | 'activityConfig'
+    | 'colors'
+    | 'ecosystemColors'
+    | 'discoveryInfo'
+    | 'daTrackingConfig'
+  >,
+  helpers: SsrHelpers,
+): Promise<ProjectLayer2sEntry> {
+  const daSolutions = await getLayer2sDaSolutions(project)
+  const [
+    projectsChangeReport,
+    activityProjectStats,
+    tvsStats,
+    tokens,
+    liveness,
+    contractUtils,
+    layer2sTvsSection,
+    activitySection,
+    costsSection,
+    dataPostedSection,
+    zkCatalogProjects,
+    allProjectsWithContracts,
+    allProjects,
+    interopProjects,
+  ] = await Promise.all([
+    getProjectsChangeReport(),
+    getActivityProjectStats(project.id),
+    get7dTvsBreakdown({ type: 'layer2' }),
+    getTokensForProject(project),
+    getLiveness(project.id),
+    getContractUtils(),
+    getLayer2sTvsSection(project),
+    getActivitySection(helpers, project),
+    getCostsSection(helpers, project),
+    getDataPostedSection(helpers, project),
+    ps.getProjects({
+      select: ['zkCatalogInfo'],
+    }),
+    ps.getProjects({
+      select: ['contracts'],
+    }),
+    ps.getProjects({
+      select: ['display'],
+      optional: ['daBridge', 'scalingInfo', 'daLayer', 'privacyInfo'],
+    }),
+    ps.getProjects({
+      select: ['interopConfig'],
+    }),
+  ])
+
+  const projectLiveness = liveness[project.id]
+  const discoveryUpdates = project.discoveryInfo?.hasDiscoUi
+    ? getDiscoveryUpdates(project.id)
+    : []
+
+  const ongoingAnomalies = projectLiveness?.anomalies.filter(
+    (anomaly) => isAnomalyOngoing(anomaly) && anomaly.isApproved,
+  )
+
+  const tvsProjectStats = tvsStats.projects[project.id]
+  const interopData = await getProjectInteropData(
+    project.id,
+    interopProjects,
+    helpers,
+  )
+  const header: ProjectLayer2sEntry['header'] = {
+    description: project.display.description,
+    warning: project.statuses.yellowWarning,
+    redWarning: project.statuses.redWarning,
+    emergencyWarning: project.statuses.emergencyWarning,
+    ongoingAnomaly: ongoingAnomalies
+      ? ongoingAnomalies.length === 0
+        ? undefined
+        : ongoingAnomalies.length === 1
+          ? 'single'
+          : 'multiple'
+      : undefined,
+    recentUpdatesCount: countRecentDiscoveryUpdates(discoveryUpdates),
+    category: project.scalingInfo.type,
+    proofSystemType: project.scalingInfo.proofSystem?.type,
+    purposes: project.scalingInfo.purposes,
+    activity: activityProjectStats,
+    links: getProjectLinks(project.display.links),
+    hostChain:
+      project.scalingInfo.hostChain.id !== ProjectId.ETHEREUM
+        ? project.scalingInfo.hostChain.name
+        : undefined,
+    chainId: project.chainConfig?.chainId,
+    tvs:
+      !env.EXCLUDED_TVS_PROJECTS?.includes(project.id) && tvsProjectStats
+        ? {
+            breakdown: {
+              ...tvsProjectStats.breakdown,
+              totalChange: tvsProjectStats.change.total,
+            },
+            warning: project.tvsInfo.warnings[0],
+            additionalTrustAssumptionsPercentage:
+              tvsProjectStats.additionalTrustAssumptionsPercentage,
+            tokens: {
+              breakdown: tvsProjectStats.breakdown,
+              warnings: compact([
+                tvsProjectStats &&
+                  tvsProjectStats.breakdown.total > 0 &&
+                  getAssociatedTokenWarning({
+                    associatedRatio:
+                      tvsProjectStats.breakdown.associated /
+                      tvsProjectStats.breakdown.total,
+                    name: project.name,
+                    associatedTokens: project.tvsInfo.associatedTokens,
+                  }),
+              ]),
+              associatedTokens: project.tvsInfo.associatedTokens,
+            },
+          }
+        : undefined,
+    badges: project.display.badges
+      .map((badge) => getBadgeWithParamsAndLink(badge, project))
+      .filter((b) => !!b),
+    gasTokens: project.chainConfig?.gasTokens,
+    interop: interopData?.summary,
+  }
+
+  const changes = projectsChangeReport.getChanges(project.id)
+
+  const dataAvailabilitySection = getDataAvailabilitySection(
+    project,
+    daSolutions,
+  )
+  const withdrawalsSection = getWithdrawalsSection(project)
+  const sequencingSection = getSequencingSection(project)
+  const operatorSection = getOperatorSection(project)
+  const stateValidationSection = getStateValidationSection(
+    project,
+    zkCatalogProjects,
+    contractUtils,
+    tvsStats,
+    allProjects,
+    allProjectsWithContracts,
+  )
+
+  const common = {
+    id: project.id,
+    type: project.scalingInfo.layer,
+    name: project.name,
+    shortName: project.shortName,
+    slug: project.slug,
+    icon: manifest.getUrl(`/icons/${project.slug}.png`),
+    underReviewStatus: getUnderReviewStatus({
+      isUnderReview: !!project.statuses.reviewStatus,
+      ...changes,
+    }),
+    archivedAt: project.archivedAt,
+    isAppchain: project.scalingInfo.capability === 'appchain',
+    colors: {
+      project: project.colors,
+      ecosystem: project.ecosystemColors,
+    },
+    header,
+    reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther,
+    rosette: getLayer2sRosette(project, {
+      hasStateValidationSection: !!stateValidationSection,
+      hasDataAvailabilitySection: !!dataAvailabilitySection,
+      hasWithdrawalsSection: !!withdrawalsSection,
+      hasSequencingSection: !!sequencingSection,
+      hasOperatorsSection: !!operatorSection,
+    }),
+    hostChainName: project.scalingInfo.hostChain.name,
+    stageConfig:
+      project.scalingInfo.type === 'Other'
+        ? { stage: 'NotApplicable' as const }
+        : project.scalingStage,
+    discoUiHref: project.discoveryInfo?.hasDiscoUi
+      ? `https://disco.l2beat.com/ui/p/${project.id}`
+      : undefined,
+  }
+
+  const sections: ProjectDetailsSection[] = []
+
+  const sortedMilestones =
+    project.milestones?.sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    ) ?? []
+
+  const hostChain =
+    project.scalingInfo.hostChain.id !== ProjectId.ETHEREUM
+      ? await ps.getProject({
+          id: project.scalingInfo.hostChain.id,
+          select: ['scalingTechnology', 'statuses'],
+          optional: ['contracts'],
+        })
+      : undefined
+
+  const hostChainVerificationWarnings = hostChain
+    ? getProjectVerificationWarnings(
+        hostChain,
+        projectsChangeReport.getChanges(hostChain.id),
+      )
+    : {
+        contracts: undefined,
+        programHashes: undefined,
+        programHashesDescription: undefined,
+      }
+  const hostChainWarning = hostChain
+    ? {
+        hostChainName: hostChain.name,
+        hostChainSlug: hostChain.slug,
+        hostChainIcon: manifest.getUrl(`/icons/${hostChain.slug}.png`),
+      }
+    : undefined
+  const hostChainRisksSummary =
+    hostChain &&
+    getLayer2sRiskSummarySection(hostChain, hostChainVerificationWarnings)
+  const hostChainWarningWithRiskCount =
+    hostChain && hostChainRisksSummary
+      ? {
+          hostChainName: hostChain.name,
+          hostChainSlug: hostChain.slug,
+          hostChainIcon: manifest.getUrl(`/icons/${hostChain.slug}.png`),
+          riskCount: hostChainRisksSummary.riskGroups.flatMap((rg) => rg.items)
+            .length,
+        }
+      : undefined
+
+  const projectWithIcon = withProjectIcon(project)
+
+  if (layer2sTvsSection && tvsProjectStats) {
+    sections.push({
+      type: 'Layer2sTvsSection',
+      props: {
+        id: 'tvs',
+        title: 'Value Secured',
+        tvsBreakdownUrl: `/layer2s/projects/${project.slug}/tvs-breakdown`,
+        milestones: sortedMilestones,
+        tokens,
+        tvsInfo: project.tvsInfo,
+        project: projectWithIcon,
+        ...layer2sTvsSection,
+      },
+    })
+  }
+
+  if (interopData) {
+    sections.push({
+      type: 'InteropFlowsSection',
+      props: {
+        id: 'interop-flows',
+        title: 'Volume and flows',
+        interopChains: interopData.interopChains,
+        protocols: interopData.protocols,
+        defaultSelectedChains: interopData.defaultSelectedChains,
+        defaultStatsChainId: interopData.chainId,
+        canonicalProtocolId: interopData.canonicalProtocolId,
+      },
+    })
+  }
+
+  if (activitySection) {
+    sections.push({
+      type: 'ActivitySection',
+      props: {
+        id: 'activity',
+        title: 'Activity',
+        milestones: sortedMilestones,
+        category: project.scalingInfo.type,
+        project: projectWithIcon,
+        ...activitySection,
+      },
+    })
+  }
+
+  if (costsSection) {
+    sections.push({
+      type: 'CostsSection',
+      props: {
+        id: 'onchain-costs',
+        title: 'Onchain costs',
+        milestones: sortedMilestones,
+        project: projectWithIcon,
+        ...costsSection,
+      },
+    })
+  }
+
+  if (dataPostedSection) {
+    sections.push({
+      type: 'DataPostedSection',
+      props: {
+        id: 'data-posted',
+        title: 'Data posted',
+        milestones: sortedMilestones,
+        project: projectWithIcon,
+        ...dataPostedSection,
+      },
+    })
+  }
+
+  const livenessSection = await getLivenessSection(
+    helpers,
+    project,
+    projectLiveness,
+    projectsChangeReport.projects[project.id],
+  )
+  if (livenessSection) {
+    sections.push({
+      type: 'LivenessSection',
+      props: {
+        id: 'liveness',
+        title: 'Liveness',
+        milestones: sortedMilestones,
+        project: projectWithIcon,
+        ...livenessSection,
+      },
+    })
+  }
+
+  if (project.milestones && project.milestones.length > 0) {
+    sections.push({
+      type: 'MilestonesAndIncidentsSection',
+      props: {
+        id: 'milestones-and-incidents',
+        title: 'Milestones & Incidents',
+        milestones: sortedMilestones,
+      },
+    })
+  }
+
+  if (project.scalingTechnology.detailedDescription) {
+    sections.push({
+      type: 'DetailedDescriptionSection',
+      props: {
+        id: 'detailed-description',
+        title: 'Detailed description',
+        description: project.display.description,
+        detailedDescription: project.scalingTechnology.detailedDescription,
+      },
+    })
+  }
+
+  const projectVerificationWarnings = getProjectVerificationWarnings(
+    project,
+    changes,
+  )
+
+  const riskSummary = getLayer2sRiskSummarySection(
+    project,
+    projectVerificationWarnings,
+  )
+  if (riskSummary.riskGroups.length > 0) {
+    sections.push({
+      type: 'RiskSummarySection',
+      props: {
+        ...riskSummary,
+        id: 'risk-summary',
+        title: 'Risk summary',
+        hostChainWarning: hostChainWarningWithRiskCount,
+        isUnderReview: !!project.statuses.reviewStatus,
+      },
+    })
+  }
+
+  if (hostChain && common.rosette.host) {
+    sections.push({
+      type: 'L3RiskAnalysisSection',
+      props: {
+        id: 'risk-analysis',
+        title: 'Risk analysis',
+        l2: {
+          name: hostChain.name,
+          risks: common.rosette.host,
+        },
+        l3: {
+          name: project.name,
+          risks: common.rosette.self,
+        },
+        combined: common.rosette.stacked,
+        warning: project.scalingTechnology.warning,
+        redWarning: project.statuses.redWarning,
+        isVerified: !projectVerificationWarnings.contracts,
+        isUnderReview: !!project.statuses.reviewStatus,
+      },
+    })
+  } else {
+    sections.push({
+      type: 'RiskAnalysisSection',
+      props: {
+        id: 'risk-analysis',
+        title: 'Risk analysis',
+        rosetteValues: common.rosette.self,
+        warning: project.scalingTechnology.warning,
+        redWarning: project.statuses.redWarning,
+        isVerified: !projectVerificationWarnings.contracts,
+        isUnderReview: !!project.statuses.reviewStatus,
+      },
+    })
+  }
+
+  if (
+    project.scalingStage.stage !== 'NotApplicable' &&
+    project.scalingInfo.type
+  ) {
+    sections.push({
+      type: 'StageSection',
+      props: {
+        id: 'stage',
+        title: 'Stage',
+        stageConfig: project.scalingStage,
+        name: project.name,
+        icon: manifest.getUrl(`/icons/${project.slug}.png`),
+        type: project.scalingInfo.type,
+        isUnderReview: !!project.statuses.reviewStatus,
+        isAppchain: project.scalingInfo.capability === 'appchain',
+        additionalConsiderations:
+          project.scalingStage.stage !== 'UnderReview'
+            ? project.scalingStage.additionalConsiderations
+            : undefined,
+        scopeOfAssessment: project.scalingInfo.scopeOfAssessment,
+        emergencyWarning: project.statuses.emergencyWarning,
+        walkAway: WALK_AWAY_PASSED_PROJECTS.includes(project.id)
+          ? 'passed'
+          : WALK_AWAY_NOT_PASSED_PROJECTS.includes(project.id)
+            ? 'not-passed'
+            : undefined,
+      },
+    })
+  }
+
+  if (dataAvailabilitySection) {
+    sections.push({
+      type: dataAvailabilitySection.type,
+      props: {
+        id: 'da-layer',
+        title: 'Data availability',
+        ...dataAvailabilitySection.props,
+      },
+    } as ProjectDetailsSection)
+  }
+
+  if (project.scalingTechnology.stateDerivation) {
+    sections.push({
+      type: 'StateDerivationSection',
+      props: {
+        id: 'state-derivation',
+        title: 'State derivation',
+        isUnderReview:
+          !!project.statuses.reviewStatus ||
+          !!project.scalingTechnology.stateDerivation.isUnderReview,
+        ...project.scalingTechnology.stateDerivation,
+      },
+    })
+  }
+
+  if (stateValidationSection) {
+    sections.push({
+      type: 'StateValidationSection',
+      props: {
+        id: 'state-validation',
+        title: 'State validation',
+        ...stateValidationSection,
+      },
+    })
+  }
+
+  const allPastUpgrades = getProjectPastUpgrades(project.contracts)
+  const upgradesAndGovernance = project.scalingTechnology.upgradesAndGovernance
+
+  if (
+    upgradesAndGovernance?.content ||
+    upgradesAndGovernance?.governanceInfo ||
+    allPastUpgrades.length > 0
+  ) {
+    sections.push({
+      type: 'UpgradesAndGovernanceSection',
+      props: {
+        id: 'upgrades-and-governance',
+        title: 'Upgrades & Governance',
+        content: upgradesAndGovernance?.content
+          ? linkAddresses(
+              upgradesAndGovernance.content,
+              project.contracts,
+              project.permissions,
+            )
+          : undefined,
+        diagram: getDiagramParams(
+          'upgrades-and-governance',
+          upgradesAndGovernance?.image ?? project.slug,
+        ),
+        governanceInfo: upgradesAndGovernance?.governanceInfo,
+        pastUpgrades: getPastUpgradesData(allPastUpgrades),
+        isUnderReview: !!project.statuses.reviewStatus,
+      },
+    })
+  }
+
+  if (discoveryUpdates.length > 0) {
+    sections.push({
+      type: 'UpdatesSection',
+      props: {
+        id: 'updates',
+        title: 'Updates',
+        updates: discoveryUpdates,
+      },
+    })
+  }
+
+  if (operatorSection) {
+    sections.push({
+      type: 'TechnologyChoicesSection',
+      props: {
+        id: 'operator',
+        title: 'Operator',
+        ...operatorSection,
+        hostChainWarning,
+      },
+    })
+  }
+
+  if (sequencingSection) {
+    sections.push({
+      type: 'SequencingSection',
+      props: {
+        id: 'sequencing',
+        title: 'Sequencing',
+        ...sequencingSection,
+      },
+    })
+  }
+
+  if (withdrawalsSection) {
+    sections.push({
+      type: 'TechnologyChoicesSection',
+      props: {
+        id: 'withdrawals',
+        title: 'Withdrawals',
+        ...withdrawalsSection,
+        hostChainWarning,
+      },
+    })
+  }
+
+  const otherConsiderationsSection = getOtherConsiderationsSection(project)
+  if (otherConsiderationsSection) {
+    sections.push({
+      type: 'TechnologyChoicesSection',
+      props: {
+        id: 'other-considerations',
+        title: 'Other considerations',
+        ...otherConsiderationsSection,
+      },
+    })
+  }
+
+  const permissionsSection = getPermissionsSection(
+    {
+      id: project.id,
+      hostChain: hostChain?.id,
+      isUnderReview: !!project.statuses.reviewStatus,
+      permissions: project.permissions,
+    },
+    contractUtils,
+    projectsChangeReport,
+  )
+
+  const discoUi = common.discoUiHref
+    ? {
+        href: common.discoUiHref,
+        images: {
+          desktop: manifest.getUrl('/images/disco-ui-desktop.png'),
+          mobile: manifest.getUrl('/images/disco-ui-mobile.png'),
+        },
+      }
+    : undefined
+
+  if (permissionsSection) {
+    const permissionedEntities = project.customDa?.dac?.knownMembers
+
+    sections.push({
+      type: 'PermissionsSection',
+      props: {
+        ...permissionsSection,
+        id: 'permissions',
+        title: 'Permissions',
+        permissionedEntities,
+        discoUi,
+      },
+    })
+  }
+
+  const contractsSection = getContractsSection(
+    {
+      id: project.id,
+      isVerified: !hostChainVerificationWarnings.contracts,
+      slug: project.slug,
+      contracts: project.contracts,
+      tvsConfig: project.tvsConfig,
+      isUnderReview: !!project.statuses.reviewStatus,
+      architectureImage: project.scalingTechnology.architectureImage,
+    },
+    contractUtils,
+    projectsChangeReport,
+    zkCatalogProjects,
+    allProjectsWithContracts,
+    tvsStats,
+  )
+  if (contractsSection) {
+    sections.push({
+      type: 'ContractsSection',
+      props: {
+        ...contractsSection,
+        id: 'contracts',
+        title: 'Smart contracts',
+        discoUi,
+      },
+    })
+  }
+
+  return { ...common, sections }
+}

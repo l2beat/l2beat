@@ -31,12 +31,12 @@ import { MarketShare } from './MonthlyUpdateMarketShare'
 
 export function MonthlyUpdateActivityChart({
   entries,
-  allScalingProjectsUops,
+  allLayer2sProjectsUops,
   from,
   to,
 }: {
   entries: ProjectId[]
-  allScalingProjectsUops: number
+  allLayer2sProjectsUops: number
   from: UnixTime
   to: UnixTime
 }) {
@@ -75,7 +75,7 @@ export function MonthlyUpdateActivityChart({
     [data?.data],
   )
 
-  const stats = getStats(chartData, allScalingProjectsUops)
+  const stats = getStats(chartData, allLayer2sProjectsUops)
   const timeRange = getChartTimeRangeFromData(chartData, { bucket: 'day' })
 
   return (
@@ -210,7 +210,7 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
 
 function getStats(
   chartData: { projects: number | null }[] | undefined,
-  allScalingProjectsUops: number,
+  allLayer2sProjectsUops: number,
 ) {
   if (!chartData) {
     return undefined
@@ -226,6 +226,6 @@ function getStats(
 
   return {
     latestUops: lastWithData.projects,
-    marketShare: lastWithData.projects / allScalingProjectsUops,
+    marketShare: lastWithData.projects / allLayer2sProjectsUops,
   }
 }

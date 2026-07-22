@@ -40,7 +40,7 @@ export function MonthlyUpdateThroughputChart({
     trpc.da.projectChart.queryOptions({
       range: [from, to + UnixTime.DAY],
       projectId: id,
-      includeScalingOnly: false,
+      includeLayer2sOnly: false,
     }),
   )
 

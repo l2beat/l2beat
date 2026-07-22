@@ -1,7 +1,7 @@
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
-import { categoryToLabel } from '~/pages/scaling/project/tvs-breakdown/components/tables/categoryToLabel'
-import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
-import { sourceToLabel } from '~/server/features/scaling/tvs/utils/sourceToLabel'
+import { categoryToLabel } from '~/pages/layer2s/project/tvs-breakdown/components/tables/categoryToLabel'
+import type { ProjectToken } from '~/server/features/layer2s/tvs/tokens/getTokensForProject'
+import { sourceToLabel } from '~/server/features/layer2s/tvs/utils/sourceToLabel'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 export function TokenSummaryBox({ token }: { token: ProjectToken }) {

@@ -1,7 +1,7 @@
 import type { Project } from '@l2beat/config'
 import isEmpty from 'lodash/isEmpty'
 import type { StateValidationSectionProps } from '~/components/projects/sections/state-validation/StateValidationSection'
-import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
+import type { SevenDayTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
 import { getTrustedSetupsWithVerifiersAndAttesters } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
 import { manifest } from '~/utils/Manifest'
 import type { ContractUtils } from '../../contracts-and-permissions/getContractUtils'

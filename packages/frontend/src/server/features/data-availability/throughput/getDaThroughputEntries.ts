@@ -29,14 +29,14 @@ export async function getDaThroughputEntries(): Promise<DaThroughputEntry[]> {
         project,
         daBridges,
         latestData.data[project.id],
-        latestData.scalingOnlyData[project.id],
+        latestData.layer2sOnlyData[project.id],
       ),
     )
     .filter(notUndefined)
     .sort(
       (a, b) =>
-        (b.scalingOnlyData?.pastDayData?.avgThroughputPerSecond ?? 0) -
-        (a.scalingOnlyData?.pastDayData?.avgThroughputPerSecond ?? 0),
+        (b.layer2sOnlyData?.pastDayData?.avgThroughputPerSecond ?? 0) -
+        (a.layer2sOnlyData?.pastDayData?.avgThroughputPerSecond ?? 0),
     )
   return entries
 }
@@ -75,7 +75,7 @@ interface DaThroughputEntryData {
 
 export interface DaThroughputEntry extends CommonDaEntry {
   data: DaThroughputEntryData | undefined
-  scalingOnlyData: DaThroughputEntryData | undefined
+  layer2sOnlyData: DaThroughputEntryData | undefined
   finality: string | undefined
   isSynced: boolean
 }
@@ -84,7 +84,7 @@ function getDaThroughputEntry(
   project: Project<'daLayer' | 'statuses' | 'display'>,
   bridges: Project<'daBridge'>[],
   data: ThroughputTableData['data'][string] | undefined,
-  scalingOnlyData: ThroughputTableData['scalingOnlyData'][string] | undefined,
+  layer2sOnlyData: ThroughputTableData['layer2sOnlyData'][string] | undefined,
 ): DaThroughputEntry | undefined {
   const bridge = bridges.find((x) => x.daBridge.daLayer === project.id)
   const syncWarning = data?.syncedUntil
@@ -101,7 +101,7 @@ function getDaThroughputEntry(
         })
       : undefined,
     data,
-    scalingOnlyData,
+    layer2sOnlyData,
     isSynced: !syncWarning,
   }
 }

@@ -3,7 +3,7 @@ import type {
   ProgramHashesSectionProps,
   StateValidationProgramHashData,
 } from '~/components/projects/sections/program-hashes/ProgramHashesSection'
-import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
+import type { SevenDayTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
 import { manifest } from '~/utils/Manifest'
 import type { ProjectSectionProps } from '../../components/projects/sections/types'
 import { tvsComparator } from './getVerifiersSection'
@@ -16,8 +16,8 @@ export function getProgramHashesSection(
 ): Omit<ProgramHashesSectionProps, keyof ProjectSectionProps> | undefined {
   const result: Map<string, StateValidationProgramHashData> = new Map()
 
-  for (const scalingProject of allProjects) {
-    const programHashes = scalingProject.contracts.programHashes
+  for (const layer2sProject of allProjects) {
+    const programHashes = layer2sProject.contracts.programHashes
     if (!programHashes) continue
 
     for (const programHash of programHashes) {
@@ -29,17 +29,17 @@ export function getProgramHashesSection(
           ...programHash,
           usedIn: [
             {
-              ...scalingProject,
-              icon: manifest.getUrl(`/icons/${scalingProject.slug}.png`),
-              url: `/scaling/projects/${scalingProject.slug}`,
+              ...layer2sProject,
+              icon: manifest.getUrl(`/icons/${layer2sProject.slug}.png`),
+              url: `/layer2s/projects/${layer2sProject.slug}`,
             },
           ],
         })
       } else {
         current.usedIn.push({
-          ...scalingProject,
-          icon: manifest.getUrl(`/icons/${scalingProject.slug}.png`),
-          url: `/scaling/projects/${scalingProject.slug}`,
+          ...layer2sProject,
+          icon: manifest.getUrl(`/icons/${layer2sProject.slug}.png`),
+          url: `/layer2s/projects/${layer2sProject.slug}`,
         })
       }
 

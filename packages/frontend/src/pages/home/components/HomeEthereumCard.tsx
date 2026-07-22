@@ -53,7 +53,7 @@ export function HomeEthereumCard({ charts }: Props) {
 
   return (
     <HomeCard className="flex h-full flex-col pb-4 xl:py-4">
-      <HomeCardHeader title="Ethereum" href="/scaling/activity" />
+      <HomeCardHeader title="Ethereum" href="/layer2s/activity" />
       <HorizontalSeparator className="my-3" />
       <div className={HOME_CHART_SECTION_GRID_CLASS}>
         <HomeChartSection

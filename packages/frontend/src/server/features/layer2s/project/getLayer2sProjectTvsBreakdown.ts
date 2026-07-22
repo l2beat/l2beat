@@ -1,0 +1,64 @@
+import type { Milestone, Project } from '@l2beat/config'
+import { env } from '~/env'
+import { ps } from '~/server/projects'
+import { type WithProjectIcon, withProjectIcon } from '~/utils/withProjectIcon'
+import {
+  getProjectTokensEntries as getProjectTokensEntries,
+  type ProjectTvsBreakdownTokenEntry,
+} from '../tvs/breakdown/getProjectTokensEntries'
+import type { ProjectSevenDayTvsBreakdown } from '../tvs/get7dTvsBreakdown'
+import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
+import { getTvsTargetTimestamp } from '../tvs/utils/getTvsTargetTimestamp'
+import { MIN_VALUE_FOR_PROJECT_TVS_BREAKDOWN } from './const'
+
+export interface Layer2sProjectTvsBreakdown {
+  project: WithProjectIcon<
+    Project<
+      'tvsConfig' | 'tvsInfo',
+      'chainConfig' | 'milestones' | 'contracts' | 'archivedAt'
+    >
+  >
+  dataTimestamp: number
+  entries: ProjectTvsBreakdownTokenEntry[]
+  project7dData: ProjectSevenDayTvsBreakdown
+  milestones: Milestone[]
+}
+
+export async function getLayer2sProjectTvsBreakdown(
+  slug: string,
+): Promise<Layer2sProjectTvsBreakdown | undefined> {
+  const project = await ps.getProject({
+    slug,
+    select: ['tvsConfig', 'tvsInfo'],
+    optional: ['chainConfig', 'milestones', 'contracts', 'archivedAt'],
+    where: ['scalingInfo'],
+  })
+
+  if (!project || env.EXCLUDED_TVS_PROJECTS?.includes(project.id.toString())) {
+    return undefined
+  }
+
+  const [projects7dData, entries] = await Promise.all([
+    get7dTvsBreakdown({
+      type: 'projects',
+      projectIds: [project.id.toString()],
+    }),
+    getProjectTokensEntries(project),
+  ])
+
+  const project7dData = projects7dData.projects[project.id.toString()]
+  if (!project7dData) {
+    return undefined
+  }
+
+  return {
+    project: withProjectIcon(project),
+    dataTimestamp: getTvsTargetTimestamp(),
+    entries: entries.filter(
+      (entry) =>
+        entry.valueForProject.value >= MIN_VALUE_FOR_PROJECT_TVS_BREAKDOWN,
+    ),
+    project7dData,
+    milestones: project.milestones ?? [],
+  }
+}

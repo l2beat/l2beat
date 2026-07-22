@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { DataPostedRangeControls } from '~/pages/scaling/data-posted/DataPostedRangeControls'
+import { DataPostedRangeControls } from '~/pages/layer2s/data-posted/DataPostedRangeControls'
 import { useTRPC } from '~/trpc/React'
 import { type ChartRange, rangeToResolution } from '~/utils/range/range'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
@@ -27,7 +27,7 @@ export function ProjectDataPostedChart({
   const [range, setRange] = useState<ChartRange>(defaultRange)
 
   const { data, isLoading } = useQuery(
-    trpc.da.scalingProjectChart.queryOptions({
+    trpc.da.layer2sProjectChart.queryOptions({
       range,
       projectId: project.id,
     }),

@@ -16,9 +16,9 @@ import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
+import { getProjectInteropData } from '../../layer2s/interop/getProjectInteropData'
+import { getLiveness } from '../../layer2s/liveness/getLiveness'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
-import { getProjectInteropData } from '../../scaling/interop/getProjectInteropData'
-import { getLiveness } from '../../scaling/liveness/getLiveness'
 import type { ProjectVerificationWarnings } from '../../utils/getCommonProjectEntry'
 import { getProjectVerificationWarnings } from '../../utils/getIsProjectVerified'
 import { getDaLayerRisks } from '../utils/getDaLayerRisks'
@@ -209,7 +209,7 @@ export async function getDaProjectEntry(
         .map((x) => ({
           ...x,
           icon: manifest.getUrl(`/icons/${x.slug}.png`),
-          url: `/scaling/projects/${x.slug}`,
+          url: `/layer2s/projects/${x.slug}`,
         })),
     })),
     header: {
@@ -232,7 +232,7 @@ export async function getDaProjectEntry(
         .map((x) => ({
           ...x,
           icon: manifest.getUrl(`/icons/${x.slug}.png`),
-          url: `/scaling/projects/${x.slug}`,
+          url: `/layer2s/projects/${x.slug}`,
         })),
       ongoingAnomaly: ongoingAnomalies
         ? ongoingAnomalies.length === 0
@@ -266,7 +266,7 @@ export async function getDaProjectEntry(
         .map((x) => ({
           ...x,
           icon: manifest.getUrl(`/icons/${x.slug}.png`),
-          url: `/scaling/projects/${x.slug}`,
+          url: `/layer2s/projects/${x.slug}`,
         })),
     })
     result.projectVariants?.unshift({
@@ -324,7 +324,7 @@ export async function getEthereumDaProjectEntry(
     .map((x) => ({
       ...x,
       icon: manifest.getUrl(`/icons/${x.slug}.png`),
-      url: `/scaling/projects/${x.slug}`,
+      url: `/layer2s/projects/${x.slug}`,
     }))
 
   const latestThroughput = layer.daLayer.throughput

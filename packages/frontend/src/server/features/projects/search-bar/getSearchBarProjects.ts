@@ -19,7 +19,7 @@ function formatSearchResult(entry: SearchBarProjectSearchEntry) {
     id: entry.id,
     iconUrl: entry.iconUrl,
     kind: entry.kind,
-    scalingCategory: entry.scalingCategory,
+    layer2sCategory: entry.layer2sCategory,
     searchMatchKind: entry.searchMatchKind,
     searchScore: entry.searchScore,
   }

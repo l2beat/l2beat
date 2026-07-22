@@ -1,6 +1,6 @@
 export const searchBarCategories = {
-  scaling: {
-    name: 'Scaling',
+  layer2s: {
+    name: 'Layer 2s',
   },
   da: {
     name: 'Data Availability',

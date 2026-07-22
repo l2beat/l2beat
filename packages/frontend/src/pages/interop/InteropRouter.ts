@@ -112,7 +112,7 @@ export function createInteropRouter(
       if (project?.scalingInfo && project.interopConfig) {
         res.redirect(
           302,
-          `/scaling/projects/${project.slug}?protocols=${project.id}#interop-flows`,
+          `/layer2s/projects/${project.slug}?protocols=${project.id}#interop-flows`,
         )
         return
       }

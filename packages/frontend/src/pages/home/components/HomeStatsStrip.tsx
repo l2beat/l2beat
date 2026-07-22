@@ -2,8 +2,8 @@ import { ChevronIcon } from '~/icons/Chevron'
 import { BridgesIcon } from '~/icons/pages/Bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/DataAvailability'
 import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
+import { Layer2sIcon } from '~/icons/pages/Layer2s'
 import { PrivacyIcon } from '~/icons/pages/Privacy'
-import { ScalingIcon } from '~/icons/pages/Scaling'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
 import { cn } from '~/utils/cn'
 import { formatInteger } from '~/utils/number-format/formatInteger'
@@ -30,9 +30,9 @@ export function HomeStatsStrip({ counts }: { counts: HomeProjectCounts }) {
   const tiles: Tile[] = [
     {
       label: 'Layer 2s',
-      metric: { count: counts.scaling, unit: 'projects' },
-      href: '/scaling/summary',
-      icon: <ScalingIcon className="size-5 stroke-pink-100" />,
+      metric: { count: counts.layer2s, unit: 'projects' },
+      href: '/layer2s/summary',
+      icon: <Layer2sIcon className="size-5 stroke-pink-100" />,
       iconBgClassName: 'bg-pink-100/10',
     },
     {

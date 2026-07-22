@@ -23,7 +23,7 @@ export function DaUpdateSection({ daLayer, from, to }: Props) {
         <MonthlyUpdateTvsChart
           type="daLayer"
           entries={daLayer.daProjects}
-          allScalingProjectsTvs={daLayer.allProjects.tvs}
+          allLayer2sProjectsTvs={daLayer.allProjects.tvs}
           from={from}
           to={to}
         />

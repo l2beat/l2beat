@@ -1,8 +1,8 @@
 import { formatDuration } from '~/components/chart/liveness/LivenessChart'
 import { LiveIndicator } from '~/components/LiveIndicator'
 import { ChevronIcon } from '~/icons/Chevron'
-import { anomalySubtypeToLabel } from '~/pages/scaling/liveness/components/AnomalyIndicator'
-import type { OngoingAnomaliesOverview } from '~/server/features/scaling/liveness/getOngoingAnomaliesOverview'
+import { anomalySubtypeToLabel } from '~/pages/layer2s/liveness/components/AnomalyIndicator'
+import type { OngoingAnomaliesOverview } from '~/server/features/layer2s/liveness/getOngoingAnomaliesOverview'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { HomeCard } from './HomeCard'
 
@@ -18,7 +18,7 @@ export function HomeAnomaliesTile({
   return (
     <HomeCard className="p-0 md:p-3">
       <a
-        href="/scaling/liveness"
+        href="/layer2s/liveness"
         className="group flex items-center gap-3 px-4 py-3 transition-colors hover:bg-surface-secondary/50 md:rounded-lg md:py-2"
       >
         <LiveIndicator size="md" disabled={!isOngoing} />

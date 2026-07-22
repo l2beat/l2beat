@@ -2,8 +2,8 @@ import type { BasicTableRow } from '~/components/table/BasicTable'
 import type {
   IntentBridgeActivityEntry,
   IntentBridgesData,
-} from '~/server/features/scaling/interop/getIntentBridgesData'
-import type { ProtocolEntry } from '~/server/features/scaling/interop/types'
+} from '~/server/features/layer2s/interop/getIntentBridgesData'
+import type { ProtocolEntry } from '~/server/features/layer2s/interop/types'
 import type { InteropIntentBridge } from '../getInteropIntentBridgesData'
 
 export type IntentBridgeRow = BasicTableRow & {

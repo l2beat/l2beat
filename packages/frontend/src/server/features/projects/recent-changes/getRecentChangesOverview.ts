@@ -38,7 +38,7 @@ export async function getRecentChangesOverview(): Promise<RecentChangesOverview>
     // Only scaling and interop projects have a detail page with an Updates
     // section to link to.
     const href = project.scalingInfo
-      ? `/scaling/projects/${project.slug}#updates`
+      ? `/layer2s/projects/${project.slug}#updates`
       : project.interopConfig
         ? `/interop/protocols/${project.slug}#updates`
         : undefined
