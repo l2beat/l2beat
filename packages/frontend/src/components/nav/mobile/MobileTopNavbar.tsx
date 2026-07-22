@@ -1,4 +1,3 @@
-import { DarkThemeToggle } from '~/components/DarkThemeToggle'
 import { cn } from '~/utils/cn'
 import { Logo } from '../../Logo'
 import { SmallSearchBarButton } from '../../search-bar/SearchBarButton'
@@ -36,7 +35,6 @@ export function MobileTopNavbar({
         {/* Right side */}
         <div className="flex shrink-0 flex-row items-center gap-2 md:gap-3">
           <SmallSearchBarButton />
-          <DarkThemeToggle className="shrink-0" />
           <MobileNavTriggerOpen />
         </div>
       </div>
