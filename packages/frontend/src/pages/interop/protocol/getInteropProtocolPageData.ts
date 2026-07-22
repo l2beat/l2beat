@@ -8,6 +8,7 @@ import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
+import { getSelectedUpdateId } from '../../utils/getSelectedUpdateId'
 import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
 
 export async function getInteropProtocolPageData(
@@ -48,6 +49,7 @@ export async function getInteropProtocolPageData(
         projectEntry: data.projectEntry,
         protocolData: data.protocolData,
         apiSelection: data.apiSelection,
+        selectedUpdateId: getSelectedUpdateId(req.query),
       },
     },
   }

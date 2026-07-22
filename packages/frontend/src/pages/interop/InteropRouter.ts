@@ -5,7 +5,6 @@ import { ps } from '~/server/projects'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
-import { getSelectedUpdateId } from '../utils/getSelectedUpdateId'
 import { getInteropBurnAndMintData } from './burn-and-mint/getInteropBurnAndMintData'
 import { getInteropIntentBridgesData } from './intent-bridges/getInteropIntentBridgesData'
 import { getInteropLockAndMintData } from './lock-and-mint/getInteropLockAndMintData'
@@ -123,22 +122,7 @@ export function createInteropRouter(
         res.status(404).send('Not found')
         return
       }
-      if (data.ssr.page !== 'InteropProtocolPage') {
-        throw new Error('Unexpected page type')
-      }
-      const html = await render(
-        {
-          ...data,
-          ssr: {
-            ...data.ssr,
-            props: {
-              ...data.ssr.props,
-              selectedUpdateId: getSelectedUpdateId(req.query),
-            },
-          },
-        },
-        req.originalUrl,
-      )
+      const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
   )
