@@ -2,30 +2,19 @@ import { getChainShortName } from '@l2beat/discovery'
 import { ChainSpecificAddress, ProjectId } from '@l2beat/shared-pure'
 import type { Bridge, ScalingProject } from '../internalTypes'
 import { asArray } from '../templates/utils'
-import type { BaseProject, ProjectContract, ProjectPermissions } from '../types'
-
-type VerifiableContract = Pick<ProjectContract, 'isVerified' | 'upgradeability'>
-
-function getUnverifiedContractAddresses(
-  contract: VerifiableContract,
-  address: ChainSpecificAddress,
-): ChainSpecificAddress[] {
-  return [
-    ...(!contract.isVerified ? [address] : []),
-    ...(contract.upgradeability?.implementations
-      .filter((implementation) => implementation.isVerified === false)
-      .map((implementation) => implementation.address) ?? []),
-  ]
-}
+import type { BaseProject, ProjectPermissions } from '../types'
 
 function getUnverifiedContracts(
   project: ScalingProject | Bridge | BaseProject,
 ): ChainSpecificAddress[] {
   return Object.values(project.contracts?.addresses ?? {})
     .flat()
-    .flatMap((contract) =>
-      getUnverifiedContractAddresses(contract, contract.address),
-    )
+    .flatMap((contract) => [
+      ...(!contract.isVerified ? [contract.address] : []),
+      ...(contract.upgradeability?.implementations
+        .filter((implementation) => implementation.isVerified === false)
+        .map((implementation) => implementation.address) ?? []),
+    ])
 }
 
 function getUnverifiedPermissions(
@@ -67,11 +56,11 @@ function getUnverifiedDaLayerContracts(
     .filter((c) => !c.isVerified)
     .map((c) => c.address)
 
-  const unverifiedDaBridgeContracts = bridge.contracts?.addresses?.[
+  const unverifiedDaBridgeContracts = bridge?.contracts?.addresses?.[
     hostChainId
-  ]?.flatMap((contract) =>
-    getUnverifiedContractAddresses(contract, contract.address),
-  )
+  ]
+    .filter((c) => !c.isVerified)
+    .map((c) => c.address)
 
   return [
     ...(unverifiedDaBridgeContracts ?? []),
@@ -82,15 +71,11 @@ function getUnverifiedDaLayerContracts(
 function getUnverifiedEscrows(
   project: ScalingProject | Bridge,
 ): ChainSpecificAddress[] {
-  return project.config.escrows.flatMap((escrow) => {
-    if (!escrow.contract) return []
-
-    const address = ChainSpecificAddress.from(
-      getChainShortName(escrow.chain),
-      escrow.address,
+  return project.config.escrows
+    .filter((e) => e.contract?.isVerified === false)
+    .map((c) =>
+      ChainSpecificAddress.from(getChainShortName(c.chain), c.address),
     )
-    return getUnverifiedContractAddresses(escrow.contract, address)
-  })
 }
 
 export function getProjectUnverifiedContracts(

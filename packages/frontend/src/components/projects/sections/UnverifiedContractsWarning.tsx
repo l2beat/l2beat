@@ -11,7 +11,6 @@ import { CustomLinkIcon } from '~/icons/Outlink'
 import { UnverifiedIcon } from '~/icons/Unverified'
 import { cn } from '~/utils/cn'
 import type { UnverifiedContractEntry } from '~/utils/project/contracts-and-permissions/getUnverifiedContractEntries'
-import { WarningBar } from '../../WarningBar'
 
 interface Props {
   entries: UnverifiedContractEntry[]
@@ -19,18 +18,6 @@ interface Props {
 }
 
 export function UnverifiedContractsWarning({ entries, className }: Props) {
-  if (entries.length === 0) {
-    return (
-      <WarningBar
-        text="This project includes unverified contracts."
-        color="red"
-        isCritical
-        className={className}
-        icon={UnverifiedIcon}
-      />
-    )
-  }
-
   return (
     <div
       className={cn(
