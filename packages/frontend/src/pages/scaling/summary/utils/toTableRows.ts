@@ -20,6 +20,7 @@ export function toTableRows({
           ...entry.tvs,
           breakdown: undefined,
           change: undefined,
+          changePeriod: undefined,
           additionalTrustAssumptionsPercentage: undefined,
           syncWarning: undefined,
         },
@@ -30,6 +31,7 @@ export function toTableRows({
       warnings,
       breakdown,
       change,
+      changePeriod,
       additionalTrustAssumptionsPercentage,
       syncState,
     } = projectData
@@ -49,6 +51,7 @@ export function toTableRows({
         ...entry.tvs,
         breakdown,
         change,
+        changePeriod,
         warnings: [...entry.tvs.warnings, ...warnings],
         additionalTrustAssumptionsPercentage,
         syncWarning: tvsSyncWarning,

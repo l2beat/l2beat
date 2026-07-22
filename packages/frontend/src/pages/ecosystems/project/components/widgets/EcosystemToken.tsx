@@ -35,13 +35,18 @@ export function EcosystemToken({ token, className }: Props) {
       <div className="grid sm:mt-4 sm:grid-cols-3 sm:gap-2">
         <DataTile label="Price">
           <span>{formatCurrency(token.data.price.value, 'usd')}</span>
-          <PercentChange className="ml-0.5" value={token.data.price.change} />
+          <PercentChange
+            className="ml-0.5"
+            value={token.data.price.change}
+            period={token.data.price.changePeriod}
+          />
         </DataTile>
         <DataTile label="Market Cap">
           <span>{formatCurrency(token.data.marketCap.value, 'usd')}</span>
           <PercentChange
             className="ml-0.5"
             value={token.data.marketCap.change}
+            period={token.data.marketCap.changePeriod}
           />
         </DataTile>
         <DataTile label="Circulating Supply">
@@ -49,6 +54,7 @@ export function EcosystemToken({ token, className }: Props) {
           <PercentChange
             className="ml-0.5"
             value={token.data.circulatingSupply.change}
+            period={token.data.circulatingSupply.changePeriod}
           />
         </DataTile>
       </div>

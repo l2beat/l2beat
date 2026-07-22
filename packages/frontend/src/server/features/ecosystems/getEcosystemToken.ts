@@ -2,6 +2,7 @@ import type { Project } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 
 export interface EcosystemToken {
@@ -13,14 +14,17 @@ export interface EcosystemToken {
     price: {
       value: number
       change: number
+      changePeriod: PercentageChangePeriod
     }
     marketCap: {
       value: number
       change: number
+      changePeriod: PercentageChangePeriod
     }
     circulatingSupply: {
       value: number
       change: number
+      changePeriod: PercentageChangePeriod
     }
   }
 }
@@ -60,14 +64,17 @@ const getCachedEcosystemToken = async (
       price: {
         value: ecosystemToken.priceUsd,
         change: ecosystemToken.price7dChange,
+        changePeriod: '7D',
       },
       marketCap: {
         value: ecosystemToken.marketCapUsd,
         change: ecosystemToken.marketCap7dChange,
+        changePeriod: '7D',
       },
       circulatingSupply: {
         value: ecosystemToken.circulatingSupply,
         change: ecosystemToken.circulatingSupply7dChange,
+        changePeriod: '7D',
       },
     },
   }
@@ -85,14 +92,17 @@ function getMockEcosystemToken(
       price: {
         value: 1.23,
         change: 5.67,
+        changePeriod: '7D',
       },
       marketCap: {
         value: 1000000,
         change: 8.9,
+        changePeriod: '7D',
       },
       circulatingSupply: {
         value: 813245.67,
         change: -2.34,
+        changePeriod: '7D',
       },
     },
   }

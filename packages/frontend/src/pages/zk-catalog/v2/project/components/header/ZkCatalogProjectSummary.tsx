@@ -16,6 +16,7 @@ import { FilledArrowIcon } from '~/icons/FilledArrow'
 import { InfoIcon } from '~/icons/Info'
 import type { ProjectZkCatalogEntry } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
 import type { TrustedSetupsByProofSystem } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { TechStackCell } from '../../../components/TechStackCell'
 import { TrustedSetupCell } from '../../../components/TrustedSetupCell'
@@ -426,7 +427,15 @@ function TechStackSection({
   )
 }
 
-function TvsStat({ value, change }: { value: number; change: number }) {
+function TvsStat({
+  value,
+  change,
+  changePeriod,
+}: {
+  value: number
+  change: number
+  changePeriod: PercentageChangePeriod
+}) {
   return (
     <ProjectSummaryStat
       titleAsChild
@@ -444,6 +453,7 @@ function TvsStat({ value, change }: { value: number; change: number }) {
               className="!text-base !font-medium !leading-[100%] text-nowrap"
               changeClassName="text-label-value-14 font-bold"
               change={change}
+              changePeriod={changePeriod}
             >
               {formatCurrency(value, 'usd')}
             </ValueWithPercentageChange>

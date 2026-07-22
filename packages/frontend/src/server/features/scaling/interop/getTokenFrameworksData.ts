@@ -9,6 +9,7 @@ import groupBy from 'lodash/groupBy'
 import sumBy from 'lodash/sumBy'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { manifest } from '~/utils/Manifest'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type {
@@ -104,6 +105,7 @@ export type TokenFrameworksData = {
   frameworkTable: FrameworkTableEntry[]
   transferSizeChartData: TransferSizeDataPoint[] | undefined
   snapshotTimestamp: number | undefined
+  changePeriod: PercentageChangePeriod
 }
 
 export async function getTokenFrameworksData(
@@ -200,6 +202,7 @@ export async function getTokenFrameworksData(
     frameworkTable,
     transferSizeChartData,
     snapshotTimestamp,
+    changePeriod: 'last24h',
   }
 }
 
@@ -607,5 +610,6 @@ function getMockTokenFrameworksData(): TokenFrameworksData {
     frameworkTable,
     transferSizeChartData,
     snapshotTimestamp: UnixTime.now(),
+    changePeriod: 'last24h',
   }
 }

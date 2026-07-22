@@ -1,6 +1,7 @@
 import type { Project } from '@l2beat/config'
 import { formatSeconds, notUndefined, UnixTime } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { type CommonDaEntry, getCommonDaEntry } from '../getCommonDaEntry'
 import {
   getDaThroughputTable,
@@ -61,6 +62,7 @@ interface DaThroughputEntryData {
         avgCapacityUtilization: number | null
         totalPosted: number
         change: number
+        changePeriod: PercentageChangePeriod
         largestPoster:
           | {
               name: string

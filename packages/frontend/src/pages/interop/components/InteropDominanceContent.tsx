@@ -7,14 +7,9 @@ import {
   TabsList,
   TabsTrigger,
 } from '~/components/core/Tabs'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '~/components/core/tooltip/Tooltip'
 import { PercentChange } from '~/components/PercentChange'
 import { ScrollWithGradient } from '~/components/ScrollWithGradient'
-import { InfoIcon } from '~/icons/Info'
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -41,6 +36,7 @@ export function InteropDominanceContent({
   transfersStatLabel,
   emptyState,
   isLoading,
+  changePeriod,
   getMetricData,
   className,
   tabsClassName,
@@ -52,6 +48,7 @@ export function InteropDominanceContent({
   transfersStatLabel: string
   emptyState: string
   isLoading: boolean
+  changePeriod: PercentageChangePeriod | undefined
   getMetricData: (metric: DominanceMetric) => {
     total: number
     rows: DominanceRow[]
@@ -113,6 +110,7 @@ export function InteropDominanceContent({
                   metric={metric}
                   total={total}
                   transfersStatLabel={transfersStatLabel}
+                  changePeriod={changePeriod}
                 />
               ))}
             </ScrollWithGradient>
@@ -125,6 +123,7 @@ export function InteropDominanceContent({
                   metric={metric}
                   total={total}
                   transfersStatLabel={transfersStatLabel}
+                  changePeriod={changePeriod}
                 />
               ))}
             </div>
@@ -140,11 +139,13 @@ function DominanceRowItem({
   metric,
   total,
   transfersStatLabel,
+  changePeriod,
 }: {
   row: DominanceRow
   metric: DominanceMetric
   total: number
   transfersStatLabel: string
+  changePeriod: PercentageChangePeriod | undefined
 }) {
   const value = metric === 'volume' ? row.volume : row.transferCount
   const previousValue =
@@ -165,21 +166,12 @@ function DominanceRowItem({
               ? formatCurrency(value, 'usd', { decimals: 2 })
               : formatInteger(value)}
           </span>
-          {percentChange !== null && (
-            <div className="flex items-center gap-1">
-              <PercentChange
-                className="font-medium text-label-value-16"
-                value={percentChange}
-              />
-              <Tooltip>
-                <TooltipTrigger>
-                  <InfoIcon className="size-3" />
-                </TooltipTrigger>
-                <TooltipContent>
-                  Percentage change compared to the previous 24 hours.
-                </TooltipContent>
-              </Tooltip>
-            </div>
+          {percentChange !== null && changePeriod !== undefined && (
+            <PercentChange
+              className="font-medium text-label-value-16"
+              value={percentChange}
+              period={changePeriod}
+            />
           )}
         </div>
       </div>

@@ -14,6 +14,7 @@ import type { RosetteValue } from '~/components/rosette/types'
 import { getL2Risks } from '~/pages/scaling/utils/getL2Risks'
 import { groupByScalingTabs } from '~/pages/scaling/utils/groupByScalingTabs'
 import { ps } from '~/server/projects'
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { getProofSystemWithName } from '~/utils/project/getProofSystemWithName'
 import { optionToRange } from '~/utils/range/range'
 import type { ProjectChanges } from '../../projects-change-report/getProjectsChangeReport'
@@ -107,6 +108,7 @@ export interface ScalingSummaryEntry extends CommonScalingEntry {
     | {
         pastDayUops: number
         change: number
+        changePeriod: PercentageChangePeriod
         isSynced: boolean
       }
     | undefined
@@ -155,6 +157,7 @@ export function getScalingSummaryEntry(
     activity: activity && {
       pastDayUops: activity.pastDayUops,
       change: activity.change,
+      changePeriod: activity.changePeriod,
       isSynced: !activitySyncWarning,
     },
     tvsOrder: latestTvs?.breakdown.total ?? -1,
