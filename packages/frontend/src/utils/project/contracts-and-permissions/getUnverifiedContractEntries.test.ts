@@ -59,11 +59,17 @@ describe(getUnverifiedContractEntries.name, () => {
     expect(result).toEqual([
       {
         address: contractAddress,
-        target: { id: 'RollupProxy', label: 'RollupProxy' },
+        target: {
+          id: `contracts-${contractAddress}`,
+          label: 'RollupProxy',
+        },
       },
       {
         address: permissionAddress,
-        target: { id: 'ProxyAdmin', label: 'ProxyAdmin' },
+        target: {
+          id: `permissions-${permissionAddress}`,
+          label: 'ProxyAdmin',
+        },
       },
       { address: unknownAddress, target: undefined },
     ])
@@ -96,7 +102,7 @@ describe(getUnverifiedContractEntries.name, () => {
     ])
   })
 
-  it('does not create section links from empty ids', () => {
+  it('links unnamed contracts to the contracts section', () => {
     const contracts = mockObject<ProjectContracts>({
       addresses: {
         ethereum: [
@@ -116,6 +122,86 @@ describe(getUnverifiedContractEntries.name, () => {
       undefined,
     )
 
-    expect(result).toEqual([{ address: contractAddress, target: undefined }])
+    expect(result).toEqual([
+      {
+        address: contractAddress,
+        target: {
+          id: `contracts-${contractAddress}`,
+          label: undefined,
+        },
+      },
+    ])
+  })
+
+  it('links unnamed permissions to the permissions section', () => {
+    const permissions = mockObject<Record<string, ProjectPermissions>>({
+      ethereum: {
+        roles: [],
+        actors: [
+          {
+            id: '',
+            name: '',
+            chain: 'ethereum',
+            description: 'Can upgrade contracts.',
+            accounts: [
+              {
+                name: '0x3333...3333',
+                address: permissionAddress,
+                url: 'https://etherscan.io/address/0x3333#code',
+                isVerified: false,
+                type: 'Contract',
+              },
+            ],
+          },
+        ],
+      },
+    })
+
+    const result = getUnverifiedContractEntries(
+      [permissionAddress],
+      undefined,
+      permissions,
+    )
+
+    expect(result).toEqual([
+      {
+        address: permissionAddress,
+        target: {
+          id: `permissions-${permissionAddress}`,
+          label: undefined,
+        },
+      },
+    ])
+  })
+
+  it('omits the generic Contract label', () => {
+    const contracts = mockObject<ProjectContracts>({
+      addresses: {
+        ethereum: [
+          {
+            name: 'Contract',
+            chain: 'ethereum',
+            address: contractAddress,
+            isVerified: false,
+          },
+        ],
+      },
+    })
+
+    const result = getUnverifiedContractEntries(
+      [contractAddress],
+      contracts,
+      undefined,
+    )
+
+    expect(result).toEqual([
+      {
+        address: contractAddress,
+        target: {
+          id: `contracts-${contractAddress}`,
+          label: undefined,
+        },
+      },
+    ])
   })
 })

@@ -1,5 +1,6 @@
 import type { ProjectContracts, ProjectPermissions } from '@l2beat/config'
 import { ChainSpecificAddress, formatAddress } from '@l2beat/shared-pure'
+import { getContractAddressAnchor } from './getContractAddressAnchor'
 
 export interface UnverifiedContractEntry {
   address: ChainSpecificAddress
@@ -8,7 +9,7 @@ export interface UnverifiedContractEntry {
 
 interface UnverifiedContractTarget {
   id: string
-  label: string
+  label?: string
 }
 
 export function getUnverifiedContractEntries(
@@ -25,23 +26,22 @@ export function getUnverifiedContractEntries(
     ({ roles = [], actors = [] }) => roles.concat(actors),
   )
   for (const permission of projectPermissions) {
-    if (!permission.id) continue
     for (const account of permission.accounts) {
       targetByAddress.set(account.address, {
-        id: permission.id,
-        label:
-          permission.name ||
-          formatAddress(ChainSpecificAddress.address(account.address)),
+        id: getContractAddressAnchor('permissions', account.address),
+        label: getDisplayLabel(
+          permission.name || account.name,
+          account.address,
+        ),
       })
     }
   }
 
   const projectContracts = Object.values(contracts?.addresses ?? {}).flat()
   for (const contract of projectContracts) {
-    if (!contract.name) continue
     targetByAddress.set(contract.address, {
-      id: contract.name,
-      label: contract.name,
+      id: getContractAddressAnchor('contracts', contract.address),
+      label: getDisplayLabel(contract.name, contract.address),
     })
   }
 
@@ -49,4 +49,14 @@ export function getUnverifiedContractEntries(
     address,
     target: targetByAddress.get(address),
   }))
+}
+
+function getDisplayLabel(
+  name: string | undefined,
+  address: ChainSpecificAddress,
+): string | undefined {
+  if (!name || name === 'Contract') return undefined
+
+  const formattedAddress = formatAddress(ChainSpecificAddress.address(address))
+  return name === formattedAddress ? undefined : name
 }

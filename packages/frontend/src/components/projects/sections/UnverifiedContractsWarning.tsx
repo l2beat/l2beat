@@ -53,13 +53,18 @@ export function UnverifiedContractsWarning({ entries, className }: Props) {
                         className: 'min-w-0 underline',
                       })}
                     >
-                      {entry.target.label}
+                      {entry.target.label ??
+                        formatAddress(
+                          ChainSpecificAddress.address(entry.address),
+                        )}
                     </a>
-                    <span className="shrink-0">
-                      {formatAddress(
-                        ChainSpecificAddress.address(entry.address),
-                      )}
-                    </span>
+                    {entry.target.label && (
+                      <span className="shrink-0">
+                        {formatAddress(
+                          ChainSpecificAddress.address(entry.address),
+                        )}
+                      </span>
+                    )}
                   </>
                 ) : (
                   <span>

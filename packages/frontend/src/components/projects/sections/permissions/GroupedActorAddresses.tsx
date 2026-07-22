@@ -1,3 +1,4 @@
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import {
   Tooltip,
   TooltipContent,
@@ -6,13 +7,21 @@ import {
 import { HighlightableLink } from '~/components/link/highlightable/HighlightableLink'
 import { UnverifiedIcon } from '~/icons/Unverified'
 import { cn } from '~/utils/cn'
+import {
+  type ContractAddressAnchorType,
+  getContractAddressAnchor,
+} from '~/utils/project/contracts-and-permissions/getContractAddressAnchor'
 import type { TechnologyContractAddress } from '../ContractEntry'
 
 export function GroupedActorAddresses({
   addresses,
+  chain,
+  type,
   className,
 }: {
   addresses: TechnologyContractAddress[]
+  chain: string
+  type: ContractAddressAnchorType
   className?: string
 }) {
   return (
@@ -25,12 +34,16 @@ export function GroupedActorAddresses({
       {addresses.map((entry) => (
         <HighlightableLink
           key={entry.address}
+          id={getContractAddressAnchor(
+            type,
+            ChainSpecificAddress.fromLong(chain, entry.address),
+          )}
           variant={
             entry.verificationStatus === 'unverified' ? 'danger' : undefined
           }
           href={entry.href}
           address={entry.address}
-          className="inline-flex items-center gap-0.5"
+          className="inline-flex scroll-mt-14 items-center gap-0.5 md:scroll-mt-10"
         >
           {entry.verificationStatus === 'unverified' && (
             <Tooltip>
