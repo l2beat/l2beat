@@ -107,7 +107,6 @@ function getHomeTopChainsColumns() {
         />
       ),
       meta: {
-        align: 'center',
         tooltip:
           'Project stage where applicable, based on L2BEAT staging criteria.',
       },
