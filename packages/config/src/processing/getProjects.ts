@@ -322,8 +322,7 @@ function toBackendTrackedTxConfig(
     return { ...common, ...use, costMultiplier, params }
   }
 
-  const groupBy = 'groupBy' in use ? use.groupBy : undefined
-  if (groupBy !== undefined) {
+  if ('groupBy' in use && use.groupBy !== undefined) {
     assert(
       params.formula === 'functionCall',
       'Liveness grouping is only supported for function calls',
@@ -332,7 +331,7 @@ function toBackendTrackedTxConfig(
       params.topics === undefined,
       'Liveness grouping is not supported for topic-matched function calls',
     )
-    return { ...common, ...use, groupBy, params }
+    return { ...common, ...use, groupBy: use.groupBy, params }
   }
 
   if (params.formula === 'functionCall') {

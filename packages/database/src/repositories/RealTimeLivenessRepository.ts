@@ -20,11 +20,16 @@ export function toRecord(
   row: Selectable<RealTimeLiveness>,
 ): RealTimeLivenessRecord {
   const { groupingKey, ...rest } = row
-  return {
+  const record: RealTimeLivenessRecord = {
     ...rest,
-    ...(groupingKey !== null ? { groupingKey } : {}),
     timestamp: UnixTime.fromDate(row.timestamp),
   }
+
+  if (groupingKey !== null) {
+    record.groupingKey = groupingKey
+  }
+
+  return record
 }
 
 export function toRow(

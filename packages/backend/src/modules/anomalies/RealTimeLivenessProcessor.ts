@@ -121,22 +121,23 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
         ...matchingCalls,
         ...filteredSubmissions,
         ...filteredSharedBridgeCalls,
-      ].map((config) => {
-        const groupingKey = hasLivenessGrouping(config)
-          ? getLivenessGroupingKey(
-              tx.data as string,
-              config.params,
-              config.groupBy,
-            )
-          : undefined
-
-        return {
+      ].map((config): RealTimeLivenessRecord => {
+        const record: RealTimeLivenessRecord = {
           timestamp: block.timestamp,
           blockNumber: block.number,
           txHash: tx.hash as string,
           configurationId: config.id,
-          ...(groupingKey !== undefined ? { groupingKey } : {}),
         }
+
+        if (hasLivenessGrouping(config)) {
+          record.groupingKey = getLivenessGroupingKey(
+            tx.data as string,
+            config.params,
+            config.groupBy,
+          )
+        }
+
+        return record
       })
 
       records.push(...results)

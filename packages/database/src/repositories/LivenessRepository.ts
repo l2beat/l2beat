@@ -18,11 +18,16 @@ export interface LivenessRecord {
 
 export function toRecord(row: Selectable<Liveness>): LivenessRecord {
   const { groupingKey, ...rest } = row
-  return {
+  const record: LivenessRecord = {
     ...rest,
-    ...(groupingKey !== null ? { groupingKey } : {}),
     timestamp: UnixTime.fromDate(row.timestamp),
   }
+
+  if (groupingKey !== null) {
+    record.groupingKey = groupingKey
+  }
+
+  return record
 }
 
 export function toRow(record: LivenessRecord): Insertable<Liveness> {

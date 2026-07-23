@@ -31,14 +31,22 @@ export class LivenessUpdater implements TxUpdaterInterface<'liveness'> {
   }
 
   transformTransactions(transactions: TrackedTxResult[]): LivenessRecord[] {
-    return transactions.map((t) => ({
-      timestamp: t.blockTimestamp,
-      blockNumber: t.blockNumber,
-      configurationId: t.id,
-      txHash: t.hash,
-      ...('groupingKey' in t && t.groupingKey !== undefined
-        ? { groupingKey: t.groupingKey }
-        : {}),
-    }))
+    return transactions.map((transaction) => {
+      const record: LivenessRecord = {
+        timestamp: transaction.blockTimestamp,
+        blockNumber: transaction.blockNumber,
+        configurationId: transaction.id,
+        txHash: transaction.hash,
+      }
+
+      if (
+        'groupingKey' in transaction &&
+        transaction.groupingKey !== undefined
+      ) {
+        record.groupingKey = transaction.groupingKey
+      }
+
+      return record
+    })
   }
 }

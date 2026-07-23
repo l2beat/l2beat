@@ -139,11 +139,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
     const liveness = result.filter((entry) => entry.type === 'liveness')
     const costs = result.filter((entry) => entry.type === 'l2costs')
 
-    expect(
-      liveness.map((entry) =>
-        'groupingKey' in entry ? entry.groupingKey : undefined,
-      ),
-    ).toEqual(['123', '123'])
+    expect(liveness.map((entry) => entry.groupingKey)).toEqual(['123', '123'])
     expect(costs.map((entry) => 'groupingKey' in entry)).toEqual([false, false])
   })
 
