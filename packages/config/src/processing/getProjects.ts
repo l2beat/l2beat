@@ -260,9 +260,42 @@ function toBackendTrackedTxsConfig(
     }
     const params = toBackendTrackedTxParams(config)
 
-    return config.uses.map((use) =>
-      toBackendTrackedTxConfig(common, use, params, config._hackCostMultiplier),
-    )
+    return config.uses.map((use): TrackedTxConfigEntryWithoutId => {
+      if (use.type === 'l2costs') {
+        return {
+          ...common,
+          ...use,
+          costMultiplier: config._hackCostMultiplier,
+          params,
+        }
+      }
+
+      if (use.groupBy !== undefined) {
+        assert(
+          params.formula === 'functionCall',
+          'Liveness grouping is only supported for function calls',
+        )
+        const { topics, ...groupableParams } = params
+        assert(
+          topics === undefined,
+          'Liveness grouping is not supported for topic-matched function calls',
+        )
+        return {
+          ...common,
+          type: use.type,
+          subtype: use.subtype,
+          groupBy: use.groupBy,
+          params: groupableParams,
+        }
+      }
+
+      return {
+        ...common,
+        type: use.type,
+        subtype: use.subtype,
+        params,
+      }
+    })
   })
 }
 
@@ -306,39 +339,6 @@ function toBackendTrackedTxParams(
         firstParameter: config.query.firstParameter,
       }
   }
-}
-
-function toBackendTrackedTxConfig(
-  common: {
-    projectId: ProjectId
-    sinceTimestamp: number
-    untilTimestamp?: number
-  },
-  use: Layer2TxConfig['uses'][number],
-  params: BackendTrackedTxParams,
-  costMultiplier: number | undefined,
-): TrackedTxConfigEntryWithoutId {
-  if (use.type === 'l2costs') {
-    return { ...common, ...use, costMultiplier, params }
-  }
-
-  if ('groupBy' in use && use.groupBy !== undefined) {
-    assert(
-      params.formula === 'functionCall',
-      'Liveness grouping is only supported for function calls',
-    )
-    assert(
-      params.topics === undefined,
-      'Liveness grouping is not supported for topic-matched function calls',
-    )
-    return { ...common, ...use, groupBy: use.groupBy, params }
-  }
-
-  if (params.formula === 'functionCall') {
-    return { ...common, ...use, params }
-  }
-
-  return { ...common, ...use, params }
 }
 
 export function adjustDiscoveryInfo(

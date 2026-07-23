@@ -20,7 +20,6 @@ export function createTrackedTxId(
       input.push(trackedTxConfig.params.selector)
       if (
         trackedTxConfig.type === 'liveness' &&
-        'groupBy' in trackedTxConfig &&
         trackedTxConfig.groupBy !== undefined
       ) {
         input.push(trackedTxConfig.groupBy.type)

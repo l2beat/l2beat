@@ -14,10 +14,12 @@ export type TrackedTxConfigEntry =
   | TrackedTxCostsConfig
   | TrackedTxLivenessConfig
 
+// Omit is applied per union member so that member-specific properties
+// (costMultiplier, groupBy) survive; Omit over the union itself would drop them.
 export type TrackedTxConfigEntryWithoutId =
   | Omit<TrackedTxCostsConfig, 'id'>
-  | Omit<TrackedTxFunctionCallLivenessConfig, 'id'>
-  | Omit<TrackedTxOtherLivenessConfig, 'id'>
+  | Omit<TrackedTxGroupedLivenessConfig, 'id'>
+  | Omit<TrackedTxUngroupedLivenessConfig, 'id'>
 
 type TrackedTxParams =
   | TrackedTxFunctionCallConfig
@@ -42,22 +44,24 @@ export interface TrackedTxCostsConfig extends TrackedTxConfigBase {
 }
 
 export type TrackedTxLivenessConfig =
-  | TrackedTxFunctionCallLivenessConfig
-  | TrackedTxOtherLivenessConfig
+  | TrackedTxGroupedLivenessConfig
+  | TrackedTxUngroupedLivenessConfig
 
-export interface TrackedTxFunctionCallLivenessConfig
-  extends TrackedTxConfigBase<TrackedTxFunctionCallConfig> {
-  type: 'liveness'
-  groupBy?: TrackedTxFunctionCallGrouping
-}
-
-export interface TrackedTxOtherLivenessConfig
+interface TrackedTxGroupedLivenessConfig
   extends TrackedTxConfigBase<
-    | TrackedTxTransferConfig
-    | TrackedTxSharpSubmissionConfig
-    | TrackedTxSharedBridgeConfig
+    TrackedTxFunctionCallConfig & { topics?: never }
   > {
   type: 'liveness'
+  groupBy: TrackedTxFunctionCallGrouping
+}
+
+interface TrackedTxUngroupedLivenessConfig extends TrackedTxConfigBase {
+  type: 'liveness'
+  groupBy?: never
+}
+
+export type TrackedTxFunctionCallLivenessConfig = TrackedTxLivenessConfig & {
+  params: TrackedTxFunctionCallConfig
 }
 
 export interface TrackedTxFunctionCallGrouping {

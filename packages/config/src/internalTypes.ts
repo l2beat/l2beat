@@ -200,24 +200,27 @@ export type Layer2TxConfig =
     }
 
 export type Layer2FunctionCallTrackedTxUse =
-  | Layer2TrackedTxUse
-  | Layer2GroupedTrackedTxLivenessUse
-
-export type Layer2TrackedTxUse =
-  | {
-      type: 'liveness'
-      subtype: TrackedTxsConfigSubtype
-    }
   | {
       type: 'l2costs'
       subtype: TrackedTxsConfigSubtype
     }
+  | {
+      type: 'liveness'
+      subtype: TrackedTxsConfigSubtype
+      groupBy?: TrackedTxFunctionCallGrouping
+    }
 
-interface Layer2GroupedTrackedTxLivenessUse {
-  type: 'liveness'
-  subtype: TrackedTxsConfigSubtype
-  groupBy: TrackedTxFunctionCallGrouping
-}
+export type Layer2TrackedTxUse =
+  | {
+      type: 'l2costs'
+      subtype: TrackedTxsConfigSubtype
+    }
+  | {
+      type: 'liveness'
+      subtype: TrackedTxsConfigSubtype
+      /** Liveness grouping is only supported for functionCall queries. */
+      groupBy?: undefined
+    }
 
 interface FunctionCall {
   formula: 'functionCall'

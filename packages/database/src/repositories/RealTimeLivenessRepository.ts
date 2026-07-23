@@ -4,8 +4,8 @@ import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { RealTimeLiveness } from '../kysely/generated/types'
 import {
-  isEarlierThanStored,
-  keepEarliestGroupedRecords,
+  insertGroupedKeepingEarliest,
+  splitLivenessRecords,
 } from './utils/livenessGrouping'
 
 export interface RealTimeLivenessRecord {
@@ -54,20 +54,9 @@ export class RealTimeLivenessRepository extends BaseRepository {
   async upsertMany(records: RealTimeLivenessRecord[]): Promise<number> {
     if (records.length === 0) return 0
 
-    const transactionRows = records
-      .filter((record) => record.groupingKey === undefined)
-      .map(toRow)
-    const groupedRows = keepEarliestGroupedRecords(
-      records.filter(
-        (
-          record,
-        ): record is RealTimeLivenessRecord & {
-          groupingKey: string
-        } => record.groupingKey !== undefined,
-      ),
-    ).map(toRow)
+    const { ungrouped, groupedEarliest } = splitLivenessRecords(records)
 
-    await this.batch(transactionRows, 10_000, async (batch) => {
+    await this.batch(ungrouped.map(toRow), 10_000, async (batch) => {
       await this.db
         .insertInto('RealTimeLiveness')
         .values(batch)
@@ -79,22 +68,8 @@ export class RealTimeLivenessRepository extends BaseRepository {
         )
         .execute()
     })
-    await this.batch(groupedRows, 10_000, async (batch) => {
-      await this.db
-        .insertInto('RealTimeLiveness')
-        .values(batch)
-        .onConflict((cb) =>
-          cb
-            .columns(['configurationId', 'groupingKey'])
-            .where('groupingKey', 'is not', null)
-            .doUpdateSet((eb) => ({
-              timestamp: eb.ref('excluded.timestamp'),
-              blockNumber: eb.ref('excluded.blockNumber'),
-              txHash: eb.ref('excluded.txHash'),
-            }))
-            .where(isEarlierThanStored('RealTimeLiveness')),
-        )
-        .execute()
+    await this.batch(groupedEarliest.map(toRow), 10_000, async (batch) => {
+      await insertGroupedKeepingEarliest(this.db, 'RealTimeLiveness', batch)
     })
     return records.length
   }

@@ -4,8 +4,8 @@ import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { Liveness } from '../kysely/generated/types'
 import {
-  isEarlierThanStored,
-  keepEarliestGroupedRecords,
+  insertGroupedKeepingEarliest,
+  splitLivenessRecords,
 } from './utils/livenessGrouping'
 
 export interface LivenessRecord {
@@ -108,38 +108,13 @@ export class LivenessRepository extends BaseRepository {
   async insertMany(records: LivenessRecord[]): Promise<number> {
     if (records.length === 0) return 0
 
-    const transactionRows = records
-      .filter((record) => record.groupingKey === undefined)
-      .map(toRow)
-    const groupedRows = keepEarliestGroupedRecords(
-      records.filter(
-        (
-          record,
-        ): record is LivenessRecord & {
-          groupingKey: string
-        } => record.groupingKey !== undefined,
-      ),
-    ).map(toRow)
+    const { ungrouped, groupedEarliest } = splitLivenessRecords(records)
 
-    await this.batch(transactionRows, 10_000, async (batch) => {
+    await this.batch(ungrouped.map(toRow), 10_000, async (batch) => {
       await this.db.insertInto('Liveness').values(batch).execute()
     })
-    await this.batch(groupedRows, 10_000, async (batch) => {
-      await this.db
-        .insertInto('Liveness')
-        .values(batch)
-        .onConflict((cb) =>
-          cb
-            .columns(['configurationId', 'groupingKey'])
-            .where('groupingKey', 'is not', null)
-            .doUpdateSet((eb) => ({
-              timestamp: eb.ref('excluded.timestamp'),
-              blockNumber: eb.ref('excluded.blockNumber'),
-              txHash: eb.ref('excluded.txHash'),
-            }))
-            .where(isEarlierThanStored('Liveness')),
-        )
-        .execute()
+    await this.batch(groupedEarliest.map(toRow), 10_000, async (batch) => {
+      await insertGroupedKeepingEarliest(this.db, 'Liveness', batch)
     })
     return records.length
   }

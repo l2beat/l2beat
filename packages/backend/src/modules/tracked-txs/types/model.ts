@@ -43,6 +43,7 @@ type TrackedTxFunctionCallResultBase = {
   blobVersionedHashes: string[] | null
 }
 
+// Costs are stored per transaction; only liveness results can be grouped.
 export type TrackedTxFunctionCallResult = TrackedTxFunctionCallResultBase &
   ({ type: 'l2costs' } | { type: 'liveness'; groupingKey?: string })
 

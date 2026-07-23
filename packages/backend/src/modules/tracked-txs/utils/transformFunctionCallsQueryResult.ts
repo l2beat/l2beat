@@ -106,16 +106,10 @@ export function transformFunctionCallsQueryResult(
       }
 
       if (config.properties.type === 'liveness') {
-        return {
-          ...common,
-          type: 'liveness',
-        }
+        return { ...common, type: 'liveness' }
       }
 
-      return {
-        ...common,
-        type: 'l2costs',
-      }
+      return { ...common, type: 'l2costs' }
     })
 
     return results

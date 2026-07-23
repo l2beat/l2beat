@@ -5,9 +5,7 @@ import type {
   TrackedTxFunctionCallLivenessConfig,
 } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
-import { utils } from 'ethers'
-
-const interfaces = new Map<`function ${string}`, utils.Interface>()
+import { decodeFunctionCallInput } from './decodeFunctionCallInput'
 
 export type GroupedLivenessConfig = TrackedTxFunctionCallLivenessConfig & {
   groupBy: TrackedTxFunctionCallGrouping
@@ -19,7 +17,6 @@ export function hasLivenessGrouping(
   return (
     config.type === 'liveness' &&
     config.params.formula === 'functionCall' &&
-    'groupBy' in config &&
     config.groupBy !== undefined
   )
 }
@@ -29,9 +26,7 @@ export function getLivenessGroupingKey(
   config: TrackedTxFunctionCallConfig,
   grouping: TrackedTxFunctionCallGrouping,
 ): string {
-  const functionFragment = config.signature.replace('function ', '')
-  const iface = getInterface(config.signature)
-  let value: unknown = iface.decodeFunctionData(functionFragment, input)
+  let value: unknown = decodeFunctionCallInput(config.signature, input)
 
   for (const index of grouping.path) {
     assert(Number.isInteger(index) && index >= 0, 'Invalid parameter path')
@@ -46,15 +41,7 @@ export function getLivenessGroupingKey(
   assert(!Array.isArray(value), 'Grouping parameter must be a scalar')
 
   const key = String(value)
+  // Keep in sync with the groupingKey columns.
   assert(key.length <= 255, 'Liveness grouping key exceeds 255 characters')
   return key
-}
-
-function getInterface(signature: `function ${string}`): utils.Interface {
-  const cached = interfaces.get(signature)
-  if (cached !== undefined) return cached
-
-  const iface = new utils.Interface([signature])
-  interfaces.set(signature, iface)
-  return iface
 }

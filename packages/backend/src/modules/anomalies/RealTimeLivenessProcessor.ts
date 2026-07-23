@@ -152,7 +152,6 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
       )
 
       const results = matchingCalls
-        .filter((config) => config.groupBy === undefined)
         .map((config) => ({
           timestamp: block.timestamp,
           blockNumber: block.number,

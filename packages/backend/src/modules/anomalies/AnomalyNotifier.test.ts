@@ -933,7 +933,7 @@ function mockTrackedTxsConfig(projects: TrackedTxProject[]): TrackedTxsConfig {
 function mockTrackedTxProject(
   projectId: string,
   configurations: {
-    type: 'liveness' | 'l2costs'
+    type: 'liveness'
     subtype: string
     params: {
       formula: string
