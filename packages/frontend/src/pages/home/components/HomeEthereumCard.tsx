@@ -47,7 +47,7 @@ export function HomeEthereumCard({ charts }: Props) {
   )
 
   const pastDayUops = charts.activity.pastDayUops
-  const rollupShare = charts.da.trackedShare
+  const trackedShare = charts.da.trackedShare
   const uopsChange = charts.activity.change
   const dataPostedChange = charts.da.change
 
@@ -71,9 +71,9 @@ export function HomeEthereumCard({ charts }: Props) {
             />
           }
           statFooter={
-            rollupShare !== undefined ? (
+            trackedShare !== undefined ? (
               <span className="font-medium text-label-value-12 text-secondary tabular-nums">
-                {formatPercent(rollupShare)} by rollups
+                {formatPercent(trackedShare)} by layer 2s
               </span>
             ) : null
           }
