@@ -1,7 +1,8 @@
-import type { InMemoryCache } from '@l2beat/shared-pure'
+import { type InMemoryCache, ProjectId } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getChangelogEntries } from '~/server/features/changelog/getChangelogEntries'
+import { getDaProjectEconomicSecurity } from '~/server/features/data-availability/project/utils/getDaProjectEconomicSecurity'
 import { getHomeEthereumCharts } from '~/server/features/home/getHomeEthereumCharts'
 import { getHomeScalingCharts } from '~/server/features/home/getHomeScalingCharts'
 import { getHomeTopChainsTvsData } from '~/server/features/home/getHomeTopChainsTvsData'
@@ -109,6 +110,7 @@ async function getCachedData(manifest: Manifest) {
     ongoingAnomalies,
     scalingCharts,
     ethereumCharts,
+    ethereumEconomicSecurity,
   ] = await Promise.all([
     getScalingSummaryData(),
     getRecentProjectsForHome(manifest),
@@ -118,6 +120,7 @@ async function getCachedData(manifest: Manifest) {
     getOngoingAnomaliesOverview(),
     getHomeScalingCharts(chartRange),
     getHomeEthereumCharts(chartRange),
+    getEthereumEconomicSecurity(),
     defaultSelectedFlowChains.length > 0
       ? helpers.queryClient.prefetchQuery(
           helpers.trpc.interop.dashboard.queryOptions({
@@ -170,6 +173,7 @@ async function getCachedData(manifest: Manifest) {
     topChainsTvsData,
     scalingCharts,
     ethereumCharts,
+    ethereumEconomicSecurity,
     recentProjects,
     interopChains: sortedChains,
     interopProtocols: protocols,
@@ -181,6 +185,22 @@ async function getCachedData(manifest: Manifest) {
     ongoingAnomalies,
     whatsNewItems: getHomeWhatsNewItems(),
   }
+}
+
+/** Same number the Ethereum DA project page shows: validator threshold stake
+ * valued at the current ETH price. */
+async function getEthereumEconomicSecurity(): Promise<number | undefined> {
+  const ethereum = await ps.getProject({
+    id: ProjectId.ETHEREUM,
+    select: ['daLayer'],
+  })
+  if (!ethereum) {
+    return undefined
+  }
+  return getDaProjectEconomicSecurity(
+    ethereum.id,
+    ethereum.daLayer.economicSecurity,
+  )
 }
 
 // Unlike the closeable nav widget, the home card ignores expiresAt — it always

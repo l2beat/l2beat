@@ -1,10 +1,10 @@
 import type { ReactNode } from 'react'
 
-/** Grid of chart sections inside the Scaling / Ethereum cards: side by side
- * from tablet up through the xl row layout, stacked and sharing the card's
- * height in the 2xl column layout. */
+/** Grid of chart sections inside the Scaling / Ethereum cards: stacked in a
+ * single column at every size, sharing the card's height in the 2xl column
+ * layout. */
 export const HOME_CHART_SECTION_GRID_CLASS =
-  'grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-6 xl:min-h-0 xl:flex-1 2xl:auto-rows-fr 2xl:grid-cols-1 2xl:gap-5'
+  'grid grid-cols-1 gap-5 xl:min-h-0 xl:flex-1 2xl:auto-rows-fr'
 
 /**
  * Stat-tile-with-trend anatomy: muted label on the left, value with its change

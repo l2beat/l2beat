@@ -34,6 +34,7 @@ interface Props extends AppLayoutProps {
   topChainsTvsData: TvsTableData
   scalingCharts: HomeScalingCharts
   ethereumCharts: HomeEthereumCharts
+  ethereumEconomicSecurity: number | undefined
   recentProjects: HomeRecentProject[]
   interopChains: InteropChainWithIcon[]
   interopProtocols: InteropFlowsProtocol[]
@@ -51,6 +52,7 @@ export function HomePage({
   topChainsTvsData,
   scalingCharts,
   ethereumCharts,
+  ethereumEconomicSecurity,
   recentProjects,
   interopChains,
   interopProtocols,
@@ -80,8 +82,9 @@ export function HomePage({
                 switches to real cards on the grey page background. */}
           <div className="flex flex-col md:gap-6 [&_.primary-card]:max-md:rounded-none [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b">
             {/* xl: stacked rows — the three sidebar cards side by side on
-                  top, then Scaling, Ethereum and Interop as full-width rows;
-                  2xl switches to three columns (sidebar / charts / Interop). */}
+                  top, then Scaling + Ethereum side by side, then Interop as
+                  a full-width row; 2xl switches to three columns
+                  (sidebar / charts / Interop). */}
             <div className="grid grid-cols-1 items-stretch md:gap-4 xl:gap-6 2xl:grid-cols-[minmax(260px,340px)_minmax(340px,1fr)_minmax(400px,1.35fr)]">
               <div className="flex h-full min-w-0 flex-col md:gap-4 xl:grid xl:grid-cols-3 xl:gap-6 2xl:flex">
                 <HomeStatsStrip counts={projectCounts} />
@@ -94,15 +97,18 @@ export function HomePage({
                   className="min-h-0 xl:flex-1"
                 />
               </div>
-              <div className="flex h-full min-h-0 min-w-0 flex-col md:gap-4 xl:gap-6">
-                <div className="flex min-h-0 flex-col xl:flex-1">
+              <div className="flex h-full min-h-0 min-w-0 flex-col md:grid md:grid-cols-2 md:gap-4 xl:gap-6 2xl:flex 2xl:flex-col">
+                <div className="flex min-h-0 min-w-0 flex-col xl:flex-1">
                   <HomeScalingCard
                     charts={scalingCharts}
                     scalingCategoryCounts={scalingCategoryCounts}
                   />
                 </div>
-                <div className="flex min-h-0 flex-col xl:flex-1">
-                  <HomeEthereumCard charts={ethereumCharts} />
+                <div className="flex min-h-0 min-w-0 flex-col xl:flex-1">
+                  <HomeEthereumCard
+                    charts={ethereumCharts}
+                    economicSecurity={ethereumEconomicSecurity}
+                  />
                 </div>
               </div>
               <div className="flex h-full min-h-0 min-w-0 flex-col">

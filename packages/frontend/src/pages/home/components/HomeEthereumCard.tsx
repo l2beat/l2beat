@@ -5,6 +5,7 @@ import type { HomeEthereumCharts } from '~/server/features/home/getHomeEthereumC
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { formatBytes } from '~/utils/number-format/formatBytes'
+import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { HomeChart } from './charts/HomeChart'
 import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'
@@ -16,9 +17,10 @@ import { HomeStatValue } from './HomeStatValue'
 
 interface Props {
   charts: HomeEthereumCharts
+  economicSecurity: number | undefined
 }
 
-export function HomeEthereumCard({ charts }: Props) {
+export function HomeEthereumCard({ charts, economicSecurity }: Props) {
   const activityChartData = useMemo(
     () =>
       charts.activity.chart.map(([timestamp, uopsCount]) => ({
@@ -53,10 +55,13 @@ export function HomeEthereumCard({ charts }: Props) {
 
   return (
     <HomeCard className="flex h-full flex-col pb-4 xl:py-4">
-      <HomeCardHeader
-        title="Ethereum"
-        href="/data-availability/projects/ethereum/ethereum"
-      />
+      <div className="flex flex-col gap-2.5">
+        <HomeCardHeader
+          title="Ethereum"
+          href="/data-availability/projects/ethereum/ethereum"
+        />
+        <EconomicSecurityLine value={economicSecurity} />
+      </div>
       <HorizontalSeparator className="my-3" />
       <div className={HOME_CHART_SECTION_GRID_CLASS}>
         <HomeChartSection
@@ -115,5 +120,20 @@ export function HomeEthereumCard({ charts }: Props) {
         </HomeChartSection>
       </div>
     </HomeCard>
+  )
+}
+
+/** Counts-line counterpart of the Layer 2s card, so the two cards' separators
+ * and charts stay level when shown side by side. */
+function EconomicSecurityLine({ value }: { value: number | undefined }) {
+  if (value === undefined) {
+    return null
+  }
+  return (
+    <div className="flex items-center gap-1.5 font-medium text-label-value-12">
+      <span className="size-2 rounded-full bg-chart-ethereum" />
+      <span className="tabular-nums">{formatCurrency(value, 'usd')}</span>
+      <span className="text-secondary">Economic security</span>
+    </div>
   )
 }
