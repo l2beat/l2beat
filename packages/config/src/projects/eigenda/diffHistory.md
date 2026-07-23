@@ -8,7 +8,7 @@ Generated with discovered.json: 0x3f3f1b16362662f4963fffbc652b2bc0ad2374a6
 
 ## Description
 
-EigenDAOperationsMultisig: new signer added; threshold 3/4 → 3/5. New EigenDACertVerifier deployed (`0xD2e6…53FE`) and registered on the CertVerifierRouter with activation block 25,575,801.
+EigenDAOperationsMultisig: new signer added; threshold 3/4 → 3/5. New EigenDACertVerifier deployed and registered on the CertVerifierRouter with activation block 25,575,801 (2026-07-21). Rewrote the security-parameters check to be division-free with explicit underflow/threshold-ordering guards; preserves the intended security threshold ([diff](https://disco.l2beat.com/diff/eth:0x46766C6426eF4D3092f73F72660A8b7B510E6846/eth:0xD2e690d08Db56Fb648B1340457281EDE7b6F53FE)).
 
 ## Watched changes
 
