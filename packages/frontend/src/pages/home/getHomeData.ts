@@ -57,7 +57,7 @@ export async function getHomeData(
           'Bird-eye view of the Ethereum scaling ecosystem: total value secured, activity, interoperability, recent additions and what L2BEAT is currently tracking.',
         url: req.originalUrl,
         openGraph: {
-          image: '/meta-images/scaling/summary/opengraph-image.png',
+          image: '/meta-images/home/opengraph-image.png',
         },
       }),
     },
