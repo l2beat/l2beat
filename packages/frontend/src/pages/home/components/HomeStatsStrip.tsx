@@ -112,12 +112,12 @@ function StatTile({ tile }: { tile: Tile }) {
         <span className="flex flex-wrap items-baseline gap-x-1 font-bold text-label-value-16 leading-tight xl:text-label-value-14">
           <TileMetricValue metric={tile.metric} />
           {tile.secondaryMetric && (
-            <>
+            <span className="hidden items-baseline gap-x-1 sm:inline-flex">
               <span className="font-medium text-label-value-12 text-secondary">
                 ·
               </span>
               <TileMetricValue metric={tile.secondaryMetric} />
-            </>
+            </span>
           )}
         </span>
       </div>
