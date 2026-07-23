@@ -1,3 +1,52 @@
+Generated with discovered.json: 0x3f3f1b16362662f4963fffbc652b2bc0ad2374a6
+
+# Diff at Thu, 23 Jul 2026 12:58:55 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@efd03446560a8d585747f124c71622cbfa33fca4 block: 1775212321
+- current timestamp: 1784811471
+
+## Description
+
+EigenDAOperationsMultisig: new signer added; threshold 3/4 → 3/5. New EigenDACertVerifier deployed (`0xD2e6…53FE`) and registered on the CertVerifierRouter with activation block 25,575,801.
+
+## Watched changes
+
+```diff
+    contract EigenDAOperationsMultisig (eth:0x002721B4790d97dC140a049936aA710152Ba92D5) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xB646A0871af2b2c6e115b24D7E36d406780b6ca8"
+      values.multisigThreshold:
+-        "3 of 4 (75%)"
++        "3 of 5 (60%)"
+    }
+```
+
+```diff
+    contract EigenDACertVerifierRouter (eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12) [eigenda/EigenDACertVerifierRouter] {
+    +++ description: A router contract for DA Certificate verifiers. Verifier routing depends on the certificate reference block number.
+      values.certVerifierABNs.2:
++        25575801
++++ description: The DA verifier contracts indexed by activation block number.
+      values.DAVerifiers.2:
++        {"activationBlockNumber":25575801,"certVerifier":"eth:0xD2e690d08Db56Fb648B1340457281EDE7b6F53FE"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EigenDACertVerifier (eth:0xD2e690d08Db56Fb648B1340457281EDE7b6F53FE) [N/A]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...:0xD2e690d08Db56Fb648B1340457281EDE7b6F53FE.sol | 2750 ++++++++++++++++++++
+ 1 file changed, 2750 insertions(+)
+```
+
 Generated with discovered.json: 0x31a0eae7cb0e697cc6a8dec5f51a5631f90c329a
 
 # Diff at Tue, 09 Jun 2026 12:43:33 GMT:
