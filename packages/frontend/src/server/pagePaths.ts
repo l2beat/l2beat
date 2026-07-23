@@ -1,11 +1,12 @@
 import { getCollection } from '~/content/getCollection'
+import { env } from '~/env'
 import { shouldHaveNoBridgePage } from './features/data-availability/utils/shouldHaveNoBridgePage'
 import { ps } from './projects'
 
 type PagePath = `/${string}`
 
 export const STATIC_PAGE_PATHS = [
-  '/',
+  ...(env.CLIENT_SIDE_HOME_PAGE ? (['/'] as const) : []),
   '/scaling/summary',
   '/scaling/activity',
   '/scaling/risk',

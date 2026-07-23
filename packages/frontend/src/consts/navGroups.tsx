@@ -1,6 +1,7 @@
 import compact from 'lodash/compact'
 import type { NavGroup } from '~/components/nav/types'
 import { PARTNERS_ORDER } from '~/consts/partnersOrder'
+import { env } from '~/env'
 import { BridgesIcon } from '~/icons/pages/Bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/DataAvailability'
 import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
@@ -11,7 +12,7 @@ import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
 import { createOrderedSort } from '~/utils/sort'
 
 export const navGroups: NavGroup[] = compact<NavGroup>([
-  {
+  env.CLIENT_SIDE_HOME_PAGE && {
     type: 'single',
     title: 'Home',
     match: 'home',
