@@ -110,14 +110,19 @@ function StatTile({ tile }: { tile: Tile }) {
           {tile.label}
         </span>
         <span className="flex flex-wrap items-baseline gap-x-1 font-bold text-label-value-16 leading-tight xl:text-label-value-14">
-          <TileMetricValue metric={tile.metric} />
+          <TileMetricValue
+            metric={tile.metric}
+            // Hide the primary metric below sm when a secondary one exists,
+            // so only the secondary (e.g. interop protocols) shows.
+            className={tile.secondaryMetric ? 'hidden sm:inline' : undefined}
+          />
           {tile.secondaryMetric && (
-            <span className="hidden items-baseline gap-x-1 sm:inline-flex">
-              <span className="font-medium text-label-value-12 text-secondary">
+            <>
+              <span className="hidden font-medium text-label-value-12 text-secondary sm:inline">
                 ·
               </span>
               <TileMetricValue metric={tile.secondaryMetric} />
-            </span>
+            </>
           )}
         </span>
       </div>
@@ -126,9 +131,15 @@ function StatTile({ tile }: { tile: Tile }) {
   )
 }
 
-function TileMetricValue({ metric }: { metric: TileMetric }) {
+function TileMetricValue({
+  metric,
+  className,
+}: {
+  metric: TileMetric
+  className?: string
+}) {
   return (
-    <span className="whitespace-nowrap">
+    <span className={cn('whitespace-nowrap', className)}>
       {formatInteger(metric.count)}{' '}
       <span className="font-medium text-label-value-12 text-secondary">
         {metric.unit}
