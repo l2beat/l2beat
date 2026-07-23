@@ -23,10 +23,7 @@ interface Props extends AppLayoutProps {
 
 export function ChangelogPage({ entries, ...props }: Props) {
   const [lastReadChangelogEntryId, setLastReadChangelogEntryId] =
-    useLocalStorage<string | undefined>(
-      'last-read-changelog-entry-id',
-      undefined,
-    )
+    useLocalStorage('last-read-changelog-entry-id', undefined)
   const [lastReadChangelogEntryIdOnLoad, setLastReadChangelogEntryIdOnLoad] =
     useState<string | undefined>(undefined)
   const hasCapturedLastReadChangelogEntryIdOnLoad = useRef(false)

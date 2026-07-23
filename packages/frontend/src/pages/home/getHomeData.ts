@@ -192,7 +192,9 @@ function getHomeWhatsNewItems(): HomeWhatsNewItem[] {
   }
   return [
     {
-      id: entry.id,
+      // Same id as the closeable nav widget, so clicking the home card can
+      // dismiss the widget via the shared `whats-new-${id}` storage key.
+      id: `changelog-${entry.id}`,
       title: entry.title,
       description: entry.summary,
       href: entry.whatsNew.href ?? `/changelog#${entry.id}`,

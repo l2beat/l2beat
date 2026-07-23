@@ -1,3 +1,4 @@
+import { useLocalStorage } from '~/hooks/useLocalStorage'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { cn } from '~/utils/cn'
 import { HomeCard } from './HomeCard'
@@ -44,9 +45,11 @@ export function HomeWhatsNewCard({
 }
 
 function WhatsNewItemCard({ item }: { item: HomeWhatsNewItem }) {
+  const [, setWidgetClosed] = useLocalStorage(`whats-new-${item.id}`, false)
   return (
     <a
       href={item.href}
+      onClick={() => setWidgetClosed(true)}
       className="group relative block flex-1 overflow-hidden md:flex md:flex-row md:rounded-lg md:border-2 md:border-divider xl:block xl:min-h-40 xl:rounded-none xl:border-0"
     >
       {/* Below md and from xl up the item is a poster: the image is the card

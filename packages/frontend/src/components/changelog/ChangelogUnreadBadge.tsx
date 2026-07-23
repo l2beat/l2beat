@@ -5,7 +5,7 @@ const IS_SERVER = typeof window === 'undefined'
 
 export function ChangelogUnreadBadge() {
   const recentChangelogEntriesIds = useChangelogEntriesContext()
-  const [lastReadChangelogEntryId] = useLocalStorage<string | undefined>(
+  const [lastReadChangelogEntryId] = useLocalStorage(
     'last-read-changelog-entry-id',
     undefined,
   )
