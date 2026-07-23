@@ -1,4 +1,5 @@
 import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
@@ -61,6 +62,8 @@ export const lighterprover: BaseProject = {
       {
         hash: '0x1f2e7ba1248f309e318f7b58be7c8c0cb459a5e98de8808ca9b2be7b021a8abb',
         name: 'Lighter verifier',
+        sourceLink:
+          'https://github.com/elliottech/lighter-prover/tree/23d1596b832db24f1007e20220ba1556d23b0c68/circuit/src',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
@@ -70,9 +73,12 @@ export const lighterprover: BaseProject = {
             ),
           },
         ],
-        verificationStatus: 'notVerified',
-        verificationSteps:
-          'The sources for the verifier circuits are not published and thus the verifier cannot be independently regenerated.',
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'lighterprover',
+          'verificationSteps-0x1f2e7ba1',
+        ),
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },
@@ -96,6 +102,8 @@ export const lighterprover: BaseProject = {
         // DesertVerifier
         hash: '0xc8ffb171b6ebf0bba84df27eaa1021550c5242b146739c704221b456203630a9',
         name: 'Lighter Desert verifier',
+        sourceLink:
+          'https://github.com/elliottech/lighter-prover/tree/23d1596b832db24f1007e20220ba1556d23b0c68/desertexit/circuits',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
@@ -105,9 +113,12 @@ export const lighterprover: BaseProject = {
             ),
           },
         ],
-        verificationStatus: 'notVerified',
-        verificationSteps:
-          'This newly deployed verifier has not yet been independently regenerated from the published circuits.',
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'lighterprover',
+          'verificationSteps-0xc8ffb171',
+        ),
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },
