@@ -1,3 +1,67 @@
+Generated with discovered.json: 0x1beb2c970cc77fdac5d38a42d9d71e74be9337c6
+
+# Diff at Thu, 23 Jul 2026 13:53:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@efd03446560a8d585747f124c71622cbfa33fca4 block: 1784623318
+- current timestamp: 1784814637
+
+## Description
+
+One Polygon Labs Engineering/Security Multisig signer was rotated and another removed, changing it from 2-of-8 to 2-of-7.
+
+## Watched changes
+
+```diff
+    contract Polygon Labs Engineering/Security Multisig (eth:0x9d851f8b8751c5FbC09b9E74E6e68E9950949052) [GnosisSafe] {
+    +++ description: None
+      values.$members.1:
+-        "eth:0xe0e8e6bBDef7bbcf8dF1F5Ac0ab9906BFe991d8B"
++        "eth:0xFB2a738AE435610354b132c4a4ee647558f663eb"
+      values.$members.6:
+-        "eth:0xED7cC82235A7757702475c8f77c7830c095FB5a2"
+      values.multisigThreshold:
+-        "2 of 8 (25%)"
++        "2 of 7 (29%)"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784623318 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0xED7cC82235A7757702475c8f77c7830c095FB5a2) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-polygon-cdk"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    reference  (eth:0xf02BE0dA37dB50BEFA5a525158aa94b50F81D4B2) {
+    +++ description: None
+      type:
+-        "EOA"
++        "Reference"
+      proxyType:
+-        "EOA"
+      targetType:
++        "EOA"
+      targetProject:
++        "shared-polygon-cdk"
+    }
+```
+
 Generated with discovered.json: 0x3764918832c27dab005c4d053470bd707a605edd
 
 # Diff at Tue, 21 Jul 2026 08:43:22 GMT:
@@ -7905,4 +7969,3 @@ initial katana predeposit disco.
     contract GnosisSafe (0xFEB4acf3df3cDEA7399794D0869ef76A6EfAff52)
     +++ description: None
 ```
-

@@ -1,6 +1,6 @@
 {
   "name": "across",
-  "timestamp": 1783509971,
+  "timestamp": 1784814834,
   "configHash": "0xcc32b038d0aa3c3f9eedde8606e69d34bb49a53ed9e89772ae9a086587a6f7f0",
   "entries": [
     {
@@ -31,28 +31,28 @@
       "values": {
         "$immutable": true,
         "ANCILLARY_BYTES_LIMIT": 8192,
-        "cumulativeStake": "19260805171709253948506556",
+        "cumulativeStake": "19445236063827231112858521",
         "currentActiveRequests": true,
         "delayFmt": "1d",
         "emissionRate": "130000000000000000",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
         "gat": "5000000000000000000000000",
-        "getCurrentRoundId": 10321,
+        "getCurrentRoundId": 10328,
         "getNumberOfPriceRequests": {
-          "numberPendingPriceRequests": 45,
-          "numberResolvedPriceRequests": 3790
+          "numberPendingPriceRequests": 29,
+          "numberResolvedPriceRequests": 3928
         },
-        "getVotePhase": 0,
-        "lastRoundIdProcessed": 10321,
-        "lastUpdateTime": 1783509959,
+        "getVotePhase": 1,
+        "lastRoundIdProcessed": 10328,
+        "lastUpdateTime": 1784806127,
         "maxRequestsPerRound": 1000,
         "maxRolls": 4,
         "migratedAddress": "eth:0x0000000000000000000000000000000000000000",
-        "nextPendingIndexToProcess": 45,
+        "nextPendingIndexToProcess": 29,
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "previousVotingContract": "eth:0x8B1631ab830d11531aE83725fDa4D86012eCCd77",
-        "rewardPerToken": "825438601649932896",
-        "rewardPerTokenStored": "825438520656434126",
+        "rewardPerToken": "834158024111266863",
+        "rewardPerTokenStored": "834099940990224120",
         "slashingLibrary": "eth:0x9a406ba5a99983250Fd663947b3c968D387ce5cd",
         "spat": "650000000000000000",
         "UINT64_MAX": "18446744073709551615",
@@ -719,7 +719,7 @@
         "bond": "5000000000000000000000",
         "bondFmt": "5,000",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1783509971,
+        "getCurrentTime": 1784814815,
         "governor": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "eth:0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -977,11 +977,11 @@
         "EMPTY_RELAYER": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 21600,
-        "getCurrentTime": 1783509971,
+        "getCurrentTime": 1784814815,
         "INFINITE_FILL_DEADLINE": 4294967295,
         "MAX_EXCLUSIVITY_PERIOD_SECONDS": 31536000,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 4067933,
+        "numberOfDeposits": 4195660,
         "OFT_DST_EID": 0,
         "OFT_FEE_CAP": 0,
         "owner": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda",
@@ -1226,7 +1226,7 @@
         "$immutable": true,
         "emergencyProposer": "eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1783509971,
+        "getCurrentTime": 1784814815,
         "getMember": [
           "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "eth:0x50efaC9619225d7fB4703C5872da978849B6E7cC",
@@ -1277,7 +1277,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 993,
+        "nonce": 1003,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1562,7 +1562,7 @@
         "delayFmt": "10d",
         "emergencyProposals": [],
         "executor": "eth:0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1783509971,
+        "getCurrentTime": 1784814815,
         "governor": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -1852,7 +1852,7 @@
           "eth:0x8692B776d1Ff0664177c90465038056Dc64f8991"
         ],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 446,
+        "nonce": 454,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2143,7 +2143,7 @@
             },
             {
               "l1Token": "eth:0x42bBFa2e77757C645eeaAd1655E0911a7553Efbc",
-              "destinationToken": "eth:0x42bBFa2e77757C645eeaAd1655E0911a7553Efbc"
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
             },
             {
               "l1Token": "eth:0x3472A5A71965499acd81997a54BBA8D852C6E53d",
@@ -2205,7 +2205,7 @@
             },
             {
               "l1Token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
-              "destinationToken": "eth:0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1"
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
             },
             {
               "l1Token": "eth:0xba100000625a3754423978a60c9317c58a424e3D",
@@ -2265,11 +2265,11 @@
             },
             {
               "l1Token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
-              "destinationToken": "eth:0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063"
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
             },
             {
               "l1Token": "eth:0x3472A5A71965499acd81997a54BBA8D852C6E53d",
-              "destinationToken": "eth:0x1FcbE5937B0cc2adf69772D228fA4205aCF4D9b2"
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
             },
             {
               "l1Token": "eth:0xba100000625a3754423978a60c9317c58a424e3D",
@@ -2315,35 +2315,35 @@
           "Boba": [
             {
               "l1Token": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "destinationToken": "eth:0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000"
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
             },
             {
               "l1Token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-              "destinationToken": "eth:0x66a2A913e447d6b4BF33EFbec43aAeF87890FBbc"
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
             },
             {
               "l1Token": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
-              "destinationToken": "eth:0xdc0486f8bf31DF57a952bcd3c1d3e166e3d9eC8b"
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
             },
             {
               "l1Token": "eth:0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828",
-              "destinationToken": "eth:0x780f33Ad21314d9A1Ffb6867Fe53d48a76Ec0D16"
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
             },
             {
               "l1Token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
-              "destinationToken": "eth:0xf74195Bb8a5cf652411867c5C2C5b8C2a402be35"
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
             },
             {
               "l1Token": "eth:0x42bBFa2e77757C645eeaAd1655E0911a7553Efbc",
-              "destinationToken": "eth:0xa18bF3994C0Cc6E3b63ac420308E5383f53120D7"
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
             },
             {
               "l1Token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
-              "destinationToken": "eth:0x5DE1677344D3Cb0D7D465c10b72A8f60699C062d"
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
             },
             {
               "l1Token": "eth:0x44108f0223A3C3028F5Fe7AEC7f9bb2E66beF82F",
-              "destinationToken": "eth:0x96821b258955587069F680729cD77369C0892B40"
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
             }
           ],
           "ZKsync Era": [
@@ -2365,7 +2365,7 @@
             },
             {
               "l1Token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
-              "destinationToken": "eth:0x4B9eb6c0b6ea15176BBF62841C6B2A8a398cb656"
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
             }
           ],
           "World Chain": [
@@ -2409,11 +2409,11 @@
           "Lisk": [
             {
               "l1Token": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "destinationToken": "eth:0x4200000000000000000000000000000000000006"
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
             },
             {
               "l1Token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
-              "destinationToken": "eth:0x05D032ac25d322df992303dCa074EE7392C117b9"
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
             },
             {
               "l1Token": "eth:0x6033F7f88332B8db6ad452B7C6D5bB643990aE3f",
@@ -2421,11 +2421,11 @@
             },
             {
               "l1Token": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
-              "destinationToken": "eth:0x03C7054BCB39f7b2e5B2c7AcB37583e32D70Cfa3"
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
             },
             {
               "l1Token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-              "destinationToken": "eth:0xF242275d3a6527d877f2c927a82D9b057609cc71"
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
             }
           ],
           "Soneium": [
@@ -2455,7 +2455,7 @@
             },
             {
               "l1Token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
-              "destinationToken": "eth:0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb"
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
             },
             {
               "l1Token": "eth:0xba100000625a3754423978a60c9317c58a424e3D",
@@ -2523,7 +2523,7 @@
             },
             {
               "l1Token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
-              "destinationToken": "eth:0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1"
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
             },
             {
               "l1Token": "eth:0x3472A5A71965499acd81997a54BBA8D852C6E53d",
@@ -2563,7 +2563,7 @@
           "Linea": [
             {
               "l1Token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
-              "destinationToken": "eth:0x4AF15ec2A0BD43Db75dd04E62FAA3B8EF36b00d5"
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
             },
             {
               "l1Token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
@@ -2621,11 +2621,11 @@
           "Zora": [
             {
               "l1Token": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "destinationToken": "eth:0x4200000000000000000000000000000000000006"
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
             },
             {
               "l1Token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-              "destinationToken": "eth:0xCccCCccc7021b32EBb4e8C08314bD62F7c653EC4"
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
             }
           ],
           "Solana": [
@@ -2638,13 +2638,13 @@
         "protocolFeeCaptureAddress": "eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": {
-          "poolRebalanceRoot": "0x132c6314eb12ba1466fb0f54eb6944caa22443b5acb042ec72c3cc3727a7c906",
-          "relayerRefundRoot": "0x1cde33e2ed736e6087670bf995210453d34284365b408f34f9ca77124bdf6fe5",
+          "poolRebalanceRoot": "0xb406a06f2f3bf81fef54ede15a74cc083f7cef6e2d74e73ec565601126de89a5",
+          "relayerRefundRoot": "0x18df05978ce71e7c63e477a12e9980c548a1cf7aeb59ca30102a1fb3abb8626d",
           "slowRelayRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "claimedBitMap": 0,
           "proposer": "eth:0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
-          "unclaimedPoolRebalanceLeafCount": 21,
-          "challengePeriodEndTimestamp": 1783511303
+          "unclaimedPoolRebalanceLeafCount": 18,
+          "challengePeriodEndTimestamp": 1784815451
         },
         "spokePool": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
         "timerAddress": "eth:0x0000000000000000000000000000000000000000",
@@ -3708,14 +3708,14 @@
         "EMPTY_RELAYER": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 21600,
-        "getCurrentTime": 1783509971,
+        "getCurrentTime": 1784814833,
         "INFINITE_FILL_DEADLINE": 4294967295,
         "l1Gas": 5000000,
         "l2Eth": "oeth:0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
         "MAX_EXCLUSIVITY_PERIOD_SECONDS": 31536000,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
         "MESSENGER": "oeth:0x4200000000000000000000000000000000000007",
-        "numberOfDeposits": 3709141,
+        "numberOfDeposits": 3716978,
         "OFT_DST_EID": 0,
         "OFT_FEE_CAP": 0,
         "pausedDeposits": false,
@@ -5253,6 +5253,6 @@
     "uma/Store": "0x0a0876560462dda4883db23e6343c1d28c8234886cda82b177de3cb263b1e86b",
     "uma/VotingV2": "0x8f7872c0ad9d4612ce7305fb6318475b85db06d8406d8e835e88e5afc8367f64"
   },
-  "usedBlockNumbers": { "ethereum": 25487540, "optimism": 153955597 },
+  "usedBlockNumbers": { "ethereum": 25595853, "optimism": 154608028 },
   "permissionsConfigHash": "0x17f662818b260110224a8211c27585c53d7576f94765fe19b279d63ea495f75c"
 }
