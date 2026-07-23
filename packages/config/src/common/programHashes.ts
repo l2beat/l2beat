@@ -1794,7 +1794,7 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     },
   '2530337539466159944237001094809327283009177793361359619481044346150483328860':
     {
-      ...STARK_EX('ApeX and EdgeX'),
+      ...STARK_EX('EdgeX'),
       verificationStatus: 'notVerified',
     },
   '273279642033703284306509103355536170486431195329675679055627933497997642494':

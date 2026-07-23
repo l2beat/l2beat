@@ -1,3 +1,214 @@
+Generated with discovered.json: 0x0d60d84cd445a1c376fe0affd69a590c381d2ca0
+
+# Diff at Wed, 22 Jul 2026 15:15:36 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@0fd88e8637e7f933fd36577548a83f1ac175841b block: 1767634866
+- current timestamp: 1784715866
+
+## Description
+
+Completely new discovery of ApeX project (ApeX Omni instead of older ApeX Pro).
+
+Now it is a zkLink X cross-chain deployment with settlement on Arbitrum One (as L3) and deposits on several other chains. 
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (eth:0x374632e7D48B7872d904524FdC5Dd4516F42cDFF) [GnosisSafe] {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db"
++        "eth:0x522b8Df4c9965934654CFebbf20882005c33cE18"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1767634866 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract CommitteeUSDC (eth:0x23Cab3CF1aa7B929Df5e9f3712aCA3A6Fb9494E4) [starkex/Committee]
+    +++ description: Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 3.
+```
+
+```diff
+-   Status: DELETED
+    contract FinalizableGpsFactAdapterUSDT (eth:0x40e1e5Ece49A878062fA9F87eA6dc81281098B22) [starkex/FinalizableGpsFactAdapter]
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`770346231394331402493200980986217737662224545740427952627288191358999988146`), which can be changed until the adapter is finalized.
+```
+
+```diff
+-   Status: DELETED
+    reference SHARPVerifierCallProxy (eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CommitteeUSDT (eth:0x7249082BfAFE9BCA502d38a686Ef3df37A0cf800) [starkex/Committee]
+    +++ description: Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 3.
+```
+
+```diff
+-   Status: DELETED
+    contract StarkPerpetualUSDC (eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb) [starkex/StarkPerpetual]
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+```
+
+```diff
+-   Status: DELETED
+    contract PerpetualEscapeVerifier (eth:0xaadFdB9CAc145c65f2284fBe24600d07fb37F7BD) [edgex/PerpetualEscapeVerifier]
+    +++ description: Special verifier for the escape() function.
+```
+
+```diff
+-   Status: DELETED
+    contract ApexAdminMultisig (eth:0xC532d2976209A56DdF4a99B844130f7c0daCa7B6) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StarkPerpetualUSDT (eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b) [starkex/StarkPerpetual]
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+```
+
+```diff
+-   Status: DELETED
+    contract FinalizableGpsFactAdapterUSDC (eth:0xE741e26573782ae3C0ea9EC710FA99Fcd27fB953) [starkex/FinalizableGpsFactAdapter]
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`2530337539466159944237001094809327283009177793361359619481044346150483328860`), which can be changed until the adapter is finalized.
+```
+
+```diff
++   Status: CREATED
+    contract Verifier (arb1:0x235118AfB54B6d6c7b48F1B5434c25CD6Eb6B68F) [N/A]
+    +++ description: PLONK verifier used to validate aggregated L2 block proofs and zero-knowledge exit proofs.
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeGatekeeper (arb1:0x2e8AD1434663b209EE59eF1a6612114239F4a190) [N/A]
+    +++ description: Controls upgrades to managed contracts. The master can schedule, cancel, and complete upgrades after the main contract's notice period.
+```
+
+```diff
++   Status: CREATED
+    contract ZkLink Main (arb1:0x3169844a120C0f517B4eB4A750c08d8518C8466a) [apex/ZkLink]
+    +++ description: The main rollup contract. It processes L2 blocks submitted by validators, handles deposits and withdrawals, and synchronizes block data with other zkLink chains.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (arb1:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LayerZeroBridge (arb1:0xfC5c2b3E615cF12e86E6dA8eF6C76fAbae5F2B7D) [apex/LZSyncHashBridge]
+    +++ description: A LayerZero bridge that relays synchronization hashes and block confirmations between zkLink chains.
+```
+
+```diff
++   Status: CREATED
+    contract EmptyVerifier (base:0x4c5629AEA0B419d26C780dD78d5671e2Ce27c563) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeGatekeeper (base:0x72343e8e448Fa539A1F118f870A1De1132f2fcaD) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (base:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LayerZeroBridge (base:0xeD5D1e1320720CAe8Bb40275550A7D307A082AC3) [apex/LZSyncHashBridge]
+    +++ description: A LayerZero bridge that relays synchronization hashes and block confirmations between zkLink chains.
+```
+
+```diff
++   Status: CREATED
+    contract ZkLink Base (base:0xeE7981C4642dE8d19AeD11dA3bac59277DfD59D7) [apex/ZkLink]
+    +++ description: The main rollup contract. It processes L2 blocks submitted by validators, handles deposits and withdrawals, and synchronizes block data with other zkLink chains.
+```
+
+```diff
++   Status: CREATED
+    contract ZkLink Ethereum (eth:0x35D173cdfE4d484BC5985fDa55FABad5892c7B82) [apex/ZkLink]
+    +++ description: The main rollup contract. It processes L2 blocks submitted by validators, handles deposits and withdrawals, and synchronizes block data with other zkLink chains.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0x374632e7D48B7872d904524FdC5Dd4516F42cDFF) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LayerZeroBridge (eth:0x3D70dc86dC8099D8a4c86C18839C7e84a13a441E) [apex/LZSyncHashBridge]
+    +++ description: A LayerZero bridge that relays synchronization hashes and block confirmations between zkLink chains.
+```
+
+```diff
++   Status: CREATED
+    contract EmptyVerifier (eth:0xe38f8bc093a1f76f0A444bA6B75F46d6dC686dba) [N/A]
+    +++ description: Placeholder verifier for chains without pairing support. It rejects all block and exit proofs.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0xF9f8794A2D9885C36D06aA25fc25a8cAda276B94) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeGatekeeper (eth:0xFBD68679271fDa6ca9bf6F20993Cd39E20072753) [N/A]
+    +++ description: Controls upgrades to managed contracts. The master can schedule, cancel, and complete upgrades after the main contract's notice period.
+```
+
+```diff
++   Status: CREATED
+    contract LayerZeroBridge (mantle:0x04C6a52f3bf9F73618cD70F234AdB95a73325D1e) [apex/LZSyncHashBridge]
+    +++ description: A LayerZero bridge that relays synchronization hashes and block confirmations between zkLink chains.
+```
+
+```diff
++   Status: CREATED
+    contract EmptyVerifier (mantle:0x0c0F729c74c9AC41F9C702dAd11011F40D4190B0) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeGatekeeper (mantle:0x2B9BA259F24965a81Fa0c4E477e3791673744059) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkLink Mantle (mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c) [apex/ZkLink]
+    +++ description: The main rollup contract. It processes L2 blocks submitted by validators, handles deposits and withdrawals, and synchronizes block data with other zkLink chains.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (mantle:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED) [GnosisSafe]
+    +++ description: None
+```
+
 Generated with discovered.json: 0x99f4310550e32b4231cc95d543d356dad0f82ece
 
 # Diff at Fri, 12 Jun 2026 12:07:43 GMT:

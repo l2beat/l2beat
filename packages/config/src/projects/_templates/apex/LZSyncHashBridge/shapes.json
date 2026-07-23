@@ -1,0 +1,26 @@
+{
+  "LZSyncHashBridge_Arb1": {
+    "hash": "0xf50b0277e3b7bfdb5540824fb20e147e3ca8fad9cc9c7557aaf3a26a3fcf9292",
+    "address": "arb1:0xfC5c2b3E615cF12e86E6dA8eF6C76fAbae5F2B7D",
+    "chain": "arbitrum",
+    "blockNumber": 486499024
+  },
+  "LZSyncHashBridge_Ethereum": {
+    "hash": "0xd60f50351716d5714b021ecd66edf6d942a9dada25a1f4bbc0e0ef1159ddb93a",
+    "address": "eth:0x3D70dc86dC8099D8a4c86C18839C7e84a13a441E",
+    "chain": "ethereum",
+    "blockNumber": 25587657
+  },
+  "LayerZeroBridge_Base": {
+    "hash": "0xb22a01a05a19c0fe5299fd65fe53ea410c5ead01e971b0add159bbe0f51146c8",
+    "address": "base:0xeD5D1e1320720CAe8Bb40275550A7D307A082AC3",
+    "chain": "base",
+    "blockNumber": 48963259
+  },
+  "LZSyncHashBridge_Mantle": {
+    "hash": "0x6b130c9503f9b52ae1b02e6167f3b93ebb26654da97d6303a05a2722e1cc1399",
+    "address": "mantle:0x04C6a52f3bf9F73618cD70F234AdB95a73325D1e",
+    "chain": "mantle",
+    "blockNumber": 98292777
+  }
+}
