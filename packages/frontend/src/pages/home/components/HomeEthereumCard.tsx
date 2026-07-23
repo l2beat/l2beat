@@ -5,7 +5,7 @@ import type { HomeEthereumCharts } from '~/server/features/home/getHomeEthereumC
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { formatBytes } from '~/utils/number-format/formatBytes'
-import { HomeSparkline } from './charts/HomeSparkline'
+import { HomeChart } from './charts/HomeChart'
 import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'
 import {
@@ -19,7 +19,7 @@ interface Props {
 }
 
 export function HomeEthereumCard({ charts }: Props) {
-  const activitySparkline = useMemo(
+  const activityChartData = useMemo(
     () =>
       charts.activity.chart.map(([timestamp, uopsCount]) => ({
         timestamp,
@@ -28,7 +28,7 @@ export function HomeEthereumCard({ charts }: Props) {
     [charts.activity.chart],
   )
 
-  const dataPostedSparkline = useMemo(
+  const dataPostedChartData = useMemo(
     () =>
       charts.da.chart.map(([timestamp, value]) => ({
         timestamp,
@@ -78,10 +78,10 @@ export function HomeEthereumCard({ charts }: Props) {
             ) : null
           }
         >
-          <HomeSparkline
-            data={dataPostedSparkline}
+          <HomeChart
+            data={dataPostedChartData}
             isLoading={false}
-            color="sky"
+            color="ethereum"
             tooltipLabel="Data posted"
             formatValue={(value) => formatBytes(value)}
             syncedUntil={charts.da.syncedUntil}
@@ -102,10 +102,10 @@ export function HomeEthereumCard({ charts }: Props) {
             />
           }
         >
-          <HomeSparkline
-            data={activitySparkline}
+          <HomeChart
+            data={activityChartData}
             isLoading={false}
-            color="purple"
+            color="ethereum"
             tooltipLabel="UOPS"
             formatValue={(value) => formatActivityCount(value)}
             yAxisUnit=" UOPS"

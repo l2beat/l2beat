@@ -13,16 +13,15 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
-import { CyanFillGradientDef } from '~/components/core/chart/defs/CyanGradientDef'
+import { EmeraldFillGradientDef } from '~/components/core/chart/defs/EmeraldGradientDef'
+import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGradientDef'
 import { PinkFillGradientDef } from '~/components/core/chart/defs/PinkGradientDef'
-import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatRange, formatTimestamp } from '~/utils/dates'
 
-export type HomeSparklineColor = 'pink' | 'cyan' | 'sky' | 'purple'
+export type HomeChartColor = 'pink' | 'emerald' | 'ethereum'
 
-export interface HomeSparklineDataPoint {
+export interface HomeChartDataPoint {
   timestamp: number
   value: number | null
   /** If set, TVS tooltip shows rollups / Validiums & Optimiums for this day */
@@ -33,9 +32,9 @@ export interface HomeSparklineDataPoint {
 }
 
 interface Props {
-  data: HomeSparklineDataPoint[] | undefined
+  data: HomeChartDataPoint[] | undefined
   isLoading: boolean
-  color: HomeSparklineColor
+  color: HomeChartColor
   tooltipLabel: string
   formatValue: (value: number) => string
   /** Appended to y-axis tick labels (e.g. ' UOPS') when the formatted value
@@ -47,11 +46,10 @@ interface Props {
   tooltipDayRange?: boolean
 }
 
-const STROKE_COLOR: Record<HomeSparklineColor, string> = {
+const STROKE_COLOR: Record<HomeChartColor, string> = {
   pink: 'var(--chart-pink)',
-  cyan: 'var(--chart-cyan)',
-  sky: 'var(--chart-sky)',
-  purple: 'var(--chart-stacked-purple)',
+  emerald: 'var(--chart-emerald)',
+  ethereum: 'var(--chart-ethereum)',
 }
 
 /**
@@ -82,12 +80,12 @@ const X_AXIS_PROPS = {
 } as const
 
 /**
- * Sleek single-series line/area sparkline used inside the home widgets.
+ * Sleek single-series line/area chart used inside the home widgets.
  * Wraps Recharts' AreaChart through `ChartContainer` (size="small") so we get
  * the shared loader / no-data state, but omits the legend slot. Fills the
  * parent's height, with a minimal mirrored y-axis and a compact timeline.
  */
-export function HomeSparkline({
+export function HomeChart({
   data,
   isLoading,
   color,
@@ -127,17 +125,8 @@ export function HomeSparkline({
           >
             <defs>
               {color === 'pink' && <PinkFillGradientDef id={fillId} />}
-              {color === 'cyan' && <CyanFillGradientDef id={fillId} />}
-              {color === 'sky' && <SkyFillGradientDef id={fillId} />}
-              {color === 'purple' && (
-                <CustomFillGradientDef
-                  id={fillId}
-                  colors={{
-                    primary: 'var(--chart-stacked-purple)',
-                    secondary: 'var(--chart-stacked-purple)',
-                  }}
-                />
-              )}
+              {color === 'emerald' && <EmeraldFillGradientDef id={fillId} />}
+              {color === 'ethereum' && <EthereumFillGradientDef id={fillId} />}
             </defs>
             <Area
               dataKey="value"
@@ -165,7 +154,7 @@ export function HomeSparkline({
             />
             <ChartTooltip
               content={
-                <SparklineTooltip
+                <HomeChartTooltip
                   formatValue={formatValue}
                   dayRange={tooltipDayRange}
                 />
@@ -179,7 +168,7 @@ export function HomeSparkline({
   )
 }
 
-function SparklineTooltip({
+function HomeChartTooltip({
   payload,
   label,
   formatValue,
@@ -194,7 +183,7 @@ function SparklineTooltip({
   if (!entry || entry.name === undefined) return null
   const config = meta[entry.name]
   if (!config) return null
-  const row = entry.payload as HomeSparklineDataPoint | undefined
+  const row = entry.payload as HomeChartDataPoint | undefined
   const breakdown = row?.tvsBreakdown
   return (
     <ChartTooltipWrapper>

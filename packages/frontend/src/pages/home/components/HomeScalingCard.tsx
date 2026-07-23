@@ -6,8 +6,8 @@ import { cn } from '~/utils/cn'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
-import type { HomeSparklineDataPoint } from './charts/HomeSparkline'
-import { HomeSparkline } from './charts/HomeSparkline'
+import type { HomeChartDataPoint } from './charts/HomeChart'
+import { HomeChart } from './charts/HomeChart'
 import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'
 import {
@@ -27,7 +27,7 @@ interface Props {
 }
 
 export function HomeScalingCard({ charts, scalingCategoryCounts }: Props) {
-  const tvsChartData = useMemo<HomeSparklineDataPoint[]>(
+  const tvsChartData = useMemo<HomeChartDataPoint[]>(
     () =>
       charts.tvs.chart.map(([timestamp, rollups, validiumsAndOptimiums]) => {
         const hasAny = rollups !== null || validiumsAndOptimiums !== null
@@ -49,7 +49,7 @@ export function HomeScalingCard({ charts, scalingCategoryCounts }: Props) {
     [tvsChartData],
   )
 
-  const activitySparkline = useMemo(
+  const activityChartData = useMemo(
     () =>
       charts.activity.chart.map(([timestamp, rollupsUops, vAndOUops]) => {
         const hasAny = rollupsUops !== null || vAndOUops !== null
@@ -64,8 +64,8 @@ export function HomeScalingCard({ charts, scalingCategoryCounts }: Props) {
 
   const pastDayActivityUops = useMemo(
     () =>
-      activitySparkline.findLast((d) => d.value !== null)?.value ?? undefined,
-    [activitySparkline],
+      activityChartData.findLast((d) => d.value !== null)?.value ?? undefined,
+    [activityChartData],
   )
 
   return (
@@ -90,7 +90,7 @@ export function HomeScalingCard({ charts, scalingCategoryCounts }: Props) {
             />
           }
         >
-          <HomeSparkline
+          <HomeChart
             data={tvsChartData}
             isLoading={false}
             color="pink"
@@ -113,10 +113,10 @@ export function HomeScalingCard({ charts, scalingCategoryCounts }: Props) {
             />
           }
         >
-          <HomeSparkline
-            data={activitySparkline}
+          <HomeChart
+            data={activityChartData}
             isLoading={false}
-            color="cyan"
+            color="emerald"
             tooltipLabel="UOPS"
             formatValue={(value) => formatActivityCount(value)}
             yAxisUnit=" UOPS"
