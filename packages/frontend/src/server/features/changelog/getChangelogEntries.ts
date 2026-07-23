@@ -11,6 +11,7 @@ export interface ChangelogEntry {
   whatsNew:
     | {
         image: string
+        verticalImage?: string
         alt: string
         href?: string
         disabledOnMatches?: string[]

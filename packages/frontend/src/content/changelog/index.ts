@@ -4,6 +4,7 @@ import { defineCollection } from '../defineCollections'
 
 const whatsNew = v.object({
   image: v.string(),
+  verticalImage: v.string().optional(),
   alt: v.string(),
   href: v.string().optional(),
   disabledOnMatches: v.array(v.string()).optional(),

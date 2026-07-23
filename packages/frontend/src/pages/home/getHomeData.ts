@@ -197,6 +197,7 @@ function getHomeWhatsNewItems(): HomeWhatsNewItem[] {
       description: entry.summary,
       href: entry.whatsNew.href ?? `/changelog#${entry.id}`,
       imageSrc: entry.whatsNew.image,
+      verticalImageSrc: entry.whatsNew.verticalImage,
       imageAlt: entry.whatsNew.alt,
     },
   ]
