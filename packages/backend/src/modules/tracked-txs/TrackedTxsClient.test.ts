@@ -98,6 +98,53 @@ describe(TrackedTxsClient.name, () => {
 
       expect(duneQueryService.query).not.toHaveBeenCalled()
     })
+
+    it('requests full input for grouped liveness calls', async () => {
+      const duneQueryService = getMockDuneQueryService([[]])
+      const trackedTxsClient = new TrackedTxsClient(
+        duneQueryService,
+        Logger.SILENT,
+      )
+      const address = EthereumAddress.random()
+      const config: Configuration<
+        TrackedTxConfigEntry & { params: TrackedTxFunctionCallConfig }
+      > = {
+        id: 'grouped',
+        minHeight: FROM,
+        maxHeight: null,
+        properties: {
+          id: 'grouped',
+          projectId: ProjectId('project'),
+          type: 'liveness',
+          subtype: 'stateUpdates',
+          sinceTimestamp: FROM,
+          groupBy: { type: 'functionCallParameter', path: [0, 0] },
+          params: {
+            formula: 'functionCall',
+            address,
+            selector: '0x12345678',
+            signature: 'function submit((uint256,uint256))',
+          },
+        },
+      }
+
+      await trackedTxsClient.getFunctionCalls([config], [], [], FROM, TO)
+
+      expect(duneQueryService.query).toHaveBeenCalledWith(
+        getFunctionCallQuery(
+          [
+            {
+              ...config.properties.params,
+              getFullInput: true,
+            },
+          ],
+          FROM,
+          TO,
+        ),
+        'large',
+        expect.anything(),
+      )
+    })
   })
 })
 

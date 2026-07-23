@@ -41,6 +41,7 @@ describe(LivenessUpdater.name, () => {
           blockNumber: transactions[0].blockNumber,
           timestamp: transactions[0].blockTimestamp,
           configurationId: transactions[0].id,
+          groupingKey: 'epoch-1',
         },
         {
           txHash: transactions[1].hash,
@@ -86,6 +87,7 @@ describe(LivenessUpdater.name, () => {
           blockNumber: transactions[0].blockNumber,
           timestamp: transactions[0].blockTimestamp,
           configurationId: transactions[0].id,
+          groupingKey: 'epoch-1',
         },
         {
           txHash: transactions[1].hash,
@@ -120,6 +122,7 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       type: 'liveness',
       subtype: 'batchSubmissions',
       id: getMockRuntimeConfigurations()[0].id,
+      groupingKey: 'epoch-1',
       gasUsed: 100,
       gasPrice: 10n,
       dataLength: 5,

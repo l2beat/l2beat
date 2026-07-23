@@ -116,6 +116,7 @@ model Liveness {
   blockNumber     Int
   txHash          String   @db.VarChar(255)
   configurationId String   @db.VarChar(12)
+  groupingKey     String?  @db.VarChar(255)
 
   @@id([configurationId, txHash])
   @@index([configurationId, timestamp])
@@ -126,6 +127,7 @@ model RealTimeLiveness {
   txHash          String   @db.VarChar(255)
   timestamp       DateTime @db.Timestamp(6)
   blockNumber     Int
+  groupingKey     String?  @db.VarChar(255)
 
   @@id([configurationId, txHash])
   @@index([configurationId, timestamp])

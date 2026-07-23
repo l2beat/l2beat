@@ -3,17 +3,24 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { Liveness } from '../kysely/generated/types'
+import {
+  isEarlierThanStored,
+  keepEarliestGroupedRecords,
+} from './utils/livenessGrouping'
 
 export interface LivenessRecord {
   timestamp: UnixTime
   blockNumber: number
   txHash: string
   configurationId: TrackedTxId
+  groupingKey?: string
 }
 
 export function toRecord(row: Selectable<Liveness>): LivenessRecord {
+  const { groupingKey, ...rest } = row
   return {
-    ...row,
+    ...rest,
+    ...(groupingKey !== null ? { groupingKey } : {}),
     timestamp: UnixTime.fromDate(row.timestamp),
   }
 }
@@ -21,6 +28,7 @@ export function toRecord(row: Selectable<Liveness>): LivenessRecord {
 export function toRow(record: LivenessRecord): Insertable<Liveness> {
   return {
     ...record,
+    groupingKey: record.groupingKey ?? null,
     timestamp: UnixTime.toDate(record.timestamp),
   }
 }
@@ -95,11 +103,40 @@ export class LivenessRepository extends BaseRepository {
   async insertMany(records: LivenessRecord[]): Promise<number> {
     if (records.length === 0) return 0
 
-    const rows = records.map(toRow)
-    await this.batch(rows, 10_000, async (batch) => {
+    const transactionRows = records
+      .filter((record) => record.groupingKey === undefined)
+      .map(toRow)
+    const groupedRows = keepEarliestGroupedRecords(
+      records.filter(
+        (
+          record,
+        ): record is LivenessRecord & {
+          groupingKey: string
+        } => record.groupingKey !== undefined,
+      ),
+    ).map(toRow)
+
+    await this.batch(transactionRows, 10_000, async (batch) => {
       await this.db.insertInto('Liveness').values(batch).execute()
     })
-    return rows.length
+    await this.batch(groupedRows, 10_000, async (batch) => {
+      await this.db
+        .insertInto('Liveness')
+        .values(batch)
+        .onConflict((cb) =>
+          cb
+            .columns(['configurationId', 'groupingKey'])
+            .where('groupingKey', 'is not', null)
+            .doUpdateSet((eb) => ({
+              timestamp: eb.ref('excluded.timestamp'),
+              blockNumber: eb.ref('excluded.blockNumber'),
+              txHash: eb.ref('excluded.txHash'),
+            }))
+            .where(isEarlierThanStored('Liveness')),
+        )
+        .execute()
+    })
+    return records.length
   }
 
   async deleteFromById(

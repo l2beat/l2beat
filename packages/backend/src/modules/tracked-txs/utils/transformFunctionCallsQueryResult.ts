@@ -11,6 +11,10 @@ import type {
   TrackedTxFunctionCallResult,
 } from '../types/model'
 import { calculateCalldataGasUsed } from './calculateCalldataGasUsed'
+import {
+  getLivenessGroupingKey,
+  hasLivenessGrouping,
+} from './getLivenessGroupingKey'
 import { isFistParameterMatching } from './isFirstParameterMatching'
 import { isProgramHashProven } from './isProgramHashProven'
 
@@ -79,6 +83,15 @@ export function transformFunctionCallsQueryResult(
           blockTimestamp: r.block_time,
           toAddress: r.to,
           input: r.input,
+          ...(hasLivenessGrouping(config.properties)
+            ? {
+                groupingKey: getLivenessGroupingKey(
+                  r.input,
+                  config.properties.params,
+                  config.properties.groupBy,
+                ),
+              }
+            : {}),
           gasUsed: r.gas_used,
           gasPrice: r.gas_price,
           dataLength: r.data_length,

@@ -26,11 +26,10 @@ export const DuneFunctionCallResult = v.object({
   input: v.string(),
 })
 
-export type TrackedTxFunctionCallResult = {
+type TrackedTxFunctionCallResultBase = {
   formula: 'functionCall'
   id: TrackedTxId
   projectId: ProjectId
-  type: TrackedTxsConfigType
   subtype: TrackedTxsConfigSubtype
   hash: string
   blockNumber: number
@@ -43,6 +42,9 @@ export type TrackedTxFunctionCallResult = {
   dataLength: number
   blobVersionedHashes: string[] | null
 }
+
+export type TrackedTxFunctionCallResult = TrackedTxFunctionCallResultBase &
+  ({ type: 'l2costs' } | { type: 'liveness'; groupingKey?: string })
 
 export type DuneTransferResult = v.infer<typeof DuneTransferResult>
 export const DuneTransferResult = v.object({

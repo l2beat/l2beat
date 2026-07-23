@@ -36,6 +36,9 @@ export class LivenessUpdater implements TxUpdaterInterface<'liveness'> {
       blockNumber: t.blockNumber,
       configurationId: t.id,
       txHash: t.hash,
+      ...('groupingKey' in t && t.groupingKey !== undefined
+        ? { groupingKey: t.groupingKey }
+        : {}),
     }))
   }
 }

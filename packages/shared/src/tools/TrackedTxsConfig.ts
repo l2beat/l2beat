@@ -14,16 +14,25 @@ export type TrackedTxConfigEntry =
   | TrackedTxCostsConfig
   | TrackedTxLivenessConfig
 
-interface TrackedTxConfigBase {
+export type TrackedTxConfigEntryWithoutId =
+  | Omit<TrackedTxCostsConfig, 'id'>
+  | Omit<TrackedTxFunctionCallLivenessConfig, 'id'>
+  | Omit<TrackedTxOtherLivenessConfig, 'id'>
+
+type TrackedTxParams =
+  | TrackedTxFunctionCallConfig
+  | TrackedTxTransferConfig
+  | TrackedTxSharpSubmissionConfig
+  | TrackedTxSharedBridgeConfig
+
+interface TrackedTxConfigBase<
+  TParams extends TrackedTxParams = TrackedTxParams,
+> {
   id: TrackedTxId
   projectId: ProjectId
   sinceTimestamp: number
   untilTimestamp?: number
-  params:
-    | TrackedTxFunctionCallConfig
-    | TrackedTxTransferConfig
-    | TrackedTxSharpSubmissionConfig
-    | TrackedTxSharedBridgeConfig
+  params: TParams
   subtype: TrackedTxsConfigSubtype
 }
 
@@ -32,8 +41,29 @@ export interface TrackedTxCostsConfig extends TrackedTxConfigBase {
   type: 'l2costs'
 }
 
-export interface TrackedTxLivenessConfig extends TrackedTxConfigBase {
+export type TrackedTxLivenessConfig =
+  | TrackedTxFunctionCallLivenessConfig
+  | TrackedTxOtherLivenessConfig
+
+export interface TrackedTxFunctionCallLivenessConfig
+  extends TrackedTxConfigBase<TrackedTxFunctionCallConfig> {
   type: 'liveness'
+  groupBy?: TrackedTxFunctionCallGrouping
+}
+
+export interface TrackedTxOtherLivenessConfig
+  extends TrackedTxConfigBase<
+    | TrackedTxTransferConfig
+    | TrackedTxSharpSubmissionConfig
+    | TrackedTxSharedBridgeConfig
+  > {
+  type: 'liveness'
+}
+
+export interface TrackedTxFunctionCallGrouping {
+  type: 'functionCallParameter'
+  /** Index path through the decoded function arguments, including tuple indices. */
+  path: readonly [number, ...number[]]
 }
 
 export interface TrackedTxFunctionCallConfig {

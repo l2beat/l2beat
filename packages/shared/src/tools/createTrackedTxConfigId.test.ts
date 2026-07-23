@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { createTrackedTxId } from './createTrackedTxConfigId'
-import type { TrackedTxConfigEntry } from './TrackedTxsConfig'
+import type { TrackedTxConfigEntryWithoutId } from './TrackedTxsConfig'
 
 describe(createTrackedTxId.name, () => {
   const fields = [
@@ -54,11 +54,39 @@ describe(createTrackedTxId.name, () => {
       }
     })
   }
+
+  it('includes liveness grouping in the hash', () => {
+    const base = {
+      projectId: ProjectId('project-id'),
+      sinceTimestamp: 0,
+      subtype: 'stateUpdates' as const,
+      type: 'liveness' as const,
+      params: {
+        formula: 'functionCall' as const,
+        address: EthereumAddress.ZERO,
+        selector: 'selector',
+        signature: 'function foo((uint256,uint256))' as const,
+      },
+    }
+
+    const perTransaction = createTrackedTxId(base)
+    const grouped = createTrackedTxId({
+      ...base,
+      groupBy: { type: 'functionCallParameter', path: [0, 0] },
+    })
+    const groupedByAnotherParameter = createTrackedTxId({
+      ...base,
+      groupBy: { type: 'functionCallParameter', path: [0, 1] },
+    })
+
+    expect(grouped).not.toEqual(perTransaction)
+    expect(groupedByAnotherParameter).not.toEqual(grouped)
+  })
 })
 
 function mock(
-  v?: Partial<TrackedTxConfigEntry>,
-): Omit<TrackedTxConfigEntry, 'id'> {
+  v?: Partial<Record<keyof TrackedTxConfigEntryWithoutId, unknown>>,
+): TrackedTxConfigEntryWithoutId {
   return {
     projectId: ProjectId('project-id'),
     sinceTimestamp: 0,
@@ -72,5 +100,5 @@ function mock(
       signature: 'function foo()',
     },
     ...v,
-  }
+  } as TrackedTxConfigEntryWithoutId
 }

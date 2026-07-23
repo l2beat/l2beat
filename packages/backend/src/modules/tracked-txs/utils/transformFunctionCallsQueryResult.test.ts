@@ -13,6 +13,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { utils } from 'ethers'
 import { readFileSync } from 'fs'
 import {
   agglayerSharedBridgeChainId,
@@ -57,6 +58,95 @@ const paradexProgramHash =
   '3258367057337572248818716706664617507069572185152472699066582725377748079373'
 
 describe(transformFunctionCallsQueryResult.name, () => {
+  it('groups liveness without affecting costs from the same call', () => {
+    const signature = 'function submit((uint256 start,uint256 end))' as const
+    const iface = new utils.Interface([signature])
+    const selector = iface.getSighash('submit')
+    const address = EthereumAddress.random()
+    const firstInput = iface.encodeFunctionData('submit', [[123, 456]])
+    const secondInput = iface.encodeFunctionData('submit', [[123, 789]])
+    const livenessId = createTrackedTxId.random()
+    const costsId = createTrackedTxId.random()
+    const common = {
+      projectId: ProjectId('project'),
+      subtype: 'stateUpdates' as const,
+      sinceTimestamp: SINCE_TIMESTAMP,
+      params: {
+        formula: 'functionCall' as const,
+        address,
+        selector,
+        signature,
+      },
+    }
+    const configurations: Configuration<
+      TrackedTxConfigEntry & { params: TrackedTxFunctionCallConfig }
+    >[] = [
+      {
+        id: livenessId,
+        minHeight: 0,
+        maxHeight: null,
+        properties: {
+          ...common,
+          id: livenessId,
+          type: 'liveness',
+          groupBy: { type: 'functionCallParameter', path: [0, 0] },
+        },
+      },
+      {
+        id: costsId,
+        minHeight: 0,
+        maxHeight: null,
+        properties: {
+          ...common,
+          id: costsId,
+          type: 'l2costs',
+        },
+      },
+    ]
+
+    const result = transformFunctionCallsQueryResult(
+      configurations,
+      [],
+      [],
+      [
+        {
+          hash: txHashes[0],
+          block_number: block,
+          block_time: timestamp,
+          input: firstInput,
+          to: address,
+          gas_price: 10n,
+          gas_used: 100,
+          data_length: 100,
+          non_zero_bytes: 100,
+          blob_versioned_hashes: null,
+        },
+        {
+          hash: txHashes[1],
+          block_number: block + 1,
+          block_time: timestamp + 1,
+          input: secondInput,
+          to: address,
+          gas_price: 10n,
+          gas_used: 100,
+          data_length: 100,
+          non_zero_bytes: 100,
+          blob_versioned_hashes: null,
+        },
+      ],
+    )
+
+    const liveness = result.filter((entry) => entry.type === 'liveness')
+    const costs = result.filter((entry) => entry.type === 'l2costs')
+
+    expect(
+      liveness.map((entry) =>
+        'groupingKey' in entry ? entry.groupingKey : undefined,
+      ),
+    ).toEqual(['123', '123'])
+    expect(costs.map((entry) => 'groupingKey' in entry)).toEqual([false, false])
+  })
+
   it('should transform results', () => {
     const functionCalls = [
       mockFunctionCall({
