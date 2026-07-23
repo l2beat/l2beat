@@ -2,13 +2,17 @@ import { expect } from 'earl'
 import {
   getClusterLabelStyle,
   getExistingRelationGraphSelection,
+  getNodeVisualScale,
   getRelationGraphFocus,
+  getRelationLabelStyle,
   mostCommonDeployedSymbol,
   type RelationGraph,
   type RelationGraphFocus,
   type RelationGraphNode,
   type RelationGraphRelation,
   relationId,
+  relationIsDirectional,
+  searchRelationGraphNodes,
   tokenId,
 } from './relationGraphModel'
 
@@ -42,13 +46,10 @@ describe(mostCommonDeployedSymbol.name, () => {
 
 describe(getClusterLabelStyle.name, () => {
   it('stops increasing labels below the minimum scale', () => {
-    expect(getClusterLabelStyle(0.25)).toEqual({
-      fontSize: 72,
-      strokeWidth: 16,
-      opacity: 0.8,
-    })
-    expect(getClusterLabelStyle(0.1).fontSize).toEqual(72)
-    expect(getClusterLabelStyle(0.1).strokeWidth).toEqual(16)
+    expect(getClusterLabelStyle(1).fontSize).toEqual(18)
+    expect(getClusterLabelStyle(1).strokeWidth).toEqual(4)
+    expect(getClusterLabelStyle(0.1).fontSize).toEqual(18)
+    expect(getClusterLabelStyle(0.1).strokeWidth).toEqual(4)
   })
 
   it('hides labels at extreme zoom-out', () => {
@@ -59,6 +60,39 @@ describe(getClusterLabelStyle.name, () => {
     expect(() => getClusterLabelStyle(0)).toThrow(
       'Graph scale must be a positive finite number',
     )
+  })
+})
+
+describe(getNodeVisualScale.name, () => {
+  it('caps node growth above 1.2x zoom', () => {
+    expect(getNodeVisualScale(0.5)).toEqual(1)
+    expect(getNodeVisualScale(1.2)).toEqual(1)
+    expect(getNodeVisualScale(2.4)).toEqual(0.5)
+  })
+})
+
+describe(getRelationLabelStyle.name, () => {
+  it('shows constant-size labels above 2.5x zoom', () => {
+    expect(getRelationLabelStyle(2.5).visible).toEqual(false)
+    const style = getRelationLabelStyle(4)
+    expect(style.visible).toEqual(true)
+    expect(style.fontSize * 4).toEqual(10)
+    expect(style.strokeWidth * 4).toEqual(3)
+  })
+})
+
+describe(relationIsDirectional.name, () => {
+  it('only treats Lock & Mint relations as directional', () => {
+    expect(
+      relationIsDirectional(
+        relation('ethereum', '0xaaa', 'base', '0xbbb', 'lock', 'lockAndMint'),
+      ),
+    ).toEqual(true)
+    expect(
+      relationIsDirectional(
+        relation('ethereum', '0xaaa', 'base', '0xbbb', 'burn', 'burnAndMint'),
+      ),
+    ).toEqual(false)
   })
 })
 
@@ -101,6 +135,35 @@ describe(getExistingRelationGraphSelection.name, () => {
         id: 'missing:relation',
       }),
     ).toEqual(undefined)
+  })
+})
+
+describe(searchRelationGraphNodes.name, () => {
+  const nodes = [
+    node('ethereum:0xaaa', 'USDC'),
+    node('base:0xbbb', 'USDC'),
+    node('arbitrum:0xccc', 'USDT'),
+    missingNode('optimism:0xddd'),
+  ]
+
+  it('searches deployed tokens by symbol, chain, and address', () => {
+    expect(
+      searchRelationGraphNodes(nodes, 'usdc').map((node) => node.id),
+    ).toEqual(['base:0xbbb', 'ethereum:0xaaa'])
+    expect(
+      searchRelationGraphNodes(nodes, 'base usdc').map((node) => node.id),
+    ).toEqual(['base:0xbbb'])
+    expect(
+      searchRelationGraphNodes(nodes, '0xCCC').map((node) => node.id),
+    ).toEqual(['arbitrum:0xccc'])
+    expect(
+      searchRelationGraphNodes(nodes, 'arbitrum:0xccc').map((node) => node.id),
+    ).toEqual(['arbitrum:0xccc'])
+  })
+
+  it('ignores missing endpoints and queries shorter than two characters', () => {
+    expect(searchRelationGraphNodes(nodes, '0xddd')).toEqual([])
+    expect(searchRelationGraphNodes(nodes, 'u')).toEqual([])
   })
 })
 
@@ -151,21 +214,29 @@ describe(getRelationGraphFocus.name, () => {
 })
 
 function node(id: string, symbol: string): RelationGraphNode {
+  const [chain, address] = id.split(':')
+  if (chain === undefined || address === undefined) {
+    throw new Error(`Invalid test node id ${id}`)
+  }
   return {
     id,
     symbol,
-    chain: id.split(':')[0] ?? '',
-    address: id,
+    chain,
+    address,
     isDeployed: true,
   }
 }
 
 function missingNode(id: string): RelationGraphNode {
+  const [chain, address] = id.split(':')
+  if (chain === undefined || address === undefined) {
+    throw new Error(`Invalid test node id ${id}`)
+  }
   return {
     id,
     symbol: null,
-    chain: id.split(':')[0] ?? '',
-    address: id,
+    chain,
+    address,
     isDeployed: false,
   }
 }
@@ -186,6 +257,7 @@ function relation(
   tokenToChain: string,
   tokenToAddress: string,
   plugin: string,
+  bridgeType: RelationGraphRelation['bridgeType'] = 'lockAndMint',
 ): RelationGraphRelation {
   return {
     tokenFromChain,
@@ -193,7 +265,7 @@ function relation(
     tokenToChain,
     tokenToAddress,
     plugin,
-    bridgeType: 'lockAndMint',
+    bridgeType,
     isConflict: false,
   }
 }
