@@ -118,7 +118,7 @@ function UpdatesPagination({
   )
 }
 
-function UpdateCard({ update }: { update: DiscoveryUpdate }) {
+export function UpdateCard({ update }: { update: DiscoveryUpdate }) {
   return (
     <details className="group w-full min-w-0 overflow-hidden rounded-lg border border-divider bg-surface-primary">
       <summary

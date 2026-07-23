@@ -1,4 +1,3 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
@@ -8,6 +7,7 @@ import { useTRPC } from '~/trpc/React'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { getInteropTokenUrl } from '../../../utils/getInteropTokenUrl'
+import { getPairFlowStats } from '../utils/flowStats'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
 import { AvgDurationStatValue } from './AvgDurationStatValue'
 import { TopItemsList } from './TopItemsList'
@@ -108,23 +108,15 @@ function Stats({
 }) {
   const { allChains } = useInteropFlows()
 
-  const flowAtoB = data.flows.find(
-    (f) => f.srcChain === chainIdA && f.dstChain === chainIdB,
-  )
-  const flowBtoA = data.flows.find(
-    (f) => f.srcChain === chainIdB && f.dstChain === chainIdA,
-  )
-
-  const totalVolume = (flowAtoB?.volume ?? 0) + (flowBtoA?.volume ?? 0)
-  const totalTransfers =
-    (flowAtoB?.transferCount ?? 0) + (flowBtoA?.transferCount ?? 0)
-  const avgTransferValue = totalTransfers > 0 ? totalVolume / totalTransfers : 0
-
-  const netFlowValue = (flowAtoB?.volume ?? 0) - (flowBtoA?.volume ?? 0)
-  const netFlowChainId = netFlowValue > 0 ? chainIdB : chainIdA
+  const {
+    totalVolume,
+    totalTransfers,
+    avgTransferValue,
+    netFlowValue,
+    netFlowChainId,
+    volumePerSecond,
+  } = getPairFlowStats(data.flows, chainIdA, chainIdB)
   const netFlowChain = allChains.find((c) => c.id === netFlowChainId)
-
-  const volumePerSecond = totalVolume / UnixTime.DAY
 
   return (
     <div className="rounded-lg border border-divider bg-surface-primary px-4 py-3">

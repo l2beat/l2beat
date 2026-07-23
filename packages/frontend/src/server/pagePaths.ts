@@ -5,6 +5,7 @@ import { ps } from './projects'
 type PagePath = `/${string}`
 
 export const STATIC_PAGE_PATHS = [
+  '/',
   '/scaling/summary',
   '/scaling/activity',
   '/scaling/risk',

@@ -3,19 +3,21 @@ import {
   DefaultZIndexes,
   ReferenceArea,
   XAxis,
+  type XAxisProps,
   YAxis,
   type YAxisProps,
 } from 'recharts'
 import { NoDataPatternDef } from './defs/NoDataPatternDef'
 import { getXAxisProps } from './utils/getXAxisProps'
 
-interface ChartCommonComponentsProps<
+export interface ChartCommonComponentsProps<
   T extends {
     timestamp: number
   },
 > {
   data: T[] | undefined
   yAxis?: Omit<YAxisProps, 'tick'>
+  xAxis?: Partial<XAxisProps>
   chartType?: 'bar' | 'line'
   isLoading: boolean | undefined
   syncedUntil: number | undefined
@@ -24,6 +26,7 @@ interface ChartCommonComponentsProps<
 export function ChartCommonComponents<T extends { timestamp: number }>({
   data,
   yAxis,
+  xAxis,
   isLoading,
   chartType = 'line',
   syncedUntil,
@@ -56,7 +59,7 @@ export function ChartCommonComponents<T extends { timestamp: number }>({
         yAxisId={yAxisId}
         {...rest}
       />
-      <XAxis key="x-axis" {...getXAxisProps(data)} />
+      <XAxis key="x-axis" {...getXAxisProps(data)} {...xAxis} />
       {lastSyncedTimestamp && (
         <ReferenceArea
           yAxisId={yAxis?.yAxisId}

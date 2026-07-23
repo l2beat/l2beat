@@ -36,20 +36,20 @@ export type EthereumActivityChartData = {
  * A function that computes values for chart data of the activity over time.
  * @returns [timestamp, ethereumTxCount, ethereumUopsCount][] - all numbers
  */
-export async function getEthereumActivityChart({
-  range,
-}: EthereumActivityChartParams): Promise<EthereumActivityChartData> {
+export async function getEthereumActivityChart(
+  params: EthereumActivityChartParams,
+): Promise<EthereumActivityChartData> {
   if (env.MOCK) {
-    return getMockEthereumActivityChart({ range })
+    return getMockEthereumActivityChart(params)
   }
 
   const db = getDb()
 
-  const adjustedRange = await getFullySyncedActivityRange(range)
+  const adjustedRange = await getFullySyncedActivityRange(params.range)
 
   const [entries, maxCounts, syncInfo, activityTotals] = await Promise.all([
     db.activity.getByProjectsAndTimeRange([ProjectId.ETHEREUM], adjustedRange),
-    db.activity.getMaxCountsForProjects(),
+    db.activity.getMaxCountsForProject(ProjectId.ETHEREUM),
     getActivitySyncInfo(ProjectId.ETHEREUM, adjustedRange[1]),
     db.activity.getActivityTotalsForProjects([ProjectId.ETHEREUM]),
   ])
@@ -114,18 +114,16 @@ export async function getEthereumActivityChart({
 function getEthereumActivityChartStats(
   data: EthereumActivityChartDataPoint[],
   syncedUntil: UnixTime,
-  maxCountsByProject: Record<
-    ProjectId,
-    {
-      uopsCount: number
-      uopsTimestamp: number
-      count: number
-      countTimestamp: number
-    }
-  >,
+  maxCounts:
+    | {
+        uopsCount: number
+        uopsTimestamp: number
+        count: number
+        countTimestamp: number
+      }
+    | undefined,
   totals: ActivityTotals | undefined,
 ): ActivityProjectChartStats | undefined {
-  const maxCounts = maxCountsByProject[ProjectId.ETHEREUM]
   if (!maxCounts) return undefined
 
   const currentData = data.find(([timestamp]) => timestamp === syncedUntil)

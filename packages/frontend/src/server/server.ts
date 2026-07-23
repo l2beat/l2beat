@@ -76,11 +76,11 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
       .replace('<!--app-html-->', rendered.html)
       .replace(
         '<!--ssr-data-->',
-        `window.__SSR_DATA__=${JSON.stringify(data.ssr)}`,
+        `window.__SSR_DATA__=${jsonForInlineScript(data.ssr)}`,
       )
       .replace(
         '<!--env-data-->',
-        `window.__ENV__=${JSON.stringify(getClientEnvData())}`,
+        `window.__ENV__=${jsonForInlineScript(getClientEnvData())}`,
       )
   }
 
@@ -119,6 +119,13 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
         ? `http://localhost:${port}`
         : `Server running on port ${port}`,
     })
+
+    // Fire-and-forget warmup: the first render after boot pays one-time costs
+    // (lazy modules, config db open, connection pool, page caches). Doing it
+    // here means no real visitor hits that request.
+    fetch(`http://localhost:${port}/`)
+      .then(() => logger.info('Warmup request completed'))
+      .catch((error) => logger.warn('Warmup request failed', { error }))
   })
 
   server.on('error', (err: NodeJS.ErrnoException) => {
@@ -165,6 +172,11 @@ async function getTemplate(
   }
 
   return productionTemplate
+}
+
+/** Safe to embed in `<script>`: avoids `</script>` in JSON closing the tag early. */
+function jsonForInlineScript(value: unknown): string {
+  return JSON.stringify(value).replace(/</g, '\\u003c')
 }
 
 function getClientEnvData() {

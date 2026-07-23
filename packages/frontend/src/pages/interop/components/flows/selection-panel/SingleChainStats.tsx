@@ -1,4 +1,3 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
@@ -8,6 +7,7 @@ import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { getInteropTokenUrl } from '../../../utils/getInteropTokenUrl'
+import { getChainFlowDerivedStats } from '../utils/flowStats'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
 import { AvgDurationStatValue } from './AvgDurationStatValue'
 import { getChainFlowStatItems } from './getChainFlowStatItems'
@@ -84,7 +84,7 @@ function Stats({
     return null
   }
 
-  const volumePerSecond = chainData.totalVolume / UnixTime.DAY
+  const { volumePerSecond } = getChainFlowDerivedStats(chainData)
 
   return (
     <div className="rounded-lg border border-divider bg-surface-primary px-4 py-3">

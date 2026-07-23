@@ -16,6 +16,7 @@ import { groupByScalingTabs } from '~/pages/scaling/utils/groupByScalingTabs'
 import { ps } from '~/server/projects'
 import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { getProofSystemWithName } from '~/utils/project/getProofSystemWithName'
+import { optionToRange } from '~/utils/range/range'
 import type { ProjectChanges } from '../../projects-change-report/getProjectsChangeReport'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import type { ActivityLatestUopsData } from '../activity/getActivityLatestTps'
@@ -29,6 +30,16 @@ import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { compareTvs } from '../tvs/utils/compareTvs'
 
 export async function getScalingSummaryEntries() {
+  const { tabs } = await getScalingSummaryData()
+  return tabs
+}
+
+/**
+ * Same as getScalingSummaryEntries but also exposes the 7d TVS breakdown it
+ * computes internally, so callers (e.g. the home page) don't have to run the
+ * expensive breakdown query a second time.
+ */
+export async function getScalingSummaryData() {
   const projects = await ps.getProjects({
     select: ['statuses', 'scalingInfo', 'scalingRisks', 'display'],
     optional: [
@@ -58,7 +69,10 @@ export async function getScalingSummaryEntries() {
       excludeAssociatedTokens: false,
       excludeRwaRestrictedTokens: true,
     }),
-    getActivityLatestUops(projects),
+    // Only the latest and 7-days-ago records are read per project, so a 90d
+    // window is plenty (it only has to cover sync lag) and much cheaper than
+    // fetching a full year of rows.
+    getActivityLatestUops(projects, optionToRange('90d')),
     getApprovedOngoingAnomalies(),
   ])
 
@@ -75,7 +89,7 @@ export async function getScalingSummaryEntries() {
     )
     .sort(compareTvs)
 
-  return groupByScalingTabs(entries)
+  return { tabs: groupByScalingTabs(entries), sevenDayTvsBreakdown: tvs }
 }
 
 export interface ScalingSummaryEntry extends CommonScalingEntry {

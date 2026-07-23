@@ -13,6 +13,7 @@ import { createEcosystemsRouter } from './ecosystems/EcosystemsRouter'
 import { createFaqRouter } from './faq/FaqRouter'
 import { createGlossaryRouter } from './glossary/GlossaryRouter'
 import { createGovernanceRouter } from './governance/GovernanceRouter'
+import { createHomeRouter } from './home/HomeRouter'
 import { createInteropRouter } from './interop/InteropRouter'
 import { createMultisigReportRouter } from './multisig-report/MutlisigReportRouter'
 import { createNativeRollupsRouter } from './native-rollups/NativeRollupsRouter'
@@ -40,16 +41,8 @@ export function createServerPageRouter(
     next()
   })
 
-  router.get('/', (_req, res) => {
-    // Temporary redirect so browsers drop the previously cached 301 before
-    // "/" starts serving the home page. no-cache (not no-store) so the
-    // response is stored and replaces the old 301 entry, but is revalidated
-    // (refetched, since 307 has no validators) on every use.
-    res.set('Cache-Control', 'no-cache')
-    res.redirect(307, '/scaling/summary')
-  })
-
   const routers = [
+    createHomeRouter,
     createScalingRouter,
     createInteropRouter,
     createDataAvailabilityRouter,

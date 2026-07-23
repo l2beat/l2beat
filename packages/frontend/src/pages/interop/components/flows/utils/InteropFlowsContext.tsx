@@ -34,12 +34,14 @@ export const InteropFlowsContext = createContext<
   InteropFlowsContextType | undefined
 >(undefined)
 
+export type InteropFlowsProtocol = ProtocolDisplayable & {
+  id: string
+}
+
 interface InteropFlowsProviderProps {
   children: ReactNode
   chains: InteropChainWithIcon[]
-  protocols: (ProtocolDisplayable & {
-    id: string
-  })[]
+  protocols: InteropFlowsProtocol[]
   defaultSelectedChains: string[]
   pinnedChainId?: string
 }
@@ -48,7 +50,7 @@ export function InteropFlowsProvider({
   children,
   chains,
   protocols,
-  defaultSelectedChains,
+  defaultSelectedChains = [],
   pinnedChainId: providedPinnedChainId,
 }: InteropFlowsProviderProps) {
   const allChainIds = useMemo(() => chains.map((c) => c.id), [chains])

@@ -50,7 +50,7 @@ export function InteropNonMintingPage({
           interopChains={interopChains}
           initialSelection={initialSelection}
         >
-          <SideNavLayout maxWidth="wide">
+          <SideNavLayout variant="wide">
             <Content
               interopChains={interopChains}
               onboardingInteropChains={onboardingInteropChains}

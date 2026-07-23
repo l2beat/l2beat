@@ -24,6 +24,7 @@ import {
   getTransferSizeChartData,
   type TransferSizeDataPoint,
 } from './utils/getTransferSizeChartData'
+import { pickTopProtocolEntries } from './utils/pickTopProtocolEntries'
 
 export type InteropDashboardFlowChain = {
   id: string
@@ -102,7 +103,7 @@ export async function getInteropDashboardData(
     transferCount: flow.transferCount,
   }))
 
-  return {
+  const data: InteropDashboardData = {
     flows,
     topProtocols: getTopProtocols(records, interopProjects, subgroupProjects),
     topToken: getTopToken({
@@ -123,6 +124,14 @@ export async function getInteropDashboardData(
       params,
     ),
   }
+
+  // The entries carry heavy nested token/chain data, so callers that only
+  // need the top of the table (e.g. the home page card) can cap them.
+  if (params.limit !== undefined) {
+    data.entries = pickTopProtocolEntries(data, params.limit)
+  }
+
+  return data
 }
 
 async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
