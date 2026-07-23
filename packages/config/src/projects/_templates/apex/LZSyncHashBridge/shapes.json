@@ -22,5 +22,11 @@
     "address": "mantle:0x04C6a52f3bf9F73618cD70F234AdB95a73325D1e",
     "chain": "mantle",
     "blockNumber": 98292777
+  },
+  "LayerZeroBridge_BNB": {
+    "hash": "0xde341a7da4f09deb4f8c8035945780f47e32a5344614a4a55efd82194b3bbd38",
+    "address": "bnb:0xc271a8e9eB2b10FCDe1709D76de6681249669D2e",
+    "chain": "bsc",
+    "blockNumber": 111458296
   }
 }

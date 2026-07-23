@@ -1,16 +1,16 @@
-Generated with discovered.json: 0x0d60d84cd445a1c376fe0affd69a590c381d2ca0
+Generated with discovered.json: 0x0a76e9be3b52bbebee71b8465e6971edc20fa1db
 
-# Diff at Wed, 22 Jul 2026 15:15:36 GMT:
+# Diff at Thu, 23 Jul 2026 12:39:24 GMT:
 
-- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
-- comparing to: main@0fd88e8637e7f933fd36577548a83f1ac175841b block: 1767634866
+- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
+- comparing to: main@efd03446560a8d585747f124c71622cbfa33fca4 block: 1767634866
 - current timestamp: 1784715866
 
 ## Description
 
 Completely new discovery of ApeX project (ApeX Omni instead of older ApeX Pro).
 
-Now it is a zkLink X cross-chain deployment with settlement on Arbitrum One (as L3) and deposits on several other chains. 
+Now it is a zkLink X cross-chain deployment with settlement on Arbitrum One (as L3) and deposits on several other chains.
 
 ## Watched changes
 
@@ -97,8 +97,8 @@ discovery. Values are for block 1767634866 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract ZkLink Main (arb1:0x3169844a120C0f517B4eB4A750c08d8518C8466a) [apex/ZkLink]
-    +++ description: The main rollup contract. It processes L2 blocks submitted by validators, handles deposits and withdrawals, and synchronizes block data with other zkLink chains.
+    contract ZkLink Main (arb1:0x3169844a120C0f517B4eB4A750c08d8518C8466a) [apex/ZkLink_main]
+    +++ description: The main rollup contract. It processes L3 blocks submitted by validators and settles L3 state, handles deposits and withdrawals, and synchronizes block data with other zkLink chains.
 ```
 
 ```diff
@@ -139,14 +139,44 @@ discovery. Values are for block 1767634866 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract ZkLink Base (base:0xeE7981C4642dE8d19AeD11dA3bac59277DfD59D7) [apex/ZkLink]
-    +++ description: The main rollup contract. It processes L2 blocks submitted by validators, handles deposits and withdrawals, and synchronizes block data with other zkLink chains.
+    contract ZkLink Base (base:0xeE7981C4642dE8d19AeD11dA3bac59277DfD59D7) [apex/ZkLink_LZEscrow]
+    +++ description: A secondary cross-chain ZkLink rollup contract. It only escrows user deposits, and synchronizes deposit data with the main zkLink chain.
 ```
 
 ```diff
 +   Status: CREATED
-    contract ZkLink Ethereum (eth:0x35D173cdfE4d484BC5985fDa55FABad5892c7B82) [apex/ZkLink]
-    +++ description: The main rollup contract. It processes L2 blocks submitted by validators, handles deposits and withdrawals, and synchronizes block data with other zkLink chains.
+    contract EmptyVerifier (bnb:0x1202e0557A23531D09015C802e993d6423685FfB) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeGatekeeper (bnb:0x81DEE5B8BfFa75Cc1ec729533EeD30CfE4F81F8C) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkLink BNB (bnb:0xb8D9F005654b7b127b34dae8F973Ba729ca3A2D9) [apex/ZkLink_LZEscrow]
+    +++ description: A secondary cross-chain ZkLink rollup contract. It only escrows user deposits, and synchronizes deposit data with the main zkLink chain.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (bnb:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LayerZeroBridge (bnb:0xc271a8e9eB2b10FCDe1709D76de6681249669D2e) [apex/LZSyncHashBridge]
+    +++ description: A LayerZero bridge that relays synchronization hashes and block confirmations between zkLink chains.
+```
+
+```diff
++   Status: CREATED
+    contract ZkLink Ethereum (eth:0x35D173cdfE4d484BC5985fDa55FABad5892c7B82) [apex/ZkLink_LZEscrow]
+    +++ description: A secondary cross-chain ZkLink rollup contract. It only escrows user deposits, and synchronizes deposit data with the main zkLink chain.
 ```
 
 ```diff
@@ -199,8 +229,8 @@ discovery. Values are for block 1767634866 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract ZkLink Mantle (mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c) [apex/ZkLink]
-    +++ description: The main rollup contract. It processes L2 blocks submitted by validators, handles deposits and withdrawals, and synchronizes block data with other zkLink chains.
+    contract ZkLink Mantle (mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c) [apex/ZkLink_LZEscrow]
+    +++ description: A secondary cross-chain ZkLink rollup contract. It only escrows user deposits, and synchronizes deposit data with the main zkLink chain.
 ```
 
 ```diff

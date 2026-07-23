@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "The main rollup contract. It processes L2 blocks submitted by validators, handles deposits and withdrawals, and synchronizes block data with other zkLink chains.",
+  "description": "A secondary cross-chain ZkLink rollup contract. It only escrows user deposits, and synchronizes deposit data with the main zkLink chain.",
   "fields": {
     "ALL_CHAINS": {
       "description": "Bitmask of zkLink chain IDs participating in the network."
@@ -12,7 +12,7 @@
       "description": "Default fee account in the zkLink state."
     },
     "syncServices": {
-      "description": "Cross-chain synchronization services, indexed by zkLink chain ID.",
+      "description": "Cross-chain synchronization services relaying deposit info, indexed by zkLink chain ID.",
       "handler": {
         "type": "event",
         "select": ["newSyncService"],

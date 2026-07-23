@@ -1,12 +1,12 @@
 {
-  "ZkLink_Arb1": {
-    "hash": "0xcf3306c0d9416ebe68af3181926165561803001f786494a95183295fdf54fe86",
+  "ZkLink_Mantle": {
+    "hash": "0xb1ce2609627d70aae43da70e3afe85837f4884708a70f8e9e9062549b310432e",
     "address": [
-      "arb1:0x23871561330080828507dED34d23FEF5EdE7053C",
-      "arb1:0x3203E813930bD710043c1d899fE38dD359307352"
+      "mantle:0x067c7126a83560Ed2Fc345d25799F696B7Ea47Ca",
+      "mantle:0xf04Af2e7AbCd011459a01A4A250ece46969c84F2"
     ],
-    "chain": "arbitrum",
-    "blockNumber": 486499024
+    "chain": "mantle",
+    "blockNumber": 98292777
   },
   "ZkLink_Ethereum": {
     "hash": "0xb4138259cf80065144e8d21d34b6ed64c712eb7cb3b14889a51a8bacf0ce219e",
@@ -26,13 +26,13 @@
     "chain": "base",
     "blockNumber": 48963259
   },
-  "ZkLink_Mantle": {
-    "hash": "0xb1ce2609627d70aae43da70e3afe85837f4884708a70f8e9e9062549b310432e",
+  "ZkLink_BNB": {
+    "hash": "0x6376298a0e414f91406f4069cdaea39f0fc6280e7e7f9a07371f8cdba7f6d265",
     "address": [
-      "mantle:0x067c7126a83560Ed2Fc345d25799F696B7Ea47Ca",
-      "mantle:0xf04Af2e7AbCd011459a01A4A250ece46969c84F2"
+      "bnb:0x3EC0ad3000b13188c235E23D549F1A1bBd25B028",
+      "bnb:0x04bF7cf48a68dfC744fc22662B90e2ecaf14D716"
     ],
-    "chain": "mantle",
-    "blockNumber": 98292777
+    "chain": "bsc",
+    "blockNumber": 111458296
   }
 }

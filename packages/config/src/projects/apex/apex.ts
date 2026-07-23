@@ -6,6 +6,7 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
 } from '../../common'
 import { BADGES } from '../../common/badges'
@@ -30,6 +31,13 @@ export const apex: ScalingProject = {
   proofSystem: {
     type: 'Validity',
   },
+  reasonsForBeingOther: [
+    {
+      ...REASON_FOR_BEING_OTHER.EXTERNAL_BRIDGE,
+      explanation:
+        "ApeX's proof system does not authenticate deposits on external chains. Users must additionally trust the 2/2 validator set and LayerZero bridge not to forge non-existent deposits.",
+    },
+  ],
   display: {
     name: 'ApeX',
     slug: 'apex',
@@ -52,36 +60,31 @@ export const apex: ScalingProject = {
       ],
     },
   },
-  stage: getRollupStage(
-    {
-      stage0: {
-        callsItselfRollup: true,
-        stateRootsPostedToL1: true,
-        dataAvailabilityOnL1: true,
-        rollupNodeSourceAvailable: false,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: null,
-      },
-      stage1: {
-        principle: false,
-        usersHave7DaysToExit: false,
-        usersCanExitWithoutCooperation: false,
-        securityCouncilProperlySetUp: false,
-        noRedTrustedSetups: null,
-        programHashesReproducible: null,
-        proverSourcePublished: false,
-        verifierContractsReproducible: false,
-      },
-      stage2: {
-        proofSystemOverriddenOnlyInCaseOfABug: false,
-        fraudProofSystemIsPermissionless: null,
-        delayWith30DExitWindow: false,
-      },
+  stage: getRollupStage({
+    stage0: {
+      callsItselfRollup: true,
+      stateRootsPostedToL1: true,
+      dataAvailabilityOnL1: true,
+      rollupNodeSourceAvailable: false,
+      stateVerificationOnL1: false,
+      fraudProofSystemAtLeast5Outsiders: null,
     },
-    {
-      rollupNodeLink: 'https://github.com/elliottech/lighter-prover/tree/main',
+    stage1: {
+      principle: false,
+      usersHave7DaysToExit: false,
+      usersCanExitWithoutCooperation: false,
+      securityCouncilProperlySetUp: false,
+      noRedTrustedSetups: null,
+      programHashesReproducible: null,
+      proverSourcePublished: false,
+      verifierContractsReproducible: false,
     },
-  ),
+    stage2: {
+      proofSystemOverriddenOnlyInCaseOfABug: false,
+      fraudProofSystemIsPermissionless: null,
+      delayWith30DExitWindow: false,
+    },
+  }),
   chainConfig: {
     name: 'apex',
     chainId: undefined,
@@ -128,6 +131,16 @@ export const apex: ScalingProject = {
         description:
           'Secondary zkLink contract on Mantle. It escrows assets deposited on Mantle and processes withdrawals confirmed by the primary deployment.',
       }),
+      discovery.getEscrowDetails({
+        address: ChainSpecificAddress(
+          'bnb:0xb8D9F005654b7b127b34dae8F973Ba729ca3A2D9',
+        ),
+        tokens: '*',
+        includeInTotal: false,
+        source: 'external',
+        description:
+          'Secondary zkLink contract on BNB. It escrows assets deposited on BNB and processes withdrawals confirmed by the primary deployment.',
+      }),
     ],
   },
   dataAvailability: {
@@ -164,7 +177,7 @@ export const apex: ScalingProject = {
       {
         title: 'Validity proofs',
         description:
-          'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Arbitrum One by a smart contract.',
+          'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Arbitrum One by a smart contract.\nDeposits on secondary chains are not verified with these validity proofs and rely on LayerZero bridges instead. Deposits could be stolen if bridges are compromized.',
         risks: [],
         references: [
           {
@@ -215,7 +228,7 @@ export const apex: ScalingProject = {
         risks: [
           {
             category: 'Funds can be lost if',
-            text: 'layerzero incorrectly authenticates a synchronization hash from a secondary deployment.',
+            text: 'the 2/2 validator set or LayerZero bridge forges a non-existent deposit.',
           },
           {
             category: 'Funds can be frozen if',

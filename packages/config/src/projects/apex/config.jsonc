@@ -2,12 +2,12 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "apex",
   "import": ["../globalConfig.jsonc"],
-  "archived": true,
   "initialAddresses": [
     "eth:0x35D173cdfE4d484BC5985fDa55FABad5892c7B82",
     "arb1:0x3169844a120c0f517b4eb4a750c08d8518c8466a",
     "base:0xee7981c4642de8d19aed11da3bac59277dfd59d7",
-    "mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c"
+    "mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c",
+    "bnb:0xb8D9F005654b7b127b34dae8F973Ba729ca3A2D9"
   ],
   "overrides": {
     "arb1:0x235118AfB54B6d6c7b48F1B5434c25CD6Eb6B68F": {
@@ -27,6 +27,10 @@
     "mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c": {
       "proxyType": "ZkLink proxy",
       "displayName": "ZkLink Mantle"
+    },
+    "bnb:0xb8D9F005654b7b127b34dae8F973Ba729ca3A2D9": {
+      "proxyType": "ZkLink proxy",
+      "displayName": "ZkLink BNB"
     },
     "eth:0xe38f8bc093a1f76f0A444bA6B75F46d6dC686dba": {
       "description": "Placeholder verifier for chains without pairing support. It rejects all block and exit proofs."
