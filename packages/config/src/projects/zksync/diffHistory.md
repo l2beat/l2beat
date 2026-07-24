@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x3ae3d586cac7869065fe582ac88fdcf2283e6392
+
+# Diff at Thu, 23 Jul 2026 11:37:10 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@efd03446560a8d585747f124c71622cbfa33fca4 block: 1784715153
+- current timestamp: 1784806565
+
+## Description
+
+Rotated one Matter Labs ms member.
+
+## Watched changes
+
+```diff
+    contract Matter Labs Multisig (eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828) [GnosisSafe] {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x5C7E59Dba6557C7dAB3B69ccd3E309d1965Cf1B1"
++        "eth:0xC9A814A4dFE108A4d2b0C01abb4c196Ed7FB3D83"
+    }
+```
+
 Generated with discovered.json: 0x5dd9c22b64864cbdcda142ecfe8cfa6a86e87546
 
 # Diff at Wed, 22 Jul 2026 10:13:42 GMT:

@@ -1,3 +1,59 @@
+Generated with discovered.json: 0x9b1fee98ff85e09ec8f5ed8060fb551d64882121
+
+# Diff at Fri, 24 Jul 2026 07:51:22 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@efe9fb65fe13447fa2102797e0c08f3569e5b554 block: 1784193326
+- current timestamp: 1784804016
+
+## Description
+
+Upgraded ServerNotifier contract that informs offchain node operators about onchain updates without any onchain significance (https://disco.l2beat.com/diff/eth:0x555D040F4A089D1dF14B372a87C5aF8FA37BDB7A/eth:0x260813B0DAf35dda95c41F39c6Cc3F24dc87028A). The new version corresponds to v30: https://github.com/matter-labs/era-contracts/blob/zkos-v0.30.2/l1-contracts/contracts/governance/ServerNotifier.sol.
+
+- Added `setUpgradeTimestamp` function to signal an upcoming upgrade
+- Added checks on announcing upgrades
+
+Also, rotated MS member.
+
+## Watched changes
+
+```diff
+    contract Matter Labs Multisig (eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828) [GnosisSafe] {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x5C7E59Dba6557C7dAB3B69ccd3E309d1965Cf1B1"
++        "eth:0xC9A814A4dFE108A4d2b0C01abb4c196Ed7FB3D83"
+    }
+```
+
+```diff
+    contract ServerNotifier (eth:0xfca808A744735D9919EEBe4660B8Fd897456Ce31) [shared-zk-stack/ServerNotifier] {
+    +++ description: A simple contract that can be called by the ChainAdmin to emit notifications about chain migrations.
+      sourceHashes.1:
+-        "0x1e4d0bfb62cb7162bc9ad0aa55a8bf3d7e735f46b0e32e9886ac236f84f9d28e"
++        "0x3c0e5bd80bc25d2e6f4be57d2f37d84edafd89559cf83a704ad8545a8d5a05c8"
+      values.$implementation:
+-        "eth:0x555D040F4A089D1dF14B372a87C5aF8FA37BDB7A"
++        "eth:0x260813B0DAf35dda95c41F39c6Cc3F24dc87028A"
+      values.$pastUpgrades.1:
++        ["2026-07-22T10:09:59.000Z","0xdbd5285f559e4ae32457b8425f67e1dfe76575c40999499e0b55d5cf985b85d8",["eth:0x260813B0DAf35dda95c41F39c6Cc3F24dc87028A"]]
+      values.$upgradeCount:
+-        1
++        2
+      implementationNames.eth:0x555D040F4A089D1dF14B372a87C5aF8FA37BDB7A:
+-        "ServerNotifier"
+      implementationNames.eth:0x260813B0DAf35dda95c41F39c6Cc3F24dc87028A:
++        "ServerNotifier"
+    }
+```
+
+## Source code changes
+
+```diff
+.../ServerNotifier/ServerNotifier.sol              | 714 ++++++++++++++++++++-
+ 1 file changed, 693 insertions(+), 21 deletions(-)
+```
+
 Generated with discovered.json: 0x84104a4ca3534bd1cf08716c959c78d936191899
 
 # Diff at Thu, 16 Jul 2026 09:16:34 GMT:

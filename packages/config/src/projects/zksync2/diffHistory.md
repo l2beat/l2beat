@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x5c197d1cf232fc52cb6094bdb81f911a2612a354
+
+# Diff at Thu, 23 Jul 2026 11:35:27 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@efd03446560a8d585747f124c71622cbfa33fca4 block: 1783501723
+- current timestamp: 1784806460
+
+## Description
+
+Rotated one validator.
+
+## Watched changes
+
+```diff
+    contract EraMultisigValidator (eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d) [shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable] {
+    +++ description: A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.
+      values.$members.3:
+-        "eth:0xd3cA2aDe062d453F410b5C5cfA1B2b89879AbE1b"
+      values.$members.7:
++        "eth:0x2400D5d69043d9BE4fF32c6F8F28047d605ad976"
++++ severity: HIGH
+      values.multisigMembers.3:
+-        "eth:0xd3cA2aDe062d453F410b5C5cfA1B2b89879AbE1b"
++++ severity: HIGH
+      values.multisigMembers.7:
++        "eth:0x2400D5d69043d9BE4fF32c6F8F28047d605ad976"
+    }
+```
+
 Generated with discovered.json: 0x320e02ea2e0c5b858a5028e7a140cfe530257810
 
 # Diff at Wed, 08 Jul 2026 09:09:53 GMT:
