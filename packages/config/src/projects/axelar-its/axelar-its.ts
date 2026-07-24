@@ -19,6 +19,10 @@ export const axelarits: BaseProject = {
         plugin: 'axelar-its',
         bridgeType: 'lockAndMint',
       },
+      {
+        plugin: 'axelar-its',
+        bridgeType: 'nonMinting',
+      },
     ],
     type: 'multichain',
   },

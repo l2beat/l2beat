@@ -33,6 +33,10 @@ export const layerzero: BaseProject = {
         plugin: 'layerzero-v2-ofts',
         bridgeType: 'lockAndMint',
       },
+      {
+        plugin: 'layerzero-v2-ofts',
+        bridgeType: 'nonMinting',
+      },
     ],
     type: 'multichain',
     permissions: generateDiscoveryDrivenPermissions([discovery]),
