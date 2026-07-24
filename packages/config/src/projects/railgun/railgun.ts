@@ -214,6 +214,11 @@ export const railgun: BaseProject = {
   },
   privacyInfo: {
     tokens: privacyTokens,
+    relayers: {
+      active30d: 44,
+      tooltip:
+        'Active broadcasters that advertize themselves on Raigun Waku broadcaster network via Waku broadcaster client, rolling averaged over daily samples.',
+    },
     exitWindow: {
       value: formatSeconds(executionStartOffset),
       sentiment: 'warning',

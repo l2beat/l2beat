@@ -144,6 +144,11 @@ export const privacyPools: BaseProject = {
   },
   privacyInfo: {
     tokens: getPrivacyTokens(),
+    relayers: {
+      active30d: 4,
+      tooltip:
+        'Addresses that appear as relayers in WithdrawalRelayed event on the Privacy Pools entrypoint.',
+    },
     exitWindow: {
       value: 'Infinite',
       sentiment: 'good',
