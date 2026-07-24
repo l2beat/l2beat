@@ -43,7 +43,7 @@ describe(parseDiscoveryUpdates.name, () => {
     )
 
     expect(updates.length).toEqual(1)
-    expect(updates[0]?.id.startsWith('update-1768986000-0x')).toEqual(true)
+    expect(updates[0]?.id ?? '').toMatchRegex(/^update-[0-9a-f]{8}$/)
     expect(updates[0]?.description).toEqual('A public update.')
     expect(updates[0]?.sections).toEqual([
       {
@@ -144,7 +144,7 @@ describe(parseDiscoveryUpdates.name, () => {
     )
 
     expect(updates[0]?.timestamp).toEqual(1700000000)
-    expect(updates[0]?.id.startsWith('update-1700000000-0x')).toEqual(true)
+    expect(updates[0]?.id ?? '').toMatchRegex(/^update-[0-9a-f]{8}$/)
   })
 
   it('creates unique ids for entries with the same discovery timestamp and date', () => {
@@ -175,10 +175,9 @@ describe(parseDiscoveryUpdates.name, () => {
       ].join('\n'),
     )
 
-    expect(updates.map((update) => update.id)).toEqual([
-      'update-1700000000-0x111',
-      'update-1700000000-0x222',
-    ])
+    expect(updates[0]?.id).not.toEqual(updates[1]?.id)
+    expect(updates[0]?.id ?? '').toMatchRegex(/^update-[0-9a-f]{8}$/)
+    expect(updates[1]?.id ?? '').toMatchRegex(/^update-[0-9a-f]{8}$/)
   })
 
   it('creates stable unique ids without a discovery hash', () => {
@@ -228,7 +227,7 @@ describe(parseDiscoveryUpdates.name, () => {
     )
 
     expect(updates[0]?.timestamp).toEqual(null)
-    expect(updates[0]?.id.startsWith('update-legacy-entry-0x')).toEqual(true)
+    expect(updates[0]?.id ?? '').toMatchRegex(/^update-[0-9a-f]{8}$/)
   })
 
   it('respects the result limit', () => {

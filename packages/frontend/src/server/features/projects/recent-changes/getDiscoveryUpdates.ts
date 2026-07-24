@@ -131,12 +131,11 @@ function toPublicDiscoveryUpdate(
   }
 
   const bodies = sections.map((section) => section.body)
-  const timestamp = getTimestamp(entry)
 
   return {
-    id: getUpdateId(entry, timestamp),
+    id: getUpdateId(entry),
     date: entry.date,
-    timestamp,
+    timestamp: getTimestamp(entry),
     description: entry.description,
     isHighSeverity: bodies.some((body) => isHighSeverityDiffBody(body)),
     changeCount: bodies.reduce((sum, body) => sum + countDiffChanges(body), 0),
@@ -144,28 +143,17 @@ function toPublicDiscoveryUpdate(
   }
 }
 
-function getUpdateId(
-  entry: DiffHistoryEntry,
-  timestamp: number | null,
-): string {
-  const dateSlug = entry.date
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '')
-
-  if (entry.discoveryHash !== null) {
-    return `update-${timestamp ?? dateSlug}-${entry.discoveryHash}`
-  }
-
+function getUpdateId(entry: DiffHistoryEntry): string {
   const fingerprint = hashJson([
     entry.date,
+    entry.discoveryHash,
     entry.current?.kind ?? null,
     entry.current?.value ?? null,
     entry.description,
     entry.sections.flatMap((section) => [section.kind, section.body]),
   ])
 
-  return `update-${timestamp ?? dateSlug}-${fingerprint}`
+  return `update-${fingerprint.slice(2, 10)}`
 }
 
 function getTimestamp(entry: DiffHistoryEntry): number | null {

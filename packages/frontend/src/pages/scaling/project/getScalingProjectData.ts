@@ -8,10 +8,9 @@ import { getProjectMetadataDescription } from '~/ssr/head/getProjectMetadataDesc
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
-import { getSelectedUpdateId } from '../../utils/getSelectedUpdateId'
 
 export async function getScalingProjectData(
-  req: Request<{ slug: string }, unknown, unknown, unknown>,
+  req: Request<{ slug: string }, unknown, unknown, { update?: string }>,
   manifest: Manifest,
   cache: InMemoryCache,
 ): Promise<RenderData | undefined> {
@@ -26,12 +25,12 @@ export async function getScalingProjectData(
   if (!data) return undefined
 
   return {
-    ...data,
+    head: data.head,
     ssr: {
-      ...data.ssr,
+      page: 'ScalingProjectPage',
       props: {
-        ...data.ssr.props,
-        selectedUpdateId: getSelectedUpdateId(req.query),
+        ...data.props,
+        selectedUpdateId: req.query.update,
       },
     },
   }
@@ -88,13 +87,10 @@ async function getCachedData(manifest: Manifest, slug: string, url: string) {
         },
       }),
     },
-    ssr: {
-      page: 'ScalingProjectPage' as const,
-      props: {
-        ...appLayoutProps,
-        projectEntry,
-        queryState: helpers.dehydrate(),
-      },
+    props: {
+      ...appLayoutProps,
+      projectEntry,
+      queryState: helpers.dehydrate(),
     },
   }
 }

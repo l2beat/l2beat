@@ -8,11 +8,10 @@ import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
-import { getSelectedUpdateId } from '../../utils/getSelectedUpdateId'
 import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
 
 export async function getInteropProtocolPageData(
-  req: Request<{ slug: string }, unknown, unknown, unknown>,
+  req: Request<{ slug: string }, unknown, unknown, { update?: string }>,
   manifest: Manifest,
   cache: InMemoryCache,
 ): Promise<RenderData | undefined> {
@@ -49,7 +48,7 @@ export async function getInteropProtocolPageData(
         projectEntry: data.projectEntry,
         protocolData: data.protocolData,
         apiSelection: data.apiSelection,
-        selectedUpdateId: getSelectedUpdateId(req.query),
+        selectedUpdateId: req.query.update,
       },
     },
   }

@@ -116,6 +116,7 @@ export function createScalingRouter(
     '/scaling/projects/:slug',
     validateRoute({
       params: v.object({ slug: v.string() }),
+      query: v.object({ update: v.string().optional() }),
     }),
     async (req, res) => {
       const data = await getScalingProjectData(req, manifest, cache)

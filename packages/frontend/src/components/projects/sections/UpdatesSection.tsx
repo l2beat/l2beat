@@ -13,7 +13,6 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '~/components/Pagination'
-import { usePathname } from '~/hooks/usePathname'
 import { ChevronIcon } from '~/icons/Chevron'
 import type { DiscoveryUpdate } from '~/server/features/projects/recent-changes/getDiscoveryUpdates'
 import { cn } from '~/utils/cn'
@@ -140,8 +139,6 @@ function UpdateCard({
   update: DiscoveryUpdate
   isSelected: boolean
 }) {
-  const pathname = usePathname()
-
   return (
     <details
       id={update.id}
@@ -166,7 +163,9 @@ function UpdateCard({
                 {formatUpdateDate(update)}
               </span>
               <CopyButton
-                toCopy={`https://l2beat.com${pathname}${getUpdateHref(update.id)}`}
+                toCopy={() =>
+                  `${window.location.origin}${window.location.pathname}?update=${update.id}`
+                }
                 copyText="Copy link to update"
                 className="rounded-sm text-secondary hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"
                 iconClassName="size-3.5"
@@ -243,10 +242,6 @@ function UpdateCard({
       </div>
     </details>
   )
-}
-
-function getUpdateHref(updateId: string): string {
-  return `?update=${updateId}`
 }
 
 function formatUpdateDate(update: DiscoveryUpdate): string {
