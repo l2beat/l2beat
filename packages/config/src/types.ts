@@ -1185,8 +1185,16 @@ export interface EthereumDaTrackingConfig {
   inbox: string
   sequencers?: string[]
   topics?: string[]
+  /** When set, call matching replaces inbox, sequencer and topic matching. */
+  calls?: EthereumDaTrackingCall[]
   sinceBlock: number
   untilBlock?: number
+}
+
+export interface EthereumDaTrackingCall {
+  selector: string
+  /** Value encoded as the first static ABI parameter of the call. */
+  firstParameter: string | number
 }
 
 export interface CelestiaDaTrackingConfig {

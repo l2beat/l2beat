@@ -130,12 +130,126 @@ describe(EthereumBlobNotifierIndexer.name, () => {
       expect(result).toEqual([{ from: '0xSeq2', to: '0xInbox', count: 200 }])
     })
 
+    it('excludes pairs that match a config by call metadata', async () => {
+      const blobsRepository = mockBlobsRepository([
+        {
+          from: '0xUnknown',
+          to: '0xUnknown',
+          callSelector: '0x12345678',
+          callFirstParameter:
+            '0x00000000000000000000000000000000000000000000000000000000000000aa',
+          count: 200,
+        },
+      ])
+      const indexer = createIndexer({
+        blobsRepository,
+        configurations: [
+          config({
+            inbox: '0xOther',
+            calls: [
+              {
+                selector: '0x12345678',
+                firstParameter: '0x00000000000000000000000000000000000000AA',
+              },
+            ],
+          }),
+        ],
+      })
+      const oneAm =
+        UnixTime.toStartOf(UnixTime.now(), 'day') + 1 * UnixTime.HOUR
+
+      const result = await indexer.getUnmatchedPairs(oneAm)
+
+      expect(result).toEqual([])
+    })
+
     it('returns empty when no pairs have 100+ blobs', async () => {
       const blobsRepository = mockBlobsRepository([
         { from: '0xA', to: '0xB', count: 50 },
         { from: '0xC', to: '0xD', count: 99 },
       ])
       const indexer = createIndexer({ blobsRepository })
+      const oneAm =
+        UnixTime.toStartOf(UnixTime.now(), 'day') + 1 * UnixTime.HOUR
+
+      const result = await indexer.getUnmatchedPairs(oneAm)
+
+      expect(result).toEqual([])
+    })
+
+    it('aggregates unmatched call groups before applying the threshold', async () => {
+      const blobsRepository = mockBlobsRepository([
+        {
+          from: '0xA',
+          to: '0xB',
+          callSelector: '0x11111111',
+          callFirstParameter: '0x01',
+          count: 75,
+        },
+        {
+          from: '0xA',
+          to: '0xB',
+          callSelector: '0x22222222',
+          callFirstParameter: '0x02',
+          count: 75,
+        },
+        {
+          from: '0xA',
+          to: '0xB',
+          callSelector: '0x33333333',
+          callFirstParameter: '0x03',
+          count: 75,
+        },
+        {
+          from: '0xA',
+          to: '0xB',
+          callSelector: '0x44444444',
+          callFirstParameter: '0x04',
+          count: 75,
+        },
+      ])
+      const indexer = createIndexer({ blobsRepository })
+      const oneAm =
+        UnixTime.toStartOf(UnixTime.now(), 'day') + 1 * UnixTime.HOUR
+
+      const result = await indexer.getUnmatchedPairs(oneAm)
+
+      expect(result).toEqual([{ from: '0xA', to: '0xB', count: 300 }])
+    })
+
+    it('excludes matched call groups before aggregating unmatched groups', async () => {
+      const matchedFirstParameter =
+        '0x00000000000000000000000000000000000000000000000000000000000000aa'
+      const blobsRepository = mockBlobsRepository([
+        {
+          from: '0xA',
+          to: '0xB',
+          callSelector: '0x12345678',
+          callFirstParameter: matchedFirstParameter,
+          count: 100,
+        },
+        {
+          from: '0xA',
+          to: '0xB',
+          callSelector: '0x87654321',
+          callFirstParameter: '0x01',
+          count: 60,
+        },
+      ])
+      const indexer = createIndexer({
+        blobsRepository,
+        configurations: [
+          config({
+            inbox: '0xOther',
+            calls: [
+              {
+                selector: '0x12345678',
+                firstParameter: '0xaa',
+              },
+            ],
+          }),
+        ],
+      })
       const oneAm =
         UnixTime.toStartOf(UnixTime.now(), 'day') + 1 * UnixTime.HOUR
 
@@ -211,14 +325,24 @@ function config(
     inbox: overrides.inbox,
     sequencers: overrides.sequencers,
     topics: overrides.topics,
+    calls: overrides.calls,
     sinceBlock: overrides.sinceBlock ?? 0,
     untilBlock: overrides.untilBlock,
   }
 }
 
-function mockBlobsRepository(pairs: BlobPairCount[]) {
+function mockBlobsRepository(
+  pairs: (Omit<BlobPairCount, 'callSelector' | 'callFirstParameter'> &
+    Partial<Pick<BlobPairCount, 'callSelector' | 'callFirstParameter'>>)[],
+) {
   return mockObject<Database['blobs']>({
-    getCountPerAddressInbox: mockFn().resolvesTo(pairs),
+    getCountPerAddressInbox: mockFn().resolvesTo(
+      pairs.map((pair) => ({
+        callSelector: null,
+        callFirstParameter: null,
+        ...pair,
+      })),
+    ),
   })
 }
 

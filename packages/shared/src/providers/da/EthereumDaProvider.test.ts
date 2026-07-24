@@ -26,14 +26,25 @@ describe(EthereumDaProvider.name, () => {
               blobVersionedHashes: [versionedHash1, versionedHash2],
               from: '0xfrom1',
               to: '0xto1',
+              data: `0x0DB9EB87${'0'.repeat(24)}ABCDEFabcdefABCDEFabcdefABCDEFabcdefABCD`,
             },
           ],
         }),
         getLogs: mockFn().resolvesTo([
           {
             transactionHash: txHash,
-            address: 'inbox1',
+            address: '0xInbox1',
             topics: ['topic1-1'],
+          },
+          {
+            transactionHash: txHash,
+            address: '0xINBOX1',
+            topics: ['topic1-2'],
+          },
+          {
+            transactionHash: txHash,
+            address: '0xEmitter2',
+            topics: ['topic2-1'],
           },
         ]),
       })
@@ -54,7 +65,10 @@ describe(EthereumDaProvider.name, () => {
           daLayer: 'ethereum',
           inbox: '0xto1',
           sequencer: '0xfrom1',
-          topics: ['topic1-1'],
+          topics: ['topic1-1', 'topic1-2', 'topic2-1'],
+          callSelector: '0x0db9eb87',
+          callFirstParameter:
+            '0x000000000000000000000000abcdefabcdefabcdefabcdefabcdefabcdefabcd',
           blockTimestamp: UnixTime.fromDate(mockDate),
           blockNumber: 1,
           size: 131072n,
@@ -64,7 +78,10 @@ describe(EthereumDaProvider.name, () => {
           daLayer: 'ethereum',
           inbox: '0xto1',
           sequencer: '0xfrom1',
-          topics: ['topic1-1'],
+          topics: ['topic1-1', 'topic1-2', 'topic2-1'],
+          callSelector: '0x0db9eb87',
+          callFirstParameter:
+            '0x000000000000000000000000abcdefabcdefabcdefabcdefabcdefabcdefabcd',
           blockTimestamp: UnixTime.fromDate(mockDate),
           blockNumber: 1,
           size: 131072n,

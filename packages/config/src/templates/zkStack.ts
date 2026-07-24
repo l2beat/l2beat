@@ -53,6 +53,7 @@ import type {
   ReasonForBeingInOther,
   TableReadyValue,
 } from '../types'
+
 import { readMarkdown } from '../utils/readMarkdown'
 import { getActivityConfig } from './activity'
 import { getDiscoveryInfo } from './getDiscoveryInfo'
@@ -705,16 +706,21 @@ function getDaTracking(
   }
 
   if (templateVars.usesEthereumBlobs) {
+    const validatorTimelockEntry =
+      templateVars.discovery.getContract('ValidatorTimelock')
     const validatorTimelock = ChainSpecificAddress.address(
-      templateVars.discovery.getContractDetails('ValidatorTimelock').address,
+      validatorTimelockEntry.address,
     )
 
-    const validatorsVTL = templateVars.discovery.getContractValue<
-      ChainSpecificAddress[]
-    >('ValidatorTimelock', 'validatorsVTL')
-
-    const inboxDeploymentBlockNumber =
-      templateVars.discovery.getContract('ValidatorTimelock').sinceBlock ?? 0
+    const inboxDeploymentBlockNumber = validatorTimelockEntry.sinceBlock ?? 0
+    const diamond = ChainSpecificAddress.address(
+      templateVars.discovery.getContract('Diamond').address,
+    )
+    const protocolVersion = templateVars.discovery.getContractValue<number[]>(
+      'Diamond',
+      'getSemverProtocolVersion',
+    )
+    const isPostV29 = usesChainAddressForDaTracking(protocolVersion)
 
     return [
       {
@@ -722,7 +728,17 @@ function getDaTracking(
         daLayer: ProjectId('ethereum'),
         sinceBlock: inboxDeploymentBlockNumber,
         inbox: validatorTimelock,
-        sequencers: validatorsVTL.map((a) => ChainSpecificAddress.address(a)),
+        calls: [
+          isPostV29
+            ? {
+                selector: '0x0db9eb87',
+                firstParameter: diamond,
+              }
+            : {
+                selector: '0x98f81962',
+                firstParameter: templateVars.chainId,
+              },
+        ],
       },
     ]
   }
@@ -752,6 +768,17 @@ function getDaTracking(
   }
 
   return undefined
+}
+
+export function usesChainAddressForDaTracking(
+  protocolVersion: number[],
+): boolean {
+  const protocolMinorVersion = protocolVersion[1]
+  assert(
+    protocolMinorVersion === 28 || protocolMinorVersion === 29,
+    `Unsupported zkStack protocol version for DA tracking: ${protocolVersion.join('.')}`,
+  )
+  return protocolMinorVersion === 29
 }
 
 function programHashesReproducible(l2BootloaderHash: string): boolean | null {

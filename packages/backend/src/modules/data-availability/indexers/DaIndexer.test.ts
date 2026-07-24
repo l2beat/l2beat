@@ -300,6 +300,8 @@ function blob(timestamp: number, size: number): DaBlob {
     inbox: '',
     sequencer: '',
     topics: [],
+    callSelector: undefined,
+    callFirstParameter: undefined,
   }
 }
 

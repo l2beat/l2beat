@@ -26,6 +26,8 @@ describe(BlobIndexer.name, () => {
           inbox: '0x123',
           sequencer: '0x456',
           topics: ['0xabc', '0xdef'],
+          callSelector: '0x12345678',
+          callFirstParameter: '0x789',
         },
       ]
 
@@ -39,7 +41,12 @@ describe(BlobIndexer.name, () => {
       expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 200)
       expect(safeHeight).toEqual(200)
 
-      expect(blobService.save).toHaveBeenCalledWith(blobs)
+      expect(blobService.replace).toHaveBeenCalledWith(
+        DA_LAYER,
+        100,
+        200,
+        blobs,
+      )
     })
 
     describe('handles batch size', () => {
@@ -77,7 +84,7 @@ describe(BlobIndexer.name, () => {
       expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 200)
       expect(safeHeight).toEqual(200)
 
-      expect(blobService.save).not.toHaveBeenCalled()
+      expect(blobService.replace).toHaveBeenCalledWith(DA_LAYER, 100, 200, [])
     })
   })
 
@@ -106,7 +113,7 @@ function mockIndexer($: {
 }) {
   const blobService = mockObject<BlobService>({
     get: mockFn().resolvesTo($.blobs ?? []),
-    save: mockFn().resolvesTo(undefined),
+    replace: mockFn().resolvesTo(undefined),
     deleteAfter: mockFn().resolvesTo({}),
   })
 

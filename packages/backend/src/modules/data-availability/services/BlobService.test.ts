@@ -5,8 +5,8 @@ import { mockDatabase } from '../../../test/database'
 import { BlobService } from './BlobService'
 
 describe(BlobService.name, () => {
-  describe(BlobService.prototype.save.name, () => {
-    it('should save blobs', async () => {
+  describe(BlobService.prototype.replace.name, () => {
+    it('should replace blobs in the requested block range', async () => {
       const blobs: EthereumBlob[] = [
         {
           type: 'ethereum',
@@ -17,10 +17,13 @@ describe(BlobService.name, () => {
           inbox: '0x123',
           sequencer: '0x456',
           topics: ['0xabc', '0xdef'],
+          callSelector: '0x12345678',
+          callFirstParameter: '0x789',
         },
       ]
 
       const mockBlobRepository = mockObject<Database['blobs']>({
+        deleteByBlockRangeInclusive: mockFn().resolvesTo(1),
         insertMany: mockFn().resolvesTo(undefined),
       })
 
@@ -29,7 +32,11 @@ describe(BlobService.name, () => {
       })
 
       const blobService = new BlobService(mockDb)
-      await blobService.save(blobs)
+      await blobService.replace('ethereum', 1, 100, blobs)
+
+      expect(
+        mockBlobRepository.deleteByBlockRangeInclusive,
+      ).toHaveBeenCalledWith('ethereum', 1, 100)
 
       expect(mockBlobRepository.insertMany).toHaveBeenCalledWith(
         blobs.map((blob) => ({
@@ -39,9 +46,28 @@ describe(BlobService.name, () => {
           from: blob.sequencer,
           to: blob.inbox,
           topics: blob.topics ?? null,
+          callSelector: blob.callSelector ?? null,
+          callFirstParameter: blob.callFirstParameter ?? null,
           size: null,
         })),
       )
+    })
+
+    it('should clear the requested range when no blobs are returned', async () => {
+      const mockBlobRepository = mockObject<Database['blobs']>({
+        deleteByBlockRangeInclusive: mockFn().resolvesTo(1),
+        insertMany: mockFn().resolvesTo(0),
+      })
+      const blobService = new BlobService(
+        mockDatabase({ blobs: mockBlobRepository }),
+      )
+
+      await blobService.replace('ethereum', 1, 100, [])
+
+      expect(
+        mockBlobRepository.deleteByBlockRangeInclusive,
+      ).toHaveBeenCalledWith('ethereum', 1, 100)
+      expect(mockBlobRepository.insertMany).toHaveBeenCalledWith([])
     })
   })
 
@@ -56,6 +82,8 @@ describe(BlobService.name, () => {
           from: '0x123',
           to: '0x456',
           topics: ['0xabc', '0xdef'],
+          callSelector: '0x12345678',
+          callFirstParameter: '0x789',
           size: null,
         },
       ]
@@ -81,6 +109,8 @@ describe(BlobService.name, () => {
           inbox: record.to ?? '',
           sequencer: record.from,
           topics: record.topics ?? [],
+          callSelector: record.callSelector ?? undefined,
+          callFirstParameter: record.callFirstParameter ?? undefined,
         })),
       )
 

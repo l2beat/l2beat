@@ -1,7 +1,9 @@
 import type { Env } from '@l2beat/backend-tools'
 import type { ProjectDaTrackingConfig, ProjectService } from '@l2beat/config'
 import {
+  assert,
   assertUnreachable,
+  encodeFunctionCallFirstParameter,
   notUndefined,
   ProjectId,
   UnixTime,
@@ -342,7 +344,11 @@ async function getTimestampDaTrackingSovereignProjects(
   return indexedConfigs
 }
 
-function createDaTrackingId(config: ProjectDaTrackingConfig): string {
+export function createDaTrackingId(config: ProjectDaTrackingConfig): string {
+  if (config.type === 'ethereum') {
+    validateEthereumDaTrackingConfig(config)
+  }
+
   const input = []
 
   input.push(config.type)
@@ -351,7 +357,19 @@ function createDaTrackingId(config: ProjectDaTrackingConfig): string {
   input.push('v2')
 
   switch (config.type) {
-    case 'ethereum':
+    case 'ethereum': {
+      if (config.calls !== undefined) {
+        input.push(
+          ...config.calls
+            .map(
+              (call) =>
+                `${call.selector.toLowerCase()}:${encodeFunctionCallFirstParameter(call.firstParameter)}`,
+            )
+            .sort((a, b) => a.localeCompare(b)),
+        )
+        break
+      }
+
       input.push(config.inbox)
       if (config.sequencers) {
         input.push(...config.sequencers.sort((a, b) => a.localeCompare(b)))
@@ -360,6 +378,7 @@ function createDaTrackingId(config: ProjectDaTrackingConfig): string {
         input.push(...config.topics.sort((a, b) => a.localeCompare(b)))
       }
       break
+    }
     case 'celestia':
       input.push(config.namespace)
       break
@@ -375,6 +394,22 @@ function createDaTrackingId(config: ProjectDaTrackingConfig): string {
 
   const hash = createHash('sha1').update(input.join('')).digest('hex')
   return hash.slice(0, 12)
+}
+
+function validateEthereumDaTrackingConfig(
+  config: Extract<ProjectDaTrackingConfig, { type: 'ethereum' }>,
+) {
+  if (config.calls === undefined) return
+
+  assert(config.calls.length > 0, 'Ethereum DA calls cannot be empty')
+  assert(
+    config.sequencers === undefined,
+    'Ethereum DA calls cannot be combined with sequencers',
+  )
+  assert(
+    config.topics === undefined,
+    'Ethereum DA calls cannot be combined with topics',
+  )
 }
 
 function createDaLayerConfigId(daLayerName: string): string {

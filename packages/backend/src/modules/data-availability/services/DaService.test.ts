@@ -1,9 +1,10 @@
+import type { EthereumDaTrackingConfig } from '@l2beat/config'
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import type { AvailBlob, CelestiaBlob, EthereumBlob } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { BlockDaIndexedConfig } from '../../../config/Config'
-import { DaService } from './DaService'
+import { DaService, matchEthereumProject } from './DaService'
 
 describe(DaService.name, () => {
   const service = new DaService()
@@ -354,6 +355,85 @@ describe(DaService.name, () => {
         ],
         latestTimestamp: TIME + 1 * UnixTime.HOUR,
       })
+    })
+  })
+
+  describe(matchEthereumProject.name, () => {
+    const config: EthereumDaTrackingConfig = {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      inbox: '0xSharedInbox',
+      calls: [
+        {
+          selector: '0x12345678',
+          firstParameter: '0x00000000000000000000000000000000000000AA',
+        },
+      ],
+      sinceBlock: 0,
+    }
+
+    it('matches a call case-insensitively', () => {
+      const result = matchEthereumProject(
+        {
+          inbox: '0xOtherInbox',
+          sequencer: '0xOtherSequencer',
+          topics: [],
+          callSelector: '0x12345678',
+          callFirstParameter:
+            '0x00000000000000000000000000000000000000000000000000000000000000aa',
+        },
+        config,
+      )
+
+      expect(result).toEqual(true)
+    })
+
+    it('does not fall back to shared inbox and sequencer', () => {
+      const result = matchEthereumProject(
+        {
+          inbox: '0xSharedInbox',
+          sequencer: '0xSharedSequencer',
+          topics: [],
+          callSelector: '0x87654321',
+          callFirstParameter:
+            '0x00000000000000000000000000000000000000000000000000000000000000aa',
+        },
+        config,
+      )
+
+      expect(result).toEqual(false)
+    })
+
+    it('does not fall back to the inbox for an empty calls array', () => {
+      const result = matchEthereumProject(
+        {
+          inbox: '0xSharedInbox',
+          sequencer: '0xSharedSequencer',
+          topics: [],
+        },
+        { ...config, calls: [] },
+      )
+
+      expect(result).toEqual(false)
+    })
+
+    it('matches a numeric first parameter', () => {
+      const result = matchEthereumProject(
+        {
+          inbox: '0xOtherInbox',
+          sequencer: '0xOtherSequencer',
+          topics: [],
+          callSelector: '0x98f81962',
+          callFirstParameter:
+            '0x000000000000000000000000000000000000000000000000000000000000011f',
+        },
+        {
+          ...config,
+          calls: [{ selector: '0x98f81962', firstParameter: 287 }],
+        },
+      )
+
+      expect(result).toEqual(true)
     })
   })
 })

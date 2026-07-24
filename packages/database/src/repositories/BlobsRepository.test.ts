@@ -16,6 +16,8 @@ describeDatabase(BlobsRepository.name, (db) => {
       from: '0x123',
       to: '0x456',
       topics: ['0xabc', '0xdef'],
+      callSelector: '0x12345678',
+      callFirstParameter: '0x111',
       size: BigInt(1000),
     },
     {
@@ -26,6 +28,8 @@ describeDatabase(BlobsRepository.name, (db) => {
       from: '0x789',
       to: null,
       topics: null,
+      callSelector: null,
+      callFirstParameter: null,
       size: BigInt(2000),
     },
     {
@@ -36,6 +40,8 @@ describeDatabase(BlobsRepository.name, (db) => {
       from: '0xabc',
       to: '0xdef',
       topics: ['0x123'],
+      callSelector: '0x87654321',
+      callFirstParameter: '0x333',
       size: BigInt(3000),
     },
   ]
@@ -57,6 +63,8 @@ describeDatabase(BlobsRepository.name, (db) => {
           from: '0x111',
           to: '0x222',
           topics: ['0x333'],
+          callSelector: '0x12345678',
+          callFirstParameter: '0x444',
           size: BigInt(4000),
         },
         {
@@ -67,6 +75,8 @@ describeDatabase(BlobsRepository.name, (db) => {
           from: '0x444',
           to: null,
           topics: null,
+          callSelector: null,
+          callFirstParameter: null,
           size: BigInt(5000),
         },
       ]
@@ -106,6 +116,21 @@ describeDatabase(BlobsRepository.name, (db) => {
     })
   })
 
+  describe(BlobsRepository.prototype.deleteByBlockRangeInclusive.name, () => {
+    it('deletes rows from the requested layer and inclusive block range', async () => {
+      const deleted = await repository.deleteByBlockRangeInclusive(
+        'avail',
+        2000,
+        2000,
+      )
+
+      expect(deleted).toEqual(1)
+      expect(await repository.getAll()).toEqualUnsorted(
+        DATA.filter((blob) => blob.blockNumber !== 2000),
+      )
+    })
+  })
+
   describe(BlobsRepository.prototype.getCountPerAddressInbox.name, () => {
     it('should group by from and to and return counts', async () => {
       await repository.deleteAll()
@@ -141,8 +166,20 @@ describeDatabase(BlobsRepository.name, (db) => {
       )
 
       expect(results).toEqualUnsorted([
-        { from: '0xA', to: '0xB', count: 2 },
-        { from: '0xA', to: '0xC', count: 1 },
+        {
+          from: '0xA',
+          to: '0xB',
+          callSelector: null,
+          callFirstParameter: null,
+          count: 2,
+        },
+        {
+          from: '0xA',
+          to: '0xC',
+          callSelector: null,
+          callFirstParameter: null,
+          count: 1,
+        },
       ])
     })
 
@@ -186,7 +223,59 @@ describeDatabase(BlobsRepository.name, (db) => {
         base + UnixTime.DAY,
       )
 
-      expect(results).toEqual([{ from: '0xA', to: '0xB', count: 2 }])
+      expect(results).toEqual([
+        {
+          from: '0xA',
+          to: '0xB',
+          callSelector: null,
+          callFirstParameter: null,
+          count: 2,
+        },
+      ])
+    })
+
+    it('should group identical pairs by call metadata', async () => {
+      await repository.deleteAll()
+      const base = UnixTime.toStartOf(UnixTime.now(), 'day')
+      await repository.insertMany([
+        blob({
+          from: '0xA',
+          to: '0xB',
+          callSelector: '0x12345678',
+          callFirstParameter: '0xDiamondA',
+          timestamp: base,
+        }),
+        blob({
+          from: '0xA',
+          to: '0xB',
+          callSelector: '0x12345678',
+          callFirstParameter: '0xDiamondB',
+          timestamp: base,
+        }),
+      ])
+
+      const results = await repository.getCountPerAddressInbox(
+        'ethereum',
+        base,
+        base + UnixTime.DAY,
+      )
+
+      expect(results).toEqualUnsorted([
+        {
+          from: '0xA',
+          to: '0xB',
+          callSelector: '0x12345678',
+          callFirstParameter: '0xDiamondA',
+          count: 1,
+        },
+        {
+          from: '0xA',
+          to: '0xB',
+          callSelector: '0x12345678',
+          callFirstParameter: '0xDiamondB',
+          count: 1,
+        },
+      ])
     })
 
     it('should return empty array when no data matches', async () => {
@@ -234,6 +323,8 @@ function blob(
     from: overrides.from ?? '0x0',
     to: overrides.to ?? null,
     topics: overrides.topics ?? null,
+    callSelector: overrides.callSelector ?? null,
+    callFirstParameter: overrides.callFirstParameter ?? null,
     size: overrides.size ?? BigInt(100),
   }
 }

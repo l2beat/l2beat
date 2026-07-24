@@ -58,15 +58,18 @@ export class BlobIndexer extends ManagedChildIndexer {
             from,
             to: adjustedTo,
           })
-
-          return adjustedTo
+        } else {
+          this.logger.info('Fetched blobs', {
+            blobs: blobs.length,
+          })
         }
 
-        this.logger.info('Fetched blobs', {
-          blobs: blobs.length,
-        })
-
-        await this.$.blobService.save(blobs)
+        await this.$.blobService.replace(
+          this.$.daLayer,
+          from,
+          adjustedTo,
+          blobs,
+        )
 
         this.logger.info('Saved blobs into DB', {
           from,

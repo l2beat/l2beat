@@ -5,7 +5,11 @@ import type {
 } from '@l2beat/config'
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import type { AvailBlob, CelestiaBlob, DaBlob } from '@l2beat/shared'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  encodeFunctionCallFirstParameter,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import type { BlockDaIndexedConfig } from '../../../config/Config'
 
 export class DaService {
@@ -115,9 +119,24 @@ export class DaService {
 }
 
 export function matchEthereumProject(
-  blob: { inbox: string; sequencer: string; topics: string[] },
+  blob: {
+    inbox: string
+    sequencer: string
+    topics: string[]
+    callSelector?: string
+    callFirstParameter?: string
+  },
   config: EthereumDaTrackingConfig,
 ) {
+  if (config.calls !== undefined) {
+    return config.calls.some(
+      (call) =>
+        call.selector.toLowerCase() === blob.callSelector?.toLowerCase() &&
+        encodeFunctionCallFirstParameter(call.firstParameter) ===
+          blob.callFirstParameter?.toLowerCase(),
+    )
+  }
+
   if (config.topics) {
     const hasTopicMatch = config.topics.some((topic) =>
       blob.topics.includes(topic.toLowerCase()),

@@ -105,6 +105,12 @@ function getConfigDetails(
     case 'baseLayer':
       return 'base layer'
     case 'ethereum': {
+      if (config.calls !== undefined) {
+        return `calls: ${config.calls
+          .map((call) => `${call.selector}(${call.firstParameter})`)
+          .join(', ')}`
+      }
+
       const parts = [`inbox: ${config.inbox}`]
       if (config.sequencers && config.sequencers.length > 0) {
         parts.push(`sequencers: ${config.sequencers.join(', ')}`)

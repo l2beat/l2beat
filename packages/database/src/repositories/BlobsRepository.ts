@@ -12,12 +12,16 @@ export interface BlobRecord {
   from: string
   to: string | null
   topics: string[] | null
+  callSelector: string | null
+  callFirstParameter: string | null
   size: bigint | null
 }
 
 export interface BlobPairCount {
   from: string
   to: string | null
+  callSelector: string | null
+  callFirstParameter: string | null
   count: number
 }
 
@@ -30,6 +34,8 @@ export function toRecord(row: Selectable<Blob>): BlobRecord {
     from: row.from,
     to: row.to ?? null,
     topics: row.topics ? JSON.parse(row.topics) : null,
+    callSelector: row.callSelector ?? null,
+    callFirstParameter: row.callFirstParameter ?? null,
     size: row.size ? BigInt(row.size) : null,
   }
 }
@@ -42,6 +48,8 @@ export function toRow(record: Omit<BlobRecord, 'id'>): Insertable<Blob> {
     from: record.from,
     to: record.to ?? null,
     topics: record.topics ? JSON.stringify(record.topics) : null,
+    callSelector: record.callSelector ?? null,
+    callFirstParameter: record.callFirstParameter ?? null,
     size: record.size ? record.size.toString() : null,
   }
 }
@@ -94,17 +102,19 @@ export class BlobsRepository extends BaseRepository {
   ): Promise<BlobPairCount[]> {
     const rows = await this.db
       .selectFrom('Blob')
-      .select(['from', 'to'])
+      .select(['from', 'to', 'callSelector', 'callFirstParameter'])
       .select((eb) => eb.fn.countAll<number>().as('count'))
       .where('daLayer', '=', daLayerToNumber(daLayer))
       .where('timestamp', '>=', UnixTime.toDate(from))
       .where('timestamp', '<', UnixTime.toDate(to))
-      .groupBy(['from', 'to'])
+      .groupBy(['from', 'to', 'callSelector', 'callFirstParameter'])
       .execute()
 
     return rows.map((r) => ({
       from: r.from,
       to: r.to ?? null,
+      callSelector: r.callSelector ?? null,
+      callFirstParameter: r.callFirstParameter ?? null,
       count: Number(r.count),
     }))
   }
@@ -128,6 +138,21 @@ export class BlobsRepository extends BaseRepository {
       .where('blockNumber', '<=', to)
       .execute()
     return rows.map(toRecord)
+  }
+
+  async deleteByBlockRangeInclusive(
+    daLayer: string,
+    from: number,
+    to: number,
+  ): Promise<number> {
+    const result = await this.db
+      .deleteFrom('Blob')
+      .where('daLayer', '=', daLayerToNumber(daLayer))
+      .where('blockNumber', '>=', from)
+      .where('blockNumber', '<=', to)
+      .executeTakeFirst()
+
+    return Number(result.numDeletedRows)
   }
 
   async deleteAll(): Promise<number> {
