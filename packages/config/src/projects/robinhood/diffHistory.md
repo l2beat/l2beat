@@ -8,7 +8,7 @@ Generated with discovered.json: 0xe34461322774a5b2afee4b3aeb9dbe9faa71d9c0
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+SafeL2, ProxyAdmin, NVIDIA Token and AccessControlsRegistry now expose their real deployerAddress/sinceTimestamp/sinceBlock after re-enabling Blockscout getContractCreation.
 
 ## Config/verification related changes
 
