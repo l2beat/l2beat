@@ -1,5 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
+import { manifest } from '~/utils/Manifest'
+import { get7dTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
 import {
   type DiscoveryUpdate,
   getDiscoveryUpdates,
@@ -11,6 +13,7 @@ const PER_PROJECT_LIMIT = 20
 
 export interface RecentChangesProjectGroup {
   name: string
+  iconUrl: string
   /** Link to the project detail page's Updates section. */
   href: string
   updates: DiscoveryUpdate[]
@@ -29,7 +32,7 @@ export async function getRecentChangesOverview(): Promise<RecentChangesOverview>
 
   const since = UnixTime.now() - RECENT_CHANGES_WINDOW
 
-  const groups: RecentChangesProjectGroup[] = []
+  const grouped: { projectId: string; group: RecentChangesProjectGroup }[] = []
   for (const project of projects) {
     if (!project.discoveryInfo?.hasDiscoUi) {
       continue
@@ -55,19 +58,42 @@ export async function getRecentChangesOverview(): Promise<RecentChangesOverview>
       continue
     }
 
-    groups.push({
-      name: project.name,
-      href,
-      updates,
+    grouped.push({
+      projectId: project.id.toString(),
+      group: {
+        name: project.name,
+        iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
+        href,
+        updates,
+      },
     })
   }
 
-  // Most recently changed projects first.
-  groups.sort((a, b) => mostRecent(b.updates) - mostRecent(a.updates))
+  // Highest-TVS projects first; projects without TVS (e.g. interop-only
+  // protocols) fall back to most recently changed.
+  const tvs = await get7dTvsBreakdown({
+    type: 'projects',
+    projectIds: grouped.map((entry) => entry.projectId),
+  })
+  const groups = grouped
+    .sort(
+      (a, b) =>
+        projectTvs(tvs.projects, b.projectId) -
+          projectTvs(tvs.projects, a.projectId) ||
+        mostRecent(b.group.updates) - mostRecent(a.group.updates),
+    )
+    .map((entry) => entry.group)
 
   const count = groups.reduce((sum, group) => sum + group.updates.length, 0)
 
   return { count, groups }
+}
+
+function projectTvs(
+  projects: Record<string, { breakdown: { total: number } }>,
+  projectId: string,
+): number {
+  return projects[projectId]?.breakdown.total ?? 0
 }
 
 function mostRecent(updates: DiscoveryUpdate[]): number {

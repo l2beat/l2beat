@@ -15,6 +15,7 @@ import type { InteropFlowsProtocol } from '../interop/components/flows/utils/Int
 import { HomeAnomaliesTile } from './components/HomeAnomaliesTile'
 import { HomeEthereumCard } from './components/HomeEthereumCard'
 import { HomeInteropCard } from './components/HomeInteropCard'
+import type { HomeRecentChangesProject } from './components/HomeRecentChangesTile'
 import { HomeRecentChangesTile } from './components/HomeRecentChangesTile'
 import { HomeRecentProjectsCard } from './components/HomeRecentProjectsCard'
 import type { HomeScalingCategoryCounts } from './components/HomeScalingCard'
@@ -41,6 +42,7 @@ interface Props extends AppLayoutProps {
   defaultSelectedFlowChains: string[]
   scalingCategoryCounts: HomeScalingCategoryCounts
   recentChangesCount: number
+  recentChangesProjects: HomeRecentChangesProject[]
   ongoingAnomalies: OngoingAnomaliesOverview
   whatsNewItems: HomeWhatsNewItem[]
 }
@@ -59,6 +61,7 @@ export function HomePage({
   defaultSelectedFlowChains,
   scalingCategoryCounts,
   recentChangesCount,
+  recentChangesProjects,
   ongoingAnomalies,
   whatsNewItems,
   ...props
@@ -121,7 +124,10 @@ export function HomePage({
             </div>
             <div className="grid grid-cols-1 gap-4 max-md:contents sm:grid-cols-2 xl:gap-6">
               <HomeAnomaliesTile ongoingAnomalies={ongoingAnomalies} />
-              <HomeRecentChangesTile recentChangesCount={recentChangesCount} />
+              <HomeRecentChangesTile
+                recentChangesCount={recentChangesCount}
+                recentChangesProjects={recentChangesProjects}
+              />
             </div>
             <div className="grid grid-cols-1 items-stretch md:gap-4 xl:gap-6 min-[1650px]:grid-cols-2">
               <HomeTopChainsCard
