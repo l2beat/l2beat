@@ -38,12 +38,7 @@ export async function getPrivacyProjectData(
       manifest,
       metadata: getMetadata(manifest, {
         title: `${details.name} - Privacy Dashboard - L2BEAT`,
-        description: getProjectMetadataDescription({
-          name: details.name,
-          display: {
-            description: details.display.description,
-          },
-        }),
+        description: getProjectMetadataDescription(details),
         url,
         openGraph: {
           image: `/meta-images/privacy/projects/${details.slug}/opengraph-image.png`,
