@@ -1,0 +1,309 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "polymarket",
+  "import": ["../globalConfig.jsonc"],
+  "maxAddresses": 60,
+  "initialAddresses": [
+    "matic:0xE111180000d2663C0091e4f400237545B87B996B",
+    "matic:0xe2222d279d744050d28e00520010520000310F59",
+    "matic:0x4D97DCd97eC945f40cF65F87097ACe5EA0476045",
+    "matic:0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
+    "matic:0x93070a847efEf7F70739046A929D47a521F5B8ee",
+    "matic:0x2957922Eb93258b93368531d39fAcCA3B4dC5854",
+    "matic:0xebC2459Ec962869ca4c0bd1E06368272732BCb08",
+    "matic:0xAdA100Db00Ca00073811820692005400218FcE1f",
+    "matic:0xadA2005600Dec949baf300f4C6120000bDB6eAab",
+    "matic:0x006F54F7f9A22e0000CC2AB60031000000ae9fEF",
+    "matic:0x1000008dD9001B968442c1000017eaE6E0dA00Ba",
+    "matic:0x200000900045e3B6259600682756002200028933",
+    "matic:0x30000034706C7d8e12009DAB006Be20000c031A8",
+    "matic:0xe3333700cA9d93003F00f0F71f8515005F6c00Aa",
+    "matic:0xa1200000d0002264C9a1698e001292D00E1b00af",
+    "matic:0x00000000000Fb5C9ADea0298D729A0CB3823Cc07",
+    "matic:0x7A18EDfe055488A3128f01F563e5B479D92ffc3a",
+    "matic:0x6A9D222616C90FcA5754cd1333cFD9b7fb6a4F74"
+  ],
+  "names": {
+    "matic:0xE111180000d2663C0091e4f400237545B87B996B": "CTFExchange",
+    "matic:0xe2222d279d744050d28e00520010520000310F59": "NegRiskCtfExchange",
+    "matic:0x4D97DCd97eC945f40cF65F87097ACe5EA0476045": "ConditionalTokens",
+    "matic:0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB": "CollateralToken",
+    "matic:0x93070a847efEf7F70739046A929D47a521F5B8ee": "CollateralOnramp",
+    "matic:0x2957922Eb93258b93368531d39fAcCA3B4dC5854": "CollateralOfframp",
+    "matic:0xebC2459Ec962869ca4c0bd1E06368272732BCb08": "PermissionedRamp",
+    "matic:0xAdA100Db00Ca00073811820692005400218FcE1f": "CtfCollateralAdapter",
+    "matic:0xadA2005600Dec949baf300f4C6120000bDB6eAab": "NegRiskCtfCollateralAdapter",
+    "matic:0x006F54F7f9A22e0000CC2AB60031000000ae9fEF": "PositionManager",
+    "matic:0x1000008dD9001B968442c1000017eaE6E0dA00Ba": "BinaryModule",
+    "matic:0x200000900045e3B6259600682756002200028933": "NegRiskModule",
+    "matic:0x30000034706C7d8e12009DAB006Be20000c031A8": "CombinatorialModule",
+    "matic:0xe3333700cA9d93003F00f0F71f8515005F6c00Aa": "CombosExchange",
+    "matic:0xa1200000d0002264C9a1698e001292D00E1b00af": "AutoRedeemer",
+    "matic:0x00000000000Fb5C9ADea0298D729A0CB3823Cc07": "DepositWalletFactory",
+    "matic:0x7A18EDfe055488A3128f01F563e5B479D92ffc3a": "DepositWalletBeacon",
+    "matic:0x6A9D222616C90FcA5754cd1333cFD9b7fb6a4F74": "UmaCtfAdapter"
+  },
+  "overrides": {
+    // Legacy Safe factory; the auto proxy detector misreads it as a GnosisSafe
+    // (slot0/masterCopy heuristic) and crashes trying to read modules.
+    "matic:0xaacFeEa03eb1561C4e67d661e40682Bd20E3541b": {
+      "proxyType": "immutable"
+    },
+    // ERC-1822 proxiableUUID reverts by design when called through a proxy.
+    "matic:0x00000000000Fb5C9ADea0298D729A0CB3823Cc07": {
+      "ignoreMethods": ["proxiableUUID"]
+    },
+    "matic:0x006F54F7f9A22e0000CC2AB60031000000ae9fEF": {
+      "ignoreMethods": ["proxiableUUID"],
+      "fields": {
+        "moduleById": {
+          "handler": {
+            "type": "array",
+            "method": "function moduleById(uint256 id) view returns (address)",
+            "indices": [1, 2, 3]
+          }
+        }
+      }
+    },
+    "matic:0x1000008dD9001B968442c1000017eaE6E0dA00Ba": {
+      "ignoreMethods": ["proxiableUUID"]
+    },
+    "matic:0x200000900045e3B6259600682756002200028933": {
+      "ignoreMethods": ["proxiableUUID"]
+    },
+    "matic:0x30000034706C7d8e12009DAB006Be20000c031A8": {
+      "ignoreMethods": ["proxiableUUID"]
+    },
+    "matic:0xa1200000d0002264C9a1698e001292D00E1b00af": {
+      "ignoreMethods": ["proxiableUUID"]
+    },
+    // DepositWallet implementation contracts: factory()/id() revert on the
+    // uninitialized implementations.
+    "matic:0x58CA52ebe0DadfdF531Cde7062e76746de4Db1eB": {
+      "ignoreMethods": ["factory", "id"]
+    },
+    "matic:0xcCF6f84C4B7e4A22A080233F68eD3bbA3fc4aB16": {
+      "ignoreMethods": ["factory", "id"]
+    },
+    // Safe singleton (mastercopy): uninitialized, getOwners reverts.
+    "matic:0xE51abdf814f8854941b9Fe8e3A4F65CAB4e7A4a8": {
+      "ignoreMethods": ["getOwners"]
+    },
+    // Safe fallback handler: getModules reverts when not called via a Safe.
+    "matic:0xe16bA5bF81E5BB113e4752E4fdC20351d796fB24": {
+      "ignoreMethods": ["getModules"]
+    },
+    // UMA's collateral whitelist enumerates every whitelisted token (WETH, DAI,
+    // USDT, ...) - external dependency, not part of Polymarket.
+    "matic:0x6A9D222616C90FcA5754cd1333cFD9b7fb6a4F74": {
+      "ignoreRelatives": ["collateralWhitelist"],
+      "fields": {
+        // Auth admins: can pause/unpause/reset any question and, after flagging
+        // and the 48h emergencySafetyPeriod, resolve it manually with arbitrary
+        // payouts.
+        "admins": {
+          "handler": {
+            "type": "event",
+            "select": "member",
+            "add": {
+              "event": "event NewAdmin(address indexed admin, address indexed member)"
+            },
+            "remove": {
+              "event": "event RemovedAdmin(address indexed admin, address indexed member)"
+            }
+          }
+        }
+      }
+    },
+    // Timelock (Solady EnumerableRoles): roleHolders/roleHolderCount accept any
+    // uint role, so the auto array explorer never terminates; enumerate the
+    // defined roles 0..MAX_ROLE(3) explicitly.
+    // Roles: 0=ADMIN, 1=PROPOSER, 2=EXECUTOR, 3=CANCELLER.
+    "matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C": {
+      "fields": {
+        "roleHolders": {
+          "handler": {
+            "type": "array",
+            "method": "function roleHolders(uint256 role) view returns (address[])",
+            "indices": [0, 1, 2, 3]
+          }
+        },
+        "roleHolderCount": {
+          "handler": {
+            "type": "array",
+            "method": "function roleHolderCount(uint256 role) view returns (uint256)",
+            "indices": [0, 1, 2, 3]
+          }
+        }
+      }
+    },
+    // UMA protocol internals (Finder -> Store, Voting, GovernorChildTunnel...).
+    // The oracle itself stays; its governance tree is UMA's, not Polymarket's.
+    "matic:0xeE3Afe347D5C74317041E2618C49534dAf887c24": {
+      "ignoreRelatives": ["finder"]
+    },
+    // Native USDC (Circle): keep the token, ignore Circle's minter/admin tree.
+    "matic:0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359": {
+      "ignoreRelatives": [
+        "masterMinter",
+        "minters",
+        "owner",
+        "pauser",
+        "blacklister",
+        "rescuer",
+        "$admin"
+      ]
+    },
+    // Bridged USDC.e: ignore the Polygon PoS bridge admin (Circle/Polygon infra).
+    "matic:0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174": {
+      "ignoreRelatives": ["$admin", "proxyOwner"]
+    },
+    // pUSD backing vault (Circle SingleOwnerMSCA): ignore canonical ERC-4337
+    // EntryPoint and Circle's plugin manager; the vault itself stays.
+    "matic:0xC417fD8E9661c0d2120B64a04Bb3278C17E99DB1": {
+      "ignoreRelatives": ["ENTRY_POINT", "getEntryPoint", "PLUGIN_MANAGER"],
+      "ignoreMethods": ["proxiableUUID"]
+    },
+    // Legacy proxy-wallet factory: ignore GSN relay infra (RelayHub, GSN module);
+    // the factory itself stays because the exchanges validate its wallets.
+    "matic:0xaB45c5A4B0c941a2F231C04C3f49182e1A254052": {
+      "ignoreRelatives": ["getHubAddr", "getGSNModule"]
+    },
+    // CTFExchange v2: Auth admins/operators live in non-enumerable mappings;
+    // reconstruct the sets from Auth events.
+    "matic:0xE111180000d2663C0091e4f400237545B87B996B": {
+      "fields": {
+        // NOTE: the Auth constructor grants admin+operator to the deployer-set
+        // address without emitting events; constructorArgs captures it.
+        "constructorArgs": { "handler": { "type": "constructorArgs" } },
+        "admins": {
+          "handler": {
+            "type": "event",
+            "select": "member",
+            "add": {
+              "event": "event NewAdmin(address indexed member, address indexed admin)"
+            },
+            "remove": {
+              "event": "event RemovedAdmin(address indexed member, address indexed admin)"
+            }
+          }
+        },
+        "operators": {
+          "handler": {
+            "type": "event",
+            "ignoreRelative": true,
+            "select": "member",
+            "add": {
+              "event": "event NewOperator(address indexed member, address indexed admin)"
+            },
+            "remove": {
+              "event": "event RemovedOperator(address indexed member, address indexed admin)"
+            }
+          }
+        }
+      }
+    },
+    "matic:0xe2222d279d744050d28e00520010520000310F59": {
+      "fields": {
+        // NOTE: the Auth constructor grants admin+operator to a deployer-set
+        // address without emitting events. Etherscan has no constructor args
+        // for this deployment (CREATE2, args not archived); verified on-chain
+        // instead: isAdmin(0x3dcE...Safe) = true (same as CTFExchange).
+        "admins": {
+          "handler": {
+            "type": "event",
+            "select": "member",
+            "add": {
+              "event": "event NewAdmin(address indexed member, address indexed admin)"
+            },
+            "remove": {
+              "event": "event RemovedAdmin(address indexed member, address indexed admin)"
+            }
+          }
+        },
+        "operators": {
+          "handler": {
+            "type": "event",
+            "ignoreRelative": true,
+            "select": "member",
+            "add": {
+              "event": "event NewOperator(address indexed member, address indexed admin)"
+            },
+            "remove": {
+              "event": "event RemovedOperator(address indexed member, address indexed admin)"
+            }
+          }
+        }
+      }
+    },
+    // pUSD roles (Solady bitmask): MINTER_ROLE=1 can mint/burn without backing,
+    // WRAPPER_ROLE=2 can wrap/unwrap against the vault. Latest bitmask per user.
+    "matic:0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB": {
+      "ignoreMethods": ["proxiableUUID"],
+      "fields": {
+        "roleHolders": {
+          "handler": {
+            "type": "event",
+            "select": ["user", "roles"],
+            "add": { "event": "RolesUpdated" },
+            "dedupBy": "user"
+          }
+        }
+      }
+    },
+    // Combos RFQ exchange roles (Solady bitmask). ~2k role holders (operator
+    // key fleet / MM allowlist) - do not walk them as relatives.
+    "matic:0xe3333700cA9d93003F00f0F71f8515005F6c00Aa": {
+      "ignoreMethods": ["proxiableUUID"],
+      "fields": {
+        "roleHolders": {
+          "handler": {
+            "type": "event",
+            "ignoreRelative": true,
+            "select": ["user", "roles"],
+            "add": { "event": "RolesUpdated" },
+            "dedupBy": "user"
+          }
+        }
+      }
+    },
+    // Ramp roles (Solady bitmask): pause/witness powers.
+    "matic:0x93070a847efEf7F70739046A929D47a521F5B8ee": {
+      "fields": {
+        "roleHolders": {
+          "handler": {
+            "type": "event",
+            "select": ["user", "roles"],
+            "add": { "event": "RolesUpdated" },
+            "dedupBy": "user"
+          }
+        }
+      }
+    },
+    "matic:0x2957922Eb93258b93368531d39fAcCA3B4dC5854": {
+      "fields": {
+        "roleHolders": {
+          "handler": {
+            "type": "event",
+            "select": ["user", "roles"],
+            "add": { "event": "RolesUpdated" },
+            "dedupBy": "user"
+          }
+        }
+      }
+    },
+    // PermissionedRamp: WITNESS_ROLE=2 co-signs wrap/unwrap requests.
+    "matic:0xebC2459Ec962869ca4c0bd1E06368272732BCb08": {
+      "fields": {
+        "roleHolders": {
+          "handler": {
+            "type": "event",
+            "select": ["user", "roles"],
+            "add": { "event": "RolesUpdated" },
+            "dedupBy": "user"
+          }
+        }
+      }
+    }
+  }
+}
