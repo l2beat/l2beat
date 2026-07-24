@@ -17,6 +17,7 @@ import { createInteropRouter } from './interop/InteropRouter'
 import { createMultisigReportRouter } from './multisig-report/MutlisigReportRouter'
 import { createNativeRollupsRouter } from './native-rollups/NativeRollupsRouter'
 import { createPrivacyRouter } from './privacy/PrivacyRouter'
+import { createProjectsRouter } from './projects/ProjectsRouter'
 import { createPublicationsRouter } from './publications/PublicationsRouter'
 import { createScalingRouter } from './scaling/ScalingRouter'
 import { createStagesRouter } from './stages/StagesRouter'
@@ -50,6 +51,7 @@ export function createServerPageRouter(
   })
 
   const routers = [
+    createProjectsRouter,
     createScalingRouter,
     createInteropRouter,
     createDataAvailabilityRouter,

@@ -7,10 +7,6 @@ export function createLegacyPathsRouter() {
     res.redirect(301, `/scaling/projects/${req.params.name}`)
   })
 
-  router.get('/projects/:name', (req, res) => {
-    res.redirect(301, `/scaling/projects/${req.params.name}`)
-  })
-
   router.get('/scaling/tvl', (_, res) => {
     res.redirect(301, '/scaling/tvs')
   })
