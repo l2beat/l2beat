@@ -1,4 +1,5 @@
 import type { ProjectUpgradeableActor, ReferenceLink } from '@l2beat/config'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { Badge } from '~/components/badge/Badge'
 import { Callout } from '~/components/Callout'
 import {
@@ -14,6 +15,10 @@ import { ShieldIcon } from '~/icons/Shield'
 import { UnderReviewIcon } from '~/icons/UnderReview'
 import { UnverifiedIcon } from '~/icons/Unverified'
 import { cn } from '~/utils/cn'
+import {
+  type ContractAddressAnchorType,
+  getContractAddressAnchor,
+} from '~/utils/project/contracts-and-permissions/getContractAddressAnchor'
 import type { VerificationStatus } from '~/utils/project/contracts-and-permissions/toVerificationStatus'
 import { type PastUpgradesData, PastUpgradesDialog } from './PastUpgradesDialog'
 import { GroupedActorAddresses } from './permissions/GroupedActorAddresses'
@@ -63,12 +68,14 @@ interface TechnologyContractEscrowToken {
 
 interface ContractEntryProps {
   contract: TechnologyContract
+  type: ContractAddressAnchorType
   className?: string
   expandableAddresses?: boolean
 }
 
 export function ContractEntry({
   contract,
+  type,
   className,
   expandableAddresses = false,
 }: ContractEntryProps) {
@@ -110,12 +117,21 @@ export function ContractEntry({
             {expandableAddresses ? (
               <GroupedActorAddresses
                 addresses={contract.addresses}
+                chain={contract.chain}
+                type={type}
                 className="basis-full"
               />
             ) : (
               entries.map((address, i) => (
                 <HighlightableLink
                   key={i}
+                  id={getContractAddressAnchor(
+                    type,
+                    ChainSpecificAddress.fromLong(
+                      contract.chain,
+                      address.address,
+                    ),
+                  )}
                   variant={
                     address.verificationStatus === 'unverified'
                       ? 'danger'
@@ -123,7 +139,7 @@ export function ContractEntry({
                   }
                   href={address.href}
                   address={address.address}
-                  className="flex items-center gap-0.5"
+                  className="flex scroll-mt-14 items-center gap-0.5 md:scroll-mt-10"
                 >
                   {address.verificationStatus === 'unverified' &&
                   color !== 'red' ? (
@@ -329,6 +345,7 @@ export function ContractsWithImpactfulChanges(props: {
         <ContractEntry
           key={technologyContractKey(contract)}
           contract={contract}
+          type={props.type}
           className="my-4 p-0"
           expandableAddresses={
             props.expandableAddresses && contract.addresses.length > 1

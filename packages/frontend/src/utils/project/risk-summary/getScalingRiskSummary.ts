@@ -9,7 +9,10 @@ import { groupRisks } from './groupRisks'
 export function getScalingRiskSummarySection(
   project: Project<'scalingTechnology', 'contracts'>,
   verificationWarnings: ProjectVerificationWarnings,
-): Omit<RiskSummarySectionProps, keyof ProjectSectionProps> {
+): Omit<
+  RiskSummarySectionProps,
+  keyof ProjectSectionProps | 'unverifiedContracts'
+> {
   const sections = [
     {
       id: 'data-availability',
