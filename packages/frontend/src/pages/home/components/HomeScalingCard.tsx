@@ -116,7 +116,7 @@ export function HomeScalingCard({ charts, scalingCategoryCounts }: Props) {
           <HomeChart
             data={activityChartData}
             isLoading={false}
-            color="emerald"
+            color="pink"
             tooltipLabel="UOPS"
             formatValue={(value) => formatActivityCount(value)}
             yAxisUnit=" UOPS"

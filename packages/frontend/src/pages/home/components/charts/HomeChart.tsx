@@ -13,13 +13,12 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { EmeraldFillGradientDef } from '~/components/core/chart/defs/EmeraldGradientDef'
 import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGradientDef'
 import { PinkFillGradientDef } from '~/components/core/chart/defs/PinkGradientDef'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatRange, formatTimestamp } from '~/utils/dates'
 
-export type HomeChartColor = 'pink' | 'emerald' | 'ethereum'
+export type HomeChartColor = 'pink' | 'ethereum'
 
 export interface HomeChartDataPoint {
   timestamp: number
@@ -48,7 +47,6 @@ interface Props {
 
 const STROKE_COLOR: Record<HomeChartColor, string> = {
   pink: 'var(--chart-pink)',
-  emerald: 'var(--chart-emerald)',
   ethereum: 'var(--chart-ethereum)',
 }
 
@@ -125,7 +123,6 @@ export function HomeChart({
           >
             <defs>
               {color === 'pink' && <PinkFillGradientDef id={fillId} />}
-              {color === 'emerald' && <EmeraldFillGradientDef id={fillId} />}
               {color === 'ethereum' && <EthereumFillGradientDef id={fillId} />}
             </defs>
             <Area
