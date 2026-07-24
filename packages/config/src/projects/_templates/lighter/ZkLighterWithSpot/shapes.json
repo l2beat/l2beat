@@ -73,5 +73,14 @@
     ],
     "chain": "ethereum",
     "blockNumber": 25573471
+  },
+  "Lighter_July24_2026": {
+    "hash": "0x2aaf3cdbc91592727e3f6f6f3573ad53f66468cc60ebb85d8a6b1997bd7e6ab4",
+    "address": [
+      "eth:0xE67606837D3d68a679B25B49b8abE5cB4B0Ae483",
+      "eth:0xaeC5dbA7C62482AAba4D330788366De60db16367"
+    ],
+    "chain": "ethereum",
+    "blockNumber": 25601610
   }
 }
