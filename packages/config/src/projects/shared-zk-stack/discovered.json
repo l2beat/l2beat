@@ -2361,11 +2361,13 @@
       "name": "ServerNotifier",
       "address": "eth:0xfca808A744735D9919EEBe4660B8Fd897456Ce31",
       "type": "Contract",
+      "template": "shared-zk-stack/ServerNotifier",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0x3c0e5bd80bc25d2e6f4be57d2f37d84edafd89559cf83a704ad8545a8d5a05c8"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "A simple contract that can be called by the ChainAdmin to emit notifications about chain migrations.",
       "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1747199375,
       "sinceBlock": 22479247,
@@ -4508,6 +4510,7 @@
     "shared-zk-stack/RollupDAManager": "0xb3064b9a4b6b31c69ab9bb1337849fe653a6264b962bfb9ff611716631669310",
     "shared-zk-stack/RollupL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-zk-stack/SecurityCouncil": "0x0b8804832bc8dce16a070579f3ae7bd8a88ec36c613ed48e2ffc2d8fae340180",
+    "shared-zk-stack/ServerNotifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-zk-stack/TimelockController": "0x88a31f2f805e380acd631322cde98aa81297a9600e66a23a68f7a0bcba65ff2e",
     "shared-zk-stack/ZkGovernor": "0x0d0c5f1209dfd254e3b76edce6803b2c607f359320da39df8a032f146ab1c46c",
     "shared-zk-stack/ZkToken": "0x22bee2bab1c58cdc909e86d516e6fbb69aa52fedff617cb6adca6c14d4dc0cd4"

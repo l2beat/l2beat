@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xe7f630f6b69098d36e84b214346c8e8ff527a21e
+Generated with discovered.json: 0x9b1fee98ff85e09ec8f5ed8060fb551d64882121
 
-# Diff at Thu, 23 Jul 2026 10:54:44 GMT:
+# Diff at Fri, 24 Jul 2026 07:51:22 GMT:
 
 - author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
-- comparing to: main@efd03446560a8d585747f124c71622cbfa33fca4 block: 1784193326
+- comparing to: main@efe9fb65fe13447fa2102797e0c08f3569e5b554 block: 1784193326
 - current timestamp: 1784804016
 
 ## Description
@@ -27,15 +27,11 @@ Also, rotated MS member.
 ```
 
 ```diff
-    contract ServerNotifier (eth:0xfca808A744735D9919EEBe4660B8Fd897456Ce31) [N/A] {
-    +++ description: None
-      template:
--        "shared-zk-stack/ServerNotifier"
+    contract ServerNotifier (eth:0xfca808A744735D9919EEBe4660B8Fd897456Ce31) [shared-zk-stack/ServerNotifier] {
+    +++ description: A simple contract that can be called by the ChainAdmin to emit notifications about chain migrations.
       sourceHashes.1:
 -        "0x1e4d0bfb62cb7162bc9ad0aa55a8bf3d7e735f46b0e32e9886ac236f84f9d28e"
 +        "0x3c0e5bd80bc25d2e6f4be57d2f37d84edafd89559cf83a704ad8545a8d5a05c8"
-      description:
--        "A simple contract that can be called by the ChainAdmin to emit notifications about chain migrations."
       values.$implementation:
 -        "eth:0x555D040F4A089D1dF14B372a87C5aF8FA37BDB7A"
 +        "eth:0x260813B0DAf35dda95c41F39c6Cc3F24dc87028A"
