@@ -1,0 +1,52 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "WSTETHPriceFeed",
+  "description": "The price source for the wstETH branch. It builds the wstETH/USD price from two inputs: Chainlink's stETH/USD feed and the wstETH-to-stETH exchange rate reported by the wstETH token. Fetching the price is permissionless and happens on every branch operation. A Chainlink feed is treated as failed if it reverts, returns a non-positive answer, or has not updated within its {{ ethUsdStaleness }} staleness window. If the exchange rate or the ETH/USD reference feed fails the branch is permanently shut down and priced from its last healthy value; if only the stETH/USD feed fails, the branch shuts down but keeps pricing from the ETH/USD feed and the exchange rate.",
+  "ignoreRelatives": ["rateProviderAddress"],
+  "fields": {
+    "constructorArgs": {
+      "handler": {
+        "type": "constructorArgs",
+        "nameArgs": true,
+        "ignoreRelative": true
+      }
+    },
+    "borrowerOperations": {
+      "copy": "constructorArgs",
+      "edit": ["get", "_borrowerOperationsAddress"]
+    },
+    "ethUsdOracle": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Supplies the ETH price this PriceFeed reads."
+        },
+        {
+          "type": "interact",
+          "description": "Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions."
+        }
+      ]
+    },
+    "stEthUsdOracle": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Supplies the stETH price this PriceFeed reads."
+        },
+        {
+          "type": "interact",
+          "description": "Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions."
+        }
+      ]
+    },
+    "ethUsdStaleness": {
+      "copy": "ethUsdOracle",
+      "edit": [
+        "pipe",
+        ["get", "stalenessThreshold"],
+        ["format", "FormatSeconds"]
+      ],
+      "description": "How long a Chainlink feed may go without an update before the branch shuts down."
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SortedTroves",
+  "description": "The branch's troves kept as a doubly-linked list ordered by annual interest rate, so any trove's position relative to the others is known at a glance. It is maintained only by the branch's BorrowerOperations and TroveManager, which insert, remove, and re-position troves as they open, close, or change their rate. It holds no funds and stores nothing but the ordering.",
+  "ignoreMethods": ["contains", "getNext", "getPrev", "isBatchedNode", "nodes"]
+}

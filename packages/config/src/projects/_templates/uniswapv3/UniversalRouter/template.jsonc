@@ -1,0 +1,11 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "UniversalRouter",
+  "description": "Uniswap's current entrypoint router: executes a caller-supplied bytecode-like command list (v2/v3/v4 swaps, Permit2 transfers, WETH wrapping, sweeps) in one transaction. It is immutable and unprivileged, and is the canonical spender that users approve via Permit2. It executes whatever route the calling frontend or aggregator computed off-chain; the contract itself performs no routing.",
+  "fields": {
+    "msgSender": {
+      "ignoreInWatchMode": true,
+      "description": "Transient storage of the current caller during execution; zero at rest."
+    }
+  }
+}

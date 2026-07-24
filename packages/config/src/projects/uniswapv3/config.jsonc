@@ -1,0 +1,90 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "uniswapv3",
+  "import": ["../globalConfig.jsonc"],
+  "maxAddresses": 60,
+  "initialAddresses": [
+    // Core
+    "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984", // UniswapV3Factory
+    // Representative pools (per-pair pool instances are deployed by the factory
+    // via CREATE2 and share identical bytecode; >20k exist, so we track two
+    // high-TVL representatives instead of enumerating them all).
+    "eth:0x88e6A0c2dDD26FEEb64F039a2c41296FcB3f5640", // USDC/WETH 0.05%
+    "eth:0xCBCdF9626bC03E24f779434178A73a0B4bad62eD", // WBTC/WETH 0.3%
+    // Periphery
+    "eth:0xC36442b4a4522E871399CD717aBDD847Ab11FE88", // NonfungiblePositionManager
+    "eth:0xE592427A0AEce92De3Edee1F18E0157C05861564", // SwapRouter (v1)
+    "eth:0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45", // SwapRouter02
+    "eth:0x66a9893cC07D91D95644AEDD05D03f95e1dBA8Af", // UniversalRouter
+    "eth:0x000000000022D473030F116dDEE9F6B43aC78BA3", // Permit2
+    // Governance
+    "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984", // UNI token
+    "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3", // GovernorBravoDelegator
+    "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC", // Timelock
+    // Fee machinery (UNIfication): current factory owner
+    "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A" // V3OpenFeeAdapter
+  ],
+  "names": {
+    "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984": "UniswapV3Factory",
+    "eth:0x88e6A0c2dDD26FEEb64F039a2c41296FcB3f5640": "UniswapV3Pool_USDC_WETH_005",
+    "eth:0xCBCdF9626bC03E24f779434178A73a0B4bad62eD": "UniswapV3Pool_WBTC_WETH_03",
+    "eth:0xC36442b4a4522E871399CD717aBDD847Ab11FE88": "NonfungiblePositionManager",
+    "eth:0xE592427A0AEce92De3Edee1F18E0157C05861564": "SwapRouter",
+    "eth:0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45": "SwapRouter02",
+    "eth:0x66a9893cC07D91D95644AEDD05D03f95e1dBA8Af": "UniversalRouter",
+    "eth:0x000000000022D473030F116dDEE9F6B43aC78BA3": "Permit2",
+    "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984": "UNIToken",
+    "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3": "GovernorBravo",
+    "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC": "Timelock",
+    "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A": "V3OpenFeeAdapter"
+  },
+  "overrides": {
+    // Pools: token0/token1 are external ERC20s (USDC, WBTC, WETH) - not part
+    // of Uniswap; keep the pools, ignore the token governance trees.
+    // The observations ring buffer (TWAP oracle, up to 723 live slots) is too
+    // large for the auto array explorer; slot0 already reports its cardinality.
+    "eth:0x88e6A0c2dDD26FEEb64F039a2c41296FcB3f5640": {
+      "ignoreRelatives": ["token0", "token1"],
+      "ignoreMethods": ["observations"]
+    },
+    "eth:0xCBCdF9626bC03E24f779434178A73a0B4bad62eD": {
+      "ignoreRelatives": ["token0", "token1"],
+      "ignoreMethods": ["observations"]
+    },
+    // Periphery: WETH9 is canonical infra, not Uniswap-governed. The ERC721
+    // auto-sampler reads a few positions/owners and drags random position
+    // tokens (DAI, SPX6900, ...) and holder EOAs into the graph - ignore it.
+    "eth:0xC36442b4a4522E871399CD717aBDD847Ab11FE88": {
+      "ignoreRelatives": ["WETH9"],
+      "ignoreMethods": [
+        "positions",
+        "ownerOf",
+        "getApproved",
+        "tokenByIndex",
+        "tokenOfOwnerByIndex",
+        "tokenURI"
+      ]
+    },
+    // UniversalRouter also routes v2 and v4; the v4 PoolManager/PositionManager
+    // tree is out of scope for this v3 project.
+    "eth:0x66a9893cC07D91D95644AEDD05D03f95e1dBA8Af": {
+      "ignoreRelatives": ["poolManager", "V4_POSITION_MANAGER"]
+    },
+    "eth:0xE592427A0AEce92De3Edee1F18E0157C05861564": {
+      "ignoreRelatives": ["WETH9"]
+    },
+    // Historical proposal payloads (90+) blow up the auto array explorer and
+    // are not permission-relevant; parameters and roles are kept.
+    "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3": {
+      "ignoreMethods": ["getActions", "proposals"]
+    },
+    // Same, on the delegate (analyzed as its own entry behind the Delegator).
+    "eth:0x53a328F4086d7C0F1Fa19e594c9b842125263026": {
+      "ignoreMethods": ["getActions", "proposals"]
+    },
+    // SwapRouter02 also routes v2; the v2 factory tree is out of scope.
+    "eth:0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45": {
+      "ignoreRelatives": ["WETH9", "factoryV2", "positionManager"]
+    }
+  }
+}

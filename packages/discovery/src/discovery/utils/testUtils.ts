@@ -17,6 +17,7 @@ export const EMPTY_ANALYZED_CONTRACT: AnalyzedContract = {
   sourceBundles: [],
   extendedTemplate: undefined,
   ignoreInWatchMode: undefined,
+  ignoreInCoverage: undefined,
   relatives: {},
   usedTypes: [],
 }
@@ -35,6 +36,7 @@ export const EMPTY_ANALYZED_EOA: AnalyzedEOA = {
   sourceBundles: [],
   extendedTemplate: undefined,
   ignoreInWatchMode: undefined,
+  ignoreInCoverage: undefined,
   relatives: {},
   usedTypes: [],
 }

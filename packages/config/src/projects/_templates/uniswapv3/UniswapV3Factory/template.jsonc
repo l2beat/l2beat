@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "UniswapV3Factory",
+  "description": "Deploys Uniswap v3 pools and holds the protocol-level knobs. Anyone can create a pool for any token pair at an enabled fee tier; each pool is deployed via CREATE2, so its address is deterministic in (token0, token1, fee). The factory itself is immutable and its owner holds only two powers: enabling new fee tiers (fee/tickSpacing combinations, irreversible once added) and being the sole address allowed to call setFeeProtocol/collectProtocol on every pool. It cannot modify, pause, or upgrade existing pools.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can enable new fee tiers, set the protocol fee share (up to 1/4 of LP fees per side) on any pool, collect accrued protocol fees, and transfer factory ownership."
+        }
+      ],
+      "severity": "HIGH",
+      "description": "The factory owner. Since the UNIfication proposal this is the V3OpenFeeAdapter, which opens fee poking and collection to anyone while keeping fee policy with governance."
+    },
+    "parameters": {
+      "ignoreInWatchMode": true,
+      "description": "Transient slot used to pass constructor parameters to pools during CREATE2 deployment; zero outside of a pool deployment."
+    }
+  }
+}

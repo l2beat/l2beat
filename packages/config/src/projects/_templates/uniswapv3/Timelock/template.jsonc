@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Timelock",
+  "description": "Compound-style timelock and the executive account of Uniswap governance: it is the UNI minter, the owner of the V3OpenFeeAdapter (and through it the v3 factory), the v4 PoolManager owner, and the TokenJar owner. Every queued transaction waits the fixed delay (2 days) and expires after the grace period (14 days). Its admin is the GovernorBravo proxy, so only passed proposals can queue actions; there is no emergency bypass.",
+  "fields": {
+    "admin": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can queue, cancel, and execute timelocked transactions, and change the delay or admin (through the timelock itself)."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "delay": {
+      "description": "Seconds every queued transaction must wait before execution.",
+      "severity": "HIGH"
+    }
+  }
+}

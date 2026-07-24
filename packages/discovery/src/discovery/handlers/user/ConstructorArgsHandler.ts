@@ -12,6 +12,7 @@ export type ConstructorArgsDefinition = v.infer<
 export const ConstructorArgsDefinition = v.strictObject({
   type: v.literal('constructorArgs'),
   nameArgs: v.boolean().optional(),
+  ignoreRelative: v.boolean().optional(),
 })
 
 export class ConstructorArgsHandler implements Handler {
@@ -45,12 +46,14 @@ export class ConstructorArgsHandler implements Handler {
       return {
         field: 'constructorArgs',
         value: result,
+        ignoreRelative: this.definition.ignoreRelative,
       }
     }
 
     return {
       field: 'constructorArgs',
       value: nameWithFragments(result, this.constructorFragment.inputs),
+      ignoreRelative: this.definition.ignoreRelative,
     }
   }
 

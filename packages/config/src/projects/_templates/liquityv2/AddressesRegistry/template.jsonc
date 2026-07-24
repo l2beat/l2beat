@@ -1,0 +1,32 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "AddressesRegistry",
+  "description": "The immutable address book and risk-parameter store for a single collateral branch: every other contract in the branch reads its sibling addresses and risk settings from here at construction. The parameters it fixes, none of which can change, are the collateral-ratio thresholds (Minimum {{ MCR }}%, Critical {{ CCR }}%, Shutdown {{ SCR }}%, and a Batch buffer of {{ BCR }}%) and the liquidation penalties ({{ LIQUIDATION_PENALTY_SP }}% when a liquidation is absorbed by the Stability Pool, {{ LIQUIDATION_PENALTY_REDISTRIBUTION }}% when it is redistributed across the remaining troves). Its addresses were registered once at deployment and the owner then renounced, so nothing here can be changed afterward.",
+  "ignoreRelatives": ["collToken", "WETH"],
+  "fields": {
+    "SCR": {
+      "edit": ["format", "Undecimal16"],
+      "description": "Shutdown Collateral Ratio (%). The branch can be shut down if its total collateral ratio (TCR) drops below this."
+    },
+    "CCR": {
+      "edit": ["format", "Undecimal16"],
+      "description": "Critical Collateral Ratio (%)."
+    },
+    "MCR": {
+      "edit": ["format", "Undecimal16"],
+      "description": "Minimum Collateral Ratio (%). Troves below it can be liquidated."
+    },
+    "BCR": {
+      "edit": ["format", "Undecimal16"],
+      "description": "Batch Collateral Ratio buffer (%). Batched troves must stay above MCR + BCR."
+    },
+    "LIQUIDATION_PENALTY_SP": {
+      "edit": ["format", "Undecimal16"],
+      "description": "Liquidation penalty when a trove is absorbed by the Stability Pool (%)."
+    },
+    "LIQUIDATION_PENALTY_REDISTRIBUTION": {
+      "edit": ["format", "Undecimal16"],
+      "description": "Liquidation penalty when a trove is redistributed across the remaining troves (%)."
+    }
+  }
+}

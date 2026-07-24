@@ -24,6 +24,7 @@
       ]
     },
     "ignoreInWatchMode": { "type": "array", "items": { "type": "string" } },
+    "ignoreInCoverage": { "type": "array", "items": { "type": "string" } },
     "ignoreMethods": { "type": "array", "items": { "type": "string" } },
     "ignoreRelatives": {
       "anyOf": [
@@ -414,7 +415,8 @@
                 "type": "object",
                 "properties": {
                   "type": { "const": "constructorArgs" },
-                  "nameArgs": { "type": "boolean" }
+                  "nameArgs": { "type": "boolean" },
+                  "ignoreRelative": { "type": "boolean" }
                 },
                 "additionalProperties": false,
                 "required": ["type"]

@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "MetadataNFT",
+  "description": "A read-only renderer for the trove NFT: it builds the on-chain SVG image and JSON metadata returned for each trove, pulling the embedded fonts through the FixedAssetReader. It holds no funds and changes no state."
+}

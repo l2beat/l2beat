@@ -93,6 +93,7 @@ export type StructureEntry = {
   values?: Record<string, ContractValue | undefined>
   errors?: Record<string, string>
   ignoreInWatchMode?: string[]
+  ignoreInCoverage?: string[]
   usedTypes?: DiscoveryCustomType[]
   targetType?: Analysis['type']
   targetProject?: string

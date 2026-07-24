@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "CollSurplusPool",
+  "description": "Holds the collateral left over from liquidations. When a liquidated trove is worth more than its debt plus penalty, the excess collateral is set aside here and credited to the former owner by the TroveManager; the owner later reclaims it through the BorrowerOperations. It only ever holds these unclaimed surpluses.",
+  "ignoreRelatives": ["collToken"],
+  "ignoreInCoverage": ["balances"]
+}

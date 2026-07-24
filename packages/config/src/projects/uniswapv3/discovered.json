@@ -1,0 +1,1071 @@
+{
+  "name": "uniswapv3",
+  "timestamp": 1784245693,
+  "configHash": "0x02c8f5ce7230e09e675df754e9623d7100137adae80ea55b1c170ebf282d93ee",
+  "entries": [
+    {
+      "address": "eth:0x000000000000000000000000000000000000dEaD",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Permit2",
+      "address": "eth:0x000000000022D473030F116dDEE9F6B43aC78BA3",
+      "type": "Contract",
+      "template": "uniswapv3/Permit2",
+      "sourceHashes": [
+        "0xea6870ee07ce35bfcdc4c18c2b8c3c938329760f8ebe44e73d3f03b580023341"
+      ],
+      "proxyType": "immutable",
+      "description": "Canonical signature-based token approval hub (same address on all chains, deployed via CREATE2). Users grant it a one-time ERC20 approval, then issue time-bounded, amount-bounded, spender-bounded permits by signature (SignatureTransfer for one-offs, AllowanceTransfer for standing allowances that can be revoked via lockdown). Immutable and ownerless; the risk it concentrates is that any spender a user signs a permit for can pull the permitted amount while it is valid.",
+      "deployerAddress": "eth:0xD32Ff78579352cA78f416120A9f68b65c410871b",
+      "sinceTimestamp": 1668647879,
+      "sinceBlock": 15986406,
+      "values": {
+        "$immutable": true,
+        "DOMAIN_SEPARATOR": "0x866a5aba21966af95d6c7ab78eb2b2fc913915c28be3b9aa07cc04ff903e3f28"
+      },
+      "implementationNames": {
+        "eth:0x000000000022D473030F116dDEE9F6B43aC78BA3": "Permit2"
+      }
+    },
+    {
+      "name": "Firepit",
+      "address": "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721",
+      "type": "Contract",
+      "template": "uniswapv3/Firepit",
+      "sourceHashes": [
+        "0x8717751f1e512d53b1cec568eec3ba69162bbef39f780e3c9c6ce788ffa1f509"
+      ],
+      "proxyType": "immutable",
+      "description": "The UNI burn engine: anyone can transfer the threshold amount of UNI (currently 4,000) to the 0xdead burn address and in exchange release up to 20 chosen asset balances from the TokenJar to themselves. Searchers arbitrage accumulated fees against the UNI burn cost, so protocol fees are continuously converted into UNI burned. The thresholdSetter (the Timelock) can retune the threshold.",
+      "deployerAddress": "eth:0x2CF8e5b175aa29C1fDf0e9fe572735C78eacCE43",
+      "sinceTimestamp": 1765924727,
+      "sinceBlock": 24028203,
+      "values": {
+        "$immutable": true,
+        "MAX_RELEASE_LENGTH": 20,
+        "nonce": 1074,
+        "owner": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+        "RESOURCE": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+        "RESOURCE_RECIPIENT": "eth:0x000000000000000000000000000000000000dEaD",
+        "threshold": "4000000000000000000000",
+        "thresholdSetter": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+        "TOKEN_JAR": "eth:0xf38521f130fcCF29dB1961597bc5d2B60F995f85"
+      },
+      "fieldMeta": {
+        "threshold": {
+          "severity": "LOW",
+          "description": "UNI amount burned per release call."
+        },
+        "thresholdSetter": { "severity": "HIGH" }
+      },
+      "implementationNames": {
+        "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721": "Firepit"
+      }
+    },
+    {
+      "name": "Timelock",
+      "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+      "type": "Contract",
+      "template": "uniswapv3/Timelock",
+      "sourceHashes": [
+        "0xc3a519884c2c5eb5c8fa33e1f7c27bf1576088eddc2d9dd478bd1889a4f7c649"
+      ],
+      "proxyType": "immutable",
+      "description": "Compound-style timelock and the executive account of Uniswap governance: it is the UNI minter, the owner of the V3OpenFeeAdapter (and through it the v3 factory), the v4 PoolManager owner, and the TokenJar owner. Every queued transaction waits the fixed delay (2 days) and expires after the grace period (14 days). Its admin is the GovernorBravo proxy, so only passed proposals can queue actions; there is no emergency bypass.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721",
+          "description": "can change the UNI amount required per TokenJar release.",
+          "role": ".thresholdSetter"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+          "description": "can mint up to 2% of the UNI supply per year (at most once per year) and set a new minter.",
+          "role": ".minter"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A",
+          "description": "can enable new fee tiers, change the feeSetter, and transfer UniswapV3Factory ownership to a new contract.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A",
+          "description": "sets the protocol fee schedule (global default, per-tier defaults, per-pool overrides) that anyone can then apply to pools.",
+          "role": ".feeSetter"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xf38521f130fcCF29dB1961597bc5d2B60F995f85",
+          "description": "can replace the releaser and thereby redirect all accumulated and future protocol fees.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
+          "description": "can replace the governor implementation (GovernorBravoDelegate).",
+          "role": ".admin"
+        }
+      ],
+      "deployerAddress": "eth:0x41653c7d61609D856f29355E404F310Ec4142Cfb",
+      "sinceTimestamp": 1600107105,
+      "sinceBlock": 10861678,
+      "values": {
+        "$immutable": true,
+        "admin": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
+        "delay": 172800,
+        "GRACE_PERIOD": 1209600,
+        "MAXIMUM_DELAY": 2592000,
+        "MINIMUM_DELAY": 172800,
+        "pendingAdmin": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "fieldMeta": {
+        "admin": { "severity": "HIGH" },
+        "delay": {
+          "severity": "HIGH",
+          "description": "Seconds every queued transaction must wait before execution."
+        }
+      },
+      "implementationNames": {
+        "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC": "Timelock"
+      }
+    },
+    {
+      "name": "UNIToken",
+      "address": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+      "type": "Contract",
+      "template": "uniswapv3/Uni",
+      "sourceHashes": [
+        "0x005d41450e7da29f6913ff9dc83738d960ae222989af4adec6bf24ccdb87aaad"
+      ],
+      "proxyType": "immutable",
+      "description": "The UNI governance token (ERC20 with delegation-based checkpoint voting). Fixed 1B initial supply; the minter (the governance Timelock) can mint at most 2% of the supply per year, no earlier than once every 365 days. Votes must be self-delegated or delegated to count. Token balances at a past block, via delegated checkpoints, are what GovernorBravo counts for proposals and voting.",
+      "deployerAddress": "eth:0x41653c7d61609D856f29355E404F310Ec4142Cfb",
+      "sinceTimestamp": 1600107086,
+      "sinceBlock": 10861674,
+      "values": {
+        "$immutable": true,
+        "decimals": 18,
+        "DELEGATION_TYPEHASH": "0xe48329057bfd03d55e49b547132e39cffd9c1820ad7b9d4c5307691425d15adf",
+        "DOMAIN_TYPEHASH": "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866",
+        "minimumTimeBetweenMints": 31536000,
+        "mintCap": 2,
+        "minter": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+        "mintingAllowedAfter": 1704067200,
+        "name": "Uniswap",
+        "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
+        "symbol": "UNI",
+        "totalSupply": "1000000000000000000000000000"
+      },
+      "fieldMeta": { "minter": { "severity": "HIGH" } },
+      "implementationNames": {
+        "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984": "Uni"
+      }
+    },
+    {
+      "name": "UniswapV3Factory",
+      "address": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
+      "type": "Contract",
+      "template": "uniswapv3/UniswapV3Factory",
+      "sourceHashes": [
+        "0x6e923d5480eaaba4682ea16d891e5906295deeb4c0c09e6495bbcd341d8ca3c5"
+      ],
+      "proxyType": "immutable",
+      "description": "Deploys Uniswap v3 pools and holds the protocol-level knobs. Anyone can create a pool for any token pair at an enabled fee tier; each pool is deployed via CREATE2, so its address is deterministic in (token0, token1, fee). The factory itself is immutable and its owner holds only two powers: enabling new fee tiers (fee/tickSpacing combinations, irreversible once added) and being the sole address allowed to call setFeeProtocol/collectProtocol on every pool. It cannot modify, pause, or upgrade existing pools.",
+      "deployerAddress": "eth:0x6C9FC64A53c1b71FB3f9Af64d1ae3A4931A5f4E9",
+      "sinceTimestamp": 1620156420,
+      "sinceBlock": 12369621,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A",
+        "parameters": {
+          "factory": "eth:0x0000000000000000000000000000000000000000",
+          "token0": "eth:0x0000000000000000000000000000000000000000",
+          "token1": "eth:0x0000000000000000000000000000000000000000",
+          "fee": 0,
+          "tickSpacing": 0
+        }
+      },
+      "fieldMeta": {
+        "owner": {
+          "severity": "HIGH",
+          "description": "The factory owner. Since the UNIfication proposal this is the V3OpenFeeAdapter, which opens fee poking and collection to anyone while keeping fee policy with governance."
+        },
+        "parameters": {
+          "description": "Transient slot used to pass constructor parameters to pools during CREATE2 deployment; zero outside of a pool deployment."
+        }
+      },
+      "implementationNames": {
+        "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984": "UniswapV3Factory"
+      }
+    },
+    {
+      "name": "GovernorBravo",
+      "address": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
+      "type": "Contract",
+      "template": "uniswapv3/GovernorBravoDelegator",
+      "sourceHashes": [
+        "0x9b0c0aedbb7ad7e39f09ed2d4779ec65307b918837b10c2b5e6800c1e9c4ece7"
+      ],
+      "proxyType": "immutable",
+      "description": "The governance proxy: UNI holders vote here. Proposals need the proposalThreshold in delegated UNI to submit, then pass through votingDelay, votingPeriod (with quorumVotes required), and finally queue into the 2-day Timelock before execution. The delegator's admin (the Timelock itself) can swap the GovernorBravoDelegate implementation, so governance logic is upgradeable, but only via a passed proposal.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+          "description": "can queue, cancel, and execute timelocked transactions, and change the delay or admin (through the timelock itself).",
+          "role": ".admin"
+        }
+      ],
+      "deployerAddress": "eth:0xCf2a39493f5193e8eE0D0e8DBf78a92a4EF293c4",
+      "sinceTimestamp": 1629421922,
+      "sinceBlock": 13059157,
+      "values": {
+        "$immutable": true,
+        "admin": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+        "implementation": "eth:0x53a328F4086d7C0F1Fa19e594c9b842125263026",
+        "pendingAdmin": "eth:0x0000000000000000000000000000000000000000",
+        "proposalCount": 98,
+        "proposalThreshold": "1000000000000000000000000",
+        "quorumVotes": "40000000000000000000000000",
+        "votingDelay": 13140,
+        "votingPeriod": 40320
+      },
+      "fieldMeta": {
+        "admin": { "severity": "HIGH" },
+        "votingDelay": {
+          "description": "Blocks between proposal submission and voting start."
+        },
+        "votingPeriod": { "description": "Voting duration in blocks." },
+        "proposalThreshold": {
+          "description": "Delegated UNI required to submit a proposal."
+        },
+        "quorumVotes": {
+          "description": "For-votes required for a proposal to pass."
+        }
+      },
+      "implementationNames": {
+        "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3": "GovernorBravoDelegator"
+      }
+    },
+    {
+      "name": "GovernorBravoDelegate",
+      "address": "eth:0x53a328F4086d7C0F1Fa19e594c9b842125263026",
+      "type": "Contract",
+      "template": "uniswapv3/GovernorBravoDelegate",
+      "sourceHashes": [
+        "0x47d52273d1b62818c961667bfcabfaa75dee85fee5fe69d22153049d8dce45fe"
+      ],
+      "proxyType": "immutable",
+      "description": "Implementation logic behind the GovernorBravoDelegator proxy. Read through the proxy for live values; the values on this address itself are uninitialized storage.",
+      "deployerAddress": "eth:0xCf2a39493f5193e8eE0D0e8DBf78a92a4EF293c4",
+      "sinceTimestamp": 1629421093,
+      "sinceBlock": 13059103,
+      "values": {
+        "$immutable": true,
+        "admin": "eth:0x0000000000000000000000000000000000000000",
+        "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
+        "DOMAIN_TYPEHASH": "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866",
+        "implementation": "eth:0x0000000000000000000000000000000000000000",
+        "initialProposalId": 0,
+        "MAX_PROPOSAL_THRESHOLD": "10000000000000000000000000",
+        "MAX_VOTING_DELAY": 40320,
+        "MAX_VOTING_PERIOD": 80640,
+        "MIN_PROPOSAL_THRESHOLD": "1000000000000000000000000",
+        "MIN_VOTING_DELAY": 1,
+        "MIN_VOTING_PERIOD": 5760,
+        "name": "Uniswap Governor Bravo",
+        "pendingAdmin": "eth:0x0000000000000000000000000000000000000000",
+        "proposalCount": 0,
+        "proposalMaxOperations": 10,
+        "proposalThreshold": 0,
+        "quorumVotes": "40000000000000000000000000",
+        "timelock": "eth:0x0000000000000000000000000000000000000000",
+        "uni": "eth:0x0000000000000000000000000000000000000000",
+        "votingDelay": 0,
+        "votingPeriod": 0
+      },
+      "implementationNames": {
+        "eth:0x53a328F4086d7C0F1Fa19e594c9b842125263026": "GovernorBravoDelegate"
+      }
+    },
+    {
+      "name": "UniversalRouter",
+      "address": "eth:0x66a9893cC07D91D95644AEDD05D03f95e1dBA8Af",
+      "type": "Contract",
+      "template": "uniswapv3/UniversalRouter",
+      "sourceHashes": [
+        "0x736bcdd72f9b9d2f4e6e7e4f61b515502a1fecf34b0bd86ca79e169e1cf5f4cc"
+      ],
+      "proxyType": "immutable",
+      "description": "Uniswap's current entrypoint router: executes a caller-supplied bytecode-like command list (v2/v3/v4 swaps, Permit2 transfers, WETH wrapping, sweeps) in one transaction. It is immutable and unprivileged, and is the canonical spender that users approve via Permit2. It executes whatever route the calling frontend or aggregator computed off-chain; the contract itself performs no routing.",
+      "deployerAddress": "eth:0x2179a60856E37dfeAacA0ab043B931fE224b27B6",
+      "sinceTimestamp": 1737658187,
+      "sinceBlock": 21689092,
+      "values": {
+        "$immutable": true,
+        "msgSender": "eth:0x0000000000000000000000000000000000000000",
+        "poolManager": "eth:0x000000000004444c5dc75cB358380D2e3dE08A90",
+        "V3_POSITION_MANAGER": "eth:0xC36442b4a4522E871399CD717aBDD847Ab11FE88",
+        "V4_POSITION_MANAGER": "eth:0xbD216513d74C8cf14cf4747E6AaA6420FF64ee9e"
+      },
+      "fieldMeta": {
+        "msgSender": {
+          "description": "Transient storage of the current caller during execution; zero at rest."
+        }
+      },
+      "implementationNames": {
+        "eth:0x66a9893cC07D91D95644AEDD05D03f95e1dBA8Af": "UniversalRouter"
+      }
+    },
+    {
+      "name": "SwapRouter02",
+      "address": "eth:0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45",
+      "type": "Contract",
+      "template": "uniswapv3/SwapRouter02",
+      "sourceHashes": [
+        "0x2de3aae2a1089eda33b08e3de6db5aaa7a8e2543533e24927a939bef0218bbf6"
+      ],
+      "proxyType": "immutable",
+      "description": "Second-generation swap router that can route a single trade across both Uniswap v2 and v3 pools and supports multicall batching with permits. Immutable, stateless between transactions, and unprivileged: it only moves funds of callers who approved it, along routes the caller encodes.",
+      "deployerAddress": "eth:0x6C9FC64A53c1b71FB3f9Af64d1ae3A4931A5f4E9",
+      "sinceTimestamp": 1639503446,
+      "sinceBlock": 13804681,
+      "values": {
+        "$immutable": true,
+        "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
+        "factoryV2": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+        "positionManager": "eth:0xC36442b4a4522E871399CD717aBDD847Ab11FE88",
+        "WETH9": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      },
+      "implementationNames": {
+        "eth:0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45": "SwapRouter02"
+      }
+    },
+    {
+      "name": "UniswapV3Pool_USDC_WETH_005",
+      "address": "eth:0x88e6A0c2dDD26FEEb64F039a2c41296FcB3f5640",
+      "type": "Contract",
+      "template": "uniswapv3/UniswapV3Pool",
+      "sourceHashes": [
+        "0x6884399b8c1127ed38bae4ae3af37927bb408b3a61a1b00f69a81f27d876bb82"
+      ],
+      "proxyType": "immutable",
+      "description": "A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on price ranges expressed as ticks; the pool tracks the current price as sqrtPriceX96 in slot0 and crosses initialized ticks as swaps move the price. Swap fees accrue to in-range positions; if the protocol fee is switched on (factory owner only), up to 1/4 of the swap fee per side is diverted to protocolFees for collection by the factory owner. Each pool also embeds a TWAP oracle: a ring buffer of price observations whose cardinality anyone can grow by paying the gas.",
+      "deployerAddress": "eth:0xb2ef52180d1e5f4835F4e343251286fa84743456",
+      "sinceTimestamp": 1620250931,
+      "sinceBlock": 12376729,
+      "values": {
+        "$immutable": true,
+        "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
+        "fee": 500,
+        "feeGrowthGlobal0X128": "4798608121941249129607952460854648",
+        "feeGrowthGlobal1X128": "2043894740129912328975131650765808025900385",
+        "liquidity": "6273709110565216059",
+        "maxLiquidityPerTick": "1917569901783203986719870431555990",
+        "protocolFees": {
+          "token0": 1071885336,
+          "token1": "670951790286582784"
+        },
+        "slot0": {
+          "sqrtPriceX96": "1836112529934583113340373133837903",
+          "tick": 201026,
+          "observationIndex": 532,
+          "observationCardinality": 723,
+          "observationCardinalityNext": 723,
+          "feeProtocol": 68,
+          "unlocked": true
+        },
+        "tickSpacing": 10,
+        "token0": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "token1": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      },
+      "fieldMeta": {
+        "slot0": {
+          "description": "Current sqrtPriceX96, tick, oracle observation index/cardinality, protocol fee setting, and the reentrancy lock; changes with every swap."
+        },
+        "protocolFees": {
+          "description": "Protocol fees accrued and not yet collected to the TokenJar; anyone can trigger collection through the V3OpenFeeAdapter."
+        }
+      },
+      "implementationNames": {
+        "eth:0x88e6A0c2dDD26FEEb64F039a2c41296FcB3f5640": "UniswapV3Pool"
+      }
+    },
+    {
+      "name": "NonfungiblePositionManager",
+      "address": "eth:0xC36442b4a4522E871399CD717aBDD847Ab11FE88",
+      "type": "Contract",
+      "template": "uniswapv3/NonfungiblePositionManager",
+      "sourceHashes": [
+        "0x9a1ef8f86965191f3d67a4e74587b87ccd95ff751de363bcbd122450167e35b5"
+      ],
+      "proxyType": "immutable",
+      "description": "Periphery contract that wraps raw pool positions into ERC721 NFTs. It is the registered owner of the underlying positions in the pools and tracks each tokenId's range, liquidity, and uncollected fees; the NFT holder can add/remove liquidity and collect fees. Immutable and unprivileged: it holds no special rights in the pools, and interacting with pools directly (without the NFT wrapper) is equally possible.",
+      "deployerAddress": "eth:0x6C9FC64A53c1b71FB3f9Af64d1ae3A4931A5f4E9",
+      "sinceTimestamp": 1620156913,
+      "sinceBlock": 12369651,
+      "values": {
+        "$immutable": true,
+        "baseURI": "",
+        "DOMAIN_SEPARATOR": "0x24ea63bbfcb16de2524c7c24322b6cbc39cb2d08881bce770af4771e6b1ad117",
+        "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
+        "name": "Uniswap V3 Positions NFT-V1",
+        "PERMIT_TYPEHASH": "0x49ecf333e5b8c95c40fdafc95c1ad136e8914a8fb55e9dc8bb01eaa83a2df9ad",
+        "symbol": "UNI-V3-POS",
+        "totalSupply": 1200800,
+        "WETH9": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      },
+      "fieldMeta": {
+        "totalSupply": {
+          "description": "Number of position NFTs minted so far."
+        }
+      },
+      "implementationNames": {
+        "eth:0xC36442b4a4522E871399CD717aBDD847Ab11FE88": "NonfungiblePositionManager"
+      }
+    },
+    {
+      "name": "UniswapV3Pool_WBTC_WETH_03",
+      "address": "eth:0xCBCdF9626bC03E24f779434178A73a0B4bad62eD",
+      "type": "Contract",
+      "template": "uniswapv3/UniswapV3Pool",
+      "sourceHashes": [
+        "0x6884399b8c1127ed38bae4ae3af37927bb408b3a61a1b00f69a81f27d876bb82"
+      ],
+      "proxyType": "immutable",
+      "description": "A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on price ranges expressed as ticks; the pool tracks the current price as sqrtPriceX96 in slot0 and crosses initialized ticks as swaps move the price. Swap fees accrue to in-range positions; if the protocol fee is switched on (factory owner only), up to 1/4 of the swap fee per side is diverted to protocolFees for collection by the factory owner. Each pool also embeds a TWAP oracle: a ring buffer of price observations whose cardinality anyone can grow by paying the gas.",
+      "deployerAddress": "eth:0x4bD047CA72fa05F0B89ad08FE5Ba5ccdC07DFFBF",
+      "sinceTimestamp": 1620158974,
+      "sinceBlock": 12369821,
+      "values": {
+        "$immutable": true,
+        "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
+        "fee": 3000,
+        "feeGrowthGlobal0X128": "69241105683657916874498192617506",
+        "feeGrowthGlobal1X128": "15562456917453694942879770397339290342307568",
+        "liquidity": "27370107355797827",
+        "maxLiquidityPerTick": "11505743598341114571880798222544994",
+        "protocolFees": { "token0": 21860, "token1": 3010226584616348 },
+        "slot0": {
+          "sqrtPriceX96": "46351888580884272208588919928623131",
+          "tick": 265602,
+          "observationIndex": 77,
+          "observationCardinality": 360,
+          "observationCardinalityNext": 360,
+          "feeProtocol": 102,
+          "unlocked": true
+        },
+        "tickSpacing": 60,
+        "token0": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "token1": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      },
+      "fieldMeta": {
+        "slot0": {
+          "description": "Current sqrtPriceX96, tick, oracle observation index/cardinality, protocol fee setting, and the reentrancy lock; changes with every swap."
+        },
+        "protocolFees": {
+          "description": "Protocol fees accrued and not yet collected to the TokenJar; anyone can trigger collection through the V3OpenFeeAdapter."
+        }
+      },
+      "implementationNames": {
+        "eth:0xCBCdF9626bC03E24f779434178A73a0B4bad62eD": "UniswapV3Pool"
+      }
+    },
+    {
+      "name": "SwapRouter",
+      "address": "eth:0xE592427A0AEce92De3Edee1F18E0157C05861564",
+      "type": "Contract",
+      "template": "uniswapv3/SwapRouter",
+      "sourceHashes": [
+        "0xe67d2fe360e7a631298c0c42135307499f4d51e4d2b4261faa29f97b17400d8d"
+      ],
+      "proxyType": "immutable",
+      "description": "The original v3 swap router (single- and multi-hop exactInput/exactOutput over v3 pools). Immutable, stateless between transactions, and unprivileged; it executes whatever route the caller encodes and pays pools via the swap callback. Superseded by SwapRouter02 and the UniversalRouter but still functional forever.",
+      "deployerAddress": "eth:0x6C9FC64A53c1b71FB3f9Af64d1ae3A4931A5f4E9",
+      "sinceTimestamp": 1620156641,
+      "sinceBlock": 12369634,
+      "values": {
+        "$immutable": true,
+        "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
+        "WETH9": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      },
+      "implementationNames": {
+        "eth:0xE592427A0AEce92De3Edee1F18E0157C05861564": "SwapRouter"
+      }
+    },
+    {
+      "name": "V3OpenFeeAdapter",
+      "address": "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A",
+      "type": "Contract",
+      "template": "uniswapv3/V3OpenFeeAdapter",
+      "sourceHashes": [
+        "0x2ff0ab152bed841e9cb41f2042cefa8031579b9d096ff597b6e6d467cdde34ba"
+      ],
+      "proxyType": "immutable",
+      "description": "Owns the UniswapV3Factory since the UNIfication proposal and operationalizes the protocol fee switch. Governance (owner and feeSetter, both the Timelock) sets the fee schedule: a global default, per-fee-tier defaults, and per-pool overrides, each encoding the 4-bit per-side protocol fee (0 or 1/4..1/10 of LP fees; current default 68 = 1/4 both sides). Anyone can then permissionlessly push the configured fee onto any pool (triggerFeeUpdate) and collect accrued protocol fees, which are hardcoded to go to the TokenJar. The owner can also still enable new fee tiers and transfer factory ownership onward.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
+          "description": "can enable new fee tiers, set the protocol fee share (up to 1/4 of LP fees per side) on any pool, collect accrued protocol fees, and transfer factory ownership.",
+          "role": ".owner"
+        }
+      ],
+      "deployerAddress": "eth:0x2CF8e5b175aa29C1fDf0e9fe572735C78eacCE43",
+      "sinceTimestamp": 1771859579,
+      "sinceBlock": 24520406,
+      "values": {
+        "$immutable": true,
+        "defaultFee": 68,
+        "FACTORY": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
+        "feeSetter": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+        "feeTiers": [100, 500, 3000, 10000],
+        "owner": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+        "TOKEN_JAR": "eth:0xf38521f130fcCF29dB1961597bc5d2B60F995f85",
+        "ZERO_FEE_SENTINEL": 255
+      },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "feeSetter": { "severity": "HIGH" },
+        "defaultFee": {
+          "description": "Packed per-side protocol fee applied to pools without an override; two 4-bit denominators (68 = 4|4<<4 = 1/4 of LP fees each side)."
+        }
+      },
+      "implementationNames": {
+        "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A": "V3OpenFeeAdapter"
+      }
+    },
+    {
+      "name": "TokenJar",
+      "address": "eth:0xf38521f130fcCF29dB1961597bc5d2B60F995f85",
+      "type": "Contract",
+      "template": "uniswapv3/TokenJar",
+      "sourceHashes": [
+        "0x4400e790cf4908c2aaf6705f909ecee02c546bc2e8998fd638ccf895cd7c6911"
+      ],
+      "proxyType": "immutable",
+      "description": "Escrow for collected protocol fees (arbitrary ERC20s and ETH swept from v3 pools via the V3OpenFeeAdapter and from v4). Only the releaser (the Firepit) can move funds out; the owner (the Timelock) can replace the releaser, which is the lever governance would use to redirect the fee stream.",
+      "deployerAddress": "eth:0x2CF8e5b175aa29C1fDf0e9fe572735C78eacCE43",
+      "sinceTimestamp": 1765924727,
+      "sinceBlock": 24028203,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+        "releaser": "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "releaser": {
+          "severity": "HIGH",
+          "description": "The only address that can move funds out; currently the Firepit burn-exchange."
+        }
+      },
+      "implementationNames": {
+        "eth:0xf38521f130fcCF29dB1961597bc5d2B60F995f85": "TokenJar"
+      }
+    }
+  ],
+  "abis": {
+    "eth:0x000000000022D473030F116dDEE9F6B43aC78BA3": [
+      "error AllowanceExpired(uint256 deadline)",
+      "error ExcessiveInvalidation()",
+      "error InsufficientAllowance(uint256 amount)",
+      "error InvalidAmount(uint256 maxAmount)",
+      "error InvalidContractSignature()",
+      "error InvalidNonce()",
+      "error InvalidSignature()",
+      "error InvalidSignatureLength()",
+      "error InvalidSigner()",
+      "error LengthMismatch()",
+      "error SignatureExpired(uint256 signatureDeadline)",
+      "event Approval(address indexed owner, address indexed token, address indexed spender, uint160 amount, uint48 expiration)",
+      "event Lockdown(address indexed owner, address token, address spender)",
+      "event NonceInvalidation(address indexed owner, address indexed token, address indexed spender, uint48 newNonce, uint48 oldNonce)",
+      "event Permit(address indexed owner, address indexed token, address indexed spender, uint160 amount, uint48 expiration, uint48 nonce)",
+      "event UnorderedNonceInvalidation(address indexed owner, uint256 word, uint256 mask)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function allowance(address, address, address) view returns (uint160 amount, uint48 expiration, uint48 nonce)",
+      "function approve(address token, address spender, uint160 amount, uint48 expiration)",
+      "function invalidateNonces(address token, address spender, uint48 newNonce)",
+      "function invalidateUnorderedNonces(uint256 wordPos, uint256 mask)",
+      "function lockdown(tuple(address token, address spender)[] approvals)",
+      "function nonceBitmap(address, uint256) view returns (uint256)",
+      "function permit(address owner, tuple(tuple(address token, uint160 amount, uint48 expiration, uint48 nonce)[] details, address spender, uint256 sigDeadline) permitBatch, bytes signature)",
+      "function permit(address owner, tuple(tuple(address token, uint160 amount, uint48 expiration, uint48 nonce) details, address spender, uint256 sigDeadline) permitSingle, bytes signature)",
+      "function permitTransferFrom(tuple(tuple(address token, uint256 amount) permitted, uint256 nonce, uint256 deadline) permit, tuple(address to, uint256 requestedAmount) transferDetails, address owner, bytes signature)",
+      "function permitTransferFrom(tuple(tuple(address token, uint256 amount)[] permitted, uint256 nonce, uint256 deadline) permit, tuple(address to, uint256 requestedAmount)[] transferDetails, address owner, bytes signature)",
+      "function permitWitnessTransferFrom(tuple(tuple(address token, uint256 amount) permitted, uint256 nonce, uint256 deadline) permit, tuple(address to, uint256 requestedAmount) transferDetails, address owner, bytes32 witness, string witnessTypeString, bytes signature)",
+      "function permitWitnessTransferFrom(tuple(tuple(address token, uint256 amount)[] permitted, uint256 nonce, uint256 deadline) permit, tuple(address to, uint256 requestedAmount)[] transferDetails, address owner, bytes32 witness, string witnessTypeString, bytes signature)",
+      "function transferFrom(tuple(address from, address to, uint160 amount, address token)[] transferDetails)",
+      "function transferFrom(address from, address to, uint160 amount, address token)"
+    ],
+    "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721": [
+      "constructor(address _resource, uint256 _threshold, address _tokenJar)",
+      "error InvalidNonce()",
+      "error TooManyAssets()",
+      "error Unauthorized()",
+      "event OwnershipTransferred(address indexed user, address indexed newOwner)",
+      "event Released(uint256 indexed nonce, address indexed recipient, address[] assets)",
+      "function MAX_RELEASE_LENGTH() view returns (uint256)",
+      "function RESOURCE() view returns (address)",
+      "function RESOURCE_RECIPIENT() view returns (address)",
+      "function TOKEN_JAR() view returns (address)",
+      "function nonce() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function release(uint256 _nonce, address[] assets, address recipient)",
+      "function setThreshold(uint256 _threshold)",
+      "function setThresholdSetter(address _thresholdSetter)",
+      "function threshold() view returns (uint256)",
+      "function thresholdSetter() view returns (address)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC": [
+      "constructor(address admin_, uint256 delay_)",
+      "event CancelTransaction(bytes32 indexed txHash, address indexed target, uint256 value, string signature, bytes data, uint256 eta)",
+      "event ExecuteTransaction(bytes32 indexed txHash, address indexed target, uint256 value, string signature, bytes data, uint256 eta)",
+      "event NewAdmin(address indexed newAdmin)",
+      "event NewDelay(uint256 indexed newDelay)",
+      "event NewPendingAdmin(address indexed newPendingAdmin)",
+      "event QueueTransaction(bytes32 indexed txHash, address indexed target, uint256 value, string signature, bytes data, uint256 eta)",
+      "function GRACE_PERIOD() view returns (uint256)",
+      "function MAXIMUM_DELAY() view returns (uint256)",
+      "function MINIMUM_DELAY() view returns (uint256)",
+      "function acceptAdmin()",
+      "function admin() view returns (address)",
+      "function cancelTransaction(address target, uint256 value, string signature, bytes data, uint256 eta)",
+      "function delay() view returns (uint256)",
+      "function executeTransaction(address target, uint256 value, string signature, bytes data, uint256 eta) payable returns (bytes)",
+      "function pendingAdmin() view returns (address)",
+      "function queueTransaction(address target, uint256 value, string signature, bytes data, uint256 eta) returns (bytes32)",
+      "function queuedTransactions(bytes32) view returns (bool)",
+      "function setDelay(uint256 delay_)",
+      "function setPendingAdmin(address pendingAdmin_)"
+    ],
+    "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984": [
+      "constructor(address account, address minter_, uint256 mintingAllowedAfter_)",
+      "event Approval(address indexed owner, address indexed spender, uint256 amount)",
+      "event DelegateChanged(address indexed delegator, address indexed fromDelegate, address indexed toDelegate)",
+      "event DelegateVotesChanged(address indexed delegate, uint256 previousBalance, uint256 newBalance)",
+      "event MinterChanged(address minter, address newMinter)",
+      "event Transfer(address indexed from, address indexed to, uint256 amount)",
+      "function DELEGATION_TYPEHASH() view returns (bytes32)",
+      "function DOMAIN_TYPEHASH() view returns (bytes32)",
+      "function PERMIT_TYPEHASH() view returns (bytes32)",
+      "function allowance(address account, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 rawAmount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function checkpoints(address, uint32) view returns (uint32 fromBlock, uint96 votes)",
+      "function decimals() view returns (uint8)",
+      "function delegate(address delegatee)",
+      "function delegateBySig(address delegatee, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s)",
+      "function delegates(address) view returns (address)",
+      "function getCurrentVotes(address account) view returns (uint96)",
+      "function getPriorVotes(address account, uint256 blockNumber) view returns (uint96)",
+      "function minimumTimeBetweenMints() view returns (uint32)",
+      "function mint(address dst, uint256 rawAmount)",
+      "function mintCap() view returns (uint8)",
+      "function minter() view returns (address)",
+      "function mintingAllowedAfter() view returns (uint256)",
+      "function name() view returns (string)",
+      "function nonces(address) view returns (uint256)",
+      "function numCheckpoints(address) view returns (uint32)",
+      "function permit(address owner, address spender, uint256 rawAmount, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function setMinter(address minter_)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address dst, uint256 rawAmount) returns (bool)",
+      "function transferFrom(address src, address dst, uint256 rawAmount) returns (bool)"
+    ],
+    "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984": [
+      "constructor()",
+      "event FeeAmountEnabled(uint24 indexed fee, int24 indexed tickSpacing)",
+      "event OwnerChanged(address indexed oldOwner, address indexed newOwner)",
+      "event PoolCreated(address indexed token0, address indexed token1, uint24 indexed fee, int24 tickSpacing, address pool)",
+      "function createPool(address tokenA, address tokenB, uint24 fee) returns (address pool)",
+      "function enableFeeAmount(uint24 fee, int24 tickSpacing)",
+      "function feeAmountTickSpacing(uint24) view returns (int24)",
+      "function getPool(address, address, uint24) view returns (address)",
+      "function owner() view returns (address)",
+      "function parameters() view returns (address factory, address token0, address token1, uint24 fee, int24 tickSpacing)",
+      "function setOwner(address _owner)"
+    ],
+    "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3": [
+      "constructor(address timelock_, address uni_, address admin_, address implementation_, uint256 votingPeriod_, uint256 votingDelay_, uint256 proposalThreshold_)",
+      "event NewAdmin(address oldAdmin, address newAdmin)",
+      "event NewImplementation(address oldImplementation, address newImplementation)",
+      "event NewPendingAdmin(address oldPendingAdmin, address newPendingAdmin)",
+      "event ProposalCanceled(uint256 id)",
+      "event ProposalCreated(uint256 id, address proposer, address[] targets, uint256[] values, string[] signatures, bytes[] calldatas, uint256 startBlock, uint256 endBlock, string description)",
+      "event ProposalExecuted(uint256 id)",
+      "event ProposalQueued(uint256 id, uint256 eta)",
+      "event ProposalThresholdSet(uint256 oldProposalThreshold, uint256 newProposalThreshold)",
+      "event VoteCast(address indexed voter, uint256 proposalId, uint8 support, uint256 votes, string reason)",
+      "event VotingDelaySet(uint256 oldVotingDelay, uint256 newVotingDelay)",
+      "event VotingPeriodSet(uint256 oldVotingPeriod, uint256 newVotingPeriod)",
+      "function _setImplementation(address implementation_)",
+      "function admin() view returns (address)",
+      "function implementation() view returns (address)",
+      "function pendingAdmin() view returns (address)"
+    ],
+    "eth:0x53a328F4086d7C0F1Fa19e594c9b842125263026": [
+      "event NewAdmin(address oldAdmin, address newAdmin)",
+      "event NewImplementation(address oldImplementation, address newImplementation)",
+      "event NewPendingAdmin(address oldPendingAdmin, address newPendingAdmin)",
+      "event ProposalCanceled(uint256 id)",
+      "event ProposalCreated(uint256 id, address proposer, address[] targets, uint256[] values, string[] signatures, bytes[] calldatas, uint256 startBlock, uint256 endBlock, string description)",
+      "event ProposalExecuted(uint256 id)",
+      "event ProposalQueued(uint256 id, uint256 eta)",
+      "event ProposalThresholdSet(uint256 oldProposalThreshold, uint256 newProposalThreshold)",
+      "event VoteCast(address indexed voter, uint256 proposalId, uint8 support, uint256 votes, string reason)",
+      "event VotingDelaySet(uint256 oldVotingDelay, uint256 newVotingDelay)",
+      "event VotingPeriodSet(uint256 oldVotingPeriod, uint256 newVotingPeriod)",
+      "function BALLOT_TYPEHASH() view returns (bytes32)",
+      "function DOMAIN_TYPEHASH() view returns (bytes32)",
+      "function MAX_PROPOSAL_THRESHOLD() view returns (uint256)",
+      "function MAX_VOTING_DELAY() view returns (uint256)",
+      "function MAX_VOTING_PERIOD() view returns (uint256)",
+      "function MIN_PROPOSAL_THRESHOLD() view returns (uint256)",
+      "function MIN_VOTING_DELAY() view returns (uint256)",
+      "function MIN_VOTING_PERIOD() view returns (uint256)",
+      "function _acceptAdmin()",
+      "function _initiate(uint256 proposalCount)",
+      "function _setPendingAdmin(address newPendingAdmin)",
+      "function _setProposalThreshold(uint256 newProposalThreshold)",
+      "function _setVotingDelay(uint256 newVotingDelay)",
+      "function _setVotingPeriod(uint256 newVotingPeriod)",
+      "function admin() view returns (address)",
+      "function cancel(uint256 proposalId)",
+      "function castVote(uint256 proposalId, uint8 support)",
+      "function castVoteBySig(uint256 proposalId, uint8 support, uint8 v, bytes32 r, bytes32 s)",
+      "function castVoteWithReason(uint256 proposalId, uint8 support, string reason)",
+      "function execute(uint256 proposalId) payable",
+      "function getActions(uint256 proposalId) view returns (address[] targets, uint256[] values, string[] signatures, bytes[] calldatas)",
+      "function getReceipt(uint256 proposalId, address voter) view returns (tuple(bool hasVoted, uint8 support, uint96 votes))",
+      "function implementation() view returns (address)",
+      "function initialProposalId() view returns (uint256)",
+      "function initialize(address timelock_, address uni_, uint256 votingPeriod_, uint256 votingDelay_, uint256 proposalThreshold_)",
+      "function latestProposalIds(address) view returns (uint256)",
+      "function name() view returns (string)",
+      "function pendingAdmin() view returns (address)",
+      "function proposalCount() view returns (uint256)",
+      "function proposalMaxOperations() view returns (uint256)",
+      "function proposalThreshold() view returns (uint256)",
+      "function proposals(uint256) view returns (uint256 id, address proposer, uint256 eta, uint256 startBlock, uint256 endBlock, uint256 forVotes, uint256 againstVotes, uint256 abstainVotes, bool canceled, bool executed)",
+      "function propose(address[] targets, uint256[] values, string[] signatures, bytes[] calldatas, string description) returns (uint256)",
+      "function queue(uint256 proposalId)",
+      "function quorumVotes() view returns (uint256)",
+      "function state(uint256 proposalId) view returns (uint8)",
+      "function timelock() view returns (address)",
+      "function uni() view returns (address)",
+      "function votingDelay() view returns (uint256)",
+      "function votingPeriod() view returns (uint256)"
+    ],
+    "eth:0x66a9893cC07D91D95644AEDD05D03f95e1dBA8Af": [
+      "constructor(tuple(address permit2, address weth9, address v2Factory, address v3Factory, bytes32 pairInitCodeHash, bytes32 poolInitCodeHash, address v4PoolManager, address v3NFTPositionManager, address v4PositionManager) params)",
+      "error BalanceTooLow()",
+      "error ContractLocked()",
+      "error DeltaNotNegative(address currency)",
+      "error DeltaNotPositive(address currency)",
+      "error ETHNotAccepted()",
+      "error ExecutionFailed(uint256 commandIndex, bytes message)",
+      "error FromAddressIsNotOwner()",
+      "error InputLengthMismatch()",
+      "error InsufficientBalance()",
+      "error InsufficientETH()",
+      "error InsufficientToken()",
+      "error InvalidAction(bytes4 action)",
+      "error InvalidBips()",
+      "error InvalidCommandType(uint256 commandType)",
+      "error InvalidEthSender()",
+      "error InvalidPath()",
+      "error InvalidReserves()",
+      "error LengthMismatch()",
+      "error NotAuthorizedForToken(uint256 tokenId)",
+      "error NotPoolManager()",
+      "error OnlyMintAllowed()",
+      "error SliceOutOfBounds()",
+      "error TransactionDeadlinePassed()",
+      "error UnsafeCast()",
+      "error UnsupportedAction(uint256 action)",
+      "error V2InvalidPath()",
+      "error V2TooLittleReceived()",
+      "error V2TooMuchRequested()",
+      "error V3InvalidAmountOut()",
+      "error V3InvalidCaller()",
+      "error V3InvalidSwap()",
+      "error V3TooLittleReceived()",
+      "error V3TooMuchRequested()",
+      "error V4TooLittleReceived(uint256 minAmountOutReceived, uint256 amountReceived)",
+      "error V4TooMuchRequested(uint256 maxAmountInRequested, uint256 amountRequested)",
+      "function V3_POSITION_MANAGER() view returns (address)",
+      "function V4_POSITION_MANAGER() view returns (address)",
+      "function execute(bytes commands, bytes[] inputs) payable",
+      "function execute(bytes commands, bytes[] inputs, uint256 deadline) payable",
+      "function msgSender() view returns (address)",
+      "function poolManager() view returns (address)",
+      "function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes data)",
+      "function unlockCallback(bytes data) returns (bytes)"
+    ],
+    "eth:0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45": [
+      "constructor(address _factoryV2, address factoryV3, address _positionManager, address _WETH9)",
+      "function WETH9() view returns (address)",
+      "function approveMax(address token) payable",
+      "function approveMaxMinusOne(address token) payable",
+      "function approveZeroThenMax(address token) payable",
+      "function approveZeroThenMaxMinusOne(address token) payable",
+      "function callPositionManager(bytes data) payable returns (bytes result)",
+      "function checkOracleSlippage(bytes[] paths, uint128[] amounts, uint24 maximumTickDivergence, uint32 secondsAgo) view",
+      "function checkOracleSlippage(bytes path, uint24 maximumTickDivergence, uint32 secondsAgo) view",
+      "function exactInput(tuple(bytes path, address recipient, uint256 amountIn, uint256 amountOutMinimum) params) payable returns (uint256 amountOut)",
+      "function exactInputSingle(tuple(address tokenIn, address tokenOut, uint24 fee, address recipient, uint256 amountIn, uint256 amountOutMinimum, uint160 sqrtPriceLimitX96) params) payable returns (uint256 amountOut)",
+      "function exactOutput(tuple(bytes path, address recipient, uint256 amountOut, uint256 amountInMaximum) params) payable returns (uint256 amountIn)",
+      "function exactOutputSingle(tuple(address tokenIn, address tokenOut, uint24 fee, address recipient, uint256 amountOut, uint256 amountInMaximum, uint160 sqrtPriceLimitX96) params) payable returns (uint256 amountIn)",
+      "function factory() view returns (address)",
+      "function factoryV2() view returns (address)",
+      "function getApprovalType(address token, uint256 amount) returns (uint8)",
+      "function increaseLiquidity(tuple(address token0, address token1, uint256 tokenId, uint256 amount0Min, uint256 amount1Min) params) payable returns (bytes result)",
+      "function mint(tuple(address token0, address token1, uint24 fee, int24 tickLower, int24 tickUpper, uint256 amount0Min, uint256 amount1Min, address recipient) params) payable returns (bytes result)",
+      "function multicall(bytes32 previousBlockhash, bytes[] data) payable returns (bytes[])",
+      "function multicall(uint256 deadline, bytes[] data) payable returns (bytes[])",
+      "function multicall(bytes[] data) payable returns (bytes[] results)",
+      "function positionManager() view returns (address)",
+      "function pull(address token, uint256 value) payable",
+      "function refundETH() payable",
+      "function selfPermit(address token, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s) payable",
+      "function selfPermitAllowed(address token, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s) payable",
+      "function selfPermitAllowedIfNecessary(address token, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s) payable",
+      "function selfPermitIfNecessary(address token, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s) payable",
+      "function swapExactTokensForTokens(uint256 amountIn, uint256 amountOutMin, address[] path, address to) payable returns (uint256 amountOut)",
+      "function swapTokensForExactTokens(uint256 amountOut, uint256 amountInMax, address[] path, address to) payable returns (uint256 amountIn)",
+      "function sweepToken(address token, uint256 amountMinimum, address recipient) payable",
+      "function sweepToken(address token, uint256 amountMinimum) payable",
+      "function sweepTokenWithFee(address token, uint256 amountMinimum, uint256 feeBips, address feeRecipient) payable",
+      "function sweepTokenWithFee(address token, uint256 amountMinimum, address recipient, uint256 feeBips, address feeRecipient) payable",
+      "function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes _data)",
+      "function unwrapWETH9(uint256 amountMinimum, address recipient) payable",
+      "function unwrapWETH9(uint256 amountMinimum) payable",
+      "function unwrapWETH9WithFee(uint256 amountMinimum, address recipient, uint256 feeBips, address feeRecipient) payable",
+      "function unwrapWETH9WithFee(uint256 amountMinimum, uint256 feeBips, address feeRecipient) payable",
+      "function wrapETH(uint256 value) payable"
+    ],
+    "eth:0x88e6A0c2dDD26FEEb64F039a2c41296FcB3f5640": [
+      "constructor()",
+      "event Burn(address indexed owner, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount, uint256 amount0, uint256 amount1)",
+      "event Collect(address indexed owner, address recipient, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount0, uint128 amount1)",
+      "event CollectProtocol(address indexed sender, address indexed recipient, uint128 amount0, uint128 amount1)",
+      "event Flash(address indexed sender, address indexed recipient, uint256 amount0, uint256 amount1, uint256 paid0, uint256 paid1)",
+      "event IncreaseObservationCardinalityNext(uint16 observationCardinalityNextOld, uint16 observationCardinalityNextNew)",
+      "event Initialize(uint160 sqrtPriceX96, int24 tick)",
+      "event Mint(address sender, address indexed owner, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount, uint256 amount0, uint256 amount1)",
+      "event SetFeeProtocol(uint8 feeProtocol0Old, uint8 feeProtocol1Old, uint8 feeProtocol0New, uint8 feeProtocol1New)",
+      "event Swap(address indexed sender, address indexed recipient, int256 amount0, int256 amount1, uint160 sqrtPriceX96, uint128 liquidity, int24 tick)",
+      "function burn(int24 tickLower, int24 tickUpper, uint128 amount) returns (uint256 amount0, uint256 amount1)",
+      "function collect(address recipient, int24 tickLower, int24 tickUpper, uint128 amount0Requested, uint128 amount1Requested) returns (uint128 amount0, uint128 amount1)",
+      "function collectProtocol(address recipient, uint128 amount0Requested, uint128 amount1Requested) returns (uint128 amount0, uint128 amount1)",
+      "function factory() view returns (address)",
+      "function fee() view returns (uint24)",
+      "function feeGrowthGlobal0X128() view returns (uint256)",
+      "function feeGrowthGlobal1X128() view returns (uint256)",
+      "function flash(address recipient, uint256 amount0, uint256 amount1, bytes data)",
+      "function increaseObservationCardinalityNext(uint16 observationCardinalityNext)",
+      "function initialize(uint160 sqrtPriceX96)",
+      "function liquidity() view returns (uint128)",
+      "function maxLiquidityPerTick() view returns (uint128)",
+      "function mint(address recipient, int24 tickLower, int24 tickUpper, uint128 amount, bytes data) returns (uint256 amount0, uint256 amount1)",
+      "function observations(uint256) view returns (uint32 blockTimestamp, int56 tickCumulative, uint160 secondsPerLiquidityCumulativeX128, bool initialized)",
+      "function observe(uint32[] secondsAgos) view returns (int56[] tickCumulatives, uint160[] secondsPerLiquidityCumulativeX128s)",
+      "function positions(bytes32) view returns (uint128 liquidity, uint256 feeGrowthInside0LastX128, uint256 feeGrowthInside1LastX128, uint128 tokensOwed0, uint128 tokensOwed1)",
+      "function protocolFees() view returns (uint128 token0, uint128 token1)",
+      "function setFeeProtocol(uint8 feeProtocol0, uint8 feeProtocol1)",
+      "function slot0() view returns (uint160 sqrtPriceX96, int24 tick, uint16 observationIndex, uint16 observationCardinality, uint16 observationCardinalityNext, uint8 feeProtocol, bool unlocked)",
+      "function snapshotCumulativesInside(int24 tickLower, int24 tickUpper) view returns (int56 tickCumulativeInside, uint160 secondsPerLiquidityInsideX128, uint32 secondsInside)",
+      "function swap(address recipient, bool zeroForOne, int256 amountSpecified, uint160 sqrtPriceLimitX96, bytes data) returns (int256 amount0, int256 amount1)",
+      "function tickBitmap(int16) view returns (uint256)",
+      "function tickSpacing() view returns (int24)",
+      "function ticks(int24) view returns (uint128 liquidityGross, int128 liquidityNet, uint256 feeGrowthOutside0X128, uint256 feeGrowthOutside1X128, int56 tickCumulativeOutside, uint160 secondsPerLiquidityOutsideX128, uint32 secondsOutside, bool initialized)",
+      "function token0() view returns (address)",
+      "function token1() view returns (address)"
+    ],
+    "eth:0xC36442b4a4522E871399CD717aBDD847Ab11FE88": [
+      "constructor(address _factory, address _WETH9, address _tokenDescriptor_)",
+      "event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)",
+      "event ApprovalForAll(address indexed owner, address indexed operator, bool approved)",
+      "event Collect(uint256 indexed tokenId, address recipient, uint256 amount0, uint256 amount1)",
+      "event DecreaseLiquidity(uint256 indexed tokenId, uint128 liquidity, uint256 amount0, uint256 amount1)",
+      "event IncreaseLiquidity(uint256 indexed tokenId, uint128 liquidity, uint256 amount0, uint256 amount1)",
+      "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function PERMIT_TYPEHASH() view returns (bytes32)",
+      "function WETH9() view returns (address)",
+      "function approve(address to, uint256 tokenId)",
+      "function balanceOf(address owner) view returns (uint256)",
+      "function baseURI() pure returns (string)",
+      "function burn(uint256 tokenId) payable",
+      "function collect(tuple(uint256 tokenId, address recipient, uint128 amount0Max, uint128 amount1Max) params) payable returns (uint256 amount0, uint256 amount1)",
+      "function createAndInitializePoolIfNecessary(address token0, address token1, uint24 fee, uint160 sqrtPriceX96) payable returns (address pool)",
+      "function decreaseLiquidity(tuple(uint256 tokenId, uint128 liquidity, uint256 amount0Min, uint256 amount1Min, uint256 deadline) params) payable returns (uint256 amount0, uint256 amount1)",
+      "function factory() view returns (address)",
+      "function getApproved(uint256 tokenId) view returns (address)",
+      "function increaseLiquidity(tuple(uint256 tokenId, uint256 amount0Desired, uint256 amount1Desired, uint256 amount0Min, uint256 amount1Min, uint256 deadline) params) payable returns (uint128 liquidity, uint256 amount0, uint256 amount1)",
+      "function isApprovedForAll(address owner, address operator) view returns (bool)",
+      "function mint(tuple(address token0, address token1, uint24 fee, int24 tickLower, int24 tickUpper, uint256 amount0Desired, uint256 amount1Desired, uint256 amount0Min, uint256 amount1Min, address recipient, uint256 deadline) params) payable returns (uint256 tokenId, uint128 liquidity, uint256 amount0, uint256 amount1)",
+      "function multicall(bytes[] data) payable returns (bytes[] results)",
+      "function name() view returns (string)",
+      "function ownerOf(uint256 tokenId) view returns (address)",
+      "function permit(address spender, uint256 tokenId, uint256 deadline, uint8 v, bytes32 r, bytes32 s) payable",
+      "function positions(uint256 tokenId) view returns (uint96 nonce, address operator, address token0, address token1, uint24 fee, int24 tickLower, int24 tickUpper, uint128 liquidity, uint256 feeGrowthInside0LastX128, uint256 feeGrowthInside1LastX128, uint128 tokensOwed0, uint128 tokensOwed1)",
+      "function refundETH() payable",
+      "function safeTransferFrom(address from, address to, uint256 tokenId)",
+      "function safeTransferFrom(address from, address to, uint256 tokenId, bytes _data)",
+      "function selfPermit(address token, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s) payable",
+      "function selfPermitAllowed(address token, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s) payable",
+      "function selfPermitAllowedIfNecessary(address token, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s) payable",
+      "function selfPermitIfNecessary(address token, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s) payable",
+      "function setApprovalForAll(address operator, bool approved)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function sweepToken(address token, uint256 amountMinimum, address recipient) payable",
+      "function symbol() view returns (string)",
+      "function tokenByIndex(uint256 index) view returns (uint256)",
+      "function tokenOfOwnerByIndex(address owner, uint256 index) view returns (uint256)",
+      "function tokenURI(uint256 tokenId) view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transferFrom(address from, address to, uint256 tokenId)",
+      "function uniswapV3MintCallback(uint256 amount0Owed, uint256 amount1Owed, bytes data)",
+      "function unwrapWETH9(uint256 amountMinimum, address recipient) payable"
+    ],
+    "eth:0xCBCdF9626bC03E24f779434178A73a0B4bad62eD": [
+      "constructor()",
+      "event Burn(address indexed owner, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount, uint256 amount0, uint256 amount1)",
+      "event Collect(address indexed owner, address recipient, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount0, uint128 amount1)",
+      "event CollectProtocol(address indexed sender, address indexed recipient, uint128 amount0, uint128 amount1)",
+      "event Flash(address indexed sender, address indexed recipient, uint256 amount0, uint256 amount1, uint256 paid0, uint256 paid1)",
+      "event IncreaseObservationCardinalityNext(uint16 observationCardinalityNextOld, uint16 observationCardinalityNextNew)",
+      "event Initialize(uint160 sqrtPriceX96, int24 tick)",
+      "event Mint(address sender, address indexed owner, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount, uint256 amount0, uint256 amount1)",
+      "event SetFeeProtocol(uint8 feeProtocol0Old, uint8 feeProtocol1Old, uint8 feeProtocol0New, uint8 feeProtocol1New)",
+      "event Swap(address indexed sender, address indexed recipient, int256 amount0, int256 amount1, uint160 sqrtPriceX96, uint128 liquidity, int24 tick)",
+      "function burn(int24 tickLower, int24 tickUpper, uint128 amount) returns (uint256 amount0, uint256 amount1)",
+      "function collect(address recipient, int24 tickLower, int24 tickUpper, uint128 amount0Requested, uint128 amount1Requested) returns (uint128 amount0, uint128 amount1)",
+      "function collectProtocol(address recipient, uint128 amount0Requested, uint128 amount1Requested) returns (uint128 amount0, uint128 amount1)",
+      "function factory() view returns (address)",
+      "function fee() view returns (uint24)",
+      "function feeGrowthGlobal0X128() view returns (uint256)",
+      "function feeGrowthGlobal1X128() view returns (uint256)",
+      "function flash(address recipient, uint256 amount0, uint256 amount1, bytes data)",
+      "function increaseObservationCardinalityNext(uint16 observationCardinalityNext)",
+      "function initialize(uint160 sqrtPriceX96)",
+      "function liquidity() view returns (uint128)",
+      "function maxLiquidityPerTick() view returns (uint128)",
+      "function mint(address recipient, int24 tickLower, int24 tickUpper, uint128 amount, bytes data) returns (uint256 amount0, uint256 amount1)",
+      "function observations(uint256) view returns (uint32 blockTimestamp, int56 tickCumulative, uint160 secondsPerLiquidityCumulativeX128, bool initialized)",
+      "function observe(uint32[] secondsAgos) view returns (int56[] tickCumulatives, uint160[] secondsPerLiquidityCumulativeX128s)",
+      "function positions(bytes32) view returns (uint128 liquidity, uint256 feeGrowthInside0LastX128, uint256 feeGrowthInside1LastX128, uint128 tokensOwed0, uint128 tokensOwed1)",
+      "function protocolFees() view returns (uint128 token0, uint128 token1)",
+      "function setFeeProtocol(uint8 feeProtocol0, uint8 feeProtocol1)",
+      "function slot0() view returns (uint160 sqrtPriceX96, int24 tick, uint16 observationIndex, uint16 observationCardinality, uint16 observationCardinalityNext, uint8 feeProtocol, bool unlocked)",
+      "function snapshotCumulativesInside(int24 tickLower, int24 tickUpper) view returns (int56 tickCumulativeInside, uint160 secondsPerLiquidityInsideX128, uint32 secondsInside)",
+      "function swap(address recipient, bool zeroForOne, int256 amountSpecified, uint160 sqrtPriceLimitX96, bytes data) returns (int256 amount0, int256 amount1)",
+      "function tickBitmap(int16) view returns (uint256)",
+      "function tickSpacing() view returns (int24)",
+      "function ticks(int24) view returns (uint128 liquidityGross, int128 liquidityNet, uint256 feeGrowthOutside0X128, uint256 feeGrowthOutside1X128, int56 tickCumulativeOutside, uint160 secondsPerLiquidityOutsideX128, uint32 secondsOutside, bool initialized)",
+      "function token0() view returns (address)",
+      "function token1() view returns (address)"
+    ],
+    "eth:0xE592427A0AEce92De3Edee1F18E0157C05861564": [
+      "constructor(address _factory, address _WETH9)",
+      "function WETH9() view returns (address)",
+      "function exactInput(tuple(bytes path, address recipient, uint256 deadline, uint256 amountIn, uint256 amountOutMinimum) params) payable returns (uint256 amountOut)",
+      "function exactInputSingle(tuple(address tokenIn, address tokenOut, uint24 fee, address recipient, uint256 deadline, uint256 amountIn, uint256 amountOutMinimum, uint160 sqrtPriceLimitX96) params) payable returns (uint256 amountOut)",
+      "function exactOutput(tuple(bytes path, address recipient, uint256 deadline, uint256 amountOut, uint256 amountInMaximum) params) payable returns (uint256 amountIn)",
+      "function exactOutputSingle(tuple(address tokenIn, address tokenOut, uint24 fee, address recipient, uint256 deadline, uint256 amountOut, uint256 amountInMaximum, uint160 sqrtPriceLimitX96) params) payable returns (uint256 amountIn)",
+      "function factory() view returns (address)",
+      "function multicall(bytes[] data) payable returns (bytes[] results)",
+      "function refundETH() payable",
+      "function selfPermit(address token, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s) payable",
+      "function selfPermitAllowed(address token, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s) payable",
+      "function selfPermitAllowedIfNecessary(address token, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s) payable",
+      "function selfPermitIfNecessary(address token, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s) payable",
+      "function sweepToken(address token, uint256 amountMinimum, address recipient) payable",
+      "function sweepTokenWithFee(address token, uint256 amountMinimum, address recipient, uint256 feeBips, address feeRecipient) payable",
+      "function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes _data)",
+      "function unwrapWETH9(uint256 amountMinimum, address recipient) payable",
+      "function unwrapWETH9WithFee(uint256 amountMinimum, address recipient, uint256 feeBips, address feeRecipient) payable"
+    ],
+    "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A": [
+      "constructor(address _factory, address _tokenJar)",
+      "error InvalidFeeTier()",
+      "error InvalidFeeValue()",
+      "error TierAlreadyStored()",
+      "error Unauthorized()",
+      "event DefaultFeeUpdated(uint8 feeValue)",
+      "event FeeSetterUpdated(address indexed oldFeeSetter, address indexed newFeeSetter)",
+      "event FeeTierDefaultCleared(uint24 indexed feeTier)",
+      "event FeeTierDefaultUpdated(uint24 indexed feeTier, uint8 feeValue)",
+      "event FeeUpdateTriggered(address indexed caller, address indexed pool, uint8 feeValue)",
+      "event OwnershipTransferred(address indexed user, address indexed newOwner)",
+      "event PoolOverrideCleared(address indexed pool)",
+      "event PoolOverrideUpdated(address indexed pool, uint8 feeValue)",
+      "function FACTORY() view returns (address)",
+      "function TOKEN_JAR() view returns (address)",
+      "function ZERO_FEE_SENTINEL() view returns (uint8)",
+      "function batchTriggerFeeUpdate(tuple(address token0, address token1)[] pairs)",
+      "function batchTriggerFeeUpdateByPool(address[] pools)",
+      "function clearFeeTierDefault(uint24 feeTier)",
+      "function clearPoolOverride(address pool)",
+      "function collect(tuple(address pool, uint128 amount0Requested, uint128 amount1Requested)[] collectParams) returns (tuple(uint128 amount0Collected, uint128 amount1Collected)[] amountsCollected)",
+      "function defaultFee() view returns (uint8)",
+      "function defaultFees(uint24 feeTier) view returns (uint8)",
+      "function enableFeeAmount(uint24 fee, int24 tickSpacing)",
+      "function feeSetter() view returns (address)",
+      "function feeTierDefaults(uint24 feeTier) view returns (uint8 feeValue)",
+      "function feeTiers(uint256) view returns (uint24)",
+      "function getFee(address pool) view returns (uint8 fee)",
+      "function owner() view returns (address)",
+      "function poolOverrides(address pool) view returns (uint8 feeValue)",
+      "function setDefaultFee(uint8 feeValue)",
+      "function setDefaultFeeByFeeTier(uint24 feeTier, uint8 defaultFeeValue)",
+      "function setFactoryOwner(address newOwner)",
+      "function setFeeSetter(address newFeeSetter)",
+      "function setFeeTierDefault(uint24 feeTier, uint8 feeValue)",
+      "function setPoolOverride(address pool, uint8 feeValue)",
+      "function storeFeeTier(uint24 feeTier)",
+      "function transferOwnership(address newOwner)",
+      "function triggerFeeUpdate(address pool)",
+      "function triggerFeeUpdate(address token0, address token1)"
+    ],
+    "eth:0xf38521f130fcCF29dB1961597bc5d2B60F995f85": [
+      "constructor()",
+      "error Unauthorized()",
+      "event OwnershipTransferred(address indexed user, address indexed newOwner)",
+      "function owner() view returns (address)",
+      "function release(address[] assets, address recipient)",
+      "function releaser() view returns (address)",
+      "function setReleaser(address _releaser)",
+      "function transferOwnership(address newOwner)"
+    ]
+  },
+  "usedTemplates": {
+    "uniswapv3/Firepit": "0x012e56fee83cb91c5375f29c293d32f8850407ec783a3f2780d5a562d5744b8e",
+    "uniswapv3/GovernorBravoDelegate": "0xbd7d6ab35d7de0f9b521c8f1d8508a7268afa3f40474fc0a1b8387bf83f1b4b6",
+    "uniswapv3/GovernorBravoDelegator": "0x7ac89f3060c6a024da3a28e739280718118261e54c5cdb2dbbc422a8cb4cf091",
+    "uniswapv3/NonfungiblePositionManager": "0x2cd534a9bc7f1ec51f8b9e52527dc14480989ade00569d806d6beecc2a2a8bac",
+    "uniswapv3/Permit2": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "uniswapv3/SwapRouter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "uniswapv3/SwapRouter02": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "uniswapv3/Timelock": "0xfa32e109a11b1e4cec79c88e3c5c3dd9da9b7e6b2f48f1b2f01e9a0f742cd8fe",
+    "uniswapv3/TokenJar": "0x4e5cdb5291d4fadb56003b4d078f44feb9eccfad71889bf91f3a931e6a042c03",
+    "uniswapv3/Uni": "0xea7d229580224255bb75d8e601137993bf27d06079e5f967b6e84bfd89200cbd",
+    "uniswapv3/UniswapV3Factory": "0x7279d249aba43ae9cc79d9b0fee0b6aa6f2a982651b91fdea6540b4951df709e",
+    "uniswapv3/UniswapV3Pool": "0x2d123384322884e19c3c6bfec6aac4ea5f30fd1ee2980ee2f2c1272b0f17b92d",
+    "uniswapv3/UniversalRouter": "0x7599293166769ce170829e381d4f80616e6cf1b2c5977c3816b0dd5618c2810a",
+    "uniswapv3/V3OpenFeeAdapter": "0x919168095503a4b75469aba4141a66b10f58ad6b4ffe14cb54bc70ac064927d5"
+  },
+  "usedBlockNumbers": { "ethereum": 25548617 },
+  "permissionsConfigHash": "0x8f302ad4950f63d408fcbc40c0de0a18a23e3cda097e10319780d9ff80518abf"
+}

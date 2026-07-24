@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "GasPool",
+  "description": "A minimal per-branch vault for WETH gas compensation. Each trove posts a small fixed amount of WETH when it opens, held here and used only to cover liquidation gas: it is returned to the borrower when the trove closes, or paid to the liquidator when the trove is liquidated. The contract has no functions of its own; at deployment it simply grants the branch's BorrowerOperations and TroveManager standing approval to move its WETH for those two purposes."
+}

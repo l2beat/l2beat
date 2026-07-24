@@ -1,0 +1,24 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ChainlinkAggregatorProxy",
+  "description": "A Chainlink {{ description }} price-feed proxy. It forwards price reads to a current aggregator and lets its owner propose then confirm a replacement aggregator, so whoever owns it can swap the price source behind the feed. It holds no funds and does no aggregation of its own.",
+  "ignoreMethods": [
+    "getAnswer",
+    "getTimestamp",
+    "proposedLatestRoundData",
+    "latestAnswer",
+    "latestRound",
+    "latestRoundData",
+    "latestTimestamp"
+  ],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "act",
+          "description": "repoint this feed to a different aggregator, swapping the price source behind it to any contract of their choosing."
+        }
+      ]
+    }
+  }
+}

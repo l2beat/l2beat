@@ -37,6 +37,7 @@ describe(ConstructorArgsHandler.name, () => {
 
       expect(response).toEqual({
         field: 'constructorArgs',
+        ignoreRelative: undefined,
         value: [
           'Pi Day N00b Token',
           'PIE',
@@ -69,6 +70,7 @@ describe(ConstructorArgsHandler.name, () => {
 
       expect(response).toEqual({
         field: 'constructorArgs',
+        ignoreRelative: undefined,
         value: {
           name: 'Pi Day N00b Token',
           symbol: 'PIE',
@@ -123,6 +125,7 @@ describe(ConstructorArgsHandler.name, () => {
 
       expect(response).toEqual({
         field: 'constructorArgs',
+        ignoreRelative: undefined,
         value: [
           'Pi Day N00b Token',
           'PIE',

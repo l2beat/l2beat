@@ -37,13 +37,17 @@ export class CallHandler implements Handler {
     private readonly definition: CallHandlerDefinition,
     abi: string[],
   ) {
+    // a nested reference (`{{ a.b.c }}`) depends on the base field `a` being
+    // resolved; the value's sub-path is walked later by resolveReference.
     for (const arg of this.definition.args) {
-      const dependency = getReferencedName(arg)
+      const dependency = getReferencedName(arg)?.split('.')[0]
       if (dependency) {
         this.dependencies.push(dependency)
       }
     }
-    const addressDependency = getReferencedName(this.definition.address)
+    const addressDependency = getReferencedName(this.definition.address)?.split(
+      '.',
+    )[0]
     if (addressDependency) {
       this.dependencies.push(addressDependency)
     }

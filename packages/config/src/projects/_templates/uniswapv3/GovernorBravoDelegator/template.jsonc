@@ -1,0 +1,36 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "GovernorBravoDelegator",
+  "description": "The governance proxy: UNI holders vote here. Proposals need the proposalThreshold in delegated UNI to submit, then pass through votingDelay, votingPeriod (with quorumVotes required), and finally queue into the 2-day Timelock before execution. The delegator's admin (the Timelock itself) can swap the GovernorBravoDelegate implementation, so governance logic is upgradeable, but only via a passed proposal.",
+  "fields": {
+    "admin": {
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "can replace the governor implementation (GovernorBravoDelegate)."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "votingDelay": {
+      "handler": { "type": "call", "method": "function votingDelay() view returns (uint256)", "args": [] },
+      "description": "Blocks between proposal submission and voting start."
+    },
+    "votingPeriod": {
+      "handler": { "type": "call", "method": "function votingPeriod() view returns (uint256)", "args": [] },
+      "description": "Voting duration in blocks."
+    },
+    "proposalThreshold": {
+      "handler": { "type": "call", "method": "function proposalThreshold() view returns (uint256)", "args": [] },
+      "description": "Delegated UNI required to submit a proposal."
+    },
+    "quorumVotes": {
+      "handler": { "type": "call", "method": "function quorumVotes() view returns (uint256)", "args": [] },
+      "description": "For-votes required for a proposal to pass."
+    },
+    "proposalCount": {
+      "handler": { "type": "call", "method": "function proposalCount() view returns (uint256)", "args": [] },
+      "ignoreInWatchMode": true
+    }
+  }
+}

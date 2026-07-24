@@ -1,0 +1,39 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "WETHPriceFeed",
+  "description": "The price source for the WETH branch: it reports the collateral's USD value by reading Chainlink's ETH/USD feed. Fetching the price is permissionless and happens on every branch operation. If that feed fails, meaning it reverts, returns a zero or negative answer, or has not updated within its {{ ethUsdStaleness }} staleness window, the branch is permanently shut down and thereafter priced from the last value recorded while the feed was healthy.",
+  "fields": {
+    "constructorArgs": {
+      "handler": {
+        "type": "constructorArgs",
+        "nameArgs": true,
+        "ignoreRelative": true
+      }
+    },
+    "borrowerOperations": {
+      "copy": "constructorArgs",
+      "edit": ["get", "_borrowerOperationsAddress"]
+    },
+    "ethUsdOracle": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Supplies the ETH price this PriceFeed reads."
+        },
+        {
+          "type": "interact",
+          "description": "Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions."
+        }
+      ]
+    },
+    "ethUsdStaleness": {
+      "copy": "ethUsdOracle",
+      "edit": [
+        "pipe",
+        ["get", "stalenessThreshold"],
+        ["format", "FormatSeconds"]
+      ],
+      "description": "How long the ETH/USD feed may go without an update before the branch shuts down."
+    }
+  }
+}

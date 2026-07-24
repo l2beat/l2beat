@@ -1,0 +1,61 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RETHPriceFeed",
+  "description": "The price source for the rETH branch. It builds the rETH/USD price from Chainlink's ETH/USD feed and the rETH/ETH rate, using the more conservative of Chainlink's market rETH/ETH feed and the canonical rate reported by the rETH token to blunt upward market manipulation. Fetching the price is permissionless and happens on every branch operation. A Chainlink feed is treated as failed if it reverts, returns a non-positive answer, or grows stale beyond its staleness window, which is {{ ethUsdStaleness }} for the ETH/USD feed and {{ rEthEthStaleness }} for the rETH/ETH feed. If the ETH/USD feed or the canonical rate fails the branch is permanently shut down and priced from its last healthy value; if only the rETH/ETH feed fails, the branch shuts down but keeps pricing from the ETH/USD feed and the canonical rate.",
+  "ignoreRelatives": ["rateProviderAddress"],
+  "fields": {
+    "constructorArgs": {
+      "handler": {
+        "type": "constructorArgs",
+        "nameArgs": true,
+        "ignoreRelative": true
+      }
+    },
+    "borrowerOperations": {
+      "copy": "constructorArgs",
+      "edit": ["get", "_borrowerOperationsAddress"]
+    },
+    "ethUsdOracle": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Supplies the ETH price this PriceFeed reads."
+        },
+        {
+          "type": "interact",
+          "description": "Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions."
+        }
+      ]
+    },
+    "rEthEthOracle": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Supplies the rETH price this PriceFeed reads."
+        },
+        {
+          "type": "interact",
+          "description": "Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions."
+        }
+      ]
+    },
+    "ethUsdStaleness": {
+      "copy": "ethUsdOracle",
+      "edit": [
+        "pipe",
+        ["get", "stalenessThreshold"],
+        ["format", "FormatSeconds"]
+      ],
+      "description": "How long the ETH/USD feed may go without an update before the branch shuts down."
+    },
+    "rEthEthStaleness": {
+      "copy": "rEthEthOracle",
+      "edit": [
+        "pipe",
+        ["get", "stalenessThreshold"],
+        ["format", "FormatSeconds"]
+      ],
+      "description": "How long the rETH/ETH feed may go without an update before the branch shuts down."
+    }
+  }
+}

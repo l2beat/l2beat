@@ -188,6 +188,12 @@ export interface BaseProject {
   // privacy data
   privacyInfo?: ProjectPrivacyInfo
 
+  // defi data
+  defiInfo?: ProjectDefiInfo
+
+  // cross-project references (e.g. an oracle or bridge this project depends on)
+  externalDependencies?: ProjectExternalDependency[]
+
   // feature configs
   tvsInfo?: ProjectTvsInfo
   tvsConfig?: TvsToken[]
@@ -234,6 +240,7 @@ export interface ProjectStatuses {
 export interface ProjectDisplay {
   description: string
   detailedDescription?: string
+  references?: ReferenceLink[]
   links: ProjectLinks
   badges: Badge[]
   redWarning?: ProjectRedWarning
@@ -965,6 +972,25 @@ export interface ProjectPrivacyInfo {
   quantumResistant?: true
   riskSummary?: string
   upgradesAndGovernance?: string
+}
+
+export interface ProjectDefiInfo {
+  /** Short category label shown in the DeFi table, e.g. "CDP / Stablecoin". */
+  category: string
+}
+
+export interface ProjectExternalDependency {
+  /** An L2BEAT project this depends on, rendered as a link to its (reviewed) page. */
+  project?: ProjectId
+  /**
+   * A dependency L2BEAT does not review, shown with a "not reviewed" tag and no
+   * link. Provide `name` and `icon` instead of `project`.
+   */
+  name?: string
+  /** Icon slug under /icons for a non-reviewed dependency (e.g. 'reth' -> /icons/reth.png). */
+  icon?: string
+  /** What this project relies on the dependency for. */
+  description: string
 }
 
 export interface PrivacyExitWindow extends ExitWindowRisk {

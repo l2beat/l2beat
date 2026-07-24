@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SwapRouter",
+  "description": "The original v3 swap router (single- and multi-hop exactInput/exactOutput over v3 pools). Immutable, stateless between transactions, and unprivileged; it executes whatever route the caller encodes and pays pools via the swap callback. Superseded by SwapRouter02 and the UniversalRouter but still functional forever.",
+  "fields": {}
+}
