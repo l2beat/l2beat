@@ -65,10 +65,6 @@ export const chains: ChainConfig[] = [
       {
         type: 'blockscout',
         url: 'https://robinhoodchain.blockscout.com/api',
-        // The public RPC is non-archival; getContractCreation triggers a
-        // creation-block lookup that probes historical state and fails.
-        // Discovery only needs latest state here, so skip deployment lookups.
-        unsupported: { getContractCreation: true },
       },
       { type: 'sourcify' },
     ],
