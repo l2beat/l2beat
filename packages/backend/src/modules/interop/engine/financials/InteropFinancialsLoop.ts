@@ -1,6 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type {
   Database,
+  InteropRecentPriceRequest,
   InteropTransferRecord,
   InteropTransferUpdate,
 } from '@l2beat/database'
@@ -82,12 +83,6 @@ export class InteropFinancialsLoop extends TimeLoop {
   }
 
   async run() {
-    const hasAnyPrices = await this.db.interopRecentPrices.hasAnyPrices()
-    if (!hasAnyPrices) {
-      this.logger.debug('Skipping run. No prices found.')
-      return
-    }
-
     const unprocessed = (await this.db.interopTransfer.getUnprocessed()).map(
       (u) => ({
         transfer: u,
@@ -117,26 +112,37 @@ export class InteropFinancialsLoop extends TimeLoop {
       this.logger,
     )
 
-    const coingeckoIds = unique(
-      Array.from(tokenInfos.values())
-        .map((t) => t.coingeckoId)
-        .filter((u) => u !== undefined),
-    )
+    const { requests, getRequestId } = createPriceRequests(tokenInfos)
+    const transfersWithPriceRequests = unprocessed.map((transfer) => ({
+      ...transfer,
+      srcPriceRequestId: transfer.srcId
+        ? getRequestId(
+            transfer.srcId,
+            transfer.transfer.srcTime ?? transfer.transfer.timestamp,
+          )
+        : undefined,
+      dstPriceRequestId: transfer.dstId
+        ? getRequestId(
+            transfer.dstId,
+            transfer.transfer.dstTime ?? transfer.transfer.timestamp,
+          )
+        : undefined,
+    }))
 
-    const prices = await this.db.interopRecentPrices.getClosestPrices(
-      coingeckoIds,
-      UnixTime.now(),
+    const prices = await this.db.interopRecentPrices.getClosestPricesAtOrBefore(
+      requests,
       UnixTime.DAY,
     )
 
     const skippedValuations: InteropSkippedTransferValuationNotification[] = []
 
-    const updates = unprocessed.map((t) => {
+    const updates = transfersWithPriceRequests.map((t) => {
       const update: InteropTransferUpdate = getEmptyFinancialUpdate()
       if (t.srcId) {
         const skipped = this.applyTokenUpdate(
           tokenInfos,
           prices,
+          t.srcPriceRequestId,
           t.srcId,
           t.transfer.srcRawAmount,
           t.transfer.srcTime ?? t.transfer.timestamp,
@@ -152,6 +158,7 @@ export class InteropFinancialsLoop extends TimeLoop {
         const skipped = this.applyTokenUpdate(
           tokenInfos,
           prices,
+          t.dstPriceRequestId,
           t.dstId,
           t.transfer.dstRawAmount,
           t.transfer.dstTime ?? t.transfer.timestamp,
@@ -198,7 +205,8 @@ export class InteropFinancialsLoop extends TimeLoop {
 
   private applyTokenUpdate(
     tokenInfos: TokenInfos,
-    prices: Map<string, number | undefined>,
+    prices: Map<number, number | undefined>,
+    priceRequestId: number | undefined,
     id: DeployedTokenId,
     rawAmount: bigint | undefined,
     priceTimestamp: UnixTime,
@@ -212,6 +220,7 @@ export class InteropFinancialsLoop extends TimeLoop {
     const tokenUpdate = this.generateTokenUpdate(
       tokenInfos,
       prices,
+      priceRequestId,
       id,
       rawAmount,
       priceTimestamp,
@@ -252,7 +261,8 @@ export class InteropFinancialsLoop extends TimeLoop {
 
   private generateTokenUpdate(
     tokenInfos: TokenInfos,
-    prices: Map<string, number | undefined>,
+    prices: Map<number, number | undefined>,
+    priceRequestId: number | undefined,
     id: DeployedTokenId,
     rawAmount: bigint | undefined,
     priceTimestamp: UnixTime,
@@ -275,7 +285,8 @@ export class InteropFinancialsLoop extends TimeLoop {
       }
     }
 
-    const price = prices.get(tokenInfo.coingeckoId)
+    const price =
+      priceRequestId === undefined ? undefined : prices.get(priceRequestId)
     if (price === undefined) {
       this.logger.warn('Missing price data', {
         id,
@@ -427,6 +438,48 @@ export async function getTokenInfos(
   }
 
   return result
+}
+
+function createPriceRequests(tokenInfos: TokenInfos) {
+  const requests: InteropRecentPriceRequest[] = []
+  const requestIdsByCoinAndTimestamp = new Map<string, Map<UnixTime, number>>()
+
+  function getRequestId(
+    deployedTokenId: DeployedTokenId,
+    timestamp: UnixTime,
+  ): number | undefined {
+    const tokenInfo = tokenInfos.get(deployedTokenId)
+    if (!tokenInfo || tokenInfo.isPriceUnreliable) {
+      return undefined
+    }
+
+    let requestIdsByTimestamp = requestIdsByCoinAndTimestamp.get(
+      tokenInfo.coingeckoId,
+    )
+    if (!requestIdsByTimestamp) {
+      requestIdsByTimestamp = new Map()
+      requestIdsByCoinAndTimestamp.set(
+        tokenInfo.coingeckoId,
+        requestIdsByTimestamp,
+      )
+    }
+
+    const existingRequestId = requestIdsByTimestamp.get(timestamp)
+    if (existingRequestId !== undefined) {
+      return existingRequestId
+    }
+
+    const requestId = requests.length
+    requests.push({
+      requestId,
+      coingeckoId: tokenInfo.coingeckoId,
+      timestamp,
+    })
+    requestIdsByTimestamp.set(timestamp, requestId)
+    return requestId
+  }
+
+  return { requests, getRequestId }
 }
 
 export function toDeployedId(
