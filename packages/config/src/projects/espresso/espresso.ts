@@ -62,6 +62,7 @@ export const espresso: BaseProject = {
       sinceTimestamp: 1704700211,
       untilTimestamp: 1772483759, // 2026-03-02T20:35:59Z V2 upgrade
       type: 'liveness',
+      eventIdentity: { type: 'transactionHash' },
       subtype: 'proofSubmissions',
       params: {
         formula: 'functionCall',
@@ -89,6 +90,7 @@ export const espresso: BaseProject = {
       sinceTimestamp: 1772483759, // 2026-03-02T20:35:59Z V2 upgrade
       untilTimestamp: 1772490059, // 2026-03-02T22:20:59Z V3 upgrade
       type: 'liveness',
+      eventIdentity: { type: 'transactionHash' },
       subtype: 'proofSubmissions',
       params: {
         formula: 'functionCall',
@@ -117,6 +119,7 @@ export const espresso: BaseProject = {
       projectId: ProjectId('espresso'),
       sinceTimestamp: 1772490059, // 2026-03-02T22:20:59Z V3 upgrade
       type: 'liveness',
+      eventIdentity: { type: 'transactionHash' },
       subtype: 'proofSubmissions',
       params: {
         formula: 'functionCall',

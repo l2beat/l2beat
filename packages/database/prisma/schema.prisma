@@ -116,8 +116,9 @@ model Liveness {
   blockNumber     Int
   txHash          String   @db.VarChar(255)
   configurationId String   @db.VarChar(12)
+  eventId         String   @db.VarChar(255)
 
-  @@id([configurationId, txHash])
+  @@id([configurationId, eventId])
   @@index([configurationId, timestamp])
 }
 
@@ -126,8 +127,9 @@ model RealTimeLiveness {
   txHash          String   @db.VarChar(255)
   timestamp       DateTime @db.Timestamp(6)
   blockNumber     Int
+  eventId         String   @db.VarChar(255)
 
-  @@id([configurationId, txHash])
+  @@id([configurationId, eventId])
   @@index([configurationId, timestamp])
 }
 

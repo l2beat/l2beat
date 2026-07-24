@@ -19,6 +19,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import type { TrackedTxsConfig } from '../../config/Config'
+import { getLivenessEventId } from '../tracked-txs/utils/getLivenessEventId'
 import { isFistParameterMatching } from '../tracked-txs/utils/isFirstParameterMatching'
 import { isProgramHashProven } from '../tracked-txs/utils/isProgramHashProven'
 import type { BlockProcessor } from '../types'
@@ -118,12 +119,18 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
         ...matchingCalls,
         ...filteredSubmissions,
         ...filteredSharedBridgeCalls,
-      ].map((config) => ({
-        timestamp: block.timestamp,
-        blockNumber: block.number,
-        txHash: tx.hash as string,
-        configurationId: config.id,
-      }))
+      ].map((config) => {
+        return {
+          timestamp: block.timestamp,
+          blockNumber: block.number,
+          txHash: tx.hash as string,
+          configurationId: config.id,
+          eventId: getLivenessEventId(config, {
+            hash: tx.hash as string,
+            input: tx.data as string,
+          }),
+        }
+      })
 
       records.push(...results)
     }
@@ -137,11 +144,15 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
       )
 
       const results = matchingCalls
+        .filter((config) => config.eventIdentity.type === 'transactionHash')
         .map((config) => ({
           timestamp: block.timestamp,
           blockNumber: block.number,
           txHash: log.transactionHash as string,
           configurationId: config.id,
+          eventId: getLivenessEventId(config, {
+            hash: log.transactionHash as string,
+          }),
         }))
         .filter(
           (result) =>
@@ -160,7 +171,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
       { blockNumber: block.number, count: records.length },
     )
 
-    await this.db.realTimeLiveness.upsertMany(records)
+    await this.db.realTimeLiveness.insertMany(records)
   }
 
   async checkForAnomalies(block: Block) {

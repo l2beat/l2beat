@@ -47,6 +47,7 @@ export const vector: BaseProject = {
       projectId: ProjectId('vector'),
       sinceTimestamp: 1719974843,
       type: 'liveness',
+      eventIdentity: { type: 'transactionHash' },
       subtype: 'proofSubmissions',
       params: {
         formula: 'functionCall',

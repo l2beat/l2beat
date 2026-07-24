@@ -15,12 +15,16 @@ import type {
 import type { TrackedTxsClient } from './TrackedTxsClient'
 import type { TxUpdaterInterface } from './types/TxUpdaterInterface'
 
+type TrackedTxUpdater =
+  | TxUpdaterInterface<'liveness'>
+  | TxUpdaterInterface<'l2costs'>
+
 interface Dependencies
   extends Omit<
     ManagedMultiIndexerOptions<TrackedTxConfigEntry>,
     'name' | 'logger'
   > {
-  updaters: TxUpdaterInterface<'liveness' | 'l2costs'>[]
+  updaters: TrackedTxUpdater[]
   trackedTxsClient: TrackedTxsClient
   db: Database
   projects: TrackedTxProject[]
@@ -71,7 +75,6 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
 
     return async () => {
       for (const updater of this.$.updaters) {
-        const filteredTxs = txs.filter((tx) => tx.type === updater.type)
         await this.$.db.syncMetadata.updateSyncedUntil(
           updater.type,
           uniq(
@@ -81,7 +84,12 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
           ),
           unixTo,
         )
-        await updater.update(filteredTxs)
+
+        if (updater.type === 'liveness') {
+          await updater.update(txs.filter((tx) => tx.type === 'liveness'))
+        } else {
+          await updater.update(txs.filter((tx) => tx.type === 'l2costs'))
+        }
       }
 
       this.logger.info('Executed updaters', {

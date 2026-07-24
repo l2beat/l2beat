@@ -3,7 +3,6 @@ import {
   EthereumAddress,
   type ProjectId,
   type TrackedTxsConfigSubtype,
-  type TrackedTxsConfigType,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
@@ -11,6 +10,17 @@ import { v } from '@l2beat/validate'
 export type TrackedTxResult =
   | TrackedTxTransferResult
   | TrackedTxFunctionCallResult
+
+export type TrackedTxLivenessResult = Extract<
+  TrackedTxResult,
+  { type: 'liveness' }
+>
+
+export type TrackedTxCostsResult = Extract<TrackedTxResult, { type: 'l2costs' }>
+
+type TrackedTxFeatureResult =
+  | { type: 'liveness'; eventId: string }
+  | { type: 'l2costs' }
 
 export type DuneFunctionCallResult = v.infer<typeof DuneFunctionCallResult>
 export const DuneFunctionCallResult = v.object({
@@ -26,11 +36,10 @@ export const DuneFunctionCallResult = v.object({
   input: v.string(),
 })
 
-export type TrackedTxFunctionCallResult = {
+export type TrackedTxFunctionCallResult = TrackedTxFeatureResult & {
   formula: 'functionCall'
   id: TrackedTxId
   projectId: ProjectId
-  type: TrackedTxsConfigType
   subtype: TrackedTxsConfigSubtype
   hash: string
   blockNumber: number
@@ -58,11 +67,10 @@ export const DuneTransferResult = v.object({
   non_zero_bytes: v.number(),
 })
 
-export type TrackedTxTransferResult = {
+export type TrackedTxTransferResult = TrackedTxFeatureResult & {
   formula: 'transfer'
   projectId: ProjectId
   id: TrackedTxId
-  type: TrackedTxsConfigType
   subtype: TrackedTxsConfigSubtype
   hash: string
   blockNumber: number

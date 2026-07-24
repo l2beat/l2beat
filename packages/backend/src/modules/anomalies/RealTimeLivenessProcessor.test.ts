@@ -15,6 +15,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
+import { utils } from 'ethers'
 import type { TrackedTxsConfig } from '../../config/Config'
 import { mockDatabase } from '../../test/database'
 import type { AnomalyNotifier } from './AnomalyNotifier'
@@ -79,7 +80,7 @@ describe(RealTimeLivenessProcessor.name, () => {
         const realTimeLivenessRepository = mockObject<
           Database['realTimeLiveness']
         >({
-          upsertMany: mockFn().resolvesTo(undefined),
+          insertMany: mockFn().resolvesTo(undefined),
         })
 
         const projectId = ProjectId('project-id')
@@ -92,6 +93,7 @@ describe(RealTimeLivenessProcessor.name, () => {
           {
             type: 'liveness' as const,
             id: 'tracked-tx-1',
+            eventIdentity: { type: 'transactionHash' },
             projectId,
             subtype: 'stateUpdates' as const,
             sinceTimestamp: UnixTime.now(),
@@ -104,6 +106,7 @@ describe(RealTimeLivenessProcessor.name, () => {
           {
             type: 'liveness' as const,
             id: 'tracked-tx-2',
+            eventIdentity: { type: 'transactionHash' },
             projectId,
             subtype: 'stateUpdates' as const,
             sinceTimestamp: UnixTime.now(),
@@ -167,24 +170,86 @@ describe(RealTimeLivenessProcessor.name, () => {
 
         await processor.matchLivenessTransactions(block, logs)
 
-        expect(realTimeLivenessRepository.upsertMany).toHaveBeenCalledWith([
+        expect(realTimeLivenessRepository.insertMany).toHaveBeenCalledWith([
           {
             configurationId: configurations[0].id,
             txHash: txHash1,
             blockNumber: block.number,
             timestamp: block.timestamp,
+            eventId: txHash1,
           },
           {
             configurationId: configurations[1].id,
             txHash: txHash1,
             blockNumber: block.number,
             timestamp: block.timestamp,
+            eventId: txHash1,
           },
           {
             configurationId: configurations[1].id,
             txHash: txHash2,
             blockNumber: block.number,
             timestamp: block.timestamp,
+            eventId: txHash2,
+          },
+        ])
+      })
+
+      it('uses a function parameter as the event identity', async () => {
+        const realTimeLivenessRepository = mockObject<
+          Database['realTimeLiveness']
+        >({
+          insertMany: mockFn().resolvesTo(undefined),
+        })
+        const projectId = ProjectId('project-id')
+        const address = EthereumAddress.random()
+        const signature = 'function submit((uint256,uint256))' as const
+        const iface = new utils.Interface([signature])
+        const data = iface.encodeFunctionData('submit', [[123, 456]])
+        const configuration: TrackedTxConfigEntry = {
+          type: 'liveness',
+          id: 'tracked-tx-1',
+          projectId,
+          subtype: 'stateUpdates',
+          sinceTimestamp: UnixTime.now(),
+          eventIdentity: {
+            type: 'functionCallParameter',
+            path: [0, 0],
+          },
+          params: {
+            formula: 'functionCall',
+            address,
+            selector: data.slice(0, 10),
+            signature,
+          },
+        }
+        const block = mockObject<Block>({
+          number: 123,
+          timestamp: UnixTime.now(),
+          transactions: [
+            {
+              hash: '0x123',
+              from: EthereumAddress.random(),
+              to: address,
+              data,
+            },
+          ],
+        })
+        const processor = new RealTimeLivenessProcessor(
+          createMockTrackedTxsConfig(projectId, [configuration]),
+          Logger.SILENT,
+          mockDatabase({ realTimeLiveness: realTimeLivenessRepository }),
+        )
+
+        await processor.matchLivenessTransactions(block, [])
+
+        expect(realTimeLivenessRepository.insertMany).toHaveBeenCalledWith([
+          {
+            configurationId: configuration.id,
+            txHash: '0x123',
+            blockNumber: block.number,
+            timestamp: block.timestamp,
+            eventId: '123',
           },
         ])
       })
@@ -218,12 +283,14 @@ describe(RealTimeLivenessProcessor.name, () => {
           {
             configurationId: configurationId1,
             txHash: '0x123',
+            eventId: '0x123',
             blockNumber: 123,
             timestamp: lastTxTimestamp,
           },
           {
             configurationId: configurationId1,
             txHash: '0x123',
+            eventId: '0x123',
             blockNumber: 123,
             timestamp: lastTxTimestamp - 1 * UnixTime.MINUTE,
           },
@@ -241,6 +308,7 @@ describe(RealTimeLivenessProcessor.name, () => {
         {
           type: 'liveness' as const,
           id: configurationId1,
+          eventIdentity: { type: 'transactionHash' },
           projectId,
           subtype: 'stateUpdates' as const,
           sinceTimestamp: UnixTime.now(),
@@ -253,6 +321,7 @@ describe(RealTimeLivenessProcessor.name, () => {
         {
           type: 'liveness' as const,
           id: configurationId2,
+          eventIdentity: { type: 'transactionHash' },
           projectId,
           subtype: 'stateUpdates' as const,
           sinceTimestamp: UnixTime.now(),
@@ -331,6 +400,7 @@ describe(RealTimeLivenessProcessor.name, () => {
           {
             configurationId,
             txHash: '0x123',
+            eventId: '0x123',
             blockNumber: 123,
             timestamp: lastTxTimestamp,
           },
@@ -356,6 +426,7 @@ describe(RealTimeLivenessProcessor.name, () => {
         {
           type: 'liveness' as const,
           id: configurationId,
+          eventIdentity: { type: 'transactionHash' },
           projectId,
           subtype: 'stateUpdates' as const,
           sinceTimestamp: UnixTime.now(),
@@ -434,12 +505,14 @@ describe(RealTimeLivenessProcessor.name, () => {
           {
             configurationId,
             txHash: '0x123',
+            eventId: '0x123',
             blockNumber: 123,
             timestamp: lastTxTimestamp,
           },
           {
             configurationId: configurationId2,
             txHash: '0x123',
+            eventId: '0x123',
             blockNumber: 123,
             timestamp: lastTxTimestamp - 1 * UnixTime.MINUTE,
           },
@@ -472,6 +545,7 @@ describe(RealTimeLivenessProcessor.name, () => {
         {
           type: 'liveness' as const,
           id: configurationId,
+          eventIdentity: { type: 'transactionHash' },
           projectId,
           subtype: 'stateUpdates' as const,
           sinceTimestamp: UnixTime.now(),
@@ -484,6 +558,7 @@ describe(RealTimeLivenessProcessor.name, () => {
         {
           type: 'liveness' as const,
           id: configurationId2,
+          eventIdentity: { type: 'transactionHash' },
           projectId,
           subtype: 'proofSubmissions' as const,
           sinceTimestamp: UnixTime.now(),
@@ -636,6 +711,7 @@ describe(RealTimeLivenessProcessor.name, () => {
           {
             configurationId,
             txHash: '0x123',
+            eventId: '0x123',
             blockNumber: 123,
             timestamp: lastTxTimestamp,
           },
@@ -653,6 +729,7 @@ describe(RealTimeLivenessProcessor.name, () => {
         {
           type: 'liveness' as const,
           id: configurationId,
+          eventIdentity: { type: 'transactionHash' },
           projectId,
           subtype: 'stateUpdates' as const,
           sinceTimestamp: UnixTime.now(),
@@ -729,6 +806,7 @@ describe(RealTimeLivenessProcessor.name, () => {
         {
           type: 'liveness',
           id: 'config-1',
+          eventIdentity: { type: 'transactionHash' },
           projectId,
           subtype: 'stateUpdates',
           sinceTimestamp: UnixTime.now(),

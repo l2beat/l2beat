@@ -947,14 +947,22 @@ function mockTrackedTxProject(
 ): TrackedTxProject {
   return mockObject<TrackedTxProject>({
     id: projectId as any,
-    configurations: configurations.map((config) => ({
-      id: `${projectId}-${config.subtype}`,
-      projectId: projectId as any,
-      sinceTimestamp: 0,
-      type: config.type,
-      subtype: config.subtype as any,
-      params: config.params as any,
-    })),
+    configurations: configurations.map((config) => {
+      const common = {
+        id: `${projectId}-${config.subtype}`,
+        projectId: projectId as any,
+        sinceTimestamp: 0,
+        subtype: config.subtype as any,
+        params: config.params as any,
+      }
+      return config.type === 'liveness'
+        ? {
+            ...common,
+            type: 'liveness',
+            eventIdentity: { type: 'transactionHash' },
+          }
+        : { ...common, type: 'l2costs' }
+    }),
   })
 }
 

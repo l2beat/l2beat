@@ -1,8 +1,8 @@
+import type { TrackedTxFunctionCallParameterEventIdentity } from '@l2beat/shared'
 import type {
   EthereumAddress,
   ProjectId,
   TrackedTxsConfigSubtype,
-  TrackedTxsConfigType,
   UnixTime,
 } from '@l2beat/shared-pure'
 import type {
@@ -187,16 +187,43 @@ export interface ProjectScalingRiskView extends ProjectRiskView {
   stateValidation: Omit<ProjectRiskView['stateValidation'], 'secondLine'>
 }
 
-export interface Layer2TxConfig {
-  uses: Layer2TrackedTxUse[]
-  query: TrackedTxQuery
+interface Layer2TxConfigBase {
   _hackCostMultiplier?: number
 }
 
-export interface Layer2TrackedTxUse {
-  type: TrackedTxsConfigType
-  subtype: TrackedTxsConfigSubtype
-}
+export type Layer2TxConfig = Layer2TxConfigBase &
+  (
+    | {
+        uses: Layer2TrackedTxUseWithoutEventIdentity[]
+        query: TrackedTxQuery
+      }
+    | {
+        uses: Layer2TrackedTxUse[]
+        query: Omit<FunctionCall, 'topics'> & { topics?: never }
+      }
+  )
+
+export type Layer2TrackedTxUse =
+  | {
+      type: 'liveness'
+      subtype: TrackedTxsConfigSubtype
+      eventIdentity?: TrackedTxFunctionCallParameterEventIdentity
+    }
+  | {
+      type: 'l2costs'
+      subtype: TrackedTxsConfigSubtype
+    }
+
+type Layer2TrackedTxUseWithoutEventIdentity =
+  | {
+      type: 'liveness'
+      subtype: TrackedTxsConfigSubtype
+      eventIdentity?: never
+    }
+  | {
+      type: 'l2costs'
+      subtype: TrackedTxsConfigSubtype
+    }
 /** This type is used to query GBQ and manual matching of transactions within a block */
 type TrackedTxQuery = FunctionCall | Transfer | SharpSubmission | SharedBridge
 

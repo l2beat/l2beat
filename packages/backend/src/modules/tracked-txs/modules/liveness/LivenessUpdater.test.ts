@@ -4,7 +4,7 @@ import { createTrackedTxId, type TrackedTxConfigEntry } from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { mockDatabase } from '../../../../test/database'
-import type { TrackedTxResult } from '../../types/model'
+import type { TrackedTxLivenessResult } from '../../types/model'
 import { LivenessUpdater } from './LivenessUpdater'
 
 const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2023-05-01T00:00:00Z'))
@@ -18,7 +18,7 @@ describe(LivenessUpdater.name, () => {
         Logger.SILENT,
       )
 
-      const transactions: TrackedTxResult[] = []
+      const transactions: TrackedTxLivenessResult[] = []
 
       await updater.update(transactions)
 
@@ -32,7 +32,7 @@ describe(LivenessUpdater.name, () => {
         Logger.SILENT,
       )
 
-      const transactions: TrackedTxResult[] = getMockTrackedTxResults()
+      const transactions = getMockTrackedTxResults()
       await updater.update(transactions)
 
       expect(livenessRepo.insertMany).toHaveBeenNthCalledWith(1, [
@@ -41,12 +41,14 @@ describe(LivenessUpdater.name, () => {
           blockNumber: transactions[0].blockNumber,
           timestamp: transactions[0].blockTimestamp,
           configurationId: transactions[0].id,
+          eventId: transactions[0].eventId,
         },
         {
           txHash: transactions[1].hash,
           blockNumber: transactions[1].blockNumber,
           timestamp: transactions[1].blockTimestamp,
           configurationId: transactions[1].id,
+          eventId: transactions[1].eventId,
         },
       ])
     })
@@ -78,7 +80,7 @@ describe(LivenessUpdater.name, () => {
         Logger.SILENT,
       )
 
-      const transactions: TrackedTxResult[] = getMockTrackedTxResults()
+      const transactions = getMockTrackedTxResults()
 
       const expected: LivenessRecord[] = [
         {
@@ -86,12 +88,14 @@ describe(LivenessUpdater.name, () => {
           blockNumber: transactions[0].blockNumber,
           timestamp: transactions[0].blockTimestamp,
           configurationId: transactions[0].id,
+          eventId: transactions[0].eventId,
         },
         {
           txHash: transactions[1].hash,
           blockNumber: transactions[1].blockNumber,
           timestamp: transactions[1].blockTimestamp,
           configurationId: transactions[1].id,
+          eventId: transactions[1].eventId,
         },
       ]
 
@@ -107,7 +111,7 @@ function getMockLivenessRepository() {
   })
 }
 
-function getMockTrackedTxResults(): TrackedTxResult[] {
+function getMockTrackedTxResults(): TrackedTxLivenessResult[] {
   return [
     {
       formula: 'functionCall',
@@ -117,6 +121,7 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       toAddress: EthereumAddress.random(),
       input: '',
       hash: '',
+      eventId: 'event-1',
       type: 'liveness',
       subtype: 'batchSubmissions',
       id: getMockRuntimeConfigurations()[0].id,
@@ -134,6 +139,7 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       blockNumber: 1,
       blockTimestamp: UnixTime.now(),
       hash: '',
+      eventId: 'event-2',
       fromAddress: EthereumAddress.random(),
       toAddress: EthereumAddress.random(),
       projectId: ProjectId('test2'),
@@ -158,6 +164,7 @@ function getMockRuntimeConfigurations(): TrackedTxConfigEntry[] {
       projectId: ProjectId('test'),
       sinceTimestamp: MIN_TIMESTAMP,
       type: 'liveness',
+      eventIdentity: { type: 'transactionHash' },
       subtype: 'batchSubmissions',
       id: createTrackedTxId.random(),
     },
@@ -171,6 +178,7 @@ function getMockRuntimeConfigurations(): TrackedTxConfigEntry[] {
       projectId: ProjectId('test2'),
       sinceTimestamp: MIN_TIMESTAMP,
       type: 'liveness',
+      eventIdentity: { type: 'transactionHash' },
       subtype: 'stateUpdates',
       id: createTrackedTxId.random(),
     },

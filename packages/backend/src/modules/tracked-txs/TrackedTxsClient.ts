@@ -141,7 +141,12 @@ export class TrackedTxsClient {
     // function calls and sharp submissions will be batched into one query to save costs
     const query = getFunctionCallQuery(
       combineCalls(
-        functionCallsConfig.map((c) => c.properties.params),
+        functionCallsConfig.map((c) => ({
+          ...c.properties.params,
+          getFullInput:
+            c.properties.type === 'liveness' &&
+            c.properties.eventIdentity.type === 'functionCallParameter',
+        })),
         sharpSubmissionsConfig.map((c) => c.properties.params),
         sharedBridgesConfig.map((c) => c.properties.params),
       ),
@@ -167,13 +172,15 @@ export class TrackedTxsClient {
 }
 
 function combineCalls(
-  functionCallsConfig: TrackedTxFunctionCallConfig[],
+  functionCallsConfig: (TrackedTxFunctionCallConfig & {
+    getFullInput: boolean
+  })[],
   sharpSubmissionsConfig: TrackedTxSharpSubmissionConfig[],
   sharedBridgesConfig: TrackedTxSharedBridgeConfig[],
 ) {
   // TODO: unique
   return [
-    ...functionCallsConfig.map((c) => ({ ...c, getFullInput: false })),
+    ...functionCallsConfig,
     ...sharpSubmissionsConfig.map((c) => ({ ...c, getFullInput: true })),
     ...sharedBridgesConfig.map((c) => ({ ...c, getFullInput: true })),
   ]

@@ -1,10 +1,10 @@
 import { createHash } from 'crypto'
-import type { TrackedTxConfigEntry } from './TrackedTxsConfig'
+import type { TrackedTxConfigEntryWithoutId } from './TrackedTxsConfig'
 
 export type TrackedTxId = string
 
 export function createTrackedTxId(
-  trackedTxConfig: Omit<TrackedTxConfigEntry, 'id'>,
+  trackedTxConfig: TrackedTxConfigEntryWithoutId,
 ): TrackedTxId {
   const input = []
 
@@ -13,6 +13,14 @@ export function createTrackedTxId(
   input.push(trackedTxConfig.type)
   input.push(trackedTxConfig.subtype)
   // untilTimestamp is not used in the ID calculation.
+
+  if (
+    trackedTxConfig.type === 'liveness' &&
+    trackedTxConfig.eventIdentity.type === 'functionCallParameter'
+  ) {
+    input.push(trackedTxConfig.eventIdentity.type)
+    input.push(trackedTxConfig.eventIdentity.path.join('.'))
+  }
 
   switch (trackedTxConfig.params.formula) {
     case 'functionCall':

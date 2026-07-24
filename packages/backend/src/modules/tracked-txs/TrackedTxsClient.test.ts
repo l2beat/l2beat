@@ -98,6 +98,42 @@ describe(TrackedTxsClient.name, () => {
 
       expect(duneQueryService.query).not.toHaveBeenCalled()
     })
+
+    it('requests full calldata for custom liveness event identities', async () => {
+      const duneQueryService = getMockDuneQueryService([[]])
+      const trackedTxsClient = new TrackedTxsClient(
+        duneQueryService,
+        Logger.SILENT,
+      )
+      const config = {
+        ...CONFIGURATIONS[1],
+        properties: {
+          ...CONFIGURATIONS[1].properties,
+          type: 'liveness' as const,
+          eventIdentity: {
+            type: 'functionCallParameter' as const,
+            path: [0] as const,
+          },
+        },
+      }
+
+      await trackedTxsClient.getFunctionCalls([config], [], [], FROM, TO)
+
+      expect(duneQueryService.query).toHaveBeenCalledWith(
+        getFunctionCallQuery(
+          [
+            {
+              ...config.properties.params,
+              getFullInput: true,
+            },
+          ],
+          FROM,
+          TO,
+        ),
+        'large',
+        expect.anything(),
+      )
+    })
   })
 })
 

@@ -8,7 +8,7 @@ import {
   assert,
   type ChainSpecificAddress,
   EthereumAddress,
-  type ProjectId,
+  ProjectId,
 } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { expect } from 'earl'
@@ -608,6 +608,29 @@ describe('getProjects', () => {
             functionCalls.add(key)
           }
         }
+      })
+
+      it('identifies Aztec liveness events by epoch start', () => {
+        const configs = projectsById.get(
+          ProjectId('aztecnetwork'),
+        )?.trackedTxsConfig
+        const stateUpdates = configs?.filter(
+          (config) =>
+            config.subtype === 'stateUpdates' &&
+            config.params.formula === 'functionCall',
+        )
+        const liveness = stateUpdates?.find(
+          (config) => config.type === 'liveness',
+        )
+        const costs = stateUpdates?.find((config) => config.type === 'l2costs')
+
+        assert(liveness?.params.formula === 'functionCall')
+        assert(costs?.params.formula === 'functionCall')
+        expect(liveness.eventIdentity).toEqual({
+          type: 'functionCallParameter',
+          path: [0, 0],
+        })
+        expect('eventIdentity' in costs).toEqual(false)
       })
     })
   })

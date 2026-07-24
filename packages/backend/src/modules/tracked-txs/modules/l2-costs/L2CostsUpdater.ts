@@ -3,7 +3,7 @@ import type { Database, L2CostRecord } from '@l2beat/database'
 import type { TrackedTxId } from '@l2beat/shared'
 import type { UnixTime } from '@l2beat/shared-pure'
 import { withCoreFeatureRpcMetricsContext } from '../../../../tools/coreFeatureRpcMetrics'
-import type { TrackedTxResult } from '../../types/model'
+import type { TrackedTxCostsResult } from '../../types/model'
 import type { TxUpdaterInterface } from '../../types/TxUpdaterInterface'
 import { ONE_BLOB_GAS } from '../../utils/const'
 import type { BlobPriceProvider } from './BlobPriceProvider'
@@ -19,7 +19,7 @@ export class L2CostsUpdater implements TxUpdaterInterface<'l2costs'> {
     this.logger = this.logger.for(this)
   }
 
-  async update(transactions: TrackedTxResult[]) {
+  async update(transactions: TrackedTxCostsResult[]) {
     if (transactions.length === 0) {
       this.logger.info('Update skipped - no transactions to process')
       return
@@ -49,7 +49,7 @@ export class L2CostsUpdater implements TxUpdaterInterface<'l2costs'> {
   }
 
   transform(
-    transactions: TrackedTxResult[],
+    transactions: TrackedTxCostsResult[],
     blobBaseFeeByBlock: Map<number, bigint>,
   ): L2CostRecord[] {
     return transactions.map((tx) => {

@@ -1,7 +1,11 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { createTrackedTxId } from './createTrackedTxConfigId'
-import type { TrackedTxConfigEntry } from './TrackedTxsConfig'
+import type {
+  TrackedTxConfigEntryWithoutId,
+  TrackedTxCostsConfig,
+  TrackedTxFunctionCallParameterEventIdentity,
+} from './TrackedTxsConfig'
 
 describe(createTrackedTxId.name, () => {
   const fields = [
@@ -54,23 +58,65 @@ describe(createTrackedTxId.name, () => {
       }
     })
   }
+
+  it('includes liveness event identity in the ID', () => {
+    const before = createTrackedTxId(mock({ type: 'liveness' }))
+    const after = createTrackedTxId(
+      mock({
+        type: 'liveness',
+        eventIdentity: {
+          type: 'functionCallParameter',
+          path: [0, 0],
+        },
+      }),
+    )
+
+    expect(before).not.toEqual(after)
+  })
 })
 
 function mock(
-  v?: Partial<TrackedTxConfigEntry>,
-): Omit<TrackedTxConfigEntry, 'id'> {
-  return {
+  v: Partial<Omit<TrackedTxCostsConfig, 'id' | 'type'>> & {
+    type?: 'liveness' | 'l2costs'
+    eventIdentity?: TrackedTxFunctionCallParameterEventIdentity
+  } = {},
+): TrackedTxConfigEntryWithoutId {
+  const base = {
     projectId: ProjectId('project-id'),
     sinceTimestamp: 0,
     untilTimestamp: 0,
-    subtype: 'stateUpdates',
-    type: 'l2costs',
+    subtype: 'stateUpdates' as const,
     params: {
-      formula: 'functionCall',
+      formula: 'functionCall' as const,
       address: EthereumAddress.ZERO,
       selector: 'selector',
-      signature: 'function foo()',
+      signature: 'function foo()' as const,
     },
+  }
+
+  if (v.type !== 'liveness') {
+    return { ...base, ...v, type: 'l2costs' }
+  }
+
+  const params = v.params ?? base.params
+  if (v.eventIdentity) {
+    if (params.formula !== 'functionCall') {
+      throw new Error('Custom event identity requires a function call')
+    }
+    return {
+      ...base,
+      ...v,
+      params,
+      type: 'liveness',
+      eventIdentity: v.eventIdentity,
+    }
+  }
+
+  return {
+    ...base,
     ...v,
+    params,
+    type: 'liveness',
+    eventIdentity: { type: 'transactionHash' },
   }
 }

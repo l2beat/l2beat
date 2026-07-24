@@ -1,4 +1,7 @@
-import type { RetryHandlerVariant, TrackedTxConfigEntry } from '@l2beat/shared'
+import type {
+  RetryHandlerVariant,
+  TrackedTxConfigEntryWithoutId,
+} from '@l2beat/shared'
 import {
   type ChainSpecificAddress,
   type CoingeckoId,
@@ -195,7 +198,7 @@ export interface BaseProject {
   livenessInfo?: ProjectLivenessInfo
   livenessConfig?: ProjectLivenessConfig
   costsInfo?: ProjectCostsInfo
-  trackedTxsConfig?: Omit<TrackedTxConfigEntry, 'id'>[]
+  trackedTxsConfig?: TrackedTxConfigEntryWithoutId[]
   daTrackingConfig?: ProjectDaTrackingConfig[]
   ecosystemInfo?: ProjectEcosystemInfo
   ecosystemConfig?: ProjectEcosystemConfig

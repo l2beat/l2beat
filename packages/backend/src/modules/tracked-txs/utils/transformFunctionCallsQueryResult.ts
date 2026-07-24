@@ -11,6 +11,7 @@ import type {
   TrackedTxFunctionCallResult,
 } from '../types/model'
 import { calculateCalldataGasUsed } from './calculateCalldataGasUsed'
+import { getLivenessEventId } from './getLivenessEventId'
 import { isFistParameterMatching } from './isFirstParameterMatching'
 import { isProgramHashProven } from './isProgramHashProven'
 
@@ -62,36 +63,45 @@ export function transformFunctionCallsQueryResult(
       isFistParameterMatching(r.input, c.properties.params),
     )
 
-    const results = [
+    return [
       ...matchingCalls,
       ...filteredSubmissions,
       ...filteredSharedBridgeCalls,
-    ].map(
-      (config) =>
-        ({
-          id: config.id,
-          formula: 'functionCall',
-          projectId: config.properties.projectId,
-          hash: r.hash,
-          type: config.properties.type,
-          subtype: config.properties.subtype,
-          blockNumber: r.block_number,
-          blockTimestamp: r.block_time,
-          toAddress: r.to,
-          input: r.input,
-          gasUsed: r.gas_used,
-          gasPrice: r.gas_price,
-          dataLength: r.data_length,
-          calldataGasUsed: calculateCalldataGasUsed(
-            r.block_number,
-            r.data_length,
-            r.non_zero_bytes,
-            r.gas_used,
-          ),
-          blobVersionedHashes: r.blob_versioned_hashes,
-        }) as const,
-    )
+    ].map((config): TrackedTxFunctionCallResult => {
+      const result = {
+        id: config.id,
+        formula: 'functionCall' as const,
+        projectId: config.properties.projectId,
+        hash: r.hash,
+        subtype: config.properties.subtype,
+        blockNumber: r.block_number,
+        blockTimestamp: r.block_time,
+        toAddress: r.to,
+        input: r.input,
+        gasUsed: r.gas_used,
+        gasPrice: r.gas_price,
+        dataLength: r.data_length,
+        calldataGasUsed: calculateCalldataGasUsed(
+          r.block_number,
+          r.data_length,
+          r.non_zero_bytes,
+          r.gas_used,
+        ),
+        blobVersionedHashes: r.blob_versioned_hashes,
+      }
 
-    return results
+      if (config.properties.type === 'liveness') {
+        return {
+          ...result,
+          type: 'liveness',
+          eventId: getLivenessEventId(config.properties, {
+            hash: r.hash,
+            input: r.input,
+          }),
+        }
+      }
+
+      return { ...result, type: 'l2costs' }
+    })
   })
 }

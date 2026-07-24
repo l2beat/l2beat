@@ -9,6 +9,7 @@ import type {
   TrackedTxTransferResult,
 } from '../types/model'
 import { calculateCalldataGasUsed } from './calculateCalldataGasUsed'
+import { getLivenessEventId } from './getLivenessEventId'
 
 export function transformTransfersQueryResult(
   configs: Configuration<
@@ -29,30 +30,38 @@ export function transformTransfersQueryResult(
       'There should be at least one matching config',
     )
 
-    return matchingConfigs.map(
-      (matchingConfig) =>
-        ({
-          formula: 'transfer',
-          projectId: matchingConfig.properties.projectId,
-          id: matchingConfig.id,
-          type: matchingConfig.properties.type,
-          subtype: matchingConfig.properties.subtype,
-          hash: r.hash,
-          blockNumber: r.block_number,
-          blockTimestamp: r.block_time,
-          fromAddress: r.from,
-          toAddress: r.to,
-          gasUsed: r.gas_used,
-          gasPrice: r.gas_price,
-          dataLength: r.data_length,
-          calldataGasUsed: calculateCalldataGasUsed(
-            r.block_number,
-            r.data_length,
-            r.non_zero_bytes,
-            r.gas_used,
-          ),
-          blobVersionedHashes: r.blob_versioned_hashes,
-        }) as const,
-    )
+    return matchingConfigs.map((matchingConfig): TrackedTxTransferResult => {
+      const result = {
+        formula: 'transfer' as const,
+        projectId: matchingConfig.properties.projectId,
+        id: matchingConfig.id,
+        subtype: matchingConfig.properties.subtype,
+        hash: r.hash,
+        blockNumber: r.block_number,
+        blockTimestamp: r.block_time,
+        fromAddress: r.from,
+        toAddress: r.to,
+        gasUsed: r.gas_used,
+        gasPrice: r.gas_price,
+        dataLength: r.data_length,
+        calldataGasUsed: calculateCalldataGasUsed(
+          r.block_number,
+          r.data_length,
+          r.non_zero_bytes,
+          r.gas_used,
+        ),
+        blobVersionedHashes: r.blob_versioned_hashes,
+      }
+
+      return matchingConfig.properties.type === 'liveness'
+        ? {
+            ...result,
+            type: 'liveness',
+            eventId: getLivenessEventId(matchingConfig.properties, {
+              hash: r.hash,
+            }),
+          }
+        : { ...result, type: 'l2costs' }
+    })
   })
 }

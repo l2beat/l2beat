@@ -212,6 +212,7 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
       blockNumber: 0,
       configurationId: '',
       txHash: '',
+      eventId: '',
       subtype,
     })
 

@@ -3,7 +3,7 @@ import type { Database, L2CostRecord } from '@l2beat/database'
 import { createTrackedTxId, type TrackedTxConfigEntry } from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import type { TrackedTxResult } from '../../types/model'
+import type { TrackedTxCostsResult } from '../../types/model'
 import { ONE_BLOB_GAS } from '../../utils/const'
 import type { BlobPriceProvider } from './BlobPriceProvider'
 import { L2CostsUpdater } from './L2CostsUpdater'
@@ -53,7 +53,7 @@ describe(L2CostsUpdater.name, () => {
 
     it('handles transactions across multiple blocks', async () => {
       const repository = getMockL2CostsRepository()
-      const transactions: TrackedTxResult[] = [
+      const transactions: TrackedTxCostsResult[] = [
         {
           ...getMockTrackedTxResults()[0],
           blockNumber: 100,
@@ -171,7 +171,7 @@ describe(L2CostsUpdater.name, () => {
         blobPriceProvider,
       )
 
-      const transactions: TrackedTxResult[] = [
+      const transactions: TrackedTxCostsResult[] = [
         {
           ...getMockTrackedTxResults()[1],
           blobVersionedHashes: ['0x1', '0x2', '0x3'],
@@ -254,7 +254,7 @@ function getMockRuntimeConfigurations(): TrackedTxConfigEntry[] {
       },
       projectId: ProjectId('test'),
       sinceTimestamp: MIN_TIMESTAMP,
-      type: 'liveness',
+      type: 'l2costs',
       id: createTrackedTxId.random(),
       subtype: 'batchSubmissions',
     },
@@ -267,14 +267,14 @@ function getMockRuntimeConfigurations(): TrackedTxConfigEntry[] {
       },
       projectId: ProjectId('test2'),
       sinceTimestamp: MIN_TIMESTAMP,
-      type: 'liveness',
+      type: 'l2costs',
       subtype: 'stateUpdates',
       id: createTrackedTxId.random(),
     },
   ]
 }
 
-function getMockTrackedTxResults(): TrackedTxResult[] {
+function getMockTrackedTxResults(): TrackedTxCostsResult[] {
   return [
     {
       formula: 'functionCall',
@@ -284,7 +284,7 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       toAddress: EthereumAddress.random(),
       input: '',
       hash: '',
-      type: 'liveness',
+      type: 'l2costs',
       subtype: 'batchSubmissions',
       id: getMockRuntimeConfigurations()[0].id,
       gasUsed: 100,
@@ -296,7 +296,7 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
     {
       formula: 'transfer',
       id: getMockRuntimeConfigurations()[1].id,
-      type: 'liveness',
+      type: 'l2costs',
       subtype: 'stateUpdates',
       blockNumber: 2,
       blockTimestamp: UnixTime.now(),

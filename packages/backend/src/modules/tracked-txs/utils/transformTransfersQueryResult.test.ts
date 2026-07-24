@@ -1,6 +1,6 @@
 import type {
-  TrackedTxConfigEntry,
   TrackedTxId,
+  TrackedTxTransactionHashLivenessConfig,
   TrackedTxTransferConfig,
 } from '@l2beat/shared'
 import {
@@ -17,6 +17,11 @@ import type {
 } from '../types/model'
 import { transformTransfersQueryResult } from './transformTransfersQueryResult'
 
+type LivenessTransferResult = Extract<
+  TrackedTxTransferResult,
+  { type: 'liveness' }
+>
+
 const ADDRESS_1 = EthereumAddress.random()
 const ADDRESS_2 = EthereumAddress.random()
 const ADDRESS_3 = EthereumAddress.random()
@@ -30,7 +35,9 @@ const RESULT_TIMESTAMP = UnixTime.fromDate(new Date('2022-01-01T01:00:00Z'))
 describe(transformTransfersQueryResult.name, () => {
   it('should transform results', () => {
     const config: Configuration<
-      TrackedTxConfigEntry & { params: TrackedTxTransferConfig }
+      TrackedTxTransactionHashLivenessConfig & {
+        params: TrackedTxTransferConfig
+      }
     >[] = [
       mock({
         id: '0x1',
@@ -111,7 +118,7 @@ describe(transformTransfersQueryResult.name, () => {
         blob_versioned_hashes: ['0x1'],
       },
     ]
-    const expected: TrackedTxTransferResult[] = [
+    const expected: Omit<LivenessTransferResult, 'eventId'>[] = [
       {
         formula: 'transfer',
         projectId: config[0].properties.projectId,
@@ -183,13 +190,15 @@ describe(transformTransfersQueryResult.name, () => {
     ]
 
     expect(transformTransfersQueryResult(config, queryResults)).toEqual(
-      expected,
+      withTransactionHashEventIds(expected),
     )
   })
 
   it('should calculate calldata gas used correctly', () => {
     const config: Configuration<
-      TrackedTxConfigEntry & { params: TrackedTxTransferConfig }
+      TrackedTxTransactionHashLivenessConfig & {
+        params: TrackedTxTransferConfig
+      }
     >[] = [
       mock({
         id: '0x1',
@@ -265,7 +274,7 @@ describe(transformTransfersQueryResult.name, () => {
         blob_versioned_hashes: ['0x1'],
       },
     ]
-    const expected: TrackedTxTransferResult[] = [
+    const expected: Omit<LivenessTransferResult, 'eventId'>[] = [
       {
         formula: 'transfer',
         projectId: config[0].properties.projectId,
@@ -320,7 +329,7 @@ describe(transformTransfersQueryResult.name, () => {
     ]
 
     expect(transformTransfersQueryResult(config, queryResults)).toEqual(
-      expected,
+      withTransactionHashEventIds(expected),
     )
   })
 
@@ -357,6 +366,12 @@ describe(transformTransfersQueryResult.name, () => {
   })
 })
 
+function withTransactionHashEventIds(
+  records: Omit<LivenessTransferResult, 'eventId'>[],
+): LivenessTransferResult[] {
+  return records.map((record) => ({ ...record, eventId: record.hash }))
+}
+
 function mock({
   id,
   projectId,
@@ -371,7 +386,11 @@ function mock({
   from: EthereumAddress
   to: EthereumAddress
   sinceTimestamp: number
-}): Configuration<TrackedTxConfigEntry & { params: TrackedTxTransferConfig }> {
+}): Configuration<
+  TrackedTxTransactionHashLivenessConfig & {
+    params: TrackedTxTransferConfig
+  }
+> {
   return {
     id,
     minHeight: 0,
@@ -380,6 +399,7 @@ function mock({
       id,
       projectId,
       type: 'liveness',
+      eventIdentity: { type: 'transactionHash' },
       subtype,
       sinceTimestamp,
       params: {

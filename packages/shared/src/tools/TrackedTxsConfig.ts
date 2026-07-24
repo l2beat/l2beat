@@ -14,16 +14,27 @@ export type TrackedTxConfigEntry =
   | TrackedTxCostsConfig
   | TrackedTxLivenessConfig
 
-interface TrackedTxConfigBase {
+type DistributiveOmit<T, K extends PropertyKey> = T extends unknown
+  ? Omit<T, K>
+  : never
+
+export type TrackedTxConfigEntryWithoutId = DistributiveOmit<
+  TrackedTxConfigEntry,
+  'id'
+>
+
+type TrackedTxConfig =
+  | TrackedTxFunctionCallConfig
+  | TrackedTxTransferConfig
+  | TrackedTxSharpSubmissionConfig
+  | TrackedTxSharedBridgeConfig
+
+interface TrackedTxConfigBase<T extends TrackedTxConfig = TrackedTxConfig> {
   id: TrackedTxId
   projectId: ProjectId
   sinceTimestamp: number
   untilTimestamp?: number
-  params:
-    | TrackedTxFunctionCallConfig
-    | TrackedTxTransferConfig
-    | TrackedTxSharpSubmissionConfig
-    | TrackedTxSharedBridgeConfig
+  params: T
   subtype: TrackedTxsConfigSubtype
 }
 
@@ -32,9 +43,20 @@ export interface TrackedTxCostsConfig extends TrackedTxConfigBase {
   type: 'l2costs'
 }
 
-export interface TrackedTxLivenessConfig extends TrackedTxConfigBase {
+export type TrackedTxLivenessConfig =
+  | TrackedTxTransactionHashLivenessConfig
+  | TrackedTxFunctionCallParameterLivenessConfig
+
+export type TrackedTxTransactionHashLivenessConfig = TrackedTxConfigBase & {
   type: 'liveness'
+  eventIdentity: TrackedTxTransactionHashEventIdentity
 }
+
+export type TrackedTxFunctionCallParameterLivenessConfig =
+  TrackedTxConfigBase<TrackedTxFunctionCallConfig> & {
+    type: 'liveness'
+    eventIdentity: TrackedTxFunctionCallParameterEventIdentity
+  }
 
 export interface TrackedTxFunctionCallConfig {
   formula: 'functionCall'
@@ -42,6 +64,20 @@ export interface TrackedTxFunctionCallConfig {
   selector: string
   signature: `function ${string}`
   topics?: string[]
+}
+
+export type TrackedTxLivenessEventIdentity =
+  | TrackedTxTransactionHashEventIdentity
+  | TrackedTxFunctionCallParameterEventIdentity
+
+export interface TrackedTxTransactionHashEventIdentity {
+  type: 'transactionHash'
+}
+
+export interface TrackedTxFunctionCallParameterEventIdentity {
+  type: 'functionCallParameter'
+  /** Index path through the decoded function arguments, including tuple indices. */
+  path: readonly [number, ...number[]]
 }
 
 export interface TrackedTxTransferConfig {
