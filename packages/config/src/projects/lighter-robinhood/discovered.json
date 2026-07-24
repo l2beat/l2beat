@@ -1,6 +1,6 @@
 {
   "name": "lighter-robinhood",
-  "timestamp": 1784545986,
+  "timestamp": 1784882184,
   "configHash": "0x74fe45fb2033ef91c26708241090402289381d8f144e33c694df9da88a2cfebb",
   "entries": [
     {
@@ -399,6 +399,6 @@
     "lighter/UpgradeGatekeeper": "0x72341d695123479e7b06142a86f758d7b9488ac1cb776c7411630080ba1e9a59",
     "lighter/ZkLighterVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "robinhood": 14656078 },
+  "usedBlockNumbers": { "robinhood": 18010147 },
   "permissionsConfigHash": "0x9b9c64773933f1e2c923a7b768e1cb7194286c7d1c2cb4990e5f6903674374db"
 }
