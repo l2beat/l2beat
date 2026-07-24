@@ -1,6 +1,6 @@
 {
   "name": "nova",
-  "timestamp": 1784648388,
+  "timestamp": 1784846743,
   "configHash": "0x7f9a7f1a3b9f1453d6df54f4fc41ac2c4bf572b844e1925187852424df77dcfa",
   "entries": [
     {
@@ -429,7 +429,7 @@
         ],
         "$upgradeCount": 3,
         "counterpartGateway": "arb-nova:0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
-        "exitNum": 2411,
+        "exitNum": 2412,
         "router": "arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
       },
       "implementationNames": {
@@ -592,7 +592,7 @@
         "beaconProxyFactory": "arb-nova:0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3",
         "cloneableProxyHash": "0xe95e7b13b0b76934e55320c0f1a812918ec818f61a9b36660d64d803eeecb91a",
         "counterpartGateway": "arb-nova:0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
-        "exitNum": 1081,
+        "exitNum": 1083,
         "router": "arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
       },
       "implementationNames": {
@@ -805,7 +805,7 @@
         "l2Gateway": "arb-nova:0xbf544970E6BD77b21C6492C281AB60d0770451F4",
         "name": "Arbitrum",
         "symbol": "ARB",
-        "totalSupply": "169252186229165282151999"
+        "totalSupply": "169226655498937271653883"
       },
       "implementationNames": {
         "arb-nova:0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD": "TransparentUpgradeableProxy",
@@ -968,7 +968,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "batchCount": 368888,
+        "batchCount": 369563,
         "batchPosterManager": "eth:0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "eth:0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
@@ -980,9 +980,9 @@
           "bufferBlocks": 14400,
           "max": 14400,
           "threshold": 300,
-          "prevBlockNumber": 25581831,
+          "prevBlockNumber": 25598244,
           "replenishRateInBasis": 500,
-          "prevSequencedBlockNumber": 25581898
+          "prevSequencedBlockNumber": 25598299
         },
         "dacKeyset": {
           "requiredSignatures": 5,
@@ -1015,7 +1015,7 @@
         "rollup": "eth:0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 615029,
+        "totalDelayedMessagesRead": 615705,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1948,7 +1948,7 @@
           "eth:0x304807A7ed6c1296df2128E6ff3836e477329CD2"
         ],
         "allowedOutboxList": ["eth:0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
-        "delayedMessageCount": 615031,
+        "delayedMessageCount": 615708,
         "inboxHistory": [
           "eth:0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
           "eth:0x304807A7ed6c1296df2128E6ff3836e477329CD2"
@@ -1956,8 +1956,8 @@
         "outboxHistory": ["eth:0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
         "rollup": "eth:0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd",
         "sequencerInbox": "eth:0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-        "sequencerMessageCount": 368888,
-        "sequencerReportedSubMessageCount": 85184760
+        "sequencerMessageCount": 369563,
+        "sequencerReportedSubMessageCount": 85192234
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -6241,7 +6241,7 @@
         ],
         "inbox": "eth:0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
         "isPostBoLD": true,
-        "latestConfirmed": "0x5cd568272fd2b7faa3187eb2cfa94e68ed7ed5bac1e483db9cd5f93749c5ae27",
+        "latestConfirmed": "0x92dbfb8f8545017700937b8b00dce0ff8fba5edd9044a6684b75a69fab6cb425",
         "loserStakeEscrow": "eth:0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",
@@ -8053,6 +8053,6 @@
     "orbitstack/Timelock": "0xeaf0991ebe464d6bb8f93bff88d69db8d55c9b58d68eed9e71d6f74f223d351c",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "ethereum": 25582053, "nova": 85184767 },
+  "usedBlockNumbers": { "ethereum": 25598501, "nova": 85192233 },
   "permissionsConfigHash": "0xba091e1868484df746b849b19700593b3812f295cea178a8d0dd75f160e636e4"
 }

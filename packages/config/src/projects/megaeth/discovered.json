@@ -1,6 +1,6 @@
 {
   "name": "megaeth",
-  "timestamp": 1784648359,
+  "timestamp": 1784846614,
   "configHash": "0x9b9994487e9254dc545ccfde5416f80b79bc3d7c3638ff7521b015674f73bec3",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
@@ -302,7 +302,7 @@
         "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "L2_BLOCK_NUMBER": 14842800,
         "l2BlockNumber": 0,
-        "lastResolved": "eth:0x83D94e495122046074dBa70E54f9C6853eC65CCB",
+        "lastResolved": "eth:0xEFd398c6f29d1122462DDF9A0D0a6938907Da638",
         "minCreationTime": 0,
         "opponentIndex": 0,
         "OPTIMISM_PORTAL": "eth:0x7f82f57F0Dd546519324392e408b01fcC7D709e8",
@@ -1465,7 +1465,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292669441",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292669501",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1565,7 +1565,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 514422,
-          "prevBlockNum": 25581895
+          "prevBlockNum": 25598459
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1712,7 +1712,7 @@
         "game1337": "eth:0x8c0Ed8Dd0CcF6d596e321d81eD895ad51fE30B84",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 6239,
+        "gameCount": 6294,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xB2E4D20ECF58f2cE6a8d3bf0c982c2c77BE42152",
@@ -4576,6 +4576,6 @@
     "risc0/RiscZeroVerifierRouter": "0xb74ea20385c8afa507c773dd57793a9fbf10ce64ed9c17b58dff13665aff9f7a",
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "usedBlockNumbers": { "ethereum": 25582050 },
+  "usedBlockNumbers": { "ethereum": 25598490 },
   "permissionsConfigHash": "0x614b5a3fa9b9338cd86450740014045d50dc496182cfd97348dd693df23ffd6a"
 }

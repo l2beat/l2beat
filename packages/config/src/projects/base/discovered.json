@@ -1,7 +1,7 @@
 {
   "name": "base",
-  "timestamp": 1784648327,
-  "configHash": "0x201da71a82b49559128b2b47d577a98484991839ba4837420f827e63ea6f7ce3",
+  "timestamp": 1784846600,
+  "configHash": "0x262ab24c65544be3ba2d43bb809f1f84ab8faf3adb2e16849b319f07fc84a777",
   "entries": [
     {
       "name": "FeeDisburser",
@@ -79,7 +79,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "base:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292677506",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292677546",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -302,10 +302,10 @@
           ]
         ],
         "$upgradeCount": 3,
-        "basefee": 243478184,
+        "basefee": 90666406,
         "baseFeeScalar": 2269,
         "batcherHash": "0x0000000000000000000000005050f69a9786f081509234f1a7f4684b5e5b76c9",
-        "blobBaseFee": 15720268,
+        "blobBaseFee": 4293691,
         "blobBaseFeeScalar": 1055762,
         "daFootprintGasScalar": 148,
         "DEPOSITOR_ACCOUNT": "base:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -315,15 +315,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0x6adee6466950964c1bc9437b9ecea2743ef9d344c6ab0d8ef1b42fb1b0a2977f",
+        "hash": "0xa69410e7234cb6eee9ff0b3ec3a8ff2c9a950fe8e7c7c9466c1ff13c28e0a521",
         "isCustomGasToken": false,
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 25582043,
+        "number": 25598485,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 3,
-        "timestamp": 1784648267,
+        "sequenceNumber": 0,
+        "timestamp": 1784846543,
         "version": "1.7.0"
       },
       "implementationNames": {
@@ -1129,6 +1129,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a Risc0 ZK proof of a valid AWS Nitro attestation document verified by the NITRO_VERIFIER.",
+      "ignoreInWatchMode": ["getRegisteredSigners"],
       "deployerAddress": "eth:0x7Ad8E6B7B1f6D66F49559f20053Cef8a7b6c488E",
       "sinceTimestamp": 1779394811,
       "sinceBlock": 25145975,
@@ -1147,8 +1148,8 @@
         "gameType": 621,
         "getExpectedImageHash": "0x58557c709e93357a135041297107aecc4bc6ba616509098a4aa8dbef774d212a",
         "getRegisteredSigners": [
-          "eth:0x9a73d6848BBe8562CBb6BF1c92B33610B80a98cC",
-          "eth:0xd7D60ED09A8069DedA10d721bDF2F04F0F80F69d"
+          "eth:0x70750512Bf3CbeF2998D501F01Cbc761861a8F24",
+          "eth:0xfa0a5793AA396206EF8C7Caa121BA4F852ad2589"
         ],
         "manager": "eth:0xd87488Dbb5b6F47cc6c15Dd95Bb60c83D3031b04",
         "MAX_AGE": 3600,
@@ -1717,7 +1718,7 @@
         "game8": "eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499",
         "game8Args": "0x0323914d3050e80c3d09da528be54794fde60cd26849cd3410dde0da7cd7d4fa6463dee3828677f6270d83d45408044fc5edb908909f6cf47ed12f010a796527f562bfc26c7f4e722453c1216e49704d84ea98a4dacd95738f2fc8ec0000000000000000000000000000000000000000000000000000000000002105",
         "game8Vm": "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908",
-        "gameCount": 18085,
+        "gameCount": 18251,
         "initBondGame0": "80000000000000000",
         "initBondGame1": "80000000000000000",
         "initBondGame42": 0,
@@ -1868,8 +1869,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 310736,
-          "prevBlockNum": 25582043
+          "prevBoughtGas": 516470,
+          "prevBlockNum": 25598489
         },
         "paused": false,
         "proofMaturityDelaySeconds": 86400,
@@ -2376,6 +2377,11 @@
           }
         }
       ]
+    },
+    {
+      "address": "eth:0x70750512Bf3CbeF2998D501F01Cbc761861a8F24",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "SystemConfig",
@@ -2925,7 +2931,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293208231",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293209164",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -3057,12 +3063,12 @@
           ]
         ],
         "$upgradeCount": 3,
-        "anchorGame": "eth:0xfB9fF8898967Ca9087160769E3Cc78Eb90d3b5f2",
+        "anchorGame": "eth:0xDd0aadbE4915AB75381f301DCD559A2083733eF4",
         "disputeGameFactory": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
         "disputeGameFinalityDelaySeconds": 0,
         "getAnchorRoot": [
-          "0xa220db49149348a68d72792b599db5e7bed9aa082b011dc42f7843b1870f673e",
-          48711960
+          "0x7e383c2e8d24c11538722ef2afaf9a70cc7f0d0d7de3ae7f07729f03ec29d789",
+          48810960
         ],
         "getStartingAnchorRoot": {
           "root": "0xc34c9f98b74b2fb85a516e302f86bc9bedcf5623ab078a671d40beac0e120329",
@@ -3141,11 +3147,6 @@
     },
     {
       "address": "eth:0x99DB5BbA0db16e9aD05e3ff53310683CC3C971D2",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x9a73d6848BBe8562CBb6BF1c92B33610B80a98cC",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -3492,7 +3493,7 @@
         "proxyAdminOwner": "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
         "symbol": "WETH",
         "systemConfig": "eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072",
-        "totalSupply": "21700000000000000000",
+        "totalSupply": "21650000000000000000",
         "version": "1.5.0"
       },
       "implementationNames": {
@@ -3507,11 +3508,6 @@
     },
     {
       "address": "eth:0xd5D43445d0227a47cA2eACCb9392352746eD9926",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xd7D60ED09A8069DedA10d721bDF2F04F0F80F69d",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -3641,6 +3637,11 @@
     },
     {
       "address": "eth:0xf9e320f3dA12E68af219d9E2A490Dd649f6B177c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xfa0a5793AA396206EF8C7Caa121BA4F852ad2589",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -5775,6 +5776,6 @@
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/RiscZeroGroth16VerifierLegacy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "base": 48929490, "ethereum": 25582048 },
-  "permissionsConfigHash": "0x5503b56a61af9926fa29b0282af72edebde6e94100c7b9822a42ea9239168834"
+  "usedBlockNumbers": { "base": 49028626, "ethereum": 25598489 },
+  "permissionsConfigHash": "0xeeac5d6c20d46eafa730fdfccbff3ca748a3bcb1b060b1a01679fdcf48bbada3"
 }

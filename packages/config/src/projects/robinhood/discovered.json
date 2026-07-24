@@ -1,6 +1,6 @@
 {
   "name": "robinhood",
-  "timestamp": 1784626795,
+  "timestamp": 1784882216,
   "configHash": "0x45d1f46d19c7d77369b23a132f6ec5489efa0d0a35fd01a4896cdfeace31d988",
   "entries": [
     {
@@ -259,7 +259,7 @@
         ],
         "inbox": "eth:0x1A07cc4BD17E0118BdB54D70990D2158AbAD7a2D",
         "isPostBoLD": true,
-        "latestConfirmed": "0xd9537f1afb02fe350e24d562051c629bd6bfe2756d932ee5ba4380d2018f9f45",
+        "latestConfirmed": "0xc7368f1ef3c5828387f2f3c072976eee6e18c575888559a886d5fbb76a76832e",
         "loserStakeEscrow": "eth:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9",
@@ -929,7 +929,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 38497,
+        "batchCount": 46801,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": ["eth:0xDaa526086787d9DEbE1D7F3FFdb1fE50cf8687F4"],
         "bridge": "eth:0xDf8755334ce7A73cCF6b581C02eA649AE3E864b3",
@@ -968,7 +968,7 @@
         "rollup": "eth:0x23A19d23e89166adedbDcB432518AB01e4272D94",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 50711,
+        "totalDelayedMessagesRead": 60327,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1054,7 +1054,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2385566271399255535818402"
+        "totalSupply": "2257346496502235025892778"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -1162,7 +1162,7 @@
           "eth:0xc34f4907822d1cDC6aE3038Be22e6f12DEa35bd4"
         ],
         "allowedOutboxList": ["eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9"],
-        "delayedMessageCount": 50738,
+        "delayedMessageCount": 60340,
         "inboxHistory": [
           "eth:0x1A07cc4BD17E0118BdB54D70990D2158AbAD7a2D",
           "eth:0xc34f4907822d1cDC6aE3038Be22e6f12DEa35bd4"
@@ -1170,8 +1170,8 @@
         "outboxHistory": ["eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9"],
         "rollup": "eth:0x23A19d23e89166adedbDcB432518AB01e4272D94",
         "sequencerInbox": "eth:0xBd0D173EEb87D57A09521c24388a12789F33ba96",
-        "sequencerMessageCount": 38497,
-        "sequencerReportedSubMessageCount": 15461824
+        "sequencerMessageCount": 46801,
+        "sequencerReportedSubMessageCount": 18010264
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1766,6 +1766,9 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "robinhood:0xBa86e3b54E3Ee00185EccB41ff40FC3d5Ee79ecA",
+      "sinceTimestamp": 1782749824,
+      "sinceBlock": 460358,
       "values": {
         "$immutable": false,
         "$implementation": "robinhood:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
@@ -2246,6 +2249,9 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "robinhood:0xBA7c7F9e20A1F6e11815D4Af08D911B21cb391Fd",
+      "sinceTimestamp": 1777567931,
+      "sinceBlock": 2,
       "values": {
         "$immutable": true,
         "owner": "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09"
@@ -2308,6 +2314,9 @@
       "proxyType": "Beacon proxy",
       "description": "ERC-20-compatible Robinhood Stock Token logic. Transfers, approvals and permits are permissionless for addresses that are not blocked in the shared AccessControlsRegistry; there is no onchain KYC or allowlist. The registry's roles can mint, burn arbitrary holders' balances, confiscate balances even while paused or blocked, pause this token or all tokens, change metadata and the UI multiplier, and upgrade the shared beacon implementation.",
       "ignoreInWatchMode": ["totalSupply", "totalSupplyUI"],
+      "deployerAddress": "robinhood:0x5516B3451d4d6C9f63353Fe7Bc9537477ECCE000",
+      "sinceTimestamp": 1781031216,
+      "sinceBlock": 45898,
       "values": {
         "$admin": "robinhood:0x0000000000000000000000000000000000000000",
         "$beacon": "robinhood:0xe10b6f6B275de231345c20D14Ab812db62151b00",
@@ -2345,8 +2354,8 @@
         "symbol": "NVDA",
         "terms": "https://robinhood.com/stocktoken/rhj",
         "tokenPaused": false,
-        "totalSupply": "11636176000000000000000",
-        "totalSupplyUI": "11636176000000000000000",
+        "totalSupply": "17200508000000000000000",
+        "totalSupplyUI": "17200508000000000000000",
         "uid": "0x00000000000000000000000000000000915f477416294f5099a5e0e09f327ce5",
         "uiMultiplier": "1000000000000000000"
       },
@@ -2422,6 +2431,9 @@
       "proxyType": "immutable",
       "description": "Shared access-control registry and upgrade beacon for Robinhood Stock Tokens. Its roles apply across every token implementation that points to this registry: they control upgrades, global and per-token pauses, the shared blocklist, issuance, arbitrary holder burns, metadata and UI multipliers.",
       "ignoreInWatchMode": ["blockedAccounts"],
+      "deployerAddress": "robinhood:0x074377a78A9710A1D47244f89797718b4f491279",
+      "sinceTimestamp": 1779401804,
+      "sinceBlock": 7662,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -3959,6 +3971,6 @@
     "robinhood/accessControlsRegistry": "0xa1fbf84eb609ea4cdccdf8a5051375ec6540a6484aa187e4fc021e7231538e24",
     "robinhood/rwa": "0x6a4b6026d07de4fbe785cf745eed6aab91d27bef2776ed3280a828368f1bf7b2"
   },
-  "usedBlockNumbers": { "ethereum": 25580257, "robinhood": 15462208 },
+  "usedBlockNumbers": { "ethereum": 25601443, "robinhood": 18010473 },
   "permissionsConfigHash": "0x520b503f3c9bb5253b5b60876b8bc989e1134376a9b01ce981bf188bacf2f3f0"
 }

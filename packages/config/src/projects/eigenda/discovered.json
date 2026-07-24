@@ -1,6 +1,6 @@
 {
   "name": "eigenda",
-  "timestamp": 1775212321,
+  "timestamp": 1784811471,
   "configHash": "0xfd4e776e2116485d264f09b24afc4803c4c4dba943d27c41ba27cfe9568b4cf1",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
@@ -139,6 +139,7 @@
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "eth:0xB646A0871af2b2c6e115b24D7E36d406780b6ca8",
           "eth:0xA3e302a6Ea0cf79B8580d94e92Eb5514292daacE",
           "eth:0x1b6cC4C0670bBA2B992b82Cb8E76B286D63264c6",
           "eth:0x403F4d4958409480502CdC78a54cE1B67263C17a",
@@ -148,8 +149,8 @@
         "domainSeparator": "0x0f8eb27939d8e0595e7cc493a40b145f31803628460538623d3988094d1a63f9",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 39,
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 43,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -333,14 +334,11 @@
           "0xedebd1222578e5cd75d76c8972ab5ee7439591ee667094aea695b092484877fb",
           "0x35a645a980a13c0cb3024a5e78408ddde2b5affd306cd331ce2be9cd5968ca23",
           "0x9451e780b7a82699a8a5345caf25822345920da114581a31b412b59694f13adc",
-          "0x4af3dac73046df0094622345c6546dafd0125ac82675783c76939c70c90c3583",
           "0x571acc1fd08b9f09262d7c3bcd1f92045e6632f62c1010776baec5e71f8f0714",
           "0xf4d2e74aefcf9a4201e7fcd300f93faf1628fdf83397a950dd49c48cc5113aaf",
           "0x74e99d8b01a4e92c6c37961c04d1956cab258a9dd036696515961e751101b7db",
           "0x2770a27e7c93d6eb0ae83ec2cae237cd4252ed2a3ad766be30783570d3195240",
           "0xb8da985da602277762b88bf534754cde59fc01f1dbbb780c76a2725d4e63e83d",
-          "0x6f6bb4800c7f533bbbfd0887c4e0c6b5dc30c3161a07b9d93f79e7351cc76d99",
-          "0x45511e592e63f31ee9d590d400a88fea67d774959e8311c60e80c5dd8007821b",
           "0x9e9ac054de136666faca763435497280f286223f6d412e4ca844a7916d7d3fc2",
           "0x2c785bd766946121479e4b017d543dcb3834c895b0aba4eb06c4d005ac0c598a",
           "0xed3e75b0d95c82ef333aa13929a00b8e6c4e04c812006b21f3743c78f774992a",
@@ -353,23 +351,13 @@
           "0x4e69818bbb7112a75a417a8da67ba346b541bc18a4fcd78897cf0d20d5573f14",
           "0xb1466ebd795b92cdd28a91fda29fc81ddbb10d46e2a29c1bec4be99431dbcf1d",
           "0x0496a1c5a3f9d2350177e1d3fc810b61acfcfd24e1d40e1d716524fd379e858a",
-          "0x298a5d7f39ddadc4ea6ec53dfe8f53da3bcb79f78959d6f0b052db493af7a750",
-          "0x3de65d5688bab111480ec6fbc980b0de1bdda1c812df51db1e3c677f085553a7",
           "0x9f38709f446fcd85a0a1909aa45a6ef8efcdbf85df20073e598db86e566ea2ea",
           "0x475ca3b08b5861bb0f8e49ebc14775847cf531c6c16a1473d4610d6f609f179c",
-          "0xb5dd0e179a31ff0dcd1db1362118aab11586e8e42c713e154295a9effa4ab738",
           "0xaa2854f59d446537e7b349ca80646985c4bc296ee0a6ef4ae2e7ce2cfc6476e2",
-          "0x866c3fdff1b88bb54fb06b8eb5d6222fa0389cd008471a141334aed0eb171878",
-          "0x11120449cb50d85ed6e420a0a94dc8eecfc3da3ce9de99ef46dc0ee0e9f0669a",
           "0x8d4e5576c75115b4f0206d4af8bcbf5fb807607b9ad204a0884ad269981132f3",
           "0x0058fc08ccd6efbfa1b28be52f2f97a34e2168217f144bbb680a537d2ca18111",
-          "0x0ceb3306c4166f83984b224c6046136f85df1bcb09da0605a5131736d5e40a77",
           "0x2d92999b9b651916f60c7d28934b9b91d9c43c7a4474861340ccc09cadc29750",
-          "0x61a037630ed03eba219a0c1b99e744f25072c3ec2040d50091664182b1feee43",
           "0xd0ee55b8e193f2dc21c140d4212079a5b78c3df1ac953f7d4f0dd7ed3c7316d6",
-          "0x9e6f62da5509519a81e7ce9549000fa7991483cb9053221968351252b70a1fb9",
-          "0x3e004bd28aa1b94a6f7a19d48007bb8211d9f7edb4a655653d8db5e1784fd76d",
-          "0x3f6034d69a0aca29b330208a3946345f238844578025d459262ce882bec85ed9",
           "0x05532d1781804b53a8614009f79ced98a4474294984d19e793780a3b8c286a98",
           "0x29ef6b67feaaa31f210c9a7b8ef073a3fb35eeb5f6fe063f5e75247b884abd0a",
           "0xd1bfc317efb9f0d3ae5a0bd8c3a6c1948d10e63cebd06250aa7d2d20fec2f851",
@@ -378,34 +366,20 @@
           "0x2e8be17a9566a25a30c37aaaa57a870a922d9713833cd401a0d59d9e67fa9dcc",
           "0x6b9d91f76e2c7d4fa17b0c498144cc857b43c1488f6f7a0cc7ed4a5f4c1fed5a",
           "0x832c0fae231eb044c5f7ceb2f72a77caef174f46e60c8c257aab5160603b05b3",
-          "0x13cb0150a640902f3d32e152e340384441e1c0bcfd3b34cf17b3f76c6030ab82",
           "0xfcc1afb1aadb7986d6482feb6cf5542fcca50d8bc92bf5e481a94d27374d24e2",
-          "0xdc504cf506e8b0562bf55d13e75704869c2e80b2c17ce834840e7baaf1ffed7a",
-          "0x960dc057a3b0c24385c25845f5eebe1fafcc4739a94351b4550cb0d0e53d3655",
-          "0xfcaffb0c80a3202d233f2b2b037a17528706afb73b1ac21194b3708177c8f301",
           "0x442a057849f7fa68f8c34dc8b9475c6f8e50ee48b1f7e83e0229833761a7d6e3",
-          "0x8758fc175c5617a10d5c8c432d3c61dea5aef3a949d3ffcf259a35daa4921871",
           "0xab5716b1b46c8c1d6eef9e2ba828f33fbbee735966f0d0e449c77727808154ba",
           "0xe8f5cbf6ef8179b14b6378206d1006a38d9f749351955d4738cd515aa8559e5e",
           "0x2aa77dfcccd51126c0affefa1235a2c53905fe864fccfd93ffe4d8d4f8912a8a",
           "0xb523e0b4efdc2c267da48e837e419fda92085151dea3d59834da2dc153dc157c",
           "0x3bada6b94153d886dd48ea93946e83779a9e338cdd138b81106584a94ef6b247",
-          "0x4b4c68dd8324d92c733fd9e8571b59a88e28f417b8e8d90a580c8d70eac650d0",
           "0x0824ab32bfcda7b4e253823f2421891fe791cc95e3de2e55a310de6f4b2b1269",
-          "0x0955e7dff023cbc1818fb1439e69caf4647d504851f58ed09552eae3393e58a1",
-          "0x80dd3e365a5a50175acbb28eb1f931b1369d50e76560adb038baff9d30bf334a",
-          "0xc69ab28996c80f2e5cb7016ab8f3f8bf029d8135646b645813020da86f432bcf",
-          "0xc7800d34420e0bfdb5db29ea545899f1ec5e9a03aab96506aaf6d8724ba8c915",
-          "0xf84c9f0d23474947e24701dbc71c1247d7c90b146219cfef6231402cf454c14c",
-          "0x14757e958213cdbf483e550491aa16c7446eaf64ac2894e33c823a60e9045f0a",
           "0x3278d7a1fc5f9f6a342007f6efd5fba9f8713169ed4c448f39884925422552f7",
           "0xf3879d1954d75c69f17b02216d7495d82be50c7ab0be425c2a6dc94a74a7cf06",
           "0x043b00fe2b0b7af45acf2778eaf4fcd396c8549cb0876cc257f6c11e54ec6635",
           "0x6da56349059cb0ec5c810d0eb2ef43e048f7713dccbd786247f47bd65fc9039f",
           "0x1c9b842872d119a38569314f96152c019f31f97f4f11b9b8f20331c7ff693e40",
           "0x2e2ee953aa3c2a499640270eaaf2ba1973265f7e0d0b1e0ebef6ead13fcce307",
-          "0xa4a276a179a448bb62e32a82dafe3993b3766e4356d14d48ff4b71ac43eb510c",
-          "0xb019237ca1552564cbdf37b4fbc5be3a6caaa7ffb7db23ac9f6abe893dfce570",
           "0x1147eac85c25bdcb35a3818f2fa98f753458208db9d7ec0753af3f0feaba49a3",
           "0x57309111be2293fbcfd77e8479a4f2570f8956aae8cd2ba3bcc0c58d65823fcb",
           "0xe53ff57b72c0ea3dc215523a33d43340a5d1aadb25f8395de0bce768f17a84c5",
@@ -413,13 +387,23 @@
           "0x32293d3ad6447b8c67a1f02ff0bfae0e73ec4d442842cd816e9395b0e370858c",
           "0x12bbc1398d50485699592d0d1c05bc358714095a1d4d9971becfa9f1b48806b2",
           "0x155ffb09581c003557d6614d7764b3a594a9a689ca705ec6ea5e9dcf29ea9e56",
-          "0x6bcf80c24889dce79c2b7c281d9e9a116df2e31b38066875709f44261919b086",
           "0xc07a06bef2237cb01b3714510ea2d7e2b0f056081e8fe0ace4c8f3e00f1c2697",
-          "0x4776a2a65d4c3b3a25603e2d581837dded443b840bad2406642d5457d90afc2b",
-          "0x6c44dee76ef91585c58c16f5dc19694fc94a31fc65808cc7e6a08f4ee209e7db",
           "0xec7f32b9be7f5385bc3bb4683cf03d41f53c317d833776da1cdb54f32a52db77",
           "0x4237db2359e8736fb9987c4c34707454ab3b0089c8ae1bd363decfa693d66c15",
-          "0xd91c7c8888da9062e48e92d20813dfa8ce7f581d327b36237040354c5159db0e"
+          "0xd91c7c8888da9062e48e92d20813dfa8ce7f581d327b36237040354c5159db0e",
+          "0xe5f9b527a2b5ace562d7ad9e3e8ed8baa162ae5bd92ea66cdf7215c6b1b19759",
+          "0x195e5fe48195d84c6c32642c2b25f50299ac6b067ab3c52a833149e3dd357a9c",
+          "0x02ec809f7c2f0a87e7c911de414416230e2f2aef9526b1efb32e4f8d16bdbce8",
+          "0x2cb71ecfdae8149ef5d3c5ed547674e78fb0f4ee2c507da5153f618fd1ff0d1d",
+          "0xc7c25d381c30da55ef484168d1f79238c119baf2c77f2b5dea18bb92140020df",
+          "0x630472e82487862e241b1d1f8e26c62caf3497086c9bbbb8b917a4b9c215b1db",
+          "0x88507c7e04a4995594d3c4c7ff7c798fc23807dce3fbb8de41ec641036d7d3b4",
+          "0x4776a2a65d4c3b3a25603e2d581837dded443b840bad2406642d5457d90afc2b",
+          "0xc1da25265bdf9211211ab9292667cf43e550adae43bae58470678918b0bd8bd3",
+          "0x0a65b09f4cc1527b6dcf4dbf071cd42b941a1aa634d1a02c6a47c5324b345654",
+          "0x2a5ccd8075a6e252f1448cd3fdbcde296d2f56aaf2d757c5863db608ae41b02e",
+          "0x42162fbd59503a09b5709d0e612b824cd12f92fa577ea993fd67e797df19415c",
+          "0x62fd7709add808809511fe2d3a230cd9cb7321cc2f47e2c35fd959d0449be8ee"
         ],
         "registries": [
           "eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
@@ -641,7 +625,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "certVerifierABNs": [0, 23786550],
+        "certVerifierABNs": [0, 23786550, 25575801],
         "DAVerifiers": [
           {
             "activationBlockNumber": 0,
@@ -650,6 +634,10 @@
           {
             "activationBlockNumber": 23786550,
             "certVerifier": "eth:0x46766C6426eF4D3092f73F72660A8b7B510E6846"
+          },
+          {
+            "activationBlockNumber": 25575801,
+            "certVerifier": "eth:0xD2e690d08Db56Fb648B1340457281EDE7b6F53FE"
           }
         ],
         "owner": "eth:0x002721B4790d97dC140a049936aA710152Ba92D5"
@@ -1238,6 +1226,11 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
+      "address": "eth:0xB646A0871af2b2c6e115b24D7E36d406780b6ca8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "IndexRegistry",
       "address": "eth:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030",
       "type": "Contract",
@@ -1325,6 +1318,33 @@
         "eth:0xF6D82FBBdf700c086389e72C3023812e956ECa9e": "EigenDARelayRegistry"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "EigenDACertVerifier",
+      "address": "eth:0xD2e690d08Db56Fb648B1340457281EDE7b6F53FE",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xfe7120fe9d61dad66b49443206c3948ef01ea3bdb1e4933a56902a614b500ec6"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0x403F4d4958409480502CdC78a54cE1B67263C17a",
+      "sinceTimestamp": 1784310803,
+      "sinceBlock": 25554030,
+      "values": {
+        "$immutable": true,
+        "certVersion": 3,
+        "eigenDASignatureVerifier": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+        "eigenDAThresholdRegistry": "eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15",
+        "quorumNumbersRequired": "0x01",
+        "securityThresholds": {
+          "confirmationThreshold": 55,
+          "adversaryThreshold": 33
+        },
+        "semver": { "major": 3, "minor": 1, "patch": 0 }
+      },
+      "implementationNames": {
+        "eth:0xD2e690d08Db56Fb648B1340457281EDE7b6F53FE": "EigenDACertVerifier"
+      }
     },
     {
       "address": "eth:0xD2Ee81Cf07B12140C793FcE5B26313CDd9d78eA8",
@@ -2036,6 +2056,25 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "eth:0xD2e690d08Db56Fb648B1340457281EDE7b6F53FE": [
+      "constructor(address initEigenDAThresholdRegistry, address initEigenDASignatureVerifier, tuple(uint8 confirmationThreshold, uint8 adversaryThreshold) initSecurityThresholds, bytes initQuorumNumbersRequired)",
+      "error BlobQuorumsNotSubset(uint256 blobQuorumsBitmap, uint256 confirmedQuorumsBitmap)",
+      "error InvalidBlobVersion(uint16 blobVersion, uint16 nextBlobVersion)",
+      "error InvalidInclusionProof(uint32 blobIndex, bytes32 blobHash, bytes32 rootHash)",
+      "error InvalidQuorumNumbersRequired(uint256 length)",
+      "error InvalidSecurityThresholds()",
+      "error RequiredQuorumsNotSubset(uint256 requiredQuorumsBitmap, uint256 blobQuorumsBitmap)",
+      "error SecurityAssumptionsNotMet(uint8 confirmationThreshold, uint8 adversaryThreshold, uint8 codingRate, uint32 numChunks, uint32 maxNumOperators)",
+      "function _decodeCert(bytes data) pure returns (tuple(tuple(bytes32 batchRoot, uint32 referenceBlockNumber) batchHeader, tuple(tuple(tuple(uint16 version, bytes quorumNumbers, tuple(tuple(uint256 X, uint256 Y) commitment, tuple(uint256[2] X, uint256[2] Y) lengthCommitment, tuple(uint256[2] X, uint256[2] Y) lengthProof, uint32 length) commitment, bytes32 paymentHeaderHash) blobHeader, bytes signature, uint32[] relayKeys) blobCertificate, uint32 blobIndex, bytes inclusionProof) blobInclusionInfo, tuple(uint32[] nonSignerQuorumBitmapIndices, tuple(uint256 X, uint256 Y)[] nonSignerPubkeys, tuple(uint256 X, uint256 Y)[] quorumApks, tuple(uint256[2] X, uint256[2] Y) apkG2, tuple(uint256 X, uint256 Y) sigma, uint32[] quorumApkIndices, uint32[] totalStakeIndices, uint32[][] nonSignerStakeIndices) nonSignerStakesAndSignature, bytes signedQuorumNumbers) cert)",
+      "function certVersion() pure returns (uint8)",
+      "function checkDACert(bytes abiEncodedCert) view returns (uint8)",
+      "function checkDACertReverts(tuple(tuple(bytes32 batchRoot, uint32 referenceBlockNumber) batchHeader, tuple(tuple(tuple(uint16 version, bytes quorumNumbers, tuple(tuple(uint256 X, uint256 Y) commitment, tuple(uint256[2] X, uint256[2] Y) lengthCommitment, tuple(uint256[2] X, uint256[2] Y) lengthProof, uint32 length) commitment, bytes32 paymentHeaderHash) blobHeader, bytes signature, uint32[] relayKeys) blobCertificate, uint32 blobIndex, bytes inclusionProof) blobInclusionInfo, tuple(uint32[] nonSignerQuorumBitmapIndices, tuple(uint256 X, uint256 Y)[] nonSignerPubkeys, tuple(uint256 X, uint256 Y)[] quorumApks, tuple(uint256[2] X, uint256[2] Y) apkG2, tuple(uint256 X, uint256 Y) sigma, uint32[] quorumApkIndices, uint32[] totalStakeIndices, uint32[][] nonSignerStakeIndices) nonSignerStakesAndSignature, bytes signedQuorumNumbers) daCert) view",
+      "function eigenDASignatureVerifier() view returns (address)",
+      "function eigenDAThresholdRegistry() view returns (address)",
+      "function quorumNumbersRequired() view returns (bytes)",
+      "function securityThresholds() view returns (tuple(uint8 confirmationThreshold, uint8 adversaryThreshold))",
+      "function semver() pure returns (uint8 major, uint8 minor, uint8 patch)"
+    ],
     "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
@@ -2191,6 +2230,6 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 24798523 },
-  "permissionsConfigHash": "0xc793638e4ccb1f14f3cd353f4433e109110cdd607ea0b64720e84e9178c3cf63"
+  "usedBlockNumbers": { "ethereum": 25595575 },
+  "permissionsConfigHash": "0x488329afba596d2c9c4ba758b575ca924bb2773fe1d2edf19649a69dc5fbc7a8"
 }
