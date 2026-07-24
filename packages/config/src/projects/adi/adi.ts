@@ -68,7 +68,10 @@ export const adi: ScalingProject = {
       'ADI Chain is a zk rollup built for scale and policy alignment.',
     links: {
       websites: ['https://adi.foundation/'],
-      explorers: ['https://explorer.adifoundation.ai/'],
+      explorers: [
+        'https://explorer-bls.adifoundation.ai',
+        'https://explorer.adifoundation.ai/',
+      ],
       repositories: ['https://github.com/orgs/ADI-Foundation-Labs/'],
       bridges: ['https://bridge.adifoundation.ai'],
       documentation: [
@@ -173,7 +176,7 @@ export const adi: ScalingProject = {
   chainConfig: {
     name: 'adi',
     chainId,
-    explorerUrl: 'https://explorer.adifoundation.ai',
+    explorerUrl: 'https://explorer-bls.adifoundation.ai',
     sinceTimestamp: UnixTime(1764062519),
     gasTokens: ['ADI'],
     apis: [

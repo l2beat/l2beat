@@ -53,9 +53,13 @@ function ValuesDialogBody({ node }: { node: Node }) {
   const [searchQuery, setSearchQuery] = useState('')
 
   const filteredFields = useMemo(() => {
-    return node.fields.filter((field) =>
-      field.name.toLowerCase().includes(searchQuery.toLowerCase()),
-    )
+    const query = searchQuery.toLowerCase()
+    return node.fields.filter((field) => {
+      return (
+        field.name.toLowerCase().includes(query) ||
+        field.label?.toLowerCase().includes(query)
+      )
+    })
   }, [searchQuery, node.fields])
 
   const fieldTree = useMemo(
@@ -154,7 +158,7 @@ function ValuesDialogBody({ node }: { node: Node }) {
         <div className="flex max-h-[40vh] flex-col overflow-y-auto border border-coffee-400 bg-coffee-400/10 p-2 text-sm">
           {fieldTree.map((field) => (
             <FieldNode
-              key={field.property}
+              key={field.type === 'simple' ? field.fullKey : field.property}
               field={field}
               hiddenFields={hiddenFields}
               onToggle={toggleField}

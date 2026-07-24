@@ -1,10 +1,14 @@
 import { assert, type UnixTime } from '@l2beat/shared-pure'
 import type { BlockIndexerClient } from '../../clients'
-import type { BlockProvider } from '../block/BlockProvider'
+
+interface BlockTimestampDataSource {
+  readonly chain: string
+  getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<number>
+}
 
 interface Dependencies {
   readonly indexerClients: BlockIndexerClient[]
-  readonly blockProviders: BlockProvider[]
+  readonly blockProviders: BlockTimestampDataSource[]
 }
 
 export class BlockTimestampProvider {

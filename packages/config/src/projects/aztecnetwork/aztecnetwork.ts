@@ -332,6 +332,12 @@ export const aztecnetwork: ScalingProject = {
   },
   config: {
     associatedTokens: ['AZTEC'],
+    activityConfig: {
+      type: 'block',
+      startBlock: 1,
+      // The indexer range is inclusive; 49 produces one 50-block RPC request.
+      batchSize: 49,
+    },
     escrows: [
       discovery.getEscrowDetails({
         address: feeJuicePortal.address,
@@ -376,7 +382,13 @@ export const aztecnetwork: ScalingProject = {
     gasTokens: ['AZTEC'],
     name: 'aztecnetwork',
     chainId: 677868, // on chainlist, but aztec is not evm
-    apis: [], // TODO: add
+    apis: [
+      {
+        type: 'aztec-rpc',
+        url: 'https://aztec-mainnet.drpc.org',
+        callsPerMinute: 60,
+      },
+    ],
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS,

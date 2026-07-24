@@ -69,6 +69,20 @@ const OP_SUCCINCT_RANGE_EIGENDA = {
     'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks. Data availability layer is set to EigenDA.',
 }
 
+const OP_SUCCINCT_RISE_V341_STEPS = `
+Prepare:
+
+1. Install sp1 toolchain: \`curl -L https://sp1.succinct.xyz | bash\`, then \`~/.sp1/bin/sp1up\`.
+2. Install docker and make sure it is running: \`docker ps\`.
+
+Verify:
+
+1. Checkout the correct tag in [risechain/op-succinct](https://github.com/risechain/op-succinct) repo: \`git checkout v3.4.1-rise.7\`. Commit hash should be \`a99569fa608127fdd4d5d73722184362c6283d6b\`.
+2. Reproducibly rebuild the EigenDA range ELF from source: from \`programs/range/eigenda\` run \`~/.sp1/bin/cargo-prove prove build --elf-name eigenda-range-elf-embedded --docker --tag v5.2.4 --output-directory ../../../elf --features embedded\`.
+3. Reproducibly rebuild the aggregation ELF from source: from \`programs/aggregation\` run \`~/.sp1/bin/cargo-prove prove build --elf-name aggregation-elf --docker --tag v5.2.4 --output-directory ../../elf\`.
+4. From the repo root run \`cargo run --bin config --release --features eigenda\` to print the range verification key hash and the aggregation verification key hash. The eigenda feature selects the EigenDA range ELF, whose in-circuit derivation verifies EigenDA DA certificates via hokulea and canoe.
+`
+
 const OP_SUCCINCT_AGGLAYER_V390_STEPS = `
 Prepare:
 
@@ -378,6 +392,20 @@ Verify:
 3. Reproducibly rebuild the program ELF from source: from \`programs/range/eigenda\` run \`cargo prove build --elf-name eigenda-range-elf-embedded --docker --tag v6.1.0 --output-directory ../../../elf\`. The rebuilt ELF is byte-identical to the one committed in the release.
 4. From the \`op-succinct\` dir run \`cargo run --bin config --release --features eigenda\` to print the verification key hashes.
     `,
+  },
+  '0x0061b26157718f96a20ea50c52a485dea3b6967139328dc7e07fece56f557bda': {
+    ...OP_SUCCINCT_FDP_AGG_EIGENDA('v3.4.1-rise.7'), // Rise
+    programUrl:
+      'https://github.com/risechain/op-succinct/tree/v3.4.1-rise.7/programs/aggregation',
+    verificationStatus: 'successful',
+    verificationSteps: OP_SUCCINCT_RISE_V341_STEPS,
+  },
+  '0x02850d082ab676631569bfa7057944a05f22f42c12ffa15b0ae30a6153dfe162': {
+    ...OP_SUCCINCT_FDP_RANGE_EIGENDA('v3.4.1-rise.7'), // Rise
+    programUrl:
+      'https://github.com/risechain/op-succinct/tree/v3.4.1-rise.7/programs/range/eigenda',
+    verificationStatus: 'successful',
+    verificationSteps: OP_SUCCINCT_RISE_V341_STEPS,
   },
   '0x003991487ea72a40a1caa7c234b12c0da52fc4ccc748a07f6ebd354bbb54772e': {
     ...OP_SUCCINCT_AGG_BLOBS,

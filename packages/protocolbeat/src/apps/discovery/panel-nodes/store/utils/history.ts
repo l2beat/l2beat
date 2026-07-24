@@ -11,11 +11,10 @@ export function emptyHistoryState(): HistoryState {
 }
 
 export function captureHistorySnapshot(
-  state: Pick<State, 'nodes' | 'hidden'>,
+  state: Pick<State, 'nodes'>,
 ): HistorySnapshot {
   return {
     nodes: state.nodes,
-    hidden: [...state.hidden],
   }
 }
 
@@ -23,17 +22,8 @@ export function snapshotsEqual(
   left: HistorySnapshot,
   right: HistorySnapshot,
 ): boolean {
-  if (left.hidden.length !== right.hidden.length) {
-    return false
-  }
   if (left.nodes.length !== right.nodes.length) {
     return false
-  }
-
-  for (let index = 0; index < left.hidden.length; index++) {
-    if (left.hidden[index] !== right.hidden[index]) {
-      return false
-    }
   }
 
   for (let index = 0; index < left.nodes.length; index++) {
@@ -70,15 +60,10 @@ export function applyHistorySnapshot(
   snapshot: HistorySnapshot,
 ): State {
   const nodeIds = new Set(snapshot.nodes.map((node) => node.id))
-  const hidden = snapshot.hidden.filter((id) => nodeIds.has(id))
-  const hiddenSet = new Set(hidden)
-  const selected = state.selected.filter(
-    (id) => nodeIds.has(id) && !hiddenSet.has(id),
-  )
+  const selected = state.selected.filter((id) => nodeIds.has(id))
 
   return updateNodePositions(state, {
     nodes: [...snapshot.nodes],
-    hidden,
     selected,
     resizingNode: undefined,
     mouseUpAction: undefined,

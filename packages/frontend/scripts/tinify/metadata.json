@@ -243,7 +243,7 @@
   "static/icons/redstone.png": "5cab24bff50961a3c67f8030b96aea30",
   "static/icons/reya.png": "a65afa11dc57ad9b51a7776a4e36fd42",
   "static/icons/rhinofi.png": "d8907bb6be1a79730bfde0942ea1809a",
-  "static/icons/rise.png": "235942879e84da498d2ecea00a7361f5",
+  "static/icons/rise.png": "6980ae7fcbd675723453886c3cca79d9",
   "static/icons/rivalz.png": "b9aeb8d889aa49a8449c9cedc3a14df8",
   "static/icons/rss3.png": "fb6136d630cb00962c3940882443e535",
   "static/icons/rufus.png": "9979fece1fd58828062dee436c2e88b3",
@@ -910,7 +910,7 @@
   "static/meta-images/scaling/projects/reya/tvs-breakdown/opengraph-image.png": "d3476440498c7476cec1a3f755979c8a",
   "static/meta-images/scaling/projects/rhinofi/opengraph-image.png": "d6291a9caf0de6c1558073384551388c",
   "static/meta-images/scaling/projects/rhinofi/tvs-breakdown/opengraph-image.png": "c3b0bcd30f8a9921f9b5bb6d226add99",
-  "static/meta-images/scaling/projects/rise/opengraph-image.png": "4433dadbdcaf302140bbd11d791200be",
+  "static/meta-images/scaling/projects/rise/opengraph-image.png": "f1eb39e2a8db7a71e2c0eb7c1815f99f",
   "static/meta-images/scaling/projects/rise/tvs-breakdown/opengraph-image.png": "f0b9727c79ee7d535f8fb4b663a36fa2",
   "static/meta-images/scaling/projects/rivalz/opengraph-image.png": "a00a35f13906bf93e67ed2a254129b7c",
   "static/meta-images/scaling/projects/rivalz/tvs-breakdown/opengraph-image.png": "dd68d5a670c4596574ca233b482453bb",
@@ -1575,6 +1575,7 @@
   "static/meta-images/zk-catalog/projects/railgun/opengraph-image.png": "5fdc48e99c2f80790ec6b42681bb3646",
   "static/meta-images/zk-catalog/projects/tornado-cash/opengraph-image.png": "16a4e5fc3712a8247e88d19b2c2bb072",
   "static/meta-images/zk-catalog/projects/strk20/opengraph-image.png": "f05a90a3a5c37363a161f93880e6be6e",
+  "static/meta-images/interop/projects/rise/opengraph-image.png": "aa0c480fad9568b1235f40e46d2cde9d",
   "static/meta-images/native-rollups/opengraph-image.png": "ca93c98a363afdcc7010410d91c58165",
   "static/meta-images/publications/ethereums-roadmap-to-10m-tps.png": "7fd91c3ae57ae883ddd845d40207661a",
   "static/meta-images/publications/execution-sharding-through-native-rollups.png": "85b25760d1b431e1d2ded6aa5508864b",
@@ -1585,5 +1586,6 @@
   "static/images/architecture/lighter-robinhood.png": "86644ba9c1b6b1329e262795ab13cf53",
   "static/meta-images/publications/governance-review-100.png": "cce191e6c0639113dfe7a3a62502237b",
   "static/meta-images/publications/governance-review-101.png": "63099d8ad6197a20404755c7f2256789",
+  "static/meta-images/publications/security-councils-in-practice.png": "dee419f5692f63a69a71a823417c8c17",
   "static/images/architecture/apex.png": "430e6eb3a921a8e24418b6529fec8649"
 }

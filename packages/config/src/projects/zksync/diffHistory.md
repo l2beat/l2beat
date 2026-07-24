@@ -1,3 +1,60 @@
+Generated with discovered.json: 0x5dd9c22b64864cbdcda142ecfe8cfa6a86e87546
+
+# Diff at Wed, 22 Jul 2026 10:13:42 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@0fd88e8637e7f933fd36577548a83f1ac175841b block: 1778580426
+- current timestamp: 1784715153
+
+## Description
+
+Downgraded 5/8 owner multisig to 1/1. Note that the project is already sunset and entered the shutdown phase. 
+
+## Watched changes
+
+```diff
+    contract ZkSync Multisig (eth:0xE24f4870Ab85DE8E356C5fC56138587206c70d99) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x4964D00fA975a7346ee6196a94b07c01ed1cD3CE"
+      values.$members.1:
+-        "eth:0x050b37a12451F188c7bA53D48b8A1adE6D138E71"
+      values.$members.2:
+-        "eth:0xeF4CcBDf8f91A001164149558106737A568e4912"
+      values.$members.3:
+-        "eth:0xC9474de11503D63D892cEDD12d6B93f6A25a9cbF"
+      values.$members.4:
+-        "eth:0x45F9AfCf9565051344aFb36e665f4d7bb2d18415"
+      values.$members.5:
+-        "eth:0x702caCafA54B88e9c54449563Fb2e496e85c78b7"
+      values.$members.6:
+-        "eth:0xD613b3a3924D0dE9B4a352ca0669e743cBC3C4AA"
+      values.$members.7:
+-        "eth:0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc"
++        "eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828"
+      values.$threshold:
+-        5
++        1
+      values.multisigThreshold:
+-        "5 of 8 (63%)"
++        "1 of 1 (100%)"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Matter Labs Multisig (eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828) [GnosisSafe]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat/Matter Labs Multisig/GnosisSafe.sol      | 1026 ++++++++++++++++++++
+ .../Matter Labs Multisig/GnosisSafeProxy.p.sol     |   38 +
+ 2 files changed, 1064 insertions(+)
+```
+
 Generated with discovered.json: 0xeae73c8612b79d421883088639904b20981a6a7d
 
 # Diff at Tue, 12 May 2026 11:06:10 GMT:

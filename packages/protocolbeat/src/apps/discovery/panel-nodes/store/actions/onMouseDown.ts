@@ -31,7 +31,7 @@ export function onMouseDown(
     }
 
     const { x, y } = toViewCoordinates(event, container, state.transform)
-    const graph = buildRenderGraph(state.nodes, state.hidden)
+    const graph = buildRenderGraph(state.nodes)
 
     // Clicking an open group's header selects the group and drags it (and,
     // through positionsBeforeMove, its whole subtree) as one unit.

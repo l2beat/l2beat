@@ -1,37 +1,25 @@
 import { useStore } from '../store/store'
+import { getGraphProjection } from '../store/utils/graphProjection'
 import { ControlDropdownButton } from './ControlDropdownButton'
 import { IconControlEye } from './icons/IconControlEye'
 
 export function ShowButton({ className }: { className?: string }) {
-  const hiddenCount = useStore((state) => state.hidden.length)
   const nodes = useStore((state) => state.nodes)
-  const hiddenNodes = useStore((state) => state.hidden)
   const showHidden = useStore((state) => state.showHidden)
-  const showUnreachable = useStore((state) => state.showUnreachable)
-
-  const hiddenUnreachableCount = nodes.filter(
-    (node) => !node.isReachable && hiddenNodes.includes(node.id),
-  ).length
+  const hiddenFieldCount = getGraphProjection(nodes).hiddenFieldCount
 
   return (
     <ControlDropdownButton
       label="Show"
       icon={<IconControlEye />}
-      disabled={hiddenCount === 0 && hiddenUnreachableCount === 0}
+      disabled={hiddenFieldCount === 0}
       className={className}
       options={[
         {
           label: 'All',
-          count: hiddenCount,
+          count: hiddenFieldCount,
           onSelect: showHidden,
-          disabled: hiddenCount === 0,
-        },
-        {
-          label: 'Unreachable',
-          count: hiddenUnreachableCount,
-          onSelect: showUnreachable,
-          disabled: hiddenUnreachableCount === 0,
-          icon: <IconControlEye />,
+          disabled: hiddenFieldCount === 0,
         },
       ]}
     />

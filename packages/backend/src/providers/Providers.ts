@@ -20,6 +20,8 @@ import {
 import { assert } from '@l2beat/shared-pure'
 import type { Config } from '../config'
 import { BlobPriceProvider } from '../modules/tracked-txs/modules/l2-costs/BlobPriceProvider'
+import { ActivityBlockProviders } from './ActivityBlockProviders'
+import { AztecBlockProviders } from './AztecBlockProviders'
 import { BlockProviders } from './BlockProviders'
 import { type Clients, initClients } from './Clients'
 import { DayProviders } from './day/DayProviders'
@@ -29,6 +31,7 @@ import { UopsAnalyzers } from './UopsAnalyzers'
 
 export class Providers {
   block: BlockProviders
+  activityBlock: ActivityBlockProviders
   logs: LogsProviders
   price: PriceProvider
   uops: UopsAnalyzers
@@ -41,6 +44,7 @@ export class Providers {
   starknetTotalSupply: StarknetTotalSupplyProvider
   balance: BalanceProvider
   svmBlock: SvmBlockProviders
+  aztecBlock: AztecBlockProviders
   slotTimestamp: SlotTimestampProvider
   daBeatStats: DaBeatStatsProvider
   blobPrice: BlobPriceProvider | undefined
@@ -57,6 +61,7 @@ export class Providers {
     this.block = new BlockProviders(this.clients.block)
     this.logs = new LogsProviders(this.clients.logs)
     this.svmBlock = new SvmBlockProviders(this.clients.svmBlock)
+    this.aztecBlock = new AztecBlockProviders(this.clients.aztecBlock)
     this.circulatingSupply = new CirculatingSupplyProvider(
       new CoingeckoQueryService(
         this.clients.coingecko,
@@ -70,6 +75,11 @@ export class Providers {
       ),
     )
     this.uops = new UopsAnalyzers(config.chainConfig)
+    this.activityBlock = new ActivityBlockProviders(
+      this.block,
+      this.aztecBlock,
+      this.uops,
+    )
     this.day = new DayProviders(config.chainConfig, {
       starkex: this.clients.starkex,
       voyager: this.clients.voyager,
@@ -95,9 +105,10 @@ export class Providers {
 
     this.blockTimestamp = new BlockTimestampProvider({
       indexerClients: this.clients.indexer,
-      blockProviders: this.clients.block.map(
-        (c) => new BlockProvider(c.chain, [c]),
-      ),
+      blockProviders: [
+        ...this.clients.block.map((c) => new BlockProvider(c.chain, [c])),
+        ...this.aztecBlock.getAll(),
+      ],
     })
 
     this.slotTimestamp = new SlotTimestampProvider({

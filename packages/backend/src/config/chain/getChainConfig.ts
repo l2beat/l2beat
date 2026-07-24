@@ -113,8 +113,9 @@ export async function getChainConfig(
           })
           break
         case 'svm-rpc':
+        case 'aztec-rpc':
           blockApis.push({
-            type: 'svm-rpc',
+            type: api.type,
             url: env.string(Env.key(chain, 'RPC_URL'), api.url),
             callsPerMinute: env.integer(
               Env.key(chain, 'RPC_CALLS_PER_MINUTE'),

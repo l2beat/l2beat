@@ -21,7 +21,6 @@ import {
   layout,
   setPreferences,
   showHidden,
-  showUnreachable,
 } from './actions/other'
 import { registerViewportContainer } from './actions/registerViewportContainer'
 import { selectAndFocus } from './actions/selectAndFocus'
@@ -40,7 +39,6 @@ type StoreSetter = (cb: (state: StoreState) => Partial<State>) => void
 
 const INITIAL_STATE: State = {
   selected: [],
-  hidden: [],
   nodes: [],
   history: emptyHistoryState(),
   transform: { offsetX: 0, offsetY: 0, scale: 1 },
@@ -86,7 +84,6 @@ export const useStore = create<StoreState>()(
       redo: wrapAction(set, redo),
       hideSelected: wrapUndoableAction(set, hideSelected),
       hideUnreachable: wrapUndoableAction(set, hideUnreachable),
-      showUnreachable: wrapUndoableAction(set, showUnreachable),
       showHidden: wrapUndoableAction(set, showHidden),
       clear: wrapHistoryResetAction(set, clear),
       layout: wrapUndoableAction(set, layout),
@@ -105,12 +102,11 @@ export const useStore = create<StoreState>()(
     }),
     {
       // You can update the key if changes are backwards incompatible
-      name: 'store-v4',
+      name: 'store-v5',
       partialize: (state) => {
         return {
           projectId: state.projectId,
           nodes: state.nodes,
-          hidden: state.hidden,
           userPreferences: state.userPreferences,
         }
       },

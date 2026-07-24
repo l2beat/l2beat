@@ -1560,12 +1560,19 @@ function getRiskViewStateValidation(
       }
     }
     case 'OpSuccinctFDP': {
+      const challengers =
+        templateVars.discovery.getContractValueOrUndefined<string[]>(
+          'AccessManager',
+          'challengers',
+        ) ?? []
       return {
         ...RISK_VIEW.STATE_FP_1R_ZK,
         sentiment: 'warning', // whitelist for challengers!
         description:
           RISK_VIEW.STATE_FP_1R_ZK.description +
-          ' The system currently operates with at least 5 whitelisted challengers external to the team.',
+          (challengers.length >= 5
+            ? ' The system currently operates with at least 5 whitelisted challengers external to the team.'
+            : ` The system currently operates with a closed set of ${challengers.length} whitelisted challenger${challengers.length === 1 ? '' : 's'}.`),
         executionDelay: getExecutionDelay(templateVars),
         challengeDelay: getChallengePeriod(templateVars),
         initialBond: {
@@ -2219,13 +2226,22 @@ function getLiveness(
 
   // For OpSuccinct chains, provide liveness info regardless of DA provider
   if (fraudProofType === 'OpSuccinct' || fraudProofType === 'OpSuccinctFDP') {
-    const daDescription =
+    const isEthereumDA =
       daProvider.layer === DA_LAYERS.ETH_BLOBS_OR_CALLDATA ||
       daProvider.layer === DA_LAYERS.ETH_CALLDATA
-        ? 'to the L1'
-        : daProvider.layer === DA_LAYERS.EIGEN_DA
-          ? 'to EigenDA'
-          : 'to an external DA layer'
+    const daDescription = isEthereumDA
+      ? 'to the L1'
+      : daProvider.layer === DA_LAYERS.EIGEN_DA
+        ? 'to EigenDA'
+        : 'to an external DA layer'
+    const systemDescription =
+      fraudProofType === 'OpSuccinct'
+        ? isEthereumDA
+          ? 'a ZK rollup'
+          : 'a Validium'
+        : isEthereumDA
+          ? 'an optimistic rollup with ZK fault proofs'
+          : 'an Optimium with ZK fault proofs'
 
     return {
       warnings: {
@@ -2234,7 +2250,7 @@ function getLiveness(
       },
       explanation: `${
         templateVars.display.name
-      } is a ZK rollup that posts transaction data ${daDescription}. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
+      } is ${systemDescription} that posts transaction data ${daDescription}. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
         HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
       )} or until it gets published. The state root gets confirmed ${formatSeconds(
         finalizationPeriod,

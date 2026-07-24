@@ -1,32 +1,35 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { BlockProvider } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import range from 'lodash/range'
 import { activityRecord } from '../../utils/aggregatePerDay.test'
-import { RpcUopsAnalyzer } from '../uops/RpcUopsAnalyzer'
 import { BlockTxsCountService } from './BlockTxsCountService'
+import type { ActivityBlockProvider } from './types'
 
 const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
 
 describe(BlockTxsCountService.name, () => {
   describe(BlockTxsCountService.prototype.getTxsCount.name, () => {
     it('should return txs and uops count', async () => {
-      const analyzer = mockObject<RpcUopsAnalyzer>({
-        calculateUops: mockFn().returnsOnce(2).returnsOnce(3).returnsOnce(7),
-      })
-
       const client = mockRpcClient([
-        { timestamp: START, count: 1, number: 1 },
-        { timestamp: START + 1 * UnixTime.HOUR, count: 2, number: 2 },
-        { timestamp: START + 2 * UnixTime.DAY, count: 5, number: 3 },
+        { timestamp: START, count: 1, uopsCount: 2, number: 1 },
+        {
+          timestamp: START + 1 * UnixTime.HOUR,
+          count: 2,
+          uopsCount: 3,
+          number: 2,
+        },
+        {
+          timestamp: START + 2 * UnixTime.DAY,
+          count: 5,
+          uopsCount: 7,
+          number: 3,
+        },
       ])
 
       const txsCountProvider = new BlockTxsCountService(
         {
           projectId: ProjectId('a'),
           provider: client,
-          uopsAnalyzer: analyzer,
           assessCount: (count) => count,
         },
         mockObject<Logger>({
@@ -49,24 +52,25 @@ describe(BlockTxsCountService.name, () => {
         ],
         latestTimestamp: START + 2 * UnixTime.DAY,
       })
-      expect(analyzer.calculateUops).toHaveBeenCalledTimes(3)
-      expect(client.getBlockWithTransactions).toHaveBeenCalledTimes(3)
+      expect(client.getBlocks).toHaveBeenOnlyCalledWith(1, 3)
     })
 
     it('should return txs and uops count and use assessCount', async () => {
-      const analyzer = new RpcUopsAnalyzer()
       const client = mockRpcClient([
-        { timestamp: START, count: 1, number: 1 },
-        { timestamp: START + 1 * UnixTime.HOUR, count: 2, number: 2 },
+        { timestamp: START, count: 1, uopsCount: 2, number: 1 },
+        {
+          timestamp: START + 1 * UnixTime.HOUR,
+          count: 2,
+          uopsCount: 3,
+          number: 2,
+        },
       ])
       const assessCount = mockFn((count) => count - 1)
 
-      analyzer.calculateUops = mockFn().returnsOnce(2).returnsOnce(3)
       const txsCountProvider = new BlockTxsCountService(
         {
           projectId: ProjectId('a'),
           provider: client,
-          uopsAnalyzer: analyzer,
           assessCount,
         },
         mockObject<Logger>({
@@ -85,15 +89,24 @@ describe(BlockTxsCountService.name, () => {
         latestTimestamp: START + 1 * UnixTime.HOUR,
       })
       expect(assessCount).toHaveBeenCalledTimes(4)
-      expect(client.getBlockWithTransactions).toHaveBeenCalledTimes(2)
+      expect(client.getBlocks).toHaveBeenOnlyCalledWith(1, 2)
     })
 
     it('should handle negative count', async () => {
-      const analyzer = new RpcUopsAnalyzer()
       const client = mockRpcClient([
-        { timestamp: START, count: 0, number: 1 },
-        { timestamp: START + 1 * UnixTime.HOUR, count: 2, number: 2 },
-        { timestamp: START + 2 * UnixTime.HOUR, count: 0, number: 3 },
+        { timestamp: START, count: 0, uopsCount: 0, number: 1 },
+        {
+          timestamp: START + 1 * UnixTime.HOUR,
+          count: 2,
+          uopsCount: 3,
+          number: 2,
+        },
+        {
+          timestamp: START + 2 * UnixTime.HOUR,
+          count: 0,
+          uopsCount: 0,
+          number: 3,
+        },
       ])
       const assessCount = mockFn((count) => count - 1)
 
@@ -104,15 +117,10 @@ describe(BlockTxsCountService.name, () => {
         for: mockFn().returns(forLogger),
       })
 
-      analyzer.calculateUops = mockFn()
-        .returnsOnce(0)
-        .returnsOnce(3)
-        .returnsOnce(0)
       const txsCountProvider = new BlockTxsCountService(
         {
           projectId: ProjectId('a'),
           provider: client,
-          uopsAnalyzer: analyzer,
           assessCount,
         },
         logger,
@@ -144,32 +152,28 @@ describe(BlockTxsCountService.name, () => {
         },
       )
       expect(assessCount).toHaveBeenCalledTimes(6)
-      expect(client.getBlockWithTransactions).toHaveBeenCalledTimes(3)
+      expect(client.getBlocks).toHaveBeenOnlyCalledWith(1, 3)
     })
   })
 })
 
 function mockRpcClient(
-  blocks: { timestamp: UnixTime; count: number; number: number }[],
+  blocks: {
+    timestamp: UnixTime
+    count: number
+    uopsCount: number | null
+    number: number
+  }[],
 ) {
-  const mockGetBlock = mockFn()
-  blocks.forEach(({ timestamp, count, number }) =>
-    mockGetBlock.resolvesToOnce({
-      transactions: transactions(count),
-      timestamp: timestamp,
-      number,
-    }),
-  )
-
-  return mockObject<BlockProvider>({
-    getBlockWithTransactions: mockGetBlock,
+  return mockObject<ActivityBlockProvider>({
+    getBlocks: mockFn().resolvesToOnce(
+      blocks.map(({ timestamp, count, uopsCount, number }) => ({
+        timestamp,
+        txsCount: count,
+        uopsCount,
+        number,
+      })),
+    ),
     chain: 'ethereum',
   })
-}
-
-function transactions(count: number) {
-  return range(count).map((i) => ({
-    to: `0x${i.toString()}`,
-    data: `0x${i.toString()}`,
-  }))
 }

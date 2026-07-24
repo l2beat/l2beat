@@ -1,6 +1,6 @@
 {
   "name": "taiko",
-  "timestamp": 1784274333,
+  "timestamp": 1784814782,
   "configHash": "0x4dd5f115c5a69c164ccdcf66d5c02ba417f4bbf018d42049bbba582efb82b51f",
   "entries": [
     {
@@ -832,7 +832,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "clock": 1784274323,
+        "clock": 1784814779,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -947,6 +947,19 @@
         "eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97": "RiscZeroGroth16Verifier"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0x2267C7246523191b8bf7615B86b3bdEE612b7D9E",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xFD019460881e6EeC632258222393d5821029b2ac",
+          "description": "eligible to propose batches on L1; only the selected current-epoch operator can successfully propose.",
+          "role": ".operatorMapping"
+        }
+      ]
     },
     {
       "name": "Chainbound Agent",
@@ -1768,12 +1781,12 @@
           "permissionlessInclusionMultiplier": 160
         },
         "getCoreState": {
-          "nextProposalId": 22010,
-          "lastProposalBlockId": 25550984,
-          "lastFinalizedProposalId": 22008,
-          "lastFinalizedTimestamp": 1784274263,
-          "lastCheckpointTimestamp": 1784274263,
-          "lastFinalizedBlockHash": "0x4c2cd67c219e0d646f7bb0c54d533f22834a3d93c62d8ff70d95a71ce0df005d"
+          "nextProposalId": 23419,
+          "lastProposalBlockId": 25595823,
+          "lastFinalizedProposalId": 23417,
+          "lastFinalizedTimestamp": 1784814551,
+          "lastCheckpointTimestamp": 1784814551,
+          "lastFinalizedBlockHash": "0x6a909c27b503805dcfac5763d4c5c60c77f3ee6bd096360891354143403233af"
         },
         "getCurrentForcedInclusionFee": 1020000,
         "getForcedInclusionState": { "head_": 2, "tail_": 3 },
@@ -3600,7 +3613,7 @@
         "GAS_RESERVE": 800000,
         "impl": "eth:0x1c94D798CFA08F396E5BA9F81697289c53273381",
         "inNonReentrant": false,
-        "nextMessageId": 40329,
+        "nextMessageId": 40367,
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pauser": "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
@@ -4003,12 +4016,13 @@
         "getOperatorForNextEpoch": "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7",
         "impl": "eth:0xDBae46E35C18719E6c78aaBF9c8869c4eC84c149",
         "inNonReentrant": false,
-        "latestActivationEpoch": 1784172503,
+        "latestActivationEpoch": 1784772695,
         "OPERATOR_CHANGE_DELAY": 2,
-        "operatorCount": 2,
+        "operatorCount": 3,
         "operatorMapping": [
           "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7",
-          "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
+          "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
+          "eth:0x2267C7246523191b8bf7615B86b3bdEE612b7D9E"
         ],
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
@@ -5730,6 +5744,6 @@
     "taiko/TaikoDAOController": "0x9c68a574bd07dcca487012dfc4123186f03a607d8b3036a8b31b28f4b19c3779",
     "taiko/TaikoToken": "0x715f0fe61aa0d583fd8574521dfa81827a944339f94c46c74a6a058c47089804"
   },
-  "usedBlockNumbers": { "ethereum": 25550997 },
-  "permissionsConfigHash": "0xe0aa85b31f0f3bf3c31eaa7e6000de86ef9a19d1a59b3ad83ac2b8541bbeaaa5"
+  "usedBlockNumbers": { "ethereum": 25595850 },
+  "permissionsConfigHash": "0xbe319bed847a9869ab5d87f98e6acad3f6fa614392ac5551b6a7a1e46edc5b96"
 }

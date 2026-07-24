@@ -179,5 +179,11 @@
     "address": "eth:0x42Ad0173051225Ac784100e9acD43349707F4db9",
     "chain": "ethereum",
     "blockNumber": 25424438
+  },
+  "SystemConfig_v3_11_0_rise.sol": {
+    "hash": "0xb2ad2606824ba1f7c45745e87a0b081234094f66ee32340c85e14d29a5a0d523",
+    "address": "eth:0x2dBFabA1D1d4172E0f8301671DED544C0079B961",
+    "chain": "ethereum",
+    "blockNumber": 24167604
   }
 }

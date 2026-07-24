@@ -7,7 +7,7 @@ export const DISPLAY_OPTIONS = {
   excludeRwaRestrictedTokens: {
     label: 'Exclude restricted RWA tokens',
     tooltip:
-      'Centralized RWAs with access, transfer, transparency or onchain liquidity restrictions. A more formal framework for RWAs is in the works!',
+      'Centralized RWAs with access or transfer restrictions, whitelists, no onchain liquidity or integration, hardcoded prices or very low activity.',
   },
   excludeAssociatedTokens: {
     label: 'Exclude associated tokens',

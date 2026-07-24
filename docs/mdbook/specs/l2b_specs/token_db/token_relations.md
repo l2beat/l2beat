@@ -253,10 +253,13 @@ against the current token catalogue. Every observed `(chain, address)`
 endpoint is a node, including endpoints that do not yet have a
 `DeployedToken` row. Catalogued nodes are green and labelled with their
 deployed token symbol; uncatalogued nodes are orange and use a shortened
-address as their label. A directed edge is an observed token relation:
-burn-and-mint edges are blue and lock-and-mint edges are pink. Arrowheads
-preserve the observed `tokenFrom` to `tokenTo` direction for both bridge
-types. Nodes can be dragged and the canvas can be panned or zoomed.
+address as their label. An edge is an observed token relation:
+burn-and-mint edges are blue and non-directional, while lock-and-mint edges are
+pink and preserve the observed `tokenFrom` to `tokenTo` direction with an
+arrowhead. Nodes can be dragged and the canvas can be panned or zoomed. Edge
+stroke widths remain constant while zooming, and node visuals stop growing
+beyond 2x zoom so additional zoom creates useful space between them. Above
+2.5x zoom, each edge shows its relation plugin name at its midpoint.
 
 Before drawing, the UI treats every connected component as a cluster and
 sorts the clusters by endpoint count (largest first, with a stable id
@@ -265,9 +268,9 @@ completion in memory so clusters do not repel each other and users never see
 the graph settle. The finished clusters are placed left-to-right in a
 square-ish grid, starting at the top-left, then the whole grid is fitted into
 the viewport. At low zoom levels each cluster is overlaid with its most common
-catalogued deployed-token symbol. The overlay stays a constant screen size as
-the graph scales, making cluster identities easier to scan when individual
-node labels are too small.
+catalogued deployed-token symbol. The overlay stays readable through the
+mid-zoom range, then shrinks and fades at extreme zoom-out to avoid overlapping
+nearby cluster labels.
 
 Clicking a node keeps the node, its incoming/outgoing edges, and its neighbors
 prominent while dimming the rest of the graph. A non-modal details panel loads
@@ -281,6 +284,12 @@ Edges are independently hoverable and clickable. Clicking one highlights its
 two endpoints and loads only that relation's full transfer evidence, including
 source and destination transaction hashes used for explorer links. This keeps
 the evidence JSON out of the initial graph response.
+
+The graph header can search catalogued deployed tokens by symbol, chain, or
+address using the already-loaded graph payload. Choosing a result selects the
+node, opens its existing details panel, and animates the viewport to a readable
+zoom around it. Full token and abstract-token details remain selection-time
+queries rather than being added to the initial payload.
 
 An edge is an assignment anomaly when both endpoints are assigned to abstract
 tokens and those abstract token IDs differ. An unassigned or uncatalogued
