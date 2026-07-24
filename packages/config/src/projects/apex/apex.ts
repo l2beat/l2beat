@@ -30,6 +30,7 @@ export const apex: ScalingProject = {
   badges: [BADGES.VM.AppChain, BADGES.L3ParentChain.Arbitrum],
   proofSystem: {
     type: 'Validity',
+    zkCatalogId: ProjectId('zksyncprover'),
   },
   reasonsForBeingOther: [
     {
@@ -246,8 +247,7 @@ export const apex: ScalingProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
-    // uncomment the line below when zklink proof system is in zk catalog
-    // zkVerifiers: [discovery.getContract('Verifier').address],
+    zkVerifiers: [discovery.getContract('Verifier').address],
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [
