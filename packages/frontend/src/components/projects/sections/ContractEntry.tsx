@@ -1,4 +1,9 @@
-import type { ProjectUpgradeableActor, ReferenceLink } from '@l2beat/config'
+import type {
+  ProjectPermissionImpactScenario,
+  ProjectPermissionOrigin,
+  ProjectUpgradeableActor,
+  ReferenceLink,
+} from '@l2beat/config'
 import { Badge } from '~/components/badge/Badge'
 import { Callout } from '~/components/Callout'
 import {
@@ -19,6 +24,7 @@ import { type PastUpgradesData, PastUpgradesDialog } from './PastUpgradesDialog'
 import { GroupedActorAddresses } from './permissions/GroupedActorAddresses'
 import type { Participant } from './permissions/Participants'
 import { ParticipantsEntry } from './permissions/Participants'
+import { PermissionDescription } from './permissions/PermissionDescription'
 import { UpgradeConsiderations } from './permissions/UpgradeConsiderations'
 import type { UsedInProject } from './permissions/UsedInProject'
 import { UsedInProjectEntry } from './permissions/UsedInProject'
@@ -31,6 +37,8 @@ export interface TechnologyContract {
   admins: TechnologyContractAddress[]
   chain: string
   description?: string
+  impactScenarios?: ProjectPermissionImpactScenario[]
+  permissionOrigins?: TechnologyContractPermissionOrigin[]
   upgradeableBy?: ProjectUpgradeableActor[]
   upgradeDelay?: string
   usedInProjects?: UsedInProject[]
@@ -41,6 +49,13 @@ export interface TechnologyContract {
   pastUpgrades?: PastUpgradesData
   escrow?: TechnologyContractEscrow
   groupCount?: number
+}
+
+export type TechnologyContractPermissionOrigin = ProjectPermissionOrigin & {
+  project?: {
+    name: string
+    icon: string
+  }
 }
 
 export interface TechnologyContractAddress {
@@ -65,12 +80,14 @@ interface ContractEntryProps {
   contract: TechnologyContract
   className?: string
   expandableAddresses?: boolean
+  descriptionType?: 'default' | 'permission'
 }
 
 export function ContractEntry({
   contract,
   className,
   expandableAddresses = false,
+  descriptionType = 'default',
 }: ContractEntryProps) {
   const sharedProxies = contract.usedInProjects?.filter(
     (c) => c.type === 'proxy',
@@ -107,6 +124,13 @@ export function ContractEntry({
             {contract.escrow && (
               <EscrowBadge isCustom={contract.escrow.isCustom} />
             )}
+            {descriptionType === 'permission' &&
+              contract.permissionOrigins?.map((origin) => (
+                <PermissionOriginBadge
+                  key={permissionOriginKey(origin)}
+                  origin={origin}
+                />
+              ))}
             {expandableAddresses ? (
               <GroupedActorAddresses
                 addresses={contract.addresses}
@@ -145,11 +169,19 @@ export function ContractEntry({
             contract.pastUpgrades.upgrades.length > 0 && (
               <PastUpgradesDialog pastUpgrades={contract.pastUpgrades} />
             )}
-          {contract.description && (
-            <Markdown className="word-break-word mt-2 text-paragraph-15 md:text-paragraph-16">
-              {contract.description}
-            </Markdown>
-          )}
+          {contract.description &&
+            (descriptionType === 'permission' ? (
+              <PermissionDescription
+                className="mt-2"
+                impactScenarios={contract.impactScenarios}
+              >
+                {contract.description}
+              </PermissionDescription>
+            ) : (
+              <Markdown className="word-break-word mt-2 text-paragraph-15 md:text-paragraph-16">
+                {contract.description}
+              </Markdown>
+            ))}
           {contract.escrow && <EscrowDetailsEntry escrow={contract.escrow} />}
           {contract.upgradeableBy && contract.upgradeableBy.length > 0 && (
             <div className="mt-2 flex flex-wrap text-paragraph-15 md:text-paragraph-16">
@@ -218,6 +250,59 @@ export function ContractEntry({
       }
     />
   )
+}
+
+function PermissionOriginBadge({
+  origin,
+}: {
+  origin: TechnologyContractPermissionOrigin
+}) {
+  if (origin.type === 'project') {
+    return (
+      <span className="inline-flex items-center gap-1 rounded bg-surface-info px-1.5 py-1 font-medium text-label-value-13 text-link leading-none">
+        {origin.project && (
+          <img
+            src={origin.project.icon}
+            alt=""
+            className="size-3.5 rounded-full bg-white"
+          />
+        )}
+        This project
+      </span>
+    )
+  }
+
+  return (
+    <span className="inline-flex items-center gap-1.5 rounded bg-surface-secondary px-1.5 py-1 text-label-value-13 leading-none">
+      <span className="text-secondary">Dependency</span>
+      <span className="inline-flex min-w-0 items-center gap-1 font-medium text-primary">
+        {origin.project && (
+          <img
+            src={origin.project.icon}
+            alt=""
+            className="size-3.5 rounded-full bg-white"
+          />
+        )}
+        {origin.project?.name ?? formatDependencyName(origin.name)}
+      </span>
+    </span>
+  )
+}
+
+function permissionOriginKey(origin: ProjectPermissionOrigin): string {
+  return origin.type === 'project'
+    ? origin.type
+    : `${origin.type}:${origin.name}`
+}
+
+function formatDependencyName(name: string): string {
+  if (name.includes(' ') || /[A-Z]/.test(name)) {
+    return name
+  }
+  return name
+    .split('-')
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ')
 }
 
 function EscrowBadge({ isCustom }: { isCustom?: boolean }) {
@@ -332,6 +417,9 @@ export function ContractsWithImpactfulChanges(props: {
           className="my-4 p-0"
           expandableAddresses={
             props.expandableAddresses && contract.addresses.length > 1
+          }
+          descriptionType={
+            props.type === 'permissions' ? 'permission' : 'default'
           }
         />
       ))}

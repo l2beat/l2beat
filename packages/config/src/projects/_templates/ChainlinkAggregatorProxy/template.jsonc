@@ -1,0 +1,71 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ChainlinkAggregatorProxy",
+  "description": "A Chainlink {{ description }} price-feed proxy. It forwards price reads to a current aggregator and lets its owner propose then confirm a replacement aggregator, so whoever owns it can swap the price source behind the feed. It holds no funds and does no aggregation of its own.",
+  "ignoreMethods": [
+    "getAnswer",
+    "getTimestamp",
+    "proposedLatestRoundData",
+    "latestAnswer",
+    "latestRound",
+    "latestRoundData",
+    "latestTimestamp"
+  ],
+  "fields": {
+    "aggregator": {
+      "permissions": [
+        {
+          "type": "act",
+          "description": "publish this aggregator's answer through the proxy."
+        }
+      ]
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "act",
+          "description": "repoint this feed to a different aggregator, swapping the price source behind it to any contract of their choosing."
+        },
+        {
+          "id": "replaceAggregator",
+          "type": "interact",
+          "description": "propose and confirm a replacement for the aggregator used by this proxy.",
+          "effects": [
+            {
+              "id": "value.overstated",
+              "description": "The replacement aggregator can return an answer above the value returned by the current source."
+            },
+            {
+              "id": "value.understated",
+              "description": "The replacement aggregator can return an answer below the value returned by the current source."
+            },
+            {
+              "id": "value.unavailable",
+              "description": "The replacement aggregator can stop returning usable answers or stop updating them."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "effectRules": [
+    {
+      "id": "forwardOverstatedAnswer",
+      "inputs": [{ "field": "aggregator", "effect": "value.overstated" }],
+      "output": "value.overstated",
+      "description": "The proxy forwards the current aggregator's answer and timestamp without independently validating its value."
+    },
+    {
+      "id": "forwardUnderstatedAnswer",
+      "inputs": [{ "field": "aggregator", "effect": "value.understated" }],
+      "output": "value.understated",
+      "description": "The proxy forwards the current aggregator's answer and timestamp without independently validating its value."
+    },
+    {
+      "id": "forwardUnavailableAnswer",
+      "inputs": [{ "field": "aggregator", "effect": "value.unavailable" }],
+      "output": "value.unavailable",
+      "description": "If the current aggregator stops returning usable updates, the proxy has no independent fallback source."
+    }
+  ]
+}

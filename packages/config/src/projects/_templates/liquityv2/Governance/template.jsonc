@@ -1,0 +1,24 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Governance",
+  "description": "The protocol's revenue router and LQTY-staking governance. Every branch sends the share of borrower interest not paid to Stability Pool depositors to this contract, which hands that BOLD out to community initiatives chosen by LQTY holders. Anyone can stake LQTY here (each staker gets a personal proxy that also stakes into Liquity's legacy V1 staking), earning voting power that grows the longer it stays staked. Time is split into fixed {{ EPOCH_DURATION }} epochs; within each epoch stakers allocate their voting power across initiatives as votes and vetoes, and any initiative whose net votes clear the voting threshold becomes eligible for a share of the accrued BOLD, which anyone can then pay out to it. Registering a new initiative (for a {{ REGISTRATION_FEE }} BOLD fee), unregistering a stale one, and triggering payouts are all permissionless. The starting set of initiatives was registered once at launch, after which ownership was renounced, so there is no privileged operator.",
+  "ignoreRelatives": ["stakingV1", "lqty"],
+  "ignoreMethods": ["calculateVotingThreshold"],
+  "ignoreInCoverage": [
+    "initiativeStates",
+    "lqtyAllocatedByUserToInitiative",
+    "registeredInitiatives",
+    "userStates",
+    "votesForInitiativeSnapshot"
+  ],
+  "fields": {
+    "EPOCH_DURATION": {
+      "edit": ["format", "FormatSeconds"],
+      "description": "Length of a governance epoch: the period over which votes are allocated and initiative payouts are decided."
+    },
+    "REGISTRATION_FEE": {
+      "edit": ["format", "Undecimal18"],
+      "description": "BOLD fee paid to register a new initiative (burned), on top of clearing the registration vote threshold."
+    }
+  }
+}

@@ -83,6 +83,25 @@ export class BlipRuntime {
         const values = blip.slice(1).map((b) => this.executeBlip(v, b))
         return values.every((e) => e)
       }
+      case '+': {
+        const values = [v, ...blip.slice(1).map((b) => this.executeBlip(v, b))]
+        assert(
+          values.every((value) => typeof value === 'number'),
+          '+ requires number inputs',
+        )
+        return (values as number[]).reduce((sum, value) => sum + value, 0)
+      }
+      case '-': {
+        const values = blip.slice(1).map((b) => this.executeBlip(v, b))
+        assert(
+          values.length > 0 &&
+            values.every((value) => typeof value === 'number'),
+          '- requires number inputs',
+        )
+        return (values as number[]).reduce(
+          (difference, value) => difference - value,
+        )
+      }
       case 'pipe': {
         return blip.slice(1).reduce((acc, fn) => this.executeBlip(acc, fn), v)
       }

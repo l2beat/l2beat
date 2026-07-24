@@ -1,0 +1,198 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RETHPriceFeed",
+  "description": "The price source for the rETH branch. It builds the rETH/USD price from Chainlink's ETH/USD feed and the rETH/ETH rate, using the more conservative of Chainlink's market rETH/ETH feed and the canonical rate reported by the rETH token to blunt upward market manipulation. Fetching the price is permissionless and happens on every branch operation. A Chainlink feed is treated as failed if it reverts, returns a non-positive answer, or grows stale beyond its staleness window, which is {{ ethUsdStaleness }} for the ETH/USD feed and {{ rEthEthStaleness }} for the rETH/ETH feed. If the ETH/USD feed or the canonical rate fails the branch is permanently shut down and priced from its last healthy value; if only the rETH/ETH feed fails, the branch shuts down but keeps pricing from the ETH/USD feed and the canonical rate.",
+  "ignoreRelatives": ["rateProviderAddress"],
+  "fields": {
+    "constructorArgs": {
+      "handler": {
+        "type": "constructorArgs",
+        "nameArgs": true,
+        "ignoreRelative": true
+      }
+    },
+    "borrowerOperations": {
+      "copy": "constructorArgs",
+      "edit": ["get", "_borrowerOperationsAddress"]
+    },
+    "ethUsdOracle": {},
+    "rEthEthOracle": {},
+    "ethUsdStaleness": {
+      "copy": "ethUsdOracle",
+      "edit": [
+        "pipe",
+        ["get", "stalenessThreshold"],
+        ["format", "FormatSeconds"]
+      ],
+      "description": "How long the ETH/USD feed may go without an update before the branch shuts down."
+    },
+    "rEthEthStaleness": {
+      "copy": "rEthEthOracle",
+      "edit": [
+        "pipe",
+        ["get", "stalenessThreshold"],
+        ["format", "FormatSeconds"]
+      ],
+      "description": "How long the rETH/ETH feed may go without an update before the branch shuts down."
+    }
+  },
+  "effectAssumptions": [
+    {
+      "field": "ethUsdOracle",
+      "description": "supply the ETH/USD value and update timestamp read by this contract.",
+      "effects": [
+        {
+          "id": "value.overstated",
+          "description": "As an undiscovered dependency, this input is treated as a black box that can return an overstated value."
+        },
+        {
+          "id": "value.understated",
+          "description": "As an undiscovered dependency, this input is treated as a black box that can return an understated value."
+        },
+        {
+          "id": "value.unavailable",
+          "description": "As an undiscovered dependency, this input is treated as a black box that can revert, return a non-positive value, or stop producing fresh updates."
+        }
+      ]
+    },
+    {
+      "field": "rEthEthOracle",
+      "description": "supply the market rETH/ETH value and update timestamp read by this contract.",
+      "effects": [
+        {
+          "id": "value.overstated",
+          "description": "As an undiscovered dependency, this input is treated as a black box that can return an overstated value."
+        },
+        {
+          "id": "value.understated",
+          "description": "As an undiscovered dependency, this input is treated as a black box that can return an understated value."
+        },
+        {
+          "id": "value.unavailable",
+          "description": "As an undiscovered dependency, this input is treated as a black box that can revert, return a non-positive value, or stop producing fresh updates."
+        }
+      ]
+    },
+    {
+      "field": "rateProviderAddress",
+      "name": "rETH rate provider",
+      "description": "supply the canonical rETH/ETH exchange rate read by this contract.",
+      "effects": [
+        {
+          "id": "value.overstated",
+          "description": "This undiscovered dependency is treated as a black box that can return an overstated exchange rate."
+        },
+        {
+          "id": "value.understated",
+          "description": "This undiscovered dependency is treated as a black box that can return an understated exchange rate, including a value close to zero."
+        },
+        {
+          "id": "value.unavailable",
+          "description": "This undiscovered dependency is treated as a black box that can revert or return zero."
+        }
+      ]
+    }
+  ],
+  "effectRules": [
+    {
+      "id": "ethUsdOverstatesPrimaryPrice",
+      "inputs": [{ "field": "ethUsdOracle", "effect": "value.overstated" }],
+      "output": "price.primary.overstated",
+      "description": "The ETH/USD input scales both rETH/ETH inputs and therefore scales the primary rETH/USD price; it has no independent USD cross-check."
+    },
+    {
+      "id": "ethUsdUnderstatesPrimaryPrice",
+      "inputs": [{ "field": "ethUsdOracle", "effect": "value.understated" }],
+      "output": "price.primary.understated",
+      "description": "The ETH/USD input scales both rETH/ETH inputs and therefore scales the primary rETH/USD price; it has no independent USD cross-check."
+    },
+    {
+      "id": "ethUsdOverstatesRedemptionPrice",
+      "inputs": [{ "field": "ethUsdOracle", "effect": "value.overstated" }],
+      "output": "price.redemption.overstated",
+      "description": "The ETH/USD input also scales the rETH/USD price used for redemptions."
+    },
+    {
+      "id": "ethUsdUnderstatesRedemptionPrice",
+      "inputs": [{ "field": "ethUsdOracle", "effect": "value.understated" }],
+      "output": "price.redemption.understated",
+      "description": "The ETH/USD input also scales the rETH/USD price used for redemptions."
+    },
+    {
+      "id": "marketRateUnderstatesPrimaryPrice",
+      "inputs": [{ "field": "rEthEthOracle", "effect": "value.understated" }],
+      "output": "price.primary.understated",
+      "description": "The primary price uses the lower of the market rETH/ETH input and the canonical rate, so an understated market input lowers the result."
+    },
+    {
+      "id": "marketRateUnderstatesRedemptionPrice",
+      "inputs": [{ "field": "rEthEthOracle", "effect": "value.understated" }],
+      "output": "price.redemption.understated",
+      "description": "For redemptions, a market rate more than 2% below the canonical rate becomes the lower input and lowers the result.",
+      "limitation": "Within the 2% deviation window the redemption calculation uses the higher input."
+    },
+    {
+      "id": "marketRateCanBoundedlyOverstateRedemptionPrice",
+      "inputs": [{ "field": "rEthEthOracle", "effect": "value.overstated" }],
+      "output": "price.redemption.overstated",
+      "description": "For redemptions, an overstated market rate can raise the result only while it remains within 2% of the canonical rate.",
+      "limitation": "Outside that deviation window the calculation uses the lower of the market and canonical rates."
+    },
+    {
+      "id": "canonicalRateUnderstatesPrimaryPrice",
+      "inputs": [
+        { "field": "rateProviderAddress", "effect": "value.understated" }
+      ],
+      "output": "price.primary.understated",
+      "description": "The primary price uses the lower of the market rETH/ETH input and the canonical rate, so an understated canonical rate lowers the result."
+    },
+    {
+      "id": "canonicalRateUnderstatesRedemptionPrice",
+      "inputs": [
+        { "field": "rateProviderAddress", "effect": "value.understated" }
+      ],
+      "output": "price.redemption.understated",
+      "description": "For redemptions, a canonical rate more than 2% below the market input becomes the lower input and lowers the result."
+    },
+    {
+      "id": "canonicalRateCanBoundedlyOverstateRedemptionPrice",
+      "inputs": [
+        { "field": "rateProviderAddress", "effect": "value.overstated" }
+      ],
+      "output": "price.redemption.overstated",
+      "description": "For redemptions, an overstated canonical rate can raise the result only while it remains within 2% of the market rate.",
+      "limitation": "Outside that deviation window the calculation uses the lower of the market and canonical rates."
+    },
+    {
+      "id": "bothRatesOverstatePrimaryPrice",
+      "inputs": [
+        { "field": "rEthEthOracle", "effect": "value.overstated" },
+        { "field": "rateProviderAddress", "effect": "value.overstated" }
+      ],
+      "output": "price.primary.overstated",
+      "description": "The minimum of the market and canonical rETH/ETH inputs is overstated only when both inputs are overstated."
+    },
+    {
+      "id": "ethUsdFailureRequestsShutdown",
+      "inputs": [{ "field": "ethUsdOracle", "effect": "value.unavailable" }],
+      "output": "branch.shutdown.requested",
+      "description": "A reverting or non-positive ETH/USD read, or an answer older than {{ ethUsdStaleness }}, makes this contract signal branch shutdown and permanently use its last recorded good price.",
+      "limitation": "The input is checked for call success, a positive answer, and freshness before it is accepted."
+    },
+    {
+      "id": "marketRateFailureRequestsShutdown",
+      "inputs": [{ "field": "rEthEthOracle", "effect": "value.unavailable" }],
+      "output": "branch.shutdown.requested",
+      "description": "A reverting or non-positive rETH/ETH read, or an answer older than {{ rEthEthStaleness }}, makes this contract signal branch shutdown and switch to ETH/USD multiplied by the canonical rate, never increasing above the last recorded good price.",
+      "limitation": "The fallback no longer depends on the failed market rETH/ETH input."
+    },
+    {
+      "id": "canonicalRateFailureRequestsShutdown",
+      "inputs": [
+        { "field": "rateProviderAddress", "effect": "value.unavailable" }
+      ],
+      "output": "branch.shutdown.requested",
+      "description": "A reverting or zero canonical-rate read makes this contract signal branch shutdown and permanently use its last recorded good price."
+    }
+  ]
+}

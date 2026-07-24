@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "DefaultPool",
+  "description": "The counterpart to the ActivePool that holds only what is pending redistribution. When a liquidation cannot be fully covered by the StabilityPool, the liquidated trove's collateral and debt are spread across the remaining troves, and until each of those troves actually realizes its share this pool holds it: the redistributed collateral as real tokens, and the redistributed debt as a bookkeeping figure (no BOLD is kept here). When a trove is next touched and its pending share is applied, that collateral and debt move out of here into the ActivePool. Only the branch's TroveManager (which adjusts the recorded debt and moves collateral out to the ActivePool) and the ActivePool (which moves collateral in) can touch it.",
+  "ignoreRelatives": ["collToken"]
+}

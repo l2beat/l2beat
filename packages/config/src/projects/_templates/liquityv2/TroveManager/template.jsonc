@@ -1,0 +1,168 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TroveManager",
+  "description": "The branch's ledger and enforcement engine. It holds the canonical record of every trove on this collateral branch (debt, collateral, stake, interest rate, and accounting snapshots) and is where BorrowerOperations persists changes when owners open, adjust, or close their troves. It also carries out the two things that happen to a trove without its owner. Liquidation is permissionless: once a trove's collateral ratio falls below the branch minimum, anyone can liquidate it, and its collateral (up to the debt plus a penalty) is either absorbed by the StabilityPool at a {{ liquidationPenaltySP }}% penalty or redistributed across the remaining troves at a {{ liquidationPenaltyRedistribution }}% penalty, with any surplus returned to the owner. Redemption is driven by the CollateralRegistry, which exchanges BOLD for collateral at face value against the lowest-interest-rate troves first, letting BOLD holders defend the peg. If the branch is ever shut down, redemption instead runs directly through this contract in an urgent mode: BOLD holders can redeem against troves of their own choosing, in any order, and are paid a {{ urgentRedemptionBonus }}% collateral bonus rather than a fee, so the branch can be wound down and its remaining debt cleared.",
+  "ignoreMethods": [
+    "batchIds",
+    "getLatestTroveData",
+    "getTroveAnnualInterestRate",
+    "getTroveFromTroveIdsArray",
+    "getTroveStatus",
+    "rewardSnapshots",
+    "Troves"
+  ],
+  "ignoreRelatives": ["WETH"],
+  "ignoreInCoverage": ["Troves", "batchIds", "batches"],
+  "fields": {
+    "constructorArgs": {
+      "handler": { "type": "constructorArgs", "nameArgs": true }
+    },
+    "addressesRegistry": {
+      "copy": "constructorArgs",
+      "edit": ["get", "_addressesRegistry"]
+    },
+    "priceFeed": {
+      "handler": {
+        "type": "event",
+        "select": "_newPriceFeedAddress",
+        "set": { "event": "PriceFeedAddressChanged" }
+      }
+    },
+    "collSurplusPool": {
+      "handler": {
+        "type": "event",
+        "select": "_collSurplusPoolAddress",
+        "set": { "event": "CollSurplusPoolAddressChanged" }
+      }
+    },
+    "gasPoolAddress": {
+      "handler": {
+        "type": "event",
+        "select": "_gasPoolAddress",
+        "set": { "event": "GasPoolAddressChanged" }
+      }
+    },
+    "boldToken": {
+      "handler": {
+        "type": "event",
+        "select": "_newBoldTokenAddress",
+        "set": { "event": "BoldTokenAddressChanged" }
+      }
+    },
+    "collateralRegistry": {
+      "handler": {
+        "type": "event",
+        "select": "_collateralRegistryAddress",
+        "set": { "event": "CollateralRegistryAddressChanged" }
+      }
+    },
+    "defaultPool": {
+      "handler": {
+        "type": "event",
+        "select": "_newDefaultPoolAddress",
+        "set": { "event": "DefaultPoolAddressChanged" }
+      }
+    },
+    "CCR": {
+      "edit": ["format", "Undecimal16"],
+      "description": "Critical Collateral Ratio (%)."
+    },
+    "liquidationPenaltySP": {
+      "handler": {
+        "type": "call",
+        "method": "function LIQUIDATION_PENALTY_SP() view returns (uint256)",
+        "args": [],
+        "address": "{{ constructorArgs._addressesRegistry }}"
+      },
+      "edit": ["format", "Undecimal16"],
+      "description": "Liquidation penalty taken when a trove is absorbed by the Stability Pool (%). Read from the AddressesRegistry."
+    },
+    "liquidationPenaltyRedistribution": {
+      "handler": {
+        "type": "call",
+        "method": "function LIQUIDATION_PENALTY_REDISTRIBUTION() view returns (uint256)",
+        "args": [],
+        "address": "{{ constructorArgs._addressesRegistry }}"
+      },
+      "edit": ["format", "Undecimal16"],
+      "description": "Liquidation penalty taken when a trove is redistributed across the remaining troves (%). Read from the AddressesRegistry."
+    },
+    "urgentRedemptionBonus": {
+      "handler": { "type": "hardcoded", "value": 2 },
+      "description": "Collateral bonus paid to the redeemer during urgent redemption, which is only possible once the branch has shut down (%). Hardcoded because it is a compiled-in contract constant (URGENT_REDEMPTION_BONUS) with no onchain getter."
+    }
+  },
+  "effectRules": [
+    {
+      "id": "overstatedPriceDelaysLiquidations",
+      "inputs": [
+        { "field": "priceFeed", "effect": "price.primary.overstated" }
+      ],
+      "output": "impact.liquidation.delayed",
+      "description": "This contract uses the PriceFeed's primary price to compute each trove's collateral ratio when determining whether it is below the liquidation threshold.",
+      "impact": "Troves that are below the configured liquidation threshold at the correct price can remain unliquidated.",
+      "categories": ["funds-can-lose-value"],
+      "terminal": true
+    },
+    {
+      "id": "understatedPriceLiquidatesHealthyTroves",
+      "inputs": [
+        { "field": "priceFeed", "effect": "price.primary.understated" }
+      ],
+      "output": "impact.liquidation.healthyTroves",
+      "description": "This contract uses the PriceFeed's primary price to compute each trove's collateral ratio when determining whether it is below the liquidation threshold.",
+      "impact": "Troves that are healthy at the correct price can become liquidatable.",
+      "categories": ["funds-can-be-stolen"],
+      "terminal": true
+    },
+    {
+      "id": "overstatedRedemptionPriceUnderpaysRedeemers",
+      "inputs": [
+        { "field": "priceFeed", "effect": "price.redemption.overstated" }
+      ],
+      "output": "impact.redemption.underpaid",
+      "description": "This contract uses the PriceFeed's redemption price to calculate how much collateral is exchanged for redeemed BOLD.",
+      "impact": "Redeemers can receive less collateral than they would at the correct price.",
+      "categories": ["funds-can-lose-value"],
+      "terminal": true
+    },
+    {
+      "id": "understatedRedemptionPriceTakesExcessCollateral",
+      "inputs": [
+        { "field": "priceFeed", "effect": "price.redemption.understated" }
+      ],
+      "output": "impact.redemption.excessCollateral",
+      "description": "This contract uses the PriceFeed's redemption price to calculate how much collateral is exchanged for redeemed BOLD.",
+      "impact": "Redemptions can remove excess collateral from troves compared with the correct price.",
+      "categories": ["funds-can-be-stolen"],
+      "terminal": true
+    },
+    {
+      "id": "enableUrgentRedemptionsAfterShutdown",
+      "inputs": [
+        {
+          "field": "borrowerOperations",
+          "effect": "branch.shutdown.active"
+        }
+      ],
+      "output": "impact.redemption.urgentMode",
+      "description": "Shutdown records the current timestamp and makes urgent redemption available through this contract.",
+      "impact": "BOLD holders can redeem against chosen troves in urgent mode using the PriceFeed's shutdown price and receive the configured {{ urgentRedemptionBonus }}% collateral bonus.",
+      "categories": ["funds-can-lose-value"],
+      "terminal": true
+    },
+    {
+      "id": "urgentRedemptionsCanClearDebtAfterShutdown",
+      "inputs": [
+        {
+          "field": "borrowerOperations",
+          "effect": "branch.shutdown.active"
+        }
+      ],
+      "output": "protection.redemption.debtClearance",
+      "description": "Shutdown makes urgent redemption available through this contract.",
+      "protection": "Urgent redemption remains available to clear branch debt after normal borrower operations stop.",
+      "terminal": true
+    }
+  ]
+}

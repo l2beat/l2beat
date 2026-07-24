@@ -29,6 +29,8 @@ export type BlipSexp =
   | ['<', ...BlipSexp[]]
   | ['>', ...BlipSexp[]]
   | ['and', ...BlipSexp[]]
+  | ['+', ...BlipSexp[]]
+  | ['-', BlipSexp, ...BlipSexp[]]
   | ['pipe', ...BlipSexp[]]
   | ['map', BlipSexp]
   | ['sort']

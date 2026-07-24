@@ -1,0 +1,174 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "WSTETHPriceFeed",
+  "description": "The price source for the wstETH branch. It builds the wstETH/USD price from two inputs: Chainlink's stETH/USD feed and the wstETH-to-stETH exchange rate reported by the wstETH token. Fetching the price is permissionless and happens on every branch operation. A Chainlink feed is treated as failed if it reverts, returns a non-positive answer, or has not updated within its {{ ethUsdStaleness }} staleness window. If the exchange rate or the ETH/USD reference feed fails the branch is permanently shut down and priced from its last healthy value; if only the stETH/USD feed fails, the branch shuts down but keeps pricing from the ETH/USD feed and the exchange rate.",
+  "ignoreRelatives": ["rateProviderAddress"],
+  "fields": {
+    "constructorArgs": {
+      "handler": {
+        "type": "constructorArgs",
+        "nameArgs": true,
+        "ignoreRelative": true
+      }
+    },
+    "borrowerOperations": {
+      "copy": "constructorArgs",
+      "edit": ["get", "_borrowerOperationsAddress"]
+    },
+    "ethUsdOracle": {},
+    "stEthUsdOracle": {},
+    "ethUsdStaleness": {
+      "copy": "ethUsdOracle",
+      "edit": [
+        "pipe",
+        ["get", "stalenessThreshold"],
+        ["format", "FormatSeconds"]
+      ],
+      "description": "How long a Chainlink feed may go without an update before the branch shuts down."
+    }
+  },
+  "effectAssumptions": [
+    {
+      "field": "ethUsdOracle",
+      "description": "supply the ETH/USD value and update timestamp read by this contract.",
+      "effects": [
+        {
+          "id": "value.overstated",
+          "description": "As an undiscovered dependency, this input is treated as a black box that can return an overstated value."
+        },
+        {
+          "id": "value.understated",
+          "description": "As an undiscovered dependency, this input is treated as a black box that can return an understated value."
+        },
+        {
+          "id": "value.unavailable",
+          "description": "As an undiscovered dependency, this input is treated as a black box that can revert, return a non-positive value, or stop producing fresh updates."
+        }
+      ]
+    },
+    {
+      "field": "stEthUsdOracle",
+      "description": "supply the stETH/USD value and update timestamp read by this contract.",
+      "effects": [
+        {
+          "id": "value.overstated",
+          "description": "As an undiscovered dependency, this input is treated as a black box that can return an overstated value."
+        },
+        {
+          "id": "value.understated",
+          "description": "As an undiscovered dependency, this input is treated as a black box that can return an understated value."
+        },
+        {
+          "id": "value.unavailable",
+          "description": "As an undiscovered dependency, this input is treated as a black box that can revert, return a non-positive value, or stop producing fresh updates."
+        }
+      ]
+    },
+    {
+      "field": "rateProviderAddress",
+      "name": "wstETH rate provider",
+      "description": "supply the canonical stETH-per-wstETH exchange rate read by this contract.",
+      "effects": [
+        {
+          "id": "value.overstated",
+          "description": "This undiscovered dependency is treated as a black box that can return an overstated exchange rate."
+        },
+        {
+          "id": "value.understated",
+          "description": "This undiscovered dependency is treated as a black box that can return an understated exchange rate, including a value close to zero."
+        },
+        {
+          "id": "value.unavailable",
+          "description": "This undiscovered dependency is treated as a black box that can revert or return zero."
+        }
+      ]
+    }
+  ],
+  "effectRules": [
+    {
+      "id": "stEthUsdOverstatesPrimaryPrice",
+      "inputs": [{ "field": "stEthUsdOracle", "effect": "value.overstated" }],
+      "output": "price.primary.overstated",
+      "description": "The primary wstETH/USD price multiplies the stETH/USD input by the canonical stETH-per-wstETH rate."
+    },
+    {
+      "id": "stEthUsdUnderstatesPrimaryPrice",
+      "inputs": [{ "field": "stEthUsdOracle", "effect": "value.understated" }],
+      "output": "price.primary.understated",
+      "description": "The primary wstETH/USD price multiplies the stETH/USD input by the canonical stETH-per-wstETH rate."
+    },
+    {
+      "id": "stEthUsdOverstatesRedemptionPrice",
+      "inputs": [{ "field": "stEthUsdOracle", "effect": "value.overstated" }],
+      "output": "price.redemption.overstated",
+      "description": "The redemption price uses stETH/USD directly when it differs from ETH/USD by more than 1%; within 1% it uses the higher input."
+    },
+    {
+      "id": "stEthUsdUnderstatesRedemptionPrice",
+      "inputs": [{ "field": "stEthUsdOracle", "effect": "value.understated" }],
+      "output": "price.redemption.understated",
+      "description": "An understated stETH/USD input lowers the redemption price when it is outside the 1% ETH/USD comparison window.",
+      "limitation": "Within the 1% window the redemption calculation uses the higher input."
+    },
+    {
+      "id": "ethUsdCanBoundedlyOverstateRedemptionPrice",
+      "inputs": [{ "field": "ethUsdOracle", "effect": "value.overstated" }],
+      "output": "price.redemption.overstated",
+      "description": "An overstated ETH/USD input can raise the redemption price only while it remains within 1% of stETH/USD.",
+      "limitation": "Outside that deviation window the redemption calculation ignores ETH/USD."
+    },
+    {
+      "id": "canonicalRateOverstatesPrimaryPrice",
+      "inputs": [
+        { "field": "rateProviderAddress", "effect": "value.overstated" }
+      ],
+      "output": "price.primary.overstated",
+      "description": "The canonical stETH-per-wstETH rate multiplies the market input in every primary price calculation."
+    },
+    {
+      "id": "canonicalRateUnderstatesPrimaryPrice",
+      "inputs": [
+        { "field": "rateProviderAddress", "effect": "value.understated" }
+      ],
+      "output": "price.primary.understated",
+      "description": "The canonical stETH-per-wstETH rate multiplies the market input in every primary price calculation."
+    },
+    {
+      "id": "canonicalRateOverstatesRedemptionPrice",
+      "inputs": [
+        { "field": "rateProviderAddress", "effect": "value.overstated" }
+      ],
+      "output": "price.redemption.overstated",
+      "description": "The canonical stETH-per-wstETH rate multiplies the selected USD input in every redemption price calculation."
+    },
+    {
+      "id": "canonicalRateUnderstatesRedemptionPrice",
+      "inputs": [
+        { "field": "rateProviderAddress", "effect": "value.understated" }
+      ],
+      "output": "price.redemption.understated",
+      "description": "The canonical stETH-per-wstETH rate multiplies the selected USD input in every redemption price calculation."
+    },
+    {
+      "id": "ethUsdFailureRequestsShutdown",
+      "inputs": [{ "field": "ethUsdOracle", "effect": "value.unavailable" }],
+      "output": "branch.shutdown.requested",
+      "description": "A reverting or non-positive ETH/USD read, or an answer older than {{ ethUsdStaleness }}, makes this contract signal branch shutdown and permanently use its last recorded good price."
+    },
+    {
+      "id": "stEthUsdFailureRequestsShutdown",
+      "inputs": [{ "field": "stEthUsdOracle", "effect": "value.unavailable" }],
+      "output": "branch.shutdown.requested",
+      "description": "A reverting or non-positive stETH/USD read, or an answer older than {{ ethUsdStaleness }}, makes this contract signal branch shutdown and switch to ETH/USD multiplied by the canonical rate, never increasing above the last recorded good price.",
+      "limitation": "The fallback no longer depends on the failed stETH/USD input."
+    },
+    {
+      "id": "canonicalRateFailureRequestsShutdown",
+      "inputs": [
+        { "field": "rateProviderAddress", "effect": "value.unavailable" }
+      ],
+      "output": "branch.shutdown.requested",
+      "description": "A reverting or zero canonical-rate read makes this contract signal branch shutdown and permanently use its last recorded good price."
+    }
+  ]
+}

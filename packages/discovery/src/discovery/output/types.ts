@@ -1,7 +1,7 @@
 import type { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { ContractValueType } from '../config/ColorConfig'
-import type { Permission } from '../config/PermissionConfig'
+import type { ImpactCategory, Permission } from '../config/PermissionConfig'
 import type { ContractFieldSeverity } from '../config/StructureConfig'
 import type { DiscoveryTimestamps } from '../modelling/modelPermissions'
 
@@ -36,6 +36,15 @@ export interface DiscoveryOutput {
   usedBlockNumbers: Record<string, number>
   permissionsConfigHash?: Hash256
   dependentDiscoveries?: DiscoveryTimestamps
+  /**
+   * Project-scoped permission results for actors owned by a referenced
+   * discovery. They are overlaid on the referenced entries when the project is
+   * consumed, without mutating the dependency's own discovered.json.
+   */
+  externalPermissions?: Record<ChainSpecificAddress, PermissionEntry>
+  permissionGroups?: ResolvedPermissionGroup[]
+  externalPermissionGroups?: ResolvedPermissionGroup[]
+  impactScenarios?: ResolvedImpactScenario[]
 }
 
 export interface DiscoveryCustomType {
@@ -51,7 +60,10 @@ export interface FieldMeta {
 
 export interface ResolvedPermissionPath {
   address: ChainSpecificAddress
+  permission?: Permission
   delay?: number
+  description?: string
+  role?: string
   condition?: string
 }
 
@@ -66,6 +78,89 @@ export interface ResolvedPermissionDetails {
 
 export type ReceivedPermission = ResolvedPermissionDetails & {
   from: ChainSpecificAddress
+}
+
+export interface ResolvedPermissionGroup {
+  id: string
+  name: string
+  memberName: string
+  threshold: number
+  members: ChainSpecificAddress[]
+  admin?: ChainSpecificAddress
+  permission: ReceivedPermission
+  isProjectScoped?: boolean
+}
+
+export type ResolvedImpactPrincipal =
+  | {
+      type: 'address'
+      address: ChainSpecificAddress
+    }
+  | {
+      type: 'group'
+      key: string
+      from: ChainSpecificAddress
+      id: string
+      name: string
+    }
+
+export interface ResolvedImpactSource {
+  id: string
+  capabilityId: string
+  principal: string
+  contract: ChainSpecificAddress
+  effect: string
+  dependencyName?: string
+  capability?: string
+  description?: string
+  limitation?: string
+}
+
+export interface ResolvedImpactStep {
+  ruleId: string
+  /** Stable semantic origin shared by instances of the same template rule. */
+  ruleDefinition: {
+    template?: string
+    id: string
+  }
+  contract: ChainSpecificAddress
+  inputs: { address: ChainSpecificAddress; effect: string }[]
+  output: string
+  description?: string
+  impact?: string
+  categories?: ImpactCategory[]
+  limitation?: string
+  protection?: string
+}
+
+/**
+ * A normalized proof tree. Human-readable source and rule metadata stays in
+ * the scenario's `sources` and `steps` arrays and is referenced by id here.
+ */
+export type ResolvedImpactTrace =
+  | {
+      type: 'source'
+      sourceId: string
+    }
+  | {
+      type: 'rule'
+      ruleId: string
+      inputs: ResolvedImpactTrace[]
+    }
+
+export interface ResolvedImpactPath {
+  terminal: { address: ChainSpecificAddress; effect: string }
+  trace: ResolvedImpactTrace
+}
+
+export interface ResolvedImpactScenario {
+  id: string
+  principals: ResolvedImpactPrincipal[]
+  sources: ResolvedImpactSource[]
+  steps: ResolvedImpactStep[]
+  terminals: { address: ChainSpecificAddress; effect: string }[]
+  /** Exact derivation for every terminal, including conjunctive branches. */
+  paths: ResolvedImpactPath[]
 }
 
 export type ExternalReference = {
@@ -93,6 +188,7 @@ export type StructureEntry = {
   values?: Record<string, ContractValue | undefined>
   errors?: Record<string, string>
   ignoreInWatchMode?: string[]
+  ignoreInCoverage?: string[]
   usedTypes?: DiscoveryCustomType[]
   targetType?: Analysis['type']
   targetProject?: string
@@ -128,13 +224,11 @@ export type PermissionsOutput = {
     delay?: number
     description?: string
     condition?: string
-    via?: {
-      address: ChainSpecificAddress
-      delay?: number
-      condition?: string
-    }[]
+    via?: ResolvedPermissionPath[]
     isFinal: boolean
     role?: string
   }[]
   dependentTimestamps: DiscoveryTimestamps
+  permissionGroups?: ResolvedPermissionGroup[]
+  impactScenarios?: ResolvedImpactScenario[]
 }

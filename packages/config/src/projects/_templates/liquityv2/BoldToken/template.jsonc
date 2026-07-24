@@ -1,0 +1,44 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "BoldToken",
+  "description": "BOLD, the protocol's stablecoin and the debt side of every trove. It is a standard ERC20 with permit, so anyone can hold, transfer, and approve it, but only the protocol's own branch contracts can create or destroy it. New BOLD is minted when a borrower draws debt (by a branch's BorrowerOperations or ActivePool) and burned when debt is repaid, liquidated, or redeemed (by a branch's BorrowerOperations, TroveManager, or StabilityPool, or by the CollateralRegistry on redemption), so the total supply always tracks the system's outstanding debt. The set of addresses allowed to mint and burn is a fixed whitelist: each branch's contracts were registered once at deployment, after which ownership was renounced, so no minter or burner can ever be added or removed.",
+  "ignoreInCoverage": ["ERC20", "ERC20Permit", "EIP712"],
+  "fields": {
+    "borrowerOperationsAddresses": {
+      "handler": {
+        "type": "event",
+        "select": "_newBorrowerOperationsAddress",
+        "add": { "event": "BorrowerOperationsAddressAdded" }
+      },
+      "severity": "HIGH",
+      "description": "Addresses allowed to mint and burn BOLD. One BorrowerOperations is whitelisted per collateral branch via setBranchAddresses."
+    },
+    "activePoolAddresses": {
+      "handler": {
+        "type": "event",
+        "select": "_newActivePoolAddress",
+        "add": { "event": "ActivePoolAddressAdded" }
+      },
+      "severity": "HIGH",
+      "description": "Addresses allowed to mint BOLD (aggregate interest minting). One ActivePool is whitelisted per collateral branch via setBranchAddresses."
+    },
+    "troveManagerAddresses": {
+      "handler": {
+        "type": "event",
+        "select": "_newTroveManagerAddress",
+        "add": { "event": "TroveManagerAddressAdded" }
+      },
+      "severity": "HIGH",
+      "description": "Addresses allowed to burn BOLD. One TroveManager is whitelisted per collateral branch via setBranchAddresses."
+    },
+    "stabilityPoolAddresses": {
+      "handler": {
+        "type": "event",
+        "select": "_newStabilityPoolAddress",
+        "add": { "event": "StabilityPoolAddressAdded" }
+      },
+      "severity": "HIGH",
+      "description": "Addresses allowed to burn BOLD and move it in and out of the Stability Pool. One StabilityPool is whitelisted per collateral branch via setBranchAddresses."
+    }
+  }
+}

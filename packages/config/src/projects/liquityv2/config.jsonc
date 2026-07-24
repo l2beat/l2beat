@@ -1,0 +1,196 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "liquityv2",
+  "modelCrossChainPermissions": true,
+  "import": ["../globalConfig.jsonc"],
+  "maxAddresses": 70,
+  "initialAddresses": ["eth:0x6440f144b7e50D6a8439336510312d2F54beB01D"],
+  "sharedModules": ["chainlink"],
+  "names": {
+    "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE": "ActivePool_WETH",
+    "eth:0x20F7C9ad66983F6523a0881d0f82406541417526": "AddressesRegistry_WETH",
+    "eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65": "BorrowerOperations_WETH",
+    "eth:0xedbE2509E502c0320D2e7f8b6746a49b4B50E2bF": "CollSurplusPool_WETH",
+    "eth:0xD4558240d50C2E219a21c9d25afD513Bb6e5B1A0": "DefaultPool_WETH",
+    "eth:0x5CcA549ca706C39D68156e5E0a72CcBC95f563d0": "FixedAssetData_WETH",
+    "eth:0x84087689B0D6a8A8f11C297e9e7f8De99f398258": "FixedAssetReader_WETH",
+    "eth:0x7b9ab3DE4036caE51F1fa4ec0a2C2fd606bCF921": "GasPool_WETH",
+    "eth:0x9B36C3B16299D68c79F174df7e728E35b6AF4A12": "MetadataNFT_WETH",
+    "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4": "SortedTroves_WETH",
+    "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF": "StabilityPool_WETH",
+    "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A": "TroveManager_WETH",
+    "eth:0x1A0FC0b843aFD9140267D25d4E575Cb37a838013": "TroveNFT_WETH",
+    "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0": "ActivePool_wstETH",
+    "eth:0x8d733F7ea7c23Cbea7C613B6eBd845d46d3aAc54": "AddressesRegistry_wstETH",
+    "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3": "BorrowerOperations_wstETH",
+    "eth:0x36e6CBdf68f64CF00fC3a6c634A25be32Dd0A235": "CollSurplusPool_wstETH",
+    "eth:0xD796e1648526400386CC4d12FA05E5F11e6a22A1": "DefaultPool_wstETH",
+    "eth:0xf4a3fE99227F6060e4C1c62b557EEE050B6483E4": "FixedAssetData_wstETH",
+    "eth:0xa5224865040034A9f8E5C60e0a616c9c8A63f237": "FixedAssetReader_wstETH",
+    "eth:0x8C44FBa379D8A8608C0e29B2729DeB75a981Db1f": "GasPool_wstETH",
+    "eth:0x362f822dF79790C8077e61110484Fffa48F682A1": "MetadataNFT_wstETH",
+    "eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1": "SortedTroves_wstETH",
+    "eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B": "StabilityPool_wstETH",
+    "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22": "TroveManager_wstETH",
+    "eth:0x857aECeBF75f1012DC18E15020C97096aeA31b04": "TroveNFT_wstETH",
+    "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F": "ActivePool_rETH",
+    "eth:0x6106046F031a22713697e04C08B330dDaf3e8789": "AddressesRegistry_rETH",
+    "eth:0xe8119fC02953B27a1b48D2573855738485A17329": "BorrowerOperations_rETH",
+    "eth:0xba4A2bD8b76DF84CaC98eBa3f4b967D8423192bF": "CollSurplusPool_rETH",
+    "eth:0x5cc5ceFD034Fdc4728D487a72Ca58A410CDdCD6b": "DefaultPool_rETH",
+    "eth:0x884Acfa4593a6FdbA0a9373007E48Ea9AF881C42": "FixedAssetData_rETH",
+    "eth:0xcC77baf5706BDf7CFA7FefD5337833e2e1fd0d8e": "FixedAssetReader_rETH",
+    "eth:0x45c81dcE308389e1Bee63ae30A04Fb1e148dad41": "GasPool_rETH",
+    "eth:0x3400874305E1547020fb8e80eAF1308B757171Af": "MetadataNFT_rETH",
+    "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386": "SortedTroves_rETH",
+    "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695": "StabilityPool_rETH",
+    "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e": "TroveManager_rETH",
+    "eth:0x7ae430E25b67f19B431e1D1Dc048a5BCF24C0873": "TroveNFT_rETH"
+  },
+  "overrides": {
+    "eth:0x5CcA549ca706C39D68156e5E0a72CcBC95f563d0": {
+      "description": "A data contract holding the raw asset bytes (an embedded font and the collateral logos) used to render the trove NFT image. The bytes are stored as the contract's own bytecode via the SSTORE2 pattern rather than as executable code, so it has no logic and no Solidity source; the FixedAssetReader slices out the assets it needs.",
+      "manualSourcePaths": {
+        "eth:0x5CcA549ca706C39D68156e5E0a72CcBC95f563d0": "https://github.com/liquity/bold/tree/main/contracts/utils/assets"
+      }
+    },
+    "eth:0x884Acfa4593a6FdbA0a9373007E48Ea9AF881C42": {
+      "description": "A data contract holding the raw asset bytes (an embedded font and the collateral logos) used to render the trove NFT image. The bytes are stored as the contract's own bytecode via the SSTORE2 pattern rather than as executable code, so it has no logic and no Solidity source; the FixedAssetReader slices out the assets it needs.",
+      "manualSourcePaths": {
+        "eth:0x884Acfa4593a6FdbA0a9373007E48Ea9AF881C42": "https://github.com/liquity/bold/tree/main/contracts/utils/assets"
+      }
+    },
+    "eth:0xf4a3fE99227F6060e4C1c62b557EEE050B6483E4": {
+      "description": "A data contract holding the raw asset bytes (an embedded font and the collateral logos) used to render the trove NFT image. The bytes are stored as the contract's own bytecode via the SSTORE2 pattern rather than as executable code, so it has no logic and no Solidity source; the FixedAssetReader slices out the assets it needs.",
+      "manualSourcePaths": {
+        "eth:0xf4a3fE99227F6060e4C1c62b557EEE050B6483E4": "https://github.com/liquity/bold/tree/main/contracts/utils/assets"
+      }
+    },
+    "eth:0x1A0FC0b843aFD9140267D25d4E575Cb37a838013": {
+      "fields": {
+        "boldToken": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D"
+          }
+        },
+        "collToken": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+          }
+        }
+      }
+    },
+    "eth:0x7ae430E25b67f19B431e1D1Dc048a5BCF24C0873": {
+      "fields": {
+        "boldToken": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D"
+          }
+        },
+        "collToken": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393"
+          }
+        }
+      }
+    },
+    "eth:0x857aECeBF75f1012DC18E15020C97096aeA31b04": {
+      "fields": {
+        "boldToken": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D"
+          }
+        },
+        "collToken": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
+          }
+        }
+      }
+    },
+    "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A": {
+      "fields": {
+        "WETH": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+          }
+        }
+      }
+    },
+    "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22": {
+      "fields": {
+        "WETH": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+          }
+        }
+      }
+    },
+    "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e": {
+      "fields": {
+        "WETH": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+          }
+        }
+      }
+    },
+    "eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65": {
+      "fields": {
+        "WETH": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+          }
+        },
+        "collToken": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+          }
+        }
+      }
+    },
+    "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3": {
+      "fields": {
+        "WETH": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+          }
+        },
+        "collToken": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
+          }
+        }
+      }
+    },
+    "eth:0xe8119fC02953B27a1b48D2573855738485A17329": {
+      "fields": {
+        "WETH": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+          }
+        },
+        "collToken": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ActivePool",
+  "description": "The branch's collateral vault and interest engine. It custodies the collateral of every active trove on this branch and tracks the branch's aggregate BOLD debt. Collateral only moves in or out on instruction from the branch's own contracts (the BorrowerOperations, TroveManager, StabilityPool, and DefaultPool). It is also where borrower interest is realized: when the branch's aggregate interest is settled, the newly accrued amount is minted as fresh BOLD and split, with {{ spYieldSplit }}% going to the StabilityPool as depositor yield and the remainder to the InterestRouter.",
+  "ignoreRelatives": ["collToken", "aggWeightedBatchManagementFeeSum"],
+  "fields": {
+    "spYieldSplit": {
+      "handler": { "type": "hardcoded", "value": 75 },
+      "description": "Share of borrower interest paid to Stability Pool depositors as yield (%); the remainder goes to the InterestRouter. A code constant, not an on-chain parameter."
+    }
+  },
+  "effectRules": [
+    {
+      "id": "stopInterestAfterShutdown",
+      "inputs": [
+        {
+          "field": "borrowerOperationsAddress",
+          "effect": "branch.shutdown.active"
+        }
+      ],
+      "output": "impact.interest.stopped",
+      "description": "The TroveManager sets this pool's shutdown timestamp as part of branch shutdown; aggregate interest calculations return no further interest after that timestamp.",
+      "impact": "Borrower interest and the corresponding Stability Pool and InterestRouter yield stop accruing for this branch.",
+      "categories": ["yield-can-stop"],
+      "terminal": true
+    }
+  ]
+}

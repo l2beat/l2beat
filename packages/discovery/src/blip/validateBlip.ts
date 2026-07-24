@@ -40,6 +40,10 @@ export function validateBlip(input: unknown): boolean {
       return input.slice(1).every((e) => validateBlip(e)) && notEmpty
     case 'and':
       return input.slice(1).every((e) => validateBlip(e)) && notEmpty
+    case '+':
+      return input.slice(1).every((e) => validateBlip(e)) && notEmpty
+    case '-':
+      return input.slice(1).every((e) => validateBlip(e)) && notEmpty
     case 'pipe':
       return input.slice(1).every((e) => validateBlip(e)) && notEmpty
     case 'map':

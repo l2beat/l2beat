@@ -1,0 +1,143 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "BorrowerOperations",
+  "description": "User-facing entry point of a single collateral branch. Borrowers open, adjust, and close troves here (depositing or withdrawing collateral and drawing or repaying BOLD), set their interest rate directly or by joining an interest-rate batch, and delegate trove management. It mints and burns BOLD as debt is drawn and repaid, and enforces the branch's collateral-ratio rules. A trove becomes liquidatable once its individual collateral ratio falls below the Minimum Collateral Ratio (MCR, {{ MCR }}%); troves managed by an interest-rate batch are held to the stronger MCR plus Batch Collateral Ratio buffer (BCR, {{ BCR }}%). While the branch's total collateral ratio is below the Critical Collateral Ratio (CCR, {{ CCR }}%) the branch is in restricted mode and borrowing operations that would lower it further are blocked. Anyone can shut the branch down once its total collateral ratio falls below the Shutdown Collateral Ratio (SCR, {{ SCR }}%), and it also shuts down automatically if the price feed reports a failure of one of its oracles.",
+  "ignoreMethods": [
+    "addManagerOf",
+    "getInterestIndividualDelegateOf",
+    "interestBatchManagerOf",
+    "removeManagerReceiverOf"
+  ],
+  "ignoreRelatives": ["WETH", "collToken"],
+  "ignoreInCoverage": [
+    "addManagerOf",
+    "interestBatchManagerOf",
+    "interestBatchManagers",
+    "interestIndividualDelegateOf",
+    "removeManagerReceiverOf"
+  ],
+  "fields": {
+    "constructorArgs": {
+      "handler": { "type": "constructorArgs", "nameArgs": true }
+    },
+    "addressesRegistry": {
+      "copy": "constructorArgs",
+      "edit": ["get", "_addressesRegistry"]
+    },
+    "boldToken": {
+      "handler": {
+        "type": "event",
+        "select": "_boldTokenAddress",
+        "set": { "event": "BoldTokenAddressChanged" }
+      }
+    },
+    "collSurplusPool": {
+      "handler": {
+        "type": "event",
+        "select": "_collSurplusPoolAddress",
+        "set": { "event": "CollSurplusPoolAddressChanged" }
+      }
+    },
+    "defaultPool": {
+      "handler": {
+        "type": "event",
+        "select": "_newDefaultPoolAddress",
+        "set": { "event": "DefaultPoolAddressChanged" }
+      }
+    },
+    "gasPoolAddress": {
+      "handler": {
+        "type": "event",
+        "select": "_gasPoolAddress",
+        "set": { "event": "GasPoolAddressChanged" }
+      }
+    },
+    "priceFeed": {
+      "handler": {
+        "type": "event",
+        "select": "_newPriceFeedAddress",
+        "set": { "event": "PriceFeedAddressChanged" }
+      }
+    },
+    "sortedTroves": {
+      "handler": {
+        "type": "event",
+        "select": "_sortedTrovesAddress",
+        "set": { "event": "SortedTrovesAddressChanged" }
+      }
+    },
+    "troveManager": {
+      "handler": {
+        "type": "event",
+        "select": "_newTroveManagerAddress",
+        "set": { "event": "TroveManagerAddressChanged" }
+      }
+    },
+    "troveNFT": {
+      "handler": {
+        "type": "event",
+        "select": "_newTroveNFTAddress",
+        "set": { "event": "TroveNFTAddressChanged" }
+      }
+    },
+    "SCR": {
+      "edit": ["format", "Undecimal16"],
+      "description": "Shutdown Collateral Ratio (%). The branch can be shut down if its total collateral ratio (TCR) drops below this."
+    },
+    "CCR": {
+      "edit": ["format", "Undecimal16"],
+      "description": "Critical Collateral Ratio (%)."
+    },
+    "MCR": {
+      "edit": ["format", "Undecimal16"],
+      "description": "Minimum Collateral Ratio (%). Troves below it can be liquidated."
+    },
+    "BCR": {
+      "edit": ["format", "Undecimal16"],
+      "description": "Batch Collateral Ratio buffer (%). Batched troves must stay above MCR + BCR."
+    }
+  },
+  "effectRules": [
+    {
+      "id": "overstatedPriceWeakensBorrowingChecks",
+      "inputs": [
+        { "field": "priceFeed", "effect": "price.primary.overstated" }
+      ],
+      "output": "impact.borrowing.unsafe",
+      "description": "This contract uses the PriceFeed's primary price to calculate individual collateral ratios and the branch total collateral ratio when enforcing MCR, CCR, and SCR checks.",
+      "impact": "Borrowers can draw more BOLD or withdraw more collateral than the configured MCR, CCR, and SCR checks would permit at the correct price.",
+      "categories": ["funds-can-be-stolen", "funds-can-lose-value"],
+      "terminal": true
+    },
+    {
+      "id": "understatedPriceRestrictsBorrowing",
+      "inputs": [
+        { "field": "priceFeed", "effect": "price.primary.understated" }
+      ],
+      "output": "impact.borrowing.restricted",
+      "description": "This contract uses the PriceFeed's primary price to calculate individual collateral ratios and the branch total collateral ratio when enforcing MCR, CCR, and SCR checks.",
+      "impact": "Otherwise valid trove openings and adjustments can be rejected, and the branch can appear to cross its restricted-mode or shutdown thresholds.",
+      "categories": ["users-can-be-censored"],
+      "terminal": true
+    },
+    {
+      "id": "applyOracleFailureShutdown",
+      "inputs": [
+        { "field": "priceFeed", "effect": "branch.shutdown.requested" }
+      ],
+      "output": "branch.shutdown.active",
+      "description": "This contract accepts the shutdown signal only from its configured PriceFeed, records the shutdown, settles aggregate interest once, and tells the TroveManager to shut down.",
+      "impact": "The branch can no longer open troves or perform borrower operations guarded by the live-branch check.",
+      "categories": ["users-can-be-censored"],
+      "terminal": true
+    },
+    {
+      "id": "preserveTroveClosureAfterShutdown",
+      "inputs": [{ "effect": "branch.shutdown.active" }],
+      "output": "protection.troveClosure.available",
+      "description": "Branch shutdown does not disable trove closure through this contract.",
+      "protection": "Trove closure remains available after branch shutdown.",
+      "terminal": true
+    }
+  ]
+}

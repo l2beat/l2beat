@@ -1,0 +1,167 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ChainlinkOCR2Aggregator",
+  "description": "A Chainlink OCR2 aggregator. It accepts reports signed by its configured quorum and submitted by a configured transmitter, and stores their median answer within its fixed min/max bounds.",
+  "ignoreRelatives": [
+    "getBillingAccessController",
+    "getRequesterAccessController",
+    "getLinkToken"
+  ],
+  "ignoreMethods": [
+    "description",
+    "latestAnswer",
+    "latestRound",
+    "latestRoundData",
+    "latestTimestamp",
+    "latestTransmissionDetails"
+  ],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "act",
+          "description": "reconfigure the oracle: replace the signer and transmitter sets and the number of signatures required per update, and set the payees and access controllers."
+        },
+        {
+          "id": "controlOracleConfiguration",
+          "type": "interact",
+          "description": "replace the signer and transmitter sets and choose how many signatures an accepted report requires.",
+          "effects": [
+            {
+              "id": "value.overstated",
+              "description": "A configuration controlled by this actor can make the aggregator accept a fresh answer above the value reported by an honest configuration, subject to the aggregator's fixed min/max bounds."
+            },
+            {
+              "id": "value.understated",
+              "description": "A configuration controlled by this actor can make the aggregator accept a fresh answer below the value reported by an honest configuration, subject to the aggregator's fixed min/max bounds."
+            },
+            {
+              "id": "value.unavailable",
+              "description": "A configuration controlled by this actor can prevent the aggregator from accepting further reports, leaving its stored answer to become stale."
+            }
+          ]
+        }
+      ]
+    },
+    "getTransmitters": {
+      "permissions": [
+        {
+          "id": "relayReports",
+          "type": "interact",
+          "description": "relay price reports already authorized by the signer quorum to this aggregator.",
+          "effects": [
+            {
+              "id": "report.relayable",
+              "description": "At least one configured transmitter can submit a quorum-authorized report to the aggregator."
+            }
+          ],
+          "group": {
+            "name": "Transmitters",
+            "memberName": "Transmitter",
+            "threshold": 1,
+            "admin": "{{ owner }}"
+          }
+        },
+        {
+          "id": "stopTransmissions",
+          "type": "interact",
+          "description": "collectively prevent every configured transmitter from submitting reports.",
+          "effects": [
+            {
+              "id": "value.unavailable",
+              "description": "If every configured transmitter stops relaying, the aggregator accepts no further reports and its stored answer becomes stale."
+            }
+          ],
+          "group": {
+            "name": "Transmitters needed to stop updates",
+            "memberName": "Transmitter",
+            "threshold": "{{ $transmitterCount }}",
+            "admin": "{{ owner }}"
+          }
+        }
+      ]
+    },
+    "ocrConfig": {
+      "description": "The oracle set from the last reconfiguration: the signing keys and f, the number of faulty oracles the config tolerates, so f+1 of them must sign each price update.",
+      "handler": {
+        "type": "event",
+        "select": ["configCount", "signers", "f"],
+        "set": {
+          "event": "event ConfigSet(uint32 previousConfigBlockNumber, bytes32 configDigest, uint64 configCount, address[] signers, address[] transmitters, uint8 f, bytes onchainConfig, uint64 offchainConfigVersion, bytes offchainConfig)"
+        }
+      },
+      "permissions": [
+        {
+          "id": "signReports",
+          "type": "interact",
+          "description": "authorize price reports for this aggregator by signing them.",
+          "effects": [
+            {
+              "id": "report.authorized",
+              "description": "The configured signer quorum can authorize a report for this aggregator."
+            }
+          ],
+          "group": {
+            "name": "Signers",
+            "memberName": "Signer",
+            "threshold": "{{ $threshold }}",
+            "admin": "{{ owner }}"
+          }
+        },
+        {
+          "id": "preventSigningQuorum",
+          "type": "interact",
+          "description": "collectively prevent the remaining signers from forming the configured report quorum.",
+          "effects": [
+            {
+              "id": "value.unavailable",
+              "description": "With fewer than the configured quorum of signers available, no new report can be authorized and the stored answer becomes stale."
+            }
+          ],
+          "group": {
+            "name": "Signers needed to block quorum",
+            "memberName": "Signer",
+            "threshold": "{{ $blockingThreshold }}",
+            "admin": "{{ owner }}"
+          }
+        }
+      ]
+    },
+    "$members": {
+      "copy": "ocrConfig",
+      "edit": ["get", "signers"]
+    },
+    "$threshold": {
+      "copy": "ocrConfig",
+      "edit": ["pipe", ["get", "f"], ["+", 1]]
+    },
+    "$blockingThreshold": {
+      "copy": "ocrConfig",
+      "edit": ["-", ["pipe", ["get", "signers"], ["length"]], ["get", "f"]]
+    },
+    "$transmitterCount": {
+      "copy": "getTransmitters",
+      "edit": ["length"]
+    }
+  },
+  "effectRules": [
+    {
+      "id": "acceptOverstatedReport",
+      "inputs": [
+        { "effect": "report.authorized" },
+        { "effect": "report.relayable" }
+      ],
+      "output": "value.overstated",
+      "description": "The aggregator accepts a quorum-authorized report submitted by a configured transmitter and stores its median answer when it is within the fixed min/max bounds."
+    },
+    {
+      "id": "acceptUnderstatedReport",
+      "inputs": [
+        { "effect": "report.authorized" },
+        { "effect": "report.relayable" }
+      ],
+      "output": "value.understated",
+      "description": "The aggregator accepts a quorum-authorized report submitted by a configured transmitter and stores its median answer when it is within the fixed min/max bounds."
+    }
+  ]
+}
