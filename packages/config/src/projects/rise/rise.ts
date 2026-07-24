@@ -55,7 +55,7 @@ export const rise: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.risechain.com',
-        callsPerMinute: 300,
+        callsPerMinute: 3_000,
       },
     ],
   },
