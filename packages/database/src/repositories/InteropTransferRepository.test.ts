@@ -7,6 +7,7 @@ import {
   hasAnyInteropTransferFinancialsFilter,
   type InteropTransferRecord,
   InteropTransferRepository,
+  type InteropTransferUpdate,
   toRecord,
   toRow,
 } from './InteropTransferRepository'
@@ -568,6 +569,19 @@ describeDatabase(InteropTransferRepository.name, (db) => {
 
       expect(result).toEqual([])
     })
+
+    it('limits the number of returned transfers', async () => {
+      await repository.insertMany([
+        transfer('plugin1', 'msg1', 'deposit', UnixTime(100)),
+        transfer('plugin1', 'msg2', 'deposit', UnixTime(200)),
+        transfer('plugin1', 'msg3', 'deposit', UnixTime(300)),
+      ])
+
+      const result = await repository.getUnprocessed(2)
+
+      expect(result).toHaveLength(2)
+      expect(result.every((r) => r.isProcessed === false)).toEqual(true)
+    })
   })
 
   describe(
@@ -656,217 +670,180 @@ describeDatabase(InteropTransferRepository.name, (db) => {
     })
   })
 
-  describe(InteropTransferRepository.prototype.updateFinancials.name, () => {
-    it('updates financial data and marks transfer as processed', async () => {
-      const record = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))
-      record.srcAbstractTokenId = undefined
-      record.srcSymbol = undefined
-      record.srcPrice = undefined
-      record.srcAmount = undefined
-      record.srcValueUsd = undefined
-      record.dstAbstractTokenId = undefined
-      record.dstSymbol = undefined
-      record.dstPrice = undefined
-      record.dstAmount = undefined
-      record.dstValueUsd = undefined
-
-      await repository.insertMany([record])
-
-      const update = {
-        srcAbstractTokenId: 'ethereum',
-        srcSymbol: 'ETH',
-        srcPrice: 2000.0,
-        srcAmount: 1.5,
-        srcValueUsd: 3000.0,
-        dstAbstractTokenId: 'arbitrum-one',
-        dstSymbol: 'ETH',
-        dstPrice: 1999.0,
-        dstAmount: 1.4,
-        dstValueUsd: 2798.6,
+  describe(
+    InteropTransferRepository.prototype.updateManyFinancials.name,
+    () => {
+      function financialsUpdate(
+        overrides: Partial<InteropTransferUpdate> = {},
+      ): InteropTransferUpdate {
+        return {
+          srcAbstractTokenId: null,
+          srcSymbol: null,
+          srcPrice: null,
+          srcAmount: null,
+          srcValueUsd: null,
+          dstAbstractTokenId: null,
+          dstSymbol: null,
+          dstPrice: null,
+          dstAmount: null,
+          dstValueUsd: null,
+          ...overrides,
+        }
       }
 
-      await repository.updateFinancials('msg1', update)
+      it('updates financial data per transfer and marks them as processed', async () => {
+        await repository.insertMany([
+          transfer('plugin1', 'msg1', 'deposit', UnixTime(100)),
+          transfer('plugin1', 'msg2', 'withdraw', UnixTime(200)),
+        ])
 
-      const result = await repository.getAll()
-      expect(result).toHaveLength(1)
+        await repository.updateManyFinancials([
+          {
+            id: 'msg1',
+            update: financialsUpdate({
+              srcAbstractTokenId: 'ethereum',
+              srcSymbol: 'ETH',
+              srcPrice: 2000.0,
+              srcAmount: 1.5,
+              srcValueUsd: 3000.0,
+              dstAbstractTokenId: 'arbitrum-one',
+              dstSymbol: 'ETH',
+              dstPrice: 1999.0,
+              dstAmount: 1.4,
+              dstValueUsd: 2798.6,
+            }),
+          },
+          {
+            id: 'msg2',
+            update: financialsUpdate({
+              srcAbstractTokenId: 'ethereum',
+              srcSymbol: 'USD "quoted", {escaped}',
+              srcPrice: 1.0,
+              srcAmount: 100,
+              srcValueUsd: 100,
+            }),
+          },
+        ])
 
-      const updatedRecord = result[0]
-      expect(updatedRecord?.srcAbstractTokenId).toEqual('ethereum')
-      expect(updatedRecord?.srcSymbol).toEqual('ETH')
-      expect(updatedRecord?.srcPrice).toEqual(2000.0)
-      expect(updatedRecord?.srcAmount).toEqual(1.5)
-      expect(updatedRecord?.srcValueUsd).toEqual(3000.0)
-      expect(updatedRecord?.dstAbstractTokenId).toEqual('arbitrum-one')
-      expect(updatedRecord?.dstSymbol).toEqual('ETH')
-      expect(updatedRecord?.dstPrice).toEqual(1999.0)
-      expect(updatedRecord?.dstAmount).toEqual(1.4)
-      expect(updatedRecord?.dstValueUsd).toEqual(2798.6)
-      expect(updatedRecord?.isProcessed).toEqual(true)
-    })
+        const result = await repository.getAll()
+        const msg1 = result.find((r) => r.transferId === 'msg1')
+        const msg2 = result.find((r) => r.transferId === 'msg2')
 
-    it('updates only provided fields', async () => {
-      const record = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))
-      record.srcAbstractTokenId = 'original-src'
-      record.srcSymbol = 'USDT'
-      record.srcPrice = 1000.0
-      record.dstAbstractTokenId = 'original-dst'
-      record.dstSymbol = 'USDT.e'
-      record.dstPrice = 1001.0
+        expect(msg1?.srcAbstractTokenId).toEqual('ethereum')
+        expect(msg1?.srcSymbol).toEqual('ETH')
+        expect(msg1?.srcPrice).toEqual(2000.0)
+        expect(msg1?.srcAmount).toEqual(1.5)
+        expect(msg1?.srcValueUsd).toEqual(3000.0)
+        expect(msg1?.dstAbstractTokenId).toEqual('arbitrum-one')
+        expect(msg1?.dstSymbol).toEqual('ETH')
+        expect(msg1?.dstPrice).toEqual(1999.0)
+        expect(msg1?.dstAmount).toEqual(1.4)
+        expect(msg1?.dstValueUsd).toEqual(2798.6)
+        expect(msg1?.isProcessed).toEqual(true)
 
-      await repository.insertMany([record])
-
-      const partialUpdate = {
-        srcPrice: 2000.0,
-        dstAmount: 1.5,
-        dstSymbol: 'USDT-updated',
-      }
-
-      await repository.updateFinancials('msg1', partialUpdate)
-
-      const result = await repository.getAll()
-      const updatedRecord = result[0]
-
-      expect(updatedRecord?.srcAbstractTokenId).toEqual('original-src')
-      expect(updatedRecord?.srcSymbol).toEqual('USDT')
-      expect(updatedRecord?.srcPrice).toEqual(2000.0)
-      expect(updatedRecord?.dstAbstractTokenId).toEqual('original-dst')
-      expect(updatedRecord?.dstSymbol).toEqual('USDT-updated')
-      expect(updatedRecord?.dstPrice).toEqual(1001.0)
-      expect(updatedRecord?.dstAmount).toEqual(1.5)
-      expect(updatedRecord?.isProcessed).toEqual(true)
-    })
-
-    it('sets provided fields to null', async () => {
-      const record = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))
-      record.srcAbstractTokenId = 'original-src'
-      record.srcSymbol = 'USDT'
-      record.srcPrice = 1000
-      record.srcAmount = 2
-      record.srcValueUsd = 2000
-      record.dstAbstractTokenId = 'original-dst'
-      record.dstSymbol = 'USDT.e'
-      record.dstPrice = 999
-      record.dstAmount = 2.1
-      record.dstValueUsd = 2097.9
-
-      await repository.insertMany([record])
-
-      await repository.updateFinancials('msg1', {
-        srcAbstractTokenId: null,
-        srcSymbol: null,
-        srcPrice: null,
-        srcAmount: null,
-        srcValueUsd: null,
+        expect(msg2?.srcSymbol).toEqual('USD "quoted", {escaped}')
+        expect(msg2?.srcPrice).toEqual(1.0)
+        expect(msg2?.dstAbstractTokenId).toEqual(undefined)
+        expect(msg2?.dstSymbol).toEqual(undefined)
+        expect(msg2?.isProcessed).toEqual(true)
       })
 
-      const result = await repository.getAll()
-      const updatedRecord = result[0]
+      it('sets null fields to null', async () => {
+        const record = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))
+        record.srcAbstractTokenId = 'original-src'
+        record.srcSymbol = 'USDT'
+        record.srcPrice = 1000
+        record.srcAmount = 2
+        record.srcValueUsd = 2000
+        record.dstAbstractTokenId = 'original-dst'
+        record.dstSymbol = 'USDT.e'
+        record.dstPrice = 999
+        record.dstAmount = 2.1
+        record.dstValueUsd = 2097.9
 
-      expect(updatedRecord?.srcAbstractTokenId).toEqual(undefined)
-      expect(updatedRecord?.srcSymbol).toEqual(undefined)
-      expect(updatedRecord?.srcPrice).toEqual(undefined)
-      expect(updatedRecord?.srcAmount).toEqual(undefined)
-      expect(updatedRecord?.srcValueUsd).toEqual(undefined)
-      expect(updatedRecord?.dstAbstractTokenId).toEqual('original-dst')
-      expect(updatedRecord?.dstSymbol).toEqual('USDT.e')
-      expect(updatedRecord?.dstPrice).toEqual(999)
-      expect(updatedRecord?.dstAmount).toEqual(2.1)
-      expect(updatedRecord?.dstValueUsd).toEqual(2097.9)
-      expect(updatedRecord?.isProcessed).toEqual(true)
-    })
+        await repository.insertMany([record])
 
-    it('does not affect other transfers', async () => {
-      const records = [
-        transfer('plugin1', 'msg1', 'deposit', UnixTime(100)),
-        transfer('plugin1', 'msg2', 'withdraw', UnixTime(200)),
-        transfer('plugin1', 'msg3', 'deposit', UnixTime(300)),
-      ]
+        await repository.updateManyFinancials([
+          { id: 'msg1', update: financialsUpdate() },
+        ])
 
-      await repository.insertMany(records)
+        const result = await repository.getAll()
+        const updatedRecord = result[0]
 
-      const update = {
-        srcPrice: 3000.0,
-        srcAmount: 2.0,
-      }
-
-      await repository.updateFinancials('msg2', update)
-
-      const result = await repository.getAll()
-      const msg1Record = result.find((r) => r.transferId === 'msg1')
-      const msg2Record = result.find((r) => r.transferId === 'msg2')
-      const msg3Record = result.find((r) => r.transferId === 'msg3')
-
-      expect(msg1Record?.isProcessed).toEqual(false)
-      expect(msg1Record?.srcPrice).not.toEqual(3000.0)
-
-      expect(msg2Record?.isProcessed).toEqual(true)
-      expect(msg2Record?.srcPrice).toEqual(3000.0)
-      expect(msg2Record?.srcAmount).toEqual(2.0)
-
-      expect(msg3Record?.isProcessed).toEqual(false)
-      expect(msg3Record?.srcPrice).not.toEqual(3000.0)
-    })
-
-    it('handles non-existent transfer ID gracefully', async () => {
-      const record = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))
-      await repository.insertMany([record])
-      const update = {
-        srcPrice: 3000.0,
-      }
-
-      await repository.updateFinancials('nonexistent-msg', update)
-      const result = await repository.getAll()
-      expect(result).toHaveLength(1)
-      expect(result[0]?.isProcessed).toEqual(false)
-      expect(result[0]?.srcPrice).not.toEqual(3000.0)
-    })
-
-    it('updates with empty update object', async () => {
-      const record = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))
-      await repository.insertMany([record])
-
-      await repository.updateFinancials('msg1', {})
-
-      const result = await repository.getAll()
-      const updatedRecord = result[0]
-
-      expect(updatedRecord?.isProcessed).toEqual(true)
-      // All other fields should remain unchanged
-      expect(updatedRecord?.transferId).toEqual('msg1')
-      expect(updatedRecord?.plugin).toEqual('plugin1')
-      expect(updatedRecord?.type).toEqual('deposit')
-    })
-
-    it('updates multiple financial fields at once', async () => {
-      const record = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))
-      await repository.insertMany([record])
-
-      const comprehensiveUpdate = {
-        srcAbstractTokenId: 'ethereum',
-        srcSymbol: 'WETH',
-        srcPrice: 2500.0,
-        srcAmount: 0.8,
-        srcValueUsd: 2000.0,
-        dstAbstractTokenId: 'polygon',
-        dstSymbol: 'WETH',
-        dstPrice: 2480.0,
-        dstAmount: 0.79,
-        dstValueUsd: 1959.2,
-      }
-
-      await repository.updateFinancials('msg1', comprehensiveUpdate)
-
-      const result = await repository.getAll()
-      const updatedRecord = result[0]
-
-      Object.entries(comprehensiveUpdate).forEach(([key, value]) => {
-        expect(updatedRecord?.[key as keyof typeof updatedRecord]).toEqual(
-          value,
-        )
+        expect(updatedRecord?.srcAbstractTokenId).toEqual(undefined)
+        expect(updatedRecord?.srcSymbol).toEqual(undefined)
+        expect(updatedRecord?.srcPrice).toEqual(undefined)
+        expect(updatedRecord?.srcAmount).toEqual(undefined)
+        expect(updatedRecord?.srcValueUsd).toEqual(undefined)
+        expect(updatedRecord?.dstAbstractTokenId).toEqual(undefined)
+        expect(updatedRecord?.dstSymbol).toEqual(undefined)
+        expect(updatedRecord?.dstPrice).toEqual(undefined)
+        expect(updatedRecord?.dstAmount).toEqual(undefined)
+        expect(updatedRecord?.dstValueUsd).toEqual(undefined)
+        expect(updatedRecord?.isProcessed).toEqual(true)
       })
-      expect(updatedRecord?.isProcessed).toEqual(true)
-    })
-  })
+
+      it('does not affect other transfers', async () => {
+        await repository.insertMany([
+          transfer('plugin1', 'msg1', 'deposit', UnixTime(100)),
+          transfer('plugin1', 'msg2', 'withdraw', UnixTime(200)),
+          transfer('plugin1', 'msg3', 'deposit', UnixTime(300)),
+        ])
+
+        await repository.updateManyFinancials([
+          {
+            id: 'msg2',
+            update: financialsUpdate({ srcPrice: 3000.0, srcAmount: 2.0 }),
+          },
+        ])
+
+        const result = await repository.getAll()
+        const msg1Record = result.find((r) => r.transferId === 'msg1')
+        const msg2Record = result.find((r) => r.transferId === 'msg2')
+        const msg3Record = result.find((r) => r.transferId === 'msg3')
+
+        expect(msg1Record?.isProcessed).toEqual(false)
+        expect(msg1Record?.srcPrice).not.toEqual(3000.0)
+
+        expect(msg2Record?.isProcessed).toEqual(true)
+        expect(msg2Record?.srcPrice).toEqual(3000.0)
+        expect(msg2Record?.srcAmount).toEqual(2.0)
+
+        expect(msg3Record?.isProcessed).toEqual(false)
+        expect(msg3Record?.srcPrice).not.toEqual(3000.0)
+      })
+
+      it('ignores non-existent transfer ids', async () => {
+        await repository.insertMany([
+          transfer('plugin1', 'msg1', 'deposit', UnixTime(100)),
+        ])
+
+        await repository.updateManyFinancials([
+          {
+            id: 'nonexistent-msg',
+            update: financialsUpdate({ srcPrice: 3000.0 }),
+          },
+          { id: 'msg1', update: financialsUpdate({ srcPrice: 4000.0 }) },
+        ])
+
+        const result = await repository.getAll()
+        expect(result).toHaveLength(1)
+        expect(result[0]?.isProcessed).toEqual(true)
+        expect(result[0]?.srcPrice).toEqual(4000.0)
+      })
+
+      it('handles empty array', async () => {
+        await repository.insertMany([
+          transfer('plugin1', 'msg1', 'deposit', UnixTime(100)),
+        ])
+
+        await repository.updateManyFinancials([])
+
+        const result = await repository.getAll()
+        expect(result[0]?.isProcessed).toEqual(false)
+      })
+    },
+  )
 
   describe(
     InteropTransferRepository.prototype.markAllAsUnprocessed.name,
