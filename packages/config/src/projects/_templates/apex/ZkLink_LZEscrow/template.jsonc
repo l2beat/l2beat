@@ -1,0 +1,110 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "A secondary cross-chain ZkLink rollup contract. It only escrows user deposits, and synchronizes deposit data with the main zkLink chain.",
+  "fields": {
+    "ALL_CHAINS": {
+      "description": "Bitmask of zkLink chain IDs participating in the network."
+    },
+    "CHAIN_ID": {
+      "description": "This chain's zkLink chain ID."
+    },
+    "DEFAULT_FEE_ADDRESS": {
+      "description": "Default fee account in the zkLink state."
+    },
+    "syncServices": {
+      "description": "Cross-chain synchronization services relaying deposit info, indexed by zkLink chain ID.",
+      "handler": {
+        "type": "event",
+        "select": ["newSyncService"],
+        "set": { "event": "SetSyncService" },
+        "groupBy": "chainId"
+      }
+    },
+    "validators": {
+      "description": "Addresses authorized to commit, execute, and revert L2 blocks, and send block confirmations to other zkLink chains.",
+      "handler": {
+        "type": "event",
+        "select": "validatorAddress",
+        "add": {
+          "event": "ValidatorStatusUpdate",
+          "where": ["=", "#isActive", true]
+        },
+        "remove": {
+          "event": "ValidatorStatusUpdate",
+          "where": ["!=", "#isActive", true]
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "commit, execute, and revert L2 blocks, and send block confirmations to other zkLink chains."
+        }
+      ]
+    },
+    "exodusMode": {
+      "description": "Whether permanent exodus mode is active, allowing users to exit their funds.",
+      "severity": "HIGH"
+    },
+    "gateway": {
+      "description": "L2 gateway used to communicate with L1; unset on the L1 chain."
+    },
+    "getMaster": {
+      "description": "Address authorized to change the proxy implementation and transfer mastership.",
+      "permissions": [
+        { "type": "upgrade" },
+        {
+          "type": "interact",
+          "description": "transfer mastership."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "getNoticePeriod": {
+      "description": "Delay before a scheduled upgrade can be completed."
+    },
+    "getTarget": {
+      "description": "Current proxy implementation address."
+    },
+    "isReadyForUpgrade": {
+      "description": "Whether the contract permits an upgrade to be completed; false in exodus mode."
+    },
+    "MASTER_CHAIN_ID": {
+      "description": "zkLink chain ID of the master chain."
+    },
+    "MAX_CHAIN_ID": {
+      "description": "Highest valid zkLink chain ID."
+    },
+    "MIN_CHAIN_ID": {
+      "description": "Lowest valid zkLink chain ID."
+    },
+    "networkGovernor": {
+      "description": "Address authorized to manage validators, tokens, gateways, and cross-chain synchronization services.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the network governor, validator set, L1 gateway and cross-chain synchronization services."
+        },
+        {
+          "type": "interact",
+          "description": "add tokens, pause and unpause token deposits."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "periphery": {
+      "description": "Delegatecall target containing functionality split from the main contract because of code-size limits."
+    },
+    "verifier": {
+      "description": "Verifier used to validate aggregated block proofs and exit proofs."
+    }
+  },
+  "ignoreMethods": [
+    "firstPriorityRequestId",
+    "totalBlocksCommitted",
+    "totalBlocksExecuted",
+    "totalBlocksProven",
+    "totalBlocksSynchronized",
+    "totalCommittedPriorityRequests",
+    "totalOpenPriorityRequests"
+  ]
+}

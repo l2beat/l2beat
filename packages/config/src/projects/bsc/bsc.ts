@@ -26,6 +26,7 @@ export const bsc: BaseProject = {
     name: 'bsc',
     chainId,
     explorerUrl: 'https://bscscan.com',
+    sinceTimestamp: UnixTime(1598671449),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

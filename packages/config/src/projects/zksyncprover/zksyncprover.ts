@@ -11,7 +11,7 @@ export const zksyncprover: BaseProject = {
   shortName: undefined,
   aliases: ['Matter Labs'],
   addedAt: UnixTime.fromDate(new Date('2025-07-23')),
-  archivedAt: UnixTime.fromDate(new Date('2026-05-05')),
+  // archivedAt: UnixTime.fromDate(new Date('2026-05-05')),
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,
@@ -59,8 +59,28 @@ export const zksyncprover: BaseProject = {
         projectId: ProjectId('zkspace'),
         sinceTimestamp: UnixTime(1639954800),
       },
+      {
+        projectId: ProjectId('apex'),
+        sinceTimestamp: UnixTime(1717970400),
+      },
     ],
     verifierHashes: [
+      {
+        hash: '0xa43ed825e5cd25608fc1bf63fa12bbf73a05523066b040a90069b2c201e76d1e',
+        name: 'ZkLink verifier ApeX Omni',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Zksync,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'arbitrum',
+              '0x235118AfB54B6d6c7b48F1B5434c25CD6Eb6B68F',
+            ),
+          },
+        ],
+        verificationStatus: 'notVerified',
+        description:
+          'Custom verifier ID: SHA256 hash of the abi packed array of uint256 obtained from flattening VerificationKey structure returned by getVkAggregated1()',
+      },
       {
         hash: '0xfa15bba967ebf892d9657359fb8ff07aea13e152c0d5160143a494abb4bc9df3',
         name: 'ZKsync Lite verifier 1',

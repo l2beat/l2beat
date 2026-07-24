@@ -1,0 +1,11 @@
+{
+  "ZkLink_Arb1": {
+    "hash": "0xcf3306c0d9416ebe68af3181926165561803001f786494a95183295fdf54fe86",
+    "address": [
+      "arb1:0x23871561330080828507dED34d23FEF5EdE7053C",
+      "arb1:0x3203E813930bD710043c1d899fE38dD359307352"
+    ],
+    "chain": "arbitrum",
+    "blockNumber": 486499024
+  }
+}

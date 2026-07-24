@@ -2,23 +2,45 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "apex",
   "import": ["../globalConfig.jsonc"],
-  "archived": true,
   "initialAddresses": [
-    "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
-    "eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b"
+    "eth:0x35D173cdfE4d484BC5985fDa55FABad5892c7B82",
+    "arb1:0x3169844a120c0f517b4eb4a750c08d8518c8466a",
+    "base:0xee7981c4642de8d19aed11da3bac59277dfd59d7",
+    "mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c",
+    "bnb:0xb8D9F005654b7b127b34dae8F973Ba729ca3A2D9"
   ],
-  "names": {
-    "eth:0xC532d2976209A56DdF4a99B844130f7c0daCa7B6": "ApexAdminMultisig",
-    "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb": "StarkPerpetualUSDC",
-    "eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b": "StarkPerpetualUSDT",
-    "eth:0x23Cab3CF1aa7B929Df5e9f3712aCA3A6Fb9494E4": "CommitteeUSDC",
-    "eth:0x7249082BfAFE9BCA502d38a686Ef3df37A0cf800": "CommitteeUSDT",
-    "eth:0xE741e26573782ae3C0ea9EC710FA99Fcd27fB953": "FinalizableGpsFactAdapterUSDC",
-    "eth:0x40e1e5Ece49A878062fA9F87eA6dc81281098B22": "FinalizableGpsFactAdapterUSDT"
-  },
   "overrides": {
-    "eth:0xaadFdB9CAc145c65f2284fBe24600d07fb37F7BD": {
-      "description": "Special verifier for the escape() function."
+    "arb1:0x235118AfB54B6d6c7b48F1B5434c25CD6Eb6B68F": {
+      "description": "PLONK verifier used to validate aggregated L2 block proofs and zero-knowledge exit proofs."
+    },
+    "arb1:0x2e8AD1434663b209EE59eF1a6612114239F4a190": {
+      "description": "Controls upgrades to managed contracts. The master can schedule, cancel, and complete upgrades after the main contract's notice period."
+    },
+    "eth:0x35D173cdfE4d484BC5985fDa55FABad5892c7B82": {
+      "proxyType": "ZkLink proxy",
+      "displayName": "ZkLink Ethereum"
+    },
+    "base:0xee7981c4642de8d19aed11da3bac59277dfd59d7": {
+      "proxyType": "ZkLink proxy",
+      "displayName": "ZkLink Base"
+    },
+    "mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c": {
+      "proxyType": "ZkLink proxy",
+      "displayName": "ZkLink Mantle"
+    },
+    "bnb:0xb8D9F005654b7b127b34dae8F973Ba729ca3A2D9": {
+      "proxyType": "ZkLink proxy",
+      "displayName": "ZkLink BNB"
+    },
+    "eth:0xe38f8bc093a1f76f0A444bA6B75F46d6dC686dba": {
+      "description": "Placeholder verifier for chains without pairing support. It rejects all block and exit proofs."
+    },
+    "eth:0xFBD68679271fDa6ca9bf6F20993Cd39E20072753": {
+      "description": "Controls upgrades to managed contracts. The master can schedule, cancel, and complete upgrades after the main contract's notice period."
+    },
+    "arb1:0x3169844a120c0f517b4eb4a750c08d8518c8466a": {
+      "proxyType": "ZkLink proxy",
+      "displayName": "ZkLink Main"
     }
   }
 }

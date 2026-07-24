@@ -6,7 +6,6 @@ import { aevo } from '../projects/aevo/aevo'
 import { alephzero } from '../projects/alephzero/alephzero'
 import { alienx } from '../projects/alienx/alienx'
 import { ancient } from '../projects/ancient/ancient'
-import { apex } from '../projects/apex/apex'
 import { appchain } from '../projects/appchain/appchain'
 import { arbitrum } from '../projects/arbitrum/arbitrum'
 import { arenaz } from '../projects/arenaz/arenaz'
@@ -172,7 +171,6 @@ export const layer2s: ScalingProject[] = [
   alienx,
   adi,
   ancient,
-  apex,
   appchain,
   arbitrum,
   arenaz,
