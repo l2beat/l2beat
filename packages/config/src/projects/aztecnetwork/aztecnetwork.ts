@@ -364,7 +364,13 @@ export const aztecnetwork: ScalingProject = {
       },
       {
         uses: [
-          { type: 'liveness', subtype: 'stateUpdates' },
+          {
+            type: 'liveness',
+            subtype: 'stateUpdates',
+            // All proof submissions targeting an epoch share its first
+            // checkpoint as `args.start`.
+            groupBy: { type: 'functionCallParameter', path: [0, 0] },
+          },
           { type: 'l2costs', subtype: 'stateUpdates' },
         ],
         query: {

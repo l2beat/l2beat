@@ -1,8 +1,8 @@
+import type { TrackedTxFunctionCallGrouping } from '@l2beat/shared'
 import type {
   EthereumAddress,
   ProjectId,
   TrackedTxsConfigSubtype,
-  TrackedTxsConfigType,
   UnixTime,
 } from '@l2beat/shared-pure'
 import type {
@@ -187,18 +187,40 @@ export interface ProjectScalingRiskView extends ProjectRiskView {
   stateValidation: Omit<ProjectRiskView['stateValidation'], 'secondLine'>
 }
 
-export interface Layer2TxConfig {
-  uses: Layer2TrackedTxUse[]
-  query: TrackedTxQuery
-  _hackCostMultiplier?: number
-}
+export type Layer2TxConfig =
+  | {
+      uses: Layer2FunctionCallTrackedTxUse[]
+      query: FunctionCall
+      _hackCostMultiplier?: number
+    }
+  | {
+      uses: Layer2TrackedTxUse[]
+      query: Transfer | SharpSubmission | SharedBridge
+      _hackCostMultiplier?: number
+    }
 
-export interface Layer2TrackedTxUse {
-  type: TrackedTxsConfigType
-  subtype: TrackedTxsConfigSubtype
-}
-/** This type is used to query GBQ and manual matching of transactions within a block */
-type TrackedTxQuery = FunctionCall | Transfer | SharpSubmission | SharedBridge
+export type Layer2FunctionCallTrackedTxUse =
+  | {
+      type: 'l2costs'
+      subtype: TrackedTxsConfigSubtype
+    }
+  | {
+      type: 'liveness'
+      subtype: TrackedTxsConfigSubtype
+      groupBy?: TrackedTxFunctionCallGrouping
+    }
+
+export type Layer2TrackedTxUse =
+  | {
+      type: 'l2costs'
+      subtype: TrackedTxsConfigSubtype
+    }
+  | {
+      type: 'liveness'
+      subtype: TrackedTxsConfigSubtype
+      /** Liveness grouping is only supported for functionCall queries. */
+      groupBy?: undefined
+    }
 
 interface FunctionCall {
   formula: 'functionCall'

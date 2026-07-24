@@ -17,6 +17,7 @@ import {
   type TrackedTxResult,
   type TrackedTxTransferResult,
 } from './types/model'
+import { hasLivenessGrouping } from './utils/getLivenessGroupingKey'
 import { getFunctionCallQuery, getTransferQuery } from './utils/sql'
 import { transformFunctionCallsQueryResult } from './utils/transformFunctionCallsQueryResult'
 import { transformTransfersQueryResult } from './utils/transformTransfersQueryResult'
@@ -141,7 +142,7 @@ export class TrackedTxsClient {
     // function calls and sharp submissions will be batched into one query to save costs
     const query = getFunctionCallQuery(
       combineCalls(
-        functionCallsConfig.map((c) => c.properties.params),
+        functionCallsConfig,
         sharpSubmissionsConfig.map((c) => c.properties.params),
         sharedBridgesConfig.map((c) => c.properties.params),
       ),
@@ -167,13 +168,18 @@ export class TrackedTxsClient {
 }
 
 function combineCalls(
-  functionCallsConfig: TrackedTxFunctionCallConfig[],
+  functionCallsConfig: Configuration<
+    TrackedTxConfigEntry & { params: TrackedTxFunctionCallConfig }
+  >[],
   sharpSubmissionsConfig: TrackedTxSharpSubmissionConfig[],
   sharedBridgesConfig: TrackedTxSharedBridgeConfig[],
 ) {
   // TODO: unique
   return [
-    ...functionCallsConfig.map((c) => ({ ...c, getFullInput: false })),
+    ...functionCallsConfig.map((c) => ({
+      ...c.properties.params,
+      getFullInput: hasLivenessGrouping(c.properties),
+    })),
     ...sharpSubmissionsConfig.map((c) => ({ ...c, getFullInput: true })),
     ...sharedBridgesConfig.map((c) => ({ ...c, getFullInput: true })),
   ]

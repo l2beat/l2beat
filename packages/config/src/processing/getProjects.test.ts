@@ -532,6 +532,27 @@ describe('getProjects', () => {
   })
 
   describe('Tracked transactions', () => {
+    it('groups only Aztec liveness state updates', () => {
+      const aztec = projects.find((project) => project.id === 'aztecnetwork')
+      const stateUpdates = aztec?.trackedTxsConfig?.filter(
+        (config) => config.subtype === 'stateUpdates',
+      )
+
+      const liveness = stateUpdates?.find(
+        (config) => config.type === 'liveness',
+      )
+      const costs = stateUpdates?.find((config) => config.type === 'l2costs')
+
+      assert(liveness !== undefined)
+      assert(costs !== undefined)
+      assert('groupBy' in liveness)
+      expect(liveness.groupBy).toEqual({
+        type: 'functionCallParameter',
+        path: [0, 0],
+      })
+      expect('groupBy' in costs).toEqual(false)
+    })
+
     it('every TrackedTxId is unique', () => {
       const ids = new Set<string>()
       for (const project of projects) {

@@ -5,13 +5,14 @@ import type {
   RealTimeLivenessRecord,
 } from '@l2beat/database'
 import type {
-  TrackedTxFunctionCallConfig,
+  TrackedTxFunctionCallLivenessConfig,
   TrackedTxLivenessConfig,
   TrackedTxSharedBridgeConfig,
   TrackedTxSharpSubmissionConfig,
   TrackedTxTransferConfig,
 } from '@l2beat/shared'
 import {
+  assert,
   type Block,
   type Log,
   type ProjectId,
@@ -19,6 +20,10 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import type { TrackedTxsConfig } from '../../config/Config'
+import {
+  getLivenessGroupingKey,
+  hasLivenessGrouping,
+} from '../tracked-txs/utils/getLivenessGroupingKey'
 import { isFistParameterMatching } from '../tracked-txs/utils/isFirstParameterMatching'
 import { isProgramHashProven } from '../tracked-txs/utils/isProgramHashProven'
 import type { BlockProcessor } from '../types'
@@ -40,9 +45,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
   private transfers: (TrackedTxLivenessConfig & {
     params: TrackedTxTransferConfig
   })[] = []
-  private functionCalls: (TrackedTxLivenessConfig & {
-    params: TrackedTxFunctionCallConfig
-  })[] = []
+  private functionCalls: TrackedTxFunctionCallLivenessConfig[] = []
   private sharpSubmissions: (TrackedTxLivenessConfig & {
     params: TrackedTxSharpSubmissionConfig
   })[] = []
@@ -118,12 +121,24 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
         ...matchingCalls,
         ...filteredSubmissions,
         ...filteredSharedBridgeCalls,
-      ].map((config) => ({
-        timestamp: block.timestamp,
-        blockNumber: block.number,
-        txHash: tx.hash as string,
-        configurationId: config.id,
-      }))
+      ].map((config): RealTimeLivenessRecord => {
+        const record: RealTimeLivenessRecord = {
+          timestamp: block.timestamp,
+          blockNumber: block.number,
+          txHash: tx.hash as string,
+          configurationId: config.id,
+        }
+
+        if (hasLivenessGrouping(config)) {
+          record.groupingKey = getLivenessGroupingKey(
+            tx.data as string,
+            config.params,
+            config.groupBy,
+          )
+        }
+
+        return record
+      })
 
       records.push(...results)
     }
@@ -357,12 +372,16 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
     )
 
     this.functionCalls = livenessConfigurations.filter(
-      (
-        c,
-      ): c is TrackedTxLivenessConfig & {
-        params: TrackedTxFunctionCallConfig
-      } => c.params.formula === 'functionCall',
+      (c): c is TrackedTxFunctionCallLivenessConfig =>
+        c.params.formula === 'functionCall',
     )
+
+    for (const config of this.functionCalls) {
+      assert(
+        config.groupBy === undefined || config.params.topics === undefined,
+        'Liveness grouping is not supported for topic-matched function calls',
+      )
+    }
 
     this.sharpSubmissions = livenessConfigurations.filter(
       (
