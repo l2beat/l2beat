@@ -153,7 +153,7 @@ function getUpdateId(entry: DiffHistoryEntry): string {
     entry.sections.flatMap((section) => [section.kind, section.body]),
   ])
 
-  return `update-${fingerprint.slice(2, 10)}`
+  return fingerprint.slice(2, 10)
 }
 
 function getTimestamp(entry: DiffHistoryEntry): number | null {
