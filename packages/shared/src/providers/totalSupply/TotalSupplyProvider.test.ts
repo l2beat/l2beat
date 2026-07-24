@@ -59,10 +59,10 @@ describe(TotalSupplyProvider.name, () => {
     it('performs single calls if multicall not deployed', async () => {
       const rpc = mockObject<RpcClient>({
         isMulticallDeployed: () => false,
-        call: mockFn()
-          .resolvesToOnce(Bytes.fromNumber(123_456))
-          .resolvesToOnce(Bytes.fromNumber(654_321))
-          .rejectsWithOnce('error'),
+        tryCall: mockFn()
+          .resolvesToOnce({ reverted: false, data: Bytes.fromNumber(123_456) })
+          .resolvesToOnce({ reverted: false, data: Bytes.fromNumber(654_321) })
+          .resolvesToOnce({ reverted: true }),
         chain: CHAIN,
       })
 
@@ -77,22 +77,72 @@ describe(TotalSupplyProvider.name, () => {
         CHAIN,
       )
 
-      expect(rpc.call).toHaveBeenNthCalledWith(
+      expect(rpc.tryCall).toHaveBeenNthCalledWith(
         1,
         encodeTotalSupply(TOKENS[0]),
         BLOCK,
       )
-      expect(rpc.call).toHaveBeenNthCalledWith(
+      expect(rpc.tryCall).toHaveBeenNthCalledWith(
         2,
         encodeTotalSupply(TOKENS[1]),
         BLOCK,
       )
-      expect(rpc.call).toHaveBeenNthCalledWith(
+      expect(rpc.tryCall).toHaveBeenNthCalledWith(
         3,
         encodeTotalSupply(TOKENS[2]),
         BLOCK,
       )
       expect(result).toEqual([123_456n, 654_321n, 0n])
+    })
+
+    it('propagates transport errors from single calls to the next client', async () => {
+      const failingRpc = mockObject<RpcClient>({
+        isMulticallDeployed: () => false,
+        tryCall: mockFn()
+          .resolvesToOnce({ reverted: false, data: Bytes.fromNumber(123_456) })
+          .rejectsWithOnce(new Error('missing trie node'))
+          .resolvesToOnce({ reverted: false, data: Bytes.fromNumber(789_012) }),
+        chain: CHAIN,
+      })
+
+      const workingRpc = mockObject<RpcClient>({
+        isMulticallDeployed: () => false,
+        tryCall: mockFn()
+          .resolvesToOnce({ reverted: false, data: Bytes.fromNumber(123_456) })
+          .resolvesToOnce({ reverted: false, data: Bytes.fromNumber(654_321) })
+          .resolvesToOnce({ reverted: false, data: Bytes.fromNumber(789_012) }),
+        chain: CHAIN,
+      })
+
+      const totalSupplyProvider = new TotalSupplyProvider(
+        [failingRpc, workingRpc],
+        Logger.SILENT,
+      )
+
+      const result = await totalSupplyProvider.getTotalSupplies(
+        TOKENS,
+        BLOCK,
+        CHAIN,
+      )
+
+      expect(result).toEqual([123_456n, 654_321n, 789_012n])
+    })
+
+    it('throws on transport error from single calls when no client left', async () => {
+      const rpc = mockObject<RpcClient>({
+        isMulticallDeployed: () => false,
+        tryCall: mockFn()
+          .resolvesToOnce({ reverted: false, data: Bytes.fromNumber(123_456) })
+          .rejectsWithOnce(new Error('missing trie node'))
+          .resolvesToOnce({ reverted: false, data: Bytes.fromNumber(789_012) }),
+        chain: CHAIN,
+      })
+
+      const totalSupplyProvider = new TotalSupplyProvider([rpc], Logger.SILENT)
+
+      await expect(
+        totalSupplyProvider.getTotalSupplies(TOKENS, BLOCK, CHAIN),
+      ).toBeRejectedWith('missing trie node')
     })
 
     it('tries next RPC client if first one fails', async () => {

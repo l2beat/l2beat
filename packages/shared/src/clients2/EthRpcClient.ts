@@ -1,6 +1,7 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { RpcMetricsRecorder } from '../clients/rpc/RpcMetricsAggregator'
+import { isRevertErrorMessage } from '../clients/rpc/revert'
 import type { Http } from './Http'
 
 export type BlockParameter =
@@ -573,10 +574,6 @@ function isRevert(e: unknown): e is Error {
   return (
     e instanceof Error &&
     e.message.startsWith('RPC call failed') &&
-    (e.message.includes('invalid opcode: INVALID') ||
-      e.message.includes('CALL_EXCEPTION') ||
-      e.message.includes('revert') ||
-      e.message.includes('reverted') ||
-      e.message.includes('gas required exceeds allowance'))
+    isRevertErrorMessage(e.message)
   )
 }

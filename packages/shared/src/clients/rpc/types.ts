@@ -159,6 +159,14 @@ export interface CallParameters {
   input: Bytes
 }
 
+/**
+ * Result of an on-chain call: it either executed and returned data, or
+ * reverted. Transport and node errors are NOT represented here - they are
+ * thrown, so callers can retry them instead of mistaking them for on-chain
+ * outcomes.
+ */
+export type CallResult = { reverted: true } | { reverted: false; data: Bytes }
+
 export type RPCError = z.infer<typeof RPCError>
 export const RPCError = z.object({
   error: z.object({

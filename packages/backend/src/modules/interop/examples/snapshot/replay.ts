@@ -1,6 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import {
   type CallParameters,
+  type CallResult,
   type EVMBlock,
   type EVMBlockWithTransactions,
   type EVMFeeHistory,
@@ -204,6 +205,16 @@ export class RpcReplay implements Omit<RpcClientCompat, 'ethRpcClient'> {
     }
 
     throw new ReplayError(key)
+  }
+
+  async tryCall(
+    callParams: CallParameters,
+    blockNumber: number | 'latest',
+  ): Promise<CallResult> {
+    // Snapshots only record successful call data, so a replayed call never
+    // reverts - a missing snapshot still throws ReplayError via call().
+    const data = await this.call(callParams, blockNumber)
+    return { reverted: false, data }
   }
 
   multicall(
