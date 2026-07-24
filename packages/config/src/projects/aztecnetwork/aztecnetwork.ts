@@ -1,5 +1,6 @@
 import {
   ChainSpecificAddress,
+  EthereumAddress,
   formatLargeNumber,
   formatSeconds,
   ProjectId,
@@ -343,6 +344,17 @@ export const aztecnetwork: ScalingProject = {
         address: feeJuicePortal.address,
         tokens: ['AZTEC'],
       }),
+    ],
+    daTracking: [
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: v5ActivationTimestamp,
+        inbox: EthereumAddress.ZERO, // Event-only tracking
+        topics: [
+          '0x6ff492bf2b4ca1b93a175167d14b3e46085b935cab3f39ca94013000799b93a0', // CheckpointProposed
+        ],
+      },
     ],
     trackedTxs: [
       {
