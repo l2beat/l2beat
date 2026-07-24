@@ -37,6 +37,6 @@ export const REASON_FOR_BEING_OTHER = {
     label: 'External bridge',
     shortDescription: 'The bridge is not secured by the proof system',
     description:
-      'Projects whose bridge is not secured by the proof system rely on the bridge and its validators to not forge deposits. A compromised bridge can cause loss of funds.',
+      'Projects whose bridge is not secured by the proof system rely on the bridge and its validators to not forge deposits. A compromised bridge together with a malicious L2 operator can cause loss of funds.',
   },
 } satisfies Record<string, ReasonForBeingInOther>

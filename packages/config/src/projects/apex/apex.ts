@@ -36,7 +36,7 @@ export const apex: ScalingProject = {
     {
       ...REASON_FOR_BEING_OTHER.EXTERNAL_BRIDGE,
       explanation:
-        "ApeX's proof system does not authenticate deposits on external chains. Users must additionally trust the 2/2 validator set and LayerZero bridge not to forge non-existent deposits.",
+        "ApeX's proof system does not authenticate deposits on external chains. Users must additionally trust the 2/2 validator set and LayerZero bridge not to forge non-existent deposits, which allows draining rollup escrows.",
     },
   ],
   display: {
