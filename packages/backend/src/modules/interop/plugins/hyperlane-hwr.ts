@@ -7,7 +7,6 @@
 
 import { Address32 } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
-import type { TokenMap } from '../engine/match/TokenMap'
 import {
   cctpV1DepositForBurnLog,
   cctpV2DepositForBurnLog,
@@ -32,10 +31,7 @@ import {
   findParsedBefore,
   type ParsedTransferLog,
 } from './logScan'
-import {
-  getBestEffortTokenFrameworkBridgeType,
-  getTokenFrameworkBridgeType,
-} from './tokenFrameworkBridgeTyping'
+import { getBestEffortBridgeTypeFromPartialSupplyAction } from './partialSupplyActionBridgeType'
 import {
   createEventParser,
   createInteropEventType,
@@ -264,11 +260,7 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
   }
 
   matchTypes = [HwrTransferSent, HwrTransferReceived]
-  match(
-    event: InteropEvent,
-    db: InteropEventDb,
-    tokenMap: TokenMap,
-  ): MatchResult | undefined {
+  match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (HwrTransferReceived.checkType(event)) {
       const hwrSent = db.find(HwrTransferSent, {
         messageId: event.args.messageId,
@@ -286,7 +278,7 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
             dstTokenAddress: event.args.tokenAddress,
             dstAmount: event.args.amount,
             dstWasMinted: event.args.minted,
-            bridgeType: getBestEffortTokenFrameworkBridgeType({
+            bridgeType: getBestEffortBridgeTypeFromPartialSupplyAction({
               srcWasBurned: undefined,
               dstWasMinted: event.args.minted,
             }),
@@ -323,16 +315,6 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
       const dstTokenAddress = event.args.tokenAddress
       const srcWasBurned = hwrSent.args.burned
       const dstWasMinted = event.args.minted
-      const bridgeType = getTokenFrameworkBridgeType({
-        srcTokenAddress,
-        dstTokenAddress,
-        srcWasBurned,
-        dstWasMinted,
-        srcChain: hwrSent.ctx.chain,
-        dstChain: event.ctx.chain,
-        tokenMap,
-      })
-
       return [
         Result.Message('hyperlane.Message', {
           app: 'hwr',
@@ -348,7 +330,6 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
           dstAmount: event.args.amount,
           srcWasBurned,
           dstWasMinted,
-          bridgeType,
         }),
       ]
     }
@@ -370,7 +351,7 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
         srcAmount: event.args.amount,
         srcWasBurned: event.args.burned,
         dstChain,
-        bridgeType: getBestEffortTokenFrameworkBridgeType({
+        bridgeType: getBestEffortBridgeTypeFromPartialSupplyAction({
           srcWasBurned: event.args.burned,
           dstWasMinted: undefined,
         }),

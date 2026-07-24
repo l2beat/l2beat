@@ -4,7 +4,6 @@
  */
 
 import { Address32 } from '@l2beat/shared-pure'
-import type { TokenMap } from '../engine/match/TokenMap'
 import {
   AXELAR_NETWORKS,
   ContractCall,
@@ -12,10 +11,7 @@ import {
   ContractCallExecuted,
 } from './axelar'
 import { findBestTransferLogByExactAmount } from './logScan'
-import {
-  getBestEffortTokenFrameworkBridgeType,
-  getTokenFrameworkBridgeType,
-} from './tokenFrameworkBridgeTyping'
+import { getBestEffortBridgeTypeFromPartialSupplyAction } from './partialSupplyActionBridgeType'
 import {
   createEventParser,
   createInteropEventType,
@@ -142,13 +138,9 @@ export class AxelarITSPlugin implements InteropPlugin {
   }
 
   matchTypes = [ContractCallExecuted, InterchainTransfer] // ContractCallExecuted is same entry as axelar.ts to prevent it stealing events
-  match(
-    event: InteropEvent,
-    db: InteropEventDb,
-    tokenMap: TokenMap,
-  ): MatchResult | undefined {
+  match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (ContractCallExecuted.checkType(event)) {
-      return this.matchExecuted(event, db, tokenMap)
+      return this.matchExecuted(event, db)
     }
 
     if (InterchainTransfer.checkType(event)) {
@@ -165,7 +157,6 @@ export class AxelarITSPlugin implements InteropPlugin {
       dstWasMinted?: boolean
     }>,
     db: InteropEventDb,
-    tokenMap: TokenMap,
   ): MatchResult | undefined {
     const interchainTransferReceived = db.find(InterchainTransferReceived, {
       commandId: contractCallExecuted.args.commandId,
@@ -190,7 +181,7 @@ export class AxelarITSPlugin implements InteropPlugin {
           dstAmount: interchainTransferReceived.args.amount,
           dstTokenAddress: interchainTransferReceived.args.tokenAddress,
           dstWasMinted: interchainTransferReceived.args.dstWasMinted,
-          bridgeType: getBestEffortTokenFrameworkBridgeType({
+          bridgeType: getBestEffortBridgeTypeFromPartialSupplyAction({
             srcWasBurned: undefined,
             dstWasMinted: interchainTransferReceived.args.dstWasMinted,
           }),
@@ -208,16 +199,6 @@ export class AxelarITSPlugin implements InteropPlugin {
     const dstTokenAddress = interchainTransferReceived.args.tokenAddress
     const srcWasBurned = interchainTransfer.args.srcWasBurned
     const dstWasMinted = interchainTransferReceived.args.dstWasMinted
-    const bridgeType = getTokenFrameworkBridgeType({
-      srcTokenAddress,
-      dstTokenAddress,
-      srcWasBurned,
-      dstWasMinted,
-      srcChain: interchainTransfer.ctx.chain,
-      dstChain: interchainTransferReceived.ctx.chain,
-      tokenMap,
-    })
-
     return [
       Result.Message('axelar.Message', {
         app: 'axelar-its',
@@ -234,7 +215,6 @@ export class AxelarITSPlugin implements InteropPlugin {
         dstAmount: interchainTransferReceived.args.amount,
         dstTokenAddress,
         dstWasMinted,
-        bridgeType,
       }),
     ]
   }
@@ -264,7 +244,7 @@ export class AxelarITSPlugin implements InteropPlugin {
         srcAmount: interchainTransfer.args.amount,
         srcTokenAddress: interchainTransfer.args.tokenAddress,
         srcWasBurned: interchainTransfer.args.srcWasBurned,
-        bridgeType: getBestEffortTokenFrameworkBridgeType({
+        bridgeType: getBestEffortBridgeTypeFromPartialSupplyAction({
           srcWasBurned: interchainTransfer.args.srcWasBurned,
           dstWasMinted: undefined,
         }),

@@ -1,14 +1,10 @@
 import { Address32, assert } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
-import type { TokenMap } from '../../engine/match/TokenMap'
 import {
   findBestTransferLog,
   findBestTransferLogByExactAmount,
 } from '../logScan'
-import {
-  getBestEffortTokenFrameworkBridgeType,
-  getTokenFrameworkBridgeType,
-} from '../tokenFrameworkBridgeTyping'
+import { getBestEffortBridgeTypeFromPartialSupplyAction } from '../partialSupplyActionBridgeType'
 import {
   createEventParser,
   createInteropEventType,
@@ -255,13 +251,9 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
   }
 
   matchTypes = [OFTReceivedPacketDelivered, OFTSentPacketSent]
-  match(
-    event: InteropEvent,
-    db: InteropEventDb,
-    tokenMap: TokenMap,
-  ): MatchResult | undefined {
+  match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (OFTReceivedPacketDelivered.checkType(event)) {
-      return this.matchReceived(event, db, tokenMap)
+      return this.matchReceived(event, db)
     }
 
     if (OFTSentPacketSent.checkType(event)) {
@@ -272,7 +264,6 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
   private matchReceived(
     oftReceivedPacketDelivered: InteropEvent<OFTReceivedPacketDeliveredArgs>,
     db: InteropEventDb,
-    tokenMap: TokenMap,
   ): MatchResult | undefined {
     const guid = oftReceivedPacketDelivered.args.guid
 
@@ -294,7 +285,7 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
           dstAmount: oftReceivedPacketDelivered.args.amountReceivedLD,
           dstTokenAddress: oftReceivedPacketDelivered.args.dstTokenAddress,
           dstWasMinted: oftReceivedPacketDelivered.args.minted,
-          bridgeType: getBestEffortTokenFrameworkBridgeType({
+          bridgeType: getBestEffortBridgeTypeFromPartialSupplyAction({
             srcWasBurned: undefined,
             dstWasMinted: oftReceivedPacketDelivered.args.minted,
           }),
@@ -313,16 +304,6 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
     const dstTokenAddress = oftReceivedPacketDelivered.args.dstTokenAddress
     const srcWasBurned = oftSentPacketSent.args.burned
     const dstWasMinted = oftReceivedPacketDelivered.args.minted
-    const bridgeType = getTokenFrameworkBridgeType({
-      srcTokenAddress,
-      dstTokenAddress,
-      srcWasBurned,
-      dstWasMinted,
-      srcChain: oftSentPacketSent.ctx.chain,
-      dstChain: packetDelivered.ctx.chain,
-      tokenMap,
-    })
-
     return [
       Result.Message('layerzero-v2.Message', {
         app: 'oftv2',
@@ -338,7 +319,6 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
         dstTokenAddress,
         srcWasBurned,
         dstWasMinted,
-        bridgeType,
       }),
     ]
   }
@@ -367,7 +347,7 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
         srcAmount: oftSentPacketSent.args.amountSentLD,
         srcTokenAddress: oftSentPacketSent.args.srcTokenAddress,
         srcWasBurned: oftSentPacketSent.args.burned,
-        bridgeType: getBestEffortTokenFrameworkBridgeType({
+        bridgeType: getBestEffortBridgeTypeFromPartialSupplyAction({
           srcWasBurned: oftSentPacketSent.args.burned,
           dstWasMinted: undefined,
         }),
