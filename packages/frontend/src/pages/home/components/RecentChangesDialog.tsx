@@ -108,9 +108,16 @@ function RecentChangesBody({
             href={group.href}
             className="group flex items-center justify-between gap-2 border-divider border-b pb-2"
           >
-            <h3 className="font-bold text-base text-primary leading-none">
-              {group.name}
-            </h3>
+            <span className="flex min-w-0 items-center gap-2">
+              <img
+                src={group.iconUrl}
+                alt={group.name}
+                className="size-5 shrink-0 rounded-full"
+              />
+              <h3 className="truncate font-bold text-base text-primary leading-none">
+                {group.name}
+              </h3>
+            </span>
             <span className="flex shrink-0 items-center gap-1 font-medium text-link text-xs">
               View updates
               <ChevronIcon className="-rotate-90 size-2.5 fill-link" />

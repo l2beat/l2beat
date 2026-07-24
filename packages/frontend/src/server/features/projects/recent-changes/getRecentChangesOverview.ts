@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
+import { manifest } from '~/utils/Manifest'
 import {
   type DiscoveryUpdate,
   getDiscoveryUpdates,
@@ -11,6 +12,7 @@ const PER_PROJECT_LIMIT = 20
 
 export interface RecentChangesProjectGroup {
   name: string
+  iconUrl: string
   /** Link to the project detail page's Updates section. */
   href: string
   updates: DiscoveryUpdate[]
@@ -57,6 +59,7 @@ export async function getRecentChangesOverview(): Promise<RecentChangesOverview>
 
     groups.push({
       name: project.name,
+      iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
       href,
       updates,
     })

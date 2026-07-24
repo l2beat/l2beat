@@ -179,9 +179,14 @@ async function getCachedData(manifest: Manifest) {
     interopProtocols: protocols,
     defaultSelectedFlowChains,
     scalingCategoryCounts,
-    // Only the count is serialized — the groups (full diff bodies) are heavy
-    // and fetched lazily via trpc.projects.recentChanges when the dialog opens.
+    // Only the count and project icons are serialized — the groups (full diff
+    // bodies) are heavy and fetched lazily via trpc.projects.recentChanges
+    // when the dialog opens.
     recentChangesCount: recentChanges.count,
+    recentChangesProjects: recentChanges.groups.map((group) => ({
+      name: group.name,
+      iconUrl: group.iconUrl,
+    })),
     ongoingAnomalies,
     whatsNewItems: getHomeWhatsNewItems(),
   }
@@ -260,7 +265,11 @@ async function getRecentProjectsForHome(
           href: `/scaling/projects/${project.slug}`,
           iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
           category: 'scaling' as const,
-          scalingCategory: project.scalingInfo.type,
+          // A bare "Other" is unclear, so prefix it with the layer.
+          scalingCategory:
+            project.scalingInfo.type === 'Other'
+              ? `${project.scalingInfo.layer === 'layer3' ? 'Layer 3s' : 'Layer 2s'} - Other`
+              : project.scalingInfo.type,
         }
       }
       if (project.daLayer) {
