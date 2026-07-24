@@ -3,50 +3,25 @@ import type { SsrHelpers } from '~/trpc/server'
 import {
   getScalingProjectEntry,
   type ProjectScalingEntry,
+  SCALING_PROJECT_FACET_KEYS,
+  SCALING_PROJECT_OPTIONAL_KEYS,
+  type ScalingProject,
 } from '../../scaling/project/getScalingProjectEntry'
-
-export type ProjectEntry = ProjectScalingEntry
 
 export async function getUnifiedProject(slug: string) {
   return await ps.getProject({
     slug,
     select: ['display', 'statuses'],
-    optional: [
-      // scaling facet
-      'scalingInfo',
-      'scalingRisks',
-      'scalingStage',
-      'scalingTechnology',
-      'tvsInfo',
-      'contracts',
-      'permissions',
-      'chainConfig',
-      'scalingDa',
-      'livenessInfo',
-      'livenessConfig',
-      'customDa',
-      'archivedAt',
-      'milestones',
-      'trackedTxsConfig',
-      'tvsConfig',
-      'colors',
-      'ecosystemColors',
-      'discoveryInfo',
-      'daTrackingConfig',
-      'costsInfo',
-      'activityConfig',
-    ],
+    optional: [...SCALING_PROJECT_FACET_KEYS, ...SCALING_PROJECT_OPTIONAL_KEYS],
   })
 }
 
-export type UnifiedProject = NonNullable<
-  Awaited<ReturnType<typeof getUnifiedProject>>
->
+type UnifiedProject = NonNullable<Awaited<ReturnType<typeof getUnifiedProject>>>
 
 export async function getProjectEntry(
   project: UnifiedProject,
   helpers: SsrHelpers,
-): Promise<ProjectEntry | undefined> {
+): Promise<ProjectScalingEntry | undefined> {
   const scalingProject = getScalingFacet(project)
   if (scalingProject) {
     return await getScalingProjectEntry(scalingProject, helpers)
@@ -55,14 +30,8 @@ export async function getProjectEntry(
 }
 
 function getScalingFacet(project: UnifiedProject) {
-  if (
-    !project.scalingInfo ||
-    !project.scalingRisks ||
-    !project.scalingStage ||
-    !project.scalingTechnology ||
-    !project.tvsInfo
-  ) {
-    return undefined
-  }
-  return project as Parameters<typeof getScalingProjectEntry>[0]
+  const hasScalingFacet = SCALING_PROJECT_FACET_KEYS.every(
+    (key) => project[key] !== undefined,
+  )
+  return hasScalingFacet ? (project as ScalingProject) : undefined
 }

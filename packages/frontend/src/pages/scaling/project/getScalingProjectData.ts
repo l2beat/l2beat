@@ -1,5 +1,9 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getScalingProjectEntry } from '~/server/features/scaling/project/getScalingProjectEntry'
+import {
+  getScalingProjectEntry,
+  SCALING_PROJECT_FACET_KEYS,
+  SCALING_PROJECT_OPTIONAL_KEYS,
+} from '~/server/features/scaling/project/getScalingProjectEntry'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getProjectMetadataDescription } from '~/ssr/head/getProjectMetadataDescription'
@@ -15,34 +19,8 @@ export async function getScalingProjectData(
   const helpers = getSsrHelpers()
   const project = await ps.getProject({
     slug,
-    select: [
-      'display',
-      'statuses',
-      'scalingInfo',
-      'scalingRisks',
-      'scalingStage',
-      'scalingTechnology',
-      'tvsInfo',
-    ],
-    optional: [
-      'contracts',
-      'permissions',
-      'chainConfig',
-      'scalingDa',
-      'livenessInfo',
-      'livenessConfig',
-      'customDa',
-      'archivedAt',
-      'milestones',
-      'trackedTxsConfig',
-      'tvsConfig',
-      'colors',
-      'ecosystemColors',
-      'discoveryInfo',
-      'daTrackingConfig',
-      'costsInfo',
-      'activityConfig',
-    ],
+    select: ['display', 'statuses', ...SCALING_PROJECT_FACET_KEYS],
+    optional: [...SCALING_PROJECT_OPTIONAL_KEYS],
   })
   if (!project) return undefined
 

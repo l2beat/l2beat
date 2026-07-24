@@ -143,34 +143,45 @@ export interface ProjectScalingEntry {
   discoUiHref: string | undefined
 }
 
+// Single source for the ProjectService keys this entry builder reads. Every
+// query that loads a project for this builder (the scaling page, the unified
+// project page orchestrator, and the section-parity test) derives from these
+// lists, so they cannot drift from the builder's contract.
+export const SCALING_PROJECT_FACET_KEYS = [
+  'scalingInfo',
+  'scalingRisks',
+  'scalingStage',
+  'scalingTechnology',
+  'tvsInfo',
+] as const
+
+export const SCALING_PROJECT_OPTIONAL_KEYS = [
+  'contracts',
+  'tvsConfig',
+  'permissions',
+  'scalingDa',
+  'customDa',
+  'chainConfig',
+  'archivedAt',
+  'milestones',
+  'trackedTxsConfig',
+  'livenessInfo',
+  'livenessConfig',
+  'costsInfo',
+  'activityConfig',
+  'colors',
+  'ecosystemColors',
+  'discoveryInfo',
+  'daTrackingConfig',
+] as const
+
+export type ScalingProject = Project<
+  'display' | 'statuses' | (typeof SCALING_PROJECT_FACET_KEYS)[number],
+  (typeof SCALING_PROJECT_OPTIONAL_KEYS)[number]
+>
+
 export async function getScalingProjectEntry(
-  project: Project<
-    | 'display'
-    | 'statuses'
-    | 'scalingInfo'
-    | 'scalingRisks'
-    | 'scalingStage'
-    | 'scalingTechnology'
-    | 'tvsInfo',
-    // optional
-    | 'contracts'
-    | 'tvsConfig'
-    | 'permissions'
-    | 'scalingDa'
-    | 'customDa'
-    | 'chainConfig'
-    | 'archivedAt'
-    | 'milestones'
-    | 'trackedTxsConfig'
-    | 'livenessInfo'
-    | 'livenessConfig'
-    | 'costsInfo'
-    | 'activityConfig'
-    | 'colors'
-    | 'ecosystemColors'
-    | 'discoveryInfo'
-    | 'daTrackingConfig'
-  >,
+  project: ScalingProject,
   helpers: SsrHelpers,
 ): Promise<ProjectScalingEntry> {
   const daSolutions = await getScalingDaSolutions(project)

@@ -2,11 +2,15 @@ import { expect } from 'earl'
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
 import { ps } from '~/server/projects'
 import { getSsrHelpers } from '~/trpc/server'
-import { getScalingProjectEntry } from '../../scaling/project/getScalingProjectEntry'
+import {
+  getScalingProjectEntry,
+  SCALING_PROJECT_FACET_KEYS,
+  SCALING_PROJECT_OPTIONAL_KEYS,
+} from '../../scaling/project/getScalingProjectEntry'
 import { getProjectEntry, getUnifiedProject } from './getProjectEntry'
 
 describe(getProjectEntry.name, function () {
-  this.timeout(0)
+  this.timeout(300_000)
 
   const originalRandom = Math.random
   before(() => {
@@ -21,34 +25,8 @@ describe(getProjectEntry.name, function () {
   it('produces the same sections and side navigation as the scaling entry builder for every scaling project', async () => {
     // The same query getScalingProjectData uses to load a scaling project.
     const scalingProjects = await ps.getProjects({
-      select: [
-        'display',
-        'statuses',
-        'scalingInfo',
-        'scalingRisks',
-        'scalingStage',
-        'scalingTechnology',
-        'tvsInfo',
-      ],
-      optional: [
-        'contracts',
-        'permissions',
-        'chainConfig',
-        'scalingDa',
-        'livenessInfo',
-        'livenessConfig',
-        'customDa',
-        'archivedAt',
-        'milestones',
-        'trackedTxsConfig',
-        'tvsConfig',
-        'colors',
-        'ecosystemColors',
-        'discoveryInfo',
-        'daTrackingConfig',
-        'costsInfo',
-        'activityConfig',
-      ],
+      select: ['display', 'statuses', ...SCALING_PROJECT_FACET_KEYS],
+      optional: [...SCALING_PROJECT_OPTIONAL_KEYS],
     })
     expect(scalingProjects.length).toBeGreaterThan(0)
 
