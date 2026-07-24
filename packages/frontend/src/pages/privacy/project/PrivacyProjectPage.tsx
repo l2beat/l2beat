@@ -18,12 +18,12 @@ import { MobileSectionNavigation } from '~/components/section-navigation/MobileS
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import { PrivacyProjectRiskProfile } from './components/PrivacyProjectRiskProfile'
 import { PrivacyProjectStats } from './components/PrivacyProjectStats'
-import type { PrivacyProjectEntry } from './getPrivacyProjectData'
 
 interface Props extends AppLayoutProps {
-  entry: PrivacyProjectEntry
+  entry: ProjectPrivacyEntry
   queryState: DehydratedState
 }
 

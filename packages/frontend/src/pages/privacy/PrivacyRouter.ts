@@ -43,13 +43,7 @@ export function createPrivacyRouter(
           ttl: 5 * 60,
           staleWhileRevalidate: 25 * 60,
         },
-        () =>
-          getPrivacyProjectData(
-            manifest,
-            req.params.slug,
-            req.originalUrl,
-            cache,
-          ),
+        () => getPrivacyProjectData(manifest, req.params.slug, req.originalUrl),
       )
 
       if (!data) {
