@@ -1,4 +1,3 @@
-import type { InMemoryCache } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getPrivacyProjectDetails } from '~/server/features/privacy/getPrivacyProjectDetails'
 import { getPrivacyProjectEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
@@ -12,19 +11,11 @@ export async function getPrivacyProjectData(
   manifest: Manifest,
   slug: string,
   url: string,
-  cache: InMemoryCache,
 ): Promise<RenderData | undefined> {
   const helpers = getSsrHelpers()
   const [appLayoutProps, details] = await Promise.all([
     getAppLayoutProps(),
-    cache.get(
-      {
-        key: ['privacy', 'project', slug],
-        ttl: 60,
-        staleWhileRevalidate: 5 * 60,
-      },
-      () => getPrivacyProjectDetails(slug),
-    ),
+    getPrivacyProjectDetails(slug),
   ])
 
   if (!details) {
