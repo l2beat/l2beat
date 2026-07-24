@@ -23,7 +23,7 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
   },
   {
     type: 'multiple',
-    title: 'Layer 2s',
+    title: env.CLIENT_SIDE_HOME_PAGE ? 'Layer 2s' : 'Scaling',
     match: 'scaling',
     icon: (
       <ScalingIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
@@ -39,7 +39,7 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
         href: '/scaling/risk',
         subLinks: [
           {
-            title: 'Home',
+            title: 'Overview',
             href: '/scaling/risk',
             exactMatch: true,
           },
