@@ -1,4 +1,4 @@
-Uniswap v3 is a concentrated-liquidity automated market maker: a set of immutable pool contracts on Ethereum where anyone can swap one ERC-20 token for another against liquidity other users have deposited. There is no operator in the trading path and user funds sit only in the pools, which have no admin, no pause switch, and no upgrade path. The periphery contracts most users interact with, the routers and the position manager, are conveniences that hold no user funds and can be bypassed by calling a pool directly.
+Uniswap v3 is a concentrated-liquidity automated market maker: a set of immutable pool contracts on Ethereum where anyone can swap one ERC-20 token for another against liquidity other users have deposited. There is no operator in the trading path and user funds sit only in the pools, which have no admin, no pause switch, and no upgrade path. The periphery contracts most users interact with, the routers and the position manager, are conveniences that hold no user funds: any contract that implements the pools' payment callbacks can trade and provide liquidity without them.
 
 UNI tokenholder governance exists alongside the pools rather than above them. Acting through a {{timelockDelayDays}}-day timelock, it can enable new fee tiers and set a protocol fee that pool code hard-caps at one quarter of LP fees; it cannot upgrade or pause a pool, move liquidity providers' funds, or censor swaps or pool creation.
 
@@ -12,11 +12,11 @@ Pool creation is permissionless: anyone can have the factory deploy a pool for a
 
 ### Providing liquidity
 
-Most liquidity providers mint through the NonfungiblePositionManager, which wraps each position as a transferable ERC-721 NFT and does the fee accounting per token ID. The manager is a convenience, not a gatekeeper: the core pools' mint, burn, and collect functions are public, so a position can also be opened and managed directly on a pool.
+Most liquidity providers mint through the NonfungiblePositionManager, which wraps each position as a transferable ERC-721 NFT and does the fee accounting per token ID. The manager is a convenience, not a gatekeeper: a pool's mint function is open to any contract that pays for the deposit in the pool's callback, and the owner of a position, however it was opened, can always withdraw liquidity and collect fees by calling the pool's burn and collect functions directly.
 
 ### Swapping
 
-Swaps normally go through a router: SwapRouter, SwapRouter02 (which also reaches Uniswap v2 pools), or the UniversalRouter, which pulls tokens via Permit2 signature-based approvals instead of per-token allowances. Which pools a trade crosses is computed off-chain by the interface or a routing API, and the chain never verifies that the chosen route was the best one. What the contracts do enforce are the two bounds the user signs: a minimum output (or maximum input) and a deadline. A bad route can still execute anywhere down to that signed minimum, so the slippage tolerance, not the quote, is the real protection; anything below it reverts. Anyone can also swap against a pool directly.
+Swaps normally go through a router: SwapRouter, SwapRouter02 (which also reaches Uniswap v2 pools), or the UniversalRouter, which pulls tokens via Permit2 signature-based approvals instead of per-token allowances. Which pools a trade crosses is computed off-chain by the interface or a routing API, and the chain never verifies that the chosen route was the best one. What the contracts do enforce are the two bounds the user signs: a minimum output (or maximum input) and a deadline. A bad route can still execute anywhere down to that signed minimum, so the slippage tolerance, not the quote, is the real protection; anything below it reverts. Swapping without any router is equally possible for a contract that pays the pool in its swap callback.
 
 ### The built-in oracle
 
@@ -24,7 +24,7 @@ Every pool doubles as a price oracle: it records cumulative-tick observations fr
 
 ### Governance and the fee switch
 
-Protocol control sits with UNI holders. An address with {{proposalThreshold}} UNI of delegated votes can submit a proposal to GovernorBravo; voting starts {{votingDelayBlocks}} blocks later (about two days) and runs for {{votingPeriodBlocks}} blocks (just under six days). Passing takes more for- than against-votes and at least {{quorumVotes}} UNI voting for. A passed proposal is queued in the Timelock and executable {{timelockDelayDays}} days later. The same Timelock is the UNI token's minter, allowed to inflate supply by at most {{uniMintCap}}% at a time, no more often than once every {{mintIntervalDays}} days.
+Protocol control sits with UNI holders. An address with more than {{proposalThreshold}} UNI of delegated votes can submit a proposal to GovernorBravo; voting starts {{votingDelayBlocks}} blocks later (just under two days) and runs for {{votingPeriodBlocks}} blocks (just under six days). Passing takes more for- than against-votes and at least {{quorumVotes}} UNI voting for. A passed proposal is queued in the Timelock and executable {{timelockDelayDays}} days later. The same Timelock is the UNI token's minter, allowed to inflate supply by at most {{uniMintCap}}% at a time, no more often than once every {{mintIntervalDays}} days.
 
 Over the pools themselves, governance holds exactly two powers, both exercised through the factory owner role. It can enable new fee tiers, each permanently bound to its tick spacing and never removable. And it can switch on the protocol fee: pool code requires each side's share to be zero or between 1/10 and 1/4 of that side's LP fees, so at most a quarter of swap fees, and never principal, can be diverted.
 
