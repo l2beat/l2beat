@@ -202,7 +202,7 @@ export async function getDefiProjectData(
       ]
     },
   )
-  if (externalDependencies.length > 0) {
+  if (project.externalDependencies !== undefined) {
     sections.push({
       type: 'ExternalDependenciesSection',
       props: {

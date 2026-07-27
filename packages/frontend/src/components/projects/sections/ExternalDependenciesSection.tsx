@@ -20,6 +20,17 @@ export function ExternalDependenciesSection({
   dependencies,
   ...sectionProps
 }: ExternalDependenciesSectionProps) {
+  if (dependencies.length === 0) {
+    return (
+      <ProjectSection {...sectionProps}>
+        <p className="text-paragraph-15 md:text-paragraph-16">
+          This project has no external dependencies: no oracle, bridge, or other
+          third-party contract is required for its contracts to operate.
+        </p>
+      </ProjectSection>
+    )
+  }
+
   return (
     <ProjectSection {...sectionProps}>
       <ul className="flex flex-col gap-4">

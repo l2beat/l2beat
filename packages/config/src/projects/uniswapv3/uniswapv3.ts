@@ -209,14 +209,10 @@ export const uniswapv3: BaseProject = {
   defiInfo: {
     category: 'DEX',
   },
-  externalDependencies: [
-    {
-      name: 'WETH9',
-      icon: 'weth',
-      description:
-        'The canonical, immutable wrapped-ETH contract that the periphery (SwapRouter, SwapRouter02, NonfungiblePositionManager, UniversalRouter) uses to wrap and unwrap ETH for swaps and liquidity operations. The core pools have no dependency on it: a WETH9 failure would break native-ETH handling in the periphery and devalue WETH held as an ordinary pool token, but pools not paired with WETH would be unaffected.',
-    },
-  ],
+  // Declared empty on purpose: v3 has no oracle, no bridge, no external
+  // contract its operation depends on. The section renders an explicit
+  // "none" message instead of being omitted.
+  externalDependencies: [],
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
