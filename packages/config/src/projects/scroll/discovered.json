@@ -1,7 +1,7 @@
 {
   "name": "scroll",
   "timestamp": 1782469580,
-  "configHash": "0x464fd385b4967f51b32f4c33de719952c9d14dddcf73bd41e15198abfdc11367",
+  "configHash": "0xdcde097573d263600fc1cfad26eb858eb25b6038c66750d54333372af0352c16",
   "entries": [
     {
       "name": "ZkEvmVerifierPostEuclid",

@@ -1,4 +1,4 @@
-Generated with discovered.json: 0x848446083025956c4b81f5fe6e5f68805d7ea228
+Generated with discovered.json: 0x78ffb499d1dbc135dae173b1c5b9675cf2be4bca
 
 # Diff at Fri, 17 Jul 2026 10:11:14 GMT:
 

@@ -1,7 +1,7 @@
 {
   "name": "superposition",
   "timestamp": 1781177218,
-  "configHash": "0x1647d2d22303b240cedfe4da9064af0475c7d61f76e37c40a44c45ab18ede624",
+  "configHash": "0xe7c5a99d6906487b70f4e1751fa3cc6335eb9d577c362af110bc18e8528a319a",
   "entries": [
     {
       "name": "OneStepProverHostIo",

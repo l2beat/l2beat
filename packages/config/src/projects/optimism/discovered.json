@@ -1,7 +1,7 @@
 {
   "name": "optimism",
   "timestamp": 1784283055,
-  "configHash": "0xc3115e3985e3bea24feada9131482b349366db34b07586039f0cf7dfa678f718",
+  "configHash": "0x7cef79ead2fc85a7f539464c882725e17e40bf2b6fb146bf9143acbe6725f729",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

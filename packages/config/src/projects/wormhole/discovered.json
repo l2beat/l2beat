@@ -1,7 +1,7 @@
 {
   "name": "wormhole",
   "timestamp": 1783513675,
-  "configHash": "0x17690043724ad3b36f101b161be0caf180807ca10e88440a5d4b53f0682c3471",
+  "configHash": "0xa535d7db7341bafb717049cbd6d7976dc5cbd8ed055dd48782a938e5be80ad39",
   "entries": [
     {
       "address": "eth:0x000aC0076727b35FBea2dAc28fEE5cCB0fEA768e",

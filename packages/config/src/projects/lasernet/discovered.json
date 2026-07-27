@@ -1,7 +1,7 @@
 {
   "name": "lasernet",
   "timestamp": 1781177084,
-  "configHash": "0x1ea47bfd8b0a9bf688c85674205b2a1f69122a3e58d9665ff613f6615417ee50",
+  "configHash": "0xee4eb3d0306b011f9610c10b1f170e35d5ed2fbc9cd43fd5d646663b0fdb6661",
   "entries": [
     {
       "name": "UpgradeExecutor",
