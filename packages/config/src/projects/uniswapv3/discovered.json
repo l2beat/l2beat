@@ -1,6 +1,6 @@
 {
   "name": "uniswapv3",
-  "timestamp": 1785187826,
+  "timestamp": 1785188610,
   "configHash": "0x769f3c53deb0274d14ed114c1471e6de5b1596010a6b54cc5324820d5dee10df",
   "entries": [
     {
@@ -365,15 +365,15 @@
         "$immutable": true,
         "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
         "fee": 500,
-        "feeGrowthGlobal0X128": "4804450689189419900458097033901926",
-        "feeGrowthGlobal1X128": "2046921869429374685660123375032040101494592",
-        "liquidity": "14004685505337418173",
+        "feeGrowthGlobal0X128": "4804450787451905057228050819679357",
+        "feeGrowthGlobal1X128": "2046923794716117286593287022727220943598729",
+        "liquidity": "14032860249206443299",
         "maxLiquidityPerTick": "1917569901783203986719870431555990",
-        "protocolFees": { "token0": 160665825, "token1": "84020963706383031" },
+        "protocolFees": { "token0": 162013754, "token1": "110431691255537571" },
         "slot0": {
-          "sqrtPriceX96": "1797101262403322379540777322074849",
-          "tick": 200597,
-          "observationIndex": 59,
+          "sqrtPriceX96": "1798264632419444056777882225124887",
+          "tick": 200610,
+          "observationIndex": 66,
           "observationCardinality": 723,
           "observationCardinalityNext": 723,
           "feeProtocol": 68,
@@ -404,7 +404,7 @@
         "0x9a1ef8f86965191f3d67a4e74587b87ccd95ff751de363bcbd122450167e35b5"
       ],
       "proxyType": "immutable",
-      "description": "Periphery contract that wraps raw pool positions into ERC721 NFTs. It is the registered owner of the underlying positions in the pools and tracks each tokenId's range, liquidity, and uncollected fees; the NFT holder can add/remove liquidity and collect fees. Immutable and unprivileged: it holds no special rights in the pools. Positions can also be opened directly on a pool by any contract that pays the deposit in the pool's mint callback, and a position's owner can always withdraw and collect on the pool directly.",
+      "description": "Periphery contract that wraps raw pool positions into ERC721 NFTs. It is the registered owner of the underlying positions in the pools and tracks each tokenId's range, liquidity, and uncollected fees; the NFT holder can add/remove liquidity and collect fees through this manager. Immutable and unprivileged: it holds no special rights in the pools. Positions can also be opened directly on a pool by any contract that pays the deposit in the pool's mint callback, and the owner of such a direct pool position can withdraw and collect on the pool directly.",
       "deployerAddress": "eth:0x6C9FC64A53c1b71FB3f9Af64d1ae3A4931A5f4E9",
       "sinceTimestamp": 1620156913,
       "sinceBlock": 12369651,
@@ -416,7 +416,7 @@
         "name": "Uniswap V3 Positions NFT-V1",
         "PERMIT_TYPEHASH": "0x49ecf333e5b8c95c40fdafc95c1ad136e8914a8fb55e9dc8bb01eaa83a2df9ad",
         "symbol": "UNI-V3-POS",
-        "totalSupply": 1205816,
+        "totalSupply": 1205818,
         "WETH9": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "fieldMeta": {
@@ -445,13 +445,13 @@
         "$immutable": true,
         "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
         "fee": 3000,
-        "feeGrowthGlobal0X128": "69313854560944239147452256699421",
+        "feeGrowthGlobal0X128": "69313854582945728702700090838849",
         "feeGrowthGlobal1X128": "15581015321933319769650063860354030694975381",
         "liquidity": "30932666269386630",
         "maxLiquidityPerTick": "11505743598341114571880798222544994",
         "protocolFees": { "token0": 1, "token1": 1 },
         "slot0": {
-          "sqrtPriceX96": "45771420132583071270240281436836194",
+          "sqrtPriceX96": "45771419788077001724244036160035456",
           "tick": 265350,
           "observationIndex": 338,
           "observationCardinality": 360,
@@ -1064,6 +1064,6 @@
     "uniswapv3/UniversalRouter": "0x7599293166769ce170829e381d4f80616e6cf1b2c5977c3816b0dd5618c2810a",
     "uniswapv3/V3OpenFeeAdapter": "0x919168095503a4b75469aba4141a66b10f58ad6b4ffe14cb54bc70ac064927d5"
   },
-  "usedBlockNumbers": { "ethereum": 25626846 },
+  "usedBlockNumbers": { "ethereum": 25626911 },
   "permissionsConfigHash": "0x21ffb35c539dc47b717fe4778681bf8b326fb825d405e36528fab69b5db99b72"
 }

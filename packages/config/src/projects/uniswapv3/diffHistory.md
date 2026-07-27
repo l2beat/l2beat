@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xbd93e772aa4cce035fe90447c04e7f7a38df1a40
+Generated with discovered.json: 0xb898ef5b5225153ae31e86d6ce5491f7753a2f36
 
-# Diff at Mon, 27 Jul 2026 21:31:29 GMT:
+# Diff at Mon, 27 Jul 2026 21:44:33 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- current timestamp: 1785187826
+- current timestamp: 1785188610
 
 ## Description
 
@@ -74,7 +74,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract NonfungiblePositionManager (eth:0xC36442b4a4522E871399CD717aBDD847Ab11FE88) [uniswapv3/NonfungiblePositionManager]
-    +++ description: Periphery contract that wraps raw pool positions into ERC721 NFTs. It is the registered owner of the underlying positions in the pools and tracks each tokenId's range, liquidity, and uncollected fees; the NFT holder can add/remove liquidity and collect fees. Immutable and unprivileged: it holds no special rights in the pools. Positions can also be opened directly on a pool by any contract that pays the deposit in the pool's mint callback, and a position's owner can always withdraw and collect on the pool directly.
+    +++ description: Periphery contract that wraps raw pool positions into ERC721 NFTs. It is the registered owner of the underlying positions in the pools and tracks each tokenId's range, liquidity, and uncollected fees; the NFT holder can add/remove liquidity and collect fees through this manager. Immutable and unprivileged: it holds no special rights in the pools. Positions can also be opened directly on a pool by any contract that pays the deposit in the pool's mint callback, and the owner of such a direct pool position can withdraw and collect on the pool directly.
 ```
 
 ```diff
