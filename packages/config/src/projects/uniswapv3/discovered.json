@@ -1,6 +1,6 @@
 {
   "name": "uniswapv3",
-  "timestamp": 1785142881,
+  "timestamp": 1785145107,
   "configHash": "0xd9372ab4446d9389f4884b0cd1312f411ee947bcbbc348310cc580fd3c56d560",
   "entries": [
     {
@@ -152,18 +152,18 @@
         "$immutable": true,
         "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
         "fee": 3000,
-        "feeGrowthGlobal0X128": "eth:0x1544736839940263796526488577219810945684",
-        "feeGrowthGlobal1X128": "5021382408211034462927367057256393243",
-        "liquidity": "335524022458230087245935",
+        "feeGrowthGlobal0X128": "eth:0x1544747431261058537918767896993819960563",
+        "feeGrowthGlobal1X128": "5021458667772922094531977851796415586",
+        "liquidity": "334346235648268535658377",
         "maxLiquidityPerTick": "11505743598341114571880798222544994",
         "protocolFees": {
-          "token0": "10111774443969743055",
-          "token1": "25963182265983155"
+          "token0": "12193086073665660156",
+          "token1": "40958522445908455"
         },
         "slot0": {
-          "sqrtPriceX96": "3529395613894434984706981881",
-          "tick": -62228,
-          "observationIndex": 138,
+          "sqrtPriceX96": "3534518196199411478305371103",
+          "tick": -62199,
+          "observationIndex": 153,
           "observationCardinality": 300,
           "observationCardinalityNext": 300,
           "feeProtocol": 102,
@@ -183,7 +183,8 @@
       },
       "implementationNames": {
         "eth:0x1d42064Fc4Beb5F8aAF85F4617AE8b3b5B8Bd801": "UniswapV3Pool"
-      }
+      },
+      "category": { "name": "TVS Escrows", "priority": -1 }
     },
     {
       "name": "UNIToken",
@@ -271,13 +272,13 @@
         "$immutable": true,
         "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
         "fee": 100,
-        "feeGrowthGlobal0X128": "3975050197368334657822385728789889114",
-        "feeGrowthGlobal1X128": "6606962878679808094230124674088262779",
+        "feeGrowthGlobal0X128": "3975050205074357109448571043089979049",
+        "feeGrowthGlobal1X128": "6606962891091637099398728574922162796",
         "liquidity": "28494215637541956",
         "maxLiquidityPerTick": "191757530477355301479181766273477",
-        "protocolFees": { "token0": 10298601, "token1": 5751501 },
+        "protocolFees": { "token0": 10513693, "token1": 6097939 },
         "slot0": {
-          "sqrtPriceX96": "79258352033591373038005619270",
+          "sqrtPriceX96": "79258366622425571293674117154",
           "tick": 7,
           "observationIndex": 68,
           "observationCardinality": 180,
@@ -299,7 +300,8 @@
       },
       "implementationNames": {
         "eth:0x3416cF6C708Da44DB2624D63ea0AAef7113527C6": "UniswapV3Pool"
-      }
+      },
+      "category": { "name": "TVS Escrows", "priority": -1 }
     },
     {
       "name": "GovernorBravo",
@@ -367,15 +369,15 @@
         "$immutable": true,
         "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
         "fee": 500,
-        "feeGrowthGlobal0X128": "61352755536587343396877846391937",
-        "feeGrowthGlobal1X128": "13703209264272247432818790360027488993196782",
+        "feeGrowthGlobal0X128": "61352830065320838635583660412711",
+        "feeGrowthGlobal1X128": "13703298287419692499833450532302008310292061",
         "liquidity": "143808289107458545",
         "maxLiquidityPerTick": "1917569901783203986719870431555990",
-        "protocolFees": { "token0": 129147, "token1": "37131038921949920" },
+        "protocolFees": { "token0": 139643, "token1": "49672649084839079" },
         "slot0": {
-          "sqrtPriceX96": "45637774898817605327925504150413854",
-          "tick": 265291,
-          "observationIndex": 67,
+          "sqrtPriceX96": "45677646075986101363511496670096370",
+          "tick": 265309,
+          "observationIndex": 83,
           "observationCardinality": 300,
           "observationCardinalityNext": 300,
           "feeProtocol": 68,
@@ -395,7 +397,8 @@
       },
       "implementationNames": {
         "eth:0x4585FE77225b41b697C938B018E2Ac67Ac5a20c0": "UniswapV3Pool"
-      }
+      },
+      "category": { "name": "TVS Escrows", "priority": -1 }
     },
     {
       "name": "UniswapV3Pool_WETH_USDT_03",
@@ -414,15 +417,15 @@
         "$immutable": true,
         "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
         "fee": 3000,
-        "feeGrowthGlobal0X128": "2530144553722863282306415231816829806931527",
-        "feeGrowthGlobal1X128": "5887701560009676177652632711724117",
-        "liquidity": "9182949409104373531",
+        "feeGrowthGlobal0X128": "2530163005373339229520148727588069626957779",
+        "feeGrowthGlobal1X128": "5887701569292666455485743196860595",
+        "liquidity": "9170552379057080161",
         "maxLiquidityPerTick": "11505743598341114571880798222544994",
-        "protocolFees": { "token0": "117872221061868484", "token1": 5210898 },
+        "protocolFees": { "token0": "217441248652563020", "token1": 5260930 },
         "slot0": {
-          "sqrtPriceX96": "3513516986730089073933412",
-          "tick": -200480,
-          "observationIndex": 290,
+          "sqrtPriceX96": "3510151654430675240281343",
+          "tick": -200499,
+          "observationIndex": 302,
           "observationCardinality": 360,
           "observationCardinalityNext": 360,
           "feeProtocol": 102,
@@ -442,7 +445,8 @@
       },
       "implementationNames": {
         "eth:0x4e68Ccd3E89f51C3074ca5072bbAC773960dFa36": "UniswapV3Pool"
-      }
+      },
+      "category": { "name": "TVS Escrows", "priority": -1 }
     },
     {
       "name": "GovernorBravoDelegate",
@@ -555,15 +559,18 @@
         "$immutable": true,
         "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
         "fee": 500,
-        "feeGrowthGlobal0X128": "4804024515504269485383462341527740",
-        "feeGrowthGlobal1X128": "2046690371830865459097395933838844998851557",
-        "liquidity": "14330606143994432258",
+        "feeGrowthGlobal0X128": "4804036322086519008699533848365346",
+        "feeGrowthGlobal1X128": "2046693904676993772812989460661610189258805",
+        "liquidity": "14297398183407980204",
         "maxLiquidityPerTick": "1917569901783203986719870431555990",
-        "protocolFees": { "token0": 855604606, "token1": "576234972370315330" },
+        "protocolFees": {
+          "token0": 1021151698,
+          "token1": "625742727636737634"
+        },
         "slot0": {
-          "sqrtPriceX96": "1789543224680875233866229568196512",
-          "tick": 200512,
-          "observationIndex": 607,
+          "sqrtPriceX96": "1787996646272208647340300298413892",
+          "tick": 200495,
+          "observationIndex": 643,
           "observationCardinality": 723,
           "observationCardinalityNext": 723,
           "feeProtocol": 68,
@@ -602,15 +609,15 @@
         "$immutable": true,
         "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
         "fee": 3000,
-        "feeGrowthGlobal0X128": "5855179542064346416868437450196343",
-        "feeGrowthGlobal1X128": "2492917838026554991069718108567524897605568",
-        "liquidity": "539519506158154884",
+        "feeGrowthGlobal0X128": "5855180486013530950294558068566165",
+        "feeGrowthGlobal1X128": "2492936093180267582507892430862464221371710",
+        "liquidity": "539532107502731576",
         "maxLiquidityPerTick": "11505743598341114571880798222544994",
-        "protocolFees": { "token0": 1234522, "token1": 7399358727824015 },
+        "protocolFees": { "token0": 1533849, "token1": "13188087426861693" },
         "slot0": {
-          "sqrtPriceX96": "1787340748559491233433101278443347",
-          "tick": 200488,
-          "observationIndex": 522,
+          "sqrtPriceX96": "1788991103950496851706058756104011",
+          "tick": 200506,
+          "observationIndex": 535,
           "observationCardinality": 1440,
           "observationCardinalityNext": 1440,
           "feeProtocol": 102,
@@ -630,7 +637,8 @@
       },
       "implementationNames": {
         "eth:0x8ad599c3A0ff1De082011EFDDc58f1908eb6e6D8": "UniswapV3Pool"
-      }
+      },
+      "category": { "name": "TVS Escrows", "priority": -1 }
     },
     {
       "name": "UniswapV3Pool_WBTC_USDC_03",
@@ -649,15 +657,15 @@
         "$immutable": true,
         "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
         "fee": 3000,
-        "feeGrowthGlobal0X128": "3688304950319837990056378667775523405",
+        "feeGrowthGlobal0X128": "3688311851161026896425906966283131200",
         "feeGrowthGlobal1X128": "eth:0x1622021451203962663958553124002452791149",
         "liquidity": 2077047343516,
         "maxLiquidityPerTick": "11505743598341114571880798222544994",
-        "protocolFees": { "token0": 72084, "token1": 1 },
+        "protocolFees": { "token0": 80505, "token1": 1 },
         "slot0": {
-          "sqrtPriceX96": "2023548721353320422255405638614",
-          "tick": 64808,
-          "observationIndex": 10,
+          "sqrtPriceX96": "2023130856138390968717983272813",
+          "tick": 64804,
+          "observationIndex": 11,
           "observationCardinality": 600,
           "observationCardinalityNext": 600,
           "feeProtocol": 102,
@@ -677,7 +685,8 @@
       },
       "implementationNames": {
         "eth:0x99ac8cA7087fA4A2A1FB6357269965A2014ABc35": "UniswapV3Pool_VerifiedByNG"
-      }
+      },
+      "category": { "name": "TVS Escrows", "priority": -1 }
     },
     {
       "name": "UniswapV3Pool_WBTC_USDT_03",
@@ -696,15 +705,15 @@
         "$immutable": true,
         "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
         "fee": 3000,
-        "feeGrowthGlobal0X128": "5908376457868735900011284071596526595",
+        "feeGrowthGlobal0X128": "5908381402214958230894403797367018669",
         "feeGrowthGlobal1X128": "eth:0x1432852622871785543315650760188066284370",
         "liquidity": 2708028518135,
         "maxLiquidityPerTick": "11505743598341114571880798222544994",
-        "protocolFees": { "token0": 83336, "token1": 1 },
+        "protocolFees": { "token0": 91204, "token1": 1 },
         "slot0": {
-          "sqrtPriceX96": "2024405504225598858280764216703",
-          "tick": 64817,
-          "observationIndex": 10,
+          "sqrtPriceX96": "2024105825896785304475926934697",
+          "tick": 64814,
+          "observationIndex": 12,
           "observationCardinality": 51,
           "observationCardinalityNext": 51,
           "feeProtocol": 102,
@@ -724,7 +733,8 @@
       },
       "implementationNames": {
         "eth:0x9Db9e0e53058C89e5B94e29621a205198648425B": "UniswapV3Pool"
-      }
+      },
+      "category": { "name": "TVS Escrows", "priority": -1 }
     },
     {
       "name": "UniswapV3Pool_LINK_WETH_03",
@@ -743,18 +753,18 @@
         "$immutable": true,
         "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
         "fee": 3000,
-        "feeGrowthGlobal0X128": "eth:0x1220739309810691462011109785053343460495",
+        "feeGrowthGlobal0X128": "eth:0x1220743181043169206885902555233831126105",
         "feeGrowthGlobal1X128": "6771242298951818172504159403569426936",
         "liquidity": "1083930277498726348450262",
         "maxLiquidityPerTick": "11505743598341114571880798222544994",
         "protocolFees": {
-          "token0": "19597573989791474611",
+          "token0": "22063847004072594133",
           "token1": 623303333909
         },
         "slot0": {
-          "sqrtPriceX96": "5309201085983412865088591787",
-          "tick": -54061,
-          "observationIndex": 311,
+          "sqrtPriceX96": "5307587427205614041377762147",
+          "tick": -54067,
+          "observationIndex": 314,
           "observationCardinality": 360,
           "observationCardinalityNext": 360,
           "feeProtocol": 102,
@@ -774,7 +784,8 @@
       },
       "implementationNames": {
         "eth:0xa6Cc3C2531FdaA6Ae1A3CA84c2855806728693e8": "UniswapV3Pool"
-      }
+      },
+      "category": { "name": "TVS Escrows", "priority": -1 }
     },
     {
       "name": "NonfungiblePositionManager",
@@ -797,7 +808,7 @@
         "name": "Uniswap V3 Positions NFT-V1",
         "PERMIT_TYPEHASH": "0x49ecf333e5b8c95c40fdafc95c1ad136e8914a8fb55e9dc8bb01eaa83a2df9ad",
         "symbol": "UNI-V3-POS",
-        "totalSupply": 1205552,
+        "totalSupply": 1205568,
         "WETH9": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "fieldMeta": {
@@ -1749,6 +1760,6 @@
     "uniswapv3/UniversalRouter": "0x7599293166769ce170829e381d4f80616e6cf1b2c5977c3816b0dd5618c2810a",
     "uniswapv3/V3OpenFeeAdapter": "0x919168095503a4b75469aba4141a66b10f58ad6b4ffe14cb54bc70ac064927d5"
   },
-  "usedBlockNumbers": { "ethereum": 25623113 },
+  "usedBlockNumbers": { "ethereum": 25623298 },
   "permissionsConfigHash": "0x92e8366800296c68a31f443d6b26dc4fba063743acbfe66819cae7dab8f9ccba"
 }

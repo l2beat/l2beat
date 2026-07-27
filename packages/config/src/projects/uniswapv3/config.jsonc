@@ -2,6 +2,11 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "uniswapv3",
   "import": ["../globalConfig.jsonc"],
+  // Pools tracked only as TVS escrows; hidden from the contracts section
+  // (the two original representative pools stay visible there).
+  "categories": {
+    "tvs-escrow": { "name": "TVS Escrows", "priority": -1 }
+  },
   "maxAddresses": 60,
   "initialAddresses": [
     // Core
@@ -77,6 +82,7 @@
       "ignoreMethods": ["observations"]
     },
     "eth:0x4e68Ccd3E89f51C3074ca5072bbAC773960dFa36": {
+      "category": "tvs-escrow",
       "ignoreRelatives": [
         "token0",
         "token1",
@@ -86,6 +92,7 @@
       "ignoreMethods": ["observations"]
     },
     "eth:0x4585FE77225b41b697C938B018E2Ac67Ac5a20c0": {
+      "category": "tvs-escrow",
       "ignoreRelatives": [
         "token0",
         "token1",
@@ -95,6 +102,7 @@
       "ignoreMethods": ["observations"]
     },
     "eth:0x3416cF6C708Da44DB2624D63ea0AAef7113527C6": {
+      "category": "tvs-escrow",
       "ignoreRelatives": [
         "token0",
         "token1",
@@ -104,6 +112,7 @@
       "ignoreMethods": ["observations"]
     },
     "eth:0x9Db9e0e53058C89e5B94e29621a205198648425B": {
+      "category": "tvs-escrow",
       "ignoreRelatives": [
         "token0",
         "token1",
@@ -113,6 +122,7 @@
       "ignoreMethods": ["observations"]
     },
     "eth:0x99ac8cA7087fA4A2A1FB6357269965A2014ABc35": {
+      "category": "tvs-escrow",
       "ignoreRelatives": [
         "token0",
         "token1",
@@ -122,6 +132,7 @@
       "ignoreMethods": ["observations"]
     },
     "eth:0xa6Cc3C2531FdaA6Ae1A3CA84c2855806728693e8": {
+      "category": "tvs-escrow",
       "ignoreRelatives": [
         "token0",
         "token1",
@@ -131,6 +142,7 @@
       "ignoreMethods": ["observations"]
     },
     "eth:0x8ad599c3A0ff1De082011EFDDc58f1908eb6e6D8": {
+      "category": "tvs-escrow",
       "ignoreRelatives": [
         "token0",
         "token1",
@@ -140,6 +152,7 @@
       "ignoreMethods": ["observations"]
     },
     "eth:0x1d42064Fc4Beb5F8aAF85F4617AE8b3b5B8Bd801": {
+      "category": "tvs-escrow",
       "ignoreRelatives": [
         "token0",
         "token1",
