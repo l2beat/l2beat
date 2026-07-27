@@ -1,0 +1,234 @@
+{
+  "entrypoints": {
+    "eth:0x015318c16AE443a20DE0A776dB06a59F0D279057": {
+      "name": "GnosisSafe",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0x178D8Eb1A1fb81B5102808A83318Bb04C6a9fC6D": {
+      "name": "GnosisSafe",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e": {
+      "name": "ProxyAdmin",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0x257FC0c3EB02F7ba8C0fd3eD57692A9c1ee6D29B": {
+      "name": "ProxyAdmin",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0x2A90830083C5Ca1f18d7AA7fCDC2998f93475384": {
+      "name": "GnosisSafe",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0x2cf3bD6a9056b39999F3883955E183F655345063": {
+      "name": "EraChainAdminProxy",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213": {
+      "name": "BridgeHub",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0x34Ea62D4b9bBB8AD927eFB6ab31E3Ab3474aC93a": {
+      "name": "GnosisSafe",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0x35eA56fd9eAd2567F339Eb9564B6940b9DD5653F": {
+      "name": "GnosisSafe",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0x390bc10e854e137d2625573272b3fEe2C615eBA4": {
+      "name": "L1GenesisUpgrade",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828": {
+      "name": "Matter Labs Multisig",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0x538612F6eba6ff80FBD95D60dCDee16b8FfF2c0f": {
+      "name": "GnosisSafe",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0x55c671BcE13120387Ded710A1d1b80C0e3d8E857": {
+      "name": "GnosisSafe",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0x590926dBCDfD19627c3BbD2A6Eb96DeC7a3AbF69": {
+      "name": "GnosisSafe",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0x59195219d1176E42f8e607e9AC114926D47f9035": {
+      "name": "SecurityCouncil",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD": {
+      "name": "MessageRoot",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8": {
+      "name": "Guardians",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0x6078F6B379f103de1Aa912dc46bb8Df0c8809860": {
+      "name": "CTMDeploymentTracker",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0x69462a81ba94D64c404575f1899a464F123497A2": {
+      "name": "GnosisSafe",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0x6D26874130A174839b9cd8CB87Ed4E09D0c1a5f0": {
+      "name": "GnosisSafe",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119": {
+      "name": "RollupL1DAValidator",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0x84BF0Ac41Eeb74373Ddddae8b7055Bf2bD3CE6E0": {
+      "name": "GnosisSafe",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0x8829AD80E425C646DAB305381ff105169FeEcE56": {
+      "name": "L1AssetRouter",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0x9B8Be3278B7F0168D82059eb6BAc5991DcdfA803": {
+      "name": "GnosisSafe",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0xB7aC3A79A23B148c85fba259712c5A1e7ad0ca44": {
+      "name": "GnosisSafe",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c": {
+      "name": "ZK Foundation Multisig",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6": {
+      "name": "L1NativeTokenVault",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1": {
+      "name": "ProxyAdmin",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C": {
+      "name": "ChainTypeManager",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e": {
+      "name": "GnosisSafe",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0xCe7a3dFcc35602155809920Ff65e093aa726f6cf": {
+      "name": "GnosisSafe",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB": {
+      "name": "L1Nullifier",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076": {
+      "name": "ChainAssetHandler",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3": {
+      "name": "ProtocolUpgradeHandler",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45": {
+      "name": "RollupDAManager",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111": {
+      "name": "EmergencyUpgradeBoard",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0xFB90Da9DC45378A1B50775Beb03aD10C7E8DC231": {
+      "name": "GnosisSafe",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0xfca808A744735D9919EEBe4660B8Fd897456Ce31": {
+      "name": "ServerNotifier",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714": {
+      "name": "ProtocolTimelockController",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E": {
+      "name": "ZkToken",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "zksync:0x76705327e682F2d96943280D99464Ab61219e34f": {
+      "name": "ZkProtocolGovernor",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746": {
+      "name": "ZkTokenGovernor",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a": {
+      "name": "GovOpsTimelockController",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC": {
+      "name": "ZkTokenProxyAdmin",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d": {
+      "name": "ZkTokenTimelockController",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160": {
+      "name": "ZkGovOpsGovernor",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    }
+  }
+}
