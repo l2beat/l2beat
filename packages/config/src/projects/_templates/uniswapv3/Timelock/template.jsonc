@@ -5,6 +5,7 @@
   "fields": {
     "admin": {
       "permissions": [
+        { "type": "act", "delay": "{{delay}}" },
         {
           "type": "interact",
           "description": "can queue, cancel, and execute timelocked transactions, and change the delay or admin (through the timelock itself)."

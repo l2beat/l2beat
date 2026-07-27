@@ -3,6 +3,15 @@
   "displayName": "Firepit",
   "description": "The UNI burn engine: anyone can send the threshold amount of UNI (currently 4,000) to the 0xdead address and in exchange release up to 20 chosen token balances from the TokenJar to themselves. The thresholdSetter (the Timelock) can change the threshold.",
   "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can replace the thresholdSetter."
+        }
+      ],
+      "severity": "HIGH"
+    },
     "threshold": {
       "description": "UNI amount burned per release call.",
       "severity": "LOW"

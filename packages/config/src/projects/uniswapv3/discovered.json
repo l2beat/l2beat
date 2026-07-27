@@ -1,6 +1,6 @@
 {
   "name": "uniswapv3",
-  "timestamp": 1785189311,
+  "timestamp": 1785189706,
   "configHash": "0x769f3c53deb0274d14ed114c1471e6de5b1596010a6b54cc5324820d5dee10df",
   "entries": [
     {
@@ -54,6 +54,7 @@
         "TOKEN_JAR": "eth:0xf38521f130fcCF29dB1961597bc5d2B60F995f85"
       },
       "fieldMeta": {
+        "owner": { "severity": "HIGH" },
         "threshold": {
           "severity": "LOW",
           "description": "UNI amount burned per release call."
@@ -74,12 +75,18 @@
       ],
       "proxyType": "immutable",
       "description": "Compound-style timelock and the executive account of Uniswap governance: it is the UNI minter, the owner of the V3OpenFeeAdapter (and through it the v3 factory), the v4 PoolManager owner, and the TokenJar owner. Every queued transaction waits the fixed delay (2 days) and expires after the grace period (14 days). Its admin is the GovernorBravo proxy, so only passed proposals can queue actions; there is no emergency bypass.",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721",
           "description": "can change the UNI amount required per TokenJar release.",
           "role": ".thresholdSetter"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721",
+          "description": "can replace the thresholdSetter.",
+          "role": ".owner"
         },
         {
           "permission": "interact",
@@ -108,8 +115,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
-          "delay": 172800,
-          "description": "can replace the governor implementation (GovernorBravoDelegate). The admin is the Timelock, so the swap sits in its queue for the full delay.",
+          "description": "can replace the governor implementation (GovernorBravoDelegate).",
           "role": ".admin"
         }
       ],
@@ -218,8 +224,100 @@
       "receivedPermissions": [
         {
           "permission": "interact",
+          "from": "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721",
+          "description": "can change the UNI amount required per TokenJar release.",
+          "role": ".thresholdSetter",
+          "via": [
+            {
+              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721",
+          "description": "can replace the thresholdSetter.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
           "description": "can queue, cancel, and execute timelocked transactions, and change the delay or admin (through the timelock itself).",
+          "role": ".admin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+          "description": "can mint up to 2% of the UNI supply per year (at most once per year) and set a new minter.",
+          "role": ".minter",
+          "via": [
+            {
+              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A",
+          "description": "can enable new fee tiers, change the feeSetter, and transfer UniswapV3Factory ownership to a new contract.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A",
+          "description": "sets the protocol fee schedule (global default, per-tier defaults, per-pool overrides) that anyone can then apply to pools.",
+          "role": ".feeSetter",
+          "via": [
+            {
+              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xf38521f130fcCF29dB1961597bc5d2B60F995f85",
+          "description": "can replace the releaser and thereby redirect all accumulated and future protocol fees.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
+          "description": "can replace the governor implementation (GovernorBravoDelegate).",
+          "role": ".admin",
+          "via": [
+            {
+              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+              "delay": 172800
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+          "delay": 172800,
           "role": ".admin"
         }
       ],
@@ -365,15 +463,15 @@
         "$immutable": true,
         "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
         "fee": 500,
-        "feeGrowthGlobal0X128": "4804452315472098011924200669888746",
-        "feeGrowthGlobal1X128": "2046924451117246455264512784917604510420947",
-        "liquidity": "14003409654466442800",
+        "feeGrowthGlobal0X128": "4804452475312516304791178777079030",
+        "feeGrowthGlobal1X128": "2046927270660688431902083472779013004529598",
+        "liquidity": "14038601595192013353",
         "maxLiquidityPerTick": "1917569901783203986719870431555990",
-        "protocolFees": { "token0": 183011098, "token1": "119454614752149829" },
+        "protocolFees": { "token0": 185203698, "token1": "158213465830686500" },
         "slot0": {
-          "sqrtPriceX96": "1798183384532292478498823294249743",
-          "tick": 200609,
-          "observationIndex": 71,
+          "sqrtPriceX96": "1799882017658153343816402099405089",
+          "tick": 200628,
+          "observationIndex": 77,
           "observationCardinality": 723,
           "observationCardinalityNext": 723,
           "feeProtocol": 68,
@@ -416,7 +514,7 @@
         "name": "Uniswap V3 Positions NFT-V1",
         "PERMIT_TYPEHASH": "0x49ecf333e5b8c95c40fdafc95c1ad136e8914a8fb55e9dc8bb01eaa83a2df9ad",
         "symbol": "UNI-V3-POS",
-        "totalSupply": 1205823,
+        "totalSupply": 1205825,
         "WETH9": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "fieldMeta": {
@@ -445,13 +543,13 @@
         "$immutable": true,
         "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
         "fee": 3000,
-        "feeGrowthGlobal0X128": "69313854593946473480324007908563",
+        "feeGrowthGlobal0X128": "69313854604983667765432567872823",
         "feeGrowthGlobal1X128": "15581015321933319769650063860354030694975381",
         "liquidity": "30830513455765584",
         "maxLiquidityPerTick": "11505743598341114571880798222544994",
         "protocolFees": { "token0": 1, "token1": 1 },
         "slot0": {
-          "sqrtPriceX96": "45771419715414431886727387890994761",
+          "sqrtPriceX96": "45771419579042325555746063051273279",
           "tick": 265350,
           "observationIndex": 339,
           "observationCardinality": 360,
@@ -1049,7 +1147,7 @@
     ]
   },
   "usedTemplates": {
-    "uniswapv3/Firepit": "0x012e56fee83cb91c5375f29c293d32f8850407ec783a3f2780d5a562d5744b8e",
+    "uniswapv3/Firepit": "0x8473222d7de21f94b51a2fc1c8efa3d9702a1bc94b43356ac565d9cfb48a3c18",
     "uniswapv3/GovernorBravoDelegate": "0xbd7d6ab35d7de0f9b521c8f1d8508a7268afa3f40474fc0a1b8387bf83f1b4b6",
     "uniswapv3/GovernorBravoDelegator": "0x7ac89f3060c6a024da3a28e739280718118261e54c5cdb2dbbc422a8cb4cf091",
     "uniswapv3/NonfungiblePositionManager": "0x2cd534a9bc7f1ec51f8b9e52527dc14480989ade00569d806d6beecc2a2a8bac",
@@ -1064,6 +1162,6 @@
     "uniswapv3/UniversalRouter": "0x7599293166769ce170829e381d4f80616e6cf1b2c5977c3816b0dd5618c2810a",
     "uniswapv3/V3OpenFeeAdapter": "0x919168095503a4b75469aba4141a66b10f58ad6b4ffe14cb54bc70ac064927d5"
   },
-  "usedBlockNumbers": { "ethereum": 25626970 },
-  "permissionsConfigHash": "0x21ffb35c539dc47b717fe4778681bf8b326fb825d405e36528fab69b5db99b72"
+  "usedBlockNumbers": { "ethereum": 25627002 },
+  "permissionsConfigHash": "0x508aef0cb815d58ca8aba1918317b795d30254938f4c5aaf479e2731624d10bd"
 }

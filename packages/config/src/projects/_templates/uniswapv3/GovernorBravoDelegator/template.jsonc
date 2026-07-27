@@ -7,8 +7,7 @@
       "permissions": [
         {
           "type": "upgrade",
-          "delay": 172800,
-          "description": "can replace the governor implementation (GovernorBravoDelegate). The admin is the Timelock, so the swap sits in its queue for the full delay."
+          "description": "can replace the governor implementation (GovernorBravoDelegate)."
         }
       ],
       "severity": "HIGH"
