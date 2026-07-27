@@ -313,7 +313,7 @@ function InteropMetrics({
         />
         <InteropMetric
           title="Tokens by volume"
-          href="#interop-tokens"
+          href="#interop-flows"
           items={{
             items: interop.tokens.items.map((token) => ({
               id: token.id,
