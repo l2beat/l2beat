@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
-  "name": "apex",
+  "name": "apex-omni",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
     "eth:0x35D173cdfE4d484BC5985fDa55FABad5892c7B82",

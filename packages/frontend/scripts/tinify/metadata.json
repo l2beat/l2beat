@@ -26,7 +26,8 @@
   "static/icons/animechain.png": "8184836a986f561d4e9824713d99907a",
   "static/icons/anomaly.png": "d50352c73d578951e42daa0a5dc024b1",
   "static/icons/apechain.png": "c3c94f06f649bf2b4d2abedb50c59c45",
-  "static/icons/apex.png": "eced1809154496838b08b634cd91e593",
+  "static/icons/apex-omni.png": "eced1809154496838b08b634cd91e593",
+  "static/icons/apex-pro.png": "eced1809154496838b08b634cd91e593",
   "static/icons/appchain.png": "61e980f68eab3d9daa628d971f11aa9d",
   "static/icons/arbitrum.png": "8c540db97bcaeb349a1b8a475012b1a4",
   "static/icons/arcology.png": "54eb316ea8a384578ed7b53186081a06",
@@ -556,8 +557,7 @@
   "static/meta-images/scaling/projects/anomaly/tvs-breakdown/opengraph-image.png": "fd2f98b9a7b0ed16c95d55750b0896e7",
   "static/meta-images/scaling/projects/apechain/opengraph-image.png": "8e1aeffe00321ad1a750913448aabb19",
   "static/meta-images/scaling/projects/apechain/tvs-breakdown/opengraph-image.png": "26f28de4a4ce99f49a93317bc79d149d",
-  "static/meta-images/scaling/projects/apex/opengraph-image.png": "856ddbf588a628ae4527ba73f9121f22",
-  "static/meta-images/scaling/projects/apex/tvs-breakdown/opengraph-image.png": "e27279b058187d9af3908fe336d62024",
+  "static/meta-images/scaling/projects/apex-omni/opengraph-image.png": "856ddbf588a628ae4527ba73f9121f22",
   "static/meta-images/scaling/projects/appchain/opengraph-image.png": "ebb1783c530c96b70c26afe6b44da113",
   "static/meta-images/scaling/projects/appchain/tvs-breakdown/opengraph-image.png": "7476941a9ef2c316bf837166e49e4515",
   "static/meta-images/scaling/projects/arbitrum/opengraph-image.png": "425c4d491e77acc3865d135a09ae5239",
@@ -1587,5 +1587,6 @@
   "static/meta-images/publications/governance-review-100.png": "cce191e6c0639113dfe7a3a62502237b",
   "static/meta-images/publications/governance-review-101.png": "63099d8ad6197a20404755c7f2256789",
   "static/meta-images/publications/security-councils-in-practice.png": "dee419f5692f63a69a71a823417c8c17",
-  "static/images/architecture/apex.png": "3ab99939bfdd9b75c02af80786d9de3f"
+  "static/images/architecture/apex-omni.png": "3ab99939bfdd9b75c02af80786d9de3f",
+  "static/meta-images/scaling/projects/apex-pro/opengraph-image.png": "f3120d6f711e307078549474c73cdd22"
 }

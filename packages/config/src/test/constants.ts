@@ -10,7 +10,7 @@
 export const NON_DISCOVERY_DRIVEN_PROJECTS: string[] = [
   // L2s
   'ancient',
-  'apex',
+  'apex-pro',
   'arbitrum',
   'astarzkevm',
   'alienx',

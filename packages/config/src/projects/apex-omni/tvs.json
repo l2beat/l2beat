@@ -1,10 +1,10 @@
 {
   "$schema": "../tvs-config-schema.json",
-  "projectId": "apex",
+  "projectId": "apex-omni",
   "tokens": [
     {
       "mode": "auto",
-      "id": "apex-AMO",
+      "id": "apex-omni-AMO",
       "priceId": "amino",
       "symbol": "AMO",
       "name": "Amino",
@@ -24,7 +24,7 @@
     },
     {
       "mode": "auto",
-      "id": "apex-cbBTC-2",
+      "id": "apex-omni-cbBTC-2",
       "priceId": "coinbase-wrapped-btc",
       "symbol": "cbBTC",
       "name": "Coinbase Wrapped BTC",
@@ -85,7 +85,7 @@
     },
     {
       "mode": "auto",
-      "id": "apex-cmETH",
+      "id": "apex-omni-cmETH",
       "priceId": "mantle-restaked-eth",
       "symbol": "cmETH",
       "name": "cmETH",
@@ -122,7 +122,7 @@
     },
     {
       "mode": "auto",
-      "id": "apex-ETH-1",
+      "id": "apex-omni-ETH-1",
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
@@ -151,7 +151,7 @@
     },
     {
       "mode": "auto",
-      "id": "apex-ETH-2",
+      "id": "apex-omni-ETH-2",
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
@@ -212,7 +212,7 @@
     },
     {
       "mode": "auto",
-      "id": "apex-FORE",
+      "id": "apex-omni-FORE",
       "priceId": "fore-protocol",
       "symbol": "FORE",
       "name": "FORE Protocol",
@@ -232,7 +232,7 @@
     },
     {
       "mode": "auto",
-      "id": "apex-mETH-1",
+      "id": "apex-omni-mETH-1",
       "priceId": "mantle-staked-ether",
       "symbol": "mETH",
       "name": "mETH",
@@ -293,7 +293,7 @@
     },
     {
       "mode": "auto",
-      "id": "apex-MNT",
+      "id": "apex-omni-MNT",
       "priceId": "mantle",
       "symbol": "MNT",
       "name": "Mantle",
@@ -354,7 +354,7 @@
     },
     {
       "mode": "auto",
-      "id": "apex-TRESTLE",
+      "id": "apex-omni-TRESTLE",
       "priceId": "trestle",
       "symbol": "TRESTLE",
       "name": "Trestle",
@@ -374,7 +374,7 @@
     },
     {
       "mode": "auto",
-      "id": "apex-UMAMI",
+      "id": "apex-omni-UMAMI",
       "priceId": "umami-finance",
       "symbol": "UMAMI",
       "name": "Umami",
@@ -405,7 +405,7 @@
     },
     {
       "mode": "auto",
-      "id": "apex-USDC-1",
+      "id": "apex-omni-USDC-1",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -441,7 +441,7 @@
     },
     {
       "mode": "auto",
-      "id": "apex-USDC-2",
+      "id": "apex-omni-USDC-2",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -502,7 +502,7 @@
     },
     {
       "mode": "auto",
-      "id": "apex-USDC-3",
+      "id": "apex-omni-USDC-3",
       "priceId": "mantle-bridged-usdc-mantle",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -531,7 +531,7 @@
     },
     {
       "mode": "auto",
-      "id": "apex-USDe-2",
+      "id": "apex-omni-USDe-2",
       "priceId": "ethena-usde",
       "symbol": "USDe",
       "name": "USDe",
@@ -610,7 +610,7 @@
     },
     {
       "mode": "auto",
-      "id": "apex-USDT-1",
+      "id": "apex-omni-USDT-1",
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
@@ -647,7 +647,7 @@
     },
     {
       "mode": "auto",
-      "id": "apex-USDT-2",
+      "id": "apex-omni-USDT-2",
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
@@ -666,7 +666,7 @@
     },
     {
       "mode": "auto",
-      "id": "apex-WBTC-1",
+      "id": "apex-omni-WBTC-1",
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
       "name": "Wrapped BTC",
@@ -685,7 +685,7 @@
     },
     {
       "mode": "auto",
-      "id": "apex-WETH-1",
+      "id": "apex-omni-WETH-1",
       "priceId": "weth",
       "symbol": "WETH",
       "name": "Wrapped Ether",
@@ -714,7 +714,7 @@
     },
     {
       "mode": "auto",
-      "id": "apex-WETH-2",
+      "id": "apex-omni-WETH-2",
       "priceId": "weth",
       "symbol": "WETH",
       "name": "Wrapped Ether",
@@ -775,7 +775,7 @@
     },
     {
       "mode": "auto",
-      "id": "apex-WETH-3",
+      "id": "apex-omni-WETH-3",
       "priceId": "wrapped-ether-mantle-bridge",
       "symbol": "WETH",
       "name": "Ether",

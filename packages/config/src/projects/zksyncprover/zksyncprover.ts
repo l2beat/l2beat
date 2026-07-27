@@ -60,7 +60,7 @@ export const zksyncprover: BaseProject = {
         sinceTimestamp: UnixTime(1639954800),
       },
       {
-        projectId: ProjectId('apex'),
+        projectId: ProjectId('apex-omni'),
         sinceTimestamp: UnixTime(1717970400),
       },
     ],

@@ -1,7 +1,7 @@
 {
-  "name": "apex",
+  "name": "apex-omni",
   "timestamp": 1784715866,
-  "configHash": "0x102906fcac5bc4a3b977659a08b655d938977ffd0f167cb795bc31108e4ab33e",
+  "configHash": "0xf66c505df5593aee4f25d9ed340adfc6be1cba67b98acadacbf0c9b895e366b3",
   "entries": [
     {
       "address": "arb1:0x22c89137525b593Dd2A18434348b550ffA5984Fe",
@@ -90,7 +90,7 @@
       "name": "ZkLink Main",
       "address": "arb1:0x3169844a120C0f517B4eB4A750c08d8518C8466a",
       "type": "Contract",
-      "template": "apex/ZkLink_main",
+      "template": "apex-omni/ZkLink_main",
       "sourceHashes": [
         "0x43e7f084adda47e6af53f9d9f359d33eecde538e53f18ce3555d080144734772",
         "0xcf3306c0d9416ebe68af3181926165561803001f786494a95183295fdf54fe86"
@@ -277,7 +277,7 @@
       "name": "LayerZeroBridge",
       "address": "arb1:0xfC5c2b3E615cF12e86E6dA8eF6C76fAbae5F2B7D",
       "type": "Contract",
-      "template": "apex/LZSyncHashBridge",
+      "template": "apex-omni/LZSyncHashBridge",
       "sourceHashes": [
         "0xf50b0277e3b7bfdb5540824fb20e147e3ca8fad9cc9c7557aaf3a26a3fcf9292"
       ],
@@ -497,7 +497,7 @@
       "name": "LayerZeroBridge",
       "address": "base:0xeD5D1e1320720CAe8Bb40275550A7D307A082AC3",
       "type": "Contract",
-      "template": "apex/LZSyncHashBridge",
+      "template": "apex-omni/LZSyncHashBridge",
       "sourceHashes": [
         "0xb22a01a05a19c0fe5299fd65fe53ea410c5ead01e971b0add159bbe0f51146c8"
       ],
@@ -546,7 +546,7 @@
       "name": "ZkLink Base",
       "address": "base:0xeE7981C4642dE8d19AeD11dA3bac59277DfD59D7",
       "type": "Contract",
-      "template": "apex/ZkLink_LZEscrow",
+      "template": "apex-omni/ZkLink_LZEscrow",
       "sourceHashes": [
         "0x43e7f084adda47e6af53f9d9f359d33eecde538e53f18ce3555d080144734772",
         "0x4f84b4144d82c5e3bc213ee815ea64739305006ceab666a6b4e1c650dd871e61"
@@ -754,7 +754,7 @@
       "name": "ZkLink BNB",
       "address": "bnb:0xb8D9F005654b7b127b34dae8F973Ba729ca3A2D9",
       "type": "Contract",
-      "template": "apex/ZkLink_LZEscrow",
+      "template": "apex-omni/ZkLink_LZEscrow",
       "sourceHashes": [
         "0x43e7f084adda47e6af53f9d9f359d33eecde538e53f18ce3555d080144734772",
         "0x6376298a0e414f91406f4069cdaea39f0fc6280e7e7f9a07371f8cdba7f6d265"
@@ -900,7 +900,7 @@
       "name": "LayerZeroBridge",
       "address": "bnb:0xc271a8e9eB2b10FCDe1709D76de6681249669D2e",
       "type": "Contract",
-      "template": "apex/LZSyncHashBridge",
+      "template": "apex-omni/LZSyncHashBridge",
       "sourceHashes": [
         "0xde341a7da4f09deb4f8c8035945780f47e32a5344614a4a55efd82194b3bbd38"
       ],
@@ -969,7 +969,7 @@
       "name": "ZkLink Ethereum",
       "address": "eth:0x35D173cdfE4d484BC5985fDa55FABad5892c7B82",
       "type": "Contract",
-      "template": "apex/ZkLink_LZEscrow",
+      "template": "apex-omni/ZkLink_LZEscrow",
       "sourceHashes": [
         "0x43e7f084adda47e6af53f9d9f359d33eecde538e53f18ce3555d080144734772",
         "0xb4138259cf80065144e8d21d34b6ed64c712eb7cb3b14889a51a8bacf0ce219e"
@@ -1102,7 +1102,7 @@
       "name": "LayerZeroBridge",
       "address": "eth:0x3D70dc86dC8099D8a4c86C18839C7e84a13a441E",
       "type": "Contract",
-      "template": "apex/LZSyncHashBridge",
+      "template": "apex-omni/LZSyncHashBridge",
       "sourceHashes": [
         "0xd60f50351716d5714b021ecd66edf6d942a9dada25a1f4bbc0e0ef1159ddb93a"
       ],
@@ -1349,7 +1349,7 @@
       "name": "LayerZeroBridge",
       "address": "mantle:0x04C6a52f3bf9F73618cD70F234AdB95a73325D1e",
       "type": "Contract",
-      "template": "apex/LZSyncHashBridge",
+      "template": "apex-omni/LZSyncHashBridge",
       "sourceHashes": [
         "0x6b130c9503f9b52ae1b02e6167f3b93ebb26654da97d6303a05a2722e1cc1399"
       ],
@@ -1484,7 +1484,7 @@
       "name": "ZkLink Mantle",
       "address": "mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c",
       "type": "Contract",
-      "template": "apex/ZkLink_LZEscrow",
+      "template": "apex-omni/ZkLink_LZEscrow",
       "sourceHashes": [
         "0x43e7f084adda47e6af53f9d9f359d33eecde538e53f18ce3555d080144734772",
         "0xb1ce2609627d70aae43da70e3afe85837f4884708a70f8e9e9062549b310432e"
@@ -3005,9 +3005,9 @@
     ]
   },
   "usedTemplates": {
-    "apex/LZSyncHashBridge": "0xe4b6bef6d8eb46b2dc59ca16c8a39144163571cb5fbdef9a2c963b5cda5cda82",
-    "apex/ZkLink_LZEscrow": "0xdfb245230fb92cbc8bfd733e69601a1bbf91608ec957b0d5e970ca492f46b131",
-    "apex/ZkLink_main": "0xdfb245230fb92cbc8bfd733e69601a1bbf91608ec957b0d5e970ca492f46b131",
+    "apex-omni/LZSyncHashBridge": "0xe4b6bef6d8eb46b2dc59ca16c8a39144163571cb5fbdef9a2c963b5cda5cda82",
+    "apex-omni/ZkLink_LZEscrow": "0xdfb245230fb92cbc8bfd733e69601a1bbf91608ec957b0d5e970ca492f46b131",
+    "apex-omni/ZkLink_main": "0xdfb245230fb92cbc8bfd733e69601a1bbf91608ec957b0d5e970ca492f46b131",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": {

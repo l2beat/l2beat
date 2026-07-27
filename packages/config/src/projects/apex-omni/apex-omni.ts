@@ -19,11 +19,11 @@ import {
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
-const discovery = new ProjectDiscovery('apex')
+const discovery = new ProjectDiscovery('apex-omni')
 
-export const apex: ScalingProject = {
+export const apexOmni: ScalingProject = {
   type: 'layer3',
-  id: ProjectId('apex'),
+  id: ProjectId('apex-omni'),
   hostChain: ProjectId('arbitrum'),
   addedAt: UnixTime(1663927910), // 2022-09-23T10:11:50Z
   capability: 'appchain',
@@ -40,8 +40,8 @@ export const apex: ScalingProject = {
     },
   ],
   display: {
-    name: 'ApeX',
-    slug: 'apex',
+    name: 'ApeX Omni',
+    slug: 'apex-omni',
     description:
       'ApeX Omni is an application-specific ZK rollup for order book trading. It uses zkLink X to aggregate liquidity deposited across multiple chains.',
     detailedDescription:
@@ -87,7 +87,7 @@ export const apex: ScalingProject = {
     },
   }),
   chainConfig: {
-    name: 'apex',
+    name: 'apexomni',
     chainId: undefined,
     apis: [],
   },
