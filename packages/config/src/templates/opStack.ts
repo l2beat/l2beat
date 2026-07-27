@@ -83,6 +83,9 @@ import {
   safeGetImplementation,
 } from './utils'
 
+const DISPUTE_GAME_CREATED_EVENT_TOPIC =
+  '0x5b565efe82411da98814f356d0e7bcb8f0219b8d970307c5afb4a6903a8b2e35' // DisputeGameCreated
+
 export function CELESTIA_DA_PROVIDER(
   fallback?: DaProjectTableValue,
 ): DAProvider {
@@ -2359,6 +2362,12 @@ function getTrackedTxs(
             selector: '0x82ecf2f6',
             functionSignature:
               'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',
+            // KailuaTreasury calls the DGF internally. The real-time liveness
+            // processor cannot inspect traces, so match the emitted event.
+            topics:
+              fraudProofType === 'Kailua'
+                ? [DISPUTE_GAME_CREATED_EVENT_TOPIC]
+                : undefined,
             sinceTimestamp: templateVars.genesisTimestamp,
           },
         },
