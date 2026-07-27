@@ -2,6 +2,13 @@ import type {
   ContractValue,
   DiscoveryOutput,
   EntryParameters,
+  ReceivedPermission,
+  ResolvedImpactPrincipal,
+  ResolvedImpactScenario,
+  ResolvedImpactSource,
+  ResolvedImpactStep,
+  ResolvedImpactTrace,
+  ResolvedPermissionGroup,
   ResolvedPermissionPath,
 } from '@l2beat/discovery'
 import {
@@ -27,6 +34,9 @@ import type {
   ProjectEscrow,
   ProjectPermission,
   ProjectPermissionedAccount,
+  ProjectPermissionImpactScenario,
+  ProjectPermissionImpactTrace,
+  ProjectPermissionOrigin,
   ProjectPermissions,
   ProjectUpgradeableActor,
   ReferenceLink,
@@ -65,10 +75,14 @@ export class ProjectDiscovery {
   ) {
     // TODO: Legacy behavior - we blindly create new ProjectDiscovery instances in tests
     try {
-      this.discoveries = configReader.readDiscoveryWithReferences(projectName)
+      this.discoveries = structuredClone(
+        configReader.readDiscoveryWithReferences(projectName),
+      )
     } catch {
       this.discoveries = []
     }
+
+    applyExternalPermissions(this.discoveries)
 
     // always the base discovery
     const entrypoints = [...(this.discoveries.at(0)?.entries ?? [])].map(
@@ -784,11 +798,16 @@ export class ProjectDiscovery {
   describeContractOrEoa(
     contractOrEoa: EntryParameters,
     describeRoles = true,
+    excludePermission?: (permission: ReceivedPermission) => boolean,
   ): string {
     return [
       contractOrEoa.description,
       this.describeGnosisSafeMembership(contractOrEoa),
-      this.permissionRegistry.describePermissions(contractOrEoa, describeRoles),
+      this.permissionRegistry.describePermissions(
+        contractOrEoa,
+        describeRoles,
+        excludePermission,
+      ),
     ]
       .filter(notUndefined)
       .join('\n')
@@ -823,11 +842,19 @@ export class ProjectDiscovery {
     return priority
   }
 
-  getEoaActors() {
+  getEoaActors(
+    excludedAddresses: ReadonlySet<string> = new Set(),
+    scenariosByPrincipal: ReadonlyMap<
+      string,
+      ResolvedImpactScenario[]
+    > = new Map(),
+  ) {
     const permissionedEoas = this.permissionRegistry
       .getPermissionedEoas()
       .map((address) => this.getEOAByAddress(address))
       .filter(notUndefined)
+      .filter((entry) => !excludedAddresses.has(entry.address.toLowerCase()))
+      .filter((entry) => this.isProjectScopedPermissionActor(entry.address))
       .filter((e) => (e.category?.priority ?? 0) >= 0)
       .sort((a, b) => {
         return this.getPermissionPriority(b) - this.getPermissionPriority(a)
@@ -842,7 +869,20 @@ export class ProjectDiscovery {
     }
 
     const eoaPermissions = permissionedEoas.map((eoa) => {
-      const description = this.describeContractOrEoa(eoa, false)
+      const principalKeys = [addressImpactPrincipalKey(eoa.address)]
+      const description = this.describeContractOrEoa(
+        eoa,
+        false,
+        this.getImpactPermissionFilter(principalKeys, scenariosByPrincipal),
+      )
+      const permissionOrigins = this.getPermissionOriginsForTargets(
+        (eoa.receivedPermissions ?? []).map((permission) => permission.from),
+      )
+      const groupingKey = JSON.stringify([
+        this.describeContractOrEoa(eoa, false),
+        description,
+        permissionOrigins,
+      ])
       const name = eoa.name ?? this.getEOAName(eoa.address)
       return {
         id: name,
@@ -853,33 +893,37 @@ export class ProjectDiscovery {
         ),
         chain: ChainSpecificAddress.longChain(eoa.address),
         description,
+        permissionOrigins,
+        groupingKey,
       }
     })
 
     const groupedByDescription = groupBy(
       eoaPermissions,
-      (eoa) => eoa.description,
+      (eoa) => eoa.groupingKey,
     )
 
     const createGroupId = (eoas: ProjectPermission[]) =>
       concatName(eoas.map((eoa) => eoa.name)).replaceAll(' ', '-')
 
-    const linkableEoas: ProjectPermission[] = eoaPermissions.map((eoa) => {
-      const group = groupedByDescription[eoa.description]
+    const linkableEoas: ProjectPermission[] = eoaPermissions.map(
+      ({ groupingKey, ...eoa }) => {
+        const group = groupedByDescription[groupingKey]
 
-      if (!group) {
-        return eoa
-      }
+        if (!group) {
+          return eoa
+        }
 
-      return {
-        ...eoa,
-        id: createGroupId(group),
-      }
-    })
+        return {
+          ...eoa,
+          id: createGroupId(group),
+        }
+      },
+    )
 
     const groupedActors: ProjectPermission[] = []
 
-    for (const [description, eoas] of Object.entries(groupedByDescription)) {
+    for (const eoas of Object.values(groupedByDescription)) {
       const byChain = groupBy(eoas, (eoa) => eoa.chain)
 
       for (const [chain, chainEoas] of Object.entries(byChain)) {
@@ -888,7 +932,11 @@ export class ProjectDiscovery {
           name: concatName(chainEoas.map((eoa) => eoa.name)),
           accounts: chainEoas.flatMap((eoa) => eoa.accounts),
           chain: chain,
-          description: description,
+          description: chainEoas[0]?.description ?? '',
+          permissionOrigins: uniqueBy(
+            chainEoas.flatMap((eoa) => eoa.permissionOrigins),
+            permissionOriginKey,
+          ).sort(comparePermissionOrigins),
         })
       }
     }
@@ -903,36 +951,105 @@ export class ProjectDiscovery {
   getDiscoveredPermissions(
     chainsToIgnore: string[] = [],
   ): Record<string, ProjectPermissions> {
+    const impactScenarios = this.getImpactScenariosByPrincipal()
+    const permissionGroups = this.getProjectPermissionGroups()
+    const groupedMembers = new Set(
+      permissionGroups.flatMap((group) =>
+        group.members.map((member) => member.toLowerCase()),
+      ),
+    )
     const permissionedContracts = this.permissionRegistry
       .getPermissionedContracts()
       .map((address) => this.getContractByAddress(address))
       .filter(notUndefined)
+      .filter((entry) => !groupedMembers.has(entry.address.toLowerCase()))
+      .filter((entry) => this.isProjectScopedPermissionActor(entry.address))
       .filter((e) => (e.category?.priority ?? 0) >= 0)
       .sort((a, b) => {
         return this.getPermissionPriority(b) - this.getPermissionPriority(a)
       })
-    const permissionedEoas = this.getEoaActors()
+    const permissionedEoas = this.getEoaActors(groupedMembers, impactScenarios)
 
     const contractActors: ProjectPermission[] = []
     for (const contract of permissionedContracts) {
-      const descriptions = this.describeContractOrEoa(contract, false)
+      const principalKeys = [addressImpactPrincipalKey(contract.address)]
+      const description = this.describeContractOrEoa(
+        contract,
+        false,
+        this.getImpactPermissionFilter(principalKeys, impactScenarios),
+      )
+      let actor: ProjectPermission
       if (isMultisigLike(contract)) {
-        contractActors.push(
-          this.getMultisigPermission(
-            contract.address.toString(),
-            descriptions,
-            [],
-          ),
+        actor = this.getMultisigPermission(
+          contract.address.toString(),
+          description,
+          [],
         )
       } else {
-        contractActors.push(this.contractAsPermissioned(contract, descriptions))
+        actor = this.contractAsPermissioned(contract, description)
       }
+      actor = this.withPermissionOrigins(
+        actor,
+        this.getPermissionOriginsForTargets(
+          (contract.receivedPermissions ?? []).map(
+            (permission) => permission.from,
+          ),
+        ),
+      )
+      contractActors.push(
+        this.withImpactScenarios(actor, principalKeys, impactScenarios),
+      )
     }
 
-    const allActors = [...contractActors, ...permissionedEoas.grouped]
+    const groupActors = permissionGroups.map((group) => {
+      const principalKey = groupImpactPrincipalKey(group)
+      return this.withImpactScenarios(
+        this.permissionGroupAsActor(group, !impactScenarios.has(principalKey)),
+        [principalKey],
+        impactScenarios,
+      )
+    })
+    const eoaActors = permissionedEoas.grouped.map((actor) =>
+      this.withImpactScenarios(
+        actor,
+        actor.accounts.map((account) =>
+          addressImpactPrincipalKey(account.address),
+        ),
+        impactScenarios,
+      ),
+    )
+    const representedPrincipals = new Set([
+      ...contractActors.flatMap((actor) =>
+        actor.accounts.map((account) =>
+          addressImpactPrincipalKey(account.address),
+        ),
+      ),
+      ...permissionGroups.map((group) => groupImpactPrincipalKey(group)),
+      ...eoaActors.flatMap((actor) =>
+        actor.accounts.map((account) =>
+          addressImpactPrincipalKey(account.address),
+        ),
+      ),
+    ])
+    const blackBoxActors = this.getBlackBoxImpactActors(
+      representedPrincipals,
+      impactScenarios,
+    )
+    const allActors = [
+      ...contractActors,
+      ...groupActors,
+      ...blackBoxActors,
+      ...eoaActors,
+    ]
 
     // NOTE(radomski): Checking for assumptions made about discovery driven actors
-    assert(allUnique(allActors.map((actor) => actor.accounts[0].address)))
+    assert(
+      allUnique(
+        [...contractActors, ...permissionedEoas.grouped].map(
+          (actor) => actor.accounts[0].address,
+        ),
+      ),
+    )
     assert(
       [...contractActors, ...permissionedEoas.linkable].every(
         (actor) => actor.accounts.length === 1,
@@ -975,6 +1092,493 @@ export class ProjectDiscovery {
       delete result[chainToRemove]
     }
     return result
+  }
+
+  private isProjectScopedPermissionActor(
+    address: ChainSpecificAddress,
+  ): boolean {
+    const rootDiscovery = this.discoveries.at(0)
+    const externalPermissions = rootDiscovery?.externalPermissions
+    if (rootDiscovery === undefined) {
+      return true
+    }
+
+    const isInRootDiscovery = rootDiscovery.entries.some(
+      (entry) => entry.type !== 'Reference' && entry.address === address,
+    )
+    if (isInRootDiscovery) {
+      return true
+    }
+
+    const isImpactPrincipal = rootDiscovery.impactScenarios?.some((scenario) =>
+      scenario.principals.some(
+        (principal) =>
+          principal.type === 'address' &&
+          principal.address.toLowerCase() === address.toLowerCase(),
+      ),
+    )
+    if (isImpactPrincipal) {
+      return true
+    }
+
+    if (externalPermissions === undefined) {
+      return rootDiscovery.impactScenarios === undefined
+    }
+
+    return Object.entries(externalPermissions).some(
+      ([externalAddress, permissions]) =>
+        externalAddress.toLowerCase() === address.toLowerCase() &&
+        (permissions.receivedPermissions?.length ?? 0) > 0,
+    )
+  }
+
+  private getProjectPermissionGroups(): ResolvedPermissionGroup[] {
+    const rootDiscovery = this.discoveries.at(0)
+    return [
+      ...(rootDiscovery?.permissionGroups ?? []),
+      ...(rootDiscovery?.externalPermissionGroups ?? []),
+    ]
+  }
+
+  private permissionGroupAsActor(
+    group: ResolvedPermissionGroup,
+    includeCapability: boolean,
+  ): ProjectPermission {
+    const targetName = this.getName(group.permission.from)
+    const groupName = `${targetName} ${group.name}`
+    const thresholdDescription =
+      group.threshold === 1
+        ? 'Any one member can exercise this capability.'
+        : `${group.threshold} members must cooperate to exercise this capability.`
+    const administration =
+      group.admin === undefined
+        ? 'This permission does not let members change the group membership.'
+        : `${this.getName(group.admin)} can replace the members; members cannot change the group membership through this permission.`
+    const permissionDescription =
+      includeCapability && group.permission.description
+        ? `\n* Can interact with ${targetName}\n  * ${trimTrailingDots(group.permission.description)}`
+        : ''
+    const accounts = this.withPermissionedAccountDisplayNames(
+      this.formatPermissionedAccounts(group.members),
+      group.members.map((_, index) => `${group.memberName} ${index + 1}`),
+    )
+
+    return {
+      id: `${targetName}-${group.id}`,
+      name: groupName,
+      displayName: groupName,
+      accounts,
+      chain: ChainSpecificAddress.longChain(group.permission.from),
+      references: [],
+      description: `A ${group.threshold}/${group.members.length} permissioned ${group.memberName.toLowerCase()} group. ${thresholdDescription} ${administration}${permissionDescription}`,
+      permissionOrigins: this.getPermissionOriginsForTargets([
+        group.permission.from,
+      ]),
+    }
+  }
+
+  private getImpactScenariosByPrincipal(): Map<
+    string,
+    ResolvedImpactScenario[]
+  > {
+    const result = new Map<string, ResolvedImpactScenario[]>()
+    for (const scenario of this.discoveries.at(0)?.impactScenarios ?? []) {
+      for (const principal of scenario.principals) {
+        const key = impactPrincipalKey(principal)
+        const existing = result.get(key) ?? []
+        existing.push(scenario)
+        result.set(key, existing)
+      }
+    }
+    return result
+  }
+
+  private getImpactPermissionFilter(
+    principalKeys: string[],
+    scenariosByPrincipal: ReadonlyMap<string, ResolvedImpactScenario[]>,
+  ): ((permission: ReceivedPermission) => boolean) | undefined {
+    const principalSet = new Set(principalKeys)
+    const capabilityKeys = new Set(
+      uniqueBy(
+        principalKeys.flatMap((key) => scenariosByPrincipal.get(key) ?? []),
+        (scenario) => scenario.id,
+      ).flatMap((scenario) =>
+        scenario.sources.flatMap((source) =>
+          principalSet.has(source.principal) && source.capability !== undefined
+            ? [impactCapabilityKey(source.contract, source.capability)]
+            : [],
+        ),
+      ),
+    )
+    if (capabilityKeys.size === 0) {
+      return undefined
+    }
+
+    return (permission) =>
+      permission.permission === 'interact' &&
+      permission.description !== undefined &&
+      capabilityKeys.has(
+        impactCapabilityKey(permission.from, permission.description),
+      )
+  }
+
+  private getPermissionOriginsForTargets(
+    targets: ChainSpecificAddress[],
+  ): ProjectPermissionOrigin[] {
+    const origins = targets.flatMap((target) => {
+      const owners = this.discoveries.flatMap((discovery, index) =>
+        discovery.entries.some(
+          (entry) => entry.address.toLowerCase() === target.toLowerCase(),
+        )
+          ? [{ discovery, index }]
+          : [],
+      )
+      assert(
+        owners.length > 0,
+        `Cannot determine the permission origin of ${target.toString()} in ${this.projectName}`,
+      )
+      return owners.map(
+        ({ discovery, index }): ProjectPermissionOrigin =>
+          index === 0
+            ? { type: 'project' }
+            : {
+                type: 'dependency',
+                name: discovery.name,
+                projectId: discovery.name,
+              },
+      )
+    })
+
+    return uniqueBy(origins, permissionOriginKey).sort(comparePermissionOrigins)
+  }
+
+  private getPermissionOriginsForSource(
+    source: ResolvedImpactSource,
+  ): ProjectPermissionOrigin[] {
+    if (source.dependencyName !== undefined) {
+      return [{ type: 'dependency', name: source.dependencyName }]
+    }
+    return this.getPermissionOriginsForTargets([source.contract])
+  }
+
+  private withPermissionOrigins(
+    actor: ProjectPermission,
+    origins: ProjectPermissionOrigin[],
+  ): ProjectPermission {
+    const permissionOrigins = uniqueBy(
+      [...(actor.permissionOrigins ?? []), ...origins],
+      permissionOriginKey,
+    ).sort(comparePermissionOrigins)
+    return permissionOrigins.length === 0
+      ? actor
+      : { ...actor, permissionOrigins }
+  }
+
+  private withImpactScenarios(
+    actor: ProjectPermission,
+    principalKeys: string[],
+    scenariosByPrincipal: ReadonlyMap<string, ResolvedImpactScenario[]>,
+  ): ProjectPermission {
+    const scenarios = uniqueBy(
+      principalKeys.flatMap((key) => scenariosByPrincipal.get(key) ?? []),
+      (scenario) => scenario.id,
+    )
+    if (scenarios.length === 0) {
+      return actor
+    }
+    const actorPrincipalKeys = new Set(principalKeys)
+    const actorWithOrigins = this.withPermissionOrigins(
+      actor,
+      uniqueBy(
+        scenarios.flatMap((scenario) =>
+          scenario.sources
+            .filter((source) => actorPrincipalKeys.has(source.principal))
+            .flatMap((source) => this.getPermissionOriginsForSource(source)),
+        ),
+        permissionOriginKey,
+      ),
+    )
+    return {
+      ...actorWithOrigins,
+      impactScenarios: this.projectImpactScenarios(
+        scenarios,
+        actorPrincipalKeys,
+      ),
+    }
+  }
+
+  private projectImpactScenarios(
+    scenarios: ResolvedImpactScenario[],
+    actorPrincipalKeys: ReadonlySet<string>,
+  ): ProjectPermissionImpactScenario[] {
+    const byCapability = groupBy(scenarios, (scenario) =>
+      unique(scenario.sources.map((source) => source.capabilityId))
+        .sort()
+        .join('|'),
+    )
+
+    return Object.values(byCapability)
+      .map((group): ProjectPermissionImpactScenario => {
+        const sources = uniqueBy(
+          group.flatMap((scenario) => scenario.sources),
+          (source) => source.id,
+        )
+        const steps = uniqueBy(
+          group.flatMap((scenario) => scenario.steps),
+          (step) => step.ruleId,
+        )
+        const sourcesById = new Map(
+          sources.map((source) => [source.id, source]),
+        )
+        const stepsById = new Map(steps.map((step) => [step.ruleId, step]))
+        const traces = uniqueBy(
+          group.flatMap((scenario) => scenario.paths.map((path) => path.trace)),
+          impactTraceKey,
+        )
+        const terminalRuleIds = new Set(
+          traces.flatMap((trace) =>
+            trace.type === 'rule' ? [trace.ruleId] : [],
+          ),
+        )
+        const capabilities = Object.values(
+          groupBy(sources, (source) => source.capabilityId),
+        ).map((capabilitySources) => {
+          const source = capabilitySources[0]
+          assert(source !== undefined, 'Impact capability has no sources')
+          const principal = group
+            .flatMap((scenario) => scenario.principals)
+            .find(
+              (candidate) => impactPrincipalKey(candidate) === source.principal,
+            )
+          assert(principal !== undefined, 'Impact source principal not found')
+          return {
+            actor: this.getImpactPrincipalName(principal, group),
+            component: this.getImpactComponentName(
+              source.contract,
+              source.dependencyName,
+            ),
+            descriptions: unique(
+              capabilitySources
+                .map((candidate) => candidate.capability)
+                .filter(notUndefined),
+            ),
+          }
+        })
+        const requires = unique(
+          group.flatMap((scenario) =>
+            scenario.principals
+              .filter(
+                (principal) =>
+                  !actorPrincipalKeys.has(impactPrincipalKey(principal)),
+              )
+              .map((principal) =>
+                this.getImpactPrincipalName(principal, group),
+              ),
+          ),
+        )
+
+        const id = group.map((scenario) => scenario.id).sort()[0]
+        assert(id !== undefined, 'Impact scenario group is empty')
+        const impactStepGroups = Object.values(
+          groupBy(
+            steps.filter(
+              (step): step is typeof step & { impact: string } =>
+                step.impact !== undefined,
+            ),
+            outcomeStepGroupKey,
+          ),
+        )
+        const protectionStepGroups = Object.values(
+          groupBy(
+            steps.filter(
+              (step): step is typeof step & { protection: string } =>
+                step.impact === undefined &&
+                step.protection !== undefined &&
+                terminalRuleIds.has(step.ruleId),
+            ),
+            outcomeStepGroupKey,
+          ),
+        )
+
+        return {
+          id,
+          requires: requires.length === 0 ? undefined : requires,
+          capabilities,
+          impacts: impactStepGroups.map((impactSteps) => {
+            const first = impactSteps[0]
+            assert(first !== undefined, 'Impact step group is empty')
+            return {
+              id: impactOutcomeId(first),
+              components: unique(
+                impactSteps.map((step) =>
+                  this.getImpactComponentName(step.contract),
+                ),
+              ),
+              description: first.impact,
+              categories: first.categories ?? [],
+              ...(first.limitation !== undefined
+                ? { limitation: first.limitation }
+                : {}),
+              paths: uniqueBy(
+                impactSteps.flatMap((step) =>
+                  traces.flatMap((trace) =>
+                    findImpactRuleTraces(trace, step.ruleId),
+                  ),
+                ),
+                impactTraceKey,
+              ).map((trace) =>
+                this.projectImpactTrace(trace, sourcesById, stepsById),
+              ),
+            }
+          }),
+          protections: protectionStepGroups.map((protectionSteps) => {
+            const first = protectionSteps[0]
+            assert(first !== undefined, 'Protection step group is empty')
+            return {
+              id: impactOutcomeId(first),
+              components: unique(
+                protectionSteps.map((step) =>
+                  this.getImpactComponentName(step.contract),
+                ),
+              ),
+              description: first.protection,
+              paths: uniqueBy(
+                protectionSteps.flatMap((step) =>
+                  traces.flatMap((trace) =>
+                    findImpactRuleTraces(trace, step.ruleId),
+                  ),
+                ),
+                impactTraceKey,
+              ).map((trace) =>
+                this.projectImpactTrace(trace, sourcesById, stepsById),
+              ),
+            }
+          }),
+        }
+      })
+      .sort((a, b) => {
+        const aName = a.capabilities[0]?.component ?? ''
+        const bName = b.capabilities[0]?.component ?? ''
+        return aName.localeCompare(bName) || a.id.localeCompare(b.id)
+      })
+  }
+
+  private projectImpactTrace(
+    trace: ResolvedImpactTrace,
+    sources: ReadonlyMap<string, ResolvedImpactSource>,
+    steps: ReadonlyMap<string, ResolvedImpactStep>,
+  ): ProjectPermissionImpactTrace {
+    if (trace.type === 'source') {
+      const source = sources.get(trace.sourceId)
+      assert(source !== undefined, `Impact source ${trace.sourceId} not found`)
+      return {
+        component: this.getImpactComponentName(
+          source.contract,
+          source.dependencyName,
+        ),
+        effect: source.effect,
+        description: source.description,
+        ...(source.limitation !== undefined
+          ? { limitation: source.limitation }
+          : {}),
+        inputs: [],
+      }
+    }
+
+    const step = steps.get(trace.ruleId)
+    assert(step !== undefined, `Impact step ${trace.ruleId} not found`)
+    return {
+      component: this.getImpactComponentName(step.contract),
+      effect: step.output,
+      description: step.description,
+      ...(step.limitation !== undefined ? { limitation: step.limitation } : {}),
+      inputs: trace.inputs.map((input) =>
+        this.projectImpactTrace(input, sources, steps),
+      ),
+    }
+  }
+
+  private getImpactPrincipalName(
+    principal: ResolvedImpactPrincipal,
+    scenarios: ResolvedImpactScenario[],
+  ): string {
+    if (principal.type === 'group') {
+      return `${this.getName(principal.from)} ${principal.name}`
+    }
+    const entryName = this.getEntryByAddress(principal.address)?.name
+    if (entryName !== undefined) {
+      return entryName
+    }
+    const dependencyName = scenarios
+      .flatMap((scenario) => scenario.sources)
+      .find(
+        (source) =>
+          source.principal === addressImpactPrincipalKey(principal.address) &&
+          source.dependencyName !== undefined,
+      )?.dependencyName
+    return dependencyName ?? shortenAddress(principal.address)
+  }
+
+  private getImpactComponentName(
+    address: ChainSpecificAddress,
+    fallback?: string,
+  ): string {
+    return (
+      this.getEntryByAddress(address)?.name ??
+      fallback ??
+      shortenAddress(address)
+    )
+  }
+
+  private getBlackBoxImpactActors(
+    representedPrincipals: ReadonlySet<string>,
+    scenariosByPrincipal: ReadonlyMap<string, ResolvedImpactScenario[]>,
+  ): ProjectPermission[] {
+    const result: ProjectPermission[] = []
+    for (const [key, scenarios] of scenariosByPrincipal) {
+      const principal = scenarios[0]?.principals.find(
+        (candidate) => impactPrincipalKey(candidate) === key,
+      )
+      if (
+        representedPrincipals.has(key) ||
+        principal === undefined ||
+        principal.type !== 'address'
+      ) {
+        continue
+      }
+      const name = this.getImpactPrincipalName(principal, scenarios)
+      const raw = ChainSpecificAddress.address(principal.address)
+      const chain = ChainSpecificAddress.longChain(principal.address)
+      const explorerUrl = EXPLORER_URLS[chain]
+      assert(
+        isNonNullable(explorerUrl),
+        `Failed to find explorer url for chain [${chain}]`,
+      )
+      result.push(
+        this.withImpactScenarios(
+          {
+            id: name,
+            name,
+            accounts: [
+              {
+                address: principal.address,
+                type: 'Reference',
+                isVerified: false,
+                name: shortenAddress(principal.address),
+                url: `${explorerUrl}/address/${raw}`,
+              },
+            ],
+            chain,
+            references: [],
+            description:
+              'This dependency has no discovery model. Its possible failures are modeled as a black box at each consuming contract boundary.',
+          },
+          [key],
+          scenariosByPrincipal,
+        ),
+      )
+    }
+    return result.sort((a, b) => a.name.localeCompare(b.name))
   }
 
   linkupActorsIntoAccounts(
@@ -1132,8 +1736,129 @@ function removeReferences(discovery: DiscoveryOutput) {
   discovery.entries = discovery.entries.filter((e) => e.type !== 'Reference')
 }
 
+function applyExternalPermissions(discoveries: DiscoveryOutput[]) {
+  const rootDiscovery = discoveries.at(0)
+  const externalPermissions = rootDiscovery?.externalPermissions
+  if (externalPermissions === undefined) {
+    return
+  }
+
+  const externalEntries = discoveries
+    .slice(1)
+    .flatMap((discovery) => discovery.entries)
+  for (const [address, permissions] of Object.entries(externalPermissions)) {
+    const target = externalEntries.find(
+      (entry) =>
+        entry.type !== 'Reference' &&
+        entry.address.toLowerCase() === address.toLowerCase(),
+    )
+    if (target === undefined) {
+      continue
+    }
+
+    target.receivedPermissions = permissions.receivedPermissions
+    target.directlyReceivedPermissions = permissions.directlyReceivedPermissions
+    target.eoaWithUpgradePermissions = permissions.eoaWithUpgradePermissions
+  }
+}
+
 function allUnique(arr: string[]): boolean {
   return new Set(arr).size === arr.length
+}
+
+function impactPrincipalKey(principal: ResolvedImpactPrincipal): string {
+  return principal.type === 'group'
+    ? principal.key
+    : addressImpactPrincipalKey(principal.address)
+}
+
+function addressImpactPrincipalKey(address: ChainSpecificAddress): string {
+  return `address:${address.toLowerCase()}`
+}
+
+function impactCapabilityKey(
+  contract: ChainSpecificAddress,
+  capability: string,
+): string {
+  return JSON.stringify([contract.toLowerCase(), capability])
+}
+
+function permissionOriginKey(origin: ProjectPermissionOrigin): string {
+  return origin.type === 'project'
+    ? origin.type
+    : `${origin.type}:${origin.name}`
+}
+
+function comparePermissionOrigins(
+  a: ProjectPermissionOrigin,
+  b: ProjectPermissionOrigin,
+): number {
+  if (a.type !== b.type) {
+    return a.type === 'project' ? -1 : 1
+  }
+  if (a.type === 'dependency' && b.type === 'dependency') {
+    return a.name.localeCompare(b.name)
+  }
+  return 0
+}
+
+function outcomeStepGroupKey(step: ResolvedImpactStep): string {
+  const definitionScope = step.ruleDefinition.template
+    ? ['template', step.ruleDefinition.template]
+    : ['contract', step.contract.toLowerCase()]
+
+  return JSON.stringify([
+    definitionScope,
+    step.ruleDefinition.id,
+    step.output,
+    step.description ?? null,
+    step.impact ?? null,
+    step.categories ?? null,
+    step.limitation ?? null,
+    step.protection ?? null,
+  ])
+}
+
+function impactOutcomeId(step: ResolvedImpactStep): string {
+  return utils.id(outcomeStepGroupKey(step))
+}
+
+function findImpactRuleTraces(
+  trace: ResolvedImpactTrace,
+  ruleId: string,
+): ResolvedImpactTrace[] {
+  if (trace.type === 'source') {
+    return []
+  }
+  if (trace.ruleId === ruleId) {
+    return [trace]
+  }
+  return trace.inputs.flatMap((input) => findImpactRuleTraces(input, ruleId))
+}
+
+function impactTraceKey(trace: ResolvedImpactTrace): string {
+  return JSON.stringify(trace)
+}
+
+function groupImpactPrincipalKey(group: ResolvedPermissionGroup): string {
+  return `group:${group.permission.from.toLowerCase()}:${group.id}`
+}
+
+function shortenAddress(address: ChainSpecificAddress): string {
+  const raw = ChainSpecificAddress.address(address).toString()
+  return `${raw.slice(0, 6)}…${raw.slice(-4)}`
+}
+
+function uniqueBy<T>(values: T[], key: (value: T) => string): T[] {
+  const seen = new Set<string>()
+  return values.filter((value) => {
+    const id = key(value)
+    if (seen.has(id)) {
+      return false
+    }
+    seen.add(id)
+    return true
+  })
 }
 
 function concatName(names: string[]): string {

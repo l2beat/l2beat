@@ -4,6 +4,7 @@ import { ContractsSection } from './sections/contracts/ContractsSection'
 import { CostsSection } from './sections/costs/CostsSection'
 import { DaRiskSummarySection } from './sections/DaRiskSummarySection'
 import { DetailedDescriptionSection } from './sections/DetailedDescriptionSection'
+import { ExternalDependenciesSection } from './sections/ExternalDependenciesSection'
 import { DataPostedSection } from './sections/data-posted/DataPostedSection'
 import { GrissiniRiskAnalysisSection } from './sections/GrissiniRiskAnalysisSection'
 import { GroupSection } from './sections/GroupSection'
@@ -116,6 +117,14 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           case 'DetailedDescriptionSection':
             return (
               <DetailedDescriptionSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'ExternalDependenciesSection':
+            return (
+              <ExternalDependenciesSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}

@@ -38,6 +38,8 @@ export {
 export { hashJsonStable } from './discovery/config/hashJsonStable'
 export {
   BasePermissionEntries,
+  ImpactCategories,
+  type ImpactCategory,
   Permission,
 } from './discovery/config/PermissionConfig'
 export {
@@ -91,6 +93,13 @@ export type {
   DiscoveryOutput,
   EntryParameters,
   ReceivedPermission,
+  ResolvedImpactPath,
+  ResolvedImpactPrincipal,
+  ResolvedImpactScenario,
+  ResolvedImpactSource,
+  ResolvedImpactStep,
+  ResolvedImpactTrace,
+  ResolvedPermissionGroup,
   ResolvedPermissionPath,
 } from './discovery/output/types'
 export { AllProviders } from './discovery/provider/AllProviders'

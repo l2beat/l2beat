@@ -67,6 +67,37 @@ describe(executeBlip.name, () => {
     expect(executeBlip({}, ['and', true, 0, ['not', false]])).toEqual(false)
   })
 
+  describe('addition', () => {
+    it('adds values to the current number', () => {
+      expect(executeBlip(6, ['+', 1])).toEqual(7)
+      expect(executeBlip(6, ['+', 1, 2])).toEqual(9)
+    })
+
+    it('rejects non-number inputs', () => {
+      expect(() => executeBlip('6', ['+', 1])).toThrow(
+        '+ requires number inputs',
+      )
+    })
+  })
+
+  describe('subtraction', () => {
+    it('subtracts resolved operands', () => {
+      expect(
+        executeBlip({ members: [1, 2, 3], f: 1 }, [
+          '-',
+          ['pipe', ['get', 'members'], ['length']],
+          ['get', 'f'],
+        ]),
+      ).toEqual(2)
+    })
+
+    it('rejects non-number inputs', () => {
+      expect(() => executeBlip({}, ['-', 3, '1'])).toThrow(
+        '- requires number inputs',
+      )
+    })
+  })
+
   describe('equality comparisons', () => {
     it('compares multiple values for equality', () => {
       expect(executeBlip({}, ['=', 1, 1, 1])).toEqual(true)

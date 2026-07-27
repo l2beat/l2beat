@@ -82,7 +82,10 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
     )
   }
 
-  describeInteractPermissions(contractOrEoa: EntryParameters) {
+  describeInteractPermissions(
+    contractOrEoa: EntryParameters,
+    excludePermission?: (permission: ReceivedPermission) => boolean,
+  ) {
     // Formatting follows: https://docs.l2beat.com/l2b_specs/permissions.html
 
     const interactPermissions = (
@@ -90,7 +93,8 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
     ).filter(
       (p) =>
         p.permission === 'interact' &&
-        this.projectDiscovery.isReachable(p.from),
+        this.projectDiscovery.isReachable(p.from) &&
+        !excludePermission?.(p),
     )
 
     const groupedByGiver = groupBy(interactPermissions, (p) => p.from)
@@ -163,9 +167,13 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
   describePermissions(
     contractOrEoa: EntryParameters,
     describeRoles = true,
+    excludePermission?: (permission: ReceivedPermission) => boolean,
   ): string {
     const upgrade = this.describeUpgradePermissions(contractOrEoa)
-    const interact = this.describeInteractPermissions(contractOrEoa)
+    const interact = this.describeInteractPermissions(
+      contractOrEoa,
+      excludePermission,
+    )
     const roles = describeRoles ? this.describeRoles(contractOrEoa) : []
     return [...upgrade, ...interact, ...roles]
       .filter((s) => s !== '')

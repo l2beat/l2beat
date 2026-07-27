@@ -90,6 +90,20 @@ describe(validateBlip.name, () => {
       expect(validateBlip(['and', 123, false, {}])).toBeFalsy() // Invalid sub-element
     })
 
+    it('validates "+" operation', () => {
+      expect(validateBlip(['+'])).toBeFalsy()
+      expect(validateBlip(['+', 1])).toBeTruthy()
+      expect(validateBlip(['+', 1, ['get', 'value']])).toBeTruthy()
+      expect(validateBlip(['+', {}])).toBeFalsy()
+    })
+
+    it('validates "-" operation', () => {
+      expect(validateBlip(['-'])).toBeFalsy()
+      expect(validateBlip(['-', 3, 1])).toBeTruthy()
+      expect(validateBlip(['-', ['length'], 1])).toBeTruthy()
+      expect(validateBlip(['-', {}])).toBeFalsy()
+    })
+
     it('validates "pipe" operation', () => {
       expect(validateBlip(['pipe'])).toBeFalsy() // Empty pipe is invalid
       expect(validateBlip(['pipe', 123])).toBeTruthy()

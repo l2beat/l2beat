@@ -77,6 +77,7 @@ export function processAnalysis(
                 sourceHashes: recalculateSourceHashes(x.sourceBundles),
                 proxyType: x.proxyType,
                 ignoreInWatchMode: x.ignoreInWatchMode,
+                ignoreInCoverage: x.ignoreInCoverage,
                 deployerAddress: x.deployerAddress,
                 sinceTimestamp: x.deploymentTimestamp,
                 sinceBlock: x.deploymentBlockNumber,

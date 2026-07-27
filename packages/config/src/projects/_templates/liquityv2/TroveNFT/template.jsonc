@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TroveNFT",
+  "description": "The ERC721 that represents ownership of a trove: opening one mints an NFT and closing it burns one, both by the branch's TroveManager. The holder of a trove's NFT is its owner, with full control over the position, and transferring the NFT hands the entire trove, collateral and debt alike, to the new holder. In every other respect it is a standard ERC721.",
+  "ignoreRelatives": ["collToken"],
+  "ignoreInCoverage": ["ERC721"],
+  "fields": {
+    "constructorArgs": {
+      "handler": { "type": "constructorArgs", "nameArgs": true }
+    },
+    "addressesRegistry": {
+      "copy": "constructorArgs",
+      "edit": ["get", "_addressesRegistry"]
+    }
+  }
+}

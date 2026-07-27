@@ -1,4 +1,4 @@
-import type { EntryParameters } from '@l2beat/discovery'
+import type { EntryParameters, ReceivedPermission } from '@l2beat/discovery'
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { ProjectUpgradeableActor } from '../types'
 
@@ -8,6 +8,7 @@ export interface PermissionRegistry {
   describePermissions(
     contractOrEoa: EntryParameters,
     includeDirectPermissions: boolean,
+    excludePermission?: (permission: ReceivedPermission) => boolean,
   ): string
   getUpgradableBy(contract: EntryParameters): ProjectUpgradeableActor[]
 }

@@ -14,6 +14,7 @@ import { ccip } from '../projects/ccip/ccip'
 import { cctpv1 } from '../projects/cctpv1/cctpv1'
 import { cctpv2 } from '../projects/cctpv2/cctpv2'
 import { celestia } from '../projects/celestia/celestia'
+import { chainlink } from '../projects/chainlink/chainlink'
 import { circlegateway } from '../projects/circlegateway/circlegateway'
 import { debridge } from '../projects/debridge/debridge'
 import { debridgeDln } from '../projects/debridge-dln/debridge-dln'
@@ -33,6 +34,7 @@ import { layerzero } from '../projects/layerzero/layerzero'
 import { lifi } from '../projects/lifi/lifi'
 import { lighterprover } from '../projects/lighterprover/lighterprover'
 import { lineaprover } from '../projects/lineaprover/lineaprover'
+import { liquityv2 } from '../projects/liquityv2/liquityv2'
 import { loopringprover } from '../projects/loopringprover/loopringprover'
 import { mayan } from '../projects/mayan/mayan'
 import { memo } from '../projects/memo/memo'
@@ -125,6 +127,9 @@ export const refactored: BaseProject[] = [
   cbridge,
   hyperevm,
   freetunnel,
+  // defi
+  liquityv2,
+  chainlink,
   // privacy
   privacyPools,
   railgun,

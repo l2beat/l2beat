@@ -1,0 +1,43 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "StabilityPool",
+  "description": "The branch's liquidation backstop. Anyone can deposit BOLD here, and those deposits are the first resource used to absorb liquidations: when a trove on this branch is liquidated, the pool burns BOLD to cancel an equal amount of that trove's debt and receives the corresponding collateral in return. Because that collateral is worth more than the debt cancelled, depositors generally come out ahead on each liquidation, and they also earn a share of the interest that branch borrowers pay. Deposits can be withdrawn at any time with no lock-up, as long as a small minimum is left so the pool can never be fully emptied.",
+  "ignoreMethods": ["scaleToB", "scaleToS"],
+  "ignoreRelatives": ["collToken"],
+  "ignoreInCoverage": ["deposits", "depositSnapshots", "stashedColl"],
+  "fields": {
+    "constructorArgs": {
+      "handler": { "type": "constructorArgs", "nameArgs": true }
+    },
+    "addressesRegistry": {
+      "copy": "constructorArgs",
+      "edit": ["get", "_addressesRegistry"]
+    },
+    "defaultPool": {
+      "handler": {
+        "type": "event",
+        "select": "_newDefaultPoolAddress",
+        "set": { "event": "DefaultPoolAddressChanged" }
+      }
+    },
+    "priceFeed": {
+      "handler": {
+        "type": "event",
+        "select": "_newPriceFeedAddress",
+        "set": { "event": "PriceFeedAddressChanged" }
+      }
+    }
+  },
+  "effectRules": [
+    {
+      "id": "withdrawalsRemainAvailableAfterShutdown",
+      "inputs": [
+        { "field": "priceFeed", "effect": "branch.shutdown.requested" }
+      ],
+      "output": "protection.stabilityPool.withdrawals",
+      "description": "Branch shutdown does not disable this contract's deposit-withdrawal path.",
+      "protection": "Stability Pool deposit withdrawals remain available after branch shutdown.",
+      "terminal": true
+    }
+  ]
+}

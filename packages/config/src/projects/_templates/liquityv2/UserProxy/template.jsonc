@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "UserProxy",
+  "description": "A per-staker proxy deployed by the Governance to hold and stake one user's LQTY. It forwards the LQTY into Liquity's legacy V1 staking, so the staker keeps earning the V1 fee rewards (LUSD and ETH) while that same LQTY backs their V2 voting power, and it passes those rewards back to the staker. Only the Governance can operate it.",
+  "ignoreRelatives": ["stakingV1", "lqty", "lusd"]
+}

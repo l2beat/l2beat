@@ -1,3 +1,4 @@
+import type { ImpactCategory } from '@l2beat/discovery'
 import type { RetryHandlerVariant, TrackedTxConfigEntry } from '@l2beat/shared'
 import {
   type ChainSpecificAddress,
@@ -188,6 +189,12 @@ export interface BaseProject {
   // privacy data
   privacyInfo?: ProjectPrivacyInfo
 
+  // defi data
+  defiInfo?: ProjectDefiInfo
+
+  // cross-project references (e.g. an oracle or bridge this project depends on)
+  externalDependencies?: ProjectExternalDependency[]
+
   // feature configs
   tvsInfo?: ProjectTvsInfo
   tvsConfig?: TvsToken[]
@@ -234,6 +241,7 @@ export interface ProjectStatuses {
 export interface ProjectDisplay {
   description: string
   detailedDescription?: string
+  references?: ReferenceLink[]
   links: ProjectLinks
   badges: Badge[]
   redWarning?: ProjectRedWarning
@@ -967,6 +975,25 @@ export interface ProjectPrivacyInfo {
   upgradesAndGovernance?: string
 }
 
+export interface ProjectDefiInfo {
+  /** Short category label shown in the DeFi table, e.g. "CDP / Stablecoin". */
+  category: string
+}
+
+export interface ProjectExternalDependency {
+  /** An L2BEAT project this depends on, rendered as a link to its (reviewed) page. */
+  project?: ProjectId
+  /**
+   * A dependency L2BEAT does not review, shown with a "not reviewed" tag and no
+   * link. Provide `name` and `icon` instead of `project`.
+   */
+  name?: string
+  /** Icon slug under /icons for a non-reviewed dependency (e.g. 'reth' -> /icons/reth.png). */
+  icon?: string
+  /** What this project relies on the dependency for. */
+  description: string
+}
+
 export interface PrivacyExitWindow extends ExitWindowRisk {
   description: string
   walkawayTest: PrivacyWalkawayTest
@@ -1260,8 +1287,14 @@ export interface ProjectPermission {
   accounts: ProjectPermissionedAccount[]
   /** Name of this group */
   name: string
+  /** Optional semantic label to preserve when rendering a multi-account group */
+  displayName?: string
   /** Description of the permissions */
   description: string
+  /** Mechanically composed impact proofs derived from discovery */
+  impactScenarios?: ProjectPermissionImpactScenario[]
+  /** Where the permissioned capabilities controlled by this actor originate. */
+  permissionOrigins?: ProjectPermissionOrigin[]
   /** Name of the chain of this address. Optional for backwards compatibility */
   chain: string
   /** List of source code permalinks and useful materials */
@@ -1270,6 +1303,44 @@ export interface ProjectPermission {
   participants?: ProjectPermissionedAccount[]
   /** Indicates whether the generation of contained data was driven by discovery */
   discoveryDrivenData?: boolean
+}
+
+export type ProjectPermissionOrigin =
+  | { type: 'project' }
+  | { type: 'dependency'; name: string; projectId?: string }
+
+export interface ProjectPermissionImpactScenario {
+  id: string
+  requires?: string[]
+  capabilities: {
+    actor: string
+    component: string
+    descriptions: string[]
+  }[]
+  impacts: {
+    /** Stable identity of the terminal outcome across capability scenarios */
+    id: string
+    components: string[]
+    description: string
+    categories: ImpactCategory[]
+    limitation?: string
+    paths: ProjectPermissionImpactTrace[]
+  }[]
+  protections: {
+    /** Stable identity of the terminal protection across capability scenarios */
+    id: string
+    components: string[]
+    description: string
+    paths: ProjectPermissionImpactTrace[]
+  }[]
+}
+
+export interface ProjectPermissionImpactTrace {
+  component: string
+  effect: string
+  description?: string
+  limitation?: string
+  inputs: ProjectPermissionImpactTrace[]
 }
 
 export interface ProjectPermissionedAccount {

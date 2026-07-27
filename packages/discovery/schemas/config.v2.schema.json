@@ -41,6 +41,10 @@
             "type": "array",
             "items": { "type": "string" }
           },
+          "ignoreInCoverage": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
           "ignoreMethods": { "type": "array", "items": { "type": "string" } },
           "ignoreRelatives": {
             "anyOf": [
@@ -59,6 +63,7 @@
                   "items": {
                     "type": "object",
                     "properties": {
+                      "id": { "type": "string" },
                       "type": {
                         "enum": ["member", "act", "interact", "upgrade"]
                       },
@@ -67,7 +72,34 @@
                       },
                       "description": { "type": "string" },
                       "condition": { "type": "string" },
-                      "role": { "type": "string" }
+                      "role": { "type": "string" },
+                      "group": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string" },
+                          "memberName": { "type": "string" },
+                          "threshold": {
+                            "anyOf": [
+                              { "type": "number" },
+                              { "type": "string" }
+                            ]
+                          },
+                          "admin": { "type": "string" }
+                        },
+                        "required": ["name", "memberName"]
+                      },
+                      "effects": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": { "type": "string" },
+                            "description": { "type": "string" },
+                            "limitation": { "type": "string" }
+                          },
+                          "required": ["id"]
+                        }
+                      }
                     },
                     "required": ["type"]
                   }
@@ -447,7 +479,8 @@
                       "type": "object",
                       "properties": {
                         "type": { "const": "constructorArgs" },
-                        "nameArgs": { "type": "boolean" }
+                        "nameArgs": { "type": "boolean" },
+                        "ignoreRelative": { "type": "boolean" }
                       },
                       "additionalProperties": false,
                       "required": ["type"]
@@ -757,6 +790,72 @@
                 "href": { "type": "string" }
               },
               "required": ["text", "href"]
+            }
+          },
+          "effectRules": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "string" },
+                "inputs": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "field": { "type": "string" },
+                      "effect": { "type": "string" }
+                    },
+                    "required": ["effect"]
+                  }
+                },
+                "output": { "type": "string" },
+                "description": { "type": "string" },
+                "impact": { "type": "string" },
+                "categories": {
+                  "type": "array",
+                  "items": {
+                    "enum": [
+                      "funds-can-be-stolen",
+                      "funds-can-be-lost",
+                      "funds-can-be-frozen",
+                      "funds-can-lose-value",
+                      "users-can-be-censored",
+                      "mev-can-be-extracted",
+                      "withdrawals-can-be-delayed",
+                      "yield-can-stop"
+                    ]
+                  }
+                },
+                "limitation": { "type": "string" },
+                "protection": { "type": "string" },
+                "terminal": { "type": "boolean" }
+              },
+              "required": ["id", "inputs", "output", "description"]
+            }
+          },
+          "effectAssumptions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "field": { "type": "string" },
+                "name": { "type": "string" },
+                "description": { "type": "string" },
+                "effects": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": { "type": "string" },
+                      "description": { "type": "string" },
+                      "limitation": { "type": "string" }
+                    },
+                    "required": ["id"]
+                  }
+                }
+              },
+              "required": ["field", "effects"]
             }
           }
         }

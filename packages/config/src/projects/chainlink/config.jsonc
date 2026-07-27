@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "chainlink",
+  "import": ["../globalConfig.jsonc"],
+  "maxAddresses": 150,
+  "initialAddresses": [
+    "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+    "eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8",
+    "eth:0x536218f9E9Eb48863970252233c8F271f554C2d0"
+  ],
+  "names": {
+    "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419": "Chainlink_ETH_USD",
+    "eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5": "Chainlink_ETH_USD_Aggregator",
+    "eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8": "Chainlink_stETH_USD",
+    "eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f": "Chainlink_stETH_USD_Aggregator",
+    "eth:0x536218f9E9Eb48863970252233c8F271f554C2d0": "Chainlink_rETH_ETH",
+    "eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d": "Chainlink_rETH_ETH_Aggregator",
+    "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA": "ChainlinkOracleMultisig"
+  },
+  "overrides": {
+    "eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b": {
+      // This module only executes transactions already confirmed by the Safe.
+      "canActIndependently": false
+    }
+  }
+}

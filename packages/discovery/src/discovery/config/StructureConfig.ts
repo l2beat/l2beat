@@ -63,6 +63,7 @@ export const _StructureContract = {
   ignoreDiscovery: v.boolean().default(false),
   proxyType: ManualProxyType.optional(),
   ignoreInWatchMode: v.array(v.string()).optional(),
+  ignoreInCoverage: v.array(v.string()).optional(),
   ignoreMethods: v.array(v.string()).default([]),
   ignoreRelatives: v.union([v.array(v.string()), v.literal(true)]).default([]),
   fields: v.record(v.string(), StructureContractField).default({}),
