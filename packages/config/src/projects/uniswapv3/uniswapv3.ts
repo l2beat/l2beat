@@ -28,11 +28,24 @@ const formatUni = (amount: string): string =>
 const poolValue = (pool: string, key: string): number =>
   discovery.getContractValue<number>(pool, key)
 
-// Packed protocol-fee value on the adapter: two 4-bit denominators
-// (token0 in the low nibble, token1 in the high one), each 0 or 4..10.
-// Both sides are currently set to the same denominator.
-const protocolFeeDenominator =
-  discovery.getContractValue<number>('V3OpenFeeAdapter', 'defaultFee') % 16
+// Packed protocol-fee values: two 4-bit denominators (token0 in the low
+// nibble, token1 in the high one), each 0 or 4..10. All current values are
+// symmetric; the guard forces a description update if that ever changes.
+const protocolFeeDenominator = (packed: number): number => {
+  const token0Side = packed % 16
+  const token1Side = Math.floor(packed / 16)
+  if (token0Side !== token1Side) {
+    throw new Error(
+      `Asymmetric protocol fee ${packed}: update the description wording`,
+    )
+  }
+  return token0Side
+}
+const poolProtocolFeeDenominator = (pool: string): number =>
+  protocolFeeDenominator(
+    discovery.getContractValue<{ feeProtocol: number }>(pool, 'slot0')
+      .feeProtocol,
+  )
 
 const trackedPools = [
   { contract: 'UniswapV3Pool_USDC_WETH_005', tokens: ['USDC', 'WETH'] },
@@ -99,7 +112,15 @@ export const uniswapv3: BaseProject = {
             'UNIToken',
             'minimumTimeBetweenMints',
           ) / 86400,
-        protocolFeeDenominator,
+        defaultProtocolFeeDenominator: protocolFeeDenominator(
+          discovery.getContractValue<number>('V3OpenFeeAdapter', 'defaultFee'),
+        ),
+        usdcWethProtocolFeeDenominator: poolProtocolFeeDenominator(
+          'UniswapV3Pool_USDC_WETH_005',
+        ),
+        wbtcWethProtocolFeeDenominator: poolProtocolFeeDenominator(
+          'UniswapV3Pool_WBTC_WETH_03',
+        ),
         firepitMaxAssets: discovery.getContractValue<number>(
           'Firepit',
           'MAX_RELEASE_LENGTH',

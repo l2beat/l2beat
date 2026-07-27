@@ -81,6 +81,7 @@ export async function getDefiProjectData(
         'discoveryInfo',
         'externalDependencies',
         'tvsConfig',
+        'tvsInfo',
       ],
     }),
     getContractUtils(),
@@ -167,6 +168,7 @@ export async function getDefiProjectData(
           shortName: project.shortName,
           iconUrl: icon,
         },
+        warnings: project.tvsInfo?.warnings,
       },
     })
   }
