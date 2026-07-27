@@ -117,7 +117,7 @@ describe(generateEntrypoints.name, () => {
     })
   })
 
-  it('drops legacy EOA entrypoints because EOAs are never entrypoints', () => {
+  it('drops legacy EOA entrypoints because EOAs must come from current initial addresses', () => {
     const old = {
       entrypoints: {
         [ChainSpecificAddress.from('eth', '0x01')]: entrypoint1,
@@ -143,7 +143,7 @@ describe(generateEntrypoints.name, () => {
 })
 
 describe(generateEntrypointsForProject.name, () => {
-  it('generates entrypoints from contracts only, skipping EOAs and references', () => {
+  it('generates entrypoints from contracts and initial addresses only', () => {
     const discovery = {
       entries: [
         {
@@ -161,10 +161,20 @@ describe(generateEntrypointsForProject.name, () => {
           type: 'Reference',
           targetProject: 'other-project',
         },
+        {
+          address: ChainSpecificAddress.from('eth', '0x04'),
+          type: 'EOA',
+          name: 'InitialEoa',
+        },
       ],
     }
     const configReader = {
       readDiscovery: mockFn().returns(discovery),
+      readConfig: mockFn().returns({
+        structure: {
+          initialAddresses: [ChainSpecificAddress.from('eth', '0x04')],
+        },
+      }),
     } as unknown as ConfigReader
 
     const result = generateEntrypointsForProject('project', configReader)
@@ -173,6 +183,11 @@ describe(generateEntrypointsForProject.name, () => {
       [ChainSpecificAddress.from('eth', '0x01')]: {
         name: 'Contract1',
         type: 'Contract',
+        project: 'project',
+      },
+      [ChainSpecificAddress.from('eth', '0x04')]: {
+        name: 'InitialEoa',
+        type: 'EOA',
         project: 'project',
       },
     })

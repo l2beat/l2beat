@@ -27,7 +27,8 @@ export function generateEntrypoints(
     logger.info('(keeping legacy entrypoints)')
     const generated = entrypoints.entrypoints ?? []
     const legacyEntries = Object.entries(existingFile.entrypoints ?? [])
-      // EOAs are never entrypoints, so legacy ones are garbage-collected
+      // EOA entrypoints must come from current initialAddresses (see the
+      // generator), so legacy EOAs are garbage-collected
       .filter(([addr, v]) => !(addr in generated) && v.type === 'Contract')
       .map(([addr, v]) => [addr, { ...v, isLegacy: true }])
     entrypoints.entrypoints = {
@@ -70,12 +71,19 @@ export function generateEntrypointsForProject(
   configReader: ConfigReader,
 ) {
   const discovery = configReader.readDiscovery(project)
+  const initialAddresses = new Set(
+    configReader.readConfig(project).structure.initialAddresses,
+  )
   const entrypoints: Record<ChainSpecificAddress, Entrypoint> = {}
   discovery.entries.forEach((e) => {
-    // Only contracts own a project's discovery graph. EOAs (e.g. multisig
-    // signers) can belong to many unrelated projects, so turning one into
-    // a cross-project reference would merge unrelated discoveries.
-    if (e.type !== 'Contract') {
+    if (e.type === 'Reference') {
+      return
+    }
+    // Discovered EOAs (e.g. multisig signers) can belong to many unrelated
+    // projects, so an EOA may only become an entrypoint when it is
+    // explicitly listed as an initial address. Anything else would merge
+    // unrelated discoveries via cross-project references.
+    if (e.type === 'EOA' && !initialAddresses.has(e.address)) {
       return
     }
     entrypoints[e.address] = {
