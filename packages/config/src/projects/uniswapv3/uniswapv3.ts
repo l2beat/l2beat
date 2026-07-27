@@ -47,48 +47,6 @@ const poolProtocolFeeDenominator = (pool: string): number =>
       .feeProtocol,
   )
 
-// The two representative pools tracked for the architecture pages; value
-// tracking is external (DeFiLlama), so pools are not tracked as escrows.
-const trackedPools = [
-  { contract: 'UniswapV3Pool_USDC_WETH_005' },
-  { contract: 'UniswapV3Pool_WBTC_WETH_03' },
-] as const
-
-// Live protocol-fee denominators of the tracked pools, grouped per fee tier,
-// e.g. "1/4 on the 0.01% and 0.05% tiers and 1/6 on the 0.3% tier". Throws if
-// pools within one tier diverge so the wording gets updated, not stale.
-const trackedTierProtocolFees = (() => {
-  const byTier = new Map<number, number>()
-  for (const { contract } of trackedPools) {
-    const fee = poolValue(contract, 'fee')
-    const denominator = poolProtocolFeeDenominator(contract)
-    const existing = byTier.get(fee)
-    if (existing !== undefined && existing !== denominator) {
-      throw new Error(
-        `Tier ${fee} has mixed protocol fees: update the description wording`,
-      )
-    }
-    byTier.set(fee, denominator)
-  }
-  const byDenominator = new Map<number, number[]>()
-  for (const [fee, denominator] of [...byTier.entries()].sort(
-    (a, b) => a[0] - b[0],
-  )) {
-    byDenominator.set(denominator, [
-      ...(byDenominator.get(denominator) ?? []),
-      fee,
-    ])
-  }
-  return [...byDenominator.entries()]
-    .map(
-      ([denominator, fees]) =>
-        `1/${denominator} on the ${fees
-          .map(formatFeeTier)
-          .join(' and ')} ${fees.length > 1 ? 'tiers' : 'tier'}`,
-    )
-    .join(' and ')
-})()
-
 export const uniswapv3: BaseProject = {
   id: ProjectId('uniswapv3'),
   slug: 'uniswapv3',
@@ -147,14 +105,8 @@ export const uniswapv3: BaseProject = {
         defaultProtocolFeeDenominator: protocolFeeDenominator(
           discovery.getContractValue<number>('V3OpenFeeAdapter', 'defaultFee'),
         ),
-        trackedPoolCount: trackedPools.length,
-        trackedTierProtocolFees,
-        firepitMaxAssets: discovery.getContractValue<number>(
-          'Firepit',
-          'MAX_RELEASE_LENGTH',
-        ),
-        firepitThreshold: formatUni(
-          discovery.getContractValue<string>('Firepit', 'threshold'),
+        tier03ProtocolFeeDenominator: poolProtocolFeeDenominator(
+          'UniswapV3Pool_WBTC_WETH_03',
         ),
       },
     ),
