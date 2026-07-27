@@ -825,10 +825,12 @@
       "name": "UpgradeableBeacon",
       "address": "eth:0xdD283a04cc711aB9c08d79e665835821BEef710B",
       "type": "Contract",
+      "template": "global/UpgradeableBeacon",
       "sourceHashes": [
         "0x5cf3d26d4fcd1958dd8077785a9ff2adda45e0c7ca89b651ba85610102eadb3b"
       ],
       "proxyType": "immutable",
+      "description": "A beacon with an upgradeable implementation currently set as eth:0x056fD0A3eD85c6ae1Ec1c398B33581951Ed4b090. Beacon proxy contracts pointing to this beacon will all use its implementation.",
       "deployerAddress": "eth:0x482582979C9125abAb5a06F0E196E8F4015bF77A",
       "sinceTimestamp": 1775739251,
       "sinceBlock": 24842286,
@@ -864,6 +866,14 @@
         "0x45b490e7750475c1972ebf94ceb72dc1ba853862cfeb57ccdca8c329c87e29d2"
       ],
       "proxyType": "EIP1967 proxy",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xdD283a04cc711aB9c08d79e665835821BEef710B",
+          "description": "change the beacon implementation.",
+          "role": ".owner"
+        }
+      ],
       "deployerAddress": "eth:0x482582979C9125abAb5a06F0E196E8F4015bF77A",
       "sinceTimestamp": 1775739251,
       "sinceBlock": 24842286,
@@ -2030,10 +2040,11 @@
     "fluent/L1FluentBridge": "0xac8ac7bce9d4a146a60a73dc807c6c61ff1f11e4147b9e3dc26b8861f1fe0fb4",
     "fluent/NativeGateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "fluent/NitroVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "global/UpgradeableBeacon": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
   "usedBlockNumbers": { "ethereum": 25601611 },
-  "permissionsConfigHash": "0xa2bf737f9f73d87a3ff2862c8cf14027900eea4fad11ed152d33482f50e08d8d"
+  "permissionsConfigHash": "0x360c608e0913571a37110e1a5e9d11f128cff758e37c0943a47ac0246f1a6660"
 }

@@ -1,7 +1,7 @@
 {
   "SignallingEscrow": {
     "hash": "0x85169eeeb90741916e4da1279a6d46ed3fd567fda961aafb0abec62df1e732da",
-    "address": "eth:0x165813A31446a98c84E20Dda8C101BB3C8228e1c",
+    "address": "eth:0xd6A67636c05BeB5B4a5c90D408b03A63c4e39426",
     "blockNumber": 25624347
   },
   "PreviousSignallingEscrow": {

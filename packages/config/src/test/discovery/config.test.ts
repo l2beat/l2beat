@@ -35,7 +35,7 @@ export const onChainProjects: string[] = [
   'vector',
   'espresso',
   'dydx',
-  'tokens',
+  'lido',
   'gateway',
   'opcm16',
   'debridge',
