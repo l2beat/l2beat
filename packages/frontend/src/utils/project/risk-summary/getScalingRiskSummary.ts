@@ -4,15 +4,14 @@ import uniqBy from 'lodash/uniqBy'
 import type { ProjectVerificationWarnings } from '~/server/features/utils/getCommonProjectEntry'
 import type { RiskSummarySectionProps } from '../../../components/projects/sections/RiskSummarySection'
 import type { ProjectSectionProps } from '../../../components/projects/sections/types'
+import type { UnverifiedContractEntry } from '../contracts-and-permissions/getUnverifiedContractEntries'
 import { groupRisks } from './groupRisks'
 
 export function getScalingRiskSummarySection(
   project: Project<'scalingTechnology', 'contracts'>,
   verificationWarnings: ProjectVerificationWarnings,
-): Omit<
-  RiskSummarySectionProps,
-  keyof ProjectSectionProps | 'unverifiedContracts'
-> {
+  unverifiedContracts: UnverifiedContractEntry[],
+): Omit<RiskSummarySectionProps, keyof ProjectSectionProps> {
   const sections = [
     {
       id: 'data-availability',
@@ -66,5 +65,6 @@ export function getScalingRiskSummarySection(
     warning: project.scalingTechnology.warning,
     verificationWarnings,
     redWarning: undefined,
+    unverifiedContracts,
   }
 }

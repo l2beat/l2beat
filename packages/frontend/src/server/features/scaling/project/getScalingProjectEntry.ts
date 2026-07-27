@@ -374,7 +374,7 @@ export async function getScalingProjectEntry(
     : undefined
   const hostChainRisksSummary =
     hostChain &&
-    getScalingRiskSummarySection(hostChain, hostChainVerificationWarnings)
+    getScalingRiskSummarySection(hostChain, hostChainVerificationWarnings, [])
   const hostChainWarningWithRiskCount =
     hostChain && hostChainRisksSummary
       ? {
@@ -540,6 +540,7 @@ export async function getScalingProjectEntry(
   const riskSummary = getScalingRiskSummarySection(
     project,
     projectVerificationWarnings,
+    unverifiedContracts,
   )
   if (riskSummary.riskGroups.length > 0) {
     sections.push({
@@ -550,7 +551,6 @@ export async function getScalingProjectEntry(
         title: 'Risk summary',
         hostChainWarning: hostChainWarningWithRiskCount,
         isUnderReview: !!project.statuses.reviewStatus,
-        unverifiedContracts,
       },
     })
   }
