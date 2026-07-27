@@ -1,10 +1,10 @@
 {
   "$schema": "../tvs-config-schema.json",
-  "projectId": "apex",
+  "projectId": "apex-pro",
   "tokens": [
     {
       "mode": "auto",
-      "id": "apex-USDC",
+      "id": "apex-pro-USDC",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -23,7 +23,7 @@
     },
     {
       "mode": "auto",
-      "id": "apex-USDT",
+      "id": "apex-pro-USDT",
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",

@@ -1,4 +1,4 @@
-Generated with discovered.json: 0x99f4310550e32b4231cc95d543d356dad0f82ece
+Generated with discovered.json: 0x862004f3864317096b42c45e4dde7275ff470f23
 
 # Diff at Fri, 12 Jun 2026 12:07:43 GMT:
 
@@ -2676,8 +2676,8 @@ of each system can differ.
  .../.code/CommitteeUSDT/IAvailabilityVerifier.sol  |  24 ++
  .../ethereum/.code/CommitteeUSDT/IFactRegistry.sol |  39 ++
  .../.code/CommitteeUSDT/IQueryableFactRegistry.sol |  30 ++
- .../apex/ethereum/.code/CommitteeUSDT/Identity.sol |  24 ++
- .../apex/ethereum/.code/CommitteeUSDT/meta.txt     |   2 +
+ .../apex-pro/ethereum/.code/CommitteeUSDT/Identity.sol |  24 ++
+ .../apex-pro/ethereum/.code/CommitteeUSDT/meta.txt     |   2 +
  .../FinalizableGpsFactAdapterUSDT/Finalizable.sol  |  42 ++
  .../FinalizableGpsFactAdapter.sol                  |  40 ++
  .../GpsFactRegistryAdapter.sol                     |  57 +++
@@ -2703,7 +2703,7 @@ of each system can differ.
  .../contracts/interfaces/IFactRegister.sol         |  13 +
  .../contracts/interfaces/IStarkEx.sol              |  44 ++
  .../contracts/interfaces/IWETH.sol                 |   9 +
- .../apex/ethereum/.code/MultiSigPoolUSDT/meta.txt  |   2 +
+ .../apex-pro/ethereum/.code/MultiSigPoolUSDT/meta.txt  |   2 +
  .../implementation-1/Addresses.sol                 |  58 +++
  .../implementation-1/BlockDirectCall.sol           |  36 ++
  .../implementation-1/Governance.sol                | 123 ++++++
@@ -2854,4 +2854,3 @@ of each system can differ.
  .../.code/StarkExchangeUSDT/proxy/meta.txt         |   2 +
  181 files changed, 13514 insertions(+)
 ```
-

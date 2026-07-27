@@ -1,5 +1,6 @@
 import type { ScalingProject } from '../internalTypes'
 import { apechain } from '../projects/apechain/apechain'
+import { apexOmni } from '../projects/apex-omni/apex-omni'
 import { b3 } from '../projects/b3/b3'
 import { blessnet } from '../projects/blessnet/blessnet'
 import { bugbuster } from '../projects/bugbuster/bugbuster'
@@ -67,4 +68,5 @@ export const layer3s: ScalingProject[] = [
   playblock,
   superposition,
   winr,
+  apexOmni,
 ]

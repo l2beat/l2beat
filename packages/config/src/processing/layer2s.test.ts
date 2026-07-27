@@ -152,8 +152,8 @@ describe('layer2s', () => {
   describe('chain name equals project id', () => {
     for (const layer2 of layer2s) {
       const name = layer2.chainConfig?.name
-      // polygon-pos is the exception
-      if (name !== undefined && layer2.id !== 'polygon-pos') {
+      const exceptions = ['polygon-pos', 'apex-pro']
+      if (name !== undefined && !exceptions.includes(layer2.id)) {
         it(layer2.id.toString(), () => {
           expect(name).toEqual(layer2.id.toString())
         })

@@ -27,7 +27,7 @@ import {
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { StarkexDAC } from '../../templates/starkex-template'
 
-const discovery = new ProjectDiscovery('apex')
+const discovery = new ProjectDiscovery('apex-pro')
 
 const upgradeDelaySecondsUSDC = discovery.getContractValue<number>(
   'StarkPerpetualUSDC',
@@ -98,9 +98,9 @@ const dacConfig =
         membersCount: usdtCommittee.accounts.length,
       }
 
-export const apex: ScalingProject = {
+export const apexPro: ScalingProject = {
   type: 'layer2',
-  id: ProjectId('apex'),
+  id: ProjectId('apex-pro'),
   addedAt: UnixTime(1663927910), // 2022-09-23T10:11:50Z
   archivedAt: UnixTime(1752072188),
   capability: 'appchain',
@@ -117,9 +117,9 @@ export const apex: ScalingProject = {
   display: {
     architectureImage: 'starkex',
     headerWarning:
-      'Apex Pro and the associated StarkEx instances [were sunset](https://www.apex.exchange/blog/detail/ApeX-Pro-Sunset-Delisting-Timeline-for-Trading-Pairs).',
-    name: 'ApeX',
-    slug: 'apex',
+      'ApeX Pro and the associated StarkEx instances [were sunset](https://www.apex.exchange/blog/detail/ApeX-Pro-Sunset-Delisting-Timeline-for-Trading-Pairs).',
+    name: 'ApeX Pro',
+    slug: 'apex-pro',
     description: `ApeX Pro is a non-custodial trading platform that delivers
       limitless cross-margined perpetual contracts trading.`,
     detailedDescription: `ApeX Pro is running
@@ -145,7 +145,7 @@ export const apex: ScalingProject = {
     stage: 'NotApplicable',
   },
   chainConfig: {
-    name: 'apex',
+    name: 'apexpro',
     chainId: undefined,
     apis: [{ type: 'starkex', product: ['apex_usdc', 'apex_usdt'] }],
   },
