@@ -8,6 +8,7 @@ import {
   UnixTime,
   // formatSeconds,
 } from '@l2beat/shared-pure'
+import { formatUnits } from 'ethers/lib/utils'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -50,6 +51,14 @@ interface MainnetInboxConfig extends Record<string, ContractValue> {
   provingWindow: number
 }
 
+interface MultisigConfig extends Record<string, ContractValue> {
+  destinationProposalDuration: number
+}
+
+interface OptimisticGovernanceConfig extends Record<string, ContractValue> {
+  timelockPeriod: number
+}
+
 const mainnetInboxConfig = discovery.getContractValue<MainnetInboxConfig>(
   'MainnetInbox',
   'getConfig',
@@ -67,17 +76,29 @@ const whitelistedProverCount = discovery.getContractValue<number>(
 const chainId = 167000
 
 const proverPlural = whitelistedProverCount === 1 ? '' : 's'
-const securityCouncilStats = discovery.getMultisigStats(
-  'SignerList (Security Council)',
-)
 const taikoMultisigStats = discovery.getMultisigStats('Taiko Multisig')
+const securityCouncilMembersCount = discovery.getContractValue<number>(
+  'SignerList (Security Council)',
+  'addresslistLength',
+)
 const standardProposalThreshold = discovery.getContractValue<number>(
   'Multisig',
   'minApprovals',
 )
-const timelockPeriod = discovery.getContractValue<string>(
-  'OptimisticTokenVotingPlugin',
-  'governanceSettings_timelockPeriod_fmt',
+const standardProposalDurationSeconds =
+  discovery.getContractValue<MultisigConfig>(
+    'Multisig',
+    'multisigSettings',
+  ).destinationProposalDuration
+const timelockPeriodSeconds =
+  discovery.getContractValue<OptimisticGovernanceConfig>(
+    'OptimisticTokenVotingPlugin',
+    'governanceSettings',
+  ).timelockPeriod
+const standardProposalDuration = formatSeconds(standardProposalDurationSeconds)
+const timelockPeriod = formatSeconds(timelockPeriodSeconds)
+const standardUpgradeDelay = formatSeconds(
+  standardProposalDurationSeconds + timelockPeriodSeconds,
 )
 const minVetoPercent = discovery.getContractValue<number>(
   'OptimisticTokenVotingPlugin',
@@ -87,6 +108,13 @@ const emergencyProposalThreshold = discovery.getContractValue<number>(
   'EmergencyMultisig',
   'minApprovals',
 )
+const securityCouncilStats = `${emergencyProposalThreshold}/${securityCouncilMembersCount}`
+const taikoTotalSupply = Number(
+  formatUnits(
+    discovery.getContractValue<string>('Taiko Token', 'totalSupply'),
+    discovery.getContractValue<number>('Taiko Token', 'decimals'),
+  ),
+).toLocaleString('en-US')
 
 export const taiko: ScalingProject = {
   id: ProjectId('taiko'),
@@ -462,10 +490,35 @@ export const taiko: ScalingProject = {
       securityCouncilStats,
       taikoMultisigStats,
       standardProposalThreshold,
+      standardProposalDuration,
       timelockPeriod,
       minVetoPercent,
       emergencyProposalThreshold,
     }),
+    governanceInfo: {
+      securityCouncil: {
+        Composition: `**${standardProposalThreshold}/${securityCouncilMembersCount} standard · ${emergencyProposalThreshold}/${securityCouncilMembersCount} emergency** — ${securityCouncilMembersCount}-member signer set shared by custom Aragon OSx standard and emergency multisig plugins. Members were appointed by the Taiko team rather than elected and include Taiko Labs employees. Members can appoint EOA agents to act for them.`,
+        'Members public': `**Mapped** — Taiko publishes a [member wallet-to-entity mapping](https://github.com/taikoxyz/dao-ui-mono/blob/main/packages/ui/src/data/security-council-profiles.json). The ${securityCouncilMembersCount} current onchain members are Aragon, Chainbound, Drew Van der Werff, Gattaca, Taiko Labs, Halborn, L2BEAT, Nethermind, and Toni Wahrstätter. Each member wallet is mapped to its voting agent onchain.`,
+        Charter:
+          '**No public charter** — the [DAO values](https://docs.taiko.xyz/understanding-the-dao/taiko-dao-values/) define the council’s security mission and principles, while the [proposal guidelines](https://docs.taiko.xyz/understanding-the-dao/proposal-guidelines/) restrict emergency proposals to protocol-security and integrity matters. Council selection, terms, conflicts, and accountability are not defined in a public charter.',
+        'Can bypass DAO?': `**Yes, for emergencies** — ${emergencyProposalThreshold} Security Council approvals execute an encrypted proposal immediately, with no TAIKO-holder veto or delay. Standard proposals require ${standardProposalThreshold} approvals and remain vetoable. The council controls most core upgrades but no longer has permissions over Treasury funds.`,
+        'DAO can override SC?': `**Veto only** — ${minVetoPercent}% of eligible TAIKO can block a standard proposal. Token holders cannot create proposals, approve payloads, remove council members, or block emergency proposals; changing the signer list requires another council-approved proposal.`,
+      },
+      upgrades: {
+        'Normal upgrade path': `Security Council member creates a public executable payload → ${standardProposalThreshold} council approvals → **${standardProposalDuration} token-holder veto period** → if less than ${minVetoPercent}% of eligible TAIKO vetoes, **${timelockPeriod} timelock** → permissionless execution of the approved onchain actions.`,
+        'Emergency upgrade path': `**${emergencyProposalThreshold} Security Council approvals, instant** — proposal metadata and actions stay encrypted while approvals are collected. A council member decrypts the payload, which is integrity-checked against the approved ciphertext and executed without a token-holder veto or timelock; its contents become public upon execution or expiry.`,
+        'Exit window': `**${standardUpgradeDelay} standard · 0 emergency** — the standard path provides ${standardProposalDuration} of public vetoing followed by a ${timelockPeriod} timelock. Emergency proposals bypass both.`,
+      },
+      tokenGovernance: {
+        'Governance token': `\`TAIKO\` on Ethereum — ${taikoTotalSupply} total supply, all minted at initialization; the current implementation has no further mint function. One delegated TAIKO equals one veto vote, snapshotted when the proposal is created. The Foundation treasury, DAO controller, canonical ERC20 vault, and zero address are excluded from eligible supply.`,
+        'Voting venue':
+          '[Taiko DAO](https://dao.taiko.xyz/) for onchain vetoes; proposals and temperature checks are discussed on the [Taiko forum](https://community.taiko.xyz/c/formal-governance-proposals-including-temperature-checks-drafts-and-proposals-for-on-chain-voting/9).',
+        'Proposal threshold':
+          '**No TAIKO threshold** — only a Security Council member can create an onchain proposal. Community members can submit forum proposals, but a council member must sponsor the idea and supply the executable payload.',
+        Quorum: `**No approval quorum; ${minVetoPercent}% veto threshold.** Standard proposals pass optimistically unless at least ${minVetoPercent}% of eligible TAIKO at the proposal snapshot vetoes. Unused and undelegated eligible tokens still count in the denominator.`,
+        'Execution model': `**Council-gated optimistic veto + permissionless execution.** The Security Council approves the exact onchain actions. Token holders can only veto; if the threshold is not reached and the ${timelockPeriod} timelock expires, anyone can call \`execute()\`. Emergency proposals skip the veto and delay.`,
+      },
+    },
   },
   technology: {
     dataAvailability: {
