@@ -1,3 +1,153 @@
+Generated with discovered.json: 0x2fc0e205a09fb8cb3fdd090cda6f40537f4de2dd
+
+# Diff at Mon, 20 Jul 2026 10:28:28 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@7377ac7e3e345e802eb1ede5f0ed37baf517c024 block: 1784278215
+- current timestamp: 1784543140
+
+## Description
+
+Cleaned up spam from the v8.0 upgrade.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784278215 (main branch discovery), not current.
+
+```diff
+    contract LineaRollup (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F) [linea/LineaRollup_ForcedTrx_v8_0] {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol.
+      values.getRequiredForcedTransactionFields:
+-        {"finalizedState":"0x6af94bc910a5facbc347462f6b2bc840940b7c99ae3cb483742dfd2c74c9d60f","previousForcedTransactionRollingHash":"0x0000000000000000000000000000000000000000000000000000000000000000","previousForcedTransactionBlockDeadline":0,"currentFinalizedL2BlockNumber":31407522,"forcedTransactionFeeAmount":1000000000000000}
+    }
+```
+
+Generated with discovered.json: 0x097f79051ae4be768c4bafbba91da6ce27bf75d5
+
+# Diff at Fri, 17 Jul 2026 10:59:45 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@da1cdcadd8fbcc84c2ca46f8a53802d0c8dfe5fe block: 1777891456
+- current timestamp: 1784278215
+
+## Description
+
+Upgraded Linea rollup contract to v8.0, diff: https://disco.l2beat.com/diff/eth:0xE68697690E8ff196A6aBB3E1385156D87Df85332/eth:0x59290394dDC1cF84e671701A929710643c343530.
+
+The upgrade sets the stage for forced L1 transactions, however they are not live yet. `FORCED_TRANSACTION_SENDER_ROLE` can send a forced transaction, which defines L2 block number deadline by which the trx must be included, otherwise the rollup operation stops. `SET_ADDRESS_FILTER_ROLE` can set address filterer, addresses on this list are not allowed to force include trxs on L1 (OFAC compliance is cited). `FORCED_TRANSACTION_SENDER_ROLE` is not held by anyone yet, preventing from using forced transactions.
+
+More precise code changes:
+- Forced trxs could now be added to the state of the rollup (`nextForcedTransactionNumber`, `forcedTransactionL2BlockNumbers`, `forcedTransactionRollingHashes`).
+- `storeForcedTransaction` adds a forced trx to the state, it could be called only by `FORCED_TRANSACTION_SENDER_ROLE`. It doesn't check whether the forced trx fee was paid, whether the `_blockNumberDeadline` is sufficiently in future or whether the sender address is not filtered. Probably these checks will be done in another contract with `FORCED_TRANSACTION_SENDER_ROLE` permissions.
+- In `_finalizeBlocks`, several checks are added, including whether all addresses filtered by the sequencer are registered in the filter, whether no forced trx has expired.
+
+Also, removed L2Roles Linea ms module on L2.
+
+Also, upgraded Linea verifier, not reproduced yet.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierFull (eth:0x0D0f070386edC441A63fB8FAe8FB937Bbd88c5Cb) [N/A]
+    +++ description: None
+```
+
+```diff
+    contract LineaRollup (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F) [linea/LineaRollup_ForcedTrx_v8_0] {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol.
+      template:
+-        "linea/LineaRollup_NativeYield_v7_1"
++        "linea/LineaRollup_ForcedTrx_v8_0"
+      sourceHashes.1:
+-        "0x61e0da7291b49dc345bdfe09390ff5f67c0d1ad182602ba2b4c238eb023dda50"
++        "0xf3482110e327210ee9824abef6aa6fea72bf9a49a46187d08853a978c2210c65"
+      values.$implementation:
+-        "eth:0xE68697690E8ff196A6aBB3E1385156D87Df85332"
++        "eth:0x59290394dDC1cF84e671701A929710643c343530"
+      values.$pastUpgrades.11:
++        ["2026-07-16T11:32:59.000Z","0x4bcfe7ea1724555288f7cf4d7a0de608182483a41d670e3027b89c3e989240c9",["eth:0x59290394dDC1cF84e671701A929710643c343530"]]
+      values.$upgradeCount:
+-        11
++        12
+      values.CONTRACT_VERSION:
+-        "7.1"
++        "8.0"
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
+      values.verifiers.1:
+-        "eth:0x0D0f070386edC441A63fB8FAe8FB937Bbd88c5Cb"
++        "eth:0x09ac9f7E5Fb37e241e0B1e52aaF01eFE0a488a77"
+      values.addressFilter:
++        "eth:0x526AE78F0103Ae73F05449ae30eb626C1003784E"
+      values.FORCED_TRANSACTION_FEE_SETTER_ROLE:
++        "0xdaafd36d8da81d5104d4fd21e3ccc58683c62ba08cd23875bcfbc0583a3f49dd"
+      values.FORCED_TRANSACTION_SENDER_ROLE:
++        "0xb63b70db607c764adad98a6745fc4efcea212ebc7b501d5753c57d675f377a66"
+      values.forcedTransactionFeeInWei:
++        1000000000000000
+      values.getRequiredForcedTransactionFields:
++        {"finalizedState":"0x6af94bc910a5facbc347462f6b2bc840940b7c99ae3cb483742dfd2c74c9d60f","previousForcedTransactionRollingHash":"0x0000000000000000000000000000000000000000000000000000000000000000","previousForcedTransactionBlockDeadline":0,"currentFinalizedL2BlockNumber":31407522,"forcedTransactionFeeAmount":1000000000000000}
+      values.SET_ADDRESS_FILTER_ROLE:
++        "0x012c76ef7f96cd7eb95acbdc250ad5696bbe3fd2fcf0207571939fa40c2e0167"
+      implementationNames.eth:0xE68697690E8ff196A6aBB3E1385156D87Df85332:
+-        "LineaRollup"
+      implementationNames.eth:0x59290394dDC1cF84e671701A929710643c343530:
++        "LineaRollup"
+    }
+```
+
+```diff
+    contract YieldManager (eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94) [linea/YieldManager] {
+    +++ description: Manages flows of ETH and staked ETH in and out of rollup contract reserves. Tracks the available ETH balance for L2 exits, configures target parameters for amount of staked ETH, communicates with yield provider adaptors.
++++ description: Value relative to TVS, part of the computation of minimal rollup ETH reserve.
+      values.minimumWithdrawalReservePercentageBps:
+-        9000
++        8500
++++ description: Value relative to TVS, part of the computation of target rollup ETH reserve.
+      values.targetWithdrawalReservePercentageBps:
+-        9888
++        9000
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L2Roles (linea:0x3886a948eA7b4053312c3aE31a13776144aA6239) [linea/L2Roles]
+    +++ description: The Zodiac 'Roles' module for Safe multisigs allows defining roles that can call preconfigured targets on behalf of the Gnosis Safe.
+```
+
+```diff
+    contract Linea Multisig 3 (linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD) [GnosisSafe] {
+    +++ description: None
+      values.GnosisSafe_modules.0:
+-        "linea:0x3886a948eA7b4053312c3aE31a13776144aA6239"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierFull (eth:0x09ac9f7E5Fb37e241e0B1e52aaF01eFE0a488a77) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AddressFilter (eth:0x526AE78F0103Ae73F05449ae30eb626C1003784E) [linea/AddressFilter]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../src/projects/linea/.flat/AddressFilter.sol     |  976 ++++++++++
+ .../.flat@1777891456/L2Roles.sol => /dev/null      | 1992 --------------------
+ .../LineaRollup/LineaRollup.sol                    |  719 +++++--
+ ...0x09ac9f7E5Fb37e241e0B1e52aaF01eFE0a488a77.sol} |   50 +-
+ 4 files changed, 1615 insertions(+), 2122 deletions(-)
+```
+
 Generated with discovered.json: 0x0f25d1441482987af549abc9b4d5fa1563054146
 
 # Diff at Tue, 09 Jun 2026 12:43:35 GMT:

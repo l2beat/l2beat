@@ -181,6 +181,101 @@
       "description": "Deprecated Aragon governance plugin excluded from the active governance set.",
       "ignoreDiscovery": true
     },
+    "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03": {
+      "fields": {
+        "initialKmsContextThreshold": {
+          "description": "Immutable public-decryption threshold assigned to initialKmsContextId during the v0.2 migration. It remains security-critical after rotation while initialKmsContextSigners is non-empty; an empty signer list means the context was destroyed.",
+          "severity": "HIGH",
+          "type": "RISK_PARAMETER",
+          "handler": { "type": "hardcoded", "value": 7 }
+        }
+      }
+    },
+    "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24": {
+      "fields": {
+        "initialMigratedKmsContextId": {
+          "description": "Identifier assigned to the Gateway KMS context created by the v0.5 migration. Version 1 Decryption response metadata can continue to select it after later rotations.",
+          "severity": "HIGH",
+          "type": "RISK_PARAMETER",
+          "handler": {
+            "type": "hardcoded",
+            "value": "3166189940082864718613269121331309980362851143201109172953918312716374638593"
+          }
+        },
+        "initialMigratedKmsTxSenders": {
+          "description": "KMS transaction senders in the Gateway context created by the v0.5 migration. Node membership is immutable and GatewayConfig cannot destroy contexts, so these accounts remain authorized to submit responses to Decryption after future rotations.",
+          "severity": "HIGH",
+          "type": "PERMISSION",
+          "handler": {
+            "type": "hardcoded",
+            "value": [
+              "zama:0x711EBE8aA590f9C9904ff279239E89dB2eFbC890",
+              "zama:0xB4CE988D382425F64c99A352375F72A5f1cf6FFB",
+              "zama:0x4eC7200E392B97913cbD6d8160B011406EB019F1",
+              "zama:0xEd1D622bd59d657580aBAc65312b40B4B2dA6236",
+              "zama:0x74a1E2e87a4026b7B8b5252c747E514159515e9a",
+              "zama:0x0e25B8DB74c754C8275C0B219ba2A6CD7c59E31D",
+              "zama:0x577Fd21e4BC7D644A4177C4B89146e1Ab394De04",
+              "zama:0xbaac6F9DD84bFB303F05B4DE45A88Eec86855BD0",
+              "zama:0x43e4c21cf9d24Dc5b4e00031349EC213A2ba8340",
+              "zama:0xC105B5933446658D226582f7A112F49a70b54364",
+              "zama:0xbcF4943A856497FB2345409D35f4d1eae9A0363E",
+              "zama:0xD227C4B573800EdA3bAdA6DAC872E9134E012e6D",
+              "zama:0x487e41623b7FeB464ff79F7326DCa791c9a1c5EC"
+            ]
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "role": ".gatewayKmsTxSenders",
+              "description": "submit KMS decryption responses to Decryption."
+            }
+          ]
+        },
+        "initialMigratedKmsSigners": {
+          "description": "KMS signers in the Gateway context created by the v0.5 migration. Node membership is immutable and GatewayConfig cannot destroy contexts, so this signer set remains authorized for Decryption responses after future rotations.",
+          "severity": "HIGH",
+          "type": "PERMISSION",
+          "handler": {
+            "type": "hardcoded",
+            "value": [
+              "zama:0xe9f7ecfF21a2e0Ca58eA26ae869FEF38ab49ed6f",
+              "zama:0xdC472efa1642D5afB684aAaa546E22FB24AAB965",
+              "zama:0xbf05c17BEB0BF2F2c78Cd491A53a148e035279C3",
+              "zama:0x915055c5F05C0d88BCdf1e3DfBA18aBD2a18350f",
+              "zama:0x41b19EB4585450db79ac03ba9503106EC7895905",
+              "zama:0x6e5f02Cd4B33f0Cf4ED5326ac9eE25e5aA8c4921",
+              "zama:0x966188a1f697F6A1B5cfA51495DD8A8A7b5CdB8D",
+              "zama:0x5d0e7033774dD43eE546D49b72Bd0B561E52f7C8",
+              "zama:0xDFc9Dcb3D206AA164770874f36a4B5AD2EE5194f",
+              "zama:0x7C5Eeb4D8CED0101799B8Cc212eE874097364F58",
+              "zama:0x7C17BE232e5968BDa9516478B798b9E90D013fCC",
+              "zama:0x6016DCA5e91e62826e3FEA1Fb0a763602dc1E385",
+              "zama:0xB7978e602D2AF68258dA614AF949E014BF0DE0eb"
+            ]
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "role": ".gatewayKmsSigners",
+              "description": "sign public decryption results and user decryption shares accepted by Decryption."
+            }
+          ]
+        },
+        "initialMigratedPublicDecryptionThreshold": {
+          "description": "Snapshot of the public-decryption threshold in the context created by the v0.5 migration. Update this project-specific value if governance changes the initial context while it is current. This value remains security-critical after future context rotations.",
+          "severity": "HIGH",
+          "type": "RISK_PARAMETER",
+          "handler": { "type": "hardcoded", "value": 7 }
+        },
+        "initialMigratedUserDecryptionThreshold": {
+          "description": "Snapshot of the user-decryption threshold in the context created by the v0.5 migration. Update this project-specific value if governance changes the initial context while it is current. This value remains security-critical after future context rotations.",
+          "severity": "HIGH",
+          "type": "RISK_PARAMETER",
+          "handler": { "type": "hardcoded", "value": 9 }
+        }
+      }
+    },
     "zama:0x5f0F86BcEad6976711C9B131bCa5D30E767fe2bE": {
       "description": "Gateway owner Safe. Its LayerZero governance module is outside the Zama Gateway protocol surface covered here.",
       "ignoreRelatives": ["GnosisSafe_modules"]

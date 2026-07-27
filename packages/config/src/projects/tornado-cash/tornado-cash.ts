@@ -171,6 +171,7 @@ export const tornadoCash: BaseProject = {
       orderHint: Number.MAX_SAFE_INTEGER,
       description:
         'The core Tornado Cash contracts are immutable and have no admin upgrade path, so users can always withdraw with a valid note and proof.',
+      walkawayTest: { passed: true },
     },
     reproducibility: {
       value: 'Reproducible',
@@ -179,7 +180,7 @@ export const tornadoCash: BaseProject = {
         'There is at least one practical way to participate in Tornado Cash using published source code that can be audited and run locally.',
     },
     privacy: {
-      value: 'None',
+      value: 'Unconditional',
       sentiment: 'good',
       description:
         'There is no protocol-level compliance mechanism or way to compromise user privacy.',

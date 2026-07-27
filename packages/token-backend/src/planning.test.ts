@@ -1,9 +1,87 @@
-import type { DeployedTokenRecord, TokenDatabase } from '@l2beat/database'
+import type {
+  AbstractTokenRecord,
+  DeployedTokenRecord,
+  TokenDatabase,
+} from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { generatePlan } from './planning'
+import { generatePlan, Plan } from './planning'
 
 const USER = 'someone@l2beat.com'
+
+describe('Plan', () => {
+  it('defaults missing additional CoinGecko entries on abstract token records', () => {
+    const parsed = Plan.parse({
+      intent: {
+        type: 'UpdateAbstractTokenIntent',
+        id: 'ABC123',
+        update: {
+          additionalCoingeckoEntries: [
+            {
+              coingeckoId: 'bridged-token',
+              coingeckoListingTimestamp: 1782345600,
+              iconUrl: 'https://example.com/icon.png',
+            },
+          ],
+        },
+      },
+      commands: [
+        {
+          type: 'UpdateAbstractTokenCommand',
+          id: 'ABC123',
+          existing: {
+            id: 'ABC123',
+            symbol: 'USDT',
+            issuer: null,
+            category: null,
+            iconUrl: null,
+            coingeckoId: 'tether',
+            coingeckoListingTimestamp: null,
+            comment: null,
+            reviewed: false,
+            isPriceUnreliable: false,
+          },
+          update: {
+            additionalCoingeckoEntries: [
+              {
+                coingeckoId: 'bridged-token',
+                coingeckoListingTimestamp: 1782345600,
+                iconUrl: 'https://example.com/icon.png',
+              },
+            ],
+          },
+        },
+      ],
+    })
+
+    expect(parsed.commands[0]).toEqual({
+      type: 'UpdateAbstractTokenCommand',
+      id: 'ABC123',
+      existing: {
+        id: 'ABC123',
+        symbol: 'USDT',
+        issuer: null,
+        category: null,
+        iconUrl: null,
+        coingeckoId: 'tether',
+        coingeckoListingTimestamp: null,
+        additionalCoingeckoEntries: null,
+        comment: null,
+        reviewed: false,
+        isPriceUnreliable: false,
+      },
+      update: {
+        additionalCoingeckoEntries: [
+          {
+            coingeckoId: 'bridged-token',
+            coingeckoListingTimestamp: 1782345600,
+            iconUrl: 'https://example.com/icon.png',
+          },
+        ],
+      },
+    })
+  })
+})
 
 describe('planning proof stamping', () => {
   describe('AddDeployedTokenIntent', () => {
@@ -169,17 +247,347 @@ describe('planning proof stamping', () => {
       ])
     })
   })
+
+  describe('TokenRelation intents', () => {
+    it('adds a token relation when both endpoints exist and the relation is new', async () => {
+      const tokenFrom = deployedRecord('ethereum', '0xaaa', 'USDC01')
+      const tokenTo = deployedRecord('arbitrum', '0xbbb', 'USDC01')
+      const relation = tokenRelation(tokenFrom, tokenTo)
+      const db = mockDb({
+        deployedByPk: {
+          [`${tokenFrom.chain}:${tokenFrom.address}`]: tokenFrom,
+          [`${tokenTo.chain}:${tokenTo.address}`]: tokenTo,
+        },
+      })
+
+      const result = await generatePlan(
+        db,
+        { type: 'AddTokenRelationIntent', record: relation },
+        { user: USER, skipLogs: true },
+      )
+
+      assertSuccess(result)
+      expect(result.plan.commands).toEqual([
+        {
+          type: 'AddTokenRelationCommand',
+          record: relation,
+        },
+      ])
+    })
+
+    it('updates an existing token relation', async () => {
+      const existing = tokenRelation(
+        deployedRecord('ethereum', '0xaaa', 'USDC01'),
+        deployedRecord('arbitrum', '0xbbb', 'USDC01'),
+      )
+      const db = mockDb({ existingRelation: existing })
+
+      const result = await generatePlan(
+        db,
+        {
+          type: 'UpdateTokenRelationIntent',
+          pk: relationPk(existing),
+          update: { transfer: { transferId: 'transfer-2' } },
+        },
+        { user: USER, skipLogs: true },
+      )
+
+      assertSuccess(result)
+      expect(result.plan.commands).toEqual([
+        {
+          type: 'UpdateTokenRelationCommand',
+          pk: relationPk(existing),
+          existing,
+          update: { transfer: { transferId: 'transfer-2' } },
+        },
+      ])
+    })
+
+    it('deletes an existing token relation', async () => {
+      const existing = tokenRelation(
+        deployedRecord('ethereum', '0xaaa', 'USDC01'),
+        deployedRecord('arbitrum', '0xbbb', 'USDC01'),
+      )
+      const db = mockDb({ existingRelation: existing })
+
+      const result = await generatePlan(
+        db,
+        { type: 'DeleteTokenRelationIntent', pk: relationPk(existing) },
+        { user: USER, skipLogs: true },
+      )
+
+      assertSuccess(result)
+      expect(result.plan.commands).toEqual([
+        {
+          type: 'DeleteTokenRelationCommand',
+          pk: relationPk(existing),
+          existing,
+        },
+      ])
+    })
+  })
+
+  describe('DeleteDeployedTokenIntent', () => {
+    it('leaves touching token relations in place when deleting the token', async () => {
+      const existing = deployedRecord('ethereum', '0xaaa', 'USDC01')
+      const db = mockDb({ existingDeployed: existing })
+
+      const result = await generatePlan(
+        db,
+        {
+          type: 'DeleteDeployedTokenIntent',
+          pk: { chain: existing.chain, address: existing.address },
+        },
+        { user: USER, skipLogs: true },
+      )
+
+      assertSuccess(result)
+      expect(result.plan.commands).toEqual([
+        {
+          type: 'DeleteDeployedTokenCommand',
+          pk: { chain: existing.chain, address: existing.address },
+          existing,
+        },
+      ])
+    })
+  })
+})
+
+describe('MergeAbstractTokenIntent', () => {
+  it('copies source CoinGecko entries, reassigns deployed tokens, and deletes source', async () => {
+    const source = abstractRecord('SOURCE', 'USDC', {
+      coingeckoId: 'usd-coin-bridged',
+      coingeckoListingTimestamp: UnixTime(100),
+      iconUrl: 'https://example.com/source.png',
+      additionalCoingeckoEntries: [
+        {
+          coingeckoId: 'usd-coin-extra',
+          coingeckoListingTimestamp: UnixTime(200),
+          iconUrl: 'https://example.com/extra.png',
+        },
+        {
+          coingeckoId: 'usd-coin',
+          coingeckoListingTimestamp: UnixTime(300),
+          iconUrl: 'https://example.com/duplicate-primary.png',
+        },
+      ],
+    })
+    const target = abstractRecord('TARGET', 'USDC', {
+      coingeckoId: 'usd-coin',
+      additionalCoingeckoEntries: [
+        {
+          coingeckoId: 'usd-coin-extra',
+          coingeckoListingTimestamp: UnixTime(201),
+          iconUrl: 'https://example.com/existing-extra.png',
+        },
+      ],
+    })
+    const firstDeployed = deployedRecord('base', '0xbbb', source.id)
+    const secondDeployed = deployedRecord('ethereum', '0xaaa', source.id)
+    const db = mockDb({
+      abstractTokens: [source, target],
+      deployedTokens: [secondDeployed, firstDeployed],
+    })
+
+    const result = await generatePlan(
+      db,
+      {
+        type: 'MergeAbstractTokenIntent',
+        // The UI sends display ids (`<id>:<issuer>:<symbol>`); planning must
+        // extract the unique identifier prefix.
+        sourceId: `${source.id}:${source.issuer}:${source.symbol}`,
+        targetId: `${target.id}:${target.issuer}:${target.symbol}`,
+      },
+      { user: USER, skipLogs: true },
+    )
+
+    assertSuccess(result)
+    expect(result.plan.commands).toEqual([
+      {
+        type: 'UpdateAbstractTokenCommand',
+        existing: target,
+        id: target.id,
+        update: {
+          comment:
+            'Merged from SOURCE:null:USDC (category: null, coingeckoId: usd-coin-bridged)',
+          additionalCoingeckoEntries: [
+            {
+              coingeckoId: 'usd-coin-extra',
+              coingeckoListingTimestamp: UnixTime(201),
+              iconUrl: 'https://example.com/existing-extra.png',
+            },
+            {
+              coingeckoId: 'usd-coin-bridged',
+              coingeckoListingTimestamp: UnixTime(100),
+              iconUrl: 'https://example.com/source.png',
+            },
+          ],
+        },
+      },
+      {
+        type: 'UpdateDeployedTokenCommand',
+        existing: firstDeployed,
+        pk: { chain: firstDeployed.chain, address: firstDeployed.address },
+        update: {
+          abstractTokenId: target.id,
+          abstractTokenAssignmentProof: { kind: 'manual', user: USER },
+        },
+      },
+      {
+        type: 'UpdateDeployedTokenCommand',
+        existing: secondDeployed,
+        pk: { chain: secondDeployed.chain, address: secondDeployed.address },
+        update: {
+          abstractTokenId: target.id,
+          abstractTokenAssignmentProof: { kind: 'manual', user: USER },
+        },
+      },
+      {
+        type: 'DeleteAbstractTokenCommand',
+        id: source.id,
+        existing: source,
+      },
+    ])
+  })
+
+  it('appends the merge note to an existing comment even when the source has no CoinGecko data', async () => {
+    const source = abstractRecord('SOURCE', 'DAI', {
+      issuer: 'MakerDAO',
+      category: 'other',
+    })
+    const target = abstractRecord('TARGET', 'DAI', {
+      comment: 'existing note',
+    })
+    const db = mockDb({ abstractTokens: [source, target] })
+
+    const result = await generatePlan(
+      db,
+      {
+        type: 'MergeAbstractTokenIntent',
+        sourceId: source.id,
+        targetId: target.id,
+      },
+      { user: USER, skipLogs: true },
+    )
+
+    assertSuccess(result)
+    expect(result.plan.commands).toEqual([
+      {
+        type: 'UpdateAbstractTokenCommand',
+        existing: target,
+        id: target.id,
+        update: {
+          comment:
+            'existing note\nMerged from SOURCE:MakerDAO:DAI (category: other, coingeckoId: null)',
+        },
+      },
+      {
+        type: 'DeleteAbstractTokenCommand',
+        id: source.id,
+        existing: source,
+      },
+    ])
+  })
+
+  it('fails when source and target are the same token', async () => {
+    const db = mockDb({})
+
+    const result = await generatePlan(
+      db,
+      {
+        type: 'MergeAbstractTokenIntent',
+        sourceId: 'USDC01',
+        targetId: 'USDC01',
+      },
+      { user: USER, skipLogs: true },
+    )
+
+    expect(result).toEqual({
+      outcome: 'error',
+      error: 'Cannot merge an abstract token into itself',
+    })
+  })
+
+  it('fails when target token does not exist', async () => {
+    const source = abstractRecord('SOURCE', 'USDC')
+    const db = mockDb({ abstractTokens: [source] })
+
+    const result = await generatePlan(
+      db,
+      {
+        type: 'MergeAbstractTokenIntent',
+        sourceId: source.id,
+        targetId: 'TARGET',
+      },
+      { user: USER, skipLogs: true },
+    )
+
+    expect(result).toEqual({
+      outcome: 'error',
+      error: "AbstractToken TARGET doesn't exist",
+    })
+  })
 })
 
 function mockDb(opts: {
   existingDeployed?: DeployedTokenRecord
+  abstractTokens?: AbstractTokenRecord[]
+  deployedTokens?: DeployedTokenRecord[]
+  deployedByPk?: Record<string, DeployedTokenRecord>
+  existingRelation?: ReturnType<typeof tokenRelation>
 }): TokenDatabase {
+  const findDeployed = mockFn().executes(
+    async (pk: { chain: string; address: string }) => {
+      return (
+        opts.deployedByPk?.[`${pk.chain}:${pk.address.toLowerCase()}`] ??
+        opts.existingDeployed
+      )
+    },
+  )
+
   return mockObject<TokenDatabase>({
     deployedToken: mockObject<TokenDatabase['deployedToken']>({
-      findByChainAndAddress: mockFn().resolvesTo(opts.existingDeployed),
+      findByChainAndAddress: findDeployed,
+      getByAbstractTokenId: mockFn((id: string) =>
+        Promise.resolve(
+          (opts.deployedTokens ?? []).filter(
+            (token) => token.abstractTokenId === id,
+          ),
+        ),
+      ),
     }),
-    abstractToken: mockObject<TokenDatabase['abstractToken']>({}),
+    abstractToken: mockObject<TokenDatabase['abstractToken']>({
+      findById: mockFn((id: string) =>
+        Promise.resolve(
+          (opts.abstractTokens ?? []).find((token) => token.id === id),
+        ),
+      ),
+    }),
+    tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
+      findByPrimaryKey: mockFn().resolvesTo(opts.existingRelation),
+    }),
   })
+}
+
+function abstractRecord(
+  id: string,
+  symbol: string,
+  overrides: Partial<AbstractTokenRecord> = {},
+): AbstractTokenRecord {
+  return {
+    id,
+    symbol,
+    issuer: null,
+    category: null,
+    iconUrl: null,
+    coingeckoId: null,
+    coingeckoListingTimestamp: null,
+    additionalCoingeckoEntries: null,
+    comment: null,
+    reviewed: false,
+    isPriceUnreliable: false,
+    ...overrides,
+  }
 }
 
 function deployedRecord(
@@ -196,6 +604,32 @@ function deployedRecord(
     deploymentTimestamp: UnixTime(1),
     comment: null,
     metadata: null,
+  }
+}
+
+function tokenRelation(
+  tokenFrom: Pick<DeployedTokenRecord, 'chain' | 'address'>,
+  tokenTo: Pick<DeployedTokenRecord, 'chain' | 'address'>,
+) {
+  return {
+    tokenFromChain: tokenFrom.chain,
+    tokenFromAddress: tokenFrom.address,
+    tokenToChain: tokenTo.chain,
+    tokenToAddress: tokenTo.address,
+    plugin: 'superbridge',
+    bridgeType: 'burnAndMint' as const,
+    transfer: { transferId: 'transfer-1' },
+  }
+}
+
+function relationPk(relation: ReturnType<typeof tokenRelation>) {
+  return {
+    tokenFromChain: relation.tokenFromChain,
+    tokenFromAddress: relation.tokenFromAddress,
+    tokenToChain: relation.tokenToChain,
+    tokenToAddress: relation.tokenToAddress,
+    plugin: relation.plugin,
+    bridgeType: relation.bridgeType,
   }
 }
 

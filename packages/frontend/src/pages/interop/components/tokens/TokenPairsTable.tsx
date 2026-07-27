@@ -9,7 +9,7 @@ import type {
   InteropTopItemsSorting,
 } from '~/server/features/scaling/interop/types'
 import { useTRPC } from '~/trpc/React'
-import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
+import type { InteropSelection } from '../../utils/types'
 import { getTopTokensPairsColumns, type TokensPairRow } from './columns'
 import {
   InfiniteScrollTrigger,
@@ -44,7 +44,10 @@ export function TokensPairsTable({
   showFlowsColumn?: boolean
 }) {
   const trpc = useTRPC()
-  const { selectedChains } = useInteropSelectedChains()
+  const selectedChains = useMemo<InteropSelection>(
+    () => ({ from: queryInput.from, to: queryInput.to }),
+    [queryInput],
+  )
   const [sorting, setSorting] =
     useState<InteropTopItemsSorting>(DEFAULT_SORTING)
   const queryInputWithSort = useMemo(

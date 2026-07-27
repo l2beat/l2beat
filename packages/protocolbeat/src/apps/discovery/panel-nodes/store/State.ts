@@ -4,7 +4,6 @@ export interface State {
   readonly projectId: string
   readonly nodes: readonly Node[]
   readonly selected: readonly string[]
-  readonly hidden: readonly string[]
   readonly history: HistoryState
   readonly userPreferences: {
     readonly enableDimming: boolean
@@ -55,6 +54,7 @@ export interface Node {
   readonly hiddenFields: string[]
   readonly box: Box
   readonly color: number
+  readonly colorSourceId?: string
   readonly hueShift: number
   readonly data: unknown
   readonly isReachable: boolean
@@ -70,11 +70,11 @@ export interface HistoryState {
 
 export interface HistorySnapshot {
   readonly nodes: readonly Node[]
-  readonly hidden: readonly string[]
 }
 
 export interface Field {
   readonly name: string
+  readonly label?: string
   readonly target: string
   readonly box: Box
   readonly connection: Connection

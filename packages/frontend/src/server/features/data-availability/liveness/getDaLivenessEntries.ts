@@ -26,7 +26,7 @@ export async function getDaLivenessEntries(): Promise<
 > {
   const [layers, bridges] = await Promise.all([
     ps.getProjects({
-      select: ['daLayer', 'statuses'],
+      select: ['daLayer', 'statuses', 'display'],
       whereNot: ['archivedAt'],
     }),
     ps.getProjects({
@@ -81,7 +81,7 @@ export interface DaBridgeLivenessEntry
 }
 
 function getDaLivenessEntry(
-  layer: Project<'daLayer' | 'statuses'>,
+  layer: Project<'daLayer' | 'statuses' | 'display'>,
   bridges: Project<
     'daBridge' | 'statuses' | 'trackedTxsConfig',
     'livenessInfo' | 'contracts'

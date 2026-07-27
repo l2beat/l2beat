@@ -10,7 +10,7 @@ import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexe
 import type {
   Configuration,
   ManagedMultiIndexerOptions,
-  RemovalConfiguration,
+  WipeRemovalConfiguration,
 } from '../../../tools/uif/multi/types'
 import type { BlobService } from '../services/BlobService'
 import type { DaService } from '../services/DaService'
@@ -38,8 +38,6 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
         name: INDEXER_NAMES.DA2,
         tags: { tag: $.daLayer },
         updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
-        configurationsTrimmingDisabled: true,
-        dataWipingAfterDeleteDisabled: false,
       },
       logger,
     )
@@ -157,18 +155,16 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
     )
   }
 
-  override async removeData(
-    configurations: RemovalConfiguration[],
+  override async wipeData(
+    configurations: WipeRemovalConfiguration[],
   ): Promise<void> {
-    //this function should only run with this flag enabled
-    assert(this.options.configurationsTrimmingDisabled)
+    const deletedRecords = await this.$.db.dataAvailability.deleteByConfigIds(
+      configurations.map((c) => c.id),
+    )
 
-    for (const c of configurations) {
-      const deletedRecords =
-        await this.$.db.dataAvailability.deleteByConfigurationId(c.id)
-
-      this.logger.info('Wiped DA records for configuration', {
-        id: c.id,
+    if (deletedRecords > 0) {
+      this.logger.info('Wiped DA records for configurations', {
+        configurations: configurations.length,
         deletedRecords,
       })
     }

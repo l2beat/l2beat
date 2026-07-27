@@ -114,6 +114,15 @@ export class LivenessRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
+  async deleteByConfigIds(ids: string[]): Promise<number> {
+    if (ids.length === 0) return 0
+    const result = await this.db
+      .deleteFrom('Liveness')
+      .where('configurationId', 'in', ids)
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
   async deleteByConfigInTimeRange(
     id: TrackedTxId,
     fromInclusive: UnixTime,

@@ -1,7 +1,7 @@
 {
   "name": "roninnetwork",
-  "timestamp": 1783327943,
-  "configHash": "0xd88cfdd0a17578feb5a040de29b13c55be76c5a500ac4408672eb02588fcb40e",
+  "timestamp": 1783604846,
+  "configHash": "0x15ab3abb01c25fa00bf289b7dc70528346b29b5aabdfea07384b5c0819521776",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -771,7 +771,7 @@
         "game1337": "eth:0x296e7aD6D441b0627768bC0650179a4206479444",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 110,
+        "gameCount": 116,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A",
@@ -835,14 +835,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengerFromDGF"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x0954eC5B731501abf85766B5c6f5DE4C2B60BC44",
       "sinceTimestamp": 1680797639,
@@ -1873,7 +1865,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2409386811941049161828731"
+        "totalSupply": "2465772783194992912944652"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -2041,7 +2033,7 @@
         "L2_BLOCK_NUMBER": 56278374,
         "l2BlockNumber": 0,
         "l2SequenceNumber": 0,
-        "lastResolved": "eth:0x9502579AF8570bBD08eAd1060Cc1ED6180BA39d6",
+        "lastResolved": "eth:0x31148E296790E417FE88bb065f367d4B06329dA6",
         "minCreationTime": 0,
         "opponentIndex": 0,
         "OPTIMISM_PORTAL": "eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77",
@@ -2091,12 +2083,6 @@
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a",
-          "description": "Allowed to post new state roots of the current layer to the host chain.",
-          "role": ".proposerFromDGF"
-        },
         {
           "permission": "interact",
           "from": "eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336",
@@ -4205,6 +4191,6 @@
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/RiscZeroGroth16VerifierLegacy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 25472415 },
-  "permissionsConfigHash": "0x2b18a1919801b8aa8af0f26884c37fe70a919998d1ee3b5176f99bf1c5b93672"
+  "usedBlockNumbers": { "ethereum": 25495416 },
+  "permissionsConfigHash": "0xcc0b1c6a2fc3d6bb3bc7a9be8cc395c230797656daf0b3fea23aa9c724fa1b84"
 }

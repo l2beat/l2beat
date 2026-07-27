@@ -103,6 +103,81 @@ describe(InteropNotifier.name, () => {
     expect(message.includes('6.00x src/dst')).toEqual(true)
   })
 
+  it('adds a backoffice deep-link per suspicious transfer when environment is set', async () => {
+    const webhookClient = mockObject<DiscordClient>({
+      sendMessage: async () => '1',
+    })
+    const notifier = new InteropNotifier(webhookClient, Logger.SILENT, {
+      backofficeEnvironment: 'staging',
+    })
+
+    notifier.notifySuspiciousTransfers(UnixTime(2_000_000), [
+      {
+        plugin: 'stargate',
+        type: 'deposit',
+        transferId: 'msg/1',
+        timestamp: UnixTime(1_999_990),
+        srcChain: 'ethereum',
+        srcTxHash: undefined,
+        srcTokenAddress: undefined,
+        srcSymbol: 'USDC',
+        srcValueUsd: 600,
+        dstChain: 'arbitrum',
+        dstTxHash: undefined,
+        dstTokenAddress: undefined,
+        dstSymbol: 'USDC.e',
+        dstValueUsd: 100,
+        dominantSide: 'src',
+        valueDifferencePercent: 83.3333,
+        valueRatio: 6,
+      },
+    ])
+    await notifier._TEST_ONLY_waitTillEmpty()
+
+    const message = webhookClient.sendMessage.calls[0]?.args[0] as string
+    expect(
+      message.includes(
+        '[↗](https://backoffice.l2beat.com/interop/insights/activity/suspicious-transfers?env=staging#msg%2F1)',
+      ),
+    ).toEqual(true)
+  })
+
+  it('does not add a backoffice deep-link when environment is not set', async () => {
+    const webhookClient = mockObject<DiscordClient>({
+      sendMessage: async () => '1',
+    })
+    const notifier = new InteropNotifier(webhookClient, Logger.SILENT)
+
+    notifier.notifyBlockedSnapshot(UnixTime(2_000_000), [
+      { rule: 'maxLaneVolume', scope: 'lane', message: 'over limit' },
+    ])
+    await notifier._TEST_ONLY_waitTillEmpty()
+
+    const message = webhookClient.sendMessage.calls[0]?.args[0] as string
+    expect(message.includes('backoffice.l2beat.com')).toEqual(false)
+  })
+
+  it('adds a backoffice deep-link to a blocked snapshot when environment is set', async () => {
+    const webhookClient = mockObject<DiscordClient>({
+      sendMessage: async () => '1',
+    })
+    const notifier = new InteropNotifier(webhookClient, Logger.SILENT, {
+      backofficeEnvironment: 'production',
+    })
+
+    notifier.notifyBlockedSnapshot(UnixTime(2_000_000), [
+      { rule: 'maxLaneVolume', scope: 'lane', message: 'over limit' },
+    ])
+    await notifier._TEST_ONLY_waitTillEmpty()
+
+    const message = webhookClient.sendMessage.calls[0]?.args[0] as string
+    expect(
+      message.includes(
+        '[Review in backoffice ↗](https://backoffice.l2beat.com/interop/promotion?env=production#2000000)',
+      ),
+    ).toEqual(true)
+  })
+
   it('queues and sends skipped valuation notifications', async () => {
     const webhookClient = mockObject<DiscordClient>({
       sendMessage: async () => '1',

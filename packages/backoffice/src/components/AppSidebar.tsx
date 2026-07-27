@@ -6,6 +6,7 @@ import {
   PieChartIcon,
   RefreshCwIcon,
   ShieldCheckIcon,
+  SigmaIcon,
 } from 'lucide-react'
 import { Link, matchPath, useLocation } from 'react-router-dom'
 import {
@@ -24,6 +25,7 @@ import {
   SidebarSeparator,
   SidebarTrigger,
 } from '~/components/core/Sidebar'
+import { DAILY_CHECKS_DASHBOARD_URL } from '~/pages/website/daily-checks/DailyChecksRedirect'
 import {
   Collapsible,
   CollapsibleContent,
@@ -116,8 +118,8 @@ const navGroups: NavigationGroup[] = [
             url: '/interop/indexing/processor-statuses',
           },
           {
-            title: 'Financial actions',
-            url: '/interop/financials/actions',
+            title: 'Financials',
+            url: '/interop/financials',
           },
         ],
       },
@@ -168,12 +170,12 @@ const navGroups: NavigationGroup[] = [
         type: 'single',
         title: 'Daily checks',
         icon: ClipboardCheckIcon,
-        url: '/website/daily-checks',
+        url: DAILY_CHECKS_DASHBOARD_URL,
       },
       {
         type: 'single',
         title: 'Interop aggregates',
-        icon: ClipboardCheckIcon,
+        icon: SigmaIcon,
         url: '/website/interop-aggregates',
       },
       {
@@ -219,13 +221,25 @@ export function AppSidebar() {
               <SidebarMenu>
                 {group.items.map((item) => {
                   if (item.type === 'single') {
+                    const isExternal = item.url.startsWith('http')
                     return (
                       <SidebarMenuItem key={item.title}>
                         <SidebarMenuButton asChild tooltip={item.title}>
-                          <Link to={item.url}>
-                            <item.icon />
-                            <span>{item.title}</span>
-                          </Link>
+                          {isExternal ? (
+                            <a
+                              href={item.url}
+                              target="_blank"
+                              rel="noreferrer noopener"
+                            >
+                              <item.icon />
+                              <span>{item.title}</span>
+                            </a>
+                          ) : (
+                            <Link to={item.url}>
+                              <item.icon />
+                              <span>{item.title}</span>
+                            </Link>
+                          )}
                         </SidebarMenuButton>
                       </SidebarMenuItem>
                     )

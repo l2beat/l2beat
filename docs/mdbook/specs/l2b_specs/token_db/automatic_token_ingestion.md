@@ -33,16 +33,22 @@ conflicts and errors surface to humans.
 ## Overview
 
 A background loop in the token-backend service ticks every minute. Each tick
-does two things in order:
+does three things in order:
 
-1. **Pre-step.** Scan the interop transfer table for transfers inserted
+1. **Token relation ingestion.** Materialize `TokenRelation` rows from
+   interop transfers inserted since the previous tick. This is a separate
+   subsystem that deliberately does not use the queue below — see
+   [Token relations](./token_relations.md) for how it works and, more
+   importantly, why it is not part of this queue.
+2. **Pre-step.** Scan the interop transfer table for transfers inserted
    since the previous tick and enqueue both token addresses from each
    transfer.
-2. **Drain.** Repeatedly take the next pending queue entry and process it
+3. **Drain.** Repeatedly take the next pending queue entry and process it
    until the queue is empty or the per-run safety cap is reached.
 
-That's the entire shape. Everything else is a detail of how a single entry
-gets processed.
+The steps run sequentially (never in parallel) so that logs stay separated
+and a failure is attributable to a single step. That's the entire shape.
+Everything else is a detail of how a single entry gets processed.
 
 ## Drain guard and monitoring
 
@@ -227,9 +233,10 @@ update, possibly with a newly built CoinGecko abstract), `conflict`
 
 ## Shared write boundary
 
-Both this pipeline and the user-driven `intent → plan → execute` pipeline
-ultimately write to the same two TokenDB tables (`AbstractToken` and
-`DeployedToken`). To make sure both paths produce the same writes — and so
+This pipeline, the user-driven `intent → plan → execute` pipeline, and
+[token relation ingestion](./token_relations.md) ultimately write to the
+same TokenDB core tables (`AbstractToken`, `DeployedToken`, and
+`TokenRelation`). To make sure all paths produce the same writes — and so
 that future cross-cutting concerns like a persistent history table land
 in exactly one place — they share a single primitive,
 [`commitTokenChanges`](../../../../../packages/token-backend/src/commitTokenChanges.ts),

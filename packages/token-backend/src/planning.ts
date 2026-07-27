@@ -6,14 +6,26 @@ import { manualProof } from './commitTokenChanges'
 import {
   type AddAbstractTokenIntent,
   type AddDeployedTokenIntent,
+  type AddTokenRelationIntent,
   type DeleteAbstractTokenIntent,
   type DeleteDeployedTokenIntent,
+  type DeleteTokenRelationIntent,
   Intent,
+  type MergeAbstractTokenIntent,
   type UpdateAbstractTokenIntent,
   type UpdateDeployedTokenIntent,
+  type UpdateTokenRelationIntent,
 } from './intents'
 import { getLogger } from './logger'
+import type {
+  AbstractTokenUpdateable,
+  CoingeckoEntry,
+} from './schemas/AbstractToken'
 import type { DeployedTokenUpdateable } from './schemas/DeployedToken'
+import type {
+  TokenRelationPrimaryKey,
+  TokenRelationRecord,
+} from './schemas/TokenRelation'
 
 export type Plan = v.infer<typeof Plan>
 export const Plan = v.object({
@@ -68,6 +80,9 @@ export async function generatePlan(
       case 'DeleteAbstractTokenIntent':
         commands = await planDeleteAbstractToken(db, intent)
         break
+      case 'MergeAbstractTokenIntent':
+        commands = await planMergeAbstractToken(db, intent, opts)
+        break
       case 'AddDeployedTokenIntent':
         commands = await planAddDeployedToken(db, intent, opts)
         break
@@ -77,6 +92,15 @@ export async function generatePlan(
 
       case 'DeleteDeployedTokenIntent':
         commands = await planDeleteDeployedToken(db, intent)
+        break
+      case 'AddTokenRelationIntent':
+        commands = await planAddTokenRelation(db, intent)
+        break
+      case 'UpdateTokenRelationIntent':
+        commands = await planUpdateTokenRelation(db, intent)
+        break
+      case 'DeleteTokenRelationIntent':
+        commands = await planDeleteTokenRelation(db, intent)
         break
       default:
         assertUnreachable(intent)
@@ -166,6 +190,85 @@ async function planDeleteAbstractToken(
   ]
 }
 
+async function planMergeAbstractToken(
+  db: TokenDatabase,
+  intent: MergeAbstractTokenIntent,
+  opts: PlanOptions,
+): Promise<Command[]> {
+  // The intent carries display ids (`<id>:<issuer>:<symbol>`) for readability
+  // in the history table; here we only need the unique identifier prefix.
+  const sourceId = extractAbstractTokenId(intent.sourceId)
+  const targetId = extractAbstractTokenId(intent.targetId)
+
+  if (sourceId === targetId) {
+    throw new PlanningError('Cannot merge an abstract token into itself')
+  }
+
+  const [source, target, deployedTokens] = await Promise.all([
+    db.abstractToken.findById(sourceId),
+    db.abstractToken.findById(targetId),
+    db.deployedToken.getByAbstractTokenId(sourceId),
+  ])
+
+  if (source === undefined) {
+    throw new PlanningError(`AbstractToken ${sourceId} doesn't exist`)
+  }
+  if (target === undefined) {
+    throw new PlanningError(`AbstractToken ${targetId} doesn't exist`)
+  }
+
+  const commands: Command[] = []
+  // The note keeps the merged-away token visible at a glance on the target
+  // (its full record is only recoverable from history). Unlike the copied
+  // CoinGecko entries it is appended even when the source has no CoinGecko
+  // data. It must be deterministic (no timestamp): executePlan regenerates
+  // the plan and deep-compares it with the confirmed one.
+  const mergeNote = `Merged from ${source.id}:${source.issuer}:${source.symbol} (category: ${source.category}, coingeckoId: ${source.coingeckoId})`
+  const update: AbstractTokenUpdateable = {
+    comment: target.comment ? `${target.comment}\n${mergeNote}` : mergeNote,
+  }
+  const additionalCoingeckoEntries = mergeAdditionalCoingeckoEntries(
+    target,
+    source,
+  )
+  if (
+    JSON.stringify(additionalCoingeckoEntries) !==
+    JSON.stringify(target.additionalCoingeckoEntries ?? [])
+  ) {
+    update.additionalCoingeckoEntries = additionalCoingeckoEntries
+  }
+  commands.push({
+    type: 'UpdateAbstractTokenCommand',
+    existing: target,
+    id: target.id,
+    update,
+  })
+
+  for (const deployedToken of [...deployedTokens].sort(compareDeployedTokens)) {
+    commands.push({
+      type: 'UpdateDeployedTokenCommand',
+      existing: deployedToken,
+      pk: {
+        chain: deployedToken.chain,
+        address: deployedToken.address,
+      },
+      update: stampUpdateProof(
+        { abstractTokenId: target.id },
+        deployedToken,
+        opts.user,
+      ),
+    })
+  }
+
+  commands.push({
+    type: 'DeleteAbstractTokenCommand',
+    id: source.id,
+    existing: source,
+  })
+
+  return commands
+}
+
 async function planAddDeployedToken(
   db: TokenDatabase,
   intent: AddDeployedTokenIntent,
@@ -217,6 +320,10 @@ async function planDeleteDeployedToken(
       `DeployedToken ${intent.pk.chain}+${intent.pk.address} doesn't exist`,
     )
   }
+  // Token relations touching this token are deliberately left in place:
+  // they are observations of on-chain transfers and stay valid whether or
+  // not the address is catalogued as a deployed token.
+  // See docs/mdbook/specs/l2b_specs/token_db/token_relations.md.
   return [
     {
       type: 'DeleteDeployedTokenCommand',
@@ -224,6 +331,180 @@ async function planDeleteDeployedToken(
       existing,
     },
   ]
+}
+
+function mergeAdditionalCoingeckoEntries(
+  target: {
+    coingeckoId: string | null
+    additionalCoingeckoEntries: CoingeckoEntry[] | null
+  },
+  source: {
+    coingeckoId: string | null
+    coingeckoListingTimestamp: number | null
+    iconUrl: string | null
+    additionalCoingeckoEntries: CoingeckoEntry[] | null
+  },
+): CoingeckoEntry[] {
+  const entries = [...(target.additionalCoingeckoEntries ?? [])]
+  const seen = new Set(entries.map((entry) => entry.coingeckoId))
+  if (target.coingeckoId) {
+    seen.add(target.coingeckoId)
+  }
+
+  for (const entry of sourceCoingeckoEntries(source)) {
+    if (seen.has(entry.coingeckoId)) {
+      continue
+    }
+    entries.push(entry)
+    seen.add(entry.coingeckoId)
+  }
+
+  return entries
+}
+
+function sourceCoingeckoEntries(source: {
+  coingeckoId: string | null
+  coingeckoListingTimestamp: number | null
+  iconUrl: string | null
+  additionalCoingeckoEntries: CoingeckoEntry[] | null
+}): CoingeckoEntry[] {
+  return [
+    ...(source.coingeckoId
+      ? [
+          {
+            coingeckoId: source.coingeckoId,
+            coingeckoListingTimestamp: source.coingeckoListingTimestamp,
+            iconUrl: source.iconUrl,
+          },
+        ]
+      : []),
+    ...(source.additionalCoingeckoEntries ?? []),
+  ]
+}
+
+function compareDeployedTokens(a: DeployedTokenRecord, b: DeployedTokenRecord) {
+  return a.chain.localeCompare(b.chain) || a.address.localeCompare(b.address)
+}
+
+/**
+ * Abstract token display ids have the shape `<id>:<issuer>:<symbol>`. Only the
+ * `<id>` prefix is the unique identifier used to look tokens up.
+ */
+function extractAbstractTokenId(displayId: string): string {
+  return displayId.split(':')[0]
+}
+
+async function planAddTokenRelation(
+  db: TokenDatabase,
+  intent: AddTokenRelationIntent,
+): Promise<Command[]> {
+  await assertRelationEndpointsExist(db, intent.record)
+
+  const existing = await db.tokenRelation.findByPrimaryKey(
+    toTokenRelationPrimaryKey(intent.record),
+  )
+  if (existing !== undefined) {
+    throw new PlanningError(
+      `TokenRelation ${formatTokenRelationPrimaryKey(intent.record)} already exists`,
+    )
+  }
+
+  return [
+    {
+      type: 'AddTokenRelationCommand',
+      record: intent.record,
+    },
+  ]
+}
+
+async function planUpdateTokenRelation(
+  db: TokenDatabase,
+  intent: UpdateTokenRelationIntent,
+): Promise<Command[]> {
+  const existing = await db.tokenRelation.findByPrimaryKey(intent.pk)
+  if (existing === undefined) {
+    throw new PlanningError(
+      `TokenRelation ${formatTokenRelationPrimaryKey(intent.pk)} doesn't exist`,
+    )
+  }
+
+  return [
+    {
+      type: 'UpdateTokenRelationCommand',
+      pk: intent.pk,
+      existing,
+      update: intent.update,
+    },
+  ]
+}
+
+async function planDeleteTokenRelation(
+  db: TokenDatabase,
+  intent: DeleteTokenRelationIntent,
+): Promise<Command[]> {
+  const existing = await db.tokenRelation.findByPrimaryKey(intent.pk)
+  if (existing === undefined) {
+    throw new PlanningError(
+      `TokenRelation ${formatTokenRelationPrimaryKey(intent.pk)} doesn't exist`,
+    )
+  }
+
+  return [
+    {
+      type: 'DeleteTokenRelationCommand',
+      pk: intent.pk,
+      existing,
+    },
+  ]
+}
+
+async function assertRelationEndpointsExist(
+  db: TokenDatabase,
+  relation: {
+    tokenFromChain: string
+    tokenFromAddress: string
+    tokenToChain: string
+    tokenToAddress: string
+  },
+): Promise<void> {
+  const [tokenFrom, tokenTo] = await Promise.all([
+    db.deployedToken.findByChainAndAddress({
+      chain: relation.tokenFromChain,
+      address: relation.tokenFromAddress,
+    }),
+    db.deployedToken.findByChainAndAddress({
+      chain: relation.tokenToChain,
+      address: relation.tokenToAddress,
+    }),
+  ])
+
+  if (tokenFrom === undefined) {
+    throw new PlanningError(
+      `DeployedToken ${relation.tokenFromChain}+${relation.tokenFromAddress} doesn't exist`,
+    )
+  }
+  if (tokenTo === undefined) {
+    throw new PlanningError(
+      `DeployedToken ${relation.tokenToChain}+${relation.tokenToAddress} doesn't exist`,
+    )
+  }
+}
+
+function toTokenRelationPrimaryKey(
+  relation: TokenRelationRecord,
+): TokenRelationPrimaryKey {
+  return {
+    tokenFromChain: relation.tokenFromChain,
+    tokenFromAddress: relation.tokenFromAddress,
+    tokenToChain: relation.tokenToChain,
+    tokenToAddress: relation.tokenToAddress,
+    plugin: relation.plugin,
+    bridgeType: relation.bridgeType,
+  }
+}
+
+function formatTokenRelationPrimaryKey(pk: TokenRelationPrimaryKey): string {
+  return `${pk.tokenFromChain}+${pk.tokenFromAddress} -> ${pk.tokenToChain}+${pk.tokenToAddress} via ${pk.plugin} (${pk.bridgeType})`
 }
 
 function stampInsertProof(

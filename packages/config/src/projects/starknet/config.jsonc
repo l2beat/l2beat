@@ -46,7 +46,44 @@
     "eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10": "SolvBTCBridge",
     "eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e": "LBTCBridge"
   },
+  "types": {
+    "StarknetOsConfigHash": {
+      "typeCaster": "Mapping",
+      "arg": {
+        // Reproduce future OS config hashes before adding them to this mapping:
+        // 1. Checkout the starkware-libs/sequencer revision matching the deployed OS. For the
+        //    current value use tag APOLLO-0.14.3-RC.11, commit
+        //    5114457ad4b5d6d1764b520dfa40b9e826f48854.
+        // 2. Read the field order and hash version in
+        //    crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core/os/os_config/os_config.cairo.
+        //    The equivalent Rust function is OsChainInfo::compute_os_config_hash in
+        //    crates/starknet_api/src/core.rs.
+        // 3. Obtain the chain ID and STRK fee-token address from the matching deployment config.
+        //    The current values are in deployments/sequencer/configs/overlays/hybrid/mainnet/common.yaml
+        //    and deployments/sequencer/configs/overlays/hybrid/common/common.yaml.
+        // 4. For V4, hash [felt("StarknetOsConfig4"), felt(chain_id), fee_token_address]. If the
+        //    state-diff-encryption public-key list is nonempty, append its Blake2Felt252 hash.
+        //    Blake2Felt252 encodes a felt below 2**63 as two big-endian u32 limbs and any larger
+        //    felt as eight big-endian u32 limbs with the high marker bit set. Serialize each limb
+        //    little-endian, apply Blake2s-256, then interpret the digest little-endian modulo the
+        //    Stark field prime 2**251 + 17 * 2**192 + 1.
+        // 5. Compare the decimal result with Starknet.configHash() and add a label only after they
+        //    match. Unknown mapping values deliberately remain visible as raw hashes.
+        // Current preimage: ["StarknetOsConfig4", "SN_MAIN",
+        // 0x04718f5a0fc34cc1af16a1cdee98ffb20c31f5cd61d6ab07201858f4287c938d], no public keys.
+        // Expected hex: 0x05b3bc83b3a47231aa5f15e73309ef7e09e087bd4ace767656fe5d713f6e2d7a.
+        "2579130946496422157802313572919622021390761807038780433165936715591440018810": "Starknet OS config V4 (SN_MAIN, STRK fee token, no state-diff encryption)"
+      }
+    }
+  },
   "overrides": {
+    "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4": {
+      "fields": {
+        "configHash": {
+          "edit": ["format", "StarknetOsConfigHash"]
+        }
+      }
+    },
     "eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10": {
       "category": "non-critical",
       "ignoreRelatives": [

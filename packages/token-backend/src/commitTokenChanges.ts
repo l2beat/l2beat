@@ -5,6 +5,7 @@ import type {
 } from '@l2beat/database'
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import type { Command } from './commands'
+import type { Intent } from './intents'
 
 /**
  * Evidence justifying a deployed token's abstract-token assignment. Persisted
@@ -32,16 +33,22 @@ export type AbstractTokenAssignmentProofTransfer = Omit<
   dstRawAmount: string | undefined
 }
 
+export function serializeInteropTransferRecord(
+  transfer: InteropTransferRecord,
+): AbstractTokenAssignmentProofTransfer {
+  return {
+    ...transfer,
+    srcRawAmount: transfer.srcRawAmount?.toString(),
+    dstRawAmount: transfer.dstRawAmount?.toString(),
+  }
+}
+
 export function nonSwappingTransferProof(
   transfer: InteropTransferRecord,
 ): AbstractTokenAssignmentProof {
   return {
     kind: 'non-swapping-transfer',
-    transfer: {
-      ...transfer,
-      srcRawAmount: transfer.srcRawAmount?.toString(),
-      dstRawAmount: transfer.dstRawAmount?.toString(),
-    },
+    transfer: serializeInteropTransferRecord(transfer),
   }
 }
 
@@ -56,7 +63,7 @@ export function manualProof(user: string): AbstractTokenAssignmentProof {
  * commands is persisted on every resulting history row.
  */
 export type WriteSource =
-  | { kind: 'manual'; user: string }
+  | { kind: 'manual'; user: string; intent: Intent | null }
   | { kind: 'ingestion'; log: string }
 
 /**
@@ -102,6 +109,15 @@ async function executeCommand(tokenDb: TokenDatabase, command: Command) {
     case 'DeleteDeployedTokenCommand':
       await tokenDb.deployedToken.deleteByPrimaryKey(command.pk)
       break
+    case 'AddTokenRelationCommand':
+      await tokenDb.tokenRelation.insert(command.record)
+      break
+    case 'UpdateTokenRelationCommand':
+      await tokenDb.tokenRelation.updateByPrimaryKey(command.pk, command.update)
+      break
+    case 'DeleteTokenRelationCommand':
+      await tokenDb.tokenRelation.deleteByPrimaryKey(command.pk)
+      break
     default:
       assertUnreachable(command)
   }
@@ -117,6 +133,7 @@ function buildHistoryEntry(
     userEmail: source.kind === 'manual' ? source.user : null,
     commandType: command.type,
     command,
+    intent: source.kind === 'manual' ? source.intent : null,
     ingestionLog: source.kind === 'ingestion' ? source.log : null,
   }
 }

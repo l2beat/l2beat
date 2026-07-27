@@ -10,7 +10,11 @@ import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { getPrivacyProjectDetails } from '~/server/features/privacy/getPrivacyProjectDetails'
-import { getPrivacyTrustedSetupsSection } from '~/server/features/privacy/utils/getPrivacyTrustedSetup'
+import {
+  getPrivacyTrustedSetup,
+  getPrivacyTrustedSetupsSection,
+  toTrustedSetupSummaryValue,
+} from '~/server/features/privacy/utils/getPrivacyTrustedSetup'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import { get7dTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
@@ -49,6 +53,7 @@ export interface PrivacyProjectEntry {
   assetsCount: number
   attributes: PrivacyAttribute[]
   exitWindow: PrivacyExitWindow
+  trustedSetup: PrivacySummaryValue
   privacy: PrivacySummaryValue
   reproducibility: PrivacySummaryValue
   summary: {
@@ -170,22 +175,25 @@ export async function getPrivacyProjectData(
   const hasTrackedAssets = details.assets.length > 0
   const discoveryHref =
     contractsSection || permissionsSection ? discoUi.href : undefined
+  let totalValueLockedUsd = 0
 
   if (hasTrackedAssets) {
-    await Promise.all([
+    const [tvlChart] = await Promise.all([
+      helpers.queryClient.fetchQuery(
+        helpers.trpc.privacy.tvlChart.queryOptions({
+          projectIds: [details.id],
+          range: defaultChartRange,
+        }),
+      ),
       helpers.queryClient.prefetchQuery(
         helpers.trpc.privacy.flowsChart.queryOptions({
           projectIds: [details.id],
           range: defaultChartRange,
         }),
       ),
-      helpers.queryClient.prefetchQuery(
-        helpers.trpc.privacy.tvlChart.queryOptions({
-          projectIds: [details.id],
-          range: defaultChartRange,
-        }),
-      ),
     ])
+
+    totalValueLockedUsd = tvlChart.chart.at(-1)?.[1][details.id] ?? 0
   }
   const bucketCount = details.assets.reduce(
     (sum, asset) => sum + asset.bucketCount,
@@ -342,10 +350,13 @@ export async function getPrivacyProjectData(
     assetsCount: details.assets.length,
     attributes: details.attributes,
     exitWindow: details.exitWindow,
+    trustedSetup: toTrustedSetupSummaryValue(
+      getPrivacyTrustedSetup(details.zkCatalogInfo),
+    ),
     privacy: details.privacy,
     reproducibility: details.reproducibility,
     summary: {
-      totalValueLockedUsd: details.summary.totalValueLockedUsd,
+      totalValueLockedUsd,
       deposits: {
         total: details.summary.deposits.total,
         last7d: details.summary.deposits.last7d,

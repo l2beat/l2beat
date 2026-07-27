@@ -8,7 +8,7 @@ import { cn } from '~/utils/cn'
 import { Tooltip, TooltipContent, TooltipTrigger } from './core/tooltip/Tooltip'
 
 interface CopyButtonProps {
-  toCopy: string
+  toCopy: string | (() => string)
   className?: string
   iconClassName?: string
   copyText?: string
@@ -26,7 +26,7 @@ export function CopyButton({
   useTimeout(() => setCopied(false), copied ? 1400 : null)
 
   function copyToClipboard() {
-    copy(toCopy)
+    copy(typeof toCopy === 'function' ? toCopy() : toCopy)
       .then(() => setCopied(true))
       .catch(() => setCopied(false))
     setCopied(true)

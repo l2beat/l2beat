@@ -1,6 +1,7 @@
 import type { Project } from '@l2beat/config'
 import { formatSeconds, notUndefined, UnixTime } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { type CommonDaEntry, getCommonDaEntry } from '../getCommonDaEntry'
 import {
   getDaThroughputTable,
@@ -10,7 +11,7 @@ import { getThroughputSyncWarning } from './isThroughputSynced'
 
 export async function getDaThroughputEntries(): Promise<DaThroughputEntry[]> {
   const [daLayers, daBridges] = await Promise.all([
-    ps.getProjects({ select: ['daLayer', 'statuses'] }),
+    ps.getProjects({ select: ['daLayer', 'statuses', 'display'] }),
     ps.getProjects({ select: ['daBridge'] }),
   ])
 
@@ -61,6 +62,7 @@ interface DaThroughputEntryData {
         avgCapacityUtilization: number | null
         totalPosted: number
         change: number
+        changePeriod: PercentageChangePeriod
         largestPoster:
           | {
               name: string
@@ -81,7 +83,7 @@ export interface DaThroughputEntry extends CommonDaEntry {
 }
 
 function getDaThroughputEntry(
-  project: Project<'daLayer' | 'statuses'>,
+  project: Project<'daLayer' | 'statuses' | 'display'>,
   bridges: Project<'daBridge'>[],
   data: ThroughputTableData['data'][string] | undefined,
   scalingOnlyData: ThroughputTableData['scalingOnlyData'][string] | undefined,

@@ -79,6 +79,7 @@ export async function getDaTrackingConfig(
         'CELESTIA_BLOBS_API_CALLS_PER_MINUTE',
         20_000,
       ),
+      timeout: env.integer('CELESTIA_BLOBS_API_TIMEOUT', 30_000),
       batchSize: env.integer('CELESTIA_BLOBS_BATCH_SIZE', 100),
       startingBlock: CELESTIA_START_BLOCK,
     })

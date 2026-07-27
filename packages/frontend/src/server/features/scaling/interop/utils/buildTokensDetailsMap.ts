@@ -1,5 +1,7 @@
+import { unique } from '@l2beat/shared-pure'
 import { getTokenDb } from '~/server/tokenDb'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
+import type { AggregatedInteropTransferWithTokens } from '../types'
 
 export type TokensDetailsMap = Map<string, TokensDetails>
 
@@ -25,4 +27,16 @@ export async function buildTokensDetailsMap(abstractTokenIds: string[]) {
   )
 
   return tokensDetailsMap
+}
+
+export async function buildTokensDetailsMapForRecords(
+  records: AggregatedInteropTransferWithTokens[],
+) {
+  return await buildTokensDetailsMap(
+    unique(
+      records.flatMap((record) =>
+        record.tokens.map((token) => token.abstractTokenId),
+      ),
+    ),
+  )
 }

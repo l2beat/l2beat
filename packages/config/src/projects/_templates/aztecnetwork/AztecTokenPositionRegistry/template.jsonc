@@ -1,17 +1,43 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "displayName": "AztecTokenPositionRegistry_ProtocolTreasury",
-  "description": "Used to set the time at which AZTEC tokens owned by the ProtocolTreasury are unlocked. Is also used as source of truth for other vesting contracts in the Aztec ecosystem.",
-  "ignoreRelatives": ["getStakerImplementation", "getRevoker"],
+  "displayName": "AztecTokenPositionRegistry",
+  "description": "Registry for AZTEC token-position milestones, staker implementations, revocation roles, and global unlock and execution timestamps.",
+  "category": "gov",
   "fields": {
     "owner": {
+      "description": "Owner of the ATP Registry.",
       "permissions": [
         {
           "type": "interact",
-          "description": "set the time at which the ProtocolTreasury funds can be transfered and manage staker implementations referenced by this contract."
+          "description": "add and resolve milestones, register staker implementations, set revoker roles, only decrease the execution and token unlock timestamps, and transfer or renounce ownership."
         }
       ]
     },
-    "getUnlockStartTime": { "severity": "HIGH" }
+    "pendingOwner": {
+      "description": "Address nominated to become the ATP Registry owner.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "accept ownership of the ATP Registry."
+        }
+      ]
+    },
+    "getUnlockStartTime": {
+      "description": "Start of the global AZTEC unlock schedule. The owner can only move it earlier.",
+      "severity": "HIGH"
+    },
+    "getExecuteAllowedAt": {
+      "description": "Base execution-eligibility timestamp used by contracts that reference this Registry. The owner can only move it earlier.",
+      "severity": "HIGH"
+    },
+    "getStakerImplementation": {
+      "description": "Registered upgradeable staker implementations by version. Implementations only need to expose the required UUPS compatibility identifier."
+    },
+    "getRevoker": {
+      "description": "Address used by ATP positions as the revocation authority."
+    },
+    "getRevokerOperator": {
+      "description": "Optional operator allowed to perform revocation-related actions on behalf of the revoker."
+    }
   }
 }

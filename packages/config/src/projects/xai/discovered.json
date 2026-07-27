@@ -1,6 +1,6 @@
 {
   "name": "xai",
-  "timestamp": 1779719769,
+  "timestamp": 1783591155,
   "configHash": "0x441aeb44dc93ba5c5a2d5c8070f5b1638fdef483809d7f0f21a5de7a2fea782c",
   "entries": [
     {
@@ -208,6 +208,41 @@
       "address": "arb1:0x0EeF59Be9b361B32A672169CF07F3e5A0a7C25dA",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "SafeL2",
+      "address": "arb1:0x194654c631686077d3C34a0e7c1856E4BE2E2705",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "arb1:0x00AE928D24A4450bFbb70bbDd7d3d3f163513C2A",
+      "sinceTimestamp": 1781212751,
+      "sinceBlock": 472501682,
+      "values": {
+        "$immutable": false,
+        "$implementation": "arb1:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
+        "$members": [
+          "arb1:0x739bd9Ed651d200dc84d0b0dF444CA47CBFf520f",
+          "arb1:0x9913fb54674894b77f7aD813938C916389817348",
+          "arb1:0x90D77E3a3B660E54E04cD622937765d2375FB2e3"
+        ],
+        "$threshold": 1,
+        "domainSeparator": "0xab8f2a8a70dd152cc5f88b0528ad56a5146c91297dd475371f884b98b251f4f1",
+        "getChainId": 42161,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 3 (33%)",
+        "nonce": 3,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "arb1:0x194654c631686077d3C34a0e7c1856E4BE2E2705": "SafeProxy",
+        "arb1:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
+      }
     },
     {
       "name": "Outbox",
@@ -788,8 +823,8 @@
         "outboxHistory": ["arb1:0x1E400568AD4840dbE50FB32f306B842e9ddeF726"],
         "rollup": "arb1:0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerInbox": "arb1:0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
-        "sequencerMessageCount": 186724,
-        "sequencerReportedSubMessageCount": 130207857
+        "sequencerMessageCount": 190949,
+        "sequencerReportedSubMessageCount": 132870698
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -881,6 +916,11 @@
       }
     },
     {
+      "address": "arb1:0x9913fb54674894b77f7aD813938C916389817348",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SequencerInbox",
       "address": "arb1:0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
       "type": "Contract",
@@ -921,7 +961,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 186724,
+        "batchCount": 190949,
         "batchPosterManager": "arb1:0x000d8C5A70B8805DF02f409F2715d05B9A63E871",
         "batchPosters": ["arb1:0x7F68dba68E72a250004812fe04F1123Fca89aBa9"],
         "bridge": "arb1:0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
@@ -1246,13 +1286,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 20444,
+        "firstUnresolvedNode": 21510,
         "inbox": "arb1:0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 18944658,
-        "latestConfirmed": 20443,
-        "latestNodeCreated": 20595,
+        "latestConfirmed": 21509,
+        "latestNodeCreated": 21661,
         "loserStakeEscrow": "arb1:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0x1E400568AD4840dbE50FB32f306B842e9ddeF726",
@@ -1616,6 +1656,7 @@
         "$immutable": false,
         "$implementation": "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
+          "arb1:0x194654c631686077d3C34a0e7c1856E4BE2E2705",
           "arb1:0x739bd9Ed651d200dc84d0b0dF444CA47CBFf520f",
           "arb1:0x90D77E3a3B660E54E04cD622937765d2375FB2e3",
           "arb1:0x1f097F3f928415cD28e1B2cC6f0F3960f4fCa6fc",
@@ -1627,8 +1668,8 @@
         "domainSeparator": "0x0f84f5102dd9fea36a3e0099c9a4da5d3e2def631c0fe4cd8fd30ae7c261b379",
         "getChainId": 42161,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 68,
+        "multisigThreshold": "3 of 7 (43%)",
+        "nonce": 69,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1764,13 +1805,13 @@
           "4459189497716894977168",
           "78125000000000000000000000"
         ],
-        "challengeCounter": 21324,
+        "challengeCounter": 22387,
         "CHALLENGER_ROLE": "0xe752add323323eb13e36c71ee508dfd16d74e9e4c4fd78786ba97989e5e13818",
         "challengerPublicKey": "0x977f9fe1d570ba7e48ea76566718023b260ed56eba368ff20dca06e99e650804126663c1a5febdb065ef139a0156a9ad",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "esXaiAddress": "arb1:0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c",
         "gasSubsidyRecipient": "arb1:0x94F4aBC83eae00b693286B6eDCa09e1D76183C97",
-        "getKycWalletCount": 6946,
+        "getKycWalletCount": 6948,
         "isCheckingAssertions": true,
         "KYC_ADMIN_ROLE": "0x811427a0fa4932aef534bba16bc34e9b7b2d7d2a79c475fca1765f6cc1faebea",
         "maxKeysPerPool": 131872,
@@ -1852,6 +1893,9 @@
       "function rollup() view returns (address)",
       "function rollupInitialized(uint256 chainId, string chainConfig)",
       "function updateRollupAddress()"
+    ],
+    "arb1:0x194654c631686077d3C34a0e7c1856E4BE2E2705": [
+      "constructor(address _singleton)"
     ],
     "arb1:0x1BeD37FeDFE8B2721a69A559313D2b58d16Ecd77": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2936,6 +2980,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 466550627 },
-  "permissionsConfigHash": "0x87355292f96c11f9a4ee1f28f009bae8f008b9349afe1d3f6ff89065e65832db"
+  "usedBlockNumbers": { "arbitrum": 481999937 },
+  "permissionsConfigHash": "0x802a909c0816271618a12e4313a675d145fb4551b71f3491c61f3f5ae34a46e6"
 }

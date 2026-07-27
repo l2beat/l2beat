@@ -145,7 +145,7 @@ function formatParametersPretty(parameters: Record<string, unknown>): string {
   const inspected = inspect(parameters, {
     colors: true,
     breakLength: 80 - INDENT_SIZE,
-    depth: 5,
+    depth: null,
   })
   inspect.styles = oldStyles
 

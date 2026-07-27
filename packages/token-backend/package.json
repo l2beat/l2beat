@@ -18,8 +18,8 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "start": "node build/server.js",
-    "dev": "node --watch -r esbuild-register src/server.ts",
-    "clean": "rm -rf build",
+    "dev": "tsx watch src/server.ts",
+    "clean": "rm -rf build *.tsbuildinfo",
     "build:dependencies": "cd ../.. && pnpm build:dependencies:token-backend",
     "watch:dependencies": "cd ../.. && pnpm watch:dependencies:token-backend",
     "format:fix": "biome format --write .",
@@ -28,8 +28,8 @@
     "lint": "biome check --formatter-enabled=false .",
     "test": "mocha",
     "typecheck": "tsc --noEmit",
-    "import-generated": "ts-node ./scripts/import-generated.ts",
-    "test-client": "ts-node ./scripts/test-client.ts"
+    "import-generated": "tsx ./scripts/import-generated.ts",
+    "test-client": "tsx ./scripts/test-client.ts"
   },
   "dependencies": {
     "@l2beat/backend-tools": "workspace:*",
@@ -52,6 +52,6 @@
     "earl": "^1.1.0",
     "express": "^5.1.0",
     "mocha": "^10.2.0",
-    "ts-node-dev": "^2.0.0"
+    "tsx": "^4.9.3"
   }
 }

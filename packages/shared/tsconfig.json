@@ -2,7 +2,8 @@
   "extends": "@l2beat/typescript-config/base",
   "compilerOptions": {
     "noUncheckedIndexedAccess": false,
-    "outDir": "build"
+    "outDir": "build",
+    "rootDir": "./src"
   },
   "exclude": ["build", "node_modules"]
 }

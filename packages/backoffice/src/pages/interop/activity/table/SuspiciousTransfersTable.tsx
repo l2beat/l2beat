@@ -9,6 +9,7 @@ interface SuspiciousTransfersTableProps {
   getExplorerUrl: (chain: string) => string | undefined
   valueDiffThresholdPercent: number
   enableCsvExport?: boolean
+  highlightTransferId?: string
 }
 
 export function SuspiciousTransfersTable({
@@ -16,6 +17,7 @@ export function SuspiciousTransfersTable({
   getExplorerUrl,
   valueDiffThresholdPercent,
   enableCsvExport = false,
+  highlightTransferId,
 }: SuspiciousTransfersTableProps) {
   const columns = useMemo(
     () =>
@@ -44,8 +46,7 @@ export function SuspiciousTransfersTable({
       { id: 'valueDifferencePercent', desc: true },
       { id: 'timestamp', desc: true },
     ],
-    getRowId: (row) =>
-      `${row.transferId}:${row.srcTxHash ?? '-'}:${row.dstTxHash ?? '-'}`,
+    getRowId: (row: SuspiciousTransferRow) => row.transferId,
     searchPlaceholder:
       'Search transfer IDs, plugins, types, chains, tokens, and hashes',
   })
@@ -67,6 +68,12 @@ export function SuspiciousTransfersTable({
       onSearchValueChange={isSearchEnabled ? setSearchValue : undefined}
       searchPlaceholder={searchPlaceholder}
       isSearchPending={isSearchPending}
+      scrollToRowId={highlightTransferId}
+      rowClassName={(row) =>
+        row.id === highlightTransferId
+          ? '!bg-blue-100 dark:!bg-blue-900/40'
+          : undefined
+      }
     />
   )
 }

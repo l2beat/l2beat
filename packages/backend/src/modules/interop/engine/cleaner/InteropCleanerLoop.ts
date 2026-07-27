@@ -10,6 +10,7 @@ export class InteropCleanerLoop extends TimeLoop {
     private store: InteropEventStore,
     private db: Database,
     private plugins: InteropPlugins,
+    private knownChains: string[],
     protected logger: Logger,
     intervalMs = 20 * 60 * 1000,
     private configHistoryKeepLatest = 3,
@@ -47,6 +48,11 @@ export class InteropCleanerLoop extends TimeLoop {
         currentPluginNames,
       )
 
+    const removedChainSyncStates =
+      await this.db.interopPluginSyncState.deleteNotInChains(this.knownChains)
+    const removedChainSyncedRanges =
+      await this.db.interopPluginSyncedRange.deleteNotInChains(this.knownChains)
+
     this.logger.info('Cleaning finished', {
       expiredEvents,
       expiredMessages,
@@ -55,6 +61,8 @@ export class InteropCleanerLoop extends TimeLoop {
       expiredConfigs,
       orphanedSyncStates,
       orphanedSyncedRanges,
+      removedChainSyncStates,
+      removedChainSyncedRanges,
     })
   }
 }

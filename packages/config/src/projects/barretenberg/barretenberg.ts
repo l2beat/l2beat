@@ -60,17 +60,38 @@ export const barretenberg: BaseProject = {
       },
     ],
     verifierHashes: [
+      // {
+      //   hash: '0x059ad02b037fcfd4df2b9db771777d067a400f06fc55cf45fa601511e58e2c3e',
+      //   name: 'Barretenberg Aztec verifier v4',
+      //   sourceLink:
+      //     'https://github.com/AztecProtocol/aztec-packages/tree/v4/noir-projects/noir-protocol-circuits',
+      //   proofSystem: ZK_CATALOG_TAGS.Plonk.UltraHonk,
+      //   knownDeployments: [
+      //     {
+      //       address: ChainSpecificAddress.fromLong(
+      //         'ethereum',
+      //         '0x70aEDda427f26480D240bc0f4308ceDec8d31348',
+      //       ),
+      //     },
+      //   ],
+      //   verificationStatus: 'successful',
+      //   attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+      //   verificationSteps: readProjectMarkdown(
+      //     'barretenberg',
+      //     'verificationSteps-0x059ad02b',
+      //   ),
+      // },
       {
-        hash: '0x059ad02b037fcfd4df2b9db771777d067a400f06fc55cf45fa601511e58e2c3e',
-        name: 'Barretenberg Aztec verifier v4',
+        hash: '0x2f0ca3e610369fc41f7fb8a69995a96428fbf69d7dffd2b576e63ba4d9511ee1',
+        name: 'Barretenberg Aztec verifier v5',
         sourceLink:
-          'https://github.com/AztecProtocol/aztec-packages/tree/v4/noir-projects/noir-protocol-circuits',
+          'https://github.com/AztecProtocol/aztec-packages/tree/v5.0.0/noir-projects/noir-protocol-circuits',
         proofSystem: ZK_CATALOG_TAGS.Plonk.UltraHonk,
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(
               'ethereum',
-              '0x70aEDda427f26480D240bc0f4308ceDec8d31348',
+              '0x098f47c00F4df22a8030746Eb11378236C24b4bC',
             ),
           },
         ],
@@ -78,7 +99,7 @@ export const barretenberg: BaseProject = {
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
         verificationSteps: readProjectMarkdown(
           'barretenberg',
-          'verificationSteps-0x059ad02b',
+          'verificationSteps-0x2f0ca3e6',
         ),
       },
     ],

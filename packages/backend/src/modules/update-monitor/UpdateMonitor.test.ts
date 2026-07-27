@@ -411,7 +411,6 @@ describe(UpdateMonitor.name, () => {
         mockConfig(PROJECT_A),
         committed.timestamp,
         expect.anything(),
-        undefined,
       )
     })
   })

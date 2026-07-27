@@ -9,5 +9,11 @@
     "address": "eth:0x98BA64d8c8Dd33bD75F2154214BFd849d0D5c17B",
     "chain": "ethereum",
     "blockNumber": 25436631
+  },
+  "AccessManager_rise.sol": {
+    "hash": "0x219f095816b5cdaca04593c26cba2820b20761b9aea9708d7458d57182ce7f8b",
+    "address": "eth:0xF90a72FC295DBEf2fD27629Fda4B98Fd3E842d17",
+    "chain": "ethereum",
+    "blockNumber": 24167766
   }
 }

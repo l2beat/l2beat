@@ -1,23 +1,23 @@
-import { useQuery } from '@tanstack/react-query'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import type { FrameworkTableEntry } from '~/server/features/scaling/interop/getTokenFrameworksData'
-import { useTRPC } from '~/trpc/React'
+import type {
+  FrameworkTableEntry,
+  TokenFrameworksData,
+} from '~/server/features/scaling/interop/getTokenFrameworksData'
+import type { InteropTransferDefaults } from '../../../components/InteropTransferTrigger'
 import type { InteropTokenFramework } from '../../getInteropTokenFrameworksData'
-import { useTokenFrameworksSelectedChains } from '../../utils/TokenFrameworksSelectedChainsContext'
 import { FrameworkColumn } from './FrameworkColumn'
 
 export function FrameworksTable({
   tokenFrameworks,
+  data,
+  isLoading,
+  transfer,
 }: {
   tokenFrameworks: InteropTokenFramework[]
+  data: TokenFrameworksData | undefined
+  isLoading: boolean
+  transfer: InteropTransferDefaults
 }) {
-  const trpc = useTRPC()
-  const { selectedChains } = useTokenFrameworksSelectedChains()
-  const apiSelection = { from: selectedChains, to: selectedChains }
-  const { data, isLoading } = useQuery(
-    trpc.interop.tokenFrameworks.queryOptions(apiSelection),
-  )
-
   const tableById = new Map<string, FrameworkTableEntry>(
     data?.frameworkTable.map((entry) => [entry.id, entry]) ?? [],
   )
@@ -44,6 +44,7 @@ export function FrameworksTable({
               entry={tableById.get(framework.id)}
               isFirst={i === 0}
               isLoading={isLoading}
+              transfer={transfer}
             />
           ))}
         </div>

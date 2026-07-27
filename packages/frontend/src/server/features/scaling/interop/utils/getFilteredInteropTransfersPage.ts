@@ -45,6 +45,7 @@ export async function getFilteredInteropTransfersPage({
       snapshotTimestamp: UnixTime(snapshotTimestamp),
       sourceChains,
       destinationChains,
+      abstractTokenId: tokenId,
       cursor: dbCursor
         ? {
             timestamp: UnixTime(dbCursor.timestamp),
@@ -61,11 +62,7 @@ export async function getFilteredInteropTransfersPage({
     for (const [i, transfer] of transfers.entries()) {
       dbCursor = toTransferCursor(transfer)
 
-      if (
-        !matcher(transfer) ||
-        !matchesTokenId(transfer, tokenId) ||
-        !transferTouchesChain(transfer, anchorChain)
-      ) {
+      if (!matcher(transfer) || !transferTouchesChain(transfer, anchorChain)) {
         continue
       }
 
@@ -109,15 +106,4 @@ function toTransferCursor(
     timestamp: transfer.timestamp,
     transferId: transfer.transferId,
   }
-}
-
-function matchesTokenId(
-  transfer: InteropTransferRecord,
-  tokenId: string | undefined,
-): boolean {
-  return (
-    tokenId === undefined ||
-    transfer.srcAbstractTokenId === tokenId ||
-    transfer.dstAbstractTokenId === tokenId
-  )
 }

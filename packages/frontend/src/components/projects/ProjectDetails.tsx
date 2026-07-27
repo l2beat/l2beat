@@ -45,6 +45,7 @@ interface ProjectDetailsProps {
   nested?: boolean
   parentSection?: string
   items: ProjectDetailsSection[]
+  selectedUpdateId?: string
 }
 
 export function ProjectDetails(props: ProjectDetailsProps) {
@@ -351,6 +352,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}
+                selectedUpdateId={props.selectedUpdateId}
               />
             )
           case 'PrivacyTvlSection':

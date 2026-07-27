@@ -3,6 +3,7 @@ import {
   HistoryIcon,
   LightbulbIcon,
   ListChecksIcon,
+  NetworkIcon,
   PanelsTopLeftIcon,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
@@ -49,6 +50,11 @@ const items = [
         title: 'History',
         url: '/tokens/history',
         icon: HistoryIcon,
+      },
+      {
+        title: 'Graph',
+        url: '/tokens/relations-graph',
+        icon: NetworkIcon,
       },
     ],
   },

@@ -7,7 +7,7 @@ import { TopTokensCell } from '~/pages/interop/components/tokens/TopTokensCell'
 import type { ProtocolEntry } from '~/server/features/scaling/interop/types'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
-import type { InteropSelection } from '../../../utils/types'
+import type { AnchoredInteropSelection } from '../../../utils/types'
 import { BridgeTypeBadge } from '../../table/BridgeTypeBadge'
 import { TopRouteCell } from './TopRouteCell'
 
@@ -16,7 +16,9 @@ export type ProtocolByVolumeRow = ProtocolEntry &
 
 const columnHelper = createColumnHelper<ProtocolByVolumeRow>()
 
-export function getProtocolsByVolumeColumns(apiSelection: InteropSelection) {
+export function getProtocolsByVolumeColumns(
+  apiSelection: AnchoredInteropSelection,
+) {
   return [
     columnHelper.accessor((_, index) => index + 1, {
       header: '#',

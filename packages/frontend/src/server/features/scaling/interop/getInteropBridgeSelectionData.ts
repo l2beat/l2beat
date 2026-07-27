@@ -3,8 +3,14 @@ import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import { buildInteropTokenData } from './getInteropTokens'
-import type { InteropBridgeSelectionParams, TokenData } from './types'
+import type {
+  InteropBridgeSelectionParams,
+  ProtocolEntry,
+  TokenData,
+} from './types'
+import { buildTokensDetailsMapForRecords } from './utils/buildTokensDetailsMap'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
+import { getProtocolEntries } from './utils/getProtocolEntries'
 import {
   aggregateTransferSize,
   aggregateTransferType,
@@ -16,6 +22,7 @@ export interface InteropBridgeSelectionData {
   transferSize: TransferSizeDistribution | undefined
   transferType: TransferTypeDataPoint | undefined
   tokens: TokenData[]
+  protocols: ProtocolEntry[]
   snapshotTimestamp: UnixTime | undefined
 }
 
@@ -23,6 +30,7 @@ const EMPTY: InteropBridgeSelectionData = {
   transferSize: undefined,
   transferType: undefined,
   tokens: [],
+  protocols: [],
   snapshotTimestamp: undefined,
 }
 
@@ -75,15 +83,27 @@ async function buildBridgeSelectionData(
     (record) => !subgroupProjects.has(record.id as ProjectId),
   )
 
+  const tokensDetailsMap =
+    await buildTokensDetailsMapForRecords(nonSubgroupRecords)
+
   return {
     transferSize: aggregateTransferSize(nonSubgroupRecords),
     transferType: aggregateTransferType(nonSubgroupRecords),
-    tokens: await buildInteropTokenData({
+    tokens: buildInteropTokenData({
       records: nonSubgroupRecords,
       interopProject: undefined,
       interopProjects,
       type: undefined,
+      tokensDetailsMap,
     }),
+    protocols: getProtocolEntries(
+      nonSubgroupRecords,
+      tokensDetailsMap,
+      interopProjects,
+      undefined,
+      undefined,
+      { from: params.from, to: params.to },
+    ).entries,
     snapshotTimestamp,
   }
 }

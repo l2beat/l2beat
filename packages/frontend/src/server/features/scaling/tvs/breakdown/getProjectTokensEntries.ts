@@ -17,7 +17,10 @@ import { env } from '~/env'
 import { categoryToLabel } from '~/pages/scaling/project/tvs-breakdown/components/tables/categoryToLabel'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
-import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
+import {
+  calculatePercentageChange,
+  type PercentageChangePeriod,
+} from '~/utils/calculatePercentageChange'
 import { formatTimestamp } from '~/utils/dates'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import { getTvsTargetTimestamp } from '../utils/getTvsTargetTimestamp'
@@ -38,10 +41,18 @@ export interface ProjectTvsBreakdownTokenEntry extends FilterableEntry {
   name: string
   symbol: TvsToken['symbol']
   iconUrl: string
-  valueForProject: { value: number; change?: number }
+  valueForProject: {
+    value: number
+    change?: number
+    changePeriod?: PercentageChangePeriod
+  }
   value: number
   amount: number
-  priceUsd: { value: number; change?: number }
+  priceUsd: {
+    value: number
+    change?: number
+    changePeriod?: PercentageChangePeriod
+  }
   category: TvsToken['category']
   source: TvsToken['source']
   isAssociated: TvsToken['isAssociated']
@@ -66,16 +77,16 @@ export async function getProjectTokensEntries(
 
   const db = getDb()
   const targetTimestamp = getTvsTargetTimestamp()
-  const oneDayAgoTargetTimestamp = targetTimestamp - UnixTime.DAY
+  const sevenDaysAgoTargetTimestamp = targetTimestamp - 7 * UnixTime.DAY
 
-  const [projects, tokenValues, oneDayAgoTokenValues] = await Promise.all([
+  const [projects, tokenValues, sevenDaysAgoTokenValues] = await Promise.all([
     ps.getProjects({
       select: ['chainConfig'],
     }),
     db.tvsTokenValue.getByProjectAtOrBefore(project.id, targetTimestamp),
     db.tvsTokenValue.getByProjectAtOrBefore(
       project.id,
-      oneDayAgoTargetTimestamp,
+      sevenDaysAgoTargetTimestamp,
     ),
   ])
 
@@ -83,14 +94,14 @@ export async function getProjectTokensEntries(
   const tokenValuesMap = new Map(
     tokenValues.map((x) => [TokenId(x.tokenId), x]),
   )
-  const oneDayAgoTokenValuesMap = new Map(
-    oneDayAgoTokenValues.map((x) => [TokenId(x.tokenId), x]),
+  const sevenDaysAgoTokenValuesMap = new Map(
+    sevenDaysAgoTokenValues.map((x) => [TokenId(x.tokenId), x]),
   )
 
   const entries = getEntries(
     project,
     tokenValuesMap,
-    oneDayAgoTokenValuesMap,
+    sevenDaysAgoTokenValuesMap,
     chains,
     targetTimestamp,
   )
@@ -101,7 +112,7 @@ export async function getProjectTokensEntries(
 function getEntries(
   project: Project<'tvsConfig', 'chainConfig' | 'contracts'>,
   tokenValuesMap: Map<TokenId, TokenValueRecord>,
-  oneDayAgoTokenValuesMap: Map<TokenId, TokenValueRecord>,
+  sevenDaysAgoTokenValuesMap: Map<TokenId, TokenValueRecord>,
   chains: ChainConfig[],
   targetTimestamp: UnixTime,
 ) {
@@ -121,12 +132,13 @@ function getEntries(
       project.contracts?.addresses,
     )
 
-    // Only compute change when we have a record exactly one day before the current record's timestamp
-    const oneDayAgoTokenValue = oneDayAgoTokenValuesMap.get(token.id)
-    const matchedOneDayAgo =
-      oneDayAgoTokenValue &&
-      oneDayAgoTokenValue.timestamp === tokenValue.timestamp - UnixTime.DAY
-        ? oneDayAgoTokenValue
+    // Only compute change when we have a record exactly seven days before the current record's timestamp
+    const sevenDaysAgoTokenValue = sevenDaysAgoTokenValuesMap.get(token.id)
+    const matchedSevenDaysAgo =
+      sevenDaysAgoTokenValue &&
+      sevenDaysAgoTokenValue.timestamp ===
+        tokenValue.timestamp - 7 * UnixTime.DAY
+        ? sevenDaysAgoTokenValue
         : undefined
 
     const tokenWithValues: ProjectTvsBreakdownTokenEntry = {
@@ -145,19 +157,21 @@ function getEntries(
       iconUrl: token.iconUrl ?? TOKEN_PLACEHOLDER_ICON_URL,
       priceUsd: {
         value: tokenValue.priceUsd,
-        change: matchedOneDayAgo
+        changePeriod: '7D',
+        change: matchedSevenDaysAgo
           ? calculatePercentageChange(
               tokenValue.priceUsd,
-              matchedOneDayAgo.priceUsd,
+              matchedSevenDaysAgo.priceUsd,
             )
           : undefined,
       },
       valueForProject: {
         value: tokenValue.valueForProject,
-        change: matchedOneDayAgo
+        changePeriod: '7D',
+        change: matchedSevenDaysAgo
           ? calculatePercentageChange(
               tokenValue.valueForProject,
-              matchedOneDayAgo.valueForProject,
+              matchedSevenDaysAgo.valueForProject,
             )
           : undefined,
       },

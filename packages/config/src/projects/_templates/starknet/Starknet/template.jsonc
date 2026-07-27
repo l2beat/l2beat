@@ -1,11 +1,11 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "Starknet",
-  "description": "Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
+  "description": "Central Starknet rollup contract. For every state update it derives a SHARP fact from the state-transition output and either the Starknet OS or aggregator program hash, checks that fact through the configured SHARP call proxy, and requires the output's OS-config hash to match. It also processes L1 <-> L2 messages and stores the finalized L2 state.",
   "category": "core",
   "fields": {
     "$admin": {
-      "description": "Permissioned to upgrade the proxy implementation and access `onlyGovernance` restricted calls.",
+      "description": "Permissioned to upgrade the proxy implementation and access `onlyGovernance` calls. While the contract is not finalized, governance can replace the OS program hash, aggregator program hash, and OS-config hash. An implementation upgrade can also replace the verifier address or bypass all proof checks.",
       "severity": "HIGH",
       "permissions": [
         {
@@ -14,33 +14,52 @@
         },
         {
           "type": "interact",
-          "description": "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract."
+          "description": "Permissioned to manage the Operator role, finalize the application configuration, and change the OS program hash, aggregator program hash, OS-config hash, fee collector, or message cancellation delay."
         }
       ]
     },
     "isFinalized": {
-      "description": "Finalizes most of the configuration of the contract, which cannot be changed afterwards (only thorugh an upgrade).",
+      "description": "Locks the current implementation's setters for the Starknet OS hash, aggregator hash, OS-config hash, and message-cancellation delay. It does not lock the fee collector or freeze the proxy, so an implementation upgrade can replace or bypass every pin.",
       "severity": "HIGH"
     },
     "programHashHistory": {
+      "description": "Previous Starknet OS program hashes emitted on each governance update. The current value is exposed separately as `programHash`.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
       "handler": {
         "type": "event",
         "select": "oldProgramHash",
         "add": { "event": "ProgramHashChanged" }
       }
     },
+    "aggregatorProgramHashHistory": {
+      "description": "Previous Starknet aggregator program hashes emitted on each governance update. The current value is exposed separately as `aggregatorProgramHash`.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      "handler": {
+        "type": "event",
+        "select": "oldAggregatorProgramHash",
+        "add": { "event": "AggregatorProgramHashChanged" }
+      }
+    },
+    "configHashHistory": {
+      "description": "Previous Starknet OS-configuration commitments emitted on each governance update. The current value is exposed separately as `configHash`.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      "handler": {
+        "type": "event",
+        "select": "oldConfigHash",
+        "add": { "event": "ConfigHashChanged" }
+      }
+    },
     "verifier": {
+      "description": "SHARP fact registry used by `updateStateInternal`. It is initialized once and currently points to an upgradeable call proxy. Starknet calls the proxy's explicit `isValid` function, which always queries the default target and its active reference registries; caller-specific fallback routes affect proof submission but not this lookup. All programs pinned by the default target and active references are part of Starknet's proof trust chain. Changing this address requires upgrading the Starknet implementation.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
       "handler": {
         "type": "starkWareNamedStorage",
         "tag": "STARKNET_1.0_INIT_VERIFIER_ADDRESS",
         "returnType": "address"
-      }
-    },
-    "governedFinalized": {
-      "handler": {
-        "type": "starkWareNamedStorage",
-        "tag": "STARKWARE_CONTRACTS_GOVERENED_FINALIZABLE_1.0_TAG",
-        "returnType": "number" // boolean
       }
     },
     // Responsible for updating the state
@@ -54,16 +73,32 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability."
+          "description": "Permissioned to regularly post L2 state updates and choose an available data-availability entry point. Under the current implementation, every update still needs a fact accepted by SHARP and cannot bypass the pinned program and config hashes."
         }
       ]
     },
+    "feeCollector": {
+      "description": "Address receiving consumed L1 -> L2 message fees. Governance can change it even after application configuration is finalized; the zero address makes the submitting Operator the recipient.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
     "programHash": {
-      "description": "The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated.",
+      "description": "Starknet OS program hash. In direct mode it is included in the SHARP fact key; in aggregator mode the aggregator's public output must contain this exact OS hash. A malicious OS program could prove arbitrary state transitions. Update the program-hash catalog and liveness tracking whenever this changes.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE"
+    },
+    "aggregatorProgramHash": {
+      "description": "Cairo aggregator program hash used in the SHARP fact key when the program output declares aggregator mode. The output must also name the current Starknet OS hash. A malicious aggregator could fabricate the transition output attributed to otherwise valid OS executions.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE"
+    },
+    "configHash": {
+      "description": "Commitment to the Starknet OS execution environment which every direct or aggregated program output must equal. The current V4 commitment is reproducible from `StarknetOsConfig4`, chain ID `SN_MAIN`, the STRK fee-token address, and no state-diff encryption public keys. A malicious value can authorize proofs under a different chain ID, fee token, or optional public-key configuration.",
       "severity": "HIGH",
       "type": "CODE_CHANGE"
     },
     "programHashMapped": {
+      "description": "Human-readable label for the current Starknet OS program hash.",
       "handler": {
         "type": "call",
         "method": "programHash",
@@ -72,6 +107,7 @@
       "edit": ["format", "StarknetProgramHash"]
     },
     "aggregatorHashMapped": {
+      "description": "Human-readable label for the current Starknet aggregator program hash.",
       "handler": {
         "type": "call",
         "method": "aggregatorProgramHash",

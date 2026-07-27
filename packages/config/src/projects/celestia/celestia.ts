@@ -225,6 +225,22 @@ export const celestia: BaseProject = {
         ],
       },
       {
+        projectId: ProjectId('eden'),
+        name: 'Eden',
+        daTrackingConfig: [
+          {
+            type: 'celestia',
+            sinceBlock: 9409947,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAORr5sRrVhwIjmU=',
+          },
+          {
+            type: 'celestia',
+            sinceBlock: 9413424,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAoxK5AW18ozObY=',
+          },
+        ],
+      },
+      {
         projectId: ProjectId('embr-fun'),
         name: 'Embr.fun',
         daTrackingConfig: [

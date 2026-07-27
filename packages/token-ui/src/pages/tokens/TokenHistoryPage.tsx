@@ -61,12 +61,16 @@ interface TokenInfo {
   primary: ReactNode
   secondary?: ReactNode
   iconUrl?: string
+  icon?: ReactNode
 }
 
 interface AbstractTokenInfo {
   symbol: string
   iconUrl: string | null
 }
+
+type DeployedTokenLookupEntry =
+  RouterOutputs['deployedTokens']['getByChainAndAddress'][number]
 
 export function TokenHistoryPage() {
   const trpc = useTRPC()
@@ -107,6 +111,25 @@ export function TokenHistoryPage() {
   )
 
   const entries = historyPage?.entries ?? []
+  const relationTokenKeys = useMemo(
+    () => getRelationTokenKeys(entries),
+    [entries],
+  )
+  const { data: relationTokens } = useQuery(
+    trpc.deployedTokens.getByChainAndAddress.queryOptions(relationTokenKeys, {
+      enabled: relationTokenKeys.length > 0,
+      refetchInterval: 10_000,
+      refetchOnMount: 'always',
+      staleTime: 0,
+    }),
+  )
+  const deployedTokensByKey = useMemo(
+    () =>
+      new Map(
+        relationTokens?.map((entry) => [tokenKey(entry.deployedToken), entry]),
+      ),
+    [relationTokens],
+  )
   const totalCount = historyPage?.totalCount ?? 0
   const pageCount = historyPage
     ? Math.max(1, Math.ceil(historyPage.totalCount / PAGE_SIZE))
@@ -202,7 +225,11 @@ export function TokenHistoryPage() {
               </TableHeader>
               <TableBody>
                 {entries.map((entry) => {
-                  const token = getTokenInfo(entry, abstractTokensById)
+                  const token = getTokenInfo(
+                    entry,
+                    abstractTokensById,
+                    deployedTokensByKey,
+                  )
 
                   return (
                     <TableRow key={entry.id}>
@@ -214,15 +241,16 @@ export function TokenHistoryPage() {
                       </TableCell>
                       <TableCell className="max-w-[360px] whitespace-normal break-words">
                         <div className="flex items-center gap-2">
-                          {token.iconUrl && (
-                            <img
-                              src={token.iconUrl}
-                              alt=""
-                              width={24}
-                              height={24}
-                              className="shrink-0 rounded-full"
-                            />
-                          )}
+                          {token.icon ??
+                            (token.iconUrl && (
+                              <img
+                                src={token.iconUrl}
+                                alt=""
+                                width={24}
+                                height={24}
+                                className="shrink-0 rounded-full"
+                              />
+                            ))}
                           <div>
                             <div>{token.primary}</div>
                             {token.secondary && (
@@ -291,6 +319,7 @@ function HistoryDetails({
             </SheetHeader>
             <div className="min-h-0 flex-1 space-y-4 overflow-y-auto px-4 pb-4">
               <CommandDiff entry={entry} />
+              {entry.intent !== null && <IntentDetails intent={entry.intent} />}
               {entry.ingestionLog && <IngestionLog log={entry.ingestionLog} />}
             </div>
           </>
@@ -306,9 +335,21 @@ function SourceLabel({ entry }: { entry: HistoryEntry }) {
       <Badge variant={entry.source === 'manual' ? 'secondary' : 'default'}>
         {entry.source}
       </Badge>
+      {entry.intent !== null && <Badge variant="outline">intent</Badge>}
       {entry.userEmail && (
         <div className="text-muted-foreground text-xs">{entry.userEmail}</div>
       )}
+    </div>
+  )
+}
+
+function IntentDetails({ intent }: { intent: unknown }) {
+  return (
+    <div className="space-y-2 rounded-md border p-3">
+      <div className="font-medium text-sm">Intent</div>
+      <pre className="overflow-x-auto rounded bg-muted p-2 text-xs">
+        {JSON.stringify(intent, null, 2)}
+      </pre>
     </div>
   )
 }
@@ -339,8 +380,11 @@ function getChangedFields(entry: HistoryEntry) {
     case 'AddAbstractTokenCommand':
     case 'AddDeployedTokenCommand':
       return []
+    case 'AddTokenRelationCommand':
+      return ['plugin', 'bridgeType']
     case 'UpdateAbstractTokenCommand':
     case 'UpdateDeployedTokenCommand':
+    case 'UpdateTokenRelationCommand':
       return Array.from(
         new Set(
           (getCommandDifferences(entry) ?? []).map((difference) =>
@@ -350,6 +394,7 @@ function getChangedFields(entry: HistoryEntry) {
       )
     case 'DeleteAbstractTokenCommand':
     case 'DeleteDeployedTokenCommand':
+    case 'DeleteTokenRelationCommand':
       return ['deleted']
     default:
       return []
@@ -359,6 +404,7 @@ function getChangedFields(entry: HistoryEntry) {
 function getTokenInfo(
   entry: HistoryEntry,
   abstractTokensById: Map<string, AbstractTokenInfo>,
+  deployedTokensByKey: Map<string, DeployedTokenLookupEntry>,
 ): TokenInfo {
   const command = asRecord(entry.command)
   switch (entry.commandType) {
@@ -395,6 +441,22 @@ function getTokenInfo(
       return abstractInfo(asRecord(command.existing), undefined, {
         id: command.id,
       })
+    case 'AddTokenRelationCommand':
+      return relationInfo(asRecord(command.record), deployedTokensByKey)
+    case 'UpdateTokenRelationCommand':
+      return relationInfo(
+        asRecord(command.existing),
+        deployedTokensByKey,
+        asRecord(command.update),
+        asRecord(command.pk),
+      )
+    case 'DeleteTokenRelationCommand':
+      return relationInfo(
+        asRecord(command.existing),
+        deployedTokensByKey,
+        undefined,
+        asRecord(command.pk),
+      )
     default:
       return { primary: '?' }
   }
@@ -453,6 +515,158 @@ function abstractInfo(
   }
 }
 
+function relationInfo(
+  record: Record<string, unknown>,
+  deployedTokensByKey: Map<string, DeployedTokenLookupEntry>,
+  _update?: Record<string, unknown>,
+  fallback: Record<string, unknown> = {},
+): TokenInfo {
+  const fromChain =
+    stringValue(fallback.tokenFromChain) ??
+    stringValue(record.tokenFromChain) ??
+    '?'
+  const fromAddress =
+    stringValue(fallback.tokenFromAddress) ??
+    stringValue(record.tokenFromAddress) ??
+    '?'
+  const toChain =
+    stringValue(fallback.tokenToChain) ??
+    stringValue(record.tokenToChain) ??
+    '?'
+  const toAddress =
+    stringValue(fallback.tokenToAddress) ??
+    stringValue(record.tokenToAddress) ??
+    '?'
+  const plugin =
+    stringValue(fallback.plugin) ?? stringValue(record.plugin) ?? '?'
+  const bridgeType =
+    stringValue(fallback.bridgeType) ?? stringValue(record.bridgeType) ?? '?'
+  const fromToken = deployedTokensByKey.get(
+    tokenKey({ chain: fromChain, address: fromAddress }),
+  )
+  const toToken = deployedTokensByKey.get(
+    tokenKey({ chain: toChain, address: toAddress }),
+  )
+  const fromIconUrl = fromToken?.abstractToken?.iconUrl ?? undefined
+  const toIconUrl = toToken?.abstractToken?.iconUrl ?? undefined
+
+  return {
+    icon:
+      fromIconUrl || toIconUrl ? (
+        <RelationIcons fromIconUrl={fromIconUrl} toIconUrl={toIconUrl} />
+      ) : undefined,
+    primary: (
+      <>
+        <TokenLink
+          to={`/tokens/${fromChain}/${fromAddress}`}
+          label={formatRelationTokenLabel(
+            fromToken?.deployedToken.symbol,
+            fromChain,
+            fromAddress,
+          )}
+        />{' '}
+        -&gt;{' '}
+        <TokenLink
+          to={`/tokens/${toChain}/${toAddress}`}
+          label={formatRelationTokenLabel(
+            toToken?.deployedToken.symbol,
+            toChain,
+            toAddress,
+          )}
+        />
+      </>
+    ),
+    secondary: [`plugin: ${plugin}`, `bridge: ${bridgeType}`].join(' | '),
+  }
+}
+
+function RelationIcons({
+  fromIconUrl,
+  toIconUrl,
+}: {
+  fromIconUrl: string | undefined
+  toIconUrl: string | undefined
+}) {
+  return (
+    <div className="flex shrink-0 items-center">
+      {fromIconUrl && (
+        <img
+          src={fromIconUrl}
+          alt=""
+          width={24}
+          height={24}
+          className="rounded-full border border-background bg-background"
+        />
+      )}
+      {toIconUrl && (
+        <img
+          src={toIconUrl}
+          alt=""
+          width={24}
+          height={24}
+          className="-ml-2 rounded-full border border-background bg-background"
+        />
+      )}
+    </div>
+  )
+}
+
+function getRelationTokenKeys(entries: HistoryEntry[]) {
+  return Array.from(
+    new Map(
+      entries
+        .flatMap(relationTokenKeysFromEntry)
+        .map((token) => [tokenKey(token), token]),
+    ).values(),
+  )
+}
+
+function relationTokenKeysFromEntry(entry: HistoryEntry) {
+  const command = asRecord(entry.command)
+  switch (entry.commandType) {
+    case 'AddTokenRelationCommand':
+      return relationTokenKeysFromRecord(asRecord(command.record))
+    case 'UpdateTokenRelationCommand':
+    case 'DeleteTokenRelationCommand':
+      return relationTokenKeysFromRecord(
+        asRecord(command.existing),
+        asRecord(command.pk),
+      )
+    default:
+      return []
+  }
+}
+
+function relationTokenKeysFromRecord(
+  record: Record<string, unknown>,
+  fallback: Record<string, unknown> = {},
+) {
+  const fromChain =
+    stringValue(fallback.tokenFromChain) ?? stringValue(record.tokenFromChain)
+  const fromAddress =
+    stringValue(fallback.tokenFromAddress) ??
+    stringValue(record.tokenFromAddress)
+  const toChain =
+    stringValue(fallback.tokenToChain) ?? stringValue(record.tokenToChain)
+  const toAddress =
+    stringValue(fallback.tokenToAddress) ?? stringValue(record.tokenToAddress)
+
+  return [
+    fromChain && fromAddress
+      ? { chain: fromChain, address: fromAddress }
+      : undefined,
+    toChain && toAddress ? { chain: toChain, address: toAddress } : undefined,
+  ].filter((token): token is { chain: string; address: string } => !!token)
+}
+
+function formatRelationTokenLabel(
+  symbol: string | undefined,
+  chain: string,
+  address: string,
+) {
+  return `${symbol ?? 'Unknown'} ${chain}:${shortAddress(address)}`
+}
+
 function TokenLink({ to, label }: { to: string; label: string }) {
   if (label.includes('?') || to.includes('?')) {
     return <>{label}</>
@@ -479,6 +693,7 @@ function getCommandDifferences(entry: HistoryEntry) {
   switch (entry.commandType) {
     case 'UpdateAbstractTokenCommand':
     case 'UpdateDeployedTokenCommand':
+    case 'UpdateTokenRelationCommand':
       return diff(asRecord(command.existing), {
         ...asRecord(command.existing),
         ...asRecord(command.update),
@@ -517,7 +732,12 @@ function abstractTokenRef(
 
 function shortAddress(address: string) {
   if (address === '?') return '?'
+  if (!address.startsWith('0x')) return address
   return formatAddress(address)
+}
+
+function tokenKey(token: { chain: string; address: string }) {
+  return `${token.chain}:${token.address.toLowerCase()}`
 }
 
 function asRecord(value: unknown): Record<string, unknown> {

@@ -8,7 +8,7 @@ export type InteropTokenProtocolsSectionProps = ProjectSectionProps
 export function InteropTokenProtocolsSection({
   ...sectionProps
 }: InteropTokenProtocolsSectionProps) {
-  const { data, isLoading } = useInteropTokenDashboard()
+  const { data, isLoading, tokenId } = useInteropTokenDashboard()
 
   return (
     <ProjectSection {...sectionProps}>
@@ -18,6 +18,7 @@ export function InteropTokenProtocolsSection({
           entries={data.entries}
           hideTypeColumn
           hideTokensColumn
+          tokenId={tokenId}
         />
       )}
       {!isLoading && (!data?.entries || data.entries.length === 0) && (

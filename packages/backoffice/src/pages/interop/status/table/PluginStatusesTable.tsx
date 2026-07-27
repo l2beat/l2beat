@@ -27,6 +27,7 @@ export function PluginStatusesTable({
     data,
     columns: pluginStatusColumns,
     initialSorting: [{ id: 'toTimestamp', desc: true }],
+    initialColumnFilters: [{ id: 'chainStatus', value: ['active'] }],
     getRowId: (row) => `${row.pluginName}:${row.chain}`,
     searchPlaceholder: 'Search plugins, chains, sync modes, and errors',
   })

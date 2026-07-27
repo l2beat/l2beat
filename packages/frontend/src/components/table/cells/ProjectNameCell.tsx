@@ -16,7 +16,8 @@ import { Markdown } from '~/components/markdown/Markdown'
 import {
   ProjectTooltipContent,
   type ProjectTooltipSectionData,
-  QUANTUM_RESISTANCE_TOOLTIP,
+  QUANTUM_RESISTANCE_TOOLTIPS,
+  type QuantumResistanceType,
 } from '~/components/projects/ProjectTooltipContent'
 import { ClockIcon } from '~/icons/Clock'
 import { Layer3Icon } from '~/icons/Layer3'
@@ -35,7 +36,7 @@ export type ProjectCellProject = Omit<CommonProjectEntry, 'href' | 'id'> & {
   purposes?: ProjectScalingPurpose[]
   capability?: ProjectScalingCapability
   ecosystemInfo?: ProjectEcosystemInfo
-  quantumResistant?: boolean
+  quantumResistance?: QuantumResistanceType
 }
 
 interface ProjectCellProps {
@@ -84,7 +85,9 @@ function DesktopStatusIcons({
     <div className={cn('flex items-center gap-1.5', className)}>
       {project.isLayer3 && <Layer3Icon className="size-4" />}
       {project.ecosystemInfo?.isPartOfSuperchain && <SuperchainIcon />}
-      {project.quantumResistant && <QuantumResistanceIcon className="size-4" />}
+      {project.quantumResistance && (
+        <QuantumResistanceIcon className="size-4" />
+      )}
       {project.statuses?.verificationWarnings &&
         Object.values(project.statuses.verificationWarnings).some(
           (value) => value !== undefined,
@@ -128,11 +131,11 @@ export function ProjectNameMobileStatusIcons({
           manage chain configuration values.
         </MobileProjectIconTooltip>
       )}
-      {project.quantumResistant && (
+      {project.quantumResistance && (
         <MobileProjectIconTooltip
           icon={<QuantumResistanceIcon className="size-4" />}
         >
-          {QUANTUM_RESISTANCE_TOOLTIP}
+          {QUANTUM_RESISTANCE_TOOLTIPS[project.quantumResistance]}
         </MobileProjectIconTooltip>
       )}
       {project.statuses?.verificationWarnings &&
@@ -355,7 +358,7 @@ export function ProjectNameInfoTooltip({
   const sections = getTooltipSections(project)
   const hasTooltipContent =
     !!project.description ||
-    !!project.quantumResistant ||
+    !!project.quantumResistance ||
     (project.badges?.length ?? 0) > 0 ||
     sections.length > 0
 
@@ -386,10 +389,10 @@ export function ProjectNameInfoTooltip({
 function getTooltipSections(project: ProjectCellProject) {
   const sections: ProjectTooltipSectionData[] = []
 
-  if (project.quantumResistant) {
+  if (project.quantumResistance) {
     sections.push({
       id: 'quantum-resistance',
-      text: QUANTUM_RESISTANCE_TOOLTIP,
+      text: QUANTUM_RESISTANCE_TOOLTIPS[project.quantumResistance],
       variant: 'muted',
       icon: <QuantumResistanceIcon className="size-4" />,
     })

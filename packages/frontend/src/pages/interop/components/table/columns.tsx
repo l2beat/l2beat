@@ -127,6 +127,7 @@ export function getAllProtocolsColumns(
   showAverageInFlightValueColumn?: boolean,
   showNetMintedValueColumn?: boolean,
   hideTokensColumn?: boolean,
+  tokenId?: string,
 ) {
   return compact([
     columnHelper.accessor((_, index) => index + 1, {
@@ -180,6 +181,7 @@ export function getAllProtocolsColumns(
           transferCount={ctx.row.original.transferCount}
           snapshotTimestamp={ctx.row.original.snapshotTimestamp}
           type={type}
+          tokenId={tokenId}
           protocol={{
             id: ctx.row.original.id,
             name: ctx.row.original.name,

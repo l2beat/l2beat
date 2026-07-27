@@ -14,6 +14,7 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 export type TvsData = {
@@ -37,6 +38,7 @@ export type TvsData = {
     btc: number
     other: number
   }
+  changePeriod: PercentageChangePeriod
 }
 
 export function TvsBreakdownSummaryBox({
@@ -63,6 +65,7 @@ export function TvsBreakdownSummaryBox({
         ) : (
           <ValueWithPercentageChange
             change={tvsData?.change.total}
+            changePeriod={tvsData?.changePeriod}
             className="font-bold text-heading-24! text-primary leading-none lg:mr-0"
             changeClassName="text-label-value-16"
             containerClassName="lg:flex-col max-lg:items-baseline"
@@ -100,6 +103,7 @@ export function TvsBreakdownSummaryBox({
             isLoading={isLoading}
             value={tvsData?.breakdown.canonical}
             change={tvsData?.change.canonical}
+            changePeriod={tvsData?.changePeriod}
           />
         </ChartStatsItem>
         <ChartStatsItem
@@ -118,6 +122,7 @@ export function TvsBreakdownSummaryBox({
             isLoading={isLoading}
             value={tvsData?.breakdown.native}
             change={tvsData?.change.native}
+            changePeriod={tvsData?.changePeriod}
           />
         </ChartStatsItem>
         <ChartStatsItem
@@ -136,6 +141,7 @@ export function TvsBreakdownSummaryBox({
             isLoading={isLoading}
             value={tvsData?.breakdown.external}
             change={tvsData?.change.external}
+            changePeriod={tvsData?.changePeriod}
           />
         </ChartStatsItem>
         <HorizontalSeparator className="my-1 md:col-span-3" />
@@ -144,6 +150,7 @@ export function TvsBreakdownSummaryBox({
             isLoading={isLoading}
             value={tvsData?.breakdown.ether}
             change={tvsData?.change.ether}
+            changePeriod={tvsData?.changePeriod}
           />
         </ChartStatsItem>
         <ChartStatsItem label="Stablecoins">
@@ -151,6 +158,7 @@ export function TvsBreakdownSummaryBox({
             isLoading={isLoading}
             value={tvsData?.breakdown.stablecoin}
             change={tvsData?.change.stablecoin}
+            changePeriod={tvsData?.changePeriod}
           />
         </ChartStatsItem>
         <ChartStatsItem label="BTC & derivatives">
@@ -158,6 +166,7 @@ export function TvsBreakdownSummaryBox({
             isLoading={isLoading}
             value={tvsData?.breakdown.btc}
             change={tvsData?.change.btc}
+            changePeriod={tvsData?.changePeriod}
           />
         </ChartStatsItem>
         <ChartStatsItem label="Other">
@@ -165,6 +174,7 @@ export function TvsBreakdownSummaryBox({
             isLoading={isLoading}
             value={tvsData?.breakdown.other}
             change={tvsData?.change.other}
+            changePeriod={tvsData?.changePeriod}
           />
         </ChartStatsItem>
       </div>
@@ -175,6 +185,7 @@ export function TvsBreakdownSummaryBox({
 interface StatsItemProps {
   value: number | undefined
   change: number | undefined
+  changePeriod: PercentageChangePeriod | undefined
   warning?: WarningWithSentiment
   isLoading: boolean
 }
@@ -187,6 +198,7 @@ function StatItemContent(props: StatsItemProps) {
     <div className="flex items-center gap-1">
       <ValueWithPercentageChange
         change={props.change}
+        changePeriod={props.changePeriod}
         changeContainerClassName="leading-none!"
         className="font-bold text-primary leading-none! md:text-lg"
       >

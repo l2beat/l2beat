@@ -3,7 +3,6 @@ import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { ContractValueType } from '../config/ColorConfig'
 import type { Permission } from '../config/PermissionConfig'
 import type { ContractFieldSeverity } from '../config/StructureConfig'
-import type { DiscoveryTimestamps } from '../modelling/modelPermissions'
 
 export type ContractValue =
   | string
@@ -35,7 +34,6 @@ export interface DiscoveryOutput {
   usedTemplates: Record<string, Hash256>
   usedBlockNumbers: Record<string, number>
   permissionsConfigHash?: Hash256
-  dependentDiscoveries?: DiscoveryTimestamps
 }
 
 export interface DiscoveryCustomType {
@@ -137,5 +135,4 @@ export type PermissionsOutput = {
     isFinal: boolean
     role?: string
   }[]
-  dependentTimestamps: DiscoveryTimestamps
 }

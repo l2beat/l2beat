@@ -1,3 +1,44 @@
+Generated with discovered.json: 0x8eaa3511d62772e3b1301505fa96c5caa4b467e1
+
+# Diff at Thu, 09 Jul 2026 10:01:03 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@41e54e24b48ee5dc5e63086324d02428320c1565 block: 1779719769
+- current timestamp: 1783591155
+
+## Description
+
+XaiFundsReiceiverMultisig (receives ETH from Sentry Node License mints) added a new 1-of-3 `SafeL2` (`0x1946…2705`) as a member. Top-Safe per-member share drops: 3/6 (50%) → 3/7 (43%).
+
+## Watched changes
+
+```diff
+    contract XaiFundsReiceiverMultisig (arb1:0xFCF7248C495d6fd3641eE43F861c48Ebe402c878) [GnosisSafe] {
+    +++ description: The designated fundsReceiver in the NodeLicenseRegistry. Receives all ETH from 'Sentry Node License' mints.
+      values.$members.0:
++        "arb1:0x194654c631686077d3C34a0e7c1856E4BE2E2705"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 7 (43%)"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (arb1:0x194654c631686077d3C34a0e7c1856E4BE2E2705) [GnosisSafe]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../SafeL2.sol                                     |    0
+ .../SafeProxy.p.sol                                |    0
+ .../SafeL2.sol                                     | 1286 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   42 +
+ 4 files changed, 1328 insertions(+)
+```
+
 Generated with discovered.json: 0xe2a1aade8d72d818562cc69a7cc5e8f41c2a4e98
 
 # Diff at Tue, 09 Jun 2026 12:43:40 GMT:

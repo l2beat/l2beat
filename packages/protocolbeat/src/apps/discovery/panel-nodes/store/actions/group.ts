@@ -2,6 +2,7 @@ import { unique } from '@l2beat/shared-pure'
 import type { Field, Node, State } from '../State'
 import { NODE_WIDTH } from '../utils/constants'
 import type { StoredGroup } from '../utils/layout'
+import { reconcileNodeHiddenFields } from '../utils/storage'
 import { updateNodePositions } from '../utils/updateNodePositions'
 
 export function groupSelected(state: State): Partial<State> {
@@ -73,7 +74,7 @@ function regroup(
     if (subnodes.length === 0) {
       continue
     }
-    result.push({ ...node, subnodes, fields: collectOutgoingFields(subnodes) })
+    result.push(updateGroupMembers(node, subnodes))
   }
   return changed ? result : nodes
 }
@@ -122,7 +123,7 @@ function ungroupTree(
       continue
     }
     changed = true
-    result.push({ ...node, subnodes, fields: collectOutgoingFields(subnodes) })
+    result.push(updateGroupMembers(node, subnodes))
   }
   return changed ? result : nodes
 }
@@ -158,7 +159,11 @@ function createPhantomNode(members: Node[]): Node {
   )
 }
 
-export function makeGroupNode(group: StoredGroup, members: Node[]): Node {
+export function makeGroupNode(
+  group: StoredGroup,
+  members: Node[],
+  settings?: Pick<Node, 'color' | 'colorSourceId' | 'hueShift'>,
+): Node {
   return {
     id: group.id,
     address: '',
@@ -174,8 +179,9 @@ export function makeGroupNode(group: StoredGroup, members: Node[]): Node {
       width: group.box.width ?? NODE_WIDTH,
       height: group.box.height ?? NODE_WIDTH,
     },
-    color: group.color,
-    hueShift: 0,
+    color: settings?.color ?? group.color,
+    colorSourceId: settings?.colorSourceId,
+    hueShift: settings?.hueShift ?? 0,
     data: null,
     isReachable: true,
     opened: group.opened,
@@ -197,8 +203,22 @@ export function collectOutgoingFields(members: readonly Node[]): Field[] {
         continue
       }
       seenTargets.add(field.target)
-      outgoing.push({ ...field, name: node.name })
+      outgoing.push({
+        ...field,
+        name: `group-field:${field.target}`,
+        label: node.name,
+      })
     }
   }
   return outgoing
+}
+
+function updateGroupMembers(node: Node, subnodes: readonly Node[]): Node {
+  const fields = collectOutgoingFields(subnodes)
+  return {
+    ...node,
+    subnodes,
+    fields,
+    hiddenFields: reconcileNodeHiddenFields(fields, node.hiddenFields),
+  }
 }

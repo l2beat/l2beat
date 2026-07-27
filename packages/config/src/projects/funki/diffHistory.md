@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x3a1c2a7c434d030736a068200373754f32f6716b
+
+# Diff at Fri, 17 Jul 2026 10:10:08 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@5a5b552776f13efe49c744667945e52e0a8f9718 block: 1783324534
+- current timestamp: 1784282928
+
+## Description
+
+OpFoundation shared Safes (UpgradeSafe + OperationsSafe): 2 members rotated.
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x6419F81580343DF023E68715C6e269aFb00a2cc7"
++        "eth:0xf1EfbdC2C0BDC4554E0f1639D7fe88cD870a4639"
+      values.$members.3:
+-        "eth:0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8"
++        "eth:0x7F1D4FE689B73B628285454667B93cfd09409f27"
+    }
+```
+
 Generated with discovered.json: 0xa18acf412d46d24f71d4f6108c0c9b1e4442909a
 
 # Diff at Mon, 06 Jul 2026 07:56:55 GMT:

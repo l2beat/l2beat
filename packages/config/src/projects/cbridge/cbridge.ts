@@ -12,6 +12,30 @@ export const cbridge: BaseProject = {
   addedAt: UnixTime(1662628329),
   // TODO!: when added, remove it from filter in config.test.ts
   interopConfig: {
+    intent: {
+      color: '#00A86B',
+      intentModel: {
+        value: 'Liquidity network',
+        description: 'Transfers are filled from the liquidity pool.',
+      },
+      userRecovery: {
+        value: 'Request refund',
+        sentiment: 'bad',
+        description:
+          'There is no onchain refund option. Failed pool transfers can be withdrawn on the source chain using gateway data signed by the Celer SGN.',
+      },
+      solverAccess: {
+        value: 'Internal',
+        sentiment: 'bad',
+        description:
+          'Solvers provide the signatures of the offchain Celer signer quorum with their transaction.',
+      },
+      settlement: {
+        value: 'Celer SGN',
+        description:
+          'Relay and refund messages must be authorized by a Celer signer quorum.',
+      },
+    },
     plugins: [
       {
         plugin: 'celer',

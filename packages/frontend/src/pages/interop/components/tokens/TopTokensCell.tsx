@@ -3,7 +3,7 @@ import { useState } from 'react'
 import type { TokenData } from '~/server/features/scaling/interop/types'
 import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
 import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
-import type { InteropSelection } from '../../utils/types'
+import type { AnchoredInteropSelection } from '../../utils/types'
 import { InteropTopItems } from '../top-items/TopItems'
 import { TokensDialog } from './TokensDialog'
 
@@ -24,7 +24,7 @@ export function TopTokensCell({
     iconUrl: string
     bridgeTypes?: KnownInteropBridgeType[]
   }
-  apiSelection: InteropSelection
+  apiSelection: AnchoredInteropSelection
   hideDialog?: boolean
   showNetMintedValueColumn?: boolean
 }) {

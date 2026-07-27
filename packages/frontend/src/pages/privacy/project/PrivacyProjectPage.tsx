@@ -97,6 +97,7 @@ export function PrivacyProjectPage({ entry, queryState, ...props }: Props) {
                       />
 
                       <PrivacyProjectRiskProfile
+                        trustedSetup={entry.trustedSetup}
                         exitWindow={entry.exitWindow}
                         privacy={entry.privacy}
                         reproducibility={entry.reproducibility}

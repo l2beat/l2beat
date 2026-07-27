@@ -1,7 +1,7 @@
 import type { Env } from '@l2beat/backend-tools'
 import { type ChainConfig, ProjectService } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Config } from './Config'
+import type { Config, DeploymentEnvironment } from './Config'
 import { getChainConfig } from './chain/getChainConfig'
 import { FeatureFlags } from './FeatureFlags'
 import { getActivityConfig } from './features/activity'
@@ -18,13 +18,14 @@ import { getGitCommitHash } from './getGitCommitHash'
 
 interface MakeConfigOptions {
   name: string
+  deploymentEnv: DeploymentEnvironment
   isLocal?: boolean
   minTimestampOverride?: UnixTime
 }
 
 export async function makeConfig(
   env: Env,
-  { name, isLocal, minTimestampOverride }: MakeConfigOptions,
+  { name, deploymentEnv, isLocal, minTimestampOverride }: MakeConfigOptions,
 ): Promise<Config> {
   const ps = new ProjectService()
 
@@ -87,7 +88,7 @@ export async function makeConfig(
         },
     notifications:
       flags.isEnabled('notifications') &&
-      getNotificationsConfig(env, flags, clockOffsetSeconds),
+      getNotificationsConfig(env, flags, clockOffsetSeconds, deploymentEnv),
     coingeckoApiKey: env.string('COINGECKO_API_KEY'),
     api: {
       port: env.integer('PORT', isLocal ? 3001 : undefined),
@@ -176,6 +177,7 @@ function getNotificationsConfig(
   env: Env,
   flags: FeatureFlags,
   clockOffsetSeconds: number,
+  deploymentEnv: DeploymentEnvironment,
 ): Config['notifications'] {
   return {
     updateMonitor: flags.isEnabled('notifications', 'updateMonitor') && {
@@ -192,6 +194,7 @@ function getNotificationsConfig(
       discordWebhookUrl: env.string(
         'NOTIFICATIONS_INTEROP_DISCORD_WEBHOOK_URL',
       ),
+      backofficeEnvironment: deploymentEnv,
     },
     ethereumBlobs: flags.isEnabled('notifications', 'ethereumBlobs') && {
       discordWebhookUrl: env.string(

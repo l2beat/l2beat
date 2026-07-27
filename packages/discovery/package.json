@@ -11,14 +11,14 @@
     "build": "tsc -p tsconfig.build.json",
     "build:dependencies": "cd ../.. && pnpm build:dependencies:discovery",
     "watch:dependencies": "cd ../.. && pnpm watch:dependencies:discovery",
-    "clean": "rm -rf dist",
+    "clean": "rm -rf dist *.tsbuildinfo",
     "format": "biome format .",
     "format:fix": "biome format --write .",
     "lint:fix": "biome check --formatter-enabled=false --write .",
     "lint": "biome check --formatter-enabled=false .",
     "test": "mocha",
     "typecheck": "tsc --noEmit",
-    "generate-schemas": "node -r esbuild-register src/cli.ts generate-schemas"
+    "generate-schemas": "tsx src/cli.ts generate-schemas"
   },
   "dependencies": {
     "@l2beat/backend-tools": "workspace:*",
@@ -43,6 +43,7 @@
     "@types/lodash": "^4.14.198",
     "@types/mock-fs": "^4.13.4",
     "@types/node-fetch": "^2.6.4",
-    "mock-fs": "^5.2.0"
+    "mock-fs": "^5.2.0",
+    "tsx": "^4.9.3"
   }
 }

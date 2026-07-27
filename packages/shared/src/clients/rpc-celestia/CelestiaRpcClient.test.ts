@@ -197,6 +197,21 @@ describe(CelestiaRpcClient.name, () => {
         },
       )
     })
+
+    it('passes configured timeout', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({ result: 'success' }),
+      })
+      const rpc = mockClient({ http, timeout: 30_000 })
+
+      await rpc.query('test_method', {})
+
+      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL/test_method', {
+        method: 'GET',
+        redirect: 'follow',
+        timeout: 30_000,
+      })
+    })
   })
 
   describe(CelestiaRpcClient.prototype.getValidatorsInfo.name, () => {
@@ -302,6 +317,7 @@ describe(CelestiaRpcClient.name, () => {
 function mockClient(deps: {
   http?: HttpClient
   url?: string
+  timeout?: number
   generateId?: () => string
 }) {
   return new CelestiaRpcClient({
@@ -311,6 +327,7 @@ function mockClient(deps: {
     callsPerMinute: 100_000,
     retryStrategy: 'TEST',
     logger: Logger.SILENT,
+    timeout: deps.timeout,
     generateId: deps.generateId,
   })
 }

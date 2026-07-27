@@ -1,0 +1,550 @@
+{
+  "name": "fusionplus",
+  "timestamp": 1784623944,
+  "configHash": "0xd0b4a01b6416967027881465e684df472d78ca0ac1cb0d032a684443025980a8",
+  "entries": [
+    {
+      "name": "FeeBank",
+      "address": "eth:0x0AafA51a3F792e1fd2766c2E7cAb1E6710e94b3b",
+      "type": "Contract",
+      "template": "fusionplus/FeeBank",
+      "sourceHashes": [
+        "0xda3a4bfe2bdb13fda1a1fdf5e3c942633bf8d54ada44b8cd741740d53072e490"
+      ],
+      "proxyType": "immutable",
+      "description": "Custody contract for resolver fee-token deposits. Depositing increases the resolver's credit in the associated charger contract, while withdrawing reduces credit and returns only the still-available amount. The owner can collect credit already consumed as protocol fees and can rescue arbitrary assets held by the contract.",
+      "deployerAddress": "eth:0x9ceef06f7042D6FF7F7F0EE4BbCa41E4B0989A0b",
+      "sinceTimestamp": 1724925755,
+      "sinceBlock": 20633516,
+      "values": {
+        "$immutable": true,
+        "charger": "eth:0xa7bCb4EAc8964306F9e3764f67Db6A7af6DdF99A",
+        "constructorArgs": {
+          "charger": "eth:0xa7bCb4EAc8964306F9e3764f67Db6A7af6DdF99A",
+          "feeToken": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+          "owner": "eth:0x9ceef06f7042D6FF7F7F0EE4BbCa41E4B0989A0b"
+        },
+        "feeToken": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "owner": "eth:0x9F8102b1bB05785BaD2874f2C7B1aaea4c6D976a"
+      },
+      "fieldMeta": {
+        "constructorArgs": {
+          "description": "Deployment configuration: credit charger, fee token and initial owner."
+        },
+        "charger": {
+          "description": "Contract that accounts for available resolver credit and is called on every deposit and withdrawal."
+        },
+        "feeToken": {
+          "description": "Token held as resolver credit and paid out on withdrawals or fee collection."
+        },
+        "owner": {
+          "severity": "HIGH",
+          "description": "Owner allowed to collect consumed fees and rescue assets from the FeeBank.",
+          "type": "PERMISSION"
+        }
+      },
+      "implementationNames": {
+        "eth:0x0AafA51a3F792e1fd2766c2E7cAb1E6710e94b3b": "FeeBank"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0x223c0EF36fEe905a40175d92704b1d3624218EE7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x8822B82DA9F9F02B99055d62226d59E4faaf4a3c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x89C8eeC57bD474816d407fe38354B8410B567Da3",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xACCe550000159e70908C0499a1119D04e7039C28",
+          "description": "choose the authorized resolver set by minting, burning or force-transferring RES tokens, authorize token mints or transfers by signature, and transfer ownership.",
+          "role": ".owner"
+        }
+      ]
+    },
+    {
+      "name": "EscrowDst",
+      "address": "eth:0x9c3e06659f1c34F930cE97fCbce6e04ae88e535B",
+      "type": "Contract",
+      "template": "fusionplus/EscrowDst",
+      "sourceHashes": [
+        "0x6b48eb14d4c994dc68b3baec0a6d0e84c5b1d282896e78e239ccd88c903bfefa"
+      ],
+      "proxyType": "immutable",
+      "description": "Implementation for deterministic destination-chain escrow clones. Each clone holds the taker's destination token amount plus a native-token safety deposit. During the private withdrawal window only the taker can reveal the secret and release the tokens to the maker; during the public window an access-token holder can perform the same action. After cancellation starts, only the taker can recover the destination tokens. The caller executing a withdrawal or cancellation receives the safety deposit. After 8d, the taker can rescue any remaining token or native balance from the clone.",
+      "deployerAddress": "eth:0x9ceef06f7042D6FF7F7F0EE4BbCa41E4B0989A0b",
+      "sinceTimestamp": 1724925755,
+      "sinceBlock": 20633516,
+      "values": {
+        "$immutable": true,
+        "accessToken": "eth:0xACCe550000159e70908C0499a1119D04e7039C28",
+        "FACTORY": "eth:0xa7bCb4EAc8964306F9e3764f67Db6A7af6DdF99A",
+        "PROXY_BYTECODE_HASH": "0xecbf051d115fa5ccc1177d7a547bf60561f699139f67c74f72f5fd67efde9155",
+        "RESCUE_DELAY": 691200,
+        "rescueDelayFmt": "8d"
+      },
+      "fieldMeta": {
+        "FACTORY": {
+          "description": "Factory that deployed this implementation. Clone calls validate all supplied swap parameters by recomputing the deterministic clone address against this factory."
+        },
+        "RESCUE_DELAY": {
+          "description": "Delay after clone deployment before the swap's taker can rescue arbitrary remaining balances.",
+          "type": "RISK_PARAMETER"
+        },
+        "PROXY_BYTECODE_HASH": {
+          "description": "Hash of the minimal-proxy creation code used with the swap parameters to validate a clone's deterministic address."
+        },
+        "accessToken": {
+          "description": "Immutable token checked for the public withdrawal path. This value is taken from the implementation's internal deployment because it has no public getter."
+        }
+      },
+      "implementationNames": {
+        "eth:0x9c3e06659f1c34F930cE97fCbce6e04ae88e535B": "EscrowDst"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "eth:0x9F8102b1bB05785BaD2874f2C7B1aaea4c6D976a",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0AafA51a3F792e1fd2766c2E7cAb1E6710e94b3b",
+          "description": "collect fee-token credit consumed from resolver accounts, rescue arbitrary ERC20 or native-token balances (including funds backing unused resolver credit), and transfer ownership.",
+          "role": ".owner"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x11799622F4D98A24514011E8527B969f7488eF47",
+      "sinceTimestamp": 1695632219,
+      "sinceBlock": 18211750,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0xC2cCE431123B3AFD5B7f5183FaB5f544E30caCD4",
+          "eth:0x8822B82DA9F9F02B99055d62226d59E4faaf4a3c",
+          "eth:0xd6970196Ff8CeF3Cdd61256C1841A085EEcD3ae8",
+          "eth:0x223c0EF36fEe905a40175d92704b1d3624218EE7",
+          "eth:0xa535D703561516F32d72218e0F8372Ef38798b58"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x3fbc156f807056fefd55d7d205e03a2cccb9a8d6126d5d352c171d24ae26a182",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 32,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0x9F8102b1bB05785BaD2874f2C7B1aaea4c6D976a": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "address": "eth:0xa535D703561516F32d72218e0F8372Ef38798b58",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "EscrowFactory",
+      "address": "eth:0xa7bCb4EAc8964306F9e3764f67Db6A7af6DdF99A",
+      "type": "Contract",
+      "template": "fusionplus/EscrowFactory",
+      "sourceHashes": [
+        "0x9e580f2e75335a8306e1150e93d7b565f031a05fa47d49d63ffbfb451a680875"
+      ],
+      "proxyType": "immutable",
+      "description": "Fusion+ factory and 1inch Limit Order Protocol extension. A source-chain order fill calls this contract through the configured Limit Order Protocol, validates the resolver against the order's time-dependent whitelist or access token, optionally charges the resolver fee, and deploys a deterministic EscrowSrc clone holding the maker's tokens. On the destination chain, anyone can fund and create the matching EscrowDst clone. Partial fills use Merkle proofs so each cumulative fill is bound to a different secret hash.",
+      "deployerAddress": "eth:0x9ceef06f7042D6FF7F7F0EE4BbCa41E4B0989A0b",
+      "sinceTimestamp": 1724925755,
+      "sinceBlock": 20633516,
+      "values": {
+        "$immutable": true,
+        "accessToken": "eth:0xACCe550000159e70908C0499a1119D04e7039C28",
+        "constructorArgs": {
+          "limitOrderProtocol": "eth:0x111111125421cA6dc452d289314280a0f8842A65",
+          "feeToken": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+          "accessToken": "eth:0xACCe550000159e70908C0499a1119D04e7039C28",
+          "owner": "eth:0x9ceef06f7042D6FF7F7F0EE4BbCa41E4B0989A0b",
+          "rescueDelaySrc": 691200,
+          "rescueDelayDst": 691200
+        },
+        "ESCROW_DST_IMPLEMENTATION": "eth:0x9c3e06659f1c34F930cE97fCbce6e04ae88e535B",
+        "ESCROW_SRC_IMPLEMENTATION": "eth:0xcD70bf33cFE59759851dB21c83ea47b6B83beF6A",
+        "FEE_BANK": "eth:0x0AafA51a3F792e1fd2766c2E7cAb1E6710e94b3b",
+        "feeToken": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "limitOrderProtocol": "eth:0x111111125421cA6dc452d289314280a0f8842A65"
+      },
+      "fieldMeta": {
+        "constructorArgs": {
+          "description": "Deployment configuration: Limit Order Protocol, fee token, resolver access token, initial FeeBank owner, and source/destination rescue delays."
+        },
+        "limitOrderProtocol": {
+          "description": "1inch Limit Order Protocol allowed to call the pre-interaction, post-interaction and partial-fill proof hooks."
+        },
+        "feeToken": {
+          "description": "Token deposited in the FeeBank and charged to eligible resolvers when an order enables a resolver fee."
+        },
+        "accessToken": {
+          "description": "Token whose holders can fill an order after its configured allowed time when they are not in its time-dependent whitelist. The same token gates the public withdrawal and cancellation functions on escrow clones."
+        },
+        "ESCROW_SRC_IMPLEMENTATION": {
+          "description": "Implementation used by deterministic minimal-proxy escrows on the source chain. The implementation itself does not hold per-swap funds."
+        },
+        "ESCROW_DST_IMPLEMENTATION": {
+          "description": "Implementation used by deterministic minimal-proxy escrows on the destination chain. The implementation itself does not hold per-swap funds."
+        },
+        "FEE_BANK": {
+          "description": "FeeBank deployed with the factory. It holds resolver fee-token deposits and forwards credit changes to this factory."
+        },
+        "lastValidated": {
+          "description": "For a partially fillable order, stores the most recently proven secret index and hash. This prevents reuse or out-of-order use of secrets from the order's Merkle tree."
+        }
+      },
+      "implementationNames": {
+        "eth:0xa7bCb4EAc8964306F9e3764f67Db6A7af6DdF99A": "EscrowFactory"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "ResolverAccessToken",
+      "address": "eth:0xACCe550000159e70908C0499a1119D04e7039C28",
+      "type": "Contract",
+      "template": "fusionplus/KycNFT",
+      "sourceHashes": [
+        "0x73474bd3318b61ff6f88b1d0864bcc868b8427e26cbd04139ab340e2dc074568"
+      ],
+      "proxyType": "immutable",
+      "description": "Resolver Access Token (RES) used by this Fusion+ deployment. A balance of one marks an address as an authorized resolver: after an order's configured allowed time the holder can fill it outside its time-dependent whitelist (paying a fee when enabled), and after the relevant escrow timelocks the holder can execute public withdrawals or source-chain cancellations to the predetermined recipient in exchange for the safety deposit.",
+      "deployerAddress": "eth:0x56E44874F624EbDE6efCc783eFD685f0FBDC6dcF",
+      "sinceTimestamp": 1724878103,
+      "sinceBlock": 20629574,
+      "values": {
+        "$immutable": true,
+        "constructorArgs": {
+          "name": "Resolver Access Token",
+          "symbol": "RES",
+          "owner": "eth:0x56E44874F624EbDE6efCc783eFD685f0FBDC6dcF"
+        },
+        "name": "Resolver Access Token",
+        "owner": "eth:0x89C8eeC57bD474816d407fe38354B8410B567Da3",
+        "symbol": "RES",
+        "tokenOwners": {
+          "0": "eth:0x33b41fE18D3A39046ad672f8a0C8c415454F629c",
+          "1": "eth:0x9C4dffb4f7E8217A8AC0555D67e125f8769284ba",
+          "10": "eth:0xf24fcc6cb06A1E061bC1cB4fa6Eb00F6Ea887A4a",
+          "15": "eth:0xad3b67BCA8935Cb510C8D18bD45F0b94F54A968f",
+          "16": "eth:0x7246999FD1BAb15B4aC7D1A23C3AbEeD63C51b86",
+          "25": "eth:0x77774bEbE35057beb2545Ba74b09AE44E823cf77",
+          "26": "eth:0xE2BC84F8d66AFA2D4853e01B922Cb2B52aAdd084",
+          "27": "eth:0x5C02bA8954Ab2CeCEb3378B8d0C9d1b84c25b2C4",
+          "50": "eth:0x8CD1F1B195bD25976c251AFCc39CdccaA5c4E95C",
+          "108": "eth:0x81018d161A59485B6666462E6896C5225d66AF8b",
+          "168": "eth:0x86336E3E9D7Ea086964EA2F2EEf9D80257267a4a",
+          "213": "eth:0x0000000000000000000000000000000000000000",
+          "233": "eth:0xD0Fc8A05Ea9502C8087913a3365A0a33e5303320",
+          "250": "eth:0x576d205E4e5322f7ACdd9965dfb617E68C781d4e",
+          "251": "eth:0xB04dE07c9e331168084C3A7d83a6e581DB149e06",
+          "261": "eth:0x9ef0B09C13267b1dd0449De5E7615317b7cBec95",
+          "307": "eth:0x0000000000000000000000000000000000000000",
+          "338": "eth:0x96658D4F26C5969AF1Cb59BbfE2cAD1084dF29c3",
+          "340": "eth:0xAE8609A54a52501bb76C104d920efaB7F52a6bcB",
+          "1000": "eth:0xD850ebe84cda9056Bc14F9b7855363EAd6c3cb57",
+          "1007": "eth:0x26cBa56f5ac624f4bDf3E73C5DfD498048fE0a3D",
+          "1017": "eth:0x742474ca3CbD47C900b2305D3d03Ea1647Ce253b",
+          "1038": "eth:0x0000000000000000000000000000000000000000",
+          "1080": "eth:0xEc4FB7e7C35C241E1138a2d8cfBB09F3Ad1CcB22",
+          "1084": "eth:0xA80ccA4Eaa9b3C4Bd5C35d9fa74ca2BDc8F5D873",
+          "1085": "eth:0xeBB15e51dC5fF266155B74783dF833325b22Cdd2",
+          "1101": "eth:0x9b1303EBf09BC51b7fac376c9E421E8daAe63B82"
+        }
+      },
+      "fieldMeta": {
+        "constructorArgs": {
+          "description": "Deployment configuration: token name, symbol and initial owner."
+        },
+        "owner": {
+          "severity": "HIGH",
+          "description": "Owner controlling token issuance, revocation and transfers.",
+          "type": "PERMISSION"
+        },
+        "tokenOwners": {
+          "description": "Latest owner of every token ID, reconstructed from Transfer events. Burned token IDs map to the zero address.",
+          "type": "PERMISSION"
+        }
+      },
+      "implementationNames": {
+        "eth:0xACCe550000159e70908C0499a1119D04e7039C28": "KycNFT"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0xC2cCE431123B3AFD5B7f5183FaB5f544E30caCD4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "EscrowSrc",
+      "address": "eth:0xcD70bf33cFE59759851dB21c83ea47b6B83beF6A",
+      "type": "Contract",
+      "template": "fusionplus/EscrowSrc",
+      "sourceHashes": [
+        "0x6653cfd67d4d8398edd4e7c78341d52dea97fe516ff708e88845b84ffff98d42"
+      ],
+      "proxyType": "immutable",
+      "description": "Implementation for deterministic source-chain escrow clones. Each clone holds the maker's source token amount plus a resolver-funded native-token safety deposit. During the private withdrawal window only the swap's taker can reveal the secret and withdraw the tokens (optionally to another address); during the public window an access-token holder can do so only to the taker. After cancellation starts, the taker—or later an access-token holder—can return the tokens to the maker. The caller executing a withdrawal or cancellation receives the safety deposit. After 8d, the taker can rescue any remaining token or native balance from the clone.",
+      "deployerAddress": "eth:0x9ceef06f7042D6FF7F7F0EE4BbCa41E4B0989A0b",
+      "sinceTimestamp": 1724925755,
+      "sinceBlock": 20633516,
+      "values": {
+        "$immutable": true,
+        "accessToken": "eth:0xACCe550000159e70908C0499a1119D04e7039C28",
+        "FACTORY": "eth:0xa7bCb4EAc8964306F9e3764f67Db6A7af6DdF99A",
+        "PROXY_BYTECODE_HASH": "0x94ceddb3ecb51b710deaccad4ebe7e21d64bc128c185721f55651bfa1e104e3a",
+        "RESCUE_DELAY": 691200,
+        "rescueDelayFmt": "8d"
+      },
+      "fieldMeta": {
+        "FACTORY": {
+          "description": "Factory that deployed this implementation. Clone calls validate all supplied swap parameters by recomputing the deterministic clone address against this factory."
+        },
+        "RESCUE_DELAY": {
+          "description": "Delay after clone deployment before the swap's taker can rescue arbitrary remaining balances.",
+          "type": "RISK_PARAMETER"
+        },
+        "PROXY_BYTECODE_HASH": {
+          "description": "Hash of the minimal-proxy creation code used with the swap parameters to validate a clone's deterministic address."
+        },
+        "accessToken": {
+          "description": "Immutable token checked for the public withdrawal and public cancellation paths. This value is taken from the implementation's internal deployment because it has no public getter."
+        }
+      },
+      "implementationNames": {
+        "eth:0xcD70bf33cFE59759851dB21c83ea47b6B83beF6A": "EscrowSrc"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0xd6970196Ff8CeF3Cdd61256C1841A085EEcD3ae8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    }
+  ],
+  "abis": {
+    "eth:0x0AafA51a3F792e1fd2766c2E7cAb1E6710e94b3b": [
+      "constructor(address charger, address feeToken, address owner)",
+      "error ETHTransferFailed()",
+      "error InsufficientBalance()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error SafeTransferFailed()",
+      "error SafeTransferFromFailed()",
+      "error ZeroAddress()",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function availableCredit(address account) view returns (uint256)",
+      "function deposit(uint256 amount) returns (uint256)",
+      "function depositFor(address account, uint256 amount) returns (uint256)",
+      "function depositForWithPermit(address account, uint256 amount, bytes permit) returns (uint256)",
+      "function depositWithPermit(uint256 amount, bytes permit) returns (uint256)",
+      "function gatherFees(address[] accounts) returns (uint256 totalAccountFees)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function rescueFunds(address token, uint256 amount)",
+      "function transferOwnership(address newOwner)",
+      "function withdraw(uint256 amount) returns (uint256)",
+      "function withdrawTo(address account, uint256 amount) returns (uint256)"
+    ],
+    "eth:0x9c3e06659f1c34F930cE97fCbce6e04ae88e535B": [
+      "constructor(uint32 rescueDelay, address accessToken)",
+      "error InvalidCaller()",
+      "error InvalidImmutables()",
+      "error InvalidSecret()",
+      "error InvalidTime()",
+      "error NativeTokenSendingFailure()",
+      "error SafeTransferFailed()",
+      "event EscrowCancelled()",
+      "event EscrowWithdrawal(bytes32 secret)",
+      "event FundsRescued(address token, uint256 amount)",
+      "function FACTORY() view returns (address)",
+      "function PROXY_BYTECODE_HASH() view returns (bytes32)",
+      "function RESCUE_DELAY() view returns (uint256)",
+      "function cancel(tuple(bytes32 orderHash, bytes32 hashlock, uint256 maker, uint256 taker, uint256 token, uint256 amount, uint256 safetyDeposit, uint256 timelocks) immutables)",
+      "function publicWithdraw(bytes32 secret, tuple(bytes32 orderHash, bytes32 hashlock, uint256 maker, uint256 taker, uint256 token, uint256 amount, uint256 safetyDeposit, uint256 timelocks) immutables)",
+      "function rescueFunds(address token, uint256 amount, tuple(bytes32 orderHash, bytes32 hashlock, uint256 maker, uint256 taker, uint256 token, uint256 amount, uint256 safetyDeposit, uint256 timelocks) immutables)",
+      "function withdraw(bytes32 secret, tuple(bytes32 orderHash, bytes32 hashlock, uint256 maker, uint256 taker, uint256 token, uint256 amount, uint256 safetyDeposit, uint256 timelocks) immutables)"
+    ],
+    "eth:0x9F8102b1bB05785BaD2874f2C7B1aaea4c6D976a": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0xa7bCb4EAc8964306F9e3764f67Db6A7af6DdF99A": [
+      "constructor(address limitOrderProtocol, address feeToken, address accessToken, address owner, uint32 rescueDelaySrc, uint32 rescueDelayDst)",
+      "error AccessDenied()",
+      "error FailedDeployment()",
+      "error InsufficientBalance(uint256 balance, uint256 needed)",
+      "error InsufficientEscrowBalance()",
+      "error InvalidCreationTime()",
+      "error InvalidPartialFill()",
+      "error InvalidProof()",
+      "error InvalidSecretsAmount()",
+      "error NotEnoughCredit()",
+      "error OnlyFeeBankAccess()",
+      "error OnlyLimitOrderProtocol()",
+      "error ResolverCanNotFillOrder()",
+      "error SafeTransferFromFailed()",
+      "event DstEscrowCreated(address escrow, bytes32 hashlock, uint256 taker)",
+      "event SrcEscrowCreated(tuple(bytes32 orderHash, bytes32 hashlock, uint256 maker, uint256 taker, uint256 token, uint256 amount, uint256 safetyDeposit, uint256 timelocks) srcImmutables, tuple(uint256 maker, uint256 amount, uint256 token, uint256 safetyDeposit, uint256 chainId) dstImmutablesComplement)",
+      "function ESCROW_DST_IMPLEMENTATION() view returns (address)",
+      "function ESCROW_SRC_IMPLEMENTATION() view returns (address)",
+      "function FEE_BANK() view returns (address)",
+      "function addressOfEscrowDst(tuple(bytes32 orderHash, bytes32 hashlock, uint256 maker, uint256 taker, uint256 token, uint256 amount, uint256 safetyDeposit, uint256 timelocks) immutables) view returns (address)",
+      "function addressOfEscrowSrc(tuple(bytes32 orderHash, bytes32 hashlock, uint256 maker, uint256 taker, uint256 token, uint256 amount, uint256 safetyDeposit, uint256 timelocks) immutables) view returns (address)",
+      "function availableCredit(address account) view returns (uint256)",
+      "function createDstEscrow(tuple(bytes32 orderHash, bytes32 hashlock, uint256 maker, uint256 taker, uint256 token, uint256 amount, uint256 safetyDeposit, uint256 timelocks) dstImmutables, uint256 srcCancellationTimestamp) payable",
+      "function decreaseAvailableCredit(address account, uint256 amount) returns (uint256 allowance)",
+      "function getMakingAmount(tuple(uint256 salt, uint256 maker, uint256 receiver, uint256 makerAsset, uint256 takerAsset, uint256 makingAmount, uint256 takingAmount, uint256 makerTraits) order, bytes, bytes32, address, uint256 takingAmount, uint256, bytes extraData) view returns (uint256)",
+      "function getTakingAmount(tuple(uint256 salt, uint256 maker, uint256 receiver, uint256 makerAsset, uint256 takerAsset, uint256 makingAmount, uint256 takingAmount, uint256 makerTraits) order, bytes, bytes32, address, uint256 makingAmount, uint256, bytes extraData) view returns (uint256)",
+      "function increaseAvailableCredit(address account, uint256 amount) returns (uint256 allowance)",
+      "function lastValidated(bytes32 key) view returns (uint256 index, bytes32 leaf)",
+      "function postInteraction(tuple(uint256 salt, uint256 maker, uint256 receiver, uint256 makerAsset, uint256 takerAsset, uint256 makingAmount, uint256 takingAmount, uint256 makerTraits) order, bytes extension, bytes32 orderHash, address taker, uint256 makingAmount, uint256 takingAmount, uint256 remainingMakingAmount, bytes extraData)",
+      "function preInteraction(tuple(uint256 salt, uint256 maker, uint256 receiver, uint256 makerAsset, uint256 takerAsset, uint256 makingAmount, uint256 takingAmount, uint256 makerTraits) order, bytes extension, bytes32 orderHash, address taker, uint256 makingAmount, uint256 takingAmount, uint256 remainingMakingAmount, bytes extraData)",
+      "function takerInteraction(tuple(uint256 salt, uint256 maker, uint256 receiver, uint256 makerAsset, uint256 takerAsset, uint256 makingAmount, uint256 takingAmount, uint256 makerTraits), bytes extension, bytes32 orderHash, address, uint256, uint256, uint256, bytes extraData)"
+    ],
+    "eth:0xACCe550000159e70908C0499a1119D04e7039C28": [
+      "constructor(string name, string symbol, address owner)",
+      "error BadSignature()",
+      "error ERC721IncorrectOwner(address sender, uint256 tokenId, address owner)",
+      "error ERC721InsufficientApproval(address operator, uint256 tokenId)",
+      "error ERC721InvalidApprover(address approver)",
+      "error ERC721InvalidOperator(address operator)",
+      "error ERC721InvalidOwner(address owner)",
+      "error ERC721InvalidReceiver(address receiver)",
+      "error ERC721InvalidSender(address sender)",
+      "error ERC721NonexistentToken(uint256 tokenId)",
+      "error OnlyOneNFTPerAddress()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)",
+      "event ApprovalForAll(address indexed owner, address indexed operator, bool approved)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)",
+      "function approve(address to, uint256 tokenId)",
+      "function balanceOf(address owner) view returns (uint256)",
+      "function burn(uint256 tokenId)",
+      "function getApproved(uint256 tokenId) view returns (address)",
+      "function isApprovedForAll(address owner, address operator) view returns (bool)",
+      "function mint(address to, uint256 tokenId)",
+      "function mint(address to, uint256 tokenId, bytes signature)",
+      "function name() view returns (string)",
+      "function nonces(uint256) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function ownerOf(uint256 tokenId) view returns (address)",
+      "function renounceOwnership()",
+      "function safeTransferFrom(address from, address to, uint256 tokenId)",
+      "function safeTransferFrom(address from, address to, uint256 tokenId, bytes data)",
+      "function setApprovalForAll(address operator, bool approved)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function symbol() view returns (string)",
+      "function tokenURI(uint256 tokenId) view returns (string)",
+      "function transferFrom(address from, address to, uint256 tokenId)",
+      "function transferFrom(address from, address to, uint256 tokenId, bytes signature)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "eth:0xcD70bf33cFE59759851dB21c83ea47b6B83beF6A": [
+      "constructor(uint32 rescueDelay, address accessToken)",
+      "error InvalidCaller()",
+      "error InvalidImmutables()",
+      "error InvalidSecret()",
+      "error InvalidTime()",
+      "error NativeTokenSendingFailure()",
+      "error SafeTransferFailed()",
+      "event EscrowCancelled()",
+      "event EscrowWithdrawal(bytes32 secret)",
+      "event FundsRescued(address token, uint256 amount)",
+      "function FACTORY() view returns (address)",
+      "function PROXY_BYTECODE_HASH() view returns (bytes32)",
+      "function RESCUE_DELAY() view returns (uint256)",
+      "function cancel(tuple(bytes32 orderHash, bytes32 hashlock, uint256 maker, uint256 taker, uint256 token, uint256 amount, uint256 safetyDeposit, uint256 timelocks) immutables)",
+      "function publicCancel(tuple(bytes32 orderHash, bytes32 hashlock, uint256 maker, uint256 taker, uint256 token, uint256 amount, uint256 safetyDeposit, uint256 timelocks) immutables)",
+      "function publicWithdraw(bytes32 secret, tuple(bytes32 orderHash, bytes32 hashlock, uint256 maker, uint256 taker, uint256 token, uint256 amount, uint256 safetyDeposit, uint256 timelocks) immutables)",
+      "function rescueFunds(address token, uint256 amount, tuple(bytes32 orderHash, bytes32 hashlock, uint256 maker, uint256 taker, uint256 token, uint256 amount, uint256 safetyDeposit, uint256 timelocks) immutables)",
+      "function withdraw(bytes32 secret, tuple(bytes32 orderHash, bytes32 hashlock, uint256 maker, uint256 taker, uint256 token, uint256 amount, uint256 safetyDeposit, uint256 timelocks) immutables)",
+      "function withdrawTo(bytes32 secret, address target, tuple(bytes32 orderHash, bytes32 hashlock, uint256 maker, uint256 taker, uint256 token, uint256 amount, uint256 safetyDeposit, uint256 timelocks) immutables)"
+    ],
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ]
+  },
+  "usedTemplates": {
+    "fusionplus/EscrowDst": "0xdd14faa8b9250c9d706d506af3df5cea560c66808da230f9e9418c268811da00",
+    "fusionplus/EscrowFactory": "0xd577b5efacffae9b8256ae5e13953a35840707a18f32531471114eaeb3b177c4",
+    "fusionplus/EscrowSrc": "0xdd14faa8b9250c9d706d506af3df5cea560c66808da230f9e9418c268811da00",
+    "fusionplus/FeeBank": "0x1a499fa9cb0e4d9165c479a0d8f481da691044d916a0bd923362b0f548c4a892",
+    "fusionplus/KycNFT": "0x3ffac0146050a0a02e1a770c27a5bf956d40de2c8a407346666ec1d95eba8ddb",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
+  },
+  "usedBlockNumbers": { "ethereum": 25580020 },
+  "permissionsConfigHash": "0x80813850a7ac2bff36cca150f5f21eb9625f8dfe6516239de3b2a49a4a17b8e4"
+}

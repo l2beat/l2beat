@@ -19,5 +19,11 @@
     "address": "katana:0x8A52Ca0E8459460C6861C117285E6973Ecf7EE3f",
     "chain": "katana",
     "blockNumber": 33142393
+  },
+  "SequencerFeeVault_v1_6_1": {
+    "hash": "0xb45389729a8fffa7650568cd2922e482d03d3ed57b35f4819650d11174d9237a",
+    "address": "ink:0xb178cdAa8336f25624A63C049EdB5AF7ca36C2dA",
+    "chain": "ink",
+    "blockNumber": 50178011
   }
 }

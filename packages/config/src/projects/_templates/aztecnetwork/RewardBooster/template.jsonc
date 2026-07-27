@@ -5,7 +5,6 @@
   "fields": {
     "ROLLUP": {
       "description": "Rollup allowed to update prover activity scores and query boosted shares during reward accounting.",
-      "template": "aztecnetwork/Rollup",
       "permissions": [
         {
           "type": "interact",

@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x745c3b276b223719f5dce71e971dae2afac8dfa5
+
+# Diff at Mon, 13 Jul 2026 10:32:06 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@217e694bd321092d3ecc9f3d50e8788555454f01 block: 1783501903
+- current timestamp: 1783938661
+
+## Description
+
+Added a DAC member and increased DAC min signatures required to 2.
+
+## Watched changes
+
+```diff
+    contract FinalizableCommittee (eth:0x23bf3dcc14680162b7f5355aAbb56D31823c946e) [edgex/FinalizableDACommittee] {
+    +++ description: DAC with admin funtions to manage members. Admins are not discoverable and thus not shown here.
++++ description: DAC members added to the initial set from the constructor.
+      values.addedDACMembers.4:
++        "eth:0x085F09cc1e8cfedc40F257891EeA6c572c9EAe8d"
+      values.signaturesRequired:
+-        1
++        2
+    }
+```
+
 Generated with discovered.json: 0xcfe3c2673ae837dff0272a9f6f37eb1b80812f69
 
 # Diff at Wed, 08 Jul 2026 09:12:48 GMT:

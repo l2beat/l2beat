@@ -1,6 +1,7 @@
 import { existsSync, mkdirSync, writeFileSync } from 'fs'
 import path from 'path'
 import { getCollection } from '~/content/getCollection'
+import { getYouTubeThumbnailUrl, getYouTubeVideoId } from '~/utils/youtube'
 
 export async function generateExternalPublicationThumbnails() {
   const externalPublications = getCollection('external-publications')
@@ -37,22 +38,20 @@ export async function generateExternalPublicationThumbnails() {
       continue
     }
 
-    if (publication.data.url.includes('youtube')) {
+    const videoId = getYouTubeVideoId(publication.data.url)
+    if (videoId) {
       console.time(`[EXTERNAL PUBLICATION] ${publication.id}`)
 
-      const ytUrl = new URL(publication.data.url)
-      const videoId = ytUrl.searchParams.get('v')
-
-      if (!videoId) {
-        console.log(
-          `[EXTERNAL PUBLICATION] Could not extract video ID from: ${publication.data.url}`,
-        )
-        continue
-      }
-      const thumbnailBuffer = await getImageFromUrl(
-        publication.id,
-        `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
-      )
+      // maxresdefault does not exist for every video, hqdefault does
+      const thumbnailBuffer =
+        (await getImageFromUrl(
+          publication.id,
+          getYouTubeThumbnailUrl(videoId, 'maxresdefault'),
+        )) ??
+        (await getImageFromUrl(
+          publication.id,
+          getYouTubeThumbnailUrl(videoId, 'hqdefault'),
+        ))
       if (!thumbnailBuffer) continue
 
       mkdirSync(outputDir, {
@@ -77,6 +76,9 @@ async function getImageFromUrl(
 ): Promise<Buffer | undefined> {
   try {
     const imgResponse = await fetch(url)
+    if (!imgResponse.ok) {
+      return undefined
+    }
     const buffer = await imgResponse.arrayBuffer()
     return Buffer.from(buffer)
   } catch (error) {

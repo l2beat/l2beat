@@ -25,6 +25,9 @@ export const zkCatalogColumns = [
       const project = {
         ...ctx.row.original,
         nameSecondLine: ctx.row.original.creator,
+        quantumResistance: ctx.row.original.quantumResistant
+          ? ('prover' as const)
+          : undefined,
       }
       return (
         <div className="flex h-full items-center">

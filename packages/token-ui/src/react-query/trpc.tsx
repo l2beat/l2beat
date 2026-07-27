@@ -45,6 +45,8 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
             (op.direction === 'down' && op.result instanceof Error),
         }),
         httpBatchLink({
+          // History pages can resolve hundreds of relation endpoints at once.
+          methodOverride: 'POST',
           transformer: trpcTransformer,
           url: '/trpc',
           headers: () => {

@@ -19,15 +19,17 @@ export const SELECTABLE_COLORS: { color: OklchColor; isDark: boolean }[] = [
 export function getColor({
   id,
   color,
+  colorSourceId,
   hueShift,
 }: {
   id: string
   color: number
+  colorSourceId?: string
   hueShift: number
 }): { color: string; isDark: boolean } {
   const result =
     color === 0
-      ? getChainColor(id.split(':')[0] ?? '')
+      ? getChainColor((colorSourceId ?? id).split(':')[0] ?? '')
       : (SELECTABLE_COLORS[color - 1] ?? { color: colors.white, isDark: false })
 
   const colorCopy = {

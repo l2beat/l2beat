@@ -191,39 +191,86 @@ describeDatabase(ActivityRepository.name, (db) => {
     })
   })
 
-  describe(ActivityRepository.prototype.getTpsTotalsForProjects.name, () => {
-    it('should return all-time TPS totals and first timestamps per project', async () => {
-      await repository.upsertMany([
-        record('a', START + 2 * UnixTime.DAY, 4, 7),
-        record('a', START, 1, 2),
-        record('a', START + 1 * UnixTime.DAY, 3, 4),
-        record('b', START + 1 * UnixTime.DAY, 6, 6),
-        record('b', START + 2 * UnixTime.DAY, 5, 8),
-        record('c', START, 0, 0),
-      ])
+  describe(
+    ActivityRepository.prototype.getActivityTotalsForProjects.name,
+    () => {
+      it('returns all-time activity totals and first timestamps per project', async () => {
+        await repository.upsertMany([
+          record('a', START + 2 * UnixTime.DAY, 4, 7),
+          record('a', START, 1, 2),
+          record('a', START + 1 * UnixTime.DAY, 3, 4),
+          record('b', START + 1 * UnixTime.DAY, 6, 6),
+          record('b', START + 2 * UnixTime.DAY, 5, 8),
+          record('c', START, 0, 0),
+        ])
 
-      const result = await repository.getTpsTotalsForProjects([
-        ProjectId('a'),
-        ProjectId('b'),
-        ProjectId('c'),
-      ])
+        const result = await repository.getActivityTotalsForProjects([
+          ProjectId('a'),
+          ProjectId('b'),
+          ProjectId('c'),
+        ])
 
-      expect(result).toEqual({
-        [ProjectId('a')]: {
-          count: 8,
-          sinceTimestamp: START,
-        },
-        [ProjectId('b')]: {
-          count: 11,
-          sinceTimestamp: START + 1 * UnixTime.DAY,
-        },
-        [ProjectId('c')]: {
-          count: 0,
-          sinceTimestamp: START,
-        },
+        expect(result).toEqual({
+          [ProjectId('a')]: {
+            count: 8,
+            uopsCount: 13,
+            sinceTimestamp: START,
+            uopsSinceTimestamp: START,
+          },
+          [ProjectId('b')]: {
+            count: 11,
+            uopsCount: 14,
+            sinceTimestamp: START + 1 * UnixTime.DAY,
+            uopsSinceTimestamp: START + 1 * UnixTime.DAY,
+          },
+          [ProjectId('c')]: {
+            count: 0,
+            uopsCount: 0,
+            sinceTimestamp: START,
+            uopsSinceTimestamp: START,
+          },
+        })
       })
-    })
-  })
+
+      it('returns UOPS totals and their first timestamps', async () => {
+        await repository.upsertMany([
+          record('complete', START, 1, 2),
+          record('complete', START + 1 * UnixTime.DAY, 3, 4),
+          record('complete', START + 2 * UnixTime.DAY, 5),
+          record('incomplete', START, 6),
+          record('incomplete', START + 1 * UnixTime.DAY, 7, 8),
+          record('without-uops', START, 9),
+        ])
+
+        const result = await repository.getActivityTotalsForProjects([
+          ProjectId('complete'),
+          ProjectId('incomplete'),
+          ProjectId('without-uops'),
+        ])
+
+        expect(result).toEqual({
+          [ProjectId('complete')]: {
+            count: 9,
+            uopsCount: 11,
+            sinceTimestamp: START,
+            uopsSinceTimestamp: START,
+          },
+          [ProjectId('incomplete')]: {
+            count: 13,
+            uopsCount: 14,
+            sinceTimestamp: START,
+            uopsSinceTimestamp: START + 1 * UnixTime.DAY,
+          },
+          [ProjectId('without-uops')]: {
+            count: 9,
+            uopsCount: 9,
+            sinceTimestamp: START,
+            uopsSinceTimestamp: undefined,
+          },
+        })
+      })
+    },
+  )
 
   describe(
     ActivityRepository.prototype.getSummedUopsCountForProjectAndTimeRange.name,

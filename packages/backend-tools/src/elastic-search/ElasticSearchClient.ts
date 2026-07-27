@@ -1,5 +1,5 @@
+import type { estypes } from '@elastic/elasticsearch'
 import { Client } from '@elastic/elasticsearch'
-import type { BulkResponse } from '@elastic/elasticsearch/lib/api/types'
 
 export interface ElasticSearchClientOptions {
   node: string
@@ -64,7 +64,7 @@ export class ElasticSearchClient {
   }
 
   private getFailedDocuments(
-    response: BulkResponse,
+    response: estypes.BulkResponse,
     operations: unknown[],
   ): Record<string, unknown>[] {
     /**

@@ -32,6 +32,7 @@ export const EXPLORER_URLS: Record<string, string> = {
   ethereal: 'https://explorer.ethereal.trade/address',
   jovay: 'https://explorer.jovay.io/l2/address',
   katana: 'https://katanascan.com',
+  robinhood: 'https://robinhoodchain.blockscout.com/address',
 }
 
 export function getExplorerTxUrl(chain: string): string | undefined {

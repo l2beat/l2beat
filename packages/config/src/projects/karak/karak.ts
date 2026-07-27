@@ -11,7 +11,10 @@ export const karak: ScalingProject = opStackL2({
   addedAt: UnixTime(1687459278), // 2023-06-22T18:41:18Z
   additionalBadges: [BADGES.RaaS.Caldera],
   discovery,
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
     name: 'K2',
     aliases: ['Karak', 'OpenGDP'],
@@ -44,16 +47,12 @@ export const karak: ScalingProject = opStackL2({
     ],
   },
   genesisTimestamp: UnixTime(1703226695), //First sequencer transaction
+  celestiaDa: {
+    sinceBlock: 0, // Edge Case: config added @ DA Module start
+    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJBA=',
+  },
   isNodeAvailable: true,
   milestones: [
-    {
-      title: 'K2 switches from Celestia to Ethereum calldata',
-      url: 'https://etherscan.io/address/0x622333688CC1878C7ff4205c89bDe051798788A7',
-      date: '2026-07-01T00:00:00Z',
-      description:
-        'K2 stops posting data to Celestia and starts posting batches directly to Ethereum as calldata.',
-      type: 'general',
-    },
     {
       title: 'Karak rebrands to OpenGDP',
       url: 'https://x.com/OpenGDP/status/1990437951529226293',

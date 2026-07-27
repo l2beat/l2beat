@@ -2,16 +2,18 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Manages the inflation and minting schedule of the Aztec token. It enforces an annual percentage cap and mints new tokens for the budget.",
   "category": "gov",
+  "canActIndependently": false,
   "fields": {
     "ASSET": {
       "description": "AZTEC token minted by this issuer.",
       "template": "aztecnetwork/Aztec"
     },
     "owner": {
+      "description": "Owner of the CoinIssuer.",
       "permissions": [
         {
           "type": "interact",
-          "description": "mint new AZTEC in the bounds of the minting caps"
+          "description": "mint new AZTEC within the annual cap, accept ownership of the AZTEC token when pending, and transfer or renounce CoinIssuer ownership."
         }
       ]
     }

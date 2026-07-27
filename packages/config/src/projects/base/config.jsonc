@@ -62,6 +62,7 @@
       }
     },
     "eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA": {
+      "ignoreInWatchMode": ["getRegisteredSigners"],
       "fields": {
         "getRegisteredSigners": { "severity": "LOW" }
       }

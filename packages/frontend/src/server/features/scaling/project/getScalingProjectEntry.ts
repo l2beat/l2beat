@@ -25,6 +25,7 @@ import {
 } from '~/server/features/projects/recent-changes/getDiscoveryUpdates'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { manifest } from '~/utils/Manifest'
 import { linkAddresses } from '~/utils/markdown/linkAddresses'
 import { getActivitySection } from '~/utils/project/activity/getActivitySection'
@@ -107,6 +108,7 @@ export interface ProjectScalingEntry {
         canonical: number
         external: number
         totalChange: number
+        totalChangePeriod: PercentageChangePeriod
       }
       warning?: WarningWithSentiment
       additionalTrustAssumptionsPercentage: number
@@ -128,6 +130,7 @@ export interface ProjectScalingEntry {
     activity?: {
       lastDayUops: number
       uopsWeeklyChange: number
+      uopsWeeklyChangePeriod: PercentageChangePeriod
     }
     gasTokens?: string[]
     interop?: ProjectInteropData['summary']
@@ -256,6 +259,7 @@ export async function getScalingProjectEntry(
             breakdown: {
               ...tvsProjectStats.breakdown,
               totalChange: tvsProjectStats.change.total,
+              totalChangePeriod: tvsProjectStats.changePeriod,
             },
             warning: project.tvsInfo.warnings[0],
             additionalTrustAssumptionsPercentage:

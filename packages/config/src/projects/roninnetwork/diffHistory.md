@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x6f0658ee1bba4fce7b959c3bbf165c2f6c6a7c96
+
+# Diff at Thu, 09 Jul 2026 13:48:35 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1e8c379b8fe786381adcddb9c648173990ad4ea3 block: 1783327943
+- current timestamp: 1783604846
+
+## Description
+
+Drop the Ronin-local permission overrides on the DGF's `proposerFromDGF` and `challengerFromDGF` fields. Now that `respectedGameType` is 1337 (KailuaGame), these are the legacy proposer/challenger for the PermissionedDisputeGame (game type 1) — dormant unless the Guardian rolls back.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1783327943 (main branch discovery), not current.
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a","description":"Allowed to challenge or delete state roots proposed by a Proposer.","role":".challengerFromDGF"}]
+    }
+```
+
+```diff
+    EOA  (eth:0xD379de941E78Ab394d4D4917FcCE1CC45b6cd620) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"interact","from":"eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a","description":"Allowed to post new state roots of the current layer to the host chain.","role":".proposerFromDGF"}
+    }
+```
+
 Generated with discovered.json: 0x3e6247f7c354f1b9671aaa3adfcf3fd24e665a9e
 
 # Diff at Mon, 06 Jul 2026 08:53:30 GMT:

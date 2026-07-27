@@ -15,6 +15,14 @@ const MAX_BLOCKED_REASONS_IN_MESSAGE = 20
 const MAX_SUSPICIOUS_TRANSFERS_IN_MESSAGE = 6
 const MAX_SKIPPED_VALUATIONS_IN_MESSAGE = 10
 
+const BACKOFFICE_URL = 'https://backoffice.l2beat.com'
+
+export type BackofficeEnvironment = 'local' | 'staging' | 'production'
+
+export interface InteropNotifierOptions {
+  backofficeEnvironment?: BackofficeEnvironment
+}
+
 export interface InteropSuspiciousTransferNotification {
   plugin: string
   type: string
@@ -53,12 +61,15 @@ export interface InteropSkippedTransferValuationNotification {
 
 export class InteropNotifier {
   private readonly messageQueue: TaskQueue<string>
+  private readonly backofficeEnvironment: BackofficeEnvironment | undefined
 
   constructor(
     private readonly client: DiscordClient,
     private readonly logger: Logger,
+    options: InteropNotifierOptions = {},
   ) {
     this.logger = logger.for(this)
+    this.backofficeEnvironment = options.backofficeEnvironment
     this.messageQueue = new TaskQueue(
       async (message) => {
         await this.send(message)
@@ -103,8 +114,11 @@ export class InteropNotifier {
       renderedReasons.push(`- ...and ${remainingReasons} more`)
     }
 
+    const link = this.backofficeLink('/interop/promotion', String(timestamp))
+
     const message = [
       `⛔ Interop snapshot \`${formatTimestamp(timestamp)}\` blocked from promotion - needs manual review`,
+      ...(link ? [`[Review in backoffice ↗](${link})`] : []),
       '',
       ...renderedReasons,
     ].join('\n')
@@ -126,7 +140,13 @@ export class InteropNotifier {
         const largerSide = transfer.dominantSide
         const smallerSide = largerSide === 'src' ? 'dst' : 'src'
 
-        return `- \`${transfer.transferId}\` \`${transfer.plugin}\` \`${transfer.type}\` \`${transfer.srcSymbol} on ${transfer.srcChain} -> ${transfer.dstSymbol} on ${transfer.dstChain}\` ${formatDollars(transfer.srcValueUsd)} vs ${formatDollars(transfer.dstValueUsd)} (${formatRatio(transfer.valueRatio)} ${largerSide}/${smallerSide}, ${formatPercent(transfer.valueDifferencePercent)})`
+        const link = this.backofficeLink(
+          '/interop/insights/activity/suspicious-transfers',
+          transfer.transferId,
+        )
+        const linkSuffix = link ? ` [↗](${link})` : ''
+
+        return `- \`${transfer.transferId}\` \`${transfer.plugin}\` \`${transfer.type}\` \`${transfer.srcSymbol} on ${transfer.srcChain} -> ${transfer.dstSymbol} on ${transfer.dstChain}\` ${formatDollars(transfer.srcValueUsd)} vs ${formatDollars(transfer.dstValueUsd)} (${formatRatio(transfer.valueRatio)} ${largerSide}/${smallerSide}, ${formatPercent(transfer.valueDifferencePercent)})${linkSuffix}`
       })
 
     const remainingTransfers =
@@ -186,6 +206,15 @@ export class InteropNotifier {
     const message = `${header}\n\n${markdown}`
 
     this.messageQueue.addToBack(message)
+  }
+
+  private backofficeLink(path: string, rowKey: string): string | undefined {
+    if (!this.backofficeEnvironment) {
+      return undefined
+    }
+    const env = encodeURIComponent(this.backofficeEnvironment)
+    const hash = encodeURIComponent(rowKey)
+    return `${BACKOFFICE_URL}${path}?env=${env}#${hash}`
   }
 
   private async send(message: string): Promise<void> {

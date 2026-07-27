@@ -1,0 +1,159 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Decryption",
+  "description": "Gateway contract that orchestrates public and user decryption requests and checks committed ciphertext material. Each response independently selects a KMS context through extraData, or uses the context current when the response executes; requests do not store a context. KMS nodes enforce host-chain ACL state offchain, and Ethereum KMSVerifier verifies public results against this contract's EIP-712 domain.",
+  "category": "core",
+  "ignoreMethods": [
+    "proxiableUUID",
+    "getDecryptionConsensusTxSenders",
+    "isDecryptionDone"
+  ],
+  "fields": {
+    "gatewayConfig": {
+      "description": "GatewayConfig contract used as the source of truth for the gateway owner, pausers, host chains, coprocessors, KMS nodes, custodians, and protocol thresholds.",
+      "type": "EXTERNAL",
+      "handler": {
+        "type": "hardcoded",
+        "value": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab"
+      }
+    },
+    "gatewayOwner": {
+      "description": "Owner of GatewayConfig. This account authorizes Decryption upgrades and can unpause the contract.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "call",
+        "method": "function owner() view returns (address)",
+        "args": [],
+        "address": "{{ gatewayConfig }}"
+      },
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "upgrade the Decryption implementation."
+        },
+        {
+          "type": "interact",
+          "description": "unpause Decryption."
+        }
+      ]
+    },
+    "gatewayProtocolPayment": {
+      "description": "ProtocolPayment contract charged when users submit public or user decryption requests.",
+      "type": "EXTERNAL",
+      "handler": {
+        "type": "hardcoded",
+        "value": "zama:0x7E179E45E5fe0a21015Be25185363B4F2F2F7e89"
+      }
+    },
+    "gatewayMultichainACL": {
+      "description": "MultichainACL contract containing the gateway-side host-chain ACL mirror. The upgraded Decryption contract no longer checks it onchain and relies on KMS nodes to enforce ACL state.",
+      "type": "EXTERNAL",
+      "handler": {
+        "type": "hardcoded",
+        "value": "zama:0x055d9FD50a612A9027716ec8db663E7D68562468"
+      }
+    },
+    "gatewayCiphertextCommits": {
+      "description": "CiphertextCommits contract storing ciphertext material required for decryption requests.",
+      "type": "EXTERNAL",
+      "handler": {
+        "type": "hardcoded",
+        "value": "zama:0xd82cF70FC102028cd01acB87D0E107780ae4F41F"
+      }
+    },
+    "gatewayKmsTxSenders": {
+      "description": "KMS transaction-sender addresses configured in the current GatewayConfig context. Historical context senders can also submit responses when response extraData explicitly selects their retained context. Post-migration contexts are indexed on GatewayConfig; migration-created membership requires a project override because no creation event was emitted.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "call",
+        "method": "function getKmsTxSenders() view returns (address[])",
+        "args": [],
+        "address": "{{ gatewayConfig }}"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit KMS decryption responses to Decryption."
+        }
+      ]
+    },
+    "gatewayKmsSigners": {
+      "description": "KMS signer addresses configured in the current GatewayConfig context. Historical context signers can also sign responses when response extraData explicitly selects their retained context. Post-migration contexts are indexed on GatewayConfig; migration-created membership requires a project override because no creation event was emitted.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "call",
+        "method": "function getKmsSigners() view returns (address[])",
+        "args": [],
+        "address": "{{ gatewayConfig }}"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "sign public decryption results and user decryption shares accepted by Decryption."
+        }
+      ]
+    },
+    "gatewayKmsContextId": {
+      "description": "Current GatewayConfig KMS context used by responses whose extraData is empty or starts with version 0. Requests do not bind this value, so a rotation can change the context used to answer an already pending request.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "handler": {
+        "type": "call",
+        "method": "function getCurrentKmsContextId() view returns (uint256)",
+        "args": [],
+        "address": "{{ gatewayConfig }}"
+      }
+    },
+    "gatewayPublicDecryptionThreshold": {
+      "description": "Minimum matching-signature count for the current context. Public responses are grouped by a digest containing raw extraData; identical empty or version 0 extraData can accumulate responses across a context rotation while the last response selects the threshold checked.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "handler": {
+        "type": "call",
+        "method": "function getPublicDecryptionThresholdForContext(uint256 contextId) view returns (uint256)",
+        "args": ["{{ gatewayKmsContextId }}"],
+        "address": "{{ gatewayConfig }}"
+      }
+    },
+    "gatewayUserDecryptionThreshold": {
+      "description": "Minimum response count for the current context. User response counts are stored per request rather than per context, so valid shares submitted under different contexts can be combined and the last response selects the threshold checked.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "handler": {
+        "type": "call",
+        "method": "function getUserDecryptionThresholdForContext(uint256 contextId) view returns (uint256)",
+        "args": ["{{ gatewayKmsContextId }}"],
+        "address": "{{ gatewayConfig }}"
+      }
+    },
+    "maxUserDecryptDurationDays": {
+      "description": "Maximum validity duration, in days, accepted for user decryption requests.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "handler": { "type": "hardcoded", "value": 365 }
+    },
+    "maxUserDecryptContractAddresses": {
+      "description": "Maximum number of contract addresses that can be included in one user decryption request.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "handler": { "type": "hardcoded", "value": 10 }
+    },
+    "maxDecryptionRequestBits": {
+      "description": "Maximum total bit size of ciphertext handles accepted in a single public or user decryption request.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "handler": { "type": "hardcoded", "value": 2048 }
+    },
+    "paused": {
+      "description": "Whether public and user decryption requests are currently paused.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "eip712Domain": {
+      "description": "EIP-712 domain used when validating KMS signatures and user/delegate decryption request signatures. Ethereum KMSVerifier is configured to verify this same source domain for public decryptions."
+    }
+  }
+}

@@ -8,6 +8,7 @@ interface ChainFlowTotals {
   netFlow: number
   transfersIn: number
   transfersOut: number
+  tokenCount: number
 }
 
 export function getChainFlowStatItems(
@@ -26,6 +27,7 @@ export function getChainFlowStatItems(
     { label: 'Volume out', value: formatCurrency(chainData.outflow, 'usd') },
     { label: 'Net flow', value: formatCurrency(chainData.netFlow, 'usd') },
     { label: 'Total transfers', value: formatInteger(totalTransfers) },
+    { label: 'Unique tokens', value: formatInteger(chainData.tokenCount) },
     { label: 'Transfers in', value: formatInteger(chainData.transfersIn) },
     { label: 'Transfers out', value: formatInteger(chainData.transfersOut) },
     {

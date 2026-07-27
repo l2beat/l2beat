@@ -7,6 +7,7 @@ import type { UnixTime } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { ps } from '~/server/projects'
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { manifest } from '~/utils/Manifest'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getProgramHashesSection } from '~/utils/project/getProgramHashesSection'
@@ -45,6 +46,7 @@ export interface ProjectZkCatalogEntry {
     tvs: {
       value: number
       change: number
+      changePeriod: PercentageChangePeriod
     }
   }
   sections: ProjectDetailsSection[]
@@ -80,11 +82,11 @@ export async function getZkCatalogProjectEntry(
     tvs,
     allProjects,
   )
-  const { tvs: tvsForProject, change } = getZkCatalogProjectTvs(
-    project,
-    allProjects,
-    tvs,
-  )
+  const {
+    tvs: tvsForProject,
+    change,
+    changePeriod,
+  } = getZkCatalogProjectTvs(project, allProjects, tvs)
 
   const sortedMilestones =
     project.milestones?.sort(
@@ -102,6 +104,7 @@ export async function getZkCatalogProjectEntry(
     tvs: {
       value: tvsForProject,
       change,
+      changePeriod,
     },
   }
 

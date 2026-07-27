@@ -1,17 +1,15 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Intermediary contract that allows the L2 Sequencers operating the canonical rollup (as defined by the Registry) to submit formal proposals to the L1 Governance contract by signalling their support of any smart contract payload on L1 with each checkpoint proposal. A signalling round comprises {{ROUND_SIZE}} checkpoints. {{QUORUM_SIZE}} signals or more during one round allow submitting the payload as a governance proposal.",
+  "description": "Intermediary contract through which the designated proposer for each L2 slot can signal support for an L1 payload. A signalling round comprises {{ROUND_SIZE}} slots. A payload that receives at least {{QUORUM_SIZE}} signals can be submitted to the L1 Governance contract within the configured lifetime.",
   "ignoreMethods": ["computeRound", "getProposalProposer"],
   "ignoreInWatchMode": ["getCurrentRound"],
   "category": "gov",
   "fields": {
     "getGovernance": {
-      "description": "Governance contract to which successful signalling rounds are submitted.",
-      "template": "aztecnetwork/Governance"
+      "description": "Current Registry owner to which successful signalling rounds are submitted."
     },
     "getInstance": {
-      "description": "Rollup instance whose checkpoint proposers can signal proposals.",
-      "template": "aztecnetwork/Rollup"
+      "description": "Rollup instance whose checkpoint proposers can signal proposals."
     },
     "GSE": {
       "description": "Global staking escrow used to validate sequencer voting power.",
@@ -20,6 +18,18 @@
     "REGISTRY": {
       "description": "Registry used to resolve the canonical rollup instance.",
       "template": "aztecnetwork/Registry"
+    },
+    "ROUND_SIZE": {
+      "description": "Number of slots in one sequencer signalling round."
+    },
+    "QUORUM_SIZE": {
+      "description": "Number of signals a payload needs to win a signalling round."
+    },
+    "EXECUTION_DELAY_IN_ROUNDS": {
+      "description": "Number of complete rounds after signalling before the winning payload can be submitted to Governance."
+    },
+    "LIFETIME_IN_ROUNDS": {
+      "description": "Maximum age of a winning signalling round that can still be submitted to Governance."
     }
   }
 }

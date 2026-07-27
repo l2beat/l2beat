@@ -1,5 +1,4 @@
 import type { Project } from '@l2beat/config'
-import { unique } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { getLogger } from '~/server/utils/logger'
@@ -12,7 +11,10 @@ import type {
   TokenData,
 } from './types'
 import { buildTokensDataMap } from './utils/buildTokensDataMap'
-import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
+import {
+  buildTokensDetailsMapForRecords,
+  type TokensDetailsMap,
+} from './utils/buildTokensDetailsMap'
 import { getDurationSplit } from './utils/getAverageDuration'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
 import { getRelevantBridgeTypes } from './utils/getRelevantBridgeTypes'
@@ -48,6 +50,7 @@ async function getCachedInteropTokens(params: InteropTopItemsParams) {
         [...params.from].sort().join(','),
         [...params.to].sort().join(','),
         [...(params.protocolIds ?? [])].sort().join(','),
+        params.anchorChain ?? 'all',
       ],
       ttl: 60 * 10,
       staleWhileRevalidate: 60 * 15,
@@ -62,6 +65,7 @@ async function getInteropTokensData({
   to,
   type,
   protocolIds,
+  anchorChain,
 }: InteropTopItemsParams): Promise<TokenData[]> {
   if (env.MOCK) {
     return getMockInteropTokens()
@@ -79,6 +83,7 @@ async function getInteropTokensData({
     selection: { from, to },
     types: type ? [type] : undefined,
     protocolIds: id ? [id] : protocolIds,
+    anchorChain,
   })
 
   return buildInteropTokenData({
@@ -86,20 +91,23 @@ async function getInteropTokensData({
     interopProject,
     interopProjects,
     type,
+    tokensDetailsMap: await buildTokensDetailsMapForRecords(records),
   })
 }
 
-export async function buildInteropTokenData({
+export function buildInteropTokenData({
   records,
   interopProject,
   interopProjects,
   type,
+  tokensDetailsMap,
 }: {
   records: AggregatedInteropTransferWithTokens[]
   interopProject: Project<'interopConfig'> | undefined
   interopProjects: Project<'interopConfig'>[]
   type: InteropTopItemsParams['type']
-}): Promise<TokenData[]> {
+  tokensDetailsMap: TokensDetailsMap
+}): TokenData[] {
   const counts = {
     transferCount: records.reduce(
       (acc, transfer) => acc + transfer.transferCount,
@@ -110,13 +118,6 @@ export async function buildInteropTokenData({
       0,
     ),
   }
-
-  const abstractTokenIds = unique(
-    records.flatMap((record) =>
-      record.tokens.map((token) => token.abstractTokenId),
-    ),
-  )
-  const tokensDetailsMap = await buildTokensDetailsMap(abstractTokenIds)
 
   const relevantBridgeTypes = interopProject
     ? getRelevantBridgeTypes(interopProject, type)

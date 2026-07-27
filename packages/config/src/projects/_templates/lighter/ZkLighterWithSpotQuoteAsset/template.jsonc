@@ -1,0 +1,78 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "The main rollup contract. It processes L2 batches, manages token deposits and withdrawals, allows users to submit priority requests and controls desert mode (escape hatch). This variant uses a configurable quote asset and commits state differences through host-chain calldata instead of EIP-4844 blob hashes. Logic is split between two contracts because of code-size limits, with many operations delegated to AdditionalZkLighter.",
+  "displayName": "Lighter",
+  "ignoreInWatchMode": [
+    "committedBatchesCount",
+    "committedPriorityRequestCount",
+    "executedBatchesCount",
+    "executedOnChainBatchesCount",
+    "executedPriorityRequestCount",
+    "lastAccountIndex",
+    "lastVerifiedEndBlockNumber",
+    "lastVerifiedStateRoot",
+    "lastVerifiedValidiumRoot",
+    "openPriorityRequestCount",
+    "pendingOnChainBatchesCount",
+    "stateRoot",
+    "validiumRoot",
+    "verifiedBatchesCount",
+    "verifiedPriorityRequestCount",
+    "createdMarkets"
+  ],
+  "ignoreRelatives": [
+    "assetConfigNative",
+    "assetConfigQuote",
+    "registeredAssets",
+    "stateRootUpgradeVerifier"
+  ],
+  "fields": {
+    "verifier": {
+      "handler": { "type": "storage", "slot": 4, "returnType": "address" },
+      "severity": "HIGH"
+    },
+    "desertVerifier": {
+      "handler": { "type": "storage", "slot": 5, "returnType": "address" },
+      "severity": "HIGH"
+    },
+    "governance": {
+      "handler": { "type": "storage", "slot": 6, "returnType": "address" }
+    },
+    "additionalZkLighter": {
+      "handler": { "type": "storage", "slot": 7, "returnType": "address" }
+    },
+    "stateRootUpgradeVerifier": {
+      "handler": { "type": "storage", "slot": 494, "returnType": "address" }
+    },
+    "createdMarkets": {
+      "handler": {
+        "type": "event",
+        "select": "symbol",
+        "add": { "event": ["CreateMarket"] }
+      },
+      "edit": ["map", ["format", "Bytes32ToString"]]
+    },
+    "desertMode": { "severity": "HIGH" },
+    "assetConfigNative": {
+      "handler": {
+        "type": "call",
+        "method": "function assetConfigs(uint16) view returns (address tokenAddress, uint8 withdrawalsEnabled, uint56 extensionMultiplier, uint128 tickSize, uint64 depositCapTicks, uint64 minDepositTicks)",
+        "args": [1]
+      }
+    },
+    "assetConfigQuote": {
+      "handler": {
+        "type": "call",
+        "method": "function assetConfigs(uint16) view returns (address tokenAddress, uint8 withdrawalsEnabled, uint56 extensionMultiplier, uint128 tickSize, uint64 depositCapTicks, uint64 minDepositTicks)",
+        "args": [3]
+      }
+    },
+    "registeredAssets": {
+      "handler": {
+        "type": "event",
+        "select": ["assetIndex", "tokenAddress"],
+        "add": { "event": ["RegisterAssetConfig"] }
+      }
+    }
+  }
+}

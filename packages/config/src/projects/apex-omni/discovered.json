@@ -1,0 +1,3021 @@
+{
+  "name": "apex-omni",
+  "timestamp": 1784715866,
+  "configHash": "0xf66c505df5593aee4f25d9ed340adfc6be1cba67b98acadacbf0c9b895e366b3",
+  "entries": [
+    {
+      "address": "arb1:0x22c89137525b593Dd2A18434348b550ffA5984Fe",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Verifier",
+      "address": "arb1:0x235118AfB54B6d6c7b48F1B5434c25CD6Eb6B68F",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x43e7f084adda47e6af53f9d9f359d33eecde538e53f18ce3555d080144734772",
+        "0x46b7042ce1a52f396cdce800a59634eec8a3ce8c9fa0bbb43a28e1f02992e61a"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "PLONK verifier used to validate aggregated L2 block proofs and zero-knowledge exit proofs.",
+      "deployerAddress": "arb1:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
+      "sinceTimestamp": 1717731621,
+      "sinceBlock": 219222458,
+      "values": {
+        "$admin": "arb1:0x2e8AD1434663b209EE59eF1a6612114239F4a190",
+        "$implementation": "arb1:0x6e21b35328E1522b1E6C0F5eCa566a7fe269274a",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "getMaster": "arb1:0x2e8AD1434663b209EE59eF1a6612114239F4a190",
+        "getTarget": "arb1:0x6e21b35328E1522b1E6C0F5eCa566a7fe269274a"
+      },
+      "implementationNames": {
+        "arb1:0x235118AfB54B6d6c7b48F1B5434c25CD6Eb6B68F": "Proxy",
+        "arb1:0x6e21b35328E1522b1E6C0F5eCa566a7fe269274a": "Verifier"
+      }
+    },
+    {
+      "address": "arb1:0x2A2A180373391915738aB1F89a1B258893361964",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "UpgradeGatekeeper",
+      "address": "arb1:0x2e8AD1434663b209EE59eF1a6612114239F4a190",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x79e413df099ed6b1f0679dd44d054e27d4f83befaa24d1772c3c2311767b5388"
+      ],
+      "proxyType": "immutable",
+      "description": "Controls upgrades to managed contracts. The master can schedule, cancel, and complete upgrades after the main contract's notice period.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x3169844a120C0f517B4eB4A750c08d8518C8466a",
+          "description": "transfer mastership.",
+          "role": ".getMaster"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x235118AfB54B6d6c7b48F1B5434c25CD6Eb6B68F",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x3169844a120C0f517B4eB4A750c08d8518C8466a",
+          "role": ".getMaster"
+        }
+      ],
+      "deployerAddress": "arb1:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
+      "sinceTimestamp": 1717731698,
+      "sinceBlock": 219222767,
+      "values": {
+        "$immutable": true,
+        "getMaster": "arb1:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED",
+        "mainContract": "arb1:0x3169844a120C0f517B4eB4A750c08d8518C8466a",
+        "managedContracts": [
+          "arb1:0x235118AfB54B6d6c7b48F1B5434c25CD6Eb6B68F",
+          "arb1:0x3169844a120C0f517B4eB4A750c08d8518C8466a"
+        ],
+        "nextTargets": [],
+        "noticePeriodFinishTimestamp": 0,
+        "upgradeStatus": 0,
+        "versionId": 1
+      },
+      "implementationNames": {
+        "arb1:0x2e8AD1434663b209EE59eF1a6612114239F4a190": "UpgradeGatekeeper"
+      }
+    },
+    {
+      "name": "ZkLink Main",
+      "address": "arb1:0x3169844a120C0f517B4eB4A750c08d8518C8466a",
+      "type": "Contract",
+      "template": "apex-omni/ZkLink_main",
+      "sourceHashes": [
+        "0x43e7f084adda47e6af53f9d9f359d33eecde538e53f18ce3555d080144734772",
+        "0xcf3306c0d9416ebe68af3181926165561803001f786494a95183295fdf54fe86"
+      ],
+      "proxyType": "ZkLink proxy",
+      "description": "The main rollup contract. It processes L3 blocks submitted by validators and settles L3 state, handles deposits and withdrawals, and synchronizes block data with other zkLink chains.",
+      "deployerAddress": "arb1:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
+      "sinceTimestamp": 1717731687,
+      "sinceBlock": 219222723,
+      "values": {
+        "$admin": "arb1:0x2e8AD1434663b209EE59eF1a6612114239F4a190",
+        "$implementation": [
+          "arb1:0x23871561330080828507dED34d23FEF5EdE7053C",
+          "arb1:0x3203E813930bD710043c1d899fE38dD359307352"
+        ],
+        "ALL_CHAINS": 3340,
+        "CHAIN_ID": 9,
+        "DEFAULT_FEE_ADDRESS": "arb1:0x374632e7D48B7872d904524FdC5Dd4516F42cDFF",
+        "exodusMode": false,
+        "gateway": "arb1:0x0000000000000000000000000000000000000000",
+        "getMaster": "arb1:0x2e8AD1434663b209EE59eF1a6612114239F4a190",
+        "getNoticePeriod": 0,
+        "getTarget": "arb1:0x23871561330080828507dED34d23FEF5EdE7053C",
+        "isReadyForUpgrade": true,
+        "MASTER_CHAIN_ID": 9,
+        "MAX_CHAIN_ID": 12,
+        "MIN_CHAIN_ID": 1,
+        "networkGovernor": "arb1:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED",
+        "periphery": "arb1:0x3203E813930bD710043c1d899fE38dD359307352",
+        "syncServices": {
+          "3": "arb1:0xfC5c2b3E615cF12e86E6dA8eF6C76fAbae5F2B7D",
+          "4": "arb1:0xfC5c2b3E615cF12e86E6dA8eF6C76fAbae5F2B7D",
+          "11": "arb1:0xfC5c2b3E615cF12e86E6dA8eF6C76fAbae5F2B7D",
+          "12": "arb1:0xfC5c2b3E615cF12e86E6dA8eF6C76fAbae5F2B7D"
+        },
+        "validators": ["arb1:0x48184910dA6765111F2ea02D0182Fc95Be17E52d"],
+        "verifier": "arb1:0x235118AfB54B6d6c7b48F1B5434c25CD6Eb6B68F"
+      },
+      "fieldMeta": {
+        "ALL_CHAINS": {
+          "description": "Bitmask of zkLink chain IDs participating in the network."
+        },
+        "CHAIN_ID": { "description": "This chain's zkLink chain ID." },
+        "DEFAULT_FEE_ADDRESS": {
+          "description": "Default fee account in the zkLink state."
+        },
+        "syncServices": {
+          "description": "Cross-chain synchronization services relaying deposit info, indexed by zkLink chain ID."
+        },
+        "validators": {
+          "description": "Addresses authorized to commit, execute, and revert L2 blocks, and send block confirmations to other zkLink chains."
+        },
+        "exodusMode": {
+          "severity": "HIGH",
+          "description": "Whether permanent exodus mode is active, allowing users to exit their funds."
+        },
+        "gateway": {
+          "description": "L2 gateway used to communicate with L1; unset on the L1 chain."
+        },
+        "getMaster": {
+          "severity": "HIGH",
+          "description": "Address authorized to change the proxy implementation and transfer mastership."
+        },
+        "getNoticePeriod": {
+          "description": "Delay before a scheduled upgrade can be completed."
+        },
+        "getTarget": { "description": "Current proxy implementation address." },
+        "isReadyForUpgrade": {
+          "description": "Whether the contract permits an upgrade to be completed; false in exodus mode."
+        },
+        "MASTER_CHAIN_ID": {
+          "description": "zkLink chain ID of the master chain."
+        },
+        "MAX_CHAIN_ID": { "description": "Highest valid zkLink chain ID." },
+        "MIN_CHAIN_ID": { "description": "Lowest valid zkLink chain ID." },
+        "networkGovernor": {
+          "severity": "HIGH",
+          "description": "Address authorized to manage validators, tokens, gateways, and cross-chain synchronization services."
+        },
+        "periphery": {
+          "description": "Delegatecall target containing functionality split from the main contract because of code-size limits."
+        },
+        "verifier": {
+          "description": "Verifier used to validate aggregated block proofs and exit proofs."
+        }
+      },
+      "implementationNames": {
+        "arb1:0x3169844a120C0f517B4eB4A750c08d8518C8466a": "Proxy",
+        "arb1:0x23871561330080828507dED34d23FEF5EdE7053C": "ZkLink",
+        "arb1:0x3203E813930bD710043c1d899fE38dD359307352": "ZkLinkPeriphery"
+      }
+    },
+    {
+      "address": "arb1:0x374632e7D48B7872d904524FdC5Dd4516F42cDFF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0x48184910dA6765111F2ea02D0182Fc95Be17E52d",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x3169844a120C0f517B4eB4A750c08d8518C8466a",
+          "description": "commit, execute, and revert L2 blocks, and send block confirmations to other zkLink chains.",
+          "role": ".validators"
+        }
+      ]
+    },
+    {
+      "address": "arb1:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0x5cDded5ea50aE7973943394De17aB51C365254Dd",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "GnosisSafeL2",
+      "address": "arb1:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x3169844a120C0f517B4eB4A750c08d8518C8466a",
+          "description": "add tokens, pause and unpause token deposits.",
+          "role": ".networkGovernor"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0x3169844a120C0f517B4eB4A750c08d8518C8466a",
+          "description": "change the network governor, validator set, L1 gateway and cross-chain synchronization services.",
+          "role": ".networkGovernor"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "arb1:0xda9f561F0d8d7061fa47e47E352eAD6844Ae3272",
+      "sinceTimestamp": 1718456781,
+      "sinceBlock": 222120933,
+      "values": {
+        "$immutable": false,
+        "$implementation": "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "$members": [
+          "arb1:0xda9f561F0d8d7061fa47e47E352eAD6844Ae3272",
+          "arb1:0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
+          "arb1:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
+          "arb1:0x22c89137525b593Dd2A18434348b550ffA5984Fe",
+          "arb1:0x2A2A180373391915738aB1F89a1B258893361964",
+          "arb1:0x5cDded5ea50aE7973943394De17aB51C365254Dd"
+        ],
+        "$threshold": 4,
+        "domainSeparator": "0xcb00e9afef3de60ebf9b23735e4e18ac8147f9d669d5de3ef968123edae5cedb",
+        "getChainId": 42161,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 6 (67%)",
+        "nonce": 6,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "arb1:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED": "GnosisSafeProxy",
+        "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
+      }
+    },
+    {
+      "address": "arb1:0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0xda9f561F0d8d7061fa47e47E352eAD6844Ae3272",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "LayerZeroBridge",
+      "address": "arb1:0xfC5c2b3E615cF12e86E6dA8eF6C76fAbae5F2B7D",
+      "type": "Contract",
+      "template": "apex-omni/LZSyncHashBridge",
+      "sourceHashes": [
+        "0xf50b0277e3b7bfdb5540824fb20e147e3ca8fad9cc9c7557aaf3a26a3fcf9292"
+      ],
+      "proxyType": "immutable",
+      "description": "A LayerZero bridge that relays synchronization hashes and block confirmations between zkLink chains.",
+      "deployerAddress": "arb1:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
+      "sinceTimestamp": 1717731751,
+      "sinceBlock": 219222978,
+      "values": {
+        "$immutable": true,
+        "ALL_CHAINS": 268,
+        "CHAIN_ID": 9,
+        "DEFAULT_FEE_ADDRESS": "arb1:0x374632e7D48B7872d904524FdC5Dd4516F42cDFF",
+        "endpoint": "arb1:0x3c2269811836af69497E5F486A85D7316753cf62",
+        "MASTER_CHAIN_ID": 9,
+        "MAX_CHAIN_ID": 9,
+        "MIN_CHAIN_ID": 1,
+        "zklink": "arb1:0x3169844a120C0f517B4eB4A750c08d8518C8466a"
+      },
+      "fieldMeta": {
+        "ALL_CHAINS": {
+          "description": "Bitmask of zkLink chain IDs participating in the network."
+        },
+        "CHAIN_ID": { "description": "This chain's zkLink chain ID." },
+        "DEFAULT_FEE_ADDRESS": {
+          "description": "Default fee account in the zkLink state."
+        },
+        "endpoint": {
+          "description": "LayerZero endpoint used to send and receive cross-chain messages."
+        },
+        "MASTER_CHAIN_ID": {
+          "description": "zkLink chain ID of the master chain."
+        },
+        "MAX_CHAIN_ID": { "description": "Highest valid zkLink chain ID." },
+        "MIN_CHAIN_ID": { "description": "Lowest valid zkLink chain ID." },
+        "zklink": {
+          "severity": "HIGH",
+          "description": "Associated zkLink contract authorized to send synchronization hashes and block confirmations."
+        }
+      },
+      "implementationNames": {
+        "arb1:0xfC5c2b3E615cF12e86E6dA8eF6C76fAbae5F2B7D": "LayerZeroBridge"
+      }
+    },
+    {
+      "address": "base:0x22c89137525b593Dd2A18434348b550ffA5984Fe",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "base:0x2A2A180373391915738aB1F89a1B258893361964",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "base:0x374632e7D48B7872d904524FdC5Dd4516F42cDFF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "base:0x48184910dA6765111F2ea02D0182Fc95Be17E52d",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0xeE7981C4642dE8d19AeD11dA3bac59277DfD59D7",
+          "description": "commit, execute, and revert L2 blocks, and send block confirmations to other zkLink chains.",
+          "role": ".validators"
+        }
+      ]
+    },
+    {
+      "name": "EmptyVerifier",
+      "address": "base:0x4c5629AEA0B419d26C780dD78d5671e2Ce27c563",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x43e7f084adda47e6af53f9d9f359d33eecde538e53f18ce3555d080144734772",
+        "0xea82f7a840c612b712cb976f83bde41d6998cafb7987911e6f8c1d91bf1b40f1"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "deployerAddress": "base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
+      "sinceTimestamp": 1720251537,
+      "sinceBlock": 16731095,
+      "values": {
+        "$admin": "base:0x72343e8e448Fa539A1F118f870A1De1132f2fcaD",
+        "$implementation": "base:0xbb205c59a53cA04D86D2c6858cC9f82603275ADC",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "getMaster": "base:0x72343e8e448Fa539A1F118f870A1De1132f2fcaD",
+        "getTarget": "base:0xbb205c59a53cA04D86D2c6858cC9f82603275ADC"
+      },
+      "implementationNames": {
+        "base:0x4c5629AEA0B419d26C780dD78d5671e2Ce27c563": "Proxy",
+        "base:0xbb205c59a53cA04D86D2c6858cC9f82603275ADC": "EmptyVerifier"
+      }
+    },
+    {
+      "address": "base:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "base:0x5cDded5ea50aE7973943394De17aB51C365254Dd",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "UpgradeGatekeeper",
+      "address": "base:0x72343e8e448Fa539A1F118f870A1De1132f2fcaD",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x79e413df099ed6b1f0679dd44d054e27d4f83befaa24d1772c3c2311767b5388"
+      ],
+      "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0xeE7981C4642dE8d19AeD11dA3bac59277DfD59D7",
+          "description": "transfer mastership.",
+          "role": ".getMaster"
+        },
+        {
+          "permission": "upgrade",
+          "from": "base:0x4c5629AEA0B419d26C780dD78d5671e2Ce27c563",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "base:0xeE7981C4642dE8d19AeD11dA3bac59277DfD59D7",
+          "role": ".getMaster"
+        }
+      ],
+      "deployerAddress": "base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
+      "sinceTimestamp": 1720251617,
+      "sinceBlock": 16731135,
+      "values": {
+        "$immutable": true,
+        "getMaster": "base:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED",
+        "mainContract": "base:0xeE7981C4642dE8d19AeD11dA3bac59277DfD59D7",
+        "managedContracts": [
+          "base:0x4c5629AEA0B419d26C780dD78d5671e2Ce27c563",
+          "base:0xeE7981C4642dE8d19AeD11dA3bac59277DfD59D7"
+        ],
+        "nextTargets": [],
+        "noticePeriodFinishTimestamp": 0,
+        "upgradeStatus": 0,
+        "versionId": 0
+      },
+      "implementationNames": {
+        "base:0x72343e8e448Fa539A1F118f870A1De1132f2fcaD": "UpgradeGatekeeper"
+      }
+    },
+    {
+      "name": "GnosisSafeL2",
+      "address": "base:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0xeE7981C4642dE8d19AeD11dA3bac59277DfD59D7",
+          "description": "add tokens, pause and unpause token deposits.",
+          "role": ".networkGovernor"
+        },
+        {
+          "permission": "interact",
+          "from": "base:0xeE7981C4642dE8d19AeD11dA3bac59277DfD59D7",
+          "description": "change the network governor, validator set, L1 gateway and cross-chain synchronization services.",
+          "role": ".networkGovernor"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "base:0xda9f561F0d8d7061fa47e47E352eAD6844Ae3272",
+      "sinceTimestamp": 1730880019,
+      "sinceBlock": 22045336,
+      "values": {
+        "$immutable": false,
+        "$implementation": "base:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "$members": [
+          "base:0xda9f561F0d8d7061fa47e47E352eAD6844Ae3272",
+          "base:0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
+          "base:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
+          "base:0x22c89137525b593Dd2A18434348b550ffA5984Fe",
+          "base:0x2A2A180373391915738aB1F89a1B258893361964",
+          "base:0x5cDded5ea50aE7973943394De17aB51C365254Dd"
+        ],
+        "$threshold": 4,
+        "domainSeparator": "0x1173780e54306194d292e312e4781929620119fdc3fab248c15d01955a645feb",
+        "getChainId": 8453,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 6 (67%)",
+        "nonce": 2,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "base:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED": "GnosisSafeProxy",
+        "base:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
+      }
+    },
+    {
+      "address": "base:0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "base:0xda9f561F0d8d7061fa47e47E352eAD6844Ae3272",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "LayerZeroBridge",
+      "address": "base:0xeD5D1e1320720CAe8Bb40275550A7D307A082AC3",
+      "type": "Contract",
+      "template": "apex-omni/LZSyncHashBridge",
+      "sourceHashes": [
+        "0xb22a01a05a19c0fe5299fd65fe53ea410c5ead01e971b0add159bbe0f51146c8"
+      ],
+      "proxyType": "immutable",
+      "description": "A LayerZero bridge that relays synchronization hashes and block confirmations between zkLink chains.",
+      "deployerAddress": "base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
+      "sinceTimestamp": 1720251747,
+      "sinceBlock": 16731200,
+      "values": {
+        "$immutable": true,
+        "ALL_CHAINS": 3340,
+        "CHAIN_ID": 11,
+        "DEFAULT_FEE_ADDRESS": "base:0x374632e7D48B7872d904524FdC5Dd4516F42cDFF",
+        "endpoint": "base:0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7",
+        "MASTER_CHAIN_ID": 9,
+        "MAX_CHAIN_ID": 12,
+        "MIN_CHAIN_ID": 1,
+        "zklink": "base:0xeE7981C4642dE8d19AeD11dA3bac59277DfD59D7"
+      },
+      "fieldMeta": {
+        "ALL_CHAINS": {
+          "description": "Bitmask of zkLink chain IDs participating in the network."
+        },
+        "CHAIN_ID": { "description": "This chain's zkLink chain ID." },
+        "DEFAULT_FEE_ADDRESS": {
+          "description": "Default fee account in the zkLink state."
+        },
+        "endpoint": {
+          "description": "LayerZero endpoint used to send and receive cross-chain messages."
+        },
+        "MASTER_CHAIN_ID": {
+          "description": "zkLink chain ID of the master chain."
+        },
+        "MAX_CHAIN_ID": { "description": "Highest valid zkLink chain ID." },
+        "MIN_CHAIN_ID": { "description": "Lowest valid zkLink chain ID." },
+        "zklink": {
+          "severity": "HIGH",
+          "description": "Associated zkLink contract authorized to send synchronization hashes and block confirmations."
+        }
+      },
+      "implementationNames": {
+        "base:0xeD5D1e1320720CAe8Bb40275550A7D307A082AC3": "LayerZeroBridge"
+      }
+    },
+    {
+      "name": "ZkLink Base",
+      "address": "base:0xeE7981C4642dE8d19AeD11dA3bac59277DfD59D7",
+      "type": "Contract",
+      "template": "apex-omni/ZkLink_LZEscrow",
+      "sourceHashes": [
+        "0x43e7f084adda47e6af53f9d9f359d33eecde538e53f18ce3555d080144734772",
+        "0x4f84b4144d82c5e3bc213ee815ea64739305006ceab666a6b4e1c650dd871e61"
+      ],
+      "proxyType": "ZkLink proxy",
+      "description": "A secondary cross-chain ZkLink rollup contract. It only escrows user deposits, and synchronizes deposit data with the main zkLink chain.",
+      "deployerAddress": "base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
+      "sinceTimestamp": 1720251597,
+      "sinceBlock": 16731125,
+      "values": {
+        "$admin": "base:0x72343e8e448Fa539A1F118f870A1De1132f2fcaD",
+        "$implementation": [
+          "base:0xD923B6479006623303f180fA149A3b5C3bf5ff66",
+          "base:0x502C848E6f88CD018153712a68Ee518C7F34AF12"
+        ],
+        "ALL_CHAINS": 3340,
+        "CHAIN_ID": 11,
+        "DEFAULT_FEE_ADDRESS": "base:0x374632e7D48B7872d904524FdC5Dd4516F42cDFF",
+        "exodusMode": false,
+        "gateway": "base:0x0000000000000000000000000000000000000000",
+        "getMaster": "base:0x72343e8e448Fa539A1F118f870A1De1132f2fcaD",
+        "getNoticePeriod": 0,
+        "getTarget": "base:0xD923B6479006623303f180fA149A3b5C3bf5ff66",
+        "isReadyForUpgrade": true,
+        "MASTER_CHAIN_ID": 9,
+        "MAX_CHAIN_ID": 12,
+        "MIN_CHAIN_ID": 1,
+        "networkGovernor": "base:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED",
+        "periphery": "base:0x502C848E6f88CD018153712a68Ee518C7F34AF12",
+        "syncServices": {
+          "9": "base:0xeD5D1e1320720CAe8Bb40275550A7D307A082AC3"
+        },
+        "validators": ["base:0x48184910dA6765111F2ea02D0182Fc95Be17E52d"],
+        "verifier": "base:0x4c5629AEA0B419d26C780dD78d5671e2Ce27c563"
+      },
+      "fieldMeta": {
+        "ALL_CHAINS": {
+          "description": "Bitmask of zkLink chain IDs participating in the network."
+        },
+        "CHAIN_ID": { "description": "This chain's zkLink chain ID." },
+        "DEFAULT_FEE_ADDRESS": {
+          "description": "Default fee account in the zkLink state."
+        },
+        "syncServices": {
+          "description": "Cross-chain synchronization services relaying deposit info, indexed by zkLink chain ID."
+        },
+        "validators": {
+          "description": "Addresses authorized to commit, execute, and revert L2 blocks, and send block confirmations to other zkLink chains."
+        },
+        "exodusMode": {
+          "severity": "HIGH",
+          "description": "Whether permanent exodus mode is active, allowing users to exit their funds."
+        },
+        "gateway": {
+          "description": "L2 gateway used to communicate with L1; unset on the L1 chain."
+        },
+        "getMaster": {
+          "severity": "HIGH",
+          "description": "Address authorized to change the proxy implementation and transfer mastership."
+        },
+        "getNoticePeriod": {
+          "description": "Delay before a scheduled upgrade can be completed."
+        },
+        "getTarget": { "description": "Current proxy implementation address." },
+        "isReadyForUpgrade": {
+          "description": "Whether the contract permits an upgrade to be completed; false in exodus mode."
+        },
+        "MASTER_CHAIN_ID": {
+          "description": "zkLink chain ID of the master chain."
+        },
+        "MAX_CHAIN_ID": { "description": "Highest valid zkLink chain ID." },
+        "MIN_CHAIN_ID": { "description": "Lowest valid zkLink chain ID." },
+        "networkGovernor": {
+          "severity": "HIGH",
+          "description": "Address authorized to manage validators, tokens, gateways, and cross-chain synchronization services."
+        },
+        "periphery": {
+          "description": "Delegatecall target containing functionality split from the main contract because of code-size limits."
+        },
+        "verifier": {
+          "description": "Verifier used to validate aggregated block proofs and exit proofs."
+        }
+      },
+      "implementationNames": {
+        "base:0xeE7981C4642dE8d19AeD11dA3bac59277DfD59D7": "Proxy",
+        "base:0xD923B6479006623303f180fA149A3b5C3bf5ff66": "ZkLink",
+        "base:0x502C848E6f88CD018153712a68Ee518C7F34AF12": "ZkLinkPeriphery"
+      }
+    },
+    {
+      "address": "bnb:0x0000000000000000000000000000000000000000",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "EmptyVerifier",
+      "address": "bnb:0x1202e0557A23531D09015C802e993d6423685FfB",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x43e7f084adda47e6af53f9d9f359d33eecde538e53f18ce3555d080144734772",
+        "0xea82f7a840c612b712cb976f83bde41d6998cafb7987911e6f8c1d91bf1b40f1"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "deployerAddress": "bnb:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
+      "sinceTimestamp": 1717731842,
+      "sinceBlock": 39393706,
+      "values": {
+        "$admin": "bnb:0x81DEE5B8BfFa75Cc1ec729533EeD30CfE4F81F8C",
+        "$implementation": "bnb:0x54dB01A8D4C7A6404fD234A009e89418b16796dB",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "getMaster": "bnb:0x81DEE5B8BfFa75Cc1ec729533EeD30CfE4F81F8C",
+        "getTarget": "bnb:0x54dB01A8D4C7A6404fD234A009e89418b16796dB"
+      },
+      "implementationNames": {
+        "bnb:0x1202e0557A23531D09015C802e993d6423685FfB": "Proxy",
+        "bnb:0x54dB01A8D4C7A6404fD234A009e89418b16796dB": "EmptyVerifier"
+      }
+    },
+    {
+      "address": "bnb:0x22c89137525b593Dd2A18434348b550ffA5984Fe",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "bnb:0x2A2A180373391915738aB1F89a1B258893361964",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "bnb:0x374632e7D48B7872d904524FdC5Dd4516F42cDFF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "bnb:0x48184910dA6765111F2ea02D0182Fc95Be17E52d",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "bnb:0xb8D9F005654b7b127b34dae8F973Ba729ca3A2D9",
+          "description": "commit, execute, and revert L2 blocks, and send block confirmations to other zkLink chains.",
+          "role": ".validators"
+        }
+      ]
+    },
+    {
+      "address": "bnb:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "bnb:0x5cDded5ea50aE7973943394De17aB51C365254Dd",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "UpgradeGatekeeper",
+      "address": "bnb:0x81DEE5B8BfFa75Cc1ec729533EeD30CfE4F81F8C",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x79e413df099ed6b1f0679dd44d054e27d4f83befaa24d1772c3c2311767b5388"
+      ],
+      "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "bnb:0xb8D9F005654b7b127b34dae8F973Ba729ca3A2D9",
+          "description": "transfer mastership.",
+          "role": ".getMaster"
+        },
+        {
+          "permission": "upgrade",
+          "from": "bnb:0x1202e0557A23531D09015C802e993d6423685FfB",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "bnb:0xb8D9F005654b7b127b34dae8F973Ba729ca3A2D9",
+          "role": ".getMaster"
+        }
+      ],
+      "deployerAddress": "bnb:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
+      "sinceTimestamp": 1717731965,
+      "sinceBlock": 39393747,
+      "values": {
+        "$immutable": true,
+        "getMaster": "bnb:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED",
+        "mainContract": "bnb:0xb8D9F005654b7b127b34dae8F973Ba729ca3A2D9",
+        "managedContracts": [
+          "bnb:0x1202e0557A23531D09015C802e993d6423685FfB",
+          "bnb:0xb8D9F005654b7b127b34dae8F973Ba729ca3A2D9"
+        ],
+        "nextTargets": [],
+        "noticePeriodFinishTimestamp": 0,
+        "upgradeStatus": 0,
+        "versionId": 1
+      },
+      "implementationNames": {
+        "bnb:0x81DEE5B8BfFa75Cc1ec729533EeD30CfE4F81F8C": "UpgradeGatekeeper"
+      }
+    },
+    {
+      "name": "ZkLink BNB",
+      "address": "bnb:0xb8D9F005654b7b127b34dae8F973Ba729ca3A2D9",
+      "type": "Contract",
+      "template": "apex-omni/ZkLink_LZEscrow",
+      "sourceHashes": [
+        "0x43e7f084adda47e6af53f9d9f359d33eecde538e53f18ce3555d080144734772",
+        "0x6376298a0e414f91406f4069cdaea39f0fc6280e7e7f9a07371f8cdba7f6d265"
+      ],
+      "proxyType": "ZkLink proxy",
+      "description": "A secondary cross-chain ZkLink rollup contract. It only escrows user deposits, and synchronizes deposit data with the main zkLink chain.",
+      "deployerAddress": "bnb:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
+      "sinceTimestamp": 1717731935,
+      "sinceBlock": 39393737,
+      "values": {
+        "$admin": "bnb:0x81DEE5B8BfFa75Cc1ec729533EeD30CfE4F81F8C",
+        "$implementation": [
+          "bnb:0x3EC0ad3000b13188c235E23D549F1A1bBd25B028",
+          "bnb:0x04bF7cf48a68dfC744fc22662B90e2ecaf14D716"
+        ],
+        "ALL_CHAINS": 3340,
+        "CHAIN_ID": 3,
+        "DEFAULT_FEE_ADDRESS": "bnb:0x374632e7D48B7872d904524FdC5Dd4516F42cDFF",
+        "exodusMode": false,
+        "gateway": "bnb:0x0000000000000000000000000000000000000000",
+        "getMaster": "bnb:0x81DEE5B8BfFa75Cc1ec729533EeD30CfE4F81F8C",
+        "getNoticePeriod": 0,
+        "getTarget": "bnb:0x3EC0ad3000b13188c235E23D549F1A1bBd25B028",
+        "isReadyForUpgrade": true,
+        "MASTER_CHAIN_ID": 9,
+        "MAX_CHAIN_ID": 12,
+        "MIN_CHAIN_ID": 1,
+        "networkGovernor": "bnb:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED",
+        "periphery": "bnb:0x04bF7cf48a68dfC744fc22662B90e2ecaf14D716",
+        "syncServices": {
+          "9": "bnb:0xc271a8e9eB2b10FCDe1709D76de6681249669D2e"
+        },
+        "validators": ["bnb:0x48184910dA6765111F2ea02D0182Fc95Be17E52d"],
+        "verifier": "bnb:0x1202e0557A23531D09015C802e993d6423685FfB"
+      },
+      "fieldMeta": {
+        "ALL_CHAINS": {
+          "description": "Bitmask of zkLink chain IDs participating in the network."
+        },
+        "CHAIN_ID": { "description": "This chain's zkLink chain ID." },
+        "DEFAULT_FEE_ADDRESS": {
+          "description": "Default fee account in the zkLink state."
+        },
+        "syncServices": {
+          "description": "Cross-chain synchronization services relaying deposit info, indexed by zkLink chain ID."
+        },
+        "validators": {
+          "description": "Addresses authorized to commit, execute, and revert L2 blocks, and send block confirmations to other zkLink chains."
+        },
+        "exodusMode": {
+          "severity": "HIGH",
+          "description": "Whether permanent exodus mode is active, allowing users to exit their funds."
+        },
+        "gateway": {
+          "description": "L2 gateway used to communicate with L1; unset on the L1 chain."
+        },
+        "getMaster": {
+          "severity": "HIGH",
+          "description": "Address authorized to change the proxy implementation and transfer mastership."
+        },
+        "getNoticePeriod": {
+          "description": "Delay before a scheduled upgrade can be completed."
+        },
+        "getTarget": { "description": "Current proxy implementation address." },
+        "isReadyForUpgrade": {
+          "description": "Whether the contract permits an upgrade to be completed; false in exodus mode."
+        },
+        "MASTER_CHAIN_ID": {
+          "description": "zkLink chain ID of the master chain."
+        },
+        "MAX_CHAIN_ID": { "description": "Highest valid zkLink chain ID." },
+        "MIN_CHAIN_ID": { "description": "Lowest valid zkLink chain ID." },
+        "networkGovernor": {
+          "severity": "HIGH",
+          "description": "Address authorized to manage validators, tokens, gateways, and cross-chain synchronization services."
+        },
+        "periphery": {
+          "description": "Delegatecall target containing functionality split from the main contract because of code-size limits."
+        },
+        "verifier": {
+          "description": "Verifier used to validate aggregated block proofs and exit proofs."
+        }
+      },
+      "implementationNames": {
+        "bnb:0xb8D9F005654b7b127b34dae8F973Ba729ca3A2D9": "Proxy",
+        "bnb:0x3EC0ad3000b13188c235E23D549F1A1bBd25B028": "ZkLink",
+        "bnb:0x04bF7cf48a68dfC744fc22662B90e2ecaf14D716": "ZkLinkPeriphery"
+      }
+    },
+    {
+      "name": "GnosisSafeL2",
+      "address": "bnb:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "bnb:0xb8D9F005654b7b127b34dae8F973Ba729ca3A2D9",
+          "description": "add tokens, pause and unpause token deposits.",
+          "role": ".networkGovernor"
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0xb8D9F005654b7b127b34dae8F973Ba729ca3A2D9",
+          "description": "change the network governor, validator set, L1 gateway and cross-chain synchronization services.",
+          "role": ".networkGovernor"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "bnb:0xda9f561F0d8d7061fa47e47E352eAD6844Ae3272",
+      "sinceTimestamp": 1718456681,
+      "sinceBlock": 39634547,
+      "values": {
+        "$immutable": false,
+        "$implementation": "bnb:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "$members": [
+          "bnb:0xda9f561F0d8d7061fa47e47E352eAD6844Ae3272",
+          "bnb:0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
+          "bnb:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
+          "bnb:0x22c89137525b593Dd2A18434348b550ffA5984Fe",
+          "bnb:0x2A2A180373391915738aB1F89a1B258893361964",
+          "bnb:0x5cDded5ea50aE7973943394De17aB51C365254Dd"
+        ],
+        "$threshold": 4,
+        "domainSeparator": "0xb569137978f6ba75a0699f5705387e7edfb57b91148ec72cf983174cd674ea6c",
+        "getChainId": 56,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 6 (67%)",
+        "nonce": 5,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "bnb:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED": "GnosisSafeProxy",
+        "bnb:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
+      }
+    },
+    {
+      "name": "LayerZeroBridge",
+      "address": "bnb:0xc271a8e9eB2b10FCDe1709D76de6681249669D2e",
+      "type": "Contract",
+      "template": "apex-omni/LZSyncHashBridge",
+      "sourceHashes": [
+        "0xde341a7da4f09deb4f8c8035945780f47e32a5344614a4a55efd82194b3bbd38"
+      ],
+      "proxyType": "immutable",
+      "description": "A LayerZero bridge that relays synchronization hashes and block confirmations between zkLink chains.",
+      "deployerAddress": "bnb:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
+      "sinceTimestamp": 1717732048,
+      "sinceBlock": 39393774,
+      "values": {
+        "$immutable": true,
+        "ALL_CHAINS": 268,
+        "CHAIN_ID": 3,
+        "DEFAULT_FEE_ADDRESS": "bnb:0x374632e7D48B7872d904524FdC5Dd4516F42cDFF",
+        "endpoint": "bnb:0x3c2269811836af69497E5F486A85D7316753cf62",
+        "MASTER_CHAIN_ID": 9,
+        "MAX_CHAIN_ID": 9,
+        "MIN_CHAIN_ID": 1,
+        "zklink": "bnb:0xb8D9F005654b7b127b34dae8F973Ba729ca3A2D9"
+      },
+      "fieldMeta": {
+        "ALL_CHAINS": {
+          "description": "Bitmask of zkLink chain IDs participating in the network."
+        },
+        "CHAIN_ID": { "description": "This chain's zkLink chain ID." },
+        "DEFAULT_FEE_ADDRESS": {
+          "description": "Default fee account in the zkLink state."
+        },
+        "endpoint": {
+          "description": "LayerZero endpoint used to send and receive cross-chain messages."
+        },
+        "MASTER_CHAIN_ID": {
+          "description": "zkLink chain ID of the master chain."
+        },
+        "MAX_CHAIN_ID": { "description": "Highest valid zkLink chain ID." },
+        "MIN_CHAIN_ID": { "description": "Lowest valid zkLink chain ID." },
+        "zklink": {
+          "severity": "HIGH",
+          "description": "Associated zkLink contract authorized to send synchronization hashes and block confirmations."
+        }
+      },
+      "implementationNames": {
+        "bnb:0xc271a8e9eB2b10FCDe1709D76de6681249669D2e": "LayerZeroBridge"
+      }
+    },
+    {
+      "address": "bnb:0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "bnb:0xda9f561F0d8d7061fa47e47E352eAD6844Ae3272",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x22c89137525b593Dd2A18434348b550ffA5984Fe",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x2A2A180373391915738aB1F89a1B258893361964",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "ZkLink Ethereum",
+      "address": "eth:0x35D173cdfE4d484BC5985fDa55FABad5892c7B82",
+      "type": "Contract",
+      "template": "apex-omni/ZkLink_LZEscrow",
+      "sourceHashes": [
+        "0x43e7f084adda47e6af53f9d9f359d33eecde538e53f18ce3555d080144734772",
+        "0xb4138259cf80065144e8d21d34b6ed64c712eb7cb3b14889a51a8bacf0ce219e"
+      ],
+      "proxyType": "ZkLink proxy",
+      "description": "A secondary cross-chain ZkLink rollup contract. It only escrows user deposits, and synchronizes deposit data with the main zkLink chain.",
+      "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
+      "sinceTimestamp": 1717731359,
+      "sinceBlock": 20037300,
+      "values": {
+        "$admin": "eth:0xFBD68679271fDa6ca9bf6F20993Cd39E20072753",
+        "$implementation": [
+          "eth:0xa9B4AB2E78f93B340Bbd6541B713B29B6B3BEe3c",
+          "eth:0x070fC04F6Ce2cd1FFBC2aE1d6a381E46f467284F"
+        ],
+        "ALL_CHAINS": 3340,
+        "CHAIN_ID": 4,
+        "DEFAULT_FEE_ADDRESS": "eth:0x374632e7D48B7872d904524FdC5Dd4516F42cDFF",
+        "exodusMode": false,
+        "gateway": "eth:0x0000000000000000000000000000000000000000",
+        "getMaster": "eth:0xFBD68679271fDa6ca9bf6F20993Cd39E20072753",
+        "getNoticePeriod": 0,
+        "getTarget": "eth:0xa9B4AB2E78f93B340Bbd6541B713B29B6B3BEe3c",
+        "isReadyForUpgrade": true,
+        "MASTER_CHAIN_ID": 9,
+        "MAX_CHAIN_ID": 12,
+        "MIN_CHAIN_ID": 1,
+        "networkGovernor": "eth:0xF9f8794A2D9885C36D06aA25fc25a8cAda276B94",
+        "periphery": "eth:0x070fC04F6Ce2cd1FFBC2aE1d6a381E46f467284F",
+        "syncServices": {
+          "9": "eth:0x3D70dc86dC8099D8a4c86C18839C7e84a13a441E"
+        },
+        "validators": ["eth:0x48184910dA6765111F2ea02D0182Fc95Be17E52d"],
+        "verifier": "eth:0xe38f8bc093a1f76f0A444bA6B75F46d6dC686dba"
+      },
+      "fieldMeta": {
+        "ALL_CHAINS": {
+          "description": "Bitmask of zkLink chain IDs participating in the network."
+        },
+        "CHAIN_ID": { "description": "This chain's zkLink chain ID." },
+        "DEFAULT_FEE_ADDRESS": {
+          "description": "Default fee account in the zkLink state."
+        },
+        "syncServices": {
+          "description": "Cross-chain synchronization services relaying deposit info, indexed by zkLink chain ID."
+        },
+        "validators": {
+          "description": "Addresses authorized to commit, execute, and revert L2 blocks, and send block confirmations to other zkLink chains."
+        },
+        "exodusMode": {
+          "severity": "HIGH",
+          "description": "Whether permanent exodus mode is active, allowing users to exit their funds."
+        },
+        "gateway": {
+          "description": "L2 gateway used to communicate with L1; unset on the L1 chain."
+        },
+        "getMaster": {
+          "severity": "HIGH",
+          "description": "Address authorized to change the proxy implementation and transfer mastership."
+        },
+        "getNoticePeriod": {
+          "description": "Delay before a scheduled upgrade can be completed."
+        },
+        "getTarget": { "description": "Current proxy implementation address." },
+        "isReadyForUpgrade": {
+          "description": "Whether the contract permits an upgrade to be completed; false in exodus mode."
+        },
+        "MASTER_CHAIN_ID": {
+          "description": "zkLink chain ID of the master chain."
+        },
+        "MAX_CHAIN_ID": { "description": "Highest valid zkLink chain ID." },
+        "MIN_CHAIN_ID": { "description": "Lowest valid zkLink chain ID." },
+        "networkGovernor": {
+          "severity": "HIGH",
+          "description": "Address authorized to manage validators, tokens, gateways, and cross-chain synchronization services."
+        },
+        "periphery": {
+          "description": "Delegatecall target containing functionality split from the main contract because of code-size limits."
+        },
+        "verifier": {
+          "description": "Verifier used to validate aggregated block proofs and exit proofs."
+        }
+      },
+      "implementationNames": {
+        "eth:0x35D173cdfE4d484BC5985fDa55FABad5892c7B82": "Proxy",
+        "eth:0xa9B4AB2E78f93B340Bbd6541B713B29B6B3BEe3c": "ZkLink",
+        "eth:0x070fC04F6Ce2cd1FFBC2aE1d6a381E46f467284F": "ZkLinkPeriphery"
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "eth:0x374632e7D48B7872d904524FdC5Dd4516F42cDFF",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
+      "sinceTimestamp": 1689406727,
+      "sinceBlock": 17697369,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0xd9cCb94805B882b78e4C8565e67469DdE90a110F",
+          "eth:0x503659DcA7Aba3129B4C098FB23857436AedECd9",
+          "eth:0x67ceD4Ae20D0702c6B773a70aE3826C1E0DE09e9",
+          "eth:0xAA2c80c9346BceF31570791BA0827B03d8a5E594",
+          "eth:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
+          "eth:0x522b8Df4c9965934654CFebbf20882005c33cE18",
+          "eth:0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
+        ],
+        "$threshold": 4,
+        "domainSeparator": "0xdea3734fcf6eac004498be36cd83f3eb4ffee19eb4144d6d3bc2861ee5d0ea74",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 7 (57%)",
+        "nonce": 17,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0x374632e7D48B7872d904524FdC5Dd4516F42cDFF": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "name": "LayerZeroBridge",
+      "address": "eth:0x3D70dc86dC8099D8a4c86C18839C7e84a13a441E",
+      "type": "Contract",
+      "template": "apex-omni/LZSyncHashBridge",
+      "sourceHashes": [
+        "0xd60f50351716d5714b021ecd66edf6d942a9dada25a1f4bbc0e0ef1159ddb93a"
+      ],
+      "proxyType": "immutable",
+      "description": "A LayerZero bridge that relays synchronization hashes and block confirmations between zkLink chains.",
+      "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
+      "sinceTimestamp": 1717731515,
+      "sinceBlock": 20037313,
+      "values": {
+        "$immutable": true,
+        "ALL_CHAINS": 268,
+        "CHAIN_ID": 4,
+        "DEFAULT_FEE_ADDRESS": "eth:0x374632e7D48B7872d904524FdC5Dd4516F42cDFF",
+        "endpoint": "eth:0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
+        "MASTER_CHAIN_ID": 9,
+        "MAX_CHAIN_ID": 9,
+        "MIN_CHAIN_ID": 1,
+        "zklink": "eth:0x35D173cdfE4d484BC5985fDa55FABad5892c7B82"
+      },
+      "fieldMeta": {
+        "ALL_CHAINS": {
+          "description": "Bitmask of zkLink chain IDs participating in the network."
+        },
+        "CHAIN_ID": { "description": "This chain's zkLink chain ID." },
+        "DEFAULT_FEE_ADDRESS": {
+          "description": "Default fee account in the zkLink state."
+        },
+        "endpoint": {
+          "description": "LayerZero endpoint used to send and receive cross-chain messages."
+        },
+        "MASTER_CHAIN_ID": {
+          "description": "zkLink chain ID of the master chain."
+        },
+        "MAX_CHAIN_ID": { "description": "Highest valid zkLink chain ID." },
+        "MIN_CHAIN_ID": { "description": "Lowest valid zkLink chain ID." },
+        "zklink": {
+          "severity": "HIGH",
+          "description": "Associated zkLink contract authorized to send synchronization hashes and block confirmations."
+        }
+      },
+      "implementationNames": {
+        "eth:0x3D70dc86dC8099D8a4c86C18839C7e84a13a441E": "LayerZeroBridge"
+      }
+    },
+    {
+      "address": "eth:0x48184910dA6765111F2ea02D0182Fc95Be17E52d",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x35D173cdfE4d484BC5985fDa55FABad5892c7B82",
+          "description": "commit, execute, and revert L2 blocks, and send block confirmations to other zkLink chains.",
+          "role": ".validators"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x503659DcA7Aba3129B4C098FB23857436AedECd9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x522b8Df4c9965934654CFebbf20882005c33cE18",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x5cDded5ea50aE7973943394De17aB51C365254Dd",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x67ceD4Ae20D0702c6B773a70aE3826C1E0DE09e9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xAA2c80c9346BceF31570791BA0827B03d8a5E594",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xd9cCb94805B882b78e4C8565e67469DdE90a110F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xda9f561F0d8d7061fa47e47E352eAD6844Ae3272",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "EmptyVerifier",
+      "address": "eth:0xe38f8bc093a1f76f0A444bA6B75F46d6dC686dba",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x43e7f084adda47e6af53f9d9f359d33eecde538e53f18ce3555d080144734772",
+        "0xea82f7a840c612b712cb976f83bde41d6998cafb7987911e6f8c1d91bf1b40f1"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Placeholder verifier for chains without pairing support. It rejects all block and exit proofs.",
+      "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
+      "sinceTimestamp": 1717731263,
+      "sinceBlock": 20037292,
+      "values": {
+        "$admin": "eth:0xFBD68679271fDa6ca9bf6F20993Cd39E20072753",
+        "$implementation": "eth:0xD6C54b6BC87BCB5F96De3fA8538c548f47829a08",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "getMaster": "eth:0xFBD68679271fDa6ca9bf6F20993Cd39E20072753",
+        "getTarget": "eth:0xD6C54b6BC87BCB5F96De3fA8538c548f47829a08"
+      },
+      "implementationNames": {
+        "eth:0xe38f8bc093a1f76f0A444bA6B75F46d6dC686dba": "Proxy",
+        "eth:0xD6C54b6BC87BCB5F96De3fA8538c548f47829a08": "EmptyVerifier"
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "eth:0xF9f8794A2D9885C36D06aA25fc25a8cAda276B94",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x35D173cdfE4d484BC5985fDa55FABad5892c7B82",
+          "description": "add tokens, pause and unpause token deposits.",
+          "role": ".networkGovernor"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x35D173cdfE4d484BC5985fDa55FABad5892c7B82",
+          "description": "change the network governor, validator set, L1 gateway and cross-chain synchronization services.",
+          "role": ".networkGovernor"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xda9f561F0d8d7061fa47e47E352eAD6844Ae3272",
+      "sinceTimestamp": 1718456123,
+      "sinceBlock": 20097326,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0xda9f561F0d8d7061fa47e47E352eAD6844Ae3272",
+          "eth:0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
+          "eth:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
+          "eth:0x22c89137525b593Dd2A18434348b550ffA5984Fe",
+          "eth:0x2A2A180373391915738aB1F89a1B258893361964",
+          "eth:0x5cDded5ea50aE7973943394De17aB51C365254Dd"
+        ],
+        "$threshold": 4,
+        "domainSeparator": "0x218e0fdaf5d4b4715b7d3ba1d0bc9e311d24032da77fa47ba9ce87d0a1c037c5",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 6 (67%)",
+        "nonce": 5,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0xF9f8794A2D9885C36D06aA25fc25a8cAda276B94": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "name": "UpgradeGatekeeper",
+      "address": "eth:0xFBD68679271fDa6ca9bf6F20993Cd39E20072753",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x79e413df099ed6b1f0679dd44d054e27d4f83befaa24d1772c3c2311767b5388"
+      ],
+      "proxyType": "immutable",
+      "description": "Controls upgrades to managed contracts. The master can schedule, cancel, and complete upgrades after the main contract's notice period.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x35D173cdfE4d484BC5985fDa55FABad5892c7B82",
+          "description": "transfer mastership.",
+          "role": ".getMaster"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x35D173cdfE4d484BC5985fDa55FABad5892c7B82",
+          "role": ".getMaster"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xe38f8bc093a1f76f0A444bA6B75F46d6dC686dba",
+          "role": "admin"
+        }
+      ],
+      "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
+      "sinceTimestamp": 1717731383,
+      "sinceBlock": 20037302,
+      "values": {
+        "$immutable": true,
+        "getMaster": "eth:0xF9f8794A2D9885C36D06aA25fc25a8cAda276B94",
+        "mainContract": "eth:0x35D173cdfE4d484BC5985fDa55FABad5892c7B82",
+        "managedContracts": [
+          "eth:0xe38f8bc093a1f76f0A444bA6B75F46d6dC686dba",
+          "eth:0x35D173cdfE4d484BC5985fDa55FABad5892c7B82"
+        ],
+        "nextTargets": [],
+        "noticePeriodFinishTimestamp": 0,
+        "upgradeStatus": 0,
+        "versionId": 1
+      },
+      "implementationNames": {
+        "eth:0xFBD68679271fDa6ca9bf6F20993Cd39E20072753": "UpgradeGatekeeper"
+      }
+    },
+    {
+      "address": "mantle:0x0000000000000000000000000000000000000000",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "LayerZeroBridge",
+      "address": "mantle:0x04C6a52f3bf9F73618cD70F234AdB95a73325D1e",
+      "type": "Contract",
+      "template": "apex-omni/LZSyncHashBridge",
+      "sourceHashes": [
+        "0x6b130c9503f9b52ae1b02e6167f3b93ebb26654da97d6303a05a2722e1cc1399"
+      ],
+      "proxyType": "immutable",
+      "description": "A LayerZero bridge that relays synchronization hashes and block confirmations between zkLink chains.",
+      "deployerAddress": "mantle:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
+      "sinceTimestamp": 1720251334,
+      "sinceBlock": 66060511,
+      "values": {
+        "$immutable": true,
+        "ALL_CHAINS": 3340,
+        "CHAIN_ID": 12,
+        "DEFAULT_FEE_ADDRESS": "mantle:0x374632e7D48B7872d904524FdC5Dd4516F42cDFF",
+        "endpoint": "mantle:0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7",
+        "MASTER_CHAIN_ID": 9,
+        "MAX_CHAIN_ID": 12,
+        "MIN_CHAIN_ID": 1,
+        "zklink": "mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c"
+      },
+      "fieldMeta": {
+        "ALL_CHAINS": {
+          "description": "Bitmask of zkLink chain IDs participating in the network."
+        },
+        "CHAIN_ID": { "description": "This chain's zkLink chain ID." },
+        "DEFAULT_FEE_ADDRESS": {
+          "description": "Default fee account in the zkLink state."
+        },
+        "endpoint": {
+          "description": "LayerZero endpoint used to send and receive cross-chain messages."
+        },
+        "MASTER_CHAIN_ID": {
+          "description": "zkLink chain ID of the master chain."
+        },
+        "MAX_CHAIN_ID": { "description": "Highest valid zkLink chain ID." },
+        "MIN_CHAIN_ID": { "description": "Lowest valid zkLink chain ID." },
+        "zklink": {
+          "severity": "HIGH",
+          "description": "Associated zkLink contract authorized to send synchronization hashes and block confirmations."
+        }
+      },
+      "implementationNames": {
+        "mantle:0x04C6a52f3bf9F73618cD70F234AdB95a73325D1e": "LayerZeroBridge"
+      }
+    },
+    {
+      "name": "EmptyVerifier",
+      "address": "mantle:0x0c0F729c74c9AC41F9C702dAd11011F40D4190B0",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x43e7f084adda47e6af53f9d9f359d33eecde538e53f18ce3555d080144734772",
+        "0xea82f7a840c612b712cb976f83bde41d6998cafb7987911e6f8c1d91bf1b40f1"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "deployerAddress": "mantle:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
+      "sinceTimestamp": 1720251108,
+      "sinceBlock": 66060398,
+      "values": {
+        "$admin": "mantle:0x2B9BA259F24965a81Fa0c4E477e3791673744059",
+        "$implementation": "mantle:0xd8428A59B60Df2d81514D429D57DF23293f1bCe7",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "getMaster": "mantle:0x2B9BA259F24965a81Fa0c4E477e3791673744059",
+        "getTarget": "mantle:0xd8428A59B60Df2d81514D429D57DF23293f1bCe7"
+      },
+      "implementationNames": {
+        "mantle:0x0c0F729c74c9AC41F9C702dAd11011F40D4190B0": "Proxy",
+        "mantle:0xd8428A59B60Df2d81514D429D57DF23293f1bCe7": "EmptyVerifier"
+      }
+    },
+    {
+      "address": "mantle:0x22c89137525b593Dd2A18434348b550ffA5984Fe",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "mantle:0x2A2A180373391915738aB1F89a1B258893361964",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "UpgradeGatekeeper",
+      "address": "mantle:0x2B9BA259F24965a81Fa0c4E477e3791673744059",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x79e413df099ed6b1f0679dd44d054e27d4f83befaa24d1772c3c2311767b5388"
+      ],
+      "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c",
+          "description": "transfer mastership.",
+          "role": ".getMaster"
+        },
+        {
+          "permission": "upgrade",
+          "from": "mantle:0x0c0F729c74c9AC41F9C702dAd11011F40D4190B0",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c",
+          "role": ".getMaster"
+        }
+      ],
+      "deployerAddress": "mantle:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
+      "sinceTimestamp": 1720251194,
+      "sinceBlock": 66060441,
+      "values": {
+        "$immutable": true,
+        "getMaster": "mantle:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED",
+        "mainContract": "mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c",
+        "managedContracts": [
+          "mantle:0x0c0F729c74c9AC41F9C702dAd11011F40D4190B0",
+          "mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c"
+        ],
+        "nextTargets": [],
+        "noticePeriodFinishTimestamp": 0,
+        "upgradeStatus": 0,
+        "versionId": 0
+      },
+      "implementationNames": {
+        "mantle:0x2B9BA259F24965a81Fa0c4E477e3791673744059": "UpgradeGatekeeper"
+      }
+    },
+    {
+      "address": "mantle:0x374632e7D48B7872d904524FdC5Dd4516F42cDFF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "ZkLink Mantle",
+      "address": "mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c",
+      "type": "Contract",
+      "template": "apex-omni/ZkLink_LZEscrow",
+      "sourceHashes": [
+        "0x43e7f084adda47e6af53f9d9f359d33eecde538e53f18ce3555d080144734772",
+        "0xb1ce2609627d70aae43da70e3afe85837f4884708a70f8e9e9062549b310432e"
+      ],
+      "proxyType": "ZkLink proxy",
+      "description": "A secondary cross-chain ZkLink rollup contract. It only escrows user deposits, and synchronizes deposit data with the main zkLink chain.",
+      "deployerAddress": "mantle:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
+      "sinceTimestamp": 1720251180,
+      "sinceBlock": 66060434,
+      "values": {
+        "$admin": "mantle:0x2B9BA259F24965a81Fa0c4E477e3791673744059",
+        "$implementation": [
+          "mantle:0x067c7126a83560Ed2Fc345d25799F696B7Ea47Ca",
+          "mantle:0xf04Af2e7AbCd011459a01A4A250ece46969c84F2"
+        ],
+        "ALL_CHAINS": 3340,
+        "CHAIN_ID": 12,
+        "DEFAULT_FEE_ADDRESS": "mantle:0x374632e7D48B7872d904524FdC5Dd4516F42cDFF",
+        "exodusMode": false,
+        "gateway": "mantle:0x0000000000000000000000000000000000000000",
+        "getMaster": "mantle:0x2B9BA259F24965a81Fa0c4E477e3791673744059",
+        "getNoticePeriod": 0,
+        "getTarget": "mantle:0x067c7126a83560Ed2Fc345d25799F696B7Ea47Ca",
+        "isReadyForUpgrade": true,
+        "MASTER_CHAIN_ID": 9,
+        "MAX_CHAIN_ID": 12,
+        "MIN_CHAIN_ID": 1,
+        "networkGovernor": "mantle:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED",
+        "periphery": "mantle:0xf04Af2e7AbCd011459a01A4A250ece46969c84F2",
+        "syncServices": {
+          "9": "mantle:0x04C6a52f3bf9F73618cD70F234AdB95a73325D1e"
+        },
+        "validators": ["mantle:0x48184910dA6765111F2ea02D0182Fc95Be17E52d"],
+        "verifier": "mantle:0x0c0F729c74c9AC41F9C702dAd11011F40D4190B0"
+      },
+      "fieldMeta": {
+        "ALL_CHAINS": {
+          "description": "Bitmask of zkLink chain IDs participating in the network."
+        },
+        "CHAIN_ID": { "description": "This chain's zkLink chain ID." },
+        "DEFAULT_FEE_ADDRESS": {
+          "description": "Default fee account in the zkLink state."
+        },
+        "syncServices": {
+          "description": "Cross-chain synchronization services relaying deposit info, indexed by zkLink chain ID."
+        },
+        "validators": {
+          "description": "Addresses authorized to commit, execute, and revert L2 blocks, and send block confirmations to other zkLink chains."
+        },
+        "exodusMode": {
+          "severity": "HIGH",
+          "description": "Whether permanent exodus mode is active, allowing users to exit their funds."
+        },
+        "gateway": {
+          "description": "L2 gateway used to communicate with L1; unset on the L1 chain."
+        },
+        "getMaster": {
+          "severity": "HIGH",
+          "description": "Address authorized to change the proxy implementation and transfer mastership."
+        },
+        "getNoticePeriod": {
+          "description": "Delay before a scheduled upgrade can be completed."
+        },
+        "getTarget": { "description": "Current proxy implementation address." },
+        "isReadyForUpgrade": {
+          "description": "Whether the contract permits an upgrade to be completed; false in exodus mode."
+        },
+        "MASTER_CHAIN_ID": {
+          "description": "zkLink chain ID of the master chain."
+        },
+        "MAX_CHAIN_ID": { "description": "Highest valid zkLink chain ID." },
+        "MIN_CHAIN_ID": { "description": "Lowest valid zkLink chain ID." },
+        "networkGovernor": {
+          "severity": "HIGH",
+          "description": "Address authorized to manage validators, tokens, gateways, and cross-chain synchronization services."
+        },
+        "periphery": {
+          "description": "Delegatecall target containing functionality split from the main contract because of code-size limits."
+        },
+        "verifier": {
+          "description": "Verifier used to validate aggregated block proofs and exit proofs."
+        }
+      },
+      "implementationNames": {
+        "mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c": "Proxy",
+        "mantle:0x067c7126a83560Ed2Fc345d25799F696B7Ea47Ca": "ZkLink",
+        "mantle:0xf04Af2e7AbCd011459a01A4A250ece46969c84F2": "ZkLinkPeriphery"
+      }
+    },
+    {
+      "address": "mantle:0x48184910dA6765111F2ea02D0182Fc95Be17E52d",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c",
+          "description": "commit, execute, and revert L2 blocks, and send block confirmations to other zkLink chains.",
+          "role": ".validators"
+        }
+      ]
+    },
+    {
+      "address": "mantle:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "mantle:0x5cDded5ea50aE7973943394De17aB51C365254Dd",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "GnosisSafeL2",
+      "address": "mantle:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c",
+          "description": "add tokens, pause and unpause token deposits.",
+          "role": ".networkGovernor"
+        },
+        {
+          "permission": "interact",
+          "from": "mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c",
+          "description": "change the network governor, validator set, L1 gateway and cross-chain synchronization services.",
+          "role": ".networkGovernor"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "mantle:0xda9f561F0d8d7061fa47e47E352eAD6844Ae3272",
+      "sinceTimestamp": 1730880070,
+      "sinceBlock": 71374879,
+      "values": {
+        "$immutable": false,
+        "$implementation": "mantle:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "$members": [
+          "mantle:0xda9f561F0d8d7061fa47e47E352eAD6844Ae3272",
+          "mantle:0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
+          "mantle:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
+          "mantle:0x22c89137525b593Dd2A18434348b550ffA5984Fe",
+          "mantle:0x2A2A180373391915738aB1F89a1B258893361964",
+          "mantle:0x5cDded5ea50aE7973943394De17aB51C365254Dd"
+        ],
+        "$threshold": 4,
+        "domainSeparator": "0x5acebc4f701521fe8b0c518f05a8b05870afa794a71584a332684f5c39ef6fc1",
+        "getChainId": 5000,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 6 (67%)",
+        "nonce": 1,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "mantle:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED": "GnosisSafeProxy",
+        "mantle:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
+      }
+    },
+    {
+      "address": "mantle:0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "mantle:0xda9f561F0d8d7061fa47e47E352eAD6844Ae3272",
+      "type": "EOA",
+      "proxyType": "EOA"
+    }
+  ],
+  "abis": {
+    "arb1:0x235118AfB54B6d6c7b48F1B5434c25CD6Eb6B68F": [
+      "constructor(address target, bytes targetInitializationParameters)",
+      "function getMaster() view returns (address master)",
+      "function getTarget() view returns (address target)",
+      "function initialize(bytes) pure",
+      "function transferMastership(address _newMaster)",
+      "function upgradeTarget(address newTarget)"
+    ],
+    "arb1:0x23871561330080828507dED34d23FEF5EdE7053C": [
+      "constructor(address _periphery)",
+      "event Accept(address acceptor, address receiver, address token, uint128 amount, uint16 withdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce, uint128 amountReceive)",
+      "event BlockCommit(uint32 indexed blockNumber)",
+      "event BlockExecuted(uint32 indexed blockNumber)",
+      "event BlockProven(uint32 indexed blockNumber)",
+      "event BlockSynced(uint32 indexed blockNumber)",
+      "event BlocksRevert(uint32 totalBlocksVerified, uint32 totalBlocksCommitted)",
+      "event ExodusMode()",
+      "event FactAuth(address indexed sender, uint32 nonce, bytes fact)",
+      "event FactAuthResetTime(address indexed sender, uint32 nonce, uint256 time)",
+      "event NewGovernor(address newGovernor)",
+      "event NewPriorityRequest(address sender, uint64 serialId, uint8 opType, bytes pubData, uint256 expirationBlock)",
+      "event NewToken(uint16 indexed tokenId, address indexed token, uint8 decimals)",
+      "event ReceiveSlaverSyncHash(uint8 slaverChainId, bytes32 syncHash)",
+      "event SendMasterSyncHash(uint32 blockNumber, bytes32 syncHash)",
+      "event SendSlaverSyncHash(bytes32 syncHash)",
+      "event SetGateway(address indexed newGateway)",
+      "event SetSyncService(uint8 chainId, address newSyncService)",
+      "event TokenPausedUpdate(uint16 indexed token, bool paused)",
+      "event ValidatorStatusUpdate(address indexed validatorAddress, bool isActive)",
+      "event Withdrawal(uint16 indexed tokenId, uint128 amount)",
+      "event WithdrawalCall(bytes32 indexed withdrawHash)",
+      "event WithdrawalL1(bytes32 indexed withdrawHash)",
+      "event WithdrawalPending(uint16 indexed tokenId, bytes32 indexed recepient, uint128 amount)",
+      "event WithdrawalPendingL1(bytes32 indexed withdrawHash)",
+      "function ALL_CHAINS() view returns (uint256)",
+      "function CHAIN_ID() view returns (uint8)",
+      "function DEFAULT_FEE_ADDRESS() view returns (address)",
+      "function MASTER_CHAIN_ID() view returns (uint8)",
+      "function MAX_CHAIN_ID() view returns (uint8)",
+      "function MIN_CHAIN_ID() view returns (uint8)",
+      "function acceptERC20(address receiver, address token, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce)",
+      "function acceptETH(address receiver, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce) payable",
+      "function accepts(bytes32) view returns (address)",
+      "function authFacts(address, uint32) view returns (bytes32)",
+      "function authFactsResetTimer(address, uint32) view returns (uint256)",
+      "function chainSyncServiceMap(uint8) view returns (address)",
+      "function commitBlocks(tuple(uint32 blockNumber, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, uint256 timestamp, bytes32 stateHash, bytes32 commitment, tuple(uint8 chainId, bytes32 syncHash)[] syncHashs) _lastCommittedBlockData, tuple(bytes32 newStateHash, bytes publicData, uint256 timestamp, tuple(bytes ethWitness, uint32 publicDataOffset)[] onchainOperations, uint32 blockNumber)[] _newBlocksData)",
+      "function depositERC20(address _token, uint104 _amount, bytes32 _zkLinkAddress, uint8 _subAccountId, bool _mapping)",
+      "function depositETH(bytes32 _zkLinkAddress, uint8 _subAccountId) payable",
+      "function executeBlocks(tuple(tuple(uint32 blockNumber, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, uint256 timestamp, bytes32 stateHash, bytes32 commitment, tuple(uint8 chainId, bytes32 syncHash)[] syncHashs) storedBlock, bytes[] pendingOnchainOpsPubdata)[] _blocksData)",
+      "function exodusMode() view returns (bool)",
+      "function firstPriorityRequestId() view returns (uint64)",
+      "function gateway() view returns (address)",
+      "function getNoticePeriod() pure returns (uint256)",
+      "function initialize(bytes initializationParameters)",
+      "function isReadyForUpgrade() view returns (bool)",
+      "function networkGovernor() view returns (address)",
+      "function pendingL1Withdraws(bytes32) view returns (bool)",
+      "function pendingWithdrawWithCalls(bytes32) view returns (bool)",
+      "function performedExodus(uint32, uint8, uint16, uint16) view returns (bool)",
+      "function periphery() view returns (address)",
+      "function priorityRequests(uint64) view returns (bytes20 hashedPubData, uint64 expirationBlock, uint8 opType)",
+      "function storedBlockHashes(uint32) view returns (bytes32)",
+      "function syncServiceMap(address) view returns (bool)",
+      "function synchronizedChains(uint8) view returns (bytes32)",
+      "function tokenIds(address) view returns (uint16)",
+      "function tokens(uint16) view returns (bool registered, bool paused, address tokenAddress, uint8 decimals)",
+      "function totalBlocksCommitted() view returns (uint32)",
+      "function totalBlocksExecuted() view returns (uint32)",
+      "function totalBlocksProven() view returns (uint32)",
+      "function totalBlocksSynchronized() view returns (uint32)",
+      "function totalCommittedPriorityRequests() view returns (uint64)",
+      "function totalOpenPriorityRequests() view returns (uint64)",
+      "function validators(address) view returns (bool)",
+      "function verifier() view returns (address)"
+    ],
+    "arb1:0x2e8AD1434663b209EE59eF1a6612114239F4a190": [
+      "constructor(address _mainContract)",
+      "event NewUpgradable(uint256 indexed versionId, address indexed upgradeable)",
+      "event NoticePeriodStart(uint256 indexed versionId, address[] newTargets, uint256 noticePeriod)",
+      "event UpgradeCancel(uint256 indexed versionId)",
+      "event UpgradeComplete(uint256 indexed versionId, address[] newTargets)",
+      "function addUpgradeable(address addr)",
+      "function cancelUpgrade()",
+      "function finishUpgrade()",
+      "function getMaster() view returns (address master)",
+      "function mainContract() view returns (address)",
+      "function managedContracts(uint256) view returns (address)",
+      "function nextTargets(uint256) view returns (address)",
+      "function noticePeriodFinishTimestamp() view returns (uint256)",
+      "function startUpgrade(address[] newTargets)",
+      "function transferMastership(address _newMaster)",
+      "function upgradeStatus() view returns (uint8)",
+      "function versionId() view returns (uint256)"
+    ],
+    "arb1:0x3169844a120C0f517B4eB4A750c08d8518C8466a": [
+      "constructor(address target, bytes targetInitializationParameters)",
+      "function getMaster() view returns (address master)",
+      "function getTarget() view returns (address target)",
+      "function initialize(bytes) pure",
+      "function transferMastership(address _newMaster)",
+      "function upgradeTarget(address newTarget)"
+    ],
+    "arb1:0x3203E813930bD710043c1d899fE38dD359307352": [
+      "event Accept(address acceptor, address receiver, address token, uint128 amount, uint16 withdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce, uint128 amountReceive)",
+      "event BlockCommit(uint32 indexed blockNumber)",
+      "event BlockExecuted(uint32 indexed blockNumber)",
+      "event BlockProven(uint32 indexed blockNumber)",
+      "event BlockSynced(uint32 indexed blockNumber)",
+      "event BlocksRevert(uint32 totalBlocksVerified, uint32 totalBlocksCommitted)",
+      "event ExodusMode()",
+      "event FactAuth(address indexed sender, uint32 nonce, bytes fact)",
+      "event FactAuthResetTime(address indexed sender, uint32 nonce, uint256 time)",
+      "event NewGovernor(address newGovernor)",
+      "event NewPriorityRequest(address sender, uint64 serialId, uint8 opType, bytes pubData, uint256 expirationBlock)",
+      "event NewToken(uint16 indexed tokenId, address indexed token, uint8 decimals)",
+      "event ReceiveSlaverSyncHash(uint8 slaverChainId, bytes32 syncHash)",
+      "event SendMasterSyncHash(uint32 blockNumber, bytes32 syncHash)",
+      "event SendSlaverSyncHash(bytes32 syncHash)",
+      "event SetGateway(address indexed newGateway)",
+      "event SetSyncService(uint8 chainId, address newSyncService)",
+      "event TokenPausedUpdate(uint16 indexed token, bool paused)",
+      "event ValidatorStatusUpdate(address indexed validatorAddress, bool isActive)",
+      "event Withdrawal(uint16 indexed tokenId, uint128 amount)",
+      "event WithdrawalCall(bytes32 indexed withdrawHash)",
+      "event WithdrawalL1(bytes32 indexed withdrawHash)",
+      "event WithdrawalPending(uint16 indexed tokenId, bytes32 indexed recepient, uint128 amount)",
+      "event WithdrawalPendingL1(bytes32 indexed withdrawHash)",
+      "function ALL_CHAINS() view returns (uint256)",
+      "function CHAIN_ID() view returns (uint8)",
+      "function DEFAULT_FEE_ADDRESS() view returns (address)",
+      "function MASTER_CHAIN_ID() view returns (uint8)",
+      "function MAX_CHAIN_ID() view returns (uint8)",
+      "function MIN_CHAIN_ID() view returns (uint8)",
+      "function acceptERC20(address receiver, address token, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce)",
+      "function acceptETH(address receiver, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce) payable",
+      "function accepts(bytes32) view returns (address)",
+      "function activateExodusMode()",
+      "function addToken(uint16 _tokenId, address _tokenAddress, uint8 _decimals)",
+      "function authFacts(address, uint32) view returns (bytes32)",
+      "function authFactsResetTimer(address, uint32) view returns (uint256)",
+      "function cancelOutstandingDepositsForExodusMode(uint64 _n, bytes[] _depositsPubdata)",
+      "function chainSyncServiceMap(uint8) view returns (address)",
+      "function changeGovernor(address _newGovernor)",
+      "function confirmBlock(tuple(uint32 blockNumber, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, uint256 timestamp, bytes32 stateHash, bytes32 commitment, tuple(uint8 chainId, bytes32 syncHash)[] syncHashs) _block) payable",
+      "function estimateConfirmBlockFee(uint32 blockNumber) view returns (uint256 totalNativeFee)",
+      "function estimateWithdrawToL1Fee(address owner, address token, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce) view returns (uint256 nativeFee)",
+      "function exodusMode() view returns (bool)",
+      "function firstPriorityRequestId() view returns (uint64)",
+      "function gateway() view returns (address)",
+      "function getPendingBalance(bytes32 _address, uint16 _tokenId) view returns (uint128)",
+      "function isBlockConfirmable(tuple(uint32 blockNumber, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, uint256 timestamp, bytes32 stateHash, bytes32 commitment, tuple(uint8 chainId, bytes32 syncHash)[] syncHashs) _block) view returns (bool)",
+      "function networkGovernor() view returns (address)",
+      "function pendingL1Withdraws(bytes32) view returns (bool)",
+      "function pendingWithdrawWithCalls(bytes32) view returns (bool)",
+      "function performExodus(tuple(uint32 blockNumber, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, uint256 timestamp, bytes32 stateHash, bytes32 commitment, tuple(uint8 chainId, bytes32 syncHash)[] syncHashs) _storedBlockInfo, bytes32 _owner, uint32 _accountId, uint8 _subAccountId, uint16 _withdrawTokenId, uint16 _deductTokenId, uint128 _amount, uint256[] _proof)",
+      "function performedExodus(uint32, uint8, uint16, uint16) view returns (bool)",
+      "function priorityRequests(uint64) view returns (bytes20 hashedPubData, uint64 expirationBlock, uint8 opType)",
+      "function proveBlocks(tuple(uint32 blockNumber, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, uint256 timestamp, bytes32 stateHash, bytes32 commitment, tuple(uint8 chainId, bytes32 syncHash)[] syncHashs)[] _committedBlocks, tuple(uint256[] recursiveInput, uint256[] proof, uint256[] commitments, uint8[] vkIndexes, uint256[16] subproofsLimbs) _proof)",
+      "function receiveSyncHash(uint8 chainId, bytes32 syncHash)",
+      "function revertBlocks(tuple(uint32 blockNumber, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, uint256 timestamp, bytes32 stateHash, bytes32 commitment, tuple(uint8 chainId, bytes32 syncHash)[] syncHashs)[] _blocksToRevert)",
+      "function setAuthPubkeyHash(bytes _pubkeyHash, uint32 _nonce)",
+      "function setGateway(address _gateway)",
+      "function setSyncService(uint8 _chainId, address _syncService)",
+      "function setTokenPaused(uint16 _tokenId, bool _tokenPaused)",
+      "function setValidator(address _validator, bool _active)",
+      "function storedBlockHashes(uint32) view returns (bytes32)",
+      "function syncServiceMap(address) view returns (bool)",
+      "function synchronizedChains(uint8) view returns (bytes32)",
+      "function tokenIds(address) view returns (uint16)",
+      "function tokens(uint16) view returns (bool registered, bool paused, address tokenAddress, uint8 decimals)",
+      "function totalBlocksCommitted() view returns (uint32)",
+      "function totalBlocksExecuted() view returns (uint32)",
+      "function totalBlocksProven() view returns (uint32)",
+      "function totalBlocksSynchronized() view returns (uint32)",
+      "function totalCommittedPriorityRequests() view returns (uint64)",
+      "function totalOpenPriorityRequests() view returns (uint64)",
+      "function validators(address) view returns (bool)",
+      "function verifier() view returns (address)",
+      "function withdrawPendingBalance(address _owner, uint16 _tokenId, uint128 _amount)",
+      "function withdrawPendingBalanceWithCall(address _owner, address _tokenAddress, uint128 _amount, bytes _data, uint32 _accountIdOfNonce, uint8 _subAccountIdOfNonce, uint32 _nonce, bool _callTarget)",
+      "function withdrawToL1(address owner, address token, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce) payable"
+    ],
+    "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "arb1:0x6e21b35328E1522b1E6C0F5eCa566a7fe269274a": [
+      "function initialize(bytes)",
+      "function verifyAggregatedBlockProof(uint256[] _recursiveInput, uint256[] _proof, uint8[] _vkIndexes, uint256[] _individualVksInputs, uint256[16] _subProofsLimbs) view returns (bool)",
+      "function verifyExitProof(bytes32 _rootHash, uint8 _chainId, uint32 _accountId, uint8 _subAccountId, bytes32 _owner, uint16 _tokenId, uint16 _srcTokenId, uint128 _amount, uint256[] _proof) view returns (bool)",
+      "function verify_serialized_proof(uint256[] public_inputs, uint256[] serialized_proof, tuple(uint256 domain_size, uint256 num_inputs, tuple(uint256 value) omega, tuple(uint256 X, uint256 Y)[7] gate_setup_commitments, tuple(uint256 X, uint256 Y)[2] gate_selector_commitments, tuple(uint256 X, uint256 Y)[4] copy_permutation_commitments, tuple(uint256 value)[3] copy_permutation_non_residues, tuple(uint256[2] X, uint256[2] Y) g2_x) vk) view returns (bool)",
+      "function verify_serialized_proof_with_recursion(uint256[] public_inputs, uint256[] serialized_proof, uint256 recursive_vks_root, uint8 max_valid_index, uint8[] recursive_vks_indexes, uint256[] individual_vks_inputs, uint256[16] subproofs_limbs, tuple(uint256 domain_size, uint256 num_inputs, tuple(uint256 value) omega, tuple(uint256 X, uint256 Y)[7] gate_setup_commitments, tuple(uint256 X, uint256 Y)[2] gate_selector_commitments, tuple(uint256 X, uint256 Y)[4] copy_permutation_commitments, tuple(uint256 value)[3] copy_permutation_non_residues, tuple(uint256[2] X, uint256[2] Y) g2_x) vk) view returns (bool)"
+    ],
+    "arb1:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED": [
+      "constructor(address _singleton)"
+    ],
+    "arb1:0xfC5c2b3E615cF12e86E6dA8eF6C76fAbae5F2B7D": [
+      "constructor(address _zklink, address _endpoint)",
+      "event MessageFailed(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload)",
+      "event UpdateDestination(uint8 zkLinkChainId, uint16 lzChainId, bytes destination)",
+      "function ALL_CHAINS() view returns (uint256)",
+      "function CHAIN_ID() view returns (uint8)",
+      "function DEFAULT_FEE_ADDRESS() view returns (address)",
+      "function MASTER_CHAIN_ID() view returns (uint8)",
+      "function MAX_CHAIN_ID() view returns (uint8)",
+      "function MIN_CHAIN_ID() view returns (uint8)",
+      "function confirmBlock(uint8 destZkLinkChainId, uint32 blockNumber) payable",
+      "function destinations(uint16) view returns (bytes)",
+      "function endpoint() view returns (address)",
+      "function estimateConfirmBlockFee(uint8 destZkLinkChainId, uint32 blockNumber) view returns (uint256 nativeFee)",
+      "function estimateSendSyncHashFee(bytes32 syncHash) view returns (uint256 nativeFee)",
+      "function failedMessages(uint16, bytes, uint64) view returns (bytes32)",
+      "function forceResumeReceive(uint16 _srcChainId, bytes _srcAddress)",
+      "function lzChainIdToZKLinkChainId(uint16) view returns (uint8)",
+      "function lzReceive(uint16 srcChainId, bytes srcPath, uint64 nonce, bytes payload)",
+      "function nonblockingLzReceive(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload)",
+      "function retryMessage(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload) payable",
+      "function sendSyncHash(bytes32 syncHash) payable",
+      "function setConfig(uint16 _version, uint16 _chainId, uint256 _configType, bytes _config)",
+      "function setDestination(uint8 zkLinkChainId, uint16 lzChainId, bytes contractAddr)",
+      "function setReceiveVersion(uint16 _version)",
+      "function setSendVersion(uint16 _version)",
+      "function zkLinkChainIdToLZChainId(uint8) view returns (uint16)",
+      "function zklink() view returns (address)"
+    ],
+    "base:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "base:0x4c5629AEA0B419d26C780dD78d5671e2Ce27c563": [
+      "constructor(address target, bytes targetInitializationParameters)",
+      "function getMaster() view returns (address master)",
+      "function getTarget() view returns (address target)",
+      "function initialize(bytes) pure",
+      "function transferMastership(address _newMaster)",
+      "function upgradeTarget(address newTarget)"
+    ],
+    "base:0x502C848E6f88CD018153712a68Ee518C7F34AF12": [
+      "event Accept(address acceptor, address receiver, address token, uint128 amount, uint16 withdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce, uint128 amountReceive)",
+      "event BlockCommit(uint32 indexed blockNumber)",
+      "event BlockExecuted(uint32 indexed blockNumber)",
+      "event BlockProven(uint32 indexed blockNumber)",
+      "event BlockSynced(uint32 indexed blockNumber)",
+      "event BlocksRevert(uint32 totalBlocksVerified, uint32 totalBlocksCommitted)",
+      "event ExodusMode()",
+      "event FactAuth(address indexed sender, uint32 nonce, bytes fact)",
+      "event FactAuthResetTime(address indexed sender, uint32 nonce, uint256 time)",
+      "event NewGovernor(address newGovernor)",
+      "event NewPriorityRequest(address sender, uint64 serialId, uint8 opType, bytes pubData, uint256 expirationBlock)",
+      "event NewToken(uint16 indexed tokenId, address indexed token, uint8 decimals)",
+      "event ReceiveSlaverSyncHash(uint8 slaverChainId, bytes32 syncHash)",
+      "event SendMasterSyncHash(uint32 blockNumber, bytes32 syncHash)",
+      "event SendSlaverSyncHash(bytes32 syncHash)",
+      "event SetGateway(address indexed newGateway)",
+      "event SetSyncService(uint8 chainId, address newSyncService)",
+      "event TokenPausedUpdate(uint16 indexed token, bool paused)",
+      "event ValidatorStatusUpdate(address indexed validatorAddress, bool isActive)",
+      "event Withdrawal(uint16 indexed tokenId, uint128 amount)",
+      "event WithdrawalCall(bytes32 indexed withdrawHash)",
+      "event WithdrawalL1(bytes32 indexed withdrawHash)",
+      "event WithdrawalPending(uint16 indexed tokenId, bytes32 indexed recepient, uint128 amount)",
+      "event WithdrawalPendingL1(bytes32 indexed withdrawHash)",
+      "function ALL_CHAINS() view returns (uint256)",
+      "function CHAIN_ID() view returns (uint8)",
+      "function DEFAULT_FEE_ADDRESS() view returns (address)",
+      "function MASTER_CHAIN_ID() view returns (uint8)",
+      "function MAX_CHAIN_ID() view returns (uint8)",
+      "function MIN_CHAIN_ID() view returns (uint8)",
+      "function acceptERC20(address receiver, address token, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce)",
+      "function acceptETH(address receiver, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce) payable",
+      "function accepts(bytes32) view returns (address)",
+      "function activateExodusMode()",
+      "function addToken(uint16 _tokenId, address _tokenAddress, uint8 _decimals)",
+      "function authFacts(address, uint32) view returns (bytes32)",
+      "function authFactsResetTimer(address, uint32) view returns (uint256)",
+      "function cancelOutstandingDepositsForExodusMode(uint64 _n, bytes[] _depositsPubdata)",
+      "function chainSyncServiceMap(uint8) view returns (address)",
+      "function changeGovernor(address _newGovernor)",
+      "function estimateSendSyncHashFee(bytes32 syncHash) view returns (uint256 nativeFee)",
+      "function estimateWithdrawToL1Fee(address owner, address token, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce) view returns (uint256 nativeFee)",
+      "function exodusMode() view returns (bool)",
+      "function firstPriorityRequestId() view returns (uint64)",
+      "function gateway() view returns (address)",
+      "function getPendingBalance(bytes32 _address, uint16 _tokenId) view returns (uint128)",
+      "function networkGovernor() view returns (address)",
+      "function pendingL1Withdraws(bytes32) view returns (bool)",
+      "function pendingWithdrawWithCalls(bytes32) view returns (bool)",
+      "function performedExodus(uint32, uint8, uint16, uint16) view returns (bool)",
+      "function priorityRequests(uint64) view returns (bytes20 hashedPubData, uint64 expirationBlock, uint8 opType)",
+      "function receiveBlockConfirmation(uint32 blockNumber)",
+      "function revertBlocks(tuple(uint32 blockNumber, uint32 blockSequence, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, bytes32 syncHash) _latestCommittedBlock, tuple(uint32 blockNumber, uint32 blockSequence, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, bytes32 syncHash)[] _blocksToRevert)",
+      "function sendSyncHash(tuple(uint32 blockNumber, uint32 blockSequence, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, bytes32 syncHash) _block) payable",
+      "function setAuthPubkeyHash(bytes _pubkeyHash, uint32 _nonce)",
+      "function setGateway(address _gateway)",
+      "function setSyncService(uint8 _chainId, address _syncService)",
+      "function setTokenPaused(uint16 _tokenId, bool _tokenPaused)",
+      "function setValidator(address _validator, bool _active)",
+      "function storedBlockHashes(uint32) view returns (bytes32)",
+      "function syncServiceMap(address) view returns (bool)",
+      "function synchronizedChains(uint8) view returns (bytes32)",
+      "function tokenIds(address) view returns (uint16)",
+      "function tokens(uint16) view returns (bool registered, bool paused, address tokenAddress, uint8 decimals)",
+      "function totalBlocksCommitted() view returns (uint32)",
+      "function totalBlocksExecuted() view returns (uint32)",
+      "function totalBlocksProven() view returns (uint32)",
+      "function totalBlocksSynchronized() view returns (uint32)",
+      "function totalCommittedPriorityRequests() view returns (uint64)",
+      "function totalOpenPriorityRequests() view returns (uint64)",
+      "function validators(address) view returns (bool)",
+      "function verifier() view returns (address)",
+      "function withdrawPendingBalance(address _owner, uint16 _tokenId, uint128 _amount)",
+      "function withdrawPendingBalanceWithCall(address _owner, address _tokenAddress, uint128 _amount, bytes _data, uint32 _accountIdOfNonce, uint8 _subAccountIdOfNonce, uint32 _nonce, bool _callTarget)",
+      "function withdrawToL1(address owner, address token, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce) payable"
+    ],
+    "base:0x72343e8e448Fa539A1F118f870A1De1132f2fcaD": [
+      "constructor(address _mainContract)",
+      "event NewUpgradable(uint256 indexed versionId, address indexed upgradeable)",
+      "event NoticePeriodStart(uint256 indexed versionId, address[] newTargets, uint256 noticePeriod)",
+      "event UpgradeCancel(uint256 indexed versionId)",
+      "event UpgradeComplete(uint256 indexed versionId, address[] newTargets)",
+      "function addUpgradeable(address addr)",
+      "function cancelUpgrade()",
+      "function finishUpgrade()",
+      "function getMaster() view returns (address master)",
+      "function mainContract() view returns (address)",
+      "function managedContracts(uint256) view returns (address)",
+      "function nextTargets(uint256) view returns (address)",
+      "function noticePeriodFinishTimestamp() view returns (uint256)",
+      "function startUpgrade(address[] newTargets)",
+      "function transferMastership(address _newMaster)",
+      "function upgradeStatus() view returns (uint8)",
+      "function versionId() view returns (uint256)"
+    ],
+    "base:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED": [
+      "constructor(address _singleton)"
+    ],
+    "base:0xbb205c59a53cA04D86D2c6858cC9f82603275ADC": [
+      "function initialize(bytes)",
+      "function verifyAggregatedBlockProof(uint256[], uint256[], uint8[], uint256[], uint256[16]) pure returns (bool)",
+      "function verifyExitProof(bytes32, uint8, uint32, uint8, bytes32, uint16, uint16, uint128, uint256[]) pure returns (bool)"
+    ],
+    "base:0xD923B6479006623303f180fA149A3b5C3bf5ff66": [
+      "constructor(address _periphery)",
+      "event Accept(address acceptor, address receiver, address token, uint128 amount, uint16 withdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce, uint128 amountReceive)",
+      "event BlockCommit(uint32 indexed blockNumber)",
+      "event BlockExecuted(uint32 indexed blockNumber)",
+      "event BlockProven(uint32 indexed blockNumber)",
+      "event BlockSynced(uint32 indexed blockNumber)",
+      "event BlocksRevert(uint32 totalBlocksVerified, uint32 totalBlocksCommitted)",
+      "event ExodusMode()",
+      "event FactAuth(address indexed sender, uint32 nonce, bytes fact)",
+      "event FactAuthResetTime(address indexed sender, uint32 nonce, uint256 time)",
+      "event NewGovernor(address newGovernor)",
+      "event NewPriorityRequest(address sender, uint64 serialId, uint8 opType, bytes pubData, uint256 expirationBlock)",
+      "event NewToken(uint16 indexed tokenId, address indexed token, uint8 decimals)",
+      "event ReceiveSlaverSyncHash(uint8 slaverChainId, bytes32 syncHash)",
+      "event SendMasterSyncHash(uint32 blockNumber, bytes32 syncHash)",
+      "event SendSlaverSyncHash(bytes32 syncHash)",
+      "event SetGateway(address indexed newGateway)",
+      "event SetSyncService(uint8 chainId, address newSyncService)",
+      "event TokenPausedUpdate(uint16 indexed token, bool paused)",
+      "event ValidatorStatusUpdate(address indexed validatorAddress, bool isActive)",
+      "event Withdrawal(uint16 indexed tokenId, uint128 amount)",
+      "event WithdrawalCall(bytes32 indexed withdrawHash)",
+      "event WithdrawalL1(bytes32 indexed withdrawHash)",
+      "event WithdrawalPending(uint16 indexed tokenId, bytes32 indexed recepient, uint128 amount)",
+      "event WithdrawalPendingL1(bytes32 indexed withdrawHash)",
+      "function ALL_CHAINS() view returns (uint256)",
+      "function CHAIN_ID() view returns (uint8)",
+      "function DEFAULT_FEE_ADDRESS() view returns (address)",
+      "function MASTER_CHAIN_ID() view returns (uint8)",
+      "function MAX_CHAIN_ID() view returns (uint8)",
+      "function MIN_CHAIN_ID() view returns (uint8)",
+      "function acceptERC20(address receiver, address token, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce)",
+      "function acceptETH(address receiver, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce) payable",
+      "function accepts(bytes32) view returns (address)",
+      "function authFacts(address, uint32) view returns (bytes32)",
+      "function authFactsResetTimer(address, uint32) view returns (uint256)",
+      "function chainSyncServiceMap(uint8) view returns (address)",
+      "function commitCompressedBlocks(tuple(uint32 blockNumber, uint32 blockSequence, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, bytes32 syncHash) _lastCommittedBlockData, tuple(bytes32 newStateHash, bytes publicData, tuple(bytes ethWitness, uint32 publicDataOffset)[] onchainOperations, uint32 blockNumber)[] _newBlocksData)",
+      "function depositERC20(address _token, uint104 _amount, bytes32 _zkLinkAddress, uint8 _subAccountId, bool _mapping)",
+      "function depositETH(bytes32 _zkLinkAddress, uint8 _subAccountId) payable",
+      "function executeCompressedBlocks(tuple(tuple(uint32 blockNumber, uint32 blockSequence, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, bytes32 syncHash) storedBlock, bytes[] pendingOnchainOpsPubdata)[] _blocksData)",
+      "function exodusMode() view returns (bool)",
+      "function firstPriorityRequestId() view returns (uint64)",
+      "function gateway() view returns (address)",
+      "function getNoticePeriod() pure returns (uint256)",
+      "function initialize(bytes initializationParameters)",
+      "function isReadyForUpgrade() view returns (bool)",
+      "function networkGovernor() view returns (address)",
+      "function pendingL1Withdraws(bytes32) view returns (bool)",
+      "function pendingWithdrawWithCalls(bytes32) view returns (bool)",
+      "function performedExodus(uint32, uint8, uint16, uint16) view returns (bool)",
+      "function periphery() view returns (address)",
+      "function priorityRequests(uint64) view returns (bytes20 hashedPubData, uint64 expirationBlock, uint8 opType)",
+      "function storedBlockHashes(uint32) view returns (bytes32)",
+      "function syncServiceMap(address) view returns (bool)",
+      "function synchronizedChains(uint8) view returns (bytes32)",
+      "function tokenIds(address) view returns (uint16)",
+      "function tokens(uint16) view returns (bool registered, bool paused, address tokenAddress, uint8 decimals)",
+      "function totalBlocksCommitted() view returns (uint32)",
+      "function totalBlocksExecuted() view returns (uint32)",
+      "function totalBlocksProven() view returns (uint32)",
+      "function totalBlocksSynchronized() view returns (uint32)",
+      "function totalCommittedPriorityRequests() view returns (uint64)",
+      "function totalOpenPriorityRequests() view returns (uint64)",
+      "function validators(address) view returns (bool)",
+      "function verifier() view returns (address)"
+    ],
+    "base:0xeD5D1e1320720CAe8Bb40275550A7D307A082AC3": [
+      "constructor(address _zklink, address _endpoint)",
+      "event MessageFailed(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload)",
+      "event UpdateDestination(uint8 zkLinkChainId, uint16 lzChainId, bytes destination)",
+      "function ALL_CHAINS() view returns (uint256)",
+      "function CHAIN_ID() view returns (uint8)",
+      "function DEFAULT_FEE_ADDRESS() view returns (address)",
+      "function MASTER_CHAIN_ID() view returns (uint8)",
+      "function MAX_CHAIN_ID() view returns (uint8)",
+      "function MIN_CHAIN_ID() view returns (uint8)",
+      "function confirmBlock(uint8 destZkLinkChainId, uint32 blockNumber) payable",
+      "function destinations(uint16) view returns (bytes)",
+      "function endpoint() view returns (address)",
+      "function estimateConfirmBlockFee(uint8 destZkLinkChainId, uint32 blockNumber) view returns (uint256 nativeFee)",
+      "function estimateSendSyncHashFee(bytes32 syncHash) view returns (uint256 nativeFee)",
+      "function failedMessages(uint16, bytes, uint64) view returns (bytes32)",
+      "function forceResumeReceive(uint16 _srcChainId, bytes _srcAddress)",
+      "function lzChainIdToZKLinkChainId(uint16) view returns (uint8)",
+      "function lzReceive(uint16 srcChainId, bytes srcPath, uint64 nonce, bytes payload)",
+      "function nonblockingLzReceive(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload)",
+      "function retryMessage(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload) payable",
+      "function sendSyncHash(bytes32 syncHash) payable",
+      "function setConfig(uint16 _version, uint16 _chainId, uint256 _configType, bytes _config)",
+      "function setDestination(uint8 zkLinkChainId, uint16 lzChainId, bytes contractAddr)",
+      "function setReceiveVersion(uint16 _version)",
+      "function setSendVersion(uint16 _version)",
+      "function zkLinkChainIdToLZChainId(uint8) view returns (uint16)",
+      "function zklink() view returns (address)"
+    ],
+    "base:0xeE7981C4642dE8d19AeD11dA3bac59277DfD59D7": [
+      "constructor(address target, bytes targetInitializationParameters)",
+      "function getMaster() view returns (address master)",
+      "function getTarget() view returns (address target)",
+      "function initialize(bytes) pure",
+      "function transferMastership(address _newMaster)",
+      "function upgradeTarget(address newTarget)"
+    ],
+    "bnb:0x04bF7cf48a68dfC744fc22662B90e2ecaf14D716": [
+      "event Accept(address acceptor, address receiver, address token, uint128 amount, uint16 withdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce, uint128 amountReceive)",
+      "event BlockCommit(uint32 indexed blockNumber)",
+      "event BlockExecuted(uint32 indexed blockNumber)",
+      "event BlockProven(uint32 indexed blockNumber)",
+      "event BlockSynced(uint32 indexed blockNumber)",
+      "event BlocksRevert(uint32 totalBlocksVerified, uint32 totalBlocksCommitted)",
+      "event ExodusMode()",
+      "event FactAuth(address indexed sender, uint32 nonce, bytes fact)",
+      "event FactAuthResetTime(address indexed sender, uint32 nonce, uint256 time)",
+      "event NewGovernor(address newGovernor)",
+      "event NewPriorityRequest(address sender, uint64 serialId, uint8 opType, bytes pubData, uint256 expirationBlock)",
+      "event NewToken(uint16 indexed tokenId, address indexed token, uint8 decimals)",
+      "event ReceiveSlaverSyncHash(uint8 slaverChainId, bytes32 syncHash)",
+      "event SendMasterSyncHash(uint32 blockNumber, bytes32 syncHash)",
+      "event SendSlaverSyncHash(bytes32 syncHash)",
+      "event SetGateway(address indexed newGateway)",
+      "event SetSyncService(uint8 chainId, address newSyncService)",
+      "event TokenPausedUpdate(uint16 indexed token, bool paused)",
+      "event ValidatorStatusUpdate(address indexed validatorAddress, bool isActive)",
+      "event Withdrawal(uint16 indexed tokenId, uint128 amount)",
+      "event WithdrawalCall(bytes32 indexed withdrawHash)",
+      "event WithdrawalL1(bytes32 indexed withdrawHash)",
+      "event WithdrawalPending(uint16 indexed tokenId, bytes32 indexed recepient, uint128 amount)",
+      "event WithdrawalPendingL1(bytes32 indexed withdrawHash)",
+      "function ALL_CHAINS() view returns (uint256)",
+      "function CHAIN_ID() view returns (uint8)",
+      "function DEFAULT_FEE_ADDRESS() view returns (address)",
+      "function MASTER_CHAIN_ID() view returns (uint8)",
+      "function MAX_CHAIN_ID() view returns (uint8)",
+      "function MIN_CHAIN_ID() view returns (uint8)",
+      "function acceptERC20(address receiver, address token, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce)",
+      "function acceptETH(address receiver, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce) payable",
+      "function accepts(bytes32) view returns (address)",
+      "function activateExodusMode()",
+      "function addToken(uint16 _tokenId, address _tokenAddress, uint8 _decimals)",
+      "function authFacts(address, uint32) view returns (bytes32)",
+      "function authFactsResetTimer(address, uint32) view returns (uint256)",
+      "function cancelOutstandingDepositsForExodusMode(uint64 _n, bytes[] _depositsPubdata)",
+      "function chainSyncServiceMap(uint8) view returns (address)",
+      "function changeGovernor(address _newGovernor)",
+      "function estimateSendSyncHashFee(bytes32 syncHash) view returns (uint256 nativeFee)",
+      "function estimateWithdrawToL1Fee(address owner, address token, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce) view returns (uint256 nativeFee)",
+      "function exodusMode() view returns (bool)",
+      "function firstPriorityRequestId() view returns (uint64)",
+      "function gateway() view returns (address)",
+      "function getPendingBalance(bytes32 _address, uint16 _tokenId) view returns (uint128)",
+      "function networkGovernor() view returns (address)",
+      "function pendingL1Withdraws(bytes32) view returns (bool)",
+      "function pendingWithdrawWithCalls(bytes32) view returns (bool)",
+      "function performedExodus(uint32, uint8, uint16, uint16) view returns (bool)",
+      "function priorityRequests(uint64) view returns (bytes20 hashedPubData, uint64 expirationBlock, uint8 opType)",
+      "function receiveBlockConfirmation(uint32 blockNumber)",
+      "function revertBlocks(tuple(uint32 blockNumber, uint32 blockSequence, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, bytes32 syncHash) _latestCommittedBlock, tuple(uint32 blockNumber, uint32 blockSequence, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, bytes32 syncHash)[] _blocksToRevert)",
+      "function sendSyncHash(tuple(uint32 blockNumber, uint32 blockSequence, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, bytes32 syncHash) _block) payable",
+      "function setAuthPubkeyHash(bytes _pubkeyHash, uint32 _nonce)",
+      "function setGateway(address _gateway)",
+      "function setSyncService(uint8 _chainId, address _syncService)",
+      "function setTokenPaused(uint16 _tokenId, bool _tokenPaused)",
+      "function setValidator(address _validator, bool _active)",
+      "function storedBlockHashes(uint32) view returns (bytes32)",
+      "function syncServiceMap(address) view returns (bool)",
+      "function synchronizedChains(uint8) view returns (bytes32)",
+      "function tokenIds(address) view returns (uint16)",
+      "function tokens(uint16) view returns (bool registered, bool paused, address tokenAddress, uint8 decimals)",
+      "function totalBlocksCommitted() view returns (uint32)",
+      "function totalBlocksExecuted() view returns (uint32)",
+      "function totalBlocksProven() view returns (uint32)",
+      "function totalBlocksSynchronized() view returns (uint32)",
+      "function totalCommittedPriorityRequests() view returns (uint64)",
+      "function totalOpenPriorityRequests() view returns (uint64)",
+      "function validators(address) view returns (bool)",
+      "function verifier() view returns (address)",
+      "function withdrawPendingBalance(address _owner, uint16 _tokenId, uint128 _amount)",
+      "function withdrawPendingBalanceWithCall(address _owner, address _tokenAddress, uint128 _amount, bytes _data, uint32 _accountIdOfNonce, uint8 _subAccountIdOfNonce, uint32 _nonce, bool _callTarget)",
+      "function withdrawToL1(address owner, address token, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce) payable"
+    ],
+    "bnb:0x1202e0557A23531D09015C802e993d6423685FfB": [
+      "constructor(address target, bytes targetInitializationParameters)",
+      "function getMaster() view returns (address master)",
+      "function getTarget() view returns (address target)",
+      "function initialize(bytes) pure",
+      "function transferMastership(address _newMaster)",
+      "function upgradeTarget(address newTarget)"
+    ],
+    "bnb:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "bnb:0x3EC0ad3000b13188c235E23D549F1A1bBd25B028": [
+      "constructor(address _periphery)",
+      "event Accept(address acceptor, address receiver, address token, uint128 amount, uint16 withdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce, uint128 amountReceive)",
+      "event BlockCommit(uint32 indexed blockNumber)",
+      "event BlockExecuted(uint32 indexed blockNumber)",
+      "event BlockProven(uint32 indexed blockNumber)",
+      "event BlockSynced(uint32 indexed blockNumber)",
+      "event BlocksRevert(uint32 totalBlocksVerified, uint32 totalBlocksCommitted)",
+      "event ExodusMode()",
+      "event FactAuth(address indexed sender, uint32 nonce, bytes fact)",
+      "event FactAuthResetTime(address indexed sender, uint32 nonce, uint256 time)",
+      "event NewGovernor(address newGovernor)",
+      "event NewPriorityRequest(address sender, uint64 serialId, uint8 opType, bytes pubData, uint256 expirationBlock)",
+      "event NewToken(uint16 indexed tokenId, address indexed token, uint8 decimals)",
+      "event ReceiveSlaverSyncHash(uint8 slaverChainId, bytes32 syncHash)",
+      "event SendMasterSyncHash(uint32 blockNumber, bytes32 syncHash)",
+      "event SendSlaverSyncHash(bytes32 syncHash)",
+      "event SetGateway(address indexed newGateway)",
+      "event SetSyncService(uint8 chainId, address newSyncService)",
+      "event TokenPausedUpdate(uint16 indexed token, bool paused)",
+      "event ValidatorStatusUpdate(address indexed validatorAddress, bool isActive)",
+      "event Withdrawal(uint16 indexed tokenId, uint128 amount)",
+      "event WithdrawalCall(bytes32 indexed withdrawHash)",
+      "event WithdrawalL1(bytes32 indexed withdrawHash)",
+      "event WithdrawalPending(uint16 indexed tokenId, bytes32 indexed recepient, uint128 amount)",
+      "event WithdrawalPendingL1(bytes32 indexed withdrawHash)",
+      "function ALL_CHAINS() view returns (uint256)",
+      "function CHAIN_ID() view returns (uint8)",
+      "function DEFAULT_FEE_ADDRESS() view returns (address)",
+      "function MASTER_CHAIN_ID() view returns (uint8)",
+      "function MAX_CHAIN_ID() view returns (uint8)",
+      "function MIN_CHAIN_ID() view returns (uint8)",
+      "function acceptERC20(address receiver, address token, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce)",
+      "function acceptETH(address receiver, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce) payable",
+      "function accepts(bytes32) view returns (address)",
+      "function authFacts(address, uint32) view returns (bytes32)",
+      "function authFactsResetTimer(address, uint32) view returns (uint256)",
+      "function chainSyncServiceMap(uint8) view returns (address)",
+      "function commitCompressedBlocks(tuple(uint32 blockNumber, uint32 blockSequence, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, bytes32 syncHash) _lastCommittedBlockData, tuple(bytes32 newStateHash, bytes publicData, tuple(bytes ethWitness, uint32 publicDataOffset)[] onchainOperations, uint32 blockNumber)[] _newBlocksData)",
+      "function depositERC20(address _token, uint104 _amount, bytes32 _zkLinkAddress, uint8 _subAccountId, bool _mapping)",
+      "function depositETH(bytes32 _zkLinkAddress, uint8 _subAccountId) payable",
+      "function executeCompressedBlocks(tuple(tuple(uint32 blockNumber, uint32 blockSequence, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, bytes32 syncHash) storedBlock, bytes[] pendingOnchainOpsPubdata)[] _blocksData)",
+      "function exodusMode() view returns (bool)",
+      "function firstPriorityRequestId() view returns (uint64)",
+      "function gateway() view returns (address)",
+      "function getNoticePeriod() pure returns (uint256)",
+      "function initialize(bytes initializationParameters)",
+      "function isReadyForUpgrade() view returns (bool)",
+      "function networkGovernor() view returns (address)",
+      "function pendingL1Withdraws(bytes32) view returns (bool)",
+      "function pendingWithdrawWithCalls(bytes32) view returns (bool)",
+      "function performedExodus(uint32, uint8, uint16, uint16) view returns (bool)",
+      "function periphery() view returns (address)",
+      "function priorityRequests(uint64) view returns (bytes20 hashedPubData, uint64 expirationBlock, uint8 opType)",
+      "function storedBlockHashes(uint32) view returns (bytes32)",
+      "function syncServiceMap(address) view returns (bool)",
+      "function synchronizedChains(uint8) view returns (bytes32)",
+      "function tokenIds(address) view returns (uint16)",
+      "function tokens(uint16) view returns (bool registered, bool paused, address tokenAddress, uint8 decimals)",
+      "function totalBlocksCommitted() view returns (uint32)",
+      "function totalBlocksExecuted() view returns (uint32)",
+      "function totalBlocksProven() view returns (uint32)",
+      "function totalBlocksSynchronized() view returns (uint32)",
+      "function totalCommittedPriorityRequests() view returns (uint64)",
+      "function totalOpenPriorityRequests() view returns (uint64)",
+      "function validators(address) view returns (bool)",
+      "function verifier() view returns (address)"
+    ],
+    "bnb:0x54dB01A8D4C7A6404fD234A009e89418b16796dB": [
+      "function initialize(bytes)",
+      "function verifyAggregatedBlockProof(uint256[], uint256[], uint8[], uint256[], uint256[16]) pure returns (bool)",
+      "function verifyExitProof(bytes32, uint8, uint32, uint8, bytes32, uint16, uint16, uint128, uint256[]) pure returns (bool)"
+    ],
+    "bnb:0x81DEE5B8BfFa75Cc1ec729533EeD30CfE4F81F8C": [
+      "constructor(address _mainContract)",
+      "event NewUpgradable(uint256 indexed versionId, address indexed upgradeable)",
+      "event NoticePeriodStart(uint256 indexed versionId, address[] newTargets, uint256 noticePeriod)",
+      "event UpgradeCancel(uint256 indexed versionId)",
+      "event UpgradeComplete(uint256 indexed versionId, address[] newTargets)",
+      "function addUpgradeable(address addr)",
+      "function cancelUpgrade()",
+      "function finishUpgrade()",
+      "function getMaster() view returns (address master)",
+      "function mainContract() view returns (address)",
+      "function managedContracts(uint256) view returns (address)",
+      "function nextTargets(uint256) view returns (address)",
+      "function noticePeriodFinishTimestamp() view returns (uint256)",
+      "function startUpgrade(address[] newTargets)",
+      "function transferMastership(address _newMaster)",
+      "function upgradeStatus() view returns (uint8)",
+      "function versionId() view returns (uint256)"
+    ],
+    "bnb:0xb8D9F005654b7b127b34dae8F973Ba729ca3A2D9": [
+      "constructor(address target, bytes targetInitializationParameters)",
+      "function getMaster() view returns (address master)",
+      "function getTarget() view returns (address target)",
+      "function initialize(bytes) pure",
+      "function transferMastership(address _newMaster)",
+      "function upgradeTarget(address newTarget)"
+    ],
+    "bnb:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED": [
+      "constructor(address _singleton)"
+    ],
+    "bnb:0xc271a8e9eB2b10FCDe1709D76de6681249669D2e": [
+      "constructor(address _zklink, address _endpoint)",
+      "event MessageFailed(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload)",
+      "event UpdateDestination(uint8 zkLinkChainId, uint16 lzChainId, bytes destination)",
+      "function ALL_CHAINS() view returns (uint256)",
+      "function CHAIN_ID() view returns (uint8)",
+      "function DEFAULT_FEE_ADDRESS() view returns (address)",
+      "function MASTER_CHAIN_ID() view returns (uint8)",
+      "function MAX_CHAIN_ID() view returns (uint8)",
+      "function MIN_CHAIN_ID() view returns (uint8)",
+      "function confirmBlock(uint8 destZkLinkChainId, uint32 blockNumber) payable",
+      "function destinations(uint16) view returns (bytes)",
+      "function endpoint() view returns (address)",
+      "function estimateConfirmBlockFee(uint8 destZkLinkChainId, uint32 blockNumber) view returns (uint256 nativeFee)",
+      "function estimateSendSyncHashFee(bytes32 syncHash) view returns (uint256 nativeFee)",
+      "function failedMessages(uint16, bytes, uint64) view returns (bytes32)",
+      "function forceResumeReceive(uint16 _srcChainId, bytes _srcAddress)",
+      "function lzChainIdToZKLinkChainId(uint16) view returns (uint8)",
+      "function lzReceive(uint16 srcChainId, bytes srcPath, uint64 nonce, bytes payload)",
+      "function nonblockingLzReceive(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload)",
+      "function retryMessage(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload) payable",
+      "function sendSyncHash(bytes32 syncHash) payable",
+      "function setConfig(uint16 _version, uint16 _chainId, uint256 _configType, bytes _config)",
+      "function setDestination(uint8 zkLinkChainId, uint16 lzChainId, bytes contractAddr)",
+      "function setReceiveVersion(uint16 _version)",
+      "function setSendVersion(uint16 _version)",
+      "function zkLinkChainIdToLZChainId(uint8) view returns (uint16)",
+      "function zklink() view returns (address)"
+    ],
+    "eth:0x070fC04F6Ce2cd1FFBC2aE1d6a381E46f467284F": [
+      "event Accept(address acceptor, address receiver, address token, uint128 amount, uint16 withdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce, uint128 amountReceive)",
+      "event BlockCommit(uint32 indexed blockNumber)",
+      "event BlockExecuted(uint32 indexed blockNumber)",
+      "event BlockProven(uint32 indexed blockNumber)",
+      "event BlockSynced(uint32 indexed blockNumber)",
+      "event BlocksRevert(uint32 totalBlocksVerified, uint32 totalBlocksCommitted)",
+      "event ExodusMode()",
+      "event FactAuth(address indexed sender, uint32 nonce, bytes fact)",
+      "event FactAuthResetTime(address indexed sender, uint32 nonce, uint256 time)",
+      "event NewGovernor(address newGovernor)",
+      "event NewPriorityRequest(address sender, uint64 serialId, uint8 opType, bytes pubData, uint256 expirationBlock)",
+      "event NewToken(uint16 indexed tokenId, address indexed token, uint8 decimals)",
+      "event ReceiveSlaverSyncHash(uint8 slaverChainId, bytes32 syncHash)",
+      "event SendMasterSyncHash(uint32 blockNumber, bytes32 syncHash)",
+      "event SendSlaverSyncHash(bytes32 syncHash)",
+      "event SetGateway(address indexed newGateway)",
+      "event SetSyncService(uint8 chainId, address newSyncService)",
+      "event TokenPausedUpdate(uint16 indexed token, bool paused)",
+      "event ValidatorStatusUpdate(address indexed validatorAddress, bool isActive)",
+      "event Withdrawal(uint16 indexed tokenId, uint128 amount)",
+      "event WithdrawalCall(bytes32 indexed withdrawHash)",
+      "event WithdrawalL1(bytes32 indexed withdrawHash)",
+      "event WithdrawalPending(uint16 indexed tokenId, bytes32 indexed recepient, uint128 amount)",
+      "event WithdrawalPendingL1(bytes32 indexed withdrawHash)",
+      "function ALL_CHAINS() view returns (uint256)",
+      "function CHAIN_ID() view returns (uint8)",
+      "function DEFAULT_FEE_ADDRESS() view returns (address)",
+      "function MASTER_CHAIN_ID() view returns (uint8)",
+      "function MAX_CHAIN_ID() view returns (uint8)",
+      "function MIN_CHAIN_ID() view returns (uint8)",
+      "function acceptERC20(address receiver, address token, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce)",
+      "function acceptETH(address receiver, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce) payable",
+      "function accepts(bytes32) view returns (address)",
+      "function activateExodusMode()",
+      "function addToken(uint16 _tokenId, address _tokenAddress, uint8 _decimals)",
+      "function authFacts(address, uint32) view returns (bytes32)",
+      "function authFactsResetTimer(address, uint32) view returns (uint256)",
+      "function cancelOutstandingDepositsForExodusMode(uint64 _n, bytes[] _depositsPubdata)",
+      "function chainSyncServiceMap(uint8) view returns (address)",
+      "function changeGovernor(address _newGovernor)",
+      "function estimateSendSyncHashFee(bytes32 syncHash) view returns (uint256 nativeFee)",
+      "function estimateWithdrawToL1Fee(address owner, address token, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce) view returns (uint256 nativeFee)",
+      "function exodusMode() view returns (bool)",
+      "function firstPriorityRequestId() view returns (uint64)",
+      "function gateway() view returns (address)",
+      "function getPendingBalance(bytes32 _address, uint16 _tokenId) view returns (uint128)",
+      "function networkGovernor() view returns (address)",
+      "function pendingL1Withdraws(bytes32) view returns (bool)",
+      "function pendingWithdrawWithCalls(bytes32) view returns (bool)",
+      "function performedExodus(uint32, uint8, uint16, uint16) view returns (bool)",
+      "function priorityRequests(uint64) view returns (bytes20 hashedPubData, uint64 expirationBlock, uint8 opType)",
+      "function receiveBlockConfirmation(uint32 blockNumber)",
+      "function revertBlocks(tuple(uint32 blockNumber, uint32 blockSequence, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, bytes32 syncHash) _latestCommittedBlock, tuple(uint32 blockNumber, uint32 blockSequence, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, bytes32 syncHash)[] _blocksToRevert)",
+      "function sendSyncHash(tuple(uint32 blockNumber, uint32 blockSequence, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, bytes32 syncHash) _block) payable",
+      "function setAuthPubkeyHash(bytes _pubkeyHash, uint32 _nonce)",
+      "function setGateway(address _gateway)",
+      "function setSyncService(uint8 _chainId, address _syncService)",
+      "function setTokenPaused(uint16 _tokenId, bool _tokenPaused)",
+      "function setValidator(address _validator, bool _active)",
+      "function storedBlockHashes(uint32) view returns (bytes32)",
+      "function syncServiceMap(address) view returns (bool)",
+      "function synchronizedChains(uint8) view returns (bytes32)",
+      "function tokenIds(address) view returns (uint16)",
+      "function tokens(uint16) view returns (bool registered, bool paused, address tokenAddress, uint8 decimals)",
+      "function totalBlocksCommitted() view returns (uint32)",
+      "function totalBlocksExecuted() view returns (uint32)",
+      "function totalBlocksProven() view returns (uint32)",
+      "function totalBlocksSynchronized() view returns (uint32)",
+      "function totalCommittedPriorityRequests() view returns (uint64)",
+      "function totalOpenPriorityRequests() view returns (uint64)",
+      "function validators(address) view returns (bool)",
+      "function verifier() view returns (address)",
+      "function withdrawPendingBalance(address _owner, uint16 _tokenId, uint128 _amount)",
+      "function withdrawPendingBalanceWithCall(address _owner, address _tokenAddress, uint128 _amount, bytes _data, uint32 _accountIdOfNonce, uint8 _subAccountIdOfNonce, uint32 _nonce, bool _callTarget)",
+      "function withdrawToL1(address owner, address token, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce) payable"
+    ],
+    "eth:0x35D173cdfE4d484BC5985fDa55FABad5892c7B82": [
+      "constructor(address target, bytes targetInitializationParameters)",
+      "function getMaster() view returns (address master)",
+      "function getTarget() view returns (address target)",
+      "function initialize(bytes) pure",
+      "function transferMastership(address _newMaster)",
+      "function upgradeTarget(address newTarget)"
+    ],
+    "eth:0x374632e7D48B7872d904524FdC5Dd4516F42cDFF": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x3D70dc86dC8099D8a4c86C18839C7e84a13a441E": [
+      "constructor(address _zklink, address _endpoint)",
+      "event MessageFailed(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload)",
+      "event UpdateDestination(uint8 zkLinkChainId, uint16 lzChainId, bytes destination)",
+      "function ALL_CHAINS() view returns (uint256)",
+      "function CHAIN_ID() view returns (uint8)",
+      "function DEFAULT_FEE_ADDRESS() view returns (address)",
+      "function MASTER_CHAIN_ID() view returns (uint8)",
+      "function MAX_CHAIN_ID() view returns (uint8)",
+      "function MIN_CHAIN_ID() view returns (uint8)",
+      "function confirmBlock(uint8 destZkLinkChainId, uint32 blockNumber) payable",
+      "function destinations(uint16) view returns (bytes)",
+      "function endpoint() view returns (address)",
+      "function estimateConfirmBlockFee(uint8 destZkLinkChainId, uint32 blockNumber) view returns (uint256 nativeFee)",
+      "function estimateSendSyncHashFee(bytes32 syncHash) view returns (uint256 nativeFee)",
+      "function failedMessages(uint16, bytes, uint64) view returns (bytes32)",
+      "function forceResumeReceive(uint16 _srcChainId, bytes _srcAddress)",
+      "function lzChainIdToZKLinkChainId(uint16) view returns (uint8)",
+      "function lzReceive(uint16 srcChainId, bytes srcPath, uint64 nonce, bytes payload)",
+      "function nonblockingLzReceive(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload)",
+      "function retryMessage(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload) payable",
+      "function sendSyncHash(bytes32 syncHash) payable",
+      "function setConfig(uint16 _version, uint16 _chainId, uint256 _configType, bytes _config)",
+      "function setDestination(uint8 zkLinkChainId, uint16 lzChainId, bytes contractAddr)",
+      "function setReceiveVersion(uint16 _version)",
+      "function setSendVersion(uint16 _version)",
+      "function zkLinkChainIdToLZChainId(uint8) view returns (uint16)",
+      "function zklink() view returns (address)"
+    ],
+    "eth:0xa9B4AB2E78f93B340Bbd6541B713B29B6B3BEe3c": [
+      "constructor(address _periphery)",
+      "event Accept(address acceptor, address receiver, address token, uint128 amount, uint16 withdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce, uint128 amountReceive)",
+      "event BlockCommit(uint32 indexed blockNumber)",
+      "event BlockExecuted(uint32 indexed blockNumber)",
+      "event BlockProven(uint32 indexed blockNumber)",
+      "event BlockSynced(uint32 indexed blockNumber)",
+      "event BlocksRevert(uint32 totalBlocksVerified, uint32 totalBlocksCommitted)",
+      "event ExodusMode()",
+      "event FactAuth(address indexed sender, uint32 nonce, bytes fact)",
+      "event FactAuthResetTime(address indexed sender, uint32 nonce, uint256 time)",
+      "event NewGovernor(address newGovernor)",
+      "event NewPriorityRequest(address sender, uint64 serialId, uint8 opType, bytes pubData, uint256 expirationBlock)",
+      "event NewToken(uint16 indexed tokenId, address indexed token, uint8 decimals)",
+      "event ReceiveSlaverSyncHash(uint8 slaverChainId, bytes32 syncHash)",
+      "event SendMasterSyncHash(uint32 blockNumber, bytes32 syncHash)",
+      "event SendSlaverSyncHash(bytes32 syncHash)",
+      "event SetGateway(address indexed newGateway)",
+      "event SetSyncService(uint8 chainId, address newSyncService)",
+      "event TokenPausedUpdate(uint16 indexed token, bool paused)",
+      "event ValidatorStatusUpdate(address indexed validatorAddress, bool isActive)",
+      "event Withdrawal(uint16 indexed tokenId, uint128 amount)",
+      "event WithdrawalCall(bytes32 indexed withdrawHash)",
+      "event WithdrawalL1(bytes32 indexed withdrawHash)",
+      "event WithdrawalPending(uint16 indexed tokenId, bytes32 indexed recepient, uint128 amount)",
+      "event WithdrawalPendingL1(bytes32 indexed withdrawHash)",
+      "function ALL_CHAINS() view returns (uint256)",
+      "function CHAIN_ID() view returns (uint8)",
+      "function DEFAULT_FEE_ADDRESS() view returns (address)",
+      "function MASTER_CHAIN_ID() view returns (uint8)",
+      "function MAX_CHAIN_ID() view returns (uint8)",
+      "function MIN_CHAIN_ID() view returns (uint8)",
+      "function acceptERC20(address receiver, address token, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce)",
+      "function acceptETH(address receiver, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce) payable",
+      "function accepts(bytes32) view returns (address)",
+      "function authFacts(address, uint32) view returns (bytes32)",
+      "function authFactsResetTimer(address, uint32) view returns (uint256)",
+      "function chainSyncServiceMap(uint8) view returns (address)",
+      "function commitCompressedBlocks(tuple(uint32 blockNumber, uint32 blockSequence, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, bytes32 syncHash) _lastCommittedBlockData, tuple(bytes32 newStateHash, bytes publicData, tuple(bytes ethWitness, uint32 publicDataOffset)[] onchainOperations, uint32 blockNumber)[] _newBlocksData)",
+      "function depositERC20(address _token, uint104 _amount, bytes32 _zkLinkAddress, uint8 _subAccountId, bool _mapping)",
+      "function depositETH(bytes32 _zkLinkAddress, uint8 _subAccountId) payable",
+      "function executeCompressedBlocks(tuple(tuple(uint32 blockNumber, uint32 blockSequence, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, bytes32 syncHash) storedBlock, bytes[] pendingOnchainOpsPubdata)[] _blocksData)",
+      "function exodusMode() view returns (bool)",
+      "function firstPriorityRequestId() view returns (uint64)",
+      "function gateway() view returns (address)",
+      "function getNoticePeriod() pure returns (uint256)",
+      "function initialize(bytes initializationParameters)",
+      "function isReadyForUpgrade() view returns (bool)",
+      "function networkGovernor() view returns (address)",
+      "function pendingL1Withdraws(bytes32) view returns (bool)",
+      "function pendingWithdrawWithCalls(bytes32) view returns (bool)",
+      "function performedExodus(uint32, uint8, uint16, uint16) view returns (bool)",
+      "function periphery() view returns (address)",
+      "function priorityRequests(uint64) view returns (bytes20 hashedPubData, uint64 expirationBlock, uint8 opType)",
+      "function storedBlockHashes(uint32) view returns (bytes32)",
+      "function syncServiceMap(address) view returns (bool)",
+      "function synchronizedChains(uint8) view returns (bytes32)",
+      "function tokenIds(address) view returns (uint16)",
+      "function tokens(uint16) view returns (bool registered, bool paused, address tokenAddress, uint8 decimals)",
+      "function totalBlocksCommitted() view returns (uint32)",
+      "function totalBlocksExecuted() view returns (uint32)",
+      "function totalBlocksProven() view returns (uint32)",
+      "function totalBlocksSynchronized() view returns (uint32)",
+      "function totalCommittedPriorityRequests() view returns (uint64)",
+      "function totalOpenPriorityRequests() view returns (uint64)",
+      "function validators(address) view returns (bool)",
+      "function verifier() view returns (address)"
+    ],
+    "eth:0xD6C54b6BC87BCB5F96De3fA8538c548f47829a08": [
+      "function initialize(bytes)",
+      "function verifyAggregatedBlockProof(uint256[], uint256[], uint8[], uint256[], uint256[16]) pure returns (bool)",
+      "function verifyExitProof(bytes32, uint8, uint32, uint8, bytes32, uint16, uint16, uint128, uint256[]) pure returns (bool)"
+    ],
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "eth:0xe38f8bc093a1f76f0A444bA6B75F46d6dC686dba": [
+      "constructor(address target, bytes targetInitializationParameters)",
+      "function getMaster() view returns (address master)",
+      "function getTarget() view returns (address target)",
+      "function initialize(bytes) pure",
+      "function transferMastership(address _newMaster)",
+      "function upgradeTarget(address newTarget)"
+    ],
+    "eth:0xF9f8794A2D9885C36D06aA25fc25a8cAda276B94": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0xFBD68679271fDa6ca9bf6F20993Cd39E20072753": [
+      "constructor(address _mainContract)",
+      "event NewUpgradable(uint256 indexed versionId, address indexed upgradeable)",
+      "event NoticePeriodStart(uint256 indexed versionId, address[] newTargets, uint256 noticePeriod)",
+      "event UpgradeCancel(uint256 indexed versionId)",
+      "event UpgradeComplete(uint256 indexed versionId, address[] newTargets)",
+      "function addUpgradeable(address addr)",
+      "function cancelUpgrade()",
+      "function finishUpgrade()",
+      "function getMaster() view returns (address master)",
+      "function mainContract() view returns (address)",
+      "function managedContracts(uint256) view returns (address)",
+      "function nextTargets(uint256) view returns (address)",
+      "function noticePeriodFinishTimestamp() view returns (uint256)",
+      "function startUpgrade(address[] newTargets)",
+      "function transferMastership(address _newMaster)",
+      "function upgradeStatus() view returns (uint8)",
+      "function versionId() view returns (uint256)"
+    ],
+    "mantle:0x04C6a52f3bf9F73618cD70F234AdB95a73325D1e": [
+      "constructor(address _zklink, address _endpoint)",
+      "event MessageFailed(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload)",
+      "event UpdateDestination(uint8 zkLinkChainId, uint16 lzChainId, bytes destination)",
+      "function ALL_CHAINS() view returns (uint256)",
+      "function CHAIN_ID() view returns (uint8)",
+      "function DEFAULT_FEE_ADDRESS() view returns (address)",
+      "function MASTER_CHAIN_ID() view returns (uint8)",
+      "function MAX_CHAIN_ID() view returns (uint8)",
+      "function MIN_CHAIN_ID() view returns (uint8)",
+      "function confirmBlock(uint8 destZkLinkChainId, uint32 blockNumber) payable",
+      "function destinations(uint16) view returns (bytes)",
+      "function endpoint() view returns (address)",
+      "function estimateConfirmBlockFee(uint8 destZkLinkChainId, uint32 blockNumber) view returns (uint256 nativeFee)",
+      "function estimateSendSyncHashFee(bytes32 syncHash) view returns (uint256 nativeFee)",
+      "function failedMessages(uint16, bytes, uint64) view returns (bytes32)",
+      "function forceResumeReceive(uint16 _srcChainId, bytes _srcAddress)",
+      "function lzChainIdToZKLinkChainId(uint16) view returns (uint8)",
+      "function lzReceive(uint16 srcChainId, bytes srcPath, uint64 nonce, bytes payload)",
+      "function nonblockingLzReceive(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload)",
+      "function retryMessage(uint16 srcChainId, bytes srcAddress, uint64 nonce, bytes payload) payable",
+      "function sendSyncHash(bytes32 syncHash) payable",
+      "function setConfig(uint16 _version, uint16 _chainId, uint256 _configType, bytes _config)",
+      "function setDestination(uint8 zkLinkChainId, uint16 lzChainId, bytes contractAddr)",
+      "function setReceiveVersion(uint16 _version)",
+      "function setSendVersion(uint16 _version)",
+      "function zkLinkChainIdToLZChainId(uint8) view returns (uint16)",
+      "function zklink() view returns (address)"
+    ],
+    "mantle:0x067c7126a83560Ed2Fc345d25799F696B7Ea47Ca": [
+      "constructor(address _periphery)",
+      "event Accept(address acceptor, address receiver, address token, uint128 amount, uint16 withdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce, uint128 amountReceive)",
+      "event BlockCommit(uint32 indexed blockNumber)",
+      "event BlockExecuted(uint32 indexed blockNumber)",
+      "event BlockProven(uint32 indexed blockNumber)",
+      "event BlockSynced(uint32 indexed blockNumber)",
+      "event BlocksRevert(uint32 totalBlocksVerified, uint32 totalBlocksCommitted)",
+      "event ExodusMode()",
+      "event FactAuth(address indexed sender, uint32 nonce, bytes fact)",
+      "event FactAuthResetTime(address indexed sender, uint32 nonce, uint256 time)",
+      "event NewGovernor(address newGovernor)",
+      "event NewPriorityRequest(address sender, uint64 serialId, uint8 opType, bytes pubData, uint256 expirationBlock)",
+      "event NewToken(uint16 indexed tokenId, address indexed token, uint8 decimals)",
+      "event ReceiveSlaverSyncHash(uint8 slaverChainId, bytes32 syncHash)",
+      "event SendMasterSyncHash(uint32 blockNumber, bytes32 syncHash)",
+      "event SendSlaverSyncHash(bytes32 syncHash)",
+      "event SetGateway(address indexed newGateway)",
+      "event SetSyncService(uint8 chainId, address newSyncService)",
+      "event TokenPausedUpdate(uint16 indexed token, bool paused)",
+      "event ValidatorStatusUpdate(address indexed validatorAddress, bool isActive)",
+      "event Withdrawal(uint16 indexed tokenId, uint128 amount)",
+      "event WithdrawalCall(bytes32 indexed withdrawHash)",
+      "event WithdrawalL1(bytes32 indexed withdrawHash)",
+      "event WithdrawalPending(uint16 indexed tokenId, bytes32 indexed recepient, uint128 amount)",
+      "event WithdrawalPendingL1(bytes32 indexed withdrawHash)",
+      "function ALL_CHAINS() view returns (uint256)",
+      "function CHAIN_ID() view returns (uint8)",
+      "function DEFAULT_FEE_ADDRESS() view returns (address)",
+      "function MASTER_CHAIN_ID() view returns (uint8)",
+      "function MAX_CHAIN_ID() view returns (uint8)",
+      "function MIN_CHAIN_ID() view returns (uint8)",
+      "function acceptERC20(address receiver, address token, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce)",
+      "function acceptETH(address receiver, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce) payable",
+      "function accepts(bytes32) view returns (address)",
+      "function authFacts(address, uint32) view returns (bytes32)",
+      "function authFactsResetTimer(address, uint32) view returns (uint256)",
+      "function chainSyncServiceMap(uint8) view returns (address)",
+      "function commitCompressedBlocks(tuple(uint32 blockNumber, uint32 blockSequence, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, bytes32 syncHash) _lastCommittedBlockData, tuple(bytes32 newStateHash, bytes publicData, tuple(bytes ethWitness, uint32 publicDataOffset)[] onchainOperations, uint32 blockNumber)[] _newBlocksData)",
+      "function depositERC20(address _token, uint104 _amount, bytes32 _zkLinkAddress, uint8 _subAccountId, bool _mapping)",
+      "function depositETH(bytes32 _zkLinkAddress, uint8 _subAccountId) payable",
+      "function executeCompressedBlocks(tuple(tuple(uint32 blockNumber, uint32 blockSequence, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, bytes32 syncHash) storedBlock, bytes[] pendingOnchainOpsPubdata)[] _blocksData)",
+      "function exodusMode() view returns (bool)",
+      "function firstPriorityRequestId() view returns (uint64)",
+      "function gateway() view returns (address)",
+      "function getNoticePeriod() pure returns (uint256)",
+      "function initialize(bytes initializationParameters)",
+      "function isReadyForUpgrade() view returns (bool)",
+      "function networkGovernor() view returns (address)",
+      "function pendingL1Withdraws(bytes32) view returns (bool)",
+      "function pendingWithdrawWithCalls(bytes32) view returns (bool)",
+      "function performedExodus(uint32, uint8, uint16, uint16) view returns (bool)",
+      "function periphery() view returns (address)",
+      "function priorityRequests(uint64) view returns (bytes20 hashedPubData, uint64 expirationBlock, uint8 opType)",
+      "function storedBlockHashes(uint32) view returns (bytes32)",
+      "function syncServiceMap(address) view returns (bool)",
+      "function synchronizedChains(uint8) view returns (bytes32)",
+      "function tokenIds(address) view returns (uint16)",
+      "function tokens(uint16) view returns (bool registered, bool paused, address tokenAddress, uint8 decimals)",
+      "function totalBlocksCommitted() view returns (uint32)",
+      "function totalBlocksExecuted() view returns (uint32)",
+      "function totalBlocksProven() view returns (uint32)",
+      "function totalBlocksSynchronized() view returns (uint32)",
+      "function totalCommittedPriorityRequests() view returns (uint64)",
+      "function totalOpenPriorityRequests() view returns (uint64)",
+      "function validators(address) view returns (bool)",
+      "function verifier() view returns (address)"
+    ],
+    "mantle:0x0c0F729c74c9AC41F9C702dAd11011F40D4190B0": [
+      "constructor(address target, bytes targetInitializationParameters)",
+      "function getMaster() view returns (address master)",
+      "function getTarget() view returns (address target)",
+      "function initialize(bytes) pure",
+      "function transferMastership(address _newMaster)",
+      "function upgradeTarget(address newTarget)"
+    ],
+    "mantle:0x2B9BA259F24965a81Fa0c4E477e3791673744059": [
+      "constructor(address _mainContract)",
+      "event NewUpgradable(uint256 indexed versionId, address indexed upgradeable)",
+      "event NoticePeriodStart(uint256 indexed versionId, address[] newTargets, uint256 noticePeriod)",
+      "event UpgradeCancel(uint256 indexed versionId)",
+      "event UpgradeComplete(uint256 indexed versionId, address[] newTargets)",
+      "function addUpgradeable(address addr)",
+      "function cancelUpgrade()",
+      "function finishUpgrade()",
+      "function getMaster() view returns (address master)",
+      "function mainContract() view returns (address)",
+      "function managedContracts(uint256) view returns (address)",
+      "function nextTargets(uint256) view returns (address)",
+      "function noticePeriodFinishTimestamp() view returns (uint256)",
+      "function startUpgrade(address[] newTargets)",
+      "function transferMastership(address _newMaster)",
+      "function upgradeStatus() view returns (uint8)",
+      "function versionId() view returns (uint256)"
+    ],
+    "mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c": [
+      "constructor(address target, bytes targetInitializationParameters)",
+      "function getMaster() view returns (address master)",
+      "function getTarget() view returns (address target)",
+      "function initialize(bytes) pure",
+      "function transferMastership(address _newMaster)",
+      "function upgradeTarget(address newTarget)"
+    ],
+    "mantle:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "mantle:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED": [
+      "constructor(address _singleton)"
+    ],
+    "mantle:0xd8428A59B60Df2d81514D429D57DF23293f1bCe7": [
+      "function initialize(bytes)",
+      "function verifyAggregatedBlockProof(uint256[], uint256[], uint8[], uint256[], uint256[16]) pure returns (bool)",
+      "function verifyExitProof(bytes32, uint8, uint32, uint8, bytes32, uint16, uint16, uint128, uint256[]) pure returns (bool)"
+    ],
+    "mantle:0xf04Af2e7AbCd011459a01A4A250ece46969c84F2": [
+      "event Accept(address acceptor, address receiver, address token, uint128 amount, uint16 withdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce, uint128 amountReceive)",
+      "event BlockCommit(uint32 indexed blockNumber)",
+      "event BlockExecuted(uint32 indexed blockNumber)",
+      "event BlockProven(uint32 indexed blockNumber)",
+      "event BlockSynced(uint32 indexed blockNumber)",
+      "event BlocksRevert(uint32 totalBlocksVerified, uint32 totalBlocksCommitted)",
+      "event ExodusMode()",
+      "event FactAuth(address indexed sender, uint32 nonce, bytes fact)",
+      "event FactAuthResetTime(address indexed sender, uint32 nonce, uint256 time)",
+      "event NewGovernor(address newGovernor)",
+      "event NewPriorityRequest(address sender, uint64 serialId, uint8 opType, bytes pubData, uint256 expirationBlock)",
+      "event NewToken(uint16 indexed tokenId, address indexed token, uint8 decimals)",
+      "event ReceiveSlaverSyncHash(uint8 slaverChainId, bytes32 syncHash)",
+      "event SendMasterSyncHash(uint32 blockNumber, bytes32 syncHash)",
+      "event SendSlaverSyncHash(bytes32 syncHash)",
+      "event SetGateway(address indexed newGateway)",
+      "event SetSyncService(uint8 chainId, address newSyncService)",
+      "event TokenPausedUpdate(uint16 indexed token, bool paused)",
+      "event ValidatorStatusUpdate(address indexed validatorAddress, bool isActive)",
+      "event Withdrawal(uint16 indexed tokenId, uint128 amount)",
+      "event WithdrawalCall(bytes32 indexed withdrawHash)",
+      "event WithdrawalL1(bytes32 indexed withdrawHash)",
+      "event WithdrawalPending(uint16 indexed tokenId, bytes32 indexed recepient, uint128 amount)",
+      "event WithdrawalPendingL1(bytes32 indexed withdrawHash)",
+      "function ALL_CHAINS() view returns (uint256)",
+      "function CHAIN_ID() view returns (uint8)",
+      "function DEFAULT_FEE_ADDRESS() view returns (address)",
+      "function MASTER_CHAIN_ID() view returns (uint8)",
+      "function MAX_CHAIN_ID() view returns (uint8)",
+      "function MIN_CHAIN_ID() view returns (uint8)",
+      "function acceptERC20(address receiver, address token, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce)",
+      "function acceptETH(address receiver, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce) payable",
+      "function accepts(bytes32) view returns (address)",
+      "function activateExodusMode()",
+      "function addToken(uint16 _tokenId, address _tokenAddress, uint8 _decimals)",
+      "function authFacts(address, uint32) view returns (bytes32)",
+      "function authFactsResetTimer(address, uint32) view returns (uint256)",
+      "function cancelOutstandingDepositsForExodusMode(uint64 _n, bytes[] _depositsPubdata)",
+      "function chainSyncServiceMap(uint8) view returns (address)",
+      "function changeGovernor(address _newGovernor)",
+      "function estimateSendSyncHashFee(bytes32 syncHash) view returns (uint256 nativeFee)",
+      "function estimateWithdrawToL1Fee(address owner, address token, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce) view returns (uint256 nativeFee)",
+      "function exodusMode() view returns (bool)",
+      "function firstPriorityRequestId() view returns (uint64)",
+      "function gateway() view returns (address)",
+      "function getPendingBalance(bytes32 _address, uint16 _tokenId) view returns (uint128)",
+      "function networkGovernor() view returns (address)",
+      "function pendingL1Withdraws(bytes32) view returns (bool)",
+      "function pendingWithdrawWithCalls(bytes32) view returns (bool)",
+      "function performedExodus(uint32, uint8, uint16, uint16) view returns (bool)",
+      "function priorityRequests(uint64) view returns (bytes20 hashedPubData, uint64 expirationBlock, uint8 opType)",
+      "function receiveBlockConfirmation(uint32 blockNumber)",
+      "function revertBlocks(tuple(uint32 blockNumber, uint32 blockSequence, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, bytes32 syncHash) _latestCommittedBlock, tuple(uint32 blockNumber, uint32 blockSequence, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, bytes32 syncHash)[] _blocksToRevert)",
+      "function sendSyncHash(tuple(uint32 blockNumber, uint32 blockSequence, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, bytes32 syncHash) _block) payable",
+      "function setAuthPubkeyHash(bytes _pubkeyHash, uint32 _nonce)",
+      "function setGateway(address _gateway)",
+      "function setSyncService(uint8 _chainId, address _syncService)",
+      "function setTokenPaused(uint16 _tokenId, bool _tokenPaused)",
+      "function setValidator(address _validator, bool _active)",
+      "function storedBlockHashes(uint32) view returns (bytes32)",
+      "function syncServiceMap(address) view returns (bool)",
+      "function synchronizedChains(uint8) view returns (bytes32)",
+      "function tokenIds(address) view returns (uint16)",
+      "function tokens(uint16) view returns (bool registered, bool paused, address tokenAddress, uint8 decimals)",
+      "function totalBlocksCommitted() view returns (uint32)",
+      "function totalBlocksExecuted() view returns (uint32)",
+      "function totalBlocksProven() view returns (uint32)",
+      "function totalBlocksSynchronized() view returns (uint32)",
+      "function totalCommittedPriorityRequests() view returns (uint64)",
+      "function totalOpenPriorityRequests() view returns (uint64)",
+      "function validators(address) view returns (bool)",
+      "function verifier() view returns (address)",
+      "function withdrawPendingBalance(address _owner, uint16 _tokenId, uint128 _amount)",
+      "function withdrawPendingBalanceWithCall(address _owner, address _tokenAddress, uint128 _amount, bytes _data, uint32 _accountIdOfNonce, uint8 _subAccountIdOfNonce, uint32 _nonce, bool _callTarget)",
+      "function withdrawToL1(address owner, address token, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce) payable"
+    ]
+  },
+  "usedTemplates": {
+    "apex-omni/LZSyncHashBridge": "0xe4b6bef6d8eb46b2dc59ca16c8a39144163571cb5fbdef9a2c963b5cda5cda82",
+    "apex-omni/ZkLink_LZEscrow": "0xdfb245230fb92cbc8bfd733e69601a1bbf91608ec957b0d5e970ca492f46b131",
+    "apex-omni/ZkLink_main": "0xdfb245230fb92cbc8bfd733e69601a1bbf91608ec957b0d5e970ca492f46b131",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
+  },
+  "usedBlockNumbers": {
+    "arbitrum": 486499024,
+    "base": 48963259,
+    "bsc": 111458296,
+    "ethereum": 25587657,
+    "mantle": 98292777
+  },
+  "permissionsConfigHash": "0x3401d8a0787441b5a10f77622619fc5ad0ba9e702cf85a97eb41893b2ef3ee95"
+}

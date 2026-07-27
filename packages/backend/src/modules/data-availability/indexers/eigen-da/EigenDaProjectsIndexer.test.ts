@@ -337,7 +337,7 @@ describe(EigenDaProjectsIndexer.name, () => {
     })
   })
 
-  describe(EigenDaProjectsIndexer.prototype.removeData.name, () => {
+  describe(EigenDaProjectsIndexer.prototype.wipeData.name, () => {
     it('should delete records by configuration IDs', async () => {
       const configurations = [
         createConfiguration('project1', DA_LAYER, 'customer1'),
@@ -349,20 +349,16 @@ describe(EigenDaProjectsIndexer.name, () => {
       })
 
       const removalsConfigurations = [
-        { id: 'config-1', from: -1, to: -1 },
-        { id: 'config-2', from: -1, to: -1 },
+        { type: 'wipe' as const, id: 'config-1' },
+        { type: 'wipe' as const, id: 'config-2' },
       ]
 
-      await indexer.removeData(removalsConfigurations)
+      await indexer.wipeData(removalsConfigurations)
 
-      expect(repository.deleteByConfigurationId).toHaveBeenNthCalledWith(
-        1,
+      expect(repository.deleteByConfigIds).toHaveBeenOnlyCalledWith([
         'config-1',
-      )
-      expect(repository.deleteByConfigurationId).toHaveBeenNthCalledWith(
-        2,
         'config-2',
-      )
+      ])
     })
   })
 })
@@ -375,9 +371,9 @@ function mockIndexer($: {
     datetime: number
     total_size_mb: number
   }[]
-  configurationsTrimmingDisabled?: boolean
 }) {
   const repository = mockObject<Database['dataAvailability']>({
+    deleteByConfigIds: mockFn().resolvesTo(10),
     deleteByConfigurationId: mockFn().resolvesTo(10),
     upsertMany: mockFn().resolvesTo(undefined),
   })
@@ -415,8 +411,6 @@ function mockIndexer($: {
       parents: [],
       indexerService,
       db,
-      configurationsTrimmingDisabled: $.configurationsTrimmingDisabled,
-      dataWipingAfterDeleteDisabled: false,
     },
     Logger.SILENT,
   )

@@ -28,7 +28,7 @@ import { getRelevantBridgeTypes } from './getRelevantBridgeTypes'
 import { getTokensData } from './getTokensData'
 import { getTopItems } from './getTopItems'
 
-const TOP_ITEMS_LIMIT = 3
+const DEFAULT_TOP_ITEMS_LIMIT = 3
 const logger = getLogger().for('getAllProtocolEntries')
 
 export function getProtocolEntries(
@@ -38,6 +38,7 @@ export function getProtocolEntries(
   type: KnownInteropBridgeType | undefined,
   snapshotTimestamp: UnixTime | undefined,
   selection: InteropSelectionInput,
+  topItemsLimit = DEFAULT_TOP_ITEMS_LIMIT,
 ): {
   entries: ProtocolEntry[]
   zeroTransferProtocols: ProtocolDisplayable[]
@@ -134,8 +135,8 @@ export function getProtocolEntries(
         : undefined,
       volume: data.volume,
       byBridgeType,
-      tokens: getTopItems(tokens, TOP_ITEMS_LIMIT),
-      chains: getTopItems(chains, TOP_ITEMS_LIMIT),
+      tokens: getTopItems(tokens, topItemsLimit),
+      chains: getTopItems(chains, topItemsLimit),
       transferCount: data.transferCount,
       averageValue:
         data.identifiedTransferCount > 0
@@ -191,7 +192,7 @@ function getByBridgeTypeData(
                 data.lockAndMint.identifiedTransferCount,
               logger,
             }),
-            TOP_ITEMS_LIMIT,
+            DEFAULT_TOP_ITEMS_LIMIT,
           ),
           flows: flowsMapToSorted(data.lockAndMint.flows, selection),
           netMintedValue: getNetMintedValueUsd(data.lockAndMint),
@@ -216,7 +217,7 @@ function getByBridgeTypeData(
                 data.nonMinting.identifiedTransferCount,
               logger,
             }),
-            TOP_ITEMS_LIMIT,
+            DEFAULT_TOP_ITEMS_LIMIT,
           ),
           flows: flowsMapToSorted(data.nonMinting.flows, selection),
           averageValueInFlight: data.nonMinting.averageValueInFlight,
@@ -242,7 +243,7 @@ function getByBridgeTypeData(
                 data.burnAndMint.identifiedTransferCount,
               logger,
             }),
-            TOP_ITEMS_LIMIT,
+            DEFAULT_TOP_ITEMS_LIMIT,
           ),
           flows: flowsMapToSorted(data.burnAndMint.flows, selection),
         }
@@ -266,7 +267,7 @@ function getByBridgeTypeData(
                 data.unknown.identifiedTransferCount,
               logger,
             }),
-            TOP_ITEMS_LIMIT,
+            DEFAULT_TOP_ITEMS_LIMIT,
           ),
           flows: flowsMapToSorted(data.unknown.flows, selection),
         }

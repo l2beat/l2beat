@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from 'fs'
 import { join } from 'path'
 
 // Resolves to packages/config/src both when compiled (build/utils -> ../../src)
-// and when run via esbuild-register (src/utils -> ../../src).
+// and when run directly from TypeScript (src/utils -> ../../src).
 const SRC_DIR = join(__dirname, '../..', 'src')
 
 /**

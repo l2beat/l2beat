@@ -1,8 +1,5 @@
+import type { ImpDefinition, Validator } from '@l2beat/validate'
 import { toJsonSchema as _toJsonSchema, v } from '@l2beat/validate'
-import type {
-  ImpDefinition,
-  Validator,
-} from '@l2beat/validate/dist/cjs/validate'
 import type { Application, Request, RequestHandler } from 'express'
 import { GenericErrorResponse } from './types'
 import { httpResponsesDescriptions } from './utils/errorDescriptions'

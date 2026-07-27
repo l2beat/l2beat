@@ -5,6 +5,7 @@ import { Button } from '~/components/core/Button'
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { TablePageLayout } from '~/components/table/TablePageLayout'
+import { useHashTarget } from '~/hooks/useHashTarget'
 import { formatDollars } from '~/pages/interop/transfers/utils'
 import { useBackendTrpc } from '~/react-query/trpc'
 import { SuspiciousTransfersTable } from './table/SuspiciousTransfersTable'
@@ -15,6 +16,7 @@ import type {
 
 export function SuspiciousTransfersPage() {
   const trpc = useBackendTrpc()
+  const highlightTransferId = useHashTarget()
   const {
     data: suspiciousTransfersData,
     error: suspiciousTransfersError,
@@ -116,6 +118,7 @@ export function SuspiciousTransfersPage() {
           getExplorerUrl={(chain) => explorerUrlsByChain.get(chain)}
           valueDiffThresholdPercent={valueDiffThresholdPercent}
           enableCsvExport
+          highlightTransferId={highlightTransferId}
         />
       ) : null}
     </TablePageLayout>

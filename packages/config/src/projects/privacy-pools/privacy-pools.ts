@@ -150,6 +150,11 @@ export const privacyPools: BaseProject = {
       orderHint: Number.MAX_SAFE_INTEGER,
       description:
         'Even if the Entrypoint or ASP turns malicious, users can always ragequit (withdraw tokens) from the immutable pool contracts, at the cost of losing privacy.',
+      walkawayTest: {
+        passed: false,
+        reason:
+          'Association Set Providers must explicitly approve deposited funds before private withdrawals.',
+      },
     },
     reproducibility: {
       value: 'Reproducible',
@@ -158,7 +163,7 @@ export const privacyPools: BaseProject = {
         'The contracts, circuits, and supporting software needed to participate in Privacy Pools are publicly available and can be run locally.',
     },
     privacy: {
-      value: 'None',
+      value: 'Compliance gated',
       sentiment: 'good',
       description:
         'Compliance is enforced through centralized association set providers, which can refuse deposits into the pool, sending them back to the sender.',

@@ -37,6 +37,17 @@ export function getAverageDuration(
     ),
   }
 }
+export function getAverageDurationSeconds(
+  data: Pick<
+    CommonInteropData,
+    'totalDurationSum' | 'transfersWithDurationCount'
+  >,
+  project: Project<'interopConfig'> | undefined,
+): number | null {
+  if (project?.interopConfig.transfersTimeMode === 'unknown') return null
+  if (data.transfersWithDurationCount <= 0) return null
+  return Math.floor(data.totalDurationSum / data.transfersWithDurationCount)
+}
 
 export function getDurationSplit(
   project: Project<'interopConfig'>,

@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "BaseFeeVault",
+  "description": "Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.",
+  "category": "non-critical",
+  "ignoreMethods": ["totalProcessed"]
+}

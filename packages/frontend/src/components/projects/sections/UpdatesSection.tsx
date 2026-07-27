@@ -1,5 +1,6 @@
 import { type MouseEvent, useState } from 'react'
 import { Badge } from '~/components/badge/Badge'
+import { CopyButton } from '~/components/CopyButton'
 import { DiffBody } from '~/components/discovery/DiffBody'
 import { Markdown } from '~/components/markdown/Markdown'
 import {
@@ -21,6 +22,7 @@ import type { ProjectSectionProps } from './types'
 
 export interface UpdatesSectionProps extends ProjectSectionProps {
   updates: DiscoveryUpdate[]
+  selectedUpdateId?: string
 }
 
 const SECTION_TITLES = {
@@ -32,9 +34,17 @@ const PAGE_SIZE = 5
 
 export function UpdatesSection({
   updates,
+  selectedUpdateId,
   ...sectionProps
 }: UpdatesSectionProps) {
-  const [page, setPage] = useState(0)
+  const [page, setPage] = useState(() => {
+    const selectedUpdateIndex = updates.findIndex(
+      (update) => update.id === selectedUpdateId,
+    )
+    return selectedUpdateIndex === -1
+      ? 0
+      : Math.floor(selectedUpdateIndex / PAGE_SIZE)
+  })
 
   if (updates.length === 0) {
     return null
@@ -46,8 +56,12 @@ export function UpdatesSection({
   return (
     <ProjectSection {...sectionProps}>
       <div className="flex flex-col gap-3">
-        {entries.map((update, index) => (
-          <UpdateCard key={`${update.date}-${index}`} update={update} />
+        {entries.map((update) => (
+          <UpdateCard
+            key={update.id}
+            update={update}
+            isSelected={update.id === selectedUpdateId}
+          />
         ))}
         {pageCount > 1 && (
           <UpdatesPagination
@@ -118,9 +132,24 @@ function UpdatesPagination({
   )
 }
 
-function UpdateCard({ update }: { update: DiscoveryUpdate }) {
+function UpdateCard({
+  update,
+  isSelected,
+}: {
+  update: DiscoveryUpdate
+  isSelected: boolean
+}) {
   return (
-    <details className="group w-full min-w-0 overflow-hidden rounded-lg border border-divider bg-surface-primary">
+    <details
+      id={update.id}
+      open={isSelected}
+      ref={(node) => {
+        if (node && isSelected) {
+          node.scrollIntoView({ block: 'start' })
+        }
+      }}
+      className="group w-full min-w-0 scroll-mt-[38px] overflow-hidden rounded-lg border border-divider bg-surface-primary md:scroll-mt-14 lg:scroll-mt-4"
+    >
       <summary
         className={cn(
           'flex w-full cursor-pointer list-none flex-col gap-2 px-4 py-3 text-left text-sm marker:hidden',
@@ -129,9 +158,19 @@ function UpdateCard({ update }: { update: DiscoveryUpdate }) {
       >
         <div className="flex items-start justify-between gap-3">
           <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-2 gap-y-1">
-            <span className="shrink-0 font-medium text-primary leading-snug">
-              {formatUpdateDate(update)}
-            </span>
+            <div className="flex shrink-0 items-center gap-1">
+              <span className="font-medium text-primary leading-snug">
+                {formatUpdateDate(update)}
+              </span>
+              <CopyButton
+                toCopy={() =>
+                  `${window.location.origin}${window.location.pathname}?update=${update.id}`
+                }
+                copyText="Copy link to update"
+                className="rounded-sm text-secondary hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                iconClassName="size-3.5"
+              />
+            </div>
             {update.isHighSeverity && (
               <Badge
                 type="error"

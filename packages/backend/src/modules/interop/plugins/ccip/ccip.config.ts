@@ -42,6 +42,7 @@ const CHAINLINK_TO_L2BEAT: Record<string, string> = {
   // Ethereum
   mainnet: 'ethereum',
   // L2s on Ethereum
+  'abstract-mainnet': 'abstract',
   'ethereum-mainnet-arbitrum-1': 'arbitrum',
   'ethereum-mainnet-base-1': 'base',
   'ethereum-mainnet-optimism-1': 'optimism',
@@ -58,6 +59,7 @@ const CHAINLINK_TO_L2BEAT: Record<string, string> = {
   'ethereum-mainnet-polygon-zkevm-1': 'polygonzkevm',
   'ethereum-mainnet-taiko-1': 'taiko',
   'ethereum-mainnet-xlayer-1': 'xlayer',
+  'polygon-mainnet-katana': 'katana',
   'robinhood-mainnet': 'robinhood',
   // Other L1s
   'avalanche-mainnet': 'avalanche',
@@ -71,6 +73,7 @@ const CHAINLINK_TO_L2BEAT: Record<string, string> = {
   'monad-mainnet': 'monad',
   'megaeth-mainnet': 'megaeth',
   'plasma-mainnet': 'plasma',
+  'tempo-mainnet': 'tempo',
 }
 
 // Maps a Chainlink chain name to an L2Beat chain name, or derives a readable

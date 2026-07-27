@@ -8,7 +8,7 @@ import { InteropCleanerLoop } from './InteropCleanerLoop'
 
 describe(InteropCleanerLoop.name, () => {
   describe(InteropCleanerLoop.prototype.run.name, () => {
-    it('cleans expired data and orphaned plugin entries', async () => {
+    it('cleans expired data, orphaned plugin entries, and removed chains', async () => {
       const deleteExpired = mockFn().resolvesTo(5)
       const deleteMessageBefore = mockFn().resolvesTo(10)
       const deleteTransferBefore = mockFn().resolvesTo(15)
@@ -16,6 +16,8 @@ describe(InteropCleanerLoop.name, () => {
       const deleteConfigs = mockFn().resolvesTo(7)
       const deleteSyncStateNotIn = mockFn().resolvesTo(2)
       const deleteSyncedRangeNotIn = mockFn().resolvesTo(3)
+      const deleteSyncStateNotInChains = mockFn().resolvesTo(4)
+      const deleteSyncedRangeNotInChains = mockFn().resolvesTo(6)
 
       const store = mockObject<InteropEventStore>({
         deleteExpired,
@@ -36,11 +38,13 @@ describe(InteropCleanerLoop.name, () => {
         }),
         interopPluginSyncState: mockObject<Database['interopPluginSyncState']>({
           deleteNotInPluginNames: deleteSyncStateNotIn,
+          deleteNotInChains: deleteSyncStateNotInChains,
         }),
         interopPluginSyncedRange: mockObject<
           Database['interopPluginSyncedRange']
         >({
           deleteNotInPluginNames: deleteSyncedRangeNotIn,
+          deleteNotInChains: deleteSyncedRangeNotInChains,
         }),
       })
 
@@ -54,11 +58,13 @@ describe(InteropCleanerLoop.name, () => {
       }
 
       const KEEP_LATEST = 3
+      const KNOWN_CHAINS = ['ethereum', 'arbitrum']
 
       const cleaner = new InteropCleanerLoop(
         store,
         db,
         plugins,
+        KNOWN_CHAINS,
         Logger.SILENT,
         undefined,
         KEEP_LATEST,
@@ -83,11 +89,15 @@ describe(InteropCleanerLoop.name, () => {
         'plugin-a',
         'plugin-b',
       ])
+      expect(deleteSyncStateNotInChains).toHaveBeenCalledWith(KNOWN_CHAINS)
+      expect(deleteSyncedRangeNotInChains).toHaveBeenCalledWith(KNOWN_CHAINS)
     })
 
-    it('passes empty list to deleteNotInPluginNames when no plugins', async () => {
+    it('passes empty lists to deleters when no plugins and no known chains', async () => {
       const deleteSyncStateNotIn = mockFn().resolvesTo(0)
       const deleteSyncedRangeNotIn = mockFn().resolvesTo(0)
+      const deleteSyncStateNotInChains = mockFn().resolvesTo(0)
+      const deleteSyncedRangeNotInChains = mockFn().resolvesTo(0)
 
       const store = mockObject<InteropEventStore>({
         deleteExpired: mockFn().resolvesTo(0),
@@ -109,11 +119,13 @@ describe(InteropCleanerLoop.name, () => {
         }),
         interopPluginSyncState: mockObject<Database['interopPluginSyncState']>({
           deleteNotInPluginNames: deleteSyncStateNotIn,
+          deleteNotInChains: deleteSyncStateNotInChains,
         }),
         interopPluginSyncedRange: mockObject<
           Database['interopPluginSyncedRange']
         >({
           deleteNotInPluginNames: deleteSyncedRangeNotIn,
+          deleteNotInChains: deleteSyncedRangeNotInChains,
         }),
       })
 
@@ -123,12 +135,20 @@ describe(InteropCleanerLoop.name, () => {
         eventPlugins: [],
       }
 
-      const cleaner = new InteropCleanerLoop(store, db, plugins, Logger.SILENT)
+      const cleaner = new InteropCleanerLoop(
+        store,
+        db,
+        plugins,
+        [],
+        Logger.SILENT,
+      )
 
       await cleaner.run()
 
       expect(deleteSyncStateNotIn).toHaveBeenCalledWith([])
       expect(deleteSyncedRangeNotIn).toHaveBeenCalledWith([])
+      expect(deleteSyncStateNotInChains).toHaveBeenCalledWith([])
+      expect(deleteSyncedRangeNotInChains).toHaveBeenCalledWith([])
     })
   })
 })

@@ -47,7 +47,7 @@ export function PrivacyProjectStats({
         title="Total Value Locked"
         value={
           <div className="flex flex-col md:gap-1">
-            <span>{formatCurrency(totalValueLockedUsd ?? 0, 'usd')}</span>
+            <span>{formatCurrency(totalValueLockedUsd, 'usd')}</span>
             <span className="font-medium text-paragraph-12 text-secondary leading-normal">
               across {formatInteger(assetsCount ?? 0)} assets and{' '}
               {formatInteger(bucketsCount ?? 0)} buckets
@@ -58,7 +58,7 @@ export function PrivacyProjectStats({
       <ProjectSummaryStat
         className="md:hidden"
         title="TVL"
-        value={formatCurrency(totalValueLockedUsd ?? 0, 'usd')}
+        value={formatCurrency(totalValueLockedUsd, 'usd')}
       />
       <ProjectSummaryStat
         className="md:hidden"

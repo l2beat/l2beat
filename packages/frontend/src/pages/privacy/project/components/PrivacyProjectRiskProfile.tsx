@@ -1,4 +1,8 @@
-import type { PrivacyExitWindow, PrivacySummaryValue } from '@l2beat/config'
+import type {
+  PrivacyExitWindow,
+  PrivacySummaryValue,
+  PrivacyWalkawayTest,
+} from '@l2beat/config'
 import {
   Tooltip,
   TooltipContent,
@@ -8,10 +12,15 @@ import { ProjectRiskTooltipContent } from '~/components/projects/ProjectRiskTool
 import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import { TrustedSetupRiskDot } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
 import { cn } from '~/utils/cn'
+import {
+  PrivacyWalkawayTestIcon,
+  PrivacyWalkawayTestTooltipContent,
+} from '../../PrivacyWalkawayTestIcon'
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
 import { sentimentToRiskDot } from '../../sentimentToRiskDot'
 
 interface Props {
+  trustedSetup: PrivacySummaryValue
   exitWindow: PrivacyExitWindow
   privacy: PrivacySummaryValue
   reproducibility: PrivacySummaryValue
@@ -19,17 +28,28 @@ interface Props {
 }
 
 export function PrivacyProjectRiskProfile({
+  trustedSetup,
   exitWindow,
   privacy,
   reproducibility,
   className,
 }: Props) {
   return (
-    <div className={cn('grid gap-4 md:grid-cols-3', className)}>
+    <div className={cn('grid gap-4 md:grid-cols-4', className)}>
+      <ProjectSummaryStat
+        title="Trusted setup"
+        tooltip="Trusted setup used by the project's proving system and its risk."
+        value={<RiskValue value={trustedSetup} />}
+      />
       <ProjectSummaryStat
         title="Exit window"
         tooltip="Time users have to withdraw before a malicious upgrade can take effect."
-        value={<RiskValue value={exitWindow} />}
+        value={
+          <RiskValue
+            value={exitWindow}
+            walkawayTest={exitWindow.walkawayTest}
+          />
+        }
       />
       <ProjectSummaryStat
         title={PRIVACY_ASSESSMENT.title}
@@ -47,8 +67,10 @@ export function PrivacyProjectRiskProfile({
 
 function RiskValue({
   value,
+  walkawayTest,
 }: {
   value: PrivacyExitWindow | PrivacySummaryValue
+  walkawayTest?: PrivacyWalkawayTest
 }) {
   return (
     <Tooltip>
@@ -62,9 +84,15 @@ function RiskValue({
           className="shrink-0"
         />
         <span>{value.value}</span>
+        {walkawayTest && (
+          <PrivacyWalkawayTestIcon passed={walkawayTest.passed} />
+        )}
       </TooltipTrigger>
       <TooltipContent className="max-w-[320px]">
         <ProjectRiskTooltipContent risk={value} variant="table" />
+        {walkawayTest && (
+          <PrivacyWalkawayTestTooltipContent walkawayTest={walkawayTest} />
+        )}
       </TooltipContent>
     </Tooltip>
   )

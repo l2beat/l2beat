@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x26b9dffb9ac1a48a84c3a88d1549fcfbf9eaed12
+
+# Diff at Tue, 21 Jul 2026 08:58:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f20722ea086c21a6e3dedded355fc3e24528daf0 block: 1781604075
+- current timestamp: 1784624234
+
+## Description
+
+Add 2 multisig signers.
+
+## Watched changes
+
+```diff
+    contract Stargate Multisig 2 (eth:0xBE634B030FEAaB661300667EaF82510a3a025413) [layerzero/OneSigMultisig] {
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+      values.$members.5:
++        "eth:0xA37b4a8A5538d2f21c4eA8a27Db8eda8C6260D1D"
+      values.$members.6:
++        "eth:0xc6A38f3dA88Ff791e296C6e05cd669d22a979e03"
+      values.$threshold:
+-        3
++        5
+      values.totalSigners:
+-        5
++        7
+    }
+```
+
 Generated with discovered.json: 0x2e68006e7c66c49fd5083322f6a937ef8e293f82
 
 # Diff at Tue, 16 Jun 2026 10:18:52 GMT:

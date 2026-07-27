@@ -8,13 +8,12 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "change the reward paid per validator insertion and recover unallocated funds from the rewarder."
+          "description": "change the reward paid per validator insertion, recover unallocated funds from the rewarder, and transfer or renounce ownership."
         }
       ]
     },
     "ROLLUP": {
-      "description": "Rollup whose validator entry queue this rewarder flushes.",
-      "template": "aztecnetwork/Rollup"
+      "description": "Rollup whose validator entry queue this rewarder flushes."
     },
     "REWARD_ASSET": {
       "description": "ERC20 token paid to accounts that flush the validator entry queue.",

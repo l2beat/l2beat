@@ -1,12 +1,10 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
-import isEmpty from 'lodash/isEmpty'
 import type {
   DiscoveryOutput,
   EntryParameters,
   PermissionsOutput,
   ReceivedPermission,
 } from '../output/types'
-import type { DiscoveryTimestamps } from './modelPermissions'
 
 // This function transforms permission modelling output such that
 // it matches the historical format of ReceivedPermission.
@@ -15,7 +13,6 @@ import type { DiscoveryTimestamps } from './modelPermissions'
 export function combinePermissionsIntoDiscovery(
   discovery: DiscoveryOutput,
   permissionsOutput: PermissionsOutput,
-  options: { skipDependentDiscoveries?: boolean } = {},
 ) {
   const updateRelevantField = (
     entry: EntryParameters,
@@ -70,21 +67,6 @@ export function combinePermissionsIntoDiscovery(
       upgradesCriticalContract(entry, discovery)
         ? true
         : undefined
-  }
-
-  if (!options.skipDependentDiscoveries) {
-    const timestampsWithoutCurProj: DiscoveryTimestamps = {}
-    for (const [project, { timestamp }] of Object.entries(
-      permissionsOutput.dependentTimestamps,
-    )) {
-      if (!(project === discovery.name)) {
-        timestampsWithoutCurProj[project] ??= { timestamp }
-        timestampsWithoutCurProj[project].timestamp = timestamp
-      }
-    }
-    discovery.dependentDiscoveries = isEmpty(timestampsWithoutCurProj)
-      ? undefined // remove entry if there are no dependent discoveries
-      : timestampsWithoutCurProj
   }
 }
 

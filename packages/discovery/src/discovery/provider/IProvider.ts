@@ -3,9 +3,9 @@ import type {
   BlobClient,
   BlobsInBlock,
   CelestiaApiClient,
+  CelestiaEvent,
   CoingeckoClient,
 } from '@l2beat/shared'
-import type { CelestiaEvent } from '@l2beat/shared/build/clients/api-celestia/types'
 import type {
   Bytes,
   ChainSpecificAddress,

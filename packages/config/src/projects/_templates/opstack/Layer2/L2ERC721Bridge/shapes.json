@@ -8,5 +8,11 @@
     "hash": "0x271f936ec1986057d9043b9961aa266e87908766814bdde8071f19a9de7484be",
     "address": "ink:0xC0D3c0d3c0d3c0d3c0D3C0d3C0D3C0D3c0d30014",
     "blockNumber": 10183769
+  },
+  "L2ERC721Bridge_v1_10_1": {
+    "hash": "0x0d8059378487e33161e0b838f622400642360f1e311eba8c7b8fbdb504aeee1e",
+    "address": "ink:0x716eAd0Cf3e7FF86A02D4F8cb41a6D14922fA833",
+    "chain": "ink",
+    "blockNumber": 50178011
   }
 }

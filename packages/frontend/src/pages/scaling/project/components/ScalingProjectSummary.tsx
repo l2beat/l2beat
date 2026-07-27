@@ -19,6 +19,7 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { VerticalSeparator } from '~/components/core/VerticalSeparator'
 import { CustomLink } from '~/components/link/CustomLink'
+import { PercentageChangeTooltipContent } from '~/components/PercentChange'
 import { DiscoUiLink } from '~/components/projects/links/DiscoUiLink'
 import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLinks'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
@@ -199,6 +200,13 @@ export function ProjectScalingSummary({ project }: Props) {
                       Click to view TVS breakdown
                     </p>
                   )}
+                  {project.header.tvs?.breakdown && (
+                    <p>
+                      <PercentageChangeTooltipContent
+                        period={project.header.tvs.breakdown.totalChangePeriod}
+                      />
+                    </p>
+                  )}
                 </TooltipContent>
               </Tooltip>
               <CustomLink
@@ -260,9 +268,12 @@ function InteropMetrics({
   interop: NonNullable<ProjectScalingEntry['header']['interop']>
 }) {
   const headlineStats = [
-    { label: 'Last 24h volume', value: formatCurrency(interop.volume, 'usd') },
     {
-      label: 'Last 24h transfer count',
+      label: 'Last 24h cross-chain volume',
+      value: formatCurrency(interop.volume, 'usd'),
+    },
+    {
+      label: 'Last 24h cross-chain transfers',
       value: formatActivityCount(interop.transferCount),
     },
   ]

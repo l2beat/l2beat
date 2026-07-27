@@ -8,6 +8,11 @@ import {
   DeployedTokenRecord,
   DeployedTokenUpdateable,
 } from './schemas/DeployedToken'
+import {
+  TokenRelationPrimaryKey,
+  TokenRelationRecord,
+  TokenRelationUpdateable,
+} from './schemas/TokenRelation'
 
 export type AddAbstractTokenCommand = v.infer<typeof AddAbstractTokenCommand>
 export const AddAbstractTokenCommand = v.object({
@@ -59,6 +64,31 @@ export const DeleteDeployedTokenCommand = v.object({
   existing: DeployedTokenRecord,
 })
 
+export type AddTokenRelationCommand = v.infer<typeof AddTokenRelationCommand>
+export const AddTokenRelationCommand = v.object({
+  type: v.literal('AddTokenRelationCommand'),
+  record: TokenRelationRecord,
+})
+
+export type UpdateTokenRelationCommand = v.infer<
+  typeof UpdateTokenRelationCommand
+>
+export const UpdateTokenRelationCommand = v.object({
+  type: v.literal('UpdateTokenRelationCommand'),
+  pk: TokenRelationPrimaryKey,
+  existing: TokenRelationRecord,
+  update: TokenRelationUpdateable,
+})
+
+export type DeleteTokenRelationCommand = v.infer<
+  typeof DeleteTokenRelationCommand
+>
+export const DeleteTokenRelationCommand = v.object({
+  type: v.literal('DeleteTokenRelationCommand'),
+  pk: TokenRelationPrimaryKey,
+  existing: TokenRelationRecord,
+})
+
 export type Command = v.infer<typeof Command>
 export const Command = v.union([
   AddAbstractTokenCommand,
@@ -67,4 +97,7 @@ export const Command = v.union([
   AddDeployedTokenCommand,
   UpdateDeployedTokenCommand,
   DeleteDeployedTokenCommand,
+  AddTokenRelationCommand,
+  UpdateTokenRelationCommand,
+  DeleteTokenRelationCommand,
 ])

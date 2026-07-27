@@ -214,6 +214,10 @@ export const sp1turbo: BaseProject = {
         sinceTimestamp: UnixTime(1765324800),
       },
       {
+        projectId: ProjectId('rise'),
+        sinceTimestamp: UnixTime(1767605759), // mainnet genesis 2026-01-05
+      },
+      {
         projectId: ProjectId('appchain'),
         sinceTimestamp: UnixTime(1776165024),
         untilTimestamp: UnixTime(1780326419),
