@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "TokenJar",
-  "description": "Escrow for collected protocol fees (arbitrary ERC20s and ETH swept from v3 pools via the V3OpenFeeAdapter and from v4). Only the releaser (the Firepit) can move funds out; the owner (the Timelock) can replace the releaser, which is the lever governance would use to redirect the fee stream.",
+  "description": "Escrow for collected protocol fees (tokens swept from v3 pools via the V3OpenFeeAdapter, and from v4). Only the releaser (the Firepit) can move funds out; the owner (the Timelock) can replace the releaser, redirecting all accumulated and future fees.",
   "fields": {
     "owner": {
       "permissions": [

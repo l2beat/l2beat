@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xb898ef5b5225153ae31e86d6ce5491f7753a2f36
+Generated with discovered.json: 0xe7cf3abd8c86cbbd343e28496ad3bda9838aeae1
 
-# Diff at Mon, 27 Jul 2026 21:44:33 GMT:
+# Diff at Mon, 27 Jul 2026 21:56:13 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- current timestamp: 1785188610
+- current timestamp: 1785189311
 
 ## Description
 
@@ -14,13 +14,13 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract Permit2 (eth:0x000000000022D473030F116dDEE9F6B43aC78BA3) [uniswapv3/Permit2]
-    +++ description: Canonical signature-based token approval hub (deployed via CREATE2 to the same address on every chain where it exists). Users grant it a one-time ERC20 approval, then issue time-bounded, amount-bounded, spender-bounded permits by signature (SignatureTransfer for one-offs, AllowanceTransfer for standing allowances that can be revoked via lockdown). Immutable and ownerless; the risk it concentrates is that any spender a user signs a permit for can pull the permitted amount while it is valid.
+    +++ description: Canonical signature-based token approval hub (same CREATE2 address on every chain where deployed). Users grant it one ERC20 approval per token, then authorize spenders via time- and amount-bounded signed permits, revocable via lockdown. Immutable and ownerless; any spender with a valid permit can pull the permitted amount.
 ```
 
 ```diff
 +   Status: CREATED
     contract Firepit (eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721) [uniswapv3/Firepit]
-    +++ description: The UNI burn engine: anyone can transfer the threshold amount of UNI (currently 4,000) to the 0xdead burn address and in exchange release up to 20 chosen asset balances from the TokenJar to themselves. Searchers arbitrage accumulated fees against the UNI burn cost, so protocol fees are continuously converted into UNI burned. The thresholdSetter (the Timelock) can retune the threshold.
+    +++ description: The UNI burn engine: anyone can send the threshold amount of UNI (currently 4,000) to the 0xdead address and in exchange release up to 20 chosen token balances from the TokenJar to themselves. The thresholdSetter (the Timelock) can change the threshold.
 ```
 
 ```diff
@@ -32,19 +32,19 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract UNIToken (eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984) [uniswapv3/Uni]
-    +++ description: The UNI governance token (ERC20 with delegation-based checkpoint voting). Fixed 1B initial supply; the minter (the governance Timelock) can mint at most 2% of the supply per year, no earlier than once every 365 days. Votes must be self-delegated or delegated to count. Token balances at a past block, via delegated checkpoints, are what GovernorBravo counts for proposals and voting.
+    +++ description: The UNI governance token (ERC20 with checkpoint voting). 1B initial supply; the minter (the Timelock) can mint at most 2% of supply per year, at most once every 365 days. Votes count only when delegated.
 ```
 
 ```diff
 +   Status: CREATED
     contract UniswapV3Factory (eth:0x1F98431c8aD98523631AE4a59f267346ea31F984) [uniswapv3/UniswapV3Factory]
-    +++ description: Deploys Uniswap v3 pools and holds the protocol-level knobs. Anyone can create a pool for any token pair at an enabled fee tier; each pool is deployed via CREATE2, so its address is deterministic in (token0, token1, fee). The factory itself is immutable and its owner holds only three powers: enabling new fee tiers (fee/tickSpacing combinations, irreversible once added), being the sole address allowed to call setFeeProtocol/collectProtocol on every pool, and transferring the owner role itself. It cannot modify, pause, or upgrade existing pools.
+    +++ description: Deploys Uniswap v3 pools: anyone can create one pool per token pair and enabled fee tier, at a CREATE2 address deterministic in (token0, token1, fee). Immutable. Its owner holds exactly three powers: enable new fee tiers (irreversible), call setFeeProtocol/collectProtocol on pools, and transfer the owner role. It cannot modify, pause, or upgrade deployed pools.
 ```
 
 ```diff
 +   Status: CREATED
     contract GovernorBravo (eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3) [uniswapv3/GovernorBravoDelegator]
-    +++ description: The governance proxy: UNI holders vote here. Proposals need the proposalThreshold in delegated UNI to submit, then pass through votingDelay, votingPeriod (with quorumVotes required), and finally queue into the 2-day Timelock before execution. The delegator's admin (the Timelock itself) can swap the GovernorBravoDelegate implementation, so governance logic is upgradeable, but only via a passed proposal.
+    +++ description: The governance proxy where UNI holders vote. Proposals need the proposalThreshold in delegated UNI, then pass votingDelay, votingPeriod (quorum required), and queue into the 2-day Timelock. Its admin (the Timelock) can swap the implementation, so governance logic is upgradeable - only via a passed proposal.
 ```
 
 ```diff
@@ -56,47 +56,47 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract UniversalRouter (eth:0x66a9893cC07D91D95644AEDD05D03f95e1dBA8Af) [uniswapv3/UniversalRouter]
-    +++ description: Uniswap's current entrypoint router: executes a caller-supplied bytecode-like command list (v2/v3/v4 swaps, Permit2 transfers, WETH wrapping, sweeps) in one transaction. It is immutable and unprivileged, and is the canonical spender that users approve via Permit2. It executes whatever route the calling frontend or aggregator computed off-chain; the contract itself performs no routing.
+    +++ description: Uniswap's current entrypoint router: executes a caller-supplied command list (v2/v3/v4 swaps, Permit2 transfers, WETH wrapping, sweeps) in one transaction. Immutable and unprivileged; the canonical Permit2 spender. Routes are computed off-chain by the caller - the contract performs no routing.
 ```
 
 ```diff
 +   Status: CREATED
     contract SwapRouter02 (eth:0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45) [uniswapv3/SwapRouter02]
-    +++ description: Second-generation swap router that can route a single trade across both Uniswap v2 and v3 pools and supports multicall batching with permits. Immutable, stateless between transactions, and unprivileged: it only moves funds of callers who approved it, along routes the caller encodes.
+    +++ description: Second-generation swap router covering both v2 and v3 pools with multicall batching. Immutable and unprivileged: it only moves funds of callers who approved it, along routes the caller encodes.
 ```
 
 ```diff
 +   Status: CREATED
     contract UniswapV3Pool_USDC_WETH_005 (eth:0x88e6A0c2dDD26FEEb64F039a2c41296FcB3f5640) [uniswapv3/UniswapV3Pool]
-    +++ description: A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on price ranges expressed as ticks; the pool tracks the current price as sqrtPriceX96 in slot0 and crosses initialized ticks as swaps move the price. Swap fees accrue to in-range positions; if the protocol fee is switched on (factory owner only), up to 1/4 of the swap fee per side is diverted to protocolFees for collection by the factory owner. Each pool also embeds a TWAP oracle: a ring buffer of price observations whose cardinality anyone can grow by paying the gas.
+    +++ description: A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on tick ranges; swap fees accrue to in-range positions. The factory owner can divert up to 1/4 of the swap fee per side as protocol fee. Also a TWAP oracle whose observation buffer anyone can grow.
 ```
 
 ```diff
 +   Status: CREATED
     contract NonfungiblePositionManager (eth:0xC36442b4a4522E871399CD717aBDD847Ab11FE88) [uniswapv3/NonfungiblePositionManager]
-    +++ description: Periphery contract that wraps raw pool positions into ERC721 NFTs. It is the registered owner of the underlying positions in the pools and tracks each tokenId's range, liquidity, and uncollected fees; the NFT holder can add/remove liquidity and collect fees through this manager. Immutable and unprivileged: it holds no special rights in the pools. Positions can also be opened directly on a pool by any contract that pays the deposit in the pool's mint callback, and the owner of such a direct pool position can withdraw and collect on the pool directly.
+    +++ description: Wraps pool positions into ERC721 NFTs: it is the pool-level owner of the wrapped positions and tracks each tokenId's range, liquidity, and fees, so NFT holders manage and collect through it. Immutable and unprivileged: no special rights in the pools, which can equally be used directly.
 ```
 
 ```diff
 +   Status: CREATED
     contract UniswapV3Pool_WBTC_WETH_03 (eth:0xCBCdF9626bC03E24f779434178A73a0B4bad62eD) [uniswapv3/UniswapV3Pool]
-    +++ description: A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on price ranges expressed as ticks; the pool tracks the current price as sqrtPriceX96 in slot0 and crosses initialized ticks as swaps move the price. Swap fees accrue to in-range positions; if the protocol fee is switched on (factory owner only), up to 1/4 of the swap fee per side is diverted to protocolFees for collection by the factory owner. Each pool also embeds a TWAP oracle: a ring buffer of price observations whose cardinality anyone can grow by paying the gas.
+    +++ description: A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on tick ranges; swap fees accrue to in-range positions. The factory owner can divert up to 1/4 of the swap fee per side as protocol fee. Also a TWAP oracle whose observation buffer anyone can grow.
 ```
 
 ```diff
 +   Status: CREATED
     contract SwapRouter (eth:0xE592427A0AEce92De3Edee1F18E0157C05861564) [uniswapv3/SwapRouter]
-    +++ description: The original v3 swap router (single- and multi-hop exactInput/exactOutput over v3 pools). Immutable, stateless between transactions, and unprivileged; it executes whatever route the caller encodes and pays pools via the swap callback. Superseded by SwapRouter02 and the UniversalRouter but still functional forever.
+    +++ description: The original v3 swap router (single- and multi-hop exact-input/exact-output over v3 pools). Immutable and unprivileged; executes whatever route the caller encodes. Superseded by SwapRouter02 and the UniversalRouter but usable forever.
 ```
 
 ```diff
 +   Status: CREATED
     contract V3OpenFeeAdapter (eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A) [uniswapv3/V3OpenFeeAdapter]
-    +++ description: Owns the UniswapV3Factory since the UNIfication proposal and operationalizes the protocol fee switch. Governance (owner and feeSetter, both the Timelock) sets the fee schedule: a global default, per-fee-tier defaults, and per-pool overrides, each encoding the 4-bit per-side protocol fee (0 or 1/4..1/10 of LP fees; current default 68 = 1/4 both sides). Anyone can then permissionlessly push the configured fee onto any pool (triggerFeeUpdate) and collect accrued protocol fees, which are hardcoded to go to the TokenJar. The owner can also still enable new fee tiers and transfer factory ownership onward.
+    +++ description: Owns the UniswapV3Factory since the UNIfication proposal. Governance (owner and feeSetter, both the Timelock) sets the protocol-fee schedule: a global default, per-tier defaults, and per-pool overrides, each 0 or between 1/10 and 1/4 of LP fees per side. Anyone can push the configured fee onto pools and collect accrued protocol fees, which go only to the TokenJar. The owner can also enable new fee tiers and transfer factory ownership.
 ```
 
 ```diff
 +   Status: CREATED
     contract TokenJar (eth:0xf38521f130fcCF29dB1961597bc5d2B60F995f85) [uniswapv3/TokenJar]
-    +++ description: Escrow for collected protocol fees (arbitrary ERC20s and ETH swept from v3 pools via the V3OpenFeeAdapter and from v4). Only the releaser (the Firepit) can move funds out; the owner (the Timelock) can replace the releaser, which is the lever governance would use to redirect the fee stream.
+    +++ description: Escrow for collected protocol fees (tokens swept from v3 pools via the V3OpenFeeAdapter, and from v4). Only the releaser (the Firepit) can move funds out; the owner (the Timelock) can replace the releaser, redirecting all accumulated and future fees.
 ```

@@ -1,6 +1,6 @@
 {
   "name": "uniswapv3",
-  "timestamp": 1785188610,
+  "timestamp": 1785189311,
   "configHash": "0x769f3c53deb0274d14ed114c1471e6de5b1596010a6b54cc5324820d5dee10df",
   "entries": [
     {
@@ -17,7 +17,7 @@
         "0xea6870ee07ce35bfcdc4c18c2b8c3c938329760f8ebe44e73d3f03b580023341"
       ],
       "proxyType": "immutable",
-      "description": "Canonical signature-based token approval hub (deployed via CREATE2 to the same address on every chain where it exists). Users grant it a one-time ERC20 approval, then issue time-bounded, amount-bounded, spender-bounded permits by signature (SignatureTransfer for one-offs, AllowanceTransfer for standing allowances that can be revoked via lockdown). Immutable and ownerless; the risk it concentrates is that any spender a user signs a permit for can pull the permitted amount while it is valid.",
+      "description": "Canonical signature-based token approval hub (same CREATE2 address on every chain where deployed). Users grant it one ERC20 approval per token, then authorize spenders via time- and amount-bounded signed permits, revocable via lockdown. Immutable and ownerless; any spender with a valid permit can pull the permitted amount.",
       "deployerAddress": "eth:0xD32Ff78579352cA78f416120A9f68b65c410871b",
       "sinceTimestamp": 1668647879,
       "sinceBlock": 15986406,
@@ -38,7 +38,7 @@
         "0x8717751f1e512d53b1cec568eec3ba69162bbef39f780e3c9c6ce788ffa1f509"
       ],
       "proxyType": "immutable",
-      "description": "The UNI burn engine: anyone can transfer the threshold amount of UNI (currently 4,000) to the 0xdead burn address and in exchange release up to 20 chosen asset balances from the TokenJar to themselves. Searchers arbitrage accumulated fees against the UNI burn cost, so protocol fees are continuously converted into UNI burned. The thresholdSetter (the Timelock) can retune the threshold.",
+      "description": "The UNI burn engine: anyone can send the threshold amount of UNI (currently 4,000) to the 0xdead address and in exchange release up to 20 chosen token balances from the TokenJar to themselves. The thresholdSetter (the Timelock) can change the threshold.",
       "deployerAddress": "eth:0x2CF8e5b175aa29C1fDf0e9fe572735C78eacCE43",
       "sinceTimestamp": 1765924727,
       "sinceBlock": 24028203,
@@ -145,7 +145,7 @@
         "0x005d41450e7da29f6913ff9dc83738d960ae222989af4adec6bf24ccdb87aaad"
       ],
       "proxyType": "immutable",
-      "description": "The UNI governance token (ERC20 with delegation-based checkpoint voting). Fixed 1B initial supply; the minter (the governance Timelock) can mint at most 2% of the supply per year, no earlier than once every 365 days. Votes must be self-delegated or delegated to count. Token balances at a past block, via delegated checkpoints, are what GovernorBravo counts for proposals and voting.",
+      "description": "The UNI governance token (ERC20 with checkpoint voting). 1B initial supply; the minter (the Timelock) can mint at most 2% of supply per year, at most once every 365 days. Votes count only when delegated.",
       "deployerAddress": "eth:0x41653c7d61609D856f29355E404F310Ec4142Cfb",
       "sinceTimestamp": 1600107086,
       "sinceBlock": 10861674,
@@ -177,7 +177,7 @@
         "0x6e923d5480eaaba4682ea16d891e5906295deeb4c0c09e6495bbcd341d8ca3c5"
       ],
       "proxyType": "immutable",
-      "description": "Deploys Uniswap v3 pools and holds the protocol-level knobs. Anyone can create a pool for any token pair at an enabled fee tier; each pool is deployed via CREATE2, so its address is deterministic in (token0, token1, fee). The factory itself is immutable and its owner holds only three powers: enabling new fee tiers (fee/tickSpacing combinations, irreversible once added), being the sole address allowed to call setFeeProtocol/collectProtocol on every pool, and transferring the owner role itself. It cannot modify, pause, or upgrade existing pools.",
+      "description": "Deploys Uniswap v3 pools: anyone can create one pool per token pair and enabled fee tier, at a CREATE2 address deterministic in (token0, token1, fee). Immutable. Its owner holds exactly three powers: enable new fee tiers (irreversible), call setFeeProtocol/collectProtocol on pools, and transfer the owner role. It cannot modify, pause, or upgrade deployed pools.",
       "deployerAddress": "eth:0x6C9FC64A53c1b71FB3f9Af64d1ae3A4931A5f4E9",
       "sinceTimestamp": 1620156420,
       "sinceBlock": 12369621,
@@ -214,7 +214,7 @@
         "0x9b0c0aedbb7ad7e39f09ed2d4779ec65307b918837b10c2b5e6800c1e9c4ece7"
       ],
       "proxyType": "immutable",
-      "description": "The governance proxy: UNI holders vote here. Proposals need the proposalThreshold in delegated UNI to submit, then pass through votingDelay, votingPeriod (with quorumVotes required), and finally queue into the 2-day Timelock before execution. The delegator's admin (the Timelock itself) can swap the GovernorBravoDelegate implementation, so governance logic is upgradeable, but only via a passed proposal.",
+      "description": "The governance proxy where UNI holders vote. Proposals need the proposalThreshold in delegated UNI, then pass votingDelay, votingPeriod (quorum required), and queue into the 2-day Timelock. Its admin (the Timelock) can swap the implementation, so governance logic is upgradeable - only via a passed proposal.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -304,7 +304,7 @@
         "0x736bcdd72f9b9d2f4e6e7e4f61b515502a1fecf34b0bd86ca79e169e1cf5f4cc"
       ],
       "proxyType": "immutable",
-      "description": "Uniswap's current entrypoint router: executes a caller-supplied bytecode-like command list (v2/v3/v4 swaps, Permit2 transfers, WETH wrapping, sweeps) in one transaction. It is immutable and unprivileged, and is the canonical spender that users approve via Permit2. It executes whatever route the calling frontend or aggregator computed off-chain; the contract itself performs no routing.",
+      "description": "Uniswap's current entrypoint router: executes a caller-supplied command list (v2/v3/v4 swaps, Permit2 transfers, WETH wrapping, sweeps) in one transaction. Immutable and unprivileged; the canonical Permit2 spender. Routes are computed off-chain by the caller - the contract performs no routing.",
       "deployerAddress": "eth:0x2179a60856E37dfeAacA0ab043B931fE224b27B6",
       "sinceTimestamp": 1737658187,
       "sinceBlock": 21689092,
@@ -333,7 +333,7 @@
         "0x2de3aae2a1089eda33b08e3de6db5aaa7a8e2543533e24927a939bef0218bbf6"
       ],
       "proxyType": "immutable",
-      "description": "Second-generation swap router that can route a single trade across both Uniswap v2 and v3 pools and supports multicall batching with permits. Immutable, stateless between transactions, and unprivileged: it only moves funds of callers who approved it, along routes the caller encodes.",
+      "description": "Second-generation swap router covering both v2 and v3 pools with multicall batching. Immutable and unprivileged: it only moves funds of callers who approved it, along routes the caller encodes.",
       "deployerAddress": "eth:0x6C9FC64A53c1b71FB3f9Af64d1ae3A4931A5f4E9",
       "sinceTimestamp": 1639503446,
       "sinceBlock": 13804681,
@@ -357,7 +357,7 @@
         "0x6884399b8c1127ed38bae4ae3af37927bb408b3a61a1b00f69a81f27d876bb82"
       ],
       "proxyType": "immutable",
-      "description": "A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on price ranges expressed as ticks; the pool tracks the current price as sqrtPriceX96 in slot0 and crosses initialized ticks as swaps move the price. Swap fees accrue to in-range positions; if the protocol fee is switched on (factory owner only), up to 1/4 of the swap fee per side is diverted to protocolFees for collection by the factory owner. Each pool also embeds a TWAP oracle: a ring buffer of price observations whose cardinality anyone can grow by paying the gas.",
+      "description": "A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on tick ranges; swap fees accrue to in-range positions. The factory owner can divert up to 1/4 of the swap fee per side as protocol fee. Also a TWAP oracle whose observation buffer anyone can grow.",
       "deployerAddress": "eth:0xb2ef52180d1e5f4835F4e343251286fa84743456",
       "sinceTimestamp": 1620250931,
       "sinceBlock": 12376729,
@@ -365,15 +365,15 @@
         "$immutable": true,
         "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
         "fee": 500,
-        "feeGrowthGlobal0X128": "4804450787451905057228050819679357",
-        "feeGrowthGlobal1X128": "2046923794716117286593287022727220943598729",
-        "liquidity": "14032860249206443299",
+        "feeGrowthGlobal0X128": "4804452315472098011924200669888746",
+        "feeGrowthGlobal1X128": "2046924451117246455264512784917604510420947",
+        "liquidity": "14003409654466442800",
         "maxLiquidityPerTick": "1917569901783203986719870431555990",
-        "protocolFees": { "token0": 162013754, "token1": "110431691255537571" },
+        "protocolFees": { "token0": 183011098, "token1": "119454614752149829" },
         "slot0": {
-          "sqrtPriceX96": "1798264632419444056777882225124887",
-          "tick": 200610,
-          "observationIndex": 66,
+          "sqrtPriceX96": "1798183384532292478498823294249743",
+          "tick": 200609,
+          "observationIndex": 71,
           "observationCardinality": 723,
           "observationCardinalityNext": 723,
           "feeProtocol": 68,
@@ -404,7 +404,7 @@
         "0x9a1ef8f86965191f3d67a4e74587b87ccd95ff751de363bcbd122450167e35b5"
       ],
       "proxyType": "immutable",
-      "description": "Periphery contract that wraps raw pool positions into ERC721 NFTs. It is the registered owner of the underlying positions in the pools and tracks each tokenId's range, liquidity, and uncollected fees; the NFT holder can add/remove liquidity and collect fees through this manager. Immutable and unprivileged: it holds no special rights in the pools. Positions can also be opened directly on a pool by any contract that pays the deposit in the pool's mint callback, and the owner of such a direct pool position can withdraw and collect on the pool directly.",
+      "description": "Wraps pool positions into ERC721 NFTs: it is the pool-level owner of the wrapped positions and tracks each tokenId's range, liquidity, and fees, so NFT holders manage and collect through it. Immutable and unprivileged: no special rights in the pools, which can equally be used directly.",
       "deployerAddress": "eth:0x6C9FC64A53c1b71FB3f9Af64d1ae3A4931A5f4E9",
       "sinceTimestamp": 1620156913,
       "sinceBlock": 12369651,
@@ -416,7 +416,7 @@
         "name": "Uniswap V3 Positions NFT-V1",
         "PERMIT_TYPEHASH": "0x49ecf333e5b8c95c40fdafc95c1ad136e8914a8fb55e9dc8bb01eaa83a2df9ad",
         "symbol": "UNI-V3-POS",
-        "totalSupply": 1205818,
+        "totalSupply": 1205823,
         "WETH9": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "fieldMeta": {
@@ -437,7 +437,7 @@
         "0x6884399b8c1127ed38bae4ae3af37927bb408b3a61a1b00f69a81f27d876bb82"
       ],
       "proxyType": "immutable",
-      "description": "A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on price ranges expressed as ticks; the pool tracks the current price as sqrtPriceX96 in slot0 and crosses initialized ticks as swaps move the price. Swap fees accrue to in-range positions; if the protocol fee is switched on (factory owner only), up to 1/4 of the swap fee per side is diverted to protocolFees for collection by the factory owner. Each pool also embeds a TWAP oracle: a ring buffer of price observations whose cardinality anyone can grow by paying the gas.",
+      "description": "A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on tick ranges; swap fees accrue to in-range positions. The factory owner can divert up to 1/4 of the swap fee per side as protocol fee. Also a TWAP oracle whose observation buffer anyone can grow.",
       "deployerAddress": "eth:0x4bD047CA72fa05F0B89ad08FE5Ba5ccdC07DFFBF",
       "sinceTimestamp": 1620158974,
       "sinceBlock": 12369821,
@@ -445,15 +445,15 @@
         "$immutable": true,
         "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
         "fee": 3000,
-        "feeGrowthGlobal0X128": "69313854582945728702700090838849",
+        "feeGrowthGlobal0X128": "69313854593946473480324007908563",
         "feeGrowthGlobal1X128": "15581015321933319769650063860354030694975381",
-        "liquidity": "30932666269386630",
+        "liquidity": "30830513455765584",
         "maxLiquidityPerTick": "11505743598341114571880798222544994",
         "protocolFees": { "token0": 1, "token1": 1 },
         "slot0": {
-          "sqrtPriceX96": "45771419788077001724244036160035456",
+          "sqrtPriceX96": "45771419715414431886727387890994761",
           "tick": 265350,
-          "observationIndex": 338,
+          "observationIndex": 339,
           "observationCardinality": 360,
           "observationCardinalityNext": 360,
           "feeProtocol": 102,
@@ -484,7 +484,7 @@
         "0xe67d2fe360e7a631298c0c42135307499f4d51e4d2b4261faa29f97b17400d8d"
       ],
       "proxyType": "immutable",
-      "description": "The original v3 swap router (single- and multi-hop exactInput/exactOutput over v3 pools). Immutable, stateless between transactions, and unprivileged; it executes whatever route the caller encodes and pays pools via the swap callback. Superseded by SwapRouter02 and the UniversalRouter but still functional forever.",
+      "description": "The original v3 swap router (single- and multi-hop exact-input/exact-output over v3 pools). Immutable and unprivileged; executes whatever route the caller encodes. Superseded by SwapRouter02 and the UniversalRouter but usable forever.",
       "deployerAddress": "eth:0x6C9FC64A53c1b71FB3f9Af64d1ae3A4931A5f4E9",
       "sinceTimestamp": 1620156641,
       "sinceBlock": 12369634,
@@ -506,7 +506,7 @@
         "0x2ff0ab152bed841e9cb41f2042cefa8031579b9d096ff597b6e6d467cdde34ba"
       ],
       "proxyType": "immutable",
-      "description": "Owns the UniswapV3Factory since the UNIfication proposal and operationalizes the protocol fee switch. Governance (owner and feeSetter, both the Timelock) sets the fee schedule: a global default, per-fee-tier defaults, and per-pool overrides, each encoding the 4-bit per-side protocol fee (0 or 1/4..1/10 of LP fees; current default 68 = 1/4 both sides). Anyone can then permissionlessly push the configured fee onto any pool (triggerFeeUpdate) and collect accrued protocol fees, which are hardcoded to go to the TokenJar. The owner can also still enable new fee tiers and transfer factory ownership onward.",
+      "description": "Owns the UniswapV3Factory since the UNIfication proposal. Governance (owner and feeSetter, both the Timelock) sets the protocol-fee schedule: a global default, per-tier defaults, and per-pool overrides, each 0 or between 1/10 and 1/4 of LP fees per side. Anyone can push the configured fee onto pools and collect accrued protocol fees, which go only to the TokenJar. The owner can also enable new fee tiers and transfer factory ownership.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -548,7 +548,7 @@
         "0x4400e790cf4908c2aaf6705f909ecee02c546bc2e8998fd638ccf895cd7c6911"
       ],
       "proxyType": "immutable",
-      "description": "Escrow for collected protocol fees (arbitrary ERC20s and ETH swept from v3 pools via the V3OpenFeeAdapter and from v4). Only the releaser (the Firepit) can move funds out; the owner (the Timelock) can replace the releaser, which is the lever governance would use to redirect the fee stream.",
+      "description": "Escrow for collected protocol fees (tokens swept from v3 pools via the V3OpenFeeAdapter, and from v4). Only the releaser (the Firepit) can move funds out; the owner (the Timelock) can replace the releaser, redirecting all accumulated and future fees.",
       "deployerAddress": "eth:0x2CF8e5b175aa29C1fDf0e9fe572735C78eacCE43",
       "sinceTimestamp": 1765924727,
       "sinceBlock": 24028203,
@@ -1064,6 +1064,6 @@
     "uniswapv3/UniversalRouter": "0x7599293166769ce170829e381d4f80616e6cf1b2c5977c3816b0dd5618c2810a",
     "uniswapv3/V3OpenFeeAdapter": "0x919168095503a4b75469aba4141a66b10f58ad6b4ffe14cb54bc70ac064927d5"
   },
-  "usedBlockNumbers": { "ethereum": 25626911 },
+  "usedBlockNumbers": { "ethereum": 25626970 },
   "permissionsConfigHash": "0x21ffb35c539dc47b717fe4778681bf8b326fb825d405e36528fab69b5db99b72"
 }

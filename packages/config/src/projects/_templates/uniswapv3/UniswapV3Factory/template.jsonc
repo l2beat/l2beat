@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "UniswapV3Factory",
-  "description": "Deploys Uniswap v3 pools and holds the protocol-level knobs. Anyone can create a pool for any token pair at an enabled fee tier; each pool is deployed via CREATE2, so its address is deterministic in (token0, token1, fee). The factory itself is immutable and its owner holds only three powers: enabling new fee tiers (fee/tickSpacing combinations, irreversible once added), being the sole address allowed to call setFeeProtocol/collectProtocol on every pool, and transferring the owner role itself. It cannot modify, pause, or upgrade existing pools.",
+  "description": "Deploys Uniswap v3 pools: anyone can create one pool per token pair and enabled fee tier, at a CREATE2 address deterministic in (token0, token1, fee). Immutable. Its owner holds exactly three powers: enable new fee tiers (irreversible), call setFeeProtocol/collectProtocol on pools, and transfer the owner role. It cannot modify, pause, or upgrade deployed pools.",
   "fields": {
     "owner": {
       "permissions": [

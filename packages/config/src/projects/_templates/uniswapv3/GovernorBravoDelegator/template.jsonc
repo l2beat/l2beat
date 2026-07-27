@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "GovernorBravoDelegator",
-  "description": "The governance proxy: UNI holders vote here. Proposals need the proposalThreshold in delegated UNI to submit, then pass through votingDelay, votingPeriod (with quorumVotes required), and finally queue into the 2-day Timelock before execution. The delegator's admin (the Timelock itself) can swap the GovernorBravoDelegate implementation, so governance logic is upgradeable, but only via a passed proposal.",
+  "description": "The governance proxy where UNI holders vote. Proposals need the proposalThreshold in delegated UNI, then pass votingDelay, votingPeriod (quorum required), and queue into the 2-day Timelock. Its admin (the Timelock) can swap the implementation, so governance logic is upgradeable - only via a passed proposal.",
   "fields": {
     "admin": {
       "permissions": [

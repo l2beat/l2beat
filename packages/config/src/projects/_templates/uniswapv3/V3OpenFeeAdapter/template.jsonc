@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "V3OpenFeeAdapter",
-  "description": "Owns the UniswapV3Factory since the UNIfication proposal and operationalizes the protocol fee switch. Governance (owner and feeSetter, both the Timelock) sets the fee schedule: a global default, per-fee-tier defaults, and per-pool overrides, each encoding the 4-bit per-side protocol fee (0 or 1/4..1/10 of LP fees; current default 68 = 1/4 both sides). Anyone can then permissionlessly push the configured fee onto any pool (triggerFeeUpdate) and collect accrued protocol fees, which are hardcoded to go to the TokenJar. The owner can also still enable new fee tiers and transfer factory ownership onward.",
+  "description": "Owns the UniswapV3Factory since the UNIfication proposal. Governance (owner and feeSetter, both the Timelock) sets the protocol-fee schedule: a global default, per-tier defaults, and per-pool overrides, each 0 or between 1/10 and 1/4 of LP fees per side. Anyone can push the configured fee onto pools and collect accrued protocol fees, which go only to the TokenJar. The owner can also enable new fee tiers and transfer factory ownership.",
   "fields": {
     "owner": {
       "permissions": [
