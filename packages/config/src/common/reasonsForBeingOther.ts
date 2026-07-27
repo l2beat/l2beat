@@ -32,11 +32,5 @@ export const REASON_FOR_BEING_OTHER = {
     shortDescription: 'The data availability committee threshold is too low',
     description:
       'Projects with a low DAC threshold rely on the honesty of few entities to safely attest data availability on Ethereum. These entities can collude with the proposer to finalize an unavailable state, which can cause loss of funds.',
-  },
-  EXTERNAL_BRIDGE: {
-    label: 'External bridge',
-    shortDescription: 'The bridge is not secured by the proof system',
-    description:
-      'Projects whose bridge is not secured by the proof system rely on the bridge and its validators to not forge deposits. A compromised bridge together with a malicious L2 operator can cause loss of funds.',
-  },
+  }
 } satisfies Record<string, ReasonForBeingInOther>
