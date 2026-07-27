@@ -1,0 +1,93 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Lido DAO's Aragon token voting application. LDO holders vote on executable DAO scripts, with configurable support, quorum, vote duration, and an objection phase.",
+  "category": "gov",
+  "ignoreMethods": ["canExecute", "getVote", "getVotePhase"],
+  "ignoreRelatives": ["getRecoveryVault"],
+  "ignoreInWatchMode": ["votesLength"],
+  "fields": {
+    "aragonPermissions": {
+      "handler": { "type": "aragonPermissions" }
+    },
+    "voteCreators": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "CREATE_VOTES_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "create executable Lido DAO votes."
+        }
+      ]
+    },
+    "supportManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "MODIFY_SUPPORT_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the minimum support required for a vote to pass."
+        }
+      ]
+    },
+    "quorumManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "MODIFY_QUORUM_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the minimum quorum required for a vote to pass."
+        }
+      ]
+    },
+    "unsafeVoteTimeManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "UNSAFELY_MODIFY_VOTE_TIME_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change vote or objection-phase durations for every existing unexecuted vote."
+        }
+      ]
+    },
+    "voteCreatorPermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "CREATE_VOTES_ROLE", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the vote-creation permission."
+        }
+      ]
+    },
+    "supportPermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "MODIFY_SUPPORT_ROLE", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the support-setting permission."
+        }
+      ]
+    },
+    "quorumPermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "MODIFY_QUORUM_ROLE", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the quorum-setting permission."
+        }
+      ]
+    },
+    "unsafeVoteTimePermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "UNSAFELY_MODIFY_VOTE_TIME_ROLE", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the unsafe vote-time permission."
+        }
+      ]
+    }
+  }
+}

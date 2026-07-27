@@ -1,0 +1,57 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Stores metadata that groups permissionless staking-module node operators, describes their operators, and assigns bond-curve weights.",
+  "category": "core",
+  "ignoreMethods": [
+    "getBondCurveWeight",
+    "getNodeOperatorGroupId",
+    "getNodeOperatorWeight",
+    "getNodeOperatorWeightAndExternalStake",
+    "getOperatorMetadata"
+  ],
+  "fields": {
+    "accessControl": {
+      "handler": { "type": "accessControl", "includeEmptyRoles": true }
+    },
+    "defaultAdmins": {
+      "copy": "accessControl",
+      "edit": ["get", "DEFAULT_ADMIN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke MetaRegistry roles."
+        }
+      ]
+    },
+    "operatorGroupManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "MANAGE_OPERATOR_GROUPS_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "create, update, and remove node-operator groups."
+        }
+      ]
+    },
+    "operatorInfoSetters": {
+      "copy": "accessControl",
+      "edit": ["get", "SET_OPERATOR_INFO_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set a node operator's metadata and group assignments."
+        }
+      ]
+    },
+    "bondCurveWeightSetters": {
+      "copy": "accessControl",
+      "edit": ["get", "SET_BOND_CURVE_WEIGHT_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the weight assigned to a bond curve."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Timelock used by Dual Governance. Governance submits and schedules batches, anyone may execute a ready batch, and time-bounded emergency committees can activate emergency mode and execute already submitted proposals without the ordinary schedule delay.",
+  "category": "gov",
+  "ignoreMethods": [
+    "canExecute",
+    "canSchedule",
+    "getProposal",
+    "getProposalCalls",
+    "getProposalDetails"
+  ],
+  "ignoreInWatchMode": ["getProposalsCount"],
+  "fields": {
+    "getGovernance": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit, schedule, and cancel timelocked proposals."
+        }
+      ]
+    },
+    "getAdminExecutor": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change timelock delays and governance, transfer executor ownership, configure emergency protection, or deactivate emergency mode before its timeout."
+        }
+      ]
+    },
+    "getEmergencyActivationCommittee": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "activate emergency mode while emergency protection is enabled."
+        }
+      ]
+    },
+    "getEmergencyExecutionCommittee": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "execute a submitted proposal without the ordinary scheduling delay during emergency mode, or reset governance to the configured emergency governance."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Emergency governance adapter. Its configured governance may submit and cancel proposals in the EmergencyProtectedTimelock; scheduling is permissionless once the submission delay has elapsed.",
+  "category": "gov",
+  "ignoreMethods": ["canScheduleProposal"],
+  "fields": {
+    "GOVERNANCE": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit emergency-governance proposals and cancel all pending proposals."
+        }
+      ]
+    }
+  }
+}

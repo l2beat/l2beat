@@ -177,4 +177,107 @@ describe(AccessControlHandler.name, () => {
       ignoreRelative: true,
     })
   })
+
+  it('does not include ABI roles which have never been granted by default', async () => {
+    const address = ChainSpecificAddress.random()
+    const provider = mockObject<IProvider>({
+      chain: 'ethereum',
+      async getLogs() {
+        return []
+      },
+    })
+
+    const handler = new AccessControlHandler(
+      'someName',
+      { type: 'accessControl' },
+      ['function WIZARD_ROLE() view returns (bytes32)'],
+    )
+    const value = await handler.execute(provider, address)
+
+    expect(value).toEqual({
+      field: 'someName',
+      value: {
+        DEFAULT_ADMIN_ROLE: {
+          adminRole: 'DEFAULT_ADMIN_ROLE',
+          members: [],
+        },
+      },
+      ignoreRelative: undefined,
+    })
+  })
+
+  it('includes ABI roles which have never been granted when configured', async () => {
+    const address = ChainSpecificAddress.random()
+    const provider = mockObject<IProvider>({
+      chain: 'ethereum',
+      async getLogs() {
+        return []
+      },
+    })
+
+    const handler = new AccessControlHandler(
+      'someName',
+      { type: 'accessControl', includeEmptyRoles: true },
+      ['function WIZARD_ROLE() view returns (bytes32)'],
+    )
+    const value = await handler.execute(provider, address)
+
+    expect(value).toEqual({
+      field: 'someName',
+      value: {
+        DEFAULT_ADMIN_ROLE: {
+          adminRole: 'DEFAULT_ADMIN_ROLE',
+          members: [],
+        },
+        WIZARD_ROLE: {
+          adminRole: 'DEFAULT_ADMIN_ROLE',
+          members: [],
+        },
+      },
+      ignoreRelative: undefined,
+    })
+  })
+
+  it('prefers an explicit hash for a role with a custom value', async () => {
+    const address = ChainSpecificAddress.random()
+    const customRole = utils.solidityKeccak256(
+      ['string'],
+      ['namespaced.WizardRole'],
+    )
+    const member = EthereumAddress.random()
+    const provider = mockObject<IProvider>({
+      chain: 'ethereum',
+      async getLogs() {
+        return [RoleGranted(customRole, member)]
+      },
+    })
+
+    const handler = new AccessControlHandler(
+      'someName',
+      {
+        type: 'accessControl',
+        includeEmptyRoles: true,
+        roleNames: { [customRole]: 'WIZARD_ROLE' },
+      },
+      ['function WIZARD_ROLE() view returns (bytes32)'],
+    )
+    const value = await handler.execute(provider, address)
+
+    expect(value).toEqual({
+      field: 'someName',
+      value: {
+        DEFAULT_ADMIN_ROLE: {
+          adminRole: 'DEFAULT_ADMIN_ROLE',
+          members: [],
+        },
+        WIZARD_ROLE: {
+          adminRole: 'DEFAULT_ADMIN_ROLE',
+          members: [
+            ChainSpecificAddress.fromLong('ethereum', member).toString(),
+          ],
+        },
+      },
+      ignoreRelative: undefined,
+    })
+  })
 })

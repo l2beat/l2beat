@@ -1,0 +1,12 @@
+{
+  "DepositSecurityModule": {
+    "hash": "0xec602317aa2fc4de0a89b5c910911635f678fb88b51a6a46f12d8b1148d95d71",
+    "address": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
+    "blockNumber": 22188285
+  },
+  "DepositSecurityModuleV3": {
+    "hash": "0xca0b27e9f594f2c113df96d8a46490f8e50e40bb6eba119a9c067b6152322fcd",
+    "address": "eth:0xF573E9E3de1f86B085417ab294f56E7920B4e9Be",
+    "blockNumber": 25624347
+  }
+}

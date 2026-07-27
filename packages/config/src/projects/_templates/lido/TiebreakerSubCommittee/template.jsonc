@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "A tiebreaker subcommittee whose members reach quorum on a proposal before forwarding it to the top-level tiebreaker committee.",
+  "category": "gov",
+  "ignoreMethods": ["getScheduleProposalState", "getSealableResumeState"],
+  "ignoreInWatchMode": ["getProposalAt", "getProposalsLength"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add or remove subcommittee members, change quorum and voting timelock, or transfer subcommittee ownership."
+        }
+      ]
+    },
+    "getMembers": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "vote to forward a proposal-scheduling or sealable-resume request to the tiebreaker core committee."
+        }
+      ]
+    }
+  }
+}

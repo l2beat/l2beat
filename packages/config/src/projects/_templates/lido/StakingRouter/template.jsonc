@@ -1,0 +1,132 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Coordinates Lido staking modules, allocates deposits and top-ups, tracks validator balances and exit states, and distributes staking rewards. Version 3 uses validator balances instead of validator counts and supports EIP-7251 compounding validators.",
+  "category": "core",
+  "ignoreMethods": [
+    "getAllNodeOperatorDigests",
+    "getDepositsAllocation",
+    "getStakingFeeAggregateDistributionE4Precision",
+    "getStakingModule",
+    "getStakingModuleSummary",
+    "hasStakingModule"
+  ],
+  "ignoreInWatchMode": [
+    "getAllStakingModuleDigests",
+    "getAllStakingModuleDigestsFrom",
+    "getModuleValidatorsBalance",
+    "getStakingFeeAggregateDistribution",
+    "getStakingModuleActiveValidatorsCount",
+    "getStakingModuleLastDepositBlock",
+    "getStakingModuleNonce",
+    "getStakingModuleStateAccounting",
+    "getStakingModuleStateDeposits",
+    "getStakingModules",
+    "getStakingRewardsDistribution",
+    "getTotalModulesValidatorsBalance"
+  ],
+  "fields": {
+    "accessControl": {
+      "handler": { "type": "accessControl", "includeEmptyRoles": true }
+    },
+    "defaultAdmins": {
+      "copy": "accessControl",
+      "edit": ["get", "DEFAULT_ADMIN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke StakingRouter roles and administer the router's privileged operations."
+        }
+      ]
+    },
+    "withdrawalCredentialsManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "MANAGE_WITHDRAWAL_CREDENTIALS_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the withdrawal credentials used for validator deposits."
+        }
+      ]
+    },
+    "stakingModuleManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "STAKING_MODULE_MANAGE_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add staking modules, change their fees and status, set deposit and top-up limits, and configure router-wide module parameters."
+        }
+      ]
+    },
+    "stakingModuleShareManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "STAKING_MODULE_SHARE_MANAGE_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change a staking module's target share and priority-exit share."
+        }
+      ]
+    },
+    "stakingModuleUnvetters": {
+      "copy": "accessControl",
+      "edit": ["get", "STAKING_MODULE_UNVETTING_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "decrease the vetted-signing-key limit of a node operator."
+        }
+      ]
+    },
+    "exitedValidatorReporters": {
+      "copy": "accessControl",
+      "edit": ["get", "REPORT_EXITED_VALIDATORS_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "report exited-validator counts and balances for staking modules and node operators."
+        }
+      ]
+    },
+    "validatorExitingStatusReporters": {
+      "copy": "accessControl",
+      "edit": ["get", "REPORT_VALIDATOR_EXITING_STATUS_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "report that validator exits have been requested and update the module's exit state."
+        }
+      ]
+    },
+    "validatorExitTriggerReporters": {
+      "copy": "accessControl",
+      "edit": ["get", "REPORT_VALIDATOR_EXIT_TRIGGERED_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "report that triggerable validator withdrawals have been submitted."
+        }
+      ]
+    },
+    "unsafeExitedValidatorSetters": {
+      "copy": "accessControl",
+      "edit": ["get", "UNSAFE_SET_EXITED_VALIDATORS_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "overwrite a staking module's exited-validator count without the normal monotonicity checks."
+        }
+      ]
+    },
+    "rewardsMintReporters": {
+      "copy": "accessControl",
+      "edit": ["get", "REPORT_REWARDS_MINTED_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "notify modules about newly minted staking rewards and advance their reward accounting."
+        }
+      ]
+    }
+  }
+}

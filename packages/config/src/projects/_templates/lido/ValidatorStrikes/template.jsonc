@@ -1,0 +1,29 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Stores the oracle-provided Merkle root of validator performance strikes. Proven strike data can cause a poor-performing validator to be ejected and penalized.",
+  "category": "core",
+  "ignoreInWatchMode": ["treeCid", "treeRoot"],
+  "fields": {
+    "accessControl": {
+      "handler": { "type": "accessControl", "includeEmptyRoles": true }
+    },
+    "defaultAdmins": {
+      "copy": "accessControl",
+      "edit": ["get", "DEFAULT_ADMIN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke ValidatorStrikes roles and change the Ejector used for poor-performing validators."
+        }
+      ]
+    },
+    "ORACLE": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the validator-strikes Merkle root and its content identifier through an oracle report."
+        }
+      ]
+    }
+  }
+}

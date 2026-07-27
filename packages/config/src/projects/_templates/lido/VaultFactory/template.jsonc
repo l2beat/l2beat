@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Permissionless factory for StakingVaults and their Dashboard management contracts. It deploys beacon proxies, initializes their code-defined authorities, and optionally connects the vault to VaultHub.",
+  "category": "core",
+  "ignoreRelatives": ["PREVIOUS_FACTORY"]
+}

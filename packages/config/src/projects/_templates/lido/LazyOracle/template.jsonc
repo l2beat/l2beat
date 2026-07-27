@@ -1,0 +1,41 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Verifies cryptographic oracle reports for individual stVaults and forwards accepted total-value, fee, and liability updates to VaultHub. Reports outside configured rate, reward, or quarantine bounds are rejected or quarantined.",
+  "category": "core",
+  "ignoreInWatchMode": [
+    "latestReportData",
+    "latestReportTimestamp",
+    "vaultsCount"
+  ],
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl",
+        "includeEmptyRoles": true,
+        "roleNames": {
+          "0x7baf7f4a9784fa74c97162de631a3eb567edeb85878cb6965945310f2c512c63": "UPDATE_SANITY_PARAMS_ROLE"
+        }
+      }
+    },
+    "defaultAdmins": {
+      "copy": "accessControl",
+      "edit": ["get", "DEFAULT_ADMIN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke LazyOracle roles."
+        }
+      ]
+    },
+    "sanityParameterManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "UPDATE_SANITY_PARAMS_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the maximum Lido fee rate, maximum reward ratio, and report quarantine period used to accept stVault reports."
+        }
+      ]
+    }
+  }
+}

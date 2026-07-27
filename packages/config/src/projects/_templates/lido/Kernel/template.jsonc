@@ -1,0 +1,32 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Lido DAO Kernel",
+  "description": "The Lido DAO's Aragon Kernel. It registers DAO applications and their implementation bases and points them to the shared ACL.",
+  "category": "gov",
+  "ignoreRelatives": ["getRecoveryVault"],
+  "fields": {
+    "aragonPermissions": {
+      "handler": { "type": "aragonPermissions" }
+    },
+    "appManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "APP_MANAGER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "install DAO apps, replace app proxies, and change application implementation bases."
+        }
+      ]
+    },
+    "appManagerPermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "APP_MANAGER_ROLE", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the Aragon application-manager permission."
+        }
+      ]
+    }
+  }
+}

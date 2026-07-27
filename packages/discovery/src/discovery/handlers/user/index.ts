@@ -6,6 +6,10 @@ import {
   AccessControlHandlerDefinition,
 } from './AccessControlHandler'
 import {
+  AragonPermissionsHandler,
+  AragonPermissionsHandlerDefinition,
+} from './AragonPermissionsHandler'
+import {
   ArbitrumActorsHandler,
   ArbitrumActorsHandlerDefinition,
 } from './ArbitrumActorsHandler'
@@ -123,6 +127,7 @@ const DEFINITIONS = [
   EventHandlerDefinition,
   StarkWareNamedStorageHandlerDefinition,
   AccessControlHandlerDefinition,
+  AragonPermissionsHandlerDefinition,
   ScrollAccessControlHandlerDefinition,
   KintoAccessControlHandlerDefinition,
   LineaRolesModuleHandlerDefinition,
@@ -164,6 +169,7 @@ export const UserHandlers: Record<HandlerType, AvailableHandlers> = {
   event: EventHandlerDefinition,
   starkWareNamedStorage: StarkWareNamedStorageHandlerDefinition,
   accessControl: AccessControlHandlerDefinition,
+  aragonPermissions: AragonPermissionsHandlerDefinition,
   kintoAccessControl: KintoAccessControlHandlerDefinition,
   scrollAccessControl: ScrollAccessControlHandlerDefinition,
   lineaRolesModule: LineaRolesModuleHandlerDefinition,
@@ -213,6 +219,8 @@ export function getUserHandler(
       return new StarkWareNamedStorageHandler(field, definition)
     case 'accessControl':
       return new AccessControlHandler(field, definition, abi)
+    case 'aragonPermissions':
+      return new AragonPermissionsHandler(field, definition, abi)
     case 'kintoAccessControl':
       return new KintoAccessControlHandler(field, definition, abi)
     case 'scrollAccessControl':
