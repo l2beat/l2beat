@@ -88,7 +88,6 @@ export function ContractsSection(props: ContractsSectionProps) {
                     <ContractEntry
                       key={technologyContractKey(contract)}
                       contract={contract}
-                      type="contracts"
                       className="my-4"
                     />
                   ))}

@@ -60,7 +60,6 @@ export function PermissionsSection({
                     <ContractEntry
                       key={technologyContractKey(permission)}
                       contract={permission}
-                      type="permissions"
                       className="my-4"
                     />
                   ))}
@@ -79,7 +78,6 @@ export function PermissionsSection({
                     <ContractEntry
                       key={technologyContractKey(permission)}
                       contract={permission}
-                      type="permissions"
                       className="my-4"
                       expandableAddresses={permission.addresses.length > 1}
                     />

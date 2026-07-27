@@ -8,3 +8,16 @@ export function getContractAddressAnchor(
 ): string {
   return `${type}-${address}`
 }
+
+export function createAddressAnchors(type: ContractAddressAnchorType) {
+  const seen = new Set<ChainSpecificAddress>()
+
+  return (address: ChainSpecificAddress): string | undefined => {
+    if (seen.has(address)) {
+      return undefined
+    }
+
+    seen.add(address)
+    return getContractAddressAnchor(type, address)
+  }
+}
