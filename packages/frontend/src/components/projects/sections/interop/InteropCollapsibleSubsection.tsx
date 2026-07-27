@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { type ReactNode, useCallback, useState } from 'react'
 import {
   Collapsible,
   CollapsibleContent,
@@ -17,10 +17,32 @@ export function InteropCollapsibleSubsection({
   defaultOpen?: boolean
   children: ReactNode
 }) {
+  const [isOpen, setIsOpen] = useState(defaultOpen)
+  const [isHashTarget, setIsHashTarget] = useState(false)
+  const ref = useCallback((node: HTMLDivElement | null) => {
+    if (!node) return
+
+    const updateIsHashTarget = () =>
+      setIsHashTarget(window.location.hash === `#${node.id}`)
+    updateIsHashTarget()
+    window.addEventListener('hashchange', updateIsHashTarget)
+
+    return () => window.removeEventListener('hashchange', updateIsHashTarget)
+  }, [])
+
+  function handleOpenChange(open: boolean) {
+    setIsOpen(open)
+    if (!open && isHashTarget) {
+      clearHash()
+    }
+  }
+
   return (
     <Collapsible
+      ref={ref}
       id={id}
-      defaultOpen={defaultOpen}
+      open={isOpen || isHashTarget}
+      onOpenChange={handleOpenChange}
       className="scroll-mt-14 rounded-lg border border-divider p-4"
     >
       <CollapsibleTrigger className="flex w-full cursor-pointer items-center justify-between gap-3">
@@ -30,4 +52,13 @@ export function InteropCollapsibleSubsection({
       <CollapsibleContent className="mt-4">{children}</CollapsibleContent>
     </Collapsible>
   )
+}
+
+function clearHash() {
+  window.history.replaceState(
+    null,
+    '',
+    `${window.location.pathname}${window.location.search}`,
+  )
+  window.dispatchEvent(new HashChangeEvent('hashchange'))
 }
