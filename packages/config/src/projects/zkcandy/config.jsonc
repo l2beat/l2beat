@@ -3,7 +3,6 @@
   "name": "zkcandy",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["eth:0xF2704433d11842d15aa76BBF0E00407267a99C92"],
-  "sharedModules": ["shared-zk-stack"],
   "names": {
     "eth:0xF2704433d11842d15aa76BBF0E00407267a99C92": "Diamond",
     "eth:0x309EfA797ec5cd324Cb473F141F95214F3a25ab2": "zkCandyZkEvmAdmin",

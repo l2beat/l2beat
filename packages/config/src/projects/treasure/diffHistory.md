@@ -1,3 +1,92 @@
+Generated with discovered.json: 0x04f765293de9e4199cc91cd7f09742beb0c5abf9
+
+# Diff at Mon, 27 Jul 2026 11:01:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@887150af6d3edad6e5fde92995bb5ecc5e48cfde block: 1753944354
+- current timestamp: 1753944354
+
+## Description
+
+shared-zk-stack now uses entrypoints rediscovery
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753944354 (main branch discovery), not current.
+
+```diff
+    contract TreasureChainAdminMultisig (eth:0x282370D1e925ee897CB29Cb3beC13aAe0743067C) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+      deployerAddress:
++        "eth:0x58551793BEeDca08a861c394258E0457e48A2FCc"
+    }
+```
+
+```diff
+    contract ValidatorTimelock2 (eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) [shared-zk-stack/ValidatorTimelock] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      sourceHashes.0:
+-        "0x5c435b3eaf489b61e623af2356a751079cfa87c079c12e5d93108d007d3b4c97"
++        "0x76c03bdcd4b9f00719cb172815067482f6e639d9e37d46cd597995d931dc26a0"
+      deployerAddress:
++        "eth:0x71d84c3404a6ae258E6471d4934B96a2033F9438"
+    }
+```
+
+```diff
+    contract Diamond (eth:0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      sourceHashes.1:
+-        "0xbceaa498ea422a98ec91f01d7b76774610e543c9efd855141de933065f32b308"
++        "0xa17c940fd2a7d029da42436da6f116a987106fed8ac22c7c3eade14b8858cd49"
+      deployerAddress:
++        "eth:0x58551793BEeDca08a861c394258E0457e48A2FCc"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) [shared-zk-stack/ValidatorTimelock] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      sourceHashes.0:
+-        "0x2221508945ceea880f5d52488af1a7466fcdfadeaf3644dc5e3b82671b7947a3"
++        "0x6308b2ae7a44c1255f5ad431f8b3d2d7da55efd35a771e2a31c87ce6b814e358"
+      deployerAddress:
++        "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16"
+    }
+```
+
+```diff
+    contract ValidiumL1DAValidator (eth:0x907b30407249949521Bf0c89A43558dae200146A) [shared-zk-stack/ValidiumL1DAValidator] {
+    +++ description: Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.
+      deployerAddress:
++        "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16"
+    }
+```
+
+```diff
+    contract TreasureZkEvmAdmin (eth:0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0x282370D1e925ee897CB29Cb3beC13aAe0743067C act through it.
+      sourceHashes.0:
+-        "0x3423f941c413d4f07703ba62723b05600f2a33f8725e8d89a53194efb05f4086"
++        "0x76a043a95de125e047fd39adec2596a1b92583f41489b33299ad421829020269"
+      deployerAddress:
++        "eth:0x58551793BEeDca08a861c394258E0457e48A2FCc"
+    }
+```
+
+```diff
+    contract Verifier (eth:0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5) [shared-zk-stack/old/Verifier] {
+    +++ description: Implements the ZK proof verification logic.
+      deployerAddress:
++        "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16"
+    }
+```
+
 Generated with discovered.json: 0x4a36379c2d288e49fecc32644c6ebff4e9d4a71d
 
 # Diff at Tue, 09 Jun 2026 12:43:40 GMT:
