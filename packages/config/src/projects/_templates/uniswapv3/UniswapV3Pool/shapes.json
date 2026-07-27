@@ -4,11 +4,5 @@
     "address": "eth:0x88e6A0c2dDD26FEEb64F039a2c41296FcB3f5640",
     "chain": "ethereum",
     "blockNumber": 25548590
-  },
-  "UniswapV3Pool_wbtcusdc": {
-    "hash": "0x04a8790cc1a7113390ea7832e6700bc92020af26bc0ab19f5a42e4963cdf57d5",
-    "address": "eth:0x99ac8cA7087fA4A2A1FB6357269965A2014ABc35",
-    "chain": "ethereum",
-    "blockNumber": 25548590
   }
 }

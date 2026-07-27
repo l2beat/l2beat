@@ -2,11 +2,6 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "uniswapv3",
   "import": ["../globalConfig.jsonc"],
-  // Pools tracked only as TVS escrows; hidden from the contracts section
-  // (the two original representative pools stay visible there).
-  "categories": {
-    "tvs-escrow": { "name": "TVS Escrows", "priority": -1 }
-  },
   "maxAddresses": 60,
   "initialAddresses": [
     // Core
@@ -16,14 +11,6 @@
     // high-TVL representatives instead of enumerating them all).
     "eth:0x88e6A0c2dDD26FEEb64F039a2c41296FcB3f5640", // USDC/WETH 0.05%
     "eth:0xCBCdF9626bC03E24f779434178A73a0B4bad62eD", // WBTC/WETH 0.3%
-    "eth:0x4e68Ccd3E89f51C3074ca5072bbAC773960dFa36", // WETH/USDT 0.3%
-    "eth:0x4585FE77225b41b697C938B018E2Ac67Ac5a20c0", // WBTC/WETH 0.05%
-    "eth:0x3416cF6C708Da44DB2624D63ea0AAef7113527C6", // USDC/USDT 0.01%
-    "eth:0x9Db9e0e53058C89e5B94e29621a205198648425B", // WBTC/USDT 0.3%
-    "eth:0x99ac8cA7087fA4A2A1FB6357269965A2014ABc35", // WBTC/USDC 0.3%
-    "eth:0xa6Cc3C2531FdaA6Ae1A3CA84c2855806728693e8", // LINK/WETH 0.3%
-    "eth:0x8ad599c3A0ff1De082011EFDDc58f1908eb6e6D8", // USDC/WETH 0.3%
-    "eth:0x1d42064Fc4Beb5F8aAF85F4617AE8b3b5B8Bd801", // UNI/WETH 0.3%
     // Periphery
     "eth:0xC36442b4a4522E871399CD717aBDD847Ab11FE88", // NonfungiblePositionManager
     "eth:0xE592427A0AEce92De3Edee1F18E0157C05861564", // SwapRouter (v1)
@@ -41,14 +28,6 @@
     "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984": "UniswapV3Factory",
     "eth:0x88e6A0c2dDD26FEEb64F039a2c41296FcB3f5640": "UniswapV3Pool_USDC_WETH_005",
     "eth:0xCBCdF9626bC03E24f779434178A73a0B4bad62eD": "UniswapV3Pool_WBTC_WETH_03",
-    "eth:0x4e68Ccd3E89f51C3074ca5072bbAC773960dFa36": "UniswapV3Pool_WETH_USDT_03",
-    "eth:0x4585FE77225b41b697C938B018E2Ac67Ac5a20c0": "UniswapV3Pool_WBTC_WETH_005",
-    "eth:0x3416cF6C708Da44DB2624D63ea0AAef7113527C6": "UniswapV3Pool_USDC_USDT_001",
-    "eth:0x9Db9e0e53058C89e5B94e29621a205198648425B": "UniswapV3Pool_WBTC_USDT_03",
-    "eth:0x99ac8cA7087fA4A2A1FB6357269965A2014ABc35": "UniswapV3Pool_WBTC_USDC_03",
-    "eth:0xa6Cc3C2531FdaA6Ae1A3CA84c2855806728693e8": "UniswapV3Pool_LINK_WETH_03",
-    "eth:0x8ad599c3A0ff1De082011EFDDc58f1908eb6e6D8": "UniswapV3Pool_USDC_WETH_03",
-    "eth:0x1d42064Fc4Beb5F8aAF85F4617AE8b3b5B8Bd801": "UniswapV3Pool_UNI_WETH_03",
     "eth:0xC36442b4a4522E871399CD717aBDD847Ab11FE88": "NonfungiblePositionManager",
     "eth:0xE592427A0AEce92De3Edee1F18E0157C05861564": "SwapRouter",
     "eth:0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45": "SwapRouter02",
@@ -60,9 +39,10 @@
     "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A": "V3OpenFeeAdapter"
   },
   "overrides": {
-    // Pools: token0/token1 are external ERC20s - keep the pools, ignore the
-    // token governance trees. Also in the UniswapV3Pool template, but kept
-    // here per address so a failed shape match can't crawl the token trees.
+    // Pools: token0/token1 are external ERC20s and the feeGrowth accumulators
+    // are large uints the relative detector can misread as addresses. Also in
+    // the UniswapV3Pool template, but kept here per address so a failed shape
+    // match can't crawl the token trees.
     "eth:0x88e6A0c2dDD26FEEb64F039a2c41296FcB3f5640": {
       "ignoreRelatives": [
         "token0",
@@ -73,86 +53,6 @@
       "ignoreMethods": ["observations"]
     },
     "eth:0xCBCdF9626bC03E24f779434178A73a0B4bad62eD": {
-      "ignoreRelatives": [
-        "token0",
-        "token1",
-        "feeGrowthGlobal0X128",
-        "feeGrowthGlobal1X128"
-      ],
-      "ignoreMethods": ["observations"]
-    },
-    "eth:0x4e68Ccd3E89f51C3074ca5072bbAC773960dFa36": {
-      "category": "tvs-escrow",
-      "ignoreRelatives": [
-        "token0",
-        "token1",
-        "feeGrowthGlobal0X128",
-        "feeGrowthGlobal1X128"
-      ],
-      "ignoreMethods": ["observations"]
-    },
-    "eth:0x4585FE77225b41b697C938B018E2Ac67Ac5a20c0": {
-      "category": "tvs-escrow",
-      "ignoreRelatives": [
-        "token0",
-        "token1",
-        "feeGrowthGlobal0X128",
-        "feeGrowthGlobal1X128"
-      ],
-      "ignoreMethods": ["observations"]
-    },
-    "eth:0x3416cF6C708Da44DB2624D63ea0AAef7113527C6": {
-      "category": "tvs-escrow",
-      "ignoreRelatives": [
-        "token0",
-        "token1",
-        "feeGrowthGlobal0X128",
-        "feeGrowthGlobal1X128"
-      ],
-      "ignoreMethods": ["observations"]
-    },
-    "eth:0x9Db9e0e53058C89e5B94e29621a205198648425B": {
-      "category": "tvs-escrow",
-      "ignoreRelatives": [
-        "token0",
-        "token1",
-        "feeGrowthGlobal0X128",
-        "feeGrowthGlobal1X128"
-      ],
-      "ignoreMethods": ["observations"]
-    },
-    "eth:0x99ac8cA7087fA4A2A1FB6357269965A2014ABc35": {
-      "category": "tvs-escrow",
-      "ignoreRelatives": [
-        "token0",
-        "token1",
-        "feeGrowthGlobal0X128",
-        "feeGrowthGlobal1X128"
-      ],
-      "ignoreMethods": ["observations"]
-    },
-    "eth:0xa6Cc3C2531FdaA6Ae1A3CA84c2855806728693e8": {
-      "category": "tvs-escrow",
-      "ignoreRelatives": [
-        "token0",
-        "token1",
-        "feeGrowthGlobal0X128",
-        "feeGrowthGlobal1X128"
-      ],
-      "ignoreMethods": ["observations"]
-    },
-    "eth:0x8ad599c3A0ff1De082011EFDDc58f1908eb6e6D8": {
-      "category": "tvs-escrow",
-      "ignoreRelatives": [
-        "token0",
-        "token1",
-        "feeGrowthGlobal0X128",
-        "feeGrowthGlobal1X128"
-      ],
-      "ignoreMethods": ["observations"]
-    },
-    "eth:0x1d42064Fc4Beb5F8aAF85F4617AE8b3b5B8Bd801": {
-      "category": "tvs-escrow",
       "ignoreRelatives": [
         "token0",
         "token1",

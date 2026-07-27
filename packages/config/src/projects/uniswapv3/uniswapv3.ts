@@ -47,20 +47,11 @@ const poolProtocolFeeDenominator = (pool: string): number =>
       .feeProtocol,
   )
 
-// The ten largest v3 mainnet pools by value (per DeFiLlama at selection
-// time) whose tokens are in the token registry; addresses verified against
-// factory.getPool. AUSD/USDC and WBTC/KBTC were skipped (tokens unlisted).
+// The two representative pools tracked for the architecture pages; value
+// tracking is external (DeFiLlama), so pools are not tracked as escrows.
 const trackedPools = [
-  { contract: 'UniswapV3Pool_USDC_WETH_005', tokens: ['USDC', 'WETH'] },
-  { contract: 'UniswapV3Pool_WETH_USDT_03', tokens: ['WETH', 'USDT'] },
-  { contract: 'UniswapV3Pool_WBTC_WETH_005', tokens: ['WBTC', 'WETH'] },
-  { contract: 'UniswapV3Pool_USDC_USDT_001', tokens: ['USDC', 'USDT'] },
-  { contract: 'UniswapV3Pool_WBTC_WETH_03', tokens: ['WBTC', 'WETH'] },
-  { contract: 'UniswapV3Pool_WBTC_USDT_03', tokens: ['WBTC', 'USDT'] },
-  { contract: 'UniswapV3Pool_WBTC_USDC_03', tokens: ['WBTC', 'USDC'] },
-  { contract: 'UniswapV3Pool_LINK_WETH_03', tokens: ['LINK', 'WETH'] },
-  { contract: 'UniswapV3Pool_USDC_WETH_03', tokens: ['USDC', 'WETH'] },
-  { contract: 'UniswapV3Pool_UNI_WETH_03', tokens: ['UNI', 'WETH'] },
+  { contract: 'UniswapV3Pool_USDC_WETH_005' },
+  { contract: 'UniswapV3Pool_WBTC_WETH_03' },
 ] as const
 
 // Live protocol-fee denominators of the tracked pools, grouped per fee tier,
@@ -189,22 +180,6 @@ export const uniswapv3: BaseProject = {
       },
     ],
     badges: [],
-  },
-  escrows: trackedPools.map(({ contract, tokens }) =>
-    discovery.getEscrowDetails({
-      address: discovery.getContract(contract).address,
-      tokens: [...tokens],
-    }),
-  ),
-  tvsInfo: {
-    associatedTokens: [],
-    warnings: [
-      {
-        value:
-          'Only the ten largest pools are tracked, so this figure undercounts the long tail of Uniswap v3’s roughly 20,000 other pools.',
-        sentiment: 'warning',
-      },
-    ],
   },
   defiInfo: {
     category: 'DEX',
