@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x694a2e487ce49a8da45e2b5c5602cdbe1ce49e8d
+Generated with discovered.json: 0x8db4b23a303e302bb9c72072f9be0a515c7ec0f0
 
-# Diff at Thu, 16 Jul 2026 23:49:16 GMT:
+# Diff at Mon, 27 Jul 2026 09:02:24 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- current timestamp: 1784245693
+- current timestamp: 1785142881
 
 ## Description
 
@@ -31,6 +31,12 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract UniswapV3Pool_UNI_WETH_03 (eth:0x1d42064Fc4Beb5F8aAF85F4617AE8b3b5B8Bd801) [uniswapv3/UniswapV3Pool]
+    +++ description: A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on price ranges expressed as ticks; the pool tracks the current price as sqrtPriceX96 in slot0 and crosses initialized ticks as swaps move the price. Swap fees accrue to in-range positions; if the protocol fee is switched on (factory owner only), up to 1/4 of the swap fee per side is diverted to protocolFees for collection by the factory owner. Each pool also embeds a TWAP oracle: a ring buffer of price observations whose cardinality anyone can grow by paying the gas.
+```
+
+```diff
++   Status: CREATED
     contract UNIToken (eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984) [uniswapv3/Uni]
     +++ description: The UNI governance token (ERC20 with delegation-based checkpoint voting). Fixed 1B initial supply; the minter (the governance Timelock) can mint at most 2% of the supply per year, no earlier than once every 365 days. Votes must be self-delegated or delegated to count. Token balances at a past block, via delegated checkpoints, are what GovernorBravo counts for proposals and voting.
 ```
@@ -43,8 +49,26 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract UniswapV3Pool_USDC_USDT_001 (eth:0x3416cF6C708Da44DB2624D63ea0AAef7113527C6) [uniswapv3/UniswapV3Pool]
+    +++ description: A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on price ranges expressed as ticks; the pool tracks the current price as sqrtPriceX96 in slot0 and crosses initialized ticks as swaps move the price. Swap fees accrue to in-range positions; if the protocol fee is switched on (factory owner only), up to 1/4 of the swap fee per side is diverted to protocolFees for collection by the factory owner. Each pool also embeds a TWAP oracle: a ring buffer of price observations whose cardinality anyone can grow by paying the gas.
+```
+
+```diff
++   Status: CREATED
     contract GovernorBravo (eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3) [uniswapv3/GovernorBravoDelegator]
     +++ description: The governance proxy: UNI holders vote here. Proposals need the proposalThreshold in delegated UNI to submit, then pass through votingDelay, votingPeriod (with quorumVotes required), and finally queue into the 2-day Timelock before execution. The delegator's admin (the Timelock itself) can swap the GovernorBravoDelegate implementation, so governance logic is upgradeable, but only via a passed proposal.
+```
+
+```diff
++   Status: CREATED
+    contract UniswapV3Pool_WBTC_WETH_005 (eth:0x4585FE77225b41b697C938B018E2Ac67Ac5a20c0) [uniswapv3/UniswapV3Pool]
+    +++ description: A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on price ranges expressed as ticks; the pool tracks the current price as sqrtPriceX96 in slot0 and crosses initialized ticks as swaps move the price. Swap fees accrue to in-range positions; if the protocol fee is switched on (factory owner only), up to 1/4 of the swap fee per side is diverted to protocolFees for collection by the factory owner. Each pool also embeds a TWAP oracle: a ring buffer of price observations whose cardinality anyone can grow by paying the gas.
+```
+
+```diff
++   Status: CREATED
+    contract UniswapV3Pool_WETH_USDT_03 (eth:0x4e68Ccd3E89f51C3074ca5072bbAC773960dFa36) [uniswapv3/UniswapV3Pool]
+    +++ description: A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on price ranges expressed as ticks; the pool tracks the current price as sqrtPriceX96 in slot0 and crosses initialized ticks as swaps move the price. Swap fees accrue to in-range positions; if the protocol fee is switched on (factory owner only), up to 1/4 of the swap fee per side is diverted to protocolFees for collection by the factory owner. Each pool also embeds a TWAP oracle: a ring buffer of price observations whose cardinality anyone can grow by paying the gas.
 ```
 
 ```diff
@@ -68,6 +92,30 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract UniswapV3Pool_USDC_WETH_005 (eth:0x88e6A0c2dDD26FEEb64F039a2c41296FcB3f5640) [uniswapv3/UniswapV3Pool]
+    +++ description: A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on price ranges expressed as ticks; the pool tracks the current price as sqrtPriceX96 in slot0 and crosses initialized ticks as swaps move the price. Swap fees accrue to in-range positions; if the protocol fee is switched on (factory owner only), up to 1/4 of the swap fee per side is diverted to protocolFees for collection by the factory owner. Each pool also embeds a TWAP oracle: a ring buffer of price observations whose cardinality anyone can grow by paying the gas.
+```
+
+```diff
++   Status: CREATED
+    contract UniswapV3Pool_USDC_WETH_03 (eth:0x8ad599c3A0ff1De082011EFDDc58f1908eb6e6D8) [uniswapv3/UniswapV3Pool]
+    +++ description: A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on price ranges expressed as ticks; the pool tracks the current price as sqrtPriceX96 in slot0 and crosses initialized ticks as swaps move the price. Swap fees accrue to in-range positions; if the protocol fee is switched on (factory owner only), up to 1/4 of the swap fee per side is diverted to protocolFees for collection by the factory owner. Each pool also embeds a TWAP oracle: a ring buffer of price observations whose cardinality anyone can grow by paying the gas.
+```
+
+```diff
++   Status: CREATED
+    contract UniswapV3Pool_WBTC_USDC_03 (eth:0x99ac8cA7087fA4A2A1FB6357269965A2014ABc35) [uniswapv3/UniswapV3Pool]
+    +++ description: A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on price ranges expressed as ticks; the pool tracks the current price as sqrtPriceX96 in slot0 and crosses initialized ticks as swaps move the price. Swap fees accrue to in-range positions; if the protocol fee is switched on (factory owner only), up to 1/4 of the swap fee per side is diverted to protocolFees for collection by the factory owner. Each pool also embeds a TWAP oracle: a ring buffer of price observations whose cardinality anyone can grow by paying the gas.
+```
+
+```diff
++   Status: CREATED
+    contract UniswapV3Pool_WBTC_USDT_03 (eth:0x9Db9e0e53058C89e5B94e29621a205198648425B) [uniswapv3/UniswapV3Pool]
+    +++ description: A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on price ranges expressed as ticks; the pool tracks the current price as sqrtPriceX96 in slot0 and crosses initialized ticks as swaps move the price. Swap fees accrue to in-range positions; if the protocol fee is switched on (factory owner only), up to 1/4 of the swap fee per side is diverted to protocolFees for collection by the factory owner. Each pool also embeds a TWAP oracle: a ring buffer of price observations whose cardinality anyone can grow by paying the gas.
+```
+
+```diff
++   Status: CREATED
+    contract UniswapV3Pool_LINK_WETH_03 (eth:0xa6Cc3C2531FdaA6Ae1A3CA84c2855806728693e8) [uniswapv3/UniswapV3Pool]
     +++ description: A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on price ranges expressed as ticks; the pool tracks the current price as sqrtPriceX96 in slot0 and crosses initialized ticks as swaps move the price. Swap fees accrue to in-range positions; if the protocol fee is switched on (factory owner only), up to 1/4 of the swap fee per side is diverted to protocolFees for collection by the factory owner. Each pool also embeds a TWAP oracle: a ring buffer of price observations whose cardinality anyone can grow by paying the gas.
 ```
 

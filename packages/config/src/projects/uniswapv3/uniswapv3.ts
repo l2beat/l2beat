@@ -47,10 +47,56 @@ const poolProtocolFeeDenominator = (pool: string): number =>
       .feeProtocol,
   )
 
+// The ten largest v3 mainnet pools by value (per DeFiLlama at selection
+// time) whose tokens are in the token registry; addresses verified against
+// factory.getPool. AUSD/USDC and WBTC/KBTC were skipped (tokens unlisted).
 const trackedPools = [
   { contract: 'UniswapV3Pool_USDC_WETH_005', tokens: ['USDC', 'WETH'] },
+  { contract: 'UniswapV3Pool_WETH_USDT_03', tokens: ['WETH', 'USDT'] },
+  { contract: 'UniswapV3Pool_WBTC_WETH_005', tokens: ['WBTC', 'WETH'] },
+  { contract: 'UniswapV3Pool_USDC_USDT_001', tokens: ['USDC', 'USDT'] },
   { contract: 'UniswapV3Pool_WBTC_WETH_03', tokens: ['WBTC', 'WETH'] },
+  { contract: 'UniswapV3Pool_WBTC_USDT_03', tokens: ['WBTC', 'USDT'] },
+  { contract: 'UniswapV3Pool_WBTC_USDC_03', tokens: ['WBTC', 'USDC'] },
+  { contract: 'UniswapV3Pool_LINK_WETH_03', tokens: ['LINK', 'WETH'] },
+  { contract: 'UniswapV3Pool_USDC_WETH_03', tokens: ['USDC', 'WETH'] },
+  { contract: 'UniswapV3Pool_UNI_WETH_03', tokens: ['UNI', 'WETH'] },
 ] as const
+
+// Live protocol-fee denominators of the tracked pools, grouped per fee tier,
+// e.g. "1/4 on the 0.01% and 0.05% tiers and 1/6 on the 0.3% tier". Throws if
+// pools within one tier diverge so the wording gets updated, not stale.
+const trackedTierProtocolFees = (() => {
+  const byTier = new Map<number, number>()
+  for (const { contract } of trackedPools) {
+    const fee = poolValue(contract, 'fee')
+    const denominator = poolProtocolFeeDenominator(contract)
+    const existing = byTier.get(fee)
+    if (existing !== undefined && existing !== denominator) {
+      throw new Error(
+        `Tier ${fee} has mixed protocol fees: update the description wording`,
+      )
+    }
+    byTier.set(fee, denominator)
+  }
+  const byDenominator = new Map<number, number[]>()
+  for (const [fee, denominator] of [...byTier.entries()].sort(
+    (a, b) => a[0] - b[0],
+  )) {
+    byDenominator.set(denominator, [
+      ...(byDenominator.get(denominator) ?? []),
+      fee,
+    ])
+  }
+  return [...byDenominator.entries()]
+    .map(
+      ([denominator, fees]) =>
+        `1/${denominator} on the ${fees
+          .map(formatFeeTier)
+          .join(' and ')} ${fees.length > 1 ? 'tiers' : 'tier'}`,
+    )
+    .join(' and ')
+})()
 
 export const uniswapv3: BaseProject = {
   id: ProjectId('uniswapv3'),
@@ -115,12 +161,8 @@ export const uniswapv3: BaseProject = {
         defaultProtocolFeeDenominator: protocolFeeDenominator(
           discovery.getContractValue<number>('V3OpenFeeAdapter', 'defaultFee'),
         ),
-        usdcWethProtocolFeeDenominator: poolProtocolFeeDenominator(
-          'UniswapV3Pool_USDC_WETH_005',
-        ),
-        wbtcWethProtocolFeeDenominator: poolProtocolFeeDenominator(
-          'UniswapV3Pool_WBTC_WETH_03',
-        ),
+        trackedPoolCount: trackedPools.length,
+        trackedTierProtocolFees,
         firepitMaxAssets: discovery.getContractValue<number>(
           'Firepit',
           'MAX_RELEASE_LENGTH',
@@ -159,7 +201,7 @@ export const uniswapv3: BaseProject = {
     warnings: [
       {
         value:
-          'Only two representative pools (USDC/WETH 0.05% and WBTC/WETH 0.3%) are tracked, so this figure is a small sample of Uniswap v3’s total value.',
+          'Only the ten largest pools are tracked, so this figure undercounts the long tail of Uniswap v3’s roughly 20,000 other pools.',
         sentiment: 'warning',
       },
     ],

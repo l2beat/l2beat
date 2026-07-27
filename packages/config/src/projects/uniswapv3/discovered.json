@@ -1,7 +1,7 @@
 {
   "name": "uniswapv3",
-  "timestamp": 1784245693,
-  "configHash": "0x02c8f5ce7230e09e675df754e9623d7100137adae80ea55b1c170ebf282d93ee",
+  "timestamp": 1785142881,
+  "configHash": "0xd9372ab4446d9389f4884b0cd1312f411ee947bcbbc348310cc580fd3c56d560",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -45,7 +45,7 @@
       "values": {
         "$immutable": true,
         "MAX_RELEASE_LENGTH": 20,
-        "nonce": 1074,
+        "nonce": 1102,
         "owner": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
         "RESOURCE": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
         "RESOURCE_RECIPIENT": "eth:0x000000000000000000000000000000000000dEaD",
@@ -136,6 +136,56 @@
       }
     },
     {
+      "name": "UniswapV3Pool_UNI_WETH_03",
+      "address": "eth:0x1d42064Fc4Beb5F8aAF85F4617AE8b3b5B8Bd801",
+      "type": "Contract",
+      "template": "uniswapv3/UniswapV3Pool",
+      "sourceHashes": [
+        "0x6884399b8c1127ed38bae4ae3af37927bb408b3a61a1b00f69a81f27d876bb82"
+      ],
+      "proxyType": "immutable",
+      "description": "A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on price ranges expressed as ticks; the pool tracks the current price as sqrtPriceX96 in slot0 and crosses initialized ticks as swaps move the price. Swap fees accrue to in-range positions; if the protocol fee is switched on (factory owner only), up to 1/4 of the swap fee per side is diverted to protocolFees for collection by the factory owner. Each pool also embeds a TWAP oracle: a ring buffer of price observations whose cardinality anyone can grow by paying the gas.",
+      "deployerAddress": "eth:0x11E4857Bb9993a50c685A79AFad4E6F65D518DDa",
+      "sinceTimestamp": 1620157956,
+      "sinceBlock": 12369739,
+      "values": {
+        "$immutable": true,
+        "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
+        "fee": 3000,
+        "feeGrowthGlobal0X128": "eth:0x1544736839940263796526488577219810945684",
+        "feeGrowthGlobal1X128": "5021382408211034462927367057256393243",
+        "liquidity": "335524022458230087245935",
+        "maxLiquidityPerTick": "11505743598341114571880798222544994",
+        "protocolFees": {
+          "token0": "10111774443969743055",
+          "token1": "25963182265983155"
+        },
+        "slot0": {
+          "sqrtPriceX96": "3529395613894434984706981881",
+          "tick": -62228,
+          "observationIndex": 138,
+          "observationCardinality": 300,
+          "observationCardinalityNext": 300,
+          "feeProtocol": 102,
+          "unlocked": true
+        },
+        "tickSpacing": 60,
+        "token0": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+        "token1": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      },
+      "fieldMeta": {
+        "slot0": {
+          "description": "Current sqrtPriceX96, tick, oracle observation index/cardinality, protocol fee setting, and the reentrancy lock; changes with every swap."
+        },
+        "protocolFees": {
+          "description": "Protocol fees accrued and not yet collected to the TokenJar; anyone can trigger collection through the V3OpenFeeAdapter."
+        }
+      },
+      "implementationNames": {
+        "eth:0x1d42064Fc4Beb5F8aAF85F4617AE8b3b5B8Bd801": "UniswapV3Pool"
+      }
+    },
+    {
       "name": "UNIToken",
       "address": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
       "type": "Contract",
@@ -205,6 +255,53 @@
       }
     },
     {
+      "name": "UniswapV3Pool_USDC_USDT_001",
+      "address": "eth:0x3416cF6C708Da44DB2624D63ea0AAef7113527C6",
+      "type": "Contract",
+      "template": "uniswapv3/UniswapV3Pool",
+      "sourceHashes": [
+        "0x6884399b8c1127ed38bae4ae3af37927bb408b3a61a1b00f69a81f27d876bb82"
+      ],
+      "proxyType": "immutable",
+      "description": "A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on price ranges expressed as ticks; the pool tracks the current price as sqrtPriceX96 in slot0 and crosses initialized ticks as swaps move the price. Swap fees accrue to in-range positions; if the protocol fee is switched on (factory owner only), up to 1/4 of the swap fee per side is diverted to protocolFees for collection by the factory owner. Each pool also embeds a TWAP oracle: a ring buffer of price observations whose cardinality anyone can grow by paying the gas.",
+      "deployerAddress": "eth:0x908841a9D510941bc5F1d4712eB47f8196B46D90",
+      "sinceTimestamp": 1636825557,
+      "sinceBlock": 13609065,
+      "values": {
+        "$immutable": true,
+        "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
+        "fee": 100,
+        "feeGrowthGlobal0X128": "3975050197368334657822385728789889114",
+        "feeGrowthGlobal1X128": "6606962878679808094230124674088262779",
+        "liquidity": "28494215637541956",
+        "maxLiquidityPerTick": "191757530477355301479181766273477",
+        "protocolFees": { "token0": 10298601, "token1": 5751501 },
+        "slot0": {
+          "sqrtPriceX96": "79258352033591373038005619270",
+          "tick": 7,
+          "observationIndex": 68,
+          "observationCardinality": 180,
+          "observationCardinalityNext": 180,
+          "feeProtocol": 68,
+          "unlocked": true
+        },
+        "tickSpacing": 1,
+        "token0": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "token1": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7"
+      },
+      "fieldMeta": {
+        "slot0": {
+          "description": "Current sqrtPriceX96, tick, oracle observation index/cardinality, protocol fee setting, and the reentrancy lock; changes with every swap."
+        },
+        "protocolFees": {
+          "description": "Protocol fees accrued and not yet collected to the TokenJar; anyone can trigger collection through the V3OpenFeeAdapter."
+        }
+      },
+      "implementationNames": {
+        "eth:0x3416cF6C708Da44DB2624D63ea0AAef7113527C6": "UniswapV3Pool"
+      }
+    },
+    {
       "name": "GovernorBravo",
       "address": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
       "type": "Contract",
@@ -230,7 +327,7 @@
         "admin": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
         "implementation": "eth:0x53a328F4086d7C0F1Fa19e594c9b842125263026",
         "pendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "proposalCount": 98,
+        "proposalCount": 100,
         "proposalThreshold": "1000000000000000000000000",
         "quorumVotes": "40000000000000000000000000",
         "votingDelay": 13140,
@@ -251,6 +348,100 @@
       },
       "implementationNames": {
         "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3": "GovernorBravoDelegator"
+      }
+    },
+    {
+      "name": "UniswapV3Pool_WBTC_WETH_005",
+      "address": "eth:0x4585FE77225b41b697C938B018E2Ac67Ac5a20c0",
+      "type": "Contract",
+      "template": "uniswapv3/UniswapV3Pool",
+      "sourceHashes": [
+        "0x6884399b8c1127ed38bae4ae3af37927bb408b3a61a1b00f69a81f27d876bb82"
+      ],
+      "proxyType": "immutable",
+      "description": "A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on price ranges expressed as ticks; the pool tracks the current price as sqrtPriceX96 in slot0 and crosses initialized ticks as swaps move the price. Swap fees accrue to in-range positions; if the protocol fee is switched on (factory owner only), up to 1/4 of the swap fee per side is diverted to protocolFees for collection by the factory owner. Each pool also embeds a TWAP oracle: a ring buffer of price observations whose cardinality anyone can grow by paying the gas.",
+      "deployerAddress": "eth:0x4bb4c1B0745ef7B4642fEECcd0740deC417ca0a0",
+      "sinceTimestamp": 1620246230,
+      "sinceBlock": 12376387,
+      "values": {
+        "$immutable": true,
+        "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
+        "fee": 500,
+        "feeGrowthGlobal0X128": "61352755536587343396877846391937",
+        "feeGrowthGlobal1X128": "13703209264272247432818790360027488993196782",
+        "liquidity": "143808289107458545",
+        "maxLiquidityPerTick": "1917569901783203986719870431555990",
+        "protocolFees": { "token0": 129147, "token1": "37131038921949920" },
+        "slot0": {
+          "sqrtPriceX96": "45637774898817605327925504150413854",
+          "tick": 265291,
+          "observationIndex": 67,
+          "observationCardinality": 300,
+          "observationCardinalityNext": 300,
+          "feeProtocol": 68,
+          "unlocked": true
+        },
+        "tickSpacing": 10,
+        "token0": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "token1": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      },
+      "fieldMeta": {
+        "slot0": {
+          "description": "Current sqrtPriceX96, tick, oracle observation index/cardinality, protocol fee setting, and the reentrancy lock; changes with every swap."
+        },
+        "protocolFees": {
+          "description": "Protocol fees accrued and not yet collected to the TokenJar; anyone can trigger collection through the V3OpenFeeAdapter."
+        }
+      },
+      "implementationNames": {
+        "eth:0x4585FE77225b41b697C938B018E2Ac67Ac5a20c0": "UniswapV3Pool"
+      }
+    },
+    {
+      "name": "UniswapV3Pool_WETH_USDT_03",
+      "address": "eth:0x4e68Ccd3E89f51C3074ca5072bbAC773960dFa36",
+      "type": "Contract",
+      "template": "uniswapv3/UniswapV3Pool",
+      "sourceHashes": [
+        "0x6884399b8c1127ed38bae4ae3af37927bb408b3a61a1b00f69a81f27d876bb82"
+      ],
+      "proxyType": "immutable",
+      "description": "A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on price ranges expressed as ticks; the pool tracks the current price as sqrtPriceX96 in slot0 and crosses initialized ticks as swaps move the price. Swap fees accrue to in-range positions; if the protocol fee is switched on (factory owner only), up to 1/4 of the swap fee per side is diverted to protocolFees for collection by the factory owner. Each pool also embeds a TWAP oracle: a ring buffer of price observations whose cardinality anyone can grow by paying the gas.",
+      "deployerAddress": "eth:0xE14722B5f1aa6ea161E547c5ca598068Ec1B3bC0",
+      "sinceTimestamp": 1620232628,
+      "sinceBlock": 12375326,
+      "values": {
+        "$immutable": true,
+        "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
+        "fee": 3000,
+        "feeGrowthGlobal0X128": "2530144553722863282306415231816829806931527",
+        "feeGrowthGlobal1X128": "5887701560009676177652632711724117",
+        "liquidity": "9182949409104373531",
+        "maxLiquidityPerTick": "11505743598341114571880798222544994",
+        "protocolFees": { "token0": "117872221061868484", "token1": 5210898 },
+        "slot0": {
+          "sqrtPriceX96": "3513516986730089073933412",
+          "tick": -200480,
+          "observationIndex": 290,
+          "observationCardinality": 360,
+          "observationCardinalityNext": 360,
+          "feeProtocol": 102,
+          "unlocked": true
+        },
+        "tickSpacing": 60,
+        "token0": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "token1": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7"
+      },
+      "fieldMeta": {
+        "slot0": {
+          "description": "Current sqrtPriceX96, tick, oracle observation index/cardinality, protocol fee setting, and the reentrancy lock; changes with every swap."
+        },
+        "protocolFees": {
+          "description": "Protocol fees accrued and not yet collected to the TokenJar; anyone can trigger collection through the V3OpenFeeAdapter."
+        }
+      },
+      "implementationNames": {
+        "eth:0x4e68Ccd3E89f51C3074ca5072bbAC773960dFa36": "UniswapV3Pool"
       }
     },
     {
@@ -364,18 +555,15 @@
         "$immutable": true,
         "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
         "fee": 500,
-        "feeGrowthGlobal0X128": "4798608121941249129607952460854648",
-        "feeGrowthGlobal1X128": "2043894740129912328975131650765808025900385",
-        "liquidity": "6273709110565216059",
+        "feeGrowthGlobal0X128": "4804024515504269485383462341527740",
+        "feeGrowthGlobal1X128": "2046690371830865459097395933838844998851557",
+        "liquidity": "14330606143994432258",
         "maxLiquidityPerTick": "1917569901783203986719870431555990",
-        "protocolFees": {
-          "token0": 1071885336,
-          "token1": "670951790286582784"
-        },
+        "protocolFees": { "token0": 855604606, "token1": "576234972370315330" },
         "slot0": {
-          "sqrtPriceX96": "1836112529934583113340373133837903",
-          "tick": 201026,
-          "observationIndex": 532,
+          "sqrtPriceX96": "1789543224680875233866229568196512",
+          "tick": 200512,
+          "observationIndex": 607,
           "observationCardinality": 723,
           "observationCardinalityNext": 723,
           "feeProtocol": 68,
@@ -395,6 +583,197 @@
       },
       "implementationNames": {
         "eth:0x88e6A0c2dDD26FEEb64F039a2c41296FcB3f5640": "UniswapV3Pool"
+      }
+    },
+    {
+      "name": "UniswapV3Pool_USDC_WETH_03",
+      "address": "eth:0x8ad599c3A0ff1De082011EFDDc58f1908eb6e6D8",
+      "type": "Contract",
+      "template": "uniswapv3/UniswapV3Pool",
+      "sourceHashes": [
+        "0x6884399b8c1127ed38bae4ae3af37927bb408b3a61a1b00f69a81f27d876bb82"
+      ],
+      "proxyType": "immutable",
+      "description": "A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on price ranges expressed as ticks; the pool tracks the current price as sqrtPriceX96 in slot0 and crosses initialized ticks as swaps move the price. Swap fees accrue to in-range positions; if the protocol fee is switched on (factory owner only), up to 1/4 of the swap fee per side is diverted to protocolFees for collection by the factory owner. Each pool also embeds a TWAP oracle: a ring buffer of price observations whose cardinality anyone can grow by paying the gas.",
+      "deployerAddress": "eth:0x3b8ccaa89FcD432f1334D35b10fF8547001Ce3e5",
+      "sinceTimestamp": 1620169800,
+      "sinceBlock": 12370624,
+      "values": {
+        "$immutable": true,
+        "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
+        "fee": 3000,
+        "feeGrowthGlobal0X128": "5855179542064346416868437450196343",
+        "feeGrowthGlobal1X128": "2492917838026554991069718108567524897605568",
+        "liquidity": "539519506158154884",
+        "maxLiquidityPerTick": "11505743598341114571880798222544994",
+        "protocolFees": { "token0": 1234522, "token1": 7399358727824015 },
+        "slot0": {
+          "sqrtPriceX96": "1787340748559491233433101278443347",
+          "tick": 200488,
+          "observationIndex": 522,
+          "observationCardinality": 1440,
+          "observationCardinalityNext": 1440,
+          "feeProtocol": 102,
+          "unlocked": true
+        },
+        "tickSpacing": 60,
+        "token0": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "token1": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      },
+      "fieldMeta": {
+        "slot0": {
+          "description": "Current sqrtPriceX96, tick, oracle observation index/cardinality, protocol fee setting, and the reentrancy lock; changes with every swap."
+        },
+        "protocolFees": {
+          "description": "Protocol fees accrued and not yet collected to the TokenJar; anyone can trigger collection through the V3OpenFeeAdapter."
+        }
+      },
+      "implementationNames": {
+        "eth:0x8ad599c3A0ff1De082011EFDDc58f1908eb6e6D8": "UniswapV3Pool"
+      }
+    },
+    {
+      "name": "UniswapV3Pool_WBTC_USDC_03",
+      "address": "eth:0x99ac8cA7087fA4A2A1FB6357269965A2014ABc35",
+      "type": "Contract",
+      "template": "uniswapv3/UniswapV3Pool",
+      "sourceHashes": [
+        "0x04a8790cc1a7113390ea7832e6700bc92020af26bc0ab19f5a42e4963cdf57d5"
+      ],
+      "proxyType": "immutable",
+      "description": "A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on price ranges expressed as ticks; the pool tracks the current price as sqrtPriceX96 in slot0 and crosses initialized ticks as swaps move the price. Swap fees accrue to in-range positions; if the protocol fee is switched on (factory owner only), up to 1/4 of the swap fee per side is diverted to protocolFees for collection by the factory owner. Each pool also embeds a TWAP oracle: a ring buffer of price observations whose cardinality anyone can grow by paying the gas.",
+      "deployerAddress": "eth:0x3c92E144062297cFD08a5a9BAaB59AaabD3231F3",
+      "sinceTimestamp": 1620241995,
+      "sinceBlock": 12376048,
+      "values": {
+        "$immutable": true,
+        "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
+        "fee": 3000,
+        "feeGrowthGlobal0X128": "3688304950319837990056378667775523405",
+        "feeGrowthGlobal1X128": "eth:0x1622021451203962663958553124002452791149",
+        "liquidity": 2077047343516,
+        "maxLiquidityPerTick": "11505743598341114571880798222544994",
+        "protocolFees": { "token0": 72084, "token1": 1 },
+        "slot0": {
+          "sqrtPriceX96": "2023548721353320422255405638614",
+          "tick": 64808,
+          "observationIndex": 10,
+          "observationCardinality": 600,
+          "observationCardinalityNext": 600,
+          "feeProtocol": 102,
+          "unlocked": true
+        },
+        "tickSpacing": 60,
+        "token0": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "token1": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      },
+      "fieldMeta": {
+        "slot0": {
+          "description": "Current sqrtPriceX96, tick, oracle observation index/cardinality, protocol fee setting, and the reentrancy lock; changes with every swap."
+        },
+        "protocolFees": {
+          "description": "Protocol fees accrued and not yet collected to the TokenJar; anyone can trigger collection through the V3OpenFeeAdapter."
+        }
+      },
+      "implementationNames": {
+        "eth:0x99ac8cA7087fA4A2A1FB6357269965A2014ABc35": "UniswapV3Pool_VerifiedByNG"
+      }
+    },
+    {
+      "name": "UniswapV3Pool_WBTC_USDT_03",
+      "address": "eth:0x9Db9e0e53058C89e5B94e29621a205198648425B",
+      "type": "Contract",
+      "template": "uniswapv3/UniswapV3Pool",
+      "sourceHashes": [
+        "0x6884399b8c1127ed38bae4ae3af37927bb408b3a61a1b00f69a81f27d876bb82"
+      ],
+      "proxyType": "immutable",
+      "description": "A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on price ranges expressed as ticks; the pool tracks the current price as sqrtPriceX96 in slot0 and crosses initialized ticks as swaps move the price. Swap fees accrue to in-range positions; if the protocol fee is switched on (factory owner only), up to 1/4 of the swap fee per side is diverted to protocolFees for collection by the factory owner. Each pool also embeds a TWAP oracle: a ring buffer of price observations whose cardinality anyone can grow by paying the gas.",
+      "deployerAddress": "eth:0x3c92E144062297cFD08a5a9BAaB59AaabD3231F3",
+      "sinceTimestamp": 1620242513,
+      "sinceBlock": 12376091,
+      "values": {
+        "$immutable": true,
+        "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
+        "fee": 3000,
+        "feeGrowthGlobal0X128": "5908376457868735900011284071596526595",
+        "feeGrowthGlobal1X128": "eth:0x1432852622871785543315650760188066284370",
+        "liquidity": 2708028518135,
+        "maxLiquidityPerTick": "11505743598341114571880798222544994",
+        "protocolFees": { "token0": 83336, "token1": 1 },
+        "slot0": {
+          "sqrtPriceX96": "2024405504225598858280764216703",
+          "tick": 64817,
+          "observationIndex": 10,
+          "observationCardinality": 51,
+          "observationCardinalityNext": 51,
+          "feeProtocol": 102,
+          "unlocked": true
+        },
+        "tickSpacing": 60,
+        "token0": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "token1": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7"
+      },
+      "fieldMeta": {
+        "slot0": {
+          "description": "Current sqrtPriceX96, tick, oracle observation index/cardinality, protocol fee setting, and the reentrancy lock; changes with every swap."
+        },
+        "protocolFees": {
+          "description": "Protocol fees accrued and not yet collected to the TokenJar; anyone can trigger collection through the V3OpenFeeAdapter."
+        }
+      },
+      "implementationNames": {
+        "eth:0x9Db9e0e53058C89e5B94e29621a205198648425B": "UniswapV3Pool"
+      }
+    },
+    {
+      "name": "UniswapV3Pool_LINK_WETH_03",
+      "address": "eth:0xa6Cc3C2531FdaA6Ae1A3CA84c2855806728693e8",
+      "type": "Contract",
+      "template": "uniswapv3/UniswapV3Pool",
+      "sourceHashes": [
+        "0x6884399b8c1127ed38bae4ae3af37927bb408b3a61a1b00f69a81f27d876bb82"
+      ],
+      "proxyType": "immutable",
+      "description": "A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on price ranges expressed as ticks; the pool tracks the current price as sqrtPriceX96 in slot0 and crosses initialized ticks as swaps move the price. Swap fees accrue to in-range positions; if the protocol fee is switched on (factory owner only), up to 1/4 of the swap fee per side is diverted to protocolFees for collection by the factory owner. Each pool also embeds a TWAP oracle: a ring buffer of price observations whose cardinality anyone can grow by paying the gas.",
+      "deployerAddress": "eth:0x726022a9fe1322fA9590FB244b8164936bB00489",
+      "sinceTimestamp": 1620237038,
+      "sinceBlock": 12375680,
+      "values": {
+        "$immutable": true,
+        "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
+        "fee": 3000,
+        "feeGrowthGlobal0X128": "eth:0x1220739309810691462011109785053343460495",
+        "feeGrowthGlobal1X128": "6771242298951818172504159403569426936",
+        "liquidity": "1083930277498726348450262",
+        "maxLiquidityPerTick": "11505743598341114571880798222544994",
+        "protocolFees": {
+          "token0": "19597573989791474611",
+          "token1": 623303333909
+        },
+        "slot0": {
+          "sqrtPriceX96": "5309201085983412865088591787",
+          "tick": -54061,
+          "observationIndex": 311,
+          "observationCardinality": 360,
+          "observationCardinalityNext": 360,
+          "feeProtocol": 102,
+          "unlocked": true
+        },
+        "tickSpacing": 60,
+        "token0": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
+        "token1": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      },
+      "fieldMeta": {
+        "slot0": {
+          "description": "Current sqrtPriceX96, tick, oracle observation index/cardinality, protocol fee setting, and the reentrancy lock; changes with every swap."
+        },
+        "protocolFees": {
+          "description": "Protocol fees accrued and not yet collected to the TokenJar; anyone can trigger collection through the V3OpenFeeAdapter."
+        }
+      },
+      "implementationNames": {
+        "eth:0xa6Cc3C2531FdaA6Ae1A3CA84c2855806728693e8": "UniswapV3Pool"
       }
     },
     {
@@ -418,7 +797,7 @@
         "name": "Uniswap V3 Positions NFT-V1",
         "PERMIT_TYPEHASH": "0x49ecf333e5b8c95c40fdafc95c1ad136e8914a8fb55e9dc8bb01eaa83a2df9ad",
         "symbol": "UNI-V3-POS",
-        "totalSupply": 1200800,
+        "totalSupply": 1205552,
         "WETH9": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "fieldMeta": {
@@ -447,15 +826,15 @@
         "$immutable": true,
         "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
         "fee": 3000,
-        "feeGrowthGlobal0X128": "69241105683657916874498192617506",
-        "feeGrowthGlobal1X128": "15562456917453694942879770397339290342307568",
-        "liquidity": "27370107355797827",
+        "feeGrowthGlobal0X128": "69311166892379228101744215307792",
+        "feeGrowthGlobal1X128": "15578899721161436372453224508378802472567015",
+        "liquidity": "32234247669213515",
         "maxLiquidityPerTick": "11505743598341114571880798222544994",
-        "protocolFees": { "token0": 21860, "token1": 3010226584616348 },
+        "protocolFees": { "token0": 36181, "token1": 1 },
         "slot0": {
-          "sqrtPriceX96": "46351888580884272208588919928623131",
-          "tick": 265602,
-          "observationIndex": 77,
+          "sqrtPriceX96": "45658358058908858729102469988129611",
+          "tick": 265300,
+          "observationIndex": 298,
           "observationCardinality": 360,
           "observationCardinalityNext": 360,
           "feeProtocol": 102,
@@ -647,6 +1026,44 @@
       "function setDelay(uint256 delay_)",
       "function setPendingAdmin(address pendingAdmin_)"
     ],
+    "eth:0x1d42064Fc4Beb5F8aAF85F4617AE8b3b5B8Bd801": [
+      "constructor()",
+      "event Burn(address indexed owner, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount, uint256 amount0, uint256 amount1)",
+      "event Collect(address indexed owner, address recipient, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount0, uint128 amount1)",
+      "event CollectProtocol(address indexed sender, address indexed recipient, uint128 amount0, uint128 amount1)",
+      "event Flash(address indexed sender, address indexed recipient, uint256 amount0, uint256 amount1, uint256 paid0, uint256 paid1)",
+      "event IncreaseObservationCardinalityNext(uint16 observationCardinalityNextOld, uint16 observationCardinalityNextNew)",
+      "event Initialize(uint160 sqrtPriceX96, int24 tick)",
+      "event Mint(address sender, address indexed owner, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount, uint256 amount0, uint256 amount1)",
+      "event SetFeeProtocol(uint8 feeProtocol0Old, uint8 feeProtocol1Old, uint8 feeProtocol0New, uint8 feeProtocol1New)",
+      "event Swap(address indexed sender, address indexed recipient, int256 amount0, int256 amount1, uint160 sqrtPriceX96, uint128 liquidity, int24 tick)",
+      "function burn(int24 tickLower, int24 tickUpper, uint128 amount) returns (uint256 amount0, uint256 amount1)",
+      "function collect(address recipient, int24 tickLower, int24 tickUpper, uint128 amount0Requested, uint128 amount1Requested) returns (uint128 amount0, uint128 amount1)",
+      "function collectProtocol(address recipient, uint128 amount0Requested, uint128 amount1Requested) returns (uint128 amount0, uint128 amount1)",
+      "function factory() view returns (address)",
+      "function fee() view returns (uint24)",
+      "function feeGrowthGlobal0X128() view returns (uint256)",
+      "function feeGrowthGlobal1X128() view returns (uint256)",
+      "function flash(address recipient, uint256 amount0, uint256 amount1, bytes data)",
+      "function increaseObservationCardinalityNext(uint16 observationCardinalityNext)",
+      "function initialize(uint160 sqrtPriceX96)",
+      "function liquidity() view returns (uint128)",
+      "function maxLiquidityPerTick() view returns (uint128)",
+      "function mint(address recipient, int24 tickLower, int24 tickUpper, uint128 amount, bytes data) returns (uint256 amount0, uint256 amount1)",
+      "function observations(uint256) view returns (uint32 blockTimestamp, int56 tickCumulative, uint160 secondsPerLiquidityCumulativeX128, bool initialized)",
+      "function observe(uint32[] secondsAgos) view returns (int56[] tickCumulatives, uint160[] secondsPerLiquidityCumulativeX128s)",
+      "function positions(bytes32) view returns (uint128 liquidity, uint256 feeGrowthInside0LastX128, uint256 feeGrowthInside1LastX128, uint128 tokensOwed0, uint128 tokensOwed1)",
+      "function protocolFees() view returns (uint128 token0, uint128 token1)",
+      "function setFeeProtocol(uint8 feeProtocol0, uint8 feeProtocol1)",
+      "function slot0() view returns (uint160 sqrtPriceX96, int24 tick, uint16 observationIndex, uint16 observationCardinality, uint16 observationCardinalityNext, uint8 feeProtocol, bool unlocked)",
+      "function snapshotCumulativesInside(int24 tickLower, int24 tickUpper) view returns (int56 tickCumulativeInside, uint160 secondsPerLiquidityInsideX128, uint32 secondsInside)",
+      "function swap(address recipient, bool zeroForOne, int256 amountSpecified, uint160 sqrtPriceLimitX96, bytes data) returns (int256 amount0, int256 amount1)",
+      "function tickBitmap(int16) view returns (uint256)",
+      "function tickSpacing() view returns (int24)",
+      "function ticks(int24) view returns (uint128 liquidityGross, int128 liquidityNet, uint256 feeGrowthOutside0X128, uint256 feeGrowthOutside1X128, int56 tickCumulativeOutside, uint160 secondsPerLiquidityOutsideX128, uint32 secondsOutside, bool initialized)",
+      "function token0() view returns (address)",
+      "function token1() view returns (address)"
+    ],
     "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984": [
       "constructor(address account, address minter_, uint256 mintingAllowedAfter_)",
       "event Approval(address indexed owner, address indexed spender, uint256 amount)",
@@ -695,6 +1112,44 @@
       "function parameters() view returns (address factory, address token0, address token1, uint24 fee, int24 tickSpacing)",
       "function setOwner(address _owner)"
     ],
+    "eth:0x3416cF6C708Da44DB2624D63ea0AAef7113527C6": [
+      "constructor()",
+      "event Burn(address indexed owner, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount, uint256 amount0, uint256 amount1)",
+      "event Collect(address indexed owner, address recipient, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount0, uint128 amount1)",
+      "event CollectProtocol(address indexed sender, address indexed recipient, uint128 amount0, uint128 amount1)",
+      "event Flash(address indexed sender, address indexed recipient, uint256 amount0, uint256 amount1, uint256 paid0, uint256 paid1)",
+      "event IncreaseObservationCardinalityNext(uint16 observationCardinalityNextOld, uint16 observationCardinalityNextNew)",
+      "event Initialize(uint160 sqrtPriceX96, int24 tick)",
+      "event Mint(address sender, address indexed owner, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount, uint256 amount0, uint256 amount1)",
+      "event SetFeeProtocol(uint8 feeProtocol0Old, uint8 feeProtocol1Old, uint8 feeProtocol0New, uint8 feeProtocol1New)",
+      "event Swap(address indexed sender, address indexed recipient, int256 amount0, int256 amount1, uint160 sqrtPriceX96, uint128 liquidity, int24 tick)",
+      "function burn(int24 tickLower, int24 tickUpper, uint128 amount) returns (uint256 amount0, uint256 amount1)",
+      "function collect(address recipient, int24 tickLower, int24 tickUpper, uint128 amount0Requested, uint128 amount1Requested) returns (uint128 amount0, uint128 amount1)",
+      "function collectProtocol(address recipient, uint128 amount0Requested, uint128 amount1Requested) returns (uint128 amount0, uint128 amount1)",
+      "function factory() view returns (address)",
+      "function fee() view returns (uint24)",
+      "function feeGrowthGlobal0X128() view returns (uint256)",
+      "function feeGrowthGlobal1X128() view returns (uint256)",
+      "function flash(address recipient, uint256 amount0, uint256 amount1, bytes data)",
+      "function increaseObservationCardinalityNext(uint16 observationCardinalityNext)",
+      "function initialize(uint160 sqrtPriceX96)",
+      "function liquidity() view returns (uint128)",
+      "function maxLiquidityPerTick() view returns (uint128)",
+      "function mint(address recipient, int24 tickLower, int24 tickUpper, uint128 amount, bytes data) returns (uint256 amount0, uint256 amount1)",
+      "function observations(uint256) view returns (uint32 blockTimestamp, int56 tickCumulative, uint160 secondsPerLiquidityCumulativeX128, bool initialized)",
+      "function observe(uint32[] secondsAgos) view returns (int56[] tickCumulatives, uint160[] secondsPerLiquidityCumulativeX128s)",
+      "function positions(bytes32) view returns (uint128 liquidity, uint256 feeGrowthInside0LastX128, uint256 feeGrowthInside1LastX128, uint128 tokensOwed0, uint128 tokensOwed1)",
+      "function protocolFees() view returns (uint128 token0, uint128 token1)",
+      "function setFeeProtocol(uint8 feeProtocol0, uint8 feeProtocol1)",
+      "function slot0() view returns (uint160 sqrtPriceX96, int24 tick, uint16 observationIndex, uint16 observationCardinality, uint16 observationCardinalityNext, uint8 feeProtocol, bool unlocked)",
+      "function snapshotCumulativesInside(int24 tickLower, int24 tickUpper) view returns (int56 tickCumulativeInside, uint160 secondsPerLiquidityInsideX128, uint32 secondsInside)",
+      "function swap(address recipient, bool zeroForOne, int256 amountSpecified, uint160 sqrtPriceLimitX96, bytes data) returns (int256 amount0, int256 amount1)",
+      "function tickBitmap(int16) view returns (uint256)",
+      "function tickSpacing() view returns (int24)",
+      "function ticks(int24) view returns (uint128 liquidityGross, int128 liquidityNet, uint256 feeGrowthOutside0X128, uint256 feeGrowthOutside1X128, int56 tickCumulativeOutside, uint160 secondsPerLiquidityOutsideX128, uint32 secondsOutside, bool initialized)",
+      "function token0() view returns (address)",
+      "function token1() view returns (address)"
+    ],
     "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3": [
       "constructor(address timelock_, address uni_, address admin_, address implementation_, uint256 votingPeriod_, uint256 votingDelay_, uint256 proposalThreshold_)",
       "event NewAdmin(address oldAdmin, address newAdmin)",
@@ -712,6 +1167,82 @@
       "function admin() view returns (address)",
       "function implementation() view returns (address)",
       "function pendingAdmin() view returns (address)"
+    ],
+    "eth:0x4585FE77225b41b697C938B018E2Ac67Ac5a20c0": [
+      "constructor()",
+      "event Burn(address indexed owner, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount, uint256 amount0, uint256 amount1)",
+      "event Collect(address indexed owner, address recipient, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount0, uint128 amount1)",
+      "event CollectProtocol(address indexed sender, address indexed recipient, uint128 amount0, uint128 amount1)",
+      "event Flash(address indexed sender, address indexed recipient, uint256 amount0, uint256 amount1, uint256 paid0, uint256 paid1)",
+      "event IncreaseObservationCardinalityNext(uint16 observationCardinalityNextOld, uint16 observationCardinalityNextNew)",
+      "event Initialize(uint160 sqrtPriceX96, int24 tick)",
+      "event Mint(address sender, address indexed owner, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount, uint256 amount0, uint256 amount1)",
+      "event SetFeeProtocol(uint8 feeProtocol0Old, uint8 feeProtocol1Old, uint8 feeProtocol0New, uint8 feeProtocol1New)",
+      "event Swap(address indexed sender, address indexed recipient, int256 amount0, int256 amount1, uint160 sqrtPriceX96, uint128 liquidity, int24 tick)",
+      "function burn(int24 tickLower, int24 tickUpper, uint128 amount) returns (uint256 amount0, uint256 amount1)",
+      "function collect(address recipient, int24 tickLower, int24 tickUpper, uint128 amount0Requested, uint128 amount1Requested) returns (uint128 amount0, uint128 amount1)",
+      "function collectProtocol(address recipient, uint128 amount0Requested, uint128 amount1Requested) returns (uint128 amount0, uint128 amount1)",
+      "function factory() view returns (address)",
+      "function fee() view returns (uint24)",
+      "function feeGrowthGlobal0X128() view returns (uint256)",
+      "function feeGrowthGlobal1X128() view returns (uint256)",
+      "function flash(address recipient, uint256 amount0, uint256 amount1, bytes data)",
+      "function increaseObservationCardinalityNext(uint16 observationCardinalityNext)",
+      "function initialize(uint160 sqrtPriceX96)",
+      "function liquidity() view returns (uint128)",
+      "function maxLiquidityPerTick() view returns (uint128)",
+      "function mint(address recipient, int24 tickLower, int24 tickUpper, uint128 amount, bytes data) returns (uint256 amount0, uint256 amount1)",
+      "function observations(uint256) view returns (uint32 blockTimestamp, int56 tickCumulative, uint160 secondsPerLiquidityCumulativeX128, bool initialized)",
+      "function observe(uint32[] secondsAgos) view returns (int56[] tickCumulatives, uint160[] secondsPerLiquidityCumulativeX128s)",
+      "function positions(bytes32) view returns (uint128 liquidity, uint256 feeGrowthInside0LastX128, uint256 feeGrowthInside1LastX128, uint128 tokensOwed0, uint128 tokensOwed1)",
+      "function protocolFees() view returns (uint128 token0, uint128 token1)",
+      "function setFeeProtocol(uint8 feeProtocol0, uint8 feeProtocol1)",
+      "function slot0() view returns (uint160 sqrtPriceX96, int24 tick, uint16 observationIndex, uint16 observationCardinality, uint16 observationCardinalityNext, uint8 feeProtocol, bool unlocked)",
+      "function snapshotCumulativesInside(int24 tickLower, int24 tickUpper) view returns (int56 tickCumulativeInside, uint160 secondsPerLiquidityInsideX128, uint32 secondsInside)",
+      "function swap(address recipient, bool zeroForOne, int256 amountSpecified, uint160 sqrtPriceLimitX96, bytes data) returns (int256 amount0, int256 amount1)",
+      "function tickBitmap(int16) view returns (uint256)",
+      "function tickSpacing() view returns (int24)",
+      "function ticks(int24) view returns (uint128 liquidityGross, int128 liquidityNet, uint256 feeGrowthOutside0X128, uint256 feeGrowthOutside1X128, int56 tickCumulativeOutside, uint160 secondsPerLiquidityOutsideX128, uint32 secondsOutside, bool initialized)",
+      "function token0() view returns (address)",
+      "function token1() view returns (address)"
+    ],
+    "eth:0x4e68Ccd3E89f51C3074ca5072bbAC773960dFa36": [
+      "constructor()",
+      "event Burn(address indexed owner, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount, uint256 amount0, uint256 amount1)",
+      "event Collect(address indexed owner, address recipient, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount0, uint128 amount1)",
+      "event CollectProtocol(address indexed sender, address indexed recipient, uint128 amount0, uint128 amount1)",
+      "event Flash(address indexed sender, address indexed recipient, uint256 amount0, uint256 amount1, uint256 paid0, uint256 paid1)",
+      "event IncreaseObservationCardinalityNext(uint16 observationCardinalityNextOld, uint16 observationCardinalityNextNew)",
+      "event Initialize(uint160 sqrtPriceX96, int24 tick)",
+      "event Mint(address sender, address indexed owner, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount, uint256 amount0, uint256 amount1)",
+      "event SetFeeProtocol(uint8 feeProtocol0Old, uint8 feeProtocol1Old, uint8 feeProtocol0New, uint8 feeProtocol1New)",
+      "event Swap(address indexed sender, address indexed recipient, int256 amount0, int256 amount1, uint160 sqrtPriceX96, uint128 liquidity, int24 tick)",
+      "function burn(int24 tickLower, int24 tickUpper, uint128 amount) returns (uint256 amount0, uint256 amount1)",
+      "function collect(address recipient, int24 tickLower, int24 tickUpper, uint128 amount0Requested, uint128 amount1Requested) returns (uint128 amount0, uint128 amount1)",
+      "function collectProtocol(address recipient, uint128 amount0Requested, uint128 amount1Requested) returns (uint128 amount0, uint128 amount1)",
+      "function factory() view returns (address)",
+      "function fee() view returns (uint24)",
+      "function feeGrowthGlobal0X128() view returns (uint256)",
+      "function feeGrowthGlobal1X128() view returns (uint256)",
+      "function flash(address recipient, uint256 amount0, uint256 amount1, bytes data)",
+      "function increaseObservationCardinalityNext(uint16 observationCardinalityNext)",
+      "function initialize(uint160 sqrtPriceX96)",
+      "function liquidity() view returns (uint128)",
+      "function maxLiquidityPerTick() view returns (uint128)",
+      "function mint(address recipient, int24 tickLower, int24 tickUpper, uint128 amount, bytes data) returns (uint256 amount0, uint256 amount1)",
+      "function observations(uint256) view returns (uint32 blockTimestamp, int56 tickCumulative, uint160 secondsPerLiquidityCumulativeX128, bool initialized)",
+      "function observe(uint32[] secondsAgos) view returns (int56[] tickCumulatives, uint160[] secondsPerLiquidityCumulativeX128s)",
+      "function positions(bytes32) view returns (uint128 liquidity, uint256 feeGrowthInside0LastX128, uint256 feeGrowthInside1LastX128, uint128 tokensOwed0, uint128 tokensOwed1)",
+      "function protocolFees() view returns (uint128 token0, uint128 token1)",
+      "function setFeeProtocol(uint8 feeProtocol0, uint8 feeProtocol1)",
+      "function slot0() view returns (uint160 sqrtPriceX96, int24 tick, uint16 observationIndex, uint16 observationCardinality, uint16 observationCardinalityNext, uint8 feeProtocol, bool unlocked)",
+      "function snapshotCumulativesInside(int24 tickLower, int24 tickUpper) view returns (int56 tickCumulativeInside, uint160 secondsPerLiquidityInsideX128, uint32 secondsInside)",
+      "function swap(address recipient, bool zeroForOne, int256 amountSpecified, uint160 sqrtPriceLimitX96, bytes data) returns (int256 amount0, int256 amount1)",
+      "function tickBitmap(int16) view returns (uint256)",
+      "function tickSpacing() view returns (int24)",
+      "function ticks(int24) view returns (uint128 liquidityGross, int128 liquidityNet, uint256 feeGrowthOutside0X128, uint256 feeGrowthOutside1X128, int56 tickCumulativeOutside, uint160 secondsPerLiquidityOutsideX128, uint32 secondsOutside, bool initialized)",
+      "function token0() view returns (address)",
+      "function token1() view returns (address)"
     ],
     "eth:0x53a328F4086d7C0F1Fa19e594c9b842125263026": [
       "event NewAdmin(address oldAdmin, address newAdmin)",
@@ -855,6 +1386,158 @@
       "function wrapETH(uint256 value) payable"
     ],
     "eth:0x88e6A0c2dDD26FEEb64F039a2c41296FcB3f5640": [
+      "constructor()",
+      "event Burn(address indexed owner, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount, uint256 amount0, uint256 amount1)",
+      "event Collect(address indexed owner, address recipient, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount0, uint128 amount1)",
+      "event CollectProtocol(address indexed sender, address indexed recipient, uint128 amount0, uint128 amount1)",
+      "event Flash(address indexed sender, address indexed recipient, uint256 amount0, uint256 amount1, uint256 paid0, uint256 paid1)",
+      "event IncreaseObservationCardinalityNext(uint16 observationCardinalityNextOld, uint16 observationCardinalityNextNew)",
+      "event Initialize(uint160 sqrtPriceX96, int24 tick)",
+      "event Mint(address sender, address indexed owner, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount, uint256 amount0, uint256 amount1)",
+      "event SetFeeProtocol(uint8 feeProtocol0Old, uint8 feeProtocol1Old, uint8 feeProtocol0New, uint8 feeProtocol1New)",
+      "event Swap(address indexed sender, address indexed recipient, int256 amount0, int256 amount1, uint160 sqrtPriceX96, uint128 liquidity, int24 tick)",
+      "function burn(int24 tickLower, int24 tickUpper, uint128 amount) returns (uint256 amount0, uint256 amount1)",
+      "function collect(address recipient, int24 tickLower, int24 tickUpper, uint128 amount0Requested, uint128 amount1Requested) returns (uint128 amount0, uint128 amount1)",
+      "function collectProtocol(address recipient, uint128 amount0Requested, uint128 amount1Requested) returns (uint128 amount0, uint128 amount1)",
+      "function factory() view returns (address)",
+      "function fee() view returns (uint24)",
+      "function feeGrowthGlobal0X128() view returns (uint256)",
+      "function feeGrowthGlobal1X128() view returns (uint256)",
+      "function flash(address recipient, uint256 amount0, uint256 amount1, bytes data)",
+      "function increaseObservationCardinalityNext(uint16 observationCardinalityNext)",
+      "function initialize(uint160 sqrtPriceX96)",
+      "function liquidity() view returns (uint128)",
+      "function maxLiquidityPerTick() view returns (uint128)",
+      "function mint(address recipient, int24 tickLower, int24 tickUpper, uint128 amount, bytes data) returns (uint256 amount0, uint256 amount1)",
+      "function observations(uint256) view returns (uint32 blockTimestamp, int56 tickCumulative, uint160 secondsPerLiquidityCumulativeX128, bool initialized)",
+      "function observe(uint32[] secondsAgos) view returns (int56[] tickCumulatives, uint160[] secondsPerLiquidityCumulativeX128s)",
+      "function positions(bytes32) view returns (uint128 liquidity, uint256 feeGrowthInside0LastX128, uint256 feeGrowthInside1LastX128, uint128 tokensOwed0, uint128 tokensOwed1)",
+      "function protocolFees() view returns (uint128 token0, uint128 token1)",
+      "function setFeeProtocol(uint8 feeProtocol0, uint8 feeProtocol1)",
+      "function slot0() view returns (uint160 sqrtPriceX96, int24 tick, uint16 observationIndex, uint16 observationCardinality, uint16 observationCardinalityNext, uint8 feeProtocol, bool unlocked)",
+      "function snapshotCumulativesInside(int24 tickLower, int24 tickUpper) view returns (int56 tickCumulativeInside, uint160 secondsPerLiquidityInsideX128, uint32 secondsInside)",
+      "function swap(address recipient, bool zeroForOne, int256 amountSpecified, uint160 sqrtPriceLimitX96, bytes data) returns (int256 amount0, int256 amount1)",
+      "function tickBitmap(int16) view returns (uint256)",
+      "function tickSpacing() view returns (int24)",
+      "function ticks(int24) view returns (uint128 liquidityGross, int128 liquidityNet, uint256 feeGrowthOutside0X128, uint256 feeGrowthOutside1X128, int56 tickCumulativeOutside, uint160 secondsPerLiquidityOutsideX128, uint32 secondsOutside, bool initialized)",
+      "function token0() view returns (address)",
+      "function token1() view returns (address)"
+    ],
+    "eth:0x8ad599c3A0ff1De082011EFDDc58f1908eb6e6D8": [
+      "constructor()",
+      "event Burn(address indexed owner, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount, uint256 amount0, uint256 amount1)",
+      "event Collect(address indexed owner, address recipient, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount0, uint128 amount1)",
+      "event CollectProtocol(address indexed sender, address indexed recipient, uint128 amount0, uint128 amount1)",
+      "event Flash(address indexed sender, address indexed recipient, uint256 amount0, uint256 amount1, uint256 paid0, uint256 paid1)",
+      "event IncreaseObservationCardinalityNext(uint16 observationCardinalityNextOld, uint16 observationCardinalityNextNew)",
+      "event Initialize(uint160 sqrtPriceX96, int24 tick)",
+      "event Mint(address sender, address indexed owner, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount, uint256 amount0, uint256 amount1)",
+      "event SetFeeProtocol(uint8 feeProtocol0Old, uint8 feeProtocol1Old, uint8 feeProtocol0New, uint8 feeProtocol1New)",
+      "event Swap(address indexed sender, address indexed recipient, int256 amount0, int256 amount1, uint160 sqrtPriceX96, uint128 liquidity, int24 tick)",
+      "function burn(int24 tickLower, int24 tickUpper, uint128 amount) returns (uint256 amount0, uint256 amount1)",
+      "function collect(address recipient, int24 tickLower, int24 tickUpper, uint128 amount0Requested, uint128 amount1Requested) returns (uint128 amount0, uint128 amount1)",
+      "function collectProtocol(address recipient, uint128 amount0Requested, uint128 amount1Requested) returns (uint128 amount0, uint128 amount1)",
+      "function factory() view returns (address)",
+      "function fee() view returns (uint24)",
+      "function feeGrowthGlobal0X128() view returns (uint256)",
+      "function feeGrowthGlobal1X128() view returns (uint256)",
+      "function flash(address recipient, uint256 amount0, uint256 amount1, bytes data)",
+      "function increaseObservationCardinalityNext(uint16 observationCardinalityNext)",
+      "function initialize(uint160 sqrtPriceX96)",
+      "function liquidity() view returns (uint128)",
+      "function maxLiquidityPerTick() view returns (uint128)",
+      "function mint(address recipient, int24 tickLower, int24 tickUpper, uint128 amount, bytes data) returns (uint256 amount0, uint256 amount1)",
+      "function observations(uint256) view returns (uint32 blockTimestamp, int56 tickCumulative, uint160 secondsPerLiquidityCumulativeX128, bool initialized)",
+      "function observe(uint32[] secondsAgos) view returns (int56[] tickCumulatives, uint160[] secondsPerLiquidityCumulativeX128s)",
+      "function positions(bytes32) view returns (uint128 liquidity, uint256 feeGrowthInside0LastX128, uint256 feeGrowthInside1LastX128, uint128 tokensOwed0, uint128 tokensOwed1)",
+      "function protocolFees() view returns (uint128 token0, uint128 token1)",
+      "function setFeeProtocol(uint8 feeProtocol0, uint8 feeProtocol1)",
+      "function slot0() view returns (uint160 sqrtPriceX96, int24 tick, uint16 observationIndex, uint16 observationCardinality, uint16 observationCardinalityNext, uint8 feeProtocol, bool unlocked)",
+      "function snapshotCumulativesInside(int24 tickLower, int24 tickUpper) view returns (int56 tickCumulativeInside, uint160 secondsPerLiquidityInsideX128, uint32 secondsInside)",
+      "function swap(address recipient, bool zeroForOne, int256 amountSpecified, uint160 sqrtPriceLimitX96, bytes data) returns (int256 amount0, int256 amount1)",
+      "function tickBitmap(int16) view returns (uint256)",
+      "function tickSpacing() view returns (int24)",
+      "function ticks(int24) view returns (uint128 liquidityGross, int128 liquidityNet, uint256 feeGrowthOutside0X128, uint256 feeGrowthOutside1X128, int56 tickCumulativeOutside, uint160 secondsPerLiquidityOutsideX128, uint32 secondsOutside, bool initialized)",
+      "function token0() view returns (address)",
+      "function token1() view returns (address)"
+    ],
+    "eth:0x99ac8cA7087fA4A2A1FB6357269965A2014ABc35": [
+      "constructor()",
+      "event Burn(address indexed owner, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount, uint256 amount0, uint256 amount1)",
+      "event Collect(address indexed owner, address recipient, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount0, uint128 amount1)",
+      "event CollectProtocol(address indexed sender, address indexed recipient, uint128 amount0, uint128 amount1)",
+      "event Flash(address indexed sender, address indexed recipient, uint256 amount0, uint256 amount1, uint256 paid0, uint256 paid1)",
+      "event IncreaseObservationCardinalityNext(uint16 observationCardinalityNextOld, uint16 observationCardinalityNextNew)",
+      "event Initialize(uint160 sqrtPriceX96, int24 tick)",
+      "event Mint(address sender, address indexed owner, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount, uint256 amount0, uint256 amount1)",
+      "event SetFeeProtocol(uint8 feeProtocol0Old, uint8 feeProtocol1Old, uint8 feeProtocol0New, uint8 feeProtocol1New)",
+      "event Swap(address indexed sender, address indexed recipient, int256 amount0, int256 amount1, uint160 sqrtPriceX96, uint128 liquidity, int24 tick)",
+      "function burn(int24 tickLower, int24 tickUpper, uint128 amount) returns (uint256 amount0, uint256 amount1)",
+      "function collect(address recipient, int24 tickLower, int24 tickUpper, uint128 amount0Requested, uint128 amount1Requested) returns (uint128 amount0, uint128 amount1)",
+      "function collectProtocol(address recipient, uint128 amount0Requested, uint128 amount1Requested) returns (uint128 amount0, uint128 amount1)",
+      "function factory() view returns (address)",
+      "function fee() view returns (uint24)",
+      "function feeGrowthGlobal0X128() view returns (uint256)",
+      "function feeGrowthGlobal1X128() view returns (uint256)",
+      "function flash(address recipient, uint256 amount0, uint256 amount1, bytes data)",
+      "function increaseObservationCardinalityNext(uint16 observationCardinalityNext)",
+      "function initialize(uint160 sqrtPriceX96)",
+      "function liquidity() view returns (uint128)",
+      "function maxLiquidityPerTick() view returns (uint128)",
+      "function mint(address recipient, int24 tickLower, int24 tickUpper, uint128 amount, bytes data) returns (uint256 amount0, uint256 amount1)",
+      "function observations(uint256) view returns (uint32 blockTimestamp, int56 tickCumulative, uint160 secondsPerLiquidityCumulativeX128, bool initialized)",
+      "function observe(uint32[] secondsAgos) view returns (int56[] tickCumulatives, uint160[] secondsPerLiquidityCumulativeX128s)",
+      "function positions(bytes32) view returns (uint128 liquidity, uint256 feeGrowthInside0LastX128, uint256 feeGrowthInside1LastX128, uint128 tokensOwed0, uint128 tokensOwed1)",
+      "function protocolFees() view returns (uint128 token0, uint128 token1)",
+      "function setFeeProtocol(uint8 feeProtocol0, uint8 feeProtocol1)",
+      "function slot0() view returns (uint160 sqrtPriceX96, int24 tick, uint16 observationIndex, uint16 observationCardinality, uint16 observationCardinalityNext, uint8 feeProtocol, bool unlocked)",
+      "function snapshotCumulativesInside(int24 tickLower, int24 tickUpper) view returns (int56 tickCumulativeInside, uint160 secondsPerLiquidityInsideX128, uint32 secondsInside)",
+      "function swap(address recipient, bool zeroForOne, int256 amountSpecified, uint160 sqrtPriceLimitX96, bytes data) returns (int256 amount0, int256 amount1)",
+      "function tickBitmap(int16) view returns (uint256)",
+      "function tickSpacing() view returns (int24)",
+      "function ticks(int24) view returns (uint128 liquidityGross, int128 liquidityNet, uint256 feeGrowthOutside0X128, uint256 feeGrowthOutside1X128, int56 tickCumulativeOutside, uint160 secondsPerLiquidityOutsideX128, uint32 secondsOutside, bool initialized)",
+      "function token0() view returns (address)",
+      "function token1() view returns (address)"
+    ],
+    "eth:0x9Db9e0e53058C89e5B94e29621a205198648425B": [
+      "constructor()",
+      "event Burn(address indexed owner, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount, uint256 amount0, uint256 amount1)",
+      "event Collect(address indexed owner, address recipient, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount0, uint128 amount1)",
+      "event CollectProtocol(address indexed sender, address indexed recipient, uint128 amount0, uint128 amount1)",
+      "event Flash(address indexed sender, address indexed recipient, uint256 amount0, uint256 amount1, uint256 paid0, uint256 paid1)",
+      "event IncreaseObservationCardinalityNext(uint16 observationCardinalityNextOld, uint16 observationCardinalityNextNew)",
+      "event Initialize(uint160 sqrtPriceX96, int24 tick)",
+      "event Mint(address sender, address indexed owner, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount, uint256 amount0, uint256 amount1)",
+      "event SetFeeProtocol(uint8 feeProtocol0Old, uint8 feeProtocol1Old, uint8 feeProtocol0New, uint8 feeProtocol1New)",
+      "event Swap(address indexed sender, address indexed recipient, int256 amount0, int256 amount1, uint160 sqrtPriceX96, uint128 liquidity, int24 tick)",
+      "function burn(int24 tickLower, int24 tickUpper, uint128 amount) returns (uint256 amount0, uint256 amount1)",
+      "function collect(address recipient, int24 tickLower, int24 tickUpper, uint128 amount0Requested, uint128 amount1Requested) returns (uint128 amount0, uint128 amount1)",
+      "function collectProtocol(address recipient, uint128 amount0Requested, uint128 amount1Requested) returns (uint128 amount0, uint128 amount1)",
+      "function factory() view returns (address)",
+      "function fee() view returns (uint24)",
+      "function feeGrowthGlobal0X128() view returns (uint256)",
+      "function feeGrowthGlobal1X128() view returns (uint256)",
+      "function flash(address recipient, uint256 amount0, uint256 amount1, bytes data)",
+      "function increaseObservationCardinalityNext(uint16 observationCardinalityNext)",
+      "function initialize(uint160 sqrtPriceX96)",
+      "function liquidity() view returns (uint128)",
+      "function maxLiquidityPerTick() view returns (uint128)",
+      "function mint(address recipient, int24 tickLower, int24 tickUpper, uint128 amount, bytes data) returns (uint256 amount0, uint256 amount1)",
+      "function observations(uint256) view returns (uint32 blockTimestamp, int56 tickCumulative, uint160 secondsPerLiquidityCumulativeX128, bool initialized)",
+      "function observe(uint32[] secondsAgos) view returns (int56[] tickCumulatives, uint160[] secondsPerLiquidityCumulativeX128s)",
+      "function positions(bytes32) view returns (uint128 liquidity, uint256 feeGrowthInside0LastX128, uint256 feeGrowthInside1LastX128, uint128 tokensOwed0, uint128 tokensOwed1)",
+      "function protocolFees() view returns (uint128 token0, uint128 token1)",
+      "function setFeeProtocol(uint8 feeProtocol0, uint8 feeProtocol1)",
+      "function slot0() view returns (uint160 sqrtPriceX96, int24 tick, uint16 observationIndex, uint16 observationCardinality, uint16 observationCardinalityNext, uint8 feeProtocol, bool unlocked)",
+      "function snapshotCumulativesInside(int24 tickLower, int24 tickUpper) view returns (int56 tickCumulativeInside, uint160 secondsPerLiquidityInsideX128, uint32 secondsInside)",
+      "function swap(address recipient, bool zeroForOne, int256 amountSpecified, uint160 sqrtPriceLimitX96, bytes data) returns (int256 amount0, int256 amount1)",
+      "function tickBitmap(int16) view returns (uint256)",
+      "function tickSpacing() view returns (int24)",
+      "function ticks(int24) view returns (uint128 liquidityGross, int128 liquidityNet, uint256 feeGrowthOutside0X128, uint256 feeGrowthOutside1X128, int56 tickCumulativeOutside, uint160 secondsPerLiquidityOutsideX128, uint32 secondsOutside, bool initialized)",
+      "function token0() view returns (address)",
+      "function token1() view returns (address)"
+    ],
+    "eth:0xa6Cc3C2531FdaA6Ae1A3CA84c2855806728693e8": [
       "constructor()",
       "event Burn(address indexed owner, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount, uint256 amount0, uint256 amount1)",
       "event Collect(address indexed owner, address recipient, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount0, uint128 amount1)",
@@ -1062,10 +1745,10 @@
     "uniswapv3/TokenJar": "0x4e5cdb5291d4fadb56003b4d078f44feb9eccfad71889bf91f3a931e6a042c03",
     "uniswapv3/Uni": "0xea7d229580224255bb75d8e601137993bf27d06079e5f967b6e84bfd89200cbd",
     "uniswapv3/UniswapV3Factory": "0x7279d249aba43ae9cc79d9b0fee0b6aa6f2a982651b91fdea6540b4951df709e",
-    "uniswapv3/UniswapV3Pool": "0x2d123384322884e19c3c6bfec6aac4ea5f30fd1ee2980ee2f2c1272b0f17b92d",
+    "uniswapv3/UniswapV3Pool": "0x9d2f859a97ff2d2ccc76be55f6d50fd6529167d7658b04f4f1173b8cde9e2371",
     "uniswapv3/UniversalRouter": "0x7599293166769ce170829e381d4f80616e6cf1b2c5977c3816b0dd5618c2810a",
     "uniswapv3/V3OpenFeeAdapter": "0x919168095503a4b75469aba4141a66b10f58ad6b4ffe14cb54bc70ac064927d5"
   },
-  "usedBlockNumbers": { "ethereum": 25548617 },
-  "permissionsConfigHash": "0x8f302ad4950f63d408fcbc40c0de0a18a23e3cda097e10319780d9ff80518abf"
+  "usedBlockNumbers": { "ethereum": 25623113 },
+  "permissionsConfigHash": "0x92e8366800296c68a31f443d6b26dc4fba063743acbfe66819cae7dab8f9ccba"
 }
