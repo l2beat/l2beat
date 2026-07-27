@@ -12,7 +12,7 @@ const stillUnverified = ChainSpecificAddress(
 )
 
 describe(getProjectVerification.name, () => {
-  it('returns only unresolved unverified contracts', () => {
+  it('filters out contracts that became verified', () => {
     const project = mockObject<Project<'statuses', 'contracts'>>({
       statuses: mockObject<Project<'statuses'>['statuses']>({
         unverifiedContracts: [becameVerified, stillUnverified],

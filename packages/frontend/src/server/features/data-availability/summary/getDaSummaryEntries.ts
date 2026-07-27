@@ -22,7 +22,7 @@ import {
 } from '../../projects-change-report/getProjectsChangeReport'
 import { getLiveness } from '../../scaling/liveness/getLiveness'
 import type { LivenessResponse } from '../../scaling/liveness/types'
-import { getProjectVerificationWarnings } from '../../utils/getIsProjectVerified'
+import { getProjectVerification } from '../../utils/getIsProjectVerified'
 import {
   type CommonDaEntry,
   getCommonDacDaEntry,
@@ -135,10 +135,10 @@ function getDaSummaryEntry(
       slug: b.slug,
       href: `/data-availability/projects/${layer.slug}/${b.slug}`,
       statuses: {
-        verificationWarnings: getProjectVerificationWarnings(
+        verificationWarnings: getProjectVerification(
           b,
           projectsChangeReport.getChanges(b.id),
-        ),
+        ).warnings,
         underReview:
           !!layer.statuses.reviewStatus || !!b.statuses.reviewStatus
             ? 'config'

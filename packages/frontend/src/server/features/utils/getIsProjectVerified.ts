@@ -9,13 +9,6 @@ const UNVERIFIED_CONTRACTS_WARNING =
 const UNSUCCESSFUL_PROGRAM_HASHES_WARNING =
   'The project relies on program hashes that could not be successfully reproduced from their published sources.'
 
-export function getProjectVerificationWarnings(
-  project: Project<'statuses', 'contracts'>,
-  changes: ProjectChanges | undefined,
-): ProjectVerificationWarnings {
-  return getProjectVerification(project, changes).warnings
-}
-
 export function getProjectVerification(
   project: Project<'statuses', 'contracts'>,
   changes: ProjectChanges | undefined,
@@ -23,7 +16,7 @@ export function getProjectVerification(
   warnings: ProjectVerificationWarnings
   unverifiedContracts: ChainSpecificAddress[]
 } {
-  const unverifiedContracts = getUnresolvedUnverifiedContracts(
+  const unverifiedContracts = getUnverifiedContracts(
     project.statuses.unverifiedContracts,
     changes,
   )
@@ -48,7 +41,7 @@ export function getProjectVerification(
   }
 }
 
-function getUnresolvedUnverifiedContracts(
+function getUnverifiedContracts(
   unverifiedContracts: ChainSpecificAddress[],
   changes: ProjectChanges | undefined,
 ): ChainSpecificAddress[] {

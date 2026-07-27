@@ -57,10 +57,7 @@ import {
 } from '~/utils/project/underReview'
 import { withProjectIcon } from '~/utils/withProjectIcon'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
-import {
-  getProjectVerification,
-  getProjectVerificationWarnings,
-} from '../../utils/getIsProjectVerified'
+import { getProjectVerification } from '../../utils/getIsProjectVerified'
 import { getActivityProjectStats } from '../activity/getActivityProjectStats'
 import {
   getProjectInteropData,
@@ -359,10 +356,10 @@ export async function getScalingProjectEntry(
       : undefined
 
   const hostChainVerificationWarnings = hostChain
-    ? getProjectVerificationWarnings(
+    ? getProjectVerification(
         hostChain,
         projectsChangeReport.getChanges(hostChain.id),
-      )
+      ).warnings
     : {
         contracts: undefined,
         programHashes: undefined,
