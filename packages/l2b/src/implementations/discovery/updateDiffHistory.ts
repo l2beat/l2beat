@@ -217,34 +217,16 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
 
   const discoveries = new DiscoveryRegistry()
   // We rediscover on the past block number, but with current configs and dependencies
-  const dependencies: string[] = [projectName]
-
-  for (const dependency of dependencies) {
-    // TODO(radomski): Remove the duplication after the PR containing this code is merged
-    let timestamp = undefined
-
-    if (dependency === projectName) {
-      timestamp = discoveryFromMainBranch.timestamp
-    }
-
-    if (timestamp === undefined) {
-      // We rediscover on the past block number, but with current configs and dependencies.
-      // Those dependencies might not have been referenced in the old discovery.
-      // In that case we don't fail - the diff will show all those "added".
-      logger.info(
-        `No block number found for dependency ${dependency}, skipping its rediscovery.`,
-      )
-      continue
-    }
-
-    const prevStructure = await rediscoverStructureOnBlock(
-      dependency,
-      { blockNumber: undefined, timestamp } as Timing,
-      saveSources,
-      overwriteCache,
-    )
-    discoveries.set(prevStructure.name, prevStructure)
-  }
+  const prevStructure = await rediscoverStructureOnBlock(
+    projectName,
+    {
+      blockNumber: undefined,
+      timestamp: discoveryFromMainBranch.timestamp,
+    } as Timing,
+    saveSources,
+    overwriteCache,
+  )
+  discoveries.set(prevStructure.name, prevStructure)
 
   const discoveryPaths = getDiscoveryPaths()
   const templateService = new TemplateService(discoveryPaths.discovery)
