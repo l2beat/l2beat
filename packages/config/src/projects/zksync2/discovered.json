@@ -1,8 +1,7 @@
 {
   "name": "zksync2",
   "timestamp": 1784806460,
-  "configHash": "0xe3366ebd88403dbbba2b7749a60f5e9e97666cca45498cba5ffc1e8c682647f5",
-  "sharedModules": ["shared-zk-stack"],
+  "configHash": "0x320135d7c7306490d61d9055bcc0b2a24d9d8ec53d52cf67b138f0abe4539f91",
   "entries": [
     {
       "name": "ProxyAdmin",

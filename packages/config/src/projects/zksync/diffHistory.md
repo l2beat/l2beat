@@ -1,3 +1,48 @@
+Generated with discovered.json: 0xe6a2f3622429d04b3dc4cce515083d823cb0377f
+
+# Diff at Mon, 27 Jul 2026 11:02:46 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@887150af6d3edad6e5fde92995bb5ecc5e48cfde block: 1784806565
+- current timestamp: 1784806565
+
+## Description
+
+shared-zk-stack now uses entrypoints rediscovery
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784806565 (main branch discovery), not current.
+
+```diff
+    reference Matter Labs Multisig (eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: None
+      type:
+-        "Contract"
++        "Reference"
+      template:
+-        "GnosisSafe"
+      sourceHashes:
+-        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"]
+      proxyType:
+-        "gnosis safe"
+      deployerAddress:
+-        "eth:0xC301f8B2a2C08958E6e7a286AB49A986c1f7ef6A"
+      sinceTimestamp:
+-        1666872275
+      sinceBlock:
+-        15839298
+      values:
+-        {"$immutable":false,"$implementation":"eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552","$members":["eth:0xEE7d66B84175cc423900595d1807A0371D66dE46","eth:0x3F0009D00cc78979d00Eb635490F23E8d6aCc481","eth:0xC9A814A4dFE108A4d2b0C01abb4c196Ed7FB3D83","eth:0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc","eth:0xFAdb20191Ab38362C50f52909817B74214CA79AE","eth:0xAf0B2B58289857e9A6Cf91Fd30410dDcad9D9B28","eth:0x7408A268e5E6e8F08917c5b71015F4B9044970C7"],"$threshold":4,"domainSeparator":"0xd3e32b4e9e95656dc35c609ae0fbcc0cea466ebecc8227025a2d3edc728b79fb","getChainId":1,"GnosisSafe_modules":[],"multisigThreshold":"4 of 7 (57%)","nonce":279,"VERSION":"1.3.0"}
+      targetType:
++        "Contract"
+      targetProject:
++        "shared-zk-stack"
+    }
+```
+
 Generated with discovered.json: 0x3ae3d586cac7869065fe582ac88fdcf2283e6392
 
 # Diff at Thu, 23 Jul 2026 11:37:10 GMT:

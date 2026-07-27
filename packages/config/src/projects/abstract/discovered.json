@@ -1,8 +1,7 @@
 {
   "name": "abstract",
   "timestamp": 1782810164,
-  "configHash": "0xc62590ca731911e0ab93201ff531cc70b2c6677503d1e42095b3df8d40596b2d",
-  "sharedModules": ["shared-zk-stack"],
+  "configHash": "0x0d413093225db7d84e677f805c484621f3776cef96b7c732cd167e182c8979ab",
   "entries": [
     {
       "name": "Safe",
@@ -568,9 +567,8 @@
     },
     {
       "address": "eth:0x3846c3A30E62075Fa916216b35EF04B8F53931f6",
-      "type": "Reference",
-      "targetType": "EOA",
-      "targetProject": "shared-zk-stack"
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x392C009a49E9368Fc2bDd8B1e5520E62DEB8276c",
@@ -931,9 +929,8 @@
     },
     {
       "address": "eth:0xafc7805c640C4A9E5D28f6A5Eae23b50e59B831c",
-      "type": "Reference",
-      "targetType": "EOA",
-      "targetProject": "shared-zk-stack"
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xb279092b5D7637e22617178f31f08229bf4FCB42",
@@ -1084,15 +1081,13 @@
     },
     {
       "address": "eth:0xCe20135Ac0253650E28Ea14911c69F1fADD8b06f",
-      "type": "Reference",
-      "targetType": "EOA",
-      "targetProject": "shared-zk-stack"
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xd757D6A02cD5af9AEF163D7eB8034f75ac22B553",
-      "type": "Reference",
-      "targetType": "EOA",
-      "targetProject": "shared-zk-stack"
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8",
@@ -1109,15 +1104,13 @@
     },
     {
       "address": "eth:0xdF28907A6A272fa06333a197d7F0379A0f8f00aa",
-      "type": "Reference",
-      "targetType": "EOA",
-      "targetProject": "shared-zk-stack"
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xe2eB80C72Fa12Ba50B3bD6545709DC153D5b26D2",
-      "type": "Reference",
-      "targetType": "EOA",
-      "targetProject": "shared-zk-stack"
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "ProtocolUpgradeHandler",
@@ -1764,5 +1757,5 @@
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
   "usedBlockNumbers": { "ethereum": 25429469 },
-  "permissionsConfigHash": "0xc394b9338a4dd99e66a5bf453505908de37e1e93cb364ff87a6ecb0edec97394"
+  "permissionsConfigHash": "0x5765cc4372ecfa37885b7b7bc15dfa4246e3d819854ade49bd420ca9dfb891d4"
 }

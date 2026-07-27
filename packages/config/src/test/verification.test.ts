@@ -59,17 +59,26 @@ function getDiscoveries(
   }
 
   const result = [discovery]
-  const referencedProjects = discovery.entries
-    .map((e) => e.targetProject)
-    .filter(notUndefined)
-  const allReferencedProjects = uniq([
-    ...referencedProjects,
-    ...(discovery.sharedModules ?? []), // TODO remove once entrypoints are used instead of sharedModules
-  ])
-  if (allReferencedProjects) {
-    for (const sharedModule of allReferencedProjects) {
+  const seen = new Set([project])
+  const queue = [discovery]
+  while (queue.length > 0) {
+    const current = queue.shift()
+    assert(current !== undefined)
+
+    const referencedProjects = current.entries
+      .map((e) => e.targetProject)
+      .filter(notUndefined)
+    const allReferencedProjects = uniq([
+      ...referencedProjects,
+      ...(current.sharedModules ?? []), // TODO remove once entrypoints are used instead of sharedModules
+    ])
+
+    for (const p of allReferencedProjects.filter((p) => !seen.has(p))) {
+      seen.add(p)
       try {
-        result.push(configReader.readDiscovery(sharedModule))
+        const referenced = configReader.readDiscovery(p)
+        result.push(referenced)
+        queue.push(referenced)
       } catch {}
     }
   }
