@@ -1,7 +1,7 @@
 {
-  "name": "apex",
+  "name": "apex-pro",
   "timestamp": 1767634866,
-  "configHash": "0x948e9f121b346ff725b2faf7402bd03dbc0df5fdaca84abcaee5d9afd8d2275d",
+  "configHash": "0x743888927d179019a8efcb5e47ea6c685c031261101683740129c8a3fdbbbd1a",
   "entries": [
     {
       "address": "eth:0x0cbb676d12745948f75aF3A172cb7E4A4f8546e8",

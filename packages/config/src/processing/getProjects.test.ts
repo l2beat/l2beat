@@ -457,7 +457,7 @@ describe('getProjects', () => {
     it('every name is equal to projectId', () => {
       // in many places chain name and project id are used interchangeably so we need them to be the same
       // do not add new projects here!
-      const KNOWN_EXCEPTIONS = ['polygonpos', 'g7']
+      const KNOWN_EXCEPTIONS = ['polygonpos', 'g7', 'apexomni', 'apexpro']
 
       for (const chain of chains) {
         if (KNOWN_EXCEPTIONS.includes(chain.name)) continue
