@@ -1,6 +1,6 @@
 {
   "name": "uniswapv3",
-  "timestamp": 1785154885,
+  "timestamp": 1785187826,
   "configHash": "0x769f3c53deb0274d14ed114c1471e6de5b1596010a6b54cc5324820d5dee10df",
   "entries": [
     {
@@ -17,7 +17,7 @@
         "0xea6870ee07ce35bfcdc4c18c2b8c3c938329760f8ebe44e73d3f03b580023341"
       ],
       "proxyType": "immutable",
-      "description": "Canonical signature-based token approval hub (same address on all chains, deployed via CREATE2). Users grant it a one-time ERC20 approval, then issue time-bounded, amount-bounded, spender-bounded permits by signature (SignatureTransfer for one-offs, AllowanceTransfer for standing allowances that can be revoked via lockdown). Immutable and ownerless; the risk it concentrates is that any spender a user signs a permit for can pull the permitted amount while it is valid.",
+      "description": "Canonical signature-based token approval hub (deployed via CREATE2 to the same address on every chain where it exists). Users grant it a one-time ERC20 approval, then issue time-bounded, amount-bounded, spender-bounded permits by signature (SignatureTransfer for one-offs, AllowanceTransfer for standing allowances that can be revoked via lockdown). Immutable and ownerless; the risk it concentrates is that any spender a user signs a permit for can pull the permitted amount while it is valid.",
       "deployerAddress": "eth:0xD32Ff78579352cA78f416120A9f68b65c410871b",
       "sinceTimestamp": 1668647879,
       "sinceBlock": 15986406,
@@ -45,7 +45,7 @@
       "values": {
         "$immutable": true,
         "MAX_RELEASE_LENGTH": 20,
-        "nonce": 1102,
+        "nonce": 1105,
         "owner": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
         "RESOURCE": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
         "RESOURCE_RECIPIENT": "eth:0x000000000000000000000000000000000000dEaD",
@@ -108,7 +108,8 @@
         {
           "permission": "upgrade",
           "from": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
-          "description": "can replace the governor implementation (GovernorBravoDelegate).",
+          "delay": 172800,
+          "description": "can replace the governor implementation (GovernorBravoDelegate). The admin is the Timelock, so the swap sits in its queue for the full delay.",
           "role": ".admin"
         }
       ],
@@ -176,7 +177,7 @@
         "0x6e923d5480eaaba4682ea16d891e5906295deeb4c0c09e6495bbcd341d8ca3c5"
       ],
       "proxyType": "immutable",
-      "description": "Deploys Uniswap v3 pools and holds the protocol-level knobs. Anyone can create a pool for any token pair at an enabled fee tier; each pool is deployed via CREATE2, so its address is deterministic in (token0, token1, fee). The factory itself is immutable and its owner holds only two powers: enabling new fee tiers (fee/tickSpacing combinations, irreversible once added) and being the sole address allowed to call setFeeProtocol/collectProtocol on every pool. It cannot modify, pause, or upgrade existing pools.",
+      "description": "Deploys Uniswap v3 pools and holds the protocol-level knobs. Anyone can create a pool for any token pair at an enabled fee tier; each pool is deployed via CREATE2, so its address is deterministic in (token0, token1, fee). The factory itself is immutable and its owner holds only three powers: enabling new fee tiers (fee/tickSpacing combinations, irreversible once added), being the sole address allowed to call setFeeProtocol/collectProtocol on every pool, and transferring the owner role itself. It cannot modify, pause, or upgrade existing pools.",
       "deployerAddress": "eth:0x6C9FC64A53c1b71FB3f9Af64d1ae3A4931A5f4E9",
       "sinceTimestamp": 1620156420,
       "sinceBlock": 12369621,
@@ -364,18 +365,15 @@
         "$immutable": true,
         "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
         "fee": 500,
-        "feeGrowthGlobal0X128": "4804063704423226443516765969830340",
-        "feeGrowthGlobal1X128": "2046717294564680515297837819538516969833767",
-        "liquidity": "13981134448684373519",
+        "feeGrowthGlobal0X128": "4804450689189419900458097033901926",
+        "feeGrowthGlobal1X128": "2046921869429374685660123375032040101494592",
+        "liquidity": "14004685505337418173",
         "maxLiquidityPerTick": "1917569901783203986719870431555990",
-        "protocolFees": {
-          "token0": 1396353322,
-          "token1": "946066998657045857"
-        },
+        "protocolFees": { "token0": 160665825, "token1": "84020963706383031" },
         "slot0": {
-          "sqrtPriceX96": "1793855981629965692842511851168430",
-          "tick": 200560,
-          "observationIndex": 33,
+          "sqrtPriceX96": "1797101262403322379540777322074849",
+          "tick": 200597,
+          "observationIndex": 59,
           "observationCardinality": 723,
           "observationCardinalityNext": 723,
           "feeProtocol": 68,
@@ -406,7 +404,7 @@
         "0x9a1ef8f86965191f3d67a4e74587b87ccd95ff751de363bcbd122450167e35b5"
       ],
       "proxyType": "immutable",
-      "description": "Periphery contract that wraps raw pool positions into ERC721 NFTs. It is the registered owner of the underlying positions in the pools and tracks each tokenId's range, liquidity, and uncollected fees; the NFT holder can add/remove liquidity and collect fees. Immutable and unprivileged: it holds no special rights in the pools, and interacting with pools directly (without the NFT wrapper) is equally possible.",
+      "description": "Periphery contract that wraps raw pool positions into ERC721 NFTs. It is the registered owner of the underlying positions in the pools and tracks each tokenId's range, liquidity, and uncollected fees; the NFT holder can add/remove liquidity and collect fees. Immutable and unprivileged: it holds no special rights in the pools. Positions can also be opened directly on a pool by any contract that pays the deposit in the pool's mint callback, and a position's owner can always withdraw and collect on the pool directly.",
       "deployerAddress": "eth:0x6C9FC64A53c1b71FB3f9Af64d1ae3A4931A5f4E9",
       "sinceTimestamp": 1620156913,
       "sinceBlock": 12369651,
@@ -418,7 +416,7 @@
         "name": "Uniswap V3 Positions NFT-V1",
         "PERMIT_TYPEHASH": "0x49ecf333e5b8c95c40fdafc95c1ad136e8914a8fb55e9dc8bb01eaa83a2df9ad",
         "symbol": "UNI-V3-POS",
-        "totalSupply": 1205612,
+        "totalSupply": 1205816,
         "WETH9": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "fieldMeta": {
@@ -447,15 +445,15 @@
         "$immutable": true,
         "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
         "fee": 3000,
-        "feeGrowthGlobal0X128": "69311166924048870627256370038708",
-        "feeGrowthGlobal1X128": "15579026167489957822991967292620125562050794",
-        "liquidity": "32234247669213515",
+        "feeGrowthGlobal0X128": "69313854560944239147452256699421",
+        "feeGrowthGlobal1X128": "15581015321933319769650063860354030694975381",
+        "liquidity": "30932666269386630",
         "maxLiquidityPerTick": "11505743598341114571880798222544994",
-        "protocolFees": { "token0": 36181, "token1": 2395600046693088 },
+        "protocolFees": { "token0": 1, "token1": 1 },
         "slot0": {
-          "sqrtPriceX96": "45670098527154172371227263874965346",
-          "tick": 265305,
-          "observationIndex": 301,
+          "sqrtPriceX96": "45771420132583071270240281436836194",
+          "tick": 265350,
+          "observationIndex": 338,
           "observationCardinality": 360,
           "observationCardinalityNext": 360,
           "feeProtocol": 102,
@@ -1066,6 +1064,6 @@
     "uniswapv3/UniversalRouter": "0x7599293166769ce170829e381d4f80616e6cf1b2c5977c3816b0dd5618c2810a",
     "uniswapv3/V3OpenFeeAdapter": "0x919168095503a4b75469aba4141a66b10f58ad6b4ffe14cb54bc70ac064927d5"
   },
-  "usedBlockNumbers": { "ethereum": 25624110 },
-  "permissionsConfigHash": "0x8f302ad4950f63d408fcbc40c0de0a18a23e3cda097e10319780d9ff80518abf"
+  "usedBlockNumbers": { "ethereum": 25626846 },
+  "permissionsConfigHash": "0x21ffb35c539dc47b717fe4778681bf8b326fb825d405e36528fab69b5db99b72"
 }

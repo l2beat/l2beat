@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xdb28935d1311631bdb43e56c1129dad812bcee90
+Generated with discovered.json: 0xbd93e772aa4cce035fe90447c04e7f7a38df1a40
 
-# Diff at Mon, 27 Jul 2026 12:22:28 GMT:
+# Diff at Mon, 27 Jul 2026 21:31:29 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- current timestamp: 1785154885
+- current timestamp: 1785187826
 
 ## Description
 
@@ -14,7 +14,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract Permit2 (eth:0x000000000022D473030F116dDEE9F6B43aC78BA3) [uniswapv3/Permit2]
-    +++ description: Canonical signature-based token approval hub (same address on all chains, deployed via CREATE2). Users grant it a one-time ERC20 approval, then issue time-bounded, amount-bounded, spender-bounded permits by signature (SignatureTransfer for one-offs, AllowanceTransfer for standing allowances that can be revoked via lockdown). Immutable and ownerless; the risk it concentrates is that any spender a user signs a permit for can pull the permitted amount while it is valid.
+    +++ description: Canonical signature-based token approval hub (deployed via CREATE2 to the same address on every chain where it exists). Users grant it a one-time ERC20 approval, then issue time-bounded, amount-bounded, spender-bounded permits by signature (SignatureTransfer for one-offs, AllowanceTransfer for standing allowances that can be revoked via lockdown). Immutable and ownerless; the risk it concentrates is that any spender a user signs a permit for can pull the permitted amount while it is valid.
 ```
 
 ```diff
@@ -38,7 +38,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract UniswapV3Factory (eth:0x1F98431c8aD98523631AE4a59f267346ea31F984) [uniswapv3/UniswapV3Factory]
-    +++ description: Deploys Uniswap v3 pools and holds the protocol-level knobs. Anyone can create a pool for any token pair at an enabled fee tier; each pool is deployed via CREATE2, so its address is deterministic in (token0, token1, fee). The factory itself is immutable and its owner holds only two powers: enabling new fee tiers (fee/tickSpacing combinations, irreversible once added) and being the sole address allowed to call setFeeProtocol/collectProtocol on every pool. It cannot modify, pause, or upgrade existing pools.
+    +++ description: Deploys Uniswap v3 pools and holds the protocol-level knobs. Anyone can create a pool for any token pair at an enabled fee tier; each pool is deployed via CREATE2, so its address is deterministic in (token0, token1, fee). The factory itself is immutable and its owner holds only three powers: enabling new fee tiers (fee/tickSpacing combinations, irreversible once added), being the sole address allowed to call setFeeProtocol/collectProtocol on every pool, and transferring the owner role itself. It cannot modify, pause, or upgrade existing pools.
 ```
 
 ```diff
@@ -74,7 +74,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract NonfungiblePositionManager (eth:0xC36442b4a4522E871399CD717aBDD847Ab11FE88) [uniswapv3/NonfungiblePositionManager]
-    +++ description: Periphery contract that wraps raw pool positions into ERC721 NFTs. It is the registered owner of the underlying positions in the pools and tracks each tokenId's range, liquidity, and uncollected fees; the NFT holder can add/remove liquidity and collect fees. Immutable and unprivileged: it holds no special rights in the pools, and interacting with pools directly (without the NFT wrapper) is equally possible.
+    +++ description: Periphery contract that wraps raw pool positions into ERC721 NFTs. It is the registered owner of the underlying positions in the pools and tracks each tokenId's range, liquidity, and uncollected fees; the NFT holder can add/remove liquidity and collect fees. Immutable and unprivileged: it holds no special rights in the pools. Positions can also be opened directly on a pool by any contract that pays the deposit in the pool's mint callback, and a position's owner can always withdraw and collect on the pool directly.
 ```
 
 ```diff
