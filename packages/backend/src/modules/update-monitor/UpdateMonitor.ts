@@ -188,9 +188,8 @@ export class UpdateMonitor {
 
       const runResult = await runner.run(
         projectConfig,
-        timestamp,
+        UnixTime.now(),
         this.logger,
-        'useCurrentTimestamp', // for dependent discoveries
       )
 
       // read previous state (committed vs DB) and prime flat sources if needed
@@ -313,7 +312,6 @@ export class UpdateMonitor {
       projectConfig,
       previousDiscovery.timestamp,
       this.logger,
-      previousDiscovery.dependentDiscoveries,
     )
     const { discovery, flatSources } = runResult
 

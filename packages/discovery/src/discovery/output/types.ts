@@ -35,7 +35,6 @@ export interface DiscoveryOutput {
   usedTemplates: Record<string, Hash256>
   usedBlockNumbers: Record<string, number>
   permissionsConfigHash?: Hash256
-  dependentDiscoveries?: DiscoveryTimestamps
 }
 
 export interface DiscoveryCustomType {
