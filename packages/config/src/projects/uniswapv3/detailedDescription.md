@@ -24,7 +24,7 @@ Every pool doubles as a price oracle: it records cumulative-tick observations fr
 
 ### Governance and the fee switch
 
-Protocol control sits with UNI holders. An address with more than {{proposalThreshold}} UNI of delegated votes can submit a proposal to GovernorBravo; voting starts {{votingDelayBlocks}} blocks later (just under two days) and runs for {{votingPeriodBlocks}} blocks (just under six days). Passing takes more for- than against-votes and at least {{quorumVotes}} UNI voting for. A passed proposal is queued in the Timelock and executable {{timelockDelayDays}} days later. The same Timelock is the UNI token's minter, allowed to inflate supply by at most {{uniMintCap}}% at a time, no more often than once every {{mintIntervalDays}} days.
+Protocol control sits with UNI holders. An address with more than {{proposalThreshold}} UNI of delegated votes can submit a proposal to GovernorBravo; voting starts {{votingDelayBlocks}} blocks later (just under two days) and runs for {{votingPeriodBlocks}} blocks (just under six days). Passing takes more for- than against-votes and at least {{quorumVotes}} UNI voting for. A passed proposal is queued in the Timelock and executable {{timelockDelayDays}} days later. The same Timelock is the UNI token's minter, with new issuance capped at {{uniMintCap}}% per year.
 
 Over the pools themselves, governance holds exactly two powers, both exercised through the factory owner role. It can enable new fee tiers, each permanently bound to its tick spacing and never removable. And it can switch on the protocol fee: pool code requires each side's share to be zero or between 1/10 and 1/4 of that side's LP fees, so at most a quarter of swap fees, and never principal, can be diverted.
 

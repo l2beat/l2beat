@@ -144,11 +144,6 @@ export const uniswapv3: BaseProject = {
           discovery.getContractValue<string>('GovernorBravo', 'quorumVotes'),
         ),
         uniMintCap: discovery.getContractValue<number>('UNIToken', 'mintCap'),
-        mintIntervalDays:
-          discovery.getContractValue<number>(
-            'UNIToken',
-            'minimumTimeBetweenMints',
-          ) / 86400,
         defaultProtocolFeeDenominator: protocolFeeDenominator(
           discovery.getContractValue<number>('V3OpenFeeAdapter', 'defaultFee'),
         ),
