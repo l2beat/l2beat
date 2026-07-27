@@ -501,12 +501,40 @@ export async function getScalingProjectEntry(
     })
   }
 
+  const permissionsSection = getPermissionsSection(
+    {
+      id: project.id,
+      hostChain: hostChain?.id,
+      isUnderReview: !!project.statuses.reviewStatus,
+      permissions: project.permissions,
+    },
+    contractUtils,
+    projectsChangeReport,
+  )
+
+  const contractsSection = getContractsSection(
+    {
+      id: project.id,
+      isVerified: !hostChainVerificationWarnings.contracts,
+      slug: project.slug,
+      contracts: project.contracts,
+      tvsConfig: project.tvsConfig,
+      isUnderReview: !!project.statuses.reviewStatus,
+      architectureImage: project.scalingTechnology.architectureImage,
+    },
+    contractUtils,
+    projectsChangeReport,
+    zkCatalogProjects,
+    allProjectsWithContracts,
+    tvsStats,
+  )
+
   const projectVerification = getProjectVerification(project, changes)
   const projectVerificationWarnings = projectVerification.warnings
   const unverifiedContracts = getUnverifiedContractEntries(
     projectVerification.unverifiedContracts,
-    project.contracts,
-    project.permissions,
+    contractsSection,
+    permissionsSection,
   )
 
   const riskSummary = getScalingRiskSummarySection(
@@ -718,17 +746,6 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const permissionsSection = getPermissionsSection(
-    {
-      id: project.id,
-      hostChain: hostChain?.id,
-      isUnderReview: !!project.statuses.reviewStatus,
-      permissions: project.permissions,
-    },
-    contractUtils,
-    projectsChangeReport,
-  )
-
   const discoUi = common.discoUiHref
     ? {
         href: common.discoUiHref,
@@ -754,22 +771,6 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const contractsSection = getContractsSection(
-    {
-      id: project.id,
-      isVerified: !hostChainVerificationWarnings.contracts,
-      slug: project.slug,
-      contracts: project.contracts,
-      tvsConfig: project.tvsConfig,
-      isUnderReview: !!project.statuses.reviewStatus,
-      architectureImage: project.scalingTechnology.architectureImage,
-    },
-    contractUtils,
-    projectsChangeReport,
-    zkCatalogProjects,
-    allProjectsWithContracts,
-    tvsStats,
-  )
   if (contractsSection) {
     sections.push({
       type: 'ContractsSection',

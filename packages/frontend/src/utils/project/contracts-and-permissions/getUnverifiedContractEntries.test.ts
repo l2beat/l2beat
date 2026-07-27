@@ -1,6 +1,12 @@
-import type { ProjectContracts, ProjectPermissions } from '@l2beat/config'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
+import type {
+  TechnologyContract,
+  TechnologyContractAddress,
+} from '~/components/projects/sections/ContractEntry'
+import { getContractAddressAnchor } from './getContractAddressAnchor'
+import type { ContractsSection } from './getContractsSection'
+import type { PermissionSection } from './getPermissionsSection'
 import { getUnverifiedContractEntries } from './getUnverifiedContractEntries'
 
 const contractAddress = ChainSpecificAddress(
@@ -17,40 +23,18 @@ const unknownAddress = ChainSpecificAddress(
 )
 
 describe(getUnverifiedContractEntries.name, () => {
-  it('links known addresses to their sections and leaves unknown addresses plain', () => {
-    const contracts = mockObject<ProjectContracts>({
-      addresses: {
-        ethereum: [
-          {
-            name: 'RollupProxy',
-            chain: 'ethereum',
-            address: contractAddress,
-            isVerified: false,
-          },
-        ],
-      },
-    })
-    const permissions = mockObject<Record<string, ProjectPermissions>>({
-      ethereum: {
-        roles: [],
-        actors: [
-          {
-            id: 'ProxyAdmin',
-            name: 'ProxyAdmin',
-            chain: 'ethereum',
-            description: 'Can upgrade contracts.',
-            accounts: [
-              {
-                name: 'ProxyAdmin account',
-                address: permissionAddress,
-                url: 'https://etherscan.io/address/0x3333#code',
-                isVerified: false,
-                type: 'Contract',
-              },
-            ],
-          },
-        ],
-      },
+  it('links rendered addresses and leaves unknown addresses plain', () => {
+    const contracts = makeContractsSection([
+      makeTechnologyContract('RollupProxy', [
+        makeAddress('contracts', contractAddress, 'RollupProxy'),
+      ]),
+    ])
+    const permissions = makePermissionsSection({
+      actors: [
+        makeTechnologyContract('ProxyAdmin', [
+          makeAddress('permissions', permissionAddress, 'ProxyAdmin account'),
+        ]),
+      ],
     })
 
     const result = getUnverifiedContractEntries(
@@ -79,35 +63,13 @@ describe(getUnverifiedContractEntries.name, () => {
   })
 
   it('uses account labels for grouped actors', () => {
-    const permissions = mockObject<Record<string, ProjectPermissions>>({
-      ethereum: {
-        roles: [],
-        actors: [
-          {
-            id: 'Sequencers',
-            name: 'Sequencers',
-            chain: 'ethereum',
-            description: 'Can sequence transactions.',
-            accounts: [
-              {
-                name: 'First sequencer',
-                displayName: 'Sequencer A',
-                address: permissionAddress,
-                url: 'https://etherscan.io/address/0x3333#code',
-                isVerified: false,
-                type: 'Contract',
-              },
-              {
-                name: 'Sequencer B',
-                address: secondPermissionAddress,
-                url: 'https://etherscan.io/address/0x5555#code',
-                isVerified: false,
-                type: 'Contract',
-              },
-            ],
-          },
-        ],
-      },
+    const permissions = makePermissionsSection({
+      actors: [
+        makeTechnologyContract('2 actors', [
+          makeAddress('permissions', permissionAddress, 'Sequencer A'),
+          makeAddress('permissions', secondPermissionAddress, 'Sequencer B'),
+        ]),
+      ],
     })
 
     const result = getUnverifiedContractEntries(
@@ -162,18 +124,11 @@ describe(getUnverifiedContractEntries.name, () => {
   })
 
   it('links unnamed contracts to the contracts section', () => {
-    const contracts = mockObject<ProjectContracts>({
-      addresses: {
-        ethereum: [
-          {
-            name: '',
-            chain: 'ethereum',
-            address: contractAddress,
-            isVerified: false,
-          },
-        ],
-      },
-    })
+    const contracts = makeContractsSection([
+      makeTechnologyContract('', [
+        makeAddress('contracts', contractAddress, '0x1111...1111'),
+      ]),
+    ])
 
     const result = getUnverifiedContractEntries(
       [contractAddress],
@@ -193,27 +148,12 @@ describe(getUnverifiedContractEntries.name, () => {
   })
 
   it('links unnamed permissions to the permissions section', () => {
-    const permissions = mockObject<Record<string, ProjectPermissions>>({
-      ethereum: {
-        roles: [],
-        actors: [
-          {
-            id: '',
-            name: '',
-            chain: 'ethereum',
-            description: 'Can upgrade contracts.',
-            accounts: [
-              {
-                name: '0x3333...3333',
-                address: permissionAddress,
-                url: 'https://etherscan.io/address/0x3333#code',
-                isVerified: false,
-                type: 'Contract',
-              },
-            ],
-          },
-        ],
-      },
+    const permissions = makePermissionsSection({
+      actors: [
+        makeTechnologyContract('', [
+          makeAddress('permissions', permissionAddress, '0x3333...3333'),
+        ]),
+      ],
     })
 
     const result = getUnverifiedContractEntries(
@@ -234,18 +174,11 @@ describe(getUnverifiedContractEntries.name, () => {
   })
 
   it('omits the generic Contract label', () => {
-    const contracts = mockObject<ProjectContracts>({
-      addresses: {
-        ethereum: [
-          {
-            name: 'Contract',
-            chain: 'ethereum',
-            address: contractAddress,
-            isVerified: false,
-          },
-        ],
-      },
-    })
+    const contracts = makeContractsSection([
+      makeTechnologyContract('Contract', [
+        makeAddress('contracts', contractAddress, '0x1111...1111'),
+      ]),
+    ])
 
     const result = getUnverifiedContractEntries(
       [contractAddress],
@@ -264,3 +197,46 @@ describe(getUnverifiedContractEntries.name, () => {
     ])
   })
 })
+
+function makeAddress(
+  type: 'contracts' | 'permissions',
+  address: ChainSpecificAddress,
+  name: string,
+): TechnologyContractAddress {
+  return {
+    name,
+    href: `https://example.com/${address}`,
+    address: ChainSpecificAddress.address(address).toString(),
+    verificationStatus: 'unverified',
+    anchorId: getContractAddressAnchor(type, address),
+  }
+}
+
+function makeTechnologyContract(
+  name: string,
+  addresses: TechnologyContractAddress[],
+): TechnologyContract {
+  return mockObject<TechnologyContract>({ name, addresses })
+}
+
+function makeContractsSection(
+  contracts: TechnologyContract[],
+): ContractsSection {
+  return mockObject<ContractsSection>({
+    contracts: { Ethereum: contracts },
+  })
+}
+
+function makePermissionsSection({
+  roles = [],
+  actors = [],
+}: {
+  roles?: TechnologyContract[]
+  actors?: TechnologyContract[]
+}): PermissionSection {
+  return mockObject<PermissionSection>({
+    permissionsByChain: {
+      Ethereum: { roles, actors },
+    },
+  })
+}

@@ -1,11 +1,17 @@
 import type {
   ProjectContract,
   ProjectContracts,
+  ProjectEscrow,
   ProjectPermission,
   ProjectPermissionedAccount,
   ProjectPermissions,
 } from '@l2beat/config'
-import { assert, ChainSpecificAddress, ProjectId } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainSpecificAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import {
@@ -25,6 +31,12 @@ const adminAddress = ChainSpecificAddress(
 )
 const permissionAddress = ChainSpecificAddress(
   'eth:0x3333333333333333333333333333333333333333',
+)
+const activeEscrowAddress = ChainSpecificAddress(
+  'eth:0x4444444444444444444444444444444444444444',
+)
+const historicalEscrowAddress = ChainSpecificAddress(
+  'eth:0x5555555555555555555555555555555555555555',
 )
 
 const contractUtils = mockObject<ContractUtils>({
@@ -68,6 +80,10 @@ describe(createAddressAnchors.name, () => {
         ],
       },
       risks: [],
+      escrows: [
+        makeEscrow(activeEscrowAddress, 'Active escrow'),
+        makeEscrow(historicalEscrowAddress, 'Historical escrow', true),
+      ],
     }
     const account: ProjectPermissionedAccount = {
       name: 'Operator account',
@@ -116,17 +132,25 @@ describe(createAddressAnchors.name, () => {
     assert(contractsSection && permissionsSection)
 
     const contract = contractsSection.contracts.polygon?.[0]
+    const activeEscrow = contractsSection.contracts.ethereum?.[0]
     const permission =
       permissionsSection.permissionsByChain.polygon?.actors[0]?.addresses[0]
-    assert(contract && permission)
+    assert(contract && activeEscrow && permission)
     const contractAnchorId = contract.addresses[0]?.anchorId
+    const activeEscrowAnchorId = activeEscrow.addresses[0]?.anchorId
     const permissionAnchorId = permission.anchorId
-    assert(contractAnchorId && permissionAnchorId)
+    assert(contractAnchorId && activeEscrowAnchorId && permissionAnchorId)
 
     const entries = getUnverifiedContractEntries(
-      [contractAddress, permissionAddress, adminAddress],
-      contracts,
-      permissions,
+      [
+        contractAddress,
+        permissionAddress,
+        activeEscrowAddress,
+        historicalEscrowAddress,
+        adminAddress,
+      ],
+      contractsSection,
+      permissionsSection,
     )
 
     expect(entries).toEqual([
@@ -145,6 +169,17 @@ describe(createAddressAnchors.name, () => {
         },
       },
       {
+        address: activeEscrowAddress,
+        target: {
+          id: activeEscrowAnchorId,
+          label: 'Active escrow',
+        },
+      },
+      {
+        address: historicalEscrowAddress,
+        target: undefined,
+      },
+      {
         address: adminAddress,
         target: undefined,
       },
@@ -153,3 +188,23 @@ describe(createAddressAnchors.name, () => {
     expect(contract.admins[0]?.anchorId).toEqual(undefined)
   })
 })
+
+function makeEscrow(
+  address: ChainSpecificAddress,
+  name: string,
+  isHistorical = false,
+): ProjectEscrow {
+  return {
+    chain: 'ethereum',
+    address: ChainSpecificAddress.address(address),
+    useContractName: true,
+    contract: {
+      name,
+      chain: 'ethereum',
+      isVerified: false,
+    },
+    sinceTimestamp: UnixTime(0),
+    tokens: ['ETH'],
+    isHistorical,
+  }
+}

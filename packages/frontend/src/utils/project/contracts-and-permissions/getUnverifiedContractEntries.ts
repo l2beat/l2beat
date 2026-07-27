@@ -1,6 +1,7 @@
-import type { ProjectContracts, ProjectPermissions } from '@l2beat/config'
-import { ChainSpecificAddress, formatAddress } from '@l2beat/shared-pure'
+import { type ChainSpecificAddress, formatAddress } from '@l2beat/shared-pure'
 import { getContractAddressAnchor } from './getContractAddressAnchor'
+import type { ContractsSection } from './getContractsSection'
+import type { PermissionSection } from './getPermissionsSection'
 
 export interface UnverifiedContractEntry {
   address: ChainSpecificAddress
@@ -14,57 +15,77 @@ interface UnverifiedContractTarget {
 
 export function getUnverifiedContractEntries(
   unverifiedContracts: ChainSpecificAddress[],
-  contracts: ProjectContracts | undefined,
-  permissions: Record<string, ProjectPermissions> | undefined,
+  contractsSection: ContractsSection | undefined,
+  permissionsSection: PermissionSection | undefined,
 ): UnverifiedContractEntry[] {
-  const targetByAddress = new Map<
-    ChainSpecificAddress,
-    UnverifiedContractTarget
-  >()
+  const targetByAnchorId = new Map<string, UnverifiedContractTarget>()
 
-  const projectPermissions = Object.values(permissions ?? {}).flatMap(
-    ({ roles = [], actors = [] }) => [
-      ...roles.map((permission) => ({ permission, isGrouped: false })),
-      ...actors.map((permission) => ({
-        permission,
-        isGrouped: permission.accounts.length > 1,
-      })),
-    ],
-  )
-  for (const { permission, isGrouped } of projectPermissions) {
-    for (const account of permission.accounts) {
-      targetByAddress.set(account.address, {
-        id: getContractAddressAnchor('permissions', account.address),
-        label: getDisplayLabel(
-          isGrouped
-            ? (account.displayName ?? account.name)
-            : permission.name || account.name,
-          account.address,
-        ),
-      })
+  for (const { roles, actors } of Object.values(
+    permissionsSection?.permissionsByChain ?? {},
+  )) {
+    for (const permission of roles) {
+      for (const address of permission.addresses) {
+        addTarget(
+          targetByAnchorId,
+          address.anchorId,
+          permission.name,
+          address.address,
+        )
+      }
+    }
+    for (const permission of actors) {
+      for (const address of permission.addresses) {
+        addTarget(
+          targetByAnchorId,
+          address.anchorId,
+          permission.addresses.length > 1 ? address.name : permission.name,
+          address.address,
+        )
+      }
     }
   }
 
-  const projectContracts = Object.values(contracts?.addresses ?? {}).flat()
-  for (const contract of projectContracts) {
-    targetByAddress.set(contract.address, {
-      id: getContractAddressAnchor('contracts', contract.address),
-      label: getDisplayLabel(contract.name, contract.address),
-    })
+  for (const contract of Object.values(
+    contractsSection?.contracts ?? {},
+  ).flat()) {
+    for (const address of contract.addresses) {
+      addTarget(
+        targetByAnchorId,
+        address.anchorId,
+        contract.name,
+        address.address,
+      )
+    }
   }
 
   return [...new Set(unverifiedContracts)].map((address) => ({
     address,
-    target: targetByAddress.get(address),
+    target:
+      targetByAnchorId.get(getContractAddressAnchor('contracts', address)) ??
+      targetByAnchorId.get(getContractAddressAnchor('permissions', address)),
   }))
+}
+
+function addTarget(
+  targetByAnchorId: Map<string, UnverifiedContractTarget>,
+  anchorId: string | undefined,
+  name: string | undefined,
+  address: string,
+) {
+  if (!anchorId) return
+
+  targetByAnchorId.set(anchorId, {
+    id: anchorId,
+    label: getDisplayLabel(name, address),
+  })
 }
 
 function getDisplayLabel(
   name: string | undefined,
-  address: ChainSpecificAddress,
+  address: string,
 ): string | undefined {
   if (!name || name === 'Contract') return undefined
 
-  const formattedAddress = formatAddress(ChainSpecificAddress.address(address))
+  const formattedAddress = formatAddress(address)
   return name === formattedAddress ? undefined : name
 }
