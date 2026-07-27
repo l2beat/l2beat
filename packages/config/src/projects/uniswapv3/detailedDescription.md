@@ -30,4 +30,4 @@ Over the pools themselves, governance holds exactly two powers, both exercised t
 
 The protocol fee is switched on: since the UNIfication proposal the factory owner role sits with the V3OpenFeeAdapter, where governance sets the fee schedule (currently 1/{{defaultProtocolFeeDenominator}} of LP fees per side by default, 1/{{tier03ProtocolFeeDenominator}} on the 0.3% tier) while applying it to pools and sweeping the accrued fees is permissionless. Swept fees land in the TokenJar and can only be released by burning UNI through the Firepit, so protocol revenue is continuously exchanged for UNI taken out of circulation.
 
-What governance cannot do is the protocol's core guarantee: it cannot upgrade, pause, or drain a pool, change a live pool's swap fee or tick spacing, block a swap, or stop anyone from creating a pool at an enabled tier.
+Governance cannot upgrade, pause, or drain a pool, change a live pool's swap fee or tick spacing, block a swap, or stop anyone from creating a pool at an enabled tier.
