@@ -23,14 +23,22 @@ export function getUnverifiedContractEntries(
   >()
 
   const projectPermissions = Object.values(permissions ?? {}).flatMap(
-    ({ roles = [], actors = [] }) => roles.concat(actors),
+    ({ roles = [], actors = [] }) => [
+      ...roles.map((permission) => ({ permission, isGrouped: false })),
+      ...actors.map((permission) => ({
+        permission,
+        isGrouped: permission.accounts.length > 1,
+      })),
+    ],
   )
-  for (const permission of projectPermissions) {
+  for (const { permission, isGrouped } of projectPermissions) {
     for (const account of permission.accounts) {
       targetByAddress.set(account.address, {
         id: getContractAddressAnchor('permissions', account.address),
         label: getDisplayLabel(
-          permission.name || account.name,
+          isGrouped
+            ? (account.displayName ?? account.name)
+            : permission.name || account.name,
           account.address,
         ),
       })

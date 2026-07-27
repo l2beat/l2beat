@@ -9,6 +9,9 @@ const contractAddress = ChainSpecificAddress(
 const permissionAddress = ChainSpecificAddress(
   'eth:0x3333333333333333333333333333333333333333',
 )
+const secondPermissionAddress = ChainSpecificAddress(
+  'eth:0x5555555555555555555555555555555555555555',
+)
 const unknownAddress = ChainSpecificAddress(
   'eth:0x4444444444444444444444444444444444444444',
 )
@@ -38,7 +41,7 @@ describe(getUnverifiedContractEntries.name, () => {
             description: 'Can upgrade contracts.',
             accounts: [
               {
-                name: 'ProxyAdmin',
+                name: 'ProxyAdmin account',
                 address: permissionAddress,
                 url: 'https://etherscan.io/address/0x3333#code',
                 isVerified: false,
@@ -72,6 +75,62 @@ describe(getUnverifiedContractEntries.name, () => {
         },
       },
       { address: unknownAddress, target: undefined },
+    ])
+  })
+
+  it('uses account labels for grouped actors', () => {
+    const permissions = mockObject<Record<string, ProjectPermissions>>({
+      ethereum: {
+        roles: [],
+        actors: [
+          {
+            id: 'Sequencers',
+            name: 'Sequencers',
+            chain: 'ethereum',
+            description: 'Can sequence transactions.',
+            accounts: [
+              {
+                name: 'First sequencer',
+                displayName: 'Sequencer A',
+                address: permissionAddress,
+                url: 'https://etherscan.io/address/0x3333#code',
+                isVerified: false,
+                type: 'Contract',
+              },
+              {
+                name: 'Sequencer B',
+                address: secondPermissionAddress,
+                url: 'https://etherscan.io/address/0x5555#code',
+                isVerified: false,
+                type: 'Contract',
+              },
+            ],
+          },
+        ],
+      },
+    })
+
+    const result = getUnverifiedContractEntries(
+      [permissionAddress, secondPermissionAddress],
+      undefined,
+      permissions,
+    )
+
+    expect(result).toEqual([
+      {
+        address: permissionAddress,
+        target: {
+          id: `permissions-${permissionAddress}`,
+          label: 'Sequencer A',
+        },
+      },
+      {
+        address: secondPermissionAddress,
+        target: {
+          id: `permissions-${secondPermissionAddress}`,
+          label: 'Sequencer B',
+        },
+      },
     ])
   })
 
