@@ -20,6 +20,10 @@ const diamond = discovery.getContract('Diamond')
 const eraValidatorMsAddress = ChainSpecificAddress.address(
   discovery.getContract('EraMultisigValidator').address,
 )
+const msExecutors = discovery.getContractValue<Record<string, string[]>>(
+  'EraMultisigValidator',
+  'executor',
+)[diamond.address]
 
 export const abstract: ScalingProject = zkStackL2({
   addedAt: UnixTime(1737936000), // 2025-01-27T00:00:00Z
@@ -99,6 +103,15 @@ export const abstract: ScalingProject = zkStackL2({
     }),
   ],
   usesEthereumBlobs: true,
+  nonTemplateDaTracking: [
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: eraMultisigValidatorTs,
+      inbox: eraValidatorMsAddress,
+      sequencers: msExecutors,
+    },
+  ],
   nonTemplateTrackedTxs: [
     {
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
