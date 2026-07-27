@@ -83,11 +83,6 @@ function getDiscoveries(
     }
   }
 
-  // TODO: this should be removed and covered by entrypoints and references
-  const dependentDiscoveries = discovery.dependentDiscoveries ?? {}
-  for (const projectName of Object.keys(dependentDiscoveries)) {
-    result.push(configReader.readDiscovery(projectName))
-  }
   return result
 }
 

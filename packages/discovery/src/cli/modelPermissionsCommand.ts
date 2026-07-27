@@ -58,11 +58,8 @@ export async function writePermissionsIntoDiscovery(
   permissionsOutput: PermissionsOutput,
   configReader: ConfigReader,
 ) {
-  const rawConfig = configReader.readRawConfig(project)
   const discovery = configReader.readDiscovery(project)
-  combinePermissionsIntoDiscovery(discovery, permissionsOutput, {
-    skipDependentDiscoveries: !rawConfig.modelCrossChainPermissions,
-  })
+  combinePermissionsIntoDiscovery(discovery, permissionsOutput)
 
   const projectDiscoveryFolder = configReader.getProjectPath(project)
   discovery.entries = discovery.entries.map((e) => sortEntry(e))
