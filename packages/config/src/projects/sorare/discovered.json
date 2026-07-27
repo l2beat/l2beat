@@ -5,9 +5,8 @@
   "entries": [
     {
       "address": "eth:0x0405107a60391Eb51821be373ff978115Ee58488",
-      "type": "Reference",
-      "targetType": "EOA",
-      "targetProject": "shared-sharp-verifier"
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
@@ -56,9 +55,8 @@
     },
     {
       "address": "eth:0x59232aC80E6d403b6381393e52f4665ECA328558",
-      "type": "Reference",
-      "targetType": "EOA",
-      "targetProject": "shared-sharp-verifier"
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x63881ac44293E22F3c3183a0C4113586ABb3e653",
@@ -907,5 +905,5 @@
     "starkex/StarkExchange_Frozen": "0x0136ed1863558a0fd0cd5283912fcd12ca49a1e78ee7595141def29b8e331ac1"
   },
   "usedBlockNumbers": { "ethereum": 25249836 },
-  "permissionsConfigHash": "0x854621f9dfca16025c1656672105e013cc7d495bc19f8c2cc24d9985d92a2ebd"
+  "permissionsConfigHash": "0x7be682060fca143a3fbda915ba31730bac298f3d2c7dbc2d1d7c8136742dd9e2"
 }
