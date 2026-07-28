@@ -23,7 +23,7 @@ export function getScalingRiskDataAvailabilityColumns(
     ),
     columnHelper.accessor((entry) => entry.dataPosted?.pastDay, {
       id: 'dataPosted',
-      header: 'Past 24h data posted',
+      header: 'Past day data posted',
       cell: (ctx) => {
         const data = ctx.row.original.dataPosted
         if (!data) {
@@ -48,7 +48,7 @@ export function getScalingRiskDataAvailabilityColumns(
       meta: {
         align: 'right',
         tooltip:
-          'The data posted by the project to the DA layer over the past 24 hours, together with a % change compared to 7D ago.',
+          'The data posted by the project to the DA layer over the past day, together with a % change compared to 7D ago.',
       },
     }),
     !hideProofSystem &&

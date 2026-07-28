@@ -44,13 +44,16 @@ export async function getProjectsDataPosted(
   if (from === null) {
     return {}
   }
+  // Report the full previous UTC day (midnight → midnight) instead of the
+  // chart's range end, which trails ~75min behind now and spans 24-47h.
+  const to = from + UnixTime.DAY
 
   const records = await getDb().dataAvailability.getByProjectIdsAndTimeRange(
     projectIds,
-    [from - 7 * UnixTime.DAY, range[1]],
+    [from - 7 * UnixTime.DAY, to],
   )
 
-  return buildProjectsDataPosted(records, from, range[1])
+  return buildProjectsDataPosted(records, from, to)
 }
 
 export function buildProjectsDataPosted(
