@@ -48,6 +48,7 @@ export interface TechnologyContractAddress {
   href: string
   address: string
   verificationStatus: VerificationStatus
+  anchorId?: string
 }
 
 export interface TechnologyContractEscrow {
@@ -116,6 +117,7 @@ export function ContractEntry({
               entries.map((address, i) => (
                 <HighlightableLink
                   key={i}
+                  id={address.anchorId}
                   variant={
                     address.verificationStatus === 'unverified'
                       ? 'danger'
@@ -123,7 +125,7 @@ export function ContractEntry({
                   }
                   href={address.href}
                   address={address.address}
-                  className="flex items-center gap-0.5"
+                  className="flex scroll-mt-14 items-center gap-0.5 md:scroll-mt-10"
                 >
                   {address.verificationStatus === 'unverified' &&
                   color !== 'red' ? (

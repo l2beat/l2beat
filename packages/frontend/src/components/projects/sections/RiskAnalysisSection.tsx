@@ -1,27 +1,28 @@
 import type { ProjectRedWarning } from '@l2beat/config'
 import { ShieldIcon } from '~/icons/Shield'
-import { UnverifiedIcon } from '~/icons/Unverified'
+import type { UnverifiedContractEntry } from '~/utils/project/contracts-and-permissions/getUnverifiedContractEntries'
 import { BigPizzaRosette } from '../../rosette/pizza/BigPizzaRosette'
 import type { RosetteValue } from '../../rosette/types'
 import { WarningBar } from '../../WarningBar'
 import { RiskBanner } from '../RiskBanner'
 import { ProjectSection } from './ProjectSection'
 import type { ProjectSectionProps } from './types'
+import { UnverifiedContractsWarning } from './UnverifiedContractsWarning'
 
 export interface RiskAnalysisSectionProps extends ProjectSectionProps {
   rosetteValues: RosetteValue[]
   warning: string | undefined
-  isVerified: boolean | undefined
   redWarning: ProjectRedWarning | undefined
   shouldHideRosette?: boolean | undefined
+  unverifiedContracts: UnverifiedContractEntry[]
 }
 
 export function RiskAnalysisSection({
   rosetteValues,
   warning,
-  isVerified,
   redWarning,
   shouldHideRosette,
+  unverifiedContracts,
   ...sectionProps
 }: RiskAnalysisSectionProps) {
   const isUnderReview =
@@ -31,13 +32,10 @@ export function RiskAnalysisSection({
     )
   return (
     <ProjectSection {...sectionProps} isUnderReview={isUnderReview}>
-      {isVerified === false && (
-        <WarningBar
-          text="This project includes unverified contracts."
-          color="red"
-          isCritical={true}
+      {unverifiedContracts.length > 0 && (
+        <UnverifiedContractsWarning
+          entries={unverifiedContracts}
           className="mt-4 text-paragraph-15 md:text-paragraph-16"
-          icon={UnverifiedIcon}
         />
       )}
       {redWarning && (
