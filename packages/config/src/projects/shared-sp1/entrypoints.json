@@ -1,0 +1,34 @@
+{
+  "entrypoints": {
+    "arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e": {
+      "name": "SP1VerifierGatewayArb",
+      "type": "Contract",
+      "project": "shared-sp1"
+    },
+    "arb1:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": {
+      "name": "SP1VerifierGatewayMultisig",
+      "type": "Contract",
+      "project": "shared-sp1"
+    },
+    "base:0x3B6041173B80E77f038f3F2C0f9744f04837185e": {
+      "name": "SP1VerifierGatewayBase",
+      "type": "Contract",
+      "project": "shared-sp1"
+    },
+    "base:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": {
+      "name": "SP1VerifierGatewayMultisig",
+      "type": "Contract",
+      "project": "shared-sp1"
+    },
+    "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e": {
+      "name": "SP1VerifierGateway",
+      "type": "Contract",
+      "project": "shared-sp1"
+    },
+    "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": {
+      "name": "SP1VerifierGatewayMultisig",
+      "type": "Contract",
+      "project": "shared-sp1"
+    }
+  }
+}
