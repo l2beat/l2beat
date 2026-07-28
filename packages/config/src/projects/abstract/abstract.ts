@@ -107,7 +107,7 @@ export const abstract: ScalingProject = zkStackL2({
     {
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
-      sinceBlock: eraMultisigValidatorTs,
+      sinceBlock: 25423749, // block with timestamp eraMultisigValidatorTs
       inbox: eraValidatorMsAddress,
       sequencers: msExecutors,
     },
