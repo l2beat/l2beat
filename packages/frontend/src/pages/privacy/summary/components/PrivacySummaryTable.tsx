@@ -165,7 +165,7 @@ const columns = [
     sortDescFirst: true,
     sortUndefined: 'last',
     meta: {
-      align: 'right',
+      align: 'center',
       tooltip:
         'Size of the biggest identified 30 day rolling onchain anonymity set',
     },
