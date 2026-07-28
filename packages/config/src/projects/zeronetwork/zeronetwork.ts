@@ -68,6 +68,31 @@ export const zeronetwork: ScalingProject = zkStackL2({
     ],
   },
   usesEthereumBlobs: true,
+  nonTemplateDaTracking: [
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 21809364,
+      untilBlock: 25482106, // last batch before the v29 upgrade
+      inbox: EthereumAddress('0x8c0Bfc04AdA21fd496c55B8C50331f904306F564'),
+      sequencers: [
+        EthereumAddress('0x479B7c95b9509E1A834C994fc94e3581aA8A73B9'),
+        EthereumAddress('0x0F9B807d5B0cE12450059B425Dc35C727D65CB2F'),
+        EthereumAddress('0xef854E09fa6e281268e1051D4d5465d8c92862ee'),
+        EthereumAddress('0x7b55c1D9b75Fa35793157aD674b0a1aEF7b8DdE0'),
+      ],
+    },
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 25482106, // v29 upgrade
+      inbox: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
+      sequencers: [
+        EthereumAddress('0xef854E09fa6e281268e1051D4d5465d8c92862ee'),
+        EthereumAddress('0x7b55c1D9b75Fa35793157aD674b0a1aEF7b8DdE0'),
+      ],
+    },
+  ],
   nonTemplateTrackedTxs: [
     {
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
