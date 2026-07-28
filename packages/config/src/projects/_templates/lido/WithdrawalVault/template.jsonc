@@ -1,0 +1,36 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Holds consensus-layer withdrawals and pays protocol predeploy fees. It lets stETH collect withdrawn ETH and lets the designated gateways submit EIP-7002 withdrawal and EIP-7251 consolidation requests.",
+  "category": "core",
+  "ignoreRelatives": ["CONSOLIDATION_REQUEST", "WITHDRAWAL_REQUEST"],
+  "ignoreInWatchMode": [
+    "getConsolidationRequestFee",
+    "getWithdrawalRequestFee"
+  ],
+  "fields": {
+    "LIDO": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "withdraw accumulated consensus-layer withdrawals into the stETH accounting buffer."
+        }
+      ]
+    },
+    "TRIGGERABLE_WITHDRAWALS_GATEWAY": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "spend vault ETH on EIP-7002 validator withdrawal requests."
+        }
+      ]
+    },
+    "CONSOLIDATION_GATEWAY": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "spend vault ETH on EIP-7251 validator consolidation requests."
+        }
+      ]
+    }
+  }
+}

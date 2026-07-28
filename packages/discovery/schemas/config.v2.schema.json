@@ -400,6 +400,22 @@
                           "propertyNames": { "type": "string" },
                           "additionalProperties": { "type": "string" }
                         },
+                        "includeEmptyRoles": { "type": "boolean" },
+                        "pickRoleMembers": { "type": "string" },
+                        "ignoreRelative": { "type": "boolean" }
+                      },
+                      "additionalProperties": false,
+                      "required": ["type"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "aragonPermissions" },
+                        "roleNames": {
+                          "type": "object",
+                          "propertyNames": { "type": "string" },
+                          "additionalProperties": { "type": "string" }
+                        },
                         "pickRoleMembers": { "type": "string" },
                         "ignoreRelative": { "type": "boolean" }
                       },

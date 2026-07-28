@@ -1,0 +1,111 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Aragon TokenManager for LDO. Its ACL roles can issue supply, mint or burn LDO, assign vested balances, and revoke vesting.",
+  "category": "gov",
+  "ignoreRelatives": ["getRecoveryVault"],
+  "fields": {
+    "aragonPermissions": {
+      "handler": { "type": "aragonPermissions" }
+    },
+    "issuers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "ISSUE_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "increase the maximum issuable LDO supply."
+        }
+      ]
+    },
+    "minters": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "MINT_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "mint LDO up to the issued supply."
+        }
+      ]
+    },
+    "burners": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "BURN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "burn LDO held by this TokenManager."
+        }
+      ]
+    },
+    "assigners": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "ASSIGN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "assign LDO with an optional revocable vesting schedule."
+        }
+      ]
+    },
+    "vestingRevokers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "REVOKE_VESTINGS_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "revoke revocable LDO vesting grants."
+        }
+      ]
+    },
+    "issuePermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "ISSUE_ROLE", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the LDO issuance permission."
+        }
+      ]
+    },
+    "mintPermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "MINT_ROLE", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the LDO mint permission."
+        }
+      ]
+    },
+    "burnPermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "BURN_ROLE", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the LDO burn permission."
+        }
+      ]
+    },
+    "assignPermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "ASSIGN_ROLE", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the LDO assignment permission."
+        }
+      ]
+    },
+    "revokeVestingPermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "REVOKE_VESTINGS_ROLE", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the vesting-revocation permission."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "wstETH_tokenContract",
+  "ignoreMethods": ["getWstETHByStETH", "getStETHByWstETH", "getStETHByWstETH"],
+  "ignoreInWatchMode": ["tokensPerStEth", "stEthPerToken", "totalSupply"]
+}

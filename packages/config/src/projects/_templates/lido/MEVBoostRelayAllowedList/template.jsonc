@@ -1,0 +1,24 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "MEV Boost Relay Allowed List",
+  "description": "Registry of MEV-Boost relay endpoints supported by Lido node operators. The list distinguishes mandatory relays from optional relays and is consumed offchain.",
+  "category": "core",
+  "fields": {
+    "get_owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "appoint or dismiss the relay-list manager, transfer ownership, and recover ERC-20 tokens."
+        }
+      ]
+    },
+    "get_manager": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add or remove supported MEV-Boost relay endpoints."
+        }
+      ]
+    }
+  }
+}

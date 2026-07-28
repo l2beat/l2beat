@@ -1,0 +1,181 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Lido DAO Agent",
+  "description": "The Lido DAO's Aragon execution and treasury agent. It can transfer assets, execute arbitrary calls or scripts, and validate signatures according to granular ACL permissions.",
+  "category": "gov",
+  "ignoreRelatives": ["designatedSigner", "getRecoveryVault"],
+  "fields": {
+    "aragonPermissions": {
+      "handler": { "type": "aragonPermissions" }
+    },
+    "executors": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "EXECUTE_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "act",
+          "description": "execute arbitrary calls from the Agent, which is the effective authority held by this contract."
+        }
+      ]
+    },
+    "safeExecutors": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "SAFE_EXECUTE_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "act",
+          "description": "execute calls from the Agent while preventing protected-token balance decreases."
+        }
+      ]
+    },
+    "assetTransferers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "TRANSFER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "transfer ETH, ERC-20, ERC-721, ERC-1155 and EtherToken assets held by the Agent."
+        }
+      ]
+    },
+    "scriptRunners": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "RUN_SCRIPT_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "act",
+          "description": "run registered EVM scripts from the Agent."
+        }
+      ]
+    },
+    "protectedTokenAdders": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "ADD_PROTECTED_TOKEN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add tokens to the Agent's protected-token list."
+        }
+      ]
+    },
+    "protectedTokenRemovers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "REMOVE_PROTECTED_TOKEN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "remove tokens from the Agent's protected-token list."
+        }
+      ]
+    },
+    "presignedHashAdders": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "ADD_PRESIGNED_HASH_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "approve hashes as valid Agent signatures."
+        }
+      ]
+    },
+    "designatedSignerManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "DESIGNATE_SIGNER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the Agent's designated ERC-1271 signer."
+        }
+      ]
+    },
+    "designatedSigner": {
+      "permissions": [
+        {
+          "type": "act",
+          "condition": "the address is non-zero",
+          "description": "produce ERC-1271 signatures accepted as signatures made by the Agent."
+        }
+      ]
+    },
+    "executePermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "EXECUTE_ROLE", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the Agent execution permission."
+        }
+      ]
+    },
+    "safeExecutePermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "SAFE_EXECUTE_ROLE", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the safe-execution permission."
+        }
+      ]
+    },
+    "transferPermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "TRANSFER_ROLE", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the Agent asset-transfer permission."
+        }
+      ]
+    },
+    "scriptPermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "RUN_SCRIPT_ROLE", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the Agent script-runner permission."
+        }
+      ]
+    },
+    "protectedTokenPermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["pipe", ["get", "ADD_PROTECTED_TOKEN_ROLE", "managers"]],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the protected-token addition permission."
+        }
+      ]
+    },
+    "protectedTokenRemovalPermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "REMOVE_PROTECTED_TOKEN_ROLE", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the protected-token removal permission."
+        }
+      ]
+    },
+    "signaturePermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "ADD_PRESIGNED_HASH_ROLE", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the presigned-hash permission."
+        }
+      ]
+    },
+    "designatedSignerPermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "DESIGNATE_SIGNER_ROLE", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the designated-signer permission."
+        }
+      ]
+    }
+  }
+}

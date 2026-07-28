@@ -1,0 +1,24 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "EasyTrack execution adapter. It executes the Aragon CallsScript produced by an approved EasyTrack motion, making downstream calls from this contract's address.",
+  "category": "gov",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the EasyTrack contract authorized to use this executor."
+        }
+      ]
+    },
+    "easyTrack": {
+      "permissions": [
+        { "type": "act" },
+        {
+          "type": "interact",
+          "description": "execute an approved EasyTrack script through this adapter."
+        }
+      ]
+    }
+  }
+}

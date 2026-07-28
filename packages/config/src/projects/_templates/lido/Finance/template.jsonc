@@ -1,0 +1,115 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Lido DAO's Aragon Finance application. ACL roles create and execute one-time or recurring treasury payments and change their budgets, recipients, amounts and accounting period.",
+  "category": "gov",
+  "ignoreMethods": ["getPayment", "getTransaction", "nextPaymentTime"],
+  "ignoreRelatives": ["getRecoveryVault"],
+  "ignoreInWatchMode": [
+    "currentPeriodId",
+    "paymentsNextIndex",
+    "periodsLength",
+    "transactionsNextIndex"
+  ],
+  "fields": {
+    "aragonPermissions": {
+      "handler": { "type": "aragonPermissions" }
+    },
+    "paymentCreators": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "CREATE_PAYMENTS_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "create one-time or recurring DAO payments."
+        }
+      ]
+    },
+    "paymentExecutors": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "EXECUTE_PAYMENTS_ROLE", "members"],
+      "permissions": [
+        { "type": "interact", "description": "execute due DAO payments." }
+      ]
+    },
+    "paymentManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "MANAGE_PAYMENTS_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change or disable existing DAO payments."
+        }
+      ]
+    },
+    "budgetManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "CHANGE_BUDGETS_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change Finance budgets for tracked assets."
+        }
+      ]
+    },
+    "periodManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "CHANGE_PERIOD_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the Finance accounting-period duration."
+        }
+      ]
+    },
+    "createPaymentPermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "CREATE_PAYMENTS_ROLE", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the payment-creation permission."
+        }
+      ]
+    },
+    "executePaymentPermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "EXECUTE_PAYMENTS_ROLE", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the payment-execution permission."
+        }
+      ]
+    },
+    "managePaymentPermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "MANAGE_PAYMENTS_ROLE", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the payment-management permission."
+        }
+      ]
+    },
+    "budgetPermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "CHANGE_BUDGETS_ROLE", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the budget-change permission."
+        }
+      ]
+    },
+    "periodPermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "CHANGE_PERIOD_ROLE", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the accounting-period permission."
+        }
+      ]
+    }
+  }
+}

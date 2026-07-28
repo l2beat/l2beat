@@ -36,6 +36,7 @@ import {
   getProjectPastUpgrades,
 } from '~/utils/project/contracts-and-permissions/getPastUpgradesData'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
+import { getUnverifiedContractEntries } from '~/utils/project/contracts-and-permissions/getUnverifiedContractEntries'
 import { getCostsSection } from '~/utils/project/costs/getCostsSection'
 import { getDataPostedSection } from '~/utils/project/data-posted/getDataPostedSection'
 import { getBadgeWithParamsAndLink } from '~/utils/project/getBadgeWithParams'
@@ -57,7 +58,7 @@ import {
 } from '~/utils/project/underReview'
 import { withProjectIcon } from '~/utils/withProjectIcon'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
-import { getProjectVerificationWarnings } from '../../utils/getIsProjectVerified'
+import { getProjectVerification } from '../../utils/getIsProjectVerified'
 import { getActivityProjectStats } from '../activity/getActivityProjectStats'
 import {
   getProjectInteropData,
@@ -359,10 +360,10 @@ export async function getScalingProjectEntry(
       : undefined
 
   const hostChainVerificationWarnings = hostChain
-    ? getProjectVerificationWarnings(
+    ? getProjectVerification(
         hostChain,
         projectsChangeReport.getChanges(hostChain.id),
-      )
+      ).warnings
     : {
         contracts: undefined,
         programHashes: undefined,
@@ -377,7 +378,7 @@ export async function getScalingProjectEntry(
     : undefined
   const hostChainRisksSummary =
     hostChain &&
-    getScalingRiskSummarySection(hostChain, hostChainVerificationWarnings)
+    getScalingRiskSummarySection(hostChain, hostChainVerificationWarnings, [])
   const hostChainWarningWithRiskCount =
     hostChain && hostChainRisksSummary
       ? {
@@ -504,14 +505,46 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const projectVerificationWarnings = getProjectVerificationWarnings(
-    project,
-    changes,
+  const permissionsSection = getPermissionsSection(
+    {
+      id: project.id,
+      hostChain: hostChain?.id,
+      isUnderReview: !!project.statuses.reviewStatus,
+      permissions: project.permissions,
+    },
+    contractUtils,
+    projectsChangeReport,
+  )
+
+  const contractsSection = getContractsSection(
+    {
+      id: project.id,
+      isVerified: !hostChainVerificationWarnings.contracts,
+      slug: project.slug,
+      contracts: project.contracts,
+      tvsConfig: project.tvsConfig,
+      isUnderReview: !!project.statuses.reviewStatus,
+      architectureImage: project.scalingTechnology.architectureImage,
+    },
+    contractUtils,
+    projectsChangeReport,
+    zkCatalogProjects,
+    allProjectsWithContracts,
+    tvsStats,
+  )
+
+  const projectVerification = getProjectVerification(project, changes)
+  const projectVerificationWarnings = projectVerification.warnings
+  const unverifiedContracts = getUnverifiedContractEntries(
+    projectVerification.unverifiedContracts,
+    contractsSection,
+    permissionsSection,
   )
 
   const riskSummary = getScalingRiskSummarySection(
     project,
     projectVerificationWarnings,
+    unverifiedContracts,
   )
   if (riskSummary.riskGroups.length > 0) {
     sections.push({
@@ -543,8 +576,8 @@ export async function getScalingProjectEntry(
         combined: common.rosette.stacked,
         warning: project.scalingTechnology.warning,
         redWarning: project.statuses.redWarning,
-        isVerified: !projectVerificationWarnings.contracts,
         isUnderReview: !!project.statuses.reviewStatus,
+        unverifiedContracts,
       },
     })
   } else {
@@ -556,8 +589,8 @@ export async function getScalingProjectEntry(
         rosetteValues: common.rosette.self,
         warning: project.scalingTechnology.warning,
         redWarning: project.statuses.redWarning,
-        isVerified: !projectVerificationWarnings.contracts,
         isUnderReview: !!project.statuses.reviewStatus,
+        unverifiedContracts,
       },
     })
   }
@@ -717,17 +750,6 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const permissionsSection = getPermissionsSection(
-    {
-      id: project.id,
-      hostChain: hostChain?.id,
-      isUnderReview: !!project.statuses.reviewStatus,
-      permissions: project.permissions,
-    },
-    contractUtils,
-    projectsChangeReport,
-  )
-
   const discoUi = common.discoUiHref
     ? {
         href: common.discoUiHref,
@@ -753,22 +775,6 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const contractsSection = getContractsSection(
-    {
-      id: project.id,
-      isVerified: !hostChainVerificationWarnings.contracts,
-      slug: project.slug,
-      contracts: project.contracts,
-      tvsConfig: project.tvsConfig,
-      isUnderReview: !!project.statuses.reviewStatus,
-      architectureImage: project.scalingTechnology.architectureImage,
-    },
-    contractUtils,
-    projectsChangeReport,
-    zkCatalogProjects,
-    allProjectsWithContracts,
-    tvsStats,
-  )
   if (contractsSection) {
     sections.push({
       type: 'ContractsSection',

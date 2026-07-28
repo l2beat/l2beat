@@ -1,0 +1,60 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Merkle-gated onboarding contract for a curated Community Staking Module cohort. An eligible address consumes its proof to create a node operator with this gate's configured bond curve and metadata group.",
+  "category": "core",
+  "fields": {
+    "accessControl": {
+      "handler": { "type": "accessControl", "includeEmptyRoles": true }
+    },
+    "defaultAdmins": {
+      "copy": "accessControl",
+      "edit": ["get", "DEFAULT_ADMIN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke gate roles and change the gate's display name."
+        }
+      ]
+    },
+    "treeSetters": {
+      "copy": "accessControl",
+      "edit": ["get", "SET_TREE_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the Merkle root and content identifier that determine eligible node operators."
+        }
+      ]
+    },
+    "pausers": {
+      "copy": "accessControl",
+      "edit": ["get", "PAUSE_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause onboarding through this gate."
+        }
+      ]
+    },
+    "resumers": {
+      "copy": "accessControl",
+      "edit": ["get", "RESUME_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "resume onboarding through this gate."
+        }
+      ]
+    },
+    "assetRecoverers": {
+      "copy": "accessControl",
+      "edit": ["get", "RECOVERER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "recover ETH, ERC-20, ERC-721 and ERC-1155 assets accidentally held by this gate."
+        }
+      ]
+    }
+  }
+}

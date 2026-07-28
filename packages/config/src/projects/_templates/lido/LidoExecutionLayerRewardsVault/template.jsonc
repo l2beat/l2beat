@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Execution Layer Rewards Vault",
+  "description": "Holds execution-layer validator rewards until stETH accounting collects them during an oracle report.",
+  "category": "core",
+  "fields": {
+    "LIDO": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "withdraw accumulated ETH rewards into the stETH accounting buffer."
+        }
+      ]
+    }
+  }
+}

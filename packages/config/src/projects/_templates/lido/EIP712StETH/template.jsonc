@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Stateless helper that builds the stETH EIP-712 domain separator and typed-data hashes.",
+  "category": "core"
+}

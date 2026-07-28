@@ -6,7 +6,7 @@ import { getBadgeWithParamsAndLink } from '~/utils/project/getBadgeWithParams'
 import { getUnderReviewStatus } from '~/utils/project/underReview'
 import type { ProjectChanges } from '../projects-change-report/getProjectsChangeReport'
 import type { CommonProjectEntry } from '../utils/getCommonProjectEntry'
-import { getProjectVerificationWarnings } from '../utils/getIsProjectVerified'
+import { getProjectVerification } from '../utils/getIsProjectVerified'
 
 const proofSystemLabel: Record<ProjectScalingProofSystem['type'], string> = {
   Optimistic: 'Optimistic',
@@ -34,7 +34,7 @@ export function getCommonScalingEntry({
   const statuses = {
     yellowWarning: project.statuses.yellowWarning,
     redWarning: project.statuses.redWarning,
-    verificationWarnings: getProjectVerificationWarnings(project, changes),
+    verificationWarnings: getProjectVerification(project, changes).warnings,
     underReview: getUnderReviewStatus({
       isUnderReview: !!project.statuses.reviewStatus,
       impactfulChange: !!changes?.impactfulChange,

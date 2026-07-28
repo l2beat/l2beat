@@ -1,0 +1,52 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Aragon registry of EVM script executors used by Lido DAO applications.",
+  "category": "gov",
+  "ignoreMethods": ["executors"],
+  "ignoreRelatives": ["getRecoveryVault"],
+  "fields": {
+    "aragonPermissions": {
+      "handler": { "type": "aragonPermissions" }
+    },
+    "executorAdders": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "REGISTRY_ADD_EXECUTOR_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add an EVM script executor to the registry."
+        }
+      ]
+    },
+    "executorAdderPermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "REGISTRY_ADD_EXECUTOR_ROLE", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the executor-adder permission."
+        }
+      ]
+    },
+    "registryManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "REGISTRY_MANAGER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "enable or disable registered EVM script executors."
+        }
+      ]
+    },
+    "registryManagerPermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "REGISTRY_MANAGER_ROLE", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the registry-manager permission."
+        }
+      ]
+    }
+  }
+}

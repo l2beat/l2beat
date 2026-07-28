@@ -1,0 +1,17 @@
+{
+  "CSFeeOracle": {
+    "hash": "0xd414c107b90634c29fdfaef7fef4fa2f712c1b09881cc987c4f43be0fef4245f",
+    "address": "eth:0x919ac5C6c62B6ef7B05cF05070080525a7B0381E",
+    "blockNumber": 22587696
+  },
+  "CSFeeOracle_v2": {
+    "hash": "0xef315fcae19b9f01e7ea5921b2afa1fad88cd4144538899030080474517e6ccb",
+    "address": "eth:0xe0B234f99E413E27D9Bc31aBba9A49A3e570Da97",
+    "blockNumber": 23519375
+  },
+  "FeeOracleV3": {
+    "hash": "0x2cd87e0f399911b499865c5fb86f951bb373201d84e9cc6528bd457e94c55111",
+    "address": "eth:0xecE66b1fA051465285A20612F2232816cF06eE76",
+    "blockNumber": 25624347
+  }
+}

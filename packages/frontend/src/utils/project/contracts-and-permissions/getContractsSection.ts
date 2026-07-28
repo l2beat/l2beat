@@ -17,6 +17,7 @@ import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type { TechnologyContract } from '../../../components/projects/sections/ContractEntry'
 import type { ContractsSectionProps } from '../../../components/projects/sections/contracts/ContractsSection'
 import { toTechnologyRisk } from '../risk-summary/toTechnologyRisk'
+import { createAddressAnchors } from './getContractAddressAnchor'
 import type { ContractUtils } from './getContractUtils'
 import { getPastUpgradesData } from './getPastUpgradesData'
 import { getProgramHashes } from './getProgramHashes'
@@ -72,6 +73,7 @@ export function getContractsSection(
     ]),
   )
   const matchedEscrows = new Set<string>()
+  const getAddressAnchor = createAddressAnchors('contracts')
 
   const contracts = Object.fromEntries(
     Object.entries(projectParams.contracts.addresses ?? {}).map(
@@ -94,6 +96,7 @@ export function getContractsSection(
               projectChangeReport,
               contractUtils,
               escrow,
+              getAddressAnchor(contract.address),
             ),
           ] as const
         })
@@ -127,6 +130,7 @@ export function getContractsSection(
         projectChangeReport,
         contractUtils,
         escrowDetails,
+        getAddressAnchor(contract.address),
       ),
     ]
   }
@@ -159,6 +163,7 @@ function makeTechnologyContract(
   projectChangeReport: ProjectsChangeReport['projects'][string] | undefined,
   contractUtils: ContractUtils,
   escrow?: TechnologyContract['escrow'],
+  anchorId?: string,
 ): TechnologyContract {
   const chain = item.chain
   // TODO: sz-piotr: This here is just a stepping stone. Ideally none of this
@@ -172,7 +177,11 @@ function makeTechnologyContract(
     item.chain
   ]?.becameVerified.includes(ChainSpecificAddress.address(item.address))
 
-  const getAddress = (opts: { address: EthereumAddress; name?: string }) => {
+  const getAddress = (opts: {
+    address: EthereumAddress
+    name?: string
+    anchorId?: string
+  }) => {
     const name =
       opts.name ?? `${opts.address.slice(0, 6)}…${opts.address.slice(38, 42)}`
 
@@ -184,11 +193,15 @@ function makeTechnologyContract(
         mainContractBecameVerified,
       ),
       href: `${explorerUrl}/address/${opts.address.toString()}#code`,
+      anchorId: opts.anchorId,
     }
   }
 
   const addresses = [
-    getAddress({ address: ChainSpecificAddress.address(item.address) }),
+    getAddress({
+      address: ChainSpecificAddress.address(item.address),
+      anchorId,
+    }),
   ]
 
   const implementations = item.upgradeability?.implementations ?? []

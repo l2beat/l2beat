@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Pushes the current stETH token rate to registered observer contracts after rebases.",
+  "category": "core",
+  "ignoreMethods": ["observers"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add or remove token-rate observers and transfer or renounce ownership."
+        }
+      ]
+    }
+  }
+}

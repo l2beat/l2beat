@@ -1,0 +1,12 @@
+{
+  "CSStrikes.sol": {
+    "hash": "0x6d90c93ddc693f6962cb745252a149286e2b9de0b6ad20e0dd8ac07c33b0c2af",
+    "address": "eth:0x3E5021424c9e13FC853e523Cd68ebBec848956a0",
+    "blockNumber": 23675030
+  },
+  "ValidatorStrikesV3": {
+    "hash": "0x1c8d9a9cedcb674698014553b83b09b70d6dbdb14c1d2d8ec1a9f99a064c8502",
+    "address": "eth:0xd25E7C3923d2e68c325980b0e15eD20d62B2691F",
+    "blockNumber": 25624347
+  }
+}

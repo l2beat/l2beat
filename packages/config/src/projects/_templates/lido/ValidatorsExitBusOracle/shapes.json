@@ -1,0 +1,17 @@
+{
+  "ValidatorsExitBusOracle": {
+    "hash": "0x528e321ed22ab81244d39787a1bc2ef5299025f329e26bf294d41e21f9f71167",
+    "address": "eth:0xA89Ea51FddE660f67d1850e03C9c9862d33Bc42c",
+    "blockNumber": 22188285
+  },
+  "ValidatorsExitBusOracle_v2": {
+    "hash": "0x4879e0bd2e338990ef1272eed42b478311c14048e7d4acfd4bcf5be1219ab013",
+    "address": "eth:0x905A211eD6830Cfc95643f0bE2ff64E7f3bf9b94",
+    "blockNumber": 23519375
+  },
+  "ValidatorsExitBusOracleV3": {
+    "hash": "0x88dc4b001552871db081d3d643ba039dff4980f5fd674dd16928bbca58c6bbc2",
+    "address": "eth:0x2C3384A9AB6d9dEbE2cA3e42f6e783a882aD6A31",
+    "blockNumber": 25624347
+  }
+}

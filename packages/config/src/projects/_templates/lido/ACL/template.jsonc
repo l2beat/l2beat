@@ -1,0 +1,32 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Lido DAO ACL",
+  "description": "The shared Aragon ACL that stores Lido DAO permission grants, optional permission parameters, and the manager allowed to grant or revoke each app role.",
+  "category": "gov",
+  "ignoreRelatives": ["getRecoveryVault"],
+  "fields": {
+    "aragonPermissions": {
+      "handler": { "type": "aragonPermissions" }
+    },
+    "permissionCreators": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "CREATE_PERMISSIONS_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "create new Aragon app permissions and assign their initial grantee and manager."
+        }
+      ]
+    },
+    "permissionCreatorManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "CREATE_PERMISSIONS_ROLE", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the permission-creator permission."
+        }
+      ]
+    }
+  }
+}
