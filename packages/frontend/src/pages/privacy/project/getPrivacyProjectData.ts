@@ -2,6 +2,7 @@ import type {
   PrivacyAttribute,
   PrivacyExitWindow,
   PrivacySummaryValue,
+  ProjectPrivacyRelayers,
   ProjectRedWarning,
 } from '@l2beat/config'
 import type { InMemoryCache, ProjectId } from '@l2beat/shared-pure'
@@ -63,6 +64,7 @@ export interface PrivacyProjectEntry {
       last7d: number
       last30d: number
     }
+    relayers?: ProjectPrivacyRelayers
   }
   isUnderReview: boolean
   warnings: {
@@ -362,6 +364,7 @@ export async function getPrivacyProjectData(
         last7d: details.summary.deposits.last7d,
         last30d: details.summary.deposits.last30d,
       },
+      relayers: details.summary.relayers,
     },
     isUnderReview: !!details.statuses.reviewStatus,
     warnings: {
