@@ -1,6 +1,6 @@
 {
   "name": "rise",
-  "timestamp": 1784537565,
+  "timestamp": 1785249452,
   "configHash": "0xc38ec037fe54d6afc26abd77ccd7bf249ffe9d37e07f5bd806d4ad9fbe4a06aa",
   "entries": [
     {
@@ -99,7 +99,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 14,
+        "nonce": 15,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -128,6 +128,19 @@
       "implementationNames": {
         "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": "SP1Verifier"
       }
+    },
+    {
+      "address": "eth:0x0aE4b35f7F5efeB4c651684e1BCa12993dcBb67d",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD3CAf2A473dBB5bc2E8FB7F328e01AB9B726a24f",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
+          "role": ".batcherHash"
+        }
+      ]
     },
     {
       "address": "eth:0x19B485cbe0B8c1AeB6C0C459611C7A8bCf7b137a",
@@ -358,19 +371,6 @@
       }
     },
     {
-      "address": "eth:0x499a15427F46685A362Dab7886A491FEfDf68A41",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD3CAf2A473dBB5bc2E8FB7F328e01AB9B726a24f",
-          "description": "Allowed to commit transactions from the current layer to the host chain.",
-          "role": ".batcherHash"
-        }
-      ]
-    },
-    {
       "name": "ProxyAdmin",
       "address": "eth:0x4ebc046b1cfc12659A19E124b0ea8a382777E542",
       "type": "Contract",
@@ -435,13 +435,13 @@
           ]
         ],
         "$upgradeCount": 3,
-        "anchorGame": "eth:0x0EC4bBE6c1795aF5b208162b3310F689B2D7cd28",
+        "anchorGame": "eth:0xF7A67c5e48D05b9C1258B9D9Af93B321a6354abF",
         "disputeGameFactory": "eth:0x6A4139810986CF13408330e14C4ac9Daf0511aA3",
         "disputeGameFinalityDelaySeconds": 302400,
         "disputeGameFinalityDelaySeconds_fmt": "3d 12h",
         "getAnchorRoot": [
-          "0x7c7b008c4023b062ecf589c08441c702ea9b8593651974dc54d3bca6aa1db611",
-          15361300
+          "0xbb7c16550138626bf019e2a47f2e9299195b7d1421fdacbdff8d51bca2b13816",
+          17146900
         ],
         "initVersion": 1,
         "paused": false,
@@ -576,7 +576,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0xBf60dBc272833cD25f0426983c3175C32C8E5A7a",
-        "gameCount": 9240,
+        "gameCount": 9438,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x2e7758aAD2B6D3D1Fd2C937D9B322378fC644633",
@@ -867,7 +867,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 617545,
-          "prevBlockNum": 25567878
+          "prevBlockNum": 25631368
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1070,7 +1070,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620484",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620506",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1267,7 +1267,7 @@
         "$upgradeCount": 1,
         "basefeeScalar": 0,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
-        "batcherHash": "eth:0x499a15427F46685A362Dab7886A491FEfDf68A41",
+        "batcherHash": "eth:0x0aE4b35f7F5efeB4c651684e1BCa12993dcBb67d",
         "batchInbox": "eth:0x00BB2BF8245E13498AF31FB3647e26694CdC9d4a",
         "blobbasefeeScalar": 0,
         "daFootprintGasScalar": 0,
@@ -1468,7 +1468,7 @@
         "DISPUTE_GAME_FACTORY": "eth:0x6A4139810986CF13408330e14C4ac9Daf0511aA3",
         "FALLBACK_TIMEOUT": 1209600,
         "FALLBACK_TIMEOUT_fmt": "14d",
-        "getLastProposalTimestamp": 1784534267,
+        "getLastProposalTimestamp": 1785246983,
         "isProposalPermissionlessMode": false,
         "owner": "eth:0x9196464e3F828A50233C20732fa6898F4317002c",
         "proposers": ["eth:0xa069F839728264E2EADa60d98Bb303859de154bA"]
@@ -2496,6 +2496,6 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 25572852 },
-  "permissionsConfigHash": "0x62814a47d7c8ea92b68fc7ce3e0d41bd9ff7197115f91ac48fa065c01944f1c2"
+  "usedBlockNumbers": { "ethereum": 25631963 },
+  "permissionsConfigHash": "0x16c8e7895cdc112f7e9a78bdb6682243b43afcb2123ee268bb18b801d2163d32"
 }
