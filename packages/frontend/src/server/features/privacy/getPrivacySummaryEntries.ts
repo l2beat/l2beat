@@ -9,6 +9,7 @@ import groupBy from 'lodash/groupBy'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { manifest } from '~/utils/Manifest'
+import { ANONYMITY_SETS, type AnonymitySet } from './anonymitySet'
 import type { PrivacyProject } from './types'
 import { getPrivacyTrustedSetup } from './utils/getPrivacyTrustedSetup'
 
@@ -33,6 +34,7 @@ export interface PrivacySummaryEntry {
   privacy: PrivacySummaryValue
   attributes: PrivacyAttribute[]
   quantumResistant?: boolean
+  anonymitySet?: AnonymitySet
 }
 
 type PrivacySummaryTrackingMetrics = Pick<
@@ -148,6 +150,7 @@ function getPrivacySummaryBaseEntry(
     privacy: project.privacyInfo.privacy,
     attributes: project.privacyInfo.attributes ?? [],
     quantumResistant: project.privacyInfo.quantumResistant,
+    anonymitySet: ANONYMITY_SETS[project.slug],
   }
 }
 

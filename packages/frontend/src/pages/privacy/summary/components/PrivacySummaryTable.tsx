@@ -27,6 +27,7 @@ import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySu
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
+import { AnonymitySetCell } from './AnonymitySetCell'
 import { PrivacyAssessmentCell } from './PrivacyAssessmentCell'
 import { PrivacyTrustedSetupCell } from './PrivacyTrustedSetupCell'
 
@@ -153,6 +154,20 @@ const columns = [
       align: 'right',
       tooltip:
         'Total deposit count aggregated across all tracked tokens and buckets.',
+    },
+  }),
+  columnHelper.accessor((entry) => entry.anonymitySet?.setSize ?? undefined, {
+    id: 'anonymitySet',
+    header: '30D anon. set',
+    cell: (ctx) => (
+      <AnonymitySetCell anonymitySet={ctx.row.original.anonymitySet} />
+    ),
+    sortDescFirst: true,
+    sortUndefined: 'last',
+    meta: {
+      align: 'right',
+      tooltip:
+        'Size of the biggest identified 30 day rolling onchain anonymity set',
     },
   }),
   columnHelper.accessor('totalValueDeposited30dUsd', {
