@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xd606b8e8e905df2acbd204d54e081e1c0b719f67
+Generated with discovered.json: 0x0f965207fc65d54a4d6ebef84f313929c39fec26
 
-# Diff at Mon, 27 Jul 2026 22:02:48 GMT:
+# Diff at Tue, 28 Jul 2026 08:13:45 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- current timestamp: 1785189706
+- current timestamp: 1785226362
 
 ## Description
 
@@ -26,7 +26,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract Timelock (eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC) [uniswapv3/Timelock]
-    +++ description: Compound-style timelock and the executive account of Uniswap governance: it is the UNI minter, the owner of the V3OpenFeeAdapter (and through it the v3 factory), the v4 PoolManager owner, and the TokenJar owner. Every queued transaction waits the fixed delay (2 days) and expires after the grace period (14 days). Its admin is the GovernorBravo proxy, so only passed proposals can queue actions; there is no emergency bypass.
+    +++ description: Compound-style timelock and the executive account of Uniswap governance: it is the UNI minter, the owner of the V3OpenFeeAdapter (and through it the v3 factory), the v4 PoolManager owner, and the TokenJar owner. Every queued transaction waits the fixed delay (2d) and expires after the grace period (14d). Its admin is the GovernorBravo proxy, so only passed proposals can queue actions; there is no emergency bypass.
 ```
 
 ```diff
@@ -44,7 +44,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract GovernorBravo (eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3) [uniswapv3/GovernorBravoDelegator]
-    +++ description: The governance proxy where UNI holders vote. Proposals need the proposalThreshold in delegated UNI, then pass votingDelay, votingPeriod (quorum required), and queue into the 2-day Timelock. Its admin (the Timelock) can swap the implementation, so governance logic is upgradeable - only via a passed proposal.
+    +++ description: The governance proxy where UNI holders vote. Proposals need the proposalThreshold in delegated UNI, then pass votingDelay, votingPeriod (quorum required), and queue into the Timelock. Its admin (the Timelock) can swap the implementation, so governance logic is upgradeable - only via a passed proposal.
 ```
 
 ```diff

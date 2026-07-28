@@ -1,6 +1,6 @@
 {
   "name": "uniswapv3",
-  "timestamp": 1785189706,
+  "timestamp": 1785226362,
   "configHash": "0x769f3c53deb0274d14ed114c1471e6de5b1596010a6b54cc5324820d5dee10df",
   "entries": [
     {
@@ -45,7 +45,7 @@
       "values": {
         "$immutable": true,
         "MAX_RELEASE_LENGTH": 20,
-        "nonce": 1105,
+        "nonce": 1106,
         "owner": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
         "RESOURCE": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
         "RESOURCE_RECIPIENT": "eth:0x000000000000000000000000000000000000dEaD",
@@ -74,7 +74,7 @@
         "0xc3a519884c2c5eb5c8fa33e1f7c27bf1576088eddc2d9dd478bd1889a4f7c649"
       ],
       "proxyType": "immutable",
-      "description": "Compound-style timelock and the executive account of Uniswap governance: it is the UNI minter, the owner of the V3OpenFeeAdapter (and through it the v3 factory), the v4 PoolManager owner, and the TokenJar owner. Every queued transaction waits the fixed delay (2 days) and expires after the grace period (14 days). Its admin is the GovernorBravo proxy, so only passed proposals can queue actions; there is no emergency bypass.",
+      "description": "Compound-style timelock and the executive account of Uniswap governance: it is the UNI minter, the owner of the V3OpenFeeAdapter (and through it the v3 factory), the v4 PoolManager owner, and the TokenJar owner. Every queued transaction waits the fixed delay (2d) and expires after the grace period (14d). Its admin is the GovernorBravo proxy, so only passed proposals can queue actions; there is no emergency bypass.",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -126,7 +126,9 @@
         "$immutable": true,
         "admin": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
         "delay": 172800,
+        "delayFormatted": "2d",
         "GRACE_PERIOD": 1209600,
+        "gracePeriodFormatted": "14d",
         "MAXIMUM_DELAY": 2592000,
         "MINIMUM_DELAY": 172800,
         "pendingAdmin": "eth:0x0000000000000000000000000000000000000000"
@@ -220,7 +222,7 @@
         "0x9b0c0aedbb7ad7e39f09ed2d4779ec65307b918837b10c2b5e6800c1e9c4ece7"
       ],
       "proxyType": "immutable",
-      "description": "The governance proxy where UNI holders vote. Proposals need the proposalThreshold in delegated UNI, then pass votingDelay, votingPeriod (quorum required), and queue into the 2-day Timelock. Its admin (the Timelock) can swap the implementation, so governance logic is upgradeable - only via a passed proposal.",
+      "description": "The governance proxy where UNI holders vote. Proposals need the proposalThreshold in delegated UNI, then pass votingDelay, votingPeriod (quorum required), and queue into the Timelock. Its admin (the Timelock) can swap the implementation, so governance logic is upgradeable - only via a passed proposal.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -463,15 +465,18 @@
         "$immutable": true,
         "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
         "fee": 500,
-        "feeGrowthGlobal0X128": "4804452475312516304791178777079030",
-        "feeGrowthGlobal1X128": "2046927270660688431902083472779013004529598",
-        "liquidity": "14038601595192013353",
+        "feeGrowthGlobal0X128": "4804725703478842405230732368329669",
+        "feeGrowthGlobal1X128": "2047116380457827233719841963450717664993781",
+        "liquidity": "5896694691037983795",
         "maxLiquidityPerTick": "1917569901783203986719870431555990",
-        "protocolFees": { "token0": 185203698, "token1": "158213465830686500" },
+        "protocolFees": {
+          "token0": 1028877875,
+          "token1": "540724370796728644"
+        },
         "slot0": {
-          "sqrtPriceX96": "1799882017658153343816402099405089",
-          "tick": 200628,
-          "observationIndex": 77,
+          "sqrtPriceX96": "1827223521259631280611385152745474",
+          "tick": 200929,
+          "observationIndex": 102,
           "observationCardinality": 723,
           "observationCardinalityNext": 723,
           "feeProtocol": 68,
@@ -514,7 +519,7 @@
         "name": "Uniswap V3 Positions NFT-V1",
         "PERMIT_TYPEHASH": "0x49ecf333e5b8c95c40fdafc95c1ad136e8914a8fb55e9dc8bb01eaa83a2df9ad",
         "symbol": "UNI-V3-POS",
-        "totalSupply": 1205825,
+        "totalSupply": 1206007,
         "WETH9": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "fieldMeta": {
@@ -543,15 +548,15 @@
         "$immutable": true,
         "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
         "fee": 3000,
-        "feeGrowthGlobal0X128": "69313854604983667765432567872823",
-        "feeGrowthGlobal1X128": "15581015321933319769650063860354030694975381",
-        "liquidity": "30830513455765584",
+        "feeGrowthGlobal0X128": "69313857179636762292083465648659",
+        "feeGrowthGlobal1X128": "15583624840996987300338690406217423379123368",
+        "liquidity": "30220394541582389",
         "maxLiquidityPerTick": "11505743598341114571880798222544994",
-        "protocolFees": { "token0": 1, "token1": 1 },
+        "protocolFees": { "token0": 29, "token1": 204023074164946 },
         "slot0": {
-          "sqrtPriceX96": "45771419579042325555746063051273279",
-          "tick": 265350,
-          "observationIndex": 339,
+          "sqrtPriceX96": "46013645101785915742290391417967809",
+          "tick": 265455,
+          "observationIndex": 10,
           "observationCardinality": 360,
           "observationCardinalityNext": 360,
           "feeProtocol": 102,
@@ -1154,7 +1159,7 @@
     "uniswapv3/Permit2": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "uniswapv3/SwapRouter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "uniswapv3/SwapRouter02": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "uniswapv3/Timelock": "0xfa32e109a11b1e4cec79c88e3c5c3dd9da9b7e6b2f48f1b2f01e9a0f742cd8fe",
+    "uniswapv3/Timelock": "0xab07fe8f36edc90c01f26b4c692e9815a828ac6307bf452b6bd633e459ce692d",
     "uniswapv3/TokenJar": "0x4e5cdb5291d4fadb56003b4d078f44feb9eccfad71889bf91f3a931e6a042c03",
     "uniswapv3/Uni": "0xea7d229580224255bb75d8e601137993bf27d06079e5f967b6e84bfd89200cbd",
     "uniswapv3/UniswapV3Factory": "0x7279d249aba43ae9cc79d9b0fee0b6aa6f2a982651b91fdea6540b4951df709e",
@@ -1162,6 +1167,6 @@
     "uniswapv3/UniversalRouter": "0x7599293166769ce170829e381d4f80616e6cf1b2c5977c3816b0dd5618c2810a",
     "uniswapv3/V3OpenFeeAdapter": "0x919168095503a4b75469aba4141a66b10f58ad6b4ffe14cb54bc70ac064927d5"
   },
-  "usedBlockNumbers": { "ethereum": 25627002 },
+  "usedBlockNumbers": { "ethereum": 25630042 },
   "permissionsConfigHash": "0x508aef0cb815d58ca8aba1918317b795d30254938f4c5aaf479e2731624d10bd"
 }
