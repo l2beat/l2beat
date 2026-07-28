@@ -5,6 +5,7 @@
   "fields": {
     "owner": {
       "permissions": [
+        { "type": "act" },
         {
           "type": "interact",
           "description": "can enable new fee tiers, change the feeSetter, and transfer UniswapV3Factory ownership to a new contract."

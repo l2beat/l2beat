@@ -1,6 +1,6 @@
 {
   "name": "uniswapv3",
-  "timestamp": 1785226362,
+  "timestamp": 1785227424,
   "configHash": "0x769f3c53deb0274d14ed114c1471e6de5b1596010a6b54cc5324820d5dee10df",
   "entries": [
     {
@@ -76,6 +76,11 @@
       "proxyType": "immutable",
       "description": "Compound-style timelock and the executive account of Uniswap governance: it is the UNI minter, the owner of the V3OpenFeeAdapter (and through it the v3 factory), the v4 PoolManager owner, and the TokenJar owner. Every queued transaction waits the fixed delay (2d) and expires after the grace period (14d). Its admin is the GovernorBravo proxy, so only passed proposals can queue actions; there is no emergency bypass.",
       "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A",
+          "role": ".owner"
+        },
         {
           "permission": "interact",
           "from": "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721",
@@ -260,6 +265,19 @@
           "description": "can mint up to 2% of the UNI supply per year (at most once per year) and set a new minter.",
           "role": ".minter",
           "via": [
+            {
+              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
+          "description": "can enable new fee tiers, set the protocol fee share (up to 1/4 of LP fees per side) on any pool, collect accrued protocol fees, and transfer factory ownership.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A" },
             {
               "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
               "delay": 172800
@@ -465,18 +483,18 @@
         "$immutable": true,
         "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
         "fee": 500,
-        "feeGrowthGlobal0X128": "4804725703478842405230732368329669",
-        "feeGrowthGlobal1X128": "2047116380457827233719841963450717664993781",
-        "liquidity": "5896694691037983795",
+        "feeGrowthGlobal0X128": "4804732016291691331839146541097306",
+        "feeGrowthGlobal1X128": "2047117780727158834793069851161764329578607",
+        "liquidity": "5906233198697616223",
         "maxLiquidityPerTick": "1917569901783203986719870431555990",
         "protocolFees": {
-          "token0": 1028877875,
-          "token1": "540724370796728644"
+          "token0": 1065352326,
+          "token1": "549274364973130579"
         },
         "slot0": {
-          "sqrtPriceX96": "1827223521259631280611385152745474",
-          "tick": 200929,
-          "observationIndex": 102,
+          "sqrtPriceX96": "1826009543649909257280507619497951",
+          "tick": 200916,
+          "observationIndex": 117,
           "observationCardinality": 723,
           "observationCardinalityNext": 723,
           "feeProtocol": 68,
@@ -519,7 +537,7 @@
         "name": "Uniswap V3 Positions NFT-V1",
         "PERMIT_TYPEHASH": "0x49ecf333e5b8c95c40fdafc95c1ad136e8914a8fb55e9dc8bb01eaa83a2df9ad",
         "symbol": "UNI-V3-POS",
-        "totalSupply": 1206007,
+        "totalSupply": 1206015,
         "WETH9": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "fieldMeta": {
@@ -610,7 +628,7 @@
       ],
       "proxyType": "immutable",
       "description": "Owns the UniswapV3Factory since the UNIfication proposal. Governance (owner and feeSetter, both the Timelock) sets the protocol-fee schedule: a global default, per-tier defaults, and per-pool overrides, each 0 or between 1/10 and 1/4 of LP fees per side. Anyone can push the configured fee onto pools and collect accrued protocol fees, which go only to the TokenJar. The owner can also enable new fee tiers and transfer factory ownership.",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
@@ -1167,6 +1185,6 @@
     "uniswapv3/UniversalRouter": "0x7599293166769ce170829e381d4f80616e6cf1b2c5977c3816b0dd5618c2810a",
     "uniswapv3/V3OpenFeeAdapter": "0x919168095503a4b75469aba4141a66b10f58ad6b4ffe14cb54bc70ac064927d5"
   },
-  "usedBlockNumbers": { "ethereum": 25630042 },
-  "permissionsConfigHash": "0x508aef0cb815d58ca8aba1918317b795d30254938f4c5aaf479e2731624d10bd"
+  "usedBlockNumbers": { "ethereum": 25630131 },
+  "permissionsConfigHash": "0x2e0545ebff1b69f992cfb5faf649c29db1518f0f0d63004aa22f3a9b5ba3ecaf"
 }
