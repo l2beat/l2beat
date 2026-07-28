@@ -224,12 +224,6 @@
       "name": "ZkGovOpsGovernor",
       "type": "Contract",
       "project": "shared-zk-stack"
-    },
-    "eth:0x390bc10e854e137d2625573272b3fEe2C615eBA4": {
-      "name": "L1GenesisUpgrade",
-      "type": "Contract",
-      "project": "shared-zk-stack",
-      "isLegacy": true
     }
   }
 }
