@@ -19,7 +19,8 @@
     "format": "biome format .",
     "format:fix": "biome format --write .",
     "lint:fix": "biome check --formatter-enabled=false --write .",
-    "lint": "biome check --formatter-enabled=false ."
+    "lint": "biome check --formatter-enabled=false .",
+    "test": "mocha"
   },
   "dependencies": {
     "@ethereum-sourcify/bytecode-utils": "^1.5.1",
