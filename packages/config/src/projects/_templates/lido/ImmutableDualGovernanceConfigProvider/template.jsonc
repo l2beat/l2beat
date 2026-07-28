@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Immutable Dual Governance timing and veto-threshold configuration. Replacing the provider in DualGovernance is the only way to change these parameters.",
+  "category": "gov"
+}

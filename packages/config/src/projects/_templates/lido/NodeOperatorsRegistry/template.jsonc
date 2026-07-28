@@ -1,0 +1,117 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Legacy permissioned staking module for curated node operators. It stores validator keys, receives deposits from the StakingRouter, tracks exited and stuck validators, and distributes module rewards.",
+  "category": "core",
+  "ignoreRelatives": [
+    "getRecoveryVault",
+    "aragonPermissions",
+    "signingKeyManagers"
+  ],
+  "ignoreMethods": [
+    "getKeysOpIndex",
+    "getTotalSigningKeyCount",
+    "getUnusedSigningKeyCount",
+    "isOperatorPenalized",
+    "isOperatorPenaltyCleared",
+    "getRewardsDistribution",
+    "getNodeOperatorIsActive",
+    "getNodeOperatorSummary",
+    "getNonce",
+    "exitDeadlineThreshold"
+  ],
+  "ignoreInWatchMode": [
+    "getStakingModuleSummary",
+    "getActiveNodeOperatorsCount",
+    "getNodeOperatorsCount"
+  ],
+  "fields": {
+    "aragonPermissions": {
+      "handler": {
+        "type": "aragonPermissions",
+        "roleNames": {
+          "0x75abc64490e17b40ea1e66691c3eb493647b24430b358bd87ec3e5127f1621ee": "MANAGE_SIGNING_KEYS"
+        }
+      }
+    },
+    "nodeOperatorManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "MANAGE_NODE_OPERATOR_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add, activate, deactivate, rename, and change reward addresses of node operators, update penalty settings, and manage signing keys."
+        }
+      ]
+    },
+    "nodeOperatorPermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "MANAGE_NODE_OPERATOR_ROLE", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the node-operator management permission."
+        }
+      ]
+    },
+    "nodeOperatorLimitSetters": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "SET_NODE_OPERATOR_LIMIT_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set a node operator's vetted signing-key limit."
+        }
+      ]
+    },
+    "nodeOperatorLimitPermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "SET_NODE_OPERATOR_LIMIT_ROLE", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the operator-limit permission."
+        }
+      ]
+    },
+    "stakingRouters": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "STAKING_ROUTER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "obtain deposit data, update validator and target limits, report exited validators, and finalize rewards."
+        }
+      ]
+    },
+    "stakingRouterPermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "STAKING_ROUTER_ROLE", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the staking-router permission."
+        }
+      ]
+    },
+    "signingKeyManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "MANAGE_SIGNING_KEYS", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add or remove signing keys for node operators within the permission's parameter constraints."
+        }
+      ]
+    },
+    "signingKeyPermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "MANAGE_SIGNING_KEYS", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the signing-key permission."
+        }
+      ]
+    }
+  }
+}

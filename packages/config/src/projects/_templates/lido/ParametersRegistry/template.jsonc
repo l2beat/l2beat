@@ -1,0 +1,105 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Stores configurable Community Staking Module parameters, including bond curves, operator rewards, penalties, key limits, queue policy, performance thresholds, and validator-exit rules.",
+  "category": "core",
+  "ignoreMethods": [
+    "getAllowedExitDelay",
+    "getBadPerformancePenalty",
+    "getCurveParameters",
+    "getExitDelayFee",
+    "getGeneralDelayedPenaltyAdditionalFine",
+    "getKeyRemovalCharge",
+    "getKeysLimit",
+    "getMaxElWithdrawalRequestFee",
+    "getPerformanceCoefficients",
+    "getPerformanceLeewayData",
+    "getQueueConfig",
+    "getRewardShareData",
+    "getStrikesParams"
+  ],
+  "fields": {
+    "accessControl": {
+      "handler": { "type": "accessControl", "includeEmptyRoles": true }
+    },
+    "defaultAdmins": {
+      "copy": "accessControl",
+      "edit": ["get", "DEFAULT_ADMIN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke ParametersRegistry roles."
+        }
+      ]
+    },
+    "curveParameterManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "MANAGE_CURVE_PARAMETERS_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change bond-curve parameters for node-operator types."
+        }
+      ]
+    },
+    "penaltyAndChargeManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "MANAGE_GENERAL_PENALTIES_AND_CHARGES_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change general delayed-penalty, penalty-rebate, key-removal and other charge parameters."
+        }
+      ]
+    },
+    "keysLimitManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "MANAGE_KEYS_LIMIT_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change validator-key limits for node operators."
+        }
+      ]
+    },
+    "performanceParameterManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "MANAGE_PERFORMANCE_PARAMETERS_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change performance thresholds and assessment parameters."
+        }
+      ]
+    },
+    "queueConfigManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "MANAGE_QUEUE_CONFIG_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change deposit-queue priority, limits and other queue configuration."
+        }
+      ]
+    },
+    "rewardShareManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "MANAGE_REWARD_SHARE_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change node-operator reward-share parameters."
+        }
+      ]
+    },
+    "validatorExitParameterManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "MANAGE_VALIDATOR_EXIT_PARAMETERS_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change validator exit-delay and strike parameters."
+        }
+      ]
+    }
+  }
+}

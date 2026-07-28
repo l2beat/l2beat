@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x22dc460d65154a0b771b5244640de3634b0ff645
+
+# Diff at Mon, 27 Jul 2026 15:26:08 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@eb7eedf8fcfcefaf8536d9aec4c193caa20949d5 block: 1784884231
+- current timestamp: 1784884231
+
+## Description
+
+Config related: new template match.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784884231 (main branch discovery), not current.
+
+```diff
+    contract UpgradeableBeacon (eth:0xdD283a04cc711aB9c08d79e665835821BEef710B) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0x056fD0A3eD85c6ae1Ec1c398B33581951Ed4b090. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      template:
++        "global/UpgradeableBeacon"
+      description:
++        "A beacon with an upgradeable implementation currently set as eth:0x056fD0A3eD85c6ae1Ec1c398B33581951Ed4b090. Beacon proxy contracts pointing to this beacon will all use its implementation."
+    }
+```
+
+```diff
+    contract ERC20TokenFactory (eth:0xF6d49E874Cb64b8ee56D6F99BD340134B30AB225) [N/A] {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0xdD283a04cc711aB9c08d79e665835821BEef710B","description":"change the beacon implementation.","role":".owner"}]
+    }
+```
+
 Generated with discovered.json: 0x7bd2d9efc5770d3dc63fbf9e415f775cbf90cf19
 
 # Diff at Fri, 24 Jul 2026 09:11:37 GMT:

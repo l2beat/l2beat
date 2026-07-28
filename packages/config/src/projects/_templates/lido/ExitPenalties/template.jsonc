@@ -1,0 +1,23 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Records delayed-exit, triggerable-withdrawal, and poor-performance penalties for a permissionless staking module.",
+  "category": "core",
+  "fields": {
+    "MODULE": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "record validator exit-delay and triggerable-withdrawal fees and query whether an exit-delay penalty applies."
+        }
+      ]
+    },
+    "STRIKES": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "record the configured poor-performance penalty for a validator."
+        }
+      ]
+    }
+  }
+}

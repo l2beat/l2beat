@@ -1,0 +1,71 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "The permissioned entrypoint for full EIP-7002 validator withdrawals. It charges the current request fee, applies a replenishing global exit limit, forwards requests to WithdrawalVault, and notifies StakingRouter.",
+  "category": "core",
+  "ignoreInWatchMode": ["getExitRequestLimitFullInfo"],
+  "fields": {
+    "exitRequestLimitConfiguration": {
+      "description": "Configured replenishing limit for triggerable validator withdrawal requests.",
+      "copy": "getExitRequestLimitFullInfo",
+      "edit": [
+        "pick",
+        "maxExitRequestsLimit",
+        "exitsPerFrame",
+        "frameDurationInSec"
+      ]
+    },
+    "accessControl": {
+      "handler": { "type": "accessControl", "includeEmptyRoles": true }
+    },
+    "defaultAdmins": {
+      "copy": "accessControl",
+      "edit": ["get", "DEFAULT_ADMIN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke every TriggerableWithdrawalsGateway role."
+        }
+      ]
+    },
+    "withdrawalRequesters": {
+      "copy": "accessControl",
+      "edit": ["get", "ADD_FULL_WITHDRAWAL_REQUEST_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "trigger full EIP-7002 withdrawals for validator public keys, subject to fees and the global request limit."
+        }
+      ]
+    },
+    "exitLimitManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "TW_EXIT_LIMIT_MANAGER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the maximum, replenishment rate, and frame duration of the triggerable-withdrawal limit."
+        }
+      ]
+    },
+    "pausers": {
+      "copy": "accessControl",
+      "edit": ["get", "PAUSE_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause triggerable withdrawals for a chosen duration."
+        }
+      ]
+    },
+    "resumers": {
+      "copy": "accessControl",
+      "edit": ["get", "RESUME_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "resume triggerable withdrawals."
+        }
+      ]
+    }
+  }
+}
