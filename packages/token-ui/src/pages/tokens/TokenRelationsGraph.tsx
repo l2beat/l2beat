@@ -19,6 +19,7 @@ import {
   type RelationGraphRelation,
   type RelationGraphSelection,
   relationColor,
+  relationDirectionLabel,
   relationId,
   relationIsDirectional,
   relationTypeLabel,
@@ -143,7 +144,8 @@ export function TokenRelationsGraph({
 
     links.append('title').text((link) => {
       const relation = link.relation
-      return `${relation.tokenFromChain}:${relation.tokenFromAddress} -> ${relation.tokenToChain}:${relation.tokenToAddress}\n${relationTypeLabel(relation)} via ${relation.plugin}`
+      const arrow = relationIsDirectional(relation) ? '->' : '<->'
+      return `${sourceId(relation)} ${arrow} ${targetId(relation)}\n${relationTypeLabel(relation)} via ${relation.plugin}\n${relationDirectionLabel(relation)}`
     })
 
     const linkHits = linksLayer

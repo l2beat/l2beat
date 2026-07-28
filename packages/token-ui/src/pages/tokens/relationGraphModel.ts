@@ -35,10 +35,10 @@ const RELATION_LABEL_MIN_SCALE = 2.5
 
 export function relationId(relation: RelationGraphRelation) {
   return [
-    relation.tokenFromChain,
-    relation.tokenFromAddress,
-    relation.tokenToChain,
-    relation.tokenToAddress,
+    relation.tokenAChain,
+    relation.tokenAAddress,
+    relation.tokenBChain,
+    relation.tokenBAddress,
     relation.plugin,
     relation.bridgeType,
   ].join(':')
@@ -46,21 +46,34 @@ export function relationId(relation: RelationGraphRelation) {
 
 export function relationPrimaryKey(relation: RelationGraphRelation) {
   return {
-    tokenFromChain: relation.tokenFromChain,
-    tokenFromAddress: relation.tokenFromAddress,
-    tokenToChain: relation.tokenToChain,
-    tokenToAddress: relation.tokenToAddress,
+    tokenAChain: relation.tokenAChain,
+    tokenAAddress: relation.tokenAAddress,
+    tokenBChain: relation.tokenBChain,
+    tokenBAddress: relation.tokenBAddress,
     plugin: relation.plugin,
     bridgeType: relation.bridgeType,
   }
 }
 
+/**
+ * Where a drawn connection starts. The A/B slots are lexicographic, not a
+ * direction, so for a directional relation the start is the locked token —
+ * never the slot order.
+ */
 export function sourceId(relation: RelationGraphRelation) {
-  return tokenId(relation.tokenFromChain, relation.tokenFromAddress)
+  return relation.lockedToken === 'B' ? idB(relation) : idA(relation)
 }
 
 export function targetId(relation: RelationGraphRelation) {
-  return tokenId(relation.tokenToChain, relation.tokenToAddress)
+  return relation.lockedToken === 'B' ? idA(relation) : idB(relation)
+}
+
+function idA(relation: RelationGraphRelation) {
+  return tokenId(relation.tokenAChain, relation.tokenAAddress)
+}
+
+function idB(relation: RelationGraphRelation) {
+  return tokenId(relation.tokenBChain, relation.tokenBAddress)
 }
 
 export function tokenId(chain: string, address: string) {
@@ -93,17 +106,41 @@ export function relationTypeLabel(relation: RelationGraphRelation) {
   }
 }
 
+/**
+ * An arrow is drawn only when the relation has a direction to show: a
+ * lock-and-mint pair whose locked endpoint is identified. A burn-and-mint pair
+ * is symmetric, and an unidentified locked endpoint would mean guessing.
+ */
 export function relationIsDirectional(relation: RelationGraphRelation) {
   switch (relation.bridgeType) {
     case 'burnAndMint':
       return false
     case 'lockAndMint':
-      return true
+      return relation.lockedToken !== null
     default:
       throw new Error(
         `Unexpected bridge type in relations graph: ${relation.bridgeType}`,
       )
   }
+}
+
+/** What the connection as a whole says about the two tokens. */
+export function relationDirectionLabel(relation: RelationGraphRelation) {
+  if (relationIsDirectional(relation)) return 'Locked → Minted'
+  if (relation.bridgeType === 'burnAndMint') {
+    return 'Symmetric — both sides burn and mint'
+  }
+  return 'Locked endpoint not identified'
+}
+
+/** What one endpoint of the connection is to the other. */
+export function relationRoleLabel(
+  relation: RelationGraphRelation,
+  nodeId: string,
+) {
+  if (relation.bridgeType === 'burnAndMint') return 'Symmetric'
+  if (relation.lockedToken === null) return 'Unknown role'
+  return sourceId(relation) === nodeId ? 'Locked' : 'Minted'
 }
 
 export function nodeColor(node: RelationGraphNode) {

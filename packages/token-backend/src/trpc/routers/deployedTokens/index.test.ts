@@ -4,6 +4,7 @@ import type {
   DeployedTokenRecord,
   InteropTransferRecord,
   TokenDatabase,
+  TokenRelationLockedToken,
   TokenRelationRecord,
 } from '@l2beat/database'
 import { Address32 } from '@l2beat/shared-pure'
@@ -262,17 +263,113 @@ describe('deployedTokensRouter', () => {
     })
   })
 
+  describe('getRelations', () => {
+    it("reports the token's role in every relation that mentions it", async () => {
+      const token = { chain: 'base', address: '0xbbb' }
+      const locked = {
+        ...tokenRelationRoute({
+          tokenAChain: 'base',
+          tokenAAddress: '0xbbb',
+          tokenBChain: 'ethereum',
+          tokenBAddress: '0xaaa',
+          plugin: 'a-plugin',
+          lockedToken: 'A',
+        }),
+        transfer: {},
+      } satisfies TokenRelationRecord
+      const minted = {
+        ...tokenRelationRoute({
+          tokenAChain: 'arbitrum',
+          tokenAAddress: '0xccc',
+          tokenBChain: 'base',
+          tokenBAddress: '0xbbb',
+          plugin: 'b-plugin',
+          lockedToken: 'A',
+        }),
+        transfer: {},
+      } satisfies TokenRelationRecord
+      const unknownRole = {
+        ...tokenRelationRoute({
+          tokenAChain: 'base',
+          tokenAAddress: '0xbbb',
+          tokenBChain: 'optimism',
+          tokenBAddress: '0xddd',
+          plugin: 'c-plugin',
+        }),
+        transfer: {},
+      } satisfies TokenRelationRecord
+      const symmetric = {
+        ...tokenRelationRoute({
+          tokenAChain: 'base',
+          tokenAAddress: '0xbbb',
+          tokenBChain: 'linea',
+          tokenBAddress: '0xeee',
+          plugin: 'd-plugin',
+        }),
+        bridgeType: 'burnAndMint' as const,
+        transfer: {},
+      } satisfies TokenRelationRecord
+
+      const getRelationsFor = mockFn().resolvesTo([
+        locked,
+        minted,
+        unknownRole,
+        symmetric,
+      ])
+      const mockTokenDb = mockObject<TokenDatabase>({
+        tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
+          getRelationsFor,
+        }),
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
+          getByPrimaryKeys: mockFn().resolvesTo([
+            deployedToken({
+              chain: 'ethereum',
+              address: '0xaaa',
+              symbol: 'USDC',
+            }),
+          ]),
+        }),
+      })
+
+      const caller = createRouter(
+        mockTokenDb,
+        mockObject<Database>({}),
+        mockObject<CoingeckoClient>({}),
+      )
+      const result = await caller.getRelations(token)
+
+      expect(getRelationsFor).toHaveBeenCalledWith(token)
+      expect(
+        result.map((entry) => ({
+          plugin: entry.relation.plugin,
+          role: entry.role,
+          otherToken: entry.otherToken?.chain ?? null,
+        })),
+      ).toEqual([
+        // This token is the escrowed original of the ethereum representation.
+        { plugin: 'a-plugin', role: 'locked', otherToken: 'ethereum' },
+        // ...and itself a representation of the arbitrum original, which is not
+        // catalogued as a deployed token.
+        { plugin: 'b-plugin', role: 'minted', otherToken: null },
+        { plugin: 'c-plugin', role: 'unknown', otherToken: null },
+        { plugin: 'd-plugin', role: 'symmetric', otherToken: null },
+      ])
+    })
+  })
+
   describe('getRelationsGraphRelationDetails', () => {
     it('loads transfer evidence only for the selected relation', async () => {
-      const route = tokenRelationRoute({
-        tokenFromChain: 'ethereum',
-        tokenFromAddress: '0xaaa',
-        tokenToChain: 'base',
-        tokenToAddress: '0xbbb',
+      const primaryKey = {
+        tokenAChain: 'base',
+        tokenAAddress: '0xbbb',
+        tokenBChain: 'ethereum',
+        tokenBAddress: '0xaaa',
         plugin: 'test-plugin',
-      })
+        bridgeType: 'lockAndMint' as const,
+      }
       const relation = {
-        ...route,
+        ...primaryKey,
+        lockedToken: 'B' as const,
         transfer: {
           transferId: 'transfer-1',
           srcTxHash: '0xsrc',
@@ -291,10 +388,10 @@ describe('deployedTokensRouter', () => {
         mockObject<CoingeckoClient>({}),
       )
 
-      expect(await caller.getRelationsGraphRelationDetails(route)).toEqual(
+      expect(await caller.getRelationsGraphRelationDetails(primaryKey)).toEqual(
         relation,
       )
-      expect(findRelation).toHaveBeenCalledWith(route)
+      expect(findRelation).toHaveBeenCalledWith(primaryKey)
     })
   })
 
@@ -302,17 +399,17 @@ describe('deployedTokensRouter', () => {
     it('returns deployed relation endpoints and lightweight edges', async () => {
       const relations = [
         tokenRelationRoute({
-          tokenFromChain: 'base',
-          tokenFromAddress: '0xbbb',
-          tokenToChain: 'ethereum',
-          tokenToAddress: '0xaaa',
+          tokenAChain: 'base',
+          tokenAAddress: '0xbbb',
+          tokenBChain: 'ethereum',
+          tokenBAddress: '0xaaa',
           plugin: 'test-plugin',
         }),
         tokenRelationRoute({
-          tokenFromChain: 'ethereum',
-          tokenFromAddress: '0xaaa',
-          tokenToChain: 'base',
-          tokenToAddress: '0xbbb',
+          tokenAChain: 'ethereum',
+          tokenAAddress: '0xaaa',
+          tokenBChain: 'base',
+          tokenBAddress: '0xbbb',
           plugin: 'test-plugin',
         }),
       ]
@@ -377,17 +474,17 @@ describe('deployedTokensRouter', () => {
 
     it('includes missing endpoints and marks different abstract tokens as conflicts', async () => {
       const conflict = tokenRelationRoute({
-        tokenFromChain: 'ethereum',
-        tokenFromAddress: '0xaaa',
-        tokenToChain: 'base',
-        tokenToAddress: '0xbbb',
+        tokenAChain: 'ethereum',
+        tokenAAddress: '0xaaa',
+        tokenBChain: 'base',
+        tokenBAddress: '0xbbb',
         plugin: 'test-plugin',
       })
       const unresolved = tokenRelationRoute({
-        tokenFromChain: 'ethereum',
-        tokenFromAddress: '0xaaa',
-        tokenToChain: 'optimism',
-        tokenToAddress: '0xccc',
+        tokenAChain: 'ethereum',
+        tokenAAddress: '0xaaa',
+        tokenBChain: 'optimism',
+        tokenBAddress: '0xccc',
         plugin: 'test-plugin',
       })
       const tokens = [
@@ -452,18 +549,18 @@ describe('deployedTokensRouter', () => {
 
     it('excludes bridge types the graph does not render', async () => {
       const supported = tokenRelationRoute({
-        tokenFromChain: 'ethereum',
-        tokenFromAddress: '0xaaa',
-        tokenToChain: 'base',
-        tokenToAddress: '0xbbb',
+        tokenAChain: 'ethereum',
+        tokenAAddress: '0xaaa',
+        tokenBChain: 'base',
+        tokenBAddress: '0xbbb',
         plugin: 'supported',
       })
       const unsupported = {
         ...tokenRelationRoute({
-          tokenFromChain: 'arbitrum',
-          tokenFromAddress: '0xccc',
-          tokenToChain: 'optimism',
-          tokenToAddress: '0xddd',
+          tokenAChain: 'arbitrum',
+          tokenAAddress: '0xccc',
+          tokenBChain: 'optimism',
+          tokenBAddress: '0xddd',
           plugin: 'unsupported',
         }),
         bridgeType: 'nonMinting' as const,
@@ -2515,15 +2612,17 @@ function deployedToken(input: {
 }
 
 function tokenRelationRoute(input: {
-  tokenFromChain: string
-  tokenFromAddress: string
-  tokenToChain: string
-  tokenToAddress: string
+  tokenAChain: string
+  tokenAAddress: string
+  tokenBChain: string
+  tokenBAddress: string
   plugin: string
+  lockedToken?: TokenRelationLockedToken
 }): Omit<TokenRelationRecord, 'transfer'> {
   return {
     ...input,
     bridgeType: 'lockAndMint',
+    lockedToken: input.lockedToken ?? null,
   }
 }
 

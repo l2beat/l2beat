@@ -249,14 +249,17 @@ describe('planning proof stamping', () => {
   })
 
   describe('TokenRelation intents', () => {
-    it('adds a token relation when both endpoints exist and the relation is new', async () => {
-      const tokenFrom = deployedRecord('ethereum', '0xaaa', 'USDC01')
-      const tokenTo = deployedRecord('arbitrum', '0xbbb', 'USDC01')
-      const relation = tokenRelation(tokenFrom, tokenTo)
+    it('adds a token relation with its endpoints in the stored order', async () => {
+      // A human names the endpoints in whichever order they think of them; a
+      // relation is a fact about an unordered pair, so the stored order is
+      // derived. Here arbitrum sorts before ethereum, so the two are swapped.
+      const ethereumToken = deployedRecord('ethereum', '0xaaa', 'USDC01')
+      const arbitrumToken = deployedRecord('arbitrum', '0xbbb', 'USDC01')
+      const relation = tokenRelation(ethereumToken, arbitrumToken)
       const db = mockDb({
         deployedByPk: {
-          [`${tokenFrom.chain}:${tokenFrom.address}`]: tokenFrom,
-          [`${tokenTo.chain}:${tokenTo.address}`]: tokenTo,
+          [`${ethereumToken.chain}:${ethereumToken.address}`]: ethereumToken,
+          [`${arbitrumToken.chain}:${arbitrumToken.address}`]: arbitrumToken,
         },
       })
 
@@ -270,7 +273,7 @@ describe('planning proof stamping', () => {
       expect(result.plan.commands).toEqual([
         {
           type: 'AddTokenRelationCommand',
-          record: relation,
+          record: tokenRelation(arbitrumToken, ethereumToken),
         },
       ])
     })
@@ -608,26 +611,27 @@ function deployedRecord(
 }
 
 function tokenRelation(
-  tokenFrom: Pick<DeployedTokenRecord, 'chain' | 'address'>,
-  tokenTo: Pick<DeployedTokenRecord, 'chain' | 'address'>,
+  tokenA: Pick<DeployedTokenRecord, 'chain' | 'address'>,
+  tokenB: Pick<DeployedTokenRecord, 'chain' | 'address'>,
 ) {
   return {
-    tokenFromChain: tokenFrom.chain,
-    tokenFromAddress: tokenFrom.address,
-    tokenToChain: tokenTo.chain,
-    tokenToAddress: tokenTo.address,
+    tokenAChain: tokenA.chain,
+    tokenAAddress: tokenA.address,
+    tokenBChain: tokenB.chain,
+    tokenBAddress: tokenB.address,
     plugin: 'superbridge',
     bridgeType: 'burnAndMint' as const,
+    lockedToken: null,
     transfer: { transferId: 'transfer-1' },
   }
 }
 
 function relationPk(relation: ReturnType<typeof tokenRelation>) {
   return {
-    tokenFromChain: relation.tokenFromChain,
-    tokenFromAddress: relation.tokenFromAddress,
-    tokenToChain: relation.tokenToChain,
-    tokenToAddress: relation.tokenToAddress,
+    tokenAChain: relation.tokenAChain,
+    tokenAAddress: relation.tokenAAddress,
+    tokenBChain: relation.tokenBChain,
+    tokenBAddress: relation.tokenBAddress,
     plugin: relation.plugin,
     bridgeType: relation.bridgeType,
   }
