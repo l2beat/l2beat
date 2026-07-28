@@ -1,6 +1,12 @@
 import type { RouterOutputs } from '@l2beat/token-backend'
 import { useQuery } from '@tanstack/react-query'
-import { ArrowRightIcon, ExternalLinkIcon, XIcon } from 'lucide-react'
+import {
+  ArrowLeftRightIcon,
+  ArrowRightIcon,
+  ExternalLinkIcon,
+  MinusIcon,
+  XIcon,
+} from 'lucide-react'
 import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { Badge } from '~/components/core/Badge'
@@ -10,15 +16,18 @@ import { ExplorerLink } from '~/components/ExplorerLink'
 import { LoadingState } from '~/components/LoadingState'
 import { useTRPC } from '~/react-query/trpc'
 import {
+  connectionHasDirection,
   nodeLabel,
   RELATION_COLORS,
   type RelationGraph,
+  type RelationGraphConnection,
   type RelationGraphNode,
-  type RelationGraphRelation,
+  type RelationGraphRoute,
   type RelationGraphSelection,
   relationColor,
   relationId,
   relationPrimaryKey,
+  relationRouteId,
   relationTypeLabel,
   sourceId,
   targetId,
@@ -53,7 +62,7 @@ export function TokenRelationsGraphDetailsPanel({
       <div className="flex items-start justify-between gap-4 border-b p-4">
         <div>
           <div className="font-semibold">
-            {selection.type === 'node' ? 'Token details' : 'Relation details'}
+            {selection.type === 'node' ? 'Token details' : 'Connection details'}
           </div>
           <div className="text-muted-foreground text-xs">
             Click another node or connection to inspect it.
@@ -107,7 +116,7 @@ function GraphNodeDetails({
   graph: RelationGraph
   chains: Chain[]
   highlightAnomalies: boolean
-  onRelationClick: (relation: RelationGraphRelation) => void
+  onRelationClick: (relation: RelationGraphConnection) => void
 }) {
   const trpc = useTRPC()
   const { data, isLoading, error } = useQuery(
@@ -117,10 +126,23 @@ function GraphNodeDetails({
     }),
   )
   const outgoing = graph.relations.filter(
-    (relation) => sourceId(relation) === node.id,
+    (relation) =>
+      connectionHasDirection(relation) && sourceId(relation) === node.id,
   )
   const incoming = graph.relations.filter(
-    (relation) => targetId(relation) === node.id,
+    (relation) =>
+      connectionHasDirection(relation) && targetId(relation) === node.id,
+  )
+  const nonDirectional = graph.relations.filter(
+    (relation) =>
+      relation.bridgeType === 'burnAndMint' &&
+      (sourceId(relation) === node.id || targetId(relation) === node.id),
+  )
+  const unknownDirection = graph.relations.filter(
+    (relation) =>
+      relation.bridgeType === 'lockAndMint' &&
+      !connectionHasDirection(relation) &&
+      (sourceId(relation) === node.id || targetId(relation) === node.id),
   )
 
   return (
@@ -159,8 +181,8 @@ function GraphNodeDetails({
       <div className="space-y-4">
         <h3 className="font-medium">Relations visible on this graph</h3>
         <GraphRelationList
-          title="Outgoing"
-          emptyText="No outgoing relations."
+          title="Outgoing Lock & Mint"
+          emptyText="No outgoing Lock & Mint connections."
           relations={outgoing}
           node={node}
           graph={graph}
@@ -168,14 +190,34 @@ function GraphNodeDetails({
           onRelationClick={onRelationClick}
         />
         <GraphRelationList
-          title="Incoming"
-          emptyText="No incoming relations."
+          title="Incoming Lock & Mint"
+          emptyText="No incoming Lock & Mint connections."
           relations={incoming}
           node={node}
           graph={graph}
           highlightAnomalies={highlightAnomalies}
           onRelationClick={onRelationClick}
         />
+        <GraphRelationList
+          title="Burn & Mint"
+          emptyText="No Burn & Mint connections."
+          relations={nonDirectional}
+          node={node}
+          graph={graph}
+          highlightAnomalies={highlightAnomalies}
+          onRelationClick={onRelationClick}
+        />
+        {unknownDirection.length > 0 && (
+          <GraphRelationList
+            title="Lock & Mint (direction unknown)"
+            emptyText="No connections with an unknown direction."
+            relations={unknownDirection}
+            node={node}
+            graph={graph}
+            highlightAnomalies={highlightAnomalies}
+            onRelationClick={onRelationClick}
+          />
+        )}
       </div>
     </div>
   )
@@ -326,11 +368,11 @@ function GraphRelationList({
 }: {
   title: string
   emptyText: string
-  relations: RelationGraphRelation[]
+  relations: RelationGraphConnection[]
   node: RelationGraphNode
   graph: RelationGraph
   highlightAnomalies: boolean
-  onRelationClick: (relation: RelationGraphRelation) => void
+  onRelationClick: (relation: RelationGraphConnection) => void
 }) {
   return (
     <div className="space-y-2">
@@ -371,7 +413,13 @@ function GraphRelationList({
                     {relationTypeLabel(relation)} · {relation.plugin}
                   </span>
                 </span>
-                <ArrowRightIcon className="size-4 shrink-0 text-muted-foreground" />
+                {connectionHasDirection(relation) ? (
+                  <ArrowRightIcon className="size-4 shrink-0 text-muted-foreground" />
+                ) : relation.bridgeType === 'burnAndMint' ? (
+                  <ArrowLeftRightIcon className="size-4 shrink-0 text-muted-foreground" />
+                ) : (
+                  <MinusIcon className="size-4 shrink-0 text-muted-foreground" />
+                )}
               </button>
             )
           })}
@@ -387,20 +435,16 @@ function GraphRelationDetails({
   chains,
   highlightAnomalies,
 }: {
-  relation: RelationGraphRelation
+  relation: RelationGraphConnection
   graph: RelationGraph
   chains: Chain[]
   highlightAnomalies: boolean
 }) {
-  const trpc = useTRPC()
-  const { data, isLoading, error } = useQuery(
-    trpc.deployedTokens.getRelationsGraphRelationDetails.queryOptions(
-      relationPrimaryKey(relation),
-    ),
-  )
   const source = findNode(graph, sourceId(relation))
   const target = findNode(graph, targetId(relation))
   const color = displayedRelationColor(relation, highlightAnomalies)
+  const directional = connectionHasDirection(relation)
+  const directionUnknown = relation.bridgeType === 'lockAndMint' && !directional
 
   return (
     <div className="space-y-5">
@@ -415,26 +459,55 @@ function GraphRelationDetails({
         </div>
         <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2">
           <EndpointCard node={source} chains={chains} />
-          <ArrowRightIcon className="size-5 text-muted-foreground" />
+          {directional ? (
+            <ArrowRightIcon className="size-5 text-muted-foreground" />
+          ) : directionUnknown ? (
+            <MinusIcon className="size-5 text-muted-foreground" />
+          ) : (
+            <ArrowLeftRightIcon className="size-5 text-muted-foreground" />
+          )}
           <EndpointCard node={target} chains={chains} />
         </div>
         <div className="text-center text-muted-foreground text-xs">
-          Observed direction
+          {directional
+            ? 'Lock → Mint'
+            : directionUnknown
+              ? 'Direction unavailable'
+              : 'Non-directional'}
         </div>
       </div>
 
-      <DetailsSection title="Relation">
+      <DetailsSection title="Connection">
         <DetailRows>
-          <DetailRow label="From">
+          <DetailRow
+            label={
+              directional
+                ? 'Locked token'
+                : directionUnknown
+                  ? 'Observed from'
+                  : 'Token 1'
+            }
+          >
             {source.chain}:{source.address}
           </DetailRow>
-          <DetailRow label="To">
+          <DetailRow
+            label={
+              directional
+                ? 'Minted token'
+                : directionUnknown
+                  ? 'Observed to'
+                  : 'Token 2'
+            }
+          >
             {target.chain}:{target.address}
           </DetailRow>
           <DetailRow label="Bridge type">
             {relationTypeLabel(relation)}
           </DetailRow>
           <DetailRow label="Plugin">{relation.plugin}</DetailRow>
+          <DetailRow label="Evidence records">
+            {relation.routes.length}
+          </DetailRow>
         </DetailRows>
         {relation.isConflict && (
           <p className="rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm">
@@ -443,14 +516,43 @@ function GraphRelationDetails({
         )}
       </DetailsSection>
 
-      {isLoading ? (
-        <LoadingState className="h-32" />
-      ) : error ? (
-        <ErrorState message={error.message} />
-      ) : data ? (
-        <RelationEvidence relation={data} chains={chains} />
-      ) : null}
+      <div className="space-y-5">
+        {relation.routes.map((route) => (
+          <GraphRelationEvidence
+            key={relationRouteId(route)}
+            route={route}
+            chains={chains}
+          />
+        ))}
+      </div>
     </div>
+  )
+}
+
+function GraphRelationEvidence({
+  route,
+  chains,
+}: {
+  route: RelationGraphRoute
+  chains: Chain[]
+}) {
+  const trpc = useTRPC()
+  const { data, isLoading, error } = useQuery(
+    trpc.deployedTokens.getRelationsGraphRelationDetails.queryOptions(
+      relationPrimaryKey(route),
+    ),
+  )
+
+  if (isLoading) return <LoadingState className="h-24" />
+  if (error) return <ErrorState message={error.message} />
+  if (data === undefined) return null
+
+  return (
+    <RelationEvidence
+      title={relationEvidenceTitle(route)}
+      relation={data}
+      chains={chains}
+    />
   )
 }
 
@@ -487,16 +589,18 @@ function EndpointCard({
 }
 
 function RelationEvidence({
+  title,
   relation,
   chains,
 }: {
+  title: string
   relation: RelationDetails
   chains: Chain[]
 }) {
   const evidence = readTransferEvidence(relation.transfer)
 
   return (
-    <DetailsSection title="Sample transfer evidence">
+    <DetailsSection title={title}>
       <DetailRows>
         {evidence.transferId && (
           <DetailRow label="Transfer ID">{evidence.transferId}</DetailRow>
@@ -525,6 +629,23 @@ function RelationEvidence({
       <JsonDetails label="Raw transfer evidence" value={relation.transfer} />
     </DetailsSection>
   )
+}
+
+function relationEvidenceTitle(route: RelationGraphRoute) {
+  if (route.bridgeType === 'burnAndMint') {
+    return `${route.tokenFromChain} → ${route.tokenToChain} evidence`
+  }
+
+  switch (route.lockAndMintDirection) {
+    case 'lockToMint':
+      return 'Lock → Mint evidence'
+    case 'burnToUnlock':
+      return 'Burn → Unlock evidence'
+    case 'unknown':
+      return 'Observed transfer evidence'
+    case null:
+      throw new Error('Lock & Mint route is missing its direction')
+  }
 }
 
 function TransactionValue({
@@ -684,7 +805,7 @@ function findRelation(graph: RelationGraph, id: string) {
 }
 
 function displayedRelationColor(
-  relation: RelationGraphRelation,
+  relation: RelationGraphConnection,
   highlightAnomalies: boolean,
 ) {
   if (!highlightAnomalies) return relationColor(relation)

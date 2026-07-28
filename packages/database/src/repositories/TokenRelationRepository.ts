@@ -1,5 +1,5 @@
 import type { InteropBridgeType } from '@l2beat/shared-pure'
-import type { Insertable, Selectable, Updateable } from 'kysely'
+import { type Insertable, type Selectable, sql, type Updateable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { TokenRelation } from '../kysely/generated/types'
 import type { DeployedTokenPrimaryKey } from './DeployedTokenRepository'
@@ -23,6 +23,11 @@ export type TokenRelationRecord = {
 }
 
 export type TokenRelationRoute = Omit<TokenRelationRecord, 'transfer'>
+
+export type TokenRelationRouteWithTransferFlags = TokenRelationRoute & {
+  srcWasBurned: boolean | undefined
+  dstWasMinted: boolean | undefined
+}
 
 export type TokenRelationPrimaryKey = Pick<
   TokenRelationRecord,
@@ -158,7 +163,9 @@ export class TokenRelationRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getAllRoutes(): Promise<TokenRelationRoute[]> {
+  async getAllRoutesWithTransferFlags(): Promise<
+    TokenRelationRouteWithTransferFlags[]
+  > {
     const rows = await this.db
       .selectFrom('TokenRelation')
       .select([
@@ -168,12 +175,20 @@ export class TokenRelationRepository extends BaseRepository {
         'tokenToAddress',
         'plugin',
         'bridgeType',
+        sql<boolean | null>`("transfer" ->> 'srcWasBurned')::boolean`.as(
+          'srcWasBurned',
+        ),
+        sql<boolean | null>`("transfer" ->> 'dstWasMinted')::boolean`.as(
+          'dstWasMinted',
+        ),
       ])
       .execute()
 
     return rows.map((row) => ({
       ...row,
       bridgeType: row.bridgeType as InteropBridgeType,
+      srcWasBurned: row.srcWasBurned ?? undefined,
+      dstWasMinted: row.dstWasMinted ?? undefined,
     }))
   }
 

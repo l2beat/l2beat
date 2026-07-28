@@ -1,8 +1,27 @@
 import type { RouterOutputs } from '@l2beat/token-backend'
 
-export type RelationGraph = RouterOutputs['deployedTokens']['getRelationsGraph']
-export type RelationGraphNode = RelationGraph['nodes'][number]
-export type RelationGraphRelation = RelationGraph['relations'][number]
+export type RelationGraphResponse =
+  RouterOutputs['deployedTokens']['getRelationsGraph']
+export type RelationGraphNode = RelationGraphResponse['nodes'][number]
+export type RelationGraphRoute = RelationGraphResponse['relations'][number]
+
+export interface RelationGraphConnection {
+  id: string
+  tokenFromChain: string
+  tokenFromAddress: string
+  tokenToChain: string
+  tokenToAddress: string
+  plugin: string
+  bridgeType: RelationGraphRoute['bridgeType']
+  directionKnown: boolean
+  isConflict: boolean
+  routes: RelationGraphRoute[]
+}
+
+export interface RelationGraph {
+  nodes: RelationGraphNode[]
+  relations: RelationGraphConnection[]
+}
 
 export type RelationGraphSelection =
   | { type: 'node'; id: string }
@@ -33,18 +52,71 @@ const SEARCH_RESULT_LIMIT = 5
 const NODE_VISUAL_MAX_SCALE = 1.2
 const RELATION_LABEL_MIN_SCALE = 2.5
 
-export function relationId(relation: RelationGraphRelation) {
-  return [
+export function buildRelationGraph(
+  response: RelationGraphResponse,
+): RelationGraph {
+  const connections = new Map<string, RelationGraphConnection>()
+
+  for (const route of response.relations) {
+    const endpoints = getConnectionEndpoints(route)
+    const id = JSON.stringify([
+      endpoints.tokenFromChain,
+      endpoints.tokenFromAddress,
+      endpoints.tokenToChain,
+      endpoints.tokenToAddress,
+      route.plugin,
+      route.bridgeType,
+    ])
+    const connection = connections.get(id)
+
+    if (connection === undefined) {
+      connections.set(id, {
+        id,
+        ...endpoints,
+        plugin: route.plugin,
+        bridgeType: route.bridgeType,
+        directionKnown: routeHasKnownDirection(route),
+        isConflict: route.isConflict,
+        routes: [route],
+      })
+    } else {
+      connection.directionKnown ||= routeHasKnownDirection(route)
+      connection.isConflict ||= route.isConflict
+      connection.routes.push(route)
+    }
+  }
+
+  return {
+    nodes: response.nodes,
+    relations: [...connections.values()]
+      .map((connection) => ({
+        ...connection,
+        routes: connection.routes.sort(
+          (a, b) =>
+            routeEvidenceOrder(a) - routeEvidenceOrder(b) ||
+            relationRouteId(a).localeCompare(relationRouteId(b)),
+        ),
+      }))
+      .sort((a, b) => a.id.localeCompare(b.id)),
+  }
+}
+
+export function relationId(relation: RelationGraphConnection) {
+  return relation.id
+}
+
+export function relationRouteId(relation: RelationGraphRoute) {
+  return JSON.stringify([
     relation.tokenFromChain,
     relation.tokenFromAddress,
     relation.tokenToChain,
     relation.tokenToAddress,
     relation.plugin,
     relation.bridgeType,
-  ].join(':')
+  ])
 }
 
-export function relationPrimaryKey(relation: RelationGraphRelation) {
+export function relationPrimaryKey(relation: RelationGraphRoute) {
   return {
     tokenFromChain: relation.tokenFromChain,
     tokenFromAddress: relation.tokenFromAddress,
@@ -55,11 +127,17 @@ export function relationPrimaryKey(relation: RelationGraphRelation) {
   }
 }
 
-export function sourceId(relation: RelationGraphRelation) {
+export function sourceId(relation: {
+  tokenFromChain: string
+  tokenFromAddress: string
+}) {
   return tokenId(relation.tokenFromChain, relation.tokenFromAddress)
 }
 
-export function targetId(relation: RelationGraphRelation) {
+export function targetId(relation: {
+  tokenToChain: string
+  tokenToAddress: string
+}) {
   return tokenId(relation.tokenToChain, relation.tokenToAddress)
 }
 
@@ -67,7 +145,9 @@ export function tokenId(chain: string, address: string) {
   return `${chain}:${address.toLowerCase()}`
 }
 
-export function relationColor(relation: RelationGraphRelation) {
+export function relationColor(relation: {
+  bridgeType: RelationGraphRoute['bridgeType']
+}) {
   switch (relation.bridgeType) {
     case 'burnAndMint':
       return RELATION_COLORS.burnAndMint
@@ -80,7 +160,9 @@ export function relationColor(relation: RelationGraphRelation) {
   }
 }
 
-export function relationTypeLabel(relation: RelationGraphRelation) {
+export function relationTypeLabel(relation: {
+  bridgeType: RelationGraphRoute['bridgeType']
+}) {
   switch (relation.bridgeType) {
     case 'burnAndMint':
       return 'Burn & Mint'
@@ -93,7 +175,9 @@ export function relationTypeLabel(relation: RelationGraphRelation) {
   }
 }
 
-export function relationIsDirectional(relation: RelationGraphRelation) {
+export function relationIsDirectional(relation: {
+  bridgeType: RelationGraphRoute['bridgeType']
+}) {
   switch (relation.bridgeType) {
     case 'burnAndMint':
       return false
@@ -104,6 +188,12 @@ export function relationIsDirectional(relation: RelationGraphRelation) {
         `Unexpected bridge type in relations graph: ${relation.bridgeType}`,
       )
   }
+}
+
+export function connectionHasDirection(
+  connection: RelationGraphConnection,
+): boolean {
+  return relationIsDirectional(connection) && connection.directionKnown
 }
 
 export function nodeColor(node: RelationGraphNode) {
@@ -261,6 +351,64 @@ export function getRelationGraphFocus(
   nodeIds.add(targetId(relation))
   relationIds.add(selection.id)
   return { nodeIds, relationIds }
+}
+
+function getConnectionEndpoints(route: RelationGraphRoute) {
+  const reverse = shouldReverseConnection(route)
+  return reverse
+    ? {
+        tokenFromChain: route.tokenToChain,
+        tokenFromAddress: route.tokenToAddress,
+        tokenToChain: route.tokenFromChain,
+        tokenToAddress: route.tokenFromAddress,
+      }
+    : {
+        tokenFromChain: route.tokenFromChain,
+        tokenFromAddress: route.tokenFromAddress,
+        tokenToChain: route.tokenToChain,
+        tokenToAddress: route.tokenToAddress,
+      }
+}
+
+function shouldReverseConnection(route: RelationGraphRoute) {
+  switch (route.bridgeType) {
+    case 'burnAndMint':
+      return sourceId(route) > targetId(route)
+    case 'lockAndMint':
+      return route.lockAndMintDirection === 'burnToUnlock'
+    default:
+      throw new Error(
+        `Unexpected bridge type in relations graph: ${route.bridgeType}`,
+      )
+  }
+}
+
+function routeEvidenceOrder(route: RelationGraphRoute) {
+  switch (route.lockAndMintDirection) {
+    case 'lockToMint':
+      return 0
+    case 'burnToUnlock':
+      return 1
+    case 'unknown':
+    case null:
+      return 2
+  }
+}
+
+function routeHasKnownDirection(route: RelationGraphRoute) {
+  switch (route.bridgeType) {
+    case 'burnAndMint':
+      return false
+    case 'lockAndMint':
+      if (route.lockAndMintDirection === null) {
+        throw new Error('Lock & Mint route is missing its direction')
+      }
+      return route.lockAndMintDirection !== 'unknown'
+    default:
+      throw new Error(
+        `Unexpected bridge type in relations graph: ${route.bridgeType}`,
+      )
+  }
 }
 
 export function shortAddress(address: string) {

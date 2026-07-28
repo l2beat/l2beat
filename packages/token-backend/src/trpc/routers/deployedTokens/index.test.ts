@@ -301,19 +301,23 @@ describe('deployedTokensRouter', () => {
   describe('getRelationsGraph', () => {
     it('returns deployed relation endpoints and lightweight edges', async () => {
       const relations = [
-        tokenRelationRoute({
+        graphRelationRoute({
           tokenFromChain: 'base',
           tokenFromAddress: '0xbbb',
           tokenToChain: 'ethereum',
           tokenToAddress: '0xaaa',
           plugin: 'test-plugin',
+          srcWasBurned: true,
+          dstWasMinted: false,
         }),
-        tokenRelationRoute({
+        graphRelationRoute({
           tokenFromChain: 'ethereum',
           tokenFromAddress: '0xaaa',
           tokenToChain: 'base',
           tokenToAddress: '0xbbb',
           plugin: 'test-plugin',
+          srcWasBurned: false,
+          dstWasMinted: true,
         }),
       ]
       const tokens = [
@@ -334,7 +338,7 @@ describe('deployedTokensRouter', () => {
       const mockGetTokens = mockFn().resolvesTo(tokens)
       const mockTokenDb = mockObject<TokenDatabase>({
         tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
-          getAllRoutes: mockGetAllRelations,
+          getAllRoutesWithTransferFlags: mockGetAllRelations,
         }),
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getByPrimaryKeys: mockGetTokens,
@@ -363,10 +367,13 @@ describe('deployedTokensRouter', () => {
             isDeployed: true,
           },
         ],
-        relations: relations.map((relation) => ({
-          ...relation,
-          isConflict: false,
-        })),
+        relations: relations.map((relation) =>
+          graphOutputRelation(
+            relation,
+            relation.srcWasBurned === true ? 'burnToUnlock' : 'lockToMint',
+            false,
+          ),
+        ),
       })
       expect(mockGetAllRelations).toHaveBeenCalledTimes(1)
       expect(mockGetTokens).toHaveBeenCalledWith([
@@ -376,14 +383,14 @@ describe('deployedTokensRouter', () => {
     })
 
     it('includes missing endpoints and marks different abstract tokens as conflicts', async () => {
-      const conflict = tokenRelationRoute({
+      const conflict = graphRelationRoute({
         tokenFromChain: 'ethereum',
         tokenFromAddress: '0xaaa',
         tokenToChain: 'base',
         tokenToAddress: '0xbbb',
         plugin: 'test-plugin',
       })
-      const unresolved = tokenRelationRoute({
+      const unresolved = graphRelationRoute({
         tokenFromChain: 'ethereum',
         tokenFromAddress: '0xaaa',
         tokenToChain: 'optimism',
@@ -406,7 +413,10 @@ describe('deployedTokensRouter', () => {
       ]
       const mockTokenDb = mockObject<TokenDatabase>({
         tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
-          getAllRoutes: mockFn().resolvesTo([conflict, unresolved]),
+          getAllRoutesWithTransferFlags: mockFn().resolvesTo([
+            conflict,
+            unresolved,
+          ]),
         }),
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getByPrimaryKeys: mockFn().resolvesTo(tokens),
@@ -444,22 +454,23 @@ describe('deployedTokensRouter', () => {
           },
         ],
         relations: [
-          { ...conflict, isConflict: true },
-          { ...unresolved, isConflict: false },
+          graphOutputRelation(conflict, 'unknown', true),
+          graphOutputRelation(unresolved, 'unknown', false),
         ],
       })
     })
 
     it('excludes bridge types the graph does not render', async () => {
-      const supported = tokenRelationRoute({
+      const supported = graphRelationRoute({
         tokenFromChain: 'ethereum',
         tokenFromAddress: '0xaaa',
         tokenToChain: 'base',
         tokenToAddress: '0xbbb',
         plugin: 'supported',
+        bridgeType: 'burnAndMint',
       })
       const unsupported = {
-        ...tokenRelationRoute({
+        ...graphRelationRoute({
           tokenFromChain: 'arbitrum',
           tokenFromAddress: '0xccc',
           tokenToChain: 'optimism',
@@ -471,7 +482,10 @@ describe('deployedTokensRouter', () => {
       const getTokens = mockFn().resolvesTo([])
       const mockTokenDb = mockObject<TokenDatabase>({
         tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
-          getAllRoutes: mockFn().resolvesTo([supported, unsupported]),
+          getAllRoutesWithTransferFlags: mockFn().resolvesTo([
+            supported,
+            unsupported,
+          ]),
         }),
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getByPrimaryKeys: getTokens,
@@ -501,7 +515,7 @@ describe('deployedTokensRouter', () => {
             isDeployed: false,
           },
         ],
-        relations: [{ ...supported, isConflict: false }],
+        relations: [graphOutputRelation(supported, null, false)],
       })
       expect(getTokens).toHaveBeenCalledWith([
         { chain: 'ethereum', address: '0xaaa' },
@@ -2524,6 +2538,44 @@ function tokenRelationRoute(input: {
   return {
     ...input,
     bridgeType: 'lockAndMint',
+  }
+}
+
+function graphRelationRoute(
+  input: Parameters<typeof tokenRelationRoute>[0] & {
+    bridgeType?: TokenRelationRecord['bridgeType']
+    srcWasBurned?: boolean
+    dstWasMinted?: boolean
+  },
+) {
+  const {
+    bridgeType = 'lockAndMint',
+    srcWasBurned,
+    dstWasMinted,
+    ...route
+  } = input
+  return {
+    ...tokenRelationRoute(route),
+    bridgeType,
+    srcWasBurned,
+    dstWasMinted,
+  }
+}
+
+function graphOutputRelation(
+  relation: ReturnType<typeof graphRelationRoute>,
+  lockAndMintDirection: 'lockToMint' | 'burnToUnlock' | 'unknown' | null,
+  isConflict: boolean,
+) {
+  return {
+    tokenFromChain: relation.tokenFromChain,
+    tokenFromAddress: relation.tokenFromAddress,
+    tokenToChain: relation.tokenToChain,
+    tokenToAddress: relation.tokenToAddress,
+    plugin: relation.plugin,
+    bridgeType: relation.bridgeType,
+    lockAndMintDirection,
+    isConflict,
   }
 }
 

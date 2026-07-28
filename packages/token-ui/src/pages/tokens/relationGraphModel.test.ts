@@ -1,5 +1,7 @@
 import { expect } from 'earl'
 import {
+  buildRelationGraph,
+  connectionHasDirection,
   getClusterLabelStyle,
   getExistingRelationGraphSelection,
   getNodeVisualScale,
@@ -9,10 +11,12 @@ import {
   type RelationGraph,
   type RelationGraphFocus,
   type RelationGraphNode,
-  type RelationGraphRelation,
+  type RelationGraphRoute,
   relationId,
   relationIsDirectional,
   searchRelationGraphNodes,
+  sourceId,
+  targetId,
   tokenId,
 } from './relationGraphModel'
 
@@ -96,12 +100,135 @@ describe(relationIsDirectional.name, () => {
   })
 })
 
-const relations = [
+describe(buildRelationGraph.name, () => {
+  it('merges opposite Burn & Mint routes under one bridge connection', () => {
+    const ethereumToBase = relation(
+      'ethereum',
+      '0xaaa',
+      'base',
+      '0xbbb',
+      'bridge',
+      'burnAndMint',
+    )
+    const baseToEthereum = relation(
+      'base',
+      '0xbbb',
+      'ethereum',
+      '0xaaa',
+      'bridge',
+      'burnAndMint',
+    )
+
+    const result = buildRelationGraph({
+      nodes: [],
+      relations: [ethereumToBase, baseToEthereum],
+    })
+
+    expect(result.relations.length).toEqual(1)
+    const connection = requiredConnection(result)
+    expect(sourceId(connection)).toEqual(tokenId('base', '0xbbb'))
+    expect(targetId(connection)).toEqual(tokenId('ethereum', '0xaaa'))
+    expect(connection.routes).toEqualUnsorted([ethereumToBase, baseToEthereum])
+  })
+
+  it('merges Lock → Mint and Burn → Unlock evidence into one arrow', () => {
+    const lockToMint = relation(
+      'ethereum',
+      '0xaaa',
+      'base',
+      '0xbbb',
+      'bridge',
+      'lockAndMint',
+      'lockToMint',
+    )
+    const burnToUnlock = relation(
+      'base',
+      '0xbbb',
+      'ethereum',
+      '0xaaa',
+      'bridge',
+      'lockAndMint',
+      'burnToUnlock',
+    )
+
+    const result = buildRelationGraph({
+      nodes: [],
+      relations: [burnToUnlock, lockToMint],
+    })
+
+    expect(result.relations.length).toEqual(1)
+    const connection = requiredConnection(result)
+    expect(sourceId(connection)).toEqual(tokenId('ethereum', '0xaaa'))
+    expect(targetId(connection)).toEqual(tokenId('base', '0xbbb'))
+    expect(connection.routes).toEqual([lockToMint, burnToUnlock])
+  })
+
+  it('keeps genuinely opposite Lock → Mint arrows separate', () => {
+    const result = buildRelationGraph({
+      nodes: [],
+      relations: [
+        relation(
+          'ethereum',
+          '0xaaa',
+          'base',
+          '0xbbb',
+          'bridge',
+          'lockAndMint',
+          'lockToMint',
+        ),
+        relation(
+          'base',
+          '0xbbb',
+          'ethereum',
+          '0xaaa',
+          'bridge',
+          'lockAndMint',
+          'lockToMint',
+        ),
+      ],
+    })
+
+    expect(result.relations.length).toEqual(2)
+  })
+
+  it('does not invent a Lock & Mint direction when evidence is ambiguous', () => {
+    const result = buildRelationGraph({
+      nodes: [],
+      relations: [
+        relation(
+          'ethereum',
+          '0xaaa',
+          'base',
+          '0xbbb',
+          'bridge',
+          'lockAndMint',
+          'unknown',
+        ),
+      ],
+    })
+
+    expect(connectionHasDirection(requiredConnection(result))).toEqual(false)
+  })
+
+  it('does not merge connections from different plugins', () => {
+    const result = buildRelationGraph({
+      nodes: [],
+      relations: [
+        relation('ethereum', '0xaaa', 'base', '0xbbb', 'first', 'burnAndMint'),
+        relation('base', '0xbbb', 'ethereum', '0xaaa', 'second', 'burnAndMint'),
+      ],
+    })
+
+    expect(result.relations.length).toEqual(2)
+  })
+})
+
+const routes = [
   relation('ethereum', '0xaaa', 'base', '0xbbb', 'first'),
   relation('ethereum', '0xaaa', 'optimism', '0xccc', 'second'),
   relation('arbitrum', '0xddd', 'linea', '0xeee', 'unrelated'),
 ]
-const graph: RelationGraph = {
+const graph: RelationGraph = buildRelationGraph({
   nodes: [
     graphNode('ethereum', '0xaaa'),
     graphNode('base', '0xbbb'),
@@ -109,8 +236,8 @@ const graph: RelationGraph = {
     graphNode('arbitrum', '0xddd'),
     graphNode('linea', '0xeee'),
   ],
-  relations,
-}
+  relations: routes,
+})
 
 describe(getExistingRelationGraphSelection.name, () => {
   it('keeps selections that exist in the graph', () => {
@@ -184,12 +311,21 @@ describe(getRelationGraphFocus.name, () => {
       ].sort(),
     )
     expect([...focus.relationIds].sort()).toEqual(
-      relations.slice(0, 2).map(relationId).sort(),
+      graph.relations
+        .filter(
+          (relation) =>
+            sourceId(relation) === tokenId('ethereum', '0xaaa') ||
+            targetId(relation) === tokenId('ethereum', '0xaaa'),
+        )
+        .map(relationId)
+        .sort(),
     )
   })
 
   it('collects only the endpoints of a selected relation', () => {
-    const selectedRelation = relations[1]
+    const selectedRelation = graph.relations.find(
+      (relation) => relation.plugin === 'second',
+    )
     if (selectedRelation === undefined) {
       throw new Error('Missing test relation')
     }
@@ -257,8 +393,9 @@ function relation(
   tokenToChain: string,
   tokenToAddress: string,
   plugin: string,
-  bridgeType: RelationGraphRelation['bridgeType'] = 'lockAndMint',
-): RelationGraphRelation {
+  bridgeType: RelationGraphRoute['bridgeType'] = 'lockAndMint',
+  lockAndMintDirection: RelationGraphRoute['lockAndMintDirection'] = 'lockToMint',
+): RelationGraphRoute {
   return {
     tokenFromChain,
     tokenFromAddress,
@@ -266,6 +403,8 @@ function relation(
     tokenToAddress,
     plugin,
     bridgeType,
+    lockAndMintDirection:
+      bridgeType === 'lockAndMint' ? lockAndMintDirection : null,
     isConflict: false,
   }
 }
@@ -275,4 +414,10 @@ function requiredFocus(
 ): RelationGraphFocus {
   if (focus === undefined) throw new Error('Expected graph focus')
   return focus
+}
+
+function requiredConnection(graph: RelationGraph) {
+  const connection = graph.relations[0]
+  if (connection === undefined) throw new Error('Expected graph connection')
+  return connection
 }

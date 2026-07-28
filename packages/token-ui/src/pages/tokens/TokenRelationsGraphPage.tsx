@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import { useTRPC } from '~/react-query/trpc'
 import { cn } from '~/utils/cn'
 import {
+  buildRelationGraph,
   getExistingRelationGraphSelection,
   NODE_COLORS,
   RELATION_COLORS,
@@ -25,7 +26,13 @@ export function TokenRelationsGraphPage() {
     trpc.deployedTokens.getRelationsGraph.queryOptions(),
   )
   const chainsQuery = useQuery(trpc.chains.getAll.queryOptions())
-  const graph = graphQuery.data
+  const graph = useMemo(
+    () =>
+      graphQuery.data === undefined
+        ? undefined
+        : buildRelationGraph(graphQuery.data),
+    [graphQuery.data],
+  )
   const graphSelection =
     graph === undefined
       ? undefined

@@ -166,29 +166,38 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
     })
   })
 
-  describe(TokenRelationRepository.prototype.getAllRoutes.name, () => {
-    it('returns relation identities without transfer evidence', async () => {
-      const relation = tokenRelation({
-        tokenFrom: tokenA,
-        tokenTo: tokenB,
-        plugin: 'superbridge',
-        bridgeType: 'burnAndMint',
-        transfer: { large: 'evidence' },
-      })
-      await repository.insert(relation)
+  describe(
+    TokenRelationRepository.prototype.getAllRoutesWithTransferFlags.name,
+    () => {
+      it('returns relation identities and only the direction flags from evidence', async () => {
+        const relation = tokenRelation({
+          tokenFrom: tokenA,
+          tokenTo: tokenB,
+          plugin: 'superbridge',
+          bridgeType: 'burnAndMint',
+          transfer: {
+            srcWasBurned: true,
+            dstWasMinted: false,
+            large: 'evidence',
+          },
+        })
+        await repository.insert(relation)
 
-      expect(await repository.getAllRoutes()).toEqual([
-        {
-          tokenFromChain: relation.tokenFromChain,
-          tokenFromAddress: relation.tokenFromAddress,
-          tokenToChain: relation.tokenToChain,
-          tokenToAddress: relation.tokenToAddress,
-          plugin: relation.plugin,
-          bridgeType: relation.bridgeType,
-        },
-      ])
-    })
-  })
+        expect(await repository.getAllRoutesWithTransferFlags()).toEqual([
+          {
+            tokenFromChain: relation.tokenFromChain,
+            tokenFromAddress: relation.tokenFromAddress,
+            tokenToChain: relation.tokenToChain,
+            tokenToAddress: relation.tokenToAddress,
+            plugin: relation.plugin,
+            bridgeType: relation.bridgeType,
+            srcWasBurned: true,
+            dstWasMinted: false,
+          },
+        ])
+      })
+    },
+  )
 
   describe(TokenRelationRepository.prototype.updateByPrimaryKey.name, () => {
     it('updates the evidence transfer without changing identity columns', async () => {

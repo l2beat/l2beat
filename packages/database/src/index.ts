@@ -130,6 +130,7 @@ export type {
   TokenRelationPrimaryKey,
   TokenRelationRecord,
   TokenRelationRoute,
+  TokenRelationRouteWithTransferFlags,
   TokenRelationUpdateable,
 } from './repositories/TokenRelationRepository'
 export type {

@@ -6,6 +6,7 @@ import {
   layoutRelationGraph,
 } from './relationGraphLayout'
 import {
+  connectionHasDirection,
   getClusterLabelStyle,
   getNodeVisualScale,
   getRelationGraphFocus,
@@ -15,12 +16,11 @@ import {
   nodeLabel,
   RELATION_COLORS,
   type RelationGraph,
+  type RelationGraphConnection,
   type RelationGraphFocus,
-  type RelationGraphRelation,
   type RelationGraphSelection,
   relationColor,
   relationId,
-  relationIsDirectional,
   relationTypeLabel,
   sourceId,
   targetId,
@@ -29,7 +29,7 @@ import {
 
 type NodeDatum = RelationGraph['nodes'][number] & LayoutNode
 type VisualLink = LayoutLink<NodeDatum> & {
-  relation: RelationGraphRelation
+  relation: RelationGraphConnection
   curve: number
 }
 
@@ -143,7 +143,13 @@ export function TokenRelationsGraph({
 
     links.append('title').text((link) => {
       const relation = link.relation
-      return `${relation.tokenFromChain}:${relation.tokenFromAddress} -> ${relation.tokenToChain}:${relation.tokenToAddress}\n${relationTypeLabel(relation)} via ${relation.plugin}`
+      const direction =
+        relation.bridgeType === 'burnAndMint'
+          ? '<->'
+          : connectionHasDirection(relation)
+            ? '->'
+            : '--'
+      return `${relation.tokenFromChain}:${relation.tokenFromAddress} ${direction} ${relation.tokenToChain}:${relation.tokenToAddress}\n${relationTypeLabel(relation)} via ${relation.plugin}\n${relation.routes.length} evidence record${relation.routes.length === 1 ? '' : 's'}`
     })
 
     const linkHits = linksLayer
@@ -446,7 +452,7 @@ function updateRelationLabelStyles(
 }
 
 function displayedRelationColor(
-  relation: RelationGraphRelation,
+  relation: RelationGraphConnection,
   highlightAnomalies: boolean,
 ) {
   if (!highlightAnomalies) return relationColor(relation)
@@ -497,10 +503,10 @@ function appendArrowMarkers(
 }
 
 function markerUrl(
-  relation: RelationGraphRelation,
+  relation: RelationGraphConnection,
   highlightAnomalies: boolean,
 ) {
-  if (!relationIsDirectional(relation)) return null
+  if (!connectionHasDirection(relation)) return null
   if (highlightAnomalies) {
     return relation.isConflict
       ? 'url(#relation-arrow-conflict)'
@@ -577,10 +583,10 @@ function useElementSize<T extends HTMLElement>(ref: RefObject<T | null>) {
 }
 
 function buildVisualLinks(
-  relations: RelationGraphRelation[],
+  relations: RelationGraphConnection[],
   nodeById: Map<string, NodeDatum>,
 ): VisualLink[] {
-  const relationGroups = new Map<string, RelationGraphRelation[]>()
+  const relationGroups = new Map<string, RelationGraphConnection[]>()
   for (const relation of relations) {
     const key = unorderedPairKey(sourceId(relation), targetId(relation))
     const group = relationGroups.get(key)
@@ -686,13 +692,13 @@ function linkGeometry(link: VisualLink): LinkGeometry {
 function linkPath(link: VisualLink) {
   const { source, target, control } = linkGeometry(link)
   if (control === undefined) {
-    if (relationIsDirectional(link.relation)) {
+    if (connectionHasDirection(link.relation)) {
       const arrow = interpolatePoint(source, target, RELATION_ARROW_POSITION)
       return `M${source.x},${source.y} L${arrow.x},${arrow.y} L${target.x},${target.y}`
     }
     return `M${source.x},${source.y} L${target.x},${target.y}`
   }
-  if (relationIsDirectional(link.relation)) {
+  if (connectionHasDirection(link.relation)) {
     const firstControl = interpolatePoint(
       source,
       control,

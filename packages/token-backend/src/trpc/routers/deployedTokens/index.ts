@@ -117,10 +117,17 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) =>
 
     getRelationsGraph: readOnlyProcedure.query(async ({ ctx }) => {
       const relations = sortRelations(
-        (await ctx.tokenDb.tokenRelation.getAllRoutes()).filter(
-          isGraphRelation,
-        ),
-      )
+        (
+          await ctx.tokenDb.tokenRelation.getAllRoutesWithTransferFlags()
+        ).filter(isGraphRelation),
+      ).map(({ srcWasBurned, dstWasMinted, ...relation }) => ({
+        ...relation,
+        lockAndMintDirection: getLockAndMintDirection({
+          ...relation,
+          srcWasBurned,
+          dstWasMinted,
+        }),
+      }))
       const tokenKeys = uniqueTokenKeys(
         relations.flatMap((relation) => [
           {
@@ -229,6 +236,22 @@ function isGraphRelation(relation: { bridgeType: string }): boolean {
     relation.bridgeType === 'burnAndMint' ||
     relation.bridgeType === 'lockAndMint'
   )
+}
+
+function getLockAndMintDirection(relation: {
+  bridgeType: string
+  srcWasBurned: boolean | undefined
+  dstWasMinted: boolean | undefined
+}): 'lockToMint' | 'burnToUnlock' | 'unknown' | null {
+  if (relation.bridgeType !== 'lockAndMint') return null
+
+  const indicatesLockToMint =
+    relation.srcWasBurned === false || relation.dstWasMinted === true
+  const indicatesBurnToUnlock =
+    relation.srcWasBurned === true || relation.dstWasMinted === false
+
+  if (indicatesLockToMint === indicatesBurnToUnlock) return 'unknown'
+  return indicatesLockToMint ? 'lockToMint' : 'burnToUnlock'
 }
 
 function uniqueTokenKeys(tokens: { chain: string; address: string }[]) {

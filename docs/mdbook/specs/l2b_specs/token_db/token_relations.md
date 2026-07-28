@@ -253,13 +253,20 @@ against the current token catalogue. Every observed `(chain, address)`
 endpoint is a node, including endpoints that do not yet have a
 `DeployedToken` row. Catalogued nodes are green and labelled with their
 deployed token symbol; uncatalogued nodes are orange and use a shortened
-address as their label. An edge is an observed token relation:
-burn-and-mint edges are blue and non-directional, while lock-and-mint edges are
-pink and preserve the observed `tokenFrom` to `tokenTo` direction with an
-arrowhead. Nodes can be dragged and the canvas can be panned or zoomed. Edge
-stroke widths remain constant while zooming, and node visuals stop growing
-beyond 2x zoom so additional zoom creates useful space between them. Above
-2.5x zoom, each edge shows its relation plugin name at its midpoint.
+address as their label. Routes between the same token pair, plugin, and bridge
+mechanism are combined into one visual connection. Burn-and-mint connections
+are blue and non-directional, with evidence from both observed directions kept
+under the same connection. Lock-and-mint connections are pink and point from
+the locked token to the minted representation. A reverse burn-to-unlock
+observation is combined with its corresponding lock-to-mint connection rather
+than drawn as a second arrow. Genuinely opposite lock-to-mint routes remain
+separate arrows. If neither stored flag identifies the role, the graph keeps
+the observed endpoint order but draws the connection without an arrow rather
+than guessing which token is original. Nodes can be dragged and the canvas can
+be panned or zoomed. Edge stroke widths remain constant while zooming, and node
+visuals stop growing beyond 2x zoom so additional zoom creates useful space
+between them. Above 2.5x zoom, each edge shows its relation plugin name at its
+midpoint.
 
 Before drawing, the UI treats every connected component as a cluster and
 sorts the clusters by endpoint count (largest first, with a stable id
@@ -281,9 +288,10 @@ second database query for the neighborhood. Uncatalogued nodes show their raw
 endpoint information instead of token details.
 
 Edges are independently hoverable and clickable. Clicking one highlights its
-two endpoints and loads only that relation's full transfer evidence, including
-source and destination transaction hashes used for explorer links. This keeps
-the evidence JSON out of the initial graph response.
+two endpoints and loads the full transfer evidence for each route combined
+under that connection, including source and destination transaction hashes
+used for explorer links. This keeps the evidence JSON out of the initial graph
+response.
 
 The graph header can search catalogued deployed tokens by symbol, chain, or
 address using the already-loaded graph payload. Choosing a result selects the
@@ -298,10 +306,11 @@ colors and does not draw anomalies red. An anomaly switch changes conflicting
 edges to red and mutes other edges to gray, so anomaly inspection does not
 compete with the default bridge-mechanism view.
 
-The initial graph query reads only relation identity fields and the minimal
-endpoint display data. It deliberately excludes full deployed/abstract token
-records and the transfer evidence JSON; dedicated selection-time queries fetch
-one node or one relation detail record when requested.
+The initial graph query reads relation identity fields, the two nullable
+burn/mint flags needed to identify lock-to-mint versus burn-to-unlock, and the
+minimal endpoint display data. The flags are projected directly from the
+evidence JSON; the full JSON is not loaded. Full deployed/abstract token records
+and transfer evidence remain selection-time queries.
 
 ## Human edits
 
