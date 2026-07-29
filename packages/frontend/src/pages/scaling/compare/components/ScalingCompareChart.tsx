@@ -14,9 +14,10 @@ import { buildCompareUrl } from '../utils/buildCompareUrl'
 import {
   COMPARE_RANGE_OPTIONS,
   type CompareChartState,
-  chartRangeToCompareRange,
-  compareRangeToChartRange,
+  type CompareClientState,
   isSameCompareState,
+  toCompareClientState,
+  toCompareUrlState,
 } from '../utils/compareChartState'
 import { parseCompareStateFromSearchParams } from '../utils/parseCompareStateFromSearchParams'
 
@@ -33,19 +34,19 @@ export function ScalingCompareChart({
   defaultProjectSlugs,
   initialChartRange,
 }: Props) {
-  const [state, setState] = useState(initialState)
-  // The resolved range is kept separately so the SSR-prefetched query input
-  // (computed once on the server) is reused verbatim on first paint.
-  const [chartRange, setChartRange] = useState(initialChartRange)
+  // Seeded with the server-resolved range so the SSR-prefetched query input
+  // is reused verbatim on first paint.
+  const [state, setState] = useState(() =>
+    toCompareClientState(initialState, initialChartRange),
+  )
 
   const validSlugs = useMemo(
     () => allProjects.map((project) => project.slug),
     [allProjects],
   )
-  useCompareUrlSync(state, validSlugs, (parsed) => {
-    setState(parsed)
-    setChartRange(compareRangeToChartRange(parsed.range))
-  })
+  useCompareUrlSync(state, validSlugs, (parsed) =>
+    setState(toCompareClientState(parsed)),
+  )
 
   const selectedProjects = useMemo(() => {
     const bySlug = new Map(
@@ -64,20 +65,14 @@ export function ScalingCompareChart({
     <section className="mt-4 flex flex-col gap-2 md:mt-6">
       <metric.Chart
         projects={selectedProjects}
-        range={chartRange}
+        range={state.chartRange}
         scale={state.scale}
       />
       <Controls
         scale={state.scale}
         setScale={(scale) => setState((prev) => ({ ...prev, scale }))}
-        range={chartRange}
-        setRange={(range) => {
-          setChartRange(range)
-          setState((prev) => ({
-            ...prev,
-            range: chartRangeToCompareRange(range),
-          }))
-        }}
+        range={state.chartRange}
+        setRange={(chartRange) => setState((prev) => ({ ...prev, chartRange }))}
       />
     </section>
   )
@@ -88,7 +83,7 @@ export function ScalingCompareChart({
  * URL state on browser back/forward, mirroring the interop pages.
  */
 function useCompareUrlSync(
-  state: CompareChartState,
+  state: CompareClientState,
   validSlugs: string[],
   onPopState: (parsed: CompareChartState) => void,
 ) {
@@ -105,11 +100,12 @@ function useCompareUrlSync(
       searchParams: new URLSearchParams(window.location.search),
       validSlugs,
     })
-    if (isSameCompareState(currentState, debouncedState)) {
+    const urlState = toCompareUrlState(debouncedState)
+    if (isSameCompareState(currentState, urlState)) {
       return
     }
 
-    const nextUrl = buildCompareUrl(window.location.pathname, debouncedState)
+    const nextUrl = buildCompareUrl(window.location.pathname, urlState)
     const currentUrl = window.location.pathname + window.location.search
     if (nextUrl === currentUrl) {
       return

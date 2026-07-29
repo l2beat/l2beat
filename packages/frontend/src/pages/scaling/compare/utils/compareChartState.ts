@@ -32,6 +32,41 @@ export interface CompareChartState {
   scale: ChartScale
 }
 
+/**
+ * The client-side chart state: identical to `CompareChartState` except the
+ * range is always resolved to concrete timestamps, so there is a single
+ * source of truth for what the chart queries.
+ */
+export interface CompareClientState {
+  metric: CompareMetricId
+  projects: string[]
+  scale: ChartScale
+  chartRange: ChartRange
+}
+
+export function toCompareUrlState(
+  state: CompareClientState,
+): CompareChartState {
+  return {
+    metric: state.metric,
+    projects: state.projects,
+    scale: state.scale,
+    range: chartRangeToCompareRange(state.chartRange),
+  }
+}
+
+export function toCompareClientState(
+  state: CompareChartState,
+  chartRange: ChartRange = compareRangeToChartRange(state.range),
+): CompareClientState {
+  return {
+    metric: state.metric,
+    projects: state.projects,
+    scale: state.scale,
+    chartRange,
+  }
+}
+
 export const DEFAULT_COMPARE_METRIC: CompareMetricId = 'tvs'
 export const DEFAULT_COMPARE_RANGE: CompareRangeOption = '1y'
 export const DEFAULT_COMPARE_SCALE: ChartScale = 'linear'

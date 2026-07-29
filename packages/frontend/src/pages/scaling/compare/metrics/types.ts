@@ -18,7 +18,10 @@ export interface CompareMetricChartProps {
 export interface CompareMetric {
   id: CompareMetricId
   label: string
-  /** Unit the metric's values are displayed in. */
-  unit: 'usd'
+  /**
+   * The metric's chart, including its data query, series extraction and
+   * value formatting. Per-metric controls and unit options land here with
+   * the follow-up metric tickets.
+   */
   Chart: ComponentType<CompareMetricChartProps>
 }

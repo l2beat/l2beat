@@ -17,17 +17,7 @@ import {
 import { parseCompareStateFromSearchParams } from './utils/parseCompareStateFromSearchParams'
 
 export async function getScalingCompareData(
-  req: Request<
-    unknown,
-    unknown,
-    unknown,
-    {
-      metric?: string
-      projects?: string
-      range?: string
-      scale?: string
-    }
-  >,
+  req: Request,
   manifest: Manifest,
   cache: InMemoryCache,
 ): Promise<RenderData> {
@@ -83,7 +73,7 @@ async function getCompareData(originalUrl: string, cache: InMemoryCache) {
       ttl: 5 * 60,
       staleWhileRevalidate: 25 * 60,
     },
-    () => getChartData(initialState, allProjects),
+    () => getPrefetchedChartData(initialState, allProjects),
   )
 
   return {
@@ -93,7 +83,7 @@ async function getCompareData(originalUrl: string, cache: InMemoryCache) {
   }
 }
 
-async function getChartData(
+async function getPrefetchedChartData(
   initialState: CompareChartState,
   allProjects: CompareProjectEntry[],
 ) {

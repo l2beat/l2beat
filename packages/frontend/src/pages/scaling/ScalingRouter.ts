@@ -67,22 +67,13 @@ export function createScalingRouter(
   })
 
   if (env.FEATURE_FLAG_COMPARE_PROJECTS) {
-    router.get(
-      '/scaling/compare',
-      validateRoute({
-        query: v.object({
-          metric: v.string().optional(),
-          projects: v.string().optional(),
-          range: v.string().optional(),
-          scale: v.string().optional(),
-        }),
-      }),
-      async (req, res) => {
-        const data = await getScalingCompareData(req, manifest, cache)
-        const html = await render(data, req.originalUrl)
-        res.status(200).send(html)
-      },
-    )
+    // No validateRoute: the compare page parses and sanitizes its query
+    // params itself (unknown values fall back to defaults, never 400).
+    router.get('/scaling/compare', async (req, res) => {
+      const data = await getScalingCompareData(req, manifest, cache)
+      const html = await render(data, req.originalUrl)
+      res.status(200).send(html)
+    })
   }
 
   router.get(

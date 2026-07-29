@@ -6,7 +6,6 @@ export const COMPARE_METRICS: Record<CompareMetricId, CompareMetric> = {
   tvs: {
     id: 'tvs',
     label: 'Value Secured',
-    unit: 'usd',
     Chart: TvsCompareChart,
   },
 }
