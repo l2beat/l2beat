@@ -1242,6 +1242,13 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "name": "ArbitrumBlobstream",
+      "address": "arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "blobstream"
+    },
+    {
       "address": "arb1:0xa8973BDEf20fe4112C920582938EF2F022C911f5",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2262,7 +2269,7 @@
     "orbitstack/Inbox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProofEntry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProver0": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "orbitstack/OneStepProverHostIo_Celestia": "0xdfb89dfaf2aa0cc0cb0a1be0072f20b1716aa3be62152610175c896630a839de",
+    "orbitstack/OneStepProverHostIo_Celestia": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProverMath": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProverMemory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/Outbox": "0x8dbaaf653890815197f4c39ef9d1000a8dfc0338ef34b273788a6d2087d4cfec",
@@ -2273,5 +2280,5 @@
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "arbitrum": 478620683 },
-  "permissionsConfigHash": "0x779c3a541428aa7fbd215463f24ed716929749c436006d36ed1d1bdcf245ae3b"
+  "permissionsConfigHash": "0x234b5c2a07e193274b5292b7dc88be77821b2376510c91b09583180d6ed2ece4"
 }
