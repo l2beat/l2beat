@@ -12,7 +12,7 @@ const DASHBOARD_PATH = '/status/discovery'
 
 export interface DashboardDeployment {
   commitSha?: string
-  deployedAt: string
+  startedAt: string
 }
 
 interface DashboardPageProps {
@@ -123,8 +123,8 @@ function DashboardPage({
       }}
     >
       <span>
-        Deployed{' '}
-        <time dateTime={deployment.deployedAt}>{deployment.deployedAt}</time>
+        Running since{' '}
+        <time dateTime={deployment.startedAt}>{deployment.startedAt}</time>
       </span>
       {deployment.commitSha && (
         <span>
