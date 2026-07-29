@@ -1,8 +1,8 @@
 {
   "name": "sophon",
   "timestamp": 1782815274,
-  "configHash": "0x4d16a21ff7e4021715f225508051def402ceca12ad696dbe75481bf1e21ca9d2",
-  "sharedModules": ["shared-sp1", "vector"],
+  "configHash": "0x2e2f3f5dfadfa31f2e34581e8239c688200612245b4fd903afbb48ba2248e555",
+  "sharedModules": ["shared-sp1"],
   "entries": [
     {
       "name": "SophonTransactionFilterer",
