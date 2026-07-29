@@ -27,7 +27,7 @@ Note that (TODO: )
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import { BinaryReader } from '../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
-import { getBestEffortBridgeTypeFromPartialSupplyAction } from './partialSupplyActionBridgeType'
+import { getBestEffortBridgeTypeFromPartialMintInfo } from './partialMintInfoBridgeType'
 import {
   createEventParser,
   createInteropEventType,
@@ -483,10 +483,13 @@ export class WormholeNTTPlugin implements InteropPluginResyncable {
         srcTokenAddress,
         srcAmount,
         srcWasBurned: sentTransceiverMessage.args.srcWasBurned,
-        bridgeType: getBestEffortBridgeTypeFromPartialSupplyAction({
-          srcWasBurned: sentTransceiverMessage.args.srcWasBurned,
-          dstWasMinted: undefined,
-        }),
+        bridgeType:
+          sentTransceiverMessage.args.srcWasBurned === undefined
+            ? undefined
+            : getBestEffortBridgeTypeFromPartialMintInfo({
+                srcWasBurned: sentTransceiverMessage.args.srcWasBurned,
+                dstWasMinted: undefined,
+              }),
         extraEvents: [logMessagePublished],
       }),
     ]
@@ -513,10 +516,13 @@ export class WormholeNTTPlugin implements InteropPluginResyncable {
         dstTokenAddress: received.args.transferTokenAddress,
         dstAmount: received.args.transferAmount,
         dstWasMinted: received.args.dstWasMinted,
-        bridgeType: getBestEffortBridgeTypeFromPartialSupplyAction({
-          srcWasBurned: undefined,
-          dstWasMinted: received.args.dstWasMinted,
-        }),
+        bridgeType:
+          received.args.dstWasMinted === undefined
+            ? undefined
+            : getBestEffortBridgeTypeFromPartialMintInfo({
+                srcWasBurned: undefined,
+                dstWasMinted: received.args.dstWasMinted,
+              }),
         extraEvents,
       }),
     ]

@@ -4,7 +4,7 @@
  */
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import { findBestTransferLogByExactAmount, findParsedAround } from './logScan'
-import { getBestEffortBridgeTypeFromPartialSupplyAction } from './partialSupplyActionBridgeType'
+import { getBestEffortBridgeTypeFromPartialMintInfo } from './partialMintInfoBridgeType'
 import {
   createEventParser,
   createInteropEventType,
@@ -340,10 +340,13 @@ export class AxelarPlugin implements InteropPlugin {
             ? contractCallApprovedWithMint.args.amount
             : undefined,
           dstWasMinted: contractCallExecuted.args.dstWasMinted,
-          bridgeType: getBestEffortBridgeTypeFromPartialSupplyAction({
-            srcWasBurned: undefined,
-            dstWasMinted: contractCallExecuted.args.dstWasMinted,
-          }),
+          bridgeType:
+            contractCallExecuted.args.dstWasMinted === undefined
+              ? undefined
+              : getBestEffortBridgeTypeFromPartialMintInfo({
+                  srcWasBurned: undefined,
+                  dstWasMinted: contractCallExecuted.args.dstWasMinted,
+                }),
           extraEvents: [contractCallApprovedWithMint],
         }),
       ]
@@ -405,10 +408,13 @@ export class AxelarPlugin implements InteropPlugin {
         srcTokenAddress: contractCallWithToken.args.tokenAddress,
         srcAmount: contractCallWithToken.args.amount,
         srcWasBurned: contractCallWithToken.args.srcWasBurned,
-        bridgeType: getBestEffortBridgeTypeFromPartialSupplyAction({
-          srcWasBurned: contractCallWithToken.args.srcWasBurned,
-          dstWasMinted: undefined,
-        }),
+        bridgeType:
+          contractCallWithToken.args.srcWasBurned === undefined
+            ? undefined
+            : getBestEffortBridgeTypeFromPartialMintInfo({
+                srcWasBurned: contractCallWithToken.args.srcWasBurned,
+                dstWasMinted: undefined,
+              }),
       }),
     ]
   }

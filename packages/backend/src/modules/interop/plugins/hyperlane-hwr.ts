@@ -31,7 +31,7 @@ import {
   findParsedBefore,
   type ParsedTransferLog,
 } from './logScan'
-import { getBestEffortBridgeTypeFromPartialSupplyAction } from './partialSupplyActionBridgeType'
+import { getBestEffortBridgeTypeFromPartialMintInfo } from './partialMintInfoBridgeType'
 import {
   createEventParser,
   createInteropEventType,
@@ -278,10 +278,13 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
             dstTokenAddress: event.args.tokenAddress,
             dstAmount: event.args.amount,
             dstWasMinted: event.args.minted,
-            bridgeType: getBestEffortBridgeTypeFromPartialSupplyAction({
-              srcWasBurned: undefined,
-              dstWasMinted: event.args.minted,
-            }),
+            bridgeType:
+              event.args.minted === undefined
+                ? undefined
+                : getBestEffortBridgeTypeFromPartialMintInfo({
+                    srcWasBurned: undefined,
+                    dstWasMinted: event.args.minted,
+                  }),
           }),
         ]
       }
@@ -351,10 +354,13 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
         srcAmount: event.args.amount,
         srcWasBurned: event.args.burned,
         dstChain,
-        bridgeType: getBestEffortBridgeTypeFromPartialSupplyAction({
-          srcWasBurned: event.args.burned,
-          dstWasMinted: undefined,
-        }),
+        bridgeType:
+          event.args.burned === undefined
+            ? undefined
+            : getBestEffortBridgeTypeFromPartialMintInfo({
+                srcWasBurned: event.args.burned,
+                dstWasMinted: undefined,
+              }),
       }),
     ]
   }

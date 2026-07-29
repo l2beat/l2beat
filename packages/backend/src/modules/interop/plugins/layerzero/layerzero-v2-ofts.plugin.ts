@@ -4,7 +4,7 @@ import {
   findBestTransferLog,
   findBestTransferLogByExactAmount,
 } from '../logScan'
-import { getBestEffortBridgeTypeFromPartialSupplyAction } from '../partialSupplyActionBridgeType'
+import { getBestEffortBridgeTypeFromPartialMintInfo } from '../partialMintInfoBridgeType'
 import {
   createEventParser,
   createInteropEventType,
@@ -285,10 +285,13 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
           dstAmount: oftReceivedPacketDelivered.args.amountReceivedLD,
           dstTokenAddress: oftReceivedPacketDelivered.args.dstTokenAddress,
           dstWasMinted: oftReceivedPacketDelivered.args.minted,
-          bridgeType: getBestEffortBridgeTypeFromPartialSupplyAction({
-            srcWasBurned: undefined,
-            dstWasMinted: oftReceivedPacketDelivered.args.minted,
-          }),
+          bridgeType:
+            oftReceivedPacketDelivered.args.minted === undefined
+              ? undefined
+              : getBestEffortBridgeTypeFromPartialMintInfo({
+                  srcWasBurned: undefined,
+                  dstWasMinted: oftReceivedPacketDelivered.args.minted,
+                }),
           extraEvents: packetDelivered ? [packetDelivered] : undefined,
         }),
       ]
@@ -347,10 +350,13 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
         srcAmount: oftSentPacketSent.args.amountSentLD,
         srcTokenAddress: oftSentPacketSent.args.srcTokenAddress,
         srcWasBurned: oftSentPacketSent.args.burned,
-        bridgeType: getBestEffortBridgeTypeFromPartialSupplyAction({
-          srcWasBurned: oftSentPacketSent.args.burned,
-          dstWasMinted: undefined,
-        }),
+        bridgeType:
+          oftSentPacketSent.args.burned === undefined
+            ? undefined
+            : getBestEffortBridgeTypeFromPartialMintInfo({
+                srcWasBurned: oftSentPacketSent.args.burned,
+                dstWasMinted: undefined,
+              }),
         extraEvents: packetSent ? [packetSent] : undefined,
       }),
     ]

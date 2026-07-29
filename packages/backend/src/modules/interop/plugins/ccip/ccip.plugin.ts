@@ -29,7 +29,7 @@ import {
   findCctpDepositForBurn,
   findCctpReceivedTransfer,
 } from '../cctp/cctp.utils'
-import { getBestEffortBridgeTypeFromPartialSupplyAction } from '../partialSupplyActionBridgeType'
+import { getBestEffortBridgeTypeFromPartialMintInfo } from '../partialMintInfoBridgeType'
 import {
   createEventParser,
   createInteropEventType,
@@ -770,10 +770,13 @@ export class CCIPPlugin implements InteropPluginResyncable {
             dstTokenAddress: dstToken.address,
             dstAmount: dstToken.amount,
             dstWasMinted: dstToken.wasMinted,
-            bridgeType: getBestEffortBridgeTypeFromPartialSupplyAction({
-              srcWasBurned: undefined,
-              dstWasMinted: dstToken.wasMinted,
-            }),
+            bridgeType:
+              dstToken.wasMinted === undefined
+                ? undefined
+                : getBestEffortBridgeTypeFromPartialMintInfo({
+                    srcWasBurned: undefined,
+                    dstWasMinted: dstToken.wasMinted,
+                  }),
           }),
         )
       }
@@ -840,10 +843,13 @@ export class CCIPPlugin implements InteropPluginResyncable {
         srcTokenAddress: delivery.args.token,
         srcAmount: delivery.args.amount,
         srcWasBurned: delivery.args.wasBurned,
-        bridgeType: getBestEffortBridgeTypeFromPartialSupplyAction({
-          srcWasBurned: delivery.args.wasBurned,
-          dstWasMinted: undefined,
-        }),
+        bridgeType:
+          delivery.args.wasBurned === undefined
+            ? undefined
+            : getBestEffortBridgeTypeFromPartialMintInfo({
+                srcWasBurned: delivery.args.wasBurned,
+                dstWasMinted: undefined,
+              }),
       }),
     ]
   }

@@ -4,7 +4,7 @@ import {
   EthereumAddress,
 } from '@l2beat/shared-pure'
 import { findBestTransferLogByExactAmount } from './logScan'
-import { getBestEffortBridgeTypeFromPartialSupplyAction } from './partialSupplyActionBridgeType'
+import { getBestEffortBridgeTypeFromPartialMintInfo } from './partialMintInfoBridgeType'
 import {
   createEventParser,
   createInteropEventType,
@@ -243,10 +243,13 @@ export class CentriFugePlugin implements InteropPluginResyncable {
           dstAmount: executeTransferShares.args.amount,
           dstTokenAddress: executeTransferShares.args.dstTokenAddress,
           dstWasMinted: executeTransferShares.args.dstWasMinted,
-          bridgeType: getBestEffortBridgeTypeFromPartialSupplyAction({
-            srcWasBurned: undefined,
-            dstWasMinted: executeTransferShares.args.dstWasMinted,
-          }),
+          bridgeType:
+            executeTransferShares.args.dstWasMinted === undefined
+              ? undefined
+              : getBestEffortBridgeTypeFromPartialMintInfo({
+                  srcWasBurned: undefined,
+                  dstWasMinted: executeTransferShares.args.dstWasMinted,
+                }),
           extraEvents: [forwardTransferShares],
         }),
       ]
@@ -305,10 +308,13 @@ export class CentriFugePlugin implements InteropPluginResyncable {
         srcAmount: initiateTransferShares.args.amount,
         srcTokenAddress: initiateTransferShares.args.srcTokenAddress,
         srcWasBurned: initiateTransferShares.args.srcWasBurned,
-        bridgeType: getBestEffortBridgeTypeFromPartialSupplyAction({
-          srcWasBurned: initiateTransferShares.args.srcWasBurned,
-          dstWasMinted: undefined,
-        }),
+        bridgeType:
+          initiateTransferShares.args.srcWasBurned === undefined
+            ? undefined
+            : getBestEffortBridgeTypeFromPartialMintInfo({
+                srcWasBurned: initiateTransferShares.args.srcWasBurned,
+                dstWasMinted: undefined,
+              }),
         extraEvents: [forwardTransferShares],
       }),
     ]

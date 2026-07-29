@@ -11,7 +11,7 @@ import {
   ContractCallExecuted,
 } from './axelar'
 import { findBestTransferLogByExactAmount } from './logScan'
-import { getBestEffortBridgeTypeFromPartialSupplyAction } from './partialSupplyActionBridgeType'
+import { getBestEffortBridgeTypeFromPartialMintInfo } from './partialMintInfoBridgeType'
 import {
   createEventParser,
   createInteropEventType,
@@ -181,10 +181,13 @@ export class AxelarITSPlugin implements InteropPlugin {
           dstAmount: interchainTransferReceived.args.amount,
           dstTokenAddress: interchainTransferReceived.args.tokenAddress,
           dstWasMinted: interchainTransferReceived.args.dstWasMinted,
-          bridgeType: getBestEffortBridgeTypeFromPartialSupplyAction({
-            srcWasBurned: undefined,
-            dstWasMinted: interchainTransferReceived.args.dstWasMinted,
-          }),
+          bridgeType:
+            interchainTransferReceived.args.dstWasMinted === undefined
+              ? undefined
+              : getBestEffortBridgeTypeFromPartialMintInfo({
+                  srcWasBurned: undefined,
+                  dstWasMinted: interchainTransferReceived.args.dstWasMinted,
+                }),
           extraEvents: [contractCallApproved, contractCallExecuted],
         }),
       ]
@@ -244,10 +247,13 @@ export class AxelarITSPlugin implements InteropPlugin {
         srcAmount: interchainTransfer.args.amount,
         srcTokenAddress: interchainTransfer.args.tokenAddress,
         srcWasBurned: interchainTransfer.args.srcWasBurned,
-        bridgeType: getBestEffortBridgeTypeFromPartialSupplyAction({
-          srcWasBurned: interchainTransfer.args.srcWasBurned,
-          dstWasMinted: undefined,
-        }),
+        bridgeType:
+          interchainTransfer.args.srcWasBurned === undefined
+            ? undefined
+            : getBestEffortBridgeTypeFromPartialMintInfo({
+                srcWasBurned: interchainTransfer.args.srcWasBurned,
+                dstWasMinted: undefined,
+              }),
       }),
     ]
   }
