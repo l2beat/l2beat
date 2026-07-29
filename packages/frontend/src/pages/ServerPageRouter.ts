@@ -1,4 +1,5 @@
 import express from 'express'
+import { env } from '~/env'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import type { RenderFunction } from '../ssr/types'
 import type { Manifest } from '../utils/Manifest'
@@ -13,6 +14,7 @@ import { createEcosystemsRouter } from './ecosystems/EcosystemsRouter'
 import { createFaqRouter } from './faq/FaqRouter'
 import { createGlossaryRouter } from './glossary/GlossaryRouter'
 import { createGovernanceRouter } from './governance/GovernanceRouter'
+import { createHomeRouter } from './home/HomeRouter'
 import { createInteropRouter } from './interop/InteropRouter'
 import { createMultisigReportRouter } from './multisig-report/MutlisigReportRouter'
 import { createNativeRollupsRouter } from './native-rollups/NativeRollupsRouter'
@@ -40,16 +42,19 @@ export function createServerPageRouter(
     next()
   })
 
-  router.get('/', (_req, res) => {
+  if (!env.CLIENT_SIDE_HOME_PAGE) {
     // Temporary redirect so browsers drop the previously cached 301 before
     // "/" starts serving the home page. no-cache (not no-store) so the
     // response is stored and replaces the old 301 entry, but is revalidated
     // (refetched, since 307 has no validators) on every use.
-    res.set('Cache-Control', 'no-cache')
-    res.redirect(307, '/scaling/summary')
-  })
+    router.get('/', (_req, res) => {
+      res.set('Cache-Control', 'no-cache')
+      res.redirect(307, '/scaling/summary')
+    })
+  }
 
   const routers = [
+    ...(env.CLIENT_SIDE_HOME_PAGE ? [createHomeRouter] : []),
     createScalingRouter,
     createInteropRouter,
     createDataAvailabilityRouter,

@@ -10,6 +10,21 @@ declare global {
   }
 }
 
+/**
+ * Every localStorage key used with this hook must be declared here,
+ * together with the type of the value stored under it.
+ */
+type LocalStorageSchema = {
+  [K in `whats-new-${string}`]: boolean
+} & {
+  [K in `top-banner-${string}-is-hidden`]: boolean
+} & {
+  'has-finished-legend-onboarding': boolean
+  'last-read-changelog-entry-id': string | undefined
+}
+
+export type LocalStorageKey = keyof LocalStorageSchema
+
 type UseLocalStorageOptions<T> = {
   serializer?: (value: T) => string
   deserializer?: (value: string) => T
@@ -18,11 +33,16 @@ type UseLocalStorageOptions<T> = {
 
 const IS_SERVER = typeof window === 'undefined'
 
-export function useLocalStorage<T>(
-  key: string,
-  initialValue: T | (() => T),
-  options: UseLocalStorageOptions<T> = {},
-): [T, Dispatch<SetStateAction<T>>, () => void] {
+export function useLocalStorage<K extends LocalStorageKey>(
+  key: K,
+  initialValue: LocalStorageSchema[K] | (() => LocalStorageSchema[K]),
+  options: UseLocalStorageOptions<LocalStorageSchema[K]> = {},
+): [
+  LocalStorageSchema[K],
+  Dispatch<SetStateAction<LocalStorageSchema[K]>>,
+  () => void,
+] {
+  type T = LocalStorageSchema[K]
   const { initializeWithValue = true } = options
 
   const serializer = useCallback<(value: T) => string>(

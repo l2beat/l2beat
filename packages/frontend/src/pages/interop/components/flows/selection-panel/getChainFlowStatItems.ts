@@ -1,5 +1,6 @@
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
+import { getChainFlowDerivedStats } from '../utils/flowStats'
 
 interface ChainFlowTotals {
   totalVolume: number
@@ -14,9 +15,8 @@ interface ChainFlowTotals {
 export function getChainFlowStatItems(
   chainData: ChainFlowTotals,
 ): { label: string; value: string }[] {
-  const totalTransfers = chainData.transfersIn + chainData.transfersOut
-  const avgTransferValue =
-    totalTransfers > 0 ? chainData.totalVolume / totalTransfers : 0
+  const { totalTransfers, avgTransferValue } =
+    getChainFlowDerivedStats(chainData)
 
   return [
     {

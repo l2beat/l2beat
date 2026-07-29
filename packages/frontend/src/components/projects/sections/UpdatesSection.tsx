@@ -132,7 +132,7 @@ function UpdatesPagination({
   )
 }
 
-function UpdateCard({
+export function UpdateCard({
   update,
   isSelected,
 }: {

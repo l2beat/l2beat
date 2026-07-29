@@ -43,12 +43,14 @@ async function getProjectsChangeReportWithFns() {
   const updateDiffs = await db.updateDiff.getAll()
 
   const byProject = groupBy(updateDiffs, (diff) => diff.projectId)
+  const projects = await ps.getProjects({
+    ids: Object.keys(byProject).map(ProjectId),
+    select: ['discoveryInfo'],
+    where: ['discoveryInfo'],
+  })
+  const projectById = new Map(projects.map((p) => [p.id.toString(), p]))
   for (const [projectId, diffs] of Object.entries(byProject)) {
-    const project = await ps.getProject({
-      id: ProjectId(projectId),
-      select: ['discoveryInfo'],
-      where: ['discoveryInfo'],
-    })
+    const project = projectById.get(projectId)
 
     // NOTE(radomski): We're optimistically saying that diffs are only active
     // if all inputs used to create them are older than the block number we
