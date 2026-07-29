@@ -1,17 +1,16 @@
 import { createDaTrackingId } from '@l2beat/shared'
 import { join } from 'path'
-import type { BaseProject, ProjectDaTrackingConfig } from '../types'
+import { getProjects } from '../../processing/getProjects'
+import type { BaseProject, ProjectDaTrackingConfig } from '../../types'
+import type { Snapshot, SnapshotDomain, SnapshotIdentity } from '../types'
 
-export function getDaTrackingSnapshotPath(): string {
-  return join(__dirname, 'daTrackingIdentities.json')
+export const daTrackingDomain: SnapshotDomain = {
+  name: 'da-tracking',
+  snapshotPath: join(__dirname, 'snapshot.json'),
+  wipeWarning:
+    'On deploy the backend WILL WIPE all DA data indexed under these configurations (ManagedMultiIndexer deletes configurations whose id disappears).',
+  generate: () => generateDaTrackingIdentities(getProjects()),
 }
-
-export interface DaTrackingIdentity {
-  id: string
-  label: string
-}
-
-export type DaTrackingIdentitiesSnapshot = Record<string, DaTrackingIdentity[]>
 
 /**
  * Computes the backend DA indexer configuration identities for every project,
@@ -21,8 +20,8 @@ export type DaTrackingIdentitiesSnapshot = Record<string, DaTrackingIdentity[]>
  */
 export function generateDaTrackingIdentities(
   projects: BaseProject[],
-): DaTrackingIdentitiesSnapshot {
-  const result: Record<string, DaTrackingIdentity[]> = {}
+): Snapshot {
+  const result: Record<string, SnapshotIdentity[]> = {}
 
   const add = (projectId: string, config: ProjectDaTrackingConfig) => {
     const identity = {
