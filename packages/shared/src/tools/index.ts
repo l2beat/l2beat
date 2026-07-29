@@ -1,4 +1,5 @@
 export * from './celestia'
+export * from './createDaTrackingId'
 export * from './createTrackedTxConfigId'
 export * from './DiffHistoryParser'
 export * from './EventTracker'

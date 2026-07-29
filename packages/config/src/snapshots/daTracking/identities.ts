@@ -1,0 +1,75 @@
+import { createDaTrackingId } from '@l2beat/shared'
+import { join } from 'path'
+import { getProjects } from '../../processing/getProjects'
+import type { BaseProject, ProjectDaTrackingConfig } from '../../types'
+import type { Snapshot, SnapshotDomain, SnapshotIdentity } from '../types'
+
+export const daTrackingDomain: SnapshotDomain = {
+  name: 'da-tracking',
+  snapshotPath: join(__dirname, 'snapshot.json'),
+  wipeWarning:
+    'On deploy the backend WILL WIPE all DA data indexed under these configurations (ManagedMultiIndexer deletes configurations whose id disappears).',
+  generate: () => generateDaTrackingIdentities(getProjects()),
+}
+
+/**
+ * Computes the backend DA indexer configuration identities for every project,
+ * including sovereign projects tracked through a DA layer's
+ * sovereignProjectsTrackingConfig. The ids are the exact values the backend
+ * keys indexed DA data by - see createDaTrackingId in @l2beat/shared.
+ */
+export function generateDaTrackingIdentities(
+  projects: BaseProject[],
+): Snapshot {
+  const result: Record<string, SnapshotIdentity[]> = {}
+
+  const add = (projectId: string, config: ProjectDaTrackingConfig) => {
+    // Deliberately no dedup - duplicate ids are a config error (colliding
+    // backend configuration ids) and the guard test must see them.
+    result[projectId] ??= []
+    result[projectId].push({
+      id: createDaTrackingId(config),
+      label: createLabel(config),
+    })
+  }
+
+  for (const project of projects) {
+    for (const config of project.daTrackingConfig ?? []) {
+      add(project.id, config)
+    }
+    for (const sovereign of project.daLayer?.sovereignProjectsTrackingConfig ??
+      []) {
+      for (const config of sovereign.daTrackingConfig) {
+        // The backend attaches the DA layer's project id before hashing
+        // (getBlockDaTrackingSovereignProjects in backend da.ts).
+        add(sovereign.projectId, { daLayer: project.id, ...config })
+      }
+    }
+  }
+
+  return Object.fromEntries(
+    Object.entries(result)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([projectId, identities]) => [
+        projectId,
+        identities.sort((a, b) => a.id.localeCompare(b.id)),
+      ]),
+  )
+}
+
+function createLabel(config: ProjectDaTrackingConfig): string {
+  switch (config.type) {
+    case 'ethereum': {
+      const sequencers = config.sequencers
+        ? ` sequencers[${config.sequencers.length}]`
+        : ''
+      return `ethereum inbox ${config.inbox}${sequencers} since ${config.sinceBlock}`
+    }
+    case 'celestia':
+      return `celestia namespace ${config.namespace} since ${config.sinceBlock}`
+    case 'avail':
+      return `avail appIds [${[...config.appIds].sort((a, b) => a.localeCompare(b)).join(', ')}] since ${config.sinceBlock}`
+    case 'eigen-da':
+      return `eigen-da customer ${config.customerId} since ${config.sinceTimestamp}`
+  }
+}
