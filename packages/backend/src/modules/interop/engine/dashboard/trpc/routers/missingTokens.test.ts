@@ -43,6 +43,13 @@ describe(createMissingTokensRouter.name, () => {
         },
       },
     ])
+    const getCoingeckoAvailability = mockFn().resolvesTo([
+      {
+        chain: 'ethereum',
+        address: normalizedMissingAddress,
+        availability: 'not-found' as const,
+      },
+    ])
     const caller = createCaller(
       {
         interopTransfer: mockObject<Database['interopTransfer']>({
@@ -50,6 +57,7 @@ describe(createMissingTokensRouter.name, () => {
         }),
       },
       query,
+      getCoingeckoAvailability,
     )
 
     const result = await caller.list()
@@ -60,6 +68,9 @@ describe(createMissingTokensRouter.name, () => {
       { chain: 'base', address: normalizedIncompleteAddress },
       { chain: 'arbitrum', address: normalizedReadyAddress },
     ])
+    expect(getCoingeckoAvailability).toHaveBeenCalledWith([
+      { chain: 'ethereum', address: normalizedMissingAddress },
+    ])
     expect(result).toEqual([
       {
         chain: 'ethereum',
@@ -67,6 +78,7 @@ describe(createMissingTokensRouter.name, () => {
         count: 5,
         plugins: ['plugin'],
         tokenDbStatus: 'missing',
+        ingestionStatus: 'no-coingecko',
       },
       {
         chain: 'base',
@@ -177,7 +189,11 @@ describe(createMissingTokensRouter.name, () => {
   })
 })
 
-function createCaller(db: Partial<Database>, query: ReturnType<typeof mockFn>) {
+function createCaller(
+  db: Partial<Database>,
+  query: ReturnType<typeof mockFn>,
+  getCoingeckoAvailability = mockFn().resolvesTo([]),
+) {
   const callerFactory = createCallerFactory(
     createMissingTokensRouter({
       chains: [
@@ -187,6 +203,9 @@ function createCaller(db: Partial<Database>, query: ReturnType<typeof mockFn>) {
       ],
       tokenDbClient: mockObject<TokenDbClient>({
         deployedTokens: { getByChainAndAddress: { query } },
+        tokenIngestionQueue: {
+          getCoingeckoAvailability: { query: getCoingeckoAvailability },
+        },
       } as any),
     }),
   )

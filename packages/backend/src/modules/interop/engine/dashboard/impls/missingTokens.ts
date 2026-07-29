@@ -11,6 +11,7 @@ export type MissingTokenDbStatus =
 
 export interface MissingTokenRecord extends InteropMissingTokenInfo {
   tokenDbStatus: MissingTokenDbStatus
+  ingestionStatus?: 'no-coingecko'
 }
 
 export interface MissingTokenSelection {
@@ -40,7 +41,44 @@ export async function getMissingTokens(
   deps: MissingTokensDeps,
 ): Promise<MissingTokenRecord[]> {
   const rows = await db.interopTransfer.getMissingTokensInfo()
-  return mapMissingTokensWithStatus(rows, deps)
+  const tokens = await mapMissingTokensWithStatus(rows, deps)
+  const addressesToCheck = tokens
+    .filter((token) => token.tokenDbStatus === 'missing')
+    .flatMap((token) => {
+      const address = toTokenIngestionAddress(token, deps)
+      return address ? [address] : []
+    })
+
+  if (addressesToCheck.length === 0) {
+    return tokens
+  }
+
+  const coingeckoAvailability =
+    await deps.tokenDbClient.tokenIngestionQueue.getCoingeckoAvailability.query(
+      addressesToCheck.map((address) => ({
+        chain: address.chain,
+        address: address.tokenAddress,
+      })),
+    )
+  const unavailableAddresses = new Set(
+    coingeckoAvailability
+      .filter((result) => result.availability === 'not-found')
+      .map((result) =>
+        getMissingTokenKey({
+          chain: result.chain,
+          tokenAddress: result.address,
+        }),
+      ),
+  )
+
+  return tokens.map((token) => {
+    const address = toTokenIngestionAddress(token, deps)
+    if (!address || !unavailableAddresses.has(getMissingTokenKey(address))) {
+      return token
+    }
+
+    return { ...token, ingestionStatus: 'no-coingecko' }
+  })
 }
 
 export async function mapMissingTokensWithStatus<
@@ -135,4 +173,23 @@ export async function getMissingTokenStatuses(
   }
 
   return statuses
+}
+
+function toTokenIngestionAddress(
+  token: MissingTokenSelection,
+  deps: MissingTokensDeps,
+) {
+  const deployedTokenId = toDeployedId(
+    deps.chains,
+    token.chain,
+    token.tokenAddress,
+  )
+  if (!deployedTokenId) {
+    return
+  }
+
+  return {
+    chain: DeployedTokenId.chain(deployedTokenId),
+    tokenAddress: DeployedTokenId.address(deployedTokenId),
+  }
 }

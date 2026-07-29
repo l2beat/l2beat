@@ -1,3 +1,4 @@
+import { CircleAlertIcon } from 'lucide-react'
 import type { ReactNode } from 'react'
 import { Badge } from '~/components/core/Badge'
 import {
@@ -6,7 +7,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/Tooltip'
 import { cn } from '~/utils/cn'
-import type { MissingTokenStatus } from './types'
+import type { MissingTokenIngestionStatus, MissingTokenStatus } from './types'
 import { getMissingTokenStatusMeta } from './utils'
 
 interface MissingTokenStatusBadgeProps {
@@ -14,6 +15,7 @@ interface MissingTokenStatusBadgeProps {
   children?: ReactNode
   className?: string
   showTooltip?: boolean
+  ingestionStatus?: MissingTokenIngestionStatus
 }
 
 export function MissingTokenStatusBadge({
@@ -21,6 +23,7 @@ export function MissingTokenStatusBadge({
   children,
   className,
   showTooltip = true,
+  ingestionStatus,
 }: MissingTokenStatusBadgeProps) {
   const meta = getMissingTokenStatusMeta(status)
 
@@ -33,15 +36,33 @@ export function MissingTokenStatusBadge({
     </Badge>
   )
 
-  if (!showTooltip) {
-    return badge
-  }
+  const ingestionIndicator =
+    ingestionStatus === 'no-coingecko' ? (
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <CircleAlertIcon
+            aria-label="Not listed on CoinGecko"
+            className="size-4 shrink-0 text-amber-600 dark:text-amber-400"
+          />
+        </TooltipTrigger>
+        <TooltipContent>
+          Automatic ingestion found no CoinGecko listing for this address.
+        </TooltipContent>
+      </Tooltip>
+    ) : null
+
+  const content = (
+    <span className="inline-flex items-center gap-1">
+      {badge}
+      {ingestionIndicator}
+    </span>
+  )
+
+  if (!showTooltip) return content
 
   return (
     <Tooltip>
-      <TooltipTrigger asChild>
-        <span className="inline-flex">{badge}</span>
-      </TooltipTrigger>
+      <TooltipTrigger asChild>{content}</TooltipTrigger>
       <TooltipContent>{meta.description}</TooltipContent>
     </Tooltip>
   )

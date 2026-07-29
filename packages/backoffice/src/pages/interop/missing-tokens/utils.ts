@@ -1,5 +1,5 @@
 import { Address32 } from '@l2beat/shared-pure'
-import type { MissingTokenStatus } from './types'
+import type { MissingTokenIngestionStatus, MissingTokenStatus } from './types'
 
 export const MISSING_TOKEN_STATUSES: MissingTokenStatus[] = [
   'missing',
@@ -78,7 +78,15 @@ export function getMissingTokenAction(options: {
   chain: string
   address: string
   tokenDbStatus: MissingTokenStatus
+  ingestionStatus?: MissingTokenIngestionStatus
 }) {
+  if (options.ingestionStatus === 'no-coingecko') {
+    return {
+      href: 'https://tokens.l2beat.com/tokens/ingestion-queue',
+      label: 'Not on CoinGecko',
+    }
+  }
+
   switch (options.tokenDbStatus) {
     case 'missing': {
       const href = getAddMissingTokenHref(options)

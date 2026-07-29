@@ -37,6 +37,72 @@ describe('tokenIngestionQueueRouter', () => {
     })
   })
 
+  describe('getCoingeckoAvailability', () => {
+    it('plans each unique address against one transfer index', async () => {
+      const first = { chain: 'ethereum', address: '0x111' }
+      const second = { chain: 'base', address: '0x222' }
+      const transferIndex = { findInvolving: mockFn().returns([]) }
+      const getInteropTransferIndex = mockFn().resolvesTo(transferIndex)
+      const plan = mockFn()
+        .resolvesToOnce({
+          id: 'ing_first',
+          address: first,
+          existingDeployedToken: undefined,
+          steps: [{ kind: 'coingecko-coin-not-found' }],
+          outcome: {
+            kind: 'skip',
+            reason: 'No abstract token could be resolved',
+          },
+        })
+        .resolvesToOnce({
+          id: 'ing_second',
+          address: second,
+          existingDeployedToken: undefined,
+          steps: [
+            {
+              kind: 'resolved-from-transfers',
+              abstractToken: { id: 'USDC', symbol: 'USDC' },
+            },
+          ],
+          outcome: {
+            kind: 'noop',
+            deployedToken: mockObject<DeployedTokenRecord>({}),
+          },
+        })
+
+      const caller = createRouter({
+        tokenDb: mockObject<TokenDatabase>({}),
+        processor: mockObject<TokenIngestionProcessor>({
+          getInteropTransferIndex,
+          plan,
+        }),
+      })
+
+      const result = await caller.getCoingeckoAvailability([
+        first,
+        first,
+        second,
+      ])
+
+      expect(result).toEqual([
+        { ...first, availability: 'not-found' },
+        { ...second, availability: 'not-checked' },
+      ])
+      expect(getInteropTransferIndex).toHaveBeenCalledWith()
+      expect(plan).toHaveBeenCalledTimes(2)
+      expect(plan.calls[0]?.args[0]).toHaveSubset({
+        ...first,
+        state: 'pending',
+      })
+      expect(plan.calls[0]?.args[1]).toEqual(transferIndex)
+      expect(plan.calls[1]?.args[0]).toHaveSubset({
+        ...second,
+        state: 'pending',
+      })
+      expect(plan.calls[1]?.args[1]).toEqual(transferIndex)
+    })
+  })
+
   describe('getPage', () => {
     it('returns one page of queue entries with predicted outcomes', async () => {
       const existingEntry = queueEntry({

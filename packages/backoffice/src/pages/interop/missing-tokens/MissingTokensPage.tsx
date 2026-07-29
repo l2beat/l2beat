@@ -4,6 +4,7 @@ import { toast } from 'sonner'
 import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
 import { ErrorState } from '~/components/ErrorState'
+import { ExternalLink } from '~/components/ExternalLink'
 import { LoadingState } from '~/components/LoadingState'
 import { TablePageLayout } from '~/components/table/TablePageLayout'
 import { useBackendTrpc } from '~/react-query/trpc'
@@ -86,19 +87,29 @@ export function MissingTokensPage() {
       title="Missing tokens"
       description="Transfers missing financial attribution, grouped by chain and address and cross-checked against TokenDB."
       actions={
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => void refetchAll()}
-          disabled={isMissingTokensFetching || isChainsFetching}
-        >
-          <RefreshCwIcon
-            className={
-              isMissingTokensFetching || isChainsFetching ? 'animate-spin' : ''
-            }
-          />
-          Refresh
-        </Button>
+        <>
+          <ExternalLink
+            href="https://tokens.l2beat.com/tokens/ingestion-queue"
+            className="text-xs"
+          >
+            Ingestion queue
+          </ExternalLink>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => void refetchAll()}
+            disabled={isMissingTokensFetching || isChainsFetching}
+          >
+            <RefreshCwIcon
+              className={
+                isMissingTokensFetching || isChainsFetching
+                  ? 'animate-spin'
+                  : ''
+              }
+            />
+            Refresh
+          </Button>
+        </>
       }
       summary={
         <>
