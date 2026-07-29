@@ -27,13 +27,11 @@ describe(InteropFinancialsLoop.name, () => {
             dstChain: 'arbitrum',
           },
         ]),
-        updateFinancials: mockFn().resolvesTo(undefined),
+        updateManyFinancials: mockFn().resolvesTo(undefined),
       })
-      const transaction = mockFn(async (fn) => await fn())
       const db = mockObject<Database>({
         interopRecentPrices,
         interopTransfer,
-        transaction,
       })
       const tokenDb = mockObject<TokenDbClient>({
         deployedTokens: {
@@ -50,18 +48,23 @@ describe(InteropFinancialsLoop.name, () => {
 
       await service.run()
 
-      expect(interopTransfer.updateFinancials).toHaveBeenCalledWith('msg1', {
-        srcAbstractTokenId: null,
-        srcSymbol: null,
-        srcPrice: null,
-        srcAmount: null,
-        srcValueUsd: null,
-        dstAbstractTokenId: null,
-        dstSymbol: null,
-        dstPrice: null,
-        dstAmount: null,
-        dstValueUsd: null,
-      })
+      expect(interopTransfer.updateManyFinancials).toHaveBeenCalledWith([
+        {
+          id: 'msg1',
+          update: {
+            srcAbstractTokenId: null,
+            srcSymbol: null,
+            srcPrice: null,
+            srcAmount: null,
+            srcValueUsd: null,
+            dstAbstractTokenId: null,
+            dstSymbol: null,
+            dstPrice: null,
+            dstAmount: null,
+            dstValueUsd: null,
+          },
+        },
+      ])
     })
 
     it('skips when unprocessed length === 0', async () => {
@@ -335,8 +338,7 @@ describe(InteropFinancialsLoop.name, () => {
       })
 
       const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
-        hasAnyPrices: mockFn().resolvesTo(true),
-        getClosestPrices: mockFn().resolvesTo(new Map([['token', 2]])),
+        getClosestPricesAtOrBefore: mockPrices(new Map([['token', 2]])),
       })
       const interopTransfer = mockObject<Database['interopTransfer']>({
         getUnprocessed: mockFn()
