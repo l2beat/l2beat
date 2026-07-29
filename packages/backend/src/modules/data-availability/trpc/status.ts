@@ -109,8 +109,9 @@ function getConfigDetails(
       if (config.sequencers && config.sequencers.length > 0) {
         parts.push(`sequencers: ${config.sequencers.join(', ')}`)
       }
-      if (config.topics && config.topics.length > 0) {
-        parts.push(`topics: ${config.topics.join(', ')}`)
+      if (config.event) {
+        parts.push(`topics: ${config.event.topics.join(', ')}`)
+        parts.push(`emitters: ${config.event.emitters?.join(', ') ?? 'any'}`)
       }
       return parts.join('; ')
     }

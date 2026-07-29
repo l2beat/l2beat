@@ -16,6 +16,7 @@ describeDatabase(BlobsRepository.name, (db) => {
       from: '0x123',
       to: '0x456',
       topics: ['0xabc', '0xdef'],
+      logs: [{ emitter: '0x789', topics: ['0xabc', '0xdef'] }],
       size: BigInt(1000),
     },
     {
@@ -26,6 +27,7 @@ describeDatabase(BlobsRepository.name, (db) => {
       from: '0x789',
       to: null,
       topics: null,
+      logs: null,
       size: BigInt(2000),
     },
     {
@@ -36,6 +38,7 @@ describeDatabase(BlobsRepository.name, (db) => {
       from: '0xabc',
       to: '0xdef',
       topics: ['0x123'],
+      logs: null,
       size: BigInt(3000),
     },
   ]
@@ -57,6 +60,7 @@ describeDatabase(BlobsRepository.name, (db) => {
           from: '0x111',
           to: '0x222',
           topics: ['0x333'],
+          logs: [{ emitter: '0x444', topics: ['0x333'] }],
           size: BigInt(4000),
         },
         {
@@ -67,6 +71,7 @@ describeDatabase(BlobsRepository.name, (db) => {
           from: '0x444',
           to: null,
           topics: null,
+          logs: null,
           size: BigInt(5000),
         },
       ]
@@ -234,6 +239,7 @@ function blob(
     from: overrides.from ?? '0x0',
     to: overrides.to ?? null,
     topics: overrides.topics ?? null,
+    logs: overrides.logs ?? null,
     size: overrides.size ?? BigInt(100),
   }
 }

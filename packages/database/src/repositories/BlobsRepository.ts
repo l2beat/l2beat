@@ -1,3 +1,4 @@
+import type { EthereumBlobLog } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import { sql } from 'kysely'
@@ -12,6 +13,7 @@ export interface BlobRecord {
   from: string
   to: string | null
   topics: string[] | null
+  logs: EthereumBlobLog[] | null
   size: bigint | null
 }
 
@@ -30,6 +32,7 @@ export function toRecord(row: Selectable<Blob>): BlobRecord {
     from: row.from,
     to: row.to ?? null,
     topics: row.topics ? JSON.parse(row.topics) : null,
+    logs: row.logs as EthereumBlobLog[] | null,
     size: row.size ? BigInt(row.size) : null,
   }
 }
@@ -42,6 +45,7 @@ export function toRow(record: Omit<BlobRecord, 'id'>): Insertable<Blob> {
     from: record.from,
     to: record.to ?? null,
     topics: record.topics ? JSON.stringify(record.topics) : null,
+    logs: record.logs !== null ? JSON.stringify(record.logs) : null,
     size: record.size ? record.size.toString() : null,
   }
 }

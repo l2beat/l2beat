@@ -11,13 +11,16 @@ export class BlobService {
         blob.type === 'ethereum',
         'Only ethereum blobs are supported in BlobService',
       )
+
       return {
         blockNumber: blob.blockNumber,
         timestamp: blob.blockTimestamp,
         daLayer: blob.daLayer,
         from: blob.sequencer,
         to: blob.inbox,
-        topics: blob.topics ?? null,
+        // Keep topics for old readers during rolling deploys and rollbacks.
+        topics: blob.topics,
+        logs: blob.logs,
         size: null, // size is constant for Ethereum blobs
       }
     })
@@ -45,7 +48,8 @@ export class BlobService {
       size: ETHEREUM_BLOB_SIZE_BYTES,
       inbox: record.to ?? '',
       sequencer: record.from,
-      topics: record.topics ?? [],
+      topics: record.topics ?? record.logs?.flatMap((log) => log.topics) ?? [],
+      logs: record.logs,
     }))
   }
 

@@ -3,7 +3,6 @@ import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
 import type { BeaconChainClient, RpcClient } from '../../clients'
 import { EthereumDaProvider } from './EthereumDaProvider'
-import type { EthereumBlob } from './types'
 
 describe(EthereumDaProvider.name, () => {
   describe(EthereumDaProvider.prototype.getBlobs.name, () => {
@@ -55,20 +54,22 @@ describe(EthereumDaProvider.name, () => {
           inbox: '0xto1',
           sequencer: '0xfrom1',
           topics: ['topic1-1'],
+          logs: [{ emitter: 'inbox1', topics: ['topic1-1'] }],
           blockTimestamp: UnixTime.fromDate(mockDate),
           blockNumber: 1,
           size: 131072n,
-        } as EthereumBlob,
+        },
         {
           type: 'ethereum',
           daLayer: 'ethereum',
           inbox: '0xto1',
           sequencer: '0xfrom1',
           topics: ['topic1-1'],
+          logs: [{ emitter: 'inbox1', topics: ['topic1-1'] }],
           blockTimestamp: UnixTime.fromDate(mockDate),
           blockNumber: 1,
           size: 131072n,
-        } as EthereumBlob,
+        },
       ])
     })
   })

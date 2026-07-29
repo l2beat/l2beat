@@ -26,6 +26,7 @@ describe(BlobIndexer.name, () => {
           inbox: '0x123',
           sequencer: '0x456',
           topics: ['0xabc', '0xdef'],
+          logs: [{ emitter: '0x789', topics: ['0xabc', '0xdef'] }],
         },
       ]
 

@@ -73,6 +73,10 @@ export class EthereumDaProvider implements DaBlobProvider {
 
       const txLogs = logs.filter((l) => l.transactionHash === tx.hash)
       const topics = txLogs.flatMap((log) => log.topics)
+      const blobLogs = txLogs.map((log) => ({
+        emitter: log.address,
+        topics: log.topics,
+      }))
 
       tx.blobVersionedHashes.forEach(() =>
         blobs.push({
@@ -84,6 +88,7 @@ export class EthereumDaProvider implements DaBlobProvider {
           inbox: tx.to ?? '',
           sequencer: tx.from,
           topics,
+          logs: blobLogs,
         }),
       )
     }

@@ -356,8 +356,13 @@ function createDaTrackingId(config: ProjectDaTrackingConfig): string {
       if (config.sequencers) {
         input.push(...config.sequencers.sort((a, b) => a.localeCompare(b)))
       }
-      if (config.topics) {
-        input.push(...config.topics.sort((a, b) => a.localeCompare(b)))
+      if (config.event) {
+        input.push(...config.event.topics.sort((a, b) => a.localeCompare(b)))
+        if (config.event.emitters !== null) {
+          input.push(
+            ...config.event.emitters.sort((a, b) => a.localeCompare(b)),
+          )
+        }
       }
       break
     case 'celestia':

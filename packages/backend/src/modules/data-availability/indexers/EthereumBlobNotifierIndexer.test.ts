@@ -210,7 +210,7 @@ function config(
     daLayer: 'ethereum' as EthereumDaTrackingConfig['daLayer'],
     inbox: overrides.inbox,
     sequencers: overrides.sequencers,
-    topics: overrides.topics,
+    event: overrides.event,
     sinceBlock: overrides.sinceBlock ?? 0,
     untilBlock: overrides.untilBlock,
   }

@@ -79,6 +79,7 @@ describe('getProjects', () => {
         typeof value === 'boolean' ||
         typeof value === 'number' ||
         typeof value === 'string' ||
+        value === null ||
         value === undefined
       ) {
         return undefined

@@ -17,6 +17,7 @@ describe(BlobService.name, () => {
           inbox: '0x123',
           sequencer: '0x456',
           topics: ['0xabc', '0xdef'],
+          logs: [{ emitter: '0x789', topics: ['0xabc', '0xdef'] }],
         },
       ]
 
@@ -38,7 +39,8 @@ describe(BlobService.name, () => {
           daLayer: blob.daLayer,
           from: blob.sequencer,
           to: blob.inbox,
-          topics: blob.topics ?? null,
+          topics: blob.topics,
+          logs: blob.logs,
           size: null,
         })),
       )
@@ -56,6 +58,18 @@ describe(BlobService.name, () => {
           from: '0x123',
           to: '0x456',
           topics: ['0xabc', '0xdef'],
+          logs: [{ emitter: '0x789', topics: ['0xabc', '0xdef'] }],
+          size: null,
+        },
+        {
+          id: 2,
+          blockNumber: 99,
+          timestamp: 99_000,
+          daLayer: 'ethereum',
+          from: '0xabc',
+          to: '0xdef',
+          topics: ['0xlegacy'],
+          logs: null,
           size: null,
         },
       ]
@@ -71,18 +85,30 @@ describe(BlobService.name, () => {
       const blobService = new BlobService(mockDb)
       const blobs = await blobService.get('ethereum', 1, 100)
 
-      expect(blobs).toEqualUnsorted(
-        records.map((record) => ({
+      expect(blobs).toEqualUnsorted([
+        {
           type: 'ethereum',
-          daLayer: record.daLayer,
-          blockTimestamp: record.timestamp,
-          blockNumber: record.blockNumber,
+          daLayer: 'ethereum',
+          blockTimestamp: 100_000,
+          blockNumber: 100,
           size: ETHEREUM_BLOB_SIZE_BYTES,
-          inbox: record.to ?? '',
-          sequencer: record.from,
-          topics: record.topics ?? [],
-        })),
-      )
+          inbox: '0x456',
+          sequencer: '0x123',
+          topics: ['0xabc', '0xdef'],
+          logs: [{ emitter: '0x789', topics: ['0xabc', '0xdef'] }],
+        },
+        {
+          type: 'ethereum',
+          daLayer: 'ethereum',
+          blockTimestamp: 99_000,
+          blockNumber: 99,
+          size: ETHEREUM_BLOB_SIZE_BYTES,
+          inbox: '0xdef',
+          sequencer: '0xabc',
+          topics: ['0xlegacy'],
+          logs: null,
+        },
+      ])
 
       expect(mockBlobRepository.getByBlockRangeInclusive).toHaveBeenCalledWith(
         'ethereum',

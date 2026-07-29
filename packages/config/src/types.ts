@@ -1184,7 +1184,11 @@ export interface EthereumDaTrackingConfig {
   daLayer: ProjectId
   inbox: string
   sequencers?: string[]
-  topics?: string[]
+  event?: {
+    topics: [string, ...string[]]
+    /** Null explicitly matches logs from any emitter. */
+    emitters: [string, ...string[]] | null
+  }
   sinceBlock: number
   untilBlock?: number
 }

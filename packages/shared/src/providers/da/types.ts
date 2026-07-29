@@ -1,5 +1,10 @@
 import type { UnixTime } from '@l2beat/shared-pure'
 
+export interface EthereumBlobLog {
+  emitter: string
+  topics: string[]
+}
+
 export interface DaBlobBase {
   daLayer: string
   blockTimestamp: UnixTime
@@ -12,6 +17,8 @@ export interface EthereumBlob extends DaBlobBase {
   inbox: string
   sequencer: string
   topics: string[]
+  /** Null for cache rows written before logs were persisted. */
+  logs: EthereumBlobLog[] | null
 }
 
 export interface AvailBlob extends DaBlobBase {

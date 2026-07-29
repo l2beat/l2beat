@@ -126,6 +126,54 @@ describe(DaIndexer.name, () => {
       expect(safeHeight).toEqual(150)
     })
 
+    it('fetches from provider when emitter filtering needs logs missing from cache', async () => {
+      const configurations: BlockDaIndexedConfig[] = [
+        {
+          ...config('project-a'),
+          event: {
+            topics: ['topic'],
+            emitters: [EthereumAddress.random()],
+          },
+        },
+      ]
+      const cachedBlobs = [blob(100, 100_000)]
+      const providerBlobs: DaBlob[] = [
+        {
+          daLayer: DA_LAYER,
+          blockTimestamp: UnixTime(100),
+          blockNumber: 1,
+          size: 100_000n,
+          type: 'ethereum',
+          inbox: '',
+          sequencer: '',
+          topics: ['0x1234'],
+          logs: [{ emitter: EthereumAddress.random(), topics: ['0x1234'] }],
+        },
+      ]
+
+      const { indexer, daService, daProvider, blobService } = mockIndexer({
+        configurations,
+        blobs: providerBlobs,
+        cachedBlobs,
+        useBlobService: true,
+      })
+
+      const updateCallback = await indexer.multiUpdate(
+        100,
+        200,
+        toIndexerConfigurations(configurations),
+      )
+      await updateCallback()
+
+      expect(blobService!.get).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 200)
+      expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 200)
+      expect(daService.generateRecords).toHaveBeenOnlyCalledWith(
+        providerBlobs,
+        [],
+        configurations,
+      )
+    })
+
     describe('handles batch size', () => {
       it('from + batchSize > to', async () => {
         const { indexer, daProvider } = mockIndexer({
@@ -211,6 +259,7 @@ function mockIndexer($: {
   batchSize?: number
   indexerService?: IndexerService
   blobs?: DaBlob[]
+  cachedBlobs?: DaBlob[]
   previousRecords?: DataAvailabilityRecord[]
   generatedRecords?: DataAvailabilityRecord[]
   useBlobService?: boolean
@@ -240,7 +289,7 @@ function mockIndexer($: {
 
   const blobService = $.useBlobService
     ? mockObject<BlobService>({
-        get: mockFn().resolvesTo($.blobs ?? []), // Empty response
+        get: mockFn().resolvesTo($.cachedBlobs ?? $.blobs ?? []),
       })
     : undefined
 
@@ -277,7 +326,10 @@ function mockIndexer($: {
   }
 }
 
-function config(project: string, inbox?: string): BlockDaIndexedConfig {
+function config(
+  project: string,
+  inbox?: string,
+): Extract<BlockDaIndexedConfig, { type: 'ethereum' }> {
   return {
     type: 'ethereum',
     configurationId: createId(project),
@@ -286,7 +338,12 @@ function config(project: string, inbox?: string): BlockDaIndexedConfig {
     inbox: inbox ?? EthereumAddress.random(),
     sequencers: [],
     sinceBlock: 1,
-    topics: inbox ? ['topic'] : [],
+    event: inbox
+      ? {
+          topics: ['topic'],
+          emitters: null,
+        }
+      : undefined,
   }
 }
 
@@ -300,6 +357,7 @@ function blob(timestamp: number, size: number): DaBlob {
     inbox: '',
     sequencer: '',
     topics: [],
+    logs: null,
   }
 }
 

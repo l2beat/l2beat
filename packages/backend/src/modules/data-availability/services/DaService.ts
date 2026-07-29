@@ -4,7 +4,12 @@ import type {
   EthereumDaTrackingConfig,
 } from '@l2beat/config'
 import type { DataAvailabilityRecord } from '@l2beat/database'
-import type { AvailBlob, CelestiaBlob, DaBlob } from '@l2beat/shared'
+import type {
+  AvailBlob,
+  CelestiaBlob,
+  DaBlob,
+  EthereumBlobLog,
+} from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { BlockDaIndexedConfig } from '../../../config/Config'
 
@@ -115,15 +120,36 @@ export class DaService {
 }
 
 export function matchEthereumProject(
-  blob: { inbox: string; sequencer: string; topics: string[] },
+  blob: {
+    inbox: string
+    sequencer: string
+    topics: string[]
+    logs: EthereumBlobLog[] | null
+  },
   config: EthereumDaTrackingConfig,
 ) {
-  if (config.topics) {
-    const hasTopicMatch = config.topics.some((topic) =>
-      blob.topics.includes(topic.toLowerCase()),
-    )
+  const event = config.event
+  if (event) {
+    const wantedTopics = event.topics.map((topic) => topic.toLowerCase())
+    const emitters = event.emitters
 
-    if (hasTopicMatch) {
+    const hasEventMatch =
+      emitters === null
+        ? blob.topics.some((topic) =>
+            wantedTopics.includes(topic.toLowerCase()),
+          )
+        : blob.logs?.some(
+            (log) =>
+              emitters.some(
+                (emitter) =>
+                  emitter.toLowerCase() === log.emitter.toLowerCase(),
+              ) &&
+              log.topics.some((topic) =>
+                wantedTopics.includes(topic.toLowerCase()),
+              ),
+          )
+
+    if (hasEventMatch) {
       return true
     }
   }

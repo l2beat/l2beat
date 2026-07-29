@@ -341,6 +341,7 @@ model Blob {
   from        String   @db.VarChar(255)
   to          String?  @db.VarChar(255)
   topics      String?
+  logs        Json?
   size        BigInt?
 
   @@index([blockNumber])
