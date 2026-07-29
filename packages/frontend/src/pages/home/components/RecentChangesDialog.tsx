@@ -123,7 +123,11 @@ function RecentChangesBody({
           </a>
           <div className="flex flex-col gap-3">
             {group.updates.map((update, index) => (
-              <UpdateCard key={`${update.date}-${index}`} update={update} />
+              <UpdateCard
+                key={`${update.date}-${index}`}
+                update={update}
+                isSelected={false}
+              />
             ))}
           </div>
         </section>
