@@ -2,8 +2,13 @@ import { readFileSync } from 'fs'
 import { SNAPSHOT_DOMAINS } from './registry'
 import type { Snapshot } from './types'
 
-const REGENERATE_HINT =
-  "If this change is intentional, run 'pnpm snapshots:generate' in packages/config and commit the updated snapshot - the snapshot diff is the explicit sign-off."
+const REMOVAL_HINT =
+  "This error must be addressed by a human: verify on-chain that the removal is intentional and the data loss acceptable, then run 'pnpm snapshots:generate' in packages/config and commit the updated snapshot as the explicit sign-off." +
+  "\nIf you're an AI, don't address this error yourself - pass it over to a human."
+
+const ADDITION_HINT =
+  'This is usually not a problem - it means a new data tracking configuration was added for this project (or an existing one was re-keyed; if this error appears together with a "disappeared" error for the same project, resolve that one first).' +
+  "\nTo register the new identities, run 'pnpm snapshots:generate' in packages/config and commit the updated snapshot."
 
 for (const domain of SNAPSHOT_DOMAINS) {
   describe(`${domain.name} identities`, () => {
@@ -23,7 +28,7 @@ for (const domain of SNAPSHOT_DOMAINS) {
             throw new Error(
               `${domain.name} identities disappeared for ${projectId}:\n` +
                 missing.map((e) => `- ${e.id} (${e.label})`).join('\n') +
-                `\n${domain.wipeWarning}\n${REGENERATE_HINT}`,
+                `\n${domain.wipeWarning}\n${REMOVAL_HINT}`,
             )
           }
         })
@@ -39,9 +44,9 @@ for (const domain of SNAPSHOT_DOMAINS) {
           const unknown = identities.filter((e) => !snapshotIds.has(e.id))
           if (unknown.length > 0) {
             throw new Error(
-              `${domain.name} identities not present in the snapshot for ${projectId}:\n` +
+              `New ${domain.name} identities are not yet in the snapshot for ${projectId}:\n` +
                 unknown.map((e) => `- ${e.id} (${e.label})`).join('\n') +
-                `\n${REGENERATE_HINT}`,
+                `\n${ADDITION_HINT}`,
             )
           }
         })
