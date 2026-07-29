@@ -10,6 +10,12 @@ export interface InteropRecentPricesRecord {
   priceUsd: number
 }
 
+export interface InteropRecentPriceRequest {
+  requestId: number
+  coingeckoId: string
+  timestamp: UnixTime
+}
+
 export function toRecord(
   row: Selectable<InteropRecentPrices>,
 ): InteropRecentPricesRecord {
@@ -41,49 +47,47 @@ export class InteropRecentPricesRepository extends BaseRepository {
     return rows.length
   }
 
-  async hasAnyPrices(): Promise<boolean> {
-    const row = await this.db
-      .selectFrom('InteropRecentPrices')
-      .selectAll()
-      .limit(1)
-      .executeTakeFirst()
-    return row !== undefined
-  }
-
-  async getClosestPrices(
-    coingeckoIds: string[],
-    timestamp: UnixTime,
+  async getClosestPricesAtOrBefore(
+    requests: InteropRecentPriceRequest[],
     errorMargin: UnixTime,
-  ): Promise<Map<string, number | undefined>> {
-    if (coingeckoIds.length === 0) {
-      return new Map()
+  ): Promise<Map<number, number | undefined>> {
+    const result = new Map<number, number | undefined>()
+    if (requests.length === 0) {
+      return result
     }
 
-    const targetTimestamp = UnixTime.toDate(timestamp)
-    const fromTime = UnixTime.toDate(timestamp - errorMargin)
-    const toTime = UnixTime.toDate(timestamp + errorMargin)
+    await this.batch(requests, 10_000, async (batch) => {
+      const values = sql.join(
+        batch.map(
+          (request) =>
+            sql`(${request.requestId}::integer, ${request.coingeckoId}::varchar, ${UnixTime.toDate(request.timestamp)}::timestamp)`,
+        ),
+      )
 
-    const rows = await this.db
-      .selectFrom('InteropRecentPrices')
-      .select([
-        'coingeckoId',
-        'priceUsd',
-        sql<string>`row_number() over (
-          partition by "coingeckoId"
-          order by abs(extract(epoch from age(timestamp, ${targetTimestamp})))
-        )`.as('rn'),
-      ])
-      .where('coingeckoId', 'in', coingeckoIds)
-      .where('timestamp', '>=', fromTime)
-      .where('timestamp', '<=', toTime)
-      .execute()
+      const rows = await sql<{
+        requestId: number
+        priceUsd: number | null
+      }>`
+        WITH "Requests" ("requestId", "coingeckoId", "timestamp") AS (
+          VALUES ${values}
+        )
+        SELECT "Requests"."requestId", "Price"."priceUsd"
+        FROM "Requests"
+        LEFT JOIN LATERAL (
+          SELECT "priceUsd"
+          FROM "InteropRecentPrices"
+          WHERE "coingeckoId" = "Requests"."coingeckoId"
+            AND "timestamp" <= "Requests"."timestamp"
+            AND "timestamp" >= "Requests"."timestamp" - ${errorMargin} * INTERVAL '1 second'
+          ORDER BY "timestamp" DESC
+          LIMIT 1
+        ) AS "Price" ON true
+      `.execute(this.db)
 
-    const closestRows = rows.filter((row) => row.rn === '1')
-
-    const result = new Map<string, number | undefined>()
-    for (const row of closestRows) {
-      result.set(row.coingeckoId, row?.priceUsd)
-    }
+      for (const row of rows.rows) {
+        result.set(row.requestId, row.priceUsd ?? undefined)
+      }
+    })
 
     return result
   }
