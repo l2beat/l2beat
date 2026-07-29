@@ -58,7 +58,7 @@ export function InteropSummaryPage({
           interopChains={interopChains}
           initialSelection={initialSelection}
         >
-          <SideNavLayout maxWidth="wide">
+          <SideNavLayout variant="wide">
             <MainPageHeader>Interoperability</MainPageHeader>
             <Content
               interopChains={interopChains}

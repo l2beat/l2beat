@@ -25,7 +25,8 @@ export interface ScalingRiskSequencingEntry extends CommonScalingEntry {
   sequencerCount: TableReadyValue | undefined
   blockProductionAccess: TableReadyValue | undefined
   entryPolicy: TableReadyValue | undefined
-  timing: TableReadyValue | undefined
+  blockTime: TableReadyValue | undefined
+  rotation: TableReadyValue | undefined
   blockProduction: TableReadyValue | undefined
   deterministicCrGadget: TableReadyValue | undefined
   additionalCrGadgets: TableReadyValue | undefined
@@ -154,7 +155,11 @@ function getScalingRiskSequencingEntry(
     sequencerCount: spec.sequencerCount,
     blockProductionAccess: spec.blockProductionAccess,
     entryPolicy: withSecondLine(spec.stakePerValidator, spec.rateLimit),
-    timing: withSecondLine(spec.slotTime, spec.epochTime),
+    blockTime: spec.blockTime,
+    rotation: withSecondLine(
+      spec.proposerRotationTime,
+      spec.committeeRotationTime,
+    ),
     blockProduction: getBlockProduction(sequencing.inclusionDelayChart),
     deterministicCrGadget: spec.deterministicCrGadget,
     additionalCrGadgets: spec.additionalCrGadgets,

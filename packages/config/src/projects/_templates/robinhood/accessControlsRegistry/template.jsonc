@@ -1,0 +1,264 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Shared access-control registry and upgrade beacon for Robinhood Stock Tokens. Its roles apply across every token implementation that points to this registry: they control upgrades, global and per-token pauses, the shared blocklist, issuance, arbitrary holder burns, metadata and UI multipliers.",
+  "ignoreRelatives": ["implementation"],
+  "fields": {
+    "implementation": {
+      "severity": "HIGH",
+      "description": "Implementation used by every beacon proxy pointing to this registry."
+    },
+    "paused": {
+      "severity": "HIGH",
+      "description": "Registry-wide pause. When true, all connected Stock Tokens treat themselves as paused."
+    },
+    "blockedAccounts": {
+      "description": "Addresses in the shared denylist, reconstructed from Blocked and Unblocked events. A blocked sender, receiver, spender or transaction caller cannot use transfers, approvals or permits on any connected token.",
+      "handler": {
+        "type": "event",
+        "select": "account",
+        "add": { "event": "Blocked" },
+        "remove": { "event": "Unblocked" },
+        "ignoreRelative": true
+      }
+    },
+    "accessControl": {
+      "description": "Current admin relationships and membership for every registry and Stock Token role.",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x5ab8bd28475e0dc8d5764e9ce50f85ffe2f14ec40c5b74e45f541485ad510c39": "BEACON_UPGRADER_ROLE",
+          "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a": "PAUSER_ROLE",
+          "0x8f2e0057cd5e35397007bcc8f5418f73dd64cc6e4073a0276563f247c3079037": "BLOCKER_ROLE",
+          "0x5f077d4e72bed5b3b14877559c782788e60c3fbb27bf29d3586097d8fa36bbeb": "TOKEN_DEPLOYER_ROLE",
+          "0xb4e5de7340a2fee2ff9be79f5ec0e8feae4b633bc8cc663711520e08f24984f8": "FACTORY_UPGRADER_ROLE",
+          "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6": "MINTER_ROLE",
+          "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848": "BURNER_ROLE",
+          "0x25e7ebc863fa4efd16243c82323b71f247c0cf439aca64c51b84a74afb738936": "ADMIN_BURNER_ROLE",
+          "0xe95e22ec6dbf4c911d1fae59680a3e9cb71dd35b3a1c697d232e4b01a8ff30a2": "TOKEN_PAUSER_ROLE",
+          "0x7158cf42e4a4f01c5456c8d75cdbd375748d45e9db7e812f5bcd18844122b615": "MULTIPLIER_UPDATER_ROLE",
+          "0x155fc2c2b00b801014447f9d3a1522625740f8e592e4c0b0bb7c5867c150aa11": "ORACLE_PAUSER_ROLE",
+          "0x7f5260842512b02356ff92de24be96e7e1aac2e234d9371b076ac2b4cddda61e": "METADATA_UPDATER_ROLE"
+        }
+      }
+    },
+    "defaultAdmins": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant and revoke every registry and Stock Token role, including the ability to grant these powers to themselves."
+        }
+      ]
+    },
+    "beaconUpgraders": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x5ab8bd28475e0dc8d5764e9ce50f85ffe2f14ec40c5b74e45f541485ad510c39": "BEACON_UPGRADER_ROLE"
+        },
+        "pickRoleMembers": "BEACON_UPGRADER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "replace the implementation used by all Stock Token beacon proxies without a delay."
+        }
+      ]
+    },
+    "globalPausers": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a": "PAUSER_ROLE"
+        },
+        "pickRoleMembers": "PAUSER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause and unpause ordinary operations across all Stock Tokens connected to this registry."
+        }
+      ]
+    },
+    "blockers": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x8f2e0057cd5e35397007bcc8f5418f73dd64cc6e4073a0276563f247c3079037": "BLOCKER_ROLE"
+        },
+        "pickRoleMembers": "BLOCKER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "block and unblock arbitrary addresses across all Stock Tokens, preventing them from sending, receiving, approving, spending or submitting permits."
+        }
+      ]
+    },
+    "tokenDeployers": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x5f077d4e72bed5b3b14877559c782788e60c3fbb27bf29d3586097d8fa36bbeb": "TOKEN_DEPLOYER_ROLE"
+        },
+        "pickRoleMembers": "TOKEN_DEPLOYER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "deploy and initialize new Stock Token beacon proxies with arbitrary product identifiers, names and symbols through the StockFactory."
+        }
+      ]
+    },
+    "factoryUpgraders": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0xb4e5de7340a2fee2ff9be79f5ec0e8feae4b633bc8cc663711520e08f24984f8": "FACTORY_UPGRADER_ROLE"
+        },
+        "pickRoleMembers": "FACTORY_UPGRADER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "upgrade the external StockFactory that deploys and initializes new Stock Tokens."
+        }
+      ]
+    },
+    "minters": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6": "MINTER_ROLE"
+        },
+        "pickRoleMembers": "MINTER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "mint an uncapped amount of any connected Stock Token to any non-blocked address while the token is not paused."
+        }
+      ]
+    },
+    "burners": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848": "BURNER_ROLE"
+        },
+        "pickRoleMembers": "BURNER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "burn arbitrary holders' balances without allowance on any connected Stock Token while neither the caller nor holder is blocked and the token is not paused."
+        }
+      ]
+    },
+    "adminBurners": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x25e7ebc863fa4efd16243c82323b71f247c0cf439aca64c51b84a74afb738936": "ADMIN_BURNER_ROLE"
+        },
+        "pickRoleMembers": "ADMIN_BURNER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "confiscate arbitrary holders' balances without allowance on any connected Stock Token, even when the token is paused or either address is blocked."
+        }
+      ]
+    },
+    "tokenPausers": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0xe95e22ec6dbf4c911d1fae59680a3e9cb71dd35b3a1c697d232e4b01a8ff30a2": "TOKEN_PAUSER_ROLE"
+        },
+        "pickRoleMembers": "TOKEN_PAUSER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause and unpause any individual Stock Token connected to this registry."
+        }
+      ]
+    },
+    "multiplierUpdaters": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x7158cf42e4a4f01c5456c8d75cdbd375748d45e9db7e812f5bcd18844122b615": "MULTIPLIER_UPDATER_ROLE"
+        },
+        "pickRoleMembers": "MULTIPLIER_UPDATER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set or schedule any nonzero UI multiplier for any unpaused Stock Token; standard ERC-20 balances and supply are unaffected."
+        }
+      ]
+    },
+    "oraclePausers": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x155fc2c2b00b801014447f9d3a1522625740f8e592e4c0b0bb7c5867c150aa11": "ORACLE_PAUSER_ROLE"
+        },
+        "pickRoleMembers": "ORACLE_PAUSER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "toggle the oraclePaused flag on any connected Stock Token; the current implementation does not enforce this flag internally."
+        }
+      ]
+    },
+    "metadataUpdaters": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x7f5260842512b02356ff92de24be96e7e1aac2e234d9371b076ac2b4cddda61e": "METADATA_UPDATER_ROLE"
+        },
+        "pickRoleMembers": "METADATA_UPDATER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the name and symbol of any connected Stock Token, which also changes its EIP-712 permit domain."
+        }
+      ]
+    }
+  },
+  "ignoreInWatchMode": ["blockedAccounts"]
+}

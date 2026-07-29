@@ -14,6 +14,17 @@ const discovery = new ProjectDiscovery('optimism')
 const genesisTimestamp = UnixTime(1636665399)
 const chainId = 10
 
+const securityCouncilStats = discovery.getMultisigStats(
+  'Optimism Security Council',
+)
+const proxyAdminOwnerStats = discovery.getMultisigStats(
+  'SuperchainProxyAdminOwner',
+)
+const opMintCapPercent =
+  (discovery.getContractValue<number>('MintManager', 'MINT_CAP') /
+    discovery.getContractValue<number>('MintManager', 'DENOMINATOR')) *
+  100
+
 export const optimism: ScalingProject = opStackL2({
   addedAt: UnixTime(1629331200), // 2021-08-19T00:00:00Z
   additionalBadges: [BADGES.Other.Governance],
@@ -325,6 +336,33 @@ export const optimism: ScalingProject = opStackL2({
   upgradesAndGovernance: {
     content:
       'All contracts are upgradable by the `SuperchainProxyAdmin` which is controlled by a 2/2 multisig composed by the Optimism Foundation and a Security Council. The Guardian role is assigned to the Security Council multisig, with a Safe Module that limits the Optimism Foundation to act through it to stop withdrawals in the whole Superchain or specific individual chains. Each pause automatically expires after 3 months if not extended or unpaused by the Security Council. The Security Council can remove the module if the Foundation becomes malicious. The single Sequencer actor can be modified by the `OpFoundationOperationsSafe` via the `SystemConfig` contract. The SuperchainProxyAdminOwner can recover dispute bonds in case of bugs that would distribute them incorrectly. \n\nAt the moment, for regular upgrades, the DAO signals its intent by voting on upgrade proposals, but has no direct control over the upgrade process.',
+    governanceInfo: {
+      securityCouncil: {
+        Composition: `**${securityCouncilStats}** — Gnosis Safe with cohorts of 7 + 6, 12-month staggered terms. Token-House-elected via Agora with Optimism Foundation eligibility screening (KYC/AML, geographic and organisational diversity).`,
+        'Members public':
+          "**Entities only** — elected entity names are public; 1:1 entity-to-address mapping deliberately not published (Foundation privacy policy). Current Cohort A (Feb 2026 – Feb 2027): Agora, Velodrome, Cyfrin, pablito.eth, Mariano, Uniswap Foundation, Emiliano. Cohort B's initial slate (Feb 2025): L2BEAT, OP Labs PBC, Coinbase Technologies, Test in Prod, Ink Foundation/Kraken, World Foundation.",
+        Charter:
+          '[Security Council Charter v0.1](https://github.com/ethereum-optimism/OPerating-manual/blob/main/Security%20Council%20Charter%20v0.1.md) — defines 75% threshold, emergency response, Token House removal, LivenessModule failsafe (control reverts to Foundation Upgrade Safe if signers drop below 8).',
+        'Can bypass DAO?': `**Yes** — emergency response measures may be taken without specific Governance approval (Charter v0.1). The SC + Foundation Upgrade Safe (${proxyAdminOwnerStats} SuperchainProxyAdminOwner) hold the actual upgrade keys and can execute at any time.`,
+        'DAO can override SC?':
+          "**Veto, plus member removal** — Token House and Citizens' House can veto DAB-approved upgrades during the 7-day veto window (subject to participation thresholds). Token House can remove SC members by simple majority within one voting cycle (≤3 weeks) for Code of Conduct violations. LivenessModule auto-removes signers inactive ≥3 months 8 days; if signer count drops below 8, control reverts to the Foundation Upgrade Safe.",
+      },
+      upgrades: {
+        'Normal upgrade path': `Technical review by the 7-member elected Developer Advisory Board (DAB, 5/7 quorum for approval) → release on Sepolia → **7-day veto window** during which Token House and/or Citizens' House can veto a DAB-approved upgrade or override a DAB rejection if participation thresholds are met (17% with two groups, 14% with three, 11% with four) → if not vetoed, SC + Foundation Upgrade Safe (${proxyAdminOwnerStats} SuperchainProxyAdminOwner) co-sign the L1 transaction → execute. Maintenance upgrades use a shortened path. Live since Aug 1, 2025.`,
+        'Emergency upgrade path': `**SC + Foundation Upgrade Safe (${proxyAdminOwnerStats}), instant** — "may preemptively address actual or anticipated bugs, defects, or stability issues without specific Governance approval" (Charter v0.1). No DAB review, no veto window. Mandatory after-the-fact public retrospective.`,
+        'Exit window': `**None** — upgrades take effect as soon as they are co-signed by the ${proxyAdminOwnerStats} SuperchainProxyAdminOwner, with no onchain delay or prior notice, so users cannot exit ahead of an unwanted upgrade.`,
+      },
+      tokenGovernance: {
+        'Governance token': `\`OP\` — ~4.29B initial supply, up to ${opMintCapPercent}%/yr inflation (cap fixed in the Operating Manual; changes require a 76% Inflation proposal). 1 OP = 1 vote, delegated.`,
+        'Voting venue':
+          "[Agora](https://vote.optimism.io/) for binding on-chain Token House votes. [Snapshot](https://snapshot.org/#/opcollective.eth) for Citizens' House signaling, Protocol Upgrade vetoes, and some Reflection Period votes. Forum stage: [gov.optimism.io](https://gov.optimism.io).",
+        'Proposal threshold':
+          "**No OP minimum** — submission requires explicit approval from 4 of the top-100 delegates on the discussion thread (Operating Manual). Citizens' House analog: 4 Citizens. Foundation-initiated proposals require no approvals. Note: protocol upgrades since Aug 2025 originate from the DAB rather than the Token House.",
+        Quorum:
+          '**30%** for Token House proposals. Veto-window participation thresholds for protocol upgrades: 17% (two groups voting), 14% (three groups), 11% (four groups).',
+        'Execution model': `**DAB-gated approval + ${proxyAdminOwnerStats} Safe signs** — DAB approves, veto window passes, then SC + Foundation Upgrade Safe co-sign the L1 transaction. Token House and Citizens' House signal/veto on-chain via Agora and Snapshot but do not directly trigger the L1 state change. No permissionless \`execute()\`.`,
+      },
+    },
   },
   milestones: [
     {

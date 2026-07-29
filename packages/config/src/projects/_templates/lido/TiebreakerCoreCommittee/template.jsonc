@@ -1,0 +1,29 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Top-level Dual Governance tiebreaker committee. Its members reach quorum to schedule a delayed governance proposal or resume a paused sealable contract when Dual Governance is tied.",
+  "category": "gov",
+  "ignoreMethods": [
+    "getScheduleProposalState",
+    "getSealableResumeNonce",
+    "getSealableResumeState"
+  ],
+  "ignoreInWatchMode": ["getProposalAt", "getProposalsLength"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add or remove committee members, change quorum and voting timelock, or transfer committee ownership."
+        }
+      ]
+    },
+    "getMembers": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "vote to schedule a governance proposal or resume a sealable contract through the Dual Governance tiebreaker."
+        }
+      ]
+    }
+  }
+}

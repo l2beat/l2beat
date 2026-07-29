@@ -1,3 +1,40 @@
+Generated with discovered.json: 0x873a3ff6636d5c6fc3723967a99b3c08750961ec
+
+# Diff at Tue, 21 Jul 2026 08:55:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f20722ea086c21a6e3dedded355fc3e24528daf0 block: 1784020108
+- current timestamp: 1784623944
+
+## Description
+
+Add new privileged resolver.
+
+## Watched changes
+
+```diff
+    contract ResolverAccessToken (eth:0xACCe550000159e70908C0499a1119D04e7039C28) [fusionplus/KycNFT] {
+    +++ description: Resolver Access Token (RES) used by this Fusion+ deployment. A balance of one marks an address as an authorized resolver: after an order's configured allowed time the holder can fill it outside its time-dependent whitelist (paying a fee when enabled), and after the relevant escrow timelocks the holder can execute public withdrawals or source-chain cancellations to the predetermined recipient in exchange for the safety deposit.
++++ description: Latest owner of every token ID, reconstructed from Transfer events. Burned token IDs map to the zero address.
+      values.tokenOwners.1101:
++        "eth:0x9b1303EBf09BC51b7fac376c9E421E8daAe63B82"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784020108 (main branch discovery), not current.
+
+```diff
+    contract ResolverAccessToken (eth:0xACCe550000159e70908C0499a1119D04e7039C28) [fusionplus/KycNFT] {
+    +++ description: Resolver Access Token (RES) used by this Fusion+ deployment. A balance of one marks an address as an authorized resolver: after an order's configured allowed time the holder can fill it outside its time-dependent whitelist (paying a fee when enabled), and after the relevant escrow timelocks the holder can execute public withdrawals or source-chain cancellations to the predetermined recipient in exchange for the safety deposit.
+      fieldMeta.tokenOwners.severity:
+-        "HIGH"
+    }
+```
+
 Generated with discovered.json: 0x23792b0abf8ed7ee59b7a17a80e3de4ee4965259
 
 # Diff at Tue, 14 Jul 2026 10:49:25 GMT:

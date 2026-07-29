@@ -98,16 +98,16 @@ export const stone: BaseProject = {
       {
         // Custom verifier ID: SHA256 hash of the address of the immutable verifier smart contract (GpsStatementVerifier)
         // in hex format '0x...'
-        hash: '0x5ed8957171b466464570ba10b3d5c5adfc54546ba56278129af5ae63a0d4ad22',
-        name: 'Stone verifier 2024_10',
+        hash: '0x243611f51b76871574612cc0f140acb660c684a66b74e37b7547474c6683659a',
+        name: 'GPS statement verifier 2026_13_4',
         sourceLink:
-          'https://etherscan.io/address/0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942#code',
+          'https://etherscan.io/address/0x4956bda1d23F75B988644329c5B06BD1494a72b6#code',
         proofSystem: ZK_CATALOG_TAGS.STARK.Stone,
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(
               'ethereum',
-              '0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942',
+              '0x4956bda1d23F75B988644329c5B06BD1494a72b6',
             ),
             overrideUsedIn: [
               ProjectId('edgex'),
@@ -123,17 +123,33 @@ export const stone: BaseProject = {
         description:
           "Custom verifier ID: SHA256 hash of the address of the immutable verifier smart contract (GpsStatementVerifier) in hex string format '0x...'.",
       },
-      // {
-      //   hash: '0xe12a7131035327b1f54cf3163d124b71da052535e71f64bbd9c2a460ec3a43f0',
-      //   proofSystem: ZK_CATALOG_TAGS.STARK.Stone,
-      //   knownDeployments: [
-      //     'https://etherscan.io/address/0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3',
-      //   ],
-      //   verificationStatus: 'notVerified',
-      //   usedBy: [ProjectId('dydx')],
-      //   description:
-      //     "Custom verifier ID: SHA256 hash of the address of the immutable verifier smart contract (GpsStatementVerifier) in hex string format '0x...'.",
-      // },
+      {
+        hash: '0x5c74473c5450f2d4ad933e8862bd570a5743b88fdf8a8c19bc42d04768b042af',
+        name: 'Stwo GPS statement verifier 2026_13_3',
+        sourceLink:
+          'https://etherscan.io/address/0xE67515a751291445B85b2F176c1eCdf08e86b406#code',
+        proofSystem: ZK_CATALOG_TAGS.STARK.Stwo,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0xE67515a751291445B85b2F176c1eCdf08e86b406',
+            ),
+            // TODO: Remove after the current GPS referral expires on 2026-08-01.
+            overrideUsedIn: [
+              ProjectId('edgex'),
+              ProjectId('myria'),
+              ProjectId('sorare'),
+              ProjectId('brine'),
+            ],
+          },
+        ],
+        verificationStatus: 'successful',
+        verificationSteps:
+          'The immutable Solidity sources are verified on Etherscan and expose every selected CPU verifier, memory-page registry, outer bootloader contract, and bootloader configuration word. Source verification of the Solidity contracts does not by itself reproduce the Cairo programs hidden behind the recursive-verifier allowlist commitment.',
+        description:
+          "This registry remains in Starknet's accepted fact chain only until the current verifier's referral expires. The custom verifier ID is the SHA256 hash of this address in checksummed hex-string format.",
+      },
     ],
   },
 }

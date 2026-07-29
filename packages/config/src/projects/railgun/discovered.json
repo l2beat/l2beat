@@ -1,6 +1,6 @@
 {
   "name": "railgun",
-  "timestamp": 1779461009,
+  "timestamp": 1784543269,
   "configHash": "0x0d8e168a26e195a9995ddaa2d069a981510eba6b8713e6f4f270c5fbb0abaaff",
   "entries": [
     {
@@ -470,7 +470,7 @@
       "template": "railgun/GovernorRewards",
       "sourceHashes": [
         "0x6719d1d65fb919b52e894f249bcbbde8d2fddde75de20893e50e1b96ec608f06",
-        "0x9bf4e7d842e397338e0191cf08fc9478cf3988db823baa64976da77c103fab0d"
+        "0xfe182358adbab091fd4af273d3cd98fe8b507eeb8a230e1b538a26a612d68ee9"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Reward distributor that pulls assets from the Railgun treasury and allocates them to stakers via token voting.",
@@ -487,13 +487,13 @@
       "sinceBlock": 16445969,
       "values": {
         "$admin": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8",
-        "$implementation": "eth:0xaF51CD5f71Ed88D6d1F65b575f1a8Ce3a78eC42b",
+        "$implementation": "eth:0xaC76eB94703b16e704f76ECFFDADF36b6A53ECDB",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "BASIS_POINTS": 10000,
         "DISTRIBUTION_INTERVAL": 1209600,
         "intervalAtTime": [],
-        "intervalBP": 200,
+        "intervalBP": 420,
         "owner": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
         "staking": "eth:0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20",
         "STAKING_DEPLOY_TIME": 1625670240,
@@ -542,7 +542,7 @@
       },
       "implementationNames": {
         "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f": "PausableUpgradableProxy",
-        "eth:0xaF51CD5f71Ed88D6d1F65b575f1a8Ce3a78eC42b": "GovernorRewards"
+        "eth:0xaC76eB94703b16e704f76ECFFDADF36b6A53ECDB": "GovernorRewards"
       },
       "category": { "name": "Governance", "priority": 3 }
     },
@@ -1133,6 +1133,7 @@
         "EXECUTION_END_OFFSET": 1209600,
         "EXECUTION_START_OFFSET": 604800,
         "PROPOSAL_SPONSOR_THRESHOLD": "500000000000000000000000",
+        "proposalCount": 25,
         "QUORUM": "2000000000000000000000000",
         "SPONSOR_LOCKOUT_TIME": 604800,
         "SPONSOR_WINDOW": 2592000,
@@ -1142,6 +1143,7 @@
         "VOTING_YAY_END_OFFSET": 432000
       },
       "fieldMeta": {
+        "proposalCount": { "severity": "HIGH" },
         "DELEGATOR_CONTRACT": {
           "severity": "HIGH",
           "description": "Delegator contract that executes successful proposal actions."
@@ -1292,7 +1294,7 @@
         "name": "Rail",
         "owner": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
         "symbol": "RAIL",
-        "totalSupply": "57500000000000000000000000"
+        "totalSupply": "60000000000000000000000000"
       },
       "fieldMeta": {
         "owner": {
@@ -1792,23 +1794,10 @@
       "function totalPayouts() view returns (uint256)",
       "function treasury() view returns (address)"
     ],
-    "eth:0xAc9f360Ae85469B27aEDdEaFC579Ef2d052aD405": [
-      "constructor(address _railgun, address _wBase)",
-      "error CallFailed(uint256 callIndex, bytes revertReason)",
-      "event CallError(uint256 callIndex, bytes revertReason)",
-      "function getAdaptParams(tuple(tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) proof, bytes32 merkleRoot, bytes32[] nullifiers, bytes32[] commitments, tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) boundParams, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) unshieldPreimage)[] _transactions, tuple(bytes31 random, bool requireSuccess, uint256 minGasLimit, tuple(address to, bytes data, uint256 value)[] calls) _actionData) pure returns (bytes32)",
-      "function multicall(bool _requireSuccess, tuple(address to, bytes data, uint256 value)[] _calls) payable",
-      "function railgun() view returns (address)",
-      "function relay(tuple(tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) proof, bytes32 merkleRoot, bytes32[] nullifiers, bytes32[] commitments, tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) boundParams, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) unshieldPreimage)[] _transactions, tuple(bytes31 random, bool requireSuccess, uint256 minGasLimit, tuple(address to, bytes data, uint256 value)[] calls) _actionData) payable",
-      "function shield(tuple(tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) preimage, tuple(bytes32[3] encryptedBundle, bytes32 shieldKey) ciphertext)[] _shieldRequests)",
-      "function transfer(tuple(tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, address to, uint256 value)[] _transfers)",
-      "function unwrapBase(uint256 _amount)",
-      "function wBase() view returns (address)",
-      "function wrapBase(uint256 _amount)"
-    ],
-    "eth:0xaF51CD5f71Ed88D6d1F65b575f1a8Ce3a78eC42b": [
+    "eth:0xaC76eB94703b16e704f76ECFFDADF36b6A53ECDB": [
       "event Claim(address token, address account, uint256 amount, uint256 startInterval, uint256 endInterval)",
       "event Initialized(uint8 version)",
+      "event IntervalBPChange(uint256 oldIntervalBP, uint256 newIntervalBP)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function BASIS_POINTS() view returns (uint256)",
       "function DISTRIBUTION_INTERVAL() view returns (uint256)",
@@ -1833,7 +1822,7 @@
       "function nextSnapshotPreCalcInterval() view returns (uint256)",
       "function owner() view returns (address)",
       "function precalculatedGlobalSnapshots(uint256) view returns (uint256)",
-      "function prefetchGlobalSnapshots(uint256 _startingInterval, uint256 _endingInterval, uint256[] _hints, address[] _postProcessTokens)",
+      "function prefetchGlobalSnapshots(uint256 _endingInterval, uint256[] _hints, address[] _postProcessTokens)",
       "function removeTokens(address[] _tokens)",
       "function removeVector(uint256 vector)",
       "function renounceOwnership()",
@@ -1843,6 +1832,20 @@
       "function tokens(address) view returns (bool)",
       "function transferOwnership(address newOwner)",
       "function treasury() view returns (address)"
+    ],
+    "eth:0xAc9f360Ae85469B27aEDdEaFC579Ef2d052aD405": [
+      "constructor(address _railgun, address _wBase)",
+      "error CallFailed(uint256 callIndex, bytes revertReason)",
+      "event CallError(uint256 callIndex, bytes revertReason)",
+      "function getAdaptParams(tuple(tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) proof, bytes32 merkleRoot, bytes32[] nullifiers, bytes32[] commitments, tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) boundParams, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) unshieldPreimage)[] _transactions, tuple(bytes31 random, bool requireSuccess, uint256 minGasLimit, tuple(address to, bytes data, uint256 value)[] calls) _actionData) pure returns (bytes32)",
+      "function multicall(bool _requireSuccess, tuple(address to, bytes data, uint256 value)[] _calls) payable",
+      "function railgun() view returns (address)",
+      "function relay(tuple(tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) proof, bytes32 merkleRoot, bytes32[] nullifiers, bytes32[] commitments, tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) boundParams, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) unshieldPreimage)[] _transactions, tuple(bytes31 random, bool requireSuccess, uint256 minGasLimit, tuple(address to, bytes data, uint256 value)[] calls) _actionData) payable",
+      "function shield(tuple(tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) preimage, tuple(bytes32[3] encryptedBundle, bytes32 shieldKey) ciphertext)[] _shieldRequests)",
+      "function transfer(tuple(tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, address to, uint256 value)[] _transfers)",
+      "function unwrapBase(uint256 _amount)",
+      "function wBase() view returns (address)",
+      "function wrapBase(uint256 _amount)"
     ],
     "eth:0xB4F2d77bD12c6b548Ae398244d7FAD4ABCE4D89b": [
       "event AddToBlocklist(address indexed token)",
@@ -2073,8 +2076,8 @@
     "railgun/SweeperLegacy": "0x2eb417aa4538dd13c156beb75374c4ab97c3a0e34a2e1616eaf4d440bed50af7",
     "railgun/Treasury": "0xe53be1977d2dba54b3716f7715569df8ec79c2de52d77b1c11b84d5902f65b12",
     "railgun/VKeySetter": "0x91335987d90d44c42826772e13ce649fe7f74f91f53eb69227ef49ff63fe5d89",
-    "railgun/Voting": "0xcf33f9d03116b81a59f25ba7bf17c38122eedecde0df775a365f78a34697bd68"
+    "railgun/Voting": "0x67493aa4e015e72df54398b5228d0608b52403af2ad52e9d3e93adb52249abc7"
   },
-  "usedBlockNumbers": { "ethereum": 25151472 },
+  "usedBlockNumbers": { "ethereum": 25573325 },
   "permissionsConfigHash": "0x56bb3ba002f719a35f1d9124f1e67edd6294599dc20dd69d0fcfcf0a7efc6a21"
 }

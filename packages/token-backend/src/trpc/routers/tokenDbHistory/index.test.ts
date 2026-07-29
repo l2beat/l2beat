@@ -19,6 +19,7 @@ describe('tokenDbHistoryRouter', () => {
         userEmail: 'dev@l2beat.com',
         commandType: 'AddAbstractTokenCommand',
         command: { type: 'AddAbstractTokenCommand' },
+        intent: null,
         ingestionLog: null,
       }
       const page = { entries: [entry], totalCount: 12 }

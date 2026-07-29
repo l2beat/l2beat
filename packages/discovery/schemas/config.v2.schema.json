@@ -25,6 +25,7 @@
               "call implementation proxy",
               "zkSync Lite proxy",
               "zkLighter proxy",
+              "ZkLink proxy",
               "zkSpace proxy",
               "Eternal Storage proxy",
               "Polygon Extension proxy",
@@ -390,6 +391,22 @@
                       "type": "object",
                       "properties": {
                         "type": { "const": "accessControl" },
+                        "roleNames": {
+                          "type": "object",
+                          "propertyNames": { "type": "string" },
+                          "additionalProperties": { "type": "string" }
+                        },
+                        "includeEmptyRoles": { "type": "boolean" },
+                        "pickRoleMembers": { "type": "string" },
+                        "ignoreRelative": { "type": "boolean" }
+                      },
+                      "additionalProperties": false,
+                      "required": ["type"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "aragonPermissions" },
                         "roleNames": {
                           "type": "object",
                           "propertyNames": { "type": "string" },

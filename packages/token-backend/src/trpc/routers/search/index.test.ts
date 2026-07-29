@@ -235,6 +235,7 @@ function abstractToken(
     iconUrl: overrides.iconUrl ?? null,
     comment: overrides.comment ?? null,
     coingeckoListingTimestamp: overrides.coingeckoListingTimestamp ?? null,
+    additionalCoingeckoEntries: overrides.additionalCoingeckoEntries ?? null,
     reviewed: overrides.reviewed ?? false,
     isPriceUnreliable: overrides.isPriceUnreliable ?? false,
   }

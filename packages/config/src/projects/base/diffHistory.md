@@ -1,3 +1,188 @@
+Generated with discovered.json: 0x892603d2e05322531ce62805c5975093c1b181d9
+
+# Diff at Tue, 28 Jul 2026 08:10:06 GMT:
+
+- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
+- comparing to: main@fb0b50e4a7f7900d17e186f908b2b3ca3e977527 block: 1784846600
+- current timestamp: 1785226129
+
+## Description
+
+Redeployed aggregate verifier with different range and aggregation prog hashes and no code changes: https://disco.l2beat.com/diff/eth:0x1bd8db5139Ba7aC9277684650c15e6E341761919/eth:0xeE303bA054c5F1E14A8EF87f1C7E285af45A1ba2. Both programs are regenreated from sources.
+
+Disabled Groth16 SP1 verifier and enabled Plonk v6.1.0 SP1 verifier. It is an already known contract, regenerated from sources.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract AggregateVerifier (eth:0x1bd8db5139Ba7aC9277684650c15e6E341761919) [opstack/AggregateVerifier]
+    +++ description: Game type implementation that combines a TEE attestation arm and a ZK proof arm. A single un-nullified proof of either type can resolve a game (PROOF_THRESHOLD = 1). When both arms commit, the finalization window collapses from SLOW_FINALIZATION_DELAY (5d) to FAST_FINALIZATION_DELAY (1d).
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
++++ severity: HIGH
+      values.game621:
+-        "eth:0x1bd8db5139Ba7aC9277684650c15e6E341761919"
++        "eth:0xeE303bA054c5F1E14A8EF87f1C7E285af45A1ba2"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+```
+
+```diff
+    contract SP1VerifierGateway (eth:0xdc32E228636273285Befa5F001dBB5142517C106) [succinct/SP1VerifierGateway] {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      values.activeVerifiers.0.verifier:
+-        "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2"
++        "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"
+      values.activeVerifiers.0.selector:
+-        "0x4388a21c"
++        "0x5a093a2f"
++++ description: All verifiers that were ever routed to by this gateway.
+      values.allVerifiers.1:
++        {"selector":"0x5a093a2f","verifier":"eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A) [shared-sp1/SP1Verifier]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AggregateVerifier (eth:0xeE303bA054c5F1E14A8EF87f1C7E285af45A1ba2) [opstack/AggregateVerifier]
+    +++ description: Game type implementation that combines a TEE attestation arm and a ZK proof arm. A single un-nullified proof of either type can resolve a game (PROOF_THRESHOLD = 1). When both arms commit, the finalization window collapses from SLOW_FINALIZATION_DELAY (5d) to FAST_FINALIZATION_DELAY (1d).
+```
+
+## Source code changes
+
+```diff
+.../{.flat@1784846600 => .flat}/SP1Verifier.sol    | 1831 ++++++++++++++------
+ 1 file changed, 1297 insertions(+), 534 deletions(-)
+```
+
+Generated with discovered.json: 0xe5196d6d60012c7eaeb43e6ccdc7e5a81935ab24
+
+# Diff at Tue, 21 Jul 2026 15:40:09 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@fc28078e744c0eaf2d65858a6073cbf1fe48622d block: 1784561613
+- current timestamp: 1784648327
+
+## Description
+
+TEEProverRegistry: both registered enclave signers rotated.
+
+## Watched changes
+
+```diff
+    contract TEEProverRegistry (eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA) [base/TEEProverRegistry] {
+    +++ description: Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a Risc0 ZK proof of a valid AWS Nitro attestation document verified by the NITRO_VERIFIER.
++++ severity: LOW
+      values.getRegisteredSigners.0:
+-        "eth:0x3354226FDDD041367AE68F7245Cd5166e11013f3"
++        "eth:0x9a73d6848BBe8562CBb6BF1c92B33610B80a98cC"
++++ severity: LOW
+      values.getRegisteredSigners.1:
+-        "eth:0xE32f95a9c06159c3cB3DC39f7573215ddAB86E59"
++        "eth:0xd7D60ED09A8069DedA10d721bDF2F04F0F80F69d"
+    }
+```
+
+Generated with discovered.json: 0x346812ba409605f633cb86a94abc49bd9a480012
+
+# Diff at Mon, 20 Jul 2026 15:35:42 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@ab4290b6bc5b6a34b8b091245cd07a7a94441102 block: 1784122559
+- current timestamp: 1784561613
+
+## Description
+
+Base Multisig 1: one member added, two removed. Threshold 3/13 → 3/12.
+
+## Watched changes
+
+```diff
+    contract Base Multisig 1 (eth:0x14536667Cd30e52C0b458BaACcB9faDA7046E056) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x7eA56fBD8320F032014C8889C4F6cDC86796Db04"
+      values.$members.11:
+-        "eth:0xa3D3c103442F162856163d564b983ae538c6202D"
+      values.$members.12:
+-        "eth:0x49243DcE94e0f5A1B08b9556bBEc5a84363c3839"
+      values.multisigThreshold:
+-        "3 of 13 (23%)"
++        "3 of 12 (25%)"
+    }
+```
+
+Generated with discovered.json: 0xc2d032883b0a42eeda70a6bb3e093ba704d58be2
+
+# Diff at Wed, 15 Jul 2026 13:37:55 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@40c68fc8d6e39f5b4f69bb2e62b69938a949b435 block: 1782850575
+- current timestamp: 1784122559
+
+## Description
+
+TEEProverRegistry: both registered enclave signers rotated.
+
+## Watched changes
+
+```diff
+    contract TEEProverRegistry (eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA) [base/TEEProverRegistry] {
+    +++ description: Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a Risc0 ZK proof of a valid AWS Nitro attestation document verified by the NITRO_VERIFIER.
++++ severity: LOW
+      values.getRegisteredSigners.0:
+-        "eth:0xCD5C52b857A8E4B3883997b856b730D76938B38C"
++        "eth:0x3354226FDDD041367AE68F7245Cd5166e11013f3"
++++ severity: LOW
+      values.getRegisteredSigners.1:
+-        "eth:0x0BcBdab1Adf24461682e9DE37AFc0548C462ca10"
++        "eth:0xE32f95a9c06159c3cB3DC39f7573215ddAB86E59"
+    }
+```
+
+Generated with discovered.json: 0xa3e0c1acad0c2197d600a45a5eccf9b2ac562594
+
+# Diff at Tue, 14 Jul 2026 14:38:08 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@40c68fc8d6e39f5b4f69bb2e62b69938a949b435 block: 1782850575
+- current timestamp: 1784039760
+
+## Description
+
+TEEProverRegistry: both registered enclave signers rotated.
+
+## Watched changes
+
+```diff
+    contract TEEProverRegistry (eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA) [base/TEEProverRegistry] {
+    +++ description: Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a Risc0 ZK proof of a valid AWS Nitro attestation document verified by the NITRO_VERIFIER.
++++ severity: LOW
+      values.getRegisteredSigners.0:
+-        "eth:0xCD5C52b857A8E4B3883997b856b730D76938B38C"
++        "eth:0xDbec3b8c62A04f6C4e35BDc0Dac5Ee3c6C1Ce846"
++++ severity: LOW
+      values.getRegisteredSigners.1:
+-        "eth:0x0BcBdab1Adf24461682e9DE37AFc0548C462ca10"
++        "eth:0xEa459F445D2675027E30E3ebF3AD8716D64DD384"
+    }
+```
+
 Generated with discovered.json: 0xcbc286ad33355fd5fb2ae809fce45e16934e5001
 
 # Diff at Wed, 01 Jul 2026 10:32:53 GMT:
@@ -15047,4 +15232,3 @@ Added wstETHEscrow contract.
 +        [{"prevNextOutputIndex":1030,"newNextOutputIndex":1027},{"prevNextOutputIndex":1364,"newNextOutputIndex":1359}]
     }
 ```
-

@@ -1,4 +1,9 @@
 {
   "version": 1,
-  "examples": {}
+  "examples": {
+    "ccip-partial-adi": {
+      "definitionHash": "ded1c242cdda65bb8a220da275ceba40cfd908a9333a6df18709360e099777dd",
+      "sealedAt": "2026-07-17T08:47:40.566Z"
+    }
+  }
 }

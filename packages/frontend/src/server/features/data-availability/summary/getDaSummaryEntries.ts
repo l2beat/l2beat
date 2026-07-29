@@ -14,6 +14,7 @@ import {
   mapLayerRisksToRosetteValues,
 } from '~/pages/data-availability/utils/MapRisksToRosetteValues'
 import { ps } from '~/server/projects'
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { manifest } from '~/utils/Manifest'
 import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
 import {
@@ -22,7 +23,7 @@ import {
 } from '../../projects-change-report/getProjectsChangeReport'
 import { getLiveness } from '../../scaling/liveness/getLiveness'
 import type { LivenessResponse } from '../../scaling/liveness/types'
-import { getProjectVerificationWarnings } from '../../utils/getIsProjectVerified'
+import { getProjectVerification } from '../../utils/getIsProjectVerified'
 import {
   type CommonDaEntry,
   getCommonDacDaEntry,
@@ -96,6 +97,7 @@ export interface DaSummaryEntry extends CommonDaEntry {
   tvs: {
     latest: number
     sevenDaysAgo: number
+    changePeriod: PercentageChangePeriod
   }
   bridges: DaBridgeSummaryEntry[]
 }
@@ -105,6 +107,7 @@ export interface DaBridgeSummaryEntry
   tvs: {
     latest: number
     sevenDaysAgo: number
+    changePeriod: PercentageChangePeriod
   }
   risks: RosetteValue[]
   usedIn: UsedInProjectWithIcon[]
@@ -124,6 +127,7 @@ function getDaSummaryEntry(
   getTvs: (projectIds: ProjectId[]) => {
     latest: number
     sevenDaysAgo: number
+    changePeriod: PercentageChangePeriod
   },
   projectsChangeReport: ProjectsChangeReport,
   liveness: LivenessResponse,
@@ -135,10 +139,10 @@ function getDaSummaryEntry(
       slug: b.slug,
       href: `/data-availability/projects/${layer.slug}/${b.slug}`,
       statuses: {
-        verificationWarnings: getProjectVerificationWarnings(
+        verificationWarnings: getProjectVerification(
           b,
           projectsChangeReport.getChanges(b.id),
-        ),
+        ).warnings,
         underReview:
           !!layer.statuses.reviewStatus || !!b.statuses.reviewStatus
             ? 'config'
@@ -212,6 +216,7 @@ function getDacEntry(
   getTvs: (projectIds: ProjectId[]) => {
     latest: number
     sevenDaysAgo: number
+    changePeriod: PercentageChangePeriod
   },
 ): DaSummaryEntry {
   const usedIn: UsedInProject[] = [
@@ -265,6 +270,7 @@ function getEthereumEntry(
   getTvs: (projectIds: ProjectId[]) => {
     latest: number
     sevenDaysAgo: number
+    changePeriod: PercentageChangePeriod
   },
 ): DaSummaryEntry {
   const bridge = bridges[0]

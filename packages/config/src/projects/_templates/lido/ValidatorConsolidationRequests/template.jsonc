@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Read-only stVault helper that validates a Dashboard's ownership of a connected StakingVault and builds the EIP-7251 consolidation-request calldata and fee-exemption call for its source and target validators.",
+  "category": "core",
+  "ignoreRelatives": ["CONSOLIDATION_REQUEST_PREDEPLOY_ADDRESS"],
+  "ignoreInWatchMode": ["getConsolidationRequestFee"]
+}

@@ -9,7 +9,7 @@ const bannerVariants = cva(
     variants: {
       type: {
         info: 'border-link bg-surface-info text-link',
-        warning: 'border-yellow-700 bg-surface-warning text-yellow-900',
+        warning: 'border-yellow-700 bg-surface-warning text-yellow-800',
         negative: 'border-negative bg-surface-negative text-negative',
       },
       centered: {

@@ -1,0 +1,22 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Core Accounting",
+  "description": "Calculates and applies a complete Lido oracle report: it reconciles validator balances, smooths the rebase, collects vault balances, finalizes withdrawals, burns shares, distributes module rewards, and updates stETH accounting.",
+  "category": "core",
+  "fields": {
+    "accountingOracle": {
+      "handler": {
+        "type": "call",
+        "method": "function accountingOracle() view returns (address)",
+        "args": [],
+        "address": "{{ LIDO_LOCATOR }}"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "apply an oracle report and its resulting stETH rebase, withdrawals, burns, fee minting, and staking-module accounting updates."
+        }
+      ]
+    }
+  }
+}

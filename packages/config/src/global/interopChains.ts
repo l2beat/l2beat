@@ -135,6 +135,14 @@ export const INTEROP_CHAINS: InteropChain[] = [
     explorerUrl: 'https://worldscan.org',
   },
   {
+    id: 'rise',
+    name: 'RISE',
+    type: 'evm',
+    display: 'RISE',
+    color: '#04DF83',
+    explorerUrl: 'https://explorer.risechain.com',
+  },
+  {
     id: 'celo',
     name: 'Celo',
     type: 'evm',
@@ -165,6 +173,14 @@ export const INTEROP_CHAINS: InteropChain[] = [
     display: 'XLAYER',
     color: '#000000',
     explorerUrl: 'https://web3.okx.com/explorer/x-layer/evm',
+  },
+  {
+    id: 'adi',
+    name: 'ADI Chain',
+    type: 'evm',
+    display: 'ADI',
+    color: '#FD7108',
+    explorerUrl: 'https://explorer-bls.adifoundation.ai',
   },
   {
     id: 'avalanche',
@@ -235,6 +251,7 @@ export const INTEROP_CHAINS: InteropChain[] = [
 export const INTEROP_ONE_SIDED_CHAINS = [
   'solana',
   'xlayer',
+  'adi',
   'plasma',
   'tron',
   'hyperliquid',

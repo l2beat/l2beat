@@ -5,25 +5,22 @@
   "ignoreMethods": ["getRollup"],
   "fields": {
     "owner": {
-      "description": "The governance owner of the registry.",
+      "description": "Owner of the Registry.",
       "permissions": [
         {
           "type": "interact",
-          "description": "register a new canonical rollup version and replace the reward distributor used by the network."
+          "description": "register a new canonical rollup version, update the Registry-selected reward distributor pointer, and transfer or renounce Registry ownership. Updating the pointer does not change a distributor fixed in an already deployed Rollup."
         }
       ]
     },
     "getCanonicalRollup": {
-      "description": "The latest registered rollup instance, treated as canonical by the Aztec contracts.",
-      "template": "aztecnetwork/Rollup"
+      "description": "The latest registered rollup instance, treated as canonical by the Aztec contracts."
     },
     "getGovernance": {
-      "description": "The governance contract controlling the registry.",
-      "template": "aztecnetwork/Governance"
+      "description": "The current Registry owner, which controls registration and the Registry-selected reward distributor."
     },
     "getRewardDistributor": {
-      "description": "The reward distributor currently used by the canonical rollup.",
-      "template": "aztecnetwork/RewardDistributor"
+      "description": "The Registry-selected reward distributor. An existing Rollup keeps the distributor fixed at its deployment and is not retargeted when this pointer changes."
     },
     "numberOfVersions": {
       "description": "Number of rollup versions registered in the registry."

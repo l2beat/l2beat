@@ -13,5 +13,11 @@
     "hash": "0xe05c41d31c126227270b4375799c11a4c815d2cf220a37a3879dea11b4402e98",
     "address": "eth:0xfF1caC738a5263736AF258e4b3D6a4970C6351FF",
     "blockNumber": 25122972
+  },
+  "OPSuccinctFaultDisputeGame_rise.sol": {
+    "hash": "0x45c64c1395c92f581247700064f7c4bded626426ab81ae5534471091d41f7e0f",
+    "address": "eth:0xBf60dBc272833cD25f0426983c3175C32C8E5A7a",
+    "chain": "ethereum",
+    "blockNumber": 24318168
   }
 }

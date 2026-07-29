@@ -17,7 +17,8 @@ type SequencingTableValueKey =
   | 'sequencerCount'
   | 'blockProductionAccess'
   | 'entryPolicy'
-  | 'timing'
+  | 'blockTime'
+  | 'rotation'
   | 'blockProduction'
   | 'deterministicCrGadget'
   | 'additionalCrGadgets'
@@ -37,10 +38,15 @@ const tableValueColumns = [
       'Stake needed to participate and any rate limit for adding new sequencers.',
   },
   {
-    key: 'timing',
-    header: 'Block time /\nepoch time',
+    key: 'blockTime',
+    header: 'L2 block\ntime',
+    tooltip: 'Interval between successive L2 blocks.',
+  },
+  {
+    key: 'rotation',
+    header: 'Proposer / committee\nrotation',
     tooltip:
-      'Slot, epoch, or span timing used by the sequencer rotation model.',
+      'How often block production rights move to another proposer and, where applicable, how often a new committee is selected.',
   },
   {
     key: 'blockProduction',

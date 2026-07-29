@@ -1,0 +1,62 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "lighter-robinhood",
+  "import": ["../globalConfig.jsonc"],
+  "maxAddresses": 100,
+  "initialAddresses": ["robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d"],
+  "names": {
+    "robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d": "Lighter",
+    "robinhood:0x6C23703ba62a845893758ea35E5eD854639ef8BA": "ZkLighter",
+    "robinhood:0x57af7CA7F40Ee33ac974c4eE864932241671c7D4": "AdditionalZkLighter",
+    "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7": "Governance",
+    "robinhood:0x3468Dcab5a2D81Af207B3e301DFA889321989a61": "Governance",
+    "robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31": "ZkLighterVerifier",
+    "robinhood:0xA3c70B197AcE329D9e09C753DA7874B78F1D00f4": "ZkLighterVerifier",
+    "robinhood:0x443cc0c7f773d0955e3bd8da393b708152cfa5bc": "DesertVerifierAlwaysTrueOld",
+    "robinhood:0x56aeed6920dbb9e198c2c0072147a45684a06e10": "DesertVerifier",
+    "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716": "UpgradeGatekeeper",
+    "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213": "Lighter Governor",
+    "robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb": "Lighter Security Council",
+    "robinhood:0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168": "USDG",
+    "robinhood:0xAc71eC137c892d02d531e48cEb1D060f9C9AC357": "Lighter Treasury",
+    "robinhood:0x6cCdD1f3f599C69fA74eeDc3dab28559fe99aB0A": "Insurance Fund Operator",
+    "robinhood:0x19f3e744b6e8FbA3Bc3737437dC82E394638b88b": "Lighter Validator 1",
+    "robinhood:0x114E0f5a71D169DdfBAef41160A0Ac789f7015cA": "Lighter Validator 2",
+    "robinhood:0x8eC9b15e83E69418350d7286e9679e4DcEf7001f": "Lighter Validator 3"
+  },
+  "overrides": {
+    "robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d": {
+      "proxyType": "zkLighter proxy",
+      // The v4 logic implementations (ZkLighter / AdditionalZkLighter) are not
+      // verified on Blockscout, so the ZkLighterWithSpotQuoteAsset template
+      // cannot match. Re-declare the source-independent fields the project
+      // depends on (storage slots + a constant getter) until the impls verify.
+      "fields": {
+        "PRIORITY_EXPIRATION": {
+          "handler": {
+            "type": "call",
+            "method": "function PRIORITY_EXPIRATION() view returns (uint256)",
+            "args": []
+          }
+        },
+        "verifier": {
+          "handler": { "type": "storage", "slot": 4, "returnType": "address" },
+          "severity": "HIGH"
+        },
+        "desertVerifier": {
+          "handler": { "type": "storage", "slot": 5, "returnType": "address" },
+          "severity": "HIGH"
+        },
+        "governance": {
+          "handler": { "type": "storage", "slot": 6, "returnType": "address" }
+        },
+        "additionalZkLighter": {
+          "handler": { "type": "storage", "slot": 7, "returnType": "address" }
+        }
+      }
+    },
+    "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7": {
+      "ignoreRelatives": ["quoteAsset"]
+    }
+  }
+}

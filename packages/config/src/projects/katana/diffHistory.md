@@ -1,3 +1,334 @@
+Generated with discovered.json: 0xcdc6f3d34aebc9d4fa0c4c56cd71c00ea3ff75f2
+
+# Diff at Wed, 29 Jul 2026 09:59:48 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e856505e0900740c5b57461c7b3471e0e0960ebe block: 1784814637
+- current timestamp: 1784814637
+
+## Description
+
+Make shared-polygon-cdk use entrypoints and rediscover
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784814637 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x21618593F7147235aC8D511d68A547C935F9d417) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-polygon-cdk"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    EOA  (eth:0x3038B4DBf022E80169b2A068290d4a3A8b87D3b5) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-polygon-cdk"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    EOA  (eth:0x516eEcfb38aA308c5f1878497108c7d054fd46B7) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-polygon-cdk"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    EOA  (eth:0x8B9F18bcDD5838bB1bd4B3d6410e45DF813b782B) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-polygon-cdk"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    EOA  (eth:0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-polygon-cdk"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    EOA  (eth:0xdFEd8373695a7b3DaF268CF91e71f6a7024A56Da) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-polygon-cdk"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    EOA  (eth:0xEB5EeE1F1650b821E0d3a87C1341d85b3a16EA72) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-polygon-cdk"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    EOA  (eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-polygon-cdk"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    EOA  (eth:0xf02BE0dA37dB50BEFA5a525158aa94b50F81D4B2) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-polygon-cdk"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    EOA  (eth:0xffbfc0c8331C5fc912DDA3C6D4A86eEB80203238) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-polygon-cdk"
+      proxyType:
++        "EOA"
+    }
+```
+
+Generated with discovered.json: 0x1beb2c970cc77fdac5d38a42d9d71e74be9337c6
+
+# Diff at Thu, 23 Jul 2026 13:53:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@efd03446560a8d585747f124c71622cbfa33fca4 block: 1784623318
+- current timestamp: 1784814637
+
+## Description
+
+One Polygon Labs Engineering/Security Multisig signer was rotated and another removed, changing it from 2-of-8 to 2-of-7.
+
+## Watched changes
+
+```diff
+    contract Polygon Labs Engineering/Security Multisig (eth:0x9d851f8b8751c5FbC09b9E74E6e68E9950949052) [GnosisSafe] {
+    +++ description: None
+      values.$members.1:
+-        "eth:0xe0e8e6bBDef7bbcf8dF1F5Ac0ab9906BFe991d8B"
++        "eth:0xFB2a738AE435610354b132c4a4ee647558f663eb"
+      values.$members.6:
+-        "eth:0xED7cC82235A7757702475c8f77c7830c095FB5a2"
+      values.multisigThreshold:
+-        "2 of 8 (25%)"
++        "2 of 7 (29%)"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784623318 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0xED7cC82235A7757702475c8f77c7830c095FB5a2) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-polygon-cdk"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    reference  (eth:0xf02BE0dA37dB50BEFA5a525158aa94b50F81D4B2) {
+    +++ description: None
+      type:
+-        "EOA"
++        "Reference"
+      proxyType:
+-        "EOA"
+      targetType:
++        "EOA"
+      targetProject:
++        "shared-polygon-cdk"
+    }
+```
+
+Generated with discovered.json: 0x3764918832c27dab005c4d053470bd707a605edd
+
+# Diff at Tue, 21 Jul 2026 08:43:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f20722ea086c21a6e3dedded355fc3e24528daf0 block: 1784270104
+- current timestamp: 1784623318
+
+## Description
+
+4 multisig signers added.
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0xFA58659F64a393A6E1A548ABc70Ad2CfE1e8f9Cb) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x9f02595fBFD199C4cBC02878fc9B2b2E07b0840C"
+      values.$members.1:
++        "eth:0x1319279d6d54dB0883F7bAF822191c7184Db0c3d"
+      values.$members.2:
++        "eth:0x6Ab87a62E250A5EB09a53Fca832B9Bda480c3890"
+      values.$members.3:
++        "eth:0x573D7a729cfcF20B81D70732d625Ae31549B8b91"
+      values.multisigThreshold:
+-        "2 of 6 (33%)"
++        "2 of 10 (20%)"
+    }
+```
+
+Generated with discovered.json: 0x895a031da67f7bef95be8dd5a12869edd4b7c915
+
+# Diff at Fri, 17 Jul 2026 07:35:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5a5b552776f13efe49c744667945e52e0a8f9718 block: 1783509417
+- current timestamp: 1784270104
+
+## Description
+
+New op-succinct programHashes - reproduced from v3.10.0  . Add rollup config preimg and instructions to repro.
+
+## Watched changes
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) [katana/AggchainFEP_post035] {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      values.selectedOpSuccinctConfig.aggregationVkey:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x0034587dfb1de8163284d39f3043f5fadfa92f9e03fb3e0315eb469c550fde40"
+      values.selectedOpSuccinctConfig.rangeVkeyCommitment:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x1b04822373ca65680026b5610c1edf424798421b032ef9117b2c264661de246f"
+      values.selectedOpSuccinctConfig.rollupConfigHash:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "Katana OP Succinct v3.10.0 rollup config (Kona v1.6.0)"
++++ description: currently enforced OpSuccinctConfig. update the call handler for the full config if this changes.
++++ severity: HIGH
+      values.selectedOpSuccinctConfigName:
+-        "0x3cb66b8472d88440173415d4d4a316b9df81ac208e63e02829f823fccbe3f547"
++        "0xe3fbe1170998c9f380d29247864dd07f2f17367a23ae5e0fa409ebd371d97d6f"
+    }
+```
+
+```diff
+    contract Katana Steakhouse Financial / Morpho Multisig (eth:0x827e86072B06674a077f592A531dcE4590aDeCdB) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xfc615395336aADe67fd853a0157001a215Ea1279"
+      values.multisigThreshold:
+-        "2 of 6 (33%)"
++        "2 of 7 (29%)"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1783509417 (main branch discovery), not current.
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) [katana/AggchainFEP_post035] {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      values.selectedOpSuccinctConfig.aggregationVkey:
+-        "0x0095c1f31a6e1003e1e3083ca45bf69b95c9a1468708df1029c9cf4bceb8a852"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.selectedOpSuccinctConfig.rangeVkeyCommitment:
+-        "0x3813362d038935ad6cb1e2566278975f08be38a92bfe7137505ef0c14a9d1972"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.selectedOpSuccinctConfig.rollupConfigHash:
+-        "0x352a9738897d236014fd5bd11986bf008b3b623b037405900ab338f93cdf5272"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"0xecdbb340ded82ca2e5baf5e40c90a3b0c1227c27f9be2962df93d2e061e9a5d4":"Katana OP Succinct v3.10.0 rollup config (Kona v1.6.0)"}}]
+    }
+```
+
 Generated with discovered.json: 0x322087878ba7a5cc2c2714d3c3a4225ba79da053
 
 # Diff at Wed, 08 Jul 2026 11:18:11 GMT:
@@ -7806,4 +8137,3 @@ initial katana predeposit disco.
     contract GnosisSafe (0xFEB4acf3df3cDEA7399794D0869ef76A6EfAff52)
     +++ description: None
 ```
-

@@ -30,3 +30,13 @@ export const INTEROP_TYPE_TO_BG_COLOR: Record<
   nonMinting: 'bg-non-minting',
   unknown: 'bg-gray-550 dark:bg-gray-650',
 }
+
+export const INTEROP_TYPE_TO_BADGE_BG_COLOR: Record<
+  keyof typeof TRANSFER_TYPE_DISPLAY,
+  string
+> = {
+  lockAndMint: 'bg-yellow-700',
+  burnAndMint: 'bg-teal-500',
+  nonMinting: 'bg-non-minting',
+  unknown: 'bg-gray-650',
+}

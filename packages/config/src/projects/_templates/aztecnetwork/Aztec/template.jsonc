@@ -5,10 +5,20 @@
   "ignoreInWatchMode": ["totalSupply"],
   "fields": {
     "owner": {
+      "description": "Owner of the AZTEC token.",
       "permissions": [
         {
           "type": "interact",
           "description": "mint unlimited amounts of the AZTEC token and transfer the ownership of the contract."
+        }
+      ]
+    },
+    "pendingOwner": {
+      "description": "Address nominated to become the AZTEC token owner.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "accept ownership of the AZTEC token."
         }
       ]
     }

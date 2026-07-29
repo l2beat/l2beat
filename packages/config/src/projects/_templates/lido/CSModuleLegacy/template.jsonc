@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": [
+    "getNodeOperator",
+    "getNodeOperatorIsActive",
+    "getNodeOperatorNonWithdrawnKeys",
+    "getNodeOperatorSummary",
+    "getNonce",
+    "depositQueuePointers",
+    "exitDeadlineThreshold",
+    "getNodeOperatorManagementProperties",
+    "getNodeOperatorOwner",
+    "getNodeOperatorTotalDepositedKeys"
+  ],
+  "ignoreInWatchMode": [
+    "getActiveNodeOperatorsCount",
+    "depositQueue",
+    "getStakingModuleSummary",
+    "getNodeOperatorsCount"
+  ]
+}

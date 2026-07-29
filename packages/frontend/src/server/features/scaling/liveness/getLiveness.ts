@@ -346,7 +346,7 @@ function getMockLivenessData(): LivenessResponse {
   const projectIds = [
     'arbitrum',
     'optimism',
-    'apex',
+    'apex-omni',
     'aevo',
     'base',
     'dydx',

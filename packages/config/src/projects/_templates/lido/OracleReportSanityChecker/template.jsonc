@@ -1,0 +1,208 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Validates AccountingOracle report values against configurable safety limits. The version 3 checker covers validator balance flows, consolidations, external pending balances, triggerable exits, and EIP-7251 balance weights.",
+  "category": "core",
+  "ignoreMethods": ["reportData"],
+  "ignoreRelatives": ["secondOpinionOracle"],
+  "ignoreInWatchMode": [
+    "getReportDataCount",
+    "isPostMigrationFirstReportDone",
+    "lastReportTimestamp",
+    "lastVaultBalanceAfterTransfer"
+  ],
+  "fields": {
+    "accessControl": {
+      "handler": { "type": "accessControl", "includeEmptyRoles": true }
+    },
+    "defaultAdmins": {
+      "copy": "accessControl",
+      "edit": ["get", "DEFAULT_ADMIN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke OracleReportSanityChecker roles."
+        }
+      ]
+    },
+    "allLimitsManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "ALL_LIMITS_MANAGER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change all oracle-report safety limits in one operation."
+        }
+      ]
+    },
+    "exitedEthDailyLimitManagers": {
+      "copy": "accessControl",
+      "edit": [
+        "get",
+        "EXITED_ETH_AMOUNT_PER_DAY_LIMIT_MANAGER_ROLE",
+        "members"
+      ],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the daily exited-ETH limit."
+        }
+      ]
+    },
+    "appearedEthDailyLimitManagers": {
+      "copy": "accessControl",
+      "edit": [
+        "get",
+        "APPEARED_ETH_AMOUNT_PER_DAY_LIMIT_MANAGER_ROLE",
+        "members"
+      ],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the daily appeared-ETH limit."
+        }
+      ]
+    },
+    "consolidationEthDailyLimitManagers": {
+      "copy": "accessControl",
+      "edit": [
+        "get",
+        "CONSOLIDATION_ETH_AMOUNT_PER_DAY_LIMIT_MANAGER_ROLE",
+        "members"
+      ],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the daily validator-consolidation ETH limit."
+        }
+      ]
+    },
+    "exitedValidatorEthLimitManagers": {
+      "copy": "accessControl",
+      "edit": [
+        "get",
+        "EXITED_VALIDATOR_ETH_AMOUNT_LIMIT_MANAGER_ROLE",
+        "members"
+      ],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the exited-validator ETH amount limit."
+        }
+      ]
+    },
+    "externalPendingBalanceCapManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "EXTERNAL_PENDING_BALANCE_CAP_MANAGER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the external pending-balance cap."
+        }
+      ]
+    },
+    "annualBalanceIncreaseLimitManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "ANNUAL_BALANCE_INCREASE_LIMIT_MANAGER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the annual consensus-layer balance-increase limit."
+        }
+      ]
+    },
+    "shareRateDeviationLimitManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "SHARE_RATE_DEVIATION_LIMIT_MANAGER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the simulated share-rate deviation limit."
+        }
+      ]
+    },
+    "balanceExitRequestLimitManagers": {
+      "copy": "accessControl",
+      "edit": [
+        "get",
+        "MAX_BALANCE_EXIT_REQUESTED_PER_REPORT_IN_ETH_ROLE",
+        "members"
+      ],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the maximum balance requested to exit in one report."
+        }
+      ]
+    },
+    "effectiveBalanceWeightManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "MAX_EFFECTIVE_BALANCE_WEIGHTS_MANAGER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change maximum effective-balance weights used when validating validator balance changes."
+        }
+      ]
+    },
+    "extraDataItemLimitManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "MAX_ITEMS_PER_EXTRA_DATA_TRANSACTION_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the maximum extra-data items processed per transaction."
+        }
+      ]
+    },
+    "extraDataOperatorLimitManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "MAX_NODE_OPERATORS_PER_EXTRA_DATA_ITEM_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the maximum node operators encoded in an extra-data item."
+        }
+      ]
+    },
+    "requestTimestampMarginManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "REQUEST_TIMESTAMP_MARGIN_MANAGER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the timestamp margin applied to withdrawal and consolidation requests."
+        }
+      ]
+    },
+    "positiveRebaseLimitManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "MAX_POSITIVE_TOKEN_REBASE_MANAGER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the maximum positive stETH token rebase."
+        }
+      ]
+    },
+    "secondOpinionManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "SECOND_OPINION_MANAGER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the second-opinion oracle and its balance-deviation limits."
+        }
+      ]
+    },
+    "clBalanceDecreaseLimitManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "MAX_CL_BALANCE_DECREASE_MANAGER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the maximum consensus-layer balance decrease."
+        }
+      ]
+    }
+  }
+}

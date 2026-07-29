@@ -10,20 +10,17 @@ import { InteropNoDataBadge } from '../../components/InteropNoDataBadge'
 import { InteropTopPathValue } from '../../components/InteropTopPathValue'
 import { TopProtocolsCell } from '../../components/protocols/TopProtocolsCell'
 import { AvgDurationCell } from '../../components/table/AvgDurationCell'
-import type { InteropSelection } from '../../utils/types'
 
 export function InteropTokenSummary({
   data,
   isLoading,
   tokenCategory,
   deploymentsCount,
-  apiSelection,
 }: {
   data: InteropTokenDashboardData | undefined
   isLoading: boolean
   tokenCategory: string | null
   deploymentsCount: number
-  apiSelection: InteropSelection
 }) {
   const token = data?.token
 
@@ -98,13 +95,11 @@ export function InteropTokenSummary({
       <div className="grid grid-cols-1 gap-x-3 max-md:mt-3 max-md:gap-y-3 md:grid-cols-3">
         <StatsItem
           title="Protocols used"
+          href="#interop-protocols"
           isLoading={isLoading}
           value={
             data?.entries?.length ? (
-              <TopProtocolsCell
-                protocols={data.entries}
-                apiSelection={apiSelection}
-              />
+              <TopProtocolsCell protocols={data.entries} />
             ) : (
               EM_DASH
             )
@@ -130,20 +125,32 @@ function StatsItem({
   title,
   value,
   isLoading,
+  href,
 }: {
   title: string
   value: ReactNode
   isLoading: boolean
+  href?: string
 }) {
-  return (
-    <div className="flex gap-3 max-md:items-start max-md:justify-between md:flex-col md:gap-1.5">
+  const content = (
+    <>
       <span className="shrink-0 font-medium text-paragraph-12 text-secondary">
         {title}
       </span>
-      <div className="min-w-0 text-right font-bold text-label-value-16 leading-none md:text-left">
+      <div className="min-w-0 text-right font-bold text-label-value-16 leading-none group-hover:underline md:text-left">
         {isLoading ? <Skeleton className="h-5 w-24" /> : value}
       </div>
-    </div>
+    </>
+  )
+  const className =
+    'flex gap-3 max-md:items-start max-md:justify-between md:flex-col md:gap-1.5'
+
+  return href ? (
+    <a href={href} className={`group ${className}`}>
+      {content}
+    </a>
+  ) : (
+    <div className={className}>{content}</div>
   )
 }
 

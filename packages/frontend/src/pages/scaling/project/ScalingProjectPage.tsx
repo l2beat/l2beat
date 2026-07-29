@@ -24,11 +24,13 @@ import { ProjectScalingSummary } from './components/ScalingProjectSummary'
 interface Props extends AppLayoutProps {
   projectEntry: ProjectScalingEntry
   queryState: DehydratedState
+  selectedUpdateId?: string
 }
 
 export function ScalingProjectPage({
   projectEntry,
   queryState,
+  selectedUpdateId,
   ...props
 }: Props) {
   const navigationSections = projectDetailsToNavigationSections(
@@ -121,7 +123,10 @@ export function ScalingProjectPage({
                       />
                     )}
                   <HighlightableLinkContextProvider>
-                    <ProjectDetails items={projectEntry.sections} />
+                    <ProjectDetails
+                      items={projectEntry.sections}
+                      selectedUpdateId={selectedUpdateId}
+                    />
                   </HighlightableLinkContextProvider>
                 </div>
                 {!isNavigationEmpty && (

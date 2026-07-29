@@ -4,7 +4,7 @@ import { type providers, utils } from 'ethers'
 import groupBy from 'lodash/groupBy'
 import { isDeepStrictEqual } from 'util'
 import { executeBlip } from '../../../blip/executeBlip'
-import type { BlipSexp } from '../../../blip/type'
+import type { BlipEnv, BlipSexp } from '../../../blip/type'
 import { validateBlip } from '../../../blip/validateBlip'
 import type { ContractValue } from '../../output/types'
 import { orderLogs } from '../../provider/BatchingAndCachingProvider'
@@ -129,6 +129,13 @@ export class EventHandler implements Handler {
       logRows.push({ log, value })
     }
 
+    const env: BlipEnv = {
+      blockNumber: provider.blockNumber,
+      timestamp: provider.timestamp,
+      chainName: provider.chain,
+      address: address.toString(),
+    }
+
     let value: ContractValue | undefined
     if (this.definition.groupBy !== undefined) {
       const groupByKey = this.definition.groupBy
@@ -136,10 +143,10 @@ export class EventHandler implements Handler {
       value = {}
       for (const key in grouped) {
         // biome-ignore lint/style/noNonNullAssertion: we know it's there
-        value[key] = this.processLogs(provider.chain, grouped[key]!)
+        value[key] = this.processLogs(provider.chain, env, grouped[key]!)
       }
     } else {
-      value = this.processLogs(provider.chain, logRows)
+      value = this.processLogs(provider.chain, env, logRows)
     }
 
     return {
@@ -151,6 +158,7 @@ export class EventHandler implements Handler {
 
   processLogs(
     longChain: string,
+    env: BlipEnv,
     logRows: LogRow[],
   ): ContractValue | ContractValue[] | undefined {
     const select = ensureArray(this.definition.select ?? [])
@@ -158,7 +166,7 @@ export class EventHandler implements Handler {
     const extractArray = this.definition.set !== undefined
     if (this.definition.set !== undefined) {
       const setActions = ensureArray(this.definition.set)
-      logRows = this.executeSets(longChain, logRows, setActions)
+      logRows = this.executeSets(longChain, env, logRows, setActions)
     } else if (this.definition.add !== undefined) {
       const addActions = ensureArray(this.definition.add)
       const removeActions = ensureArray(this.definition.remove ?? [])
@@ -175,6 +183,7 @@ export class EventHandler implements Handler {
 
       logRows = this.executeAddRemove(
         longChain,
+        env,
         logRows,
         addActions,
         removeActions,
@@ -198,6 +207,7 @@ export class EventHandler implements Handler {
 
   executeSets(
     longChain: string,
+    env: BlipEnv,
     logs: LogRow[],
     setActions: EventHandlerAction[],
   ): LogRow[] {
@@ -205,7 +215,7 @@ export class EventHandler implements Handler {
 
     for (const entry of logs) {
       const keep = setActions.some((action) =>
-        evaluateAction(longChain, entry, action),
+        evaluateAction(longChain, env, entry, action),
       )
       if (!keep) {
         continue
@@ -219,6 +229,7 @@ export class EventHandler implements Handler {
 
   executeAddRemove(
     longChain: string,
+    env: BlipEnv,
     logs: LogRow[],
     addActions: EventHandlerAction[],
     removeActions: EventHandlerAction[],
@@ -228,10 +239,10 @@ export class EventHandler implements Handler {
 
     for (const entry of logs) {
       const add = addActions.some((action) =>
-        evaluateAction(longChain, entry, action),
+        evaluateAction(longChain, env, entry, action),
       )
       const remove = removeActions.some((action) =>
-        evaluateAction(longChain, entry, action),
+        evaluateAction(longChain, env, entry, action),
       )
 
       assert(
@@ -304,6 +315,7 @@ async function fetchLogs(
 
 function evaluateAction(
   longChain: string,
+  env: BlipEnv,
   log: LogRow,
   { event, where }: EventHandlerAction,
 ) {
@@ -313,7 +325,7 @@ function evaluateAction(
 
   return (
     eventMatch &&
-    executeBlip(prefixAddresses(longChain, log.value), where ?? true)
+    executeBlip(prefixAddresses(longChain, log.value), where ?? true, env)
   )
 }
 

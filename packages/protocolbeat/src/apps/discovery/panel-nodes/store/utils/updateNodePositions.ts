@@ -33,19 +33,9 @@ export function updateNodePositions(
   for (const node of nextState.nodes) {
     const previousNode = previousNodes.get(node.id)
     const start = nextState.positionsBeforeMove[node.id]
-    const hiddenFieldsHeight =
-      node.hiddenFields.length > 0 ? HIDDEN_FIELDS_FOOTER_HEIGHT : 0
-    const visibleFieldsCount = Math.max(
-      0,
-      node.fields.length - node.hiddenFields.length,
-    )
     const nextBox: Box = {
       width: node.box.width,
-      height:
-        HEADER_HEIGHT +
-        visibleFieldsCount * FIELD_HEIGHT +
-        BOTTOM_PADDING +
-        hiddenFieldsHeight,
+      height: getNodeHeight(node),
       x: start ? start.x + dx : node.box.x,
       y: start ? start.y + dy : node.box.y,
     }
@@ -185,21 +175,42 @@ function shiftSubnodes(
       node.subnodes.length > 0
         ? shiftSubnodes(node.subnodes, positions, dx, dy)
         : node.subnodes
+    const height = getNodeHeight(node)
+    const resized = height !== node.box.height
     if (start !== undefined) {
       changed = true
       return {
         ...node,
-        box: { ...node.box, x: start.x + dx, y: start.y + dy },
+        box: { ...node.box, x: start.x + dx, y: start.y + dy, height },
         subnodes: movedSubnodes,
       }
     }
-    if (movedSubnodes !== node.subnodes) {
+    if (movedSubnodes !== node.subnodes || resized) {
       changed = true
-      return { ...node, subnodes: movedSubnodes }
+      return {
+        ...node,
+        box: resized ? { ...node.box, height } : node.box,
+        subnodes: movedSubnodes,
+      }
     }
     return node
   })
   return changed ? next : subnodes
+}
+
+function getNodeHeight(node: Node): number {
+  const hiddenFieldsHeight =
+    node.hiddenFields.length > 0 ? HIDDEN_FIELDS_FOOTER_HEIGHT : 0
+  const visibleFieldsCount = Math.max(
+    0,
+    node.fields.length - node.hiddenFields.length,
+  )
+  return (
+    HEADER_HEIGHT +
+    visibleFieldsCount * FIELD_HEIGHT +
+    BOTTOM_PADDING +
+    hiddenFieldsHeight
+  )
 }
 
 function indexSubnodes(

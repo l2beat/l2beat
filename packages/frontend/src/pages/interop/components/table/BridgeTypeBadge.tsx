@@ -7,7 +7,7 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { cn } from '~/utils/cn'
 import {
-  INTEROP_TYPE_TO_BG_COLOR,
+  INTEROP_TYPE_TO_BADGE_BG_COLOR,
   TRANSFER_TYPE_DISPLAY,
 } from '../../utils/display'
 
@@ -29,7 +29,7 @@ export function BridgeTypeBadge({
       <TooltipTrigger asChild>
         <Badge
           className={cn(
-            INTEROP_TYPE_TO_BG_COLOR[bridgeType],
+            INTEROP_TYPE_TO_BADGE_BG_COLOR[bridgeType],
             'cursor-pointer whitespace-nowrap text-white uppercase',
             className,
           )}

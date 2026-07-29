@@ -1,8 +1,8 @@
 {
   "name": "molten",
   "timestamp": 1782746641,
-  "configHash": "0xfd7dd88e42225e13a9c91943c35dd6d53c7270a80461369d28c2b22d2d0dd40f",
-  "sharedModules": ["shared-sp1", "blobstream"],
+  "configHash": "0x03c8558b98b2769529751b8d1bc3b97e4dfd24799ced399597a73e9aad60b8d2",
+  "sharedModules": ["shared-sp1"],
   "entries": [
     {
       "address": "arb1:0x00B96a8454dc757240e475B5e6e7DcAAf401930f",
@@ -1291,6 +1291,13 @@
       "address": "arb1:0xA63f3De629c7DA2989a1ae4429d48F98ad164e5B",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "ArbitrumBlobstream",
+      "address": "arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "blobstream"
     },
     {
       "address": "arb1:0xa8973BDEf20fe4112C920582938EF2F022C911f5",
@@ -2657,7 +2664,7 @@
     "orbitstack/Inbox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProofEntry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProver0": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "orbitstack/OneStepProverHostIo_Celestia": "0xdfb89dfaf2aa0cc0cb0a1be0072f20b1716aa3be62152610175c896630a839de",
+    "orbitstack/OneStepProverHostIo_Celestia": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProverMath": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProverMemory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/Outbox": "0x8dbaaf653890815197f4c39ef9d1000a8dfc0338ef34b273788a6d2087d4cfec",
@@ -2669,5 +2676,5 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "arbitrum": 478619686 },
-  "permissionsConfigHash": "0x6114be7753e5e0a1fb206ea996b8ecfda0cb44500f4cb860aa3ec6df2bcac927"
+  "permissionsConfigHash": "0x6d90512419b13f5b5073480fdd9d5c9738e5ec74e8da1ffbd757dbfeee166816"
 }

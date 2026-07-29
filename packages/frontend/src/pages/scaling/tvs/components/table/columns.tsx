@@ -90,6 +90,7 @@ export const getScalingTvsColumns = (
                   data.additionalTrustAssumptionsPercentage
                 }
                 change={data.change.total}
+                changePeriod={data.changePeriod}
                 associatedTokens={ctx.row.original.tvs.associatedTokens}
                 syncWarning={ctx.row.original.tvs.syncWarning}
               />
@@ -334,6 +335,7 @@ function BreakdownCell({
         <ValueSecuredCell
           value={data.breakdown[dataKey]}
           change={data.change[dataKey]}
+          changePeriod={data.changePeriod}
         />
       </SyncStatusWrapper>
     </TableLink>

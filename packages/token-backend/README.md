@@ -48,3 +48,7 @@ These documents MUST be kept up to date when their subjects change:
   the pipeline behind every human-driven write from token-UI (intents →
   plans → commands), and the rationale (visible blast radius +
   concurrency safety).
+- [Abstract token merging](../../docs/mdbook/specs/l2b_specs/token_db/abstract_token_merging.md) —
+  why duplicate abstract tokens arise, why an abstract token keeps
+  multiple CoinGecko entries, and how merging resolves relation
+  conflicts.

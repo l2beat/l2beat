@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "External-call executor used by the Dual Governance timelock. Its owner can make it call any target with arbitrary calldata and ETH.",
+  "category": "gov",
+  "fields": {
+    "owner": {
+      "permissions": [
+        { "type": "act" },
+        {
+          "type": "interact",
+          "description": "make arbitrary calls through this executor and transfer its ownership."
+        }
+      ]
+    }
+  }
+}

@@ -459,6 +459,8 @@ model InteropTransfer {
   @@index([isProcessed, srcValueUsd, dstValueUsd])
   @@index([type, duration, srcValueUsd, dstValueUsd])
   @@index([plugin, srcChain, dstChain, timestamp(sort: Desc), transferId(sort: Desc)])
+  @@index([srcAbstractTokenId, timestamp(sort: Desc)])
+  @@index([dstAbstractTokenId, timestamp(sort: Desc)])
 }
 
 model EcosystemToken {
@@ -478,16 +480,17 @@ model EcosystemToken {
 }
 
 model AbstractToken {
-  id                        String    @db.Char(6)
-  issuer                    String?   @db.VarChar(255)
-  symbol                    String    @db.VarChar(255)
-  category                  String?   @db.VarChar(255)
-  iconUrl                   String?   @db.VarChar(255)
-  coingeckoId               String?   @db.VarChar(255)
-  coingeckoListingTimestamp DateTime? @db.Timestamp(6)
-  comment                   String?   @db.Text
-  reviewed                  Boolean   @default(false)
-  isPriceUnreliable         Boolean   @default(false)
+  id                         String    @db.Char(6)
+  issuer                     String?   @db.VarChar(255)
+  symbol                     String    @db.VarChar(255)
+  category                   String?   @db.VarChar(255)
+  iconUrl                    String?   @db.VarChar(255)
+  coingeckoId                String?   @db.VarChar(255)
+  coingeckoListingTimestamp  DateTime? @db.Timestamp(6)
+  additionalCoingeckoEntries Json?
+  comment                    String?   @db.Text
+  reviewed                   Boolean   @default(false)
+  isPriceUnreliable          Boolean   @default(false)
 
   deployedTokens DeployedToken[]
 
@@ -540,6 +543,7 @@ model TokenDbHistory {
   userEmail    String?  @db.VarChar(255)
   commandType  String   @db.VarChar(64)
   command      Json
+  intent       Json?
   ingestionLog String?  @db.Text
 
   @@index([timestamp])

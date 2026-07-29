@@ -3,7 +3,10 @@ import { notUndefined, UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
+import {
+  calculatePercentageChange,
+  type PercentageChangePeriod,
+} from '~/utils/calculatePercentageChange'
 import { type ChartRange, optionToRange } from '~/utils/range/range'
 import { getActivitySyncState, type SyncState } from '../../utils/syncState'
 import { countPerSecond } from './utils/countPerSecond'
@@ -15,6 +18,7 @@ export type ActivityLatestUopsData = Record<
   {
     pastDayUops: number
     change: number
+    changePeriod: PercentageChangePeriod
     syncState: SyncState
   }
 >
@@ -75,6 +79,7 @@ export async function getActivityLatestUops(
           {
             pastDayUops,
             change: calculatePercentageChange(pastDayUops, sevenDaysAgoUops),
+            changePeriod: '7D',
             syncState,
           },
         ] as const
@@ -92,6 +97,7 @@ function getMockActivityLatestUopsData(
       {
         pastDayUops: 5,
         change: 0.1,
+        changePeriod: '7D',
         syncState: {
           isSynced: true,
           syncedUntil: UnixTime.now(),

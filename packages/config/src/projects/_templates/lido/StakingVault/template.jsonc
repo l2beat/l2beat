@@ -1,0 +1,44 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "StakingVault",
+  "description": "An isolated staking position that holds ETH for validators with 0x02 withdrawal credentials. The owner controls funds and validator operations, the depositor performs Beacon Chain deposits, and the node operator can force validator exits. Vaults normally use a beacon implementation but can irreversibly pin their current implementation.",
+  "category": "core",
+  "ignoreMethods": ["calculateValidatorWithdrawalFee"],
+  "ignoreRelatives": ["pendingOwner", "nodeOperator"],
+  "ignoreInWatchMode": ["availableBalance", "stagedBalance"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "withdraw ETH and ERC-20 tokens, pause or resume Beacon Chain deposits, request or trigger validator withdrawals, choose the depositor, transfer vault ownership, and irreversibly pin the vault implementation."
+        }
+      ]
+    },
+    "pendingOwner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "condition": "the address is non-zero",
+          "description": "accept ownership of the vault."
+        }
+      ]
+    },
+    "depositor": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "stage or unstage vault ETH and deposit it to validator keys on the Beacon Chain."
+        }
+      ]
+    },
+    "nodeOperator": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "force full EIP-7002 withdrawals for validators assigned to this vault."
+        }
+      ]
+    }
+  }
+}

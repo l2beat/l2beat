@@ -11,6 +11,7 @@
   - [Why there are NO foreign keys to DeployedToken](#why-there-are-no-foreign-keys-to-deployedtoken)
   - [Deleting a deployed token leaves its relations in place](#deleting-a-deployed-token-leaves-its-relations-in-place)
   - [Display implications](#display-implications)
+  - [Relations graph](#relations-graph)
   - [Human edits](#human-edits)
   - [Known limitations](#known-limitations)
 
@@ -41,7 +42,8 @@ where our interpretation (two different abstract tokens) disagrees with the
 observations (non-swapping transfers between them). The whole point of
 collecting relations is to surface those disagreements — for example as a
 graph where an edge between tokens of different abstract tokens is drawn
-red, telling a human "these abstract tokens should probably be merged".
+red, telling a human "these abstract tokens should probably be merged"
+(see [abstract token merging](./abstract_token_merging.md)).
 
 It follows that observation recording must never be gated on the
 interpretation being consistent. Any design where a token-level conflict
@@ -246,27 +248,60 @@ read-time cost is the entire price paid for the foreign-key decision above.
 
 ## Relations graph
 
-The graph page in token-ui is a catalogue-level view of the relation
-observations. A node is a deployed token, identified by `(chain, address)`
-and labelled with the deployed token's symbol. A directed edge is an
-observed token relation; hovering it shows its endpoints, plugin, and
-bridge type. Node colors distinguish chains. The layout is force-directed;
-nodes can be dragged and the canvas can be panned or zoomed.
+The graph page in token-ui is a view of the relation observations resolved
+against the current token catalogue. Every observed `(chain, address)`
+endpoint is a node, including endpoints that do not yet have a
+`DeployedToken` row. Catalogued nodes are green and labelled with their
+deployed token symbol; uncatalogued nodes are orange and use a shortened
+address as their label. An edge is an observed token relation:
+burn-and-mint edges are blue and non-directional, while lock-and-mint edges are
+pink and preserve the observed `tokenFrom` to `tokenTo` direction with an
+arrowhead. Nodes can be dragged and the canvas can be panned or zoomed. Edge
+stroke widths remain constant while zooming, and node visuals stop growing
+beyond 2x zoom so additional zoom creates useful space between them. Above
+2.5x zoom, each edge shows its relation plugin name at its midpoint.
 
-Relations can exist before either endpoint is catalogued. The graph
-currently omits a relation unless both endpoints resolve to deployed
-tokens, and omits nodes left without a displayed relation. The observation
-stays in `TokenRelation` and can appear automatically once its missing
-endpoint is catalogued.
+Before drawing, the UI treats every connected component as a cluster and
+sorts the clusters by endpoint count (largest first, with a stable id
+tie-break). Each cluster gets its own force simulation, which is run to
+completion in memory so clusters do not repel each other and users never see
+the graph settle. The finished clusters are placed left-to-right in a
+square-ish grid, starting at the top-left, then the whole grid is fitted into
+the viewport. At low zoom levels each cluster is overlaid with its most common
+catalogued deployed-token symbol. The overlay stays readable through the
+mid-zoom range, then shrinks and fades at extreme zoom-out to avoid overlapping
+nearby cluster labels.
 
-An edge is red when both endpoints are assigned to abstract tokens and
-those abstract token IDs differ. This is a conflict between the observed
-non-swapping relation and the current catalogue assignments. An unassigned
-endpoint is not considered a conflict.
+Clicking a node keeps the node, its incoming/outgoing edges, and its neighbors
+prominent while dimming the rest of the graph. A non-modal details panel loads
+that one deployed token and its abstract token on demand; the initial graph
+payload does not contain full token records. The panel also lists the incoming
+and outgoing relations already present in the graph rather than issuing a
+second database query for the neighborhood. Uncatalogued nodes show their raw
+endpoint information instead of token details.
 
-The graph query reads only relation identity fields. It deliberately
-excludes the full transfer evidence JSON used by deployed-token relation
-details, because the graph neither displays nor interprets that evidence.
+Edges are independently hoverable and clickable. Clicking one highlights its
+two endpoints and loads only that relation's full transfer evidence, including
+source and destination transaction hashes used for explorer links. This keeps
+the evidence JSON out of the initial graph response.
+
+The graph header can search catalogued deployed tokens by symbol, chain, or
+address using the already-loaded graph payload. Choosing a result selects the
+node, opens its existing details panel, and animates the viewport to a readable
+zoom around it. Full token and abstract-token details remain selection-time
+queries rather than being added to the initial payload.
+
+An edge is an assignment anomaly when both endpoints are assigned to abstract
+tokens and those abstract token IDs differ. An unassigned or uncatalogued
+endpoint is not considered an anomaly. The default view keeps the bridge-type
+colors and does not draw anomalies red. An anomaly switch changes conflicting
+edges to red and mutes other edges to gray, so anomaly inspection does not
+compete with the default bridge-mechanism view.
+
+The initial graph query reads only relation identity fields and the minimal
+endpoint display data. It deliberately excludes full deployed/abstract token
+records and the transfer evidence JSON; dedicated selection-time queries fetch
+one node or one relation detail record when requested.
 
 ## Human edits
 

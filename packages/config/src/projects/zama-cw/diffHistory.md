@@ -1,3 +1,45 @@
+Generated with discovered.json: 0xb4c2e2ca4fa6219d510415bfc0f6ea329ea208dd
+
+# Diff at Thu, 23 Jul 2026 14:09:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@efd03446560a8d585747f124c71622cbfa33fca4 block: 1783927795
+- current timestamp: 1784815701
+
+## Description
+
+The Safe signer set changed from 2-of-3 to 3-of-5, removing two signers and adding four.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    EOA  (eth:0x4202860Fa6afAF3e2977cD139Ac693a05e4f9450)
+    +++ description: None
+```
+
+```diff
+    contract Safe (eth:0x69E55790880d0ABa56E48Ee1f7fc3834b0F5c223) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x5e4f2616AA570d60EC6D7BBF08D070fb81353553"
+      values.$members.1:
++        "eth:0x1E3eafD783D47c36dC5CD529721E6cc16456Cc0F"
+      values.$members.1:
+-        "eth:0x7df0Fe803832BB3Ca8906a6e49968C2421C1aE9B"
++        "eth:0x0BBc1d7ceB10a0a00dD3aeBcA37e85D60d4a1103"
+      values.$members.2:
+-        "eth:0x4202860Fa6afAF3e2977cD139Ac693a05e4f9450"
++        "eth:0xFa4902732675Ee16a508487E4fDcb910fFb00A20"
+      values.$threshold:
+-        2
++        3
+      values.multisigThreshold:
+-        "2 of 3 (67%)"
++        "3 of 5 (60%)"
+    }
+```
+
 Generated with discovered.json: 0xabfdb4e50f19d35c07b5b6d3642cd689e8a492c9
 
 # Diff at Mon, 13 Jul 2026 09:17:17 GMT:

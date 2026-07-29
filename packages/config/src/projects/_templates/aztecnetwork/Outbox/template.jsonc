@@ -5,7 +5,6 @@
   "fields": {
     "ROLLUP": {
       "description": "The address of the core Rollup contract that possesses the permission to insert new L2 to L1 message tree roots.",
-      "template": "aztecnetwork/Rollup",
       "permissions": [
         {
           "type": "interact",

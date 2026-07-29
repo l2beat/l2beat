@@ -24,7 +24,7 @@ Restore data from a remote database into your local DB, either by feature (`db-r
 ```
 
 Run without arguments to list the available features. Currently:
-`da`, `liveness`, `tvs`, `activity`, `shared`, `interop`, `interop-aggregates`, `tokens-ui`, `tracked-txs`, `privacy`.
+`da`, `liveness`, `tvs`, `activity`, `shared`, `interop`, `interop-aggregates`, `token-db`, `tracked-txs`, `privacy`.
 
 ## Restore by table
 

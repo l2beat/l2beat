@@ -28,7 +28,10 @@ import {
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { StarkexDAC } from '../../templates/starkex-template'
-import { getSHARPBootloaderHashes } from '../starknet/starknet'
+import {
+  getAcceptedSHARPVerifierChain,
+  getSHARPBootloaderHashes,
+} from '../starknet/starknet'
 
 const discovery = new ProjectDiscovery('sorare')
 const freezeGracePeriod = discovery.getContractValue<number>(
@@ -194,7 +197,7 @@ export const sorare: ScalingProject = {
     ],
     programHashes: sorareProgramHashes.map((el) => PROGRAM_HASHES(el)),
     // stone verifier address, could be deduced from analyzing trx traces
-    zkVerifiers: [discovery.getContract('SHARPVerifier_2024_10').address],
+    zkVerifiers: getAcceptedSHARPVerifierChain().factRegistries,
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [

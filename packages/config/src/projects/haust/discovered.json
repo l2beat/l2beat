@@ -1,8 +1,7 @@
 {
   "name": "haust",
   "timestamp": 1762959021,
-  "configHash": "0xe8eb5d0e114d750d186a85737ca4cdb174e65a9a2fbe112fab7de28722a9bac2",
-  "sharedModules": ["shared-polygon-cdk"],
+  "configHash": "0x777c4f92b16d948e68e379b2195af633bf4738038ba84e084e3da0cd02ef7329",
   "entries": [
     {
       "name": "AgglayerGateway",

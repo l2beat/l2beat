@@ -18,6 +18,5 @@
     "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83": {
       "ignoreRelatives": ["bEIGEN"]
     }
-  },
-  "sharedModules": ["shared-eigenlayer"]
+  }
 }

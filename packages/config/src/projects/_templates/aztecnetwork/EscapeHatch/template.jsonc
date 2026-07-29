@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Provides a fallback mechanism for block production if the primary sequencer committee fails or censors. The committee is circumvented by allowing proposals by anyone who is able to post a large bond of {{getBondSizeFmt}} AZTEC. It maintains a set of bonded candidates and deterministically selects a designated proposer for a given 'hatch' period using RANDAO. If the designated proposer fails to propose and prove, their bond is slashed by {{getFailedHatchPunishmentFmt}} AZTEC. The minimum tax deducted from their bond is {{getWithdrawalTaxFmt}} AZTEC, even if the proposal is successful. The escape hatch regularly opens every {{getFrequency}} epochs, given there are any bonded candidates.",
+  "description": "Provides a fallback mechanism for block production if the primary sequencer committee fails or censors. Candidates post a bond of {{getBondSizeFmt}} AZTEC and enter the candidate set. For each hatch, the contract snapshots the eligible set and uses RANDAO to select one designated proposer; posting a bond does not grant immediate proposal rights. If the designated proposer fails to propose and prove, their bond is slashed by {{getFailedHatchPunishmentFmt}} AZTEC. The minimum tax deducted from their bond is {{getWithdrawalTaxFmt}} AZTEC, even if the proposal is successful. The escape hatch regularly opens every {{getFrequency}} epochs, given there are any eligible bonded candidates.",
   "ignoreMethods": [
     "getCandidateAtIndex",
     "getCandidateAtIndexForHatch",
@@ -72,7 +72,6 @@
     },
     "getRollup": {
       "description": "The rollup contract that this escape hatch can fallback-propose for.",
-      "template": "aztecnetwork/Rollup",
       "permissions": [
         {
           "type": "interact",

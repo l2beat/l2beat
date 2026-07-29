@@ -1,6 +1,6 @@
 {
   "name": "zksync",
-  "timestamp": 1778580426,
+  "timestamp": 1784806565,
   "configHash": "0x3da6ed999e85a500837cf4d150aac50656dbcdd1a54ee4041251c7853091e1d5",
   "entries": [
     {
@@ -39,11 +39,6 @@
         "eth:0x002A5dc50bbB8d5808e418Aeeb9F060a2Ca17346": "Proxy",
         "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F": "GnosisSafe"
       }
-    },
-    {
-      "address": "eth:0x050b37a12451F188c7bA53D48b8A1adE6D138E71",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "ZkSyncLiteSunsetClaimDistributorL1",
@@ -177,7 +172,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 447,
+        "nonce": 450,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -187,11 +182,6 @@
     },
     {
       "address": "eth:0x2A0a81e257a2f5D6eD4F07b81DbDa09F107bd027",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -310,19 +300,16 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x45F9AfCf9565051344aFb36e665f4d7bb2d18415",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x4964D00fA975a7346ee6196a94b07c01ed1cD3CE",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x4d1E3089042Ab3A93E03CA88B566b99Bd22438C6",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "Matter Labs Multisig",
+      "address": "eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-zk-stack"
     },
     {
       "address": "eth:0x4F0eB7DBcF5410C7bA0Ad8D131956f0194Ea803B",
@@ -351,11 +338,6 @@
         "eth:0x5290E9582B4FB706EaDf87BB1c129e897e04d06D": "Proxy",
         "eth:0x57B09100e6160503aBDEBC76012b6c358eA4e462": "Verifier"
       }
-    },
-    {
-      "address": "eth:0x702caCafA54B88e9c54449563Fb2e496e85c78b7",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0x71E805aB236c945165b9Cd0bf95B9f2F0A0488c3",
@@ -649,16 +631,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xC9474de11503D63D892cEDD12d6B93f6A25a9cbF",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xD613b3a3924D0dE9B4a352ca0669e743cBC3C4AA",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xd6970196Ff8CeF3Cdd61256C1841A085EEcD3ae8",
       "type": "EOA",
       "proxyType": "EOA"
@@ -717,23 +689,14 @@
       "values": {
         "$immutable": false,
         "$implementation": "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
-        "$members": [
-          "eth:0x4964D00fA975a7346ee6196a94b07c01ed1cD3CE",
-          "eth:0x050b37a12451F188c7bA53D48b8A1adE6D138E71",
-          "eth:0xeF4CcBDf8f91A001164149558106737A568e4912",
-          "eth:0xC9474de11503D63D892cEDD12d6B93f6A25a9cbF",
-          "eth:0x45F9AfCf9565051344aFb36e665f4d7bb2d18415",
-          "eth:0x702caCafA54B88e9c54449563Fb2e496e85c78b7",
-          "eth:0xD613b3a3924D0dE9B4a352ca0669e743cBC3C4AA",
-          "eth:0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc"
-        ],
-        "$threshold": 5,
+        "$members": ["eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828"],
+        "$threshold": 1,
         "domainSeparator": "0xcd86f82218dc46b5501da06e0b96a9cf73cd8f35153e9da3a481f79b6be5ff63",
         "getModules": [],
         "GnosisSafe_modules": [],
-        "multisigThreshold": "5 of 8 (63%)",
+        "multisigThreshold": "1 of 1 (100%)",
         "NAME": "Gnosis Safe",
-        "nonce": 130,
+        "nonce": 131,
         "VERSION": "1.1.1"
       },
       "implementationNames": {
@@ -753,11 +716,6 @@
     },
     {
       "address": "eth:0xee8AE1F1B4B1E1956C8Bda27eeBCE54Cf0bb5eaB",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xeF4CcBDf8f91A001164149558106737A568e4912",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1179,6 +1137,6 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 25078333 },
-  "permissionsConfigHash": "0xe838bc75e32d4257943c2ad8a166a887e79bbedbb3114d899a22d5db0fa87606"
+  "usedBlockNumbers": { "ethereum": 25595172 },
+  "permissionsConfigHash": "0x28e548c32351604c6fcc421b5779c1173373afe1b91d778ca361092fe26a4a5c"
 }

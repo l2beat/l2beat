@@ -15,6 +15,7 @@ import { IconUnlinked } from '../../../icons/IconUnliked'
 import { toShortenedAddress } from '../../../utils/toShortenedAddress'
 import { useProjectQueryOptions } from '../hooks/projectQuery'
 import { useStore as useNodesStore } from '../panel-nodes/store/store'
+import { getGraphProjection } from '../panel-nodes/store/utils/graphProjection'
 import { useGlobalSettingsStore } from '../store/global-settings-store'
 import { usePanelStore } from '../store/panel-store'
 
@@ -168,7 +169,7 @@ function AddressEntry({ entry }: { entry: ApiAddressEntry }) {
     (s) => s.markUnreachableEntries,
   )
   const isHidden = useNodesStore((state) =>
-    state.hidden.includes(entry.address),
+    getGraphProjection(state.nodes).hiddenNodeIds.has(entry.address),
   )
   const isGrayedOut = isHidden || (markUnreachableEntries && !entry.isReachable)
 

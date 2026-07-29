@@ -1,6 +1,7 @@
 export const pageLoaders = {
   IconPreviewPage: async () =>
     (await import('./dev/icons/IconPreviewPage')).IconPreviewPage,
+  HomePage: async () => (await import('./home/HomePage')).HomePage,
   ScalingSummaryPage: async () =>
     (await import('./scaling/summary/ScalingSummaryPage')).ScalingSummaryPage,
   ScalingRiskPage: async () =>
@@ -101,6 +102,8 @@ export const pageLoaders = {
       .EcosystemProjectPage,
   GovernancePage: async () =>
     (await import('./governance/GovernancePage')).GovernancePage,
+  NativeRollupsPage: async () =>
+    (await import('./native-rollups/NativeRollupsPage')).NativeRollupsPage,
   EthereumConnectPage: async () =>
     (await import('./governance/ethereum-connect/EthereumConnectPage'))
       .EthereumConnectPage,

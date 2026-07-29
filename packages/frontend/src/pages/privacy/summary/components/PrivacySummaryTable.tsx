@@ -190,7 +190,11 @@ const columns = [
     id: 'exitWindow',
     header: 'Exit',
     cell: (ctx) => (
-      <PrivacyAssessmentCell value={ctx.row.original.exitWindow} showValue />
+      <PrivacyAssessmentCell
+        value={ctx.row.original.exitWindow}
+        showValue
+        walkawayTest={ctx.row.original.exitWindow.walkawayTest}
+      />
     ),
     sortDescFirst: true,
     sortUndefined: 'last',

@@ -2,9 +2,10 @@ import {
   type DiffHistoryEntry,
   DiffHistoryParser,
   type DiffHistorySectionKind,
+  hashJson,
 } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import { existsSync, readFileSync } from 'fs'
+import { existsSync, readFileSync, statSync } from 'fs'
 import path from 'path'
 import {
   countDiffChanges,
@@ -22,6 +23,7 @@ export interface DiscoveryUpdateSection {
 }
 
 export interface DiscoveryUpdate {
+  id: string
   date: string
   timestamp: number | null
   description: string
@@ -41,6 +43,11 @@ const RECENT_UPDATES_WINDOW_SECONDS = 7 * 24 * 60 * 60
 
 const diffHistoryParser = new DiffHistoryParser()
 
+const parseCache = new Map<
+  string,
+  { mtimeMs: number; updates: DiscoveryUpdate[] }
+>()
+
 export function getDiscoveryUpdates(
   projectId: string,
   limit = DEFAULT_LIMIT,
@@ -49,12 +56,22 @@ export function getDiscoveryUpdates(
     return []
   }
 
-  const content = readDiffHistoryContent(projectId)
-  if (content === undefined) {
+  const diffHistoryPath = getDiffHistoryPath(projectId)
+  if (!existsSync(diffHistoryPath)) {
     return []
   }
 
-  return parseDiscoveryUpdates(content, limit)
+  const mtimeMs = statSync(diffHistoryPath).mtimeMs
+  const cached = parseCache.get(projectId)
+  if (cached && cached.mtimeMs === mtimeMs) {
+    return cached.updates.slice(0, limit)
+  }
+
+  const content = readFileSync(diffHistoryPath, 'utf-8')
+  const updates = parseDiscoveryUpdates(content, Number.POSITIVE_INFINITY)
+  parseCache.set(projectId, { mtimeMs, updates })
+
+  return updates.slice(0, limit)
 }
 
 export function parseDiscoveryUpdates(
@@ -65,11 +82,11 @@ export function parseDiscoveryUpdates(
 
   for (const entry of diffHistoryParser.parse(content)) {
     const update = toPublicDiscoveryUpdate(entry)
-    if (update !== null) {
-      updates.push(update)
-      if (updates.length >= limit) {
-        break
-      }
+    if (update === null) continue
+
+    updates.push(update)
+    if (updates.length >= limit) {
+      break
     }
   }
 
@@ -87,19 +104,13 @@ export function countRecentDiscoveryUpdates(
   ).length
 }
 
-function readDiffHistoryContent(projectId: string): string | undefined {
-  const diffHistoryPath = path.join(
+function getDiffHistoryPath(projectId: string): string {
+  return path.join(
     process.cwd(),
     '../config/src/projects',
     projectId,
     'diffHistory.md',
   )
-
-  if (!existsSync(diffHistoryPath)) {
-    return undefined
-  }
-
-  return readFileSync(diffHistoryPath, 'utf-8')
 }
 
 function toPublicDiscoveryUpdate(
@@ -131,6 +142,7 @@ function toPublicDiscoveryUpdate(
   const bodies = sections.map((section) => section.body)
 
   return {
+    id: getUpdateId(entry),
     date: entry.date,
     timestamp: getTimestamp(entry),
     description: entry.description,
@@ -138,6 +150,19 @@ function toPublicDiscoveryUpdate(
     changeCount: bodies.reduce((sum, body) => sum + countDiffChanges(body), 0),
     sections,
   }
+}
+
+function getUpdateId(entry: DiffHistoryEntry): string {
+  const fingerprint = hashJson([
+    entry.date,
+    entry.discoveryHash,
+    entry.current?.kind ?? null,
+    entry.current?.value ?? null,
+    entry.description,
+    entry.sections.flatMap((section) => [section.kind, section.body]),
+  ])
+
+  return fingerprint.slice(2, 10)
 }
 
 function getTimestamp(entry: DiffHistoryEntry): number | null {

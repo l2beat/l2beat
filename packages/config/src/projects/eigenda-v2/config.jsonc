@@ -3,5 +3,5 @@
   "name": "eigenda-v2",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [],
-  "sharedModules": ["eigenda", "shared-eigenlayer"]
+  "sharedModules": ["eigenda"]
 }

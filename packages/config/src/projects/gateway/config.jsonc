@@ -3,7 +3,6 @@
   "name": "gateway",
   "archived": true,
   "import": ["../globalConfig.jsonc"],
-  "sharedModules": ["shared-zk-stack"],
   "initialAddresses": [
     "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
     "gateway:0x0000000000000000000000000000000000008008" // L1Messenger

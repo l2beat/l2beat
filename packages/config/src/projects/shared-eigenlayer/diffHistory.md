@@ -1,3 +1,58 @@
+Generated with discovered.json: 0x746766deeeeb6b793a6a9c550c057ba227280c80
+
+# Diff at Wed, 15 Jul 2026 13:40:40 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@40c68fc8d6e39f5b4f69bb2e62b69938a949b435 block: 1783434691
+- current timestamp: 1784122710
+
+## Description
+
+RewardsCoordinator `rewardsUpdater` rotated to a new EOA. This role can submit and disable distribution roots for all rewards routed through the coordinator. EigenLayerOperationsMultisig2 also rotated one signer.
+
+## Watched changes
+
+```diff
+    contract EigenLayerOperationsMultisig2 (eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F) [GnosisSafe] {
+    +++ description: None
+      values.$members.2:
+-        "eth:0xC6F9BDEEdEf78c2Cd146cdA31C82F76ca14A2927"
++        "eth:0x02088a44674Ece0a5cd03ed032fFaf4a09235fE5"
+    }
+```
+
+```diff
+    contract RewardsCoordinator (eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda) [N/A] {
+    +++ description: Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.
+      values.rewardsUpdater:
+-        "eth:0x1fCDde04047F63560AEC55383b3Cd33db3C2eA80"
++        "eth:0x604238AB35438f7c46066Aae988FB07CF98f0256"
+    }
+```
+
+Generated with discovered.json: 0xe5af2362202ac50b52f674166e4e578b8d131a94
+
+# Diff at Tue, 14 Jul 2026 14:39:39 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@40c68fc8d6e39f5b4f69bb2e62b69938a949b435 block: 1783434691
+- current timestamp: 1784039848
+
+## Description
+
+RewardsCoordinator `rewardsUpdater` rotated to a new EOA. This role can submit and disable distribution roots for all rewards routed through the coordinator.
+
+## Watched changes
+
+```diff
+    contract RewardsCoordinator (eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda) [N/A] {
+    +++ description: Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.
+      values.rewardsUpdater:
+-        "eth:0x1fCDde04047F63560AEC55383b3Cd33db3C2eA80"
++        "eth:0x604238AB35438f7c46066Aae988FB07CF98f0256"
+    }
+```
+
 Generated with discovered.json: 0x743752e20ad8ae04691c71098694874f07b81c07
 
 # Diff at Tue, 07 Jul 2026 14:33:44 GMT:
@@ -13334,4 +13389,3 @@ Initial discovery.
     contract GnosisSafe (0xFEA47018D632A77bA579846c840d5706705Dc598) {
     }
 ```
-

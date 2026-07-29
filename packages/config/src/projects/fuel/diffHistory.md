@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x00c0a1cb5de688bb7ef9abd55d46cb79640e2b49
+
+# Diff at Wed, 15 Jul 2026 14:00:21 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@40c68fc8d6e39f5b4f69bb2e62b69938a949b435 block: 1783335748
+- current timestamp: 1784123940
+
+## Description
+
+FuelMessagePortal is no longer paused.
+
+## Watched changes
+
+```diff
+    contract FuelMessagePortal (eth:0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf) [N/A] {
+    +++ description: None
+      values.paused:
+-        true
++        false
+    }
+```
+
 Generated with discovered.json: 0x779c5a0e73d864ab1e1ea99cd48d717c13971aa3
 
 # Diff at Mon, 06 Jul 2026 11:03:37 GMT:
@@ -1360,4 +1383,3 @@ Initial discovery.
     contract FuelChainState (0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130)
     +++ description: None
 ```
-

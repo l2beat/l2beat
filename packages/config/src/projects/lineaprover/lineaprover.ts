@@ -94,25 +94,41 @@ export const lineaprover: BaseProject = {
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },
+      // {
+      //   hash: '0xd92b8281296cbfe1963093c23f9fb7fef6f9debfa9115622ca412c32b848aa52',
+      //   name: 'Linea Plonk Type 1',
+      //   sourceLink:
+      //     'https://github.com/Consensys/linea-monorepo/tree/988bbce27b61a5e5a29913468d06d0a124dea8e4/prover',
+      //   proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+      //   knownDeployments: [
+      //     {
+      //       address: ChainSpecificAddress.fromLong(
+      //         'ethereum',
+      //         '0x0D0f070386edC441A63fB8FAe8FB937Bbd88c5Cb',
+      //       ),
+      //     },
+      //   ],
+      //   verificationStatus: 'successful',
+      //   verificationSteps: readProjectMarkdown(
+      //     'lineaprover',
+      //     'verificationSteps-0xd92b8281',
+      //   ),
+      //   description:
+      //     'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
+      // },
       {
-        hash: '0xd92b8281296cbfe1963093c23f9fb7fef6f9debfa9115622ca412c32b848aa52',
+        hash: '0x6ffac481bc247d3ebf14238058f222f104b3b0c0d1617625c41b859045984621',
         name: 'Linea Plonk Type 1',
-        sourceLink:
-          'https://github.com/Consensys/linea-monorepo/tree/988bbce27b61a5e5a29913468d06d0a124dea8e4/prover',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(
               'ethereum',
-              '0x0D0f070386edC441A63fB8FAe8FB937Bbd88c5Cb',
+              '0x09ac9f7E5Fb37e241e0B1e52aaF01eFE0a488a77',
             ),
           },
         ],
-        verificationStatus: 'successful',
-        verificationSteps: readProjectMarkdown(
-          'lineaprover',
-          'verificationSteps-0xd92b8281',
-        ),
+        verificationStatus: 'notVerified',
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },

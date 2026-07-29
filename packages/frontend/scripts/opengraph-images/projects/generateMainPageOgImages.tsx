@@ -7,6 +7,9 @@ import { MainPageOpengraphImage } from '~/components/opengraph-image/MainPage'
 
 const mainPages: MainPage[] = [
   {
+    title: 'Home',
+  },
+  {
     type: 'scaling',
     title: 'Summary',
   },
@@ -128,6 +131,9 @@ const mainPages: MainPage[] = [
   },
   {
     title: 'DA Risk Framework',
+  },
+  {
+    title: 'Native Rollups',
   },
 ]
 

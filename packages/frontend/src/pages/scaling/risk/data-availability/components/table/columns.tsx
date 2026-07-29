@@ -1,12 +1,15 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import compact from 'lodash/compact'
+import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { CombinedGrissiniCell } from '~/components/rosette/grissini/CombinedGrissiniCell'
 import { ProofSystemCell } from '~/components/table/cells/ProofSystemCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
+import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { getScalingCommonProjectColumns } from '~/components/table/common-project-columns/ScalingCommonProjectColumns'
 import { TableLink } from '~/components/table/TableLink'
 import type { ScalingRiskDaEntry } from '~/server/features/scaling/risks/data-availability/getScalingRiskDaEntries'
+import { formatBytes } from '~/utils/number-format/formatBytes'
 
 const columnHelper = createColumnHelper<ScalingRiskDaEntry>()
 
@@ -18,6 +21,36 @@ export function getScalingRiskDataAvailabilityColumns(
       columnHelper,
       (row) => `/scaling/projects/${row.slug}`,
     ),
+    columnHelper.accessor((entry) => entry.dataPosted?.pastDay, {
+      id: 'dataPosted',
+      header: 'Past day data posted',
+      cell: (ctx) => {
+        const data = ctx.row.original.dataPosted
+        if (!data) {
+          return <NoDataBadge />
+        }
+
+        return (
+          <TableLink
+            href={`/scaling/projects/${ctx.row.original.slug}#data-posted`}
+          >
+            <ValueWithPercentageChange
+              change={data.change}
+              changePeriod={data.changePeriod}
+              className="font-medium text-xs md:text-sm"
+            >
+              {formatBytes(data.pastDay)}
+            </ValueWithPercentageChange>
+          </TableLink>
+        )
+      },
+      sortUndefined: 'last',
+      meta: {
+        align: 'right',
+        tooltip:
+          'The data posted by the project to the DA layer over the past day, together with a % change compared to 7D ago.',
+      },
+    }),
     !hideProofSystem &&
       columnHelper.accessor('proofSystem', {
         header: 'Proof system',

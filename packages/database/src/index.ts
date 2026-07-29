@@ -9,7 +9,10 @@ export type {
   AbstractTokenRecord,
   AbstractTokenUpdateable,
 } from './repositories/AbstractTokenRepository'
-export type { ActivityRecord } from './repositories/ActivityRepository'
+export type {
+  ActivityRecord,
+  ActivityTotals,
+} from './repositories/ActivityRepository'
 export type {
   AggregatedInteropDeployedTokenRecord,
   AggregatedInteropDeployedTokenStats,
@@ -71,6 +74,7 @@ export type {
   InteropPluginSyncedRangeRecord,
 } from './repositories/InteropPluginSyncedRangeRepository'
 export type { InteropPluginSyncStateRecord } from './repositories/InteropPluginSyncStateRepository'
+export type { InteropRecentPriceRequest } from './repositories/InteropRecentPricesRepository'
 export {
   hasAnyInteropTransferFinancialsFilter,
   type InteropMissingTokenInfo,

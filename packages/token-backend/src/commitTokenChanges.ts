@@ -5,6 +5,7 @@ import type {
 } from '@l2beat/database'
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import type { Command } from './commands'
+import type { Intent } from './intents'
 
 /**
  * Evidence justifying a deployed token's abstract-token assignment. Persisted
@@ -62,7 +63,7 @@ export function manualProof(user: string): AbstractTokenAssignmentProof {
  * commands is persisted on every resulting history row.
  */
 export type WriteSource =
-  | { kind: 'manual'; user: string }
+  | { kind: 'manual'; user: string; intent: Intent | null }
   | { kind: 'ingestion'; log: string }
 
 /**
@@ -132,6 +133,7 @@ function buildHistoryEntry(
     userEmail: source.kind === 'manual' ? source.user : null,
     commandType: command.type,
     command,
+    intent: source.kind === 'manual' ? source.intent : null,
     ingestionLog: source.kind === 'ingestion' ? source.log : null,
   }
 }

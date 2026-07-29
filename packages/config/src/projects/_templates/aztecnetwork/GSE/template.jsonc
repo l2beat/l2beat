@@ -1,8 +1,9 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Central staking manager independent of Rollup implementations. Sequencers deposit stake here through their chosen Rollup contract. Their stake is then transfered to the Governance contract and activated for voting. The GSE tracks which rollup instance validators are securing, and gives them an option to automatically move to the latest Rollup version.",
+  "description": "Central staking manager independent of Rollup implementations. Sequencers deposit stake here through their chosen Rollup contract. Their stake is then transferred to the Governance contract and activated for voting. The GSE tracks which rollup instance validators are securing, and gives them an option to automatically move to the latest Rollup version.",
   "ignoreMethods": ["getLatestRollupAt"],
   "ignoreInWatchMode": ["totalSupply"],
+  "ignoreRelatives": ["BONUS_INSTANCE_ADDRESS", "getBonusInstanceAddress"],
   "category": "gov",
   "fields": {
     "ASSET": {
@@ -10,19 +11,23 @@
       "template": "aztecnetwork/Aztec"
     },
     "getGovernance": {
-      "description": "Governance contract receiving voting power from staked validators.",
-      "template": "aztecnetwork/Governance"
+      "description": "One-time configured contract receiving voting power from staked validators."
     },
     "getLatestRollup": {
-      "description": "Latest rollup registered in the GSE.",
-      "template": "aztecnetwork/Rollup"
-    },
-    "owner": {
-      "description": "Governance owner of the GSE.",
+      "description": "Latest rollup registered in the GSE. Validators assigned to the bonus instance follow this address.",
       "permissions": [
         {
           "type": "interact",
-          "description": "set governance once, change the proof-of-possession gas limit, and add new rollup addresses that make bonus-instance validators effective on the latest rollup."
+          "description": "deposit and withdraw validator stake for its own GSE instance and, while it is the latest Rollup, for the bonus instance; cast all available own-instance and applicable bonus-instance power as yea on qualifying sequencer-signalled proposals."
+        }
+      ]
+    },
+    "owner": {
+      "description": "Owner of the GSE.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set Governance once if still unset, change the proof-of-possession gas limit (including to a value that prevents new deposits), add a new latest rollup that controls bonus-instance validators, and transfer or renounce ownership."
         }
       ]
     }

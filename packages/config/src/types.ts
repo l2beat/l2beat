@@ -64,8 +64,9 @@ export interface ProjectTechnologyChoice {
 }
 
 export interface ProjectSequencerSetSpec {
-  slotTime?: TableReadyValue
-  epochTime?: TableReadyValue
+  blockTime?: TableReadyValue
+  proposerRotationTime?: TableReadyValue
+  committeeRotationTime?: TableReadyValue
   sequencerCount?: TableReadyValue
   blockProductionAccess?: TableReadyValue
   stakePerValidator?: TableReadyValue
@@ -362,6 +363,7 @@ export type ChainApiConfig =
   | ChainBasicApi<'degate3'>
   | ChainBasicApi<'fuel'>
   | ChainBasicApi<'svm-rpc'>
+  | ChainBasicApi<'aztec-rpc'>
   | ChainExplorerApi<'blockscout'>
   | ChainExplorerApi<'blockscoutV2'>
   | ChainExplorerApi<'routescan'>
@@ -967,7 +969,12 @@ export interface ProjectPrivacyInfo {
 
 export interface PrivacyExitWindow extends ExitWindowRisk {
   description: string
+  walkawayTest: PrivacyWalkawayTest
 }
+
+export type PrivacyWalkawayTest =
+  | { passed: true }
+  | { passed: false; reason: string }
 
 export interface PrivacySummaryValue extends TableReadyValue {
   description: string

@@ -43,6 +43,7 @@ describe(parseDiscoveryUpdates.name, () => {
     )
 
     expect(updates.length).toEqual(1)
+    expect(updates[0]?.id ?? '').toMatchRegex(/^[0-9a-f]{8}$/)
     expect(updates[0]?.description).toEqual('A public update.')
     expect(updates[0]?.sections).toEqual([
       {
@@ -143,6 +144,90 @@ describe(parseDiscoveryUpdates.name, () => {
     )
 
     expect(updates[0]?.timestamp).toEqual(1700000000)
+    expect(updates[0]?.id ?? '').toMatchRegex(/^[0-9a-f]{8}$/)
+  })
+
+  it('creates unique ids for entries with the same discovery timestamp and date', () => {
+    const updates = parseDiscoveryUpdates(
+      [
+        'Generated with discovered.json: 0x111',
+        '# Diff at Tue, 21 Jan 2026 09:00:00 GMT:',
+        '',
+        '- current timestamp: 1700000000',
+        '',
+        '## Watched changes',
+        '',
+        '```diff',
+        '+ first',
+        '```',
+        '',
+        'Generated with discovered.json: 0x222',
+        '# Diff at Tue, 21 Jan 2026 09:00:00 GMT:',
+        '',
+        '- current timestamp: 1700000000',
+        '',
+        '## Watched changes',
+        '',
+        '```diff',
+        '+ second',
+        '```',
+        '',
+      ].join('\n'),
+    )
+
+    expect(updates[0]?.id).not.toEqual(updates[1]?.id)
+    expect(updates[0]?.id ?? '').toMatchRegex(/^[0-9a-f]{8}$/)
+    expect(updates[1]?.id ?? '').toMatchRegex(/^[0-9a-f]{8}$/)
+  })
+
+  it('creates stable unique ids without a discovery hash', () => {
+    const content = [
+      '# Diff at Tue, 21 Jan 2026 09:00:00 GMT:',
+      '',
+      '- current timestamp: 1700000000',
+      '',
+      '## Watched changes',
+      '',
+      '```diff',
+      '+ first',
+      '```',
+      '',
+      '# Diff at Tue, 21 Jan 2026 09:00:00 GMT:',
+      '',
+      '- current timestamp: 1700000000',
+      '',
+      '## Watched changes',
+      '',
+      '```diff',
+      '+ second',
+      '```',
+      '',
+    ].join('\n')
+    const updates = parseDiscoveryUpdates(content)
+    const repeated = parseDiscoveryUpdates(content)
+
+    expect(updates[0]?.id).not.toEqual(updates[1]?.id)
+    expect(repeated.map((update) => update.id)).toEqual(
+      updates.map((update) => update.id),
+    )
+  })
+
+  it('creates a linkable id for legacy entries with an invalid date', () => {
+    const updates = parseDiscoveryUpdates(
+      [
+        '# Diff at legacy entry:',
+        '',
+        '## Watched changes',
+        '',
+        '```diff',
+        '+ watched',
+        '```',
+        '',
+      ].join('\n'),
+    )
+
+    expect(updates[0]?.timestamp).toEqual(null)
+    expect(updates[0]?.id ?? '').toMatchRegex(/^[0-9a-f]{8}$/)
   })
 
   it('respects the result limit', () => {
@@ -179,6 +264,7 @@ describe(countRecentDiscoveryUpdates.name, () => {
 
   function update(timestamp: number | null): DiscoveryUpdate {
     return {
+      id: `${timestamp ?? 'unknown'}`,
       date: 'Tue, 21 Jan 2026 09:00:00 GMT',
       timestamp,
       description: '',

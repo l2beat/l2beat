@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.",
   "ignoreMethods": ["compute"],
   "category": "spam"
 }

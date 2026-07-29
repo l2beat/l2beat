@@ -19,9 +19,11 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { PercentageChangeTooltipContent } from '~/components/PercentChange'
 import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { formatDollarValueNumber } from '~/utils/number-format/formatDollarValueNumber'
 import { TableLink } from '../../../../../components/table/TableLink'
 
@@ -47,6 +49,7 @@ interface TotalValueSecuredCellProps {
       }
   additionalTrustAssumptionsPercentage: number
   change: number
+  changePeriod: PercentageChangePeriod
   tvsWarnings?: WarningWithSentiment[]
   associatedTokens?: ProjectAssociatedToken[]
   syncWarning: string | undefined
@@ -58,7 +61,7 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
 
   return (
     <Tooltip>
-      <TooltipTrigger asChild>
+      <TooltipTrigger asChild disabledOnMobile>
         <TableLink href={props.href}>
           <SyncStatusWrapper isSynced={!props.syncWarning}>
             <div className="flex flex-col items-end max-md:py-1">
@@ -69,7 +72,10 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
                     sentiment={anyBadWarnings ? 'bad' : 'warning'}
                   />
                 ) : null}
-                <ValueWithPercentageChange change={props.change}>
+                <ValueWithPercentageChange
+                  change={props.change}
+                  changePeriod={props.changePeriod}
+                >
                   {formatDollarValueNumber(props.total)}
                 </ValueWithPercentageChange>
               </div>
@@ -132,6 +138,9 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
             associatedTokens={props.associatedTokens ?? []}
           />
         )}
+        <p>
+          <PercentageChangeTooltipContent period={props.changePeriod} />
+        </p>
       </TooltipContent>
     </Tooltip>
   )

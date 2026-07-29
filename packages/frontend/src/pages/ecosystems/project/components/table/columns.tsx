@@ -110,6 +110,7 @@ export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
               tvsWarnings={value.warnings}
               breakdown={tvsData?.breakdown}
               change={tvsData?.change.total}
+              changePeriod={tvsData?.changePeriod}
               syncWarning={ctx.row.original.tvsSyncWarning}
             />
           )
@@ -134,7 +135,11 @@ export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
             href={`/scaling/activity?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
           >
             <SyncStatusWrapper isSynced={data.isSynced}>
-              <ValueWithPercentageChange change={data?.change}>
+              <ValueWithPercentageChange
+                change={data?.change}
+                changePeriod={data.changePeriod}
+                disabledOnMobile
+              >
                 {formatActivityCount(ctx.getValue())}
               </ValueWithPercentageChange>
             </SyncStatusWrapper>

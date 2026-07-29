@@ -3,12 +3,8 @@ import {
   ChainSpecificAddress,
   EthereumAddress,
 } from '@l2beat/shared-pure'
-import type { TokenMap } from '../engine/match/TokenMap'
 import { findBestTransferLogByExactAmount } from './logScan'
-import {
-  getBestEffortTokenFrameworkBridgeType,
-  getTokenFrameworkBridgeType,
-} from './tokenFrameworkBridgeTyping'
+import { getBestEffortBridgeTypeFromPartialSupplyAction } from './partialSupplyActionBridgeType'
 import {
   createEventParser,
   createInteropEventType,
@@ -205,13 +201,9 @@ export class CentriFugePlugin implements InteropPluginResyncable {
 
   matchTypes = [ExecuteTransferShares, InitiateTransferShares]
 
-  match(
-    event: InteropEvent,
-    db: InteropEventDb,
-    tokenMap: TokenMap,
-  ): MatchResult | undefined {
+  match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (ExecuteTransferShares.checkType(event)) {
-      return this.matchExecuted(event, db, tokenMap)
+      return this.matchExecuted(event, db)
     }
 
     if (InitiateTransferShares.checkType(event)) {
@@ -229,7 +221,6 @@ export class CentriFugePlugin implements InteropPluginResyncable {
       dstWasMinted?: boolean
     }>,
     db: InteropEventDb,
-    tokenMap: TokenMap,
   ): MatchResult | undefined {
     const forwardTransferShares = findBestForwardForExecute(
       executeTransferShares,
@@ -252,7 +243,7 @@ export class CentriFugePlugin implements InteropPluginResyncable {
           dstAmount: executeTransferShares.args.amount,
           dstTokenAddress: executeTransferShares.args.dstTokenAddress,
           dstWasMinted: executeTransferShares.args.dstWasMinted,
-          bridgeType: getBestEffortTokenFrameworkBridgeType({
+          bridgeType: getBestEffortBridgeTypeFromPartialSupplyAction({
             srcWasBurned: undefined,
             dstWasMinted: executeTransferShares.args.dstWasMinted,
           }),
@@ -271,15 +262,6 @@ export class CentriFugePlugin implements InteropPluginResyncable {
         dstAmount: executeTransferShares.args.amount,
         dstTokenAddress: executeTransferShares.args.dstTokenAddress,
         dstWasMinted: executeTransferShares.args.dstWasMinted,
-        bridgeType: getTokenFrameworkBridgeType({
-          srcTokenAddress: initiateTransferShares.args.srcTokenAddress,
-          dstTokenAddress: executeTransferShares.args.dstTokenAddress,
-          srcWasBurned: initiateTransferShares.args.srcWasBurned,
-          dstWasMinted: executeTransferShares.args.dstWasMinted,
-          srcChain: initiateTransferShares.ctx.chain,
-          dstChain: executeTransferShares.ctx.chain,
-          tokenMap,
-        }),
         extraEvents: [forwardTransferShares],
       }),
     ]
@@ -323,7 +305,7 @@ export class CentriFugePlugin implements InteropPluginResyncable {
         srcAmount: initiateTransferShares.args.amount,
         srcTokenAddress: initiateTransferShares.args.srcTokenAddress,
         srcWasBurned: initiateTransferShares.args.srcWasBurned,
-        bridgeType: getBestEffortTokenFrameworkBridgeType({
+        bridgeType: getBestEffortBridgeTypeFromPartialSupplyAction({
           srcWasBurned: initiateTransferShares.args.srcWasBurned,
           dstWasMinted: undefined,
         }),

@@ -27,7 +27,10 @@ import {
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
-import { getSHARPBootloaderHashes } from '../starknet/starknet'
+import {
+  getAcceptedSHARPVerifierChain,
+  getSHARPBootloaderHashes,
+} from '../starknet/starknet'
 
 const discovery = new ProjectDiscovery('paradex')
 
@@ -84,6 +87,7 @@ export const paradex: ScalingProject = {
     BADGES.DA.DAC,
     BADGES.Stack.SNStack,
     BADGES.Infra.SHARP,
+    BADGES.RaaS.Karnot,
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
@@ -286,7 +290,7 @@ export const paradex: ScalingProject = {
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(minDelay)],
     programHashes: paradexProgramHashes.map((el) => PROGRAM_HASHES(el)),
     // stwo verifier address, could be deduced from analyzing trx traces
-    zkVerifiers: [discovery.getContract('SHARPVerifier_2025_11').address],
+    zkVerifiers: getAcceptedSHARPVerifierChain().factRegistries,
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [

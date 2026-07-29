@@ -1,5 +1,6 @@
 import { assert, type TokenCategory, type UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable, Updateable } from 'kysely'
+import { sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { AbstractToken } from '../kysely/generated/types'
 import { fromTimestamp, toTimestamp } from '../utils/timestamp'
@@ -12,9 +13,16 @@ export type AbstractTokenRecord = {
   iconUrl: string | null
   coingeckoId: string | null
   coingeckoListingTimestamp: UnixTime | null
+  additionalCoingeckoEntries: CoingeckoEntry[] | null
   comment: string | null
   reviewed: boolean
   isPriceUnreliable: boolean
+}
+
+export type CoingeckoEntry = {
+  coingeckoId: string
+  coingeckoListingTimestamp: UnixTime | null
+  iconUrl: string | null
 }
 
 export type AbstractTokenUpdateable = Omit<
@@ -32,6 +40,10 @@ function toRecord(row: Selectable<AbstractToken>): AbstractTokenRecord {
     reviewed: row.reviewed,
     isPriceUnreliable: row.isPriceUnreliable,
     coingeckoId: row.coingeckoId,
+    additionalCoingeckoEntries:
+      row.additionalCoingeckoEntries === undefined
+        ? null
+        : (row.additionalCoingeckoEntries as CoingeckoEntry[] | null),
 
     coingeckoListingTimestamp: toTimestamp(row.coingeckoListingTimestamp),
     category: row.category as TokenCategory | null,
@@ -50,6 +62,10 @@ function toRow(record: AbstractTokenRecord): Insertable<AbstractToken> {
     isPriceUnreliable: record.isPriceUnreliable,
     category: record.category,
     coingeckoId: record.coingeckoId,
+    additionalCoingeckoEntries:
+      record.additionalCoingeckoEntries !== null
+        ? JSON.stringify(record.additionalCoingeckoEntries)
+        : null,
 
     coingeckoListingTimestamp: fromTimestamp(record.coingeckoListingTimestamp),
   }
@@ -61,6 +77,12 @@ function toUpdateRow(
   return {
     ...record,
     coingeckoListingTimestamp: fromTimestamp(record.coingeckoListingTimestamp),
+    additionalCoingeckoEntries:
+      record.additionalCoingeckoEntries !== undefined
+        ? record.additionalCoingeckoEntries !== null
+          ? JSON.stringify(record.additionalCoingeckoEntries)
+          : null
+        : undefined,
   }
 }
 
@@ -119,7 +141,12 @@ export class AbstractTokenRepository extends BaseRepository {
     const result = await this.db
       .selectFrom('AbstractToken')
       .selectAll()
-      .where('coingeckoId', '=', coingeckoId)
+      .where((eb) =>
+        eb.or([
+          eb('coingeckoId', '=', coingeckoId),
+          sql<boolean>`"additionalCoingeckoEntries" @> ${JSON.stringify([{ coingeckoId }])}::jsonb`,
+        ]),
+      )
       .executeTakeFirst()
 
     return result ? toRecord(result) : undefined

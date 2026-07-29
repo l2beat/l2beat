@@ -28,9 +28,8 @@ export function ExcludeRwaRestrictedTokensCheckbox() {
         </div>
       </Checkbox>
       <TooltipContent>
-        Centralized RWAs with access, transfer, transparency or onchain
-        liquidity restrictions. A more formal framework for RWAs is in the
-        works!
+        Centralized RWAs with access or transfer restrictions, whitelists, no
+        onchain liquidity or integration, hardcoded prices or very low activity.
       </TooltipContent>
     </Tooltip>
   )

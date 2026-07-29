@@ -219,6 +219,7 @@ export const railgun: BaseProject = {
       sentiment: 'warning',
       orderHint: executionStartOffset,
       description: `DAO-approved upgrades wait ${formatSeconds(executionStartOffset)} before they can execute, giving users time to unshield funds if they do not approve the change.`,
+      walkawayTest: { passed: true },
     },
     reproducibility: {
       value: 'Reproducible',

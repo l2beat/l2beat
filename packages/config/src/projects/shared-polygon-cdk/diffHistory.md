@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x35e32bd3dcf58017d67cd29cad1c2a06f2e504fd
+
+# Diff at Thu, 23 Jul 2026 13:53:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@efd03446560a8d585747f124c71622cbfa33fca4 block: 1781600877
+- current timestamp: 1784814697
+
+## Description
+
+One PolygonAdminMultisig signer was rotated.
+
+## Watched changes
+
+```diff
+    contract PolygonAdminMultisig (eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) [GnosisSafe] {
+    +++ description: None
+      values.$members.2:
+-        "eth:0xED7cC82235A7757702475c8f77c7830c095FB5a2"
++        "eth:0xf02BE0dA37dB50BEFA5a525158aa94b50F81D4B2"
+    }
+```
+
 Generated with discovered.json: 0x95844697bd903f68a260a701bf4651c98ea84eb9
 
 # Diff at Tue, 16 Jun 2026 09:09:48 GMT:
@@ -9778,4 +9801,3 @@ Provide description of changes. This section will be preserved.
     contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF)
     +++ description: None
 ```
-

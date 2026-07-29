@@ -2,7 +2,7 @@
 
 source .env
 
-FEATURES_NAMES=("da" "liveness" "tvs" "activity" "shared" "interop" "interop-aggregates" "tokens-ui" "tracked-txs" "privacy")
+FEATURES_NAMES=("da" "liveness" "tvs" "activity" "shared" "interop" "interop-aggregates" "token-db" "tracked-txs" "privacy")
 FEATURES_TABLES=(
     "IndexerState IndexerConfiguration DataAvailability Blob SyncMetadata"
     "IndexerState IndexerConfiguration Liveness AggregatedLiveness"
@@ -11,7 +11,7 @@ FEATURES_TABLES=(
     "IndexerState IndexerConfiguration AnomalyStats RealTimeLiveness RealTimeAnomaly"
     "IndexerState IndexerConfiguration InteropEvent InteropMessage InteropTransfer InteropConfig InteropRecentPrices InteropPluginSyncState InteropPluginSyncedRange"
     "IndexerState IndexerConfiguration AggregatedInteropTransfer AggregatedInteropToken InteropAggregateStatus"
-    "AbstractToken DeployedToken TokenRelation Chain"
+    "AbstractToken DeployedToken TokenRelation Chain TokenDbSettings TokenIngestionQueue TokenDbHistory"
     "IndexerState IndexerConfiguration L2Cost Liveness AggregatedL2Cost AggregatedLiveness"
     "IndexerState IndexerConfiguration PrivacyBlockTimestamp PrivacyFlowEvent PrivacyPrice"
 )

@@ -56,6 +56,7 @@ export const automata: ScalingProject = opStackL2({
     isPartOfSuperchain: false,
   },
   addedAt: UnixTime(1729359609), // 2024-10-19T17:40:09Z
+  archivedAt: UnixTime(1784195945), // Thu, 16 Jul 2026
   additionalBadges: [BADGES.RaaS.AltLayer],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
@@ -94,6 +95,7 @@ export const automata: ScalingProject = opStackL2({
         callsPerMinute: 300,
       },
     ],
+    untilTimestamp: UnixTime(1784195945), // Thu, 16 Jul 2026
   },
   discovery,
   genesisTimestamp,
@@ -185,4 +187,13 @@ export const automata: ScalingProject = opStackL2({
       relayerFailure: DaRelayerFailureRisk.NoMechanism,
     },
   },
+  milestones: [
+    {
+      title: 'Automata paused',
+      url: 'https://etherscan.io/tx/0xe805d831fd737aae90f8313d66da05b7eae1f721f55cda3fbadad22a37deb2a4',
+      date: '2026-07-13T00:00:00Z',
+      description: 'Guardian EOA pauses chain contracts.',
+      type: 'incident',
+    },
+  ],
 })

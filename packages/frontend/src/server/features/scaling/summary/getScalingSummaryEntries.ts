@@ -14,7 +14,9 @@ import type { RosetteValue } from '~/components/rosette/types'
 import { getL2Risks } from '~/pages/scaling/utils/getL2Risks'
 import { groupByScalingTabs } from '~/pages/scaling/utils/groupByScalingTabs'
 import { ps } from '~/server/projects'
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { getProofSystemWithName } from '~/utils/project/getProofSystemWithName'
+import { optionToRange } from '~/utils/range/range'
 import type { ProjectChanges } from '../../projects-change-report/getProjectsChangeReport'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import type { ActivityLatestUopsData } from '../activity/getActivityLatestTps'
@@ -28,6 +30,11 @@ import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { compareTvs } from '../tvs/utils/compareTvs'
 
 export async function getScalingSummaryEntries() {
+  const { tabs } = await getScalingSummaryData()
+  return tabs
+}
+
+export async function getScalingSummaryData() {
   const projects = await ps.getProjects({
     select: ['statuses', 'scalingInfo', 'scalingRisks', 'display'],
     optional: [
@@ -57,7 +64,7 @@ export async function getScalingSummaryEntries() {
       excludeAssociatedTokens: false,
       excludeRwaRestrictedTokens: true,
     }),
-    getActivityLatestUops(projects),
+    getActivityLatestUops(projects, optionToRange('90d')),
     getApprovedOngoingAnomalies(),
   ])
 
@@ -74,7 +81,7 @@ export async function getScalingSummaryEntries() {
     )
     .sort(compareTvs)
 
-  return groupByScalingTabs(entries)
+  return { tabs: groupByScalingTabs(entries), sevenDayTvsBreakdown: tvs }
 }
 
 export interface ScalingSummaryEntry extends CommonScalingEntry {
@@ -93,6 +100,7 @@ export interface ScalingSummaryEntry extends CommonScalingEntry {
     | {
         pastDayUops: number
         change: number
+        changePeriod: PercentageChangePeriod
         isSynced: boolean
       }
     | undefined
@@ -141,6 +149,7 @@ export function getScalingSummaryEntry(
     activity: activity && {
       pastDayUops: activity.pastDayUops,
       change: activity.change,
+      changePeriod: activity.changePeriod,
       isSynced: !activitySyncWarning,
     },
     tvsOrder: latestTvs?.breakdown.total ?? -1,

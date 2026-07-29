@@ -1,6 +1,17 @@
+import { env } from '~/env'
 import type { SearchBarEntry } from './types'
 
 export const searchBarPages = withIndex([
+  ...(env.CLIENT_SIDE_HOME_PAGE
+    ? [
+        {
+          category: 'other' as const,
+          name: 'Home',
+          href: '/',
+          tags: ['pages'],
+        },
+      ]
+    : []),
   {
     category: 'scaling',
     name: 'Summary',
@@ -137,6 +148,12 @@ export const searchBarPages = withIndex([
     category: 'other',
     name: 'Governance',
     href: '/governance',
+    tags: ['pages'],
+  },
+  {
+    category: 'other',
+    name: 'Native Rollups',
+    href: '/native-rollups',
     tags: ['pages'],
   },
   {

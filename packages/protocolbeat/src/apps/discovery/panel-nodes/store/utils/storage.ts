@@ -26,6 +26,20 @@ export function reconcileHiddenFields(
   return [...result]
 }
 
+export function reconcileNodeHiddenFields(
+  fields: readonly { readonly name: string; readonly label?: string }[],
+  hiddenFieldNames: readonly string[],
+): string[] {
+  const hidden = new Set(hiddenFieldNames)
+  const legacyGroupFields = fields
+    .filter((field) => field.label !== undefined && hidden.has(field.label))
+    .map((field) => field.name)
+  return reconcileHiddenFields(
+    fields.map((field) => field.name),
+    [...hiddenFieldNames, ...legacyGroupFields],
+  )
+}
+
 function getLayoutStorageKey(projectId: string): string {
   return `layout/${projectId}`
 }
@@ -67,7 +81,6 @@ export function buildStoredNodeLayout(
         .filter((n) => n.hiddenFields.length > 0)
         .map((n) => [n.id, n.hiddenFields]),
     ),
-    hiddenNodes: [...state.hidden],
     groups: groups.length > 0 ? groups : undefined,
   }
 }

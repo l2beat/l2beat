@@ -1,3 +1,148 @@
+Generated with discovered.json: 0x025743b917d01bd18822470b43f52901094ef074
+
+# Diff at Wed, 29 Jul 2026 11:40:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8fc71653df107a65d06ec19257b0c3f4f6ed070d block: 1784814834
+- current timestamp: 1785325146
+
+## Description
+
+13 pool rebalance routes across ten destination chains were disabled by setting their destination token to the zero address. HubPool rejects root-bundle execution for disabled routes, so these token/chain pairs can no longer be used for pool rebalances and relayer refunds.
+
+## Watched changes
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) [acrossv3/HubPool] {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT.
+      values.poolRebalanceRoutes.OP Mainnet.1.destinationToken:
+-        "eth:0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Unichain.1.destinationToken:
+-        "eth:0x078D782b760474a361dDA0AF3839290b0EF57AD6"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Polygon PoS.1.destinationToken:
+-        "eth:0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Polygon PoS.7.destinationToken:
+-        "eth:0xc2132D05D31c914a87C6611C10748AEb04B58e8F"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Monad.0.destinationToken:
+-        "eth:0x754704Bc059F8C67012fEd69BC8A327a5aafb603"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Monad.1.destinationToken:
+-        "eth:0xe7cd86e13AC4309349F30B3435a9d337750fC82D"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.World Chain.2.destinationToken:
+-        "eth:0x79A02482A880bCE3F13e09Da970dC34db4CD24d1"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.HyperEVM.0.destinationToken:
+-        "eth:0xb88339CB7199b77E23DB6E890353E22632Ba630f"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Base.1.destinationToken:
+-        "eth:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Plasma.0.destinationToken:
+-        "eth:0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Arbitrum One.1.destinationToken:
+-        "eth:0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Arbitrum One.7.destinationToken:
+-        "eth:0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Solana.0.destinationToken:
+-        "eth:0xaBc97431B1Bbe4C2D2f6E0E47ca60203452f5d61"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+Generated with discovered.json: 0x51583b683443e64711cb4489838884c0f6e08e5e
+
+# Diff at Thu, 23 Jul 2026 13:55:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@efd03446560a8d585747f124c71622cbfa33fca4 block: 1783509971
+- current timestamp: 1784814834
+
+## Description
+
+22 pool rebalance routes were disabled by setting their destination tokens to the zero address.
+
+## Watched changes
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) [acrossv3/HubPool] {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT.
+      values.poolRebalanceRoutes.Ethereum.5.destinationToken:
+-        "eth:0x42bBFa2e77757C645eeaAd1655E0911a7553Efbc"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.OP Mainnet.4.destinationToken:
+-        "eth:0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Polygon PoS.4.destinationToken:
+-        "eth:0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Polygon PoS.5.destinationToken:
+-        "eth:0x1FcbE5937B0cc2adf69772D228fA4205aCF4D9b2"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Boba.0.destinationToken:
+-        "eth:0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Boba.1.destinationToken:
+-        "eth:0x66a2A913e447d6b4BF33EFbec43aAeF87890FBbc"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Boba.2.destinationToken:
+-        "eth:0xdc0486f8bf31DF57a952bcd3c1d3e166e3d9eC8b"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Boba.3.destinationToken:
+-        "eth:0x780f33Ad21314d9A1Ffb6867Fe53d48a76Ec0D16"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Boba.4.destinationToken:
+-        "eth:0xf74195Bb8a5cf652411867c5C2C5b8C2a402be35"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Boba.5.destinationToken:
+-        "eth:0xa18bF3994C0Cc6E3b63ac420308E5383f53120D7"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Boba.6.destinationToken:
+-        "eth:0x5DE1677344D3Cb0D7D465c10b72A8f60699C062d"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Boba.7.destinationToken:
+-        "eth:0x96821b258955587069F680729cD77369C0892B40"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.ZKsync Era.4.destinationToken:
+-        "eth:0x4B9eb6c0b6ea15176BBF62841C6B2A8a398cb656"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Lisk.0.destinationToken:
+-        "eth:0x4200000000000000000000000000000000000006"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Lisk.1.destinationToken:
+-        "eth:0x05D032ac25d322df992303dCa074EE7392C117b9"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Lisk.3.destinationToken:
+-        "eth:0x03C7054BCB39f7b2e5B2c7AcB37583e32D70Cfa3"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Lisk.4.destinationToken:
+-        "eth:0xF242275d3a6527d877f2c927a82D9b057609cc71"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Base.2.destinationToken:
+-        "eth:0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Arbitrum One.3.destinationToken:
+-        "eth:0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Linea.0.destinationToken:
+-        "eth:0x4AF15ec2A0BD43Db75dd04E62FAA3B8EF36b00d5"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Zora.0.destinationToken:
+-        "eth:0x4200000000000000000000000000000000000006"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Zora.1.destinationToken:
+-        "eth:0xCccCCccc7021b32EBb4e8C08314bD62F7c653EC4"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x8354005005099c44015c883895b884324c20a8fb
 
 # Diff at Wed, 08 Jul 2026 12:42:41 GMT:

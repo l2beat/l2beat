@@ -264,7 +264,7 @@ export const base: ScalingProject = opStackL2({
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,
-        noRedTrustedSetups: false,
+        noRedTrustedSetups: true,
         programHashesReproducible: true,
         proverSourcePublished: true,
         verifierContractsReproducible: true,

@@ -1,0 +1,94 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "The central registry and lifecycle manager for stVaults connected to Lido. It enforces collateral and risk parameters, tracks vault reports and liabilities, mints and burns stETH shares, settles fees, rebalances unhealthy vaults, and manages bad debt.",
+  "category": "core",
+  "ignoreInWatchMode": [
+    "badDebtToInternalize",
+    "badDebtToInternalizeForLastRefSlot",
+    "vaultByIndex",
+    "vaultsCount"
+  ],
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl",
+        "includeEmptyRoles": true,
+        "roleNames": {
+          "0x8d0e4ae4847b49935b55c99f9c3ce025c87e7c4604c35b7ae56929bd32fa5a78": "PAUSE_ROLE",
+          "0xa79a6aede309e0d48bf2ef0f71355c06ad317956d4c0da2deb0dc47cc34f826c": "RESUME_ROLE",
+          "0x479bc4a51d27fbdc8e51b5b1ebd3dcd58bd229090980bff226f8930587e69ce3": "VAULT_MASTER_ROLE",
+          "0x44f007e8cc2a08047a03d8d9c295057454942eb49ee3ced9c87e9b9406f21174": "REDEMPTION_MASTER_ROLE",
+          "0x2159c5943234d9f3a7225b9a743ea06e4a0d0ba5ed82889e867759a8a9eb7883": "VALIDATOR_EXIT_ROLE",
+          "0xa85bab4b576ca359fa6ae02ab8744b5c85c7e7ed4d7e0bca7b5b64580ac5d17d": "BAD_DEBT_MASTER_ROLE"
+        }
+      }
+    },
+    "defaultAdmins": {
+      "copy": "accessControl",
+      "edit": ["get", "DEFAULT_ADMIN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke every VaultHub role."
+        }
+      ]
+    },
+    "pausers": {
+      "copy": "accessControl",
+      "edit": ["get", "PAUSE_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause VaultHub operations for a chosen duration."
+        }
+      ]
+    },
+    "resumers": {
+      "copy": "accessControl",
+      "edit": ["get", "RESUME_ROLE", "members"],
+      "permissions": [
+        { "type": "interact", "description": "resume VaultHub operations." }
+      ]
+    },
+    "redemptionMasters": {
+      "copy": "accessControl",
+      "edit": ["get", "REDEMPTION_MASTER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set a vault's liability-shares target, forcing it to burn shares or rebalance before normal operation."
+        }
+      ]
+    },
+    "vaultMasters": {
+      "copy": "accessControl",
+      "edit": ["get", "VAULT_MASTER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "disconnect a vault from VaultHub without the vault owner's initiation once disconnection conditions are met."
+        }
+      ]
+    },
+    "badDebtMasters": {
+      "copy": "accessControl",
+      "edit": ["get", "BAD_DEBT_MASTER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "disconnect an unhealthy vault and either socialize its bad debt across other vaults or queue it for internalization as a Lido protocol loss."
+        }
+      ]
+    },
+    "validatorExiters": {
+      "copy": "accessControl",
+      "edit": ["get", "VALIDATOR_EXIT_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "trigger EIP-7002 withdrawals for validators of connected vaults."
+        }
+      ]
+    }
+  }
+}

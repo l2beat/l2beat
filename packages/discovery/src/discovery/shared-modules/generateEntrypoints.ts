@@ -6,6 +6,8 @@ import { join } from 'path'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import type { ConfigReader } from '../config/ConfigReader'
 import { type Entrypoint, EntrypointsFile } from '../config/StructureConfig'
+import type { EntryParameters } from '../output/types'
+import { mapToReferenceNodes } from '../utils/reachable'
 
 const ENTRYPOINTS_FILENAME = 'entrypoints.json'
 
@@ -27,7 +29,9 @@ export function generateEntrypoints(
     logger.info('(keeping legacy entrypoints)')
     const generated = entrypoints.entrypoints ?? []
     const legacyEntries = Object.entries(existingFile.entrypoints ?? [])
-      .filter(([addr, _]) => !(addr in generated))
+      // EOA entrypoints must come from current initialAddresses (see the
+      // generator), so legacy EOAs are garbage-collected
+      .filter(([addr, v]) => !(addr in generated) && v.type === 'Contract')
       .map(([addr, v]) => [addr, { ...v, isLegacy: true }])
     entrypoints.entrypoints = {
       ...entrypoints.entrypoints,
@@ -64,14 +68,32 @@ export async function generateEntrypointsCommand(
   }
 }
 
-function generateEntrypointsForProject(
+export function generateEntrypointsForProject(
   project: string,
   configReader: ConfigReader,
 ) {
   const discovery = configReader.readDiscovery(project)
+  const initialAddresses = new Set(
+    configReader.readConfig(project).structure.initialAddresses,
+  )
+  const leafAddresses = findLeafAddresses(discovery.entries)
   const entrypoints: Record<ChainSpecificAddress, Entrypoint> = {}
   discovery.entries.forEach((e) => {
     if (e.type === 'Reference') {
+      return
+    }
+    // Discovered EOAs (e.g. multisig signers) can belong to many unrelated
+    // projects, so an EOA may only become an entrypoint when it is
+    // explicitly listed as an initial address. Anything else would merge
+    // unrelated discoveries via cross-project references.
+    if (e.type === 'EOA' && !initialAddresses.has(e.address)) {
+      return
+    }
+    // Leaves (e.g. permissionless immutable verifiers) are dead ends that
+    // many unrelated projects deploy or reuse. Referencing one pulls in the
+    // whole referenced project, which would attribute this module's
+    // infrastructure and permissions to a consumer that only calls the leaf.
+    if (leafAddresses.has(e.address) && !initialAddresses.has(e.address)) {
       return
     }
     entrypoints[e.address] = {
@@ -82,4 +104,18 @@ function generateEntrypointsForProject(
   })
 
   return { entrypoints }
+}
+
+// A leaf has no outgoing edges in the same graph that decides what a
+// reference drags along: address values (including $admin/$implementation)
+// plus issued permissions. Discovery relatives are deliberately not used,
+// deployerAddress would make every deployed contract a non-leaf.
+function findLeafAddresses(
+  entries: EntryParameters[],
+): Set<ChainSpecificAddress> {
+  return new Set(
+    mapToReferenceNodes(entries)
+      .filter((node) => node.references.length === 0)
+      .map((node) => node.address),
+  )
 }

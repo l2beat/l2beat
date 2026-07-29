@@ -1,0 +1,11 @@
+{
+  "LighterRobinhood.sol": {
+    "hash": "0x86f638acded19238eadee62f3969d0beb270e3406a22bb47e816b5a3b0acdd42",
+    "address": [
+      "robinhood:0x6C23703ba62a845893758ea35E5eD854639ef8BA",
+      "robinhood:0x57af7CA7F40Ee33ac974c4eE864932241671c7D4"
+    ],
+    "chain": "robinhood",
+    "blockNumber": 8751492
+  }
+}

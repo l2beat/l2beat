@@ -1,3 +1,106 @@
+Generated with discovered.json: 0xf708d7a955a91db408820da9f51428f0a5642419
+
+# Diff at Tue, 14 Jul 2026 16:01:07 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@40c68fc8d6e39f5b4f69bb2e62b69938a949b435 block: 1769535666
+- current timestamp: 1784044779
+
+## Description
+
+SOON paused on 2026-07-12; reason unknown. Guardian EOA rotated (`0x7fFB…1593` → `0xcb17…B911`), the new guardian was also added to SoonMultisig (member[3]), then it called `pause` on the `SuperchainConfigFake` — OptimismPortal2, L1CrossDomainMessenger, L1StandardBridge, L1ERC721Bridge all read `paused: true` through it. OptimismPortal2 impl upgraded ([tx](https://etherscan.io/tx/0xa4ccaddf2ef0b79355fce160a4241d1b637cb32d6a1b6b7c12eea57f32577f0c)); `disputeGameFinalityDelaySeconds` and `proofMaturityDelaySeconds` extended 8h → 10d. SystemConfig `opStackDA.isUsingEigenDA` set to `false` (was `"v3"`) — EigenDA disabled.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isUsingEigenDA:
+-        "v3"
++        false
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07) [opstack/OptimismPortal2_soon] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It disallows ERC20 token deposits and L1->L2 transactions that would create a contract. Withdrawals can be frozen / blacklisted by a permissioned actor. Has a MIN_BRIDGE_VALUE set to 0.001 ETH.
+      values.$implementation:
+-        "eth:0x29174FC953F163452093aFa9eE3904168C74b2E7"
++        "eth:0xcd87F6B5B03A73733ab5A9cbB56951600f3330A6"
+      values.$pastUpgrades.3:
++        ["2026-07-12T16:28:23.000Z","0xa4ccaddf2ef0b79355fce160a4241d1b637cb32d6a1b6b7c12eea57f32577f0c",["eth:0xcd87F6B5B03A73733ab5A9cbB56951600f3330A6"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.disputeGameFinalityDelaySeconds:
+-        28800
++        864000
+      values.guardian:
+-        "eth:0x7fFB604c57FAFbAeaE6587DF035a0DB032301593"
++        "eth:0xcb17B5F3Cf75eb40F0Addf97B0D457922f10B911"
++++ description: Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused.
++++ severity: HIGH
+      values.paused:
+-        false
++        true
+      values.proofMaturityDelaySeconds:
+-        28800
++        864000
+      implementationNames.eth:0x29174FC953F163452093aFa9eE3904168C74b2E7:
+-        "OptimismPortal2"
+      implementationNames.eth:0xcd87F6B5B03A73733ab5A9cbB56951600f3330A6:
++        "OptimismPortal2"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x7d34832fc0cc6ed718a993CAAb4c6CAdaE9763A2) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.paused:
+-        false
++        true
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0xbB138cE37870443d5b2B02a36619D3478738E0f6) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.paused:
+-        false
++        true
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0xD02631b334FfDCD5674217e57fe524c44B341DD4) [opstack/SuperchainConfigFake] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      values.guardian:
+-        "eth:0x7fFB604c57FAFbAeaE6587DF035a0DB032301593"
++        "eth:0xcb17B5F3Cf75eb40F0Addf97B0D457922f10B911"
+      values.paused:
+-        false
++        true
+    }
+```
+
+```diff
+    contract SoonMultisig (eth:0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701) [GnosisSafe] {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x7b4d0e4d7C961CF967e88f600399d610736DeE51"
++        "eth:0xcb17B5F3Cf75eb40F0Addf97B0D457922f10B911"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9) [opstack/L1StandardBridge_soon] {
+    +++ description: The main entry point to deposit ETH from host chain to this chain. This version (originally from SOON) is modified to support Solana addresses. It requires specifying the destination SOL address and removes support for ERC20 tokens.
+      values.paused:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x0604a0b6a01d2d94faca77d685154a7e935ccbc1
 
 # Diff at Tue, 09 Jun 2026 12:43:39 GMT:

@@ -200,6 +200,7 @@ function getPastDayData(
   return {
     totalPosted: currentTotalPosted,
     change,
+    changePeriod: '1D' as const,
     avgThroughputPerSecond,
     avgCapacityUtilization,
     largestPoster: largestPoster
@@ -245,6 +246,7 @@ function getMockDaThroughputTableData(
                 avgCapacityUtilization: 24,
                 totalPosted: 10312412,
                 change: 0.15,
+                changePeriod: '1D',
                 avgThroughputPerSecond: 100000,
               },
               maxThroughputPerSecond: 400000,
@@ -267,6 +269,7 @@ function getMockDaThroughputTableData(
                 avgCapacityUtilization: 48,
                 totalPosted: 20312412,
                 change: -0.08,
+                changePeriod: '1D',
                 largestPoster: {
                   name: 'Base',
                   percentage: 40,

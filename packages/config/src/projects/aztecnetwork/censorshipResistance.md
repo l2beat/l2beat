@@ -1,7 +1,13 @@
-The committee and regular sequencer set can be circumvented via the escape hatch, which designates a bonded proposer (via RANDAO) who can publish checkpoints without committee attestations. The bond is {{escapeHatchBondString}}, a high amount that is supposed to protect the single-proof system in case of bugs while still providing a last resort opportunity to circumvent the sequencer set. Aztec has developed a full private execution environment on the L2. This can benefit users because they cannot be censored based on their transaction content.
+The regular committee can be circumvented by the escape hatch, which uses RANDAO to designate a previously enrolled bonded candidate that may publish checkpoints without committee attestations. Enrollment requires {{escapeHatchBondString}}, a high bond intended to protect the single-proof system while providing a last-resort path around the regular sequencer set. Aztec's private execution environment can also make selective censorship harder because transaction contents are hidden.
+
 ### Selective censorship
-On a live Aztec L2 with a given fraction of censoring sequencers, users can either send private transactions or wait for a non-censoring committee and proposing sequencer to include their public transaction.
+
+On a live network with some censoring sequencers, users can submit private transactions or wait for an honest committee and proposer to include their public transaction.
+
 ### Blanket censorship
-If users are censored by the entire sequencer set, even if it stops block production just to censor, anyone can join the sequencer set permissionlessly at the churn rate or circumvent it completely by bonding and using the escape hatch. In both cases, expensive hardware is required to provide the required validity proof. Motivated censorers can try to saturate the entry queue and the escape hatch with their own new sequencers and thus lower the inclusion chances of the censored.
+
+If the entire active set censors or stops producing checkpoints, a new sequencer can join through the permissionless staking queue, subject to its churn limits. A sufficiently capitalized account can instead enroll for the escape hatch, but enrollment, candidate-set snapshots, eligibility, and RANDAO selection are lagged. Specialized proving hardware is still required. Adversaries can also saturate the entry queue or candidate set and reduce an honest user's inclusion probability.
+
 ### Walkaway
-In the scenario of all sequencers stopping their service, the escape hatch provides an inclusion guarantee of {{escapeHatchFrequencyString}} in the worst case and the sequencer set can heal long-term by permissionless entry and churn.
+
+Hatch opportunities occur approximately every {{escapeHatchFrequencyString}}, but the candidate set can be empty and selection, proposal, and proving can fail. The protocol therefore provides no deterministic maximum inclusion delay; permissionless validator entry and the bonded hatch only improve the probability that the chain eventually recovers.

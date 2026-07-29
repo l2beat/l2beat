@@ -181,6 +181,16 @@ export function groupByTimestampAndDaLayerId(
   }
 }
 
+export function sumGroupedDataPosted(
+  grouped: Record<number, Record<string, number>>,
+) {
+  return Object.values(grouped).reduce(
+    (total, byDaLayer) =>
+      total + Object.values(byDaLayer).reduce((sum, value) => sum + value, 0),
+    0,
+  )
+}
+
 function getMockDaThroughputChartData({
   range,
 }: DaThroughputChartParams): DaThroughputDataPoint[] {

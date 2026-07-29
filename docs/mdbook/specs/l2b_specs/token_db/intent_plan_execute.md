@@ -32,7 +32,8 @@ Intent   ─►   Plan   ─►   Commands  ─►  TokenDB
 
 - **Intent** ([intents.ts](../../../../../packages/token-backend/src/intents.ts)) —
   *what the user wants*. A small, validated union: add/update/delete an
-  abstract token, deployed token, or token relation.
+  abstract token, deployed token, or token relation, plus merging one
+  abstract token into another.
 - **Plan** ([planning.ts](../../../../../packages/token-backend/src/planning.ts)) —
   *what will happen* if the intent is carried out: the original intent
   plus the ordered list of low-level **Commands** the backend will run.
@@ -53,6 +54,12 @@ On the frontend, [PlanConfirmationDialog.tsx](../../../../../packages/token-ui/s
 shows the plan to the user, and only on **Confirm** does it call
 `plan.execute`.
 
+Each command executed from a confirmed manual plan is stored as its own
+`TokenDbHistory` row, together with the intent that produced the plan. This
+keeps history entries primitive and easy to inspect/revert, while preserving
+the higher-level reason for multi-command operations such as abstract-token
+merges.
+
 ## Why this shape?
 
 Two reasons, both load-bearing.
@@ -72,10 +79,11 @@ each `Command` ("Deployed token X will be updated", "Abstract token Y
 will be added") with diffs. There are no surprise mutations executed
 after a click.
 
-Most planners today are 1:1 — one intent produces one command. That is
-fine: the abstraction is set up so that when propagation rules grow more
-complex, the UX does not need to change. The dialog already knows how
-to render a list of commands.
+Most planners today are 1:1 — one intent produces one command. Multi-command
+plans are used when the user action has a larger blast radius. For example,
+merging one abstract token into another updates the target token's additional
+CoinGecko entries, reassigns deployed tokens, and then deletes the source
+abstract token. The dialog already knows how to render the full command list.
 
 ### 2. Make concurrent edits safe without manual locking
 

@@ -40,7 +40,9 @@ while [ ! -f dist/server/index.js ]; do
   sleep 0.1
 done
 
-node --watch-path=dist/server dist/server/index.js
+watch_args=(--watch-path=dist/server)
+[ -f .env ] && watch_args+=(--watch-path=.env)
+node "${watch_args[@]}" dist/server/index.js
 pids+=($!)
 
 echo "All processes started. Press Ctrl+C to exit."
