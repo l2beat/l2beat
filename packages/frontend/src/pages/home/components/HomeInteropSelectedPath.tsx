@@ -1,21 +1,27 @@
+import { pluralize } from '@l2beat/shared-pure'
 import type { ReactNode } from 'react'
+import { Button } from '~/components/core/Button'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
+import { AvgDurationStatValue } from '~/pages/interop/components/flows/selection-panel/AvgDurationStatValue'
+import { getChainFlowStatItems } from '~/pages/interop/components/flows/selection-panel/getChainFlowStatItems'
 import {
   getChainFlowDerivedStats,
   getPairFlowStats,
 } from '~/pages/interop/components/flows/utils/flowStats'
+import { buildInteropUrl } from '~/pages/interop/utils/buildInteropUrl'
 import type {
   FlowProtocol,
   FlowToken,
   InteropFlowsData,
 } from '~/server/features/scaling/interop/getInteropFlows'
+import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 
 interface StatRow {
   label: string
-  value: string
+  value: ReactNode
 }
 
 interface TopRoute {
@@ -29,11 +35,13 @@ export function HomeInteropSelectedPath({
   allChains,
   selectedChains,
   visibleHighlightedChains,
+  className,
 }: {
   data: InteropFlowsData
   allChains: InteropChainWithIcon[]
   selectedChains: string[]
   visibleHighlightedChains: string[]
+  className?: string
 }) {
   const chainA = allChains.find((c) => c.id === visibleHighlightedChains[0])
   if (!chainA) {
@@ -51,17 +59,39 @@ export function HomeInteropSelectedPath({
 
   const subtitle = chainB
     ? chainB.name
-    : `${selectedChains.length - 1} selected chains`
+    : `${selectedChains.length - 1} selected ${pluralize(selectedChains.length - 1, 'chain')}`
+
+  const cta = chainB
+    ? {
+        label: 'View path details',
+        href: buildInteropUrl('/interop/summary', {
+          from: [chainA.id, chainB.id],
+          to: [chainA.id, chainB.id],
+        }),
+      }
+    : chainA.href
+      ? {
+          label: 'View chain details',
+          href: `${chainA.href}#interop-flows`,
+        }
+      : undefined
 
   return (
-    <div className="rounded-lg bg-surface-secondary p-3 dark:bg-header-secondary">
-      <div className="flex items-baseline gap-1.5">
-        <span className="font-bold text-label-value-15">Selected path</span>
+    <div
+      className={cn(
+        '@container flex flex-col rounded-lg bg-surface-secondary p-3 dark:bg-header-secondary',
+        className,
+      )}
+    >
+      <div className="flex flex-wrap items-baseline gap-x-1.5">
+        <span className="shrink-0 font-bold text-label-value-15">
+          Selected path
+        </span>
         <span className="min-w-0 truncate font-medium text-label-value-12 text-secondary">
           {chainA.name} ↔ {subtitle}
         </span>
       </div>
-      <div className="mt-2 grid grid-cols-2 gap-x-4 gap-y-1">
+      <div className="mt-2 grid @min-[300px]:grid-cols-2 grid-cols-1 gap-x-4 gap-y-1">
         {summary.stats.map((stat) => (
           <Row key={stat.label} label={stat.label}>
             <span className="font-semibold tabular-nums">{stat.value}</span>
@@ -116,6 +146,13 @@ export function HomeInteropSelectedPath({
           </Row>
         )}
       </div>
+      {cta && (
+        <a href={cta.href} className="mt-auto pt-3">
+          <Button variant="fill" size="sm" className="w-full">
+            {cta.label}
+          </Button>
+        </a>
+      )}
     </div>
   )
 }
@@ -164,8 +201,7 @@ function getChainSummary(
     }
   }
 
-  const { totalTransfers, avgTransferValue, volumePerSecond } =
-    getChainFlowDerivedStats(chainData)
+  const { volumePerSecond } = getChainFlowDerivedStats(chainData)
 
   const topFlow = data.flows
     .filter((f) => f.srcChain === chainId || f.dstChain === chainId)
@@ -173,21 +209,20 @@ function getChainSummary(
 
   return {
     stats: [
-      {
-        label: 'Total volume',
-        value: formatCurrency(chainData.totalVolume, 'usd'),
-      },
-      { label: 'Net flow', value: formatCurrency(chainData.netFlow, 'usd') },
-      { label: 'Volume in', value: formatCurrency(chainData.inflow, 'usd') },
-      { label: 'Volume out', value: formatCurrency(chainData.outflow, 'usd') },
-      { label: 'Transfers', value: formatInteger(totalTransfers) },
-      {
-        label: 'Avg. transfer',
-        value: formatCurrency(avgTransferValue, 'usd'),
-      },
+      ...getChainFlowStatItems(chainData),
+      ...(chainData.avgDuration
+        ? [
+            {
+              label: 'Avg. transfer time',
+              value: (
+                <AvgDurationStatValue avgDuration={chainData.avgDuration} />
+              ),
+            },
+          ]
+        : []),
       { label: 'Connected', value: `${chainData.connectedChains} chains` },
       {
-        label: 'Per second',
+        label: 'Avg. value per second',
         value: `${formatCurrency(volumePerSecond, 'usd')}/s`,
       },
     ],
@@ -229,17 +264,27 @@ function getPairSummary(
   return {
     stats: [
       { label: 'Total volume', value: formatCurrency(totalVolume, 'usd') },
-      { label: 'Transfers', value: formatInteger(totalTransfers) },
+      { label: 'Total transfers', value: formatInteger(totalTransfers) },
       {
-        label: 'Avg. transfer',
+        label: 'Avg. transfer value',
         value: formatCurrency(avgTransferValue, 'usd'),
       },
+      ...(pairData?.avgDuration
+        ? [
+            {
+              label: 'Avg. transfer time',
+              value: (
+                <AvgDurationStatValue avgDuration={pairData.avgDuration} />
+              ),
+            },
+          ]
+        : []),
       {
         label: 'Net flow',
-        value: `${formatCurrency(Math.abs(netFlowValue), 'usd')}${netFlowChain ? ` → ${netFlowChain.name}` : ''}`,
+        value: `${formatCurrency(Math.abs(netFlowValue), 'usd')}${netFlowChain ? ` to ${netFlowChain.name}` : ''}`,
       },
       {
-        label: 'Per second',
+        label: 'Avg. value per second',
         value: `${formatCurrency(volumePerSecond, 'usd')}/s`,
       },
     ],

@@ -10,7 +10,6 @@ import {
   MIN_SELECTED_PROTOCOLS,
 } from '~/pages/interop/components/flows/consts'
 import { FlowsGraphPanel } from '~/pages/interop/components/flows/graph/FlowsGraphPanel'
-import { FlowsSelectedPathPanel } from '~/pages/interop/components/flows/selection-panel/FlowsSelectedPathPanel'
 import {
   type InteropFlowsProtocol,
   InteropFlowsProvider,
@@ -118,13 +117,13 @@ function HomeInteropCardContent({
   const statsLoading = isLoading && data === undefined
 
   return (
-    <HomeCard className="flex h-full flex-col">
+    <HomeCard className="@container flex h-full flex-col">
       <HomeCardHeader
         title="Interop"
         href="/interop/summary"
         timeframe="Last 24h"
       />
-      <div className="mt-2.5 grid grid-cols-2 gap-2 md:grid-cols-4">
+      <div className="mt-2.5 grid @min-[440px]:grid-cols-4 grid-cols-2 gap-2">
         <StatTile
           title="Volume"
           isLoading={statsLoading}
@@ -200,14 +199,14 @@ function HomeInteropCardContent({
       </div>
       <div
         className={cn(
-          'flex min-h-0 flex-1 flex-col motion-reduce:transition-none xl:max-2xl:mt-6 xl:max-2xl:grid xl:max-2xl:gap-4 xl:max-2xl:transition-[grid-template-columns] xl:max-2xl:duration-300 xl:max-2xl:ease-in-out',
+          'mt-6 flex @min-[900px]:grid min-h-0 flex-1 flex-col @min-[900px]:gap-4 @min-[900px]:transition-[grid-template-columns] @min-[900px]:duration-300 @min-[900px]:ease-in-out motion-reduce:transition-none',
           hasSelection
-            ? 'xl:max-2xl:grid-cols-[1fr_280px]'
-            : 'xl:max-2xl:grid-cols-[1fr_0px]',
+            ? '@min-[900px]:grid-cols-[1fr_280px]'
+            : '@min-[900px]:grid-cols-[1fr_0px]',
         )}
       >
-        <div className="-mx-2 mt-6 flex min-h-0 min-w-0 flex-1 flex-col overflow-x-clip xl:max-2xl:mt-0">
-          <div className="mb-3 hidden justify-center xl:max-2xl:flex">
+        <div className="-mx-2 flex min-h-0 min-w-0 flex-1 flex-col overflow-x-clip">
+          <div className="mb-3 flex justify-center">
             <SelectInfo
               highlightedChainsNumber={visibleHighlightedChains.length}
             />
@@ -223,32 +222,19 @@ function HomeInteropCardContent({
         </div>
         <div
           className={cn(
-            'mt-4 flex min-h-[180px] flex-col motion-reduce:transition-none xl:max-2xl:mt-0 xl:max-2xl:min-h-0 xl:max-2xl:min-w-0 xl:max-2xl:translate-x-3 xl:max-2xl:overflow-hidden xl:max-2xl:opacity-0 xl:max-2xl:transition-[transform,opacity] xl:max-2xl:duration-300 xl:max-2xl:ease-out',
-            hasSelection && 'xl:max-2xl:translate-x-0 xl:max-2xl:opacity-100',
+            'flex min-h-0 min-w-0 @min-[900px]:translate-x-3 flex-col @min-[900px]:overflow-hidden @min-[900px]:opacity-0 @min-[900px]:transition-[transform,opacity] @min-[900px]:duration-300 @min-[900px]:ease-out motion-reduce:transition-none',
+            hasSelection &&
+              '@min-[900px]:translate-x-0 @min-[900px]:opacity-100',
           )}
         >
-          {hasSelection && data ? (
-            <>
-              <div className="xl:max-2xl:hidden">
-                <HomeInteropSelectedPath
-                  data={data}
-                  allChains={allChains}
-                  selectedChains={selectedChains}
-                  visibleHighlightedChains={visibleHighlightedChains}
-                />
-              </div>
-              <div className="hidden xl:max-2xl:block xl:max-2xl:h-full xl:max-2xl:w-[280px]">
-                <FlowsSelectedPathPanel
-                  visibleHighlightedChains={visibleHighlightedChains}
-                />
-              </div>
-            </>
-          ) : (
-            <div className="flex flex-1 items-center justify-center rounded-lg bg-surface-secondary p-4 xl:max-2xl:hidden dark:bg-header-secondary">
-              <SelectInfo
-                highlightedChainsNumber={visibleHighlightedChains.length}
-              />
-            </div>
+          {hasSelection && data && (
+            <HomeInteropSelectedPath
+              data={data}
+              allChains={allChains}
+              selectedChains={selectedChains}
+              visibleHighlightedChains={visibleHighlightedChains}
+              className="@min-[900px]:mt-0 mt-4 @min-[900px]:h-full @min-[900px]:w-[280px]"
+            />
           )}
         </div>
       </div>
