@@ -26,6 +26,10 @@ export const wormholeWtt: BaseProject = {
         plugin: 'wormhole-token-bridge',
         bridgeType: 'lockAndMint',
       },
+      {
+        plugin: 'wormhole-token-bridge',
+        bridgeType: 'burnAndMint',
+      },
     ],
     type: 'other',
     permissions: generateDiscoveryDrivenPermissions([discovery]),
