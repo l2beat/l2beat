@@ -3,7 +3,6 @@
   "name": "katana",
   "import": ["../globalConfig.jsonc"],
   "maxAddresses": 200,
-  "sharedModules": ["shared-polygon-cdk"],
   "types": {
     "OpSuccinctRollupConfigHash": {
       "typeCaster": "Mapping",
