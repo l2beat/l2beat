@@ -47,5 +47,56 @@ for (const domain of SNAPSHOT_DOMAINS) {
         })
       }
     })
+
+    describe('no duplicate identities', () => {
+      // Duplicate ids mean two configs hash to the same backend
+      // configuration id - the indexer cannot tell them apart.
+      it('within a project', () => {
+        const errors: string[] = []
+        for (const [projectId, identities] of Object.entries(current)) {
+          const seen = new Map<string, string>()
+          for (const identity of identities) {
+            const first = seen.get(identity.id)
+            if (first !== undefined) {
+              errors.push(
+                `- ${projectId}: ${identity.id} (${first} / ${identity.label})`,
+              )
+            } else {
+              seen.set(identity.id, identity.label)
+            }
+          }
+        }
+        if (errors.length > 0) {
+          throw new Error(
+            `${domain.name} has duplicate identities within a project:\n${errors.join('\n')}`,
+          )
+        }
+      })
+
+      it('across projects', () => {
+        const byId = new Map<string, { projectId: string; label: string }[]>()
+        for (const [projectId, identities] of Object.entries(current)) {
+          for (const identity of identities) {
+            byId.set(identity.id, [
+              ...(byId.get(identity.id) ?? []),
+              { projectId, label: identity.label },
+            ])
+          }
+        }
+        const errors = [...byId.entries()]
+          .filter(
+            ([, owners]) => new Set(owners.map((o) => o.projectId)).size > 1,
+          )
+          .map(
+            ([id, owners]) =>
+              `- ${id}: ${owners.map((o) => `${o.projectId} (${o.label})`).join(', ')}`,
+          )
+        if (errors.length > 0) {
+          throw new Error(
+            `${domain.name} has identities shared by multiple projects:\n${errors.join('\n')}`,
+          )
+        }
+      })
+    })
   })
 }
