@@ -1,6 +1,7 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import express from 'express'
+import { env } from '~/env'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
@@ -65,22 +66,24 @@ export function createScalingRouter(
     res.status(200).send(html)
   })
 
-  router.get(
-    '/scaling/compare',
-    validateRoute({
-      query: v.object({
-        metric: v.string().optional(),
-        projects: v.string().optional(),
-        range: v.string().optional(),
-        scale: v.string().optional(),
+  if (env.FEATURE_FLAG_COMPARE_PROJECTS) {
+    router.get(
+      '/scaling/compare',
+      validateRoute({
+        query: v.object({
+          metric: v.string().optional(),
+          projects: v.string().optional(),
+          range: v.string().optional(),
+          scale: v.string().optional(),
+        }),
       }),
-    }),
-    async (req, res) => {
-      const data = await getScalingCompareData(req, manifest, cache)
-      const html = await render(data, req.originalUrl)
-      res.status(200).send(html)
-    },
-  )
+      async (req, res) => {
+        const data = await getScalingCompareData(req, manifest, cache)
+        const html = await render(data, req.originalUrl)
+        res.status(200).send(html)
+      },
+    )
+  }
 
   router.get(
     '/scaling/tvs',

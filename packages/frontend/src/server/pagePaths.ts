@@ -1,4 +1,5 @@
 import { getCollection } from '~/content/getCollection'
+import { env } from '~/env'
 import { shouldHaveNoBridgePage } from './features/data-availability/utils/shouldHaveNoBridgePage'
 import { ps } from './projects'
 
@@ -7,7 +8,6 @@ type PagePath = `/${string}`
 export const STATIC_PAGE_PATHS = [
   '/scaling/summary',
   '/scaling/activity',
-  '/scaling/compare',
   '/scaling/risk',
   '/scaling/risk/state-validation',
   '/scaling/risk/data-availability',
@@ -47,7 +47,14 @@ export const STATIC_PAGE_PATHS = [
 ] as const satisfies PagePath[]
 
 export async function getPagePaths(): Promise<PagePath[]> {
-  return [...STATIC_PAGE_PATHS, ...(await getDynamicPagePaths())]
+  const flaggedPaths: PagePath[] = env.FEATURE_FLAG_COMPARE_PROJECTS
+    ? ['/scaling/compare']
+    : []
+  return [
+    ...STATIC_PAGE_PATHS,
+    ...flaggedPaths,
+    ...(await getDynamicPagePaths()),
+  ]
 }
 
 async function getDynamicPagePaths(): Promise<PagePath[]> {

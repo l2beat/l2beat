@@ -65,6 +65,7 @@ const SERVER_CONFIG = {
     .optional(),
   INTEROP_CHAINS: stringArray.optional(),
   INTEROP_UPCOMING_CHAINS: stringArray.optional(),
+  FEATURE_FLAG_COMPARE_PROJECTS: featureFlag.default(false),
 }
 const ServerEnv = z.object(SERVER_CONFIG)
 
@@ -127,6 +128,7 @@ function getRawEnv(): Record<
     LOG_LEVEL: process.env.LOG_LEVEL,
     INTEROP_CHAINS: process.env.INTEROP_CHAINS,
     INTEROP_UPCOMING_CHAINS: process.env.INTEROP_UPCOMING_CHAINS,
+    FEATURE_FLAG_COMPARE_PROJECTS: process.env.FEATURE_FLAG_COMPARE_PROJECTS,
     // Client
     CLIENT_SIDE_GITCOIN_ROUND_LIVE: process.env.CLIENT_SIDE_GITCOIN_ROUND_LIVE,
     CLIENT_SIDE_SHOW_HIRING_BADGE: process.env.CLIENT_SIDE_SHOW_HIRING_BADGE,
