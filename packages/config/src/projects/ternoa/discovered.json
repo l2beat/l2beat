@@ -1,8 +1,7 @@
 {
   "name": "ternoa",
   "timestamp": 1768816541,
-  "configHash": "0x78cb235d1ce268cc0778544315039373da5930ecd2cce6c2b2471a31bc6271ce",
-  "sharedModules": ["shared-polygon-cdk"],
+  "configHash": "0x15bd789f39aa244d44d8f1b0c39326eef09af8273391a0765d036a259528ed70",
   "entries": [
     {
       "name": "AgglayerBridge",
