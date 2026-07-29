@@ -1,0 +1,34 @@
+{
+  "entrypoints": {
+    "eth:0x02993cdC11213985b9B13224f3aF289F03bf298d": {
+      "name": "Vector",
+      "type": "Contract",
+      "project": "vector"
+    },
+    "eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a": {
+      "name": "AvailBridgeV1",
+      "type": "Contract",
+      "project": "vector"
+    },
+    "eth:0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930": {
+      "name": "Avail Multisig 2",
+      "type": "Contract",
+      "project": "vector"
+    },
+    "eth:0x36194271a00dBBBae314E83dA56d0FF75fDa367B": {
+      "name": "ProxyAdmin",
+      "type": "Contract",
+      "project": "vector"
+    },
+    "eth:0x45828180bbE489350D621d002968A0585406d487": {
+      "name": "TimelockController",
+      "type": "Contract",
+      "project": "vector"
+    },
+    "eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666": {
+      "name": "Avail Multisig 1",
+      "type": "Contract",
+      "project": "vector"
+    }
+  }
+}
