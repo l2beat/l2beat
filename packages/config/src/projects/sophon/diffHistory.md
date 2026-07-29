@@ -1,4 +1,34 @@
-Generated with discovered.json: 0x63589e7be748626ba03e5963b54d309edd571f4b
+Generated with discovered.json: 0x37c7921b5b4ca24752178ed8e299504b7fc2bba9
+
+# Diff at Wed, 29 Jul 2026 12:10:36 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@aa8a66c60dd068866cc6883eb64714f2f3e69afa block: 1782815274
+- current timestamp: 1782815274
+
+## Description
+
+Make vector use entrypoints and rediscover
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782815274 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    reference Vector (eth:0x02993cdC11213985b9B13224f3aF289F03bf298d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference AvailBridgeV1 (eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x166a1616a512b39c181ae8c4f36e86a0afa98c15
 
 # Diff at Tue, 30 Jun 2026 10:28:58 GMT:
 

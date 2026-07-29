@@ -64,6 +64,20 @@
       }
     },
     {
+      "name": "Vector",
+      "address": "eth:0x02993cdC11213985b9B13224f3aF289F03bf298d",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "vector"
+    },
+    {
+      "name": "AvailBridgeV1",
+      "address": "eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "vector"
+    },
+    {
       "name": "Diamond",
       "address": "eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
       "type": "Contract",
@@ -1427,7 +1441,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "shared-zk-stack/AvailL1DAValidator": "0xb0d552fff2582ff6cb7f9fad04a31ee03fa589ac2c852310fc3771f9367afc08",
+    "shared-zk-stack/AvailL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",
     "shared-zk-stack/Diamond": "0xf58468847183a89ea73709ca00dc1bd45baad858f179c87fa0b9a9a3099edb25",
     "shared-zk-stack/DualVerifier": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
@@ -1438,5 +1452,5 @@
     "sophon/SophonTransactionFilterer": "0x5af79cc105e47429633fc735f1601adf54bbd92b355c622bdab306600a542b7c"
   },
   "usedBlockNumbers": { "ethereum": 25429893 },
-  "permissionsConfigHash": "0x3be25ac0b452e8705309395cbb308e498ab73db55aa15e2fc6490d1492f98356"
+  "permissionsConfigHash": "0xeb0d929e33bdc91c92c6c459cd99083c4eab3c99004d77b259d476517c3db565"
 }
