@@ -1095,6 +1095,10 @@
     {
       "id": "695532d64024",
       "label": "ethereum inbox 0x8c0Bfc04AdA21fd496c55B8C50331f904306F564 sequencers[2] since 21809364"
+    },
+    {
+      "id": "a04029e240ea",
+      "label": "ethereum inbox 0xdC26B08F0335b68721F64001C38b05D0BC9B539d sequencers[2] since 24979712"
     }
   ],
   "zora": [
