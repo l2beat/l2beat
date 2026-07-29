@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { Line, LineChart } from 'recharts'
@@ -19,7 +20,7 @@ import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { countPerSecond } from '~/server/features/scaling/activity/utils/countPerSecond'
 import { useTRPC } from '~/trpc/React'
-import { formatTimestamp } from '~/utils/dates'
+import { formatRange } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generateColors'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import type { CompareActivityUnit } from '../../utils/compareChartState'
@@ -156,10 +157,7 @@ function CustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-[200px] flex-col [@media(min-width:600px)]:w-60">
         <div className="font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(label, {
-            longMonthName: true,
-            mode: 'datetime',
-          })}
+          {formatRange(label, label + UnixTime.DAY)}
         </div>
         <div className="mt-2 flex flex-col gap-2">
           {[...visible]
