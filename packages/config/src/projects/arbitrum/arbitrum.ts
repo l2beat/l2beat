@@ -315,7 +315,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
     ),
     governanceInfo: {
       securityCouncil: {
-        Composition: `**${securityCouncilStats}** — 12 members across two 6-seat cohorts, 1-year staggered terms. DAO-elected via Tally with Foundation eligibility screening.`,
+        Composition: `**${securityCouncilStats}** — 12 members across two 6-seat cohorts, 1-year staggered terms. DAO-elected via on-chain vote with Foundation eligibility screening.`,
         'Members public':
           '**Mapped** — 12 entities + addresses [published by the Arbitrum Foundation](https://docs.arbitrum.foundation/security-council-members). Mix of individuals (gzeon, zachxbt, Bartek, Yoav, Griff Green, "fred", Emiliano, Michael Lewellen) and orgs (Gauntlet, Immunefi, Certora, OpenZeppelin).',
         Charter: `[Arbitrum DAO Constitution §3](https://docs.arbitrum.foundation/dao-constitution) — defines ${securityCouncilStats} threshold, transparency reports, conflict-of-interest, removal mechanics, ≤3-per-org cap.`,
