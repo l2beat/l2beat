@@ -20,6 +20,8 @@ const QueueEntryAddress = v.object({
 
 export type CoingeckoAvailability = 'found' | 'not-found' | 'not-checked'
 
+const COINGECKO_AVAILABILITY_BATCH_SIZE = 10
+
 const QueuePageInput = v.object({
   page: v.number(),
   pageSize: v.number(),
@@ -45,15 +47,28 @@ export const tokenIngestionQueueRouter = router({
         availability: CoingeckoAvailability
       }[] = []
 
-      for (const address of dedupeAddresses(input)) {
-        const trace = await ctx.tokenIngestionProcessor.plan(
-          toPendingEntry(address),
-          transferIndex,
+      const addresses = dedupeAddresses(input)
+      for (
+        let start = 0;
+        start < addresses.length;
+        start += COINGECKO_AVAILABILITY_BATCH_SIZE
+      ) {
+        const batch = await Promise.all(
+          addresses
+            .slice(start, start + COINGECKO_AVAILABILITY_BATCH_SIZE)
+            .map(async (address) => {
+              const trace = await ctx.tokenIngestionProcessor.plan(
+                toPendingEntry(address),
+                transferIndex,
+              )
+
+              return {
+                ...address,
+                availability: getCoingeckoAvailability(trace),
+              }
+            }),
         )
-        results.push({
-          ...address,
-          availability: getCoingeckoAvailability(trace),
-        })
+        results.push(...batch)
       }
 
       return results

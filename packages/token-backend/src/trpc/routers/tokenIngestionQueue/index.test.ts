@@ -101,6 +101,59 @@ describe('tokenIngestionQueueRouter', () => {
       })
       expect(plan.calls[1]?.args[1]).toEqual(transferIndex)
     })
+
+    it('plans at most ten addresses concurrently', async () => {
+      const addresses = Array.from({ length: 11 }, (_, index) => ({
+        chain: 'ethereum',
+        address: `0x${index}`,
+      }))
+      const transferIndex = { findInvolving: mockFn().returns([]) }
+      const getInteropTransferIndex = mockFn().resolvesTo(transferIndex)
+      let started = 0
+      let releaseFirstBatch: (() => void) | undefined
+      let signalFirstBatchStarted: (() => void) | undefined
+      const firstBatchCanFinish = new Promise<void>((resolve) => {
+        releaseFirstBatch = resolve
+      })
+      const firstBatchStarted = new Promise<void>((resolve) => {
+        signalFirstBatchStarted = resolve
+      })
+      const plan = mockFn().executes(
+        async (entry: TokenIngestionQueueRecord) => {
+          started++
+          if (started === 10) {
+            signalFirstBatchStarted?.()
+          }
+          if (started <= 10) {
+            await firstBatchCanFinish
+          }
+
+          return {
+            id: `ing_${entry.address}`,
+            address: { chain: entry.chain, address: entry.address },
+            existingDeployedToken: undefined,
+            steps: [],
+            outcome: { kind: 'skip' as const, reason: 'test' },
+          }
+        },
+      )
+      const caller = createRouter({
+        tokenDb: mockObject<TokenDatabase>({}),
+        processor: mockObject<TokenIngestionProcessor>({
+          getInteropTransferIndex,
+          plan,
+        }),
+      })
+
+      const resultPromise = caller.getCoingeckoAvailability(addresses)
+      await firstBatchStarted
+
+      expect(plan).toHaveBeenCalledTimes(10)
+      releaseFirstBatch?.()
+
+      const result = await resultPromise
+      expect(result).toHaveLength(11)
+    })
   })
 
   describe('getPage', () => {

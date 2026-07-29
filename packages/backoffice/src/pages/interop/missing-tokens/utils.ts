@@ -81,10 +81,7 @@ export function getMissingTokenAction(options: {
   ingestionStatus?: MissingTokenIngestionStatus
 }) {
   if (options.ingestionStatus === 'no-coingecko') {
-    return {
-      href: 'https://tokens.l2beat.com/tokens/ingestion-queue',
-      label: 'Not on CoinGecko',
-    }
+    return undefined
   }
 
   switch (options.tokenDbStatus) {
