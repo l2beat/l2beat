@@ -7,6 +7,7 @@ import type {
 } from '@l2beat/database'
 import {
   Address32,
+  assert,
   assertUnreachable,
   UnixTime,
   unique,
@@ -34,12 +35,15 @@ export type TokenInfos = Map<
   }
 >
 
+const DEFAULT_BATCH_SIZE = 10_000
+
 interface InteropFinancialsLoopOptions {
   analyzer?: InteropTransferAnalyzer
   intervalMs?: number
   notifier?: InteropNotifier
   maxTokenPriceUsd?: number
   maxTransferValueUsd?: number
+  batchSize?: number
 }
 
 interface GeneratedTokenUpdate {
@@ -65,6 +69,7 @@ export class InteropFinancialsLoop extends TimeLoop {
   private readonly notifier: InteropNotifier | undefined
   private readonly maxTokenPriceUsd: number
   private readonly maxTransferValueUsd: number
+  private readonly batchSize: number
 
   constructor(
     private chains: { id: string; type: 'evm' }[],
@@ -80,20 +85,29 @@ export class InteropFinancialsLoop extends TimeLoop {
     this.maxTokenPriceUsd = options.maxTokenPriceUsd ?? Number.POSITIVE_INFINITY
     this.maxTransferValueUsd =
       options.maxTransferValueUsd ?? Number.POSITIVE_INFINITY
+    this.batchSize = options.batchSize ?? DEFAULT_BATCH_SIZE
+    assert(this.batchSize > 0, 'batch size must be positive')
   }
 
   async run() {
-    const unprocessed = (await this.db.interopTransfer.getUnprocessed()).map(
-      (u) => ({
-        transfer: u,
-        srcId: toDeployedId(this.chains, u.srcChain, u.srcTokenAddress),
-        dstId: toDeployedId(this.chains, u.dstChain, u.dstTokenAddress),
-      }),
-    )
+    let processed = 0
+    do {
+      processed = await this.processBatch()
+    } while (processed === this.batchSize)
+  }
+
+  private async processBatch(): Promise<number> {
+    const unprocessed = (
+      await this.db.interopTransfer.getUnprocessed(this.batchSize)
+    ).map((u) => ({
+      transfer: u,
+      srcId: toDeployedId(this.chains, u.srcChain, u.srcTokenAddress),
+      dstId: toDeployedId(this.chains, u.dstChain, u.dstTokenAddress),
+    }))
 
     if (unprocessed.length === 0) {
       this.logger.debug('Skipping run, no transfers to process.')
-      return
+      return 0
     }
 
     this.logger.info('Processing transfers', {
@@ -179,11 +193,9 @@ export class InteropFinancialsLoop extends TimeLoop {
 
     const processedAt = UnixTime.now()
 
-    await this.db.transaction(async () => {
-      for (const { id, update } of updates) {
-        await this.db.interopTransfer.updateFinancials(id, update)
-      }
-    })
+    await this.db.interopTransfer.updateManyFinancials(
+      updates.map(({ id, update }) => ({ id, update })),
+    )
 
     this.notifier?.notifySkippedTransferValuations(
       processedAt,
@@ -201,6 +213,8 @@ export class InteropFinancialsLoop extends TimeLoop {
     if (this.analyzer) {
       this.analyzer.handleProcessedTransfers(processedTransfers, processedAt)
     }
+
+    return unprocessed.length
   }
 
   private applyTokenUpdate(
