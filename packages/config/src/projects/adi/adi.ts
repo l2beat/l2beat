@@ -107,7 +107,7 @@ export const adi: ScalingProject = {
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
         sinceBlock: 23874833,
-        inbox: 'eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186',
+        inbox: '0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186',
         sequencers: [
           '0xF8fF3e62E94807a5C687f418Fe36942dD3a24524',
           '0x6090e365149d005517e2013926cD18d767f04Aa1',
