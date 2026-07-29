@@ -11,6 +11,30 @@
   "overrides": {
     "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776": {
       "fields": {
+        "daTrackingConfig": {
+          // Full DA tracking era history for the backend indexer. Append-only:
+          // when the chain migrates to a new ValidatorTimelock, close the last
+          // era with untilBlock, append a new one and move this field to the
+          // new timelock's overrides - never edit or remove existing eras.
+          "handler": {
+            "type": "zkStackDaTracking",
+            "l2ChainId": 543210,
+            "eras": [
+              {
+                // sinceBlock defaults to the first ValidatorAdded for this chain
+                "inbox": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+                "validatorSource": "legacyEvents",
+                "untilBlock": 25482106 // last batch before the v29 upgrade
+              },
+              {
+                "inbox": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+                "validatorSource": "crossChainRoles",
+                "chainAddress": "eth:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9",
+                "sinceBlock": 25482106 // v29 upgrade
+              }
+            ]
+          }
+        },
         "validatorsVTLFullAC": {
           // giving the permission to the entire AC, because in practice the actor(s) have all roles
           "handler": {

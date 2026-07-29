@@ -1,7 +1,7 @@
 {
   "name": "lachain",
   "timestamp": 1761642941,
-  "configHash": "0x729086d33080c55e97333daee200266758676e4312bef719dc3999ec1ca3ae74",
+  "configHash": "0xb4bfbec7ce3d9fe2ff82dd189310577a758f0375ab3ec2057221cc04429585a1",
   "entries": [
     {
       "address": "eth:0x00A74411DDBC50C04353543d5D3f4296936DA645",
@@ -427,6 +427,16 @@
       "values": {
         "$immutable": true,
         "chainTypeManager": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+        "daTrackingConfig": [
+          {
+            "inbox": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+            "sequencers": [
+              "eth:0xB66d4AF4E96bF96026454A6A150EDD2CE55E9E67",
+              "eth:0xDAC936134633C309BA831239e5e25Cfe5094b229"
+            ],
+            "sinceBlock": 22248238
+          }
+        ],
         "executionDelay": 10800,
         "executionDelay_fmt": "3h",
         "getName": "ValidatorTimelock",

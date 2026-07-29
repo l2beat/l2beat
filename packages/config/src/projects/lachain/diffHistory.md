@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x8b5a36349db3e54407781f0c5de13aae8596c1fb
+Generated with discovered.json: 0xf4c6643ef85bc7c8f3b254c265ac685d570d5f90
 
-# Diff at Mon, 27 Jul 2026 11:01:25 GMT:
+# Diff at Wed, 29 Jul 2026 07:29:09 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@887150af6d3edad6e5fde92995bb5ecc5e48cfde block: 1761642941
+- author: torztomasz (<tomasz.torz@l2beat.com>)
+- comparing to: main@fc28078e744c0eaf2d65858a6073cbf1fe48622d block: 1761642941
 - current timestamp: 1761642941
 
 ## Description
@@ -49,6 +49,8 @@ discovery. Values are for block 1761642941 (main branch discovery), not current.
       sourceHashes.0:
 -        "0x2221508945ceea880f5d52488af1a7466fcdfadeaf3644dc5e3b82671b7947a3"
 +        "0x6308b2ae7a44c1255f5ad431f8b3d2d7da55efd35a771e2a31c87ce6b814e358"
+      values.daTrackingConfig:
++        [{"inbox":"eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564","sequencers":["eth:0xB66d4AF4E96bF96026454A6A150EDD2CE55E9E67","eth:0xDAC936134633C309BA831239e5e25Cfe5094b229"],"sinceBlock":22248238}]
       deployerAddress:
 +        "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16"
     }

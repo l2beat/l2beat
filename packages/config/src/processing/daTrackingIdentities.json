@@ -472,7 +472,7 @@
   "lachain": [
     {
       "id": "3456bae137ed",
-      "label": "ethereum inbox 0x8c0Bfc04AdA21fd496c55B8C50331f904306F564 sequencers[2] since 21809364"
+      "label": "ethereum inbox 0x8c0Bfc04AdA21fd496c55B8C50331f904306F564 sequencers[2] since 22248238"
     }
   ],
   "lambda": [
@@ -1037,12 +1037,16 @@
   ],
   "zeronetwork": [
     {
+      "id": "733eaddfda94",
+      "label": "ethereum inbox 0x8c0Bfc04AdA21fd496c55B8C50331f904306F564 sequencers[2] since 22120195"
+    },
+    {
       "id": "a7118a5692fd",
-      "label": "ethereum inbox 0x2e5110cF18678Ec99818bFAa849B8C881744b776 sequencers[2] since 25482106"
+      "label": "ethereum inbox 0x2e5110cF18678Ec99818bFAa849B8C881744b776 sequencers[2] since 25487710"
     },
     {
       "id": "d7d7f8be0a85",
-      "label": "ethereum inbox 0x8c0Bfc04AdA21fd496c55B8C50331f904306F564 sequencers[4] since 21809364"
+      "label": "ethereum inbox 0x8c0Bfc04AdA21fd496c55B8C50331f904306F564 sequencers[4] since 24879563"
     }
   ],
   "zircuit": [

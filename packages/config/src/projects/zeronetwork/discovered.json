@@ -1,7 +1,7 @@
 {
   "name": "zeronetwork",
   "timestamp": 1785166634,
-  "configHash": "0xfe191f045624cc36d992ff374d84468e34bb3ed8f1bad2594588f050a120474e",
+  "configHash": "0xc00a83a546497037ac052d700a06eb79b5adfc60339a4c6c936364cf1a6de7c4",
   "entries": [
     {
       "name": "ValidatorTimelock",
@@ -38,6 +38,36 @@
         "$upgradeCount": 1,
         "BRIDGE_HUB": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
         "COMMITTER_ROLE": "0x0b60b5d7f7e737e4561eecda7c6a01e19e626c495c26e6f45e5b255f76a20106",
+        "daTrackingConfig": [
+          {
+            "inbox": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+            "sequencers": [
+              "eth:0x0F9B807d5B0cE12450059B425Dc35C727D65CB2F",
+              "eth:0x479B7c95b9509E1A834C994fc94e3581aA8A73B9"
+            ],
+            "sinceBlock": 22120195,
+            "untilBlock": 24879563
+          },
+          {
+            "inbox": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+            "sequencers": [
+              "eth:0x0F9B807d5B0cE12450059B425Dc35C727D65CB2F",
+              "eth:0x479B7c95b9509E1A834C994fc94e3581aA8A73B9",
+              "eth:0x7b55c1D9b75Fa35793157aD674b0a1aEF7b8DdE0",
+              "eth:0xef854E09fa6e281268e1051D4d5465d8c92862ee"
+            ],
+            "sinceBlock": 24879563,
+            "untilBlock": 25482106
+          },
+          {
+            "inbox": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+            "sequencers": [
+              "eth:0x7b55c1D9b75Fa35793157aD674b0a1aEF7b8DdE0",
+              "eth:0xef854E09fa6e281268e1051D4d5465d8c92862ee"
+            ],
+            "sinceBlock": 25487710
+          }
+        ],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "executionDelay": 10800,
         "executionDelay_fmt": "3h",

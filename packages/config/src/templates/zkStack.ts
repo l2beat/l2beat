@@ -705,6 +705,38 @@ function getDaTracking(
   }
 
   if (templateVars.usesEthereumBlobs) {
+    // Full era history resolved by the zkStackDaTracking discovery handler,
+    // declared per project in config.jsonc on the ValidatorTimelock entry.
+    const discoveredEras = templateVars.discovery.hasContract(
+      'ValidatorTimelock',
+    )
+      ? templateVars.discovery.getContractValueOrUndefined<
+          {
+            inbox: string
+            sequencers: string[]
+            sinceBlock: number
+            untilBlock?: number
+          }[]
+        >('ValidatorTimelock', 'daTrackingConfig')
+      : undefined
+
+    if (discoveredEras) {
+      return discoveredEras.map((era) => ({
+        type: 'ethereum' as const,
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: era.sinceBlock,
+        untilBlock: era.untilBlock,
+        inbox: ChainSpecificAddress.address(ChainSpecificAddress(era.inbox)),
+        sequencers: era.sequencers.map((a) =>
+          ChainSpecificAddress.address(ChainSpecificAddress(a)),
+        ),
+      }))
+    }
+
+    // Legacy single-era derivation, only current discovery state - a
+    // discovery update that rotates validators or migrates the timelock
+    // re-keys this config and wipes indexed DA data. Migrate projects to
+    // the zkStackDaTracking handler instead.
     const validatorTimelock = ChainSpecificAddress.address(
       templateVars.discovery.getContractDetails('ValidatorTimelock').address,
     )

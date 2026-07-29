@@ -18,6 +18,23 @@
     },
     "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": {
       "fields": {
+        "daTrackingConfig": {
+          // Full DA tracking era history for the backend indexer. Append-only:
+          // on a ValidatorTimelock migration, close this era with untilBlock,
+          // append a new one and move this field to the new timelock's
+          // overrides - never edit or remove existing eras.
+          "handler": {
+            "type": "zkStackDaTracking",
+            "l2ChainId": 2904,
+            "eras": [
+              {
+                // sinceBlock defaults to the first ValidatorAdded for this chain
+                "inbox": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+                "validatorSource": "legacyEvents"
+              }
+            ]
+          }
+        },
         "validatorsVTL": {
           "handler": {
             "type": "event",
