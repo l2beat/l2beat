@@ -1,7 +1,6 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
-import { DarkThemeToggle } from '~/components/DarkThemeToggle'
-import { SearchBarButton } from '~/components/search-bar/SearchBarButton'
+import { MainPageHeader } from '~/components/MainPageHeader'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -73,13 +72,7 @@ export function HomePage({
           variant="home"
           childrenWrapperClassName="max-md:bg-surface-primary"
         >
-          <header className="flex items-center gap-4 pt-[18px] pb-5 max-lg:hidden">
-            <h1 className="font-bold text-[26px]">Home</h1>
-            <div className="ml-auto flex shrink-0 items-center gap-4">
-              <SearchBarButton />
-              <DarkThemeToggle />
-            </div>
-          </header>
+          <MainPageHeader>Home</MainPageHeader>
           <div className="flex flex-col md:gap-6 [&_.primary-card]:max-md:rounded-none [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b">
             <div className="grid grid-cols-1 items-stretch md:gap-4 xl:gap-6 2xl:grid-cols-[minmax(260px,340px)_minmax(340px,1fr)_minmax(400px,1.35fr)]">
               <div className="flex h-full min-w-0 flex-col md:gap-4 xl:grid xl:grid-cols-3 xl:gap-6 2xl:flex">
