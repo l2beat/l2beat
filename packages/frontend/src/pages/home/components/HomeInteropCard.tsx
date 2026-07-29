@@ -198,10 +198,6 @@ function HomeInteropCardContent({
           }
         />
       </div>
-      {/* xl only (full-width row layout): selected-path stats sit to the
-          right of the graph, like the summary-page side panel; the panel
-          column animates open so the centered graph slides left, mirroring
-          the summary page. 2xl returns the stats below the graph. */}
       <div
         className={cn(
           'flex min-h-0 flex-1 flex-col motion-reduce:transition-none xl:max-2xl:mt-6 xl:max-2xl:grid xl:max-2xl:gap-4 xl:max-2xl:transition-[grid-template-columns] xl:max-2xl:duration-300 xl:max-2xl:ease-in-out',
@@ -210,12 +206,7 @@ function HomeInteropCardContent({
             : 'xl:max-2xl:grid-cols-[1fr_0px]',
         )}
       >
-        {/* overflow-x-clip: node halos render outside the square svg
-            (overflow="visible") and would otherwise widen the page on
-            mobile. */}
         <div className="-mx-2 mt-6 flex min-h-0 min-w-0 flex-1 flex-col overflow-x-clip xl:max-2xl:mt-0">
-          {/* Same select hint placement as the summary page: above the
-              graph instead of in the bottom placeholder box. */}
           <div className="mb-3 hidden justify-center xl:max-2xl:flex">
             <SelectInfo
               highlightedChainsNumber={visibleHighlightedChains.length}
@@ -227,14 +218,9 @@ function HomeInteropCardContent({
             hasEnoughChains={hasEnoughChains}
             hasEnoughProtocols={hasEnoughProtocols}
             isLoading={isLoading}
-            // Center the width-capped graph in the leftover space so the
-            // card doesn't end in a large blank area at xl.
             className="pb-2"
           />
         </div>
-        {/* Always reserve the bottom panel height (min-h matches the tallest
-            selected-path state) so the graph doesn't jump when a chain is
-            (de)selected. */}
         <div
           className={cn(
             'mt-4 flex min-h-[180px] flex-col motion-reduce:transition-none xl:max-2xl:mt-0 xl:max-2xl:min-h-0 xl:max-2xl:min-w-0 xl:max-2xl:translate-x-3 xl:max-2xl:overflow-hidden xl:max-2xl:opacity-0 xl:max-2xl:transition-[transform,opacity] xl:max-2xl:duration-300 xl:max-2xl:ease-out',
@@ -243,8 +229,6 @@ function HomeInteropCardContent({
         >
           {hasSelection && data ? (
             <>
-              {/* Compact below-graph version; swapped for the full
-                  summary-page panel when it sits beside the graph. */}
               <div className="xl:max-2xl:hidden">
                 <HomeInteropSelectedPath
                   data={data}
@@ -253,8 +237,6 @@ function HomeInteropCardContent({
                   visibleHighlightedChains={visibleHighlightedChains}
                 />
               </div>
-              {/* Fixed inner width so the panel content doesn't squish
-                  while the column animates open. */}
               <div className="hidden xl:max-2xl:block xl:max-2xl:h-full xl:max-2xl:w-[280px]">
                 <FlowsSelectedPathPanel
                   visibleHighlightedChains={visibleHighlightedChains}
@@ -307,7 +289,6 @@ function StatTile({
   secondary?: string
   icon?: ReactNode
   isLoading: boolean
-  /** Larger value, vertically centered in the space below the label. */
   emphasized?: boolean
   className?: string
 }) {

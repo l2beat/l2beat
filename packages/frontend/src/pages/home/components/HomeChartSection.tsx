@@ -1,15 +1,8 @@
 import type { ReactNode } from 'react'
 
-/** Grid of chart sections inside the Scaling / Ethereum cards: stacked in a
- * single column at every size, sharing the card's height in the 2xl column
- * layout. */
 export const HOME_CHART_SECTION_GRID_CLASS =
   'grid grid-cols-1 gap-5 xl:min-h-0 xl:flex-1 2xl:auto-rows-fr'
 
-/**
- * Stat-tile-with-trend anatomy: muted label on the left, value with its change
- * stacked on the right, chart underneath.
- */
 export function HomeChartSection({
   label,
   stat,
@@ -30,8 +23,6 @@ export function HomeChartSection({
         </div>
         <div className="flex-none">{stat}</div>
       </div>
-      {/* mt-auto bottom-aligns charts in side-by-side sections, so their
-          x-axes stay level when a header wraps to a second line. */}
       <div className="mt-auto w-full min-w-0 pt-3 xl:flex xl:min-h-0 xl:flex-1 xl:flex-col">
         {children}
       </div>

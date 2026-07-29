@@ -21,7 +21,6 @@ export function WhatsNewWidgetCloseable({
   const pathname = usePathname()
   if (!isClient) return null
 
-  // The home page has its own What's new card, so the widget stays hidden there.
   if (
     isClosed ||
     pathname === '/' ||

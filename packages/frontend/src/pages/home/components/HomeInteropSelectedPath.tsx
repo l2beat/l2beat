@@ -24,11 +24,6 @@ interface TopRoute {
   volume: number
 }
 
-/**
- * Compact summary shown at the bottom of the home Interop widget when a chain
- * or chain-pair is selected on the graph. Two-column stats plus single top
- * route / token / bridge rows — a condensed version of the detailed-page panel.
- */
 export function HomeInteropSelectedPath({
   data,
   allChains,

@@ -11,30 +11,19 @@ import { computeSeriesChange } from './computeSeriesChange'
 
 export interface HomeEthereumCharts {
   activity: {
-    /** [timestamp, uopsCount] — raw daily counts */
     chart: [number, number | null][]
     syncedUntil: number
-    /** Past day UOPS per second, for the stat next to the sparkline. */
     pastDayUops: number | undefined
-    /** Relative change of the series over the chart range. */
     change: number | undefined
   }
   da: {
-    /** [timestamp, bytes] — data posted per day */
     chart: [number, number | null][]
     syncedUntil: number
-    /** Share of the latest day's data posted by tracked projects. */
     trackedShare: number | undefined
-    /** Relative change of the series over the chart range. */
     change: number | undefined
   }
 }
 
-/**
- * Purpose-built data for HomeEthereumCard. Replaces the ethereumChart and
- * da.projectCharts procedures which computed all-time-high stats and a full
- * year of per-poster DA rows the card never renders.
- */
 export async function getHomeEthereumCharts(
   range: ChartRange,
 ): Promise<HomeEthereumCharts> {
@@ -103,11 +92,8 @@ async function getEthereumDaSparkline(
 ): Promise<HomeEthereumCharts['da']> {
   const db = getDb()
 
-  // Only show fully synced days — the current day's data is partial.
   const adjustedRange = getFullySyncedDaRange(range)
 
-  // The 'ethereum' projectId rows are the DA layer's own totals, so this is
-  // a small query even over a year.
   const totalRecords = await db.dataAvailability.getByProjectIdsAndTimeRange(
     ['ethereum'],
     adjustedRange,
@@ -145,8 +131,6 @@ async function getEthereumDaSparkline(
     'day',
   ).map((timestamp) => [timestamp, totalByDay.get(timestamp) ?? null])
 
-  // Share of the latest day's total posted by tracked posters: only that one
-  // day is fetched per poster instead of the full year.
   const posterRecords = await db.dataAvailability.getByDaLayersAndTimeRange(
     ['ethereum'],
     [lastDay, lastDay + UnixTime.DAY],

@@ -120,9 +120,6 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
         : `Server running on port ${port}`,
     })
 
-    // Fire-and-forget warmup: the first render after boot pays one-time costs
-    // (lazy modules, config db open, connection pool, page caches). Doing it
-    // here means no real visitor hits that request.
     fetch(`http://localhost:${port}/`)
       .then(() => logger.info('Warmup request completed'))
       .catch((error) => logger.warn('Warmup request failed', { error }))

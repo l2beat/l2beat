@@ -89,7 +89,6 @@ export type InteropDashboardParams = v.infer<typeof InteropDashboardParams>
 export const InteropDashboardParams = v.object({
   ...InteropSelectionInputShape,
   type: KnownInteropBridgeType.optional(),
-  /** When set, only the top N protocol entries (by volume) are returned. */
   limit: v.number().optional(),
 })
 

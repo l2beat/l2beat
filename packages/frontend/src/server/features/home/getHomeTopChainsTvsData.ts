@@ -4,12 +4,6 @@ import type { SevenDayTvsBreakdown } from '../scaling/tvs/get7dTvsBreakdown'
 import type { TvsTableData } from '../scaling/tvs/getTvsTableData'
 import { getAssociatedTokenWarning } from '../scaling/tvs/utils/getAssociatedTokenWarning'
 
-/**
- * Builds the TvsTableData subset for the top chains card from the 7d
- * breakdown that getScalingSummaryData already computed, so the home page
- * doesn't have to run the tvs.table query (which recomputes the breakdown
- * for every rollup) a second time.
- */
 export function getHomeTopChainsTvsData(
   entries: ScalingSummaryEntry[],
   breakdown: SevenDayTvsBreakdown,

@@ -32,8 +32,6 @@ interface Props {
 export function RecentChangesDialog({ open, onOpenChange }: Props) {
   const { isMobile } = useDevice()
   const trpc = useTRPC()
-  // The groups (full diff bodies) are heavy, so they are not serialized into
-  // the page props — they are fetched only when the dialog is opened.
   const { data, isLoading } = useQuery(
     trpc.projects.recentChanges.queryOptions(),
   )

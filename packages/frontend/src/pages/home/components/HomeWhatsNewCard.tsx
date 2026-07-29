@@ -52,11 +52,6 @@ function WhatsNewItemCard({ item }: { item: HomeWhatsNewItem }) {
       onClick={() => setWidgetClosed(true)}
       className="group relative block flex-1 overflow-hidden md:flex md:flex-row md:rounded-lg md:border-2 md:border-divider xl:block xl:min-h-40 xl:rounded-none xl:border-0"
     >
-      {/* Below md and from xl up the item is a poster: the image is the card
-          background and the text sits on a dark scrim at the bottom. The
-          default 16:9 asset serves the mobile poster; at xl the vertical
-          asset fills whatever box the column slack produces. In between
-          (md–xl) the item is a compact thumbnail row. */}
       <div className="relative aspect-video w-full overflow-hidden md:aspect-auto md:w-32 md:shrink-0 xl:absolute xl:inset-0 xl:w-full">
         <picture className="contents">
           <source

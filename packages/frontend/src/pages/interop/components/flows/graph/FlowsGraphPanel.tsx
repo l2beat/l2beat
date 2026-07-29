@@ -106,7 +106,5 @@ const RESIZE_STEP = 50
 
 function getSteppedSize(size: number) {
   const stepped = Math.max(Math.round(size / RESIZE_STEP) * RESIZE_STEP, 350)
-  // Never exceed the container, otherwise the graph overflows the page
-  // horizontally on narrow screens.
   return Math.min(stepped, Math.floor(size))
 }

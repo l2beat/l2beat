@@ -8,13 +8,11 @@ import {
 } from './getDiscoveryUpdates'
 
 const RECENT_CHANGES_WINDOW = 7 * UnixTime.DAY
-/** Updates are newest-first; a 7-day window never needs more than a handful. */
 const PER_PROJECT_LIMIT = 20
 
 export interface RecentChangesProjectGroup {
   name: string
   iconUrl: string
-  /** Link to the project detail page's Updates section. */
   href: string
   updates: DiscoveryUpdate[]
 }
@@ -38,8 +36,6 @@ export async function getRecentChangesOverview(): Promise<RecentChangesOverview>
       continue
     }
 
-    // Only scaling and interop projects have a detail page with an Updates
-    // section to link to.
     const href = project.scalingInfo
       ? `/scaling/projects/${project.slug}#updates`
       : project.interopConfig
@@ -69,8 +65,6 @@ export async function getRecentChangesOverview(): Promise<RecentChangesOverview>
     })
   }
 
-  // Highest-TVS projects first; projects without TVS (e.g. interop-only
-  // protocols) fall back to most recently changed.
   const tvs = await get7dTvsBreakdown({
     type: 'projects',
     projectIds: grouped.map((entry) => entry.projectId),

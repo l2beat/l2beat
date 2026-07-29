@@ -3,9 +3,7 @@ import { ps } from '~/server/projects'
 
 export interface HomeProjectCounts {
   scaling: number
-  /** Number of chains tracked for interop. */
   interop: number
-  /** Number of interop protocols (projects with an interopConfig). */
   interopProtocols: number
   privacy: number
   dataAvailability: number
@@ -31,7 +29,6 @@ export async function getHomeProjectCounts(): Promise<HomeProjectCounts> {
       where: ['daLayer'],
       whereNot: ['archivedAt'],
     }),
-    // Custom DA systems (DACs) shown on the "custom" tab of the DA page.
     ps.getProjects({
       where: ['customDa'],
       whereNot: ['archivedAt'],

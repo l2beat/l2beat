@@ -17,9 +17,7 @@ interface TileMetric {
 
 interface Tile {
   label: string
-  /** Primary metric shown after the label. */
   metric: TileMetric
-  /** Optional second metric (e.g. interop protocols), shown after the primary. */
   secondaryMetric?: TileMetric
   href: string
   icon: React.ReactNode
@@ -93,7 +91,6 @@ function StatTile({ tile }: { tile: Tile }) {
       className={cn(
         'group flex h-full items-center gap-2.5 rounded-lg border border-divider px-2.5 py-2',
         'transition-colors duration-200 hover:border-link-stroke',
-        // Narrow column layout on desktop: compact borderless rows.
         'xl:-mx-3 xl:gap-2 xl:rounded-md xl:border-0 xl:px-3 xl:py-2 xl:hover:border-transparent',
       )}
     >
@@ -112,8 +109,6 @@ function StatTile({ tile }: { tile: Tile }) {
         <span className="flex flex-wrap items-baseline gap-x-1 font-bold text-label-value-16 leading-tight xl:text-label-value-14">
           <TileMetricValue
             metric={tile.metric}
-            // Hide the primary metric below sm when a secondary one exists,
-            // so only the secondary (e.g. interop protocols) shows.
             className={tile.secondaryMetric ? 'hidden sm:inline' : undefined}
           />
           {tile.secondaryMetric && (

@@ -93,12 +93,9 @@ async function getCachedData(manifest: Manifest) {
 
   // The interop prefetch inputs must match the client queries exactly
   // (HomeTopInteropProtocolsCard, HomeInteropCard) so hydration avoids a
-  // refetch. The scaling/ethereum charts and the top chains table are
-  // computed server-side into props — they have no client refetch.
+  // refetch.
   const chartRange = optionToRange(HOME_CHART_RANGE)
 
-  // The flows prefetch needs the protocol list, so it chains off this promise
-  // instead of waiting for a separate fetch phase.
   const interopProtocolsPromise = ps.getProjects({ select: ['interopConfig'] })
 
   const [
@@ -179,9 +176,6 @@ async function getCachedData(manifest: Manifest) {
     interopProtocols: protocols,
     defaultSelectedFlowChains,
     scalingCategoryCounts,
-    // Only the count and project icons are serialized — the groups (full diff
-    // bodies) are heavy and fetched lazily via trpc.projects.recentChanges
-    // when the dialog opens.
     recentChangesCount: recentChanges.count,
     recentChangesProjects: recentChanges.groups.map((group) => ({
       name: group.name,
@@ -192,8 +186,6 @@ async function getCachedData(manifest: Manifest) {
   }
 }
 
-/** Same number the Ethereum DA project page shows: validator threshold stake
- * valued at the current ETH price. */
 async function getEthereumEconomicSecurity(): Promise<number | undefined> {
   const ethereum = await ps.getProject({
     id: ProjectId.ETHEREUM,
@@ -208,8 +200,6 @@ async function getEthereumEconomicSecurity(): Promise<number | undefined> {
   )
 }
 
-// Unlike the closeable nav widget, the home card ignores expiresAt — it always
-// shows the latest changelog entry flagged with whatsNew.
 function getHomeWhatsNewItems(): HomeWhatsNewItem[] {
   const entry = getChangelogEntries().find((entry) => entry.whatsNew)
   if (!entry?.whatsNew) {
@@ -217,8 +207,6 @@ function getHomeWhatsNewItems(): HomeWhatsNewItem[] {
   }
   return [
     {
-      // Same id as the closeable nav widget, so clicking the home card can
-      // dismiss the widget via the shared `whats-new-${id}` storage key.
       id: `changelog-${entry.id}`,
       title: entry.title,
       description: entry.summary,
@@ -265,7 +253,6 @@ async function getRecentProjectsForHome(
           href: `/scaling/projects/${project.slug}`,
           iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
           category: 'scaling' as const,
-          // A bare "Other" is unclear, so prefix it with the layer.
           scalingCategory:
             project.scalingInfo.type === 'Other'
               ? `${project.scalingInfo.layer === 'layer3' ? 'Layer 3s' : 'Layer 2s'} - Other`

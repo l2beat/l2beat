@@ -5,8 +5,6 @@ import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import { HOME_CHART_DELTA_PERIOD_LABEL } from '../homeChartRanges'
 
-/** Headline stat of a chart section: prominent value with its % change
- * ("▲ 4.2% / 1 year") stacked below, both right-aligned. */
 export function HomeStatValue({
   isLoading,
   value,

@@ -41,10 +41,6 @@ const RECENT_UPDATES_WINDOW_SECONDS = 7 * 24 * 60 * 60
 
 const diffHistoryParser = new DiffHistoryParser()
 
-/**
- * Parsing diffHistory.md is expensive and the overview fetcher calls this for
- * every project on each render, so cache the full parse per file mtime.
- */
 const parseCache = new Map<
   string,
   { mtimeMs: number; updates: DiscoveryUpdate[] }

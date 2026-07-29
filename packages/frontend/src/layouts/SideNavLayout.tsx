@@ -15,11 +15,6 @@ const LOGO_LINK = env.CLIENT_SIDE_HOME_PAGE ? '/' : '/scaling/summary'
 
 export type SideNavLayoutVariant = 'default' | 'wide' | 'home'
 
-/**
- * Per-surface classes for each layout variant. 'home' is the full-width
- * homepage treatment: the content area owns its padding and the footer
- * spans the whole page.
- */
 const topBannerVariants = cva('lg:rounded-b-xl 2xl:rounded-br-none', {
   variants: {
     variant: {

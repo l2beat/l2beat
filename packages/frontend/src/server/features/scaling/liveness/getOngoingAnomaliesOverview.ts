@@ -40,7 +40,6 @@ export async function getOngoingAnomaliesOverview(): Promise<OngoingAnomaliesOve
     if (!project || anomalies.length === 0) {
       continue
     }
-    // Longest-running anomaly represents the project in the compact list.
     const earliestStart = Math.min(...anomalies.map((a) => a.start))
     const subtypes = [...new Set(anomalies.map((a) => a.subtype))]
     items.push({

@@ -125,8 +125,6 @@ export async function getInteropDashboardData(
     ),
   }
 
-  // The entries carry heavy nested token/chain data, so callers that only
-  // need the top of the table (e.g. the home page card) can cap them.
   if (params.limit !== undefined) {
     data.entries = pickTopProtocolEntries(data, params.limit)
   }

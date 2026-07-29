@@ -23,7 +23,6 @@ export type HomeChartColor = 'pink' | 'ethereum'
 export interface HomeChartDataPoint {
   timestamp: number
   value: number | null
-  /** If set, TVS tooltip shows rollups / Validiums & Optimiums for this day */
   tvsBreakdown?: {
     rollups: number | null
     validiumsAndOptimiums: number | null
@@ -36,12 +35,8 @@ interface Props {
   color: HomeChartColor
   tooltipLabel: string
   formatValue: (value: number) => string
-  /** Appended to y-axis tick labels (e.g. ' UOPS') when the formatted value
-   * alone doesn't carry a unit. */
   yAxisUnit?: string
   syncedUntil?: number
-  /** For period-aggregated metrics (activity, data posted): show the full day
-   * range in the tooltip instead of a point-in-time date. */
   tooltipDayRange?: boolean
 }
 
@@ -51,7 +46,6 @@ const STROKE_COLOR: Record<HomeChartColor, string> = {
 }
 
 /**
- * Grow to fill the parent's available height (parent must define a height).
  * The chart is absolutely positioned inside the relative wrapper so the
  * rendered svg (fixed pixel height) never contributes to layout height —
  * otherwise a transiently tall grid row makes the chart render taller, which
@@ -60,29 +54,14 @@ const STROKE_COLOR: Record<HomeChartColor, string> = {
 const FILL_HEIGHT_CLASS =
   'absolute inset-0 [&>div]:h-full [&_.recharts-wrapper]:h-full! [&_.recharts-wrapper]:min-h-0! [&_.recharts-wrapper]:aspect-auto!'
 
-/**
- * Compact-widget y-axis: the shared container styles ticks at text-sm for
- * full-size charts, which overpowers these small plots — step them down.
- */
 const Y_AXIS_TICK_SIZE_CLASS =
   '[&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:!text-2xs [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:!font-medium [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:!leading-none'
 
-/**
- * Compact x-axis: a short timeline strip that renders inside the chart height
- * (so the widget doesn't grow — the plot area just shrinks). Tick text is
- * already styled small by the shared ChartContainer.
- */
 const X_AXIS_PROPS = {
   height: 18,
   tickMargin: 3,
 } as const
 
-/**
- * Sleek single-series line/area chart used inside the home widgets.
- * Wraps Recharts' AreaChart through `ChartContainer` (size="small") so we get
- * the shared loader / no-data state, but omits the legend slot. Fills the
- * parent's height, with a minimal mirrored y-axis and a compact timeline.
- */
 export function HomeChart({
   data,
   isLoading,

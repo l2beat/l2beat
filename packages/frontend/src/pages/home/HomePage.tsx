@@ -80,14 +80,7 @@ export function HomePage({
               <DarkThemeToggle />
             </div>
           </header>
-          {/* Mobile keeps a flat white page: cards lose their rounding and
-                read as sections split by hairline dividers. Tablet+ (md)
-                switches to real cards on the grey page background. */}
           <div className="flex flex-col md:gap-6 [&_.primary-card]:max-md:rounded-none [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b">
-            {/* xl: stacked rows — the three sidebar cards side by side on
-                  top, then Scaling + Ethereum side by side, then Interop as
-                  a full-width row; 2xl switches to three columns
-                  (sidebar / charts / Interop). */}
             <div className="grid grid-cols-1 items-stretch md:gap-4 xl:gap-6 2xl:grid-cols-[minmax(260px,340px)_minmax(340px,1fr)_minmax(400px,1.35fr)]">
               <div className="flex h-full min-w-0 flex-col md:gap-4 xl:grid xl:grid-cols-3 xl:gap-6 2xl:flex">
                 <HomeStatsStrip counts={projectCounts} />

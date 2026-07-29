@@ -34,11 +34,6 @@ export async function getScalingSummaryEntries() {
   return tabs
 }
 
-/**
- * Same as getScalingSummaryEntries but also exposes the 7d TVS breakdown it
- * computes internally, so callers (e.g. the home page) don't have to run the
- * expensive breakdown query a second time.
- */
 export async function getScalingSummaryData() {
   const projects = await ps.getProjects({
     select: ['statuses', 'scalingInfo', 'scalingRisks', 'display'],
@@ -69,9 +64,6 @@ export async function getScalingSummaryData() {
       excludeAssociatedTokens: false,
       excludeRwaRestrictedTokens: true,
     }),
-    // Only the latest and 7-days-ago records are read per project, so a 90d
-    // window is plenty (it only has to cover sync lag) and much cheaper than
-    // fetching a full year of rows.
     getActivityLatestUops(projects, optionToRange('90d')),
     getApprovedOngoingAnomalies(),
   ])

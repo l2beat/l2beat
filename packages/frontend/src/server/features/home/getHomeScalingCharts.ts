@@ -11,27 +11,18 @@ import { createTvsProjectsFilter } from '../scaling/tvs/utils/projectFilterUtils
 import { computeSeriesChange } from './computeSeriesChange'
 
 export interface HomeScalingCharts {
-  /** [timestamp, rollups, validiumsAndOptimiums] */
   tvs: {
     chart: [number, number | null, number | null][]
     syncedUntil: number
-    /** Relative change of the summed series over the chart range. */
     change: number | undefined
   }
-  /** [timestamp, rollupsUopsCount, validiumsAndOptimiumsUopsCount] */
   activity: {
     chart: [number, number | null, number | null][]
     syncedUntil: number
-    /** Relative change of the summed series over the chart range. */
     change: number | undefined
   }
 }
 
-/**
- * Purpose-built data for HomeScalingCard. Unlike the recategorised chart
- * procedures it fetches only the two series the card renders (no "others",
- * no ethereum) and pushes the activity aggregation into SQL.
- */
 export async function getHomeScalingCharts(
   range: ChartRange,
 ): Promise<HomeScalingCharts> {
@@ -124,10 +115,6 @@ async function getHomeActivityChart(
   }
 }
 
-/**
- * Zip two per-timestamp series into [timestamp, a, b] rows sorted by
- * timestamp. A timestamp present in only one series gets null for the other.
- */
 export function mergeSeriesByTimestamp(
   seriesA: { timestamp: number; value: number | null }[],
   seriesB: { timestamp: number; value: number | null }[],

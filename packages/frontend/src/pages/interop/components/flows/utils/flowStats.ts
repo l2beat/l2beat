@@ -14,7 +14,6 @@ export interface PairFlowStats {
   totalTransfers: number
   avgTransferValue: number
   netFlowValue: number
-  /** Chain the net flow points to. */
   netFlowChainId: string
   volumePerSecond: number
   topFlow: Flow | undefined

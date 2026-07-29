@@ -123,8 +123,6 @@ export function HomeEthereumCard({ charts, economicSecurity }: Props) {
   )
 }
 
-/** Counts-line counterpart of the Layer 2s card, so the two cards' separators
- * and charts stay level when shown side by side. */
 function EconomicSecurityLine({ value }: { value: number | undefined }) {
   if (value === undefined) {
     return null
