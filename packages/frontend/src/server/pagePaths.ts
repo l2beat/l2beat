@@ -7,6 +7,7 @@ type PagePath = `/${string}`
 export const STATIC_PAGE_PATHS = [
   '/scaling/summary',
   '/scaling/activity',
+  '/scaling/compare',
   '/scaling/risk',
   '/scaling/risk/state-validation',
   '/scaling/risk/data-availability',

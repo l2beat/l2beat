@@ -6,6 +6,7 @@ import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
 import { getScalingActivityData } from './activity/getScalingActivityData'
 import { getScalingArchivedData } from './archived/getScalingArchivedData'
+import { getScalingCompareData } from './compare/getScalingCompareData'
 import { getScalingCostsData } from './costs/getScalingCostsData'
 import { getScalingLivenessData } from './liveness/getScalingLivenessData'
 import { getScalingProjectData } from './project/getScalingProjectData'
@@ -63,6 +64,23 @@ export function createScalingRouter(
     const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
+
+  router.get(
+    '/scaling/compare',
+    validateRoute({
+      query: v.object({
+        metric: v.string().optional(),
+        projects: v.string().optional(),
+        range: v.string().optional(),
+        scale: v.string().optional(),
+      }),
+    }),
+    async (req, res) => {
+      const data = await getScalingCompareData(req, manifest, cache)
+      const html = await render(data, req.originalUrl)
+      res.status(200).send(html)
+    },
+  )
 
   router.get(
     '/scaling/tvs',
