@@ -17,20 +17,26 @@ import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleA
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
+import { countPerSecond } from '~/server/features/scaling/activity/utils/countPerSecond'
 import { useTRPC } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generateColors'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
+import type { CompareActivityUnit } from '../../utils/compareChartState'
 import type { CompareMetricChartProps } from '../types'
-import { getTvsCompareChartParams } from './getTvsCompareChartParams'
+import { getActivityCompareChartParams } from './getActivityCompareChartParams'
 
-export function TvsCompareChart({ projects, state }: CompareMetricChartProps) {
+export function ActivityCompareChart({
+  projects,
+  state,
+}: CompareMetricChartProps) {
   const trpc = useTRPC()
   const { data, isLoading } = useQuery(
-    trpc.tvs.detailedChartWithProjectsRanges.queryOptions(
-      getTvsCompareChartParams(projects, state.chartRange),
+    trpc.activity.detailedChartWithProjectsRanges.queryOptions(
+      getActivityCompareChartParams(projects, state.chartRange),
     ),
   )
+  const unit = state.activityUnit
 
   const chartMeta = useMemo<ChartMeta>(() => {
     const colors = generateAccessibleColors(projects.length)
@@ -61,16 +67,19 @@ export function TvsCompareChart({ projects, state }: CompareMetricChartProps) {
 
   const chartData = useMemo(
     () =>
-      data?.chart.map(([timestamp, _ethPrice, valuesByProject]) => {
+      data?.chart.map(([timestamp, valuesByProject]) => {
         const point: { timestamp: number; [key: string]: number | null } = {
           timestamp,
         }
         for (const project of projects) {
-          point[project.id] = valuesByProject[project.id]?.[0] ?? null
+          const values = valuesByProject[project.id]
+          point[project.id] = values
+            ? countPerSecond(unit === 'tps' ? values[0] : values[1])
+            : null
         }
         return point
       }),
-    [data, projects],
+    [data, projects, unit],
   )
 
   const timeRange = useMemo(
@@ -115,18 +124,22 @@ export function TvsCompareChart({ projects, state }: CompareMetricChartProps) {
             yAxis={{
               scale: state.scale === 'symlog' ? 'symlog' : 'auto',
               tickCount: 4,
-              tickFormatter: (value) => formatCurrency(Number(value), 'usd'),
+              tickFormatter: (value) => formatActivityCount(Number(value)),
             }}
             syncedUntil={data?.syncedUntil}
           />
-          <ChartTooltip content={<CustomTooltip />} />
+          <ChartTooltip content={<CustomTooltip unit={unit} />} />
         </LineChart>
       </ChartContainer>
     </div>
   )
 }
 
-function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
+function CustomTooltip({
+  payload,
+  label,
+  unit,
+}: CustomChartTooltipProps & { unit: CompareActivityUnit }) {
   const { meta } = useChart()
   if (!payload || typeof label !== 'number') return null
 
@@ -170,7 +183,7 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
                   </div>
                   <span className="whitespace-nowrap font-medium text-label-value-15 text-primary tabular-nums">
                     {entry.value !== null && entry.value !== undefined
-                      ? formatCurrency(entry.value, 'usd')
+                      ? `${formatActivityCount(entry.value)} ${unit.toUpperCase()}`
                       : 'No data'}
                   </span>
                 </div>

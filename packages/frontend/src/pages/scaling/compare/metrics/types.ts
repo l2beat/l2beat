@@ -1,13 +1,18 @@
-import type { ComponentType } from 'react'
-import type { ChartScale } from '~/components/chart/types'
+import type { ComponentType, Dispatch, SetStateAction } from 'react'
 import type { CompareProjectEntry } from '~/server/features/scaling/compare/getCompareProjectEntries'
-import type { ChartRange } from '~/utils/range/range'
-import type { CompareMetricId } from '../utils/compareChartState'
+import type {
+  CompareClientState,
+  CompareMetricId,
+} from '../utils/compareChartState'
 
 export interface CompareMetricChartProps {
   projects: CompareProjectEntry[]
-  range: ChartRange
-  scale: ChartScale
+  state: CompareClientState
+}
+
+export interface CompareMetricControlsProps {
+  state: CompareClientState
+  setState: Dispatch<SetStateAction<CompareClientState>>
 }
 
 /**
@@ -20,8 +25,12 @@ export interface CompareMetric {
   label: string
   /**
    * The metric's chart, including its data query, series extraction and
-   * value formatting. Per-metric controls and unit options land here with
-   * the follow-up metric tickets.
+   * value formatting.
    */
   Chart: ComponentType<CompareMetricChartProps>
+  /**
+   * Metric-specific controls (e.g. the UOPS/TPS switch), rendered in the
+   * per-metric slot next to the metric switcher.
+   */
+  Controls?: ComponentType<CompareMetricControlsProps>
 }
