@@ -118,6 +118,10 @@ import {
   ZKsyncEraValidatorsHandler,
   ZKsyncEraValidatorsHandlerDefinition,
 } from './ZKsyncEraValidatorsHandler'
+import {
+  ZkStackDaTrackingHandler,
+  ZkStackDaTrackingHandlerDefinition,
+} from './ZkStackDaTrackingHandler'
 
 const DEFINITIONS = [
   StorageHandlerDefinition,
@@ -153,6 +157,7 @@ const DEFINITIONS = [
   YieldFiMintersDefinition,
   EventTraceHandlerDefinition,
   CrossChainAccessControlHandlerDefinition,
+  ZkStackDaTrackingHandlerDefinition,
 ] as const
 
 type AvailableHandlers = (typeof DEFINITIONS)[number]
@@ -197,6 +202,7 @@ export const UserHandlers: Record<HandlerType, AvailableHandlers> = {
   YieldFiMinters: YieldFiMintersDefinition,
   eventTrace: EventTraceHandlerDefinition,
   crossChainAccessControl: CrossChainAccessControlHandlerDefinition,
+  zkStackDaTracking: ZkStackDaTrackingHandlerDefinition,
 }
 
 export function getUserHandler(
@@ -271,5 +277,7 @@ export function getUserHandler(
       return new EventTraceHandler(field, definition, abi)
     case 'crossChainAccessControl':
       return new CrossChainAccessControlHandler(field, definition, abi)
+    case 'zkStackDaTracking':
+      return new ZkStackDaTrackingHandler(field, definition)
   }
 }

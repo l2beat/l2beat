@@ -712,6 +712,40 @@
                       },
                       "additionalProperties": false,
                       "required": ["type"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "zkStackDaTracking" },
+                        "l2ChainId": { "type": "number" },
+                        "eras": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "inbox": { "type": "string" },
+                              "validatorSource": {
+                                "anyOf": [
+                                  { "const": "legacyEvents" },
+                                  { "const": "crossChainRoles" }
+                                ]
+                              },
+                              "chainAddress": { "type": "string" },
+                              "role": { "type": "string" },
+                              "sinceBlock": { "type": "number" },
+                              "untilBlock": { "type": "number" },
+                              "sequencers": {
+                                "type": "array",
+                                "items": { "type": "string" }
+                              }
+                            },
+                            "additionalProperties": false,
+                            "required": ["inbox", "validatorSource"]
+                          }
+                        }
+                      },
+                      "additionalProperties": false,
+                      "required": ["type", "l2ChainId", "eras"]
                     }
                   ]
                 },
