@@ -2,6 +2,7 @@
   "import": [
     "../projects/shared-sharp-verifier/entrypoints.json",
     "../projects/shared-zk-stack/entrypoints.json",
-    "../projects/shared-polygon-cdk/entrypoints.json"
+    "../projects/shared-polygon-cdk/entrypoints.json",
+    "../projects/shared-eigenlayer/entrypoints.json"
   ]
 }
