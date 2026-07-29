@@ -1,14 +1,38 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "Timelock",
-  "description": "Compound-style timelock and the executive account of Uniswap governance: it is the UNI minter, the owner of the V3OpenFeeAdapter (and through it the v3 factory), the v4 PoolManager owner, and the TokenJar owner. Every queued transaction waits the fixed delay ({{delayFormatted}}) and expires after the grace period ({{gracePeriodFormatted}}). Its admin is the GovernorBravo proxy, so only passed proposals can queue actions; there is no emergency bypass.",
+  "description": "Compound-style timelock. Its admin can queue, cancel, and execute transactions. A queued transaction becomes executable after {{ delayFormatted }} and remains executable for a {{ gracePeriodFormatted }} grace period. The delay can be changed only through the timelock itself and must remain between {{ minimumDelayFormatted }} and {{ maximumDelayFormatted }}. After the one-time admin initialization path has been used, changing the admin requires a timelocked self-call; there is no emergency bypass.",
   "fields": {
     "delayFormatted": {
-      "handler": { "type": "call", "method": "delay", "args": [] },
+      "handler": {
+        "type": "call",
+        "method": "function delay() view returns (uint256)",
+        "args": []
+      },
       "edit": ["format", "FormatSeconds"]
     },
     "gracePeriodFormatted": {
-      "handler": { "type": "call", "method": "GRACE_PERIOD", "args": [] },
+      "handler": {
+        "type": "call",
+        "method": "function GRACE_PERIOD() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "minimumDelayFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "function MINIMUM_DELAY() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "maximumDelayFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "function MAXIMUM_DELAY() view returns (uint256)",
+        "args": []
+      },
       "edit": ["format", "FormatSeconds"]
     },
     "admin": {

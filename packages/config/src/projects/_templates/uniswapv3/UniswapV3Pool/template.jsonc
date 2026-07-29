@@ -27,7 +27,7 @@
     },
     "protocolFees": {
       "ignoreInWatchMode": true,
-      "description": "Protocol fees accrued and not yet collected to the TokenJar; anyone can trigger collection through the V3OpenFeeAdapter."
+      "description": "Protocol fees accrued and not yet collected by the factory owner."
     }
   }
 }

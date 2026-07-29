@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { formatSeconds, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -28,10 +28,10 @@ const formatUni = (amount: string): string =>
 const poolValue = (pool: string, key: string): number =>
   discovery.getContractValue<number>(pool, key)
 
-// Packed protocol-fee values: two 4-bit denominators (token0 in the low
-// nibble, token1 in the high one), each 0 or 4..10. All current values are
-// symmetric; the guard forces a description update if that ever changes.
-const protocolFeeDenominator = (packed: number): number => {
+// Packed protocol-fee values contain two 4-bit denominators (token0 in the low
+// nibble, token1 in the high one), each 0 or 4..10. The prose assumes the two
+// sides match; fail loudly rather than silently misdescribe a future schedule.
+const formatProtocolFee = (packed: number): string => {
   const token0Side = packed % 16
   const token1Side = Math.floor(packed / 16)
   if (token0Side !== token1Side) {
@@ -39,13 +39,22 @@ const protocolFeeDenominator = (packed: number): number => {
       `Asymmetric protocol fee ${packed}: update the description wording`,
     )
   }
-  return token0Side
+  if (token0Side === 0) {
+    return 'off'
+  }
+  if (token0Side < 4 || token0Side > 10) {
+    throw new Error(
+      `Invalid protocol fee ${packed}: update the description wording`,
+    )
+  }
+  return `1/${token0Side} of LP fees per side`
 }
-const poolProtocolFeeDenominator = (pool: string): number =>
-  protocolFeeDenominator(
-    discovery.getContractValue<{ feeProtocol: number }>(pool, 'slot0')
-      .feeProtocol,
-  )
+const zeroFeeSentinel = discovery.getContractValue<number>(
+  'V3OpenFeeAdapter',
+  'ZERO_FEE_SENTINEL',
+)
+const decodeAdapterStoredFee = (stored: number): number =>
+  stored === zeroFeeSentinel ? 0 : stored
 
 const timelockDelayDays =
   discovery.getContractValue<number>('Timelock', 'delay') / 86400
@@ -65,7 +74,7 @@ export const uniswapv3: BaseProject = {
     unverifiedContracts: [],
   },
   display: {
-    description: `Uniswap v3 is a concentrated-liquidity AMM where anyone can deploy an immutable, adminless pool for any token pair at an enabled fee tier. User funds sit only in the pools, which no one can upgrade or pause. UNI tokenholder governance, acting through a ${timelockDelayDays}-day timelock, holds two bounded control powers over v3 pools: enabling new fee tiers and setting a protocol fee capped at 1/4 of LP fees per side. Since the UNIfication proposal, collected protocol fees are exchanged by the Firepit for UNI and sent permanently to 0xdead.`,
+    description: `Uniswap v3 is a concentrated-liquidity AMM where anyone can deploy an immutable, adminless pool for any token pair at an enabled fee tier. User funds sit only in the pools, which no one can upgrade or pause. UNI tokenholder governance, acting through a ${timelockDelayDays}-day timelock, holds two bounded control powers over v3 pools: enabling new fee tiers and setting a protocol fee capped at 1/4 of LP fees per side. Under the current UNIfication configuration, collected protocol fees are exchanged by the Firepit for UNI sent permanently to 0xdead; governance can change this disposal path after the timelock.`,
     detailedDescription: readProjectMarkdown(
       'uniswapv3',
       'detailedDescription',
@@ -103,11 +112,26 @@ export const uniswapv3: BaseProject = {
           discovery.getContractValue<string>('GovernorBravo', 'quorumVotes'),
         ),
         uniMintCap: discovery.getContractValue<number>('UNIToken', 'mintCap'),
-        defaultProtocolFeeDenominator: protocolFeeDenominator(
-          discovery.getContractValue<number>('V3OpenFeeAdapter', 'defaultFee'),
+        uniMintInterval: formatSeconds(
+          discovery.getContractValue<number>(
+            'UNIToken',
+            'minimumTimeBetweenMints',
+          ),
+          { fullUnit: true },
         ),
-        tier03ProtocolFeeDenominator: poolProtocolFeeDenominator(
-          'UniswapV3Pool_WBTC_WETH_03',
+        defaultProtocolFee: formatProtocolFee(
+          decodeAdapterStoredFee(
+            discovery.getContractValue<number>(
+              'V3OpenFeeAdapter',
+              'defaultFee',
+            ),
+          ),
+        ),
+        tier03ProtocolFee: formatProtocolFee(
+          discovery.getContractValue<number>(
+            'V3OpenFeeAdapter',
+            'tier03DefaultFee',
+          ),
         ),
       },
     ),

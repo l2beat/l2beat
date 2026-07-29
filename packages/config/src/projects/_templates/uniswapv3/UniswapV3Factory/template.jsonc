@@ -11,7 +11,7 @@
         }
       ],
       "severity": "HIGH",
-      "description": "The factory owner. Since the UNIfication proposal this is the V3OpenFeeAdapter, which opens fee poking and collection to anyone while keeping fee policy with governance."
+      "description": "Address authorized to exercise the factory owner actions."
     },
     "parameters": {
       "ignoreInWatchMode": true,

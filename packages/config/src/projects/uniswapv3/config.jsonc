@@ -3,6 +3,12 @@
   "name": "uniswapv3",
   "import": ["../globalConfig.jsonc"],
   "maxAddresses": 60,
+  "types": {
+    "Undecimal0": {
+      "typeCaster": "Undecimal",
+      "arg": { "decimals": 0 }
+    }
+  },
   "initialAddresses": [
     // Core
     "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984", // UniswapV3Factory
@@ -83,14 +89,12 @@
     "eth:0xE592427A0AEce92De3Edee1F18E0157C05861564": {
       "ignoreRelatives": ["WETH9"]
     },
-    // Historical proposal payloads (90+) blow up the auto array explorer and
-    // are not permission-relevant; parameters and roles are kept.
+    // Historical proposal payloads (90+) and derived states blow up the auto
+    // array explorer and are not permission-relevant; parameters and roles are
+    // kept.
     "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3": {
-      "ignoreMethods": ["getActions", "proposals"]
-    },
-    // Same, on the delegate (analyzed as its own entry behind the Delegator).
-    "eth:0x53a328F4086d7C0F1Fa19e594c9b842125263026": {
-      "ignoreMethods": ["getActions", "proposals"]
+      "proxyType": "call implementation proxy",
+      "ignoreMethods": ["getActions", "proposals", "state"]
     },
     // SwapRouter02 also routes v2; the v2 factory tree is out of scope.
     "eth:0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45": {

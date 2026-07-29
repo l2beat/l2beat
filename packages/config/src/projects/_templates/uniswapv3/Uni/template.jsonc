@@ -1,13 +1,17 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "Uni",
-  "description": "The UNI governance token (ERC20 with checkpoint voting). 1B initial supply; the minter (the Timelock) can mint at most 2% of supply per year, at most once every 365 days. Votes count only when delegated.",
+  "description": "ERC20 governance token with checkpoint voting. Its constructor mints a fixed initial supply; the minter can mint at most {{ mintCap }}% of supply per mint, with a minimum interval of {{ minimumTimeBetweenMintsFormatted }}. Votes count only when delegated.",
   "fields": {
+    "minimumTimeBetweenMintsFormatted": {
+      "copy": "minimumTimeBetweenMints",
+      "edit": ["format", "FormatSeconds"]
+    },
     "minter": {
       "permissions": [
         {
           "type": "interact",
-          "description": "can mint up to 2% of the UNI supply per year (at most once per year) and set a new minter."
+          "description": "can mint up to {{ mintCap }}% of the token supply per mint after the minimum {{ minimumTimeBetweenMintsFormatted }} interval, and set a new minter."
         }
       ],
       "severity": "HIGH"

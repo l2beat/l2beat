@@ -146,7 +146,32 @@ export class ParsedFilesManager {
       )
     }
 
-    // Pass 3: Resolve all references to other contracts
+    // Pass 3: Preserve source-unit-scoped using directives. They apply to every
+    // declaration in their file, including free functions imported selectively
+    // by another source unit. Model that scope as dependency edges so a
+    // declaration cannot be flattened without the extension methods it uses.
+    //
+    // Global directives are already linked through their user-defined target
+    // type. Non-global directives can target built-in types (for example
+    // `using SafeCast for int256;`), for which no declaration exists to carry
+    // the existing backward link.
+    for (const file of result.files) {
+      const fileScopedUsingNames = file.topLevelDeclarations
+        .filter(
+          (declaration) =>
+            declaration.type === 'using' &&
+            !(declaration.ast as AST.UsingForDeclaration).isGlobal,
+        )
+        .map((declaration) => declaration.name)
+
+      for (const declaration of file.topLevelDeclarations) {
+        if (declaration.type !== 'using') {
+          declaration.signatureReferences.push(...fileScopedUsingNames)
+        }
+      }
+    }
+
+    // Pass 4: Resolve all references to other contracts
     for (const file of result.files) {
       for (const declaration of file.topLevelDeclarations) {
         const { signatureReferences, implementationReferences, backwardLinks } =

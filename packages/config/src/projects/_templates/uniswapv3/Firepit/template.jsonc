@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "Firepit",
-  "description": "The UNI burn engine: anyone can send the threshold amount of UNI (currently 4,000) to the 0xdead address and in exchange release up to 20 chosen token balances from the TokenJar to themselves. The thresholdSetter (the Timelock) can change the threshold.",
+  "description": "Burn-and-release contract: anyone can transfer the configured threshold (currently {{ threshold }} UNI) to a fixed burn address and release selected balances from its token jar to a chosen recipient. The threshold setter can change the threshold, including to zero, and the owner can replace the threshold setter.",
   "fields": {
     "owner": {
       "permissions": [
@@ -13,14 +13,15 @@
       "severity": "HIGH"
     },
     "threshold": {
-      "description": "UNI amount burned per release call.",
-      "severity": "LOW"
+      "description": "Amount of the configured burn token transferred to the burn address per release call.",
+      "severity": "LOW",
+      "edit": ["format", "Undecimal18"]
     },
     "thresholdSetter": {
       "permissions": [
         {
           "type": "interact",
-          "description": "can change the UNI amount required per TokenJar release."
+          "description": "can change the burn-token amount required per token-jar release."
         }
       ],
       "severity": "HIGH"
