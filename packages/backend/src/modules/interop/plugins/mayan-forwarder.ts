@@ -275,7 +275,15 @@ function findExecuteCallValue(
 
   if (decoded.functionName !== 'execute') return undefined
 
-  const calls = decodeExecuteCalls(decoded.args[0], decoded.args[1])
+  let calls: Array<{ to: `0x${string}`; value: bigint }>
+  try {
+    calls = decodeExecuteCalls(decoded.args[0], decoded.args[1])
+  } catch {
+    // The mode-specific executionData encoding is unknown or malformed.
+    // A single undecodable tx must not abort the whole capture range.
+    return undefined
+  }
+
   const targetSet = new Set(targets.map((target) => target.toLowerCase()))
 
   const directMatch = calls.find(

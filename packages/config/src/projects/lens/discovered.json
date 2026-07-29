@@ -1,8 +1,8 @@
 {
   "name": "lens",
   "timestamp": 1781602943,
-  "configHash": "0x1a3cd3cc74bcd5e07da700dfcbaafe8b6dcddcb367ffe8e24edbee9b6c01828a",
-  "sharedModules": ["shared-zk-stack", "shared-sp1", "vector"],
+  "configHash": "0xe1c14ca61848d6c2ce224b3aa78e62c5f42ee407e22cb51c93ed0a7a2586dcf7",
+  "sharedModules": ["shared-sp1", "vector"],
   "entries": [
     {
       "address": "eth:0x2a80091816D7872850D500F6Ade835354238Af17",

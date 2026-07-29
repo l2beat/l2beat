@@ -1,6 +1,6 @@
 {
   "name": "layerzero",
-  "timestamp": 1784274500,
+  "timestamp": 1784814910,
   "configHash": "0x0f75d67533acb1a532a5729da33b6da23041f8b93b9a0b54ddd1f747d26d0f34",
   "entries": [
     {
@@ -366,11 +366,6 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "address": "eth:0x86CbBAEB08861D005fD2147A5123E43e558db167",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "ProxyAdmin",
       "address": "eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
       "type": "Contract",
@@ -491,6 +486,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xb859DD2Cb50F19a53Ad25b279750ba5DEC76D306",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SendUln302",
       "address": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
       "type": "Contract",
@@ -592,7 +592,7 @@
         "executorRequired": true,
         "getExecutors": ["eth:0x39f86ECef62c5bcE23428d6b7c7050D9Ecb0e346"],
         "LEAF_ENCODING_VERSION": 1,
-        "nonce": 570,
+        "nonce": 575,
         "ONE_SIG_ID": 30101,
         "seed": "0xa8c6099081c03ac4c11ed511690f296077e94d44cf99bebc8c349cf972f87340",
         "totalExecutors": 1,
@@ -685,7 +685,7 @@
           "eth:0xFCc1C98F887C93C38Deb5e38A6Fb820AD3fB9DFD",
           "eth:0x51C59785639CCa31c09D0833749e76A5D945C9F3",
           "eth:0x601767c4ba4134cc2E906ea7cf25EaB845152A7C",
-          "eth:0x86CbBAEB08861D005fD2147A5123E43e558db167",
+          "eth:0xb859DD2Cb50F19a53Ad25b279750ba5DEC76D306",
           "eth:0x7AAd74b7f0d60D5867B59dbD377a71783425af47",
           "eth:0xa85B57bD7433dCC4679d638b87d80F155A689Fc1"
         ],
@@ -694,7 +694,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 1922,
+        "nonce": 1925,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1563,6 +1563,6 @@
     "layerzero/ReceiveUln302": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "layerzero/SendUln302": "0x86b01d43b83e681bc06e5ac7c94dbda3625974b05580472da383e78f0241a49e"
   },
-  "usedBlockNumbers": { "ethereum": 25551011 },
-  "permissionsConfigHash": "0xb37f27408a41b76671b7a3759b5d87d170a413d95669d1418f61262ac36048bc"
+  "usedBlockNumbers": { "ethereum": 25595859 },
+  "permissionsConfigHash": "0x68308c5782622e55d7542a00e04031cbd379bf25eda1c9d1ac4cddcac96efefe"
 }

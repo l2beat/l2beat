@@ -9,14 +9,17 @@ import {
   NODE_COLORS,
   RELATION_COLORS,
   type RelationGraph,
+  type RelationGraphNode,
   type RelationGraphSelection,
 } from './relationGraphModel'
 import { TokenRelationsGraph } from './TokenRelationsGraph'
 import { TokenRelationsGraphDetailsPanel } from './TokenRelationsGraphDetailsPanel'
+import { TokenRelationsGraphSearch } from './TokenRelationsGraphSearch'
 
 export function TokenRelationsGraphPage() {
   const trpc = useTRPC()
   const [selection, setSelection] = useState<RelationGraphSelection>()
+  const [zoomTarget, setZoomTarget] = useState<{ nodeId: string }>()
   const [highlightAnomalies, setHighlightAnomalies] = useState(false)
   const graphQuery = useQuery(
     trpc.deployedTokens.getRelationsGraph.queryOptions(),
@@ -27,6 +30,22 @@ export function TokenRelationsGraphPage() {
     graph === undefined
       ? undefined
       : getExistingRelationGraphSelection(graph, selection)
+  const graphZoomTarget =
+    graph !== undefined &&
+    zoomTarget !== undefined &&
+    graph.nodes.some((node) => node.id === zoomTarget.nodeId)
+      ? zoomTarget
+      : undefined
+
+  function selectSearchResult(node: RelationGraphNode) {
+    setSelection({ type: 'node', id: node.id })
+    setZoomTarget({ nodeId: node.id })
+  }
+
+  function changeSelection(selection: RelationGraphSelection | undefined) {
+    setSelection(selection)
+    setZoomTarget(undefined)
+  }
 
   useEffect(() => {
     if (
@@ -35,6 +54,7 @@ export function TokenRelationsGraphPage() {
       graphSelection === undefined
     ) {
       setSelection(undefined)
+      setZoomTarget(undefined)
     }
   }, [graph, graphSelection, selection])
 
@@ -53,6 +73,12 @@ export function TokenRelationsGraphPage() {
             </div>
           </div>
           <div className="flex flex-wrap items-center justify-end gap-x-4 gap-y-2 text-xs">
+            {graph && (
+              <TokenRelationsGraphSearch
+                nodes={graph.nodes}
+                onSelect={selectSearchResult}
+              />
+            )}
             <GraphLegend />
             <AnomalySwitch
               checked={highlightAnomalies}
@@ -75,8 +101,9 @@ export function TokenRelationsGraphPage() {
             <TokenRelationsGraph
               graph={graph}
               selection={graphSelection}
+              zoomTarget={graphZoomTarget}
               highlightAnomalies={highlightAnomalies}
-              onSelectionChange={setSelection}
+              onSelectionChange={changeSelection}
             />
           )}
           {graph && graphSelection && (
@@ -85,8 +112,8 @@ export function TokenRelationsGraphPage() {
               chains={chainsQuery.data ?? []}
               selection={graphSelection}
               highlightAnomalies={highlightAnomalies}
-              onSelectionChange={setSelection}
-              onClose={() => setSelection(undefined)}
+              onSelectionChange={changeSelection}
+              onClose={() => changeSelection(undefined)}
             />
           )}
         </div>

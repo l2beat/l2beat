@@ -1,3 +1,5 @@
+import type { InMemoryCache } from '@l2beat/shared-pure'
+import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getScalingProjectEntry } from '~/server/features/scaling/project/getScalingProjectEntry'
 import { ps } from '~/server/projects'
@@ -8,10 +10,33 @@ import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getScalingProjectData(
+  req: Request<{ slug: string }, unknown, unknown, { update?: string }>,
   manifest: Manifest,
-  slug: string,
-  url: string,
+  cache: InMemoryCache,
 ): Promise<RenderData | undefined> {
+  const data = await cache.get(
+    {
+      key: ['scaling', 'projects', req.params.slug],
+      ttl: 5 * 60,
+      staleWhileRevalidate: 25 * 60,
+    },
+    () => getCachedData(manifest, req.params.slug, req.originalUrl),
+  )
+  if (!data) return undefined
+
+  return {
+    head: data.head,
+    ssr: {
+      page: 'ScalingProjectPage',
+      props: {
+        ...data.props,
+        selectedUpdateId: req.query.update,
+      },
+    },
+  }
+}
+
+async function getCachedData(manifest: Manifest, slug: string, url: string) {
   const helpers = getSsrHelpers()
   const project = await ps.getProject({
     slug,
@@ -62,13 +87,10 @@ export async function getScalingProjectData(
         },
       }),
     },
-    ssr: {
-      page: 'ScalingProjectPage',
-      props: {
-        ...appLayoutProps,
-        projectEntry,
-        queryState: helpers.dehydrate(),
-      },
+    props: {
+      ...appLayoutProps,
+      projectEntry,
+      queryState: helpers.dehydrate(),
     },
   }
 }

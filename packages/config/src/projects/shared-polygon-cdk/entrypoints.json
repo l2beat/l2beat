@@ -1,0 +1,49 @@
+{
+  "entrypoints": {
+    "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3": {
+      "name": "AgglayerGateway",
+      "type": "Contract",
+      "project": "shared-polygon-cdk"
+    },
+    "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": {
+      "name": "SharedProxyAdmin",
+      "type": "Contract",
+      "project": "shared-polygon-cdk"
+    },
+    "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21": {
+      "name": "PolygonAdminMultisig",
+      "type": "Contract",
+      "project": "shared-polygon-cdk"
+    },
+    "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe": {
+      "name": "AgglayerBridge",
+      "type": "Contract",
+      "project": "shared-polygon-cdk"
+    },
+    "eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6": {
+      "name": "PolygonSecurityCouncil",
+      "type": "Contract",
+      "project": "shared-polygon-cdk"
+    },
+    "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2": {
+      "name": "AgglayerManager",
+      "type": "Contract",
+      "project": "shared-polygon-cdk"
+    },
+    "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb": {
+      "name": "AgglayerGER",
+      "type": "Contract",
+      "project": "shared-polygon-cdk"
+    },
+    "eth:0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB": {
+      "name": "PolygonCreateRollupMultisig",
+      "type": "Contract",
+      "project": "shared-polygon-cdk"
+    },
+    "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF": {
+      "name": "Timelock",
+      "type": "Contract",
+      "project": "shared-polygon-cdk"
+    }
+  }
+}

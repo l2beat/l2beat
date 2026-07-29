@@ -1,8 +1,7 @@
 {
   "name": "polygonzkevm",
   "timestamp": 1767608184,
-  "configHash": "0x43e5871758116afc99449d92fe50aa1b1598723a0f29600e0493ff98b2dbc9c2",
-  "sharedModules": ["shared-polygon-cdk"],
+  "configHash": "0x087d0d46863c58353642f5c3a4e4a4fbe2f91c739a06f0c1c5f57aa587e85ba1",
   "entries": [
     {
       "name": "AgglayerGateway",

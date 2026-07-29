@@ -1,3 +1,54 @@
+Generated with discovered.json: 0x845a35a11f9962731ffec2d1d481530f80dc7474
+
+# Diff at Thu, 23 Jul 2026 14:08:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@efd03446560a8d585747f124c71622cbfa33fca4 block: 1784624105
+- current timestamp: 1784815601
+
+## Description
+
+Two signers were rotated in one Safe. The Polygon Labs Engineering/Security Multisig rotated one signer and removed another, while the validator set grew from 102 to 105 (max).
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (eth:0x424bDE99FCfB68c5a1218fd3215caFfD031f19C4) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x2100482bc290716DE46e38046EeD343cfb1aC740"
+      values.$members.1:
++        "eth:0x61Cb29AF9E503f0e2d88717f388931f1d10DE768"
+      values.$members.5:
+-        "eth:0xdEb97974dfCC73178672205A1eadDc2BDeAc1Bd4"
+      values.$members.8:
+-        "eth:0x6624307a4f672ec5C289fBA196952902BB518dc0"
+    }
+```
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) [polygon-pos/StakeManager] {
+    +++ description: Manages the Polygon PoS validator set.
+      values.currentValidatorSetSize:
+-        102
++        105
+    }
+```
+
+```diff
+    contract Polygon Labs Engineering/Security Multisig (eth:0x9d851f8b8751c5FbC09b9E74E6e68E9950949052) [GnosisSafe] {
+    +++ description: None
+      values.$members.1:
+-        "eth:0xe0e8e6bBDef7bbcf8dF1F5Ac0ab9906BFe991d8B"
++        "eth:0xFB2a738AE435610354b132c4a4ee647558f663eb"
+      values.$members.6:
+-        "eth:0xED7cC82235A7757702475c8f77c7830c095FB5a2"
+      values.multisigThreshold:
+-        "2 of 8 (25%)"
++        "2 of 7 (29%)"
+    }
+```
+
 Generated with discovered.json: 0xb5bb5746765c2dee75d2e4ff8881f0076e035496
 
 # Diff at Tue, 21 Jul 2026 08:56:45 GMT:
@@ -7561,4 +7612,3 @@ discovery. Values are for block 17770180 (main branch discovery), not current.
 +        "5 of 9 (56%)"
     }
 ```
-

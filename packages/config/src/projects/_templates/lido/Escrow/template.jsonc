@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Dual Governance escrow in which holders lock stETH, wstETH or unstETH to build veto support. It can be irreversibly converted into a Rage Quit escrow that withdraws the locked position as ETH.",
+  "category": "gov",
+  "ignoreMethods": [
+    "getRageQuitEscrowDetails",
+    "getUnclaimedUnstETHIdsCount",
+    "isRageQuitFinalized",
+    "isWithdrawalsBatchesClosed"
+  ],
+  "ignoreInWatchMode": [
+    "getNextWithdrawalBatch",
+    "getRageQuitSupport",
+    "getSignallingEscrowDetails"
+  ],
+  "fields": {
+    "DUAL_GOVERNANCE": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the minimum asset-lock duration and convert this signalling escrow into a Rage Quit escrow."
+        }
+      ]
+    }
+  }
+}

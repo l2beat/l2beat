@@ -38,5 +38,11 @@
     "hash": "0x3d80c4cef4b064c6aa35b40463287e7e4430c33c3ca17027c4b7855f9cfec730",
     "address": "eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442",
     "blockNumber": 24419115
+  },
+  "L1VerifierFflonk_v31": {
+    "hash": "0x5bfaff4e5dd264277b42d20a688c4f4f211abc9d707e3658a1ec3e23ef95a808",
+    "address": "eth:0x9f5C39a2790f38542065E7854b90407371923375",
+    "chain": "ethereum",
+    "blockNumber": 25625379
   }
 }

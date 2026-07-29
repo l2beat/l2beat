@@ -7,13 +7,14 @@ import { BigPizzaRosette } from '~/components/rosette/pizza/BigPizzaRosette'
 import { SentimentText } from '~/components/SentimentText'
 import { EM_DASH } from '~/consts/characters'
 import { ShieldIcon } from '~/icons/Shield'
-import { UnverifiedIcon } from '~/icons/Unverified'
 import { cn } from '~/utils/cn'
+import type { UnverifiedContractEntry } from '~/utils/project/contracts-and-permissions/getUnverifiedContractEntries'
 import { sentimentToTransparentBgColor } from '~/utils/sentiment'
 import { WarningBar } from '../../WarningBar'
 import { RiskBanner } from '../RiskBanner'
 import { ProjectSection } from './ProjectSection'
 import type { ProjectSectionProps } from './types'
+import { UnverifiedContractsWarning } from './UnverifiedContractsWarning'
 
 export interface L3RiskAnalysisSectionProps extends ProjectSectionProps {
   l2: {
@@ -26,8 +27,8 @@ export interface L3RiskAnalysisSectionProps extends ProjectSectionProps {
   }
   combined?: RosetteValueTuple
   warning: string | undefined
-  isVerified: boolean | undefined
   redWarning: ProjectRedWarning | undefined
+  unverifiedContracts: UnverifiedContractEntry[]
 }
 
 export function L3RiskAnalysisSection({
@@ -35,8 +36,8 @@ export function L3RiskAnalysisSection({
   l3,
   combined,
   warning,
-  isVerified,
   redWarning,
+  unverifiedContracts,
   ...sectionProps
 }: L3RiskAnalysisSectionProps) {
   const isUnderReview =
@@ -51,13 +52,10 @@ export function L3RiskAnalysisSection({
         The L3 risks depend on the individual properties of L3 and those of the
         host chain combined.
       </div>
-      {isVerified === false && (
-        <WarningBar
-          text="This project includes unverified contracts."
-          color="red"
-          isCritical={true}
+      {unverifiedContracts.length > 0 && (
+        <UnverifiedContractsWarning
+          entries={unverifiedContracts}
           className="mt-4 text-paragraph-15 md:text-paragraph-16"
-          icon={UnverifiedIcon}
         />
       )}
       {redWarning && (

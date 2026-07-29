@@ -1,3 +1,235 @@
+Generated with discovered.json: 0xcdc6f3d34aebc9d4fa0c4c56cd71c00ea3ff75f2
+
+# Diff at Wed, 29 Jul 2026 09:59:48 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e856505e0900740c5b57461c7b3471e0e0960ebe block: 1784814637
+- current timestamp: 1784814637
+
+## Description
+
+Make shared-polygon-cdk use entrypoints and rediscover
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784814637 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x21618593F7147235aC8D511d68A547C935F9d417) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-polygon-cdk"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    EOA  (eth:0x3038B4DBf022E80169b2A068290d4a3A8b87D3b5) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-polygon-cdk"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    EOA  (eth:0x516eEcfb38aA308c5f1878497108c7d054fd46B7) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-polygon-cdk"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    EOA  (eth:0x8B9F18bcDD5838bB1bd4B3d6410e45DF813b782B) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-polygon-cdk"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    EOA  (eth:0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-polygon-cdk"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    EOA  (eth:0xdFEd8373695a7b3DaF268CF91e71f6a7024A56Da) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-polygon-cdk"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    EOA  (eth:0xEB5EeE1F1650b821E0d3a87C1341d85b3a16EA72) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-polygon-cdk"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    EOA  (eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-polygon-cdk"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    EOA  (eth:0xf02BE0dA37dB50BEFA5a525158aa94b50F81D4B2) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-polygon-cdk"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    EOA  (eth:0xffbfc0c8331C5fc912DDA3C6D4A86eEB80203238) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-polygon-cdk"
+      proxyType:
++        "EOA"
+    }
+```
+
+Generated with discovered.json: 0x1beb2c970cc77fdac5d38a42d9d71e74be9337c6
+
+# Diff at Thu, 23 Jul 2026 13:53:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@efd03446560a8d585747f124c71622cbfa33fca4 block: 1784623318
+- current timestamp: 1784814637
+
+## Description
+
+One Polygon Labs Engineering/Security Multisig signer was rotated and another removed, changing it from 2-of-8 to 2-of-7.
+
+## Watched changes
+
+```diff
+    contract Polygon Labs Engineering/Security Multisig (eth:0x9d851f8b8751c5FbC09b9E74E6e68E9950949052) [GnosisSafe] {
+    +++ description: None
+      values.$members.1:
+-        "eth:0xe0e8e6bBDef7bbcf8dF1F5Ac0ab9906BFe991d8B"
++        "eth:0xFB2a738AE435610354b132c4a4ee647558f663eb"
+      values.$members.6:
+-        "eth:0xED7cC82235A7757702475c8f77c7830c095FB5a2"
+      values.multisigThreshold:
+-        "2 of 8 (25%)"
++        "2 of 7 (29%)"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784623318 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0xED7cC82235A7757702475c8f77c7830c095FB5a2) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-polygon-cdk"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    reference  (eth:0xf02BE0dA37dB50BEFA5a525158aa94b50F81D4B2) {
+    +++ description: None
+      type:
+-        "EOA"
++        "Reference"
+      proxyType:
+-        "EOA"
+      targetType:
++        "EOA"
+      targetProject:
++        "shared-polygon-cdk"
+    }
+```
+
 Generated with discovered.json: 0x3764918832c27dab005c4d053470bd707a605edd
 
 # Diff at Tue, 21 Jul 2026 08:43:22 GMT:
@@ -7905,4 +8137,3 @@ initial katana predeposit disco.
     contract GnosisSafe (0xFEB4acf3df3cDEA7399794D0869ef76A6EfAff52)
     +++ description: None
 ```
-

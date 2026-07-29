@@ -1,0 +1,78 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Receives committee-consensus reports containing a staking module's reward-distribution Merkle root and forwards them to FeeDistributor and ValidatorStrikes.",
+  "category": "core",
+  "ignoreMethods": ["getConsensusReport", "getLastProcessingRefSlot"],
+  "fields": {
+    "accessControl": {
+      "handler": { "type": "accessControl", "includeEmptyRoles": true }
+    },
+    "defaultAdmins": {
+      "copy": "accessControl",
+      "edit": ["get", "DEFAULT_ADMIN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke every FeeOracle role."
+        }
+      ]
+    },
+    "consensusContractManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "MANAGE_CONSENSUS_CONTRACT_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the HashConsensus contract that supplies accepted report hashes."
+        }
+      ]
+    },
+    "consensusVersionManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "MANAGE_CONSENSUS_VERSION_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the consensus version that submitted fee reports must use."
+        }
+      ]
+    },
+    "dataSubmitters": {
+      "copy": "accessControl",
+      "edit": ["get", "SUBMIT_DATA_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit fee-distribution data whose hash has reached oracle consensus."
+        }
+      ]
+    },
+    "pausers": {
+      "copy": "accessControl",
+      "edit": ["get", "PAUSE_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause fee report submission for a chosen duration."
+        }
+      ]
+    },
+    "resumers": {
+      "copy": "accessControl",
+      "edit": ["get", "RESUME_ROLE", "members"],
+      "permissions": [
+        { "type": "interact", "description": "resume fee report submission." }
+      ]
+    },
+    "assetRecoverers": {
+      "copy": "accessControl",
+      "edit": ["get", "RECOVERER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "recover unprotected assets accidentally held by FeeOracle."
+        }
+      ]
+    }
+  }
+}

@@ -363,6 +363,7 @@ export type ChainApiConfig =
   | ChainBasicApi<'degate3'>
   | ChainBasicApi<'fuel'>
   | ChainBasicApi<'svm-rpc'>
+  | ChainBasicApi<'aztec-rpc'>
   | ChainExplorerApi<'blockscout'>
   | ChainExplorerApi<'blockscoutV2'>
   | ChainExplorerApi<'routescan'>

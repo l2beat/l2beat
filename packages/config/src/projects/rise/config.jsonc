@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "rise",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": ["eth:0xad92Fa18EB74E46Db844240623124BF46589db4C"],
+  "names": {
+    "eth:0x03B85FAa108C10F6EFfec1d91954DE99dA32FB46": "Rise Guardian Multisig",
+    "eth:0x9196464e3F828A50233C20732fa6898F4317002c": "Rise ProxyAdminOwner Multisig"
+  },
+  "overrides": {
+    "eth:0x6A4139810986CF13408330e14C4ac9Daf0511aA3": {
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
+    }
+  }
+}

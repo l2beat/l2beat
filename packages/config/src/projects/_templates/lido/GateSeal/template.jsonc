@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Time-limited emergency sealing contract. Before its expiry, the sealing committee can pause every configured sealable contract for the fixed seal duration.",
+  "category": "gov",
+  "fields": {
+    "get_sealing_committee": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause all configured sealable contracts for the fixed seal duration before this GateSeal expires."
+        }
+      ]
+    }
+  }
+}

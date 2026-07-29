@@ -1,3 +1,107 @@
+Generated with discovered.json: 0x453e7e6ebbb140b2c4d3386ae3333f16c94e656b
+
+# Diff at Thu, 23 Jul 2026 13:55:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@efd03446560a8d585747f124c71622cbfa33fca4 block: 1782391789
+- current timestamp: 1784814886
+
+## Description
+
+Four signers were rotated in each of the three 4-of-7 bridge validator sets.
+
+## Watched changes
+
+```diff
+    contract XDai Bridge Validators (eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E) [gnosis/BridgeValidators] {
+    +++ description: Validator set contract used by the bridge to require threshold signatures before cross-chain messages can be executed.
++++ description: Array of the signers in the validator multisig
+      values.$members.0:
+-        "eth:0x4D1c96B9A49C4469A0b720a22b74b034EDdFe051"
++++ description: Array of the signers in the validator multisig
+      values.$members.1:
+-        "eth:0xc073C8E5ED9Aa11CF6776C69b3e13b259Ba9F506"
++++ description: Array of the signers in the validator multisig
+      values.$members.3:
+-        "eth:0x97630E2aE609D4104aBdA91F3066C556403182dd"
++++ description: Array of the signers in the validator multisig
+      values.$members.4:
+-        "eth:0x7117F73aFBDec3221bDD50DdCbf73204b3998302"
++++ description: Array of the signers in the validator multisig
+      values.$members.3:
++        "eth:0x82b00cA9D162859f645B51967746E55bb6498DfC"
++++ description: Array of the signers in the validator multisig
+      values.$members.4:
++        "eth:0x2245bFAD58a6cD50e9e413084d4091C497281911"
++++ description: Array of the signers in the validator multisig
+      values.$members.5:
++        "eth:0xC9f0d7e76E7970590e217c57Af5d2B7d07A62c13"
++++ description: Array of the signers in the validator multisig
+      values.$members.6:
++        "eth:0x156c0DAAb0cD73c224a424a781866d35f0F8Fade"
+    }
+```
+
+```diff
+    contract AMB Validators (eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064) [gnosis/BridgeValidators] {
+    +++ description: Validator set contract used by the bridge to require threshold signatures before cross-chain messages can be executed.
++++ description: Array of the signers in the validator multisig
+      values.$members.0:
+-        "eth:0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d"
++++ description: Array of the signers in the validator multisig
+      values.$members.1:
+-        "eth:0x459A3bd49F1ff109bc90b76125533699AaAAf9A6"
++++ description: Array of the signers in the validator multisig
+      values.$members.3:
+-        "eth:0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe"
++++ description: Array of the signers in the validator multisig
+      values.$members.4:
+-        "eth:0x7117F73aFBDec3221bDD50DdCbf73204b3998302"
++++ description: Array of the signers in the validator multisig
+      values.$members.3:
++        "eth:0x4A07b8AE561CC558eDD3f1836365AB8e02C52dE2"
++++ description: Array of the signers in the validator multisig
+      values.$members.4:
++        "eth:0xAD93BffBC65002cC75AD2d5770d3AAfFdefd8D55"
++++ description: Array of the signers in the validator multisig
+      values.$members.5:
++        "eth:0xE9fc29AE64c2923FeBb615cB016b77aF9492EBcE"
++++ description: Array of the signers in the validator multisig
+      values.$members.6:
++        "eth:0x156c0DAAb0cD73c224a424a781866d35f0F8Fade"
+    }
+```
+
+```diff
+    contract HomeAMB Validators (gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008) [gnosis/BridgeValidators] {
+    +++ description: Validator set contract used by the bridge to require threshold signatures before cross-chain messages can be executed.
++++ description: Array of the signers in the validator multisig
+      values.$members.0:
+-        "gno:0x459A3bd49F1ff109bc90b76125533699AaAAf9A6"
++++ description: Array of the signers in the validator multisig
+      values.$members.1:
+-        "gno:0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d"
++++ description: Array of the signers in the validator multisig
+      values.$members.3:
+-        "gno:0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe"
++++ description: Array of the signers in the validator multisig
+      values.$members.4:
+-        "gno:0x7117F73aFBDec3221bDD50DdCbf73204b3998302"
++++ description: Array of the signers in the validator multisig
+      values.$members.3:
++        "gno:0x4A07b8AE561CC558eDD3f1836365AB8e02C52dE2"
++++ description: Array of the signers in the validator multisig
+      values.$members.4:
++        "gno:0xAD93BffBC65002cC75AD2d5770d3AAfFdefd8D55"
++++ description: Array of the signers in the validator multisig
+      values.$members.5:
++        "gno:0xE9fc29AE64c2923FeBb615cB016b77aF9492EBcE"
++++ description: Array of the signers in the validator multisig
+      values.$members.6:
++        "gno:0x156c0DAAb0cD73c224a424a781866d35f0F8Fade"
+    }
+```
+
 Generated with discovered.json: 0x6241c41af620a04de5fcee4c5ac744920d93c249
 
 # Diff at Thu, 25 Jun 2026 12:51:18 GMT:

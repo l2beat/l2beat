@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x351255fab4b01b1fd251a72432169fa64318b666
+
+# Diff at Thu, 23 Jul 2026 13:54:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@efd03446560a8d585747f124c71622cbfa33fca4 block: 1784623722
+- current timestamp: 1784814808
+
+## Description
+
+Slashing was disabled for ~ three more days, until July 26.
+
+## Watched changes
+
+```diff
+    contract Slasher (eth:0xCD6855470A01aBcd989126A1183Fb50673952548) [aztecnetwork/Slasher] {
+    +++ description: Executes payload actions submitted by the authorized slashing proposer or Governance. Execution is blocked while slashing is disabled or when the vetoer has vetoed the payload; voting and execution-delay rules are enforced by the proposer, while Governance can bypass the proposer.
++++ description: Timestamp until which slash payload execution is disabled.
+      values.slashingDisabledUntil:
+-        1784800907
++        1785056291
+    }
+```
+
 Generated with discovered.json: 0x0346938a2615d99eda2e2a0258121efa05014fd2
 
 # Diff at Tue, 21 Jul 2026 08:50:05 GMT:

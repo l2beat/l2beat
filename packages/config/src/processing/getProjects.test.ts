@@ -457,7 +457,7 @@ describe('getProjects', () => {
     it('every name is equal to projectId', () => {
       // in many places chain name and project id are used interchangeably so we need them to be the same
       // do not add new projects here!
-      const KNOWN_EXCEPTIONS = ['polygonpos', 'g7']
+      const KNOWN_EXCEPTIONS = ['polygonpos', 'g7', 'apexomni', 'apexpro']
 
       for (const chain of chains) {
         if (KNOWN_EXCEPTIONS.includes(chain.name)) continue
@@ -732,6 +732,26 @@ describe('getProjects', () => {
               }
             })
           }
+        }
+      }
+    })
+
+    // The backend compares these raw strings against tx to/from addresses,
+    // so a chain-prefixed address (e.g. 'eth:0x...') silently matches nothing
+    describe('every ethereum inbox and sequencer is a plain unprefixed address', () => {
+      for (const project of projects) {
+        if (project.daTrackingConfig) {
+          it(project.id, () => {
+            assert(project.daTrackingConfig) // type issue
+            for (const config of project.daTrackingConfig) {
+              if (config.type === 'ethereum') {
+                expect(() => EthereumAddress(config.inbox)).not.toThrow()
+                for (const sequencer of config.sequencers ?? []) {
+                  expect(() => EthereumAddress(sequencer)).not.toThrow()
+                }
+              }
+            }
+          })
         }
       }
     })

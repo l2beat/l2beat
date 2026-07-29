@@ -1,4 +1,76 @@
-Generated with discovered.json: 0x31b35d40e7eac367a5839d214a11ad5b04f93fee
+Generated with discovered.json: 0x892603d2e05322531ce62805c5975093c1b181d9
+
+# Diff at Tue, 28 Jul 2026 08:10:06 GMT:
+
+- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
+- comparing to: main@fb0b50e4a7f7900d17e186f908b2b3ca3e977527 block: 1784846600
+- current timestamp: 1785226129
+
+## Description
+
+Redeployed aggregate verifier with different range and aggregation prog hashes and no code changes: https://disco.l2beat.com/diff/eth:0x1bd8db5139Ba7aC9277684650c15e6E341761919/eth:0xeE303bA054c5F1E14A8EF87f1C7E285af45A1ba2. Both programs are regenreated from sources.
+
+Disabled Groth16 SP1 verifier and enabled Plonk v6.1.0 SP1 verifier. It is an already known contract, regenerated from sources.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract AggregateVerifier (eth:0x1bd8db5139Ba7aC9277684650c15e6E341761919) [opstack/AggregateVerifier]
+    +++ description: Game type implementation that combines a TEE attestation arm and a ZK proof arm. A single un-nullified proof of either type can resolve a game (PROOF_THRESHOLD = 1). When both arms commit, the finalization window collapses from SLOW_FINALIZATION_DELAY (5d) to FAST_FINALIZATION_DELAY (1d).
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
++++ severity: HIGH
+      values.game621:
+-        "eth:0x1bd8db5139Ba7aC9277684650c15e6E341761919"
++        "eth:0xeE303bA054c5F1E14A8EF87f1C7E285af45A1ba2"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+```
+
+```diff
+    contract SP1VerifierGateway (eth:0xdc32E228636273285Befa5F001dBB5142517C106) [succinct/SP1VerifierGateway] {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      values.activeVerifiers.0.verifier:
+-        "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2"
++        "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"
+      values.activeVerifiers.0.selector:
+-        "0x4388a21c"
++        "0x5a093a2f"
++++ description: All verifiers that were ever routed to by this gateway.
+      values.allVerifiers.1:
++        {"selector":"0x5a093a2f","verifier":"eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A) [shared-sp1/SP1Verifier]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AggregateVerifier (eth:0xeE303bA054c5F1E14A8EF87f1C7E285af45A1ba2) [opstack/AggregateVerifier]
+    +++ description: Game type implementation that combines a TEE attestation arm and a ZK proof arm. A single un-nullified proof of either type can resolve a game (PROOF_THRESHOLD = 1). When both arms commit, the finalization window collapses from SLOW_FINALIZATION_DELAY (5d) to FAST_FINALIZATION_DELAY (1d).
+```
+
+## Source code changes
+
+```diff
+.../{.flat@1784846600 => .flat}/SP1Verifier.sol    | 1831 ++++++++++++++------
+ 1 file changed, 1297 insertions(+), 534 deletions(-)
+```
+
+Generated with discovered.json: 0xe5196d6d60012c7eaeb43e6ccdc7e5a81935ab24
 
 # Diff at Tue, 21 Jul 2026 15:40:09 GMT:
 

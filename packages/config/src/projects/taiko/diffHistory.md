@@ -1,3 +1,25 @@
+Generated with discovered.json: 0x846023cd81fd4230f46ad36f5cfd23b2ca8ab317
+
+# Diff at Thu, 23 Jul 2026 13:54:23 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@efd03446560a8d585747f124c71622cbfa33fca4 block: 1784274333
+- current timestamp: 1784814782
+
+## Description
+
+A third preconfirmation operator was added to the whitelist.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) [taiko/PreconfWhitelist] {
+    +++ description: Contains the whitelist of addresses eligible to propose batches on L1 and issue preconfirmations. It dynamically selects a single active operator for each epoch using a delayed Ethereum beacon block root as randomness. There is no fallback proposer path in this contract: non-selected operators cannot propose for the current epoch.
+      values.operatorMapping.2:
++        "eth:0x2267C7246523191b8bf7615B86b3bdEE612b7D9E"
+    }
+```
+
 Generated with discovered.json: 0x370a7936dcd250464d80ec295584a01067d824ed
 
 # Diff at Fri, 17 Jul 2026 07:47:14 GMT:
@@ -18278,4 +18300,3 @@ Provide description of changes. This section will be preserved.
     contract L1SharedAddressManager (0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa)
     +++ description: None
 ```
-

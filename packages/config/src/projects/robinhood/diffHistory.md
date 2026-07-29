@@ -1,3 +1,135 @@
+Generated with discovered.json: 0xfe0853d552ea5b849a7a5e3877fc351c3cd5bb47
+
+# Diff at Tue, 28 Jul 2026 14:38:32 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@fb0b50e4a7f7900d17e186f908b2b3ca3e977527 block: 1784882216
+- current timestamp: 1785249440
+
+## Description
+
+Deployer address, timestamp and block resolved for ArbFilteredTransactionsManager, L2UpgradeExecutor, ProxyAdmin and SafeL2.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784882216 (main branch discovery), not current.
+
+```diff
+    contract ArbFilteredTransactionsManager (robinhood:0x0000000000000000000000000000000000000074) [N/A] {
+    +++ description: ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.
+      deployerAddress:
++        "robinhood:0x0000000000000000000000000000000000000000"
+      sinceTimestamp:
++        1777567931
+      sinceBlock:
++        0
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09) [orbitstack/UpgradeExecutor] {
+    +++ description: ArbOS chain owner (UpgradeExecutor). Manages the ArbOwner chain-owner set and the transaction-filterer set, and can upgrade ArbOS configuration without delay.
+      deployerAddress:
++        "robinhood:0xBA7c7F9e20A1F6e11815D4Af08D911B21cb391Fd"
+      sinceTimestamp:
++        1777567931
+      sinceBlock:
++        2
+    }
+```
+
+```diff
+    contract ProxyAdmin (robinhood:0x672Da8B43058D1bC78956d71d9A208E168E2a3EF) [global/ProxyAdmin] {
+    +++ description: None
+      deployerAddress:
++        "robinhood:0xcFDab226f6DF33cd364Ff8E617bEB5Fe54E84Ebe"
+      sinceTimestamp:
++        1782841253
+      sinceBlock:
++        615454
+    }
+```
+
+```diff
+    contract SafeL2 (robinhood:0x6b9F63817F1442e40Bb9c3C2207758934C323FdC) [GnosisSafe] {
+    +++ description: None
+      deployerAddress:
++        "robinhood:0xcFDab226f6DF33cd364Ff8E617bEB5Fe54E84Ebe"
+      sinceTimestamp:
++        1782841226
+      sinceBlock:
++        615414
+    }
+```
+
+Generated with discovered.json: 0xe34461322774a5b2afee4b3aeb9dbe9faa71d9c0
+
+# Diff at Fri, 24 Jul 2026 08:38:05 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@efd03446560a8d585747f124c71622cbfa33fca4 block: 1784626795
+- current timestamp: 1784882216
+
+## Description
+
+SafeL2, ProxyAdmin, NVIDIA Token and AccessControlsRegistry now expose their real deployerAddress/sinceTimestamp/sinceBlock after re-enabling Blockscout getContractCreation.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784626795 (main branch discovery), not current.
+
+```diff
+    contract SafeL2 (robinhood:0x3A0C507Cc7F8785C877359ad49d0476966d17a1C) [GnosisSafe] {
+    +++ description: None
+      deployerAddress:
++        "robinhood:0xBa86e3b54E3Ee00185EccB41ff40FC3d5Ee79ecA"
+      sinceTimestamp:
++        1782749824
+      sinceBlock:
++        460358
+    }
+```
+
+```diff
+    contract ProxyAdmin (robinhood:0xa3Acd31AFb851B4eB9DAD00F5204c01D924267dF) [global/ProxyAdmin] {
+    +++ description: None
+      deployerAddress:
++        "robinhood:0xBA7c7F9e20A1F6e11815D4Af08D911B21cb391Fd"
+      sinceTimestamp:
++        1777567931
+      sinceBlock:
++        2
+    }
+```
+
+```diff
+    contract NVIDIA • Robinhood Token (robinhood:0xd0601CE157Db5bdC3162BbaC2a2C8aF5320D9EEC) [robinhood/rwa] {
+    +++ description: ERC-20-compatible Robinhood Stock Token logic. Transfers, approvals and permits are permissionless for addresses that are not blocked in the shared AccessControlsRegistry; there is no onchain KYC or allowlist. The registry's roles can mint, burn arbitrary holders' balances, confiscate balances even while paused or blocked, pause this token or all tokens, change metadata and the UI multiplier, and upgrade the shared beacon implementation.
+      deployerAddress:
++        "robinhood:0x5516B3451d4d6C9f63353Fe7Bc9537477ECCE000"
+      sinceTimestamp:
++        1781031216
+      sinceBlock:
++        45898
+    }
+```
+
+```diff
+    contract AccessControlsRegistry (robinhood:0xe10b6f6B275de231345c20D14Ab812db62151b00) [robinhood/accessControlsRegistry] {
+    +++ description: Shared access-control registry and upgrade beacon for Robinhood Stock Tokens. Its roles apply across every token implementation that points to this registry: they control upgrades, global and per-token pauses, the shared blocklist, issuance, arbitrary holder burns, metadata and UI multipliers.
+      deployerAddress:
++        "robinhood:0x074377a78A9710A1D47244f89797718b4f491279"
+      sinceTimestamp:
++        1779401804
+      sinceBlock:
++        7662
+    }
+```
+
 Generated with discovered.json: 0x936c2f40238f505a040b9a4962fb955524287753
 
 # Diff at Tue, 21 Jul 2026 11:00:47 GMT:

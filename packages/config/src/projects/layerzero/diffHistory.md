@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x479d6b65bb1111ff43d5e53f296377575a5a2e4d
+
+# Diff at Thu, 23 Jul 2026 13:56:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@efd03446560a8d585747f124c71622cbfa33fca4 block: 1784274500
+- current timestamp: 1784814910
+
+## Description
+
+One Safe signer was rotated.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (eth:0xCbcdd778AA25476F203814214dD3E9b9c46829A1) [GnosisSafe] {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x86CbBAEB08861D005fD2147A5123E43e558db167"
++        "eth:0xb859DD2Cb50F19a53Ad25b279750ba5DEC76D306"
+    }
+```
+
 Generated with discovered.json: 0x15dc33d0d7a05c4ded07820ef7b4984f3277674b
 
 # Diff at Fri, 17 Jul 2026 07:49:26 GMT:

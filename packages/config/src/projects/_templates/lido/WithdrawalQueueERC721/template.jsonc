@@ -1,0 +1,81 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Queues stETH and wstETH withdrawal requests as transferable NFTs. Oracle reports can enter bunker mode and finalize batches by supplying ETH and a maximum share rate, after which NFT owners claim ETH.",
+  "category": "core",
+  "ignoreRelatives": ["getNFTDescriptorAddress"],
+  "ignoreMethods": [
+    "getApproved",
+    "getLastCheckpointIndex",
+    "ownerOf",
+    "tokenURI"
+  ],
+  "ignoreInWatchMode": [
+    "getLastFinalizedRequestId",
+    "getLastRequestId",
+    "getLockedEtherAmount",
+    "unfinalizedRequestNumber",
+    "unfinalizedStETH"
+  ],
+  "fields": {
+    "accessControl": {
+      "handler": { "type": "accessControl", "includeEmptyRoles": true }
+    },
+    "defaultAdmins": {
+      "copy": "accessControl",
+      "edit": ["get", "DEFAULT_ADMIN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke every WithdrawalQueue role."
+        }
+      ]
+    },
+    "finalizers": {
+      "copy": "accessControl",
+      "edit": ["get", "FINALIZE_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "finalize queued withdrawal requests using supplied ETH and a chosen maximum stETH share rate."
+        }
+      ]
+    },
+    "oracleReporters": {
+      "copy": "accessControl",
+      "edit": ["get", "ORACLE_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "update bunker-mode status and the withdrawal queue's latest oracle-report timestamp."
+        }
+      ]
+    },
+    "metadataManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "MANAGE_TOKEN_URI_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change withdrawal NFT metadata configuration."
+        }
+      ]
+    },
+    "pausers": {
+      "copy": "accessControl",
+      "edit": ["get", "PAUSE_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause new withdrawal requests for a chosen duration."
+        }
+      ]
+    },
+    "resumers": {
+      "copy": "accessControl",
+      "edit": ["get", "RESUME_ROLE", "members"],
+      "permissions": [
+        { "type": "interact", "description": "resume new withdrawal requests." }
+      ]
+    }
+  }
+}

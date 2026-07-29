@@ -1,0 +1,42 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Emergency pause coordinator. The admin assigns one heartbeat-gated pauser to each registered protocol contract; a live pauser can trigger one time-bounded pause before its assignment is consumed.",
+  "category": "gov",
+  "fields": {
+    "ADMIN": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change pause and heartbeat durations and assign, replace, or remove pausers for supported protocol contracts."
+        }
+      ]
+    },
+    "$pausersByPausable": {
+      "description": "Latest pauser assigned to each pausable contract, reconstructed from PauserSet events.",
+      "handler": {
+        "type": "event",
+        "groupBy": "pausable",
+        "select": "newPauser",
+        "set": { "event": "PauserSet" }
+      }
+    },
+    "activePausers": {
+      "copy": "$pausersByPausable",
+      "edit": [
+        "pipe",
+        ["to_entries"],
+        [
+          "filter",
+          ["!=", "eth:0x0000000000000000000000000000000000000000", ["get", 1]]
+        ],
+        ["map", ["get", 1]]
+      ],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "maintain a live heartbeat and trigger the assigned protocol contract's one-time emergency pause."
+        }
+      ]
+    }
+  }
+}

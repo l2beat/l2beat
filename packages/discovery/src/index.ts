@@ -61,7 +61,6 @@ export { KnowledgeBase } from './discovery/modelling/KnowledgeBase'
 export { ModelIdRegistry } from './discovery/modelling/ModelIdRegistry'
 export {
   DiscoveryRegistry,
-  type DiscoveryTimestamps as DiscoveryBlockNumbers,
   generateClingoForDiscoveries,
   generatePermissionConfigHash,
   getDependenciesToDiscoverForProject,

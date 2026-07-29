@@ -1,0 +1,22 @@
+{
+  "AccountingOracle": {
+    "hash": "0x385c491ae4ecebeb7a7ca87addffc13c0fca6c83858abbfa858d268c15b01038",
+    "address": "eth:0x0e65898527E77210fB0133D00dd4C0E86Dc29bC7",
+    "blockNumber": 22188285
+  },
+  "AccountingOracle_v2": {
+    "hash": "0xb06723b219abb589ad094a24acae57f1870a67d722102f305fa04563ee866e41",
+    "address": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
+    "blockNumber": 23519375
+  },
+  "AccountingOracleV4.sol": {
+    "hash": "0x942cad30e14ba51db1a2a12e6bb48e0ba708f8bf7390773e0d4bdeb22f8da772",
+    "address": "eth:0x1455B96780A93e08abFE41243Db92E2fCbb0141c",
+    "blockNumber": 24183468
+  },
+  "AccountingOracleV5": {
+    "hash": "0xda67540a88dd514494980768b6432cd48b375456c7aa83b6d8a0f65a952325ba",
+    "address": "eth:0xe4f03A6AEb4f58E84d8DD7b99672354C9Bf44e9B",
+    "blockNumber": 25624347
+  }
+}

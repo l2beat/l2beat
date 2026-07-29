@@ -1,0 +1,61 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Lido Dual Governance state machine. Registered proposers submit calls through an associated executor, while stETH, wstETH and unstETH holders can lock assets in an escrow to delay or stop governance execution and enter Rage Quit.",
+  "category": "gov",
+  "ignoreMethods": ["getProposer", "isExecutor", "isProposer"],
+  "ignoreRelatives": ["getRageQuitEscrow"],
+  "fields": {
+    "adminExecutor": {
+      "description": "Executor recognized as the administrative caller by this contract.",
+      "handler": {
+        "type": "call",
+        "address": "{{ TIMELOCK }}",
+        "method": "function getAdminExecutor() view returns (address)",
+        "args": []
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change Dual Governance configuration, proposer executors, tiebreaker and reseal settings."
+        }
+      ]
+    },
+    "proposers": {
+      "description": "Accounts registered to submit governance proposals, each routed through its configured executor.",
+      "copy": "getProposers",
+      "edit": ["map", ["get", "account"]],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit proposals to the Dual Governance timelock."
+        }
+      ]
+    },
+    "getProposalsCanceller": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "cancel all pending governance proposals while the Dual Governance state permits cancellation."
+        }
+      ]
+    },
+    "tiebreakerCommittee": {
+      "copy": "getTiebreakerDetails",
+      "edit": ["get", "tiebreakerCommittee"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "schedule a proposal or resume a sealable contract when Dual Governance is in a tie state."
+        }
+      ]
+    },
+    "getResealCommittee": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "request that a sealable contract be paused indefinitely through the configured ResealManager."
+        }
+      ]
+    }
+  }
+}

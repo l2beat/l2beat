@@ -1,5 +1,6 @@
 import {
   ChainSpecificAddress,
+  EthereumAddress,
   formatLargeNumber,
   formatSeconds,
   ProjectId,
@@ -172,6 +173,7 @@ const registryAddress = ChainSpecificAddress.address(registry.address)
 const escapeHatchAddress = ChainSpecificAddress.address(escapeHatch.address)
 
 const v5ActivationTimestamp = UnixTime(1784060567) // 14 July 2026 20:22:47 UTC
+const v5ActivationBlock = 25533241 // https://etherscan.io/tx/0xff2db4e4bba583f2451478bfe4703e16afc79f0b463fb60615ebe3494142437b
 
 function formatAztecAmount(amount: bigint): string {
   return `${formatLargeNumber(Number(amount / 10n ** 18n))} AZTEC`
@@ -332,11 +334,28 @@ export const aztecnetwork: ScalingProject = {
   },
   config: {
     associatedTokens: ['AZTEC'],
+    activityConfig: {
+      type: 'block',
+      startBlock: 1,
+      // The indexer range is inclusive; 49 produces one 50-block RPC request.
+      batchSize: 49,
+    },
     escrows: [
       discovery.getEscrowDetails({
         address: feeJuicePortal.address,
         tokens: ['AZTEC'],
       }),
+    ],
+    daTracking: [
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: v5ActivationBlock,
+        inbox: EthereumAddress.ZERO, // Event-only tracking
+        topics: [
+          '0x6ff492bf2b4ca1b93a175167d14b3e46085b935cab3f39ca94013000799b93a0', // CheckpointProposed
+        ],
+      },
     ],
     trackedTxs: [
       {
@@ -376,7 +395,13 @@ export const aztecnetwork: ScalingProject = {
     gasTokens: ['AZTEC'],
     name: 'aztecnetwork',
     chainId: 677868, // on chainlist, but aztec is not evm
-    apis: [], // TODO: add
+    apis: [
+      {
+        type: 'aztec-rpc',
+        url: 'https://aztec-mainnet.drpc.org',
+        callsPerMinute: 60,
+      },
+    ],
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS,

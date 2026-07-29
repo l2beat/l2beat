@@ -1,4 +1,0 @@
-{
-  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Custom role-based operations entrypoint for Lido."
-}

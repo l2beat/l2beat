@@ -1,6 +1,6 @@
 {
   "name": "zama-cw",
-  "timestamp": 1783927795,
+  "timestamp": 1784815701,
   "configHash": "0x9966c7120d6e80774741b8e28cd70224af776aa48ce73e46d22e41344c8dadd2",
   "entries": [
     {
@@ -9,7 +9,17 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x0BBc1d7ceB10a0a00dD3aeBcA37e85D60d4a1103",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x0f81fd435d44Cc49f90BB74bF4BdE0e9A0554ae6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x1E3eafD783D47c36dC5CD529721E6cc16456Cc0F",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -260,7 +270,7 @@
         "aclAddress": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
         "aclOwner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
         "blockHCUWhitelist": [],
-        "getBlockMeter": { "blockNumber": 25522225, "usedHCU": 0 },
+        "getBlockMeter": { "blockNumber": 25595925, "usedHCU": 0 },
         "getFHEVMExecutorAddress": "eth:0xD82385dADa1ae3E969447f20A3164F6213100e75",
         "getGlobalHCUCapPerBlock": 281474976710655,
         "getMaxHCUDepthPerTx": 5000000,
@@ -326,35 +336,6 @@
       ]
     },
     {
-      "address": "eth:0x4202860Fa6afAF3e2977cD139Ac693a05e4f9450",
-      "type": "EOA",
-      "sourceHashes": [
-        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
-      ],
-      "proxyType": "EIP7702 EOA",
-      "values": {
-        "$implementation": "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B",
-        "delegationManager": "eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3",
-        "DOMAIN_VERSION": "1",
-        "eip712Domain": {
-          "fields": "0x0f",
-          "name": "EIP7702StatelessDeleGator",
-          "version": "1",
-          "chainId": 1,
-          "verifyingContract": "eth:0x4202860Fa6afAF3e2977cD139Ac693a05e4f9450",
-          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "extensions": []
-        },
-        "entryPoint": "eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032",
-        "getDeposit": 0,
-        "getDomainHash": "0x1c1eac34109260cde9c12e27efd579fdbf49bf454118204e077ff641a41ca399",
-        "getNonce": 0,
-        "NAME": "EIP7702StatelessDeleGator",
-        "PACKED_USER_OP_TYPEHASH": "0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18",
-        "VERSION": "1.3.0"
-      }
-    },
-    {
       "address": "eth:0x438Ce5730ACDBb58B3c712834142eD1ec8D0fF5A",
       "type": "EOA",
       "proxyType": "EOA"
@@ -393,7 +374,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 278,
+        "nonce": 280,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -424,6 +405,11 @@
           "role": ".getKmsSigners"
         }
       ]
+    },
+    {
+      "address": "eth:0x5e4f2616AA570d60EC6D7BBF08D070fb81353553",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x6016DCA5e91e62826e3FEA1Fb0a763602dc1E385",
@@ -492,7 +478,7 @@
         "$upgradeCount": 2,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0xb4ebd0ceaad40e91c0fe3f15b14954ea81efc6f36eff00000000000000010500",
+        "confidentialTotalSupply": "0x811963cda2ce7a2e8e1e530718cb4e321f75aa0e5bff00000000000000010500",
         "constructorArgs": [
           "eth:0xAea1d2cc69aF93CA0fdd34426E74Ad7cB19E9745",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000beef00a59b577423653a1526c7009bde103f542b000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000017436f6e666964656e7469616c20737465616b6355534443000000000000000000000000000000000000000000000000000000000000000000000000000000000b63737465616b635553444300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000ae646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c20737465616b6355534443222c2273796d626f6c223a2263737465616b6355534443222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f6620737465616b635553444320736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d000000000000000000000000000000000000"
@@ -506,7 +492,7 @@
           "isSet": false,
           "selector": "0x00000000"
         },
-        "inferredTotalSupply": 23973474310697,
+        "inferredTotalSupply": 18449539524241,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential steakcUSDC",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -574,16 +560,18 @@
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "eth:0x5e4f2616AA570d60EC6D7BBF08D070fb81353553",
+          "eth:0x1E3eafD783D47c36dC5CD529721E6cc16456Cc0F",
           "eth:0xf2084ab935805A71d17a02A3907c863AD9Cf8F04",
-          "eth:0x7df0Fe803832BB3Ca8906a6e49968C2421C1aE9B",
-          "eth:0x4202860Fa6afAF3e2977cD139Ac693a05e4f9450"
+          "eth:0x0BBc1d7ceB10a0a00dD3aeBcA37e85D60d4a1103",
+          "eth:0xFa4902732675Ee16a508487E4fDcb910fFb00A20"
         ],
-        "$threshold": 2,
+        "$threshold": 3,
         "domainSeparator": "0x7d4e7e451d54b0e5eda82c6e40c6fd4d41de5c6c771bd67fd755ad4575a77203",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 21,
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 24,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -687,7 +675,7 @@
             ]
           }
         },
-        "clock": 25522225,
+        "clock": 25595925,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -723,8 +711,8 @@
         "rewardRate": "6970000000000000000",
         "stakingToken": "eth:0xA12CC123ba206d4031D1c7f6223D1C2Ec249f4f3",
         "symbol": "stZAMA-Coprocessor",
-        "totalStakedWeight": 56439254386756,
-        "totalSupply": "637217866229888221432816032",
+        "totalStakedWeight": 56742941172867,
+        "totalSupply": "643984645061875161337008252",
         "unstakeCooldownPeriod": 604800,
         "unstakeCooldownPeriod_fmt": "7d",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -839,7 +827,7 @@
         "$upgradeCount": 3,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0x163b4b774427cc428f959eac3d6319c9916f3b58c0ff00000000000000010500",
+        "confidentialTotalSupply": "0xb15d8a186cbfeaf3b1a3418afc3dcc6891691ed84dff00000000000000010500",
         "constructorArgs": [
           "eth:0x9CFdA0290EdeF98D0539e5747bea9Bd889a08BaB",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e0000000000000000000000000000000000000000000000000000000000000012000000000000000000000000068749665ff8d2d112fa859aa293f07a622782f38000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205841557400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056358415574000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2058415574222c2273796d626f6c223a226358415574222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205841557420736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -853,7 +841,7 @@
           "isSet": true,
           "selector": "0xfbac3951"
         },
-        "inferredTotalSupply": 13020472,
+        "inferredTotalSupply": 10020472,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential XAUt",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -1082,11 +1070,6 @@
       ]
     },
     {
-      "address": "eth:0x7df0Fe803832BB3Ca8906a6e49968C2421C1aE9B",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "ConfidentialZAMAWrapper",
       "address": "eth:0x80CB147Fd86dC6dEe3Eee7e4Cee33d1397d98071",
       "type": "Contract",
@@ -1124,7 +1107,7 @@
         "$upgradeCount": 3,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0xcffe6a2f4f4439a5369833b147fcf95952f216feadff00000000000000010500",
+        "confidentialTotalSupply": "0xdb484e837d517b659e610756964b8719886156d584ff00000000000000010500",
         "constructorArgs": [
           "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000a12cc123ba206d4031d1c7f6223d1c2ec249f4f3000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205a414d410000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005635a414d41000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c205a414d41222c2273796d626f6c223a22635a414d41222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205a414d4120736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -1138,7 +1121,7 @@
           "isSet": false,
           "selector": "0x00000000"
         },
-        "inferredTotalSupply": 186240579349400,
+        "inferredTotalSupply": 181147984009034,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential ZAMA",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -1328,7 +1311,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 23,
+        "nonce": 24,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1411,7 +1394,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 317,
+        "nonce": 320,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1598,7 +1581,7 @@
         "$upgradeCount": 3,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0x1a9caab8f973b379533f6f0ed0950abbf6bb16b23bff00000000000000010500",
+        "confidentialTotalSupply": "0x7beff19ecf950a1a4755f72dbfedc956f14dd0623fff00000000000000010500",
         "constructorArgs": [
           "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000dac17f958d2ee523a2206206994597c13d831ec7000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205553445400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056355534454000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2055534454222c2273796d626f6c223a226355534454222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205553445420736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -1612,7 +1595,7 @@
           "isSet": true,
           "selector": "0x59bf1abe"
         },
-        "inferredTotalSupply": 8012901756696,
+        "inferredTotalSupply": 7970017582360,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential USDT",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -3079,7 +3062,7 @@
         "$upgradeCount": 3,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0x34c6d9a714b094e13be1304211cbea7b6e8fda4b6cff00000000000000010500",
+        "confidentialTotalSupply": "0xb3166966dd302d6efac954feffb6f9c8ae8325a01eff00000000000000010500",
         "constructorArgs": [
           "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205745544800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056357455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2057455448222c2273796d626f6c223a226357455448222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205745544820736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -3093,7 +3076,7 @@
           "isSet": false,
           "selector": "0x00000000"
         },
-        "inferredTotalSupply": 27684191,
+        "inferredTotalSupply": 21686368,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential WETH",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -3713,7 +3696,7 @@
         "$upgradeCount": 3,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0xe0a3b7446639c71192c8e5ae855e10bf9bf2f4822bff00000000000000010500",
+        "confidentialTotalSupply": "0xd860770c07cad7492065d5edbc1572d853b41af79bff00000000000000010500",
         "constructorArgs": [
           "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205553444300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056355534443000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2055534443222c2273796d626f6c223a226355534443222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205553444320736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -3727,7 +3710,7 @@
           "isSet": true,
           "selector": "0xfe575a87"
         },
-        "inferredTotalSupply": 6725691816036,
+        "inferredTotalSupply": 5292202968856,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential USDC",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -3841,7 +3824,7 @@
             ]
           }
         },
-        "clock": 25522225,
+        "clock": 25595925,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -3885,8 +3868,8 @@
         "rewardRate": "10460000000000000000",
         "stakingToken": "eth:0xA12CC123ba206d4031D1c7f6223D1C2Ec249f4f3",
         "symbol": "stZAMA-KMS",
-        "totalStakedWeight": 110624510877955,
-        "totalSupply": "947376154932509725560138804",
+        "totalStakedWeight": 111481181229864,
+        "totalSupply": "967589111057656002771952041",
         "unstakeCooldownPeriod": 604800,
         "unstakeCooldownPeriod_fmt": "7d",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -4076,6 +4059,11 @@
     },
     {
       "address": "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xFa4902732675Ee16a508487E4fDcb910fFb00A20",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -6447,58 +6435,6 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B": [
-      "constructor(address _delegationManager, address _entryPoint)",
-      "error ECDSAInvalidSignature()",
-      "error ECDSAInvalidSignatureLength(uint256 length)",
-      "error ECDSAInvalidSignatureS(bytes32 s)",
-      "error ExecutionFailed()",
-      "error InvalidEIP712NameLength()",
-      "error InvalidEIP712VersionLength()",
-      "error InvalidShortString()",
-      "error NotDelegationManager()",
-      "error NotEntryPoint()",
-      "error NotEntryPointOrSelf()",
-      "error NotSelf()",
-      "error StringTooLong(string str)",
-      "error UnauthorizedCallContext()",
-      "error UnsupportedCallType(bytes1 callType)",
-      "error UnsupportedExecType(bytes1 execType)",
-      "event EIP712DomainChanged()",
-      "event SentPrefund(address indexed sender, uint256 amount, bool success)",
-      "event SetDelegationManager(address indexed newDelegationManager)",
-      "event SetEntryPoint(address indexed entryPoint)",
-      "event TryExecuteUnsuccessful(uint256 batchExecutionindex, bytes result)",
-      "function DOMAIN_VERSION() view returns (string)",
-      "function NAME() view returns (string)",
-      "function PACKED_USER_OP_TYPEHASH() view returns (bytes32)",
-      "function VERSION() view returns (string)",
-      "function addDeposit() payable",
-      "function delegationManager() view returns (address)",
-      "function disableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function enableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
-      "function entryPoint() view returns (address)",
-      "function execute(tuple(address target, uint256 value, bytes callData) _execution) payable",
-      "function execute(bytes32 _mode, bytes _executionCalldata) payable",
-      "function executeFromExecutor(bytes32 _mode, bytes _executionCalldata) payable returns (bytes[] returnData_)",
-      "function getDeposit() view returns (uint256)",
-      "function getDomainHash() view returns (bytes32)",
-      "function getNonce(uint192 _key) view returns (uint256)",
-      "function getNonce() view returns (uint256)",
-      "function getPackedUserOperationHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
-      "function getPackedUserOperationTypedDataHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
-      "function isDelegationDisabled(bytes32 _delegationHash) view returns (bool)",
-      "function isValidSignature(bytes32 _hash, bytes _signature) view returns (bytes4 magicValue_)",
-      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) view returns (bytes4)",
-      "function onERC1155Received(address, address, uint256, uint256, bytes) view returns (bytes4)",
-      "function onERC721Received(address, address, uint256, bytes) view returns (bytes4)",
-      "function redeemDelegations(bytes[] _permissionContexts, bytes32[] _modes, bytes[] _executionCallDatas)",
-      "function supportsExecutionMode(bytes32 _mode) view returns (bool)",
-      "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
-      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp, bytes32, uint256 _missingAccountFunds) returns (uint256 validationData_)",
-      "function withdrawDeposit(address _withdrawAddress, uint256 _withdrawAmount)"
-    ],
     "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
@@ -7681,6 +7617,6 @@
     "zama/ZamaKMSVerifier_v0_2_0": "0x7fc4e3ae2be7d94f782720d3adb57b48f46f25266cbde808b3ce285721e9f7e4",
     "zama/ZamaPauserSet": "0x1af56cc25e42342b2f464add26e41d36787603eb96bf24f0923abdf7caf5d35f"
   },
-  "usedBlockNumbers": { "ethereum": 25522225, "zama": 1945080 },
-  "permissionsConfigHash": "0xd11ba1eedda1cf4173b96c1e840541c9d70dbc586f11246366898a6dc3b14b50"
+  "usedBlockNumbers": { "ethereum": 25595925, "zama": 2004406 },
+  "permissionsConfigHash": "0xc9fb44b7283796989e0c254403579db8a8ac467aad5a0370a1d6a964fc7df888"
 }

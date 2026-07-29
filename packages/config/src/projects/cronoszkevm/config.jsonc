@@ -3,7 +3,6 @@
   "name": "cronoszkevm",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["eth:0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc"],
-  "sharedModules": ["shared-zk-stack"],
   "names": {
     "eth:0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc": "Diamond",
     "eth:0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4": "CronosZkEVMAdmin",

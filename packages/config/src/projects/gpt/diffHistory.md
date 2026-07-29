@@ -1,3 +1,59 @@
+Generated with discovered.json: 0xd4f2eb6d7d73fea9c5d59865393ad09b17730b2c
+
+# Diff at Wed, 29 Jul 2026 09:59:44 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e856505e0900740c5b57461c7b3471e0e0960ebe block: 1762264385
+- current timestamp: 1762264385
+
+## Description
+
+Make shared-polygon-cdk use entrypoints and rediscover
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762264385 (main branch discovery), not current.
+
+```diff
+    contract Verifier (eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81) [polygon-cdk/Verifier] {
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+      deployerAddress:
++        "eth:0x0F8352cA7C57731382cB7e1b80D2603e31e056F4"
+    }
+```
+
+```diff
+    contract PolygonDataCommittee (eth:0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8) [polygon-cdk/PolygonDataCommittee] {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+      sourceHashes.1:
+-        "0xf7c38d00c4b6000f1840ed38f9ae99d753da8ac69ee1b6ac9ed614f2b60d470f"
++        "0x104785224960bd811f19412b23435d0d80fa4eb4d05a7d50a857009b583bafa5"
+      deployerAddress:
++        "eth:0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xada59D145126A746976F0F56477aafFEB3acc8e3) [global/ProxyAdmin] {
+    +++ description: None
+      deployerAddress:
++        "eth:0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
+    }
+```
+
+```diff
+    contract Validium (eth:0xC4E903D3Af4c3d2e437492d602adcC9d9b536858) [polygon-cdk/PolygonZkEVM] {
+    +++ description: The main system contract defining the gpt-mainnet Layer 2 logic. Entry point for sequencing batches.
+      sourceHashes.1:
+-        "0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7"
++        "0xc2c916e82f16c757dfd984fa2f02882312e7b4e546567608931fde689d1f0a78"
+      deployerAddress:
++        "eth:0x4c1665d6651ecEfa59B9B3041951608468b18891"
+    }
+```
+
 Generated with discovered.json: 0x589af6e4b0635fc4fffab704003bfb3b331d373e
 
 # Diff at Fri, 12 Jun 2026 10:18:49 GMT:

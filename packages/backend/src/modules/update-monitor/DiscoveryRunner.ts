@@ -5,7 +5,6 @@ import {
   ConfigReader,
   type ConfigRegistry,
   combinePermissionsIntoDiscovery,
-  type DiscoveryBlockNumbers,
   type DiscoveryEngine,
   type DiscoveryOutput,
   DiscoveryRegistry,
@@ -19,7 +18,7 @@ import {
 import {
   assert,
   ChainSpecificAddress,
-  UnixTime,
+  type UnixTime,
   unique,
   withoutUndefinedKeys,
 } from '@l2beat/shared-pure'
@@ -46,7 +45,6 @@ export class DiscoveryRunner {
   private async discover(
     projectName: string,
     discoveryTimestamp: number,
-    dependentDiscoveries: 'useCurrentTimestamp' | DiscoveryBlockNumbers,
     logger: Logger,
     configReader?: ConfigReader,
   ): Promise<DiscoveryRunResult> {
@@ -66,25 +64,14 @@ export class DiscoveryRunner {
         configReader,
       )
       logger.info('Dependent project:', toDiscover)
-      logger.info(
-        'Requested dependent block numbers:',
-        dependentDiscoveries ?? 'none',
-      )
     } else {
       logger.info('Discovering only current project - no cross-chain modelling')
       toDiscover.push(projectName)
     }
 
-    if (dependentDiscoveries !== 'useCurrentTimestamp') {
-      // Always default the discovery of current project to discoveryBlockNumber
-      dependentDiscoveries[projectName] = {
-        timestamp: discoveryTimestamp,
-      }
-    }
-
     const discoveries = await this.discoverMany(
       toDiscover,
-      dependentDiscoveries,
+      discoveryTimestamp,
       configReader,
       logger,
     )
@@ -122,29 +109,12 @@ export class DiscoveryRunner {
 
   private async discoverMany(
     toDiscover: string[],
-    dependentDiscoveries: 'useCurrentTimestamp' | DiscoveryBlockNumbers,
+    dependencyTimestamp: number,
     configReader: ConfigReader,
     logger: Logger,
   ) {
     const discoveries = new DiscoveryRegistry()
     for (const dependency of toDiscover) {
-      let dependencyTimestamp
-      if (dependentDiscoveries === 'useCurrentTimestamp') {
-        dependencyTimestamp = UnixTime.now()
-      } else {
-        dependencyTimestamp = dependentDiscoveries?.[dependency]?.timestamp
-
-        if (dependencyTimestamp === undefined) {
-          // We rediscover on the past block number, but with current configs and dependencies.
-          // Those dependencies might not have been referenced in the old discovery.
-          // In that case we don't fail - the diff will show all those "added".
-          logger.info(
-            `No block number found for dependency ${dependency}, skipping its rediscovery.`,
-          )
-          continue
-        }
-      }
-
       const dependencyConfig = configReader.readConfig(dependency)
       logger.info(
         `Discovering ${dependencyConfig.name} at timestamp ${dependencyTimestamp}`,
@@ -181,17 +151,10 @@ export class DiscoveryRunner {
     config: ConfigRegistry,
     timestamp: UnixTime,
     logger: Logger,
-    dependentDiscoveries?: 'useCurrentTimestamp' | DiscoveryBlockNumbers,
     configReader?: ConfigReader,
   ): Promise<DiscoveryRunResult> {
     try {
-      return await this.discover(
-        config.name,
-        timestamp,
-        dependentDiscoveries ?? {},
-        logger,
-        configReader,
-      )
+      return await this.discover(config.name, timestamp, logger, configReader)
     } catch (error) {
       const err = isError(error)
         ? (error as Error)
