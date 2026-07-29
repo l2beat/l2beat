@@ -24,14 +24,13 @@ export function generateDaTrackingIdentities(
   const result: Record<string, SnapshotIdentity[]> = {}
 
   const add = (projectId: string, config: ProjectDaTrackingConfig) => {
-    const identity = {
+    // Deliberately no dedup - duplicate ids are a config error (colliding
+    // backend configuration ids) and the guard test must see them.
+    result[projectId] ??= []
+    result[projectId].push({
       id: createDaTrackingId(config),
       label: createLabel(config),
-    }
-    result[projectId] ??= []
-    if (!result[projectId].some((e) => e.id === identity.id)) {
-      result[projectId].push(identity)
-    }
+    })
   }
 
   for (const project of projects) {
