@@ -96,6 +96,10 @@ export function createUpdateMonitorModule({
     db,
     configReader,
     projectService,
+    {
+      commitSha: config.health.commitSha || undefined,
+      deployedAt: config.health.releasedAt ?? config.health.startedAt,
+    },
   )
   const updateMonitorRouter = createUpdateMonitorRouter(updateMonitorController)
 
