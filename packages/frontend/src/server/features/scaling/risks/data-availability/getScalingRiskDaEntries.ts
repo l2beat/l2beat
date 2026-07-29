@@ -11,6 +11,10 @@ import {
   mapLayerRisksToRosetteValues,
 } from '~/pages/data-availability/utils/MapRisksToRosetteValues'
 import { groupByScalingTabs } from '~/pages/scaling/utils/groupByScalingTabs'
+import {
+  getProjectsDataPosted,
+  type ProjectDataPosted,
+} from '~/server/features/data-availability/throughput/getProjectsDataPosted'
 import { ps } from '~/server/projects'
 import { getProofSystemWithName } from '~/utils/project/getProofSystemWithName'
 import { getDaLayerRisks } from '../../../data-availability/utils/getDaLayerRisks'
@@ -42,7 +46,7 @@ export async function getScalingRiskDaEntries() {
     getProjectsChangeReport(),
     ps.getProjects({
       select: ['statuses', 'scalingInfo', 'scalingDa', 'display'],
-      optional: ['customDa', 'contracts'],
+      optional: ['customDa', 'contracts', 'daTrackingConfig'],
       where: ['scalingInfo'],
       whereNot: ['archivedAt'],
     }),
@@ -61,7 +65,14 @@ export async function getScalingRiskDaEntries() {
   const dacs = projects.filter((p) => !!p.customDa) as Project<'customDa'>[]
 
   const uniqueProjectsInUse = getDaUsers(daLayers, daBridges, dacs)
-  const tvsPerProject = await getDaProjectsTvs(uniqueProjectsInUse)
+  const [tvsPerProject, dataPostedByProject] = await Promise.all([
+    getDaProjectsTvs(uniqueProjectsInUse),
+    getProjectsDataPosted(
+      projects
+        .filter((project) => project.daTrackingConfig)
+        .map((project) => project.id),
+    ),
+  ])
   const getTvs = pickTvsForProjects(tvsPerProject)
 
   const entries = projects
@@ -80,6 +91,7 @@ export async function getScalingRiskDaEntries() {
         projectsChangeReport.getChanges(project.id),
         tvs.projects[project.id]?.breakdown.total,
         zkCatalogProjects,
+        dataPostedByProject[project.id],
       )
     })
     .filter((entry) => entry !== undefined)
@@ -95,6 +107,7 @@ export interface ScalingRiskDaEntry extends CommonScalingEntry {
   })[]
   stacks: ProjectScalingStack[] | undefined
   tvsOrder: number
+  dataPosted: ProjectDataPosted | undefined
   risks:
     | (EntryRisks & {
         daHref?: ScalingRiskDaEntryHref
@@ -112,6 +125,7 @@ function getScalingRiskDaEntry(
   changes: ProjectChanges,
   tvs: number | undefined,
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
+  dataPosted: ProjectDataPosted | undefined,
 ): ScalingRiskDaEntry {
   return {
     ...getCommonScalingEntry({ project, changes }),
@@ -124,6 +138,7 @@ function getScalingRiskDaEntry(
       zkCatalogProjects,
     ),
     stacks: project.scalingInfo.stacks,
+    dataPosted,
     risks,
     tvsOrder: tvs ?? -1,
   }
