@@ -1,4 +1,27 @@
-Generated with discovered.json: 0xb3047b0e33b04ea42d8c02e5a50c65c9477f59ba
+Generated with discovered.json: 0xc2d9f0d144cde8c88a310e85f338731c5a04e639
+
+# Diff at Tue, 28 Jul 2026 14:38:41 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@fb0b50e4a7f7900d17e186f908b2b3ca3e977527 block: 1776179280
+- current timestamp: 1785249458
+
+## Description
+
+EspressoMultisig: `$members[4]` rotated.
+
+## Watched changes
+
+```diff
+    contract EspressoMultisig (eth:0x34F5af5158171Ffd2475d21dB5fc3B311F221982) [GnosisSafe] {
+    +++ description: None
+      values.$members.4:
+-        "eth:0x811caa1c5C96BFE0AB12b2EEB542994B0C368627"
++        "eth:0x5E768dd03BD821703ef825e057434De85913EEAC"
+    }
+```
+
+Generated with discovered.json: 0x8b5994adfb6ad9278ab8f0edd894a24f91c6e556
 
 # Diff at Fri, 08 May 2026 07:51:17 GMT:
 

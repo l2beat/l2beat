@@ -1,4 +1,70 @@
-Generated with discovered.json: 0x0965a10c1baad8a3957f38d5b15f9e495df698e1
+Generated with discovered.json: 0xb0ae2c31a683eaa71162b00b7f07c1d882277088
+
+# Diff at Tue, 28 Jul 2026 14:38:19 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@fb0b50e4a7f7900d17e186f908b2b3ca3e977527 block: 1784882184
+- current timestamp: 1785249432
+
+## Description
+
+Deployer address, timestamp and block resolved for UpgradeGatekeeper, DesertVerifier and Lighter.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784882184 (main branch discovery), not current.
+
+```diff
+    contract UpgradeGatekeeper (robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716) [lighter/UpgradeGatekeeper] {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb.
+      deployerAddress:
++        "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213"
+      sinceTimestamp:
++        1782477747
+      sinceBlock:
++        229410
+    }
+```
+
+```diff
+    contract DesertVerifier (robinhood:0x56aeED6920DBB9E198C2C0072147A45684A06E10) [N/A] {
+    +++ description: None
+      deployerAddress:
++        "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213"
+      sinceTimestamp:
++        1784265403
+      sinceBlock:
++        11861471
+    }
+```
+
+```diff
+    contract Lighter (robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d) [N/A] {
+    +++ description: None
+      deployerAddress:
++        "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213"
+      sinceTimestamp:
++        1782477747
+      sinceBlock:
++        229410
+    }
+```
+
+```diff
+    contract ZkLighterVerifier (robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31) [lighter/ZkLighterVerifier] {
+    +++ description: The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.
+      deployerAddress:
++        "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213"
+      sinceTimestamp:
++        1782477747
+      sinceBlock:
++        229410
+    }
+```
+
+Generated with discovered.json: 0xa63ba73bc31c2571c9d38b3c1ebca4200477a281
 
 # Diff at Mon, 20 Jul 2026 11:15:48 GMT:
 

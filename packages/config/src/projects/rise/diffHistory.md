@@ -1,4 +1,27 @@
-Generated with discovered.json: 0xb0685f63dd5c01e41c29b088a92b489ec5680371
+Generated with discovered.json: 0x611154f2673059e1290c4ff2571a9366745cf1d4
+
+# Diff at Tue, 28 Jul 2026 14:38:38 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@fb0b50e4a7f7900d17e186f908b2b3ca3e977527 block: 1784537565
+- current timestamp: 1785249452
+
+## Description
+
+SystemConfig: `batcherHash` rotated (`0x499a…8A41` → `0x0aE4…67d`); new batch submitter key.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0xD3CAf2A473dBB5bc2E8FB7F328e01AB9B726a24f) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.batcherHash:
+-        "eth:0x499a15427F46685A362Dab7886A491FEfDf68A41"
++        "eth:0x0aE4b35f7F5efeB4c651684e1BCa12993dcBb67d"
+    }
+```
+
+Generated with discovered.json: 0x7a401b2debf7d39a38e0f3a4353e8158bf439c4f
 
 # Diff at Mon, 20 Jul 2026 08:54:38 GMT:
 

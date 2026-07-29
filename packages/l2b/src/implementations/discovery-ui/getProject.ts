@@ -11,7 +11,11 @@ import {
   type TemplateService,
 } from '@l2beat/discovery'
 import type { ColorContract } from '@l2beat/discovery/dist/discovery/config/ColorConfig'
-import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { getContractName } from './getContractName'
 import { getContractType } from './getContractType'
@@ -42,6 +46,8 @@ export function getProject(
     config: configReader.readConfig(discovery.name),
   }))
 
+  const ownedEntries = resolveEntryOwnership(discoveries)
+
   const reachableEntries = getReachableEntries(
     data
       .flatMap((x) => x.discovery.entries)
@@ -51,9 +57,10 @@ export function getProject(
   ).map((x) => x.address)
 
   const response: ApiProjectResponse = { entries: [] }
-  const meta = getMeta(data.map((x) => x.discovery))
+  const meta = getMeta([...ownedEntries.values()].flat())
   for (const { config, discovery } of data) {
-    const contracts = discovery.entries
+    const entries = ownedEntries.get(discovery.name) ?? []
+    const contracts = entries
       .filter((e) => e.type === 'Contract')
       // .filter((e) => referencedEntries.includes(e.address))
       .map((entry) => {
@@ -98,7 +105,7 @@ export function getProject(
       discoveredContracts: contracts.filter(
         (x) => !initialAddresses.includes(x.address),
       ),
-      eoas: discovery.entries
+      eoas: entries
         .filter((e) => e.type === 'EOA')
         .filter(
           (x) =>
@@ -125,6 +132,36 @@ export function getProject(
   }
   populateReferencedBy(response.entries)
   return response
+}
+
+// A contract belongs to one project, because a shared module lists it as an
+// entrypoint and its dependents then reference it instead of discovering it.
+// EOAs are deliberately not entrypoints, since an EOA like a multisig signer
+// belongs to no project and making it one would chain unrelated discoveries
+// together. So the same EOA is discovered in full by every project that reaches
+// it. The UI keys every node by address, so the response may name an address
+// once: the first project to claim it wins, and `discoveries` starts with the
+// project itself, which puts shared EOAs in the project's scope rather than the
+// shared module's.
+function resolveEntryOwnership(
+  discoveries: DiscoveryOutput[],
+): Map<string, EntryParameters[]> {
+  const owned = new Map<string, EntryParameters[]>()
+  const claimed = new Set<ChainSpecificAddress>()
+
+  for (const discovery of discoveries) {
+    assert(!owned.has(discovery.name), 'Duplicate discovery')
+    const entries = discovery.entries
+      .filter((e) => e.type !== 'Reference')
+      .filter((e) => !claimed.has(e.address))
+
+    for (const { address } of entries) {
+      claimed.add(address)
+    }
+    owned.set(discovery.name, entries)
+  }
+
+  return owned
 }
 
 function getRoles(entry: EntryParameters): string[] {
