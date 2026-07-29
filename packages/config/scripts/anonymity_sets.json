@@ -1,0 +1,33 @@
+{
+  "generatedAt": "2026-07-29T14:48:54.746Z",
+  "windowDays": 30,
+  "cutoffBlock": 25424022,
+  "cutoffDate": "2026-06-29T14:48:59.000Z",
+  "tornado-cash": {
+    "bucket": "tornado-ETH-0.1",
+    "setSize": 1345,
+    "candidateBuckets": {
+      "tornado-ETH-1": 831,
+      "tornado-ETH-0.1": 1345,
+      "tornado-ETH-10": 378,
+      "tornado-ETH-100": 140
+    }
+  },
+  "railgun": {
+    "bucket": "railgun-WETH",
+    "thresholdRaw": "100000000000000000",
+    "setSize": 691
+  },
+  "privacy-pools": {
+    "token": "ethereum",
+    "thresholdRaw": "100000000000000000",
+    "setSize": 69,
+    "buckets": {
+      "privacy-pools-ETH-0xf241d57c6debae225c0f2e6ea1529373c9a9c9fb": 69
+    }
+  },
+  "diagnostics": {
+    "trxsWithAmountsRows": 350232,
+    "privacyPoolsRows": 13983
+  }
+}

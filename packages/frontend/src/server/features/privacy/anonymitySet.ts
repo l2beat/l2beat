@@ -13,7 +13,7 @@ export interface AnonymitySet {
 
 export const ANONYMITY_SETS: Record<string, AnonymitySet> = {
   'tornado-cash': {
-    setSize: 4000,
+    setSize: 1345,
     description:
       'Number of unique depositors in the 0.1 ETH bucket in the last 30 days.',
     steps: [
@@ -23,21 +23,21 @@ export const ANONYMITY_SETS: Record<string, AnonymitySet> = {
     ],
   },
   railgun: {
-    setSize: 1000,
+    setSize: 691,
     description:
-      'Number of unique depositors of the WETH token with an amount of at least 1 WETH in the last 30 days.',
+      'Number of unique depositors of the WETH token with an amount of at least 0.1 WETH in the last 30 days.',
     steps: [
-      'Deposit at most 1 WETH into the Railgun protocol.',
+      'Deposit at most 0.1 WETH into the Railgun protocol.',
       'Wait for a randomized duration of time up to 30 days. Do not rely on a human judgement to pick a random number.',
       'Withdraw to an unlinkable address. Make sure the withdrawal amount is not equal to the deposit amount, leaving a small amount still deposited.',
     ],
   },
   'privacy-pools': {
-    setSize: 450,
+    setSize: 69,
     description:
-      'Number of unique depositors of the ETH token with an amount of at least 1 ETH in the last 30 days.',
+      'Number of unique depositors of the ETH token with an amount of at least 0.1 ETH in the last 30 days.',
     steps: [
-      'Deposit at most 1 ETH into the Privacy Pools protocol.',
+      'Deposit at most 0.1 ETH into the Privacy Pools protocol.',
       'Wait for a randomized duration of time up to 30 days. Do not rely on a human judgement to pick a random number.',
       'Withdraw to an unlinkable address. Make sure the withdrawal amount is not equal to the deposit amount, leaving a small amount still deposited.',
     ],
