@@ -65,7 +65,7 @@ export const uniswapv3: BaseProject = {
     unverifiedContracts: [],
   },
   display: {
-    description: `Uniswap v3 is a concentrated-liquidity AMM where anyone can deploy an immutable, adminless pool for any token pair at an enabled fee tier. User funds sit only in the pools, which no one can upgrade or pause. UNI tokenholder governance, acting through a ${timelockDelayDays}-day timelock, holds two bounded control powers over v3 pools: enabling new fee tiers and setting a protocol fee capped at 1/4 of LP fees per side. Since the UNIfication proposal, collected protocol fees flow through the V3OpenFeeAdapter into the TokenJar and are exchanged by the Firepit for UNI sent permanently to 0xdead.`,
+    description: `Uniswap v3 is a concentrated-liquidity AMM where anyone can deploy an immutable, adminless pool for any token pair at an enabled fee tier. User funds sit only in the pools, which no one can upgrade or pause. UNI tokenholder governance, acting through a ${timelockDelayDays}-day timelock, holds two bounded control powers over v3 pools: enabling new fee tiers and setting a protocol fee capped at 1/4 of LP fees per side. Since the UNIfication proposal, collected protocol fees are exchanged by the Firepit for UNI and sent permanently to 0xdead.`,
     detailedDescription: readProjectMarkdown(
       'uniswapv3',
       'detailedDescription',
