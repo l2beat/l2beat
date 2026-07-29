@@ -33,8 +33,8 @@
   ],
   "adi": [
     {
-      "id": "92a5d6836b78",
-      "label": "ethereum inbox eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186 sequencers[4] since 23874833"
+      "id": "a8d364734186",
+      "label": "ethereum inbox 0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186 sequencers[4] since 23874833"
     }
   ],
   "aevo": [
@@ -162,7 +162,11 @@
   "bobanetwork": [
     {
       "id": "85bcc630ded4",
-      "label": "ethereum inbox 0xfFF0000000000000000000000000000000000288 sequencers[1] since 19670770"
+      "label": "ethereum inbox 0xfFF0000000000000000000000000000000000288 sequencers[1] since 22790097"
+    },
+    {
+      "id": "e541e8f08f5f",
+      "label": "ethereum inbox 0xfFF0000000000000000000000000000000000288 sequencers[1] since 19671339"
     }
   ],
   "bullet": [
@@ -372,7 +376,19 @@
   "hashkey": [
     {
       "id": "11c7a388565a",
-      "label": "ethereum inbox 0x0004cb44C80b6Fbf8ceb1d80AF688C9f7C0b2aB5 sequencers[1] since 21414667"
+      "label": "ethereum inbox 0x0004cb44C80b6Fbf8ceb1d80AF688C9f7C0b2aB5 sequencers[1] since 24582182"
+    },
+    {
+      "id": "374bf6c1c013",
+      "label": "ethereum inbox 0x0004cb44C80b6Fbf8ceb1d80AF688C9f7C0b2aB5 sequencers[1] since 22237008"
+    },
+    {
+      "id": "bcad13fb47dc",
+      "label": "ethereum inbox 0x0004cb44C80b6Fbf8ceb1d80AF688C9f7C0b2aB5 sequencers[1] since 24324263"
+    },
+    {
+      "id": "e11269b4d577",
+      "label": "ethereum inbox 0x0004cb44C80b6Fbf8ceb1d80AF688C9f7C0b2aB5 sequencers[1] since 21414884"
     }
   ],
   "hello-world": [
@@ -555,6 +571,10 @@
     {
       "id": "77d7ad49a27a",
       "label": "ethereum inbox 0xFFEEDDCcBbAA0000000000000000000000000000 sequencers[1] since 19434945"
+    },
+    {
+      "id": "7f14496fac2c",
+      "label": "eigen-da customer 0x24f0a3716805e8973bf48eb908d6d4a2f34af785 since 1738821600"
     }
   ],
   "mantle-testnet": [
@@ -853,6 +873,10 @@
   ],
   "settlus": [
     {
+      "id": "21b59864e4d8",
+      "label": "ethereum inbox 0x003E40D3125591bD722aB1bB880c78e4D74d0977 sequencers[1] since 21890837"
+    },
+    {
       "id": "f22125c047be",
       "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFPs= since 9779673"
     }
@@ -945,8 +969,16 @@
   ],
   "swell": [
     {
+      "id": "4aa1aaee8130",
+      "label": "ethereum inbox 0x005dE5857e38dFD703a1725c0900E9C6f24cbdE0 sequencers[1] since 21278355"
+    },
+    {
+      "id": "770a0aae77ac",
+      "label": "ethereum inbox 0x005dE5857e38dFD703a1725c0900E9C6f24cbdE0 sequencers[1] since 22204309"
+    },
+    {
       "id": "ae6db0223ff8",
-      "label": "ethereum inbox 0x005dE5857e38dFD703a1725c0900E9C6f24cbdE0 sequencers[1] since 21277945"
+      "label": "ethereum inbox 0x005dE5857e38dFD703a1725c0900E9C6f24cbdE0 sequencers[1] since 25247844"
     }
   ],
   "syndicate": [
@@ -1053,16 +1085,16 @@
   ],
   "zksync2": [
     {
-      "id": "009f95694fb9",
-      "label": "ethereum inbox eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564 sequencers[2] since 23016895"
+      "id": "19c318b4d577",
+      "label": "ethereum inbox 0x8c0Bfc04AdA21fd496c55B8C50331f904306F564 sequencers[2] since 23016895"
     },
     {
-      "id": "443e9296a048",
-      "label": "ethereum inbox eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776 sequencers[2] since 23633924"
+      "id": "2abe26d17972",
+      "label": "ethereum inbox 0x2e5110cF18678Ec99818bFAa849B8C881744b776 sequencers[2] since 23633924"
     },
     {
-      "id": "9294ada25d43",
-      "label": "ethereum inbox eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564 sequencers[2] since 21809364"
+      "id": "695532d64024",
+      "label": "ethereum inbox 0x8c0Bfc04AdA21fd496c55B8C50331f904306F564 sequencers[2] since 21809364"
     }
   ],
   "zora": [
