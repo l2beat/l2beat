@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x2f7673fcfd131d1b9ad735aae007a1b673504b69
+
+# Diff at Wed, 29 Jul 2026 11:43:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8fc71653df107a65d06ec19257b0c3f4f6ed070d block: 1784815601
+- current timestamp: 1785325317
+
+## Description
+
+Two members were removed from the Safe that holds the Polygon RootChainManager's token-mapping role. The threshold remains 4, leaving a 4-of-12 Safe instead of 4-of-14.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (eth:0x424bDE99FCfB68c5a1218fd3215caFfD031f19C4) [GnosisSafe] {
+    +++ description: None
+      values.$members.7:
+-        "eth:0xF045025C845E786E343Df30cC6f67ec6BB822b34"
+      values.$members.9:
+-        "eth:0xe76c5A6DA94Ed348a80869f26eBd0e5e082664b9"
+      values.multisigThreshold:
+-        "4 of 14 (29%)"
++        "4 of 12 (33%)"
+    }
+```
+
 Generated with discovered.json: 0x845a35a11f9962731ffec2d1d481530f80dc7474
 
 # Diff at Thu, 23 Jul 2026 14:08:13 GMT:

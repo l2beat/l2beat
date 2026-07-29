@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x832fbad18e5f419f7aadcd3e777778ea3cca7f2b
+
+# Diff at Wed, 29 Jul 2026 11:45:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8fc71653df107a65d06ec19257b0c3f4f6ed070d block: 1784624234
+- current timestamp: 1785325405
+
+## Description
+
+One signer was rotated in Stargate Multisig 2. Its 5-of-7 threshold and sole executor are unchanged.
+
+## Watched changes
+
+```diff
+    contract Stargate Multisig 2 (eth:0xBE634B030FEAaB661300667EaF82510a3a025413) [layerzero/OneSigMultisig] {
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+      values.$members.4:
+-        "eth:0x18b3Bf351B161E3DE0d9d47Efa80d9f474bDd5D1"
++        "eth:0x69784C33E460ab284b32eEA886C2Eb5bA8B5Aa01"
+    }
+```
+
 Generated with discovered.json: 0x26b9dffb9ac1a48a84c3a88d1549fcfbf9eaed12
 
 # Diff at Tue, 21 Jul 2026 08:58:57 GMT:
@@ -3908,4 +3931,3 @@ The same change was performed on a multisig in the Aptos project.
 +        "0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437"
     }
 ```
-
