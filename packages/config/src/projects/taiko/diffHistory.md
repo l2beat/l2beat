@@ -1,3 +1,76 @@
+Generated with discovered.json: 0xae9485c3fa9558efdd90a21fa07ec70ec16545c9
+
+# Diff at Thu, 30 Jul 2026 11:25:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@582e1a34fd1cba95db9957343b373cd84374dd99 block: 1785325120
+- current timestamp: 1785325120
+
+## Description
+
+Make shared-sp1 use entrypoints and rediscover
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1785325120 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
+    reference SP1VerifierGateway (eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: None
+      type:
+-        "Contract"
++        "Reference"
+      template:
+-        "succinct/SP1VerifierGateway"
+      sourceHashes:
+-        ["0xf67f0dc1760fe9589909a16bfef47f76d6dfa71427e034d759a3d8da88a42645"]
+      proxyType:
+-        "immutable"
+      description:
+-        "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract."
+      deployerAddress:
+-        "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"
+      sinceTimestamp:
+-        1720099223
+      sinceBlock:
+-        20233410
+      values:
+-        {"$immutable":true,"activeVerifiers":[{"selector":"0xd4e8ecd2","verifier":"eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"},{"selector":"0xbb1a6f29","verifier":"eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C"},{"selector":"0x5a093a2f","verifier":"eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"}],"allVerifiers":[{"selector":"0x801c66ac","verifier":"eth:0xfE2bb0Ad7F2c44Bd1289234Af08aD6FDEC0d54a2"},{"selector":"0x8c5bc5e4","verifier":"eth:0x331b350dDA287d0A65ce43103984CD44cb4Da9f0"},{"selector":"0xfedc1fcc","verifier":"eth:0x36B353776AF6EF3A2bD707049e783F52c4209017"},{"selector":"0xc430ff7f","verifier":"eth:0xc350F063C13a3Ca21331610fe159E697a5c9c2FB"},{"selector":"0xc865c1b6","verifier":"eth:0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc"},{"selector":"0x4aca240a","verifier":"eth:0x1764C29FBd94865198588f10FC75D4f6636d158d"},{"selector":"0x09069090","verifier":"eth:0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3"},{"selector":"0x54bdcae3","verifier":"eth:0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16"},{"selector":"0x1b34fe11","verifier":"eth:0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"},{"selector":"0xd4e8ecd2","verifier":"eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"},{"selector":"0xbb1a6f29","verifier":"eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C"},{"selector":"0x5a093a2f","verifier":"eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"}],"owner":"eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878"}
+      fieldMeta:
+-        {"activeVerifiers":{"description":"Verifiers that are routed to by their selector and not frozen."},"allVerifiers":{"description":"All verifiers that were ever routed to by this gateway."}}
+      targetType:
++        "Contract"
+      targetProject:
++        "shared-sp1"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v6.0.0).
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A) [shared-sp1/SP1Verifier]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SP1VerifierGatewayMultisig (eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) [GnosisSafe]
+    +++ description: None
+```
+
 Generated with discovered.json: 0x3ba8d6f5854c252de135d229a72aa9ddd99efe3e
 
 # Diff at Wed, 29 Jul 2026 11:40:03 GMT:
