@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -16,10 +16,24 @@ export const settlus: ScalingProject = opStackL2({
   capability: 'universal',
   addedAt: UnixTime(1737636288), // 2025-01-23T12:44:48+00:00
   additionalBadges: [BADGES.RaaS.Alchemy],
-  celestiaDa: {
-    sinceBlock: 9779673,
-    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFPs=',
-  },
+  nonTemplateDaTracking: [
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 21890837, // first batch posted to the inbox
+      untilBlock: 24433367, // last blob batch before the switch to Celestia
+      inbox: EthereumAddress('0x003E40D3125591bD722aB1bB880c78e4D74d0977'),
+      sequencers: [
+        EthereumAddress('0xD0b4c3aC8A50B6F1B3949ADaf55Cc9805620EB57'),
+      ],
+    },
+    {
+      type: 'celestia',
+      daLayer: ProjectId('celestia'),
+      sinceBlock: 9779673,
+      namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFPs=',
+    },
+  ],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,

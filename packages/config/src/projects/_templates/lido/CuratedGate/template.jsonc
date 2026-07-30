@@ -56,5 +56,6 @@
         }
       ]
     }
-  }
+  },
+  "ignoreInWatchMode": ["treeCid", "treeRoot"]
 }

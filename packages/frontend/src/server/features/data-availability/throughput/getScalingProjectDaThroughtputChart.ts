@@ -1,17 +1,16 @@
-import type { ProjectsSummedDataAvailabilityRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import {
-  ChartRange,
-  type ChartResolution,
-  rangeToResolution,
-} from '~/utils/range/range'
+import { ChartRange, rangeToResolution } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { getActivityForProjectAndRange } from '../../scaling/activity/getActivityForProjectAndRange'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { getChartStartTimestamp } from '../../utils/getChartStartTimestamp'
+import {
+  groupByTimestampAndDaLayerId,
+  sumGroupedDataPosted,
+} from './getDaThroughputChart'
 import { isThroughputSynced } from './isThroughputSynced'
 import { THROUGHPUT_ENABLED_DA_LAYERS } from './utils/consts'
 import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
@@ -65,10 +64,11 @@ export async function getScalingProjectDaThroughputChart({
   const syncedUntil = throughput.at(-1)?.timestamp
   assert(syncedUntil, 'syncedUntil is undefined')
 
-  const { grouped, minTimestamp, maxTimestamp } = groupByTimestamp(
+  const { grouped, minTimestamp, maxTimestamp } = groupByTimestampAndDaLayerId(
     throughput,
     resolution,
   )
+  const total = sumGroupedDataPosted(grouped)
 
   const lastTimestampForLayers: Record<string, number> = {}
   for (const layer of THROUGHPUT_ENABLED_DA_LAYERS) {
@@ -104,13 +104,8 @@ export async function getScalingProjectDaThroughputChart({
     resolution,
   )
 
-  let total = 0
   const chart: ScalingProjectDaThroughputChartPoint[] = timestamps.map(
     (timestamp) => {
-      const posted = grouped[timestamp]
-      if (posted) {
-        total += Object.values(posted).reduce((sum, val) => sum + val, 0)
-      }
       const getDaValue = (layer: string) => {
         const lastTimestamp = lastTimestampForLayers[layer]
         const isBefore = lastTimestamp && timestamp <= lastTimestamp
@@ -148,36 +143,6 @@ export async function getScalingProjectDaThroughputChart({
       avgPerDay,
       postedPerUop: total / uopsCount,
     },
-  }
-}
-
-function groupByTimestamp(
-  records: ProjectsSummedDataAvailabilityRecord[],
-  resolution: ChartResolution,
-) {
-  let minTimestamp = Number.POSITIVE_INFINITY
-  let maxTimestamp = Number.NEGATIVE_INFINITY
-  const result: Record<number, Record<string, number>> = {}
-
-  const offset = UnixTime.toStartOf(UnixTime.now(), resolution)
-
-  const fullySyncedRecords = records.filter((r) => r.timestamp < offset)
-
-  for (const record of fullySyncedRecords) {
-    const timestamp = UnixTime.toStartOf(record.timestamp, resolution)
-    const value = record.totalSize
-    if (!result[timestamp]) {
-      result[timestamp] = {}
-    }
-    const currentDaLayerValue = result[timestamp][record.daLayer] ?? 0
-    result[timestamp][record.daLayer] = currentDaLayerValue + Number(value)
-    minTimestamp = Math.min(minTimestamp, timestamp)
-    maxTimestamp = Math.max(maxTimestamp, timestamp)
-  }
-  return {
-    grouped: result,
-    minTimestamp: UnixTime(minTimestamp),
-    maxTimestamp: UnixTime(maxTimestamp),
   }
 }
 

@@ -87,6 +87,7 @@ export const paradex: ScalingProject = {
     BADGES.DA.DAC,
     BADGES.Stack.SNStack,
     BADGES.Infra.SHARP,
+    BADGES.RaaS.Karnot,
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {

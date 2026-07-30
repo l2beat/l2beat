@@ -119,11 +119,7 @@ export async function getDaProjectEntry(
   ).filter((x) => x.daBridge.daLayer === layer.id)
 
   const selected = bridges.find((x) => x.slug === bridgeSlug)
-  if (
-    !selected &&
-    bridgeSlug !== 'no-bridge' &&
-    layer.daLayer.usedWithoutBridgeIn.length === 0
-  ) {
+  if (!selected && bridgeSlug !== 'no-bridge') {
     return
   }
 

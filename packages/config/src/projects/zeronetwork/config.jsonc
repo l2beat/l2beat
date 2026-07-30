@@ -15,7 +15,7 @@
           // giving the permission to the entire AC, because in practice the actor(s) have all roles
           "handler": {
             "type": "crossChainAccessControl",
-            "pickChainAddress": "eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9"
+            "pickChainAddress": "eth:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"
           },
           "permissions": [
             {
@@ -28,7 +28,7 @@
           // for backwards compatibility with the zkstack template
           "handler": {
             "type": "crossChainAccessControl",
-            "pickChainAddress": "eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9"
+            "pickChainAddress": "eth:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"
           },
           "edit": ["get", "EXECUTOR_ROLE", "members"]
         }

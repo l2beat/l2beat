@@ -70,16 +70,16 @@ export interface InteropTransferRecord {
 }
 
 export interface InteropTransferUpdate {
-  srcAbstractTokenId?: string | null
-  srcSymbol?: string | null
-  srcPrice?: number | null
-  srcAmount?: number | null
-  srcValueUsd?: number | null
-  dstAbstractTokenId?: string | null
-  dstSymbol?: string | null
-  dstPrice?: number | null
-  dstAmount?: number | null
-  dstValueUsd?: number | null
+  srcAbstractTokenId: string | null
+  srcSymbol: string | null
+  srcPrice: number | null
+  srcAmount: number | null
+  srcValueUsd: number | null
+  dstAbstractTokenId: string | null
+  dstSymbol: string | null
+  dstPrice: number | null
+  dstAmount: number | null
+  dstValueUsd: number | null
 }
 
 export interface InteropTransferFinancialsFilter {
@@ -603,12 +603,17 @@ export class InteropTransferRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getUnprocessed() {
-    const rows = await this.db
+  async getUnprocessed(limit?: number) {
+    let query = this.db
       .selectFrom('InteropTransfer')
       .where('isProcessed', '=', false)
       .selectAll()
-      .execute()
+
+    if (limit !== undefined) {
+      query = query.limit(limit)
+    }
+
+    const rows = await query.execute()
 
     return rows.map(toRecord)
   }
@@ -714,14 +719,53 @@ export class InteropTransferRepository extends BaseRepository {
       )
   }
 
-  async updateFinancials(
-    id: string,
-    update: InteropTransferUpdate,
+  async updateManyFinancials(
+    updates: { id: string; update: InteropTransferUpdate }[],
   ): Promise<void> {
+    if (updates.length === 0) {
+      return
+    }
+
+    // unnest instead of a VALUES list: each column binds as a single array
+    // parameter, so the statement stays within Postgres' 65535 parameter
+    // limit regardless of the number of rows.
+    const v = sql<{ transferId: string } & InteropTransferUpdate>`unnest(
+      ${updates.map((u) => u.id)}::varchar[],
+      ${updates.map((u) => u.update.srcAbstractTokenId)}::varchar[],
+      ${updates.map((u) => u.update.srcSymbol)}::varchar[],
+      ${updates.map((u) => u.update.srcPrice)}::real[],
+      ${updates.map((u) => u.update.srcAmount)}::real[],
+      ${updates.map((u) => u.update.srcValueUsd)}::real[],
+      ${updates.map((u) => u.update.dstAbstractTokenId)}::varchar[],
+      ${updates.map((u) => u.update.dstSymbol)}::varchar[],
+      ${updates.map((u) => u.update.dstPrice)}::real[],
+      ${updates.map((u) => u.update.dstAmount)}::real[],
+      ${updates.map((u) => u.update.dstValueUsd)}::real[]
+    )`.as<'v'>(
+      sql`v(
+        "transferId",
+        "srcAbstractTokenId", "srcSymbol", "srcPrice", "srcAmount", "srcValueUsd",
+        "dstAbstractTokenId", "dstSymbol", "dstPrice", "dstAmount", "dstValueUsd"
+      )`,
+    )
+
     await this.db
       .updateTable('InteropTransfer')
-      .set({ ...update, isProcessed: true })
-      .where('transferId', '=', id)
+      .from(v)
+      .set((eb) => ({
+        srcAbstractTokenId: eb.ref('v.srcAbstractTokenId'),
+        srcSymbol: eb.ref('v.srcSymbol'),
+        srcPrice: eb.ref('v.srcPrice'),
+        srcAmount: eb.ref('v.srcAmount'),
+        srcValueUsd: eb.ref('v.srcValueUsd'),
+        dstAbstractTokenId: eb.ref('v.dstAbstractTokenId'),
+        dstSymbol: eb.ref('v.dstSymbol'),
+        dstPrice: eb.ref('v.dstPrice'),
+        dstAmount: eb.ref('v.dstAmount'),
+        dstValueUsd: eb.ref('v.dstValueUsd'),
+        isProcessed: true,
+      }))
+      .whereRef('InteropTransfer.transferId', '=', 'v.transferId')
       .execute()
   }
 

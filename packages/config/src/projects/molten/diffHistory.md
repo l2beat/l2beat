@@ -1,4 +1,28 @@
-Generated with discovered.json: 0x58323aa0ff363e7439d73266fe89761ab19dca2f
+Generated with discovered.json: 0xdace4db0f1c1cd206b609051eb9e10b361cb69cc
+
+# Diff at Wed, 29 Jul 2026 11:32:29 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@7ee6102e023331dc2bb11a8e7d9b8b29863dccce block: 1782746641
+- current timestamp: 1782746641
+
+## Description
+
+Make blobstream use entrypoints and rediscover
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782746641 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    reference ArbitrumBlobstream (arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x977ef453050843580e744fdc4c900530ffb3afad
 
 # Diff at Mon, 29 Jun 2026 15:29:07 GMT:
 

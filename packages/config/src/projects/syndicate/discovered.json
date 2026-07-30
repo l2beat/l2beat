@@ -1,8 +1,7 @@
 {
   "name": "syndicate",
   "timestamp": 1781595301,
-  "configHash": "0x578958c25a2082e0e0b2e01bdfaa66adc61f21093bdcb8e40002a0a41633efcf",
-  "sharedModules": ["shared-eigenlayer"],
+  "configHash": "0x0b5407c150b3967d34888cca4e797348303270b4fc18b8872f199752865acbb2",
   "entries": [
     {
       "address": "eth:0x001271c57AeC639952B5201D052767c316755512",

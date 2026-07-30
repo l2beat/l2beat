@@ -107,25 +107,18 @@ export const boojum: BaseProject = {
     ],
     verifierHashes: [
       {
-        hash: '0xe4503cf38485e3d728a7362155d53d3d63293e2fa48dca4f5588aa4625de251f',
-        name: 'Boojum Fflonk v29.3 verifier',
-        sourceLink:
-          'https://github.com/matter-labs/zksync-era/tree/f57999997f581b557cf8e36e3a9be5650d992022/prover',
+        hash: '0x34e7f769253b128e4ac6fbf71b3f8471d507c4f93bc50dcf26509ed1bae25122',
+        name: 'Boojum Fflonk v31 verifier',
         proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(
               'ethereum',
-              '0xE3743181a4b0A0C1260826105c6BBA4b6e18D79d',
+              '0x9f5C39a2790f38542065E7854b90407371923375',
             ),
           },
         ],
-        verificationStatus: 'successful',
-        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: readProjectMarkdown(
-          'boojum',
-          'verificationsSteps-0xe4503cf3',
-        ),
+        verificationStatus: 'notVerified',
       },
       // {
       //   hash: '0x17e8d7931f1314431359233e65c22657a32c335205e3c24ce292c5819becfaa7',
@@ -152,25 +145,18 @@ export const boojum: BaseProject = {
       //   verificationStatus: 'notVerified',
       // },
       {
-        hash: '0x93e83aa1ec05a2ac4de1f0b241394efb9f94a4e7c1784a5a9bf6b85eb930c62a',
-        name: 'Boojum Plonk v29.3 verifier',
-        sourceLink:
-          'https://github.com/matter-labs/zksync-era/tree/f57999997f581b557cf8e36e3a9be5650d992022/prover',
+        hash: '0x18bdc7272350532ca7c3d4d613f0f22aa4100bcddd06722b2f8c6896ca5f5ad3',
+        name: 'Boojum Plonk v31 verifier',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(
               'ethereum',
-              '0xB3f4396C2040e502d0556Cbb16C0B22fE777A026',
+              '0xd22cA89e8991FCE568456914c616d303e3142395',
             ),
           },
         ],
-        verificationStatus: 'successful',
-        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: readProjectMarkdown(
-          'boojum',
-          'verificationSteps-0x93e83aa1',
-        ),
+        verificationStatus: 'notVerified',
       },
       // {
       //   hash: '0xd90459c5b727b9ceeb2b6192d2953dbf05970edf090333b3ad3bcac1a1442b78',

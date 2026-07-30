@@ -1,11 +1,13 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type {
   Database,
+  InteropRecentPriceRequest,
   InteropTransferRecord,
   InteropTransferUpdate,
 } from '@l2beat/database'
 import {
   Address32,
+  assert,
   assertUnreachable,
   UnixTime,
   unique,
@@ -33,12 +35,15 @@ export type TokenInfos = Map<
   }
 >
 
+const DEFAULT_BATCH_SIZE = 10_000
+
 interface InteropFinancialsLoopOptions {
   analyzer?: InteropTransferAnalyzer
   intervalMs?: number
   notifier?: InteropNotifier
   maxTokenPriceUsd?: number
   maxTransferValueUsd?: number
+  batchSize?: number
 }
 
 interface GeneratedTokenUpdate {
@@ -64,6 +69,7 @@ export class InteropFinancialsLoop extends TimeLoop {
   private readonly notifier: InteropNotifier | undefined
   private readonly maxTokenPriceUsd: number
   private readonly maxTransferValueUsd: number
+  private readonly batchSize: number
 
   constructor(
     private chains: { id: string; type: 'evm' }[],
@@ -79,26 +85,29 @@ export class InteropFinancialsLoop extends TimeLoop {
     this.maxTokenPriceUsd = options.maxTokenPriceUsd ?? Number.POSITIVE_INFINITY
     this.maxTransferValueUsd =
       options.maxTransferValueUsd ?? Number.POSITIVE_INFINITY
+    this.batchSize = options.batchSize ?? DEFAULT_BATCH_SIZE
+    assert(this.batchSize > 0, 'batch size must be positive')
   }
 
   async run() {
-    const hasAnyPrices = await this.db.interopRecentPrices.hasAnyPrices()
-    if (!hasAnyPrices) {
-      this.logger.debug('Skipping run. No prices found.')
-      return
-    }
+    let processed = 0
+    do {
+      processed = await this.processBatch()
+    } while (processed === this.batchSize)
+  }
 
-    const unprocessed = (await this.db.interopTransfer.getUnprocessed()).map(
-      (u) => ({
-        transfer: u,
-        srcId: toDeployedId(this.chains, u.srcChain, u.srcTokenAddress),
-        dstId: toDeployedId(this.chains, u.dstChain, u.dstTokenAddress),
-      }),
-    )
+  private async processBatch(): Promise<number> {
+    const unprocessed = (
+      await this.db.interopTransfer.getUnprocessed(this.batchSize)
+    ).map((u) => ({
+      transfer: u,
+      srcId: toDeployedId(this.chains, u.srcChain, u.srcTokenAddress),
+      dstId: toDeployedId(this.chains, u.dstChain, u.dstTokenAddress),
+    }))
 
     if (unprocessed.length === 0) {
       this.logger.debug('Skipping run, no transfers to process.')
-      return
+      return 0
     }
 
     this.logger.info('Processing transfers', {
@@ -117,26 +126,37 @@ export class InteropFinancialsLoop extends TimeLoop {
       this.logger,
     )
 
-    const coingeckoIds = unique(
-      Array.from(tokenInfos.values())
-        .map((t) => t.coingeckoId)
-        .filter((u) => u !== undefined),
-    )
+    const { requests, getRequestId } = createPriceRequests(tokenInfos)
+    const transfersWithPriceRequests = unprocessed.map((transfer) => ({
+      ...transfer,
+      srcPriceRequestId: transfer.srcId
+        ? getRequestId(
+            transfer.srcId,
+            transfer.transfer.srcTime ?? transfer.transfer.timestamp,
+          )
+        : undefined,
+      dstPriceRequestId: transfer.dstId
+        ? getRequestId(
+            transfer.dstId,
+            transfer.transfer.dstTime ?? transfer.transfer.timestamp,
+          )
+        : undefined,
+    }))
 
-    const prices = await this.db.interopRecentPrices.getClosestPrices(
-      coingeckoIds,
-      UnixTime.now(),
+    const prices = await this.db.interopRecentPrices.getClosestPricesAtOrBefore(
+      requests,
       UnixTime.DAY,
     )
 
     const skippedValuations: InteropSkippedTransferValuationNotification[] = []
 
-    const updates = unprocessed.map((t) => {
+    const updates = transfersWithPriceRequests.map((t) => {
       const update: InteropTransferUpdate = getEmptyFinancialUpdate()
       if (t.srcId) {
         const skipped = this.applyTokenUpdate(
           tokenInfos,
           prices,
+          t.srcPriceRequestId,
           t.srcId,
           t.transfer.srcRawAmount,
           t.transfer.srcTime ?? t.transfer.timestamp,
@@ -152,6 +172,7 @@ export class InteropFinancialsLoop extends TimeLoop {
         const skipped = this.applyTokenUpdate(
           tokenInfos,
           prices,
+          t.dstPriceRequestId,
           t.dstId,
           t.transfer.dstRawAmount,
           t.transfer.dstTime ?? t.transfer.timestamp,
@@ -172,11 +193,9 @@ export class InteropFinancialsLoop extends TimeLoop {
 
     const processedAt = UnixTime.now()
 
-    await this.db.transaction(async () => {
-      for (const { id, update } of updates) {
-        await this.db.interopTransfer.updateFinancials(id, update)
-      }
-    })
+    await this.db.interopTransfer.updateManyFinancials(
+      updates.map(({ id, update }) => ({ id, update })),
+    )
 
     this.notifier?.notifySkippedTransferValuations(
       processedAt,
@@ -194,11 +213,14 @@ export class InteropFinancialsLoop extends TimeLoop {
     if (this.analyzer) {
       this.analyzer.handleProcessedTransfers(processedTransfers, processedAt)
     }
+
+    return unprocessed.length
   }
 
   private applyTokenUpdate(
     tokenInfos: TokenInfos,
-    prices: Map<string, number | undefined>,
+    prices: Map<number, number | undefined>,
+    priceRequestId: number | undefined,
     id: DeployedTokenId,
     rawAmount: bigint | undefined,
     priceTimestamp: UnixTime,
@@ -212,6 +234,7 @@ export class InteropFinancialsLoop extends TimeLoop {
     const tokenUpdate = this.generateTokenUpdate(
       tokenInfos,
       prices,
+      priceRequestId,
       id,
       rawAmount,
       priceTimestamp,
@@ -252,7 +275,8 @@ export class InteropFinancialsLoop extends TimeLoop {
 
   private generateTokenUpdate(
     tokenInfos: TokenInfos,
-    prices: Map<string, number | undefined>,
+    prices: Map<number, number | undefined>,
+    priceRequestId: number | undefined,
     id: DeployedTokenId,
     rawAmount: bigint | undefined,
     priceTimestamp: UnixTime,
@@ -275,7 +299,8 @@ export class InteropFinancialsLoop extends TimeLoop {
       }
     }
 
-    const price = prices.get(tokenInfo.coingeckoId)
+    const price =
+      priceRequestId === undefined ? undefined : prices.get(priceRequestId)
     if (price === undefined) {
       this.logger.warn('Missing price data', {
         id,
@@ -427,6 +452,48 @@ export async function getTokenInfos(
   }
 
   return result
+}
+
+function createPriceRequests(tokenInfos: TokenInfos) {
+  const requests: InteropRecentPriceRequest[] = []
+  const requestIdsByCoinAndTimestamp = new Map<string, Map<UnixTime, number>>()
+
+  function getRequestId(
+    deployedTokenId: DeployedTokenId,
+    timestamp: UnixTime,
+  ): number | undefined {
+    const tokenInfo = tokenInfos.get(deployedTokenId)
+    if (!tokenInfo || tokenInfo.isPriceUnreliable) {
+      return undefined
+    }
+
+    let requestIdsByTimestamp = requestIdsByCoinAndTimestamp.get(
+      tokenInfo.coingeckoId,
+    )
+    if (!requestIdsByTimestamp) {
+      requestIdsByTimestamp = new Map()
+      requestIdsByCoinAndTimestamp.set(
+        tokenInfo.coingeckoId,
+        requestIdsByTimestamp,
+      )
+    }
+
+    const existingRequestId = requestIdsByTimestamp.get(timestamp)
+    if (existingRequestId !== undefined) {
+      return existingRequestId
+    }
+
+    const requestId = requests.length
+    requests.push({
+      requestId,
+      coingeckoId: tokenInfo.coingeckoId,
+      timestamp,
+    })
+    requestIdsByTimestamp.set(timestamp, requestId)
+    return requestId
+  }
+
+  return { requests, getRequestId }
 }
 
 export function toDeployedId(

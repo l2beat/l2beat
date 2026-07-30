@@ -22,6 +22,7 @@
     "fill-ts": "tsx scripts/fillts/index.ts",
     "tokens": "tsx scripts/tokens/tokens.ts",
     "tokens:verify": "sh scripts/tokens/verify.sh",
+    "snapshots:generate": "tsx scripts/snapshots/generate.ts",
     "tokens:generate-names": "tsx scripts/tokens/generateTokenNames.ts",
     "coingecko:platforms": "tsx scripts/getCoingeckoPlatforms.ts",
     "stargatev2-pools": "tsx scripts/stargatev2-pools/index.ts",

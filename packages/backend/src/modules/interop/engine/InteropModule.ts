@@ -212,6 +212,7 @@ export function createInteropModule({
       notifier: notificationClient,
       maxTokenPriceUsd: config.interop.financials.maxTokenPriceUsd,
       maxTransferValueUsd: config.interop.financials.maxTransferValueUsd,
+      batchSize: config.interop.financials.batchSize,
     },
   )
 

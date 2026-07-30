@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x30eaac3c7e667993bac9dbd203174b79f87eea0a
+
+# Diff at Wed, 29 Jul 2026 12:10:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@aa8a66c60dd068866cc6883eb64714f2f3e69afa block: 1780925583
+- current timestamp: 1785325389
+
+## Description
+
+GatewayWallet was upgraded. The new implementation separates the power to remove EIP-1271 contract signers from the allowlister, adds owner-managed TEE signers that can vouch for burn intents on behalf of contract accounts, and disables ownership renunciation. A new disallowlister and TEE signer were configured; the existing burn signer remains active.
+
+GatewayWallet diff: https://disco.l2beat.com/diff/eth:0x09E3740c97C7413693B7e07C32D42C53CD050d27/eth:0xF7a6D9D7Df917c072ac8987A820c58aA27A0e798
+
+## Watched changes
+
+```diff
+    contract GatewayWallet (eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE) [tokens/circle/GatewayWallet] {
+    +++ description: Exit point or burner of USDC on this chain for the Gateway protocol.
+      sourceHashes.1:
+-        "0x58abac7a9c89cc1bb5e3008040a2a14acbee3ba234aab0da096e9163c2ba3962"
++        "0x9be4bc0a852d86d084188555ae4446289dbb638f0ac69478dffed14c6f9925af"
+      values.$implementation:
+-        "eth:0x09E3740c97C7413693B7e07C32D42C53CD050d27"
++        "eth:0xF7a6D9D7Df917c072ac8987A820c58aA27A0e798"
+      values.$pastUpgrades.4:
++        ["2026-07-23T19:32:11.000Z","0x9032a846cd5f1fe703f17ab9b6015966a4f953412483a90d822992eeec99699d",["eth:0xF7a6D9D7Df917c072ac8987A820c58aA27A0e798"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.contractSignersDisallowlister:
++        "eth:0xaf8f5B407023a4b0a1861E69Bff4BCa151f15444"
+      implementationNames.eth:0x09E3740c97C7413693B7e07C32D42C53CD050d27:
+-        "GatewayWallet"
+      implementationNames.eth:0xF7a6D9D7Df917c072ac8987A820c58aA27A0e798:
++        "GatewayWallet"
+    }
+```
+
+```diff
+    contract MessageTransmitterV2 (eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64) [tokens/circle/MessageTransmitter] {
+    +++ description: Part of CCTP
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48","description":"mint the token in the bounds of a preset minting allowance","role":".minters","via":[{"address":"eth:0xfd78EE919681417d192449715b2594ab58f5D002"},{"address":"eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d"}]}]
+    }
+```
+
+## Source code changes
+
+```diff
+.../GatewayWallet/GatewayWallet.sol                | 279 ++++++++++++++++++---
+ 1 file changed, 238 insertions(+), 41 deletions(-)
+```
+
 Generated with discovered.json: 0x2dfc931693fc9e1b350509014ab4f02baaf2998c
 
 # Diff at Fri, 12 Jun 2026 10:19:02 GMT:

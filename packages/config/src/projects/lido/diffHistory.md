@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x46975b380e1b6bc8d8baa4e7dc4d2cfe6a5c6de5
+
+# Diff at Wed, 29 Jul 2026 11:42:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8fc71653df107a65d06ec19257b0c3f4f6ed070d block: 1785159796
+- current timestamp: 1785325193
+
+## Description
+
+The Community Staking Module's stake share limit increased from 8.5% to 9%, and its priority-exit threshold increased from 10.2% to 10.8%. The module can receive a larger share of Lido stake before reaching its allocation cap, while its exits become prioritized at the higher threshold.
+
+## Watched changes
+
+```diff
+    contract StakingRouter (eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999) [lido/StakingRouter] {
+    +++ description: Coordinates Lido staking modules, allocates deposits and top-ups, tracks validator balances and exit states, and distributes staking rewards. Version 3 uses validator balances instead of validator counts and supports EIP-7251 compounding validators.
+      values.getStakingModuleStateConfig.2.4:
+-        1020
++        1080
+      values.getStakingModuleStateConfig.2.3:
+-        850
++        900
+    }
+```
+
 Generated with discovered.json: 0x6f003178bbc5691d9a9ff1af8bed00a030bde231
 
 # Diff at Mon, 27 Jul 2026 15:11:46 GMT:

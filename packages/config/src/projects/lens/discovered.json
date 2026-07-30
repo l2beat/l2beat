@@ -1,9 +1,23 @@
 {
   "name": "lens",
   "timestamp": 1781602943,
-  "configHash": "0xe1c14ca61848d6c2ce224b3aa78e62c5f42ee407e22cb51c93ed0a7a2586dcf7",
-  "sharedModules": ["shared-sp1", "vector"],
+  "configHash": "0x34246c4372dc19a07c274435352b8364c79a5257e4ed2639ba389fec00986444",
+  "sharedModules": ["shared-sp1"],
   "entries": [
+    {
+      "name": "Vector",
+      "address": "eth:0x02993cdC11213985b9B13224f3aF289F03bf298d",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "vector"
+    },
+    {
+      "name": "AvailBridgeV1",
+      "address": "eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "vector"
+    },
     {
       "address": "eth:0x2a80091816D7872850D500F6Ade835354238Af17",
       "type": "EOA",
@@ -1404,7 +1418,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "shared-zk-stack/AvailL1DAValidator": "0xb0d552fff2582ff6cb7f9fad04a31ee03fa589ac2c852310fc3771f9367afc08",
+    "shared-zk-stack/AvailL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",
     "shared-zk-stack/Diamond": "0xf58468847183a89ea73709ca00dc1bd45baad858f179c87fa0b9a9a3099edb25",
     "shared-zk-stack/DualVerifier": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
@@ -1414,5 +1428,5 @@
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
   "usedBlockNumbers": { "ethereum": 25329255 },
-  "permissionsConfigHash": "0x1bfd2693f196876999c7d7b44ef078786ea16120231510ce09e07dc5758e77a3"
+  "permissionsConfigHash": "0xb6066867cd55493ba60ebf13681ba40f05dbc88cabf04c988e07bef5a2ed9a78"
 }

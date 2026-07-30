@@ -6,6 +6,8 @@ import { join } from 'path'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import type { ConfigReader } from '../config/ConfigReader'
 import { type Entrypoint, EntrypointsFile } from '../config/StructureConfig'
+import type { EntryParameters } from '../output/types'
+import { mapToReferenceNodes } from '../utils/reachable'
 
 const ENTRYPOINTS_FILENAME = 'entrypoints.json'
 
@@ -74,6 +76,7 @@ export function generateEntrypointsForProject(
   const initialAddresses = new Set(
     configReader.readConfig(project).structure.initialAddresses,
   )
+  const leafAddresses = findLeafAddresses(discovery.entries)
   const entrypoints: Record<ChainSpecificAddress, Entrypoint> = {}
   discovery.entries.forEach((e) => {
     if (e.type === 'Reference') {
@@ -86,6 +89,13 @@ export function generateEntrypointsForProject(
     if (e.type === 'EOA' && !initialAddresses.has(e.address)) {
       return
     }
+    // Leaves (e.g. permissionless immutable verifiers) are dead ends that
+    // many unrelated projects deploy or reuse. Referencing one pulls in the
+    // whole referenced project, which would attribute this module's
+    // infrastructure and permissions to a consumer that only calls the leaf.
+    if (leafAddresses.has(e.address) && !initialAddresses.has(e.address)) {
+      return
+    }
     entrypoints[e.address] = {
       ...(e.name && { name: e.name }),
       type: e.type,
@@ -94,4 +104,18 @@ export function generateEntrypointsForProject(
   })
 
   return { entrypoints }
+}
+
+// A leaf has no outgoing edges in the same graph that decides what a
+// reference drags along: address values (including $admin/$implementation)
+// plus issued permissions. Discovery relatives are deliberately not used,
+// deployerAddress would make every deployed contract a non-leaf.
+function findLeafAddresses(
+  entries: EntryParameters[],
+): Set<ChainSpecificAddress> {
+  return new Set(
+    mapToReferenceNodes(entries)
+      .filter((node) => node.references.length === 0)
+      .map((node) => node.address),
+  )
 }
