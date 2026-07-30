@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { DataAvailabilityRecord } from '@l2beat/database'
-import type { EigenApiClient } from '@l2beat/shared'
+import { EIGENDA_LAYER_DATA_GAP, type EigenApiClient } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import uniq from 'lodash/uniq'
@@ -53,6 +53,20 @@ export class EigenDaLayerIndexer extends ManagedMultiIndexer<TimestampDaIndexedC
   ) {
     const adjustedFrom = UnixTime.toStartOf(from, 'hour')
     const adjustedTo = adjustedFrom + UnixTime.HOUR
+
+    if (
+      adjustedFrom >= EIGENDA_LAYER_DATA_GAP.from &&
+      adjustedFrom < EIGENDA_LAYER_DATA_GAP.until
+    ) {
+      this.logger.info('Skipping update - sync disabled for this range', {
+        from: adjustedFrom,
+        to: adjustedTo,
+      })
+      return () => {
+        return Promise.resolve(adjustedTo)
+      }
+    }
+
     const daLayerData = await this.getDaLayerData(adjustedFrom, adjustedTo)
 
     this.logger.info('Da Layer data fetched')
