@@ -6,9 +6,11 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { HomeEthereumCharts } from '~/server/features/home/getHomeEthereumCharts'
 import type { HomeScalingCharts } from '~/server/features/home/getHomeScalingCharts'
+import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
 import type { OngoingAnomaliesOverview } from '~/server/features/scaling/liveness/getOngoingAnomaliesOverview'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
 import type { TvsTableData } from '~/server/features/scaling/tvs/getTvsTableData'
+import type { ZkCatalogEntry } from '~/server/features/zk-catalog/getZkCatalogEntries'
 import type { InteropChainWithIcon } from '../interop/components/chain-selector/types'
 import type { InteropFlowsProtocol } from '../interop/components/flows/utils/InteropFlowsContext'
 import { HomeAnomaliesTile } from './components/HomeAnomaliesTile'
@@ -22,6 +24,8 @@ import { HomeScalingCard } from './components/HomeScalingCard'
 import { HomeStatsStrip } from './components/HomeStatsStrip'
 import { HomeTopChainsCard } from './components/HomeTopChainsCard'
 import { HomeTopInteropProtocolsCard } from './components/HomeTopInteropProtocolsCard'
+import { HomeTopPrivacyProtocolsCard } from './components/HomeTopPrivacyProtocolsCard'
+import { HomeTopZkProversCard } from './components/HomeTopZkProversCard'
 import type { HomeWhatsNewItem } from './components/HomeWhatsNewCard'
 import { HomeWhatsNewCard } from './components/HomeWhatsNewCard'
 import type { HomeRecentProject } from './getHomeData'
@@ -32,6 +36,8 @@ interface Props extends AppLayoutProps {
   projectCounts: HomeProjectCounts
   topChains: ScalingSummaryEntry[]
   topChainsTvsData: TvsTableData
+  topPrivacyProtocols: PrivacySummaryEntry[]
+  topZkProvers: ZkCatalogEntry[]
   scalingCharts: HomeScalingCharts
   ethereumCharts: HomeEthereumCharts
   ethereumEconomicSecurity: number | undefined
@@ -51,6 +57,8 @@ export function HomePage({
   projectCounts,
   topChains,
   topChainsTvsData,
+  topPrivacyProtocols,
+  topZkProvers,
   scalingCharts,
   ethereumCharts,
   ethereumEconomicSecurity,
@@ -115,15 +123,17 @@ export function HomePage({
                 recentChangesProjects={recentChangesProjects}
               />
             </div>
-            <div className="grid grid-cols-1 items-stretch md:gap-4 xl:gap-6 min-[1650px]:grid-cols-2">
-              <HomeTopChainsCard
-                entries={topChains}
-                tvsData={topChainsTvsData}
-              />
+            <div className="grid grid-cols-1 items-stretch md:gap-4 lg:grid-cols-2 xl:gap-6">
               <HomeTopInteropProtocolsCard
                 interopChains={interopChains}
                 defaultSelectedFlowChains={defaultSelectedFlowChains}
               />
+              <HomeTopPrivacyProtocolsCard entries={topPrivacyProtocols} />
+              <HomeTopChainsCard
+                entries={topChains}
+                tvsData={topChainsTvsData}
+              />
+              <HomeTopZkProversCard entries={topZkProvers} />
             </div>
             <HomeRecentProjectsCard
               className="max-md:border-b-0! xl:hidden"

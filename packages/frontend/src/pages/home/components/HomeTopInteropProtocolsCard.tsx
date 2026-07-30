@@ -54,10 +54,7 @@ export function HomeTopInteropProtocolsCard({
 
   const entries = useMemo(() => pickTopProtocolEntries(data), [data])
 
-  const columns = useMemo(
-    () => getHomeTopInteropProtocolsColumns(apiSelection),
-    [apiSelection],
-  )
+  const columns = useMemo(() => getHomeTopInteropProtocolsColumns(), [])
 
   const table = useTable<ProtocolRow>({
     data: entries,
@@ -71,7 +68,7 @@ export function HomeTopInteropProtocolsCard({
   return (
     <HomeCard className="flex h-full min-w-0 flex-col">
       <HomeCardHeader
-        title="Top interop protocols"
+        title="Interop (Top 5 by volume)"
         href="/interop/summary"
         linkLabel="View all"
       />
