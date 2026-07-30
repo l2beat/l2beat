@@ -134,6 +134,9 @@ export const zksync2: ScalingProject = zkStackL2({
       sequencers: [
         '0x14F19299476664665eDa17DBb7dA7e62E3253aa8',
         '0x7d95f0B9D3383D58E39a75a67760aA2153D355A2',
+        '0xc75cDcBEef3aE3365ABF0217815748586F9047F1',
+        '0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7',
+        '0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd',
       ],
     },
     {
