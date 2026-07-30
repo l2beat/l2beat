@@ -20,6 +20,11 @@
       "type": "Contract",
       "project": "shared-sp1"
     },
+    "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B": {
+      "name": "SP1VerifierGatewayOlder",
+      "type": "Contract",
+      "project": "shared-sp1"
+    },
     "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e": {
       "name": "SP1VerifierGateway",
       "type": "Contract",
