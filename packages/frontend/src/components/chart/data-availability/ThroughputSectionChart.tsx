@@ -98,6 +98,7 @@ export function ThroughputSectionChart({
           milestones={milestones}
           syncedUntil={data?.syncedUntil}
           resolution={resolution}
+          dataGap={data?.totalChart.dataGap}
         />
       </div>
       <DaThroughputByProjectChart

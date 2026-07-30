@@ -14,11 +14,14 @@ import {
   ProjectDaThroughputChartParams,
   type ProjectDaThroughputChartPoint,
 } from './getProjectDaThroughputChart'
+import { isInEigendaLayerDataGap } from './utils/eigendaDataGap'
 
 export type getProjectDaThroughputChartsData = {
   totalChart: {
     data: ProjectDaThroughputChartPoint[]
     range: ChartRange
+    // First and last chart timestamp for which data is not available
+    dataGap: [number, number] | undefined
   }
   byProjectChart: {
     data: DaThroughputChartDataPoint[]
@@ -71,9 +74,23 @@ export async function getProjectDaThroughputCharts(
   const to = Math.max(totalChartData.to, byProjectChartData.to)
 
   const timestamps = generateTimestamps([from, to], resolution)
+  const hasEigendaGap =
+    params.projectId === 'eigenda' && !params.includeScalingOnly
+  const gapTimestamps = hasEigendaGap
+    ? timestamps.filter((t) => isInEigendaLayerDataGap(t, resolution))
+    : []
+  const firstGapTimestamp = gapTimestamps.at(0)
+  const lastGapTimestamp = gapTimestamps.at(-1)
+  const dataGap: [number, number] | undefined =
+    firstGapTimestamp !== undefined && lastGapTimestamp !== undefined
+      ? [firstGapTimestamp, lastGapTimestamp]
+      : undefined
 
   const totalChart: ProjectDaThroughputChartPoint[] = timestamps.map(
     (timestamp) => {
+      if (hasEigendaGap && isInEigendaLayerDataGap(timestamp, resolution)) {
+        return [timestamp, null]
+      }
       const posted =
         timestamp <= totalChartData.maxTimestamp
           ? (totalChartData.grouped[timestamp] ?? 0)
@@ -93,6 +110,7 @@ export async function getProjectDaThroughputCharts(
     totalChart: {
       data: totalChart,
       range: [from, to],
+      dataGap,
     },
     byProjectChart: {
       data: byProjectChart,
@@ -125,6 +143,7 @@ function getMockProjectDaThroughputCharts({
       totalChart: {
         data: [],
         range: [from, to],
+        dataGap: undefined,
       },
       byProjectChart: {
         data: [],
@@ -148,6 +167,7 @@ function getMockProjectDaThroughputCharts({
         return [timestamp, Math.round(throughputValue)]
       }),
       range: [from, to],
+      dataGap: undefined,
     },
     byProjectChart: {
       data: [],

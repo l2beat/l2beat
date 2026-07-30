@@ -124,27 +124,31 @@ export async function getDaTrackingConfig(
   }
 
   if (eigenDaEnabled) {
+    const eigenStartTimestamp = env.integer(
+      'EIGEN_DA_START_TIMESTAMP',
+      EIGEN_START_TIMESTAMP,
+    )
     timestampLayers.push({
       type: 'eigen-da' as const,
       name: 'eigenda',
       url: env.string('EIGEN_DA_API_URL'),
       perProjectUrl: env.string('EIGEN_DA_PER_PROJECT_API_URL'),
       callsPerMinute: env.integer('EIGEN_DA_API_CALLS_PER_MINUTE', 2000),
-      startingTimestamp: EIGEN_START_TIMESTAMP,
+      startingTimestamp: eigenStartTimestamp,
     })
     timestampProjectsForLayers.push({
       configurationId: createDaLayerConfigId('eigenda'),
       projectId: ProjectId('eigenda'),
       type: 'baseLayer' as const,
       daLayer: 'eigenda',
-      sinceTimestamp: EIGEN_START_TIMESTAMP,
+      sinceTimestamp: eigenStartTimestamp,
     })
 
     const sovereignProjectsOnEigen =
       await getTimestampDaTrackingSovereignProjects(
         ps,
         ProjectId('eigenda'),
-        EIGEN_START_TIMESTAMP,
+        eigenStartTimestamp,
       )
     sovereignTimestampProjects.push(...sovereignProjectsOnEigen)
   }

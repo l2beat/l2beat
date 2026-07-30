@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { DataAvailabilityRecord } from '@l2beat/database'
-import type { EigenApiClient } from '@l2beat/shared'
+import { EIGENDA_LAYER_DATA_GAP, type EigenApiClient } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import uniq from 'lodash/uniq'
@@ -11,15 +11,6 @@ import type {
   ManagedMultiIndexerOptions,
   WipeRemovalConfiguration,
 } from '../../../../tools/uif/multi/types'
-
-// Layer-level metrics are unavailable for this window - skip it without
-// calling the Eigen API or saving any records.
-const SYNC_DISABLED_FROM = UnixTime.fromDate(
-  new Date('2026-06-22T00:00:00.000Z'),
-)
-const SYNC_DISABLED_UNTIL = UnixTime.fromDate(
-  new Date('2026-06-29T00:00:00.000Z'),
-)
 
 export interface Dependencies
   extends Omit<
@@ -64,8 +55,8 @@ export class EigenDaLayerIndexer extends ManagedMultiIndexer<TimestampDaIndexedC
     const adjustedTo = adjustedFrom + UnixTime.HOUR
 
     if (
-      adjustedFrom >= SYNC_DISABLED_FROM &&
-      adjustedFrom < SYNC_DISABLED_UNTIL
+      adjustedFrom >= EIGENDA_LAYER_DATA_GAP.from &&
+      adjustedFrom < EIGENDA_LAYER_DATA_GAP.until
     ) {
       this.logger.info('Skipping update - sync disabled for this range', {
         from: adjustedFrom,
