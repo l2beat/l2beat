@@ -8,6 +8,7 @@ import {
   assert,
   type ChainSpecificAddress,
   EthereumAddress,
+  notUndefined,
   type ProjectId,
 } from '@l2beat/shared-pure'
 import chalk from 'chalk'
@@ -152,7 +153,14 @@ describe('getProjects', () => {
           asArray(project.dataAvailability).every((da) => {
             const bridgeProjId = da.bridge.projectId
             if (bridgeProjId === undefined) return true
-            daBridges.map((x) => x.id).includes(bridgeProjId)
+            return daBridges.map((x) => x.id).includes(bridgeProjId)
+          }) &&
+          // an L2 can be the DA layer of an L3, and scaling projects are not
+          // listed on the DA-BEAT
+          asArray(project.dataAvailability).every((da) => {
+            const layerProjId = da.layer.projectId
+            if (layerProjId === undefined) return true
+            return daLayers.map((x) => x.id).includes(layerProjId)
           }) &&
           // Will be listed on the DA-BEAT automatically
           !project.customDa,
@@ -171,6 +179,22 @@ describe('getProjects', () => {
 
       // Array comparison to have a better error message with actual names
       expect(projectsWithoutDaBeatEntry).toEqual([])
+    })
+
+    it('each referenced DA bridge project exists', () => {
+      const daBridgeIds = projects
+        .filter((x) => x.daBridge !== undefined)
+        .map((x) => x.id)
+
+      const dangling = [...layer2s, ...layer3s].flatMap((project) =>
+        asArray(project.dataAvailability)
+          .map((da) => da.bridge.projectId)
+          .filter(notUndefined)
+          .filter((bridgeProjId) => !daBridgeIds.includes(bridgeProjId))
+          .map((bridgeProjId) => `${project.id} -> ${bridgeProjId}`),
+      )
+
+      expect(dangling).toEqual([])
     })
   })
 

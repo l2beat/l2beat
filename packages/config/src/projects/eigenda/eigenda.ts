@@ -314,7 +314,7 @@ export const eigenda: BaseProject = {
     },
     usedIn: linkByDA({
       layer: ProjectId('eigenda'),
-      bridge: ProjectId('eigenda-v2'),
+      bridge: ProjectId('eigenda'),
     }),
     technology: {
       description: readProjectMarkdown('eigenda', 'daBridgeTechnology'),
