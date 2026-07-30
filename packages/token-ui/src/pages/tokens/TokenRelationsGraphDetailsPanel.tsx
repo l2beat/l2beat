@@ -1,18 +1,22 @@
-import type { RouterOutputs } from '@l2beat/token-backend'
-import { useQuery } from '@tanstack/react-query'
+import type { Plan, RouterOutputs } from '@l2beat/token-backend'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import {
   ArrowLeftRightIcon,
   ArrowRightIcon,
   ExternalLinkIcon,
+  TrashIcon,
   XIcon,
 } from 'lucide-react'
-import type { ReactNode } from 'react'
+import { type ReactNode, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { toast } from 'sonner'
+import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
 import { Separator } from '~/components/core/Separator'
 import { ExplorerLink } from '~/components/ExplorerLink'
 import { LoadingState } from '~/components/LoadingState'
+import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { useTRPC } from '~/react-query/trpc'
 import {
   nodeLabel,
@@ -41,14 +45,18 @@ export function TokenRelationsGraphDetailsPanel({
   chains,
   selection,
   highlightAnomalies,
+  deletedRelationIds,
   onSelectionChange,
+  onRelationDeleted,
   onClose,
 }: {
   graph: RelationGraph
   chains: Chain[]
   selection: RelationGraphSelection
   highlightAnomalies: boolean
+  deletedRelationIds: ReadonlySet<string>
   onSelectionChange: (selection: RelationGraphSelection) => void
+  onRelationDeleted: (relationId: string) => void
   onClose: () => void
 }) {
   return (
@@ -84,6 +92,7 @@ export function TokenRelationsGraphDetailsPanel({
             graph={graph}
             chains={chains}
             highlightAnomalies={highlightAnomalies}
+            deletedRelationIds={deletedRelationIds}
             onRelationClick={(relation) =>
               onSelectionChange({
                 type: 'relation',
@@ -97,6 +106,7 @@ export function TokenRelationsGraphDetailsPanel({
             graph={graph}
             chains={chains}
             highlightAnomalies={highlightAnomalies}
+            onRelationDeleted={onRelationDeleted}
           />
         )}
       </div>
@@ -109,12 +119,14 @@ function GraphNodeDetails({
   graph,
   chains,
   highlightAnomalies,
+  deletedRelationIds,
   onRelationClick,
 }: {
   node: RelationGraphNode
   graph: RelationGraph
   chains: Chain[]
   highlightAnomalies: boolean
+  deletedRelationIds: ReadonlySet<string>
   onRelationClick: (relation: RelationGraphRelation) => void
 }) {
   const trpc = useTRPC()
@@ -128,7 +140,8 @@ function GraphNodeDetails({
   // Each entry is labelled with this token's role in that relation instead.
   const relations = graph.relations.filter(
     (relation) =>
-      sourceId(relation) === node.id || targetId(relation) === node.id,
+      !deletedRelationIds.has(relationId(relation)) &&
+      (sourceId(relation) === node.id || targetId(relation) === node.id),
   )
 
   return (
@@ -380,17 +393,31 @@ function GraphRelationDetails({
   graph,
   chains,
   highlightAnomalies,
+  onRelationDeleted,
 }: {
   relation: RelationGraphRelation
   graph: RelationGraph
   chains: Chain[]
   highlightAnomalies: boolean
+  onRelationDeleted: (relationId: string) => void
 }) {
   const trpc = useTRPC()
   const { data, isLoading, error } = useQuery(
     trpc.deployedTokens.getRelationsGraphRelationDetails.queryOptions(
       relationPrimaryKey(relation),
     ),
+  )
+  const [deletePlan, setDeletePlan] = useState<Plan | undefined>(undefined)
+  const { mutate: planDelete, isPending: isDeletePlanPending } = useMutation(
+    trpc.plan.generate.mutationOptions({
+      onSuccess: (data) => {
+        if (data.outcome === 'success') {
+          setDeletePlan(data.plan)
+        } else {
+          toast.error(data.error)
+        }
+      },
+    }),
   )
   const source = findNode(graph, sourceId(relation))
   const target = findNode(graph, targetId(relation))
@@ -399,6 +426,12 @@ function GraphRelationDetails({
 
   return (
     <div className="space-y-5">
+      <PlanConfirmationDialog
+        plan={deletePlan}
+        setPlan={setDeletePlan}
+        onSuccess={() => onRelationDeleted(relationId(relation))}
+        note="The removal is recorded in the token history together with the full relation record, so it leaves a trace and the relation can be recovered from there if needed."
+      />
       <div className="space-y-3">
         <div className="flex flex-wrap items-center gap-2">
           <Badge variant="outline" style={{ borderColor: color, color }}>
@@ -449,6 +482,28 @@ function GraphRelationDetails({
       ) : data ? (
         <RelationEvidence relation={data} chains={chains} />
       ) : null}
+
+      <Separator />
+      <DetailsSection title="Delete relation">
+        <p className="text-muted-foreground text-sm">
+          Remove this relation if it was ingested from an incorrect interop
+          transfer. The graph keeps its current layout — refresh the page to see
+          the re-clustered graph.
+        </p>
+        <ButtonWithSpinner
+          variant="destructive"
+          className="w-full"
+          isLoading={isDeletePlanPending}
+          onClick={() =>
+            planDelete({
+              type: 'DeleteTokenRelationIntent',
+              pk: relationPrimaryKey(relation),
+            })
+          }
+        >
+          <TrashIcon /> Delete relation
+        </ButtonWithSpinner>
+      </DetailsSection>
     </div>
   )
 }
