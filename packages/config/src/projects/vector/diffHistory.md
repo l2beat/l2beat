@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x4d54d33722655709fbc3479fb823d45fd3fb8d1e
+
+# Diff at Thu, 30 Jul 2026 11:10:10 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@fb0b50e4a7f7900d17e186f908b2b3ca3e977527 block: 1763483689
+- current timestamp: 1785409748
+
+## Description
+
+Vector rotated its SP1 program verification key for Avail data-commitment verification.
+
+## Watched changes
+
+```diff
+    contract Vector (eth:0x02993cdC11213985b9B13224f3aF289F03bf298d) [succinct/SP1Vector] {
+    +++ description: The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.
+      values.vectorXProgramVkey:
+-        "0x0057b7de6dcd8ff25e7b41089f4b5fa586067fbb107756d1f66d92fe71dd6ad1"
++        "0x005f3914526e9f0d261b56a3613985801d3060584f95874548c70fda5f81efdb"
+    }
+```
+
 Generated with discovered.json: 0xb7d5857a065bf7465870328fb4b25ea05cd76991
 
 # Diff at Fri, 08 May 2026 07:52:39 GMT:

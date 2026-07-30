@@ -1,6 +1,6 @@
 {
   "name": "vector",
-  "timestamp": 1763483689,
+  "timestamp": 1785409748,
   "configHash": "0x455ec64b38255bfc3fbf151468a894e2da55e5ceb695549f56aeeb4d3a831269",
   "sharedModules": ["shared-sp1"],
   "entries": [
@@ -61,13 +61,13 @@
         "headerRangeCommitmentTreeSize": 2048,
         "headerRangeFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "isRelayerApproved": true,
-        "latestAuthoritySetId": 551,
-        "latestBlock": 2169088,
+        "latestAuthoritySetId": 826,
+        "latestBlock": 3264896,
         "relayers": ["eth:0x27BF7DE579c5779DbFbB8e9d69999E4D1370787D"],
         "rotateFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "timelocks": ["eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"],
-        "vectorXProgramVkey": "0x0057b7de6dcd8ff25e7b41089f4b5fa586067fbb107756d1f66d92fe71dd6ad1",
+        "vectorXProgramVkey": "0x005f3914526e9f0d261b56a3613985801d3060584f95874548c70fda5f81efdb",
         "verifier": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "VERSION": "2.0.0"
       },
@@ -121,7 +121,7 @@
         "feePerByte": 0,
         "feeRecipient": "eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
         "fees": 0,
-        "messageId": 1804,
+        "messageId": 1843,
         "owner": "eth:0x45828180bbE489350D621d002968A0585406d487",
         "paused": false,
         "pauserAC": ["eth:0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930"],
@@ -442,7 +442,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 15,
+        "nonce": 16,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -769,6 +769,6 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "succinct/SP1Vector": "0xfa432768402e63bf3829db629a75b9b795d90d28bde6ae5d3971689687185dd9"
   },
-  "usedBlockNumbers": { "ethereum": 23827222 },
+  "usedBlockNumbers": { "ethereum": 25645277 },
   "permissionsConfigHash": "0x0d54b47320dab9ec3ed2c0783045318923a36c8243db89727a0531c06efa676d"
 }

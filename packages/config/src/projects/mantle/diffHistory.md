@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x296550cdc2e7a82a7a7f9519d4187ca9960e1082
+
+# Diff at Thu, 30 Jul 2026 11:05:57 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@fb0b50e4a7f7900d17e186f908b2b3ca3e977527 block: 1782298886
+- current timestamp: 1785409492
+
+## Description
+
+OP Succinct aggregation and range verification keys rotated, and the rollup config hash changed.
+
+## Watched changes
+
+```diff
+    contract OPSuccinctL2OutputOracle (eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) [succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      values.aggregationVkey:
+-        "0x001db6dc655ffc97e6ec7a2b5c9b1ddf42c2235faa007d8a96d659c68b7c432a"
++        "0x0063d017f049d215e2cda7f7826d7c1a8176a678203d6f74a731fc331cc16377"
+      values.rangeVkeyCommitment:
+-        "0x6f0230de6e9b59592b3127f55829c9a766d397903df5c57d557c91634a30b32b"
++        "0x1dc938274cd550224002662e765b50c838b6fcb3234308b847ece2ce0e4a5631"
+      values.rollupConfigHash:
+-        "0x6681c11eccf96068a081bbb888fd64ce72aa83bd1ccda5bbb53b4c43368cf87f"
++        "0x40d5353fb8c9257f03461070a2bfc2b18f2f822b69c64f0c467402c2fc422ecb"
+    }
+```
+
 Generated with discovered.json: 0x0a2cd37661894243afdb6d79238f57e3a0775ccb
 
 # Diff at Wed, 24 Jun 2026 11:02:47 GMT:
