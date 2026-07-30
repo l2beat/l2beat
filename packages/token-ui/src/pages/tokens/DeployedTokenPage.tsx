@@ -272,24 +272,10 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
           </div>
         </TabsContent>
         <TabsContent value="relations">
-          <div className="space-y-4">
-            <TokenRelationsSection
-              title="Outgoing relations"
-              description="This token is the source/from token."
-              otherTokenHeader="To token"
-              direction="outgoing"
-              entries={relations?.outgoing ?? []}
-              loading={areRelationsLoading}
-            />
-            <TokenRelationsSection
-              title="Incoming relations"
-              description="This token is the target/to token."
-              otherTokenHeader="From token"
-              direction="incoming"
-              entries={relations?.incoming ?? []}
-              loading={areRelationsLoading}
-            />
-          </div>
+          <TokenRelationsSection
+            entries={relations ?? []}
+            loading={areRelationsLoading}
+          />
         </TabsContent>
       </Tabs>
     </>
@@ -297,28 +283,33 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
 }
 
 type TokenRelationsResponse = RouterOutputs['deployedTokens']['getRelations']
-type TokenRelationEntry = TokenRelationsResponse['incoming'][number]
+type TokenRelationEntry = TokenRelationsResponse[number]
 
+const RELATION_ROLE_DESCRIPTIONS: Record<TokenRelationEntry['role'], string> = {
+  locked: 'Locked here, minted there',
+  minted: 'Minted here, locked there',
+  symmetric: 'Burned and minted on both sides',
+  unknown: 'Locked side not observed',
+}
+
+// A single list: relations are facts about a pair of tokens, not directed
+// edges, so there is no inbound/outbound split. What differs per relation is
+// this token's role, which the Role column states.
 function TokenRelationsSection({
-  title,
-  description,
-  otherTokenHeader,
-  direction,
   entries,
   loading,
 }: {
-  title: string
-  description: string
-  otherTokenHeader: string
-  direction: 'outgoing' | 'incoming'
   entries: TokenRelationEntry[]
   loading: boolean
 }) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
+        <CardTitle>Relations</CardTitle>
+        <CardDescription>
+          Non-swapping interop transfers observed between this token and another
+          one.
+        </CardDescription>
       </CardHeader>
       <CardContent>
         {loading ? (
@@ -329,20 +320,21 @@ function TokenRelationsSection({
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>{otherTokenHeader}</TableHead>
+                <TableHead>Other token</TableHead>
+                <TableHead>This token's role</TableHead>
                 <TableHead>Plugin</TableHead>
                 <TableHead>Bridge type</TableHead>
                 <TableHead>Transfer</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {entries.map(({ relation, otherToken }) => (
+              {entries.map(({ relation, role, otherEndpoint, otherToken }) => (
                 <TableRow
                   key={[
-                    relation.tokenFromChain,
-                    relation.tokenFromAddress,
-                    relation.tokenToChain,
-                    relation.tokenToAddress,
+                    relation.tokenAChain,
+                    relation.tokenAAddress,
+                    relation.tokenBChain,
+                    relation.tokenBAddress,
                     relation.plugin,
                     relation.bridgeType,
                   ].join(':')}
@@ -361,7 +353,13 @@ function TokenRelationsSection({
                     <div className="break-all text-muted-foreground text-xs">
                       {otherToken
                         ? otherToken.address
-                        : formatRelationEndpoint(relation, direction)}
+                        : `${otherEndpoint.chain}:${otherEndpoint.address}`}
+                    </div>
+                  </TableCell>
+                  <TableCell className="align-top">
+                    <div className="font-medium">{role}</div>
+                    <div className="text-muted-foreground text-xs">
+                      {RELATION_ROLE_DESCRIPTIONS[role]}
                     </div>
                   </TableCell>
                   <TableCell className="align-top">{relation.plugin}</TableCell>
@@ -386,14 +384,4 @@ function TokenRelationsSection({
       </CardContent>
     </Card>
   )
-}
-
-function formatRelationEndpoint(
-  relation: TokenRelationEntry['relation'],
-  direction: 'outgoing' | 'incoming',
-) {
-  if (direction === 'outgoing') {
-    return `${relation.tokenToChain}:${relation.tokenToAddress}`
-  }
-  return `${relation.tokenFromChain}:${relation.tokenFromAddress}`
 }

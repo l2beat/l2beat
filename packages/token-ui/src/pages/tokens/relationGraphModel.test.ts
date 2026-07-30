@@ -12,7 +12,10 @@ import {
   type RelationGraphRelation,
   relationId,
   relationIsDirectional,
+  relationRoleLabel,
   searchRelationGraphNodes,
+  sourceId,
+  targetId,
   tokenId,
 } from './relationGraphModel'
 
@@ -82,7 +85,7 @@ describe(getRelationLabelStyle.name, () => {
 })
 
 describe(relationIsDirectional.name, () => {
-  it('only treats Lock & Mint relations as directional', () => {
+  it('only treats Lock & Mint relations with an identified locked token as directional', () => {
     expect(
       relationIsDirectional(
         relation('ethereum', '0xaaa', 'base', '0xbbb', 'lock', 'lockAndMint'),
@@ -93,6 +96,97 @@ describe(relationIsDirectional.name, () => {
         relation('ethereum', '0xaaa', 'base', '0xbbb', 'burn', 'burnAndMint'),
       ),
     ).toEqual(false)
+    // Drawing an arrow here would mean guessing which token is the original.
+    expect(
+      relationIsDirectional(
+        relation(
+          'ethereum',
+          '0xaaa',
+          'base',
+          '0xbbb',
+          'lock',
+          'lockAndMint',
+          null,
+        ),
+      ),
+    ).toEqual(false)
+  })
+})
+
+describe('relation endpoint order', () => {
+  it('draws a directional relation from the locked token to the minted one', () => {
+    // The A/B slots are lexicographic, so the arrow must follow `lockedToken`
+    // rather than the slot order.
+    const lockedIsSecondEndpoint = relation(
+      'base',
+      '0xbbb',
+      'ethereum',
+      '0xaaa',
+      'lock',
+      'lockAndMint',
+      'B',
+    )
+
+    expect(sourceId(lockedIsSecondEndpoint)).toEqual(
+      tokenId('ethereum', '0xaaa'),
+    )
+    expect(targetId(lockedIsSecondEndpoint)).toEqual(tokenId('base', '0xbbb'))
+  })
+
+  it('keeps the stored order for relations without a direction', () => {
+    const symmetric = relation(
+      'base',
+      '0xbbb',
+      'ethereum',
+      '0xaaa',
+      'burn',
+      'burnAndMint',
+      null,
+    )
+
+    expect(sourceId(symmetric)).toEqual(tokenId('base', '0xbbb'))
+    expect(targetId(symmetric)).toEqual(tokenId('ethereum', '0xaaa'))
+  })
+})
+
+describe(relationRoleLabel.name, () => {
+  it('labels each endpoint by what it is to the other', () => {
+    const lockAndMint = relation(
+      'base',
+      '0xbbb',
+      'ethereum',
+      '0xaaa',
+      'lock',
+      'lockAndMint',
+      'B',
+    )
+
+    expect(
+      relationRoleLabel(lockAndMint, tokenId('ethereum', '0xaaa')),
+    ).toEqual('Locked')
+    expect(relationRoleLabel(lockAndMint, tokenId('base', '0xbbb'))).toEqual(
+      'Minted',
+    )
+    expect(
+      relationRoleLabel(
+        relation('base', '0xbbb', 'ethereum', '0xaaa', 'burn', 'burnAndMint'),
+        tokenId('base', '0xbbb'),
+      ),
+    ).toEqual('Symmetric')
+    expect(
+      relationRoleLabel(
+        relation(
+          'base',
+          '0xbbb',
+          'ethereum',
+          '0xaaa',
+          'lock',
+          'lockAndMint',
+          null,
+        ),
+        tokenId('base', '0xbbb'),
+      ),
+    ).toEqual('Unknown role')
   })
 })
 
@@ -202,11 +296,8 @@ describe(getRelationGraphFocus.name, () => {
 
     expect([...focus.nodeIds].sort()).toEqual(
       [
-        tokenId(
-          selectedRelation.tokenFromChain,
-          selectedRelation.tokenFromAddress,
-        ),
-        tokenId(selectedRelation.tokenToChain, selectedRelation.tokenToAddress),
+        tokenId(selectedRelation.tokenAChain, selectedRelation.tokenAAddress),
+        tokenId(selectedRelation.tokenBChain, selectedRelation.tokenBAddress),
       ].sort(),
     )
     expect([...focus.relationIds]).toEqual([relationId(selectedRelation)])
@@ -252,20 +343,22 @@ function graphNode(chain: string, address: string): RelationGraphNode {
 }
 
 function relation(
-  tokenFromChain: string,
-  tokenFromAddress: string,
-  tokenToChain: string,
-  tokenToAddress: string,
+  tokenAChain: string,
+  tokenAAddress: string,
+  tokenBChain: string,
+  tokenBAddress: string,
   plugin: string,
   bridgeType: RelationGraphRelation['bridgeType'] = 'lockAndMint',
+  lockedToken: RelationGraphRelation['lockedToken'] = 'A',
 ): RelationGraphRelation {
   return {
-    tokenFromChain,
-    tokenFromAddress,
-    tokenToChain,
-    tokenToAddress,
+    tokenAChain,
+    tokenAAddress,
+    tokenBChain,
+    tokenBAddress,
     plugin,
     bridgeType,
+    lockedToken,
     isConflict: false,
   }
 }
