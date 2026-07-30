@@ -97,6 +97,66 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
     it('empty array', async () => {
       await expect(repository.upsertMany([])).not.toBeRejected()
     })
+
+    it('keeps the earliest transaction for each grouping key', async () => {
+      const grouped = [
+        {
+          timestamp: START - 4 * UnixTime.MINUTE,
+          blockNumber: 20,
+          txHash: '0xgrouped-later',
+          configurationId: txIdA,
+          groupingKey: 'epoch-1',
+        },
+        {
+          timestamp: START - 5 * UnixTime.MINUTE,
+          blockNumber: 10,
+          txHash: '0xgrouped-earlier',
+          configurationId: txIdA,
+          groupingKey: 'epoch-1',
+        },
+        {
+          timestamp: START - 3 * UnixTime.MINUTE,
+          blockNumber: 30,
+          txHash: '0xgrouped-other-config',
+          configurationId: txIdB,
+          groupingKey: 'epoch-1',
+        },
+      ]
+
+      await repository.upsertMany(grouped)
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([...DATA, grouped[1]!, grouped[2]!])
+    })
+
+    it('replaces a grouped transaction only when an earlier one arrives', async () => {
+      const first = {
+        timestamp: START - 4 * UnixTime.MINUTE,
+        blockNumber: 20,
+        txHash: '0xgrouped-first',
+        configurationId: txIdA,
+        groupingKey: 'epoch-1',
+      }
+      const earlier = {
+        ...first,
+        timestamp: START - 5 * UnixTime.MINUTE,
+        blockNumber: 10,
+        txHash: '0xgrouped-earlier',
+      }
+      const later = {
+        ...first,
+        timestamp: START - 3 * UnixTime.MINUTE,
+        blockNumber: 30,
+        txHash: '0xgrouped-later',
+      }
+
+      await repository.upsertMany([first])
+      await repository.upsertMany([earlier])
+      await repository.upsertMany([later])
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([...DATA, earlier])
+    })
   })
 
   describe(RealTimeLivenessRepository.prototype.getAll.name, () => {

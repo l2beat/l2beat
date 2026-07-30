@@ -3,21 +3,33 @@ import { UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { RealTimeLiveness } from '../kysely/generated/types'
+import {
+  insertGroupedKeepingEarliest,
+  splitLivenessRecords,
+} from './utils/livenessGrouping'
 
 export interface RealTimeLivenessRecord {
   configurationId: TrackedTxId
   txHash: string
   timestamp: UnixTime
   blockNumber: number
+  groupingKey?: string
 }
 
 export function toRecord(
   row: Selectable<RealTimeLiveness>,
 ): RealTimeLivenessRecord {
-  return {
-    ...row,
+  const { groupingKey, ...rest } = row
+  const record: RealTimeLivenessRecord = {
+    ...rest,
     timestamp: UnixTime.fromDate(row.timestamp),
   }
+
+  if (groupingKey !== null) {
+    record.groupingKey = groupingKey
+  }
+
+  return record
 }
 
 export function toRow(
@@ -25,6 +37,7 @@ export function toRow(
 ): Insertable<RealTimeLiveness> {
   return {
     ...record,
+    groupingKey: record.groupingKey ?? null,
     timestamp: UnixTime.toDate(record.timestamp),
   }
 }
@@ -41,8 +54,9 @@ export class RealTimeLivenessRepository extends BaseRepository {
   async upsertMany(records: RealTimeLivenessRecord[]): Promise<number> {
     if (records.length === 0) return 0
 
-    const rows = records.map(toRow)
-    await this.batch(rows, 10_000, async (batch) => {
+    const { ungrouped, groupedEarliest } = splitLivenessRecords(records)
+
+    await this.batch(ungrouped.map(toRow), 10_000, async (batch) => {
       await this.db
         .insertInto('RealTimeLiveness')
         .values(batch)
@@ -54,7 +68,10 @@ export class RealTimeLivenessRepository extends BaseRepository {
         )
         .execute()
     })
-    return rows.length
+    await this.batch(groupedEarliest.map(toRow), 10_000, async (batch) => {
+      await insertGroupedKeepingEarliest(this.db, 'RealTimeLiveness', batch)
+    })
+    return records.length
   }
 
   async deleteAll(): Promise<number> {
