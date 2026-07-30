@@ -15,6 +15,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
+import { utils } from 'ethers'
 import type { TrackedTxsConfig } from '../../config/Config'
 import { mockDatabase } from '../../test/database'
 import type { AnomalyNotifier } from './AnomalyNotifier'
@@ -187,6 +188,192 @@ describe(RealTimeLivenessProcessor.name, () => {
             timestamp: block.timestamp,
           },
         ])
+      })
+
+      it('derives the grouping key from function call input', async () => {
+        const realTimeLivenessRepository = mockObject<
+          Database['realTimeLiveness']
+        >({
+          upsertMany: mockFn().resolvesTo(undefined),
+        })
+        const projectId = ProjectId('project-id')
+        const address = EthereumAddress.random()
+        const signature = 'function submit((uint256 start,uint256 end) epoch)'
+        const abi = new utils.Interface([signature])
+        const data = abi.encodeFunctionData('submit', [[42, 43]])
+        const configuration: TrackedTxConfigEntry = {
+          type: 'liveness',
+          id: 'tracked-tx-1',
+          projectId,
+          subtype: 'stateUpdates',
+          sinceTimestamp: UnixTime.now(),
+          params: {
+            formula: 'functionCall',
+            address,
+            selector: abi.getSighash('submit'),
+            signature,
+          },
+          groupBy: {
+            type: 'functionCallParameter',
+            path: [0, 0],
+          },
+        }
+        const block = mockObject<Block>({
+          number: 123,
+          timestamp: UnixTime.now(),
+          transactions: [
+            {
+              hash: '0x123',
+              from: EthereumAddress.random(),
+              to: address,
+              data,
+            },
+          ],
+        })
+        const processor = new RealTimeLivenessProcessor(
+          createMockTrackedTxsConfig(projectId, [configuration]),
+          Logger.SILENT,
+          mockDatabase({ realTimeLiveness: realTimeLivenessRepository }),
+          mockObject<AnomalyNotifier>(),
+        )
+
+        await processor.matchLivenessTransactions(block, [])
+
+        expect(realTimeLivenessRepository.upsertMany).toHaveBeenCalledWith([
+          {
+            configurationId: configuration.id,
+            txHash: '0x123',
+            blockNumber: block.number,
+            timestamp: block.timestamp,
+            groupingKey: '42',
+          },
+        ])
+      })
+
+      it('skips a grouped call when its input cannot be decoded', async () => {
+        const realTimeLivenessRepository = mockObject<
+          Database['realTimeLiveness']
+        >({
+          upsertMany: mockFn().resolvesTo(undefined),
+        })
+        const projectId = ProjectId('project-id')
+        const address = EthereumAddress.random()
+        const signature = 'function submit(uint256 epoch)'
+        const abi = new utils.Interface([signature])
+        const selector = abi.getSighash('submit')
+        const groupedConfiguration: TrackedTxConfigEntry = {
+          type: 'liveness',
+          id: 'grouped',
+          projectId,
+          subtype: 'stateUpdates',
+          sinceTimestamp: UnixTime.now(),
+          params: {
+            formula: 'functionCall',
+            address,
+            selector,
+            signature,
+          },
+          groupBy: {
+            type: 'functionCallParameter',
+            path: [0],
+          },
+        }
+        const ungroupedConfiguration: TrackedTxConfigEntry = {
+          type: 'liveness',
+          id: 'ungrouped',
+          projectId,
+          subtype: 'stateUpdates',
+          sinceTimestamp: UnixTime.now(),
+          params: {
+            formula: 'functionCall',
+            address,
+            selector,
+            signature,
+          },
+        }
+        const block = mockObject<Block>({
+          number: 123,
+          timestamp: UnixTime.now(),
+          transactions: [
+            {
+              hash: '0x123',
+              from: EthereumAddress.random(),
+              to: address,
+              data: selector,
+            },
+          ],
+        })
+        const processor = new RealTimeLivenessProcessor(
+          createMockTrackedTxsConfig(projectId, [
+            groupedConfiguration,
+            ungroupedConfiguration,
+          ]),
+          Logger.SILENT,
+          mockDatabase({ realTimeLiveness: realTimeLivenessRepository }),
+          mockObject<AnomalyNotifier>(),
+        )
+
+        await processor.matchLivenessTransactions(block, [])
+
+        expect(realTimeLivenessRepository.upsertMany).toHaveBeenCalledWith([
+          {
+            configurationId: ungroupedConfiguration.id,
+            txHash: '0x123',
+            blockNumber: block.number,
+            timestamp: block.timestamp,
+          },
+        ])
+      })
+
+      it('skips a grouped call when its grouping key is too long', async () => {
+        const realTimeLivenessRepository = mockObject<
+          Database['realTimeLiveness']
+        >({
+          upsertMany: mockFn().resolvesTo(undefined),
+        })
+        const projectId = ProjectId('project-id')
+        const address = EthereumAddress.random()
+        const signature = 'function submit(string epoch)'
+        const abi = new utils.Interface([signature])
+        const configuration: TrackedTxConfigEntry = {
+          type: 'liveness',
+          id: 'tracked-tx-1',
+          projectId,
+          subtype: 'stateUpdates',
+          sinceTimestamp: UnixTime.now(),
+          params: {
+            formula: 'functionCall',
+            address,
+            selector: abi.getSighash('submit'),
+            signature,
+          },
+          groupBy: {
+            type: 'functionCallParameter',
+            path: [0],
+          },
+        }
+        const block = mockObject<Block>({
+          number: 123,
+          timestamp: UnixTime.now(),
+          transactions: [
+            {
+              hash: '0x123',
+              from: EthereumAddress.random(),
+              to: address,
+              data: abi.encodeFunctionData('submit', ['a'.repeat(256)]),
+            },
+          ],
+        })
+        const processor = new RealTimeLivenessProcessor(
+          createMockTrackedTxsConfig(projectId, [configuration]),
+          Logger.SILENT,
+          mockDatabase({ realTimeLiveness: realTimeLivenessRepository }),
+          mockObject<AnomalyNotifier>(),
+        )
+
+        await processor.matchLivenessTransactions(block, [])
+
+        expect(realTimeLivenessRepository.upsertMany).toHaveBeenCalledWith([])
       })
     },
   )

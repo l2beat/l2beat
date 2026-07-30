@@ -11,6 +11,10 @@ import type {
   TrackedTxFunctionCallResult,
 } from '../types/model'
 import { calculateCalldataGasUsed } from './calculateCalldataGasUsed'
+import {
+  getLivenessGroupingKey,
+  hasLivenessGrouping,
+} from './getLivenessGroupingKey'
 import { isFistParameterMatching } from './isFirstParameterMatching'
 import { isProgramHashProven } from './isProgramHashProven'
 
@@ -62,35 +66,51 @@ export function transformFunctionCallsQueryResult(
       isFistParameterMatching(r.input, c.properties.params),
     )
 
-    const results = [
+    const results: TrackedTxFunctionCallResult[] = [
       ...matchingCalls,
       ...filteredSubmissions,
       ...filteredSharedBridgeCalls,
-    ].map(
-      (config) =>
-        ({
-          id: config.id,
-          formula: 'functionCall',
-          projectId: config.properties.projectId,
-          hash: r.hash,
-          type: config.properties.type,
-          subtype: config.properties.subtype,
-          blockNumber: r.block_number,
-          blockTimestamp: r.block_time,
-          toAddress: r.to,
-          input: r.input,
-          gasUsed: r.gas_used,
-          gasPrice: r.gas_price,
-          dataLength: r.data_length,
-          calldataGasUsed: calculateCalldataGasUsed(
-            r.block_number,
-            r.data_length,
-            r.non_zero_bytes,
-            r.gas_used,
+    ].map((config) => {
+      const common = {
+        id: config.id,
+        formula: 'functionCall' as const,
+        projectId: config.properties.projectId,
+        subtype: config.properties.subtype,
+        hash: r.hash,
+        blockNumber: r.block_number,
+        blockTimestamp: r.block_time,
+        toAddress: r.to,
+        input: r.input,
+        gasUsed: r.gas_used,
+        gasPrice: r.gas_price,
+        dataLength: r.data_length,
+        calldataGasUsed: calculateCalldataGasUsed(
+          r.block_number,
+          r.data_length,
+          r.non_zero_bytes,
+          r.gas_used,
+        ),
+        blobVersionedHashes: r.blob_versioned_hashes,
+      }
+
+      if (hasLivenessGrouping(config.properties)) {
+        return {
+          ...common,
+          type: 'liveness',
+          groupingKey: getLivenessGroupingKey(
+            r.input,
+            config.properties.params,
+            config.properties.groupBy,
           ),
-          blobVersionedHashes: r.blob_versioned_hashes,
-        }) as const,
-    )
+        }
+      }
+
+      if (config.properties.type === 'liveness') {
+        return { ...common, type: 'liveness' }
+      }
+
+      return { ...common, type: 'l2costs' }
+    })
 
     return results
   })
