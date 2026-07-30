@@ -26,7 +26,7 @@ export function HomeRecentProjectsCard({ projects, className }: Props) {
   return (
     <HomeCard className={cn('flex h-full flex-col', className)}>
       <h2 className="font-bold text-xl">Recently added projects</h2>
-      <ul className="mt-2 grid grid-cols-1 gap-1.5 md:grid-cols-3 xl:grid-cols-1">
+      <ul className="mt-2 grid grid-cols-1 gap-1.5 md:grid-cols-3 lg:grid-cols-1">
         {visibleProjects.map((project) => (
           <li key={project.id}>
             <RecentProjectCard project={project} />

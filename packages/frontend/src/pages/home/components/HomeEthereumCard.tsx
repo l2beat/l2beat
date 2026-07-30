@@ -54,7 +54,7 @@ export function HomeEthereumCard({ charts, economicSecurity }: Props) {
   const dataPostedChange = charts.da.change
 
   return (
-    <HomeCard className="flex h-full flex-col pb-4 xl:py-4">
+    <HomeCard className="flex h-full flex-col pb-4 lg:py-4">
       <div className="flex flex-col gap-2.5">
         <HomeCardHeader
           title="Ethereum"
