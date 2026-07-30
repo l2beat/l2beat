@@ -187,40 +187,26 @@ export interface ProjectScalingRiskView extends ProjectRiskView {
   stateValidation: Omit<ProjectRiskView['stateValidation'], 'secondLine'>
 }
 
-export type Layer2TxConfig =
-  | {
-      uses: Layer2FunctionCallTrackedTxUse[]
-      query: FunctionCall
-      _hackCostMultiplier?: number
-    }
-  | {
-      uses: Layer2TrackedTxUse[]
-      query: Transfer | SharpSubmission | SharedBridge
-      _hackCostMultiplier?: number
-    }
-
-export type Layer2FunctionCallTrackedTxUse =
-  | {
-      type: 'l2costs'
-      subtype: TrackedTxsConfigSubtype
-    }
-  | {
-      type: 'liveness'
-      subtype: TrackedTxsConfigSubtype
-      groupBy?: TrackedTxFunctionCallGrouping
-    }
+export interface Layer2TxConfig {
+  uses: Layer2TrackedTxUse[]
+  query: TrackedTxQuery
+  _hackCostMultiplier?: number
+}
 
 export type Layer2TrackedTxUse =
   | {
       type: 'l2costs'
       subtype: TrackedTxsConfigSubtype
+      groupBy?: never
     }
   | {
       type: 'liveness'
       subtype: TrackedTxsConfigSubtype
-      /** Liveness grouping is only supported for functionCall queries. */
-      groupBy?: undefined
+      /** Only supported for function calls without topics; validated in getProjects. */
+      groupBy?: TrackedTxFunctionCallGrouping
     }
+
+type TrackedTxQuery = FunctionCall | Transfer | SharpSubmission | SharedBridge
 
 interface FunctionCall {
   formula: 'functionCall'
