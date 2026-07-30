@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>One panel, every width — Home interop card walkthrough</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,340;0,9..144,600;0,9..144,700;1,9..144,340;1,9..144,600&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0b0b10;
+    --bg2: #101018;
+    --surface: #14141d;
+    --surface2: #1a1a26;
+    --line: #26263440;
+    --line-solid: #262634;
+    --ink: #ece9e2;
+    --muted: #9a97ab;
+    --faint: #64627a;
+    --pink: #ff46c0;
+    --pink-dim: #ff46c02b;
+    --amber: #ffb454;
+    --teal: #45d6c0;
+    --violet: #8f8aff;
+    --serif: "Fraunces", Georgia, serif;
+    --sans: "Instrument Sans", "Helvetica Neue", sans-serif;
+    --mono: "Spline Sans Mono", ui-monospace, monospace;
+    --w: 880px;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16.5px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* grain + glow atmosphere */
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  }
+  body::after {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background:
+      radial-gradient(900px 500px at 85% -5%, #ff46c012, transparent 65%),
+      radial-gradient(700px 420px at 0% 30%, #8f8aff0e, transparent 60%);
+  }
+  main { position: relative; z-index: 1; }
+
+  .wrap { max-width: var(--w); margin: 0 auto; padding: 0 28px; }
+
+  /* ---------- hero ---------- */
+  header.hero { padding: 96px 0 72px; border-bottom: 1px solid var(--line-solid); }
+  .kicker {
+    font-family: var(--mono); font-size: 12px; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--pink); display: flex; align-items: center; gap: 12px;
+  }
+  .kicker::before { content: ""; width: 34px; height: 1px; background: var(--pink); }
+  h1 {
+    font-family: var(--serif); font-weight: 340; font-size: clamp(44px, 7vw, 76px);
+    line-height: 1.02; letter-spacing: -0.015em; margin: 22px 0 10px;
+  }
+  h1 em { font-style: italic; color: var(--pink); }
+  .hero p.lede {
+    font-size: 19px; color: var(--muted); max-width: 44ch; margin-top: 18px;
+  }
+  .hero-meta {
+    display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 34px;
+    font-family: var(--mono); font-size: 12.5px; color: var(--faint);
+  }
+  .hero-meta b { color: var(--ink); font-weight: 500; }
+
+  /* ---------- sections ---------- */
+  section { padding: 72px 0; border-bottom: 1px solid var(--line-solid); }
+  .snum {
+    font-family: var(--serif); font-style: italic; font-weight: 340;
+    font-size: 15px; color: var(--pink); letter-spacing: .04em;
+  }
+  h2 {
+    font-family: var(--serif); font-weight: 600; font-size: clamp(28px, 4vw, 38px);
+    line-height: 1.12; letter-spacing: -0.01em; margin: 8px 0 22px;
+  }
+  h3 { font-size: 17px; font-weight: 600; margin: 34px 0 10px; }
+  p { color: var(--muted); max-width: 68ch; }
+  p + p { margin-top: 14px; }
+  p strong, li strong { color: var(--ink); font-weight: 600; }
+  a { color: var(--pink); text-decoration: none; border-bottom: 1px solid var(--pink-dim); }
+  code {
+    font-family: var(--mono); font-size: .86em; color: var(--ink);
+    background: var(--surface2); padding: 2px 6px; border-radius: 5px;
+    border: 1px solid var(--line-solid);
+  }
+  ul.plain { padding-left: 20px; color: var(--muted); }
+  ul.plain li { margin: 8px 0; }
+  ul.plain li::marker { color: var(--pink); }
+
+  /* code blocks */
+  pre {
+    font-family: var(--mono); font-size: 13px; line-height: 1.7;
+    background: var(--bg2); border: 1px solid var(--line-solid); border-radius: 12px;
+    padding: 20px 22px; overflow-x: auto; margin: 18px 0;
+  }
+  pre .c { color: var(--faint); }        /* comment */
+  pre .k { color: var(--violet); }        /* keyword-ish */
+  pre .s { color: var(--teal); }          /* string / class */
+  pre .hl { color: var(--pink); }         /* highlight */
+  pre .del { color: #e06c75; }
+  pre .add { color: #98c379; }
+  .filetag {
+    display: inline-block; font-family: var(--mono); font-size: 11.5px;
+    color: var(--faint); letter-spacing: .04em; margin: 22px 0 -10px;
+  }
+
+  /* ---------- breakpoint map diagrams ---------- */
+  .map { margin: 26px 0; }
+  .map-title {
+    font-family: var(--mono); font-size: 12px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--faint); margin-bottom: 10px;
+  }
+  .track { display: flex; border-radius: 10px; overflow: hidden; border: 1px solid var(--line-solid); }
+  .seg { padding: 14px 16px 12px; position: relative; min-width: 0; }
+  .seg + .seg { border-left: 1px dashed #3a3a4d; }
+  .seg .range { font-family: var(--mono); font-size: 11px; color: var(--faint); letter-spacing: .05em; }
+  .seg .what { font-size: 13.5px; font-weight: 600; margin-top: 4px; }
+  .seg .detail { font-size: 12px; color: var(--muted); margin-top: 2px; line-height: 1.45; }
+  .seg.a { background: #ffb45414; }
+  .seg.a .what { color: var(--amber); }
+  .seg.b { background: #ff46c01a; }
+  .seg.b .what { color: var(--pink); }
+  .seg.t { background: #45d6c012; }
+  .seg.t .what { color: var(--teal); }
+  .axis {
+    display: flex; justify-content: space-between; margin-top: 6px;
+    font-family: var(--mono); font-size: 10.5px; color: var(--faint);
+  }
+  .verdict {
+    display: flex; gap: 10px; align-items: baseline; margin-top: 14px;
+    font-size: 14px; color: var(--muted);
+  }
+  .verdict .tag {
+    font-family: var(--mono); font-size: 11px; padding: 2px 9px; border-radius: 999px;
+    letter-spacing: .08em; white-space: nowrap;
+  }
+  .tag.bad  { color: var(--amber); border: 1px solid #ffb45455; }
+  .tag.good { color: var(--teal);  border: 1px solid #45d6c055; }
+
+  /* ---------- decision cards ---------- */
+  .decision { border-left: 2px solid var(--pink); padding: 4px 0 4px 26px; margin: 40px 0; }
+  .decision .dnum {
+    font-family: var(--mono); font-size: 11.5px; letter-spacing: .16em;
+    color: var(--pink); text-transform: uppercase;
+  }
+  .decision h3 { margin: 6px 0 10px; font-size: 19px; font-family: var(--serif); font-weight: 600; letter-spacing: 0; }
+  .decision .why { color: var(--muted); }
+  .rejected {
+    margin-top: 14px; padding: 12px 16px; border-radius: 10px;
+    background: var(--bg2); border: 1px solid var(--line-solid);
+    font-size: 14px; color: var(--muted);
+  }
+  .rejected b { color: var(--amber); font-weight: 600; font-family: var(--mono); font-size: 11.5px; letter-spacing: .1em; }
+
+  /* ---------- tree diagram ---------- */
+  .tree {
+    font-family: var(--mono); font-size: 13px; line-height: 1.85;
+    background: var(--bg2); border: 1px solid var(--line-solid); border-radius: 12px;
+    padding: 20px 24px; overflow-x: auto; white-space: pre; color: var(--muted);
+  }
+  .tree b { color: var(--ink); font-weight: 500; }
+  .tree .p { color: var(--pink); } .tree .t { color: var(--teal); }
+  .tree .a { color: var(--amber); } .tree .x { color: #e06c75; text-decoration: line-through; }
+  .cols2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .cols2 > div { min-width: 0; }
+  @media (max-width: 760px) { .cols2 { grid-template-columns: 1fr; } }
+  .colhead { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); margin: 18px 0 8px; }
+
+  /* ---------- tables ---------- */
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+  th {
+    text-align: left; font-family: var(--mono); font-size: 11px; font-weight: 500;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--faint);
+    padding: 10px 14px; border-bottom: 1px solid var(--line-solid);
+  }
+  td { padding: 11px 14px; border-bottom: 1px solid var(--line); color: var(--muted); vertical-align: top; }
+  td:first-child:not([colspan]) { font-family: var(--mono); font-size: 12.5px; color: var(--ink); white-space: nowrap; }
+  td .ok { color: var(--teal); }
+
+  /* ================= interactive demo ================= */
+  .demo-shell {
+    margin: 34px 0 10px; padding: 34px 28px 30px;
+    background: linear-gradient(#0e0e15, #0b0b10);
+    border-block: 1px solid var(--line-solid);
+  }
+  .demo-inner { max-width: 1320px; margin: 0 auto; }
+  .demo-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-bottom: 8px; }
+  .demo-controls label { font-family: var(--mono); font-size: 12px; color: var(--faint); letter-spacing: .08em; }
+  #wslider { accent-color: var(--pink); width: min(360px, 60vw); }
+  .presets { display: flex; gap: 8px; flex-wrap: wrap; }
+  .presets button {
+    font-family: var(--mono); font-size: 11.5px; letter-spacing: .04em;
+    color: var(--muted); background: var(--surface); border: 1px solid var(--line-solid);
+    border-radius: 999px; padding: 5px 13px; cursor: pointer; transition: all .15s;
+  }
+  .presets button:hover { color: var(--ink); border-color: var(--faint); }
+  .presets button.on { color: var(--pink); border-color: var(--pink); background: var(--pink-dim); }
+  .readout { font-family: var(--mono); font-size: 12.5px; color: var(--muted); margin: 6px 0 20px; }
+  .readout b { color: var(--pink); font-weight: 500; }
+  .readout .mode { color: var(--teal); }
+
+  .demo-stage { overflow-x: auto; padding-bottom: 8px; }
+
+  /* the mock card — real container queries, same thresholds as the shipped code */
+  .mock-card {
+    container-type: inline-size;
+    width: 953px; padding: 16px; border-radius: 14px;
+    background: #171720; border: 1px solid #2c2c3c;
+    transition: width .25s ease;
+    font-size: 12px;
+  }
+  .mock-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+  .mock-head .h { font-weight: 600; font-size: 14px; color: var(--ink); }
+  .mock-head .v { font-family: var(--mono); font-size: 10.5px; color: var(--pink); }
+  .mock-tiles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  @container (min-width: 440px) { .mock-tiles { grid-template-columns: repeat(4, 1fr); } }
+  .mock-tile {
+    border: 1px solid #2c2c3c; background: #1c1c28; border-radius: 8px;
+    padding: 8px 10px; text-align: center;
+  }
+  .mock-tile .t { font-family: var(--mono); font-size: 8.5px; letter-spacing: .14em; color: var(--faint); text-transform: uppercase; }
+  .mock-tile .n { font-weight: 600; font-size: 13px; color: var(--ink); margin-top: 2px; }
+
+  .mock-flow { display: flex; flex-direction: column; margin-top: 16px; }
+  @container (min-width: 900px) {
+    .mock-flow { display: grid; grid-template-columns: 1fr 280px; gap: 14px; }
+  }
+  .mock-hint {
+    display: flex; justify-content: center; align-items: center; gap: 6px;
+    font-size: 11px; font-style: italic; color: var(--pink); margin-bottom: 8px;
+  }
+  .mock-graph {
+    position: relative; height: 240px; border-radius: 10px;
+    border: 1px dashed #34344a;
+    background: radial-gradient(circle at 50% 50%, #ff46c00a, transparent 70%);
+  }
+  .node { position: absolute; width: 26px; height: 26px; border-radius: 50%;
+    display: grid; place-items: center; font-size: 9px; font-weight: 600; color: #0b0b10; }
+  .node.sel { outline: 3px solid #ff46c055; }
+  .edge { position: absolute; height: 1px; background: linear-gradient(90deg, #ff46c066, #45d6c044); transform-origin: 0 0; }
+
+  .mock-panel {
+    background: #1c1c28; border-radius: 10px; padding: 12px;
+    container-type: inline-size; margin-top: 12px;
+    display: flex; flex-direction: column;
+  }
+  @container (min-width: 900px) { .mock-panel-slot .mock-panel { margin-top: 0; height: 100%; } }
+  .mock-panel .ph { font-weight: 600; font-size: 12.5px; color: var(--ink); }
+  .mock-panel .ps { font-size: 10.5px; color: var(--faint); }
+  .mock-stats { display: grid; grid-template-columns: 1fr; gap: 3px 16px; margin-top: 8px; }
+  @container (min-width: 300px) { .mock-stats { grid-template-columns: 1fr 1fr; } }
+  .mrow { display: flex; justify-content: space-between; gap: 8px; font-size: 10.5px; }
+  .mrow .l { color: var(--faint); white-space: nowrap; }
+  .mrow .v { color: var(--ink); font-family: var(--mono); font-size: 10px; }
+  .mock-cta {
+    margin-top: auto; padding-top: 10px;
+  }
+  .mock-cta div {
+    background: var(--pink); color: #14060f; font-weight: 600; font-size: 11px;
+    text-align: center; border-radius: 6px; padding: 6px;
+  }
+
+  /* footer */
+  footer { padding: 56px 0 80px; }
+  footer p { font-family: var(--mono); font-size: 12px; color: var(--faint); }
+
+  .anim-in { animation: rise .7s cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } }
+  header.hero > * { animation: rise .7s cubic-bezier(.2,.7,.2,1) both; }
+  header.hero > *:nth-child(2) { animation-delay: .07s; }
+  header.hero > *:nth-child(3) { animation-delay: .14s; }
+  header.hero > *:nth-child(4) { animation-delay: .21s; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<main>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="kicker">l2beat · summary-page branch · home interop card</div>
+    <h1>One panel,<br /><em>every width.</em></h1>
+    <p class="lede">How the Home interop flow graph went from three different UIs across breakpoints to one component whose only responsive freedom is <em>where it sits</em> — a walkthrough of the implementation, the decisions, and the structure.</p>
+    <div class="hero-meta">
+      <span>files&nbsp;<b>2 changed</b></span>
+      <span>net&nbsp;<b>−30 lines in the card</b></span>
+      <span>technique&nbsp;<b>CSS container queries</b></span>
+      <span>verified&nbsp;<b>375 / 1280 / 1600 / 1920 px</b></span>
+    </div>
+  </header>
+
+  <!-- ============ 01 THE PROBLEM ============ -->
+  <section id="problem">
+    <div class="snum">01 — the problem</div>
+    <h2>It wasn't a responsiveness bug.<br/>It was two different features.</h2>
+    <p>The complaint was “the graph looks way different between <code>xl</code> and <code>2xl</code>.” The actual cause: <code>HomeInteropCard</code> rendered <strong>two entirely different components</strong> for the selected-path details, switched by an <code>xl:max-2xl</code> class window.</p>
+
+    <div class="map">
+      <div class="map-title">Before — selected-path UI by viewport width</div>
+      <div class="track">
+        <div class="seg a" style="flex:1.1">
+          <div class="range">&lt; xl</div>
+          <div class="what">HomeInteropSelectedPath</div>
+          <div class="detail">compact box below graph · 8 hand-rolled stats · 1 top route/token/bridge · no CTA · hint in a box under the graph</div>
+        </div>
+        <div class="seg b" style="flex:1.2">
+          <div class="range">xl – 2xl</div>
+          <div class="what">FlowsSelectedPathPanel</div>
+          <div class="detail">summary page's 280px side column · full stats incl. avg transfer time · top-3 clickable routes · token &amp; bridge lists · CTA button · hint above graph</div>
+        </div>
+        <div class="seg a" style="flex:1.1">
+          <div class="range">≥ 2xl</div>
+          <div class="what">HomeInteropSelectedPath</div>
+          <div class="detail">back to the compact box — different stats again</div>
+        </div>
+      </div>
+      <div class="axis"><span>0</span><span>1280</span><span>~1720</span><span>∞</span></div>
+      <div class="verdict"><span class="tag bad">A → B → A</span> Different stat sets, different labels (“Per second” vs “Avg. value per second”), different net-flow formatting, CTA appears and disappears — depending on nothing but window width.</div>
+    </div>
+
+    <p>Worse, <code>HomeInteropSelectedPath</code> <strong>re-implemented the stat math</strong> that <code>SingleChainStats</code> / <code>MultipleChainsStats</code> already own on the summary page — a guaranteed drift trap where the two copies diverge a little more with every edit.</p>
+
+    <h3>The diagnosis that shaped everything</h3>
+    <p>The divergence has two independent axes. <strong>Placement</strong> (beside the graph vs. below it) may legitimately change with available width — that's responsive design. <strong>Content</strong> (which stats, which labels, which actions) must never change — that's just two features wearing the same name. Fix: pin the content, free the placement.</p>
+  </section>
+
+  <!-- ============ 02 DECISIONS ============ -->
+  <section id="decisions">
+    <div class="snum">02 — decisions</div>
+    <h2>Five decisions, each with the road not taken</h2>
+
+    <div class="decision">
+      <div class="dnum">Decision 01</div>
+      <h3>The compact panel survives; the summary panel leaves the card</h3>
+      <p class="why"><code>HomeInteropSelectedPath</code> is the single selected-path component at every width. It fits all placements — including the height-constrained third column of the 3-column home grid, and mobile. The home card is a teaser; depth lives one click away.</p>
+      <div class="rejected"><b>REJECTED</b> — using <code>FlowsSelectedPathPanel</code> everywhere. Its full stack (stats + 3 routes + token list + bridge list + button) doesn't fit below the graph in the narrow 2xl column without scrolling, and adding a “compact mode” prop would reintroduce the exact per-breakpoint divergence being removed.</div>
+    </div>
+
+    <div class="decision">
+      <div class="dnum">Decision 02</div>
+      <h3>Stats come from the summary page's own helpers</h3>
+      <p class="why">The rewritten panel derives every number from <code>getChainFlowStatItems</code> and <code>getPairFlowStats</code> — the same functions <code>SingleChainStats</code> / <code>MultipleChainsStats</code> use. Labels and values are now byte-identical with <code>/interop/summary</code>, and the duplicated math in the home component is deleted. Drift is structurally impossible.</p>
+      <p class="why" style="margin-top:10px">Side effect: the home card <em>gained</em> rows it never had — Avg. transfer time, Unique tokens, Transfers in/out. Single chain now shows the summary's exact 12 rows; a pair shows its exact 6.</p>
+      <div class="rejected"><b>REJECTED</b> — keeping the hand-rolled 8-stat set and only fixing labels. Cheaper diff, but the two stat pipelines would remain and re-diverge.</div>
+    </div>
+
+    <div class="decision">
+      <div class="dnum">Decision 03</div>
+      <h3>Container queries replace viewport breakpoints</h3>
+      <p class="why">“Is this card wide enough for a side panel?” is a question about the <em>card</em>, not the window. And card width is not monotonic in viewport width: the card is full-page-width below 2xl, then <em>shrinks</em> to a ~500–700px column above it. That's precisely why the old code needed the weird <code>xl:max-2xl</code> window. <code>@container</code> on the card + <code>@min-[900px]:</code> on the layout makes the decision track actual card width.</p>
+      <p class="why" style="margin-top:10px"><strong>Why 900?</strong> The graph wants ≥ ~600px to breathe, plus the 280px panel, plus the gap. Bonus fixes for free: ultrawide screens (where the third column grows past 900px again) get the side panel back, and awkward in-between <code>lg</code> widths resolve correctly with no extra cases. <code>@min-[…px]</code> arbitrary values follow the existing repo convention (see <code>TopRoutesWidget</code>, <code>ProtocolsPieChart</code>).</p>
+      <div class="rejected"><b>REJECTED</b> — patching with more viewport windows (<code>lg:max-2xl</code>, <code>min-[2200px]:</code>…). Each new page-grid change would break the mapping again.</div>
+    </div>
+
+    <div class="decision">
+      <div class="dnum">Decision 04</div>
+      <h3>The panel measures itself too</h3>
+      <p class="why">The panel is its own <code>@container</code>. Its stat grid is 1 column under 300px of panel width, 2 columns above. So in the 280px side column it stacks; below the graph it spreads — without the panel ever knowing <em>why</em> it has the width it has. Nesting works because a container variant resolves against the nearest <em>ancestor</em> container: the panel root's classes answer to the card, its children answer to the panel.</p>
+      <div class="rejected"><b>REJECTED</b> — a <code>placement</code> prop passed down from the card. Works, but it's exactly the coupling container queries exist to delete.</div>
+    </div>
+
+    <div class="decision">
+      <div class="dnum">Decision 05</div>
+      <h3>One hint position, one CTA, everywhere</h3>
+      <p class="why">The “select a chain” hint used to live above the graph in side-panel mode and inside a placeholder box below it otherwise. Now it's always above the graph; the placeholder box and its <code>min-h-[180px]</code> reservation are gone. The summary panel's CTA was grafted onto the compact panel: a pair deep-links to <code>/interop/summary?from=…&amp;to=…</code> via <code>buildInteropUrl</code>, a single chain links to <code>{chain.href}#interop-flows</code> (absent when the chain has no project page — same rule as the summary). <code>mt-auto</code> pins it to the bottom when the side column stretches the panel.</p>
+    </div>
+  </section>
+
+  <!-- ============ 03 STRUCTURE ============ -->
+  <section id="structure">
+    <div class="snum">03 — structure</div>
+    <h2>What the tree looks like now</h2>
+
+    <div class="cols2">
+      <div>
+        <div class="colhead">Before</div>
+        <div class="tree"><b>HomeInteropCard</b>
+├─ StatTile ×4        <span class="a">md:grid-cols-4</span>
+└─ layout             <span class="a">xl:max-2xl window</span>
+   ├─ <span class="a">xl–2xl:</span> <span class="x">FlowsSelectedPathPanel</span>
+   │   ├─ SingleChainStats   <span class="c">(own useQuery)</span>
+   │   └─ MultipleChainsStats
+   └─ <span class="a">else:</span> HomeInteropSelectedPath
+       └─ <span class="x">hand-rolled stat math</span></div>
+      </div>
+      <div>
+        <div class="colhead">After</div>
+        <div class="tree"><b>HomeInteropCard</b>  <span class="p">@container</span>
+├─ StatTile ×4        <span class="t">@min-[440px]:grid-cols-4</span>
+└─ layout             <span class="t">@min-[900px]: side | stacked</span>
+   ├─ SelectInfo      <span class="c">(always above graph)</span>
+   ├─ FlowsGraphPanel <span class="c">(ResizeObserver — untouched)</span>
+   └─ <b>HomeInteropSelectedPath</b>  <span class="p">@container</span>
+       ├─ getChainFlowStatItems  <span class="c">┐ shared with</span>
+       ├─ getPairFlowStats       <span class="c">┘ summary page</span>
+       └─ CTA → buildInteropUrl</div>
+      </div>
+    </div>
+
+    <span class="filetag">packages/frontend/src/pages/home/components/HomeInteropCard.tsx — the whole trick, in one wrapper</span>
+    <pre><span class="c">// hasSelection animates the 280px column open/closed — the same</span>
+<span class="c">// grid-template-columns transition the old xl:max-2xl variant had.</span>
+&lt;div className={cn(
+  <span class="s">'mt-6 flex min-h-0 flex-1 flex-col motion-reduce:transition-none</span>
+<span class="hl">   @min-[900px]:grid @min-[900px]:gap-4</span>
+<span class="s">   @min-[900px]:transition-[grid-template-columns]</span>
+<span class="s">   @min-[900px]:duration-300 @min-[900px]:ease-in-out'</span>,
+  hasSelection
+    ? <span class="hl">'@min-[900px]:grid-cols-[1fr_280px]'</span>
+    : <span class="hl">'@min-[900px]:grid-cols-[1fr_0px]'</span>,
+)}&gt;</pre>
+
+    <span class="filetag">…and the single panel instance, placed by width alone</span>
+    <pre>{hasSelection &amp;&amp; data &amp;&amp; (
+  &lt;HomeInteropSelectedPath
+    data={data} allChains={allChains}
+    selectedChains={selectedChains}
+    visibleHighlightedChains={visibleHighlightedChains}
+    className=<span class="hl">"mt-4 @min-[900px]:mt-0 @min-[900px]:h-full @min-[900px]:w-[280px]"</span>
+  /&gt;
+)}</pre>
+
+    <span class="filetag">HomeInteropSelectedPath.tsx — stats delegated to the summary helpers</span>
+    <pre>stats: [
+  <span class="k">...</span><span class="s">getChainFlowStatItems</span>(chainData),          <span class="c">// 9 rows, identical to summary</span>
+  <span class="k">...</span>(chainData.avgDuration ? [{ label: <span class="s">'Avg. transfer time'</span>, … }] : []),
+  { label: <span class="s">'Connected'</span>, value: <span class="s">`${chainData.connectedChains} chains`</span> },
+  { label: <span class="s">'Avg. value per second'</span>, value: <span class="s">`${formatCurrency(volumePerSecond, 'usd')}/s`</span> },
+]
+<span class="c">// pair variant mirrors MultipleChainsStats via getPairFlowStats the same way</span></pre>
+
+    <h3>Everything that changed</h3>
+    <table>
+      <tr><th>File</th><th>Change</th></tr>
+      <tr><td>HomeInteropCard.tsx</td><td>Dual-component branch deleted; all <code>xl:max-2xl:</code> → container queries; hint unified above graph; placeholder box + <code>min-h-[180px]</code> removed; stat tiles → <code>@min-[440px]:grid-cols-4</code>. <span class="ok">Net −30 lines.</span></td></tr>
+      <tr><td>HomeInteropSelectedPath.tsx</td><td>Stats rebuilt on shared helpers; gained CTA, <code>className</code> prop, own <code>@container</code> with <code>@min-[300px]:grid-cols-2</code> stat grid; header made <code>flex-wrap</code> so the title can't break mid-word at 280px.</td></tr>
+      <tr><td>FlowsSelectedPathPanel.tsx</td><td>Untouched — still owns the summary page. Just no longer imported by the home card.</td></tr>
+      <tr><td colspan="2" style="color:var(--faint);font-size:12.5px">Incidental green-CI fixes in the same push: <code>RecentChangesDialog.tsx</code> — new required <code>isSelected</code> prop on <code>UpdateCard</code>, passed <code>false</code> (nothing is deep-linked in the dialog); <code>scripts/tinify/metadata.json</code> — trailing newline.</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ 04 DEMO ============ -->
+  <section id="demo">
+    <div class="snum">04 — feel it</div>
+    <h2>The container query, live</h2>
+    <p>This mock uses <strong>real CSS container queries with the shipped thresholds</strong> — <code>900px</code> for the side panel, <code>440px</code> for the tile row, <code>300px</code> for the panel's stat columns. Drag the width or jump to the four card widths measured in the running app.</p>
+  </section>
+</div>
+
+<div class="demo-shell">
+  <div class="demo-inner">
+    <div class="demo-controls">
+      <label>card width</label>
+      <input type="range" id="wslider" min="320" max="1300" value="953" step="1" />
+      <div class="presets" id="presets">
+        <button data-w="364">364 · mobile @375</button>
+        <button data-w="683">683 · 2xl column @1920</button>
+        <button data-w="953" class="on">953 · full width @1280</button>
+        <button data-w="1257">1257 · full width @1600</button>
+      </div>
+    </div>
+    <div class="readout" id="readout"></div>
+
+    <div class="demo-stage">
+      <div class="mock-card" id="mockcard">
+        <div class="mock-head"><span class="h">Interop</span><span class="v">Last 24h · View details ›</span></div>
+        <div class="mock-tiles">
+          <div class="mock-tile"><div class="t">Volume</div><div class="n">$832.03M</div></div>
+          <div class="mock-tile"><div class="t">Top chain</div><div class="n">Arbitrum One</div></div>
+          <div class="mock-tile"><div class="t">Top token</div><div class="n">USDC</div></div>
+          <div class="mock-tile"><div class="t">Top path</div><div class="n">ARB → ETH</div></div>
+        </div>
+        <div class="mock-flow">
+          <div>
+            <div class="mock-hint">↖ Select second chain to view detailed data</div>
+            <div class="mock-graph" id="mockgraph"></div>
+          </div>
+          <div class="mock-panel-slot">
+            <div class="mock-panel">
+              <div class="ph">Selected path</div>
+              <div class="ps">Ethereum ↔ 14 selected chains</div>
+              <div class="mock-stats">
+                <div class="mrow"><span class="l">Total volume</span><span class="v">$379.14M</span></div>
+                <div class="mrow"><span class="l">Volume in</span><span class="v">$225.51M</span></div>
+                <div class="mrow"><span class="l">Volume out</span><span class="v">$153.62M</span></div>
+                <div class="mrow"><span class="l">Net flow</span><span class="v">$71.88M</span></div>
+                <div class="mrow"><span class="l">Total transfers</span><span class="v">24.23K</span></div>
+                <div class="mrow"><span class="l">Unique tokens</span><span class="v">646</span></div>
+                <div class="mrow"><span class="l">Avg. transfer time</span><span class="v">23m</span></div>
+                <div class="mrow"><span class="l">Avg. value / second</span><span class="v">$4.38K/s</span></div>
+              </div>
+              <div class="mock-cta"><div>View chain details</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <!-- ============ 05 VERIFICATION ============ -->
+  <section id="verification">
+    <div class="snum">05 — verification</div>
+    <h2>Measured in the running app, not assumed</h2>
+    <p>Each width was driven in the dev server with a chain selected on the graph; layout state was read from computed styles, not eyeballed.</p>
+    <table>
+      <tr><th>Viewport</th><th>Card width</th><th>Layout</th><th>Observed</th></tr>
+      <tr><td>375px</td><td>364px</td><td>stacked</td><td>2-col tiles · panel below graph (332px, 2-col stats) · hint above graph · <span class="ok">no horizontal overflow</span></td></tr>
+      <tr><td>1280px</td><td>953px</td><td><span class="ok">side panel</span></td><td>grid animates <code>609px → 280px</code> on select · 1-col stats · CTA renders</td></tr>
+      <tr><td>1600px</td><td>1257px</td><td><span class="ok">side panel</span></td><td>page grid still single-column here (this repo's 2xl sits higher than Tailwind's default) — card wide, side panel correct</td></tr>
+      <tr><td>1920px</td><td>683px</td><td>stacked</td><td>3-column home grid active · panel below graph, 2-col stats · <span class="ok">all 12 summary-identical rows present</span></td></tr>
+    </table>
+    <p>Plus the boring guarantees: <code>tsc --noEmit</code> exits 0, <code>pnpm lint</code> and <code>pnpm format</code> clean across 1,693 files, and the open/close animation still respects <code>motion-reduce</code>.</p>
+
+    <h3>Small things worth knowing</h3>
+    <ul class="plain">
+      <li><strong>tailwind-merge is safe here</strong> — <code>mt-4</code> and <code>@min-[900px]:mt-0</code> are distinct groups, so the per-breakpoint override rule that bites with <code>md:</code> padding doesn't apply.</li>
+      <li><strong><code>FlowsGraphPanel</code> needed nothing</strong> — it already sizes via ResizeObserver, i.e. it was container-driven before the rest of the card caught up.</li>
+      <li><strong>The 280px header wrap</strong> — “Selected path” broke mid-word in the side column; fixed with <code>flex-wrap</code> + <code>shrink-0</code> on the title so the subtitle wraps as a unit instead.</li>
+      <li><strong>React Query dedupes</strong> — the panel receives <code>data</code> from the card rather than re-querying, so unifying components didn't add a request.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>home-interop-card-walkthrough.html · branch summary-page · Jul 2026 · generated with Claude Code</p>
+  </footer>
+</div>
+
+</main>
+
+<script>
+  (function () {
+    var slider = document.getElementById('wslider');
+    var card = document.getElementById('mockcard');
+    var readout = document.getElementById('readout');
+    var presets = document.getElementById('presets');
+    var PAD = 32; // p-4 both sides — container queries measure the content box
+
+    function render(w) {
+      card.style.width = w + 'px';
+      var content = w - PAD;
+      var mode = content >= 900 ? 'side panel (grid 1fr + 280px)' : 'stacked (panel below graph)';
+      var tiles = content >= 440 ? '4' : '2';
+      var statCols = content >= 900 ? 1 : ((content - 24) >= 300 ? 2 : 1);
+      readout.innerHTML =
+        'card <b>' + w + 'px</b> · content <b>' + content + 'px</b> · layout <span class="mode">' + mode +
+        '</span> · tiles <span class="mode">' + tiles + ' cols</span> · panel stats <span class="mode">' + statCols + ' col' + (statCols > 1 ? 's' : '') + '</span>';
+      var btns = presets.querySelectorAll('button');
+      for (var i = 0; i < btns.length; i++) {
+        btns[i].classList.toggle('on', +btns[i].dataset.w === w);
+      }
+    }
+    slider.addEventListener('input', function () { render(+slider.value); });
+    presets.addEventListener('click', function (e) {
+      var b = e.target.closest('button');
+      if (!b) return;
+      slider.value = b.dataset.w;
+      render(+b.dataset.w);
+    });
+    render(+slider.value);
+
+    // little network mock in the graph box
+    var g = document.getElementById('mockgraph');
+    var chains = [
+      { n: 'ETH', c: '#8f8aff', x: 78, y: 22, sel: true },
+      { n: 'ARB', c: '#45d6c0', x: 40, y: 12 },
+      { n: 'BASE', c: '#5aa2ff', x: 18, y: 46 },
+      { n: 'OP',  c: '#ff6b6b', x: 34, y: 82 },
+      { n: 'HL',  c: '#7de08c', x: 66, y: 86 },
+      { n: 'MON', c: '#ffb454', x: 88, y: 60 }
+    ];
+    function edge(a, b) {
+      var el = document.createElement('div');
+      el.className = 'edge';
+      el.dataset.a = a; el.dataset.b = b;
+      g.appendChild(el);
+    }
+    chains.forEach(function (c, i) {
+      var el = document.createElement('div');
+      el.className = 'node' + (c.sel ? ' sel' : '');
+      el.textContent = c.n;
+      el.style.background = c.c;
+      g.appendChild(el);
+      if (i > 0) edge(0, i);
+    });
+    edge(1, 2); edge(3, 4);
+    function layout() {
+      var r = g.getBoundingClientRect();
+      var nodes = g.querySelectorAll('.node');
+      nodes.forEach ? null : 0;
+      for (var i = 0; i < chains.length; i++) {
+        var c = chains[i];
+        c.px = (c.x / 100) * (r.width - 26);
+        c.py = (c.y / 100) * (r.height - 26);
+        nodes[i].style.left = c.px + 'px';
+        nodes[i].style.top = c.py + 'px';
+      }
+      var edges = g.querySelectorAll('.edge');
+      for (var j = 0; j < edges.length; j++) {
+        var a = chains[+edges[j].dataset.a], b = chains[+edges[j].dataset.b];
+        var x1 = a.px + 13, y1 = a.py + 13, x2 = b.px + 13, y2 = b.py + 13;
+        var len = Math.hypot(x2 - x1, y2 - y1);
+        edges[j].style.left = x1 + 'px';
+        edges[j].style.top = y1 + 'px';
+        edges[j].style.width = len + 'px';
+        edges[j].style.transform = 'rotate(' + Math.atan2(y2 - y1, x2 - x1) + 'rad)';
+      }
+    }
+    new ResizeObserver(layout).observe(g);
+    layout();
+  })();
+</script>
+</body>
+</html>
