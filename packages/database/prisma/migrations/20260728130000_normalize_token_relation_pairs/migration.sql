@@ -12,6 +12,15 @@
 -- transfer's source — which step 4 destroys when it swaps rows into
 -- lexicographic order.
 
+-- The file runs as one transaction, and the live writer keeps inserting
+-- normalized rows while it does. Without this lock, an insert committing in
+-- the gap between step 3's delete and step 4's swap can occupy the exact
+-- primary key the swap is about to write, aborting the whole migration.
+-- EXCLUSIVE blocks writers while letting reads proceed; it is released on
+-- commit (sub-second for this table), after which a blocked ingestion tick
+-- simply resumes against the then-constrained table.
+LOCK TABLE "TokenRelation" IN EXCLUSIVE MODE;
+
 -- 1. Backfill `lockedToken` from the evidence, mirroring
 --    `InteropTransferClassifier.inferLockedTransferSide`. `IS TRUE`/`IS FALSE`
 --    keep an unobserved flag from propagating NULL. A pair that both flags
