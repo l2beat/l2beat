@@ -30,11 +30,8 @@ export function getLivenessGroupingKey(
 
   for (const index of grouping.path) {
     assert(Number.isInteger(index) && index >= 0, 'Invalid parameter path')
-    assert(
-      typeof value === 'object' && value !== null,
-      'Parameter path does not exist',
-    )
-    value = Reflect.get(value, index)
+    assert(Array.isArray(value), 'Parameter path does not exist')
+    value = value[index]
   }
 
   assert(value !== undefined && value !== null, 'Parameter path does not exist')
