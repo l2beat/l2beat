@@ -1,7 +1,14 @@
 import type { InteropBridgeType } from '@l2beat/shared-pure'
-import type { Insertable, Selectable, Updateable } from 'kysely'
+import type {
+  Expression,
+  ExpressionBuilder,
+  Insertable,
+  Selectable,
+  SqlBool,
+  Updateable,
+} from 'kysely'
 import { BaseRepository } from '../BaseRepository'
-import type { TokenRelation } from '../kysely/generated/types'
+import type { DB, TokenRelation } from '../kysely/generated/types'
 import type { DeployedTokenPrimaryKey } from './DeployedTokenRepository'
 
 export type JsonValue =
@@ -287,6 +294,59 @@ export class TokenRelationRepository extends BaseRepository {
       .execute()
 
     return rows.map(toRecord)
+  }
+
+  /**
+   * Distinct names of the plugins observed minting this token — the plugins
+   * of every relation in which this token is minted:
+   *
+   * - a `lockAndMint` relation whose locked endpoint is the *other* one,
+   *   making this token the minted representation, or
+   * - a `burnAndMint` relation mentioning the token — the pair is symmetric,
+   *   so both endpoints are minted.
+   *
+   * A `lockAndMint` relation whose locked endpoint is not identified
+   * (`lockedToken` null) names no minter: one of its endpoints is minted, but
+   * nothing says it is this one.
+   */
+  async getMintingPluginsFor(
+    token: DeployedTokenPrimaryKey,
+  ): Promise<string[]> {
+    const address = token.address.toLowerCase()
+    const rows = await this.db
+      .selectFrom('TokenRelation')
+      .select('plugin')
+      .distinct()
+      .where((eb) =>
+        eb.or([
+          this.mintedAtEndpoint(eb, { chain: token.chain, address }, 'A'),
+          this.mintedAtEndpoint(eb, { chain: token.chain, address }, 'B'),
+        ]),
+      )
+      .orderBy('plugin')
+      .execute()
+
+    return rows.map((row) => row.plugin)
+  }
+
+  // The token occupies the given endpoint slot and is minted there.
+  private mintedAtEndpoint(
+    eb: ExpressionBuilder<DB, 'TokenRelation'>,
+    token: DeployedTokenPrimaryKey,
+    slot: 'A' | 'B',
+  ): Expression<SqlBool> {
+    const otherSlot = slot === 'A' ? 'B' : 'A'
+    return eb.and([
+      eb(`token${slot}Chain`, '=', token.chain),
+      eb(`token${slot}Address`, '=', token.address),
+      eb.or([
+        eb('bridgeType', '=', 'burnAndMint' satisfies InteropBridgeType),
+        eb.and([
+          eb('bridgeType', '=', 'lockAndMint' satisfies InteropBridgeType),
+          eb('lockedToken', '=', otherSlot),
+        ]),
+      ]),
+    ])
   }
 
   async deleteByPrimaryKey(pk: TokenRelationPrimaryKey): Promise<number> {

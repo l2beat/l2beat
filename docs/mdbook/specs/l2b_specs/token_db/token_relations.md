@@ -370,6 +370,16 @@ This is the answer to "which plugin minted this token, and which token is it
 a representation of" — the question the Relations tab exists for. Read it
 from `role`, never by comparing the endpoint columns.
 
+The narrower question "which plugins mint this token" — asked by the public
+frontend, which reads the token database directly rather than through
+token-backend — is answered by
+`TokenRelationRepository.getMintingPluginsFor`: the distinct plugins of the
+relations where the token is minted. Deliberately
+excluded: relations where the token is locked, relations with an unknown
+role (one of their endpoints is minted, but nothing says it is this one), and
+non-`burnAndMint` symmetric-looking rows — a human-added `nonMinting`
+relation mints nothing.
+
 ## Relations graph
 
 The graph page in token-ui is a view of the relation observations resolved
