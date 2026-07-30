@@ -1,3 +1,46 @@
+Generated with discovered.json: 0xaa0ca21831e4d5f0cb1c23c402aec30a1c311aab
+
+# Diff at Thu, 30 Jul 2026 11:10:25 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@fb0b50e4a7f7900d17e186f908b2b3ca3e977527 block: 1784882184
+- current timestamp: 1785409759
+
+## Description
+
+DesertVerifier became verified on Robinhood chain and Governance deployer metadata was resolved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784882184 (main branch discovery), not current.
+
+```diff
+    contract DesertVerifier (robinhood:0x56aeED6920DBB9E198C2C0072147A45684A06E10) [N/A] {
+    +++ description: None
+      unverified:
+-        true
+      implementationNames.robinhood:0x56aeED6920DBB9E198C2C0072147A45684A06E10:
+-        ""
++        "DesertVerifier"
+      sourceHashes:
++        ["0xcedbddf6ef097d451ba200328780c0cc492b65383f8dc44e760ec70eee4f8850"]
+    }
+```
+
+```diff
+    contract Governance (robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7) [lighter/Governance] {
+    +++ description: Manages the list of validators and the network governor.
+      deployerAddress:
++        "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213"
+      sinceTimestamp:
++        1782477747
+      sinceBlock:
++        229410
+    }
+```
+
 Generated with discovered.json: 0xf704c3228f6a40b431bfe9843954067403a4382d
 
 # Diff at Tue, 28 Jul 2026 14:38:19 GMT:

@@ -1,6 +1,6 @@
 {
   "name": "lighter-robinhood",
-  "timestamp": 1785249432,
+  "timestamp": 1785409759,
   "configHash": "0x74fe45fb2033ef91c26708241090402289381d8f144e33c694df9da88a2cfebb",
   "entries": [
     {
@@ -163,14 +163,16 @@
       "name": "DesertVerifier",
       "address": "robinhood:0x56aeED6920DBB9E198C2C0072147A45684A06E10",
       "type": "Contract",
-      "unverified": true,
+      "sourceHashes": [
+        "0xcedbddf6ef097d451ba200328780c0cc492b65383f8dc44e760ec70eee4f8850"
+      ],
       "proxyType": "immutable",
       "deployerAddress": "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213",
       "sinceTimestamp": 1784265403,
       "sinceBlock": 11861471,
       "values": { "$immutable": true },
       "implementationNames": {
-        "robinhood:0x56aeED6920DBB9E198C2C0072147A45684A06E10": ""
+        "robinhood:0x56aeED6920DBB9E198C2C0072147A45684A06E10": "DesertVerifier"
       }
     },
     {
@@ -258,6 +260,9 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages the list of validators and the network governor.",
+      "deployerAddress": "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213",
+      "sinceTimestamp": 1782477747,
+      "sinceBlock": 229410,
       "values": {
         "$admin": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
         "$implementation": "robinhood:0x3468Dcab5a2D81Af207B3e301DFA889321989a61",
@@ -373,6 +378,11 @@
       "function versionId() view returns (uint256)",
       "function zkLighterProxy() view returns (address)"
     ],
+    "robinhood:0x56aeED6920DBB9E198C2C0072147A45684A06E10": [
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function initialize(bytes)",
+      "function upgrade(bytes upgradeParameters)"
+    ],
     "robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d": [
       "constructor(address target, bytes targetInitializationParameters)",
       "function getMaster() view returns (address master)",
@@ -411,6 +421,6 @@
     "lighter/UpgradeGatekeeper": "0x72341d695123479e7b06142a86f758d7b9488ac1cb776c7411630080ba1e9a59",
     "lighter/ZkLighterVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "robinhood": 21669016 },
+  "usedBlockNumbers": { "robinhood": 23268111 },
   "permissionsConfigHash": "0x9b9c64773933f1e2c923a7b768e1cb7194286c7d1c2cb4990e5f6903674374db"
 }
