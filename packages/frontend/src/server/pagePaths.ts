@@ -48,7 +48,14 @@ export const STATIC_PAGE_PATHS = [
 ] as const satisfies PagePath[]
 
 export async function getPagePaths(): Promise<PagePath[]> {
-  return [...STATIC_PAGE_PATHS, ...(await getDynamicPagePaths())]
+  const flaggedPaths: PagePath[] = env.FEATURE_FLAG_COMPARE_PROJECTS
+    ? ['/scaling/compare']
+    : []
+  return [
+    ...STATIC_PAGE_PATHS,
+    ...flaggedPaths,
+    ...(await getDynamicPagePaths()),
+  ]
 }
 
 async function getDynamicPagePaths(): Promise<PagePath[]> {

@@ -1,11 +1,13 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import express from 'express'
+import { env } from '~/env'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
 import { getScalingActivityData } from './activity/getScalingActivityData'
 import { getScalingArchivedData } from './archived/getScalingArchivedData'
+import { getScalingCompareData } from './compare/getScalingCompareData'
 import { getScalingCostsData } from './costs/getScalingCostsData'
 import { getScalingLivenessData } from './liveness/getScalingLivenessData'
 import { getScalingProjectData } from './project/getScalingProjectData'
@@ -63,6 +65,16 @@ export function createScalingRouter(
     const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
+
+  if (env.FEATURE_FLAG_COMPARE_PROJECTS) {
+    // No validateRoute: the compare page parses and sanitizes its query
+    // params itself (unknown values fall back to defaults, never 400).
+    router.get('/scaling/compare', async (req, res) => {
+      const data = await getScalingCompareData(req, manifest, cache)
+      const html = await render(data, req.originalUrl)
+      res.status(200).send(html)
+    })
+  }
 
   router.get(
     '/scaling/tvs',
