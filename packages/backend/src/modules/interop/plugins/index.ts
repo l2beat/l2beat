@@ -30,6 +30,7 @@ import { DeBridgePlugin } from './debridge'
 import { DeBridgeDlnPlugin } from './debridge-dln'
 import { GasZipConfigPlugin } from './gaszip/gaszip.config'
 import { GasZipPlugin } from './gaszip/gaszip.plugin'
+import { GnosisBridgePlugin } from './gnosisbridge'
 import { HyperlanePlugIn } from './hyperlane'
 import { HyperlaneConfigPlugin } from './hyperlane.config'
 import { HyperlaneEcoPlugin } from './hyperlane-eco'
@@ -214,6 +215,7 @@ export function createInteropPlugins(
         ],
       },
       new AvalanchePlugin(),
+      new GnosisBridgePlugin(),
       new LineaPlugin(),
       {
         name: 'axelar',

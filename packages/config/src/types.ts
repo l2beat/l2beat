@@ -1411,6 +1411,7 @@ export type InteropPluginName =
   | 'debridge'
   | 'debridge-dln'
   | 'gaszip'
+  | 'gnosisbridge'
   | 'hyperlane'
   | 'hyperlane-eco'
   | 'hyperlane-hwr'
