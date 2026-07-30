@@ -1,8 +1,7 @@
 {
   "name": "lumia",
   "timestamp": 1761895563,
-  "configHash": "0xca533beca2b09634a8ce92d2d807b952f54a2876e69c4508d5fddd5be9dc1b63",
-  "sharedModules": ["shared-polygon-cdk"],
+  "configHash": "0x44170e02d908eeeb6841697c0bc26af49aaf6e31466f9abc6754d296c9636c86",
   "entries": [
     {
       "name": "AgglayerGateway",

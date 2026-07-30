@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x2460028db8f0cf211ea30dd957fd769161b141b2
+
+# Diff at Thu, 30 Jul 2026 10:47:38 GMT:
+
+- author: Sergey Shemyakov (<serge.shemyakov@l2beat.com>)
+- comparing to: main@4e9103e71c52f25da344c761254bcc489fdd6f5a block: 1784543269
+- current timestamp: 1785404669
+
+## Description
+
+New railgun proposal created. It is evaluated as not malicious. The trx: https://tools.l2beat.com/decoder-new/?hash=0x818c219e6081d0b650f6be93fb19e1829c154c299f2dae0c7e2f6a6dcd3f2a71&data=AwA.
+Proposed upgrade of the main Railgun contract: https://disco.l2beat.com/diff/eth:0xB4F2d77bD12c6b548Ae398244d7FAD4ABCE4D89b/eth:0xd662c4b1f22aceb0beacdf3a493de6f478686a0c.
+
+Changes:
+- Added Action event that has overview of trxs in the action. This event is now emitted in transact()
+- verify() and validateTransaction() now also return hashBoundParams to be included in the new event
+- minor refactoring.
+
+Proposal also executes task 6 on Arbitrum Executor, which is this one: https://tools.l2beat.com/decoder-new/?hash=0xa2403ae37d69e9b92b5934bfb13779176d8484402b211ed8f55cd3d415ef0d66&data=AwA. It makes the same railgun contract upgrade on Arbitrum.
+
+The newly deployed railgun contracts have poseidon hash libraries not verified, it is confirmed that the EVM byte code of these libraries is equivalent to the previous deployment (no vulnerabilities introduced) on Ethereum and Arbitrum.
+
+## Watched changes
+
+```diff
+    contract Voting (eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) [railgun/Voting] {
+    +++ description: Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.
++++ severity: HIGH
+      values.proposalCount:
+-        25
++        26
+    }
+```
+
 Generated with discovered.json: 0xfe1fbfd0e53c5757dbaa3477468a5f1704eb7f16
 
 # Diff at Mon, 20 Jul 2026 10:53:56 GMT:

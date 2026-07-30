@@ -45,11 +45,6 @@
       "type": "Contract",
       "project": "shared-zk-stack"
     },
-    "eth:0x390bc10e854e137d2625573272b3fEe2C615eBA4": {
-      "name": "L1GenesisUpgrade",
-      "type": "Contract",
-      "project": "shared-zk-stack"
-    },
     "eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828": {
       "name": "Matter Labs Multisig",
       "type": "Contract",

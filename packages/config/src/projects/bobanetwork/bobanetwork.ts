@@ -13,6 +13,27 @@ export const bobanetwork: ScalingProject = opStackL2({
   },
   addedAt: UnixTime(1632469722), // 2021-09-24T07:48:42Z
   discovery,
+  nonTemplateDaTracking: [
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 19671339, // first batch posted to the inbox after the Anchorage migration
+      untilBlock: 22790097, // last batch of this sequencer
+      inbox: EthereumAddress('0xfFF0000000000000000000000000000000000288'),
+      sequencers: [
+        EthereumAddress('0xe1B64045351B0B6e9821F19b39f81bc4711D2230'),
+      ],
+    },
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 22790097,
+      inbox: EthereumAddress('0xfFF0000000000000000000000000000000000288'),
+      sequencers: [
+        EthereumAddress('0xA4eD58737Fc5C4861C33410c29ECb1E2AF29d960'),
+      ],
+    },
+  ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Boba Network',

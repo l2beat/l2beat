@@ -21,6 +21,7 @@ export interface DynamicPageToVerify {
  * prefetches are not useful for this check.
  */
 export const STATIC_PAGES: PageToVerify[] = [
+  page('/', ['interop.dashboard', 'interop.flows']),
   page('/scaling/summary', [
     'tvs.recategorisedChart',
     'activity.recategorisedChart',
@@ -51,7 +52,7 @@ export const STATIC_PAGES: PageToVerify[] = [
     'interop.flows',
     'da.projectCharts',
   ]),
-  page('/data-availability/projects/eigenda/eigenda-v2', ['da.projectCharts']),
+  page('/data-availability/projects/eigenda/eigenda', ['da.projectCharts']),
   page('/interop/summary', ['interop.flows']),
   page('/interop/lock-and-mint?from=ethereum&to=arbitrum', [
     'interop.dashboard',

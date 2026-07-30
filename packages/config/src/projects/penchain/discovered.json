@@ -1,8 +1,7 @@
 {
   "name": "penchain",
   "timestamp": 1777962030,
-  "configHash": "0x0442f99d5d83f849a3e67735f13abfff6ae15f29c40259b6d3cd4e21a66f94c7",
-  "sharedModules": ["shared-polygon-cdk"],
+  "configHash": "0xdc8e49f326b2907312b7a1e3fcb353d383e2f1a0bb4f6156a8b79c2f7d3f6b26",
   "entries": [
     {
       "name": "AgglayerGateway",

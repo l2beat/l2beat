@@ -1,3 +1,69 @@
+Generated with discovered.json: 0xfe0853d552ea5b849a7a5e3877fc351c3cd5bb47
+
+# Diff at Tue, 28 Jul 2026 14:38:32 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@fb0b50e4a7f7900d17e186f908b2b3ca3e977527 block: 1784882216
+- current timestamp: 1785249440
+
+## Description
+
+Deployer address, timestamp and block resolved for ArbFilteredTransactionsManager, L2UpgradeExecutor, ProxyAdmin and SafeL2.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784882216 (main branch discovery), not current.
+
+```diff
+    contract ArbFilteredTransactionsManager (robinhood:0x0000000000000000000000000000000000000074) [N/A] {
+    +++ description: ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.
+      deployerAddress:
++        "robinhood:0x0000000000000000000000000000000000000000"
+      sinceTimestamp:
++        1777567931
+      sinceBlock:
++        0
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09) [orbitstack/UpgradeExecutor] {
+    +++ description: ArbOS chain owner (UpgradeExecutor). Manages the ArbOwner chain-owner set and the transaction-filterer set, and can upgrade ArbOS configuration without delay.
+      deployerAddress:
++        "robinhood:0xBA7c7F9e20A1F6e11815D4Af08D911B21cb391Fd"
+      sinceTimestamp:
++        1777567931
+      sinceBlock:
++        2
+    }
+```
+
+```diff
+    contract ProxyAdmin (robinhood:0x672Da8B43058D1bC78956d71d9A208E168E2a3EF) [global/ProxyAdmin] {
+    +++ description: None
+      deployerAddress:
++        "robinhood:0xcFDab226f6DF33cd364Ff8E617bEB5Fe54E84Ebe"
+      sinceTimestamp:
++        1782841253
+      sinceBlock:
++        615454
+    }
+```
+
+```diff
+    contract SafeL2 (robinhood:0x6b9F63817F1442e40Bb9c3C2207758934C323FdC) [GnosisSafe] {
+    +++ description: None
+      deployerAddress:
++        "robinhood:0xcFDab226f6DF33cd364Ff8E617bEB5Fe54E84Ebe"
+      sinceTimestamp:
++        1782841226
+      sinceBlock:
++        615414
+    }
+```
+
 Generated with discovered.json: 0xe34461322774a5b2afee4b3aeb9dbe9faa71d9c0
 
 # Diff at Fri, 24 Jul 2026 08:38:05 GMT:

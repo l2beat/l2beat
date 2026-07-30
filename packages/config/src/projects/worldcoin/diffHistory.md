@@ -1,3 +1,42 @@
+Generated with discovered.json: 0xf38dab6749dc2f4e7b9684e7c440ec4e502b8fde
+
+# Diff at Wed, 29 Jul 2026 11:46:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8fc71653df107a65d06ec19257b0c3f4f6ed070d block: 1767718570
+- current timestamp: 1785325462
+
+## Description
+
+A newly deployed 1-of-2 Safe was added as the seventh member of the Safe controlling WorldIDRouterV1. The outer threshold remains 2, changing it from 2-of-6 to 2-of-7; either owner of the inner Safe can provide that member's approval.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (oeth:0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "oeth:0x3Ba8e8e561798e5194c898f3a2303986A7d1e901"
+      values.multisigThreshold:
+-        "2 of 6 (33%)"
++        "2 of 7 (29%)"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (oeth:0x3Ba8e8e561798e5194c898f3a2303986A7d1e901) [GnosisSafe]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../src/projects/worldcoin/.flat/SafeL2/SafeL2.sol | 1286 ++++++++++++++++++++
+ .../worldcoin/.flat/SafeL2/SafeProxy.p.sol         |   42 +
+ 2 files changed, 1328 insertions(+)
+```
+
 Generated with discovered.json: 0x973f814636e4208cb873e03d11312d3c79a57fe6
 
 # Diff at Fri, 12 Jun 2026 10:19:08 GMT:
@@ -4231,4 +4270,3 @@ Added worldcoin discovery. In particular this is needed for the ZK Catalog.
     contract RegisterVerifierSize600 (0xFC1c26E964F791f81a33F49D91f79456891AA1c1)
     +++ description: None
 ```
-

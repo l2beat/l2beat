@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xeb6a6b3452a25ce402ae0eeea93afe8b6384558c
+
+# Diff at Wed, 29 Jul 2026 11:40:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8fc71653df107a65d06ec19257b0c3f4f6ed070d block: 1784814808
+- current timestamp: 1785325171
+
+## Description
+
+The existing three-day slashing pause expired (the `slashingDisabledUntil` value did not change), so slash payload execution is enabled again.
+
+## Watched changes
+
+```diff
+    contract Slasher (eth:0xCD6855470A01aBcd989126A1183Fb50673952548) [aztecnetwork/Slasher] {
+    +++ description: Executes payload actions submitted by the authorized slashing proposer or Governance. Execution is blocked while slashing is disabled or when the vetoer has vetoed the payload; voting and execution-delay rules are enforced by the proposer, while Governance can bypass the proposer.
++++ description: Whether slash payload execution is currently enabled.
+      values.isSlashingEnabled:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x351255fab4b01b1fd251a72432169fa64318b666
 
 # Diff at Thu, 23 Jul 2026 13:54:50 GMT:

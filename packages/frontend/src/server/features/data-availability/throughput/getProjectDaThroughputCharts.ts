@@ -14,11 +14,15 @@ import {
   ProjectDaThroughputChartParams,
   type ProjectDaThroughputChartPoint,
 } from './getProjectDaThroughputChart'
+import { isInEigendaLayerDataGap } from './utils/eigendaDataGap'
 
 export type getProjectDaThroughputChartsData = {
   totalChart: {
     data: ProjectDaThroughputChartPoint[]
     range: ChartRange
+    // Chart timestamps bounding the range where data is not available; the
+    // bounds themselves are the closest synced points on each side
+    dataGap: [number, number] | undefined
   }
   byProjectChart: {
     data: DaThroughputChartDataPoint[]
@@ -71,9 +75,34 @@ export async function getProjectDaThroughputCharts(
   const to = Math.max(totalChartData.to, byProjectChartData.to)
 
   const timestamps = generateTimestamps([from, to], resolution)
+  const hasEigendaGap =
+    params.projectId === 'eigenda' && !params.includeScalingOnly
+  const firstGapIndex = hasEigendaGap
+    ? timestamps.findIndex((t) => isInEigendaLayerDataGap(t, resolution))
+    : -1
+  const lastGapIndex = hasEigendaGap
+    ? timestamps.findLastIndex((t) => isInEigendaLayerDataGap(t, resolution))
+    : -1
+  // Extend to the neighboring synced points so the hatched area connects to
+  // the data on both sides
+  const gapStart =
+    firstGapIndex !== -1
+      ? timestamps.at(Math.max(firstGapIndex - 1, 0))
+      : undefined
+  const gapEnd =
+    lastGapIndex !== -1
+      ? timestamps.at(Math.min(lastGapIndex + 1, timestamps.length - 1))
+      : undefined
+  const dataGap: [number, number] | undefined =
+    gapStart !== undefined && gapEnd !== undefined
+      ? [gapStart, gapEnd]
+      : undefined
 
   const totalChart: ProjectDaThroughputChartPoint[] = timestamps.map(
     (timestamp) => {
+      if (hasEigendaGap && isInEigendaLayerDataGap(timestamp, resolution)) {
+        return [timestamp, null]
+      }
       const posted =
         timestamp <= totalChartData.maxTimestamp
           ? (totalChartData.grouped[timestamp] ?? 0)
@@ -93,6 +122,7 @@ export async function getProjectDaThroughputCharts(
     totalChart: {
       data: totalChart,
       range: [from, to],
+      dataGap,
     },
     byProjectChart: {
       data: byProjectChart,
@@ -125,6 +155,7 @@ function getMockProjectDaThroughputCharts({
       totalChart: {
         data: [],
         range: [from, to],
+        dataGap: undefined,
       },
       byProjectChart: {
         data: [],
@@ -148,6 +179,7 @@ function getMockProjectDaThroughputCharts({
         return [timestamp, Math.round(throughputValue)]
       }),
       range: [from, to],
+      dataGap: undefined,
     },
     byProjectChart: {
       data: [],
