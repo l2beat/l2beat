@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type {
   TrackedTxConfigEntry,
   TrackedTxFunctionCallConfig,
@@ -29,6 +30,7 @@ export function transformFunctionCallsQueryResult(
     TrackedTxConfigEntry & { params: TrackedTxSharedBridgeConfig }
   >[],
   queryResults: DuneFunctionCallResult[],
+  logger: Logger,
 ): TrackedTxFunctionCallResult[] {
   return queryResults.flatMap((r) => {
     const selector = r.input.slice(0, 10)
@@ -70,7 +72,7 @@ export function transformFunctionCallsQueryResult(
       ...matchingCalls,
       ...filteredSubmissions,
       ...filteredSharedBridgeCalls,
-    ].map((config) => {
+    ].flatMap((config): TrackedTxFunctionCallResult[] => {
       const common = {
         id: config.id,
         formula: 'functionCall' as const,
@@ -94,22 +96,35 @@ export function transformFunctionCallsQueryResult(
       }
 
       if (hasLivenessGrouping(config.properties)) {
-        return {
-          ...common,
-          type: 'liveness',
-          groupingKey: getLivenessGroupingKey(
-            r.input,
-            config.properties.params,
-            config.properties.groupBy,
-          ),
+        try {
+          return [
+            {
+              ...common,
+              type: 'liveness',
+              groupingKey: getLivenessGroupingKey(
+                r.input,
+                config.properties.params,
+                config.properties.groupBy,
+              ),
+            },
+          ]
+        } catch (error) {
+          logger.warn('Failed to derive liveness grouping key', {
+            error,
+            configurationId: config.id,
+            projectId: config.properties.projectId,
+            transactionHash: r.hash,
+            blockNumber: r.block_number,
+          })
+          return []
         }
       }
 
       if (config.properties.type === 'liveness') {
-        return { ...common, type: 'liveness' }
+        return [{ ...common, type: 'liveness' }]
       }
 
-      return { ...common, type: 'l2costs' }
+      return [{ ...common, type: 'l2costs' }]
     })
 
     return results

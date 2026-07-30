@@ -1,3 +1,4 @@
+import { Logger } from '@l2beat/backend-tools'
 import {
   createTrackedTxId,
   type TrackedTxConfigEntry,
@@ -12,7 +13,7 @@ import {
   type TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
 import { readFileSync } from 'fs'
 import {
@@ -67,6 +68,8 @@ describe(transformFunctionCallsQueryResult.name, () => {
     const secondInput = iface.encodeFunctionData('submit', [[123, 789]])
     const livenessId = createTrackedTxId.random()
     const costsId = createTrackedTxId.random()
+    const warn = mockFn().returns(undefined)
+    const logger = mockObject<Logger>({ warn })
     const common = {
       projectId: ProjectId('project'),
       subtype: 'stateUpdates' as const,
@@ -133,14 +136,37 @@ describe(transformFunctionCallsQueryResult.name, () => {
           non_zero_bytes: 100,
           blob_versioned_hashes: null,
         },
+        {
+          hash: txHashes[2],
+          block_number: block + 2,
+          block_time: timestamp + 2,
+          input: selector,
+          to: address,
+          gas_price: 10n,
+          gas_used: 100,
+          data_length: 4,
+          non_zero_bytes: 4,
+          blob_versioned_hashes: null,
+        },
       ],
+      logger,
     )
 
     const liveness = result.filter((entry) => entry.type === 'liveness')
     const costs = result.filter((entry) => entry.type === 'l2costs')
 
     expect(liveness.map((entry) => entry.groupingKey)).toEqual(['123', '123'])
-    expect(costs).toHaveLength(2)
+    expect(costs).toHaveLength(3)
+    expect(warn).toHaveBeenCalledWith(
+      'Failed to derive liveness grouping key',
+      {
+        error: expect.anything(),
+        configurationId: livenessId,
+        projectId: common.projectId,
+        transactionHash: txHashes[2],
+        blockNumber: block + 2,
+      },
+    )
   })
 
   it('should transform results', () => {
@@ -289,6 +315,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       sharpSubmissions,
       sharedBridgeCalls,
       queryResults,
+      Logger.SILENT,
     )
 
     expect(result).toEqual(expected)
@@ -324,7 +351,13 @@ describe(transformFunctionCallsQueryResult.name, () => {
     ]
 
     expect(() =>
-      transformFunctionCallsQueryResult(functionCalls, [], [], queryResults),
+      transformFunctionCallsQueryResult(
+        functionCalls,
+        [],
+        [],
+        queryResults,
+        Logger.SILENT,
+      ),
     ).toThrow('There should be at least one matching config')
   })
 
@@ -394,6 +427,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       sharpSubmissions,
       [],
       queryResults,
+      Logger.SILENT,
     )
 
     expect(result).toEqual(expected)
@@ -509,6 +543,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       [],
       sharedBridgeCalls,
       queryResults,
+      Logger.SILENT,
     )
 
     expect(result).toEqual(expected)
@@ -584,6 +619,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       [],
       sharedBridgeCalls,
       queryResults,
+      Logger.SILENT,
     )
 
     expect(result).toEqual(expected)
@@ -726,6 +762,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       [],
       [],
       queryResults,
+      Logger.SILENT,
     )
 
     expect(result).toEqual(expected)

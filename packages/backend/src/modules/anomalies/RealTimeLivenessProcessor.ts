@@ -136,7 +136,14 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
               config.params,
               config.groupBy,
             )
-          } catch {
+          } catch (error) {
+            this.logger.warn('Failed to derive liveness grouping key', {
+              error,
+              configurationId: config.id,
+              projectId: config.projectId,
+              transactionHash: tx.hash,
+              blockNumber: block.number,
+            })
             return []
           }
         }

@@ -163,6 +163,7 @@ export class TrackedTxsClient {
       sharpSubmissionsConfig,
       sharedBridgesConfig,
       queryResult,
+      this.logger,
     )
   }
 }

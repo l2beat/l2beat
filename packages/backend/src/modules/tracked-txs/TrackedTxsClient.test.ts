@@ -380,6 +380,7 @@ const FUNCTIONS_RESULT = transformFunctionCallsQueryResult(
   [CONFIGURATIONS[2]],
   [CONFIGURATIONS[3], CONFIGURATIONS[4], CONFIGURATIONS[5]],
   FUNCTIONS_RESPONSE,
+  Logger.SILENT,
 )
 
 const TRANSFERS_SQL = getTransferQuery(

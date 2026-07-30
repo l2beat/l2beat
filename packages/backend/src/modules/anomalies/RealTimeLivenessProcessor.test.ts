@@ -251,6 +251,15 @@ describe(RealTimeLivenessProcessor.name, () => {
       })
 
       it('skips a grouped call when its input cannot be decoded', async () => {
+        const warn = mockFn().returns(undefined)
+        const logger = mockObject<Logger>({
+          for: mockFn().returns(
+            mockObject<Logger>({
+              warn,
+              info: mockFn().returns(undefined),
+            }),
+          ),
+        })
         const realTimeLivenessRepository = mockObject<
           Database['realTimeLiveness']
         >({
@@ -308,7 +317,7 @@ describe(RealTimeLivenessProcessor.name, () => {
             groupedConfiguration,
             ungroupedConfiguration,
           ]),
-          Logger.SILENT,
+          logger,
           mockDatabase({ realTimeLiveness: realTimeLivenessRepository }),
           mockObject<AnomalyNotifier>(),
         )
@@ -323,6 +332,16 @@ describe(RealTimeLivenessProcessor.name, () => {
             timestamp: block.timestamp,
           },
         ])
+        expect(warn).toHaveBeenCalledWith(
+          'Failed to derive liveness grouping key',
+          {
+            error: expect.anything(),
+            configurationId: groupedConfiguration.id,
+            projectId,
+            transactionHash: '0x123',
+            blockNumber: block.number,
+          },
+        )
       })
 
       it('skips a grouped call when its grouping key is too long', async () => {
