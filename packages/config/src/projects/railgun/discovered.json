@@ -1325,6 +1325,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Collects Railgun fees. Managed through access control roles.",
+      "ignoreInWatchMode": ["RAILBalance"],
       "deployerAddress": "eth:0x223e4fD4a088Abf96f16A579A3EAde3F87Dd2911",
       "sinceTimestamp": 1657776059,
       "sinceBlock": 15138802,
@@ -1357,6 +1358,7 @@
         "defaultAdminRoleMembers": [
           "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B"
         ],
+        "RAILBalance": "2,621,512.109670325154470821",
         "TRANSFER_ROLE": "0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c",
         "transferRoleMembers": [
           "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
@@ -1371,6 +1373,9 @@
         ]
       },
       "fieldMeta": {
+        "RAILBalance": {
+          "description": "RAIL held by the treasury, movable by holders of TRANSFER_ROLE."
+        },
         "$admin": {
           "severity": "HIGH",
           "description": "Proxy admin that can pause, unpause, transfer proxy ownership, or upgrade the treasury proxy.",
@@ -1405,6 +1410,7 @@
         "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40": "PausableUpgradableProxy",
         "eth:0xA092c7577354EA82a6c7e55B423c3DD80f0dF255": "Treasury"
       },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -1448,6 +1454,7 @@
       ],
       "proxyType": "immutable",
       "description": "RAIL staking contract that tracks delegated voting power, enforces a 1mo unstake delay, and snapshots staking balances for governance every 1d. Its parameters define the governance voting system.",
+      "ignoreInWatchMode": ["RAILStaked"],
       "deployerAddress": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
       "sinceTimestamp": 1625670240,
       "sinceBlock": 12780995,
@@ -1455,6 +1462,7 @@
         "$immutable": true,
         "DEPLOY_TIME": 1625670240,
         "intervalAtTime": [],
+        "RAILStaked": "41,136,386.034466970760388651",
         "SNAPSHOT_INTERVAL": 86400,
         "SNAPSHOT_INTERVAL_fmt": "1d",
         "STAKE_LOCKTIME": 2592000,
@@ -1462,6 +1470,9 @@
         "stakingToken": "eth:0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D"
       },
       "fieldMeta": {
+        "RAILStaked": {
+          "description": "Total RAIL locked in this contract by governance participants for voting power."
+        },
         "stakingToken": {
           "severity": "HIGH",
           "description": "RAIL token contract that users lock here to obtain voting power."
@@ -1480,6 +1491,7 @@
       "implementationNames": {
         "eth:0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20": "Staking"
       },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -2071,10 +2083,10 @@
     "railgun/RailgunSmartWallet": "0x73f14bd8461facf56cca712201c02818c69035359f3c6d9f62ead7358c1abd92",
     "railgun/RailToken": "0x804530e37ec6008f7e038487ae7914ce758ee7b27c21a98172234dc96f3fe682",
     "railgun/RelayAdapt": "0xe64239195c9b233532c77144e0b1161bdf296080b3fbe1d7857a20920c72f5df",
-    "railgun/Staking": "0x78593ec22b89ba550eccd09e11681e717d558121e95ec8eb62c6fe12826ba8a3",
+    "railgun/Staking": "0x7be0011fe230d0df425b604fe047026ba396620550299ad956bef1743a90dd8e",
     "railgun/Sweeper": "0x770b366e3e05222adc3601c01c4d6707431927b39692b296f886ae34d7c9f3a2",
     "railgun/SweeperLegacy": "0x2eb417aa4538dd13c156beb75374c4ab97c3a0e34a2e1616eaf4d440bed50af7",
-    "railgun/Treasury": "0xe53be1977d2dba54b3716f7715569df8ec79c2de52d77b1c11b84d5902f65b12",
+    "railgun/Treasury": "0x4221ed0e8307ee2ffd52d7bd83b3f6805d2cd431814543ed36f5dc42b7d77988",
     "railgun/VKeySetter": "0x91335987d90d44c42826772e13ce649fe7f74f91f53eb69227ef49ff63fe5d89",
     "railgun/Voting": "0x67493aa4e015e72df54398b5228d0608b52403af2ad52e9d3e93adb52249abc7"
   },

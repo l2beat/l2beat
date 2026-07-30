@@ -86,6 +86,20 @@ const executionEndOffset = discovery.getContractValue<number>(
   'EXECUTION_END_OFFSET',
 )
 const quorum = discovery.getContractValueBigInt('Voting', 'QUORUM')
+const railTotalSupply = discovery.getContractValueBigInt(
+  'Rail Token',
+  'totalSupply',
+)
+const railTreasuryBalance = Number(
+  discovery
+    .getContractValue<string>('Treasury', 'RAILBalance')
+    .replaceAll(',', ''),
+)
+const railStaked = Number(
+  discovery
+    .getContractValue<string>('Staking', 'RAILStaked')
+    .replaceAll(',', ''),
+)
 const RAILGUN_SINCE_TIMESTAMP = UnixTime(railgunCore.sinceTimestamp ?? 0)
 
 function formatBasisPoints(value: number): string {
@@ -240,23 +254,24 @@ export const railgun: BaseProject = {
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     riskSummary: readProjectMarkdown('railgun', 'riskSummary'),
-    upgradesAndGovernance: readProjectMarkdown(
-      'railgun',
-      'upgradesAndGovernance',
-      {
-        stakeLocktime: formatSeconds(stakeLocktime),
-        sponsorWindow: formatSeconds(sponsorWindow),
-        proposalSponsorThreshold: formatLargeNumber(
-          Number(proposalSponsorThreshold / 10n ** 18n),
-        ),
-        votingStartOffset: formatSeconds(votingStartOffset),
-        votingYayEndOffset: formatSeconds(votingYayEndOffset),
-        votingNayEndOffset: formatSeconds(votingNayEndOffset),
-        quorum: formatLargeNumber(Number(quorum / 10n ** 18n)),
-        executionStartOffset: formatSeconds(executionStartOffset),
-        executionEndOffset: formatSeconds(executionEndOffset),
+    upgradesAndGovernance: {
+      content: readProjectMarkdown('railgun', 'upgradesAndGovernance'),
+      governanceInfo: {
+        upgrades: {
+          'Normal upgrade path': `Create a proposal with an IPFS link and onchain calldata in the [Voting contract](https://etherscan.io/address/0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) → collect **${formatLargeNumber(Number(proposalSponsorThreshold / 10n ** 18n))} RAIL** sponsorship within ${formatSeconds(sponsorWindow)} → wait ${formatSeconds(votingStartOffset)} → cast Yay votes within ${formatSeconds(votingYayEndOffset)} and Nay votes within ${formatSeconds(votingNayEndOffset)} → pass with a simple majority and **${formatLargeNumber(Number(quorum / 10n ** 18n))} RAIL** quorum → wait ${formatSeconds(executionStartOffset)} → permissionless execution through the Delegator within ${formatSeconds(executionEndOffset)}.`,
+          'Exit window': `**${formatSeconds(executionStartOffset)}** — a passed proposal must wait this long before it can be executed, giving users time to unshield funds.`,
+        },
+        tokenGovernance: {
+          'Governance token': `\`RAIL\` 1 token = 1 vote, delegated. Total supply: **${formatLargeNumber(Number(railTotalSupply / 10n ** 18n))} RAIL**, DAO-owned treasury (unavailable for voting): **${formatLargeNumber(railTreasuryBalance)} RAIL**, staked for voting: **${formatLargeNumber(railStaked)} RAIL**, the rest is circulating supply.`,
+          'Stake lock': `Unstaking has **${formatSeconds(stakeLocktime)}** delay.`,
+          'Voting venue':
+            '[Voting contract](https://etherscan.io/address/0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) on Ethereum. Proposal text is distributed over IPFS, its CID is available as a parameter of \`createPropsal()\` call on the voting contract.',
+          'Proposal threshold': `**No threshold to create a proposal.** A proposal must receive sponsorship from **${formatLargeNumber(Number(proposalSponsorThreshold / 10n ** 18n))} RAIL** stake within ${formatSeconds(sponsorWindow)}.`,
+          Quorum: `**${formatLargeNumber(Number(quorum / 10n ** 18n))} RAIL**, with a simple majority required for acceptance.`,
+          'Execution model': `**Onchain calldata · Permissionless execution through the Delegator.** A passed proposal waits ${formatSeconds(executionStartOffset)}, after which anyone can execute it through the [Delegator contract](https://etherscan.io/address/0xB6d513f6222Ee92Fff975E901bd792E2513fB53B) within ${formatSeconds(executionEndOffset)}.`,
+        },
       },
-    ),
+    },
   },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {

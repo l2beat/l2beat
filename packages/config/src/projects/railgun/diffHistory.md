@@ -1,3 +1,41 @@
+Generated with discovered.json: 0xdc5ee3658590f256c693fe0f1a3df0ef79d5592f
+
+# Diff at Thu, 30 Jul 2026 15:18:34 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@66fa629d20cb3eebcd8a566401e5b4f335fafdf2 block: 1785404669
+- current timestamp: 1785404669
+
+## Description
+
+Added RAIL balances to gov staking and the treasury.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1785404669 (main branch discovery), not current.
+
+```diff
+    contract Treasury (eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40) [railgun/Treasury] {
+    +++ description: Collects Railgun fees. Managed through access control roles.
+      fieldMeta.RAILBalance:
++        {"description":"RAIL held by the treasury, movable by holders of TRANSFER_ROLE."}
+      usedTypes:
++        [{"typeCaster":"Undecimal","arg":{"decimals":18}}]
+    }
+```
+
+```diff
+    contract Staking (eth:0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20) [railgun/Staking] {
+    +++ description: RAIL staking contract that tracks delegated voting power, enforces a 1mo unstake delay, and snapshots staking balances for governance every 1d. Its parameters define the governance voting system.
+      fieldMeta.RAILStaked:
++        {"description":"Total RAIL locked in this contract by governance participants for voting power."}
+      usedTypes:
++        [{"typeCaster":"Undecimal","arg":{"decimals":18}}]
+    }
+```
+
 Generated with discovered.json: 0x2460028db8f0cf211ea30dd957fd769161b141b2
 
 # Diff at Thu, 30 Jul 2026 10:47:38 GMT:

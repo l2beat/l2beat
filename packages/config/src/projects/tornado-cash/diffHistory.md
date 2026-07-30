@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x80b6786b458bb7d7e4ce214aa98baa2fd3882b24
+
+# Diff at Thu, 30 Jul 2026 14:13:58 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@66fa629d20cb3eebcd8a566401e5b4f335fafdf2 block: 1783068981
+- current timestamp: 1783068981
+
+## Description
+
+Added TORN balances to gov staking and the treasury.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1783068981 (main branch discovery), not current.
+
+```diff
+    contract TornadoVault (eth:0x2F50508a8a3D323B91336FA3eA6ae50E55f32185) [tornado-cash/TornadoVault] {
+    +++ description: Vault that escrows locked TORN of governance participants who wish to receive voting rights.
+      fieldMeta:
++        {"TORNStaked":{"description":"TORN locked by governance participants for voting power, escrowed in this vault."}}
+    }
+```
+
+```diff
+    contract GovernanceProposalStateUpgrade (eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) [tornado-cash/GovernanceProposalStateUpgrade] {
+    +++ description: Upgradeable Tornado Cash governance contract that manages proposals, voting, execution, and treasury-connected governance modules. If you trust this contract, you trust its upgrade path and proposal rules to change protocol governance behavior.
+      fieldMeta.TORNTreasury:
++        {"description":"TORN held by the governance contract itself (the governance treasury). Does not include TORN locked by users for voting, which is escrowed in userVault."}
+    }
+```
+
 Generated with discovered.json: 0x757a65684bafe278143f918b51bbfbb15873ed73
 
 # Diff at Fri, 03 Jul 2026 08:58:07 GMT:

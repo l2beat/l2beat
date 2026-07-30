@@ -224,11 +224,12 @@ export async function getPrivacyProjectEntry(
 
   if (details.upgradesAndGovernance) {
     sections.push({
-      type: 'MarkdownSection',
+      type: 'UpgradesAndGovernanceSection',
       props: {
         id: 'upgrades-and-governance',
         title: 'Upgrades & Governance',
-        content: details.upgradesAndGovernance,
+        content: details.upgradesAndGovernance.content,
+        governanceInfo: details.upgradesAndGovernance.governanceInfo,
       },
     })
   }
