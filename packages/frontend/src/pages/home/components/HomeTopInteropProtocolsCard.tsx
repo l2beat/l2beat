@@ -10,6 +10,7 @@ import {
   type ProtocolRow,
 } from '~/pages/interop/components/table/columns'
 import { NoResultsInfo } from '~/pages/interop/summary/components/NoResultsInfo'
+import { TopNBadge } from '~/pages/interop/summary/components/TopNBadge'
 import {
   pickTopProtocolEntries,
   TOP_PROTOCOLS_LIMIT,
@@ -54,10 +55,7 @@ export function HomeTopInteropProtocolsCard({
 
   const entries = useMemo(() => pickTopProtocolEntries(data), [data])
 
-  const columns = useMemo(
-    () => getHomeTopInteropProtocolsColumns(apiSelection),
-    [apiSelection],
-  )
+  const columns = useMemo(() => getHomeTopInteropProtocolsColumns(), [])
 
   const table = useTable<ProtocolRow>({
     data: entries,
@@ -71,7 +69,8 @@ export function HomeTopInteropProtocolsCard({
   return (
     <HomeCard className="flex h-full min-w-0 flex-col">
       <HomeCardHeader
-        title="Top interop protocols"
+        title="Interop"
+        badge={<TopNBadge n={5} />}
         href="/interop/summary"
         linkLabel="View all"
       />

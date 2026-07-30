@@ -15,7 +15,6 @@ import { EM_DASH } from '~/consts/characters'
 import type { ProtocolEntry } from '~/server/features/scaling/interop/types'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatInteger } from '~/utils/number-format/formatInteger'
 import type { InteropSelection } from '../../utils/types'
 import { InteropNoDataBadge } from '../InteropNoDataBadge'
 import { TopTokensCell } from '../tokens/TopTokensCell'
@@ -101,6 +100,18 @@ const homeCommonColumns = [
     cellClassName: 'lg:pl-2.5',
   }),
 ]
+
+const categoryColumn = columnHelper.accessor('type', {
+  header: 'Category',
+  cell: (ctx) => (
+    <div className="whitespace-nowrap font-medium text-xs capitalize leading-[15px] md:text-sm md:leading-[1.2]">
+      {ctx.row.original.type}
+    </div>
+  ),
+  meta: {
+    headClassName: 'text-2xs',
+  },
+})
 
 const last24hVolumeColumn = columnHelper.accessor('volume', {
   header: 'Last 24h\nVolume',
@@ -257,17 +268,7 @@ export function getAllProtocolsColumns(
       size: 44,
     }),
     ...commonColumns,
-    columnHelper.accessor('type', {
-      header: 'Category',
-      cell: (ctx) => (
-        <div className="whitespace-nowrap font-medium text-xs capitalize leading-[15px] md:text-sm md:leading-[1.2]">
-          {ctx.row.original.type}
-        </div>
-      ),
-      meta: {
-        headClassName: 'text-2xs',
-      },
-    }),
+    categoryColumn,
     !hideTypeColumn &&
       columnHelper.accessor('bridgeTypes', {
         header: 'Transfer types',
@@ -371,27 +372,6 @@ export function getAllProtocolsColumns(
   ])
 }
 
-export function getHomeTopInteropProtocolsColumns(
-  apiSelection: InteropSelection,
-) {
-  return [
-    ...homeCommonColumns,
-    last24hVolumeColumn,
-    columnHelper.accessor((row) => row.transferCount, {
-      header: 'Last 24h\ntransfer count',
-      cell: (ctx) => (
-        <span className="font-medium text-label-value-15 text-primary tabular-nums">
-          {formatInteger(ctx.row.original.transferCount)}
-        </span>
-      ),
-      meta: {
-        align: 'right',
-        headClassName: 'text-2xs',
-        tooltip:
-          'The total number of token transfer transactions completed in the past 24 hours.',
-      },
-    }),
-    averageValueColumn,
-    makeTokensColumn({ type: undefined, apiSelection, hideDialog: true }),
-  ]
+export function getHomeTopInteropProtocolsColumns() {
+  return [...homeCommonColumns, categoryColumn, last24hVolumeColumn]
 }

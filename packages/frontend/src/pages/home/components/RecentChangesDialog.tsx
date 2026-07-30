@@ -101,9 +101,9 @@ function RecentChangesBody({
   return (
     <div className="flex flex-col gap-6">
       {groups.map((group) => (
-        <section key={group.href} className="flex flex-col gap-3">
+        <section key={group.projectHref} className="flex flex-col gap-3">
           <a
-            href={group.href}
+            href={`${group.projectHref}#updates`}
             className="group flex items-center justify-between gap-2 border-divider border-b pb-2"
           >
             <span className="flex min-w-0 items-center gap-2">
@@ -127,6 +127,7 @@ function RecentChangesBody({
                 key={`${update.date}-${index}`}
                 update={update}
                 isSelected={false}
+                copyLinkPath={group.projectHref}
               />
             ))}
           </div>

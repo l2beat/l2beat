@@ -28,13 +28,13 @@ export function HomeRecentChangesTile({
   const restCount = recentChangesProjects.length - visibleProjects.length
 
   return (
-    <HomeCard className="p-0 md:p-0">
+    <HomeCard className="p-0 md:p-1">
       <button
         type="button"
         onClick={() => setDialogOpen(true)}
         disabled={disabled}
         className={cn(
-          'group flex w-full items-center gap-3 px-4 py-3 text-left transition-colors md:rounded-xl md:px-7 md:py-5',
+          'group flex w-full items-center gap-3 px-4 py-3 text-left transition-colors md:rounded-lg md:px-7 md:py-5',
           !disabled && 'hover:bg-surface-secondary/50',
           disabled && 'cursor-default',
         )}
