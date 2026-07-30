@@ -2,7 +2,32 @@ import { createTrackedTxId } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
-import { RealTimeLivenessRepository } from './RealTimeLivenessRepository'
+import {
+  RealTimeLivenessRepository,
+  toRecord,
+} from './RealTimeLivenessRepository'
+
+describe(toRecord.name, () => {
+  it('maps a null grouping key to undefined', () => {
+    const timestamp = UnixTime(1)
+
+    expect(
+      toRecord({
+        timestamp: UnixTime.toDate(timestamp),
+        blockNumber: 1,
+        txHash: '0x1234',
+        configurationId: 'config-id',
+        groupingKey: null,
+      }),
+    ).toEqual({
+      timestamp,
+      blockNumber: 1,
+      txHash: '0x1234',
+      configurationId: 'config-id',
+      groupingKey: undefined,
+    })
+  })
+})
 
 describeDatabase(RealTimeLivenessRepository.name, (db) => {
   const repository = db.realTimeLiveness
@@ -18,24 +43,28 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
       blockNumber: 12345,
       txHash: '0x1234567890abcdef',
       configurationId: txIdA,
+      groupingKey: undefined,
     },
     {
       timestamp: START - 2 * UnixTime.HOUR,
       blockNumber: 12340,
       txHash: '0xabcdef1234567890',
       configurationId: txIdA,
+      groupingKey: undefined,
     },
     {
       timestamp: START - 3 * UnixTime.HOUR,
       blockNumber: 12346,
       txHash: '0xabcdef1234567890',
       configurationId: txIdB,
+      groupingKey: undefined,
     },
     {
       timestamp: START - 3 * UnixTime.HOUR,
       blockNumber: 12347,
       txHash: '0x12345678901abcdef',
       configurationId: txIdC,
+      groupingKey: undefined,
     },
   ]
 
@@ -54,12 +83,14 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
           blockNumber: 12349,
           txHash: '0x1234567890abcdef1',
           configurationId: txIdA,
+          groupingKey: undefined,
         },
         {
           timestamp: START - 6 * UnixTime.HOUR,
           blockNumber: 12350,
           txHash: '0xabcdef1234567892',
           configurationId: txIdA,
+          groupingKey: undefined,
         },
       ]
       await repository.upsertMany(newRows)
@@ -80,12 +111,14 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
           blockNumber: 12348,
           txHash: '0xabcdef1234567890',
           configurationId: txIdB,
+          groupingKey: undefined,
         },
         {
           timestamp: START - 4 * UnixTime.HOUR,
           blockNumber: 12349,
           txHash: '0x12345678901abcdef',
           configurationId: txIdC,
+          groupingKey: undefined,
         },
       ]
       await repository.upsertMany(newRows)

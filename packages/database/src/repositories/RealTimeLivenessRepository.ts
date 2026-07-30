@@ -19,17 +19,11 @@ export interface RealTimeLivenessRecord {
 export function toRecord(
   row: Selectable<RealTimeLiveness>,
 ): RealTimeLivenessRecord {
-  const { groupingKey, ...rest } = row
-  const record: RealTimeLivenessRecord = {
-    ...rest,
+  return {
+    ...row,
+    groupingKey: row.groupingKey ?? undefined,
     timestamp: UnixTime.fromDate(row.timestamp),
   }
-
-  if (groupingKey !== null) {
-    record.groupingKey = groupingKey
-  }
-
-  return record
 }
 
 export function toRow(
