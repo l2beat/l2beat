@@ -20,7 +20,8 @@ export type getProjectDaThroughputChartsData = {
   totalChart: {
     data: ProjectDaThroughputChartPoint[]
     range: ChartRange
-    // First and last chart timestamp for which data is not available
+    // Chart timestamps bounding the range where data is not available; the
+    // bounds themselves are the closest synced points on each side
     dataGap: [number, number] | undefined
   }
   byProjectChart: {
@@ -76,14 +77,25 @@ export async function getProjectDaThroughputCharts(
   const timestamps = generateTimestamps([from, to], resolution)
   const hasEigendaGap =
     params.projectId === 'eigenda' && !params.includeScalingOnly
-  const gapTimestamps = hasEigendaGap
-    ? timestamps.filter((t) => isInEigendaLayerDataGap(t, resolution))
-    : []
-  const firstGapTimestamp = gapTimestamps.at(0)
-  const lastGapTimestamp = gapTimestamps.at(-1)
+  const firstGapIndex = hasEigendaGap
+    ? timestamps.findIndex((t) => isInEigendaLayerDataGap(t, resolution))
+    : -1
+  const lastGapIndex = hasEigendaGap
+    ? timestamps.findLastIndex((t) => isInEigendaLayerDataGap(t, resolution))
+    : -1
+  // Extend to the neighboring synced points so the hatched area connects to
+  // the data on both sides
+  const gapStart =
+    firstGapIndex !== -1
+      ? timestamps.at(Math.max(firstGapIndex - 1, 0))
+      : undefined
+  const gapEnd =
+    lastGapIndex !== -1
+      ? timestamps.at(Math.min(lastGapIndex + 1, timestamps.length - 1))
+      : undefined
   const dataGap: [number, number] | undefined =
-    firstGapTimestamp !== undefined && lastGapTimestamp !== undefined
-      ? [firstGapTimestamp, lastGapTimestamp]
+    gapStart !== undefined && gapEnd !== undefined
+      ? [gapStart, gapEnd]
       : undefined
 
   const totalChart: ProjectDaThroughputChartPoint[] = timestamps.map(

@@ -158,11 +158,6 @@ export function ProjectDaAbsoluteThroughputChart({
             x1={dataGap[0]}
             x2={dataGap[1]}
             fill="url(#noDataFill)"
-            label={{
-              value: 'Data not available',
-              position: 'insideTop',
-              className: 'fill-secondary font-medium text-label-value-12',
-            }}
           />
         )}
         <ChartTooltip
