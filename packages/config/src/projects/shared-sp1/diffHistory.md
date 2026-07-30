@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xfb85c43a555e5800c17c16d0c7526b26f6dd3087
+Generated with discovered.json: 0x870e83079474cd937ec5bd5af8ae66961fb92a7c
 
-# Diff at Thu, 30 Jul 2026 11:25:54 GMT:
+# Diff at Thu, 30 Jul 2026 14:34:13 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@582e1a34fd1cba95db9957343b373cd84374dd99 block: 1783679422
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@66fa629d20cb3eebcd8a566401e5b4f335fafdf2 block: 1783679422
 - current timestamp: 1783679422
 
 ## Description
@@ -15,6 +15,39 @@ Make shared-sp1 use entrypoints and rediscover
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1783679422 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (arb1:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+      template:
+-        "shared-sp1/SP1Verifier"
++        "succinct/SP1Verifier"
+      description:
++        "Verifier contract for SP1 proofs (v6.1.0)."
+    }
+```
+
+```diff
+    contract SP1Verifier (base:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+      template:
+-        "shared-sp1/SP1Verifier"
++        "succinct/SP1Verifier"
+      description:
++        "Verifier contract for SP1 proofs (v6.1.0)."
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+      template:
+-        "shared-sp1/SP1Verifier"
++        "succinct/SP1Verifier"
+      description:
++        "Verifier contract for SP1 proofs (v6.1.0)."
+    }
+```
 
 ```diff
     contract SP1VerifierGatewayMultisig (eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) [GnosisSafe] {

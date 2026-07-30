@@ -160,11 +160,12 @@
       "name": "SP1Verifier",
       "address": "arb1:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A",
       "type": "Contract",
-      "template": "shared-sp1/SP1Verifier",
+      "template": "succinct/SP1Verifier",
       "sourceHashes": [
         "0x841e49c8753878bb522d9e0f0d5276aa39929d0cb7d6bd23ca0d5032537b8536"
       ],
       "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v6.1.0).",
       "deployerAddress": "arb1:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
       "sinceTimestamp": 1776172418,
       "sinceBlock": 452416145,
@@ -378,11 +379,12 @@
       "name": "SP1Verifier",
       "address": "base:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A",
       "type": "Contract",
-      "template": "shared-sp1/SP1Verifier",
+      "template": "succinct/SP1Verifier",
       "sourceHashes": [
         "0x841e49c8753878bb522d9e0f0d5276aa39929d0cb7d6bd23ca0d5032537b8536"
       ],
       "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v6.1.0).",
       "deployerAddress": "base:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
       "sinceTimestamp": 1776172423,
       "sinceBlock": 44691538,
@@ -729,11 +731,12 @@
       "name": "SP1Verifier",
       "address": "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A",
       "type": "Contract",
-      "template": "shared-sp1/SP1Verifier",
+      "template": "succinct/SP1Verifier",
       "sourceHashes": [
         "0x841e49c8753878bb522d9e0f0d5276aa39929d0cb7d6bd23ca0d5032537b8536"
       ],
       "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v6.1.0).",
       "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
       "sinceTimestamp": 1776172415,
       "sinceBlock": 24878258,
@@ -1177,7 +1180,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "shared-sp1/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },

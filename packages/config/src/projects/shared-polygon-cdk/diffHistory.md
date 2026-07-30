@@ -1,3 +1,32 @@
+Generated with discovered.json: 0xeed66383c3e1b421c260c92b6d5ca4da30a9c4e5
+
+# Diff at Thu, 30 Jul 2026 14:36:31 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@66fa629d20cb3eebcd8a566401e5b4f335fafdf2 block: 1784814697
+- current timestamp: 1784814697
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784814697 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+      template:
+-        "shared-sp1/SP1Verifier"
++        "succinct/SP1Verifier"
+      description:
++        "Verifier contract for SP1 proofs (v6.1.0)."
+    }
+```
+
 Generated with discovered.json: 0x35e32bd3dcf58017d67cd29cad1c2a06f2e504fd
 
 # Diff at Thu, 23 Jul 2026 13:53:29 GMT:
