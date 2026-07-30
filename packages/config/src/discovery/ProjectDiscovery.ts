@@ -47,7 +47,6 @@ const paths = getDiscoveryPaths()
 
 interface ProjectDiscoveryOptions {
   reachableEntries?: {
-    use: boolean
     maxDepth?: number
   }
 }
@@ -81,14 +80,22 @@ export class ProjectDiscovery {
     // references to entrypoints to make it cleaner
     this.discoveries.forEach((d) => removeReferences(d))
 
-    // TODO: Uncomment me once cross-chain permissions are implemented
-    this.reachableEntries = this.options?.reachableEntries?.use
-      ? getReachableEntries(
-          this.discoveries.flatMap((discovery) => discovery.entries),
-          entrypoints,
-          this.options.reachableEntries.maxDepth,
-        )
-      : this.discoveries.flatMap((discovery) => discovery.entries)
+    // A reference points at one specific deployment inside a shared module, it
+    // does not adopt everything else that module discovered: a project linking
+    // the Ethereum deployment must not inherit the Arbitrum one.
+    // Cross-chain permissions are still not modelled, so a cluster reaching the
+    // project only through L1<>L2 aliasing counts as unlinked as well.
+    this.reachableEntries = getReachableEntries(
+      this.discoveries.flatMap((discovery) => discovery.entries),
+      entrypoints,
+      this.options?.reachableEntries?.maxDepth,
+    )
+    assert(
+      (this.discoveries.at(0)?.entries ?? []).every((entry) =>
+        this.reachableEntries.includes(entry),
+      ),
+      `Every entry of ${projectName} must stay reachable`,
+    )
 
     this.permissionRegistry = new PermissionsFromDiscovery(this)
   }
