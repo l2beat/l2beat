@@ -16,6 +16,7 @@ import { rangeToDays } from '~/utils/range/rangeToDays'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { isThroughputSynced } from './isThroughputSynced'
 import { THROUGHPUT_ENABLED_DA_LAYERS } from './utils/consts'
+import { isInEigendaLayerDataGap } from './utils/eigendaDataGap'
 import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
 
 type DaThroughputChart = {
@@ -126,13 +127,15 @@ export async function getDaThroughputChart({
     }
 
     const fallbackValue = isSynced ? 0 : null
+    const isEigendaGap =
+      !includeScalingOnly && isInEigendaLayerDataGap(timestamp, resolution)
 
     return [
       timestamp,
       layerValues.ethereum ?? fallbackValue,
       layerValues.celestia ?? fallbackValue,
       layerValues.avail ?? fallbackValue,
-      layerValues.eigenda ?? fallbackValue,
+      isEigendaGap ? null : (layerValues.eigenda ?? fallbackValue),
     ]
   })
   return {

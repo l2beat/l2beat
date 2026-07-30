@@ -12,6 +12,13 @@ export type JsonValue =
   | JsonValue[]
   | { [key: string]: JsonValue }
 
+/**
+ * TRANSITIONAL: the endpoint columns are now named `tokenA*`/`tokenB*`, but the
+ * record this repository hands out still uses the old `tokenFrom*`/`tokenTo*`
+ * names, so every caller keeps compiling and keeps working across the column
+ * rename. The follow-up release renames the record fields too and this mismatch
+ * disappears — do not build anything on the old names.
+ */
 export type TokenRelationRecord = {
   tokenFromChain: string
   tokenFromAddress: string
@@ -39,9 +46,17 @@ export type TokenRelationUpdateable = Omit<
   keyof TokenRelationPrimaryKey
 >
 
+// Columns are listed explicitly rather than spread, both because the record
+// names differ from the column names for now and so that a column the record
+// type does not model yet — `lockedToken` — cannot leak into API responses and
+// history snapshots.
 function toRecord(row: Selectable<TokenRelation>): TokenRelationRecord {
   return {
-    ...row,
+    tokenFromChain: row.tokenAChain,
+    tokenFromAddress: row.tokenAAddress,
+    tokenToChain: row.tokenBChain,
+    tokenToAddress: row.tokenBAddress,
+    plugin: row.plugin,
     bridgeType: row.bridgeType as InteropBridgeType,
     transfer: row.transfer as JsonValue,
   }
@@ -49,9 +64,13 @@ function toRecord(row: Selectable<TokenRelation>): TokenRelationRecord {
 
 function toRow(record: TokenRelationRecord): Insertable<TokenRelation> {
   return {
-    ...record,
-    tokenFromAddress: record.tokenFromAddress.toLowerCase(),
-    tokenToAddress: record.tokenToAddress.toLowerCase(),
+    tokenAChain: record.tokenFromChain,
+    tokenAAddress: record.tokenFromAddress.toLowerCase(),
+    tokenBChain: record.tokenToChain,
+    tokenBAddress: record.tokenToAddress.toLowerCase(),
+    plugin: record.plugin,
+    bridgeType: record.bridgeType,
+    transfer: record.transfer,
   }
 }
 
@@ -70,10 +89,10 @@ export class TokenRelationRepository extends BaseRepository {
     const row = await this.db
       .selectFrom('TokenRelation')
       .selectAll()
-      .where('tokenFromChain', '=', pk.tokenFromChain)
-      .where('tokenFromAddress', '=', pk.tokenFromAddress.toLowerCase())
-      .where('tokenToChain', '=', pk.tokenToChain)
-      .where('tokenToAddress', '=', pk.tokenToAddress.toLowerCase())
+      .where('tokenAChain', '=', pk.tokenFromChain)
+      .where('tokenAAddress', '=', pk.tokenFromAddress.toLowerCase())
+      .where('tokenBChain', '=', pk.tokenToChain)
+      .where('tokenBAddress', '=', pk.tokenToAddress.toLowerCase())
       .where('plugin', '=', pk.plugin)
       .where('bridgeType', '=', pk.bridgeType)
       .executeTakeFirst()
@@ -107,10 +126,10 @@ export class TokenRelationRepository extends BaseRepository {
                   eb('bridgeType', '=', bridgeType),
                   eb(
                     eb.refTuple(
-                      'tokenFromChain',
-                      'tokenFromAddress',
-                      'tokenToChain',
-                      'tokenToAddress',
+                      'tokenAChain',
+                      'tokenAAddress',
+                      'tokenBChain',
+                      'tokenBAddress',
                       'plugin',
                     ),
                     'in',
@@ -142,10 +161,10 @@ export class TokenRelationRepository extends BaseRepository {
     const result = await this.db
       .updateTable('TokenRelation')
       .set(patch)
-      .where('tokenFromChain', '=', pk.tokenFromChain)
-      .where('tokenFromAddress', '=', pk.tokenFromAddress.toLowerCase())
-      .where('tokenToChain', '=', pk.tokenToChain)
-      .where('tokenToAddress', '=', pk.tokenToAddress.toLowerCase())
+      .where('tokenAChain', '=', pk.tokenFromChain)
+      .where('tokenAAddress', '=', pk.tokenFromAddress.toLowerCase())
+      .where('tokenBChain', '=', pk.tokenToChain)
+      .where('tokenBAddress', '=', pk.tokenToAddress.toLowerCase())
       .where('plugin', '=', pk.plugin)
       .where('bridgeType', '=', pk.bridgeType)
       .executeTakeFirst()
@@ -162,17 +181,21 @@ export class TokenRelationRepository extends BaseRepository {
     const rows = await this.db
       .selectFrom('TokenRelation')
       .select([
-        'tokenFromChain',
-        'tokenFromAddress',
-        'tokenToChain',
-        'tokenToAddress',
+        'tokenAChain',
+        'tokenAAddress',
+        'tokenBChain',
+        'tokenBAddress',
         'plugin',
         'bridgeType',
       ])
       .execute()
 
     return rows.map((row) => ({
-      ...row,
+      tokenFromChain: row.tokenAChain,
+      tokenFromAddress: row.tokenAAddress,
+      tokenToChain: row.tokenBChain,
+      tokenToAddress: row.tokenBAddress,
+      plugin: row.plugin,
       bridgeType: row.bridgeType as InteropBridgeType,
     }))
   }
@@ -183,8 +206,8 @@ export class TokenRelationRepository extends BaseRepository {
     const rows = await this.db
       .selectFrom('TokenRelation')
       .selectAll()
-      .where('tokenFromChain', '=', token.chain)
-      .where('tokenFromAddress', '=', token.address.toLowerCase())
+      .where('tokenAChain', '=', token.chain)
+      .where('tokenAAddress', '=', token.address.toLowerCase())
       .execute()
 
     return rows.map(toRecord)
@@ -196,8 +219,8 @@ export class TokenRelationRepository extends BaseRepository {
     const rows = await this.db
       .selectFrom('TokenRelation')
       .selectAll()
-      .where('tokenToChain', '=', token.chain)
-      .where('tokenToAddress', '=', token.address.toLowerCase())
+      .where('tokenBChain', '=', token.chain)
+      .where('tokenBAddress', '=', token.address.toLowerCase())
       .execute()
 
     return rows.map(toRecord)
@@ -206,10 +229,10 @@ export class TokenRelationRepository extends BaseRepository {
   async deleteByPrimaryKey(pk: TokenRelationPrimaryKey): Promise<number> {
     const result = await this.db
       .deleteFrom('TokenRelation')
-      .where('tokenFromChain', '=', pk.tokenFromChain)
-      .where('tokenFromAddress', '=', pk.tokenFromAddress.toLowerCase())
-      .where('tokenToChain', '=', pk.tokenToChain)
-      .where('tokenToAddress', '=', pk.tokenToAddress.toLowerCase())
+      .where('tokenAChain', '=', pk.tokenFromChain)
+      .where('tokenAAddress', '=', pk.tokenFromAddress.toLowerCase())
+      .where('tokenBChain', '=', pk.tokenToChain)
+      .where('tokenBAddress', '=', pk.tokenToAddress.toLowerCase())
       .where('plugin', '=', pk.plugin)
       .where('bridgeType', '=', pk.bridgeType)
       .executeTakeFirst()

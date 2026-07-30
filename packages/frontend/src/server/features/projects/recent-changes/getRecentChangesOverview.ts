@@ -13,7 +13,7 @@ const PER_PROJECT_LIMIT = 20
 export interface RecentChangesProjectGroup {
   name: string
   iconUrl: string
-  href: string
+  projectHref: string
   updates: DiscoveryUpdate[]
 }
 
@@ -36,12 +36,12 @@ export async function getRecentChangesOverview(): Promise<RecentChangesOverview>
       continue
     }
 
-    const href = project.scalingInfo
-      ? `/scaling/projects/${project.slug}#updates`
+    const projectHref = project.scalingInfo
+      ? `/scaling/projects/${project.slug}`
       : project.interopConfig
-        ? `/interop/protocols/${project.slug}#updates`
+        ? `/interop/protocols/${project.slug}`
         : undefined
-    if (!href) {
+    if (!projectHref) {
       continue
     }
 
@@ -59,7 +59,7 @@ export async function getRecentChangesOverview(): Promise<RecentChangesOverview>
       group: {
         name: project.name,
         iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-        href,
+        projectHref,
         updates,
       },
     })
