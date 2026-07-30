@@ -12,6 +12,15 @@ import type {
   WipeRemovalConfiguration,
 } from '../../../../tools/uif/multi/types'
 
+// Layer-level metrics are unavailable for this window - skip it without
+// calling the Eigen API or saving any records.
+const SYNC_DISABLED_FROM = UnixTime.fromDate(
+  new Date('2026-06-22T00:00:00.000Z'),
+)
+const SYNC_DISABLED_UNTIL = UnixTime.fromDate(
+  new Date('2026-06-29T00:00:00.000Z'),
+)
+
 export interface Dependencies
   extends Omit<
     ManagedMultiIndexerOptions<TimestampDaIndexedConfig>,
@@ -53,6 +62,20 @@ export class EigenDaLayerIndexer extends ManagedMultiIndexer<TimestampDaIndexedC
   ) {
     const adjustedFrom = UnixTime.toStartOf(from, 'hour')
     const adjustedTo = adjustedFrom + UnixTime.HOUR
+
+    if (
+      adjustedFrom >= SYNC_DISABLED_FROM &&
+      adjustedFrom < SYNC_DISABLED_UNTIL
+    ) {
+      this.logger.info('Skipping update - sync disabled for this range', {
+        from: adjustedFrom,
+        to: adjustedTo,
+      })
+      return () => {
+        return Promise.resolve(adjustedTo)
+      }
+    }
+
     const daLayerData = await this.getDaLayerData(adjustedFrom, adjustedTo)
 
     this.logger.info('Da Layer data fetched')
