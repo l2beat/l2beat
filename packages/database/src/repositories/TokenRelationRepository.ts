@@ -254,11 +254,7 @@ export class TokenRelationRepository extends BaseRepository {
       .execute()
 
     return rows.map((row) => ({
-      tokenFromChain: row.tokenAChain,
-      tokenFromAddress: row.tokenAAddress,
-      tokenToChain: row.tokenBChain,
-      tokenToAddress: row.tokenBAddress,
-      plugin: row.plugin,
+      ...row,
       bridgeType: row.bridgeType as InteropBridgeType,
       lockedToken: row.lockedToken as TokenRelationLockedToken,
     }))
