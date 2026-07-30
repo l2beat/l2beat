@@ -1,6 +1,6 @@
 {
   "name": "railgun",
-  "timestamp": 1784543269,
+  "timestamp": 1785404669,
   "configHash": "0x0d8e168a26e195a9995ddaa2d069a981510eba6b8713e6f4f270c5fbb0abaaff",
   "entries": [
     {
@@ -1133,7 +1133,7 @@
         "EXECUTION_END_OFFSET": 1209600,
         "EXECUTION_START_OFFSET": 604800,
         "PROPOSAL_SPONSOR_THRESHOLD": "500000000000000000000000",
-        "proposalCount": 25,
+        "proposalCount": 26,
         "QUORUM": "2000000000000000000000000",
         "SPONSOR_LOCKOUT_TIME": 604800,
         "SPONSOR_WINDOW": 2592000,
@@ -2078,6 +2078,6 @@
     "railgun/VKeySetter": "0x91335987d90d44c42826772e13ce649fe7f74f91f53eb69227ef49ff63fe5d89",
     "railgun/Voting": "0x67493aa4e015e72df54398b5228d0608b52403af2ad52e9d3e93adb52249abc7"
   },
-  "usedBlockNumbers": { "ethereum": 25573325 },
+  "usedBlockNumbers": { "ethereum": 25644855 },
   "permissionsConfigHash": "0x56bb3ba002f719a35f1d9124f1e67edd6294599dc20dd69d0fcfcf0a7efc6a21"
 }
