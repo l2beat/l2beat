@@ -20,7 +20,7 @@ const topBannerVariants = cva('lg:rounded-b-xl 2xl:rounded-br-none', {
     variant: {
       default: undefined,
       wide: undefined,
-      home: 'lg:mr-0',
+      home: 'lg:mr-0 lg:rounded-none',
     },
   },
 })
@@ -30,7 +30,8 @@ const bannerWrapperVariants = cva('hidden lg:block 2xl:mr-0', {
     variant: {
       default: 'lg:mr-3',
       wide: 'lg:mr-3',
-      home: 'lg:mr-0',
+      // On home the banner is rendered above the top navbar instead.
+      home: 'hidden lg:hidden',
     },
   },
 })
@@ -78,24 +79,37 @@ export function SideNavLayout({
 }: SideNavLayoutProps) {
   const whatsNew = useWhatsNewContext()
   const topChildren = <TopBanner className={topBannerVariants({ variant })} />
+  // The home page has no persistent side nav: the top navbar is shown on all
+  // screens and the full nav opens as an overlay sheet.
+  const hideSideNav = variant === 'home'
 
   return (
     <SidebarProvider>
-      <div className="relative flex grow flex-col lg:flex-row">
-        <div className="block lg:hidden">{topChildren}</div>
+      <div
+        className={cn(
+          'relative flex grow flex-col',
+          !hideSideNav && 'lg:flex-row',
+        )}
+      >
+        <div className={hideSideNav ? 'block' : 'block lg:hidden'}>
+          {topChildren}
+        </div>
         <MobileTopNavbar
           groups={navGroups}
           logoLink={LOGO_LINK}
           sideLinks={navSecondaryLinks}
+          showOnDesktop={hideSideNav}
         />
         <NavSidebar
           logoLink={LOGO_LINK}
           groups={navGroups}
           sideLinks={navSecondaryLinks}
+          forceSheet={hideSideNav}
         />
         <div
           className={cn(
             'flex min-w-0 flex-1 flex-col has-data-hide-overflow-x:overflow-x-clip md:pt-5 lg:ml-3 lg:pt-0',
+            hideSideNav && 'lg:ml-0 lg:pt-5',
             childrenWrapperClassName,
           )}
         >

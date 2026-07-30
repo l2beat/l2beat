@@ -1,6 +1,5 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
-import { MainPageHeader } from '~/components/MainPageHeader'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -72,28 +71,27 @@ export function HomePage({
           variant="home"
           childrenWrapperClassName="max-md:bg-surface-primary"
         >
-          <MainPageHeader>Home</MainPageHeader>
           <div className="flex flex-col md:gap-6 [&_.primary-card]:max-md:rounded-none [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b">
-            <div className="grid grid-cols-1 items-stretch md:gap-4 xl:gap-6 2xl:grid-cols-[minmax(260px,340px)_minmax(340px,1fr)_minmax(400px,1.35fr)]">
-              <div className="flex h-full min-w-0 flex-col md:gap-4 xl:grid xl:grid-cols-3 xl:gap-6 2xl:flex">
+            <div className="grid grid-cols-1 items-stretch md:gap-4 lg:grid-cols-[minmax(260px,340px)_minmax(340px,1fr)_minmax(400px,1.35fr)] lg:gap-6">
+              <div className="flex h-full min-w-0 flex-col md:gap-4 lg:gap-6">
                 <HomeStatsStrip counts={projectCounts} />
                 <HomeRecentProjectsCard
-                  className="hidden h-auto xl:flex"
+                  className="hidden h-auto lg:flex"
                   projects={recentProjects}
                 />
                 <HomeWhatsNewCard
                   items={whatsNewItems}
-                  className="min-h-0 xl:flex-1"
+                  className="min-h-0 lg:flex-1"
                 />
               </div>
-              <div className="flex h-full min-h-0 min-w-0 flex-col md:grid md:grid-cols-2 md:gap-4 xl:gap-6 2xl:flex 2xl:flex-col">
-                <div className="flex min-h-0 min-w-0 flex-col xl:flex-1">
+              <div className="flex h-full min-h-0 min-w-0 flex-col md:grid md:grid-cols-2 md:gap-4 lg:flex lg:flex-col lg:gap-6">
+                <div className="flex min-h-0 min-w-0 flex-col lg:flex-1">
                   <HomeScalingCard
                     charts={scalingCharts}
                     scalingCategoryCounts={scalingCategoryCounts}
                   />
                 </div>
-                <div className="flex min-h-0 min-w-0 flex-col xl:flex-1">
+                <div className="flex min-h-0 min-w-0 flex-col lg:flex-1">
                   <HomeEthereumCard
                     charts={ethereumCharts}
                     economicSecurity={ethereumEconomicSecurity}
@@ -108,14 +106,14 @@ export function HomePage({
                 />
               </div>
             </div>
-            <div className="grid grid-cols-1 gap-4 max-md:contents sm:grid-cols-2 xl:gap-6">
+            <div className="grid grid-cols-1 gap-4 max-md:contents sm:grid-cols-2 lg:gap-6">
               <HomeAnomaliesTile ongoingAnomalies={ongoingAnomalies} />
               <HomeRecentChangesTile
                 recentChangesCount={recentChangesCount}
                 recentChangesProjects={recentChangesProjects}
               />
             </div>
-            <div className="grid grid-cols-1 items-stretch md:gap-4 xl:gap-6 min-[1650px]:grid-cols-2">
+            <div className="grid grid-cols-1 items-stretch md:gap-4 lg:gap-6 min-[1400px]:grid-cols-2">
               <HomeTopChainsCard
                 entries={topChains}
                 tvsData={topChainsTvsData}
@@ -126,7 +124,7 @@ export function HomePage({
               />
             </div>
             <HomeRecentProjectsCard
-              className="max-md:border-b-0! xl:hidden"
+              className="max-md:border-b-0! lg:hidden"
               projects={recentProjects}
             />
           </div>
