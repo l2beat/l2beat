@@ -17,6 +17,7 @@ import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPer
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
 import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
+import { TopNBadge } from '~/pages/interop/summary/components/TopNBadge'
 import { toTableRows } from '~/pages/scaling/summary/utils/toTableRows'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
 import type { TvsTableData } from '~/server/features/scaling/tvs/getTvsTableData'
@@ -55,7 +56,8 @@ export function HomeTopChainsCard({ entries, tvsData }: Props) {
   return (
     <HomeCard className="flex h-full min-w-0 flex-col">
       <HomeCardHeader
-        title="Chains (Top 5 by TVS)"
+        title="Chains"
+        badge={<TopNBadge n={5} />}
         href="/scaling/summary"
         linkLabel="View all"
       />

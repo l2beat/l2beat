@@ -14,6 +14,7 @@ import {
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
 import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
+import { TopNBadge } from '~/pages/interop/summary/components/TopNBadge'
 import { TechStackTag } from '~/pages/zk-catalog/v2/components/TechStackTag'
 import { TrustedSetupRiskDot } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
 import {
@@ -40,7 +41,8 @@ export function HomeTopZkProversCard({ entries }: Props) {
   return (
     <HomeCard className="flex h-full min-w-0 flex-col">
       <HomeCardHeader
-        title="ZK Provers (Top 5 by TVS)"
+        title="ZK Provers"
+        badge={<TopNBadge n={5} />}
         href="/zk-catalog"
         linkLabel="View all"
       />

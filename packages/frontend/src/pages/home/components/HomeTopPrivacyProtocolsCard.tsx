@@ -16,8 +16,9 @@ import {
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
 import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
-import { PrivacyWalkawayTestTooltipContent } from '~/pages/privacy/PrivacyWalkawayTestIcon'
+import { TopNBadge } from '~/pages/interop/summary/components/TopNBadge'
 import { PRIVACY_ASSESSMENT } from '~/pages/privacy/privacyAssessment'
+import { PrivacyWalkawayTestTooltipContent } from '~/pages/privacy/PrivacyWalkawayTestIcon'
 import { sentimentToRiskDot } from '~/pages/privacy/sentimentToRiskDot'
 import { TrustedSetupRiskDot } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
@@ -39,7 +40,12 @@ export function HomeTopPrivacyProtocolsCard({ entries }: Props) {
 
   return (
     <HomeCard className="flex h-full min-w-0 flex-col">
-      <HomeCardHeader title="Privacy" href="/privacy" linkLabel="View all" />
+      <HomeCardHeader
+        title="Privacy"
+        badge={<TopNBadge n={5} />}
+        href="/privacy"
+        linkLabel="View all"
+      />
       <div className="mt-3 flex-1">
         <BasicTable table={table} />
       </div>
