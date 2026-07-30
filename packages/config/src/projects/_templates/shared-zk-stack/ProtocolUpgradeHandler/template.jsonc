@@ -26,11 +26,9 @@
     },
     "L2_PROTOCOL_GOVERNOR": {
       "permissions": [
-        {
-          "type": "interact",
-          "description": "start (queue) upgrades."
-        }
-      ]
+        { "type": "interact", "description": "start (queue) upgrades." }
+      ],
+      "edit": ["format", "ZkSyncAddress"]
     },
     "protocolFrozenUntil": {
       "description": "Timestamp until which ALL Hyperchains connected to the main STM are frozen. (Mailbox and Executor facets blocked)",
