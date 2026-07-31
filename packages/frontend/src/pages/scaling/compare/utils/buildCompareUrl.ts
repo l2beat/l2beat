@@ -1,5 +1,6 @@
 import {
   type CompareChartState,
+  DEFAULT_COMPARE_ACTIVITY_UNIT,
   DEFAULT_COMPARE_METRIC,
   DEFAULT_COMPARE_RANGE,
   DEFAULT_COMPARE_SCALE,
@@ -27,6 +28,13 @@ export function buildCompareUrl(
   }
   if (state.scale !== DEFAULT_COMPARE_SCALE) {
     params.set('scale', 'log')
+  }
+  // Per-metric controls are only encoded for the metric they belong to.
+  if (
+    state.metric === 'activity' &&
+    state.activityUnit !== DEFAULT_COMPARE_ACTIVITY_UNIT
+  ) {
+    params.set('unit', state.activityUnit)
   }
   // Keep commas literal so shared links stay readable.
   const query = params.toString().replaceAll('%2C', ',')

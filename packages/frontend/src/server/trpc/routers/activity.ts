@@ -5,6 +5,10 @@ import {
 } from '~/server/features/scaling/activity/getActivityChart'
 import { getActivityChartStats } from '~/server/features/scaling/activity/getActivityChartStats'
 import {
+  ActivityChartWithProjectsRangesDataParams,
+  getDetailedActivityChartWithProjectsRanges,
+} from '~/server/features/scaling/activity/getDetailedActivityChartWithProjectsRanges'
+import {
   EthereumActivityChartParams,
   getEthereumActivityChart,
 } from '~/server/features/scaling/activity/getEthereumActivityChart'
@@ -17,6 +21,9 @@ export const activityRouter = router({
   chart: procedure
     .input(ActivityChartParams)
     .query(({ input }) => getActivityChart(input)),
+  detailedChartWithProjectsRanges: procedure
+    .input(ActivityChartWithProjectsRangesDataParams)
+    .query(({ input }) => getDetailedActivityChartWithProjectsRanges(input)),
   ethereumChart: procedure
     .input(EthereumActivityChartParams)
     .query(({ input }) => getEthereumActivityChart(input)),

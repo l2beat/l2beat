@@ -14,13 +14,16 @@ function parse(search: string) {
 
 describe(parseCompareStateFromSearchParams.name, () => {
   it('parses a full state', () => {
-    const result = parse('projects=arbitrum,base&range=30d&scale=log')
+    const result = parse(
+      'metric=activity&projects=arbitrum,base&range=30d&scale=log&unit=tps',
+    )
 
     expect(result).toEqual({
-      metric: 'tvs',
+      metric: 'activity',
       projects: ['arbitrum', 'base'],
       range: '30d',
       scale: 'symlog',
+      activityUnit: 'tps',
     })
   })
 
@@ -32,6 +35,7 @@ describe(parseCompareStateFromSearchParams.name, () => {
       projects: [],
       range: '1y',
       scale: 'linear',
+      activityUnit: 'uops',
     })
   })
 
@@ -58,13 +62,14 @@ describe(parseCompareStateFromSearchParams.name, () => {
   })
 
   it('falls back to defaults on garbage values', () => {
-    const result = parse('metric=bogus&range=yesterday&scale=cubic')
+    const result = parse('metric=bogus&range=yesterday&scale=cubic&unit=gas')
 
     expect(result).toEqual({
       metric: 'tvs',
       projects: [],
       range: '1y',
       scale: 'linear',
+      activityUnit: 'uops',
     })
   })
 
@@ -80,6 +85,7 @@ describe(parseCompareStateFromSearchParams.name, () => {
       projects: ['base', 'arbitrum'],
       range: '90d',
       scale: 'symlog',
+      activityUnit: 'uops',
     }
 
     const url = buildCompareUrl('/scaling/compare', state)
@@ -94,6 +100,22 @@ describe(parseCompareStateFromSearchParams.name, () => {
       projects: [],
       range: { from: 1700000000, to: 1710000000 },
       scale: 'linear',
+      activityUnit: 'uops',
+    }
+
+    const url = buildCompareUrl('/scaling/compare', state)
+    const search = url.split('?')[1] ?? ''
+
+    expect(parse(search)).toEqual(state)
+  })
+
+  it('round-trips the activity metric with its unit through buildCompareUrl', () => {
+    const state: CompareChartState = {
+      metric: 'activity',
+      projects: ['optimism'],
+      range: '7d',
+      scale: 'linear',
+      activityUnit: 'tps',
     }
 
     const url = buildCompareUrl('/scaling/compare', state)
