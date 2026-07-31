@@ -33,7 +33,7 @@
     "shortName": "gno",
     "chainId": 100,
     "etherscanApi": true,
-    "explorerUrl": "https://gnosisscan.io",
+    "explorerUrl": "https://gnosis.blockscout.com",
     "alchemyId": "gnosis-mainnet",
     "nativeCurrency": {
       "name": "xDAI",
