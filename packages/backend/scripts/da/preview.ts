@@ -4,16 +4,7 @@ import { daTrackingDomain } from '@l2beat/config/build/snapshots/daTracking/iden
 import { createDatabase, type DataAvailabilityRecord } from '@l2beat/database'
 import { getBlockNumberAtOrBefore, HttpClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import {
-  boolean,
-  command,
-  flag,
-  option,
-  optional,
-  positional,
-  run,
-  string,
-} from 'cmd-ts'
+import { command, option, optional, positional, run, string } from 'cmd-ts'
 import { config as dotenv } from 'dotenv'
 import * as fs from 'fs'
 import * as path from 'path'
@@ -66,11 +57,6 @@ const args = {
     short: 'l',
     description: `Only preview a single DA layer (${LAYERS.join('|')})`,
   }),
-  diffOnly: flag({
-    type: boolean,
-    long: 'diff-only',
-    description: 'Only print the configuration identity diff (no network)',
-  }),
 }
 
 const cmd = command({
@@ -92,9 +78,6 @@ const cmd = command({
     }
 
     const snapshotDiff = printSnapshotDiff(logger)
-    if (args.diffOnly) {
-      process.exit(0)
-    }
 
     const dbUrl = env.optionalString('DA_PREVIEW_DB_URL')
     if (dbUrl && !env.optionalString('ETHEREUM_BEACON_API_URL')) {

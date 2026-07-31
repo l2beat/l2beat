@@ -16,7 +16,7 @@ deploying the backend:
 
 ```bash
 cd packages/backend
-pnpm da:preview [projectId] [--from <unix|ISO>] [--to <unix|ISO>] [--layer <name>] [--diff-only]
+pnpm da:preview [projectId] [--from <unix|ISO>] [--to <unix|ISO>] [--layer <name>]
 ```
 
 The script rebuilds `@l2beat/config`, assembles the exact configurations the
@@ -36,14 +36,11 @@ are excluded from gap detection and warned about separately.
 It also always prints an identity diff against the committed snapshot
 (`packages/config/src/snapshots/daTracking/snapshot.json`): added ids sync from
 scratch, removed ids mean the backend WILL WIPE the data indexed under them on
-deploy. Use `--diff-only` for a quick, offline wipe check.
+deploy.
 
 Examples:
 
 ```bash
-# what would change after my edit, no network needed
-pnpm da:preview --diff-only
-
 # last 3 hours (default window) for a single project
 pnpm da:preview taiko
 
