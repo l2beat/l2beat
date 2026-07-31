@@ -23,7 +23,13 @@ import {
   type SnapshotDiff,
 } from '../../src/modules/data-availability/preview/diffSnapshot'
 import {
+  type ExpectedCoverage,
+  findRecordGaps,
+} from '../../src/modules/data-availability/preview/gaps'
+import {
+  ceilToHour,
   clampBlockRange,
+  hoursInWindow,
   parseTimeArg,
   resolveWindow,
 } from '../../src/modules/data-availability/preview/range'
@@ -32,7 +38,7 @@ import { DaService } from '../../src/modules/data-availability/services/DaServic
 import { createBlobSource } from './blobSource'
 import { createPreviewClients, DB_CACHE_URL } from './clients'
 import { previewEigen } from './eigenPreview'
-import { summarizeRecords, writePreviewJson } from './output'
+import { summarizeGaps, summarizeRecords, writePreviewJson } from './output'
 
 const LAYERS = ['ethereum', 'celestia', 'avail', 'eigenda'] as const
 
@@ -141,6 +147,7 @@ const cmd = command({
 
     const daService = new DaService()
     const records: DataAvailabilityRecord[] = []
+    const expected: ExpectedCoverage[] = []
 
     for (const layer of clients.blockLayers) {
       const layerConfigs = blockConfigs.filter((c) => c.daLayer === layer.name)
@@ -182,6 +189,25 @@ const cmd = command({
       )
       logger.info(`Fetched ${blobs.length} ${layer.name} blobs`)
 
+      // Hours where the layer produced any data at all - hours outside this
+      // set are a source problem (e.g. lagging blob cache), not a config gap
+      const layerHours = new Set(
+        blobs.map((b) => UnixTime.toStartOf(b.blockTimestamp, 'hour')),
+      )
+      const hoursWithoutLayerData = hoursInWindow(window).filter(
+        (h) => !layerHours.has(h),
+      )
+      if (hoursWithoutLayerData.length > 0) {
+        logger.warn(
+          `No ${layer.name} blobs at all in ${hoursWithoutLayerData.length} hour(s) of the window - the blob source may be lagging; these hours are excluded from gap detection`,
+          {
+            hours: hoursWithoutLayerData.map((h) =>
+              UnixTime.toDate(h).toISOString(),
+            ),
+          },
+        )
+      }
+
       for (const config of layerConfigs) {
         const range = clampBlockRange(config, fromBlock, toBlock)
         if (!range) {
@@ -191,6 +217,26 @@ const cmd = command({
           })
           continue
         }
+
+        // Active time bounds within the window: only resolve boundary block
+        // timestamps when the config starts or ends inside the fetched range
+        const activeFrom =
+          range.from > fromBlock
+            ? ceilToHour((await getBlock(range.from)).timestamp)
+            : window.from
+        const activeTo =
+          range.to < toBlock
+            ? UnixTime.toStartOf((await getBlock(range.to)).timestamp, 'hour')
+            : window.to
+        expected.push({
+          projectId: config.projectId,
+          daLayer: config.daLayer,
+          configurationId: config.configurationId,
+          hours: hoursInWindow({ from: activeFrom, to: activeTo }).filter((h) =>
+            layerHours.has(h),
+          ),
+        })
+
         const blobsInRange = blobs.filter(
           (b) => b.blockNumber >= range.from && b.blockNumber <= range.to,
         )
@@ -203,14 +249,14 @@ const cmd = command({
     }
 
     if (clients.eigen && timestampConfigs.length > 0) {
-      records.push(
-        ...(await previewEigen(
-          clients.eigen,
-          timestampConfigs,
-          window,
-          logger,
-        )),
+      const eigenResult = await previewEigen(
+        clients.eigen,
+        timestampConfigs,
+        window,
+        logger,
       )
+      records.push(...eigenResult.records)
+      expected.push(...eigenResult.expected)
     }
 
     records.sort(
@@ -220,13 +266,22 @@ const cmd = command({
         a.daLayer.localeCompare(b.daLayer),
     )
 
+    const gaps = findRecordGaps(records, expected)
+
     summarizeRecords(records, logger)
+    summarizeGaps(gaps, logger)
     writePreviewJson(OUTPUT_PATH, {
       window: {
         from: UnixTime.toDate(window.from).toISOString(),
         to: UnixTime.toDate(window.to).toISOString(),
       },
       snapshotDiff,
+      gaps: gaps.map((gap) => ({
+        ...gap,
+        missingHours: gap.missingHours.map((h) =>
+          UnixTime.toDate(h).toISOString(),
+        ),
+      })),
       records,
     })
     logger.info(`Go to ${OUTPUT_PATH} for the full hourly records`)

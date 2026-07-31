@@ -1,6 +1,10 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { DataAvailabilityRecord } from '@l2beat/database'
+import { UnixTime } from '@l2beat/shared-pure'
 import * as fs from 'fs'
+import type { RecordGap } from '../../src/modules/data-availability/preview/gaps'
+
+const MAX_LISTED_GAP_HOURS = 6
 
 export function summarizeRecords(
   records: DataAvailabilityRecord[],
@@ -31,6 +35,29 @@ export function summarizeRecords(
       })
     }
   }
+}
+
+export function summarizeGaps(gaps: RecordGap[], logger: Logger): void {
+  if (gaps.length === 0) {
+    logger.info(
+      'No coverage gaps - every configuration has records for all expected hours',
+    )
+    return
+  }
+
+  for (const gap of gaps) {
+    const listed = gap.missingHours
+      .slice(0, MAX_LISTED_GAP_HOURS)
+      .map((h) => UnixTime.toDate(h).toISOString())
+    const more = gap.missingHours.length - listed.length
+    logger.warn(
+      `GAP ${gap.projectId} (${gap.daLayer} ${gap.configurationId}): no data in ${gap.missingHours.length}/${gap.expectedHours} hours`,
+      { missing: more > 0 ? [...listed, `+${more} more`] : listed },
+    )
+  }
+  logger.warn(
+    `${gaps.length} configuration(s) have hours without data - if you are adding a new config, it may not have full coverage (wrong sequencer/topic/namespace?). It can also mean the project simply did not post in those hours.`,
+  )
 }
 
 export function writePreviewJson(path: string, payload: unknown): void {

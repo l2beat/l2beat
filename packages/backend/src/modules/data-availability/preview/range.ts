@@ -68,6 +68,12 @@ export function clampTimestampRange(
   return { from: clampedFrom, to: clampedTo }
 }
 
+/** Rounds up to the next hour start (identity for hour-aligned timestamps). */
+export function ceilToHour(timestamp: UnixTime): UnixTime {
+  const start = UnixTime.toStartOf(timestamp, 'hour')
+  return start === timestamp ? timestamp : start + UnixTime.HOUR
+}
+
 /** Hour starts in [window.from, window.to), assuming an hour-aligned window. */
 export function hoursInWindow(window: PreviewWindow): UnixTime[] {
   const hours: UnixTime[] = []

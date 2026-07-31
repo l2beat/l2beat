@@ -25,6 +25,14 @@ backend would index (including sovereign projects tracked through a DA layer's
 production record generation. It prints a per-project summary and writes the
 full hourly records to `scripts/da/preview.json`.
 
+Hours in the window where a configuration matched no data are reported as
+`GAP` warnings (and listed under `gaps` in the JSON). When you are adding a
+new config, gaps usually mean incomplete coverage - a missing sequencer,
+wrong topic or namespace - though they can also mean the project simply did
+not post in those hours, so compare against the project's posting cadence.
+Hours where the layer produced no blobs at all (e.g. a lagging blob cache)
+are excluded from gap detection and warned about separately.
+
 It also always prints an identity diff against the committed snapshot
 (`packages/config/src/snapshots/daTracking/snapshot.json`): added ids sync from
 scratch, removed ids mean the backend WILL WIPE the data indexed under them on

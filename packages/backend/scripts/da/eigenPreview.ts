@@ -3,6 +3,7 @@ import type { DataAvailabilityRecord } from '@l2beat/database'
 import type { EigenApiClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import type { TimestampDaIndexedConfig } from '../../src/config/Config'
+import type { ExpectedCoverage } from '../../src/modules/data-availability/preview/gaps'
 import {
   type EigenDaProjectConfiguration,
   mapEigenProjectData,
@@ -19,26 +20,34 @@ const FIRST_FILE_DATE = UnixTime.fromDate(new Date('2025-08-01T00:00:00.000Z'))
 /** One getMetrics call per hour - keep long windows from hammering the API. */
 const MAX_METRICS_HOURS = 48
 
+export interface EigenPreviewResult {
+  records: DataAvailabilityRecord[]
+  expected: ExpectedCoverage[]
+}
+
 export async function previewEigen(
   client: EigenApiClient,
   configs: TimestampDaIndexedConfig[],
   window: PreviewWindow,
   logger: Logger,
-): Promise<DataAvailabilityRecord[]> {
+): Promise<EigenPreviewResult> {
   const records: DataAvailabilityRecord[] = []
+  const expected: ExpectedCoverage[] = []
 
   for (const config of configs.filter((c) => c.type === 'baseLayer')) {
-    records.push(...(await previewLayerTotal(client, config, window, logger)))
+    const result = await previewLayerTotal(client, config, window, logger)
+    records.push(...result.records)
+    expected.push(...result.expected)
   }
 
   const projectConfigs = configs.filter((c) => c.type === 'eigen-da')
   if (projectConfigs.length > 0) {
-    records.push(
-      ...(await previewProjects(client, projectConfigs, window, logger)),
-    )
+    const result = await previewProjects(client, projectConfigs, window, logger)
+    records.push(...result.records)
+    expected.push(...result.expected)
   }
 
-  return records
+  return { records, expected }
 }
 
 async function previewLayerTotal(
@@ -46,13 +55,13 @@ async function previewLayerTotal(
   config: Extract<TimestampDaIndexedConfig, { type: 'baseLayer' }>,
   window: PreviewWindow,
   logger: Logger,
-): Promise<DataAvailabilityRecord[]> {
+): Promise<EigenPreviewResult> {
   const clamped = clampTimestampRange(config, window.from, window.to)
   if (!clamped) {
     logger.warn('EigenDA layer configuration inactive in window', {
       configurationId: config.configurationId,
     })
-    return []
+    return { records: [], expected: [] }
   }
 
   let hours = hoursInWindow(clamped)
@@ -78,7 +87,17 @@ async function previewLayerTotal(
       totalSize: BigInt(metrics.total_bytes_posted),
     })
   }
-  return records
+  return {
+    records,
+    expected: [
+      {
+        projectId: config.projectId,
+        daLayer: config.daLayer,
+        configurationId: config.configurationId,
+        hours,
+      },
+    ],
+  }
 }
 
 async function previewProjects(
@@ -86,7 +105,7 @@ async function previewProjects(
   configs: Extract<TimestampDaIndexedConfig, { type: 'eigen-da' }>[],
   window: PreviewWindow,
   logger: Logger,
-): Promise<DataAvailabilityRecord[]> {
+): Promise<EigenPreviewResult> {
   const configurations: EigenDaProjectConfiguration[] = configs.map((c) => ({
     id: c.configurationId,
     properties: c,
@@ -94,6 +113,7 @@ async function previewProjects(
   const configById = new Map(configs.map((c) => [c.configurationId, c]))
 
   const records: DataAvailabilityRecord[] = []
+  const fetchedHours: UnixTime[] = []
   // A daily file dated D contains hourly rows for [D - DAY, D)
   const firstDay = UnixTime.toStartOf(window.from, 'day') + UnixTime.DAY
   const lastDay = UnixTime.toStartOf(window.to - 1, 'day') + UnixTime.DAY
@@ -119,6 +139,10 @@ async function previewProjects(
       continue
     }
 
+    for (let hour = day - UnixTime.DAY; hour < day; hour += UnixTime.HOUR) {
+      fetchedHours.push(hour)
+    }
+
     const dayRecords = mapEigenProjectData(
       data,
       configurations,
@@ -136,5 +160,18 @@ async function previewProjects(
     }
   }
 
-  return records
+  const fetched = new Set(fetchedHours)
+  const expected: ExpectedCoverage[] = []
+  for (const config of configs) {
+    const clamped = clampTimestampRange(config, window.from, window.to)
+    if (!clamped) continue
+    expected.push({
+      projectId: config.projectId,
+      daLayer: config.daLayer,
+      configurationId: config.configurationId,
+      hours: hoursInWindow(clamped).filter((hour) => fetched.has(hour)),
+    })
+  }
+
+  return { records, expected }
 }

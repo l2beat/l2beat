@@ -1,6 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import {
+  ceilToHour,
   clampBlockRange,
   clampTimestampRange,
   hoursInWindow,
@@ -93,6 +94,20 @@ describe(clampTimestampRange.name, () => {
   it('returns undefined when there is no overlap', () => {
     expect(clampTimestampRange({ sinceTimestamp: 200 }, 100, 200)).toEqual(
       undefined,
+    )
+  })
+})
+
+describe(ceilToHour.name, () => {
+  it('keeps hour-aligned timestamps', () => {
+    const aligned = UnixTime.fromDate(new Date('2026-07-30T05:00:00Z'))
+    expect(ceilToHour(aligned)).toEqual(aligned)
+  })
+
+  it('rounds up mid-hour timestamps', () => {
+    const midHour = UnixTime.fromDate(new Date('2026-07-30T05:20:00Z'))
+    expect(ceilToHour(midHour)).toEqual(
+      UnixTime.fromDate(new Date('2026-07-30T06:00:00Z')),
     )
   })
 })
