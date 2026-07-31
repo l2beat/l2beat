@@ -4,6 +4,7 @@
   "description": "Upgradeable Tornado Cash governance contract that manages proposals, voting, execution, and treasury-connected governance modules. If you trust this contract, you trust its upgrade path and proposal rules to change protocol governance behavior.",
   "category": "gov",
   "ignoreMethods": ["checkIfQuorumReached", "proposalCodehashes", "proposals"],
+  "ignoreInWatchMode": ["TORNTreasury"],
   "fields": {
     "$admin": {
       "description": "Can upgrade the governance implementation.",
@@ -14,6 +15,15 @@
           "description": "upgrade the governance implementation, changing proposal execution and treasury-control logic."
         }
       ]
+    },
+    "TORNTreasury": {
+      "description": "TORN held by the governance contract itself (the governance treasury). Does not include TORN locked by users for voting, which is escrowed in userVault.",
+      "handler": {
+        "type": "call",
+        "method": "function balanceOf(address account) view returns (uint256)",
+        "args": ["0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce"],
+        "address": "{{ torn }}"
+      }
     },
     "$implementation": {
       "description": "Current governance implementation.",

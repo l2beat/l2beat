@@ -136,6 +136,7 @@ export const DEBRIDGE_NETWORKS = defineNetworks('debridge', [
   { chainId: '2741', chain: 'abstract' },
   // katana not supported
   { chainId: '56', chain: 'bsc' },
+  { chainId: '100', chain: 'gnosis' },
   { chainId: '43114', chain: 'avalanche' },
   { chainId: '59144', chain: 'linea' },
   { chainId: '999', chain: 'hyperevm' },

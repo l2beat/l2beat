@@ -18,8 +18,8 @@ const chainId = 324
 const l1migrationTs = UnixTime(1769897051) // 2023-11-03T00:32:11Z
 
 // timestamp of the first executeBatchesSharedBridge trx on 0xdC26B08F0335b68721F64001C38b05D0BC9B539d
-const eraMultisigValidatorTs = UnixTime(1777393175)
-const eraMultisigValidatorBlock = 24979712 // block with timestamp eraMultisigValidatorTs
+const eraMultisigValidatorTs = UnixTime(1777393451)
+const eraMultisigValidatorBlock = 24979735 // block with timestamp eraMultisigValidatorTs
 
 export const zksync2: ScalingProject = zkStackL2({
   chainId,

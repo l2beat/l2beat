@@ -1,3 +1,86 @@
+Generated with discovered.json: 0x870e83079474cd937ec5bd5af8ae66961fb92a7c
+
+# Diff at Thu, 30 Jul 2026 14:34:13 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@66fa629d20cb3eebcd8a566401e5b4f335fafdf2 block: 1783679422
+- current timestamp: 1783679422
+
+## Description
+
+Make shared-sp1 use entrypoints and rediscover
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1783679422 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (arb1:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+      template:
+-        "shared-sp1/SP1Verifier"
++        "succinct/SP1Verifier"
+      description:
++        "Verifier contract for SP1 proofs (v6.1.0)."
+    }
+```
+
+```diff
+    contract SP1Verifier (base:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+      template:
+-        "shared-sp1/SP1Verifier"
++        "succinct/SP1Verifier"
+      description:
++        "Verifier contract for SP1 proofs (v6.1.0)."
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+      template:
+-        "shared-sp1/SP1Verifier"
++        "succinct/SP1Verifier"
+      description:
++        "Verifier contract for SP1 proofs (v6.1.0)."
+    }
+```
+
+```diff
+    contract SP1VerifierGatewayMultisig (eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B","description":"affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.","role":".owner"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1VerifierGatewayOlder (eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B) [succinct/SP1VerifierGateway]
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v6.0.0).
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+```
+
 Generated with discovered.json: 0xda8333d541551da51c38a6ef5a5a8a2aadb508f9
 
 # Diff at Fri, 10 Jul 2026 10:31:34 GMT:

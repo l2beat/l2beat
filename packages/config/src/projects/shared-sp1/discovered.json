@@ -1,7 +1,7 @@
 {
   "name": "shared-sp1",
   "timestamp": 1783679422,
-  "configHash": "0x1c4cc8f0914071afc54f768a16450b6f0cbfe1ef176c898a9992c00f0ced19c0",
+  "configHash": "0x498f0936e2410b4d3b7405a414e09eb84091eaedf3d17352c6e956724ea64122",
   "entries": [
     {
       "name": "SP1Verifier",
@@ -160,11 +160,12 @@
       "name": "SP1Verifier",
       "address": "arb1:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A",
       "type": "Contract",
-      "template": "shared-sp1/SP1Verifier",
+      "template": "succinct/SP1Verifier",
       "sourceHashes": [
         "0x841e49c8753878bb522d9e0f0d5276aa39929d0cb7d6bd23ca0d5032537b8536"
       ],
       "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v6.1.0).",
       "deployerAddress": "arb1:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
       "sinceTimestamp": 1776172418,
       "sinceBlock": 452416145,
@@ -378,11 +379,12 @@
       "name": "SP1Verifier",
       "address": "base:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A",
       "type": "Contract",
-      "template": "shared-sp1/SP1Verifier",
+      "template": "succinct/SP1Verifier",
       "sourceHashes": [
         "0x841e49c8753878bb522d9e0f0d5276aa39929d0cb7d6bd23ca0d5032537b8536"
       ],
       "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v6.1.0).",
       "deployerAddress": "base:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
       "sinceTimestamp": 1776172423,
       "sinceBlock": 44691538,
@@ -459,6 +461,71 @@
       },
       "implementationNames": {
         "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": "SP1Verifier"
+      }
+    },
+    {
+      "name": "SP1VerifierGatewayOlder",
+      "address": "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B",
+      "type": "Contract",
+      "template": "succinct/SP1VerifierGateway",
+      "sourceHashes": [
+        "0xf67f0dc1760fe9589909a16bfef47f76d6dfa71427e034d759a3d8da88a42645"
+      ],
+      "proxyType": "immutable",
+      "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
+      "deployerAddress": "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
+      "sinceTimestamp": 1730486951,
+      "sinceBlock": 21094694,
+      "values": {
+        "$immutable": true,
+        "activeVerifiers": [
+          {
+            "selector": "0xa4594c59",
+            "verifier": "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5"
+          },
+          {
+            "selector": "0x0e78f4db",
+            "verifier": "eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508"
+          },
+          {
+            "selector": "0x4388a21c",
+            "verifier": "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2"
+          }
+        ],
+        "allVerifiers": [
+          {
+            "selector": "0x09069090",
+            "verifier": "eth:0xE780809121774D06aD9B0EEeC620fF4B3913Ced1"
+          },
+          {
+            "selector": "0x11b6a09d",
+            "verifier": "eth:0xa27A057CAb1a4798c6242F6eE5b2416B7Cd45E5D"
+          },
+          {
+            "selector": "0xa4594c59",
+            "verifier": "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5"
+          },
+          {
+            "selector": "0x0e78f4db",
+            "verifier": "eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508"
+          },
+          {
+            "selector": "0x4388a21c",
+            "verifier": "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2"
+          }
+        ],
+        "owner": "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878"
+      },
+      "fieldMeta": {
+        "activeVerifiers": {
+          "description": "Verifiers that are routed to by their selector and not frozen."
+        },
+        "allVerifiers": {
+          "description": "All verifiers that were ever routed to by this gateway."
+        }
+      },
+      "implementationNames": {
+        "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B": "SP1VerifierGateway"
       }
     },
     {
@@ -555,6 +622,28 @@
       }
     },
     {
+      "name": "SP1Verifier",
+      "address": "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5",
+      "type": "Contract",
+      "template": "succinct/SP1Verifier",
+      "sourceHashes": [
+        "0x3430123e1fec5a2451a38fcf0a62fdd0cc482b69740ab632ef580e1a44122702"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v5.0.0).",
+      "deployerAddress": "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
+      "sinceTimestamp": 1748550083,
+      "sinceBlock": 22590749,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0xa4594c59bbc142f3b81c3ecb7f50a7c34bc9af7c4c444b5d48b795427e285913",
+        "VERSION": "v5.0.0"
+      },
+      "implementationNames": {
+        "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5": "SP1Verifier"
+      }
+    },
+    {
       "address": "eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
       "type": "EOA",
       "proxyType": "EOA"
@@ -588,6 +677,52 @@
       "proxyType": "EOA"
     },
     {
+      "name": "SP1Verifier",
+      "address": "eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508",
+      "type": "Contract",
+      "template": "succinct/SP1Verifier",
+      "sourceHashes": [
+        "0x42f46686613948c377586d511d315e6d67b9fd747a18225cce7c4cf32d14c7be"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v6.0.0).",
+      "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
+      "sinceTimestamp": 1771375907,
+      "sinceBlock": 24480252,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0x0e78f4db7a6771a3a6a7d9c3b0de6fe73d58781368967a7fe84d87aefffec896",
+        "VERSION": "v6.0.0",
+        "VK_ROOT": "0x008cd56e10c2fe24795cff1e1d1f40d3a324528d315674da45d26afb376e8670"
+      },
+      "implementationNames": {
+        "eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508": "SP1Verifier"
+      }
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2",
+      "type": "Contract",
+      "template": "succinct/SP1Verifier",
+      "sourceHashes": [
+        "0xaed0a260d9c0355e7e6fcf19f18136f914582d20027b440b0c04b762e521b2d6"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v6.1.0).",
+      "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
+      "sinceTimestamp": 1776172379,
+      "sinceBlock": 24878255,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0x4388a21c687fdd5f218d7e3d13190cac4c5355818d3605fd5fb811df468ee696",
+        "VERSION": "v6.1.0",
+        "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
+      },
+      "implementationNames": {
+        "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2": "SP1Verifier"
+      }
+    },
+    {
       "address": "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
       "type": "EOA",
       "proxyType": "EOA"
@@ -596,11 +731,12 @@
       "name": "SP1Verifier",
       "address": "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A",
       "type": "Contract",
-      "template": "shared-sp1/SP1Verifier",
+      "template": "succinct/SP1Verifier",
       "sourceHashes": [
         "0x841e49c8753878bb522d9e0f0d5276aa39929d0cb7d6bd23ca0d5032537b8536"
       ],
       "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v6.1.0).",
       "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
       "sinceTimestamp": 1776172415,
       "sinceBlock": 24878258,
@@ -625,6 +761,12 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B",
+          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
+          "role": ".owner"
+        },
         {
           "permission": "interact",
           "from": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
@@ -876,6 +1018,25 @@
       "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
+    "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error RouteAlreadyExists(address verifier)",
+      "error RouteIsFrozen(bytes4 selector)",
+      "error RouteNotFound(bytes4 selector)",
+      "error SelectorCannotBeZero()",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RouteAdded(bytes4 selector, address verifier)",
+      "event RouteFrozen(bytes4 selector, address verifier)",
+      "function addRoute(address verifier)",
+      "function freezeRoute(bytes4 selector)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function routes(bytes4) view returns (address verifier, bool frozen)",
+      "function transferOwnership(address newOwner)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
     "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e": [
       "constructor(address initialOwner)",
       "error OwnableInvalidOwner(address owner)",
@@ -895,6 +1056,19 @@
       "function transferOwnership(address newOwner)",
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
+    "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5": [
+      "error InvalidProof()",
+      "error ProofInvalid()",
+      "error PublicInputNotInField()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function Verify(uint256[8] proof, uint256[2] input) view",
+      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyCompressedProof(uint256[4] compressedProof, uint256[2] input) view",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
     "eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C": [
       "error InvalidExitCode()",
       "error InvalidProof()",
@@ -905,6 +1079,38 @@
       "function VK_ROOT() pure returns (bytes32)",
       "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
       "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
+    "eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508": [
+      "error InvalidExitCode()",
+      "error InvalidProof()",
+      "error InvalidVkRoot()",
+      "error ProofInvalid()",
+      "error PublicInputNotInField()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function VK_ROOT() pure returns (bytes32)",
+      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyCompressedProof(uint256[4] compressedProof, uint256[5] input) view",
+      "function verifyProof(uint256[8] proof, uint256[5] input) view",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
+    "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2": [
+      "error InvalidExitCode()",
+      "error InvalidProof()",
+      "error InvalidVkRoot()",
+      "error ProofInvalid()",
+      "error PublicInputNotInField()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function VK_ROOT() pure returns (bytes32)",
+      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyCompressedProof(uint256[4] compressedProof, uint256[5] input) view",
+      "function verifyProof(uint256[8] proof, uint256[5] input) view",
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A": [
@@ -974,7 +1180,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "shared-sp1/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
@@ -983,5 +1188,5 @@
     "base": 48445037,
     "ethereum": 25501601
   },
-  "permissionsConfigHash": "0x4bd56c5f9fa64feb9cee386d3d2af584cf1c104fd7e1ba5b99a9968e2cc77ffc"
+  "permissionsConfigHash": "0x45826a50baf34187b2cdacb4246b8c744f2755c08887cfa64e9612e1f0ea7579"
 }

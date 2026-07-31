@@ -67,9 +67,8 @@ export const strk20: BaseProject = {
     ],
     quantumResistant: true,
     riskSummary: readProjectMarkdown('strk20', 'riskSummary'),
-    upgradesAndGovernance: readProjectMarkdown(
-      'strk20',
-      'upgradesAndGovernance',
-    ),
+    upgradesAndGovernance: {
+      content: readProjectMarkdown('strk20', 'upgradesAndGovernance'),
+    },
   },
 }

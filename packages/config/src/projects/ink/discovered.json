@@ -1,6 +1,6 @@
 {
   "name": "ink",
-  "timestamp": 1784561683,
+  "timestamp": 1785409481,
   "configHash": "0xd952acf70a2058a21226972321393d4f6e53d1b32769a9f35cc86112d6c02e7f",
   "entries": [
     {
@@ -173,7 +173,7 @@
         "game8": "eth:0x2DDA3584b51eF5236f7726Dea5A0FB6B3cA94AeC",
         "game8Args": "0x0337ecb3604c0b40c352e0c7711beb17a212d583f4fe956fd8d66e29ad5f9025acc005dcd857b401e4732e6f7837135a22825cfaee018baf058227872540ac60efbd38b023d9dae257b4c29daee99a28e6e86778b499361294c134ea000000000000000000000000000000000000000000000000000000000000def1",
         "game8Vm": "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA",
-        "gameCount": 2364,
+        "gameCount": 2401,
         "initBondGame0": 0,
         "initBondGame1": "80000000000000000",
         "initBondGame42": 0,
@@ -420,19 +420,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x500d7Ea63CF2E501dadaA5feeC1FC19FE2Aa72Ac",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364",
-          "description": "Allowed to commit transactions from the current layer to the host chain.",
-          "role": ".batcherHash"
-        }
-      ]
-    },
-    {
       "name": "SuperchainProxyAdmin",
       "address": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
       "type": "Contract",
@@ -507,7 +494,7 @@
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "symbol": "WETH",
         "systemConfig": "eth:0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364",
-        "totalSupply": "3360000000000000000",
+        "totalSupply": "3847594000000000000",
         "version": "1.5.1"
       },
       "implementationNames": {
@@ -751,7 +738,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 514422,
-          "prevBlockNum": 25574700
+          "prevBlockNum": 25645167
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -862,7 +849,7 @@
         "$upgradeCount": 10,
         "basefeeScalar": 4424,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
-        "batcherHash": "eth:0x500d7Ea63CF2E501dadaA5feeC1FC19FE2Aa72Ac",
+        "batcherHash": "eth:0x6db6161fC5662450E801398Bad62dD9921216B98",
         "batchInbox": "eth:0x005969bf0EcbF6eDB6C47E5e94693b1C3651Be97",
         "blobbasefeeScalar": 810831,
         "daFootprintGasScalar": 0,
@@ -927,7 +914,7 @@
         "startBlock": 21344310,
         "superchainConfig": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
-        "unsafeBlockSigner": "eth:0x7D056B99AA2021864c42E25B4F8cE3BdEAc9463C",
+        "unsafeBlockSigner": "eth:0x7b322282DF45E537E5de76D60E1432Db3cF3F8E1",
         "version": "3.14.2",
         "VERSION": 0
       },
@@ -1120,7 +1107,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292647672",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292648123",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1147,6 +1134,19 @@
         "eth:0x59D497530b00062f40950ba8EaB88868bf7F86f0": "L1CrossDomainMessenger"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "eth:0x6db6161fC5662450E801398Bad62dD9921216B98",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
+          "role": ".batcherHash"
+        }
+      ]
     },
     {
       "name": "DeputyPauseModule",
@@ -1192,7 +1192,7 @@
       }
     },
     {
-      "address": "eth:0x7D056B99AA2021864c42E25B4F8cE3BdEAc9463C",
+      "address": "eth:0x7b322282DF45E537E5de76D60E1432Db3cF3F8E1",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1449,7 +1449,7 @@
           "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
         ],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 120,
+        "nonce": 121,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1986,12 +1986,12 @@
           ]
         ],
         "$upgradeCount": 5,
-        "anchorGame": "eth:0x1DE853DD25F89F57BE82b1Aa6BD502A514B5f404",
+        "anchorGame": "eth:0xC4E7b0F68A0D28e5f0fF47C4542F147F06F639C1",
         "disputeGameFactory": "eth:0x10d7B35078d3baabB96Dd45a9143B94be65b12CD",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0xc8d62d88645875b5c248484787c0c19f7046445689d12873980f5e5edcbed7a5",
-          50439360
+          "0xfe64fb2721c744621e87e3fada3e790fac9dce41c92520b60ef477a6764c7233",
+          51303086
         ],
         "getStartingAnchorRoot": {
           "root": "0x10c839264195b6b897892b2d8949004bcb6005a9c712b41651aaf1a68c004d21",
@@ -2075,7 +2075,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "l1CrossDomainMessenger": "ink:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621315",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621319",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2134,7 +2134,7 @@
         "$upgradeCount": 3,
         "baseFee": 0,
         "baseFeeScalar": 4424,
-        "blobBaseFee": 7901781,
+        "blobBaseFee": 5132960,
         "blobBaseFeeScalar": 810831,
         "decimals": 6,
         "DECIMALS": 6,
@@ -2143,7 +2143,7 @@
         "isFjord": true,
         "isIsthmus": true,
         "isJovian": true,
-        "l1BaseFee": 144418102,
+        "l1BaseFee": 148004003,
         "version": "1.6.0"
       },
       "implementationNames": {
@@ -2399,10 +2399,10 @@
           ]
         ],
         "$upgradeCount": 3,
-        "basefee": 144418102,
+        "basefee": 148004003,
         "baseFeeScalar": 4424,
-        "batcherHash": "0x000000000000000000000000500d7ea63cf2e501dadaa5feec1fc19fe2aa72ac",
-        "blobBaseFee": 7901781,
+        "batcherHash": "0x0000000000000000000000006db6161fc5662450e801398bad62dd9921216b98",
+        "blobBaseFee": 5132960,
         "blobBaseFeeScalar": 810831,
         "daFootprintGasScalar": 400,
         "DEPOSITOR_ACCOUNT": "ink:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -2412,17 +2412,17 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0x10597eca4e667ce3e2ef3ca28be7e37f454e01f6ad08c078f8b9bd6f0a63aca8",
+        "hash": "0x81205cc9589180e8c9a28249a9aa2fbce25a9e914805580960fbff9f8569fbb5",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 25574847,
+        "number": 25645249,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
         "proxyAdmin": "ink:0x4200000000000000000000000000000000000018",
         "proxyAdminOwner": "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
         "sequenceNumber": 4,
-        "timestamp": 1784561615,
+        "timestamp": 1785409403,
         "version": "1.9.0"
       },
       "implementationNames": {
@@ -4656,6 +4656,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 25574852, "ink": 51063272 },
-  "permissionsConfigHash": "0xfb30d4f5914924209dba24bc76f2a49a85c44f3bc6da550b6b94a062d800db99"
+  "usedBlockNumbers": { "ethereum": 25645255, "ink": 51911070 },
+  "permissionsConfigHash": "0x41dd36e0f63ac0cf9747dc6a44174052fb719f245a9b99b1ecb8c1026d00387e"
 }

@@ -338,67 +338,9 @@
     {
       "name": "SP1VerifierGateway",
       "address": "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B",
-      "type": "Contract",
-      "template": "succinct/SP1VerifierGateway",
-      "sourceHashes": [
-        "0xf67f0dc1760fe9589909a16bfef47f76d6dfa71427e034d759a3d8da88a42645"
-      ],
-      "proxyType": "immutable",
-      "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
-      "deployerAddress": "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
-      "sinceTimestamp": 1730486951,
-      "sinceBlock": 21094694,
-      "values": {
-        "$immutable": true,
-        "activeVerifiers": [
-          {
-            "selector": "0xa4594c59",
-            "verifier": "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5"
-          },
-          {
-            "selector": "0x0e78f4db",
-            "verifier": "eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508"
-          },
-          {
-            "selector": "0x4388a21c",
-            "verifier": "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2"
-          }
-        ],
-        "allVerifiers": [
-          {
-            "selector": "0x09069090",
-            "verifier": "eth:0xE780809121774D06aD9B0EEeC620fF4B3913Ced1"
-          },
-          {
-            "selector": "0x11b6a09d",
-            "verifier": "eth:0xa27A057CAb1a4798c6242F6eE5b2416B7Cd45E5D"
-          },
-          {
-            "selector": "0xa4594c59",
-            "verifier": "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5"
-          },
-          {
-            "selector": "0x0e78f4db",
-            "verifier": "eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508"
-          },
-          {
-            "selector": "0x4388a21c",
-            "verifier": "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2"
-          }
-        ],
-        "owner": "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878"
-      },
-      "fieldMeta": {
-        "activeVerifiers": {
-          "description": "Verifiers that are routed to by their selector and not frozen."
-        },
-        "allVerifiers": {
-          "description": "All verifiers that were ever routed to by this gateway."
-        }
-      },
-      "implementationNames": {
-        "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B": "SP1VerifierGateway"
-      }
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-sp1"
     },
     {
       "name": "FastWithdrawalList",
@@ -441,39 +383,12 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SP1Verifier",
-      "address": "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5",
-      "type": "Contract",
-      "template": "succinct/SP1Verifier",
-      "sourceHashes": [
-        "0x3430123e1fec5a2451a38fcf0a62fdd0cc482b69740ab632ef580e1a44122702"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifier contract for SP1 proofs (v5.0.0).",
-      "deployerAddress": "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
-      "sinceTimestamp": 1748550083,
-      "sinceBlock": 22590749,
-      "values": {
-        "$immutable": true,
-        "VERIFIER_HASH": "0xa4594c59bbc142f3b81c3ecb7f50a7c34bc9af7c4c444b5d48b795427e285913",
-        "VERSION": "v5.0.0"
-      },
-      "implementationNames": {
-        "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5": "SP1Verifier"
-      }
-    },
-    {
       "address": "eth:0x624Cd730EE0f49c51a150b6e29Ae833DfE2B0C9B",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "address": "eth:0x6845b3A6B1b8071944D20a797D57F4c0b8E3f99b",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -575,34 +490,6 @@
         "eth:0x025f11FedA181E2Ba63bb86536DD987E0769f586": "NativeGateway"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
-      "address": "eth:0x9395e83720bf2D8ac6435f9c520b48E289Cb8885",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "SP1Verifier",
-      "address": "eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508",
-      "type": "Contract",
-      "template": "succinct/SP1Verifier",
-      "sourceHashes": [
-        "0x42f46686613948c377586d511d315e6d67b9fd747a18225cce7c4cf32d14c7be"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifier contract for SP1 proofs (v6.0.0).",
-      "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
-      "sinceTimestamp": 1771375907,
-      "sinceBlock": 24480252,
-      "values": {
-        "$immutable": true,
-        "VERIFIER_HASH": "0x0e78f4db7a6771a3a6a7d9c3b0de6fe73d58781368967a7fe84d87aefffec896",
-        "VERSION": "v6.0.0",
-        "VK_ROOT": "0x008cd56e10c2fe24795cff1e1d1f40d3a324528d315674da45d26afb376e8670"
-      },
-      "implementationNames": {
-        "eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508": "SP1Verifier"
-      }
     },
     {
       "name": "L1FluentBridge",
@@ -737,29 +624,6 @@
       ]
     },
     {
-      "name": "SP1Verifier",
-      "address": "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2",
-      "type": "Contract",
-      "template": "succinct/SP1Verifier",
-      "sourceHashes": [
-        "0xaed0a260d9c0355e7e6fcf19f18136f914582d20027b440b0c04b762e521b2d6"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifier contract for SP1 proofs (v6.1.0).",
-      "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
-      "sinceTimestamp": 1776172379,
-      "sinceBlock": 24878255,
-      "values": {
-        "$immutable": true,
-        "VERIFIER_HASH": "0x4388a21c687fdd5f218d7e3d13190cac4c5355818d3605fd5fb811df468ee696",
-        "VERSION": "v6.1.0",
-        "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
-      },
-      "implementationNames": {
-        "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2": "SP1Verifier"
-      }
-    },
-    {
       "name": "FluentProverEOA",
       "address": "eth:0xB9E6f78a0F35F96b806D0359AbB251117aCe255C",
       "type": "EOA",
@@ -772,54 +636,6 @@
           "role": ".proverAC"
         }
       ]
-    },
-    {
-      "address": "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "SP1VerifierGatewayMultisig",
-      "address": "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
-      ],
-      "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B",
-          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
-          "role": ".owner"
-        }
-      ],
-      "ignoreInWatchMode": ["nonce"],
-      "deployerAddress": "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
-      "sinceTimestamp": 1724204135,
-      "sinceBlock": 20573748,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": [
-          "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
-          "eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
-          "eth:0x9395e83720bf2D8ac6435f9c520b48E289Cb8885"
-        ],
-        "$threshold": 2,
-        "domainSeparator": "0x9ce9716cc3ee4040796acdd48cea971343ff05b11468ce9e8d815c2ce3fc8b9e",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 14,
-        "VERSION": "1.3.0"
-      },
-      "implementationNames": {
-        "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "GnosisSafeProxy",
-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
-      }
     },
     {
       "name": "UpgradeableBeacon",
@@ -1183,25 +999,6 @@
     "eth:0x33C0B99F3210a9578d81d5B13dEC03160F58ff11": [
       "constructor(address _singleton)"
     ],
-    "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B": [
-      "constructor(address initialOwner)",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "error RouteAlreadyExists(address verifier)",
-      "error RouteIsFrozen(bytes4 selector)",
-      "error RouteNotFound(bytes4 selector)",
-      "error SelectorCannotBeZero()",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event RouteAdded(bytes4 selector, address verifier)",
-      "event RouteFrozen(bytes4 selector, address verifier)",
-      "function addRoute(address verifier)",
-      "function freezeRoute(bytes4 selector)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function routes(bytes4) view returns (address verifier, bool frozen)",
-      "function transferOwnership(address newOwner)",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
-    ],
     "eth:0x3eFc3c84ecf259Da36E33692f2a107A0AB88D30E": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
@@ -1257,19 +1054,6 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
-    ],
-    "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5": [
-      "error InvalidProof()",
-      "error ProofInvalid()",
-      "error PublicInputNotInField()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function Verify(uint256[8] proof, uint256[2] input) view",
-      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function verifyCompressedProof(uint256[4] compressedProof, uint256[2] input) view",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "eth:0x7846C001835d889A29ba659f67A5B7ac98E73bF4": [
       "constructor(uint256 minDelay, address[] proposers, address[] executors)",
@@ -1459,22 +1243,6 @@
       "function unregisterToken(address token)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508": [
-      "error InvalidExitCode()",
-      "error InvalidProof()",
-      "error InvalidVkRoot()",
-      "error ProofInvalid()",
-      "error PublicInputNotInField()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function VK_ROOT() pure returns (bytes32)",
-      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function verifyCompressedProof(uint256[4] compressedProof, uint256[5] input) view",
-      "function verifyProof(uint256[8] proof, uint256[5] input) view",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
-    ],
     "eth:0x9CAcf613fC29015893728563f423fD26dCdB8Ddc": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
@@ -1482,22 +1250,6 @@
       "error ERC1967NonPayable()",
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
-    ],
-    "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2": [
-      "error InvalidExitCode()",
-      "error InvalidProof()",
-      "error InvalidVkRoot()",
-      "error ProofInvalid()",
-      "error PublicInputNotInField()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function VK_ROOT() pure returns (bytes32)",
-      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function verifyCompressedProof(uint256[4] compressedProof, uint256[5] input) view",
-      "function verifyProof(uint256[8] proof, uint256[5] input) view",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "eth:0xB9E397C9506F71590be1f24da3f219bedE38b845": [
       "constructor()",
@@ -1529,58 +1281,6 @@
       "function setBlacklistedBatch(address[] accounts, bool status)",
       "function transferOwnership(address newOwner)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": [
-      "constructor(address _singleton)"
-    ],
-    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
-      "constructor()",
-      "event AddedOwner(address owner)",
-      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
-      "event ChangedFallbackHandler(address handler)",
-      "event ChangedGuard(address guard)",
-      "event ChangedThreshold(uint256 threshold)",
-      "event DisabledModule(address module)",
-      "event EnabledModule(address module)",
-      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
-      "event ExecutionFromModuleFailure(address indexed module)",
-      "event ExecutionFromModuleSuccess(address indexed module)",
-      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
-      "event RemovedOwner(address owner)",
-      "event SafeReceived(address indexed sender, uint256 value)",
-      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
-      "event SignMsg(bytes32 indexed msgHash)",
-      "function VERSION() view returns (string)",
-      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
-      "function approveHash(bytes32 hashToApprove)",
-      "function approvedHashes(address, bytes32) view returns (uint256)",
-      "function changeThreshold(uint256 _threshold)",
-      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
-      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
-      "function disableModule(address prevModule, address module)",
-      "function domainSeparator() view returns (bytes32)",
-      "function enableModule(address module)",
-      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
-      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
-      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
-      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
-      "function getChainId() view returns (uint256)",
-      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
-      "function getOwners() view returns (address[])",
-      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
-      "function getThreshold() view returns (uint256)",
-      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
-      "function isModuleEnabled(address module) view returns (bool)",
-      "function isOwner(address owner) view returns (bool)",
-      "function nonce() view returns (uint256)",
-      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
-      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
-      "function setFallbackHandler(address handler)",
-      "function setGuard(address guard)",
-      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
-      "function signedMessages(bytes32) view returns (uint256)",
-      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
-      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
     "eth:0xdD283a04cc711aB9c08d79e665835821BEef710B": [
       "constructor(address implementation_, address initialOwner)",
@@ -2041,10 +1741,8 @@
     "fluent/NativeGateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "fluent/NitroVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "global/UpgradeableBeacon": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 25601611 },
-  "permissionsConfigHash": "0x360c608e0913571a37110e1a5e9d11f128cff758e37c0943a47ac0246f1a6660"
+  "permissionsConfigHash": "0xb71b5e625931fab516f5d704a8198949400a3df243fc61b528a750e86e75702f"
 }

@@ -964,7 +964,7 @@ export interface ProjectPrivacyInfo {
    */
   quantumResistant?: true
   riskSummary?: string
-  upgradesAndGovernance?: string
+  upgradesAndGovernance?: ProjectUpgradesAndGovernance
 }
 
 export interface PrivacyExitWindow extends ExitWindowRisk {
@@ -1411,6 +1411,7 @@ export type InteropPluginName =
   | 'debridge'
   | 'debridge-dln'
   | 'gaszip'
+  | 'gnosisbridge'
   | 'hyperlane'
   | 'hyperlane-eco'
   | 'hyperlane-hwr'

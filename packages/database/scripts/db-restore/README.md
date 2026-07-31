@@ -20,11 +20,19 @@ Restore data from a remote database into your local DB, either by feature (`db-r
 ## Restore by feature
 
 ```bash
-./scripts/db-restore/db-restore.sh <FEATURE>
+./scripts/db-restore/db-restore.sh <FEATURE> [SINCE]
 ```
 
 Run without arguments to list the available features. Currently:
 `da`, `liveness`, `tvs`, `activity`, `shared`, `interop`, `interop-aggregates`, `token-db`, `tracked-txs`, `privacy`.
+
+`SINCE` is an optional cutoff (any Postgres-parseable timestamp, e.g. `2026-07-01`). Tables with a `timestamp` column only get rows where `timestamp >= SINCE`; tables without one (e.g. `IndexerState`, `IndexerConfiguration`) are still copied in full.
+
+```bash
+./scripts/db-restore/db-restore.sh interop 2026-07-01
+```
+
+> Note: with `SINCE`, indexer state still reflects the full remote sync range, while older rows are missing locally — fine for working on the frontend/API, but backfills won't re-fetch the missing range.
 
 ## Restore by table
 
