@@ -385,69 +385,11 @@
       }
     },
     {
-      "name": "SP1VerifierGateway",
+      "name": "SP1VerifierGatewayOlder",
       "address": "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B",
-      "type": "Contract",
-      "template": "succinct/SP1VerifierGateway",
-      "sourceHashes": [
-        "0xf67f0dc1760fe9589909a16bfef47f76d6dfa71427e034d759a3d8da88a42645"
-      ],
-      "proxyType": "immutable",
-      "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
-      "deployerAddress": "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
-      "sinceTimestamp": 1730486951,
-      "sinceBlock": 21094694,
-      "values": {
-        "$immutable": true,
-        "activeVerifiers": [
-          {
-            "selector": "0xa4594c59",
-            "verifier": "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5"
-          },
-          {
-            "selector": "0x0e78f4db",
-            "verifier": "eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508"
-          },
-          {
-            "selector": "0x4388a21c",
-            "verifier": "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2"
-          }
-        ],
-        "allVerifiers": [
-          {
-            "selector": "0x09069090",
-            "verifier": "eth:0xE780809121774D06aD9B0EEeC620fF4B3913Ced1"
-          },
-          {
-            "selector": "0x11b6a09d",
-            "verifier": "eth:0xa27A057CAb1a4798c6242F6eE5b2416B7Cd45E5D"
-          },
-          {
-            "selector": "0xa4594c59",
-            "verifier": "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5"
-          },
-          {
-            "selector": "0x0e78f4db",
-            "verifier": "eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508"
-          },
-          {
-            "selector": "0x4388a21c",
-            "verifier": "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2"
-          }
-        ],
-        "owner": "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878"
-      },
-      "fieldMeta": {
-        "activeVerifiers": {
-          "description": "Verifiers that are routed to by their selector and not frozen."
-        },
-        "allVerifiers": {
-          "description": "All verifiers that were ever routed to by this gateway."
-        }
-      },
-      "implementationNames": {
-        "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B": "SP1VerifierGateway"
-      }
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-sp1"
     },
     {
       "address": "eth:0x491619874b866c3cDB7C8553877da223525ead01",
@@ -580,28 +522,6 @@
         "eth:0xfCA51bf5bDc5aC16B86F859d6BEe90cfdF6fEb72": "SystemConfig"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
-      "name": "SP1Verifier",
-      "address": "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5",
-      "type": "Contract",
-      "template": "succinct/SP1Verifier",
-      "sourceHashes": [
-        "0x3430123e1fec5a2451a38fcf0a62fdd0cc482b69740ab632ef580e1a44122702"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifier contract for SP1 proofs (v5.0.0).",
-      "deployerAddress": "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
-      "sinceTimestamp": 1748550083,
-      "sinceBlock": 22590749,
-      "values": {
-        "$immutable": true,
-        "VERIFIER_HASH": "0xa4594c59bbc142f3b81c3ecb7f50a7c34bc9af7c4c444b5d48b795427e285913",
-        "VERSION": "v5.0.0"
-      },
-      "implementationNames": {
-        "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5": "SP1Verifier"
-      }
     },
     {
       "name": "AgglayerManager",
@@ -803,11 +723,6 @@
       ]
     },
     {
-      "address": "eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x736E68Af2CbF2aB0E46E4310fE5Ae568b3642FF6",
       "type": "EOA",
       "proxyType": "EOA",
@@ -947,11 +862,6 @@
       }
     },
     {
-      "address": "eth:0x9395e83720bf2D8ac6435f9c520b48E289Cb8885",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x98245d0ADF4595C66F0a9Db8E13c44CBFF6be459",
       "type": "EOA",
       "proxyType": "EOA",
@@ -1009,29 +919,6 @@
       },
       "implementationNames": {
         "eth:0x98BA64d8c8Dd33bD75F2154214BFd849d0D5c17B": "AccessManager"
-      }
-    },
-    {
-      "name": "SP1Verifier",
-      "address": "eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508",
-      "type": "Contract",
-      "template": "succinct/SP1Verifier",
-      "sourceHashes": [
-        "0x42f46686613948c377586d511d315e6d67b9fd747a18225cce7c4cf32d14c7be"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifier contract for SP1 proofs (v6.0.0).",
-      "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
-      "sinceTimestamp": 1771375907,
-      "sinceBlock": 24480252,
-      "values": {
-        "$immutable": true,
-        "VERIFIER_HASH": "0x0e78f4db7a6771a3a6a7d9c3b0de6fe73d58781368967a7fe84d87aefffec896",
-        "VERSION": "v6.0.0",
-        "VK_ROOT": "0x008cd56e10c2fe24795cff1e1d1f40d3a324528d315674da45d26afb376e8670"
-      },
-      "implementationNames": {
-        "eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508": "SP1Verifier"
       }
     },
     {
@@ -1156,34 +1043,6 @@
         "eth:0xAecF995ABf9E7eDE7ae0CE65E60622C9eD84823a": "L1ChugSplashProxy",
         "eth:0x2978527d5D1372C32fEdC182FDE7559c0471d051": "L1StandardBridge"
       }
-    },
-    {
-      "name": "SP1Verifier",
-      "address": "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2",
-      "type": "Contract",
-      "template": "succinct/SP1Verifier",
-      "sourceHashes": [
-        "0xaed0a260d9c0355e7e6fcf19f18136f914582d20027b440b0c04b762e521b2d6"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifier contract for SP1 proofs (v6.1.0).",
-      "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
-      "sinceTimestamp": 1776172379,
-      "sinceBlock": 24878255,
-      "values": {
-        "$immutable": true,
-        "VERIFIER_HASH": "0x4388a21c687fdd5f218d7e3d13190cac4c5355818d3605fd5fb811df468ee696",
-        "VERSION": "v6.1.0",
-        "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
-      },
-      "implementationNames": {
-        "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2": "SP1Verifier"
-      }
-    },
-    {
-      "address": "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Xlayer Multisig",
@@ -1338,49 +1197,6 @@
       },
       "implementationNames": {
         "eth:0xC6901aBf8D39079d6b028dA550BB643f10840552": "ProxyAdmin"
-      }
-    },
-    {
-      "name": "SP1VerifierGatewayMultisig",
-      "address": "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
-      ],
-      "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B",
-          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
-          "role": ".owner"
-        }
-      ],
-      "ignoreInWatchMode": ["nonce"],
-      "deployerAddress": "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
-      "sinceTimestamp": 1724204135,
-      "sinceBlock": 20573748,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": [
-          "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
-          "eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
-          "eth:0x9395e83720bf2D8ac6435f9c520b48E289Cb8885"
-        ],
-        "$threshold": 2,
-        "domainSeparator": "0x9ce9716cc3ee4040796acdd48cea971343ff05b11468ce9e8d815c2ce3fc8b9e",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 14,
-        "VERSION": "1.3.0"
-      },
-      "implementationNames": {
-        "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "GnosisSafeProxy",
-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
     },
     {
@@ -1994,25 +1810,6 @@
       "function withdraw(address _guy, uint256 _wad)",
       "function withdrawals(address, address) view returns (uint256 amount, uint256 timestamp)"
     ],
-    "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B": [
-      "constructor(address initialOwner)",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "error RouteAlreadyExists(address verifier)",
-      "error RouteIsFrozen(bytes4 selector)",
-      "error RouteNotFound(bytes4 selector)",
-      "error SelectorCannotBeZero()",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event RouteAdded(bytes4 selector, address verifier)",
-      "event RouteFrozen(bytes4 selector, address verifier)",
-      "function addRoute(address verifier)",
-      "function freezeRoute(bytes4 selector)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function routes(bytes4) view returns (address verifier, bool frozen)",
-      "function transferOwnership(address newOwner)",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
-    ],
     "eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2022,19 +1819,6 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
-    ],
-    "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5": [
-      "error InvalidProof()",
-      "error ProofInvalid()",
-      "error PublicInputNotInField()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function Verify(uint256[8] proof, uint256[2] input) view",
-      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function verifyCompressedProof(uint256[4] compressedProof, uint256[2] input) view",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "eth:0x62e1Aaeba9A8AA4654980653dB4B21FC82C61c15": [
       "constructor(address _admin)",
@@ -2211,22 +1995,6 @@
       "function setProposer(address _proposer, bool _allowed)",
       "function transferOwnership(address newOwner)"
     ],
-    "eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508": [
-      "error InvalidExitCode()",
-      "error InvalidProof()",
-      "error InvalidVkRoot()",
-      "error ProofInvalid()",
-      "error PublicInputNotInField()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function VK_ROOT() pure returns (bytes32)",
-      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function verifyCompressedProof(uint256[4] compressedProof, uint256[5] input) view",
-      "function verifyProof(uint256[8] proof, uint256[5] input) view",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
-    ],
     "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2363,22 +2131,6 @@
       "function version() view returns (string)",
       "function xDomainMessageSender() view returns (address)"
     ],
-    "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2": [
-      "error InvalidExitCode()",
-      "error InvalidProof()",
-      "error InvalidVkRoot()",
-      "error ProofInvalid()",
-      "error PublicInputNotInField()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function VK_ROOT() pure returns (bytes32)",
-      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function verifyCompressedProof(uint256[4] compressedProof, uint256[5] input) view",
-      "function verifyProof(uint256[8] proof, uint256[5] input) view",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
-    ],
     "eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A": [
       "constructor(address _singleton)"
     ],
@@ -2402,9 +2154,6 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address _proxy, address _implementation)",
       "function upgradeAndCall(address _proxy, address _implementation, bytes _data) payable"
-    ],
-    "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": [
-      "constructor(address _singleton)"
     ],
     "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
@@ -2775,10 +2524,8 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "polygon-cdk/AggchainECDSAMultisig": "0x82ecfee4035ce80ca61e973569ea98f7de96585fc446962ce126778d59492772",
     "succinct/OPSuccinct/AccessManager": "0x4dfa9533d437cf2efb76347ce42e28eaa3a388c509f141d483bf9c9ab7c799b0",
-    "succinct/OPSuccinct/OPSuccinctFaultDisputeGame": "0x941ed16f5158ec2fcfd64540f5eff08a11a298d3514f88b190f9902846dbf225",
-    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
+    "succinct/OPSuccinct/OPSuccinctFaultDisputeGame": "0x941ed16f5158ec2fcfd64540f5eff08a11a298d3514f88b190f9902846dbf225"
   },
   "usedBlockNumbers": { "ethereum": 25437874 },
-  "permissionsConfigHash": "0xb2b1da0a6f0aca97a8a7b307e68578df2b66e95bfc7d65a128e94af8cbd86650"
+  "permissionsConfigHash": "0x44508de8da43a58c4015bd6cbb454255778d91efe03419386f02f22f4f387c1f"
 }

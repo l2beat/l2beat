@@ -1,3 +1,76 @@
+Generated with discovered.json: 0xc7c7eb92998a7dcc64bd7c4a7489edaa570995c5
+
+# Diff at Thu, 30 Jul 2026 11:25:53 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@582e1a34fd1cba95db9957343b373cd84374dd99 block: 1784884231
+- current timestamp: 1784884231
+
+## Description
+
+Make shared-sp1 use entrypoints and rediscover
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784884231 (main branch discovery), not current.
+
+```diff
+    reference SP1VerifierGateway (eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B) {
+    +++ description: None
+      type:
+-        "Contract"
++        "Reference"
+      template:
+-        "succinct/SP1VerifierGateway"
+      sourceHashes:
+-        ["0xf67f0dc1760fe9589909a16bfef47f76d6dfa71427e034d759a3d8da88a42645"]
+      proxyType:
+-        "immutable"
+      description:
+-        "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract."
+      deployerAddress:
+-        "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"
+      sinceTimestamp:
+-        1730486951
+      sinceBlock:
+-        21094694
+      values:
+-        {"$immutable":true,"activeVerifiers":[{"selector":"0xa4594c59","verifier":"eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5"},{"selector":"0x0e78f4db","verifier":"eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508"},{"selector":"0x4388a21c","verifier":"eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2"}],"allVerifiers":[{"selector":"0x09069090","verifier":"eth:0xE780809121774D06aD9B0EEeC620fF4B3913Ced1"},{"selector":"0x11b6a09d","verifier":"eth:0xa27A057CAb1a4798c6242F6eE5b2416B7Cd45E5D"},{"selector":"0xa4594c59","verifier":"eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5"},{"selector":"0x0e78f4db","verifier":"eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508"},{"selector":"0x4388a21c","verifier":"eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2"}],"owner":"eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878"}
+      fieldMeta:
+-        {"activeVerifiers":{"description":"Verifiers that are routed to by their selector and not frozen."},"allVerifiers":{"description":"All verifiers that were ever routed to by this gateway."}}
+      targetType:
++        "Contract"
+      targetProject:
++        "shared-sp1"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v6.0.0).
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+```
+
+```diff
+-   Status: DELETED
+    contract SP1VerifierGatewayMultisig (eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) [GnosisSafe]
+    +++ description: None
+```
+
 Generated with discovered.json: 0x22dc460d65154a0b771b5244640de3634b0ff645
 
 # Diff at Mon, 27 Jul 2026 15:26:08 GMT:
