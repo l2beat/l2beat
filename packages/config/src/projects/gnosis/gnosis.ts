@@ -88,6 +88,42 @@ export const gnosis: ScalingProject = {
       ],
     },
   },
+  interopConfig: {
+    name: 'Gnosis Bridge',
+    description:
+      'The canonical bridge between Ethereum and Gnosis Chain. It includes arbitrary message passing, Omnibridge ERC20 transfers, and the native xDAI bridge.',
+    durationSplit: {
+      lockAndMint: [
+        {
+          label: 'L1 -> L2',
+          transferTypes: ['gnosisbridge.L1ToL2Transfer'],
+        },
+        {
+          label: 'L2 -> L1',
+          transferTypes: ['gnosisbridge.L2ToL1Transfer'],
+        },
+      ],
+      burnAndMint: [
+        {
+          label: 'L2 -> L1',
+          transferTypes: ['gnosisbridge.L2ToL1Transfer'],
+        },
+      ],
+    },
+    plugins: [
+      {
+        chain: 'gnosis',
+        plugin: 'gnosisbridge',
+        bridgeType: 'lockAndMint',
+      },
+      {
+        chain: 'gnosis',
+        plugin: 'gnosisbridge',
+        bridgeType: 'burnAndMint',
+      },
+    ],
+    type: 'canonical',
+  },
   proofSystem: undefined,
   stage: {
     stage: 'NotApplicable',

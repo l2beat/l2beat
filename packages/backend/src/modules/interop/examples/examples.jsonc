@@ -5850,6 +5850,182 @@
       ]
     }
   },
+  "gnosisbridge": {
+    "description": "Ethereum <> Gnosis canonical AMB, Omnibridge, and native xDAI bridge",
+    "txs": [
+      // Omnibridge: Ethereum -> Gnosis (GNO)
+      {
+        "chain": "ethereum",
+        "tx": "0x198a84aea5ea049b2905006b337c85ac8b8b940ee7ae17522e6514490fe7ca79"
+      },
+      {
+        "chain": "gnosis",
+        "tx": "0xbe3401ce217725dec0037e3ad32b226bf55c18c3c5a77e7a7af7c670cdc9e1cf"
+      },
+      // Omnibridge: Gnosis -> Ethereum (USDT)
+      {
+        "chain": "gnosis",
+        "tx": "0x946d5a926b4e6c55b51eae53b6fea118d7d4fd5ebfa44d6256ef4ce7b4d927be"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x7bac646761744ab63fd918c222108762ef3793dac252b9b71c1a82a16d6105b9"
+      },
+      // Native xDAI bridge: Ethereum -> Gnosis
+      {
+        "chain": "ethereum",
+        "tx": "0xc8b02fb55feb8d223f36b3aedb573854057ada763ef51988b2ee56adf88a8519"
+      },
+      {
+        "chain": "gnosis",
+        "tx": "0xf6f6f166413c343059c4068d1cf45d4b722dac89c2aeeea4412c08a6a3ceceed"
+      },
+      // Native xDAI bridge: Gnosis -> Ethereum (USDS)
+      {
+        "chain": "gnosis",
+        "tx": "0x6e68581085547e30e9878244971c295879666f48d7362b8b7a170be2ea0722a9"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x1943e4e8268e9cbed3e228cd686f4118f847b46141b8cfe24b3ba79216ad3004"
+      },
+      // Native xDAI bridge: Gnosis -> Ethereum (DAI conversion)
+      {
+        "chain": "gnosis",
+        "tx": "0x2431cf3a34c3b39663397809fe5a14849d9c21fb794fb428cb93851fa8c1d5b4"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x25579f0d7d173f12cae8889d495286f855e314fa8c645d1f06079309e19b50e0"
+      }
+    ],
+    "expects": {
+      "events": [
+        "gnosisbridge.AmbMessageRequested",
+        "gnosisbridge.OmnibridgeTransferInitiated",
+        "gnosisbridge.OmnibridgeTransferFinalized",
+        "gnosisbridge.AmbMessageRelayed",
+        "gnosisbridge.AmbMessageRequested",
+        "gnosisbridge.OmnibridgeTransferInitiated",
+        "gnosisbridge.OmnibridgeTransferFinalized",
+        "gnosisbridge.AmbMessageRelayed",
+        "gnosisbridge.XdaiTransferInitiated",
+        "gnosisbridge.XdaiTransferFinalized",
+        "gnosisbridge.XdaiWithdrawalInitiated",
+        "gnosisbridge.XdaiWithdrawalFinalized",
+        "gnosisbridge.XdaiWithdrawalInitiated",
+        "gnosisbridge.XdaiWithdrawalFinalized"
+      ],
+      "messages": [
+        {
+          "type": "gnosisbridge.Message",
+          "app": "omnibridge",
+          "src": { "ctx": { "chain": "ethereum" } },
+          "dst": { "ctx": { "chain": "gnosis" } }
+        },
+        {
+          "type": "gnosisbridge.Message",
+          "app": "omnibridge",
+          "src": { "ctx": { "chain": "gnosis" } },
+          "dst": { "ctx": { "chain": "ethereum" } }
+        },
+        {
+          "type": "gnosisbridge.Message",
+          "app": "xdai-bridge",
+          "src": { "ctx": { "chain": "ethereum" } },
+          "dst": { "ctx": { "chain": "gnosis" } }
+        },
+        {
+          "type": "gnosisbridge.Message",
+          "app": "xdai-bridge",
+          "src": { "ctx": { "chain": "gnosis" } },
+          "dst": { "ctx": { "chain": "ethereum" } }
+        },
+        {
+          "type": "gnosisbridge.Message",
+          "app": "xdai-bridge",
+          "src": { "ctx": { "chain": "gnosis" } },
+          "dst": { "ctx": { "chain": "ethereum" } }
+        }
+      ],
+      "transfers": [
+        // Bridge types are inferred centrally from wasBurned/wasMinted.
+        {
+          "type": "gnosisbridge.L1ToL2Transfer",
+          "src": {
+            "tokenAmount": "33400121260000000000",
+            "wasBurned": false,
+            "event": {
+              "type": "gnosisbridge.OmnibridgeTransferInitiated"
+            }
+          },
+          "dst": {
+            "tokenAmount": "33400121260000000000",
+            "wasMinted": true,
+            "event": {
+              "type": "gnosisbridge.OmnibridgeTransferFinalized"
+            }
+          }
+        },
+        {
+          "type": "gnosisbridge.L2ToL1Transfer",
+          "src": {
+            "tokenAmount": "389189000000",
+            "wasBurned": true,
+            "event": {
+              "type": "gnosisbridge.OmnibridgeTransferInitiated"
+            }
+          },
+          "dst": {
+            "tokenAmount": "389189000000",
+            "wasMinted": false,
+            "event": {
+              "type": "gnosisbridge.OmnibridgeTransferFinalized"
+            }
+          }
+        },
+        {
+          "type": "gnosisbridge.L1ToL2Transfer",
+          "src": {
+            "tokenAmount": "40000000000000000000000",
+            "wasBurned": false,
+            "event": { "type": "gnosisbridge.XdaiTransferInitiated" }
+          },
+          "dst": {
+            "tokenAmount": "40000000000000000000000",
+            "wasMinted": true,
+            "event": { "type": "gnosisbridge.XdaiTransferFinalized" }
+          }
+        },
+        {
+          "type": "gnosisbridge.L2ToL1Transfer",
+          "src": {
+            "tokenAmount": "2418625240434307784481",
+            "wasBurned": true,
+            "event": { "type": "gnosisbridge.XdaiWithdrawalInitiated" }
+          },
+          "dst": {
+            "tokenAmount": "2418625240434307784481",
+            "wasMinted": false,
+            "event": { "type": "gnosisbridge.XdaiWithdrawalFinalized" }
+          }
+        },
+        {
+          "type": "gnosisbridge.L2ToL1Transfer",
+          "src": {
+            "tokenAmount": "120000000000000000000",
+            "wasBurned": true,
+            "event": { "type": "gnosisbridge.XdaiWithdrawalInitiated" }
+          },
+          "dst": {
+            "tokenAmount": "120000000000000000000",
+            "wasMinted": true,
+            "event": { "type": "gnosisbridge.XdaiWithdrawalFinalized" }
+          }
+        }
+      ]
+    }
+  },
   "maker-bridge": {
     "txs": [
       // L1 -> L2 deposit
