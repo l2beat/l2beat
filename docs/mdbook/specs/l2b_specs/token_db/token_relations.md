@@ -357,14 +357,21 @@ read-time cost is the entire price paid for the foreign-key decision above.
 `getRelations` returns one flat list, not an inbound/outbound split: the
 endpoint columns are not a direction, so there is nothing to split on. Each
 entry instead carries the queried token's `role` in that relation, derived
-from `lockedToken`:
+from `bridgeType` and `lockedToken`:
 
 | `role` | meaning |
 |---|---|
 | `locked` | this token is escrowed; the other is its minted representation |
-| `minted` | this token is a representation; the other is escrowed |
-| `symmetric` | a `burnAndMint` pair — both sides burn and mint |
+| `minted` | this token is minted by the plugin: the representation side of a `lockAndMint` pair, or either side of a `burnAndMint` pair |
 | `unknown` | a `lockAndMint` pair whose locked endpoint is not identified |
+
+There is deliberately no `symmetric` role (there used to be one, shown for
+`burnAndMint` pairs). A `burnAndMint` pair *is* symmetric, but from each
+endpoint's point of view that fact reads "minted" — the question the role
+answers — and the bridge type, shown alongside, is what carries the
+symmetry. A relation that is neither `burnAndMint` nor `lockAndMint` (a
+human-added `nonMinting` row; ingestion never writes one) mints nothing and
+shows `unknown`.
 
 This is the answer to "which plugin minted this token, and which token is it
 a representation of" — the question the Relations tab exists for. Read it
@@ -374,11 +381,12 @@ The narrower question "which plugins mint this token" — asked by the public
 frontend, which reads the token database directly rather than through
 token-backend — is answered by
 `TokenRelationRepository.getMintingPluginsFor`: the distinct plugins of the
-relations where the token is minted. Deliberately
-excluded: relations where the token is locked, relations with an unknown
-role (one of their endpoints is minted, but nothing says it is this one), and
-non-`burnAndMint` symmetric-looking rows — a human-added `nonMinting`
-relation mints nothing.
+relations where the token's role is minted. Deliberately excluded: relations
+where the token is locked, relations with an unknown role (one of their
+endpoints is minted, but nothing says it is this one), and human-added
+`nonMinting` relations, which mint nothing. Token-UI exposes the same query
+as `deployedTokens.getMintingPlugins` and shows the list above the Relations
+table, so the summary can be eyeballed against the roles in the table.
 
 ## Relations graph
 

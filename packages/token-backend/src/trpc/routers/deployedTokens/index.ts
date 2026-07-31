@@ -62,6 +62,14 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) =>
         })
       }),
 
+    // The same answer the Relations tab's role column gives, summarized: the
+    // distinct plugins of the relations whose role for this token is `minted`.
+    getMintingPlugins: readOnlyProcedure
+      .input(v.object({ chain: v.string(), address: v.string() }))
+      .query(({ ctx, input }) =>
+        ctx.tokenDb.tokenRelation.getMintingPluginsFor(input),
+      ),
+
     getRelationsGraphNodeDetails: readOnlyProcedure
       .input(v.object({ chain: v.string(), address: v.string() }))
       .query(async ({ ctx, input }) => {
@@ -211,15 +219,22 @@ function isGraphRelation(relation: { bridgeType: string }): boolean {
  * What one endpoint of a relation is to the other:
  *
  * - `locked` — this token is escrowed, the other is its minted representation
- * - `minted` — this token is the representation, the other is escrowed
- * - `symmetric` — a burn-and-mint pair, where neither side is escrowed
+ * - `minted` — this token is minted by the relation's plugin: the
+ *   representation side of a lock-and-mint pair, or either side of a
+ *   burn-and-mint pair. A burn-and-mint pair is symmetric, but as a role that
+ *   fact reads "minted" from each endpoint's point of view — the bridge type
+ *   is what shows the symmetry, so the role does not repeat it.
  * - `unknown` — a lock-and-mint pair whose locked endpoint is not identified
  */
 function tokenRelationRole(
   relation: TokenRelationRoute,
   token: { chain: string; address: string },
-): 'locked' | 'minted' | 'symmetric' | 'unknown' {
-  if (relation.bridgeType !== 'lockAndMint') return 'symmetric'
+): 'locked' | 'minted' | 'unknown' {
+  if (relation.bridgeType === 'burnAndMint') return 'minted'
+  // Anything that is neither burnAndMint nor lockAndMint (a human-added
+  // nonMinting relation) mints nothing and has no locked side to name — it
+  // must not claim a minter, consistently with `getMintingPluginsFor`.
+  if (relation.bridgeType !== 'lockAndMint') return 'unknown'
   if (relation.lockedToken === null) return 'unknown'
 
   const locked =

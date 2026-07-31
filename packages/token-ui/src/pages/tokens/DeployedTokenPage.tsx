@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
+import { Badge } from '~/components/core/Badge'
 import {
   Card,
   CardContent,
@@ -98,6 +99,13 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
       address: token.address,
     }),
   )
+  const { data: mintingPlugins, isLoading: areMintingPluginsLoading } =
+    useQuery(
+      trpc.deployedTokens.getMintingPlugins.queryOptions({
+        chain: token.chain,
+        address: token.address,
+      }),
+    )
 
   useEffect(() => {
     if (abstractTokenId) {
@@ -272,10 +280,16 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
           </div>
         </TabsContent>
         <TabsContent value="relations">
-          <TokenRelationsSection
-            entries={relations ?? []}
-            loading={areRelationsLoading}
-          />
+          <div className="space-y-4">
+            <MintingPluginsSection
+              plugins={mintingPlugins ?? []}
+              loading={areMintingPluginsLoading}
+            />
+            <TokenRelationsSection
+              entries={relations ?? []}
+              loading={areRelationsLoading}
+            />
+          </div>
         </TabsContent>
       </Tabs>
     </>
@@ -285,11 +299,52 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
 type TokenRelationsResponse = RouterOutputs['deployedTokens']['getRelations']
 type TokenRelationEntry = TokenRelationsResponse[number]
 
+// A symmetric (burnAndMint) pair also shows as minted — both of its endpoints
+// are — so the minted description must not claim anything about the other
+// side; the Bridge type column is where the mechanism shows.
 const RELATION_ROLE_DESCRIPTIONS: Record<TokenRelationEntry['role'], string> = {
   locked: 'Locked here, minted there',
-  minted: 'Minted here, locked there',
-  symmetric: 'Burned and minted on both sides',
+  minted: 'Minted on this side',
   unknown: 'Locked side not observed',
+}
+
+// The same answer the Role column gives one relation at a time, summarized by
+// `getMintingPluginsFor`: seeing both agree is a cheap correctness check.
+function MintingPluginsSection({
+  plugins,
+  loading,
+}: {
+  plugins: string[]
+  loading: boolean
+}) {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Minting plugins</CardTitle>
+        <CardDescription>
+          Plugins observed minting this token — the relations below in which
+          this token's role is minted.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        {loading ? (
+          <LoadingState className="h-10" />
+        ) : plugins.length === 0 ? (
+          <div className="text-muted-foreground text-sm">
+            No plugin has been observed minting this token.
+          </div>
+        ) : (
+          <div className="flex flex-wrap gap-2">
+            {plugins.map((plugin) => (
+              <Badge key={plugin} variant="secondary">
+                {plugin}
+              </Badge>
+            ))}
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  )
 }
 
 // A single list: relations are facts about a pair of tokens, not directed

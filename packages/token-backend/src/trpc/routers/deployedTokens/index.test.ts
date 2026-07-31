@@ -352,8 +352,38 @@ describe('deployedTokensRouter', () => {
         // catalogued as a deployed token.
         { plugin: 'b-plugin', role: 'minted', otherToken: null },
         { plugin: 'c-plugin', role: 'unknown', otherToken: null },
-        { plugin: 'd-plugin', role: 'symmetric', otherToken: null },
+        // A burnAndMint pair is symmetric — both endpoints are minted, and
+        // the bridge type is what carries the symmetry — so the role says
+        // minted, never symmetric.
+        { plugin: 'd-plugin', role: 'minted', otherToken: null },
       ])
+    })
+  })
+
+  describe('getMintingPlugins', () => {
+    it('returns the plugin names straight from the repository', async () => {
+      const getMintingPluginsFor = mockFn().resolvesTo([
+        'canonicalbridge',
+        'superbridge',
+      ])
+      const mockTokenDb = mockObject<TokenDatabase>({
+        tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
+          getMintingPluginsFor,
+        }),
+      })
+      const caller = createRouter(
+        mockTokenDb,
+        mockObject<Database>({}),
+        mockObject<CoingeckoClient>({}),
+      )
+
+      expect(
+        await caller.getMintingPlugins({ chain: 'base', address: '0xbbb' }),
+      ).toEqual(['canonicalbridge', 'superbridge'])
+      expect(getMintingPluginsFor).toHaveBeenCalledWith({
+        chain: 'base',
+        address: '0xbbb',
+      })
     })
   })
 
