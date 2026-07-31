@@ -36,13 +36,12 @@ export function MobileTopNavbar({
               <Logo className="h-8 w-auto" />
             </a>
           </div>
-          <div
-            className={cn(
-              'flex min-w-0 items-center gap-3',
-              showOnDesktop && 'lg:hidden',
-            )}
-          >
-            <MobileSelectedLink groups={groups} sideLinks={sideLinks} />
+          <div className="flex min-w-0 items-center gap-3">
+            <MobileSelectedLink
+              groups={groups}
+              sideLinks={sideLinks}
+              className={showOnDesktop ? 'text-brand' : undefined}
+            />
           </div>
         </div>
         {/* Right side */}
