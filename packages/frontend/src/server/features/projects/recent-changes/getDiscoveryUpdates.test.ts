@@ -6,7 +6,7 @@ import {
 } from './getDiscoveryUpdates'
 
 describe(parseDiscoveryUpdates.name, () => {
-  it('keeps only initial discovery and watched changes', () => {
+  it('keeps only public changes', () => {
     const updates = parseDiscoveryUpdates(
       [
         '# Diff at Tue, 21 Jan 2026 09:00:00 GMT:',
@@ -52,6 +52,98 @@ describe(parseDiscoveryUpdates.name, () => {
       },
     ])
     expect(updates[0]?.changeCount).toEqual(1)
+  })
+
+  it('keeps verified and created contracts from config related changes', () => {
+    const verifiedContract = [
+      '```diff',
+      '    contract Inbox (eth:0x123) [orbitstack/Inbox] {',
+      '      unverified:',
+      '-        true',
+      '      sourceHashes.0:',
+      '-        null',
+      '+        "0xabcdef"',
+      '    }',
+      '```',
+    ].join('\n')
+    const createdContract = [
+      '```diff',
+      '+   Status: CREATED',
+      '    contract UpgradeExecutor (eth:0x456) [orbitstack/UpgradeExecutor]',
+      '    +++ description: None',
+      '```',
+    ].join('\n')
+
+    const updates = parseDiscoveryUpdates(
+      [
+        '# Diff at Tue, 21 Jan 2026 09:00:00 GMT:',
+        '',
+        '## Config/verification related changes',
+        '',
+        'These changes can also include config-only updates.',
+        '',
+        verifiedContract,
+        '',
+        '```diff',
+        '    contract ConfiguredContract (eth:0x789) [N/A] {',
+        '      description:',
+        '+        "A config-only change"',
+        '    }',
+        '```',
+        '',
+        createdContract,
+        '',
+        '```diff',
+        '+   Status: CREATED',
+        '    EOA NewActor (eth:0xabc)',
+        '    +++ description: None',
+        '```',
+        '',
+        '```diff',
+        '    EOA NewActor (eth:0xabc) {',
+        '      unverified:',
+        '-        true',
+        '    }',
+        '```',
+        '',
+      ].join('\n'),
+    )
+
+    expect(updates.length).toEqual(1)
+    expect(updates[0]?.sections).toEqual([
+      {
+        kind: 'config-related-changes',
+        body: [verifiedContract, createdContract].join('\n\n'),
+      },
+    ])
+    expect(updates[0]?.changeCount).toEqual(4)
+  })
+
+  it('keeps standalone contracts added through config', () => {
+    const createdContract = [
+      '```diff',
+      '+   Status: CREATED',
+      '    contract ConfiguredContract (eth:0x789) [N/A]',
+      '    +++ description: None',
+      '```',
+    ].join('\n')
+    const updates = parseDiscoveryUpdates(
+      [
+        '# Diff at Tue, 21 Jan 2026 09:00:00 GMT:',
+        '',
+        '## Config/verification related changes',
+        '',
+        createdContract,
+        '',
+      ].join('\n'),
+    )
+
+    expect(updates[0]?.sections).toEqual([
+      {
+        kind: 'config-related-changes',
+        body: createdContract,
+      },
+    ])
   })
 
   it('keeps initial discovery entries', () => {
