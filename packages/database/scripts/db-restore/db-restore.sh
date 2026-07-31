@@ -165,6 +165,10 @@ echo "Migrating DB to latest"
 PRISMA_DB_URL="$DEV_LOCAL_DB_URL" pnpm prisma migrate deploy
 
 if [ -n "$SINCE" ]; then
+  # Versioned state tables where the latest row per key must survive the
+  # cutoff (e.g. InteropConfig, read via latest-per-key) — always copy in full
+  FULL_COPY_OVERRIDES=("InteropConfig")
+
   # Split tables by whether they have a "timestamp" column on the remote
   IN_LIST=$(printf "'%s'," "${TABLES[@]}")
   IN_LIST="${IN_LIST%,}"
@@ -176,7 +180,9 @@ if [ -n "$SINCE" ]; then
   FULL_TABLES=()
   SINCE_TABLES=()
   for table_name in "${TABLES[@]}"; do
-    if grep -qx "$table_name" <<< "$TIMESTAMPED"; then
+    if printf '%s\n' "${FULL_COPY_OVERRIDES[@]}" | grep -qx "$table_name"; then
+      FULL_TABLES+=("$table_name")
+    elif grep -qx "$table_name" <<< "$TIMESTAMPED"; then
       SINCE_TABLES+=("$table_name")
     else
       FULL_TABLES+=("$table_name")
