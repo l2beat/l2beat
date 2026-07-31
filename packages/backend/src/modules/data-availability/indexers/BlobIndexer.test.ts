@@ -25,7 +25,10 @@ describe(BlobIndexer.name, () => {
           size: ETHEREUM_BLOB_SIZE_BYTES,
           inbox: '0x123',
           sequencer: '0x456',
+          txHash: '0xtx1',
+          blobCount: 1,
           topics: ['0xabc', '0xdef'],
+          logs: [{ emitter: '0x789', topics: ['0xabc', '0xdef'] }],
         },
       ]
 

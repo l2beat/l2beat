@@ -1,13 +1,16 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
-import { type BlobRecord, BlobsRepository } from './BlobsRepository'
+import {
+  type TxWithBlobsRecord,
+  TxWithBlobsRepository,
+} from './TxWithBlobsRepository'
 
-describeDatabase(BlobsRepository.name, (db) => {
-  const repository = db.blobs
+describeDatabase(TxWithBlobsRepository.name, (db) => {
+  const repository = db.txWithBlobs
 
   const START = UnixTime.now()
-  const DATA: BlobRecord[] = [
+  const DATA: TxWithBlobsRecord[] = [
     {
       id: 1,
       blockNumber: 1000,
@@ -15,18 +18,23 @@ describeDatabase(BlobsRepository.name, (db) => {
       daLayer: 'ethereum',
       from: '0x123',
       to: '0x456',
-      topics: ['0xabc', '0xdef'],
-      size: BigInt(1000),
+      txHash: '0xtx1',
+      blobCount: 2,
+      logs: [{ emitter: '0x789', topics: ['0xabc', '0xdef'] }],
+      topics: null,
     },
     {
+      // Legacy shape: backfilled from the per-blob table.
       id: 2,
       blockNumber: 2000,
       timestamp: START - 2 * UnixTime.HOUR,
       daLayer: 'avail',
       from: '0x789',
       to: null,
+      txHash: null,
+      blobCount: 1,
+      logs: null,
       topics: null,
-      size: BigInt(2000),
     },
     {
       id: 3,
@@ -35,8 +43,10 @@ describeDatabase(BlobsRepository.name, (db) => {
       daLayer: 'avail',
       from: '0xabc',
       to: '0xdef',
+      txHash: null,
+      blobCount: 3,
+      logs: null,
       topics: ['0x123'],
-      size: BigInt(3000),
     },
   ]
 
@@ -46,9 +56,9 @@ describeDatabase(BlobsRepository.name, (db) => {
     await repository.insertMany(DATA)
   })
 
-  describe(BlobsRepository.prototype.insertMany.name, () => {
+  describe(TxWithBlobsRepository.prototype.insertMany.name, () => {
     it('add new', async () => {
-      const newRows: BlobRecord[] = [
+      const newRows: TxWithBlobsRecord[] = [
         {
           id: 4,
           blockNumber: 4000,
@@ -56,8 +66,10 @@ describeDatabase(BlobsRepository.name, (db) => {
           daLayer: 'eigen-da',
           from: '0x111',
           to: '0x222',
-          topics: ['0x333'],
-          size: BigInt(4000),
+          txHash: '0xtx4',
+          blobCount: 1,
+          logs: [{ emitter: '0x444', topics: ['0x333'] }],
+          topics: null,
         },
         {
           id: 5,
@@ -66,8 +78,10 @@ describeDatabase(BlobsRepository.name, (db) => {
           daLayer: 'ethereum',
           from: '0x444',
           to: null,
+          txHash: null,
+          blobCount: 1,
+          logs: null,
           topics: null,
-          size: BigInt(5000),
         },
       ]
 
@@ -82,7 +96,7 @@ describeDatabase(BlobsRepository.name, (db) => {
     })
   })
 
-  describe(BlobsRepository.prototype.getAll.name, () => {
+  describe(TxWithBlobsRepository.prototype.getAll.name, () => {
     it('should return all rows', async () => {
       const results = await repository.getAll()
 
@@ -94,42 +108,62 @@ describeDatabase(BlobsRepository.name, (db) => {
     })
   })
 
-  describe(BlobsRepository.prototype.getByBlockRangeInclusive.name, () => {
-    it('should return all rows for related entity', async () => {
-      const results = await repository.getByBlockRangeInclusive(
-        'avail',
-        2000,
-        3000,
-      )
+  describe(
+    TxWithBlobsRepository.prototype.getByBlockRangeInclusive.name,
+    () => {
+      it('should return all rows for related entity', async () => {
+        const results = await repository.getByBlockRangeInclusive(
+          'avail',
+          2000,
+          3000,
+        )
 
-      expect(results).toEqualUnsorted(DATA.slice(1, 3))
-    })
-  })
+        expect(results).toEqualUnsorted(DATA.slice(1, 3))
+      })
 
-  describe(BlobsRepository.prototype.getCountPerAddressInbox.name, () => {
-    it('should group by from and to and return counts', async () => {
+      it('should return rows in ascending block order', async () => {
+        await repository.deleteAll()
+        await repository.insertMany([
+          txWithBlobs({ blockNumber: 30 }),
+          txWithBlobs({ blockNumber: 10 }),
+          txWithBlobs({ blockNumber: 20 }),
+        ])
+
+        const results = await repository.getByBlockRangeInclusive(
+          'ethereum',
+          0,
+          100,
+        )
+
+        expect(results.map((r) => r.blockNumber)).toEqual([10, 20, 30])
+      })
+    },
+  )
+
+  describe(TxWithBlobsRepository.prototype.getCountPerAddressInbox.name, () => {
+    it('should group by from and to and sum blob counts', async () => {
       await repository.deleteAll()
       const base = UnixTime.toStartOf(UnixTime.now(), 'day')
       await repository.insertMany([
-        blob({
+        txWithBlobs({
           from: '0xA',
           to: '0xB',
+          blobCount: 3,
           timestamp: base + 1,
-          daLayer: 'ethereum',
           blockNumber: 10,
         }),
-        blob({
+        txWithBlobs({
           from: '0xA',
           to: '0xB',
+          blobCount: 2,
           timestamp: base + 2,
-          daLayer: 'ethereum',
           blockNumber: 11,
         }),
-        blob({
+        txWithBlobs({
           from: '0xA',
           to: '0xC',
+          blobCount: 1,
           timestamp: base + 3,
-          daLayer: 'ethereum',
           blockNumber: 12,
         }),
       ])
@@ -141,7 +175,7 @@ describeDatabase(BlobsRepository.name, (db) => {
       )
 
       expect(results).toEqualUnsorted([
-        { from: '0xA', to: '0xB', count: 2 },
+        { from: '0xA', to: '0xB', count: 5 },
         { from: '0xA', to: '0xC', count: 1 },
       ])
     })
@@ -150,34 +184,10 @@ describeDatabase(BlobsRepository.name, (db) => {
       await repository.deleteAll()
       const base = UnixTime.toStartOf(UnixTime.now(), 'day')
       await repository.insertMany([
-        blob({
-          from: '0xA',
-          to: '0xB',
-          timestamp: base - 1,
-          daLayer: 'ethereum',
-          blockNumber: 10,
-        }),
-        blob({
-          from: '0xA',
-          to: '0xB',
-          timestamp: base,
-          daLayer: 'ethereum',
-          blockNumber: 11,
-        }),
-        blob({
-          from: '0xA',
-          to: '0xB',
-          timestamp: base + 100,
-          daLayer: 'ethereum',
-          blockNumber: 12,
-        }),
-        blob({
-          from: '0xA',
-          to: '0xB',
-          timestamp: base + UnixTime.DAY,
-          daLayer: 'ethereum',
-          blockNumber: 13,
-        }),
+        txWithBlobs({ timestamp: base - 1, blockNumber: 10 }),
+        txWithBlobs({ timestamp: base, blockNumber: 11 }),
+        txWithBlobs({ timestamp: base + 100, blockNumber: 12 }),
+        txWithBlobs({ timestamp: base + UnixTime.DAY, blockNumber: 13 }),
       ])
 
       const results = await repository.getCountPerAddressInbox(
@@ -186,7 +196,7 @@ describeDatabase(BlobsRepository.name, (db) => {
         base + UnixTime.DAY,
       )
 
-      expect(results).toEqual([{ from: '0xA', to: '0xB', count: 2 }])
+      expect(results).toEqual([{ from: '0x0', to: null, count: 2 }])
     })
 
     it('should return empty array when no data matches', async () => {
@@ -203,7 +213,7 @@ describeDatabase(BlobsRepository.name, (db) => {
     })
   })
 
-  describe(BlobsRepository.prototype.deleteAll.name, () => {
+  describe(TxWithBlobsRepository.prototype.deleteAll.name, () => {
     it('should delete all rows', async () => {
       await repository.deleteAll()
 
@@ -213,7 +223,7 @@ describeDatabase(BlobsRepository.name, (db) => {
     })
   })
 
-  describe(BlobsRepository.prototype.deleteAfter.name, () => {
+  describe(TxWithBlobsRepository.prototype.deleteAfter.name, () => {
     it('should delete all rows', async () => {
       await repository.deleteAfter('avail', 2000)
 
@@ -224,16 +234,18 @@ describeDatabase(BlobsRepository.name, (db) => {
   })
 })
 
-function blob(
-  overrides: Partial<Omit<BlobRecord, 'id'>>,
-): Omit<BlobRecord, 'id'> {
+function txWithBlobs(
+  overrides: Partial<Omit<TxWithBlobsRecord, 'id'>>,
+): Omit<TxWithBlobsRecord, 'id'> {
   return {
     blockNumber: overrides.blockNumber ?? 1,
     timestamp: overrides.timestamp ?? UnixTime.now(),
     daLayer: overrides.daLayer ?? 'ethereum',
     from: overrides.from ?? '0x0',
     to: overrides.to ?? null,
+    txHash: overrides.txHash ?? null,
+    blobCount: overrides.blobCount ?? 1,
+    logs: overrides.logs ?? null,
     topics: overrides.topics ?? null,
-    size: overrides.size ?? BigInt(100),
   }
 }

@@ -143,12 +143,26 @@ function TransactionDetails({
                 </div>
               </div>
             )}
-            {transaction.topics && transaction.topics.length > 0 && (
+            {transaction.event && (
               <div className="mb-1 text-sm">
                 <span className="text-secondary">Topics: </span>
                 <div>
-                  {transaction.topics?.map((topic) => (
+                  {transaction.event.topics.map((topic) => (
                     <span key={topic}>{topic}</span>
+                  ))}
+                </div>
+              </div>
+            )}
+            {transaction.event?.emitters && (
+              <div className="mb-1 text-sm">
+                <span className="text-secondary">Emitters: </span>
+                <div className="inline-flex gap-2">
+                  {transaction.event.emitters.map((emitter) => (
+                    <EtherscanLink
+                      key={emitter}
+                      address={emitter}
+                      className="whitespace-nowrap"
+                    />
                   ))}
                 </div>
               </div>

@@ -337,17 +337,23 @@ model Notification {
   @@id([id])
 }
 
-model Blob {
+model TxWithBlobs {
   id          Int      @id @default(autoincrement())
   blockNumber Int
   timestamp   DateTime @db.Timestamp(6)
   daLayer     Int
   from        String   @db.VarChar(255)
   to          String?  @db.VarChar(255)
+  /// Null for rows backfilled from the legacy per-blob "Blob" table.
+  txHash      String?  @db.VarChar(255)
+  blobCount   Int
+  /// [{emitter, topics}] for every log of the tx. Null for backfilled rows.
+  logs        Json?
+  /// Legacy JSON-stringified topic list; only set on backfilled rows.
   topics      String?
-  size        BigInt?
 
   @@index([blockNumber])
+  @@index([daLayer, timestamp])
 }
 
 model SyncMetadata {

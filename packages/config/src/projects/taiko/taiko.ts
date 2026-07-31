@@ -191,9 +191,12 @@ export const taiko: ScalingProject = {
         sinceBlock: 0, // Edge Case: config added @ DA Module start
         inbox: mainnetInboxAddress,
         sequencers: [],
-        topics: [
-          '0x7c4c4523e17533e451df15762a093e0693a2cd8b279fe54c6cd3777ed5771213', // Proposed
-        ],
+        event: {
+          topics: [
+            '0x7c4c4523e17533e451df15762a093e0693a2cd8b279fe54c6cd3777ed5771213', // Proposed
+          ],
+          emitters: null, // Inbox matching already identifies Taiko blobs.
+        },
       },
     ],
     trackedTxs: [

@@ -1,9 +1,10 @@
+import type { EthereumDaTrackingConfig } from '@l2beat/config'
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import type { AvailBlob, CelestiaBlob, EthereumBlob } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { BlockDaIndexedConfig } from '../../../config/Config'
-import { DaService } from './DaService'
+import { DaService, matchEthereumProject } from './DaService'
 
 describe(DaService.name, () => {
   const service = new DaService()
@@ -19,6 +20,9 @@ describe(DaService.name, () => {
           daLayer: 'ethereum',
           inbox: 'ethereum-1-inbox',
           sequencer: 'ethereum-1-seq1',
+          txHash: null,
+          blobCount: 1,
+          logs: null,
           topics: [],
           blockTimestamp: TIME,
           blockNumber: 1,
@@ -30,6 +34,9 @@ describe(DaService.name, () => {
           daLayer: 'ethereum',
           inbox: 'ethereum-1-inbox',
           sequencer: 'ethereum-1-seq1',
+          txHash: null,
+          blobCount: 1,
+          logs: null,
           topics: [],
           blockTimestamp: TIME,
           blockNumber: 1,
@@ -41,6 +48,9 @@ describe(DaService.name, () => {
           daLayer: 'ethereum',
           inbox: 'ethereum-1-inbox',
           sequencer: 'ethereum-1-seq1',
+          txHash: null,
+          blobCount: 1,
+          logs: null,
           topics: ['0x1234'],
           blockTimestamp: TIME,
           blockNumber: 1,
@@ -52,6 +62,9 @@ describe(DaService.name, () => {
           daLayer: 'ethereum',
           inbox: 'ethereum-2-inbox',
           sequencer: 'any',
+          txHash: null,
+          blobCount: 1,
+          logs: null,
           topics: [],
           blockTimestamp: TIME,
           blockNumber: 1,
@@ -63,6 +76,9 @@ describe(DaService.name, () => {
           daLayer: 'ethereum',
           inbox: 'any',
           sequencer: 'any',
+          txHash: null,
+          blobCount: 1,
+          logs: null,
           topics: [],
           size: BigInt(400),
           blockTimestamp: TIME,
@@ -226,6 +242,9 @@ describe(DaService.name, () => {
           daLayer: 'ethereum',
           inbox: 'ethereum-1-inbox',
           sequencer: 'ethereum-1-seq1',
+          txHash: null,
+          blobCount: 1,
+          logs: null,
           topics: [],
           blockTimestamp: TIME,
           blockNumber: 1,
@@ -237,6 +256,9 @@ describe(DaService.name, () => {
           daLayer: 'ethereum',
           inbox: 'ethereum-1-inbox',
           sequencer: 'ethereum-1-seq1',
+          txHash: null,
+          blobCount: 1,
+          logs: null,
           topics: [],
           blockTimestamp: TIME,
           blockNumber: 1,
@@ -248,6 +270,9 @@ describe(DaService.name, () => {
           daLayer: 'ethereum',
           inbox: 'ethereum-1-inbox',
           sequencer: 'ethereum-1-seq1',
+          txHash: null,
+          blobCount: 1,
+          logs: null,
           topics: [],
           blockTimestamp: TIME - 1 * UnixTime.HOUR,
           blockNumber: 1,
@@ -259,6 +284,9 @@ describe(DaService.name, () => {
           daLayer: 'ethereum',
           inbox: 'ethereum-1-inbox',
           sequencer: 'ethereum-1-seq1',
+          txHash: null,
+          blobCount: 1,
+          logs: null,
           topics: [],
           blockTimestamp: TIME + 1 * UnixTime.HOUR,
           blockNumber: 1,
@@ -355,6 +383,108 @@ describe(DaService.name, () => {
         latestTimestamp: TIME + 1 * UnixTime.HOUR,
       })
     })
+
+    it('counts every blob of a multi-blob tx via its total size', async () => {
+      const TIME = UnixTime.now()
+
+      const mockBlobs = [
+        {
+          type: 'ethereum',
+          daLayer: 'ethereum',
+          inbox: 'ethereum-1-inbox',
+          sequencer: 'ethereum-1-seq1',
+          txHash: '0xtx1',
+          blobCount: 3,
+          topics: [],
+          logs: null,
+          blockTimestamp: TIME,
+          blockNumber: 1,
+          size: 393216n, // 3 * 131072
+        } as EthereumBlob,
+      ]
+
+      const result = service.generateRecords(
+        mockBlobs,
+        [],
+        [MOCK_ETHEREUM_CONFIGS[1]],
+      )
+
+      expect(result.records).toEqual([
+        {
+          configurationId: 'eth-2',
+          projectId: 'project-ethereum-1',
+          daLayer: 'ethereum',
+          timestamp: UnixTime.toStartOf(TIME, 'hour'),
+          totalSize: 393216n,
+        },
+      ])
+    })
+  })
+})
+
+describe(matchEthereumProject.name, () => {
+  const config: EthereumDaTrackingConfig = {
+    type: 'ethereum',
+    daLayer: ProjectId('ethereum'),
+    inbox: 'inbox',
+    sinceBlock: 0,
+    event: {
+      topics: ['0x1234'],
+      emitters: ['0xAbC'],
+    },
+  }
+
+  const match = (
+    blob: Partial<Parameters<typeof matchEthereumProject>[0]>,
+    override = config,
+  ) =>
+    matchEthereumProject(
+      {
+        inbox: 'other',
+        sequencer: 'sequencer',
+        topics: [],
+        logs: [],
+        ...blob,
+      },
+      override,
+    )
+
+  it('matches topic and emitter from the same log', () => {
+    expect(match({ logs: [{ emitter: '0xaBc', topics: ['0x1234'] }] })).toEqual(
+      true,
+    )
+  })
+
+  it('does not match a wrong emitter or combine separate logs', () => {
+    expect(
+      match({
+        logs: [
+          { emitter: '0xabc', topics: ['0x5678'] },
+          { emitter: '0xdef', topics: ['0x1234'] },
+        ],
+      }),
+    ).toEqual(false)
+  })
+
+  it('uses legacy topics only when any emitter is accepted', () => {
+    const legacyBlob = { topics: ['0x1234'], logs: null }
+
+    expect(match(legacyBlob)).toEqual(false)
+    expect(
+      match(legacyBlob, {
+        ...config,
+        event: { topics: ['0x1234'], emitters: null },
+      }),
+    ).toEqual(true)
+  })
+
+  it('still matches by inbox when the event does not match', () => {
+    expect(
+      match({
+        inbox: 'INBOX',
+        logs: [{ emitter: '0xdef', topics: ['0x1234'] }],
+      }),
+    ).toEqual(true)
   })
 })
 
@@ -374,7 +504,10 @@ const MOCK_ETHEREUM_CONFIGS: BlockDaIndexedConfig[] = [
     inbox: 'ethereum-1-inbox',
     sequencers: ['Ethereum-1-seq1', 'ethereum-1-seq1'],
     sinceBlock: 0,
-    topics: ['0x1234', '0x5678'],
+    event: {
+      topics: ['0x1234', '0x5678'],
+      emitters: null,
+    },
   },
   {
     configurationId: 'eth-3',

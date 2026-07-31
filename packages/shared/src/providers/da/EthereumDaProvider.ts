@@ -72,20 +72,24 @@ export class EthereumDaProvider implements DaBlobProvider {
       }
 
       const txLogs = logs.filter((l) => l.transactionHash === tx.hash)
-      const topics = txLogs.flatMap((log) => log.topics)
+      const blobCount = tx.blobVersionedHashes.length
 
-      tx.blobVersionedHashes.forEach(() =>
-        blobs.push({
-          type: 'ethereum',
-          daLayer: this.daLayer,
-          blockTimestamp: block.timestamp,
-          blockNumber: block.number,
-          size: ETHEREUM_BLOB_SIZE_BYTES,
-          inbox: tx.to ?? '',
-          sequencer: tx.from,
-          topics,
-        }),
-      )
+      blobs.push({
+        type: 'ethereum',
+        daLayer: this.daLayer,
+        blockTimestamp: block.timestamp,
+        blockNumber: block.number,
+        size: ETHEREUM_BLOB_SIZE_BYTES * BigInt(blobCount),
+        inbox: tx.to ?? '',
+        sequencer: tx.from,
+        txHash: tx.hash,
+        blobCount,
+        topics: txLogs.flatMap((log) => log.topics),
+        logs: txLogs.map((log) => ({
+          emitter: log.address,
+          topics: log.topics,
+        })),
+      })
     }
 
     return blobs

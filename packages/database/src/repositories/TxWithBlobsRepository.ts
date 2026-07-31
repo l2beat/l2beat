@@ -1,18 +1,25 @@
+import type { EthereumBlobLog } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import { sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
-import type { Blob } from '../kysely/generated/types'
+import type { TxWithBlobs } from '../kysely/generated/types'
 
-export interface BlobRecord {
+/** One blob-carrying transaction; blobCount holds the blob multiplicity. */
+export interface TxWithBlobsRecord {
   id: number
   blockNumber: number
   timestamp: UnixTime
   daLayer: string
   from: string
   to: string | null
+  /** Null for rows backfilled from the legacy per-blob table. */
+  txHash: string | null
+  blobCount: number
+  /** Null for rows backfilled from the legacy per-blob table. */
+  logs: EthereumBlobLog[] | null
+  /** Legacy topic list; only set on backfilled rows, null on new writes. */
   topics: string[] | null
-  size: bigint | null
 }
 
 export interface BlobPairCount {
@@ -21,7 +28,7 @@ export interface BlobPairCount {
   count: number
 }
 
-export function toRecord(row: Selectable<Blob>): BlobRecord {
+export function toRecord(row: Selectable<TxWithBlobs>): TxWithBlobsRecord {
   return {
     id: row.id,
     blockNumber: row.blockNumber,
@@ -29,20 +36,26 @@ export function toRecord(row: Selectable<Blob>): BlobRecord {
     daLayer: numberToDaLayer(row.daLayer),
     from: row.from,
     to: row.to ?? null,
+    txHash: row.txHash ?? null,
+    blobCount: row.blobCount,
+    logs: row.logs as EthereumBlobLog[] | null,
     topics: row.topics ? JSON.parse(row.topics) : null,
-    size: row.size ? BigInt(row.size) : null,
   }
 }
 
-export function toRow(record: Omit<BlobRecord, 'id'>): Insertable<Blob> {
+export function toRow(
+  record: Omit<TxWithBlobsRecord, 'id'>,
+): Insertable<TxWithBlobs> {
   return {
     blockNumber: record.blockNumber,
     timestamp: UnixTime.toDate(record.timestamp),
     daLayer: daLayerToNumber(record.daLayer),
     from: record.from,
     to: record.to ?? null,
+    txHash: record.txHash ?? null,
+    blobCount: record.blobCount,
+    logs: record.logs !== null ? JSON.stringify(record.logs) : null,
     topics: record.topics ? JSON.stringify(record.topics) : null,
-    size: record.size ? record.size.toString() : null,
   }
 }
 
@@ -76,13 +89,13 @@ export function numberToDaLayer(daLayer: number): string {
   }
 }
 
-export class BlobsRepository extends BaseRepository {
-  async insertMany(records: Omit<BlobRecord, 'id'>[]): Promise<number> {
+export class TxWithBlobsRepository extends BaseRepository {
+  async insertMany(records: Omit<TxWithBlobsRecord, 'id'>[]): Promise<number> {
     if (records.length === 0) return 0
 
     const rows = records.map(toRow)
     await this.batch(rows, 10_000, async (batch) => {
-      await this.db.insertInto('Blob').values(batch).execute()
+      await this.db.insertInto('TxWithBlobs').values(batch).execute()
     })
     return rows.length
   }
@@ -93,9 +106,9 @@ export class BlobsRepository extends BaseRepository {
     to: UnixTime,
   ): Promise<BlobPairCount[]> {
     const rows = await this.db
-      .selectFrom('Blob')
+      .selectFrom('TxWithBlobs')
       .select(['from', 'to'])
-      .select((eb) => eb.fn.countAll<number>().as('count'))
+      .select((eb) => eb.fn.sum<number>('blobCount').as('count'))
       .where('daLayer', '=', daLayerToNumber(daLayer))
       .where('timestamp', '>=', UnixTime.toDate(from))
       .where('timestamp', '<', UnixTime.toDate(to))
@@ -109,8 +122,8 @@ export class BlobsRepository extends BaseRepository {
     }))
   }
 
-  async getAll(): Promise<BlobRecord[]> {
-    const rows = await this.db.selectFrom('Blob').selectAll().execute()
+  async getAll(): Promise<TxWithBlobsRecord[]> {
+    const rows = await this.db.selectFrom('TxWithBlobs').selectAll().execute()
 
     return rows.map(toRecord)
   }
@@ -119,22 +132,25 @@ export class BlobsRepository extends BaseRepository {
     daLayer: string,
     from: number,
     to: number,
-  ): Promise<BlobRecord[]> {
+  ): Promise<TxWithBlobsRecord[]> {
     const rows = await this.db
-      .selectFrom('Blob')
+      .selectFrom('TxWithBlobs')
       .selectAll()
       .where('daLayer', '=', daLayerToNumber(daLayer))
       .where('blockNumber', '>=', from)
       .where('blockNumber', '<=', to)
+      .orderBy('blockNumber', 'asc')
       .execute()
     return rows.map(toRecord)
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db.deleteFrom('Blob').executeTakeFirst()
+    const result = await this.db.deleteFrom('TxWithBlobs').executeTakeFirst()
 
     const resetIdQuery =
-      sql`ALTER SEQUENCE public."Blob_id_seq" RESTART WITH 1`.compile(this.db)
+      sql`ALTER SEQUENCE public."TxWithBlobs_id_seq" RESTART WITH 1`.compile(
+        this.db,
+      )
     await this.db.executeQuery(resetIdQuery)
 
     return Number(result.numDeletedRows)
@@ -142,7 +158,7 @@ export class BlobsRepository extends BaseRepository {
 
   async deleteAfter(daLayer: string, blockNumber: number): Promise<number> {
     const result = await this.db
-      .deleteFrom('Blob')
+      .deleteFrom('TxWithBlobs')
       .where('daLayer', '=', daLayerToNumber(daLayer))
       .where('blockNumber', '>', blockNumber)
       .executeTakeFirst()

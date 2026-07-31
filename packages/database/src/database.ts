@@ -11,7 +11,6 @@ import { AggregatedLivenessRepository } from './repositories/AggregatedLivenessR
 import { AnomaliesRepository } from './repositories/AnomaliesRepository'
 import { AnomalyStatsRepository } from './repositories/AnomalyStatsRepository'
 import { AppStateRepository } from './repositories/AppStateRepository'
-import { BlobsRepository } from './repositories/BlobsRepository'
 import { CurrentPriceRepository } from './repositories/CurrentPriceRepository'
 import { DaBeatStatsRepository } from './repositories/DaBeatStatsRepository'
 import { DataAvailabilityRepository } from './repositories/DataAvailabilityRepository'
@@ -44,6 +43,7 @@ import { TokenValueRepository } from './repositories/TokenValueRepository'
 import { TvsAmountRepository } from './repositories/TvsAmountRepository'
 import { TvsBlockTimestampRepository } from './repositories/TvsBlockTimestampRepository'
 import { TvsPriceRepository } from './repositories/TvsPriceRepository'
+import { TxWithBlobsRepository } from './repositories/TxWithBlobsRepository'
 import { UpdateDiffRepository } from './repositories/UpdateDiffRepository'
 import { UpdateMessageRepository } from './repositories/UpdateMessageRepository'
 import { UpdateMonitorRepository } from './repositories/UpdateMonitorRepository'
@@ -85,7 +85,7 @@ export function createDatabase(
     currentPrice: new CurrentPriceRepository(db),
     daBeatStats: new DaBeatStatsRepository(db),
     dataAvailability: new DataAvailabilityRepository(db),
-    blobs: new BlobsRepository(db),
+    txWithBlobs: new TxWithBlobsRepository(db),
     // #endregion
 
     // #region Discovery

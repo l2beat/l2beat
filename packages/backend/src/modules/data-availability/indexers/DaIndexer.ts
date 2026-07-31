@@ -67,6 +67,13 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
           to: adjustedTo,
         })
 
+        const needsEmitters = configurations.some(
+          (c) =>
+            c.properties.type === 'ethereum' &&
+            c.properties.event !== undefined &&
+            c.properties.event.emitters !== null,
+        )
+
         let blobs: DaBlob[] = []
         if (this.$.blobService) {
           blobs = await this.$.blobService.get(this.daLayer, from, adjustedTo)
@@ -74,6 +81,23 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
           this.logger.info('Fetched blobs from cache', {
             blobs: blobs.length,
           })
+
+          const hasLegacyBlobs = blobs.some(
+            (blob) => blob.type === 'ethereum' && blob.logs === null,
+          )
+
+          if (needsEmitters && hasLegacyBlobs) {
+            blobs = await this.$.daProvider.getBlobs(
+              this.daLayer,
+              from,
+              adjustedTo,
+            )
+
+            this.logger.info(
+              'Fetched blobs from provider because cached blobs have no logs',
+              { blobs: blobs.length },
+            )
+          }
         } else {
           blobs = await this.$.daProvider.getBlobs(
             this.daLayer,

@@ -64,16 +64,56 @@ describe(createDaTrackingId.name, () => {
     ).toEqual('158f67fc279d')
   })
 
-  it('matches the pinned id for an ethereum config with topics', () => {
+  it('matches the pinned id for an ethereum config with topics (emitters: null)', () => {
+    // Pinned against the pre-event `topics: string[]` shape - a topic-only
+    // event config must not re-key data indexed under plain topics.
     expect(
       createDaTrackingId({
         type: 'ethereum',
         daLayer: 'ethereum',
         inbox: '0x8c0Bfc04AdA21fd496c55B8C50331f904306F564',
         sequencers: ['0xb', '0xa'],
-        topics: ['0x2', '0x1'],
+        event: { topics: ['0x2', '0x1'], emitters: null },
       }),
     ).toEqual('7b0e365a57ff')
+  })
+
+  it('emitters are part of the identity', () => {
+    const base = {
+      type: 'ethereum' as const,
+      daLayer: 'ethereum',
+      inbox: '0x8c0Bfc04AdA21fd496c55B8C50331f904306F564',
+    }
+    expect(
+      createDaTrackingId({
+        ...base,
+        event: { topics: ['0x1'], emitters: ['0xa'] },
+      }),
+    ).not.toEqual(
+      createDaTrackingId({
+        ...base,
+        event: { topics: ['0x1'], emitters: null },
+      }),
+    )
+  })
+
+  it('does not collide topic-only and emitter-bearing configs with the same strings', () => {
+    const base = {
+      type: 'ethereum' as const,
+      daLayer: 'ethereum',
+      inbox: '0x8c0Bfc04AdA21fd496c55B8C50331f904306F564',
+    }
+    expect(
+      createDaTrackingId({
+        ...base,
+        event: { topics: ['0x1', '0x2'], emitters: null },
+      }),
+    ).not.toEqual(
+      createDaTrackingId({
+        ...base,
+        event: { topics: ['0x1'], emitters: ['0x2'] },
+      }),
+    )
   })
 
   it('matches the pinned id for a celestia config', () => {

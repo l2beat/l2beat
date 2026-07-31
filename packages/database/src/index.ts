@@ -32,7 +32,6 @@ export {
   AppStatePair,
   type AppStateRecord,
 } from './repositories/AppStateRepository'
-export type { BlobPairCount, BlobRecord } from './repositories/BlobsRepository'
 export type {
   ChainApi,
   ChainRecord,
@@ -143,6 +142,10 @@ export type {
 export type { TvsAmountRecord } from './repositories/TvsAmountRepository'
 export type { TvsBlockTimestampRecord } from './repositories/TvsBlockTimestampRepository'
 export type { TvsPriceRecord } from './repositories/TvsPriceRepository'
+export type {
+  BlobPairCount,
+  TxWithBlobsRecord,
+} from './repositories/TxWithBlobsRepository'
 export type { UpdateDiffRecord } from './repositories/UpdateDiffRepository'
 export type { UpdateMessageRecord } from './repositories/UpdateMessageRepository'
 export type { UpdateMonitorRecord } from './repositories/UpdateMonitorRepository'

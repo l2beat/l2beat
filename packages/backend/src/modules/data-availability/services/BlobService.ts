@@ -17,12 +17,14 @@ export class BlobService {
         daLayer: blob.daLayer,
         from: blob.sequencer,
         to: blob.inbox,
-        topics: blob.topics ?? null,
-        size: null, // size is constant for Ethereum blobs
+        txHash: blob.txHash,
+        blobCount: blob.blobCount,
+        logs: blob.logs,
+        topics: null, // legacy column: new writes derive topics from logs
       }
     })
 
-    await this.db.blobs.insertMany(records)
+    await this.db.txWithBlobs.insertMany(records)
   }
 
   async get(daLayer: string, from: number, to: number): Promise<DaBlob[]> {
@@ -31,7 +33,7 @@ export class BlobService {
       'Only ethereum blobs are supported in BlobService',
     )
 
-    const records = await this.db.blobs.getByBlockRangeInclusive(
+    const records = await this.db.txWithBlobs.getByBlockRangeInclusive(
       daLayer,
       from,
       to,
@@ -42,10 +44,13 @@ export class BlobService {
       daLayer: record.daLayer,
       blockTimestamp: record.timestamp,
       blockNumber: record.blockNumber,
-      size: ETHEREUM_BLOB_SIZE_BYTES,
+      size: ETHEREUM_BLOB_SIZE_BYTES * BigInt(record.blobCount),
       inbox: record.to ?? '',
       sequencer: record.from,
-      topics: record.topics ?? [],
+      txHash: record.txHash,
+      blobCount: record.blobCount,
+      topics: record.logs?.flatMap((log) => log.topics) ?? record.topics ?? [],
+      logs: record.logs,
     }))
   }
 
@@ -55,6 +60,6 @@ export class BlobService {
       'Only ethereum blobs are supported in BlobService',
     )
 
-    return await this.db.blobs.deleteAfter(daLayer, from)
+    return await this.db.txWithBlobs.deleteAfter(daLayer, from)
   }
 }

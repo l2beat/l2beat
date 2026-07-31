@@ -174,6 +174,11 @@ const escapeHatchAddress = ChainSpecificAddress.address(escapeHatch.address)
 
 const v5ActivationTimestamp = UnixTime(1784060567) // 14 July 2026 20:22:47 UTC
 const v5ActivationBlock = 25533241 // https://etherscan.io/tx/0xff2db4e4bba583f2451478bfe4703e16afc79f0b463fb60615ebe3494142437b
+// Keep versioned DA emitters stable when discovery moves to a newer Rollup.
+// Later versions should get a separate, bounded DA tracking config.
+const v5RollupAddress = EthereumAddress(
+  '0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34',
+)
 
 function formatAztecAmount(amount: bigint): string {
   return `${formatLargeNumber(Number(amount / 10n ** 18n))} AZTEC`
@@ -352,9 +357,12 @@ export const aztecnetwork: ScalingProject = {
         daLayer: ProjectId('ethereum'),
         sinceBlock: v5ActivationBlock,
         inbox: EthereumAddress.ZERO, // Event-only tracking
-        topics: [
-          '0x6ff492bf2b4ca1b93a175167d14b3e46085b935cab3f39ca94013000799b93a0', // CheckpointProposed
-        ],
+        event: {
+          topics: [
+            '0x6ff492bf2b4ca1b93a175167d14b3e46085b935cab3f39ca94013000799b93a0', // CheckpointProposed
+          ],
+          emitters: [v5RollupAddress],
+        },
       },
     ],
     trackedTxs: [

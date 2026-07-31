@@ -210,14 +210,14 @@ function config(
     daLayer: 'ethereum' as EthereumDaTrackingConfig['daLayer'],
     inbox: overrides.inbox,
     sequencers: overrides.sequencers,
-    topics: overrides.topics,
+    event: overrides.event,
     sinceBlock: overrides.sinceBlock ?? 0,
     untilBlock: overrides.untilBlock,
   }
 }
 
 function mockBlobsRepository(pairs: BlobPairCount[]) {
-  return mockObject<Database['blobs']>({
+  return mockObject<Database['txWithBlobs']>({
     getCountPerAddressInbox: mockFn().resolvesTo(pairs),
   })
 }
@@ -238,7 +238,7 @@ function createIndexer($?: {
   return new EthereumBlobNotifierIndexer(
     {
       db: mockDatabase({
-        blobs: $?.blobsRepository ?? mockBlobsRepository([]),
+        txWithBlobs: $?.blobsRepository ?? mockBlobsRepository([]),
       }),
       configurations: $?.configurations ?? [],
       discordClient: $?.discordClient ?? mockDiscordClient(),
