@@ -1,10 +1,12 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { EthereumDaBridgeRisks, EthereumDaLayerRisks } from '../../common'
 import { linkByDA } from '../../common/linkByDA'
+import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const chainId = 1
+const ethereumBlockTimeSeconds = HARDCODED.ETHEREUM.BLOCK_TIME_SECONDS
 
 // Deployment of the first L2
 export const MIN_TIMESTAMP_FOR_TVL = UnixTime.fromDate(
@@ -69,40 +71,40 @@ export const ethereum: BaseProject = {
     consensusAlgorithm: {
       name: 'Gasper',
       description: readProjectMarkdown('ethereum', 'daLayerConsensusAlgorithm'),
-      blockTime: 12, // seconds per slot
-      consensusFinality: 768, // seconds, two epochs of 32 slots each
+      blockTime: ethereumBlockTimeSeconds,
+      consensusFinality: ethereumBlockTimeSeconds * 2 * 32, // two epochs of 32 slots each
       unbondingPeriod: 777600, // current value from validatorqueue.com. Technically it is the sum of 1) Exit Queue (variable) 2) fixed waiting time (27.3 hours), 3) Validator Sweep (variable).
     },
     throughput: [
       {
         size: 786432, // 0.75 MiB
         target: 393216, // 0.375 MiB
-        frequency: 12, // 12 seconds
+        frequency: ethereumBlockTimeSeconds,
         sinceTimestamp: 1710288000, // 2024-03-13
       },
       {
         // EIP-7691: Prague / Electra hard-fork – increased blob limits
         size: 1_179_648, // 1.125 MiB (max 9 blobs × 128 KiB)
         target: 786_432, // 0.75 MiB (target 6 blobs × 128 KiB)
-        frequency: 12, // unchanged: 12 s slot time
+        frequency: ethereumBlockTimeSeconds,
         sinceTimestamp: 1746612300, // 2025-05-07 10:05:00 UTC ≈ Pectra main-net epoch 364032
       },
       {
         // BPO1: Blob Parameter Only fork 1 (post-Fusaka PeerDAS)
         size: 1_966_080, // 1.875 MiB (max 15 blobs × 128 KiB)
         target: 1_310_720, // 1.25 MiB (target 10 blobs × 128 KiB)
-        frequency: 12, // unchanged: 12 s slot time
+        frequency: ethereumBlockTimeSeconds,
         sinceTimestamp: 1765290071, // 2025-12-09 14:21:11 UTC – epoch 412672
       },
       {
         // BPO2: Blob Parameter Only fork 2
         size: 2_752_512, // 2.625 MiB (max 21 blobs × 128 KiB)
         target: 1_835_008, // 1.75 MiB (target 14 blobs × 128 KiB)
-        frequency: 12, // unchanged: 12 s slot time
+        frequency: ethereumBlockTimeSeconds,
         sinceTimestamp: 1767747671, // 2026-01-07 01:01:11 UTC – epoch 419072
       },
     ],
-    finality: 768, // seconds
+    finality: ethereumBlockTimeSeconds * 2 * 32,
     pruningWindow: 86400 * 18, // 18 days in seconds
     risks: {
       daLayer: EthereumDaLayerRisks.SelfVerify,

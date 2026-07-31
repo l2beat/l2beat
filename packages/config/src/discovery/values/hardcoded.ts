@@ -14,23 +14,45 @@ UNDERSTAND WHAT YOU ARE DOING BEFORE YOU UPDATE THIS FILE
 
 // This is the place to insert hardcoded values
 // which should be used inside project's hardcoded tests
+const ETHEREUM_BLOCK_TIME_SECONDS = 12
+const OP_MAINNET_SEQUENCING_WINDOW_BLOCKS = 3_600
+
 export const HARDCODED = {
+  ETHEREUM: {
+    BLOCK_TIME_SECONDS: ETHEREUM_BLOCK_TIME_SECONDS,
+  },
   ARBITRUM: {
     SET_SEQUENCER_COUNT: 3,
+    // https://github.com/OffchainLabs/nitro/blob/master/execution/gethexec/sequencer.go
+    L2_BLOCK_TIME_MILLISECONDS: 250,
+    // https://github.com/OffchainLabs/nitro/blob/master/timeboost/config.go
+    TIMEBOOST_EXPRESS_LANE_ADVANTAGE_MILLISECONDS: 200,
   },
   OPTIMISM: {
+    // block_time and seq_window_size can be independently verified by calling
+    // optimism_rollupConfig on an OP Mainnet op-node RPC. They deliberately
+    // remain hardcoded because this RPC describes node configuration rather
+    // than historical L1 state and is not supported by every RPC provider.
     // https://docs.optimism.io/chain-operators/guides/configuration/rollup#sequencerwindowsize
     // https://github.com/ethereum-optimism/optimism/blob/develop/op-deployer/pkg/deployer/state/deploy_config.go#L93
     // https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/packages/contracts-bedrock/deploy-config/mainnet.json#LL10C26-L10C30
-    SEQUENCING_WINDOW_SECONDS: 3600 * 12, // blocks * blocktime
+    L2_BLOCK_TIME_SECONDS: 2,
+    SEQUENCING_WINDOW_BLOCKS: OP_MAINNET_SEQUENCING_WINDOW_BLOCKS,
+    SEQUENCING_WINDOW_SECONDS:
+      OP_MAINNET_SEQUENCING_WINDOW_BLOCKS * ETHEREUM_BLOCK_TIME_SECONDS,
+    // https://docs.optimism.io/op-stack/features/flashblocks
+    FLASHBLOCK_INTERVAL_MILLISECONDS: 250,
+    // This limit is a literal in OptimismPortal2.depositTransaction and has no getter.
+    // https://etherscan.io/address/0xe89f13c5ee4033b2d3cd76c9d6958efbfe26d3c2#code
+    MAX_DEPOSIT_CALLDATA_BYTES: 120_000,
   },
   PUBLICGOODSNETWORK: {
     // https://github.com/ethereum-optimism/optimism/pull/6261/files
-    SEQUENCING_WINDOW_SECONDS: 3600 * 12, // blocks * blocktime
+    SEQUENCING_WINDOW_SECONDS: 3_600 * ETHEREUM_BLOCK_TIME_SECONDS,
   },
   KROMA: {
     // https://github.com/kroma-network/kroma/blob/dev/packages/contracts/deploy-config/mainnet.json#L9C30-L9C30
-    SEQUENCING_WINDOW_SECONDS: 3600 * 12, // blocks * blocktime
+    SEQUENCING_WINDOW_SECONDS: 3_600 * ETHEREUM_BLOCK_TIME_SECONDS,
   },
   ZKSYNC: {
     PRIORITY_EXPIRATION_PERIOD: 1209600, // 14 days

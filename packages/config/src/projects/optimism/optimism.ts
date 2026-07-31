@@ -8,17 +8,33 @@ import {
 import { DERIVATION, SOA } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('optimism')
 const genesisTimestamp = UnixTime(1636665399)
 const chainId = 10
-const sequencingWindowBlocks = 3_600
-const assumedL1BlockTimeSeconds = 12
+const assumedL1BlockTimeSeconds = HARDCODED.ETHEREUM.BLOCK_TIME_SECONDS
+const l2BlockTimeSeconds = HARDCODED.OPTIMISM.L2_BLOCK_TIME_SECONDS
+const flashblockIntervalMilliseconds =
+  HARDCODED.OPTIMISM.FLASHBLOCK_INTERVAL_MILLISECONDS
+const sequencingWindowSeconds = HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS
+const sequencingWindowBlocks = HARDCODED.OPTIMISM.SEQUENCING_WINDOW_BLOCKS
+const maxDepositCalldataBytes = HARDCODED.OPTIMISM.MAX_DEPOSIT_CALLDATA_BYTES
 const depositResourceLimit = discovery.getContractValue<{
   maxResourceLimit: number
 }>('SystemConfig', 'resourceConfig').maxResourceLimit
+const minimumDepositGasWithoutData = discovery.getContractValue<number>(
+  'OptimismPortal2',
+  'minimumGasLimitZeroBytes',
+)
+const minimumDepositGasWithOneByte = discovery.getContractValue<number>(
+  'OptimismPortal2',
+  'minimumGasLimitOneByte',
+)
+const minimumDepositGasPerByte =
+  minimumDepositGasWithOneByte - minimumDepositGasWithoutData
 const proofMaturityDelaySeconds = discovery.getContractValue<number>(
   'OptimismPortal2',
   'proofMaturityDelaySeconds',
@@ -36,8 +52,7 @@ const stateFinalizationDelaySeconds = Math.max(
   maxClockDuration + disputeGameFinalityDelaySeconds,
 )
 const worstCaseFallbackFinalizationDelaySeconds =
-  sequencingWindowBlocks * assumedL1BlockTimeSeconds +
-  stateFinalizationDelaySeconds
+  sequencingWindowSeconds + stateFinalizationDelaySeconds
 
 const securityCouncilStats = discovery.getMultisigStats(
   'Optimism Security Council',
@@ -192,11 +207,10 @@ export const optimism: ScalingProject = opStackL2({
         'OP Mainnet uses a single centralized sequencer for fast confirmations. Users can bypass it with one Ethereum transaction to the OptimismPortal. Rollup nodes derive the deposited transaction from Ethereum, including it after at most one sequencing window.',
       centralizedSequencingSpec: {
         trustedPreconfirmation: {
-          value: '250 ms',
-          secondLine: '2 s L2 block time',
-          description:
-            'The centralized sequencer streams cumulative Flashblock preconfirmations every 250 ms while sealing regular L2 blocks every 2 seconds. Flashblocks are out of protocol: the promise has no protocol enforcement or slashing, and 250 ms is a target that can vary with execution load.',
-          orderHint: 0.25,
+          value: `${flashblockIntervalMilliseconds} ms`,
+          secondLine: `${l2BlockTimeSeconds} s L2 block time`,
+          description: `The centralized sequencer streams cumulative Flashblock preconfirmations every ${flashblockIntervalMilliseconds} ms while sealing regular L2 blocks every ${l2BlockTimeSeconds} seconds. Flashblocks are out of protocol: the promise has no protocol enforcement or slashing, and ${flashblockIntervalMilliseconds} ms is a target that can vary with execution load.`,
+          orderHint: flashblockIntervalMilliseconds / 1_000,
         },
         trustedOrdering: {
           value: 'Priority gas auction',
@@ -226,25 +240,24 @@ export const optimism: ScalingProject = opStackL2({
             'The user submits one Ethereum transaction to the OptimismPortal. Once it is included, conforming rollup nodes derive the deposit transaction without requiring a follow-up force-inclusion transaction.',
         },
         forcedInclusionDelay: {
-          value: `${formatSeconds(sequencingWindowBlocks * assumedL1BlockTimeSeconds, { fullUnit: true })}`,
+          value: formatSeconds(sequencingWindowSeconds, { fullUnit: true }),
           secondLine: `${sequencingWindowBlocks.toLocaleString('en-US')} L1 blocks`,
           sentiment: 'good',
-          description:
-            'The static sequencing window is measured in Ethereum blocks. The wall-clock duration assumes 12-second L1 blocks.',
+          description: `The static sequencing window is measured in Ethereum blocks. The wall-clock duration assumes ${assumedL1BlockTimeSeconds}-second L1 blocks.`,
           orderHint: sequencingWindowBlocks,
         },
         fallbackFinalizationDelay: {
           value: formatSeconds(worstCaseFallbackFinalizationDelaySeconds, {
             fullUnit: true,
           }),
-          secondLine: `${formatSeconds(sequencingWindowBlocks * assumedL1BlockTimeSeconds)} inclusion + ${formatSeconds(stateFinalizationDelaySeconds)} finality`,
-          description: `After the deposit enters the canonical L2 order, anyone with the required bond can immediately self-propose a dispute game. A maximally delayed game uses the ${formatSeconds(maxClockDuration, { fullUnit: true })} game clock and then waits the ${formatSeconds(disputeGameFinalityDelaySeconds, { fullUnit: true })} finality air gap. The independently enforced ${formatSeconds(proofMaturityDelaySeconds, { fullUnit: true })} withdrawal-proof maturity period runs concurrently and gives the same 7-day finality leg. The total assumes 12-second Ethereum blocks and that Ethereum includes the game, proof and finalization transactions.`,
+          secondLine: `${formatSeconds(sequencingWindowSeconds)} inclusion + ${formatSeconds(stateFinalizationDelaySeconds)} finality`,
+          description: `After the deposit enters the canonical L2 order, anyone with the required bond can immediately self-propose a dispute game. A maximally delayed game uses the ${formatSeconds(maxClockDuration, { fullUnit: true })} game clock and then waits the ${formatSeconds(disputeGameFinalityDelaySeconds, { fullUnit: true })} finality air gap. The independently enforced ${formatSeconds(proofMaturityDelaySeconds, { fullUnit: true })} withdrawal-proof maturity period runs concurrently and gives the same 7-day finality leg. The total assumes ${assumedL1BlockTimeSeconds}-second Ethereum blocks and that Ethereum includes the game, proof and finalization transactions.`,
           orderHint: worstCaseFallbackFinalizationDelaySeconds,
         },
         forcedInclusionConstraints: {
           value: 'Deposit transaction',
           secondLine: 'Address alias',
-          description: `The fallback creates an L1-originated deposit transaction rather than submitting the original signed L2 transaction. Its calldata is capped at 120,000 bytes, its minimum L2 gas limit is 21,000 plus 40 gas per calldata byte, and deposits share a metered ${depositResourceLimit.toLocaleString('en-US')} gas resource limit per Ethereum block. L1 contract callers use an aliased address on L2.`,
+          description: `The fallback creates an L1-originated deposit transaction rather than submitting the original signed L2 transaction. Its calldata is capped at ${maxDepositCalldataBytes.toLocaleString('en-US')} bytes, its minimum L2 gas limit is ${minimumDepositGasWithoutData.toLocaleString('en-US')} plus ${minimumDepositGasPerByte.toLocaleString('en-US')} gas per calldata byte, and deposits share a metered ${depositResourceLimit.toLocaleString('en-US')} gas resource limit per Ethereum block. L1 contract callers use an aliased address on L2.`,
         },
       },
       censorshipResistance:

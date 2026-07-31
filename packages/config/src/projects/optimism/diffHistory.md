@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xac0bab6ca7dc1f9b673f0059d3c8a1914f24d6b8
+
+# Diff at Fri, 31 Jul 2026 12:33:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a3c051e775d3ff28bddb26800fc0b8049d20228a block: 1784283055
+- current timestamp: 1784283055
+
+## Description
+
+Config: Add gas limit info.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784283055 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      values.minimumGasLimitOneByte:
++        21040
+      values.minimumGasLimitZeroBytes:
++        21000
+    }
+```
+
 Generated with discovered.json: 0x5cbd79fdd282d3d9ed3faba4f4c2887d56fd0e02
 
 # Diff at Fri, 17 Jul 2026 10:13:04 GMT:

@@ -17,6 +17,7 @@ import {
 import { BADGES } from '../../common/badges'
 import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
 import {
   getNitroGovernance,
@@ -26,7 +27,10 @@ import {
 
 const discovery = new ProjectDiscovery('arbitrum')
 
-const assumedBlockTime = 12 // seconds, different from RollupUserLogic.sol#L35 which assumes 13.2 seconds
+const assumedBlockTime = HARDCODED.ETHEREUM.BLOCK_TIME_SECONDS
+const l2BlockTimeMilliseconds = HARDCODED.ARBITRUM.L2_BLOCK_TIME_MILLISECONDS
+const timeboostExpressLaneAdvantageMilliseconds =
+  HARDCODED.ARBITRUM.TIMEBOOST_EXPRESS_LANE_ADVANTAGE_MILLISECONDS
 
 const challengeWindow = discovery.getContractValue<number>(
   'RollupProxy',
@@ -536,17 +540,15 @@ export const arbitrum: ScalingProject = orbitStackL2({
         'Arbitrum One uses a single centralized sequencer for fast confirmations. Users can bypass it by first enqueueing a message on Ethereum. If the sequencer does not include it before the message-specific delay expires, anyone can submit a second Ethereum transaction to force the delayed queue into the canonical order.',
       centralizedSequencingSpec: {
         trustedPreconfirmation: {
-          value: '250 ms',
-          secondLine: '250 ms L2 block time',
-          description:
-            'The sequencer feed provides a trusted soft confirmation with no protocol enforcement or slashing. While a Timeboost express lane controller is active, non-express transactions are delayed by 200 ms before ordering.',
-          orderHint: 0.25,
+          value: `${l2BlockTimeMilliseconds} ms`,
+          secondLine: `${l2BlockTimeMilliseconds} ms L2 block time`,
+          description: `The sequencer feed provides a trusted soft confirmation with no protocol enforcement or slashing. While a Timeboost express lane controller is active, non-express transactions are delayed by ${timeboostExpressLaneAdvantageMilliseconds} ms before ordering.`,
+          orderHint: l2BlockTimeMilliseconds / 1_000,
         },
         trustedOrdering: {
           value: 'Timeboost',
           secondLine: 'Auctioned express lane',
-          description:
-            'The express lane controller, selected by auction for each round, receives a 200 ms advantage over regular transactions. Transactions are otherwise ordered based on arrival time. This policy is operated by the centralized sequencer and is not enforced by the L1 contracts.',
+          description: `The express lane controller, selected by auction for each round, receives a ${timeboostExpressLaneAdvantageMilliseconds} ms advantage over regular transactions. Transactions are otherwise ordered based on arrival time. This policy is operated by the centralized sequencer and is not enforced by the L1 contracts.`,
         },
         sequencerCount: {
           value: 'Centralized',
@@ -588,7 +590,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
             challengeGracePeriodSeconds / assumedBlockTime
           ).toLocaleString(
             'en-US',
-          )}-block grace period. The total assumes 12-second Ethereum blocks and that Ethereum includes the proposal, challenge and confirmation transactions.`,
+          )}-block grace period. The total assumes ${assumedBlockTime}-second Ethereum blocks and that Ethereum includes the proposal, challenge and confirmation transactions.`,
           orderHint: worstCaseFallbackFinalizationDelaySeconds,
         },
         forcedInclusionConstraints: {
