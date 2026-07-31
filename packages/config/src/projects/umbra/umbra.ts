@@ -1,12 +1,74 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
-import type { BaseProject } from '../../types'
+import { getTokenByAddress } from '../../tokens/getTokenByAddress'
+import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('umbra')
+
+const UMBRA_ANNOUNCEMENT_EVENT =
+  '0x29877766fa2bfe3b90008d6d92f965eca91cbc5757ed775740e460799fb92219'
+const UMBRA_TOKEN_WITHDRAWAL_EVENT =
+  '0x30eb3583ad09933b693a45452ab07512244cdbc5868701aa004c27b7b267c249'
+
+const ETH_TOKEN_PLACEHOLDER = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
+
+const TRACKED_TOKENS = [
+  '0x6B175474E89094C44Da98b954EedeAC495271d0F', // DAI
+  ETH_TOKEN_PLACEHOLDER,
+  '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', // USDC
+  '0xdAC17F958D2ee523a2206206994597C13D831ec7', // USDT
+  '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599', // WBTC
+]
+
+const umbraCore = discovery.getContract('Umbra')
+
+const privacyTokens: ProjectPrivacyToken[] = TRACKED_TOKENS.map((address) => {
+  const resolved = getTokenByAddress(address)
+  // Prices must cover the whole bucket range, so never start before listing.
+  const sinceTimestamp = Math.max(
+    umbraCore.sinceTimestamp ?? 0,
+    resolved.coingeckoListingTimestamp,
+  )
+
+  return {
+    token: {
+      address: EthereumAddress(address),
+      iconUrl: resolved.iconUrl,
+      symbol: resolved.symbol,
+      decimals: resolved.decimals,
+      priceId: resolved.coingeckoId,
+      sinceTimestamp,
+    },
+    buckets: [
+      {
+        id: `umbra-${resolved.symbol}`,
+        type: 'pool',
+        label: resolved.symbol,
+        address: umbraCore.address,
+        sinceTimestamp,
+        deposit: {
+          event: UMBRA_ANNOUNCEMENT_EVENT,
+          extractor: 'umbraAmount',
+          params: { tokenAddress: EthereumAddress(address) },
+        },
+        withdrawal: {
+          // ETH is forwarded straight to the stealth address instead of being
+          // escrowed, so its Announcement is a deposit and a withdrawal at once.
+          event:
+            address === ETH_TOKEN_PLACEHOLDER
+              ? UMBRA_ANNOUNCEMENT_EVENT
+              : UMBRA_TOKEN_WITHDRAWAL_EVENT,
+          extractor: 'umbraAmount',
+          params: { tokenAddress: EthereumAddress(address) },
+        },
+      },
+    ],
+  }
+})
 
 export const umbra: BaseProject = {
   id: ProjectId('umbra'),
@@ -41,12 +103,8 @@ export const umbra: BaseProject = {
     badges: [],
   },
   privacyInfo: {
-    // TODO: Track volume from Announcement events once privacy metrics support
-    // volume-only protocols without TVL and withdrawal flows. ETH uses token
-    // 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE and event topic
-    // 0x29877766fa2bfe3b90008d6d92f965eca91cbc5757ed775740e460799fb92219.
-    tokens: [],
-    summaryTrackedItemName: 'transfer',
+    tokens: privacyTokens,
+    summaryTrackedItemName: 'token',
     exitWindow: {
       value: 'Infinite',
       sentiment: 'good',
