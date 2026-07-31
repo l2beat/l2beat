@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xac0bab6ca7dc1f9b673f0059d3c8a1914f24d6b8
+Generated with discovered.json: 0x47ff97e599c2108e71b556803d9de7c4e68b3eb8
 
-# Diff at Fri, 31 Jul 2026 12:33:22 GMT:
+# Diff at Fri, 31 Jul 2026 19:38:09 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@a3c051e775d3ff28bddb26800fc0b8049d20228a block: 1784283055
-- current timestamp: 1784283055
+- comparing to: main@44e2212a46e585fd2ddb21d6755695cf74e1f876 block: 1784283055
+- current timestamp: 1785526607
 
 ## Description
 
@@ -15,6 +15,16 @@ Config: Add gas limit info.
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1784283055 (main branch discovery), not current.
+
+```diff
+    contract FaultDisputeGame (eth:0x2DDA3584b51eF5236f7726Dea5A0FB6B3cA94AeC) [opstack/FaultDisputeGame] {
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      values.requiredBondAtFirstDepth:
++        "87594000000000000"
+      values.requiredBondAtRoot:
++        "80000000000000000"
+    }
+```
 
 ```diff
     contract OptimismPortal2 (eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed) [opstack/OptimismPortal2] {

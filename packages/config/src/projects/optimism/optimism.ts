@@ -13,7 +13,6 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
 import {
-  getOpStackBondScalingFactor,
   getOpStackFullDisputeGameBondCost,
   opStackL2,
 } from '../../templates/opStack'
@@ -57,25 +56,33 @@ const respectedGameType = discovery.getContractValue<number>(
   'OptimismPortal2',
   'respectedGameType',
 )
-assert(
-  respectedGameType === 8,
-  'Update OP Mainnet exit economics for the new respected game type',
-)
 const faultDisputeGameInitialBond = discovery.getContractValue<string>(
   'DisputeGameFactory',
-  'initBondGame8',
+  `initBondGame${respectedGameType}`,
 )
 const faultDisputeGameMaxDepth = discovery.getContractValue<number>(
   'FaultDisputeGame',
   'maxGameDepth',
 )
-const faultDisputeGameBondScalingFactor = getOpStackBondScalingFactor(
-  faultDisputeGameMaxDepth,
+const faultDisputeGameRootBond = discovery.getContractValue<string>(
+  'FaultDisputeGame',
+  'requiredBondAtRoot',
 )
+assert(
+  faultDisputeGameRootBond === faultDisputeGameInitialBond,
+  'The dispute game factory bond must match the root claim bond',
+)
+const faultDisputeGameFirstDepthBond = discovery.getContractValue<string>(
+  'FaultDisputeGame',
+  'requiredBondAtFirstDepth',
+)
+const faultDisputeGameBondScalingFactor =
+  Number(faultDisputeGameFirstDepthBond) / Number(faultDisputeGameRootBond)
 const faultDisputeGameDefenderAdvantage = 1 / faultDisputeGameBondScalingFactor
 const faultDisputeGameFullPathCost = getOpStackFullDisputeGameBondCost(
   faultDisputeGameInitialBond,
   faultDisputeGameMaxDepth,
+  faultDisputeGameBondScalingFactor,
 )
 const faultDisputeGameInitialBondEther = Number(
   formatEther(faultDisputeGameInitialBond),

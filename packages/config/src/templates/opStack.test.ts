@@ -20,4 +20,10 @@ describe(getOpStackFullDisputeGameBondCost.name, () => {
 
     expect(Number(formatEther(fullPathCost)).toFixed(2)).toEqual('691.23')
   })
+
+  it('can use a scaling factor observed from the deployed game', () => {
+    const fullPathCost = getOpStackFullDisputeGameBondCost(100_000, 2, 2)
+
+    expect(fullPathCost).toEqual(700_000n)
+  })
 })

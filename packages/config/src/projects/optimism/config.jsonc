@@ -248,6 +248,24 @@
         "resolvedSubgames"
       ]
     },
+    "eth:0x2DDA3584b51eF5236f7726Dea5A0FB6B3cA94AeC": {
+      "fields": {
+        "requiredBondAtRoot": {
+          "handler": {
+            "type": "call",
+            "method": "getRequiredBond",
+            "args": [1]
+          }
+        },
+        "requiredBondAtFirstDepth": {
+          "handler": {
+            "type": "call",
+            "method": "getRequiredBond",
+            "args": [2]
+          }
+        }
+      }
+    },
     "eth:0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277": {
       "ignoreMethods": ["zeroHashes"]
     },

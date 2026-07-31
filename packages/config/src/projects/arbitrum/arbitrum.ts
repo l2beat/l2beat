@@ -191,6 +191,11 @@ const boldBisectionCount = boldBisectionHeights.reduce((sum, height) => {
   assert(Number.isInteger(depth), 'BoLD bisection height must be a power of 2')
   return sum + depth
 }, 0)
+const boldChallengeLevelCount = boldChallengeBonds.length
+assert(
+  boldChallengeLevelCount === boldBisectionHeights.length,
+  'BoLD must define one bond schedule entry per challenge level',
+)
 const edgeChallengePeriodSeconds = edgeChallengePeriodBlocks * assumedBlockTime
 const worstCaseStateFinalizationDelaySeconds =
   minimumAssertionPeriodSeconds +
@@ -630,7 +635,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
         exitEconomics: {
           value: formatWethAmount(boldAssertionBond),
           secondLine: `Favors defender ${boldDefenderAdvantage.multiplier.toFixed(2)}×`,
-          description: `If state proposers also stop, an exiting user needs a ${formatWethAmount(boldAssertionBond)} assertion bond. BoLD commits to intermediate execution histories, so bisections can be checked against the claimed history and shared across challenges instead of requiring a new bond for every move. A fully contested path performs about ${boldBisectionCount} bisections across three levels before one-step execution; entering the lower levels requires additional refundable bonds of ${formatWethAmount(boldBigStepBond)} and ${formatWethAmount(boldSmallStepBond)}. The worst adjacent bond ratio means an attacker needs ${boldDefenderAdvantage.multiplier.toFixed(2)} times the honest side's capital to exhaust it.`,
+          description: `If state proposers also stop, an exiting user needs a ${formatWethAmount(boldAssertionBond)} assertion bond. BoLD commits to intermediate execution histories, so bisections can be checked against the claimed history and shared across challenges instead of requiring a new bond for every move. A fully contested path performs about ${boldBisectionCount} bisections across ${boldChallengeLevelCount} levels before one-step execution; entering the lower levels requires additional refundable bonds of ${formatWethAmount(boldBigStepBond)} and ${formatWethAmount(boldSmallStepBond)}. The worst adjacent bond ratio means an attacker needs ${boldDefenderAdvantage.multiplier.toFixed(2)} times the honest side's capital to exhaust it.`,
         },
       },
       censorshipResistance:
