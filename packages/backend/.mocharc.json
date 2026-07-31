@@ -1,5 +1,5 @@
 {
-  "spec": ["src/**/*.test.ts"],
+  "spec": ["src/**/*.test.ts", "scripts/**/*.test.ts"],
   "node-option": ["import=tsx"],
   "watchExtensions": "ts",
   "extension": "ts",
