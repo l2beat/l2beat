@@ -10,7 +10,11 @@ import * as fs from 'fs'
 import * as path from 'path'
 import { getDaTrackingConfig } from '../../src/config/features/da'
 import { BlobService } from '../../src/modules/data-availability/services/BlobService'
-import { createBlobSource } from './blobSource'
+import {
+  createIndexerId,
+  INDEXER_NAMES,
+} from '../../src/tools/uif/indexerIdentity'
+import { type BlobCache, createBlobSource } from './blobSource'
 import { previewBlockLayer } from './blockPreview'
 import { createPreviewClients } from './clients'
 import { diffSnapshots, type SnapshotDiff } from './diffSnapshot'
@@ -136,7 +140,7 @@ const cmd = command({
         ethereumFromDbOnly,
       },
     )
-    const blobService = dbUrl ? createBlobService(dbUrl) : undefined
+    const blobCache = dbUrl ? createBlobCache(dbUrl) : undefined
 
     const records: DataAvailabilityRecord[] = []
     const expected: ExpectedCoverage[] = []
@@ -149,7 +153,7 @@ const cmd = command({
 
       if (
         layer.name === 'ethereum' &&
-        !blobService &&
+        !blobCache &&
         window.to - window.from > 6 * UnixTime.HOUR
       ) {
         logger.warn(
@@ -157,7 +161,7 @@ const cmd = command({
         )
       }
 
-      const source = createBlobSource(layer, blobService, logger)
+      const source = createBlobSource(layer, blobCache, logger)
       const result = await previewBlockLayer(
         layer,
         layerConfigs,
@@ -248,7 +252,7 @@ function printSnapshotDiff(logger: Logger): SnapshotDiff {
   return diff
 }
 
-function createBlobService(dbUrl: string): BlobService {
+function createBlobCache(dbUrl: string): BlobCache {
   const db = createDatabase({
     connectionString: dbUrl,
     application_name: 'DA-PREVIEW',
@@ -257,5 +261,14 @@ function createBlobService(dbUrl: string): BlobService {
     max: 5,
     keepAlive: false,
   })
-  return new BlobService(db)
+  const blobService = new BlobService(db)
+  return {
+    get: (daLayer, from, to) => blobService.get(daLayer, from, to),
+    getSyncedHeight: async (daLayer) =>
+      (
+        await db.indexerState.findByIndexerId(
+          createIndexerId(INDEXER_NAMES.BLOB, daLayer),
+        )
+      )?.safeHeight,
+  }
 }

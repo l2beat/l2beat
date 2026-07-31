@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { DataAvailabilityRecord } from '@l2beat/database'
-import type { EigenApiClient } from '@l2beat/shared'
+import { EIGENDA_LAYER_DATA_GAP, type EigenApiClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import type { TimestampDaIndexedConfig } from '../../src/config/Config'
 import {
@@ -55,7 +55,21 @@ async function previewLayerTotal(
     return { records: [], expected: [] }
   }
 
-  let hours = hoursInWindow(clamped)
+  // The metrics API 500s inside this range; production skips it too
+  // (EigenDaLayerIndexer.multiUpdate)
+  let hours = hoursInWindow(clamped).filter(
+    (h) => h < EIGENDA_LAYER_DATA_GAP.from || h >= EIGENDA_LAYER_DATA_GAP.until,
+  )
+  const skippedGapHours = hoursInWindow(clamped).length - hours.length
+  if (skippedGapHours > 0) {
+    logger.warn(
+      `Skipping ${skippedGapHours} hour(s) inside the known EigenDA layer metrics gap`,
+      {
+        gapFrom: UnixTime.toDate(EIGENDA_LAYER_DATA_GAP.from).toISOString(),
+        gapUntil: UnixTime.toDate(EIGENDA_LAYER_DATA_GAP.until).toISOString(),
+      },
+    )
+  }
   if (hours.length > MAX_METRICS_HOURS) {
     logger.warn(
       `EigenDA layer preview capped to the last ${MAX_METRICS_HOURS} hours (one getMetrics call per hour)`,
@@ -132,9 +146,16 @@ async function previewProjects(
     try {
       data = await client.getByProjectData(day)
     } catch (error) {
+      // Only the API's known missing-file response is skippable (the assert
+      // message in EigenApiClient.getByProjectData) - anything else (auth,
+      // rate limit, network, malformed data) must fail the preview instead
+      // of being silently excluded from gap detection
+      const message = error instanceof Error ? error.message : `${error}`
+      if (!message.includes('No EigenDA data for projects')) {
+        throw error
+      }
       logger.warn('No EigenDA per-project data for day', {
         day: UnixTime.toDate(day).toISOString(),
-        error: error instanceof Error ? error.message : `${error}`,
       })
       continue
     }
