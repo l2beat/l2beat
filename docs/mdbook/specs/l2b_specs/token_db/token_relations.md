@@ -429,9 +429,11 @@ re-run.** Removing an edge can split a cluster in two, and re-clustering —
 new cluster grid, new cluster labels, reset viewport — would yank the graph
 out from under a user mid-investigation on a view that takes seconds to
 build. Refreshing the page is how one sees the re-clustered graph. For the
-same reason, executing a plan never refetches the graph query while the page
-is showing it: the query is only marked stale, so fresh data loads on the
-next visit to the page.
+same reason, the graph query is never refetched automatically while the page
+is open — executing a plan only marks it stale without refetching active
+instances, and the page opts out of the window-focus and reconnect refetches
+that would otherwise pick that staleness up — so fresh data loads only on
+the next visit to the page.
 
 The graph header can search catalogued deployed tokens by symbol, chain, or
 address using the already-loaded graph payload. Choosing a result selects the

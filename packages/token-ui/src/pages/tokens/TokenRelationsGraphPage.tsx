@@ -11,6 +11,7 @@ import {
   type RelationGraph,
   type RelationGraphNode,
   type RelationGraphSelection,
+  relationId,
 } from './relationGraphModel'
 import { TokenRelationsGraph } from './TokenRelationsGraph'
 import { TokenRelationsGraphDetailsPanel } from './TokenRelationsGraphDetailsPanel'
@@ -28,7 +29,17 @@ export function TokenRelationsGraphPage() {
     ReadonlySet<string>
   >(() => new Set())
   const graphQuery = useQuery(
-    trpc.deployedTokens.getRelationsGraph.queryOptions(),
+    trpc.deployedTokens.getRelationsGraph.queryOptions(undefined, {
+      // The layout takes seconds and must never re-run under the user, so
+      // this query is never refetched automatically while the page is open.
+      // A plan execution marks it stale without refetching active instances
+      // (see PlanConfirmationDialog); window focus and reconnect must not
+      // pick that staleness up either — only the next mount of this page
+      // fetches fresh data.
+      staleTime: Number.POSITIVE_INFINITY,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+    }),
   )
   const chainsQuery = useQuery(trpc.chains.getAll.queryOptions())
   const graph = graphQuery.data
@@ -77,7 +88,7 @@ export function TokenRelationsGraphPage() {
             <h1 className="font-semibold text-xl">Token Relations Graph</h1>
             <div className="text-muted-foreground text-sm">
               {graph
-                ? graphSummary(graph, deletedRelationIds.size)
+                ? graphSummary(graph, deletedRelationIds)
                 : graphQuery.isError
                   ? 'Graph unavailable'
                   : 'Loading graph data'}
@@ -198,9 +209,17 @@ function AnomalySwitch({
   )
 }
 
-function graphSummary(graph: RelationGraph, deletedRelationCount: number) {
+function graphSummary(
+  graph: RelationGraph,
+  deletedRelationIds: ReadonlySet<string>,
+) {
   const deployed = graph.nodes.filter((node) => node.isDeployed).length
   const missing = graph.nodes.length - deployed
-  const relations = graph.relations.length - deletedRelationCount
+  // Count by filtering rather than subtracting the deleted set's size: a
+  // fresh payload no longer contains the deleted relations, and subtraction
+  // would then remove them a second time.
+  const relations = graph.relations.filter(
+    (relation) => !deletedRelationIds.has(relationId(relation)),
+  ).length
   return `${deployed} deployed tokens, ${missing} missing endpoints, ${relations} relations`
 }
