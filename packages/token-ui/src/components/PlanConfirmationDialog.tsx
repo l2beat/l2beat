@@ -1,6 +1,7 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import type { Command, Plan } from '@l2beat/token-backend'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import type { ReactNode } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { useTRPC } from '~/react-query/trpc'
@@ -23,10 +24,12 @@ export function PlanConfirmationDialog({
   plan,
   setPlan,
   onSuccess,
+  note,
 }: {
   plan: Plan | undefined
   setPlan: (plan: Plan | undefined) => void
   onSuccess?: () => void
+  note?: ReactNode
 }) {
   const trpc = useTRPC()
   const queryClient = useQueryClient()
@@ -56,15 +59,26 @@ export function PlanConfirmationDialog({
     queryClient.invalidateQueries(
       trpc.deployedTokens.getRelations.queryFilter(),
     )
-    queryClient.invalidateQueries(
-      trpc.deployedTokens.getRelationsGraph.queryFilter(),
-    )
+    // The relations graph takes seconds to lay out and must never redraw
+    // under a user who is looking at it (e.g. right after deleting a
+    // relation from the graph page, which handles the disappearing edge
+    // itself). Mark the query stale without refetching active instances;
+    // the next mount of the graph page fetches fresh data.
+    queryClient.invalidateQueries({
+      ...trpc.deployedTokens.getRelationsGraph.queryFilter(),
+      refetchType: 'none',
+    })
     queryClient.invalidateQueries(
       trpc.deployedTokens.getRelationsGraphNodeDetails.queryFilter(),
     )
-    queryClient.invalidateQueries(
-      trpc.deployedTokens.getRelationsGraphRelationDetails.queryFilter(),
-    )
+    // Refetching active instances would hit the backend for a relation that
+    // may have just been deleted (the graph panel is still mounted at this
+    // point) and the endpoint throws for missing relations. Reopening the
+    // panel refetches, so marking stale is enough.
+    queryClient.invalidateQueries({
+      ...trpc.deployedTokens.getRelationsGraphRelationDetails.queryFilter(),
+      refetchType: 'none',
+    })
     queryClient.invalidateQueries(trpc.deployedTokens.checks.queryFilter())
     queryClient.invalidateQueries(
       trpc.deployedTokens.getSuggestionsByCoingeckoId.queryFilter(),
@@ -178,6 +192,7 @@ export function PlanConfirmationDialog({
                   <CommandItem key={index} command={command} />
                 ))}
               </ul>
+              {note !== undefined && <div className="mt-2">{note}</div>}
             </div>
           </DialogDescription>
           <DialogFooter>

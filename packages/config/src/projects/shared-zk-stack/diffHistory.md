@@ -1,3 +1,48 @@
+Generated with discovered.json: 0x1a3e6a1fcefdf5c52851f44f3c54655fda0fb979
+
+# Diff at Thu, 30 Jul 2026 13:10:30 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@66fa629d20cb3eebcd8a566401e5b4f335fafdf2 block: 1785168665
+- current timestamp: 1785168665
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1785168665 (main branch discovery), not current.
+
+```diff
+    contract ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) [shared-zk-stack/ProtocolUpgradeHandler] {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+      values.L2_PROTOCOL_GOVERNOR:
+-        "eth:0x085b8B6407f150D62adB1EF926F7f304600ec714"
++        "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"zksync"}}]
+    }
+```
+
+```diff
+    contract ProtocolTimelockController (zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714) [shared-zk-stack/TimelockController] {
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 0s.
+      directlyReceivedPermissions.0:
++        {"permission":"interact","from":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3","description":"start (queue) upgrades.","role":".L2_PROTOCOL_GOVERNOR"}
+    }
+```
+
+```diff
+    contract ZkProtocolGovernor (zksync:0x76705327e682F2d96943280D99464Ab61219e34f) [shared-zk-stack/ZkGovernor] {
+    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3","description":"start (queue) upgrades.","role":".L2_PROTOCOL_GOVERNOR","via":[{"address":"zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714"}]}
+    }
+```
+
 Generated with discovered.json: 0xf6fd62754e3cd5076871339df05d10ba4cf78af0
 
 # Diff at Mon, 27 Jul 2026 16:12:23 GMT:

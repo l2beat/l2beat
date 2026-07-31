@@ -43,13 +43,17 @@ describe(TokenRelationIngestion.name, () => {
     expect(getAfterSerialId).toHaveBeenCalledWith('10', expect.a(Number))
     expect(insert).toHaveBeenCalledTimes(1)
     const inserted = insert.calls[0]?.args[0] as TokenRelationRecord
+    // Endpoints are stored in lexicographic order — base sorts before ethereum
+    // — so the observed transfer direction is not what orients the row. The
+    // locked endpoint (ethereum, whose token was not burned) is named instead.
     expect(inserted).toHaveSubset({
-      tokenFromChain: 'ethereum',
-      tokenFromAddress: token('0xaaa'),
-      tokenToChain: 'base',
-      tokenToAddress: token('0xbbb'),
+      tokenAChain: 'base',
+      tokenAAddress: token('0xbbb'),
+      tokenBChain: 'ethereum',
+      tokenBAddress: token('0xaaa'),
       plugin: 'test',
       bridgeType: 'lockAndMint',
+      lockedToken: 'B',
     })
     expect(evidenceTransferId(inserted)).toEqual('lock-mint')
     expect(historyInsert).toHaveBeenCalledTimes(1)
@@ -118,6 +122,172 @@ describe(TokenRelationIngestion.name, () => {
     await ingestion.runOnce()
 
     expect(insert).toHaveBeenCalledTimes(1)
+  })
+
+  it('records one relation for both observed directions of a lock-and-mint route', async () => {
+    // The deposit locks on ethereum and mints on base; the withdrawal burns on
+    // base and unlocks on ethereum. Same pair, same locked endpoint, one row.
+    const insert = mockFn().resolvesTo(undefined)
+
+    const ingestion = createIngestion({
+      getAfterSerialId: mockFn()
+        .resolvesToOnce({
+          latestSerialId: '3',
+          transfers: [
+            transfer({
+              transferId: 'deposit',
+              srcWasBurned: false,
+              dstWasMinted: true,
+            }),
+            transfer({
+              transferId: 'withdrawal',
+              srcChain: 'base',
+              srcTokenAddress: token('0xbbb'),
+              srcWasBurned: true,
+              dstChain: 'ethereum',
+              dstTokenAddress: token('0xaaa'),
+              dstWasMinted: false,
+            }),
+          ],
+        })
+        .resolvesToOnce(emptyBatch()),
+      insert,
+    })
+
+    await ingestion.runOnce()
+
+    expect(insert).toHaveBeenCalledTimes(1)
+    expect(insert.calls[0]?.args[0]).toEqual(
+      relationRecord({
+        lockedToken: 'B',
+        transfer: expect.a(Object),
+      }),
+    )
+  })
+
+  it('leaves the locked token unidentified when the flags do not identify one', async () => {
+    const insert = mockFn().resolvesTo(undefined)
+
+    const ingestion = createIngestion({
+      getAfterSerialId: mockFn()
+        .resolvesToOnce({
+          latestSerialId: '3',
+          transfers: [
+            transfer({
+              transferId: 'contradicting-flags',
+              bridgeType: 'lockAndMint',
+              srcWasBurned: false,
+              dstWasMinted: false,
+            }),
+          ],
+        })
+        .resolvesToOnce(emptyBatch()),
+      insert,
+    })
+
+    await ingestion.runOnce()
+
+    expect(insert.calls[0]?.args[0]).toHaveSubset({
+      bridgeType: 'lockAndMint',
+      lockedToken: null,
+    })
+  })
+
+  it('never identifies a locked token for a burn-and-mint pair', async () => {
+    // Both sides burn and mint, so the pair is symmetric — nothing is locked.
+    const insert = mockFn().resolvesTo(undefined)
+
+    const ingestion = createIngestion({
+      getAfterSerialId: mockFn()
+        .resolvesToOnce({
+          latestSerialId: '3',
+          transfers: [
+            transfer({
+              transferId: 'burn-and-mint',
+              bridgeType: 'burnAndMint',
+              srcWasBurned: true,
+              dstWasMinted: true,
+            }),
+          ],
+        })
+        .resolvesToOnce(emptyBatch()),
+      insert,
+    })
+
+    await ingestion.runOnce()
+
+    expect(insert.calls[0]?.args[0]).toHaveSubset({
+      bridgeType: 'burnAndMint',
+      lockedToken: null,
+    })
+  })
+
+  it('resolves the locked token of a relation that was observed without one', async () => {
+    const update = mockFn().resolvesTo(1)
+    const insert = mockFn().resolvesTo(undefined)
+
+    const ingestion = createIngestion({
+      getAfterSerialId: mockFn()
+        .resolvesToOnce({
+          latestSerialId: '3',
+          transfers: [transfer({ transferId: 'now-with-flags' })],
+        })
+        .resolvesToOnce(emptyBatch()),
+      existingRelations: [relationRecord({ lockedToken: null })],
+      insert,
+      update,
+    })
+
+    await ingestion.runOnce()
+
+    expect(insert).toHaveBeenCalledTimes(0)
+    expect(update).toHaveBeenCalledTimes(1)
+    expect(update.calls[0]?.args[1]).toEqual({ lockedToken: 'B' })
+  })
+
+  it('does not overwrite a locked token that is already identified', async () => {
+    const update = mockFn().resolvesTo(1)
+
+    const ingestion = createIngestion({
+      getAfterSerialId: mockFn()
+        .resolvesToOnce({
+          latestSerialId: '3',
+          transfers: [transfer({ transferId: 'already-known' })],
+        })
+        .resolvesToOnce(emptyBatch()),
+      existingRelations: [relationRecord({ lockedToken: 'B' })],
+      update,
+    })
+
+    await ingestion.runOnce()
+
+    expect(update).toHaveBeenCalledTimes(0)
+  })
+
+  it('ignores transfers whose two endpoints are the same token', async () => {
+    // A token is trivially the same asset as itself, so there is nothing to
+    // record — and the pair could not be stored in a canonical order anyway.
+    const insert = mockFn().resolvesTo(undefined)
+
+    const ingestion = createIngestion({
+      getAfterSerialId: mockFn()
+        .resolvesToOnce({
+          latestSerialId: '3',
+          transfers: [
+            transfer({
+              transferId: 'same-token',
+              dstChain: 'ethereum',
+              dstTokenAddress: token('0xaaa'),
+            }),
+          ],
+        })
+        .resolvesToOnce(emptyBatch()),
+      insert,
+    })
+
+    await ingestion.runOnce()
+
+    expect(insert).toHaveBeenCalledTimes(0)
   })
 
   it('infers the bridge type from burn and mint flags when it is not stored', async () => {
@@ -236,25 +406,15 @@ describe(TokenRelationIngestion.name, () => {
 
   it('skips relations that already exist', async () => {
     const insert = mockFn().resolvesTo(undefined)
-    const existing = transfer({ transferId: 'existing' })
 
     const ingestion = createIngestion({
       getAfterSerialId: mockFn()
         .resolvesToOnce({
           latestSerialId: '6',
-          transfers: [existing],
+          transfers: [transfer({ transferId: 'existing' })],
         })
         .resolvesToOnce(emptyBatch()),
-      existingRelations: [
-        relationRecord({
-          tokenFromChain: existing.srcChain,
-          tokenFromAddress: existing.srcTokenAddress ?? '',
-          tokenToChain: existing.dstChain,
-          tokenToAddress: existing.dstTokenAddress ?? '',
-          plugin: existing.plugin,
-          bridgeType: 'lockAndMint',
-        }),
-      ],
+      existingRelations: [relationRecord({ lockedToken: 'B' })],
       insert,
     })
 
@@ -363,7 +523,7 @@ describe(TokenRelationIngestion.name, () => {
     await ingestion.runOnce()
 
     expect(insert.calls[0]?.args[0]).toHaveSubset({
-      tokenFromAddress: ethereumAddress.toLowerCase(),
+      tokenBAddress: ethereumAddress.toLowerCase(),
     })
   })
 
@@ -386,6 +546,7 @@ function createIngestion(opts: {
   cursor?: string
   existingRelations?: TokenRelationRecord[]
   insert?: ReturnType<typeof mockFn>
+  update?: ReturnType<typeof mockFn>
   historyInsert?: ReturnType<typeof mockFn>
   set?: ReturnType<typeof mockFn>
   transaction?: ReturnType<typeof mockFn>
@@ -408,6 +569,7 @@ function createIngestion(opts: {
     tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
       getByPrimaryKeys: mockFn().resolvesTo(opts.existingRelations ?? []),
       insert: opts.insert ?? mockFn().resolvesTo(undefined),
+      updateByPrimaryKey: opts.update ?? mockFn().resolvesTo(1),
     }),
     tokenDbHistory: mockObject<TokenDatabase['tokenDbHistory']>({
       insert: opts.historyInsert ?? mockFn().resolvesTo(undefined),
@@ -433,14 +595,15 @@ function relationRecord(
   overrides: Partial<TokenRelationRecord>,
 ): TokenRelationRecord {
   return {
-    tokenFromChain: 'ethereum',
-    tokenFromAddress: token('0xaaa'),
-    tokenToChain: 'base',
-    tokenToAddress: token('0xbbb'),
+    tokenAChain: 'base',
+    tokenAAddress: token('0xbbb'),
+    tokenBChain: 'ethereum',
+    tokenBAddress: token('0xaaa'),
     plugin: 'test',
     bridgeType: 'lockAndMint',
     transfer: {},
     ...overrides,
+    lockedToken: overrides.lockedToken ?? null,
   }
 }
 

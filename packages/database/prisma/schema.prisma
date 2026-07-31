@@ -558,20 +558,28 @@ model TokenDbHistory {
 // observation of an on-chain transfer between two token addresses and must be
 // recordable before (or without) either endpoint being catalogued as a
 // deployed token. The observed burn/mint flags are deliberately not columns —
-// they are nullable observations and live in the `transfer` evidence JSON.
+// they are nullable per-transfer observations and live in the `transfer`
+// evidence JSON.
+//
+// A relation describes an unordered pair of tokens, so the endpoints are named
+// `tokenA`/`tokenB` rather than from/to: there is no direction between them.
+// They are stored in a fixed lexicographic order — A before B — so one pair
+// cannot occupy two rows, and `lockedToken` ('A' or 'B') names the endpoint
+// holding the locked token of a `lockAndMint` pair.
 // See docs/mdbook/specs/l2b_specs/token_db/token_relations.md.
 model TokenRelation {
-  tokenFromChain   String @db.VarChar(32)
-  tokenFromAddress String @db.VarChar(255)
-  tokenToChain     String @db.VarChar(32)
-  tokenToAddress   String @db.VarChar(255)
-  plugin           String @db.VarChar(64)
-  bridgeType       String @db.VarChar(32)
-  transfer         Json
+  tokenAChain   String  @db.VarChar(32)
+  tokenAAddress String  @db.VarChar(255)
+  tokenBChain   String  @db.VarChar(32)
+  tokenBAddress String  @db.VarChar(255)
+  plugin        String  @db.VarChar(64)
+  bridgeType    String  @db.VarChar(32)
+  lockedToken   String? @db.Char(1)
+  transfer      Json
 
-  @@id([tokenFromChain, tokenFromAddress, tokenToChain, tokenToAddress, plugin, bridgeType])
-  @@index([tokenFromChain, tokenFromAddress])
-  @@index([tokenToChain, tokenToAddress])
+  @@id([tokenAChain, tokenAAddress, tokenBChain, tokenBAddress, plugin, bridgeType])
+  @@index([tokenAChain, tokenAAddress])
+  @@index([tokenBChain, tokenBAddress])
 }
 
 model InteropRecentPrices {

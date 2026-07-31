@@ -6,11 +6,13 @@ import { getDaProjectEconomicSecurity } from '~/server/features/data-availabilit
 import { getHomeEthereumCharts } from '~/server/features/home/getHomeEthereumCharts'
 import { getHomeScalingCharts } from '~/server/features/home/getHomeScalingCharts'
 import { getHomeTopChainsTvsData } from '~/server/features/home/getHomeTopChainsTvsData'
+import { getPrivacySummaryEntries } from '~/server/features/privacy/getPrivacySummaryEntries'
 import { getRecentChangesOverview } from '~/server/features/projects/recent-changes/getRecentChangesOverview'
 import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
 import { TOP_PROTOCOLS_LIMIT } from '~/server/features/scaling/interop/utils/pickTopProtocolEntries'
 import { getOngoingAnomaliesOverview } from '~/server/features/scaling/liveness/getOngoingAnomaliesOverview'
 import { getScalingSummaryData } from '~/server/features/scaling/summary/getScalingSummaryEntries'
+import { getZkCatalogEntries } from '~/server/features/zk-catalog/getZkCatalogEntries'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -29,6 +31,8 @@ import { getHomeProjectCounts } from './getHomeProjectCounts'
 import { HOME_CHART_RANGE } from './homeChartRanges'
 
 const TOP_CHAINS_COUNT = 5
+const TOP_PRIVACY_PROTOCOLS_COUNT = 5
+const TOP_ZK_PROVERS_COUNT = 5
 const RECENT_PROJECTS_COUNT = 5
 
 export async function getHomeData(
@@ -108,6 +112,8 @@ async function getCachedData(manifest: Manifest) {
     scalingCharts,
     ethereumCharts,
     ethereumEconomicSecurity,
+    privacyEntries,
+    zkCatalogEntries,
   ] = await Promise.all([
     getScalingSummaryData(),
     getRecentProjectsForHome(manifest),
@@ -118,6 +124,8 @@ async function getCachedData(manifest: Manifest) {
     getHomeScalingCharts(chartRange),
     getHomeEthereumCharts(chartRange),
     getEthereumEconomicSecurity(),
+    getPrivacyEntriesForHome(),
+    getZkCatalogEntries(),
     defaultSelectedFlowChains.length > 0
       ? helpers.queryClient.prefetchQuery(
           helpers.trpc.interop.dashboard.queryOptions({
@@ -168,6 +176,8 @@ async function getCachedData(manifest: Manifest) {
     projectCounts,
     topChains,
     topChainsTvsData,
+    topPrivacyProtocols: privacyEntries.slice(0, TOP_PRIVACY_PROTOCOLS_COUNT),
+    topZkProvers: zkCatalogEntries.slice(0, TOP_ZK_PROVERS_COUNT),
     scalingCharts,
     ethereumCharts,
     ethereumEconomicSecurity,
@@ -184,6 +194,21 @@ async function getCachedData(manifest: Manifest) {
     ongoingAnomalies,
     whatsNewItems: getHomeWhatsNewItems(),
   }
+}
+
+async function getPrivacyEntriesForHome() {
+  const projects = await ps.getProjects({
+    where: ['privacyInfo'],
+    select: ['display', 'privacyInfo', 'statuses'],
+    optional: [
+      'tvsConfig',
+      'contracts',
+      'permissions',
+      'discoveryInfo',
+      'zkCatalogInfo',
+    ],
+  })
+  return getPrivacySummaryEntries(projects)
 }
 
 async function getEthereumEconomicSecurity(): Promise<number | undefined> {

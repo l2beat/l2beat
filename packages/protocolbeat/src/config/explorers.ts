@@ -10,7 +10,7 @@ export const EXPLORER_URLS: Record<string, string> = {
   linea: 'https://lineascan.build/address',
   base: 'https://basescan.org/address',
   zkevm: 'https://zkevm.polygonscan.com/address',
-  gno: 'https://gnosisscan.io/address',
+  gno: 'https://gnosis.blockscout.com/address',
   zksync: 'https://explorer.zksync.io/address',
   sep: 'https://sepolia.etherscan.io/address',
   scr: 'https://scrollscan.com/address',

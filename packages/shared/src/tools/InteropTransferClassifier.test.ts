@@ -139,6 +139,43 @@ describe(InteropTransferClassifier.name, () => {
     expect(result.nonMinting).toEqual([])
     expect(result.unknown.map((x) => x.id)).toEqual(['one-sided-unknown'])
   })
+
+  describe(InteropTransferClassifier.inferLockedTransferSide.name, () => {
+    const lockedSide = (
+      srcWasBurned: boolean | undefined,
+      dstWasMinted: boolean | undefined,
+    ) =>
+      InteropTransferClassifier.inferLockedTransferSide({
+        srcWasBurned,
+        dstWasMinted,
+      })
+
+    it('reads the locked side from either flag alone', () => {
+      // One-sided transfers only ever observe one of the two flags, and one is
+      // enough: the roles of a lock-and-mint pair are complementary.
+      expect(lockedSide(false, undefined)).toEqual('src')
+      expect(lockedSide(undefined, true)).toEqual('src')
+      expect(lockedSide(true, undefined)).toEqual('dst')
+      expect(lockedSide(undefined, false)).toEqual('dst')
+    })
+
+    it('reads the locked side from both flags', () => {
+      expect(lockedSide(false, true)).toEqual('src')
+      expect(lockedSide(true, false)).toEqual('dst')
+    })
+
+    it('identifies no side when the flags were not observed', () => {
+      expect(lockedSide(undefined, undefined)).toEqual(undefined)
+    })
+
+    it('identifies no side when the flags contradict lock-and-mint', () => {
+      // Both reachable when a plugin declares `lockAndMint` itself: (false,
+      // false) is really non-minting and (true, true) is really burn-and-mint,
+      // so neither identifies a locked endpoint.
+      expect(lockedSide(false, false)).toEqual(undefined)
+      expect(lockedSide(true, true)).toEqual(undefined)
+    })
+  })
 })
 
 function transfer(override: Partial<TestTransfer>): TestTransfer {

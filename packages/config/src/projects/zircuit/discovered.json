@@ -1,6 +1,6 @@
 {
   "name": "zircuit",
-  "timestamp": 1780398934,
+  "timestamp": 1785409633,
   "configHash": "0x3a1deb6ab2bdb63f37ad7bfab61ce8f7dc4c0bff80e75ff1b5bab9161bc3911f",
   "entries": [
     {
@@ -102,7 +102,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 312784,
-          "prevBlockNum": 25227778
+          "prevBlockNum": 25634716
         },
         "paused": false,
         "resolverRegistry": "eth:0x6c89104690452AD7e209f0ab72287C2561d5cF0E",
@@ -150,7 +150,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292641114",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292641238",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -215,14 +215,14 @@
           "eth:0x63cbB9fA540F6249AE4A3576f48BF07609b3a355",
           "eth:0x62C688FCa995e07632D64A9586896BB7EcD68567",
           "eth:0x0D5edFC67Ae336eddC91031FD6402EeAD6350CAb",
-          "eth:0x38809210f69ed6204E276d2Be6b15cd530698679"
+          "eth:0xf5B2C0bfA18561d5374EAcc5FFfA3E39B049c1ae"
         ],
         "$threshold": 2,
         "domainSeparator": "0x2f5a11412426a5c8d31f741f163ead381cc22d989644b0397df78d087004170c",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 9,
+        "nonce": 10,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -409,11 +409,6 @@
         "eth:0x25DF2d6DDCa09C0f9Fce19373896be075F4f7d98": "L1StandardBridge"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
-    },
-    {
-      "address": "eth:0x38809210f69ed6204E276d2Be6b15cd530698679",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "SP1Verifier",
@@ -767,12 +762,12 @@
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
         "l2ChainId": 48900,
-        "latestBlockNumber": 30230030,
-        "latestOutputIndex": 39806,
+        "latestBlockNumber": 32734898,
+        "latestOutputIndex": 41193,
         "latestOutputProposedV2": 32836,
-        "latestOutputProposedV3": 39806,
-        "nextBlockNumber": 30230031,
-        "nextOutputIndex": 39807,
+        "latestOutputProposedV3": 41193,
+        "nextBlockNumber": 32734899,
+        "nextOutputIndex": 41194,
         "owner": "eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "proposer": "eth:0x691b3588eB87E6163260650D3BB465883EB6A575",
@@ -1170,21 +1165,21 @@
           ]
         ],
         "$upgradeCount": 1,
-        "basefee": 240108842,
+        "basefee": 129016686,
         "baseFeeScalar": 1368,
         "batcherHash": "0x000000000000000000000000af1e4f6a47af647f87c0ec814d8032c4a4bff145",
-        "blobBaseFee": 14911154,
+        "blobBaseFee": 6234620,
         "blobBaseFeeScalar": 810949,
         "depositExclusions": "0x",
         "DEPOSITOR_ACCOUNT": "zircuit:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
-        "hash": "0xa419eb10798d9557ea74f7a077cdb420582fb447a01de8f1ad36231ca05fa539",
+        "hash": "0x1cfd2189d2e946c9d3da809f0e22666602b7d2b84dcf08793f293371c9ad5f6a",
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 25229332,
+        "number": 25645265,
         "operatorFeeConstant": 360000000000,
         "operatorFeeScalar": 4200000000,
-        "sequenceNumber": 3,
-        "timestamp": 1780398899,
+        "sequenceNumber": 5,
+        "timestamp": 1785409595,
         "version": "1.3.0"
       },
       "implementationNames": {
@@ -2060,6 +2055,6 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 25229334, "zircuit": 30231359 },
-  "permissionsConfigHash": "0x18f9f98ee1aca35843908712e4379633a55a939e488ceed6adeddfcdf10d70b0"
+  "usedBlockNumbers": { "ethereum": 25645268, "zircuit": 32736709 },
+  "permissionsConfigHash": "0x22ba8ec88c641edebef75ef09a6827e4ea04e763f6fca699110f3cb225fe9e83"
 }

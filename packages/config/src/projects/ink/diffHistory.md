@@ -1,3 +1,38 @@
+Generated with discovered.json: 0x06898bb4ee003fc2a23469a1b0933d268ce6bb54
+
+# Diff at Thu, 30 Jul 2026 11:05:46 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@fb0b50e4a7f7900d17e186f908b2b3ca3e977527 block: 1784561683
+- current timestamp: 1785409481
+
+## Description
+
+SystemConfig batch submitter and unsafe block signer rotated. L1Block now mirrors the new batcher hash on L2.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.batcherHash:
+-        "eth:0x500d7Ea63CF2E501dadaA5feeC1FC19FE2Aa72Ac"
++        "eth:0x6db6161fC5662450E801398Bad62dD9921216B98"
+      values.unsafeBlockSigner:
+-        "eth:0x7D056B99AA2021864c42E25B4F8cE3BdEAc9463C"
++        "eth:0x7b322282DF45E537E5de76D60E1432Db3cF3F8E1"
+    }
+```
+
+```diff
+    contract L1Block (ink:0x4200000000000000000000000000000000000015) [opstack/Layer2/L1Block] {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      values.batcherHash:
+-        "0x000000000000000000000000500d7ea63cf2e501dadaa5feec1fc19fe2aa72ac"
++        "0x0000000000000000000000006db6161fc5662450e801398bad62dd9921216b98"
+    }
+```
+
 Generated with discovered.json: 0xdb24b45c738a7360698426b1782c404fdd3493b4
 
 # Diff at Mon, 20 Jul 2026 15:36:32 GMT:

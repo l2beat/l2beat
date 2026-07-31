@@ -34,7 +34,7 @@ export const EXPLORER_URLS: Record<string, string> = {
   taiko: 'https://taikoscan.io',
   facet: 'https://explorer.facet.org',
   gateway: 'https://gateway.explorer.zksync.io',
-  gnosis: 'https://gnosisscan.io',
+  gnosis: 'https://gnosis.blockscout.com',
   zircuit: 'https://explorer.zircuit.com',
   zama: 'https://explorer.mainnet.zama.org',
   metis: 'https://andromeda-explorer.metis.io',

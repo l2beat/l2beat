@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x0700c169cb352eae0d4617aff35db12cc105af4d
+
+# Diff at Thu, 30 Jul 2026 11:09:17 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@fb0b50e4a7f7900d17e186f908b2b3ca3e977527 block: 1780398934
+- current timestamp: 1785409633
+
+## Description
+
+Zircuit Multisig 2 rotated one signer (`0x3880...8679` -> `0xf5B2...c1ae`); threshold remains 2/5.
+
+## Watched changes
+
+```diff
+    contract Zircuit Multisig 2 (eth:0x2c0B27F7C8F083B539557a0bA787041BF22DB276) [GnosisSafe] {
+    +++ description: None
+      values.$members.4:
+-        "eth:0x38809210f69ed6204E276d2Be6b15cd530698679"
++        "eth:0xf5B2C0bfA18561d5374EAcc5FFfA3E39B049c1ae"
+    }
+```
+
 Generated with discovered.json: 0x81f4d916a419507347b3bf5b5e6f13b1191dae44
 
 # Diff at Tue, 09 Jun 2026 12:43:41 GMT:

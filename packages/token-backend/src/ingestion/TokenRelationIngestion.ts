@@ -1,10 +1,12 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type {
-  Database,
-  InteropTransferRecord,
-  TokenDatabase,
-  TokenRelationRecord,
-  TokenRelationRoute,
+import {
+  type Database,
+  type InteropTransferRecord,
+  normalizeTokenRelation,
+  type TokenDatabase,
+  type TokenRelationLockedToken,
+  type TokenRelationRecord,
+  type TokenRelationRoute,
 } from '@l2beat/database'
 import { InteropTransferClassifier } from '../../../shared/build'
 import {
@@ -46,6 +48,7 @@ export class TokenRelationIngestion {
     const startedAt = Date.now()
     let scanned = 0
     let inserted = 0
+    let resolved = 0
 
     const setting = await this.tokenDb.tokenDbSettings.get(
       TOKEN_RELATIONS_LAST_SERIAL_ID_KEY,
@@ -61,7 +64,9 @@ export class TokenRelationIngestion {
         break
       }
 
-      inserted += await this.ingestBatch(batch.transfers)
+      const outcome = await this.ingestBatch(batch.transfers)
+      inserted += outcome.inserted
+      resolved += outcome.resolved
       scanned += batch.transfers.length
       lastSerialId = batch.latestSerialId
       await this.tokenDb.tokenDbSettings.set({
@@ -78,6 +83,7 @@ export class TokenRelationIngestion {
     this.logger.info('Token relation ingestion finished', {
       scannedTransfers: scanned,
       insertedRelations: inserted,
+      resolvedLockedTokens: resolved,
       lastSerialId,
       durationMs: Date.now() - startedAt,
     })
@@ -85,7 +91,7 @@ export class TokenRelationIngestion {
 
   private async ingestBatch(
     transfers: InteropTransferRecord[],
-  ): Promise<number> {
+  ): Promise<{ inserted: number; resolved: number }> {
     const candidates = new Map<
       string,
       { route: TokenRelationRoute; transfer: InteropTransferRecord }
@@ -97,24 +103,35 @@ export class TokenRelationIngestion {
       }
     }
     if (candidates.size === 0) {
-      return 0
+      return { inserted: 0, resolved: 0 }
     }
 
     const existing = await this.tokenDb.tokenRelation.getByPrimaryKeys(
       Array.from(candidates.values(), (candidate) => candidate.route),
     )
+    // An existing relation whose locked endpoint was never identified is
+    // upgraded as soon as an observation identifies one — possible only because
+    // `lockedToken` sits outside the primary key. A known locked endpoint is
+    // never overwritten.
+    const resolutions: TokenRelationRecord[] = []
     for (const relation of existing) {
-      candidates.delete(relationKey(relation))
+      const key = relationKey(relation)
+      const observed = candidates.get(key)?.route.lockedToken
+      candidates.delete(key)
+      if (relation.lockedToken === null && observed != null) {
+        resolutions.push({ ...relation, lockedToken: observed })
+      }
     }
-    if (candidates.size === 0) {
-      return 0
+    if (candidates.size === 0 && resolutions.length === 0) {
+      return { inserted: 0, resolved: 0 }
     }
 
     // The transfer evidence JSON is built only here, after both dedup checks
     // — in steady state almost every candidate already exists. The observed
     // burn/mint flags are deliberately not copied onto the relation: they are
-    // nullable observations (one-sided transfers often miss one) and live in
-    // the `transfer` evidence JSON exactly as observed.
+    // nullable per-transfer observations (one-sided transfers often miss one)
+    // and live in the `transfer` evidence JSON exactly as observed. What the
+    // relation keeps is the pair-level fact they imply: `lockedToken`.
     const newRelations = Array.from(
       candidates.values(),
       ({ route, transfer }): TokenRelationRecord => ({
@@ -132,11 +149,34 @@ export class TokenRelationIngestion {
           { kind: 'ingestion', log: formatRelationLog(relation) },
         )
       }
+      for (const relation of resolutions) {
+        await commitTokenChanges(
+          this.tokenDb,
+          [
+            {
+              type: 'UpdateTokenRelationCommand',
+              pk: relation,
+              existing: { ...relation, lockedToken: null },
+              update: { lockedToken: relation.lockedToken },
+            },
+          ],
+          { kind: 'ingestion', log: formatResolutionLog(relation) },
+        )
+      }
     })
-    return newRelations.length
+    return { inserted: newRelations.length, resolved: resolutions.length }
   }
 }
 
+/**
+ * The relation a transfer is evidence of, or `undefined` when the transfer is
+ * not evidence of one.
+ *
+ * This is the single place where transfer semantics are turned into relation
+ * semantics: the observed direction stays in the evidence JSON, while the pair
+ * is stored in a fixed order with `lockedToken` naming the endpoint that holds
+ * the locked token. Nothing downstream reads the evidence to recover roles.
+ */
 function tokenRouteFromTransfer(
   transfer: InteropTransferRecord,
 ): TokenRelationRoute | undefined {
@@ -157,23 +197,48 @@ function tokenRouteFromTransfer(
   if (!source || !destination) {
     return undefined
   }
+  // A token is trivially the same asset as itself, so a pair of identical
+  // endpoints (same-chain transfers of one token) carries no information.
+  if (
+    source.chain === destination.chain &&
+    source.address === destination.address
+  ) {
+    return undefined
+  }
 
-  return {
-    tokenFromChain: source.chain,
-    tokenFromAddress: source.address,
-    tokenToChain: destination.chain,
-    tokenToAddress: destination.address,
+  return normalizeTokenRelation({
+    tokenAChain: source.chain,
+    tokenAAddress: source.address,
+    tokenBChain: destination.chain,
+    tokenBAddress: destination.address,
     plugin: transfer.plugin,
     bridgeType,
-  }
+    lockedToken: lockedTokenFromTransfer(transfer, bridgeType),
+  })
+}
+
+function lockedTokenFromTransfer(
+  transfer: InteropTransferRecord,
+  bridgeType: 'lockAndMint' | 'burnAndMint',
+): TokenRelationLockedToken {
+  // A burn-and-mint pair is symmetric: both sides burn and mint, so no endpoint
+  // is the locked one.
+  if (bridgeType === 'burnAndMint') return null
+
+  const lockedSide = InteropTransferClassifier.inferLockedTransferSide(transfer)
+  if (lockedSide === undefined) return null
+  // The caller puts the transfer's source in slot A and its destination in slot
+  // B, so the sides map straight onto the slots. `normalizeTokenRelation` then
+  // moves this value together with the endpoints if the pair needs reordering.
+  return lockedSide === 'src' ? 'A' : 'B'
 }
 
 function relationKey(relation: TokenRelationRoute): string {
   return [
-    relation.tokenFromChain,
-    relation.tokenFromAddress.toLowerCase(),
-    relation.tokenToChain,
-    relation.tokenToAddress.toLowerCase(),
+    relation.tokenAChain,
+    relation.tokenAAddress,
+    relation.tokenBChain,
+    relation.tokenBAddress,
     relation.plugin,
     relation.bridgeType,
   ].join(':')
@@ -181,10 +246,25 @@ function relationKey(relation: TokenRelationRoute): string {
 
 function formatRelationLog(relation: TokenRelationRoute): string {
   return (
-    'Observed a non-swapping interop transfer ' +
-    `${relation.tokenFromChain}:${relation.tokenFromAddress} -> ` +
-    `${relation.tokenToChain}:${relation.tokenToAddress} ` +
-    `via ${relation.plugin} (${relation.bridgeType}) ` +
+    'Observed a non-swapping interop transfer between ' +
+    `${formatPair(relation)} ` +
+    `via ${relation.plugin} (${relation.bridgeType}, ` +
+    `locked token: ${relation.lockedToken ?? 'not identified'}) ` +
     'with no matching token relation.'
+  )
+}
+
+function formatResolutionLog(relation: TokenRelationRoute): string {
+  return (
+    'Observed which endpoint holds the locked token of the relation between ' +
+    `${formatPair(relation)} via ${relation.plugin} ` +
+    `(${relation.bridgeType}): ${relation.lockedToken}.`
+  )
+}
+
+function formatPair(relation: TokenRelationRoute): string {
+  return (
+    `${relation.tokenAChain}:${relation.tokenAAddress} and ` +
+    `${relation.tokenBChain}:${relation.tokenBAddress}`
   )
 }

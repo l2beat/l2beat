@@ -321,26 +321,27 @@ function deployedRecord(
 }
 
 function tokenRelationRecord(
-  tokenFrom: Pick<DeployedTokenRecord, 'chain' | 'address'>,
-  tokenTo: Pick<DeployedTokenRecord, 'chain' | 'address'>,
+  tokenA: Pick<DeployedTokenRecord, 'chain' | 'address'>,
+  tokenB: Pick<DeployedTokenRecord, 'chain' | 'address'>,
 ): TokenRelationRecord {
   return {
-    tokenFromChain: tokenFrom.chain,
-    tokenFromAddress: tokenFrom.address,
-    tokenToChain: tokenTo.chain,
-    tokenToAddress: tokenTo.address,
+    tokenAChain: tokenA.chain,
+    tokenAAddress: tokenA.address,
+    tokenBChain: tokenB.chain,
+    tokenBAddress: tokenB.address,
     plugin: 'superbridge',
     bridgeType: 'burnAndMint',
+    lockedToken: null,
     transfer: { transferId: 'transfer-1' },
   }
 }
 
 function relationPk(relation: TokenRelationRecord) {
   return {
-    tokenFromChain: relation.tokenFromChain,
-    tokenFromAddress: relation.tokenFromAddress,
-    tokenToChain: relation.tokenToChain,
-    tokenToAddress: relation.tokenToAddress,
+    tokenAChain: relation.tokenAChain,
+    tokenAAddress: relation.tokenAAddress,
+    tokenBChain: relation.tokenBChain,
+    tokenBAddress: relation.tokenBAddress,
     plugin: relation.plugin,
     bridgeType: relation.bridgeType,
   }
