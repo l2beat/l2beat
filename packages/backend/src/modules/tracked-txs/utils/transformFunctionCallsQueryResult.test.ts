@@ -1,3 +1,4 @@
+import { Logger } from '@l2beat/backend-tools'
 import {
   createTrackedTxId,
   type TrackedTxConfigEntry,
@@ -12,7 +13,8 @@ import {
   type TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
+import { utils } from 'ethers'
 import { readFileSync } from 'fs'
 import {
   agglayerSharedBridgeChainId,
@@ -57,6 +59,116 @@ const paradexProgramHash =
   '3258367057337572248818716706664617507069572185152472699066582725377748079373'
 
 describe(transformFunctionCallsQueryResult.name, () => {
+  it('groups liveness without affecting costs from the same call', () => {
+    const signature = 'function submit((uint256 start,uint256 end))' as const
+    const iface = new utils.Interface([signature])
+    const selector = iface.getSighash('submit')
+    const address = EthereumAddress.random()
+    const firstInput = iface.encodeFunctionData('submit', [[123, 456]])
+    const secondInput = iface.encodeFunctionData('submit', [[123, 789]])
+    const livenessId = createTrackedTxId.random()
+    const costsId = createTrackedTxId.random()
+    const warn = mockFn().returns(undefined)
+    const logger = mockObject<Logger>({ warn })
+    const common = {
+      projectId: ProjectId('project'),
+      subtype: 'stateUpdates' as const,
+      sinceTimestamp: SINCE_TIMESTAMP,
+      params: {
+        formula: 'functionCall' as const,
+        address,
+        selector,
+        signature,
+      },
+    }
+    const configurations: Configuration<
+      TrackedTxConfigEntry & { params: TrackedTxFunctionCallConfig }
+    >[] = [
+      {
+        id: livenessId,
+        minHeight: 0,
+        maxHeight: null,
+        properties: {
+          ...common,
+          id: livenessId,
+          type: 'liveness',
+          groupBy: { type: 'functionCallParameter', path: [0, 0] },
+        },
+      },
+      {
+        id: costsId,
+        minHeight: 0,
+        maxHeight: null,
+        properties: {
+          ...common,
+          id: costsId,
+          type: 'l2costs',
+        },
+      },
+    ]
+
+    const result = transformFunctionCallsQueryResult(
+      configurations,
+      [],
+      [],
+      [
+        {
+          hash: txHashes[0],
+          block_number: block,
+          block_time: timestamp,
+          input: firstInput,
+          to: address,
+          gas_price: 10n,
+          gas_used: 100,
+          data_length: 100,
+          non_zero_bytes: 100,
+          blob_versioned_hashes: null,
+        },
+        {
+          hash: txHashes[1],
+          block_number: block + 1,
+          block_time: timestamp + 1,
+          input: secondInput,
+          to: address,
+          gas_price: 10n,
+          gas_used: 100,
+          data_length: 100,
+          non_zero_bytes: 100,
+          blob_versioned_hashes: null,
+        },
+        {
+          hash: txHashes[2],
+          block_number: block + 2,
+          block_time: timestamp + 2,
+          input: selector,
+          to: address,
+          gas_price: 10n,
+          gas_used: 100,
+          data_length: 4,
+          non_zero_bytes: 4,
+          blob_versioned_hashes: null,
+        },
+      ],
+      logger,
+    )
+
+    const liveness = result.filter((entry) => entry.type === 'liveness')
+    const costs = result.filter((entry) => entry.type === 'l2costs')
+
+    expect(liveness.map((entry) => entry.groupingKey)).toEqual(['123', '123'])
+    expect(costs).toHaveLength(3)
+    expect(warn).toHaveBeenCalledWith(
+      'Failed to derive liveness grouping key',
+      {
+        error: expect.anything(),
+        configurationId: livenessId,
+        projectId: common.projectId,
+        transactionHash: txHashes[2],
+        blockNumber: block + 2,
+      },
+    )
+  })
+
   it('should transform results', () => {
     const functionCalls = [
       mockFunctionCall({
@@ -203,6 +315,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       sharpSubmissions,
       sharedBridgeCalls,
       queryResults,
+      Logger.SILENT,
     )
 
     expect(result).toEqual(expected)
@@ -238,7 +351,13 @@ describe(transformFunctionCallsQueryResult.name, () => {
     ]
 
     expect(() =>
-      transformFunctionCallsQueryResult(functionCalls, [], [], queryResults),
+      transformFunctionCallsQueryResult(
+        functionCalls,
+        [],
+        [],
+        queryResults,
+        Logger.SILENT,
+      ),
     ).toThrow('There should be at least one matching config')
   })
 
@@ -308,6 +427,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       sharpSubmissions,
       [],
       queryResults,
+      Logger.SILENT,
     )
 
     expect(result).toEqual(expected)
@@ -423,6 +543,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       [],
       sharedBridgeCalls,
       queryResults,
+      Logger.SILENT,
     )
 
     expect(result).toEqual(expected)
@@ -498,6 +619,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       [],
       sharedBridgeCalls,
       queryResults,
+      Logger.SILENT,
     )
 
     expect(result).toEqual(expected)
@@ -640,6 +762,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       [],
       [],
       queryResults,
+      Logger.SILENT,
     )
 
     expect(result).toEqual(expected)

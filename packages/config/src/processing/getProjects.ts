@@ -1,9 +1,13 @@
 import {
   SHARP_SUBMISSION_ADDRESS,
   SHARP_SUBMISSION_SELECTOR,
-  type TrackedTxConfigEntry,
+  type TrackedTxConfigEntryWithoutId,
+  type TrackedTxFunctionCallConfig,
+  type TrackedTxSharedBridgeConfig,
+  type TrackedTxSharpSubmissionConfig,
+  type TrackedTxTransferConfig,
 } from '@l2beat/shared'
-import { ProjectId } from '@l2beat/shared-pure'
+import { assert, ProjectId } from '@l2beat/shared-pure'
 import { existsSync, readFileSync } from 'fs'
 import { join } from 'path'
 import { badgesCompareFn } from '../common/badges'
@@ -245,70 +249,96 @@ function getCostsInfo(p: ScalingProject): ProjectCostsInfo | undefined {
 function toBackendTrackedTxsConfig(
   projectId: ProjectId,
   configs: Layer2TxConfig[] | undefined,
-): Omit<TrackedTxConfigEntry, 'id'>[] | undefined {
+): TrackedTxConfigEntryWithoutId[] | undefined {
   if (configs === undefined) return
 
-  return configs.flatMap((config) =>
-    config.uses.map((use) => {
-      const base = {
-        projectId,
-        sinceTimestamp: config.query.sinceTimestamp,
-        untilTimestamp: config.query.untilTimestamp,
-        type: use.type,
-        subtype: use.subtype,
-        costMultiplier:
-          use.type === 'l2costs' ? config._hackCostMultiplier : undefined,
+  return configs.flatMap((config) => {
+    const common = {
+      projectId,
+      sinceTimestamp: config.query.sinceTimestamp,
+      untilTimestamp: config.query.untilTimestamp,
+    }
+    const params = toBackendTrackedTxParams(config)
+
+    return config.uses.map((use): TrackedTxConfigEntryWithoutId => {
+      if (use.type === 'l2costs') {
+        return {
+          ...common,
+          ...use,
+          costMultiplier: config._hackCostMultiplier,
+          params,
+        }
       }
 
-      switch (config.query.formula) {
-        case 'functionCall': {
-          return {
-            ...base,
-            params: {
-              formula: 'functionCall',
-              address: config.query.address,
-              selector: config.query.selector,
-              signature: config.query.functionSignature,
-              topics: config.query.topics,
-            },
-          }
-        }
-        case 'transfer': {
-          return {
-            ...base,
-            params: {
-              formula: 'transfer',
-              from: config.query.from,
-              to: config.query.to,
-            },
-          }
-        }
-        case 'sharpSubmission': {
-          return {
-            ...base,
-            params: {
-              formula: 'sharpSubmission',
-              address: SHARP_SUBMISSION_ADDRESS,
-              selector: SHARP_SUBMISSION_SELECTOR,
-              programHashes: config.query.programHashes,
-            },
-          }
-        }
-        case 'sharedBridge': {
-          return {
-            ...base,
-            params: {
-              formula: 'sharedBridge',
-              address: config.query.address,
-              signature: config.query.functionSignature,
-              selector: config.query.selector,
-              firstParameter: config.query.firstParameter,
-            },
-          }
+      if (use.groupBy !== undefined) {
+        assert(
+          params.formula === 'functionCall',
+          'Liveness grouping is only supported for function calls',
+        )
+        const { topics, ...groupableParams } = params
+        assert(
+          topics === undefined,
+          'Liveness grouping is not supported for topic-matched function calls',
+        )
+        return {
+          ...common,
+          type: use.type,
+          subtype: use.subtype,
+          groupBy: use.groupBy,
+          params: groupableParams,
         }
       }
-    }),
-  )
+
+      return {
+        ...common,
+        type: use.type,
+        subtype: use.subtype,
+        params,
+      }
+    })
+  })
+}
+
+type BackendTrackedTxParams =
+  | TrackedTxFunctionCallConfig
+  | TrackedTxTransferConfig
+  | TrackedTxSharpSubmissionConfig
+  | TrackedTxSharedBridgeConfig
+
+function toBackendTrackedTxParams(
+  config: Layer2TxConfig,
+): BackendTrackedTxParams {
+  switch (config.query.formula) {
+    case 'functionCall':
+      return {
+        formula: 'functionCall',
+        address: config.query.address,
+        selector: config.query.selector,
+        signature: config.query.functionSignature,
+        topics: config.query.topics,
+      }
+    case 'transfer':
+      return {
+        formula: 'transfer',
+        from: config.query.from,
+        to: config.query.to,
+      }
+    case 'sharpSubmission':
+      return {
+        formula: 'sharpSubmission',
+        address: SHARP_SUBMISSION_ADDRESS,
+        selector: SHARP_SUBMISSION_SELECTOR,
+        programHashes: config.query.programHashes,
+      }
+    case 'sharedBridge':
+      return {
+        formula: 'sharedBridge',
+        address: config.query.address,
+        signature: config.query.functionSignature,
+        selector: config.query.selector,
+        firstParameter: config.query.firstParameter,
+      }
+  }
 }
 
 export function adjustDiscoveryInfo(

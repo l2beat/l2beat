@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type {
   TrackedTxConfigEntry,
   TrackedTxFunctionCallConfig,
@@ -11,6 +12,10 @@ import type {
   TrackedTxFunctionCallResult,
 } from '../types/model'
 import { calculateCalldataGasUsed } from './calculateCalldataGasUsed'
+import {
+  getLivenessGroupingKey,
+  hasLivenessGrouping,
+} from './getLivenessGroupingKey'
 import { isFistParameterMatching } from './isFirstParameterMatching'
 import { isProgramHashProven } from './isProgramHashProven'
 
@@ -25,6 +30,7 @@ export function transformFunctionCallsQueryResult(
     TrackedTxConfigEntry & { params: TrackedTxSharedBridgeConfig }
   >[],
   queryResults: DuneFunctionCallResult[],
+  logger: Logger,
 ): TrackedTxFunctionCallResult[] {
   return queryResults.flatMap((r) => {
     const selector = r.input.slice(0, 10)
@@ -62,35 +68,64 @@ export function transformFunctionCallsQueryResult(
       isFistParameterMatching(r.input, c.properties.params),
     )
 
-    const results = [
+    const results: TrackedTxFunctionCallResult[] = [
       ...matchingCalls,
       ...filteredSubmissions,
       ...filteredSharedBridgeCalls,
-    ].map(
-      (config) =>
-        ({
-          id: config.id,
-          formula: 'functionCall',
-          projectId: config.properties.projectId,
-          hash: r.hash,
-          type: config.properties.type,
-          subtype: config.properties.subtype,
-          blockNumber: r.block_number,
-          blockTimestamp: r.block_time,
-          toAddress: r.to,
-          input: r.input,
-          gasUsed: r.gas_used,
-          gasPrice: r.gas_price,
-          dataLength: r.data_length,
-          calldataGasUsed: calculateCalldataGasUsed(
-            r.block_number,
-            r.data_length,
-            r.non_zero_bytes,
-            r.gas_used,
-          ),
-          blobVersionedHashes: r.blob_versioned_hashes,
-        }) as const,
-    )
+    ].flatMap((config): TrackedTxFunctionCallResult[] => {
+      const common = {
+        id: config.id,
+        formula: 'functionCall' as const,
+        projectId: config.properties.projectId,
+        subtype: config.properties.subtype,
+        hash: r.hash,
+        blockNumber: r.block_number,
+        blockTimestamp: r.block_time,
+        toAddress: r.to,
+        input: r.input,
+        gasUsed: r.gas_used,
+        gasPrice: r.gas_price,
+        dataLength: r.data_length,
+        calldataGasUsed: calculateCalldataGasUsed(
+          r.block_number,
+          r.data_length,
+          r.non_zero_bytes,
+          r.gas_used,
+        ),
+        blobVersionedHashes: r.blob_versioned_hashes,
+      }
+
+      if (hasLivenessGrouping(config.properties)) {
+        try {
+          return [
+            {
+              ...common,
+              type: 'liveness',
+              groupingKey: getLivenessGroupingKey(
+                r.input,
+                config.properties.params,
+                config.properties.groupBy,
+              ),
+            },
+          ]
+        } catch (error) {
+          logger.warn('Failed to derive liveness grouping key', {
+            error,
+            configurationId: config.id,
+            projectId: config.properties.projectId,
+            transactionHash: r.hash,
+            blockNumber: r.block_number,
+          })
+          return []
+        }
+      }
+
+      if (config.properties.type === 'liveness') {
+        return [{ ...common, type: 'liveness' }]
+      }
+
+      return [{ ...common, type: 'l2costs' }]
+    })
 
     return results
   })
