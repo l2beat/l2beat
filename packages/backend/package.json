@@ -47,6 +47,7 @@
     "dev": "pnpm start:dev",
     "tvs:generate": "pnpm build:config && tsx ./scripts/tvs/generate-config.ts",
     "tvs:execute": "pnpm build:config && tsx ./scripts/tvs/execute.ts",
+    "da:preview": "pnpm build:config && tsx ./scripts/da/preview.ts",
     "tvs:calculate-ids": "tsx ./scripts/tvs/calculate-ids.ts",
     "tvs:translate-id": "tsx ./scripts/tvs/translate-id.ts",
     "anomalies": "tsx ./scripts/anomalies/anomalies.ts",
