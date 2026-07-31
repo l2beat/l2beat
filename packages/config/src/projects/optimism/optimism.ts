@@ -13,6 +13,7 @@ import { opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('optimism')
 const genesisTimestamp = UnixTime(1636665399)
 const chainId = 10
+const sequencingWindowBlocks = 3_600
 
 const securityCouncilStats = discovery.getMultisigStats(
   'Optimism Security Council',
@@ -160,6 +161,63 @@ export const optimism: ScalingProject = opStackL2({
   },
   hasSuperchainScUpgrades: true,
   associatedTokens: ['OP'],
+  nonTemplateTechnology: {
+    sequencing: {
+      name: 'Transactions are ordered by a centralized sequencer',
+      description:
+        'OP Mainnet uses a single centralized sequencer for fast confirmations. Users can bypass it with one Ethereum transaction to the OptimismPortal. Rollup nodes derive the deposited transaction from Ethereum, including it after at most one sequencing window.',
+      centralizedSequencingSpec: {
+        sequencerCount: {
+          value: '1 operator',
+          sentiment: 'bad',
+          description:
+            'A single operator controls real-time transaction ordering and block production.',
+          orderHint: 1,
+        },
+        realtimeCensorshipResistance: {
+          value: 'No',
+          sentiment: 'bad',
+          description:
+            'The centralized sequencer can censor transactions submitted through the normal L2 path.',
+        },
+        forcedInclusion: {
+          value: 'Automatic derivation',
+          secondLine: 'OptimismPortal deposit',
+          sentiment: 'good',
+          description:
+            'Once the Ethereum deposit is included, conforming rollup nodes derive it without requiring a second user transaction.',
+        },
+        forcedInclusionDelay: {
+          value: `${sequencingWindowBlocks.toLocaleString('en-US')} L1 blocks`,
+          secondLine: '≈ 12 hours nominal',
+          sentiment: 'good',
+          description:
+            'The static sequencing window is measured in Ethereum blocks. The wall-clock duration assumes 12-second L1 blocks.',
+          orderHint: sequencingWindowBlocks,
+        },
+        l1Transactions: {
+          value: '1 transaction',
+          sentiment: 'good',
+          description:
+            'The user submits one transaction to the OptimismPortal. No follow-up force-inclusion transaction is needed.',
+          orderHint: 1,
+        },
+      },
+      censorshipResistance:
+        'The centralized sequencer provides no real-time censorship resistance. The Ethereum deposit path provides eventual censorship resistance, assuming the deposit is included on Ethereum.',
+      references: [
+        {
+          title: 'OP Stack specification - sequencing window',
+          url: 'https://specs.optimism.io/protocol/overview.html#epochs-and-the-sequencing-window',
+        },
+        {
+          title: 'OptimismPortal2 - source code',
+          url: 'https://etherscan.io/address/0xe89F13c5ee4033B2D3cD76C9d6958eFBfe26D3C2#code',
+        },
+      ],
+      risks: [],
+    },
+  },
   nonTemplateExcludedTokens: ['rsETH'],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({

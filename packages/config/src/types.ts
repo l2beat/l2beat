@@ -56,6 +56,7 @@ export interface ProjectTechnologyChoice {
   references: ReferenceLink[]
   risks: ProjectRisk[]
   sequencerSetSpec?: ProjectSequencerSetSpec
+  centralizedSequencingSpec?: ProjectCentralizedSequencingSpec
   inclusionDelayChart?: ProjectInclusionDelayChart
   inclusionDelayChartDescription?: string
   censorshipResistance?: string
@@ -73,6 +74,14 @@ export interface ProjectSequencerSetSpec {
   rateLimit?: TableReadyValue
   deterministicCrGadget?: TableReadyValue
   additionalCrGadgets?: TableReadyValue
+}
+
+export interface ProjectCentralizedSequencingSpec {
+  sequencerCount: TableReadyValue
+  realtimeCensorshipResistance: TableReadyValue
+  forcedInclusion: TableReadyValue
+  forcedInclusionDelay: TableReadyValue
+  l1Transactions: TableReadyValue
 }
 
 export type ProjectInclusionDelayChart =

@@ -131,6 +131,18 @@ const maxTimeVariation = discovery.getContractValue<{
   delaySeconds: number
   futureSeconds: number
 }>('SequencerInbox', 'maxTimeVariation')
+const delayBuffer = discovery.getContractValue<{
+  bufferBlocks: number
+  max: number
+  threshold: number
+  prevBlockNumber: number
+  replenishRateInBasis: number
+  prevSequencedBlockNumber: number
+}>('SequencerInbox', 'buffer')
+const currentForceInclusionDelayBlocks = Math.min(
+  maxTimeVariation.delayBlocks,
+  delayBuffer.bufferBlocks,
+)
 
 const selfSequencingDelay = maxTimeVariation.delaySeconds
 
@@ -495,6 +507,62 @@ export const arbitrum: ScalingProject = orbitStackL2({
     dataFormat: `Nitro supports Ethereum's data structures and formats by incorporating the core code of the popular go-ethereum ("Geth") Ethereum node software. The batch is composed of a header and a compressed blob, which results from compressing concatenated RLP-encoded transactions using the standard RLP encoding.`,
   },
   nonTemplateTechnology: {
+    sequencing: {
+      name: 'Transactions are ordered by a centralized sequencer',
+      description:
+        'Arbitrum One uses a single centralized sequencer for fast confirmations. Users can bypass it by first enqueueing a message on Ethereum. If the sequencer does not include it before the message-specific delay expires, anyone can submit a second Ethereum transaction to force the delayed queue into the canonical order.',
+      centralizedSequencingSpec: {
+        sequencerCount: {
+          value: '1 operator',
+          sentiment: 'bad',
+          description:
+            'A single operator controls the real-time sequencer feed. Multiple batch-poster keys do not represent independent sequencers.',
+          orderHint: 1,
+        },
+        realtimeCensorshipResistance: {
+          value: 'No',
+          sentiment: 'bad',
+          description:
+            'The centralized sequencer can censor transactions submitted through the normal L2 path.',
+        },
+        forcedInclusion: {
+          value: 'Permissionless call',
+          secondLine: 'Delayed inbox + force inclusion',
+          sentiment: 'good',
+          description:
+            'After the delay expires, anyone can call forceInclusion on Ethereum. The call advances all delayed messages through the selected message.',
+        },
+        forcedInclusionDelay: {
+          value: `${currentForceInclusionDelayBlocks.toLocaleString('en-US')} L1 blocks`,
+          secondLine: `${delayBuffer.threshold.toLocaleString('en-US')}–${maxTimeVariation.delayBlocks.toLocaleString('en-US')}, dynamic`,
+          sentiment: 'good',
+          description:
+            'The message-specific delay is the lower of delayBlocks and the delay buffer. The current buffer gives the maximum delay. The force call becomes valid in the following Ethereum block.',
+          orderHint: currentForceInclusionDelayBlocks,
+        },
+        l1Transactions: {
+          value: '2 transactions',
+          secondLine: 'enqueue + force',
+          sentiment: 'warning',
+          description:
+            'The first Ethereum transaction enqueues the message. If the sequencer censors it, a second Ethereum transaction must call forceInclusion.',
+          orderHint: 2,
+        },
+      },
+      censorshipResistance:
+        'The centralized sequencer provides no real-time censorship resistance. The delayed inbox provides eventual censorship resistance, assuming Ethereum includes both the enqueue transaction and, when needed, the force-inclusion transaction.',
+      references: [
+        {
+          title: 'Arbitrum documentation - Sequencer and censorship resistance',
+          url: 'https://docs.arbitrum.io/how-arbitrum-works/deep-dives/sequencer',
+        },
+        {
+          title: 'SequencerInbox - source code',
+          url: 'https://etherscan.io/address/0x98a58ADAb0f8A66A1BF4544d804bc0475dff32c7#code',
+        },
+      ],
+      risks: [],
+    },
     otherConsiderations: [
       ...WASMVM_OTHER_CONSIDERATIONS,
       UPGRADE_MECHANISM.ARBITRUM_DAO(

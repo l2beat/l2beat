@@ -32,6 +32,15 @@ export interface ScalingRiskSequencingEntry extends CommonScalingEntry {
   additionalCrGadgets: TableReadyValue | undefined
 }
 
+export interface ScalingRiskCentralizedSequencingEntry
+  extends CommonScalingEntry {
+  sequencerCount: TableReadyValue
+  realtimeCensorshipResistance: TableReadyValue
+  forcedInclusion: TableReadyValue
+  forcedInclusionDelay: TableReadyValue
+  l1Transactions: TableReadyValue
+}
+
 export interface InclusionDelayComparisonSeries {
   key: string
   label: string
@@ -45,7 +54,8 @@ export interface InclusionDelayComparison {
 }
 
 export interface ScalingRiskSequencingPageData {
-  entries: ScalingRiskSequencingEntry[]
+  decentralizedEntries: ScalingRiskSequencingEntry[]
+  centralizedEntries: ScalingRiskCentralizedSequencingEntry[]
   inclusionDelayComparison: InclusionDelayComparison | undefined
 }
 
@@ -66,7 +76,7 @@ export async function getScalingRiskSequencingEntries(): Promise<ScalingRiskSequ
     }),
   ])
 
-  const entries = projects
+  const decentralizedEntries = projects
     .map((project) =>
       getScalingRiskSequencingEntry(
         project,
@@ -76,8 +86,19 @@ export async function getScalingRiskSequencingEntries(): Promise<ScalingRiskSequ
     .filter(notUndefined)
     .sort((a, b) => a.name.localeCompare(b.name))
 
+  const centralizedEntries = projects
+    .map((project) =>
+      getScalingRiskCentralizedSequencingEntry(
+        project,
+        projectsChangeReport.getChanges(project.id),
+      ),
+    )
+    .filter(notUndefined)
+    .sort((a, b) => a.name.localeCompare(b.name))
+
   return {
-    entries,
+    decentralizedEntries,
+    centralizedEntries,
     inclusionDelayComparison: getInclusionDelayComparison(projects),
   }
 }
@@ -163,6 +184,26 @@ function getScalingRiskSequencingEntry(
     blockProduction: getBlockProduction(sequencing.inclusionDelayChart),
     deterministicCrGadget: spec.deterministicCrGadget,
     additionalCrGadgets: spec.additionalCrGadgets,
+  }
+}
+
+function getScalingRiskCentralizedSequencingEntry(
+  project: ScalingRiskSequencingProject,
+  changes: ProjectChanges,
+): ScalingRiskCentralizedSequencingEntry | undefined {
+  const sequencing = project.scalingTechnology.sequencing
+  const spec = sequencing?.centralizedSequencingSpec
+  if (!sequencing || !spec) {
+    return undefined
+  }
+
+  return {
+    ...getCommonScalingEntry({ project, changes }),
+    sequencerCount: spec.sequencerCount,
+    realtimeCensorshipResistance: spec.realtimeCensorshipResistance,
+    forcedInclusion: spec.forcedInclusion,
+    forcedInclusionDelay: spec.forcedInclusionDelay,
+    l1Transactions: spec.l1Transactions,
   }
 }
 

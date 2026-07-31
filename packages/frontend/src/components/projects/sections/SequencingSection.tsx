@@ -1,4 +1,8 @@
-import type { ProjectSequencerSetSpec, ReferenceLink } from '@l2beat/config'
+import type {
+  ProjectCentralizedSequencingSpec,
+  ProjectSequencerSetSpec,
+  ReferenceLink,
+} from '@l2beat/config'
 import { DiagramImage } from '~/components/DiagramImage'
 import { cn } from '~/utils/cn'
 import type { DiagramParams } from '~/utils/project/getDiagramParams'
@@ -8,6 +12,7 @@ import { ProjectSection } from './ProjectSection'
 import { ReferenceList } from './ReferenceList'
 import type { TechnologyRisk } from './RiskList'
 import { RiskList } from './RiskList'
+import { CentralizedSequencingSpecSheet } from './sequencing/CentralizedSequencingSpecSheet'
 import { ProjectInclusionDelayChart } from './sequencing/ProjectInclusionDelayChart'
 import { SequencerSetSpecSheet } from './sequencing/SequencerSetSpecSheet'
 import type { ProjectSectionProps } from './types'
@@ -18,6 +23,7 @@ export interface SequencingSectionProps extends ProjectSectionProps {
   diagram?: DiagramParams
   content: string
   sequencerSetSpec?: ProjectSequencerSetSpec
+  centralizedSequencingSpec?: ProjectCentralizedSequencingSpec
   inclusionDelay?: InclusionDelayChartProps
   inclusionDelayChartDescription?: string
   censorshipResistance?: string
@@ -32,6 +38,7 @@ export function SequencingSection({
   diagram,
   content,
   sequencerSetSpec,
+  centralizedSequencingSpec,
   inclusionDelay,
   inclusionDelayChartDescription,
   censorshipResistance,
@@ -59,6 +66,9 @@ export function SequencingSection({
         {content}
       </Markdown>
       {sequencerSetSpec && <SequencerSetSpecSheet spec={sequencerSetSpec} />}
+      {centralizedSequencingSpec && (
+        <CentralizedSequencingSpecSheet spec={centralizedSequencingSpec} />
+      )}
       {inclusionDelay && (
         <>
           <ProjectInclusionDelayChart

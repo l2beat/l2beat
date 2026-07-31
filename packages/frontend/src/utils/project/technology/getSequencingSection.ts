@@ -16,6 +16,7 @@ export function getSequencingSection(
     ),
     content: sequencing.description,
     sequencerSetSpec: sequencing.sequencerSetSpec,
+    centralizedSequencingSpec: sequencing.centralizedSequencingSpec,
     inclusionDelay: sequencing.inclusionDelayChart
       ? prepareInclusionDelay(sequencing.inclusionDelayChart)
       : undefined,
