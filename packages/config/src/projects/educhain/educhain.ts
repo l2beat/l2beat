@@ -12,7 +12,7 @@ export const educhain: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1737072000), // 2025-01-17T00:00:00Z
   hostChain: 'arbitrum',
   discovery,
-  additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Gelato],
+  additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Conduit],
   additionalPurposes: ['Social'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,

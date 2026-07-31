@@ -54,8 +54,10 @@
       "ignoreRelatives": ["getDistribution"],
       "ignoreInWatchMode": [
         "getCurrentEpoch",
+        "getDistribution",
         "lastTimeButtonPressable",
-        "nextTimeButtonPressable"
+        "nextTimeButtonPressable",
+        "totalWeight"
       ]
     },
     "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53": {
