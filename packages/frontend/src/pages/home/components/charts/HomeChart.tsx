@@ -23,6 +23,7 @@ export type HomeChartColor = 'pink' | 'ethereum'
 export interface HomeChartDataPoint {
   timestamp: number
   value: number | null
+  ethereum?: number | null
   tvsBreakdown?: {
     rollups: number | null
     validiumsAndOptimiums: number | null
@@ -38,6 +39,7 @@ interface Props {
   yAxisUnit?: string
   syncedUntil?: number
   tooltipDayRange?: boolean
+  withEthereum?: boolean
 }
 
 const STROKE_COLOR: Record<HomeChartColor, string> = {
@@ -71,8 +73,10 @@ export function HomeChart({
   yAxisUnit,
   syncedUntil,
   tooltipDayRange,
+  withEthereum,
 }: Props) {
   const fillId = useId()
+  const ethereumFillId = useId()
 
   const stroke = STROKE_COLOR[color]
   const meta = useMemo<ChartMeta>(
@@ -82,8 +86,17 @@ export function HomeChart({
         color: stroke,
         indicatorType: { shape: 'line' },
       },
+      ...(withEthereum
+        ? {
+            ethereum: {
+              label: 'Ethereum',
+              color: STROKE_COLOR.ethereum,
+              indicatorType: { shape: 'line' as const },
+            },
+          }
+        : {}),
     }),
-    [stroke, tooltipLabel],
+    [stroke, tooltipLabel, withEthereum],
   )
 
   return (
@@ -103,6 +116,7 @@ export function HomeChart({
             <defs>
               {color === 'pink' && <PinkFillGradientDef id={fillId} />}
               {color === 'ethereum' && <EthereumFillGradientDef id={fillId} />}
+              {withEthereum && <EthereumFillGradientDef id={ethereumFillId} />}
             </defs>
             <Area
               dataKey="value"
@@ -121,6 +135,25 @@ export function HomeChart({
                 fill: stroke,
               }}
             />
+            {withEthereum && (
+              <Area
+                dataKey="ethereum"
+                type="monotone"
+                stroke={STROKE_COLOR.ethereum}
+                strokeWidth={1.75}
+                fill={`url(#${ethereumFillId})`}
+                fillOpacity={1}
+                dot={false}
+                isAnimationActive={false}
+                connectNulls={false}
+                activeDot={{
+                  r: 3,
+                  stroke: '#fff',
+                  strokeWidth: 1,
+                  fill: STROKE_COLOR.ethereum,
+                }}
+              />
+            )}
             <ChartCommonComponents
               data={data}
               isLoading={isLoading}
@@ -155,11 +188,15 @@ function HomeChartTooltip({
 }) {
   const { meta } = useChart()
   if (!payload || typeof label !== 'number') return null
-  const entry = payload[0]
-  if (!entry || entry.name === undefined) return null
-  const config = meta[entry.name]
-  if (!config) return null
-  const row = entry.payload as HomeChartDataPoint | undefined
+  const entries = payload.flatMap((entry) => {
+    if (entry.name === undefined) return []
+    const config = meta[entry.name]
+    if (!config) return []
+    return { entry, config }
+  })
+  const firstEntry = entries[0]
+  if (!firstEntry) return null
+  const row = firstEntry.entry.payload as HomeChartDataPoint | undefined
   const breakdown = row?.tvsBreakdown
   return (
     <ChartTooltipWrapper>
@@ -170,22 +207,27 @@ function HomeChartTooltip({
             : formatTimestamp(label, { longMonthName: true })}
         </div>
         <div className="flex flex-col gap-2">
-          <div className="flex w-full items-center justify-between gap-2">
-            <div className="flex items-center gap-1">
-              <ChartDataIndicator
-                backgroundColor={config.color}
-                type={config.indicatorType}
-              />
-              <span className="w-20 font-medium text-label-value-14 sm:w-fit">
-                {config.label}
+          {entries.map(({ entry, config }) => (
+            <div
+              key={entry.name}
+              className="flex w-full items-center justify-between gap-2"
+            >
+              <div className="flex items-center gap-1">
+                <ChartDataIndicator
+                  backgroundColor={config.color}
+                  type={config.indicatorType}
+                />
+                <span className="w-20 font-medium text-label-value-14 sm:w-fit">
+                  {config.label}
+                </span>
+              </div>
+              <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
+                {entry.value !== null && entry.value !== undefined
+                  ? formatValue(entry.value)
+                  : 'No data'}
               </span>
             </div>
-            <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-              {entry.value !== null && entry.value !== undefined
-                ? formatValue(entry.value)
-                : 'No data'}
-            </span>
-          </div>
+          ))}
           {breakdown !== undefined && (
             <>
               <HorizontalSeparator />
