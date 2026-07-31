@@ -10,6 +10,7 @@ import type {
   ManagedMultiIndexerOptions,
   WipeRemovalConfiguration,
 } from '../../../../tools/uif/multi/types'
+import { mapEigenProjectData } from '../../preview/mapEigenProjectData'
 
 export interface Dependencies
   extends Omit<
@@ -115,41 +116,12 @@ export class EigenDaProjectsIndexer extends ManagedMultiIndexer<TimestampDaIndex
       Extract<TimestampDaIndexedConfig, { type: 'eigen-da' }>
     >[]
 
-    const recordsMap = new Map<string, DataAvailabilityRecord>()
-
-    for (const d of data) {
-      if (
-        d.datetime < startOfTheDay - UnixTime.DAY ||
-        d.datetime >= startOfTheDay
-      ) {
-        continue
-      }
-
-      const configuration = projectsConfigurations.find(
-        (c) => c.properties.customerId === d.customer_id,
-      )
-      if (!configuration) {
-        continue
-      }
-      const key = `${d.datetime}-${configuration.id}`
-
-      const totalSize = BigInt(Math.round(d.total_size_mb * 1024 * 1024))
-
-      const existing = recordsMap.get(key)
-      if (!existing) {
-        recordsMap.set(key, {
-          timestamp: d.datetime,
-          totalSize,
-          projectId: configuration.properties.projectId,
-          daLayer: this.daLayer,
-          configurationId: configuration.id,
-        })
-      } else {
-        existing.totalSize += totalSize
-      }
-    }
-
-    return Array.from(recordsMap.values())
+    return mapEigenProjectData(
+      data,
+      projectsConfigurations,
+      this.daLayer,
+      startOfTheDay,
+    )
   }
 
   override async wipeData(
