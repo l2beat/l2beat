@@ -1,7 +1,10 @@
 import { type InMemoryCache, ProjectId } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getChangelogEntries } from '~/server/features/changelog/getChangelogEntries'
+import {
+  getChangelogEntries,
+  selectActiveWhatsNewEntry,
+} from '~/server/features/changelog/getChangelogEntries'
 import { getDaProjectEconomicSecurity } from '~/server/features/data-availability/project/utils/getDaProjectEconomicSecurity'
 import { getHomeEthereumCharts } from '~/server/features/home/getHomeEthereumCharts'
 import { getHomeScalingCharts } from '~/server/features/home/getHomeScalingCharts'
@@ -226,7 +229,7 @@ async function getEthereumEconomicSecurity(): Promise<number | undefined> {
 }
 
 function getHomeWhatsNewItems(): HomeWhatsNewItem[] {
-  const entry = getChangelogEntries().find((entry) => entry.whatsNew)
+  const entry = selectActiveWhatsNewEntry(getChangelogEntries(), new Date())
   if (!entry?.whatsNew) {
     return []
   }
