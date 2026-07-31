@@ -317,19 +317,6 @@ describe('discovery config.jsonc', () => {
       }
     })
 
-    describe('all shared modules exist', () => {
-      for (const c of configs ?? []) {
-        it(c.name, () => {
-          for (const sharedModule of c.structure.sharedModules) {
-            assert(
-              configs?.flat()?.some((x) => x.name === sharedModule),
-              `Shared module ${sharedModule} does not exist (${c.name})`,
-            )
-          }
-        })
-      }
-    })
-
     // inversion logic depends on this
     describe('all accessControl fields keys are accessControl', () => {
       for (const c of configs ?? []) {

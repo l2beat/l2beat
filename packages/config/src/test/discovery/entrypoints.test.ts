@@ -85,8 +85,7 @@ describe('discovery config.jsonc', () => {
     }
   })
 
-  // TODO: Enable this test once all .sharedModules are converted to entrypoints
-  it.skip("doesn't reference legacy or not existing entrypoints", () => {
+  it("doesn't reference legacy or not existing entrypoints", () => {
     for (const c of configs ?? []) {
       const discovery = getDiscovery(c.name)
       const entrypoints = c.structure.entrypoints ?? {}

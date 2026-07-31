@@ -39,19 +39,8 @@ export class UpdateDiffer {
       return
     }
 
-    const onDiskContracts = [
-      ...onDiskDiscovery.entries,
-      ...(onDiskDiscovery.sharedModules ?? []).flatMap(
-        (module) => this.getOnDiskDiscovery(module).entries,
-      ),
-    ]
-
-    const latestContracts = [
-      ...latestDiscovery.entries,
-      ...(latestDiscovery.sharedModules ?? []).flatMap(
-        (module) => this.discoveryOutputCache.get(module)?.entries ?? [],
-      ),
-    ]
+    const onDiskContracts = onDiskDiscovery.entries
+    const latestContracts = latestDiscovery.entries
 
     const diff = diffDiscovery(onDiskContracts, latestContracts)
     const diffBaseTimestamp = onDiskDiscovery.timestamp
