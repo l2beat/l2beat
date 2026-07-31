@@ -435,6 +435,24 @@ those hashes with the chains recorded *inside* the evidence, because the sample
 transfer keeps its own observed direction, which the relation's endpoint order
 does not describe.
 
+The relation panel also carries a delete button — the tool for removing a
+bogus observation that a buggy plugin's interop transfer ingested. Any
+relation can be deleted this way, not only anomalies. The button goes through
+the standard delete intent (see [Human edits](#human-edits)), so the user
+confirms a plan first; the confirmation notes that the executed command lands
+in `TokenDbHistory` with the full removed record, from which the relation can
+be recovered in the worst case. On success the edge simply disappears from the
+drawing and from the panel's relation lists. **The layout is deliberately not
+re-run.** Removing an edge can split a cluster in two, and re-clustering —
+new cluster grid, new cluster labels, reset viewport — would yank the graph
+out from under a user mid-investigation on a view that takes seconds to
+build. Refreshing the page is how one sees the re-clustered graph. For the
+same reason, the graph query is never refetched automatically while the page
+is open — executing a plan only marks it stale without refetching active
+instances, and the page opts out of the window-focus and reconnect refetches
+that would otherwise pick that staleness up — so fresh data loads only on
+the next visit to the page.
+
 The graph header can search catalogued deployed tokens by symbol, chain, or
 address using the already-loaded graph payload. Choosing a result selects the
 node, opens its existing details panel, and animates the viewport to a readable

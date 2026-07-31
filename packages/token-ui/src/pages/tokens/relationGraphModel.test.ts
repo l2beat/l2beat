@@ -232,6 +232,26 @@ describe(getExistingRelationGraphSelection.name, () => {
       }),
     ).toEqual(undefined)
   })
+
+  it('clears a relation selection that was deleted from the graph view', () => {
+    const deletedRelation = relations[0]
+    if (deletedRelation === undefined) throw new Error('Missing test relation')
+    const selection = {
+      type: 'relation',
+      id: relationId(deletedRelation),
+    } as const
+
+    expect(getExistingRelationGraphSelection(graph, selection)).toEqual(
+      selection,
+    )
+    expect(
+      getExistingRelationGraphSelection(
+        graph,
+        selection,
+        new Set([relationId(deletedRelation)]),
+      ),
+    ).toEqual(undefined)
+  })
 })
 
 describe(searchRelationGraphNodes.name, () => {
@@ -303,6 +323,41 @@ describe(getRelationGraphFocus.name, () => {
       ].sort(),
     )
     expect([...focus.relationIds]).toEqual([relationId(selectedRelation)])
+  })
+
+  it('skips deleted relations when collecting a node neighborhood', () => {
+    const deletedRelation = relations[0]
+    const keptRelation = relations[1]
+    if (deletedRelation === undefined || keptRelation === undefined) {
+      throw new Error('Missing test relation')
+    }
+    const focus = requiredFocus(
+      getRelationGraphFocus(
+        graph,
+        { type: 'node', id: tokenId('ethereum', '0xaaa') },
+        new Set([relationId(deletedRelation)]),
+      ),
+    )
+
+    expect([...focus.nodeIds].sort()).toEqual(
+      [tokenId('ethereum', '0xaaa'), tokenId('optimism', '0xccc')].sort(),
+    )
+    expect([...focus.relationIds]).toEqual([relationId(keptRelation)])
+  })
+
+  it('rejects a selected relation that was deleted', () => {
+    const deletedRelation = relations[0]
+    if (deletedRelation === undefined) throw new Error('Missing test relation')
+
+    expect(() =>
+      getRelationGraphFocus(
+        graph,
+        { type: 'relation', id: relationId(deletedRelation) },
+        new Set([relationId(deletedRelation)]),
+      ),
+    ).toThrow(
+      `Selected relation ${relationId(deletedRelation)} is not in graph`,
+    )
   })
 })
 

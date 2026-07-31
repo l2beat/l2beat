@@ -197,15 +197,18 @@ export function getRelationLabelStyle(scale: number) {
 export function getExistingRelationGraphSelection(
   graph: RelationGraph,
   selection: RelationGraphSelection | undefined,
+  deletedRelationIds?: ReadonlySet<string>,
 ): RelationGraphSelection | undefined {
   if (selection === undefined) return undefined
 
+  if (selection.type === 'node') {
+    return graph.nodes.some((node) => node.id === selection.id)
+      ? selection
+      : undefined
+  }
   const exists =
-    selection.type === 'node'
-      ? graph.nodes.some((node) => node.id === selection.id)
-      : graph.relations.some(
-          (relation) => relationId(relation) === selection.id,
-        )
+    !deletedRelationIds?.has(selection.id) &&
+    graph.relations.some((relation) => relationId(relation) === selection.id)
   return exists ? selection : undefined
 }
 
@@ -270,6 +273,7 @@ function clusterLabelOpacity(scale: number) {
 export function getRelationGraphFocus(
   graph: RelationGraph,
   selection: RelationGraphSelection | undefined,
+  deletedRelationIds?: ReadonlySet<string>,
 ): RelationGraphFocus | undefined {
   if (selection === undefined) return undefined
 
@@ -279,6 +283,7 @@ export function getRelationGraphFocus(
   if (selection.type === 'node') {
     nodeIds.add(selection.id)
     for (const relation of graph.relations) {
+      if (deletedRelationIds?.has(relationId(relation))) continue
       const source = sourceId(relation)
       const target = targetId(relation)
       if (source !== selection.id && target !== selection.id) continue
@@ -293,7 +298,7 @@ export function getRelationGraphFocus(
   const relation = graph.relations.find(
     (relation) => relationId(relation) === selection.id,
   )
-  if (relation === undefined) {
+  if (relation === undefined || deletedRelationIds?.has(selection.id)) {
     throw new Error(`Selected relation ${selection.id} is not in graph`)
   }
   nodeIds.add(sourceId(relation))
