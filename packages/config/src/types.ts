@@ -964,7 +964,7 @@ export interface ProjectPrivacyInfo {
    */
   quantumResistant?: true
   riskSummary?: string
-  upgradesAndGovernance?: string
+  upgradesAndGovernance?: ProjectUpgradesAndGovernance
 }
 
 export interface PrivacyExitWindow extends ExitWindowRisk {

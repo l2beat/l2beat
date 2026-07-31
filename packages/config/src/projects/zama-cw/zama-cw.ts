@@ -204,14 +204,12 @@ export const zamaCw: BaseProject = {
       coprocessorThreshold,
       coprocessorSignerCount,
     }),
-    upgradesAndGovernance: readProjectMarkdown(
-      'zama-cw',
-      'upgradesAndGovernance',
-      {
+    upgradesAndGovernance: {
+      content: readProjectMarkdown('zama-cw', 'upgradesAndGovernance', {
         multisigAStats,
         multisigBStats,
-      },
-    ),
+      }),
+    },
   },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {

@@ -490,10 +490,19 @@
       ],
       "proxyType": "immutable",
       "description": "Vault that escrows locked TORN of governance participants who wish to receive voting rights.",
+      "ignoreInWatchMode": ["TORNStaked"],
       "deployerAddress": "eth:0x9923bb2390Ab5bf92CD440c1f61e45aF44a68d1b",
       "sinceTimestamp": 1634397582,
       "sinceBlock": 13429786,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true,
+        "TORNStaked": "2601966644796502099699121"
+      },
+      "fieldMeta": {
+        "TORNStaked": {
+          "description": "TORN locked by governance participants for voting power, escrowed in this vault."
+        }
+      },
       "implementationNames": {
         "eth:0x2F50508a8a3D323B91336FA3eA6ae50E55f32185": "TornadoVault"
       }
@@ -1436,6 +1445,7 @@
           "role": ".$admin"
         }
       ],
+      "ignoreInWatchMode": ["TORNTreasury"],
       "deployerAddress": "eth:0x4e7B3769921C8DFBdb3d1B4c73558db079A180c7",
       "sinceTimestamp": 1608261835,
       "sinceBlock": 11474695,
@@ -1476,6 +1486,7 @@
         "Staking": "eth:0x5B3f656C80E8ddb9ec01Dd9018815576E9238c29",
         "state": [5, 2, 2, 5],
         "torn": "eth:0x77777FeDdddFfC19Ff86DB637967013e6C6A116C",
+        "TORNTreasury": "4732221906308401820714848",
         "userVault": "eth:0x2F50508a8a3D323B91336FA3eA6ae50E55f32185",
         "version": "5.proposal-state-patch",
         "VOTE_EXTEND_TIME": 21600,
@@ -1486,6 +1497,9 @@
         "$admin": {
           "severity": "HIGH",
           "description": "Can upgrade the governance implementation."
+        },
+        "TORNTreasury": {
+          "description": "TORN held by the governance contract itself (the governance treasury). Does not include TORN locked by users for voting, which is escrowed in userVault."
         },
         "$implementation": {
           "severity": "HIGH",
@@ -3815,7 +3829,7 @@
     "tornado-cash/ERC20Tornado": "0x706711f265615d631ed936a2b0e21f75b7516a3c0cfc989932625e0a511b5d2e",
     "tornado-cash/FeeManager": "0x2d14cdb76f10301881976bdd0e73118dd9470c62127b4fa0f756c1d4f6436b1b",
     "tornado-cash/GasCompensationVault": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "tornado-cash/GovernanceProposalStateUpgrade": "0x5ef7d5bcb5b1f194dce583d85f696e249f44e85360486fbb3ede97ded1f604ce",
+    "tornado-cash/GovernanceProposalStateUpgrade": "0xfe4376ccbb98b25676799aca19bec472ef351193d9ce4700bd2911cbc43a6d78",
     "tornado-cash/InstanceRegistry": "0xe4adfe1b395d68b67ff6c83a2964386a9813cf4c8739d2b6e65f5c1f5756a160",
     "tornado-cash/Miner": "0xe77c3ae97ad6368c8457e5442f79fefa5211b0e0528233a22f9f9710750b957d",
     "tornado-cash/Proposal": "0x21857196f327a8eadf42591631adb24d788318246f12110fe95bbc8b3821338f",
@@ -3832,7 +3846,7 @@
     "tornado-cash/TornadoStakingRewards": "0xb124ea92c7b402984584d879e0c46522f1d0c2951a14a546a5093d8a56677d1f",
     "tornado-cash/TornadoTreesV1": "0xce9776830aa69762cea76fb26a81549086cd437558a918ad7335b0a840bb1b4e",
     "tornado-cash/TornadoTreesV2": "0xbc25f893cb79475b64b22a551019f57c4829214af384ce0054c7d9de631ee8c6",
-    "tornado-cash/TornadoVault": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "tornado-cash/TornadoVault": "0x6c36b72786015e9ca7e1672aaaeb3a54a0ab8f701b5f617dda6eba5d862c508d",
     "tornado-cash/TreeUpdateVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tornado-cash/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tornado-cash/WithdrawVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"

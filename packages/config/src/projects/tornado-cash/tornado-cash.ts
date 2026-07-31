@@ -58,6 +58,19 @@ const votingPeriod = discovery.getContractValue<number>(
   'GovernanceProposalStateUpgrade',
   'VOTING_PERIOD',
 )
+const tornTotalSupply = discovery.getContractValueBigInt('TORN', 'totalSupply')
+const tornTreasury = discovery.getContractValueBigInt(
+  'GovernanceProposalStateUpgrade',
+  'TORNTreasury',
+)
+const tornStaked = discovery.getContractValueBigInt(
+  'TornadoVault',
+  'TORNStaked',
+)
+
+const stakeLockPeriod = formatSeconds(
+  voteExtendTime + executionExpiration + executionDelay,
+)
 
 function formatDenomination(amount: bigint, decimals: number): string {
   return utils.formatUnits(amount, decimals).replace(/\.?0+$/, '')
@@ -187,25 +200,24 @@ export const tornadoCash: BaseProject = {
     },
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.fixedAmounts],
     riskSummary: readProjectMarkdown('tornado-cash', 'riskSummary'),
-    upgradesAndGovernance: readProjectMarkdown(
-      'tornado-cash',
-      'upgradesAndGovernance',
-      {
-        stakeLockPeriod: formatSeconds(
-          voteExtendTime + executionExpiration + executionDelay,
-        ),
-        proposalThreshold: formatLargeNumber(
-          Number(proposalThreshold / 10n ** 18n),
-        ),
-        votingDelay: formatSeconds(votingDelay),
-        votingPeriod: formatSeconds(votingPeriod),
-        closingPeriod: formatSeconds(closingPeriod),
-        voteExtendTime: formatSeconds(voteExtendTime),
-        quorumVotes: formatLargeNumber(Number(quorumVotes / 10n ** 18n)),
-        executionDelay: formatSeconds(executionDelay),
-        executionExpiration: formatSeconds(executionExpiration),
+    upgradesAndGovernance: {
+      content: readProjectMarkdown('tornado-cash', 'upgradesAndGovernance'),
+      governanceInfo: {
+        upgrades: {
+          'Normal upgrade path': `Lock and optionally delegate TORN in the [Governance contract](https://etherscan.io/address/0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) → submit a proposal with at least **${formatLargeNumber(Number(proposalThreshold / 10n ** 18n))} TORN** → wait ${formatSeconds(votingDelay)} → vote for ${formatSeconds(votingPeriod)} (extended by ${formatSeconds(voteExtendTime)} if the outcome changes during the last ${formatSeconds(closingPeriod)}) → pass with a simple majority and **${formatLargeNumber(Number(quorumVotes / 10n ** 18n))} TORN** quorum → wait ${formatSeconds(executionDelay)} → permissionless execution within ${formatSeconds(executionExpiration)}. The DAO controls protocol and periphery components, but cannot upgrade or modify existing pools.`,
+          'Exit window': `**${formatSeconds(executionDelay)}** for DAO-controlled changes — an accepted proposal remains timelocked for this period before it can be executed. Existing Tornado Cash pools are immutable and cannot be upgraded by the DAO.`,
+        },
+        tokenGovernance: {
+          'Governance token': `\`TORN\`, 1 token = 1 vote, delegated. Total supply: **${formatLargeNumber(Number(tornTotalSupply / 10n ** 18n))} TORN**, DAO-owned TORN (unavailable for voting): **${formatLargeNumber(Number(tornTreasury / 10n ** 18n))} TORN**, staked for voting: **${formatLargeNumber(Number(tornStaked / 10n ** 18n))} TORN**, the rest is circulating supply.`,
+          'Stake lock': `After voting or proposing, staked tokens are locked for **${stakeLockPeriod}** after proposal ends, preventing governance hopping.`,
+          'Voting venue':
+            '[Governance contract](https://etherscan.io/address/0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) on Ethereum. Proposals are viewable on the voting tab of the frontend, see the note on secure frontend above.',
+          'Proposal threshold': `**${formatLargeNumber(Number(proposalThreshold / 10n ** 18n))} TORN** locked in governance.`,
+          Quorum: `**${formatLargeNumber(Number(quorumVotes / 10n ** 18n))} TORN**, with a simple majority required for acceptance.`,
+          'Execution model': `**Permissionless execution after an onchain vote and timelock.** An accepted proposal waits ${formatSeconds(executionDelay)} and can then be executed by anyone within ${formatSeconds(executionExpiration)}. Proposal executable payload is committed in the \`propose()\` transaction.`,
+        },
       },
-    ),
+    },
   },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {

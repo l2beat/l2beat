@@ -170,11 +170,11 @@ export const privacyPools: BaseProject = {
     },
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.anyAmount],
     riskSummary: readProjectMarkdown('privacy-pools', 'riskSummary'),
-    upgradesAndGovernance: readProjectMarkdown(
-      'privacy-pools',
-      'upgradesAndGovernance',
-      { multisigStats },
-    ),
+    upgradesAndGovernance: {
+      content: readProjectMarkdown('privacy-pools', 'upgradesAndGovernance', {
+        multisigStats,
+      }),
+    },
   },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
