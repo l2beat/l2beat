@@ -95,10 +95,12 @@ describe(ProjectDatabase.name, () => {
       },
       externalDependencies: [
         {
+          type: 'tracked',
           projectId: ProjectId('reviewed-dependency'),
           description: 'Provides a price feed.',
         },
         {
+          type: 'not-tracked',
           name: 'External dependency',
           icon: 'external-dependency',
           description: 'Provides an exchange rate.',

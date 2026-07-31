@@ -970,16 +970,15 @@ export interface ProjectDefiInfo {
 
 export type ProjectExternalDependency =
   | {
+      type: 'tracked'
       /** An L2BEAT project this project depends on. */
       projectId: ProjectId
-      name?: never
-      icon?: never
       /** How this project depends on the referenced project. */
       description: string
     }
   | {
+      type: 'not-tracked'
       /** An external dependency that is not represented by an L2BEAT project. */
-      projectId?: never
       name: string
       /** Icon slug under /icons, e.g. "reth" for /icons/reth.png. */
       icon: string
