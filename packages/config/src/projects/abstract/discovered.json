@@ -667,6 +667,12 @@
           "from": "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83",
           "description": "initiate batch execution on L1 if approved by enough Validator Multisig members.",
           "role": ".executor"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83",
+          "description": "submit batches on L1 if approved by enough Validator Multisig members.",
+          "role": ".committers"
         }
       ]
     },
@@ -1001,6 +1007,12 @@
         "$upgradeCount": 1,
         "BRIDGE_HUB": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
         "COMMITTER_ROLE": "0x0b60b5d7f7e737e4561eecda7c6a01e19e626c495c26e6f45e5b255f76a20106",
+        "committers": {
+          "eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9": [
+            "eth:0x6be789605b13Edb78749824633b9933D44B582ba",
+            "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
+          ]
+        },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "eip712Domain": {
           "fields": "0x0f",
@@ -1099,6 +1111,12 @@
           "from": "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83",
           "description": "initiate batch execution on L1 if approved by enough Validator Multisig members.",
           "role": ".executor"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83",
+          "description": "submit batches on L1 if approved by enough Validator Multisig members.",
+          "role": ".committers"
         }
       ]
     },
@@ -1751,11 +1769,11 @@
     "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",
     "shared-zk-stack/Diamond": "0xf58468847183a89ea73709ca00dc1bd45baad858f179c87fa0b9a9a3099edb25",
     "shared-zk-stack/DualVerifier": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
-    "shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable": "0x55d204472e25f4714e0b26d4449b39099a93ef829660099d6504ef808f61138e",
+    "shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable": "0x1c1894c389e5cbc9aa30194cb9f9294354eeb0a28968fd00e4282b861dc61d9d",
     "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
   "usedBlockNumbers": { "ethereum": 25429469 },
-  "permissionsConfigHash": "0x5765cc4372ecfa37885b7b7bc15dfa4246e3d819854ade49bd420ca9dfb891d4"
+  "permissionsConfigHash": "0x4f71e72637efc8e83a4105c0aaba86d545bf2c5a99c17ee0217453b4812d38b2"
 }
