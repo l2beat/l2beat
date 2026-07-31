@@ -10954,6 +10954,28 @@
       }
     },
     {
+      "name": "Bitget Wrapped BTC",
+      "coingeckoId": "bitget-wrapped-btc",
+      "address": "0x31011317764E097b28d159a8145B92BFA453F606",
+      "symbol": "BGBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1777433128,
+      "coingeckoListingTimestamp": 1776988800,
+      "category": "btc",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102172988/large/20260423-114744.png?1777014158",
+      "chainId": 2818,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP",
+            "slug": "ccip"
+          }
+        ]
+      }
+    },
+    {
       "name": "BitgetToken",
       "coingeckoId": "bitget-token",
       "address": "0x389C08Bc23A7317000a1FD76c7c5B0cb0b4640b5",

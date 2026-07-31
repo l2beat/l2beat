@@ -98,6 +98,32 @@
     },
     {
       "mode": "auto",
+      "id": "morph-BGBTC",
+      "priceId": "bitget-wrapped-btc",
+      "symbol": "BGBTC",
+      "name": "Bitget Wrapped BTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102172988/large/20260423-114744.png?1777014158",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x31011317764E097b28d159a8145B92BFA453F606",
+        "chain": "morph",
+        "decimals": 8,
+        "sinceTimestamp": 1777433128
+      },
+      "category": "btc",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP",
+            "slug": "ccip"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "morph-DAI",
       "priceId": "dai",
       "symbol": "DAI",
