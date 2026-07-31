@@ -15,7 +15,6 @@
     "arb1:0xbF5041Fc07E1c866D15c749156657B8eEd0fb649",
     "arb1:0x32e7AF5A8151934F3787d0cD59EB6EDd0a736b1d",
     "arb1:0x1D62fFeB72e4c360CcBbacf7c965153b00260417",
-    "arb1:0x0000000000000000000000000000000000000074",
     "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
     "eth:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
     "eth:0xcEe284F754E854890e311e3280b767F80797180d",
@@ -29,7 +28,6 @@
     "arb1:0x789fC99093B09aD01C34DC7251D0C89ce743e5a4": "TreasuryGovernor",
     "arb1:0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58": "TreasuryTimelock",
     "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827": "L2UpgradeExecutor",
-    "arb1:0x0000000000000000000000000000000000000074": "ArbFilteredTransactionsManager",
     "arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC": "SecurityCouncilManager",
     "arb1:0x1D62fFeB72e4c360CcBbacf7c965153b00260417": "ConstitutionHash",
     "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e": "L2ProxyAdmin",
@@ -74,55 +72,20 @@
     "eth:0xc4940069140142236D4065b866018f7b2BeC77fD": "OutboxEntry"
   },
   "overrides": {
-    "arb1:0x0000000000000000000000000000000000000074": {
-      "description": "ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay. Shipped in ArbOS 61 but NOT enabled on Arbitrum One - it has no filterers and no filtered transactions. Tracked here so any future activation (filterer added or a tx censored) is caught immediately. Compare Robinhood, where this precompile is active.",
-      // Precompiles have no verifiable on-chain bytecode (a 0xfe stub once ArbOS 61
-      // activates; no code at all before then). Point at the implementation source
-      // so the entry is treated as verified instead of flagged "unverified".
-      "manualSourcePaths": {
-        "arb1:0x0000000000000000000000000000000000000074": "https://github.com/OffchainLabs/nitro/blob/v3.11.0/precompiles/ArbFilteredTransactionsManager.go"
-      },
+    "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827": {
       "fields": {
-        // Number of transactions ever added to the censored list
-        // (FilteredTransactionAdded(bytes32)). Expected 0 on Arbitrum One; a
-        // non-zero, growing value means the operator is actively censoring.
-        "filteredTransactionsAdded": {
+        // Seeds the ArbOS 61 transaction-filtering precompile (0x..74) as a
+        // relative and applies the shared orbitstack/ArbFilteredTransactionsManager
+        // template (censored-tx counts + authorized filterer set). The feature is
+        // not enabled on Arbitrum One, so it yields no results today; it
+        // auto-populates if it is ever activated. Hosted on the chain owner
+        // (UpgradeExecutor) because that is the ArbOS-config authority.
+        "transactionFilteringPrecompile": {
           "handler": {
-            "type": "eventCount",
-            "topics": [
-              "0xde91070c821fde128c9ad6c14fac600aa5d701f4f74997eb997cd5591414426f"
-            ]
-          }
-        },
-        // Number of transactions removed from the censored list
-        // (FilteredTransactionDeleted(bytes32)).
-        "filteredTransactionsDeleted": {
-          "handler": {
-            "type": "eventCount",
-            "topics": [
-              "0xdb54a829e2a086557fb16aeb8950816c19960c430bf7d36c791c0f8382b66d22"
-            ]
-          }
-        },
-        // The authorized transaction filterers (ArbOwnerPublic.getAllTransaction
-        // Filterers, read cross-address off 0x..6b). getAllTransactionFilterers is
-        // an ArbOS-61-only method, so it reverts until ArbOS 61 activates on
-        // Arbitrum One; expectRevert keeps discovery clean (no actor) until then,
-        // after which it resolves to the (initially empty) filterer set.
-        "transactionFilterers": {
-          "handler": {
-            "type": "call",
-            "method": "function getAllTransactionFilterers() view returns (address[])",
-            "args": [],
-            "address": "arb1:0x000000000000000000000000000000000000006b",
-            "expectRevert": true
+            "type": "hardcoded",
+            "value": "arb1:0x0000000000000000000000000000000000000074"
           },
-          "permissions": [
-            {
-              "type": "interact",
-              "description": "Can register/remove transaction hashes in the ArbFilteredTransactionsManager precompile, causing the state transition function to forcibly fail those transactions, including force-included ones, without delay."
-            }
-          ]
+          "template": "orbitstack/ArbFilteredTransactionsManager"
         }
       }
     },
