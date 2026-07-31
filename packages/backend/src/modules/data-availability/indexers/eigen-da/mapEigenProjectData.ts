@@ -1,6 +1,6 @@
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import type { TimestampDaIndexedConfig } from '../../../config/Config'
+import type { TimestampDaIndexedConfig } from '../../../../config/Config'
 
 export interface EigenProjectDataEntry {
   datetime: UnixTime

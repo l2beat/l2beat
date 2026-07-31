@@ -18,27 +18,21 @@ import { config as dotenv } from 'dotenv'
 import * as fs from 'fs'
 import * as path from 'path'
 import { getDaTrackingConfig } from '../../src/config/features/da'
-import {
-  diffSnapshots,
-  type SnapshotDiff,
-} from '../../src/modules/data-availability/preview/diffSnapshot'
-import {
-  type ExpectedCoverage,
-  findRecordGaps,
-} from '../../src/modules/data-availability/preview/gaps'
+import { BlobService } from '../../src/modules/data-availability/services/BlobService'
+import { DaService } from '../../src/modules/data-availability/services/DaService'
+import { createBlobSource } from './blobSource'
+import { createPreviewClients, DB_CACHE_URL } from './clients'
+import { diffSnapshots, type SnapshotDiff } from './diffSnapshot'
+import { previewEigen } from './eigenPreview'
+import { type ExpectedCoverage, findRecordGaps } from './gaps'
+import { summarizeGaps, summarizeRecords, writePreviewJson } from './output'
 import {
   ceilToHour,
   clampBlockRange,
   hoursInWindow,
   parseTimeArg,
   resolveWindow,
-} from '../../src/modules/data-availability/preview/range'
-import { BlobService } from '../../src/modules/data-availability/services/BlobService'
-import { DaService } from '../../src/modules/data-availability/services/DaService'
-import { createBlobSource } from './blobSource'
-import { createPreviewClients, DB_CACHE_URL } from './clients'
-import { previewEigen } from './eigenPreview'
-import { summarizeGaps, summarizeRecords, writePreviewJson } from './output'
+} from './range'
 
 const LAYERS = ['ethereum', 'celestia', 'avail', 'eigenda'] as const
 

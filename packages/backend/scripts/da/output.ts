@@ -2,7 +2,7 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import * as fs from 'fs'
-import type { RecordGap } from '../../src/modules/data-availability/preview/gaps'
+import type { RecordGap } from './gaps'
 
 const MAX_LISTED_GAP_HOURS = 6
 

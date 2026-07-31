@@ -10,7 +10,7 @@ import type {
   ManagedMultiIndexerOptions,
   WipeRemovalConfiguration,
 } from '../../../../tools/uif/multi/types'
-import { mapEigenProjectData } from '../../preview/mapEigenProjectData'
+import { mapEigenProjectData } from './mapEigenProjectData'
 
 export interface Dependencies
   extends Omit<

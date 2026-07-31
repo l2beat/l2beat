@@ -3,16 +3,12 @@ import type { DataAvailabilityRecord } from '@l2beat/database'
 import type { EigenApiClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import type { TimestampDaIndexedConfig } from '../../src/config/Config'
-import type { ExpectedCoverage } from '../../src/modules/data-availability/preview/gaps'
 import {
   type EigenDaProjectConfiguration,
   mapEigenProjectData,
-} from '../../src/modules/data-availability/preview/mapEigenProjectData'
-import {
-  clampTimestampRange,
-  hoursInWindow,
-  type PreviewWindow,
-} from '../../src/modules/data-availability/preview/range'
+} from '../../src/modules/data-availability/indexers/eigen-da/mapEigenProjectData'
+import type { ExpectedCoverage } from './gaps'
+import { clampTimestampRange, hoursInWindow, type PreviewWindow } from './range'
 
 /** Date of the first per-project data file available from the Eigen API. */
 const FIRST_FILE_DATE = UnixTime.fromDate(new Date('2025-08-01T00:00:00.000Z'))
