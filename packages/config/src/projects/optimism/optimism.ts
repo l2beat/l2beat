@@ -1,6 +1,7 @@
 import {
   ChainSpecificAddress,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -14,6 +15,7 @@ const discovery = new ProjectDiscovery('optimism')
 const genesisTimestamp = UnixTime(1636665399)
 const chainId = 10
 const sequencingWindowBlocks = 3_600
+const assumedL1BlockTimeSeconds = 12
 
 const securityCouncilStats = discovery.getMultisigStats(
   'Optimism Security Council',
@@ -188,8 +190,8 @@ export const optimism: ScalingProject = opStackL2({
             'Once the Ethereum deposit is included, conforming rollup nodes derive it without requiring a second user transaction.',
         },
         forcedInclusionDelay: {
-          value: `${sequencingWindowBlocks.toLocaleString('en-US')} L1 blocks`,
-          secondLine: '≈ 12 hours nominal',
+          value: `${formatSeconds(sequencingWindowBlocks * assumedL1BlockTimeSeconds, { fullUnit: true })}`,
+          secondLine: `${sequencingWindowBlocks.toLocaleString('en-US')} L1 blocks`,
           sentiment: 'good',
           description:
             'The static sequencing window is measured in Ethereum blocks. The wall-clock duration assumes 12-second L1 blocks.',

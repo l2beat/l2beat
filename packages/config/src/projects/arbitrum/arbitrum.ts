@@ -533,8 +533,8 @@ export const arbitrum: ScalingProject = orbitStackL2({
             'After the delay expires, anyone can call forceInclusion on Ethereum. The call advances all delayed messages through the selected message.',
         },
         forcedInclusionDelay: {
-          value: `${currentForceInclusionDelayBlocks.toLocaleString('en-US')} L1 blocks`,
-          secondLine: `${delayBuffer.threshold.toLocaleString('en-US')}–${maxTimeVariation.delayBlocks.toLocaleString('en-US')}, dynamic`,
+          value: `${formatSeconds(currentForceInclusionDelayBlocks * assumedBlockTime, { fullUnit: true })}`,
+          secondLine: `${currentForceInclusionDelayBlocks.toLocaleString('en-US')} L1 blocks (${delayBuffer.threshold.toLocaleString('en-US')}–${maxTimeVariation.delayBlocks.toLocaleString('en-US')}, dynamic)`,
           sentiment: 'good',
           description:
             'The message-specific delay is the lower of delayBlocks and the delay buffer. The current buffer gives the maximum delay. The force call becomes valid in the following Ethereum block.',
