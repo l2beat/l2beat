@@ -57,10 +57,18 @@ export function makeEntryStructureConfig(
     ...overrides,
     types: merge({}, config.types ?? {}, overrides.types),
     pushValues: function (values: StructureContract) {
-      const newState = {
-        address: this.address,
-        ...StructureContract.parse(merge({}, values, this)),
+      // `ignoreRelatives: true` is a wildcard (ignore every relative). lodash
+      // `merge` collapses it to `[]` whenever the other side carries the
+      // schema's default empty array, silently dropping a template's wildcard.
+      // Preserve it explicitly: the wildcard subsumes any field list on either
+      // side.
+      const ignoreAllRelatives =
+        values.ignoreRelatives === true || this.ignoreRelatives === true
+      const merged = StructureContract.parse(merge({}, values, this))
+      if (ignoreAllRelatives) {
+        merged.ignoreRelatives = true
       }
+      const newState = { address: this.address, ...merged }
       newState.discoverLibraries ??=
         this.discoverLibraries ?? config.discoverLibraries ?? false
       Object.assign(this, newState)
