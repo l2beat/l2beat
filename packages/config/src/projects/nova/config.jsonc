@@ -9,12 +9,14 @@
     "arb-nova:0x9fCB6F75D99029f28F6F4a1d277bae49c5CAC79f",
     "arb-nova:0x509386DbF5C0BE6fd68Df97A05fdB375136c32De",
     "arb-nova:0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD",
+    "arb-nova:0x0000000000000000000000000000000000000074",
     "eth:0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48",
     "eth:0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
     "eth:0x97f63339374fCe157Aa8Ee27830172d2AF76A786"
   ],
   "names": {
     "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482": "L2UpgradeExecutor",
+    "arb-nova:0x0000000000000000000000000000000000000074": "ArbFilteredTransactionsManager",
     "arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9": "L2ProxyAdmin",
     "arb-nova:0x9fCB6F75D99029f28F6F4a1d277bae49c5CAC79f": "L2BaseFee",
     "arb-nova:0x509386DbF5C0BE6fd68Df97A05fdB375136c32De": "L2SurplusFee",
@@ -41,6 +43,58 @@
     "eth:0xFE66b18Ef1B943F8594A2710376Af4B01AcfA688": "EdgeChallengeManager"
   },
   "overrides": {
+    "arb-nova:0x0000000000000000000000000000000000000074": {
+      "description": "ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay. Shipped in ArbOS 61 but NOT enabled on Arbitrum Nova - it has no filterers and no filtered transactions. Tracked here so any future activation (filterer added or a tx censored) is caught immediately. Compare Robinhood, where this precompile is active.",
+      // Precompiles have no verifiable on-chain bytecode (a 0xfe stub once ArbOS 61
+      // activates; no code at all before then). Point at the implementation source
+      // so the entry is treated as verified instead of flagged "unverified".
+      "manualSourcePaths": {
+        "arb-nova:0x0000000000000000000000000000000000000074": "https://github.com/OffchainLabs/nitro/blob/v3.11.0/precompiles/ArbFilteredTransactionsManager.go"
+      },
+      "fields": {
+        // Number of transactions ever added to the censored list
+        // (FilteredTransactionAdded(bytes32)). Expected 0 on Arbitrum Nova; a
+        // non-zero, growing value means the operator is actively censoring.
+        "filteredTransactionsAdded": {
+          "handler": {
+            "type": "eventCount",
+            "topics": [
+              "0xde91070c821fde128c9ad6c14fac600aa5d701f4f74997eb997cd5591414426f"
+            ]
+          }
+        },
+        // Number of transactions removed from the censored list
+        // (FilteredTransactionDeleted(bytes32)).
+        "filteredTransactionsDeleted": {
+          "handler": {
+            "type": "eventCount",
+            "topics": [
+              "0xdb54a829e2a086557fb16aeb8950816c19960c430bf7d36c791c0f8382b66d22"
+            ]
+          }
+        },
+        // The authorized transaction filterers (ArbOwnerPublic.getAllTransaction
+        // Filterers, read cross-address off 0x..6b). getAllTransactionFilterers is
+        // an ArbOS-61-only method, so it reverts until ArbOS 61 activates on
+        // Arbitrum Nova; expectRevert keeps discovery clean (no actor) until then,
+        // after which it resolves to the (initially empty) filterer set.
+        "transactionFilterers": {
+          "handler": {
+            "type": "call",
+            "method": "function getAllTransactionFilterers() view returns (address[])",
+            "args": [],
+            "address": "arb-nova:0x000000000000000000000000000000000000006b",
+            "expectRevert": true
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Can register/remove transaction hashes in the ArbFilteredTransactionsManager precompile, causing the state transition function to forcibly fail those transactions, including force-included ones, without delay."
+            }
+          ]
+        }
+      }
+    },
     "eth:0x3B0369CAD35d257793F51c28213a4Cf4001397AC": {
       "category": "non-critical"
     },

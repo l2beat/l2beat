@@ -1,8 +1,26 @@
 {
   "name": "nova",
-  "timestamp": 1784846743,
-  "configHash": "0x7f9a7f1a3b9f1453d6df54f4fc41ac2c4bf572b844e1925187852424df77dcfa",
+  "timestamp": 1785503792,
+  "configHash": "0xd967aae68971f8ab9607552388605cc451834dae6a35d887c4cd7b499e9cc068",
   "entries": [
+    {
+      "name": "ArbFilteredTransactionsManager",
+      "address": "arb-nova:0x0000000000000000000000000000000000000074",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "description": "ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay. Shipped in ArbOS 61 but NOT enabled on Arbitrum Nova - it has no filterers and no filtered transactions. Tracked here so any future activation (filterer added or a tx censored) is caught immediately. Compare Robinhood, where this precompile is active.",
+      "values": {
+        "filteredTransactionsAdded": 0,
+        "filteredTransactionsDeleted": 0,
+        "transactionFilterers": "EXPECT_REVERT"
+      },
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://github.com/OffchainLabs/nitro/blob/v3.11.0/precompiles/ArbFilteredTransactionsManager.go"
+        }
+      ]
+    },
     {
       "name": "bartek.eth-L2BEAT",
       "address": "arb-nova:0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
@@ -968,7 +986,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "batchCount": 369563,
+        "batchCount": 371795,
         "batchPosterManager": "eth:0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "eth:0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
@@ -980,9 +998,9 @@
           "bufferBlocks": 14400,
           "max": 14400,
           "threshold": 300,
-          "prevBlockNumber": 25598244,
+          "prevBlockNumber": 25652813,
           "replenishRateInBasis": 500,
-          "prevSequencedBlockNumber": 25598299
+          "prevSequencedBlockNumber": 25652878
         },
         "dacKeyset": {
           "requiredSignatures": 5,
@@ -1015,7 +1033,7 @@
         "rollup": "eth:0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 615705,
+        "totalDelayedMessagesRead": 617938,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1948,7 +1966,7 @@
           "eth:0x304807A7ed6c1296df2128E6ff3836e477329CD2"
         ],
         "allowedOutboxList": ["eth:0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
-        "delayedMessageCount": 615708,
+        "delayedMessageCount": 617941,
         "inboxHistory": [
           "eth:0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
           "eth:0x304807A7ed6c1296df2128E6ff3836e477329CD2"
@@ -1956,8 +1974,8 @@
         "outboxHistory": ["eth:0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
         "rollup": "eth:0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd",
         "sequencerInbox": "eth:0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-        "sequencerMessageCount": 369563,
-        "sequencerReportedSubMessageCount": 85192234
+        "sequencerMessageCount": 371795,
+        "sequencerReportedSubMessageCount": 85211367
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -6241,7 +6259,7 @@
         ],
         "inbox": "eth:0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
         "isPostBoLD": true,
-        "latestConfirmed": "0x92dbfb8f8545017700937b8b00dce0ff8fba5edd9044a6684b75a69fab6cb425",
+        "latestConfirmed": "0xaa35ec0c39ddfcbbf24410bb31d4275e77293135277fd62f2216d9b9409a4731",
         "loserStakeEscrow": "eth:0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",
@@ -8053,6 +8071,6 @@
     "orbitstack/Timelock": "0xeaf0991ebe464d6bb8f93bff88d69db8d55c9b58d68eed9e71d6f74f223d351c",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "ethereum": 25598501, "nova": 85192233 },
-  "permissionsConfigHash": "0xba091e1868484df746b849b19700593b3812f295cea178a8d0dd75f160e636e4"
+  "usedBlockNumbers": { "ethereum": 25653082, "nova": 85211372 },
+  "permissionsConfigHash": "0xb1ca02e35bce3d96c3b8ad0292d0b0c54bc0a931882ec1a4f88b268675d9f8c1"
 }
