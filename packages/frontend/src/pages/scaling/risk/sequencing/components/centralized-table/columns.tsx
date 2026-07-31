@@ -14,13 +14,28 @@ function getSequencingHref(entry: ScalingRiskCentralizedSequencingEntry) {
 }
 
 type CentralizedSequencingTableValueKey =
+  | 'trustedPreconfirmation'
+  | 'trustedOrdering'
   | 'sequencerCount'
   | 'realtimeCensorshipResistance'
   | 'forcedInclusion'
   | 'forcedInclusionDelay'
-  | 'l1Transactions'
+  | 'fallbackFinalizationDelay'
+  | 'forcedInclusionConstraints'
 
 const tableValueColumns = [
+  {
+    key: 'trustedPreconfirmation',
+    header: 'Trusted\npreconfirmation',
+    tooltip:
+      'Target latency of the trusted sequencer preconfirmation. The second line shows the regular L2 block time.',
+  },
+  {
+    key: 'trustedOrdering',
+    header: 'Trusted\nordering',
+    tooltip:
+      'Policy the centralized sequencer claims to use for ordering transactions. It is not enforced by the host chain.',
+  },
   {
     key: 'sequencerCount',
     header: 'Sequencer\noperators',
@@ -37,7 +52,7 @@ const tableValueColumns = [
     key: 'forcedInclusion',
     header: 'L1\nfallback',
     tooltip:
-      'How users bypass the sequencer after submitting through the host chain.',
+      'How users bypass the sequencer through the host chain and how many L1 transactions the complete fallback path requires.',
   },
   {
     key: 'forcedInclusionDelay',
@@ -46,10 +61,16 @@ const tableValueColumns = [
       'Protocol delay after the first L1 transaction is included. Wall-clock values are nominal.',
   },
   {
-    key: 'l1Transactions',
-    header: 'Required\nL1 txs',
+    key: 'fallbackFinalizationDelay',
+    header: 'Fallback to\nstate finality',
     tooltip:
-      'Number of L1 transactions needed when the sequencer censors the user.',
+      'Worst-case protocol delay from the first L1 fallback transaction until its resulting L2 state can finalize, including permissionless state proposal and challenges. Assumes all required L1 transactions are included.',
+  },
+  {
+    key: 'forcedInclusionConstraints',
+    header: 'Fallback\nconstraints',
+    tooltip:
+      'Transaction format, size, address-aliasing, resource and permission constraints of the L1 fallback path.',
   },
 ] satisfies {
   key: CentralizedSequencingTableValueKey

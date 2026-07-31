@@ -37,9 +37,11 @@ export function CentralizedSequencingTable({ entries }: Props) {
             Centralized sequencing
           </h2>
           <p className="mt-1 max-w-3xl text-paragraph-14 text-secondary md:text-paragraph-15">
-            A single operator can censor in real time, while an L1 fallback
-            provides eventual inclusion. Delays assume Ethereum includes the
-            required L1 transactions.
+            A centralized operator can censor in real time, while an L1 fallback
+            provides eventual inclusion. Fallback delay measures when a
+            transaction enters the canonical L2 order; state finality also
+            includes permissionless proposal and challenge periods. Delays
+            assume Ethereum includes the required L1 transactions.
           </p>
         </div>
         <ColumnsControls columns={table.getAllColumns()} />

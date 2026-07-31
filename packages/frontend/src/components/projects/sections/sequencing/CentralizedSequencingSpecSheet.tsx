@@ -9,6 +9,8 @@ interface Props {
 }
 
 const SPEC_ROWS = [
+  { key: 'trustedPreconfirmation', label: 'Trusted preconfirmation' },
+  { key: 'trustedOrdering', label: 'Trusted ordering' },
   { key: 'sequencerCount', label: 'Sequencer operators' },
   {
     key: 'realtimeCensorshipResistance',
@@ -16,7 +18,11 @@ const SPEC_ROWS = [
   },
   { key: 'forcedInclusion', label: 'L1 fallback' },
   { key: 'forcedInclusionDelay', label: 'Fallback delay' },
-  { key: 'l1Transactions', label: 'Required L1 transactions' },
+  {
+    key: 'fallbackFinalizationDelay',
+    label: 'Fallback to state finality',
+  },
+  { key: 'forcedInclusionConstraints', label: 'Fallback constraints' },
 ] satisfies {
   key: keyof ProjectCentralizedSequencingSpec
   label: string

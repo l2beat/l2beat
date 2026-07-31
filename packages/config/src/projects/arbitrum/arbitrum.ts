@@ -143,6 +143,29 @@ const currentForceInclusionDelayBlocks = Math.min(
   maxTimeVariation.delayBlocks,
   delayBuffer.bufferBlocks,
 )
+const inboxMaxDataSize = discovery.getContractValue<number>(
+  'Inbox',
+  'maxDataSize',
+)
+const minimumAssertionPeriodSeconds =
+  discovery.getContractValue<number>('RollupProxy', 'minimumAssertionPeriod') *
+  assumedBlockTime
+const edgeChallengePeriodBlocks = discovery.getContractValue<number>(
+  'EdgeChallengeManager',
+  'challengePeriodBlocks',
+)
+const edgeChallengePeriodSeconds = edgeChallengePeriodBlocks * assumedBlockTime
+const worstCaseStateFinalizationDelaySeconds =
+  minimumAssertionPeriodSeconds +
+  edgeChallengePeriodSeconds * 2 +
+  challengeGracePeriodSeconds
+const worstCaseFallbackFinalizationDelaySeconds =
+  currentForceInclusionDelayBlocks * assumedBlockTime +
+  worstCaseStateFinalizationDelaySeconds
+const worstCaseFallbackFinalizationDisplaySeconds =
+  Math.ceil(worstCaseFallbackFinalizationDelaySeconds / 3_600) * 3_600
+const worstCaseStateFinalizationDisplaySeconds =
+  Math.ceil(worstCaseStateFinalizationDelaySeconds / 3_600) * 3_600
 
 const selfSequencingDelay = maxTimeVariation.delaySeconds
 
@@ -512,11 +535,25 @@ export const arbitrum: ScalingProject = orbitStackL2({
       description:
         'Arbitrum One uses a single centralized sequencer for fast confirmations. Users can bypass it by first enqueueing a message on Ethereum. If the sequencer does not include it before the message-specific delay expires, anyone can submit a second Ethereum transaction to force the delayed queue into the canonical order.',
       centralizedSequencingSpec: {
+        trustedPreconfirmation: {
+          value: '250 ms',
+          secondLine: '250 ms L2 block time',
+          description:
+            'The sequencer feed provides a trusted soft confirmation with no protocol enforcement or slashing. While a Timeboost express lane controller is active, non-express transactions are delayed by 200 ms before ordering.',
+          orderHint: 0.25,
+        },
+        trustedOrdering: {
+          value: 'Timeboost',
+          secondLine: 'Auctioned express lane',
+          description:
+            'The express lane controller, selected by auction for each round, receives a 200 ms advantage over regular transactions. Transactions are otherwise ordered based on arrival time. This policy is operated by the centralized sequencer and is not enforced by the L1 contracts.',
+        },
         sequencerCount: {
-          value: '1 operator',
+          value: 'Centralized',
+          secondLine: 'Redis-coordinated HA',
           sentiment: 'bad',
           description:
-            'A single operator controls the real-time sequencer feed. Multiple batch-poster keys do not represent independent sequencers.',
+            "One organization controls the real-time sequencer feed. Arbitrum's documented production HA architecture runs redundant sequencer replicas and selects one active instance through shared Redis state. This improves availability but is not BFT consensus and does not create independent operators or censorship resistance.",
           orderHint: 1,
         },
         realtimeCensorshipResistance: {
@@ -527,10 +564,10 @@ export const arbitrum: ScalingProject = orbitStackL2({
         },
         forcedInclusion: {
           value: 'Permissionless call',
-          secondLine: 'Delayed inbox + force inclusion',
+          secondLine: '2 L1 txs: enqueue + force',
           sentiment: 'good',
           description:
-            'After the delay expires, anyone can call forceInclusion on Ethereum. The call advances all delayed messages through the selected message.',
+            'The first Ethereum transaction enqueues the message in the delayed inbox. After the delay expires, anyone can submit a second transaction calling forceInclusion, which advances all delayed messages through the selected message.',
         },
         forcedInclusionDelay: {
           value: `${formatSeconds(currentForceInclusionDelayBlocks * assumedBlockTime, { fullUnit: true })}`,
@@ -540,13 +577,24 @@ export const arbitrum: ScalingProject = orbitStackL2({
             'The message-specific delay is the lower of delayBlocks and the delay buffer. The current buffer gives the maximum delay. The force call becomes valid in the following Ethereum block.',
           orderHint: currentForceInclusionDelayBlocks,
         },
-        l1Transactions: {
-          value: '2 transactions',
-          secondLine: 'enqueue + force',
-          sentiment: 'warning',
-          description:
-            'The first Ethereum transaction enqueues the message. If the sequencer censors it, a second Ethereum transaction must call forceInclusion.',
-          orderHint: 2,
+        fallbackFinalizationDelay: {
+          value: formatSeconds(worstCaseFallbackFinalizationDisplaySeconds, {
+            fullUnit: true,
+          }),
+          secondLine: `${formatSeconds(currentForceInclusionDelayBlocks * assumedBlockTime)} inclusion + ${formatSeconds(
+            worstCaseStateFinalizationDisplaySeconds,
+          )} finality`,
+          description: `After forced inclusion, anyone with the required bond can self-propose an assertion. The assertion cadence can add up to ${formatSeconds(minimumAssertionPeriodSeconds, { fullUnit: true })}. In a maximally delayed BoLD challenge, confirming the winning edge can take up to twice the ${edgeChallengePeriodBlocks.toLocaleString('en-US')}-block edge challenge period, followed by a ${(
+            challengeGracePeriodSeconds / assumedBlockTime
+          ).toLocaleString(
+            'en-US',
+          )}-block grace period. The total assumes 12-second Ethereum blocks and that Ethereum includes the proposal, challenge and confirmation transactions.`,
+          orderHint: worstCaseFallbackFinalizationDelaySeconds,
+        },
+        forcedInclusionConstraints: {
+          value: 'Delayed-inbox message',
+          secondLine: 'Address alias',
+          description: `The fallback creates an L1-originated L2 message rather than submitting the original signed L2 transaction. The full delayed-inbox message is capped at ${inboxMaxDataSize.toLocaleString('en-US')} bytes, so the available call data is slightly smaller. L1 contract callers use an aliased address on L2. The rollup owner can pause the Inbox or enable its allowlist, preventing new fallback submissions.`,
         },
       },
       censorshipResistance:
@@ -557,8 +605,20 @@ export const arbitrum: ScalingProject = orbitStackL2({
           url: 'https://docs.arbitrum.io/how-arbitrum-works/deep-dives/sequencer',
         },
         {
+          title: 'Arbitrum - Timeboost launch',
+          url: 'https://blog.arbitrum.io/gattaca-titan-timeboost-live-on-arbitrum/',
+        },
+        {
+          title: 'Arbitrum documentation - High-availability sequencer',
+          url: 'https://docs.arbitrum.io/launch-arbitrum-chain/run-a-node/high-availability-sequencer',
+        },
+        {
           title: 'SequencerInbox - source code',
           url: 'https://etherscan.io/address/0x98a58ADAb0f8A66A1BF4544d804bc0475dff32c7#code',
+        },
+        {
+          title: 'Inbox - source code',
+          url: 'https://etherscan.io/address/0x7C058ad1D0Ee415f7e7f30e62DB1BCf568470a10#code',
         },
       ],
       risks: [],

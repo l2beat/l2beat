@@ -77,11 +77,14 @@ export interface ProjectSequencerSetSpec {
 }
 
 export interface ProjectCentralizedSequencingSpec {
+  trustedPreconfirmation: TableReadyValue
+  trustedOrdering: TableReadyValue
   sequencerCount: TableReadyValue
   realtimeCensorshipResistance: TableReadyValue
   forcedInclusion: TableReadyValue
   forcedInclusionDelay: TableReadyValue
-  l1Transactions: TableReadyValue
+  fallbackFinalizationDelay: TableReadyValue
+  forcedInclusionConstraints: TableReadyValue
 }
 
 export type ProjectInclusionDelayChart =

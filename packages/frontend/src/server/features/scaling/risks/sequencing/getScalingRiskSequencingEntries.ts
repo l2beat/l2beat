@@ -34,11 +34,14 @@ export interface ScalingRiskSequencingEntry extends CommonScalingEntry {
 
 export interface ScalingRiskCentralizedSequencingEntry
   extends CommonScalingEntry {
+  trustedPreconfirmation: TableReadyValue
+  trustedOrdering: TableReadyValue
   sequencerCount: TableReadyValue
   realtimeCensorshipResistance: TableReadyValue
   forcedInclusion: TableReadyValue
   forcedInclusionDelay: TableReadyValue
-  l1Transactions: TableReadyValue
+  fallbackFinalizationDelay: TableReadyValue
+  forcedInclusionConstraints: TableReadyValue
 }
 
 export interface InclusionDelayComparisonSeries {
@@ -199,11 +202,14 @@ function getScalingRiskCentralizedSequencingEntry(
 
   return {
     ...getCommonScalingEntry({ project, changes }),
+    trustedPreconfirmation: spec.trustedPreconfirmation,
+    trustedOrdering: spec.trustedOrdering,
     sequencerCount: spec.sequencerCount,
     realtimeCensorshipResistance: spec.realtimeCensorshipResistance,
     forcedInclusion: spec.forcedInclusion,
     forcedInclusionDelay: spec.forcedInclusionDelay,
-    l1Transactions: spec.l1Transactions,
+    fallbackFinalizationDelay: spec.fallbackFinalizationDelay,
+    forcedInclusionConstraints: spec.forcedInclusionConstraints,
   }
 }
 

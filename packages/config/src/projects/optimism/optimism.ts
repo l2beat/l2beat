@@ -16,6 +16,28 @@ const genesisTimestamp = UnixTime(1636665399)
 const chainId = 10
 const sequencingWindowBlocks = 3_600
 const assumedL1BlockTimeSeconds = 12
+const depositResourceLimit = discovery.getContractValue<{
+  maxResourceLimit: number
+}>('SystemConfig', 'resourceConfig').maxResourceLimit
+const proofMaturityDelaySeconds = discovery.getContractValue<number>(
+  'OptimismPortal2',
+  'proofMaturityDelaySeconds',
+)
+const disputeGameFinalityDelaySeconds = discovery.getContractValue<number>(
+  'OptimismPortal2',
+  'disputeGameFinalityDelaySeconds',
+)
+const maxClockDuration = discovery.getContractValue<number>(
+  'FaultDisputeGame',
+  'maxClockDuration',
+)
+const stateFinalizationDelaySeconds = Math.max(
+  proofMaturityDelaySeconds,
+  maxClockDuration + disputeGameFinalityDelaySeconds,
+)
+const worstCaseFallbackFinalizationDelaySeconds =
+  sequencingWindowBlocks * assumedL1BlockTimeSeconds +
+  stateFinalizationDelaySeconds
 
 const securityCouncilStats = discovery.getMultisigStats(
   'Optimism Security Council',
@@ -169,11 +191,25 @@ export const optimism: ScalingProject = opStackL2({
       description:
         'OP Mainnet uses a single centralized sequencer for fast confirmations. Users can bypass it with one Ethereum transaction to the OptimismPortal. Rollup nodes derive the deposited transaction from Ethereum, including it after at most one sequencing window.',
       centralizedSequencingSpec: {
+        trustedPreconfirmation: {
+          value: '250 ms',
+          secondLine: '2 s L2 block time',
+          description:
+            'The centralized sequencer streams cumulative Flashblock preconfirmations every 250 ms while sealing regular L2 blocks every 2 seconds. Flashblocks are out of protocol: the promise has no protocol enforcement or slashing, and 250 ms is a target that can vary with execution load.',
+          orderHint: 0.25,
+        },
+        trustedOrdering: {
+          value: 'Priority gas auction',
+          secondLine: 'Higher priority fees first',
+          description:
+            "The centralized sequencer prioritizes transactions that pay higher priority fees. The policy is not enforced by the derivation rules, and Flashblocks only expose the builder's ordering decisions earlier.",
+        },
         sequencerCount: {
-          value: '1 operator',
+          value: 'Centralized',
+          secondLine: 'Raft-coordinated HA',
           sentiment: 'bad',
           description:
-            'A single operator controls real-time transaction ordering and block production.',
+            'One organization controls real-time ordering. OP Labs runs redundant sequencer instances coordinated by op-conductor using Raft leader election, with only the leader producing blocks. op-conductor explicitly assumes all nodes are honest and is not Byzantine fault tolerant, so the replicas do not create independent operators or censorship resistance.',
           orderHint: 1,
         },
         realtimeCensorshipResistance: {
@@ -184,10 +220,10 @@ export const optimism: ScalingProject = opStackL2({
         },
         forcedInclusion: {
           value: 'Automatic derivation',
-          secondLine: 'OptimismPortal deposit',
+          secondLine: '1 L1 tx: portal deposit',
           sentiment: 'good',
           description:
-            'Once the Ethereum deposit is included, conforming rollup nodes derive it without requiring a second user transaction.',
+            'The user submits one Ethereum transaction to the OptimismPortal. Once it is included, conforming rollup nodes derive the deposit transaction without requiring a follow-up force-inclusion transaction.',
         },
         forcedInclusionDelay: {
           value: `${formatSeconds(sequencingWindowBlocks * assumedL1BlockTimeSeconds, { fullUnit: true })}`,
@@ -197,12 +233,18 @@ export const optimism: ScalingProject = opStackL2({
             'The static sequencing window is measured in Ethereum blocks. The wall-clock duration assumes 12-second L1 blocks.',
           orderHint: sequencingWindowBlocks,
         },
-        l1Transactions: {
-          value: '1 transaction',
-          sentiment: 'good',
-          description:
-            'The user submits one transaction to the OptimismPortal. No follow-up force-inclusion transaction is needed.',
-          orderHint: 1,
+        fallbackFinalizationDelay: {
+          value: formatSeconds(worstCaseFallbackFinalizationDelaySeconds, {
+            fullUnit: true,
+          }),
+          secondLine: `${formatSeconds(sequencingWindowBlocks * assumedL1BlockTimeSeconds)} inclusion + ${formatSeconds(stateFinalizationDelaySeconds)} finality`,
+          description: `After the deposit enters the canonical L2 order, anyone with the required bond can immediately self-propose a dispute game. A maximally delayed game uses the ${formatSeconds(maxClockDuration, { fullUnit: true })} game clock and then waits the ${formatSeconds(disputeGameFinalityDelaySeconds, { fullUnit: true })} finality air gap. The independently enforced ${formatSeconds(proofMaturityDelaySeconds, { fullUnit: true })} withdrawal-proof maturity period runs concurrently and gives the same 7-day finality leg. The total assumes 12-second Ethereum blocks and that Ethereum includes the game, proof and finalization transactions.`,
+          orderHint: worstCaseFallbackFinalizationDelaySeconds,
+        },
+        forcedInclusionConstraints: {
+          value: 'Deposit transaction',
+          secondLine: 'Address alias',
+          description: `The fallback creates an L1-originated deposit transaction rather than submitting the original signed L2 transaction. Its calldata is capped at 120,000 bytes, its minimum L2 gas limit is 21,000 plus 40 gas per calldata byte, and deposits share a metered ${depositResourceLimit.toLocaleString('en-US')} gas resource limit per Ethereum block. L1 contract callers use an aliased address on L2.`,
         },
       },
       censorshipResistance:
@@ -211,6 +253,18 @@ export const optimism: ScalingProject = opStackL2({
         {
           title: 'OP Stack specification - sequencing window',
           url: 'https://specs.optimism.io/protocol/overview.html#epochs-and-the-sequencing-window',
+        },
+        {
+          title: 'OP Mainnet documentation - Flashblocks',
+          url: 'https://docs.optimism.io/op-stack/features/flashblocks',
+        },
+        {
+          title: 'OP Stack documentation - Conductor',
+          url: 'https://docs.optimism.io/chain-operators/tools/op-conductor',
+        },
+        {
+          title: 'OP Mainnet documentation - transaction fees',
+          url: 'https://docs.optimism.io/op-stack/transactions/fees',
         },
         {
           title: 'OptimismPortal2 - source code',
