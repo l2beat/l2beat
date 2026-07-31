@@ -520,6 +520,76 @@ describe('flatten', () => {
     )
   })
 
+  it('includes file-scoped using declarations with selectively imported free functions', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import { BalanceDelta, add } from "BalanceDelta.sol";
+
+      contract Root {
+          function addDeltas(BalanceDelta a, BalanceDelta b) public pure returns (BalanceDelta) {
+              return add(a, b);
+          }
+      }
+    `,
+    )
+    const balanceDeltaFile = sol(
+      'BalanceDelta.sol',
+      `
+      import { SafeCast } from "SafeCast.sol";
+
+      using SafeCast for int256;
+
+      type BalanceDelta is int256;
+
+      function add(BalanceDelta a, BalanceDelta b) pure returns (BalanceDelta) {
+          return BalanceDelta.wrap((BalanceDelta.unwrap(a) + BalanceDelta.unwrap(b)).toInt128());
+      }
+    `,
+    )
+    const safeCastFile = sol(
+      'SafeCast.sol',
+      `
+      library SafeCast {
+          function toInt128(int256 value) internal pure returns (int128) {
+              return int128(value);
+          }
+      }
+    `,
+    )
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, balanceDeltaFile, safeCastFile],
+      [],
+    )
+
+    expect(flattened).toEqual(
+      dedent(`
+      library SafeCast {
+          function toInt128(int256 value) internal pure returns (int128) {
+              return int128(value);
+          }
+      }
+
+      using SafeCast for int256;
+
+      type BalanceDelta is int256;
+
+      function add(BalanceDelta a, BalanceDelta b) pure returns (BalanceDelta) {
+          return BalanceDelta.wrap((BalanceDelta.unwrap(a) + BalanceDelta.unwrap(b)).toInt128());
+      }
+
+      contract Root {
+          function addDeltas(BalanceDelta a, BalanceDelta b) public pure returns (BalanceDelta) {
+              return add(a, b);
+          }
+      }
+    `),
+    )
+  })
+
   it('renames library aliases in global using declarations', () => {
     const rootFile = sol(
       'Root.sol',

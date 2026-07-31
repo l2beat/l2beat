@@ -52,6 +52,51 @@ describe(CallHandler.name, () => {
 
       expect(handler.dependencies).toEqual(['quax'])
     })
+
+    // Only the base field is ever a field name, so only the base field can be
+    // scheduled. resolveReference walks the rest of the path at execute time.
+    it('detects the base field of a nested reference in args', () => {
+      const handler = new CallHandler(
+        'someName',
+        {
+          type: 'call',
+          method: 'function foo(uint a, uint b) view returns (uint)',
+          args: ['{{ constructorArgs._addressesRegistry }}', '{{ bar }}'],
+        },
+        [],
+      )
+
+      expect(handler.dependencies).toEqual(['constructorArgs', 'bar'])
+    })
+
+    it('detects the base field of a nested reference in inAddress', () => {
+      const handler = new CallHandler(
+        'someName',
+        {
+          type: 'call',
+          method: 'function foo(uint a, uint b) view returns (uint)',
+          args: [1, 2],
+          address: '{{ constructorArgs._addressesRegistry }}',
+        },
+        [],
+      )
+
+      expect(handler.dependencies).toEqual(['constructorArgs'])
+    })
+
+    it('detects the base field of a deeply nested reference', () => {
+      const handler = new CallHandler(
+        'someName',
+        {
+          type: 'call',
+          method: 'function foo(uint a) view returns (uint)',
+          args: ['{{ foo.bar.baz }}'],
+        },
+        [],
+      )
+
+      expect(handler.dependencies).toEqual(['foo'])
+    })
   })
 
   describe('getMethod', () => {
@@ -316,6 +361,92 @@ describe(CallHandler.name, () => {
         someDependentAddress: {
           field: 'someDependentAddress',
           value: inAddress.toString(),
+        },
+      })
+      expect(result).toEqual({
+        field: 'add',
+        fragment: methodFragment,
+        value: 3,
+        ignoreRelative: undefined,
+      })
+    })
+
+    it('calls the method with parameters resolved from a nested reference', async () => {
+      const provider = mockObject<IProvider>({
+        blockNumber: 123,
+        chain: 'foo',
+        async callMethod<T>(
+          passedAddress: ChainSpecificAddress,
+          _abi: string,
+          data: unknown[],
+        ) {
+          expect(passedAddress).toEqual(address)
+          expect(data).toEqual([1, 2])
+
+          return 3 as T
+        },
+      })
+
+      const handler = new CallHandler(
+        'add',
+        {
+          type: 'call',
+          method,
+          args: ['{{ constructorArgs._a }}', '{{ constructorArgs._b }}'],
+        },
+        [],
+      )
+
+      expect(handler.dependencies).toEqual([
+        'constructorArgs',
+        'constructorArgs',
+      ])
+
+      const result = await handler.execute(provider, address, {
+        constructorArgs: {
+          field: 'constructorArgs',
+          value: { _a: 1, _b: 2 },
+        },
+      })
+      expect(result).toEqual({
+        field: 'add',
+        fragment: methodFragment,
+        value: 3,
+        ignoreRelative: undefined,
+      })
+    })
+
+    it('calls the address resolved from a nested reference', async () => {
+      const inAddress = ChainSpecificAddress.random()
+      const provider = mockObject<IProvider>({
+        blockNumber: 123,
+        chain: 'foo',
+        async callMethod<T>(
+          passedAddress: ChainSpecificAddress,
+          _abi: string,
+          data: unknown[],
+        ) {
+          expect(passedAddress).toEqual(inAddress)
+          expect(data).toEqual([1, 2])
+
+          return 3 as T
+        },
+      })
+
+      const handler = new CallHandler(
+        'add',
+        {
+          type: 'call',
+          method,
+          args: [1, 2],
+          address: '{{ constructorArgs._addressesRegistry }}',
+        },
+        [],
+      )
+      const result = await handler.execute(provider, address, {
+        constructorArgs: {
+          field: 'constructorArgs',
+          value: { _addressesRegistry: inAddress.toString() },
         },
       })
       expect(result).toEqual({
