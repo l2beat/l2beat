@@ -191,6 +191,12 @@ export interface BaseProject {
   // privacy data
   privacyInfo?: ProjectPrivacyInfo
 
+  // defi data
+  defiInfo?: ProjectDefiInfo
+
+  // external dependency data
+  externalDependencies?: ProjectExternalDependency[]
+
   // feature configs
   tvsInfo?: ProjectTvsInfo
   tvsConfig?: TvsToken[]
@@ -237,6 +243,7 @@ export interface ProjectStatuses {
 export interface ProjectDisplay {
   description: string
   detailedDescription?: string
+  references?: ReferenceLink[]
   links: ProjectLinks
   badges: Badge[]
   redWarning?: ProjectRedWarning
@@ -949,6 +956,35 @@ export interface TrustedSetup {
   longDescription: string
   participantCount?: number
 }
+
+// #endregion
+
+// #region defi data
+
+export type ProjectDefiCategory = 'DEX' | 'Oracle' | 'Stablecoin'
+
+export interface ProjectDefiInfo {
+  /** Short category label shown in the DeFi table, e.g. "Stablecoin". */
+  category: ProjectDefiCategory
+}
+
+export type ProjectExternalDependency =
+  | {
+      type: 'tracked'
+      /** An L2BEAT project this project depends on. */
+      projectId: ProjectId
+      /** How this project depends on the referenced project. */
+      description: string
+    }
+  | {
+      type: 'not-tracked'
+      /** An external dependency that is not represented by an L2BEAT project. */
+      name: string
+      /** Icon slug under /icons, e.g. "reth" for /icons/reth.png. */
+      icon: string
+      /** How this project depends on the external dependency. */
+      description: string
+    }
 
 // #endregion
 
