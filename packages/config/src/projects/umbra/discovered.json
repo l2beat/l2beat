@@ -1,0 +1,136 @@
+{
+  "name": "umbra",
+  "timestamp": 1785499067,
+  "configHash": "0x41eeddb311eed2d8282a3a5107e4283df7ca538cd19a7bb84dfbe3e541758a81",
+  "entries": [
+    {
+      "address": "eth:0x12aE679061C58e9f7660A2f7e6f06573014d2615",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "StealthKeyRegistry",
+      "address": "eth:0x31fe56609C65Cd0C510E7125f051D440424D38f3",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xb9c99bb5f3a66ecab2d7cf945eedf4ccc3c3d5e2ecba8cbba4afec18b84ad4a7"
+      ],
+      "proxyType": "immutable",
+      "ignoreInWatchMode": ["registeredAddresses"],
+      "deployerAddress": "eth:0x5777Aa6F437399Af6cef2Fce0BE8D4B4eD7C7232",
+      "sinceTimestamp": 1629943007,
+      "sinceBlock": 13098125,
+      "values": {
+        "$immutable": true,
+        "DOMAIN_SEPARATOR": "0xbffc56f4d2a2d2f02a0a5fd845c389cb145f77af539d336fc9ec350637642194",
+        "registeredAddresses": 11562,
+        "STEALTHKEYS_TYPEHASH": "0xab73c83a21fb894c20095a8f28177984b02f6284c760e4c1ac2f82c3d34b79c1"
+      },
+      "fieldMeta": {
+        "registeredAddresses": {
+          "description": "Total number of unique addresses that have registered stealth keys."
+        }
+      },
+      "implementationNames": {
+        "eth:0x31fe56609C65Cd0C510E7125f051D440424D38f3": "StealthKeyRegistry"
+      }
+    },
+    {
+      "address": "eth:0x5777Aa6F437399Af6cef2Fce0BE8D4B4eD7C7232",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xFb2dc580Eed955B528407b4d36FfaFe3da685401",
+          "description": "set an arbitrary ETH toll that must be paid on every transfer routed through the Umbra contract.",
+          "role": ".owner"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xb4435399AB53D6136C9AEEBb77a0120620b117F9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Umbra",
+      "address": "eth:0xFb2dc580Eed955B528407b4d36FfaFe3da685401",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x6e3d0905ee09aa55ec4a8f64cedf4106e30ada95cf2583911ef9952695eea8d2"
+      ],
+      "proxyType": "immutable",
+      "ignoreInWatchMode": [
+        "totalTransfers",
+        "totalERC20Deposits",
+        "totalERC20Withdrawals"
+      ],
+      "deployerAddress": "eth:0x5777Aa6F437399Af6cef2Fce0BE8D4B4eD7C7232",
+      "sinceTimestamp": 1619813937,
+      "sinceBlock": 12343914,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x5777Aa6F437399Af6cef2Fce0BE8D4B4eD7C7232",
+        "toll": 0,
+        "tollCollector": "eth:0x12aE679061C58e9f7660A2f7e6f06573014d2615",
+        "tollReceiver": "eth:0xb4435399AB53D6136C9AEEBb77a0120620b117F9",
+        "totalERC20Deposits": 1642,
+        "totalERC20Withdrawals": 1614,
+        "totalTransfers": 24977
+      },
+      "fieldMeta": {
+        "owner": { "description": "Owner of the Umbra contract." },
+        "totalTransfers": {
+          "description": "Total number of stealth transfers, both ETH and ERC20s"
+        },
+        "totalERC20Deposits": {
+          "description": "Total number of stealth transfers of ERC20 tokens"
+        },
+        "totalERC20Withdrawals": {
+          "description": "Total number of ERC20 withdrawals from stealth address escrows in Umbra contract"
+        }
+      },
+      "implementationNames": {
+        "eth:0xFb2dc580Eed955B528407b4d36FfaFe3da685401": "Umbra"
+      }
+    }
+  ],
+  "abis": {
+    "eth:0x31fe56609C65Cd0C510E7125f051D440424D38f3": [
+      "constructor()",
+      "event StealthKeyChanged(address indexed registrant, uint256 spendingPubKeyPrefix, uint256 spendingPubKey, uint256 viewingPubKeyPrefix, uint256 viewingPubKey)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function STEALTHKEYS_TYPEHASH() view returns (bytes32)",
+      "function setStealthKeys(uint256 _spendingPubKeyPrefix, uint256 _spendingPubKey, uint256 _viewingPubKeyPrefix, uint256 _viewingPubKey)",
+      "function setStealthKeysOnBehalf(address _registrant, uint256 _spendingPubKeyPrefix, uint256 _spendingPubKey, uint256 _viewingPubKeyPrefix, uint256 _viewingPubKey, uint8 _v, bytes32 _r, bytes32 _s)",
+      "function stealthKeys(address _registrant) view returns (uint256 spendingPubKeyPrefix, uint256 spendingPubKey, uint256 viewingPubKeyPrefix, uint256 viewingPubKey)"
+    ],
+    "eth:0xFb2dc580Eed955B528407b4d36FfaFe3da685401": [
+      "constructor(uint256 _toll, address _tollCollector, address _tollReceiver)",
+      "event Announcement(address indexed receiver, uint256 amount, address indexed token, bytes32 pkx, bytes32 ciphertext)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event TokenWithdrawal(address indexed receiver, address indexed acceptor, uint256 amount, address indexed token)",
+      "function collectTolls()",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function sendEth(address _receiver, uint256 _tollCommitment, bytes32 _pkx, bytes32 _ciphertext) payable",
+      "function sendToken(address _receiver, address _tokenAddr, uint256 _amount, bytes32 _pkx, bytes32 _ciphertext) payable",
+      "function setToll(uint256 _newToll)",
+      "function setTollCollector(address _newTollCollector)",
+      "function setTollReceiver(address _newTollReceiver)",
+      "function tokenPayments(address, address) view returns (uint256)",
+      "function toll() view returns (uint256)",
+      "function tollCollector() view returns (address)",
+      "function tollReceiver() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function withdrawToken(address _acceptor, address _tokenAddr)",
+      "function withdrawTokenAndCall(address _acceptor, address _tokenAddr, address _hook, bytes _data)",
+      "function withdrawTokenAndCallOnBehalf(address _stealthAddr, address _acceptor, address _tokenAddr, address _sponsor, uint256 _sponsorFee, address _hook, bytes _data, uint8 _v, bytes32 _r, bytes32 _s)",
+      "function withdrawTokenOnBehalf(address _stealthAddr, address _acceptor, address _tokenAddr, address _sponsor, uint256 _sponsorFee, uint8 _v, bytes32 _r, bytes32 _s)"
+    ]
+  },
+  "usedTemplates": {},
+  "usedBlockNumbers": { "ethereum": 25652689 },
+  "permissionsConfigHash": "0x6caeabcd1fdcdf101f57b39e82f1d9997b6f6bc2fac8ee263e44c9affe08dfe8"
+}

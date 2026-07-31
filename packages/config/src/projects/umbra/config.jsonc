@@ -1,0 +1,77 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "umbra",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "eth:0xFb2dc580Eed955B528407b4d36FfaFe3da685401",
+    "eth:0x31fe56609C65Cd0C510E7125f051D440424D38f3"
+  ],
+  "overrides": {
+    "eth:0x31fe56609C65Cd0C510E7125f051D440424D38f3": {
+      "ignoreInWatchMode": ["registeredAddresses"],
+      "fields": {
+        "registeredAddresses": {
+          "description": "Total number of unique addresses that have registered stealth keys.",
+          "handler": {
+            "type": "event",
+            "add": { "event": "StealthKeyChanged" },
+            "select": "registrant",
+            "dedupBy": "registrant"
+          },
+          "edit": ["length"]
+        }
+      }
+    },
+    "eth:0xFb2dc580Eed955B528407b4d36FfaFe3da685401": {
+      "ignoreInWatchMode": [
+        "totalTransfers",
+        "totalERC20Deposits",
+        "totalERC20Withdrawals"
+      ],
+      "fields": {
+        "owner": {
+          "description": "Owner of the Umbra contract.",
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "set an arbitrary ETH toll that must be paid on every transfer routed through the Umbra contract."
+            }
+          ]
+        },
+        "totalTransfers": {
+          "description": "Total number of stealth transfers, both ETH and ERC20s",
+          "handler": {
+            "type": "eventCount",
+            "topics": [
+              "0x29877766fa2bfe3b90008d6d92f965eca91cbc5757ed775740e460799fb92219"
+            ]
+          }
+        },
+        "totalERC20Deposits": {
+          "description": "Total number of stealth transfers of ERC20 tokens",
+          "handler": {
+            "type": "event",
+            "add": {
+              "event": "Announcement",
+              "where": [
+                "!=",
+                "#token",
+                "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+              ]
+            }
+          },
+          "edit": ["length"]
+        },
+        "totalERC20Withdrawals": {
+          "description": "Total number of ERC20 withdrawals from stealth address escrows in Umbra contract",
+          "handler": {
+            "type": "eventCount",
+            "topics": [
+              "0x30eb3583ad09933b693a45452ab07512244cdbc5868701aa004c27b7b267c249"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
