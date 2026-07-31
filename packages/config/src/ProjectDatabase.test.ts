@@ -83,6 +83,41 @@ describe(ProjectDatabase.name, () => {
     expect(result).toEqual([projectB])
   })
 
+  it('can add and query DeFi project data', async () => {
+    const project: BaseProject = {
+      id: ProjectId('defi-project'),
+      slug: 'defi-project',
+      name: 'DeFi project',
+      shortName: undefined,
+      addedAt: 0,
+      defiInfo: {
+        category: 'Stablecoin',
+      },
+      externalDependencies: [
+        {
+          projectId: ProjectId('reviewed-dependency'),
+          description: 'Provides a price feed.',
+        },
+        {
+          name: 'External dependency',
+          icon: 'external-dependency',
+          description: 'Provides an exchange rate.',
+        },
+      ],
+    }
+
+    await db.saveProject(project)
+
+    const result = await db.getProject({
+      id: project.id,
+      select: ['defiInfo', 'externalDependencies'],
+      whereNotNull: [],
+      whereNull: [],
+    })
+
+    expect(result).toEqual(project)
+  })
+
   it('can add and retrieve a token', async () => {
     const token: LegacyToken = {
       id: AssetId('foo'),
