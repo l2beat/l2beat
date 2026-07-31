@@ -167,12 +167,14 @@ describe(relationRoleLabel.name, () => {
     expect(relationRoleLabel(lockAndMint, tokenId('base', '0xbbb'))).toEqual(
       'Minted',
     )
+    // A burn-and-mint pair is symmetric, so each endpoint's role is Minted;
+    // the relation type label is what shows the symmetry.
     expect(
       relationRoleLabel(
         relation('base', '0xbbb', 'ethereum', '0xaaa', 'burn', 'burnAndMint'),
         tokenId('base', '0xbbb'),
       ),
-    ).toEqual('Symmetric')
+    ).toEqual('Minted')
     expect(
       relationRoleLabel(
         relation(

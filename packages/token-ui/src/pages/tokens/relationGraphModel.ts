@@ -128,7 +128,7 @@ export function relationIsDirectional(relation: RelationGraphRelation) {
 export function relationDirectionLabel(relation: RelationGraphRelation) {
   if (relationIsDirectional(relation)) return 'Locked → Minted'
   if (relation.bridgeType === 'burnAndMint') {
-    return 'Symmetric — both sides burn and mint'
+    return 'Both sides burn and mint'
   }
   return 'Locked endpoint not identified'
 }
@@ -138,7 +138,9 @@ export function relationRoleLabel(
   relation: RelationGraphRelation,
   nodeId: string,
 ) {
-  if (relation.bridgeType === 'burnAndMint') return 'Symmetric'
+  // A burn-and-mint pair is symmetric — both endpoints are minted — so each
+  // side's role reads Minted; the relation type label carries the symmetry.
+  if (relation.bridgeType === 'burnAndMint') return 'Minted'
   if (relation.lockedToken === null) return 'Unknown role'
   return sourceId(relation) === nodeId ? 'Locked' : 'Minted'
 }

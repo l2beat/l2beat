@@ -326,6 +326,128 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
     })
   })
 
+  describe(TokenRelationRepository.prototype.getMintingPluginsFor.name, () => {
+    it('returns plugins of relations where the token is minted or the pair is symmetric', async () => {
+      const mintedHere = tokenRelation({
+        endpoints: [ethereumToken, arbitrumToken],
+        plugin: 'canonicalbridge',
+        bridgeType: 'lockAndMint',
+        // The ethereum endpoint is locked, so the arbitrum token is minted.
+        lockedToken: 'A',
+      })
+      const symmetric = tokenRelation({
+        endpoints: [arbitrumToken, optimismToken],
+        plugin: 'superbridge',
+        bridgeType: 'burnAndMint',
+      })
+      const lockedHere = tokenRelation({
+        endpoints: [arbitrumToken, ethereumToken],
+        plugin: 'escrowbridge',
+        bridgeType: 'lockAndMint',
+        // The arbitrum token itself is locked — the plugin mints the other one.
+        lockedToken: 'A',
+      })
+      const unknownRole = tokenRelation({
+        endpoints: [arbitrumToken, optimismToken],
+        plugin: 'mysterybridge',
+        bridgeType: 'lockAndMint',
+        // One of the endpoints is minted, but nothing says it is this one.
+        lockedToken: null,
+      })
+      const nonMintingPair = tokenRelation({
+        endpoints: [arbitrumToken, optimismToken],
+        plugin: 'poolbridge',
+        // Only a burnAndMint pair is symmetric; a nonMinting one (possible via
+        // a human-added relation) mints nothing.
+        bridgeType: 'nonMinting',
+      })
+      const otherPair = tokenRelation({
+        endpoints: [ethereumToken, optimismToken],
+        plugin: 'unrelatedbridge',
+        bridgeType: 'burnAndMint',
+      })
+      const relations = [
+        mintedHere,
+        symmetric,
+        lockedHere,
+        unknownRole,
+        nonMintingPair,
+        otherPair,
+      ]
+      for (const relation of relations) {
+        await repository.insert(relation)
+      }
+
+      expect(await repository.getMintingPluginsFor(arbitrumToken)).toEqual([
+        'canonicalbridge',
+        'superbridge',
+      ])
+    })
+
+    it('finds the minted token on either endpoint slot', async () => {
+      // Normalizes to arbitrum in slot A, with ethereum (slot B) locked.
+      const mintedAtA = tokenRelation({
+        endpoints: [ethereumToken, arbitrumToken],
+        plugin: 'slot-a-bridge',
+        bridgeType: 'lockAndMint',
+        lockedToken: 'A',
+      })
+      // An uncatalogued arbitrum token sorting first stays in slot A and is
+      // locked, leaving the queried token minted in slot B.
+      const mintedAtB = tokenRelation({
+        endpoints: [
+          { chain: 'arbitrum', address: '0x' + '0'.repeat(40) },
+          arbitrumToken,
+        ],
+        plugin: 'slot-b-bridge',
+        bridgeType: 'lockAndMint',
+        lockedToken: 'A',
+      })
+      await repository.insert(mintedAtA)
+      await repository.insert(mintedAtB)
+
+      expect(await repository.getMintingPluginsFor(arbitrumToken)).toEqual([
+        'slot-a-bridge',
+        'slot-b-bridge',
+      ])
+    })
+
+    it('returns each plugin once even when several of its relations qualify', async () => {
+      const viaEthereum = tokenRelation({
+        endpoints: [ethereumToken, arbitrumToken],
+        plugin: 'superbridge',
+        bridgeType: 'burnAndMint',
+      })
+      const viaOptimism = tokenRelation({
+        endpoints: [arbitrumToken, optimismToken],
+        plugin: 'superbridge',
+        bridgeType: 'burnAndMint',
+      })
+      await repository.insert(viaEthereum)
+      await repository.insert(viaOptimism)
+
+      expect(await repository.getMintingPluginsFor(arbitrumToken)).toEqual([
+        'superbridge',
+      ])
+    })
+
+    it('normalizes the queried address', async () => {
+      const relation = tokenRelation({
+        endpoints: [ethereumToken, arbitrumToken],
+        plugin: 'superbridge',
+        bridgeType: 'burnAndMint',
+      })
+      await repository.insert(relation)
+
+      expect(
+        await repository.getMintingPluginsFor({
+          chain: arbitrumToken.chain,
+          address: arbitrumToken.address.toUpperCase(),
+        }),
+      ).toEqual(['superbridge'])
+    })
+  })
+
   describe(TokenRelationRepository.prototype.deleteByPrimaryKey.name, () => {
     it('deletes a single relation by its identity', async () => {
       const relation = tokenRelation({
