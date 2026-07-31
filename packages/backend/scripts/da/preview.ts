@@ -14,6 +14,7 @@ import {
   run,
   string,
 } from 'cmd-ts'
+import { config as dotenv } from 'dotenv'
 import * as fs from 'fs'
 import * as path from 'path'
 import { getDaTrackingConfig } from '../../src/config/features/da'
@@ -76,6 +77,9 @@ const cmd = command({
   name: 'da:preview',
   args,
   handler: async (args) => {
+    // Loaded before getEnv() so scripts/da/.env takes precedence over
+    // packages/backend/.env (dotenv never overwrites already-set variables)
+    dotenv({ path: path.join(__dirname, '.env') })
     let env = getEnv()
     const logger = initLogger(env)
     const start = Date.now()

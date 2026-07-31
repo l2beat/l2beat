@@ -45,8 +45,10 @@ pnpm da:preview eclipse --from 2026-07-30T00:00Z --to 2026-07-30T06:00Z --layer 
 
 ### Environment variables
 
-Each layer is enabled only when its url is set (same variables as the backend
-module); layers without one are skipped with a warning:
+The script loads `packages/backend/scripts/da/.env` (see the `.env.example`
+next to it) with `packages/backend/.env` as a fallback. Each layer is enabled
+only when its url is set (same variables as the backend module); layers
+without one are skipped with a warning:
 
 - `ETHEREUM_BEACON_API_URL` - ethereum blobs (plus `ETHEREUM_RPC_URL` to
   override the default rpc from the ethereum chain config)
