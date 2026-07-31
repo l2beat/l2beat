@@ -74,6 +74,7 @@ export interface ProjectSequencerSetSpec {
   rateLimit?: TableReadyValue
   deterministicCrGadget?: TableReadyValue
   additionalCrGadgets?: TableReadyValue
+  exitEconomics: TableReadyValue
 }
 
 export interface ProjectCentralizedSequencingSpec {
@@ -85,6 +86,7 @@ export interface ProjectCentralizedSequencingSpec {
   forcedInclusionDelay: TableReadyValue
   fallbackFinalizationDelay: TableReadyValue
   forcedInclusionConstraints: TableReadyValue
+  exitEconomics: TableReadyValue
 }
 
 export type ProjectInclusionDelayChart =

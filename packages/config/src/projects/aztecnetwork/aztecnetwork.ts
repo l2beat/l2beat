@@ -56,6 +56,18 @@ const escapeHatchBond = discovery.getContractValueBigInt(
   'EscapeHatch',
   'getBondSize',
 )
+const escapeHatchWithdrawalTax = discovery.getContractValueBigInt(
+  'EscapeHatch',
+  'getWithdrawalTax',
+)
+const escapeHatchFailedPunishment = discovery.getContractValueBigInt(
+  'EscapeHatch',
+  'getFailedHatchPunishment',
+)
+const escapeHatchCandidateCount = discovery.getContractValue<number>(
+  'EscapeHatch',
+  'getCandidateCount',
+)
 const targetCommitteeSize = discovery.getContractValue<number>(
   'Rollup',
   'getTargetCommitteeSize',
@@ -206,6 +218,12 @@ function formatMonthYear(timestamp: number): string {
 
 const activationThresholdString = formatAztecAmount(activationThreshold)
 const escapeHatchBondString = formatAztecAmount(escapeHatchBond)
+const escapeHatchWithdrawalTaxString = formatAztecAmount(
+  escapeHatchWithdrawalTax,
+)
+const escapeHatchFailedPunishmentString = formatAztecAmount(
+  escapeHatchFailedPunishment,
+)
 const governanceLockAmount = BigInt(
   governanceConfiguration.proposeConfig.lockAmount,
 )
@@ -536,6 +554,12 @@ export const aztecnetwork: ScalingProject = {
         additionalCrGadgets: {
           value: 'Bonded escape hatch, private transactions',
           sentiment: 'good',
+        },
+        exitEconomics: {
+          value: escapeHatchBondString,
+          secondLine: `${escapeHatchWithdrawalTaxString} exit tax`,
+          sentiment: 'neutral',
+          description: `The escape hatch combines live inclusion and exit: bonding does not grant immediate proposal rights, but enters a candidate set from which one proposer is periodically selected to bypass the committee, include transactions and prove the resulting checkpoints. Every candidate eventually loses the ${escapeHatchWithdrawalTaxString} exit tax. A selected candidate that fails to propose and prove loses another ${escapeHatchFailedPunishmentString}. The latest discovery scan reports ${escapeHatchCandidateCount} bonded candidates.`,
         },
       },
       inclusionDelayChart: {

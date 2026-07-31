@@ -305,6 +305,12 @@ export const polygonpos: ScalingProject = {
         rateLimit: { value: 'No (permissioned)' },
         deterministicCrGadget: { value: 'No', sentiment: 'warning' },
         additionalCrGadgets: { value: 'No', sentiment: 'bad' },
+        exitEconomics: {
+          value: 'No protocol exit',
+          secondLine: 'Normal validator stake only',
+          sentiment: 'bad',
+          description: `The ${minDeposit} POL validator stake grants normal block-production rights but does not provide a fallback path around a censoring or unavailable validator set. The set is currently full and new validators cannot join without permission, so complete operator walkaway ultimately requires social recovery.`,
+        },
       },
       inclusionDelayChart: {
         type: 'spanlike',

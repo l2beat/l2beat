@@ -1384,6 +1384,30 @@ function getStateValidation(
   }
 }
 
+export function getOpStackBondScalingFactor(gameMaxDepth: number): number {
+  return (
+    (HARDCODED.OPTIMISM.FAULT_PROOF_HIGH_GAS_CHARGED /
+      HARDCODED.OPTIMISM.FAULT_PROOF_BASE_GAS_CHARGED) **
+    (1 / gameMaxDepth)
+  )
+}
+
+export function getOpStackFullDisputeGameBondCost(
+  initialBond: number | string | bigint,
+  gameMaxDepth: number,
+): bigint {
+  const exponentialBondsFactor = getOpStackBondScalingFactor(gameMaxDepth)
+  const initialBondNumber = Number(initialBond)
+  let cost = 0
+  const scaleFactor = 100_000
+
+  for (let depth = 0; depth <= gameMaxDepth; depth++) {
+    cost += (initialBondNumber / scaleFactor) * exponentialBondsFactor ** depth
+  }
+
+  return BigInt(cost) * BigInt(scaleFactor)
+}
+
 function describeOPFP({
   disputeGameBonds,
   maxClockDuration,
@@ -1401,21 +1425,17 @@ function describeOPFP({
   oracleChallengePeriod: number
   isPermissionless: boolean
 }): ProjectScalingStateValidation {
-  const exponentialBondsFactor = 1.09493 // hardcoded, from https://specs.optimism.io/fault-proof/stage-one/bond-incentives.html?highlight=1.09493#bond-scaling
+  const exponentialBondsFactor = getOpStackBondScalingFactor(gameMaxDepth)
 
   const gameMaxClockExtension =
     gameClockExtension * 2 + // at SPLIT_DEPTH - 1
     oracleChallengePeriod + // at MAX_GAME_DEPTH - 1
     gameClockExtension * (gameMaxDepth - 3) // the rest, excluding also the last depth
 
-  const permissionlessGameFullCost = (() => {
-    let cost = 0
-    const scaleFactor = 100000
-    for (let i = 0; i <= gameMaxDepth; i++) {
-      cost += (disputeGameBonds / scaleFactor) * exponentialBondsFactor ** i
-    }
-    return BigInt(cost) * BigInt(scaleFactor)
-  })()
+  const permissionlessGameFullCost = getOpStackFullDisputeGameBondCost(
+    disputeGameBonds,
+    gameMaxDepth,
+  )
 
   return {
     description: readMarkdown('templates/opStack/opfpDescription.md', {
@@ -1523,6 +1543,13 @@ function getRiskViewStateValidation(
       }
     }
     case 'Permissionless': {
+      const faultDisputeGame = getFaultDisputeGameName(templateVars)
+      const gameMaxDepth = templateVars.discovery.getContractValue<number>(
+        faultDisputeGame,
+        'maxGameDepth',
+      )
+      const exponentialBondsFactor = getOpStackBondScalingFactor(gameMaxDepth)
+
       return {
         ...RISK_VIEW.STATE_FP_INT(
           getChallengePeriod(templateVars),
@@ -1532,10 +1559,13 @@ function getRiskViewStateValidation(
           value: formatEther(getPermissionlessGameBond(templateVars)),
         },
         permissioned: false,
-        // OPFP: bonds scale by `exponentialBondsFactor` (1.09493) per depth,
-        // so the resource ratio is exactly that factor — slightly favors the
-        // attacker.
-        defenderAdvantage: { multiplier: 1 / 1.09493, shape: 'linear' },
+        // OPFP bonds increase at every depth, so the immediate counterclaim
+        // costs more than the claim it counters and slightly favors the
+        // attacker in a resource-exhaustion attack.
+        defenderAdvantage: {
+          multiplier: 1 / exponentialBondsFactor,
+          shape: 'linear',
+        },
       }
     }
     case 'Kailua':

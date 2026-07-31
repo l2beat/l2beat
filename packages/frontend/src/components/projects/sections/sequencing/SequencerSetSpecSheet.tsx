@@ -15,6 +15,7 @@ const SPEC_ROWS = [
   { key: 'rateLimit', label: 'Rate-limit to join' },
   { key: 'deterministicCrGadget', label: 'Deterministic CR gadget' },
   { key: 'additionalCrGadgets', label: 'Additional CR gadgets' },
+  { key: 'exitEconomics', label: 'Exit economics' },
 ] satisfies { key: keyof ProjectSequencerSetSpec; label: string }[]
 
 export function SequencerSetSpecSheet({ spec }: Props) {

@@ -45,6 +45,12 @@ export const HARDCODED = {
     // This limit is a literal in OptimismPortal2.depositTransaction and has no getter.
     // https://etherscan.io/address/0xe89f13c5ee4033b2d3cd76c9d6958efbfe26d3c2#code
     MAX_DEPOSIT_CALLDATA_BYTES: 120_000,
+    // These gas amounts are literals in FaultDisputeGame.getRequiredBond().
+    // Together with the discovered maxGameDepth, they define the per-depth
+    // multiplier used for dispute-game bonds.
+    // https://specs.optimism.io/fault-proof/stage-one/bond-incentives.html#bond-scaling
+    FAULT_PROOF_BASE_GAS_CHARGED: 400_000,
+    FAULT_PROOF_HIGH_GAS_CHARGED: 300_000_000,
   },
   PUBLICGOODSNETWORK: {
     // https://github.com/ethereum-optimism/optimism/pull/6261/files

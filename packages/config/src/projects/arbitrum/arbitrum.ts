@@ -158,6 +158,39 @@ const edgeChallengePeriodBlocks = discovery.getContractValue<number>(
   'EdgeChallengeManager',
   'challengePeriodBlocks',
 )
+const boldAssertionBond = discovery.getContractValue<string>(
+  'RollupProxy',
+  'baseStake',
+)
+const boldChallengeBonds = discovery.getContractValue<string[]>(
+  'EdgeChallengeManager',
+  'stakeAmounts',
+)
+const [, boldBigStepBond, boldSmallStepBond] = boldChallengeBonds
+assert(boldBigStepBond !== undefined && boldSmallStepBond !== undefined)
+const boldDefenderAdvantage = computeBoldDefenderAdvantage(
+  boldAssertionBond,
+  boldChallengeBonds,
+)
+const boldBisectionHeights = [
+  discovery.getContractValue<number>(
+    'EdgeChallengeManager',
+    'LAYERZERO_BLOCKEDGE_HEIGHT',
+  ),
+  discovery.getContractValue<number>(
+    'EdgeChallengeManager',
+    'LAYERZERO_BIGSTEPEDGE_HEIGHT',
+  ),
+  discovery.getContractValue<number>(
+    'EdgeChallengeManager',
+    'LAYERZERO_SMALLSTEPEDGE_HEIGHT',
+  ),
+]
+const boldBisectionCount = boldBisectionHeights.reduce((sum, height) => {
+  const depth = Math.log2(height)
+  assert(Number.isInteger(depth), 'BoLD bisection height must be a power of 2')
+  return sum + depth
+}, 0)
 const edgeChallengePeriodSeconds = edgeChallengePeriodBlocks * assumedBlockTime
 const worstCaseStateFinalizationDelaySeconds =
   minimumAssertionPeriodSeconds +
@@ -172,6 +205,10 @@ const worstCaseStateFinalizationDisplaySeconds =
   Math.ceil(worstCaseStateFinalizationDelaySeconds / 3_600) * 3_600
 
 const selfSequencingDelay = maxTimeVariation.delaySeconds
+
+function formatWethAmount(amount: string): string {
+  return `${Number(formatEther(amount)).toLocaleString('en-US')} WETH`
+}
 
 const chainId = 42161
 
@@ -475,18 +512,10 @@ export const arbitrum: ScalingProject = orbitStackL2({
         'if-challenged',
       ),
       initialBond: {
-        value: formatEther(
-          discovery.getContractValue<number>('RollupProxy', 'baseStake'),
-        ),
+        value: formatEther(boldAssertionBond),
       },
       permissioned: false,
-      defenderAdvantage: computeBoldDefenderAdvantage(
-        discovery.getContractValue<number>('RollupProxy', 'baseStake'),
-        discovery.getContractValue<number[]>(
-          'EdgeChallengeManager',
-          'stakeAmounts',
-        ),
-      ),
+      defenderAdvantage: boldDefenderAdvantage,
     },
   },
   isNodeAvailable: true,
@@ -585,8 +614,8 @@ export const arbitrum: ScalingProject = orbitStackL2({
           }),
           secondLine: `${formatSeconds(currentForceInclusionDelayBlocks * assumedBlockTime)} inclusion + ${formatSeconds(
             worstCaseStateFinalizationDisplaySeconds,
-          )} finality`,
-          description: `After forced inclusion, anyone with the required bond can self-propose an assertion. The assertion cadence can add up to ${formatSeconds(minimumAssertionPeriodSeconds, { fullUnit: true })}. In a maximally delayed BoLD challenge, confirming the winning edge can take up to twice the ${edgeChallengePeriodBlocks.toLocaleString('en-US')}-block edge challenge period, followed by a ${(
+          )} exit`,
+          description: `After live inclusion, anyone with the required bond can self-propose the assertion needed to exit. The assertion cadence can add up to ${formatSeconds(minimumAssertionPeriodSeconds, { fullUnit: true })}. In a maximally delayed BoLD challenge, confirming the winning edge can take up to twice the ${edgeChallengePeriodBlocks.toLocaleString('en-US')}-block edge challenge period, followed by a ${(
             challengeGracePeriodSeconds / assumedBlockTime
           ).toLocaleString(
             'en-US',
@@ -596,7 +625,12 @@ export const arbitrum: ScalingProject = orbitStackL2({
         forcedInclusionConstraints: {
           value: 'Delayed-inbox message',
           secondLine: 'Address alias',
-          description: `The fallback creates an L1-originated L2 message rather than submitting the original signed L2 transaction. The full delayed-inbox message is capped at ${inboxMaxDataSize.toLocaleString('en-US')} bytes, so the available call data is slightly smaller. L1 contract callers use an aliased address on L2. The rollup owner can pause the Inbox or enable its allowlist, preventing new fallback submissions.`,
+          description: `Live inclusion creates an L1-originated L2 message rather than submitting the original signed L2 transaction. The full delayed-inbox message is capped at ${inboxMaxDataSize.toLocaleString('en-US')} bytes, so the available call data is slightly smaller. L1 contract callers use an aliased address on L2. The rollup owner can pause the Inbox or enable its allowlist, preventing new submissions.`,
+        },
+        exitEconomics: {
+          value: formatWethAmount(boldAssertionBond),
+          secondLine: `Favors defender ${boldDefenderAdvantage.multiplier.toFixed(2)}×`,
+          description: `If state proposers also stop, an exiting user needs a ${formatWethAmount(boldAssertionBond)} assertion bond. BoLD commits to intermediate execution histories, so bisections can be checked against the claimed history and shared across challenges instead of requiring a new bond for every move. A fully contested path performs about ${boldBisectionCount} bisections across three levels before one-step execution; entering the lower levels requires additional refundable bonds of ${formatWethAmount(boldBigStepBond)} and ${formatWethAmount(boldSmallStepBond)}. The worst adjacent bond ratio means an attacker needs ${boldDefenderAdvantage.multiplier.toFixed(2)} times the honest side's capital to exhaust it.`,
         },
       },
       censorshipResistance:

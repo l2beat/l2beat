@@ -1,16 +1,22 @@
 import {
+  assert,
   ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { formatEther } from 'ethers/lib/utils'
 import { DERIVATION, SOA } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import {
+  getOpStackBondScalingFactor,
+  getOpStackFullDisputeGameBondCost,
+  opStackL2,
+} from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('optimism')
 const genesisTimestamp = UnixTime(1636665399)
@@ -46,6 +52,39 @@ const disputeGameFinalityDelaySeconds = discovery.getContractValue<number>(
 const maxClockDuration = discovery.getContractValue<number>(
   'FaultDisputeGame',
   'maxClockDuration',
+)
+const respectedGameType = discovery.getContractValue<number>(
+  'OptimismPortal2',
+  'respectedGameType',
+)
+assert(
+  respectedGameType === 8,
+  'Update OP Mainnet exit economics for the new respected game type',
+)
+const faultDisputeGameInitialBond = discovery.getContractValue<string>(
+  'DisputeGameFactory',
+  'initBondGame8',
+)
+const faultDisputeGameMaxDepth = discovery.getContractValue<number>(
+  'FaultDisputeGame',
+  'maxGameDepth',
+)
+const faultDisputeGameBondScalingFactor = getOpStackBondScalingFactor(
+  faultDisputeGameMaxDepth,
+)
+const faultDisputeGameDefenderAdvantage = 1 / faultDisputeGameBondScalingFactor
+const faultDisputeGameFullPathCost = getOpStackFullDisputeGameBondCost(
+  faultDisputeGameInitialBond,
+  faultDisputeGameMaxDepth,
+)
+const faultDisputeGameInitialBondEther = Number(
+  formatEther(faultDisputeGameInitialBond),
+)
+const faultDisputeGameDeepestBondEther =
+  faultDisputeGameInitialBondEther *
+  faultDisputeGameBondScalingFactor ** faultDisputeGameMaxDepth
+const faultDisputeGameFullPathCostEther = Number(
+  formatEther(faultDisputeGameFullPathCost),
 )
 const stateFinalizationDelaySeconds = Math.max(
   proofMaturityDelaySeconds,
@@ -250,14 +289,19 @@ export const optimism: ScalingProject = opStackL2({
           value: formatSeconds(worstCaseFallbackFinalizationDelaySeconds, {
             fullUnit: true,
           }),
-          secondLine: `${formatSeconds(sequencingWindowSeconds)} inclusion + ${formatSeconds(stateFinalizationDelaySeconds)} finality`,
-          description: `After the deposit enters the canonical L2 order, anyone with the required bond can immediately self-propose a dispute game. A maximally delayed game uses the ${formatSeconds(maxClockDuration, { fullUnit: true })} game clock and then waits the ${formatSeconds(disputeGameFinalityDelaySeconds, { fullUnit: true })} finality air gap. The independently enforced ${formatSeconds(proofMaturityDelaySeconds, { fullUnit: true })} withdrawal-proof maturity period runs concurrently and gives the same 7-day finality leg. The total assumes ${assumedL1BlockTimeSeconds}-second Ethereum blocks and that Ethereum includes the game, proof and finalization transactions.`,
+          secondLine: `${formatSeconds(sequencingWindowSeconds)} inclusion + ${formatSeconds(stateFinalizationDelaySeconds)} exit`,
+          description: `After the deposit enters the canonical L2 order, anyone with the required bond can immediately self-propose the dispute game needed to exit. A maximally delayed game uses the ${formatSeconds(maxClockDuration, { fullUnit: true })} game clock and then waits the ${formatSeconds(disputeGameFinalityDelaySeconds, { fullUnit: true })} finality air gap. The independently enforced ${formatSeconds(proofMaturityDelaySeconds, { fullUnit: true })} withdrawal-proof maturity period runs concurrently and gives the same 7-day exit leg. The total assumes ${assumedL1BlockTimeSeconds}-second Ethereum blocks and that Ethereum includes the game, proof and finalization transactions.`,
           orderHint: worstCaseFallbackFinalizationDelaySeconds,
         },
         forcedInclusionConstraints: {
           value: 'Deposit transaction',
           secondLine: 'Address alias',
-          description: `The fallback creates an L1-originated deposit transaction rather than submitting the original signed L2 transaction. Its calldata is capped at ${maxDepositCalldataBytes.toLocaleString('en-US')} bytes, its minimum L2 gas limit is ${minimumDepositGasWithoutData.toLocaleString('en-US')} plus ${minimumDepositGasPerByte.toLocaleString('en-US')} gas per calldata byte, and deposits share a metered ${depositResourceLimit.toLocaleString('en-US')} gas resource limit per Ethereum block. L1 contract callers use an aliased address on L2.`,
+          description: `Live inclusion creates an L1-originated deposit transaction rather than submitting the original signed L2 transaction. Its calldata is capped at ${maxDepositCalldataBytes.toLocaleString('en-US')} bytes, its minimum L2 gas limit is ${minimumDepositGasWithoutData.toLocaleString('en-US')} plus ${minimumDepositGasPerByte.toLocaleString('en-US')} gas per calldata byte, and deposits share a metered ${depositResourceLimit.toLocaleString('en-US')} gas resource limit per Ethereum block. L1 contract callers use an aliased address on L2.`,
+        },
+        exitEconomics: {
+          value: `${faultDisputeGameInitialBondEther.toLocaleString('en-US')} ETH`,
+          secondLine: `Favors attacker ${(1 / faultDisputeGameDefenderAdvantage).toFixed(2)}×`,
+          description: `If state proposers also stop, an exiting user can create a respected dispute game with a ${faultDisputeGameInitialBondEther.toLocaleString('en-US')} ETH bond. Unlike BoLD, OP does not use history commitments that make intermediate bisections reusable and verifiable against the initial claim, so every claim is bonded and invalid bisections must be countered. Bonds grow by ${faultDisputeGameBondScalingFactor.toFixed(5)} at every depth, meaning each immediate counterclaim costs more than the claim it counters and favors the attacker in a resource-exhaustion attack. An unchallenged proposal uses only the initial bond. A fully contested single path can post claims through depth ${faultDisputeGameMaxDepth}, ending at ${faultDisputeGameDeepestBondEther.toLocaleString('en-US', { maximumFractionDigits: 2 })} ETH and containing ${faultDisputeGameFullPathCostEther.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ETH across all claims before one-step execution; branching can require more aggregate capital.`,
         },
       },
       censorshipResistance:

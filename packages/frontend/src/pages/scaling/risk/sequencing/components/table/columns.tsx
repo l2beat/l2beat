@@ -22,6 +22,7 @@ type SequencingTableValueKey =
   | 'blockProduction'
   | 'deterministicCrGadget'
   | 'additionalCrGadgets'
+  | 'exitEconomics'
 
 const tableValueColumns = [
   { key: 'sequencerCount', header: 'Set\nsize' },
@@ -65,6 +66,12 @@ const tableValueColumns = [
     header: 'Additional\nCR',
     tooltip:
       'Additional censorship-resistance aids beyond the normal sequencer rotation.',
+  },
+  {
+    key: 'exitEconomics',
+    header: 'Exit\neconomics',
+    tooltip:
+      'Capital required to make progress and exit if the normal sequencers and state proposers stop. This is distinct from stake used for normal block production.',
   },
 ] satisfies {
   key: SequencingTableValueKey

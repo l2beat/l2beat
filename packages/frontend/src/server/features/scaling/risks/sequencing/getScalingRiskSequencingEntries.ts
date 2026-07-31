@@ -30,6 +30,7 @@ export interface ScalingRiskSequencingEntry extends CommonScalingEntry {
   blockProduction: TableReadyValue | undefined
   deterministicCrGadget: TableReadyValue | undefined
   additionalCrGadgets: TableReadyValue | undefined
+  exitEconomics: TableReadyValue
 }
 
 export interface ScalingRiskCentralizedSequencingEntry
@@ -42,6 +43,7 @@ export interface ScalingRiskCentralizedSequencingEntry
   forcedInclusionDelay: TableReadyValue
   fallbackFinalizationDelay: TableReadyValue
   forcedInclusionConstraints: TableReadyValue
+  exitEconomics: TableReadyValue
 }
 
 export interface InclusionDelayComparisonSeries {
@@ -187,6 +189,7 @@ function getScalingRiskSequencingEntry(
     blockProduction: getBlockProduction(sequencing.inclusionDelayChart),
     deterministicCrGadget: spec.deterministicCrGadget,
     additionalCrGadgets: spec.additionalCrGadgets,
+    exitEconomics: spec.exitEconomics,
   }
 }
 
@@ -210,6 +213,7 @@ function getScalingRiskCentralizedSequencingEntry(
     forcedInclusionDelay: spec.forcedInclusionDelay,
     fallbackFinalizationDelay: spec.fallbackFinalizationDelay,
     forcedInclusionConstraints: spec.forcedInclusionConstraints,
+    exitEconomics: spec.exitEconomics,
   }
 }
 

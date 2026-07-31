@@ -22,6 +22,7 @@ type CentralizedSequencingTableValueKey =
   | 'forcedInclusionDelay'
   | 'fallbackFinalizationDelay'
   | 'forcedInclusionConstraints'
+  | 'exitEconomics'
 
 const tableValueColumns = [
   {
@@ -38,7 +39,7 @@ const tableValueColumns = [
   },
   {
     key: 'sequencerCount',
-    header: 'Sequencer\noperators',
+    header: 'Sequencer',
     tooltip:
       'Number of independent operators controlling real-time transaction ordering.',
   },
@@ -46,31 +47,37 @@ const tableValueColumns = [
     key: 'realtimeCensorshipResistance',
     header: 'Real-time\nCR',
     tooltip:
-      'Whether the normal low-latency sequencing path resists censorship by one operator.',
+      'Whether the normal low-latency sequencing path resists censorship by the operator.',
   },
   {
     key: 'forcedInclusion',
-    header: 'L1\nfallback',
+    header: 'Forced\ninclusion',
     tooltip:
-      'How users bypass the sequencer through the host chain and how many L1 transactions the complete fallback path requires.',
+      'How users bypass the sequencer while the chain is otherwise live, and how many L1 transactions this inclusion path requires.',
   },
   {
     key: 'forcedInclusionDelay',
-    header: 'Fallback\ndelay',
+    header: 'Inclusion\ndelay',
     tooltip:
-      'Protocol delay after the first L1 transaction is included. Wall-clock values are nominal.',
-  },
-  {
-    key: 'fallbackFinalizationDelay',
-    header: 'Fallback to\nstate finality',
-    tooltip:
-      'Worst-case protocol delay from the first L1 fallback transaction until its resulting L2 state can finalize, including permissionless state proposal and challenges. Assumes all required L1 transactions are included.',
+      'Protocol delay after the first L1 transaction is included until the transaction enters the canonical L2 order. Wall-clock values are nominal.',
   },
   {
     key: 'forcedInclusionConstraints',
-    header: 'Fallback\nconstraints',
+    header: 'Inclusion\nconstraints',
     tooltip:
-      'Transaction format, size, address-aliasing, resource and permission constraints of the L1 fallback path.',
+      'Transaction format, size, address-aliasing, resource and permission constraints of the live-inclusion path.',
+  },
+  {
+    key: 'fallbackFinalizationDelay',
+    header: 'Exit\ndelay',
+    tooltip:
+      'Worst-case protocol delay from the first L1 inclusion transaction until its resulting state can support an L1 exit, including permissionless state proposal and challenges. Assumes all required L1 transactions are included.',
+  },
+  {
+    key: 'exitEconomics',
+    header: 'Exit\neconomics',
+    tooltip:
+      'Capital required to self-propose and defend the state needed for an exit after operator walkaway. The second line shows which side has the advantage in a resource-exhaustion attack.',
   },
 ] satisfies {
   key: CentralizedSequencingTableValueKey

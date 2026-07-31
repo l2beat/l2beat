@@ -261,6 +261,13 @@ export const gnosis: ScalingProject = {
           value: 'Shutter encrypted mempool beta',
           sentiment: 'warning',
         },
+        exitEconomics: {
+          value: 'No protocol exit',
+          secondLine: 'Normal validator stake only',
+          sentiment: 'bad',
+          description:
+            'The 1 GNO validator stake grants normal consensus participation but does not provide a fallback around a censoring majority. New validators can help while the chain is still finalizing and processing entries; after a complete halt, exiting requires social recovery and cooperation from the separate bridge validator sets.',
+        },
       },
       inclusionDelayChart: {
         type: 'ethereumlike',
