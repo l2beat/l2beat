@@ -13,6 +13,12 @@ export interface ExpectedCoverage {
   hours: UnixTime[]
 }
 
+/** What every layer preview produces: generated records + the hours they should cover. */
+export interface LayerPreviewResult {
+  records: DataAvailabilityRecord[]
+  expected: ExpectedCoverage[]
+}
+
 export interface RecordGap {
   projectId: string
   daLayer: string

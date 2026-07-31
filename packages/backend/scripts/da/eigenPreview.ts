@@ -7,7 +7,7 @@ import {
   type EigenDaProjectConfiguration,
   mapEigenProjectData,
 } from '../../src/modules/data-availability/indexers/eigen-da/mapEigenProjectData'
-import type { ExpectedCoverage } from './gaps'
+import type { ExpectedCoverage, LayerPreviewResult } from './gaps'
 import { clampTimestampRange, hoursInWindow, type PreviewWindow } from './range'
 
 /** Date of the first per-project data file available from the Eigen API. */
@@ -16,17 +16,12 @@ const FIRST_FILE_DATE = UnixTime.fromDate(new Date('2025-08-01T00:00:00.000Z'))
 /** One getMetrics call per hour - keep long windows from hammering the API. */
 const MAX_METRICS_HOURS = 48
 
-export interface EigenPreviewResult {
-  records: DataAvailabilityRecord[]
-  expected: ExpectedCoverage[]
-}
-
 export async function previewEigen(
   client: EigenApiClient,
   configs: TimestampDaIndexedConfig[],
   window: PreviewWindow,
   logger: Logger,
-): Promise<EigenPreviewResult> {
+): Promise<LayerPreviewResult> {
   const records: DataAvailabilityRecord[] = []
   const expected: ExpectedCoverage[] = []
 
@@ -51,7 +46,7 @@ async function previewLayerTotal(
   config: Extract<TimestampDaIndexedConfig, { type: 'baseLayer' }>,
   window: PreviewWindow,
   logger: Logger,
-): Promise<EigenPreviewResult> {
+): Promise<LayerPreviewResult> {
   const clamped = clampTimestampRange(config, window.from, window.to)
   if (!clamped) {
     logger.warn('EigenDA layer configuration inactive in window', {
@@ -101,12 +96,21 @@ async function previewProjects(
   configs: Extract<TimestampDaIndexedConfig, { type: 'eigen-da' }>[],
   window: PreviewWindow,
   logger: Logger,
-): Promise<EigenPreviewResult> {
+): Promise<LayerPreviewResult> {
   const configurations: EigenDaProjectConfiguration[] = configs.map((c) => ({
     id: c.configurationId,
     properties: c,
   }))
-  const configById = new Map(configs.map((c) => [c.configurationId, c]))
+  // Per-config window clamp, computed once and reused for record filtering
+  // and expected coverage; configs inactive in the window are absent
+  const clampedById = new Map(
+    configs.flatMap((c) => {
+      const clamped = clampTimestampRange(c, window.from, window.to)
+      return clamped
+        ? [[c.configurationId, { config: c, clamped }] as const]
+        : []
+    }),
+  )
 
   const records: DataAvailabilityRecord[] = []
   const fetchedHours: UnixTime[] = []
@@ -146,28 +150,26 @@ async function previewProjects(
       day,
     )
     for (const record of dayRecords) {
-      const config = configById.get(record.configurationId)
-      if (!config) continue
-      const clamped = clampTimestampRange(config, window.from, window.to)
-      if (!clamped) continue
-      if (record.timestamp >= clamped.from && record.timestamp < clamped.to) {
+      const entry = clampedById.get(record.configurationId)
+      if (!entry) continue
+      if (
+        record.timestamp >= entry.clamped.from &&
+        record.timestamp < entry.clamped.to
+      ) {
         records.push(record)
       }
     }
   }
 
   const fetched = new Set(fetchedHours)
-  const expected: ExpectedCoverage[] = []
-  for (const config of configs) {
-    const clamped = clampTimestampRange(config, window.from, window.to)
-    if (!clamped) continue
-    expected.push({
+  const expected: ExpectedCoverage[] = [...clampedById.values()].map(
+    ({ config, clamped }) => ({
       projectId: config.projectId,
       daLayer: config.daLayer,
       configurationId: config.configurationId,
       hours: hoursInWindow(clamped).filter((hour) => fetched.has(hour)),
-    })
-  }
+    }),
+  )
 
   return { records, expected }
 }

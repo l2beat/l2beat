@@ -15,13 +15,6 @@ import {
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import type { DataAvailabilityTrackingConfig } from '../../src/config/Config'
 
-/**
- * Sentinel used as ETHEREUM_BEACON_API_URL when only DA_PREVIEW_DB_URL is set,
- * so getDaTrackingConfig still assembles ethereum configurations while blobs
- * come exclusively from the database cache.
- */
-export const DB_CACHE_URL = 'db-cache'
-
 export interface PreviewBlockClient {
   getLatestBlockNumber(): Promise<number>
   getBlockWithTransactions(
@@ -30,8 +23,8 @@ export interface PreviewBlockClient {
 }
 
 export interface DaPreviewLayer {
+  /** Layer name as used in config daLayer references ('ethereum' | 'celestia' | 'avail') */
   name: string
-  type: 'ethereum' | 'celestia' | 'avail'
   batchSize: number
   startingBlock: number
   /** Undefined only for ethereum in db-cache-only mode */
@@ -50,6 +43,7 @@ export async function createPreviewClients(
   env: Env,
   logger: Logger,
   http: HttpClient,
+  opts: { ethereumFromDbOnly: boolean },
 ): Promise<PreviewClients> {
   const blockLayers: DaPreviewLayer[] = []
 
@@ -75,7 +69,7 @@ export async function createPreviewClients(
         })
 
         let provider: DaBlobProvider | undefined
-        if (layer.url !== DB_CACHE_URL) {
+        if (!opts.ethereumFromDbOnly) {
           const beaconClient = new BeaconChainClient({
             sourceName: 'beaconApi',
             beaconApiUrl: layer.url,
@@ -90,7 +84,6 @@ export async function createPreviewClients(
 
         blockLayers.push({
           name: layer.name,
-          type: layer.type,
           batchSize: layer.batchSize,
           startingBlock: layer.startingBlock,
           provider,
@@ -110,7 +103,6 @@ export async function createPreviewClients(
         })
         blockLayers.push({
           name: layer.name,
-          type: layer.type,
           batchSize: layer.batchSize,
           startingBlock: layer.startingBlock,
           provider: new CelestiaDaProvider(client, layer.name),
@@ -129,7 +121,6 @@ export async function createPreviewClients(
         })
         blockLayers.push({
           name: layer.name,
-          type: layer.type,
           batchSize: layer.batchSize,
           startingBlock: layer.startingBlock,
           provider: new AvailDaProvider(client, layer.name),

@@ -32,7 +32,7 @@ export function createBlobSource(
     return blobs
   }
 
-  if (layer.type === 'ethereum' && blobService) {
+  if (layer.name === 'ethereum' && blobService) {
     return {
       getBlobs: async (from, to) => {
         logger.info('Reading ethereum blobs from the database cache', {

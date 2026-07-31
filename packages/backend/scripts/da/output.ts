@@ -18,9 +18,17 @@ export function summarizeRecords(
   const byProject = new Map<string, Map<string, DataAvailabilityRecord[]>>()
   for (const record of records) {
     const key = `${record.daLayer} ${record.configurationId}`
-    const project = byProject.get(record.projectId) ?? new Map()
-    byProject.set(record.projectId, project)
-    project.set(key, [...(project.get(key) ?? []), record])
+    let project = byProject.get(record.projectId)
+    if (!project) {
+      project = new Map()
+      byProject.set(record.projectId, project)
+    }
+    const list = project.get(key)
+    if (list) {
+      list.push(record)
+    } else {
+      project.set(key, [record])
+    }
   }
 
   for (const [projectId, configs] of [...byProject.entries()].sort(([a], [b]) =>
@@ -71,7 +79,7 @@ export function writePreviewJson(path: string, payload: unknown): void {
   )
 }
 
-export function formatBytes(bytes: bigint): string {
+function formatBytes(bytes: bigint): string {
   const units = ['B', 'KiB', 'MiB', 'GiB', 'TiB']
   let value = Number(bytes)
   let unit = 0
