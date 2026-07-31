@@ -49,16 +49,20 @@ export function HomeScalingCard({ charts, scalingCategoryCounts }: Props) {
     [tvsChartData],
   )
 
-  const activityChartData = useMemo(
+  const activityChartData = useMemo<HomeChartDataPoint[]>(
     () =>
-      charts.activity.chart.map(([timestamp, rollupsUops, vAndOUops]) => {
-        const hasAny = rollupsUops !== null || vAndOUops !== null
-        const sum = (rollupsUops ?? 0) + (vAndOUops ?? 0)
-        return {
-          timestamp,
-          value: hasAny ? sum / UnixTime.DAY : null,
-        }
-      }),
+      charts.activity.chart.map(
+        ([timestamp, rollupsUops, vAndOUops, ethereumUops]) => {
+          const hasAny = rollupsUops !== null || vAndOUops !== null
+          const sum = (rollupsUops ?? 0) + (vAndOUops ?? 0)
+          return {
+            timestamp,
+            value: hasAny ? sum / UnixTime.DAY : null,
+            ethereum:
+              ethereumUops !== null ? ethereumUops / UnixTime.DAY : null,
+          }
+        },
+      ),
     [charts.activity.chart],
   )
 
@@ -117,11 +121,12 @@ export function HomeScalingCard({ charts, scalingCategoryCounts }: Props) {
             data={activityChartData}
             isLoading={false}
             color="pink"
-            tooltipLabel="UOPS"
+            tooltipLabel="Layer 2s"
             formatValue={(value) => formatActivityCount(value)}
             yAxisUnit=" UOPS"
             syncedUntil={charts.activity.syncedUntil}
             tooltipDayRange
+            withEthereum
           />
         </HomeChartSection>
       </div>
