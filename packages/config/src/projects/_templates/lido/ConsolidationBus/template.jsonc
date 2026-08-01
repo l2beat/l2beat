@@ -1,0 +1,50 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Queues validator consolidation batches and, after an execution delay, forwards proven EIP-7251 requests to ConsolidationGateway.",
+  "category": "core",
+  "fields": {
+    "accessControl": {
+      "handler": { "type": "accessControl", "includeEmptyRoles": true }
+    },
+    "defaultAdmins": {
+      "copy": "accessControl",
+      "edit": ["get", "DEFAULT_ADMIN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke ConsolidationBus roles."
+        }
+      ]
+    },
+    "publishers": {
+      "copy": "accessControl",
+      "edit": ["get", "PUBLISH_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "publish validator consolidation batches to the delayed queue."
+        }
+      ]
+    },
+    "batchRemovers": {
+      "copy": "accessControl",
+      "edit": ["get", "REMOVE_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "remove pending validator consolidation batches."
+        }
+      ]
+    },
+    "configManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "MANAGE_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the consolidation batch-size limit, group limit, and execution delay."
+        }
+      ]
+    }
+  }
+}

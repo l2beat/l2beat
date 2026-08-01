@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "wstETH Referral Staker",
+  "description": "Permissionless convenience contract that stakes supplied ETH in Lido with a caller-selected referral, wraps the resulting stETH, and returns wstETH to the caller.",
+  "category": "core"
+}

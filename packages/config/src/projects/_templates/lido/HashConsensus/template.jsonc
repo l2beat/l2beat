@@ -1,0 +1,95 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Collects report hashes from an enumerable oracle committee and forwards a report to its processor once quorum agrees. It defines report frames, quorum, fast-lane members, and the report processor.",
+  "category": "core",
+  "ignoreMethods": [
+    "getConsensusState",
+    "getCurrentFrame",
+    "getFastLaneMembers",
+    "getReportVariants"
+  ],
+  "ignoreInWatchMode": [
+    "getConsensusState",
+    "getCurrentFrame",
+    "getFastLaneMembers",
+    "getMembers",
+    "getReportVariants",
+    "getInitialRefSlot"
+  ],
+  "fields": {
+    "members": {
+      "description": "Oracle committee members, excluding their changing last-reported reference slots.",
+      "copy": "getMembers",
+      "edit": ["get", "addresses"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit report hashes and participate in reaching oracle consensus."
+        }
+      ]
+    },
+    "accessControl": {
+      "handler": { "type": "accessControl", "includeEmptyRoles": true }
+    },
+    "defaultAdmins": {
+      "copy": "accessControl",
+      "edit": ["get", "DEFAULT_ADMIN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke every HashConsensus role."
+        }
+      ]
+    },
+    "memberAndQuorumManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "MANAGE_MEMBERS_AND_QUORUM_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add or remove oracle committee members and change the report quorum."
+        }
+      ]
+    },
+    "frameConfigManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "MANAGE_FRAME_CONFIG_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the duration and timing of oracle reporting frames."
+        }
+      ]
+    },
+    "fastLaneConfigManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "MANAGE_FAST_LANE_CONFIG_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the number of frame slots reserved for fast-lane committee members."
+        }
+      ]
+    },
+    "reportProcessorManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "MANAGE_REPORT_PROCESSOR_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the contract that receives consensus reports."
+        }
+      ]
+    },
+    "consensusDisablers": {
+      "copy": "accessControl",
+      "edit": ["get", "DISABLE_CONSENSUS_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "remove committee members or lower quorum to interrupt the current consensus."
+        }
+      ]
+    }
+  }
+}

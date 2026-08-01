@@ -8,6 +8,7 @@ import type {
 } from '../../../components/projects/sections/ContractEntry'
 import type { UsedInProject } from '../../../components/projects/sections/permissions/UsedInProject'
 import type { ProjectSectionProps } from '../../../components/projects/sections/types'
+import { createAddressAnchors } from './getContractAddressAnchor'
 import type { ContractUtils } from './getContractUtils'
 import { toVerificationStatus } from './toVerificationStatus'
 
@@ -17,6 +18,8 @@ type ProjectParams = {
   isUnderReview: boolean
   hostChain?: string
 }
+
+type GetAddressAnchor = ReturnType<typeof createAddressAnchors>
 
 export type PermissionSection = Omit<
   PermissionsSectionProps,
@@ -75,6 +78,7 @@ export function getPermissionsSection(
   const projectChangeReport = projectParams.id
     ? projectsChangeReport?.projects[projectParams.id]
     : undefined
+  const getAddressAnchor = createAddressAnchors('permissions')
 
   const permissionsByChain = {
     ...Object.fromEntries(
@@ -87,6 +91,7 @@ export function getPermissionsSection(
               permissions,
               contractUtils,
               projectChangeReport,
+              getAddressAnchor,
             ),
           ]
         },
@@ -105,6 +110,7 @@ function getGroupedTechnologyContracts(
   permissions: ProjectPermissions,
   contractUtils: ContractUtils,
   projectChangeReport: ProjectsChangeReport['projects'][string] | undefined,
+  getAddressAnchor: GetAddressAnchor,
 ): PermissionSection['permissionsByChain'][string] {
   return {
     roles:
@@ -114,6 +120,7 @@ function getGroupedTechnologyContracts(
           permission,
           contractUtils,
           projectChangeReport,
+          getAddressAnchor,
         ),
       ) ?? [],
     actors:
@@ -123,6 +130,7 @@ function getGroupedTechnologyContracts(
           permission,
           contractUtils,
           projectChangeReport,
+          getAddressAnchor,
           { grouped: true },
         ),
       ) ?? [],
@@ -142,6 +150,7 @@ function toTechnologyContract(
   permission: ProjectPermission,
   contractUtils: ContractUtils,
   projectChangeReport: ProjectsChangeReport['projects'][string] | undefined,
+  getAddressAnchor: GetAddressAnchor,
   options?: { grouped: true },
 ): TechnologyContract[] {
   const isGrouped = options?.grouped === true && permission.accounts.length > 1
@@ -159,6 +168,7 @@ function toTechnologyContract(
           ChainSpecificAddress.address(account.address),
         ),
       ),
+      anchorId: getAddressAnchor(account.address),
     }),
   )
 

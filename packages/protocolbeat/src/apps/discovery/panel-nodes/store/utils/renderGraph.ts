@@ -1,6 +1,8 @@
-import type { Box, Node } from '../State'
+import type { Box, Field, Node } from '../State'
 import { FIELD_HEIGHT, HEADER_HEIGHT } from './constants'
 import { boxContains } from './containment'
+import { type GraphEdge, getGraphProjection } from './graphProjection'
+import { topLevelByDescendant } from './subnodes'
 import { processConnection } from './updateNodePositions'
 
 const CONTAINER_PADDING = 24
@@ -17,6 +19,12 @@ export interface RenderGraph {
   // Flat list of nodes to draw. Opened groups are replaced by their (possibly
   // nested) members; closed groups stay collapsed as a single node.
   readonly nodes: Node[]
+  // Nodes disconnected by hidden fields.
+  readonly hidden: ReadonlySet<string>
+  // Per collapsed group, the row targets that still have a live connection
+  // from some member. Rows are unique per target within a group, so a target
+  // identifies a row.
+  readonly liveGroupTargets: ReadonlyMap<string, ReadonlySet<string>>
   // One boundary per opened group, innermost last so hit-testing can prefer it.
   readonly containers: GroupContainer[]
 }
@@ -25,43 +33,80 @@ export interface RenderGraph {
 // inside them, while closed groups remain a single collapsed box. Connection
 // geometry is recomputed against the expanded layout. When nothing is opened
 // the original node refs are returned untouched so React.memo keeps working.
-export function buildRenderGraph(
-  nodes: readonly Node[],
-  hidden: readonly string[],
-): RenderGraph {
-  const { nodes: rendered, containers, expanded } = expandGroups(nodes, hidden)
-  if (!expanded) {
-    return { nodes: rendered, containers }
-  }
-
-  const boxById = new Map<string, Box>()
-  for (const node of rendered) {
-    boxById.set(node.id, node.box)
-    if (node.subnodes.length > 0) {
-      indexDescendants(node, node.box, boxById)
+export function buildRenderGraph(nodes: readonly Node[]): RenderGraph {
+  const projection = getGraphProjection(nodes)
+  const effectiveHidden = projection.hiddenNodeIds
+  const {
+    nodes: rendered,
+    containers,
+    expanded,
+  } = expandGroups(nodes, effectiveHidden)
+  let laidOut = rendered
+  if (expanded) {
+    const boxById = new Map<string, Box>()
+    for (const node of rendered) {
+      boxById.set(node.id, node.box)
+      if (node.subnodes.length > 0) {
+        indexDescendants(node, node.box, boxById)
+      }
     }
+    laidOut = rendered.map((node) => layoutFields(node, boxById))
   }
+  return {
+    nodes: laidOut,
+    hidden: effectiveHidden,
+    containers,
+    liveGroupTargets: getLiveGroupTargets(laidOut, projection.visibleEdges),
+  }
+}
 
-  const laidOut = rendered.map((node) => layoutFields(node, boxById))
-  return { nodes: laidOut, containers }
+// Whether a field's connection should be drawn and counted for dimming. For
+// regular nodes this is just the hidden-fields check — target visibility is
+// handled separately by the renderers. For collapsed groups, whose rows
+// aggregate member fields, a row is live only while some member still has a
+// visible edge to the row's target.
+export function isFieldConnectionLive(
+  node: Node,
+  field: Field,
+  liveGroupTargets: ReadonlyMap<string, ReadonlySet<string>>,
+): boolean {
+  if (node.hiddenFields.includes(field.name)) return false
+  if (node.subnodes.length === 0) return true
+  return liveGroupTargets.get(node.id)?.has(field.target) ?? false
+}
+
+function getLiveGroupTargets(
+  nodes: readonly Node[],
+  edges: readonly GraphEdge[],
+): ReadonlyMap<string, ReadonlySet<string>> {
+  const result = new Map<string, Set<string>>()
+  if (!nodes.some((node) => node.subnodes.length > 0)) {
+    return result
+  }
+  const sourceByDescendant = topLevelByDescendant(nodes)
+  for (const edge of edges) {
+    const source = sourceByDescendant.get(edge.source)
+    if (source === undefined || source.id === edge.source) continue
+    const targets = result.get(source.id) ?? new Set()
+    targets.add(edge.target)
+    result.set(source.id, targets)
+  }
+  return result
 }
 
 // Flatten opened groups into their members without laying out fields. Select-box
 // hit-testing only reads node boxes, so it can skip the per-field connection
 // recompute that buildRenderGraph does on every mousemove.
-export function expandedNodes(
-  nodes: readonly Node[],
-  hidden: readonly string[],
-): Node[] {
-  return expandGroups(nodes, hidden).nodes
+export function expandedNodes(nodes: readonly Node[]): Node[] {
+  const effectiveHidden = getGraphProjection(nodes).hiddenNodeIds
+  return expandGroups(nodes, effectiveHidden).nodes
 }
 
 function expandGroups(
   nodes: readonly Node[],
-  hidden: readonly string[],
+  hidden: ReadonlySet<string>,
 ): { nodes: Node[]; containers: GroupContainer[]; expanded: boolean } {
-  const hiddenSet = new Set(hidden)
-  const visible = nodes.filter((node) => !hiddenSet.has(node.id))
+  const visible = nodes.filter((node) => !hidden.has(node.id))
 
   const hasOpenGroup = visible.some(
     (node) => node.opened && node.subnodes.length > 0,
@@ -73,7 +118,7 @@ function expandGroups(
   const rendered: Node[] = []
   const containers: GroupContainer[] = []
   for (const node of visible) {
-    for (const member of expand(node, hiddenSet, containers)) {
+    for (const member of expand(node, hidden, containers)) {
       rendered.push(member)
     }
   }
@@ -91,8 +136,11 @@ function expand(
       .flatMap((subnode) => expand(subnode, hidden, containers))
     if (members.length > 0) {
       containers.push(boundary(node, members))
+      return members
     }
-    return members
+    // Defensive: unreachable under derived hiddenness, because an opened
+    // group whose members are all hidden is itself hidden and filtered earlier.
+    return [node]
   }
   return [node]
 }
@@ -171,12 +219,9 @@ export function headerAt(
 
 // The on-screen footprint of each open group, so layout can size and place it
 // by its expanded container rather than its collapsed box.
-export function containerBoxes(
-  nodes: readonly Node[],
-  hidden: readonly string[],
-): Map<string, Box> {
+export function containerBoxes(nodes: readonly Node[]): Map<string, Box> {
   const boxes = new Map<string, Box>()
-  for (const group of buildRenderGraph(nodes, hidden).containers) {
+  for (const group of buildRenderGraph(nodes).containers) {
     boxes.set(group.id, group.box)
   }
   return boxes

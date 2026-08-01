@@ -1,8 +1,7 @@
 {
   "name": "treasure",
   "timestamp": 1753944354,
-  "configHash": "0xbfe10a34dd18e18ae901b3659a728e90b6a292a589aa4817fb11745497f69ff9",
-  "sharedModules": ["shared-zk-stack"],
+  "configHash": "0xc0d28a472498007753d1cac3bbaa87c7c14075030f5276b2951cfa13996d8873",
   "entries": [
     {
       "address": "eth:0x18c16E72CAa10D2Ce13E4b61bfC51AB93B7e92f0",
@@ -45,7 +44,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -67,6 +66,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x58551793BEeDca08a861c394258E0457e48A2FCc",
       "sinceTimestamp": 1732645991,
       "sinceBlock": 21273741,
       "values": {
@@ -129,7 +129,7 @@
       "type": "Contract",
       "template": "shared-zk-stack/ValidatorTimelock",
       "sourceHashes": [
-        "0x5c435b3eaf489b61e623af2356a751079cfa87c079c12e5d93108d007d3b4c97"
+        "0x76c03bdcd4b9f00719cb172815067482f6e639d9e37d46cd597995d931dc26a0"
       ],
       "proxyType": "immutable",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
@@ -141,6 +141,7 @@
           "role": ".validators"
         }
       ],
+      "deployerAddress": "eth:0x71d84c3404a6ae258E6471d4934B96a2033F9438",
       "sinceTimestamp": 1717520615,
       "sinceBlock": 20019826,
       "values": {
@@ -169,7 +170,7 @@
       "template": "shared-zk-stack/Diamond",
       "sourceHashes": [
         "0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f",
-        "0xbceaa498ea422a98ec91f01d7b76774610e543c9efd855141de933065f32b308"
+        "0xa17c940fd2a7d029da42436da6f116a987106fed8ac22c7c3eade14b8858cd49"
       ],
       "proxyType": "EIP2535 diamond proxy",
       "description": "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
@@ -188,6 +189,7 @@
         "baseTokenGasPriceMultiplierDenominator",
         "baseTokenGasPriceMultiplierNominator"
       ],
+      "deployerAddress": "eth:0x58551793BEeDca08a861c394258E0457e48A2FCc",
       "sinceTimestamp": 1732199087,
       "sinceBlock": 21236684,
       "values": {
@@ -444,7 +446,7 @@
       "type": "Contract",
       "template": "shared-zk-stack/ValidatorTimelock",
       "sourceHashes": [
-        "0x2221508945ceea880f5d52488af1a7466fcdfadeaf3644dc5e3b82671b7947a3"
+        "0x6308b2ae7a44c1255f5ad431f8b3d2d7da55efd35a771e2a31c87ce6b814e358"
       ],
       "proxyType": "immutable",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
@@ -456,6 +458,7 @@
           "role": ".validators"
         }
       ],
+      "deployerAddress": "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
       "sinceTimestamp": 1739108999,
       "sinceBlock": 21809364,
       "values": {
@@ -487,6 +490,7 @@
       ],
       "proxyType": "immutable",
       "description": "Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.",
+      "deployerAddress": "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
       "sinceTimestamp": 1739108927,
       "sinceBlock": 21809358,
       "values": { "$immutable": true },
@@ -501,7 +505,7 @@
       "type": "Contract",
       "template": "shared-zk-stack/ChainAdmin",
       "sourceHashes": [
-        "0x3423f941c413d4f07703ba62723b05600f2a33f8725e8d89a53194efb05f4086"
+        "0x76a043a95de125e047fd39adec2596a1b92583f41489b33299ad421829020269"
       ],
       "proxyType": "immutable",
       "description": "A governance proxy that lets eth:0x282370D1e925ee897CB29Cb3beC13aAe0743067C act through it.",
@@ -513,6 +517,7 @@
           "role": ".getAdmin"
         }
       ],
+      "deployerAddress": "eth:0x58551793BEeDca08a861c394258E0457e48A2FCc",
       "sinceTimestamp": 1731546443,
       "sinceBlock": 21182547,
       "values": {
@@ -557,6 +562,7 @@
       ],
       "proxyType": "immutable",
       "description": "Implements the ZK proof verification logic.",
+      "deployerAddress": "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
       "sinceTimestamp": 1739108831,
       "sinceBlock": 21809350,
       "values": {

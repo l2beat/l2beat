@@ -17,6 +17,7 @@ import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type { TechnologyContract } from '../../../components/projects/sections/ContractEntry'
 import type { ContractsSectionProps } from '../../../components/projects/sections/contracts/ContractsSection'
 import { toTechnologyRisk } from '../risk-summary/toTechnologyRisk'
+import { createAddressAnchors } from './getContractAddressAnchor'
 import type { ContractUtils } from './getContractUtils'
 import { getPastUpgradesData } from './getPastUpgradesData'
 import { getProgramHashes } from './getProgramHashes'
@@ -72,30 +73,36 @@ export function getContractsSection(
     ]),
   )
   const matchedEscrows = new Set<string>()
+  const getAddressAnchor = createAddressAnchors('contracts')
 
   const contracts = Object.fromEntries(
     Object.entries(projectParams.contracts.addresses ?? {}).map(
       ([chainName, contracts]) => {
-        return [
-          contractUtils.getChainName(chainName),
-          contracts.map((contract) => {
-            const escrowKey = getEscrowKey(
-              chainName,
-              ChainSpecificAddress.address(contract.address),
-            )
-            const escrow = escrowsByAddress.get(escrowKey)
-            if (escrow) {
-              matchedEscrows.add(escrowKey)
-            }
-            return makeTechnologyContract(
+        const technologyContracts = contracts.map((contract) => {
+          const escrowKey = getEscrowKey(
+            chainName,
+            ChainSpecificAddress.address(contract.address),
+          )
+          const escrow = escrowsByAddress.get(escrowKey)
+          if (escrow) {
+            matchedEscrows.add(escrowKey)
+          }
+          return [
+            contract,
+            makeTechnologyContract(
               contract,
               projectParams,
               !contract.isVerified,
               projectChangeReport,
               contractUtils,
               escrow,
-            )
-          }),
+              getAddressAnchor(contract.address),
+            ),
+          ] as const
+        })
+        return [
+          contractUtils.getChainName(chainName),
+          groupTechnologyContracts(technologyContracts),
         ]
       },
     ),
@@ -123,6 +130,7 @@ export function getContractsSection(
         projectChangeReport,
         contractUtils,
         escrowDetails,
+        getAddressAnchor(contract.address),
       ),
     ]
   }
@@ -155,6 +163,7 @@ function makeTechnologyContract(
   projectChangeReport: ProjectsChangeReport['projects'][string] | undefined,
   contractUtils: ContractUtils,
   escrow?: TechnologyContract['escrow'],
+  anchorId?: string,
 ): TechnologyContract {
   const chain = item.chain
   // TODO: sz-piotr: This here is just a stepping stone. Ideally none of this
@@ -168,7 +177,11 @@ function makeTechnologyContract(
     item.chain
   ]?.becameVerified.includes(ChainSpecificAddress.address(item.address))
 
-  const getAddress = (opts: { address: EthereumAddress; name?: string }) => {
+  const getAddress = (opts: {
+    address: EthereumAddress
+    name?: string
+    anchorId?: string
+  }) => {
     const name =
       opts.name ?? `${opts.address.slice(0, 6)}…${opts.address.slice(38, 42)}`
 
@@ -180,11 +193,15 @@ function makeTechnologyContract(
         mainContractBecameVerified,
       ),
       href: `${explorerUrl}/address/${opts.address.toString()}#code`,
+      anchorId: opts.anchorId,
     }
   }
 
   const addresses = [
-    getAddress({ address: ChainSpecificAddress.address(item.address) }),
+    getAddress({
+      address: ChainSpecificAddress.address(item.address),
+      anchorId,
+    }),
   ]
 
   const implementations = item.upgradeability?.implementations ?? []
@@ -274,6 +291,70 @@ function makeTechnologyContract(
     pastUpgrades: getPastUpgradesData(pastUpgrades),
     escrow,
   }
+}
+
+// TODO(radomski): We know this is not the best place for this code, nor the
+// best solution. Ideally the config package owns all data manipulation and the
+// frontend only renders it. We are not doing the grouping in config because the
+// config makes many assumptions that a contract entry is a single contract tied
+// to a single address, so introducing grouped contracts there is not easy. The
+// proper fix is to simplify the contract data schema in config and move this
+// logic there. Grouping also breaks per-contract rendering that assumes a single
+// address per entry (e.g. past upgrades would need smarter handling). This is
+// the first iteration and we will work on this more if there is demand for it.
+function groupTechnologyContracts(
+  contracts: (readonly [ProjectContract, TechnologyContract])[],
+): TechnologyContract[] {
+  const isGroupable = ([rawContract, contract]: readonly [
+    ProjectContract,
+    TechnologyContract,
+  ]) =>
+    rawContract.upgradeability?.immutable === true &&
+    (contract.pastUpgrades?.upgrades.length ?? 0) === 0 &&
+    !contract.escrow &&
+    !contract.impactfulChange &&
+    !contract.addresses.some(
+      (address) => address.verificationStatus === 'became-verified',
+    )
+
+  const groupKey = (contract: TechnologyContract) =>
+    JSON.stringify({
+      name: contract.name,
+      description: contract.description ?? null,
+      upgradeableBy: contract.upgradeableBy ?? null,
+      upgradeConsiderations: contract.upgradeConsiderations ?? null,
+      references: contract.references,
+      usedInProjects: contract.usedInProjects ?? null,
+    })
+
+  const result: TechnologyContract[] = []
+  const groupIndexByKey = new Map<string, number>()
+
+  for (const pair of contracts) {
+    const [, contract] = pair
+    if (!isGroupable(pair)) {
+      result.push(contract)
+      continue
+    }
+
+    const key = groupKey(contract)
+    const existingIndex = groupIndexByKey.get(key)
+    if (existingIndex === undefined) {
+      groupIndexByKey.set(key, result.length)
+      result.push(contract)
+      continue
+    }
+
+    const group = result[existingIndex]
+    assert(group, 'Group must exist')
+    result[existingIndex] = {
+      ...group,
+      addresses: [...group.addresses, ...contract.addresses],
+      groupCount: (group.groupCount ?? 1) + 1,
+    }
+  }
+
+  return result
 }
 
 function getEscrowDetails(

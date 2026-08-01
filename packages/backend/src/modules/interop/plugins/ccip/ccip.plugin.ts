@@ -29,7 +29,7 @@ import {
   findCctpDepositForBurn,
   findCctpReceivedTransfer,
 } from '../cctp/cctp.utils'
-import { getBestEffortTokenFrameworkBridgeType } from '../tokenFrameworkBridgeTyping'
+import { getBestEffortBridgeTypeFromPartialSupplyAction } from '../partialSupplyActionBridgeType'
 import {
   createEventParser,
   createInteropEventType,
@@ -770,7 +770,7 @@ export class CCIPPlugin implements InteropPluginResyncable {
             dstTokenAddress: dstToken.address,
             dstAmount: dstToken.amount,
             dstWasMinted: dstToken.wasMinted,
-            bridgeType: getBestEffortTokenFrameworkBridgeType({
+            bridgeType: getBestEffortBridgeTypeFromPartialSupplyAction({
               srcWasBurned: undefined,
               dstWasMinted: dstToken.wasMinted,
             }),
@@ -840,7 +840,7 @@ export class CCIPPlugin implements InteropPluginResyncable {
         srcTokenAddress: delivery.args.token,
         srcAmount: delivery.args.amount,
         srcWasBurned: delivery.args.wasBurned,
-        bridgeType: getBestEffortTokenFrameworkBridgeType({
+        bridgeType: getBestEffortBridgeTypeFromPartialSupplyAction({
           srcWasBurned: delivery.args.wasBurned,
           dstWasMinted: undefined,
         }),

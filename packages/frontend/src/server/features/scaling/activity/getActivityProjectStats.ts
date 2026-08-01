@@ -44,6 +44,7 @@ async function getActivityProjectStatsData(projectId: ProjectId) {
   return {
     lastDayUops: countPerSecond(lastDayUops),
     uopsWeeklyChange: calculatePercentageChange(lastDayUops, sevenDaysAgoUops),
+    uopsWeeklyChangePeriod: '7D' as const,
   }
 }
 
@@ -51,5 +52,6 @@ function getMockActivityProjectStatsData(): ActivityProjectStats {
   return {
     lastDayUops: 15,
     uopsWeeklyChange: 0.1,
+    uopsWeeklyChangePeriod: '7D',
   }
 }

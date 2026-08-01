@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "HintHelpers",
+  "description": "A read-only helper for locating where a trove sits in a branch's interest-rate ordering. Off-chain callers use it to compute the position hints that keep opening and adjusting troves gas-efficient. It holds no funds and changes no state."
+}

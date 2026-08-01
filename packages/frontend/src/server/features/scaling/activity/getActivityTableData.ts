@@ -5,7 +5,10 @@ import partition from 'lodash/partition'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
-import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
+import {
+  calculatePercentageChange,
+  type PercentageChangePeriod,
+} from '~/utils/calculatePercentageChange'
 import { optionToRange } from '~/utils/range/range'
 import { getActivitySyncState, type SyncState } from '../../utils/syncState'
 import { countPerSecond } from './utils/countPerSecond'
@@ -18,10 +21,12 @@ interface MetricData {
   pastDayCount: {
     value: number
     change: number
+    changePeriod: PercentageChangePeriod
   }
   summedCount: {
     value: number
     change: number
+    changePeriod: PercentageChangePeriod
   }
   maxCount: {
     value: number
@@ -119,6 +124,7 @@ export async function getActivityTable(
                 pastDayData?.count ?? 0,
                 sevenDaysAgoData?.count ?? 0,
               ),
+              changePeriod: '7D',
             },
             summedCount: {
               value: tpsCount,
@@ -126,6 +132,7 @@ export async function getActivityTable(
                 tpsCount,
                 thirtyDaysAgoRecords ? sumTpsCount(thirtyDaysAgoRecords) : 0,
               ),
+              changePeriod: 'last30d',
             },
             maxCount: {
               value: countPerSecond(maxCount.count),
@@ -147,6 +154,7 @@ export async function getActivityTable(
                 pastDayData?.uopsCount ?? pastDayData?.count ?? 0,
                 sevenDaysAgoData?.uopsCount ?? sevenDaysAgoData?.count ?? 0,
               ),
+              changePeriod: '7D',
             },
             summedCount: {
               value: uopsCount,
@@ -154,6 +162,7 @@ export async function getActivityTable(
                 uopsCount,
                 thirtyDaysAgoRecords ? sumUopsCount(thirtyDaysAgoRecords) : 0,
               ),
+              changePeriod: 'last30d',
             },
             maxCount: {
               value: countPerSecond(maxCount.uopsCount),
@@ -165,7 +174,7 @@ export async function getActivityTable(
             pastDayData?.count ?? 0,
           ),
           syncState,
-        },
+        } satisfies ActivityProjectTableData,
       ]
     }),
   )
@@ -187,10 +196,12 @@ async function getMockActivityTableData(): Promise<ActivityTableData> {
           pastDayCount: {
             value: 19,
             change: Math.random(),
+            changePeriod: '7D',
           },
           summedCount: {
             value: 1500,
             change: Math.random(),
+            changePeriod: 'last30d',
           },
           maxCount: {
             value: 30,
@@ -205,10 +216,12 @@ async function getMockActivityTableData(): Promise<ActivityTableData> {
           pastDayCount: {
             value: 20,
             change: Math.random(),
+            changePeriod: '7D',
           },
           summedCount: {
             value: 1550,
             change: Math.random(),
+            changePeriod: 'last30d',
           },
           maxCount: {
             value: 30,
@@ -221,7 +234,7 @@ async function getMockActivityTableData(): Promise<ActivityTableData> {
           syncedUntil: UnixTime.now(),
           target: UnixTime.now(),
         },
-      },
+      } satisfies ActivityProjectTableData,
     ]),
   )
 }

@@ -69,6 +69,20 @@ const OP_SUCCINCT_RANGE_EIGENDA = {
     'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks. Data availability layer is set to EigenDA.',
 }
 
+const OP_SUCCINCT_RISE_V341_STEPS = `
+Prepare:
+
+1. Install sp1 toolchain: \`curl -L https://sp1.succinct.xyz | bash\`, then \`~/.sp1/bin/sp1up\`.
+2. Install docker and make sure it is running: \`docker ps\`.
+
+Verify:
+
+1. Checkout the correct tag in [risechain/op-succinct](https://github.com/risechain/op-succinct) repo: \`git checkout v3.4.1-rise.7\`. Commit hash should be \`a99569fa608127fdd4d5d73722184362c6283d6b\`.
+2. Reproducibly rebuild the EigenDA range ELF from source: from \`programs/range/eigenda\` run \`~/.sp1/bin/cargo-prove prove build --elf-name eigenda-range-elf-embedded --docker --tag v5.2.4 --output-directory ../../../elf --features embedded\`.
+3. Reproducibly rebuild the aggregation ELF from source: from \`programs/aggregation\` run \`~/.sp1/bin/cargo-prove prove build --elf-name aggregation-elf --docker --tag v5.2.4 --output-directory ../../elf\`.
+4. From the repo root run \`cargo run --bin config --release --features eigenda\` to print the range verification key hash and the aggregation verification key hash. The eigenda feature selects the EigenDA range ELF, whose in-circuit derivation verifies EigenDA DA certificates via hokulea and canoe.
+`
+
 const OP_SUCCINCT_AGGLAYER_V390_STEPS = `
 Prepare:
 
@@ -378,6 +392,20 @@ Verify:
 3. Reproducibly rebuild the program ELF from source: from \`programs/range/eigenda\` run \`cargo prove build --elf-name eigenda-range-elf-embedded --docker --tag v6.1.0 --output-directory ../../../elf\`. The rebuilt ELF is byte-identical to the one committed in the release.
 4. From the \`op-succinct\` dir run \`cargo run --bin config --release --features eigenda\` to print the verification key hashes.
     `,
+  },
+  '0x0061b26157718f96a20ea50c52a485dea3b6967139328dc7e07fece56f557bda': {
+    ...OP_SUCCINCT_FDP_AGG_EIGENDA('v3.4.1-rise.7'), // Rise
+    programUrl:
+      'https://github.com/risechain/op-succinct/tree/v3.4.1-rise.7/programs/aggregation',
+    verificationStatus: 'successful',
+    verificationSteps: OP_SUCCINCT_RISE_V341_STEPS,
+  },
+  '0x02850d082ab676631569bfa7057944a05f22f42c12ffa15b0ae30a6153dfe162': {
+    ...OP_SUCCINCT_FDP_RANGE_EIGENDA('v3.4.1-rise.7'), // Rise
+    programUrl:
+      'https://github.com/risechain/op-succinct/tree/v3.4.1-rise.7/programs/range/eigenda',
+    verificationStatus: 'successful',
+    verificationSteps: OP_SUCCINCT_RISE_V341_STEPS,
   },
   '0x003991487ea72a40a1caa7c234b12c0da52fc4ccc748a07f6ebd354bbb54772e': {
     ...OP_SUCCINCT_AGG_BLOBS,
@@ -1794,7 +1822,7 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     },
   '2530337539466159944237001094809327283009177793361359619481044346150483328860':
     {
-      ...STARK_EX('ApeX and EdgeX'),
+      ...STARK_EX('ApeX Pro and EdgeX'),
       verificationStatus: 'notVerified',
     },
   '273279642033703284306509103355536170486431195329675679055627933497997642494':
@@ -2313,6 +2341,18 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       'common/programHashes/0x00fb9ae7af3b4852bd4524789cb15dbf188ee47b1d3838bdd39062821c6182e6.md',
     ),
   },
+  '0x00e726560b91ff68e7e232d79536f4a8fb951f1f0197f97f7377b3f21e7e641e': {
+    title: 'Fluent Nitro TEE verifier v1.0.4',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/fluentlabs-xyz/fluent-stf/tree/v1.0.4/bin/aws-nitro-validator',
+    description:
+      'Verifies correctness of a single TEE attestation for executing Fluent STF within a trusted enclave on AWS cloud.',
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0x00e726560b91ff68e7e232d79536f4a8fb951f1f0197f97f7377b3f21e7e641e.md',
+    ),
+  },
   '0x00e34107e4c5284bd4ecc4269c650671038c1e85d9dacb931b534e984f607334': {
     title: 'Fluent STF guest program',
     proverSystemProject: ProjectId('sp1hypercube'),
@@ -2359,6 +2399,18 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       },
     ),
   },
+  '0x00a147f0c69da81e3d530cca91310f9605f980dc155726bb33fbde0e493a3836': {
+    title: 'Aggregation program of Base AggregateVerifier',
+    programUrl:
+      'https://github.com/base/base/tree/09a973afe8467919370b90bc87ac1e7fde12c43b/crates/proof/succinct/programs/aggregation',
+    description:
+      'Aggregates range proofs of correct execution for several consecutive sub-ranges of Base L2 blocks.',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0x00a147f0c69da81e3d530cca91310f9605f980dc155726bb33fbde0e493a3836.md',
+    ),
+  },
   '0x44f625fa2a41367670d74a7b0d9899412dc1ca406f90df7a5bd9f8ae581ee47f': {
     title: 'Range program of Base AggregateVerifier',
     programUrl:
@@ -2385,6 +2437,18 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
         version: 'v1.1.1',
         commitHash: '01e732cdbae0c624d652da9e608d7d3fe0f9c74b',
       },
+    ),
+  },
+  '0x5fd09a2f4338ca7063bc37b02f9411645d0ef2784fe644cc71ab48ae64200beb': {
+    title: 'Range program of Base AggregateVerifier',
+    programUrl:
+      'https://github.com/base/base/tree/09a973afe8467919370b90bc87ac1e7fde12c43b/crates/proof/succinct/programs/range/ethereum',
+    description:
+      'Proves correct state transition function of the Base rollup over a sub-range of L2 blocks.',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0x5fd09a2f4338ca7063bc37b02f9411645d0ef2784fe644cc71ab48ae64200beb.md',
     ),
   },
   '0xc9536fb5b1387f30d16f6b95a5a26de352f8056866482bca632f7219896ea74c': {

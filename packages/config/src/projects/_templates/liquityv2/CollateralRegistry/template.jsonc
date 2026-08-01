@@ -1,0 +1,53 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "CollateralRegistry",
+  "description": "The protocol's redemption hub and the registry of its collateral branches: it stores only the address of each branch's collateral token and TroveManager, {{ totalCollaterals }} branches in all, fixed at construction, and custodies no funds itself. Redemption is what keeps BOLD near its dollar peg. Anyone can hand in BOLD and receive an equal dollar value of collateral drawn from the branches, so whenever BOLD trades below a dollar it becomes profitable to buy it up and redeem it. Each redemption is spread across the branches in proportion to their unbacked debt, meaning the debt a branch has not covered with Stability Pool deposits, so redemptions land hardest on the branches whose Stability Pools back them the least; a branch is skipped if it has been shut down or its total collateral ratio has fallen below the shutdown threshold. The redeemer pays a fee taken from the collateral they receive, set by a base rate that jumps up with the size of the redemption relative to total BOLD supply and decays back down over time, but never below a {{ redemptionFeeFloor }}% floor.",
+  "ignoreRelatives": ["getToken"],
+  "ignoreMethods": [
+    "getEffectiveRedemptionFeeInBold",
+    "getRedemptionFeeWithDecay",
+    "getRedemptionRateForRedeemedAmount"
+  ],
+  "ignoreInCoverage": [
+    "token0",
+    "token1",
+    "token2",
+    "token3",
+    "token4",
+    "token5",
+    "token6",
+    "token7",
+    "token8",
+    "token9",
+    "troveManager0",
+    "troveManager1",
+    "troveManager2",
+    "troveManager3",
+    "troveManager4",
+    "troveManager5",
+    "troveManager6",
+    "troveManager7",
+    "troveManager8",
+    "troveManager9"
+  ],
+  "fields": {
+    "getToken": {
+      "handler": {
+        "type": "array",
+        "method": "getToken",
+        "length": "{{ totalCollaterals }}"
+      }
+    },
+    "getTroveManager": {
+      "handler": {
+        "type": "array",
+        "method": "getTroveManager",
+        "length": "{{ totalCollaterals }}"
+      }
+    },
+    "redemptionFeeFloor": {
+      "handler": { "type": "hardcoded", "value": "0.5" },
+      "description": "Minimum redemption fee (%): a floor the decaying base rate never drops below. A code constant, not an on-chain parameter. Stored as a string since it is fractional (the discovery UI parses numeric field values as integers)."
+    }
+  }
+}

@@ -20,6 +20,32 @@
       "category": "other",
       "source": "canonical",
       "isAssociated": true
+    },
+    {
+      "mode": "auto",
+      "id": "adi-USDC.e",
+      "priceId": "usd-coin",
+      "symbol": "USDC.e",
+      "name": "USDC.e",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x9cb8142aEBBcdc60AF7c97Af897A67A8f3CA71C2",
+        "chain": "adi",
+        "decimals": 6,
+        "sinceTimestamp": 1775297696
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "ccip"
+          }
+        ]
+      }
     }
   ]
 }

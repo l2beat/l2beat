@@ -2,6 +2,7 @@ import type { Project } from '@l2beat/config'
 import { type ProjectId, UnixTime, unique } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import type {
   AverageDuration,
   InteropSelectionInput,
@@ -58,6 +59,7 @@ export type IntentBridgesData = {
   table: IntentBridgeTableData
   transferSizeChartData: TransferSizeDataPoint[] | undefined
   snapshotTimestamp: number | undefined
+  changePeriod: PercentageChangePeriod
 }
 
 export async function getIntentBridgesData(
@@ -129,6 +131,7 @@ export async function getIntentBridgesData(
     table,
     transferSizeChartData: getTransferSizeChartData(records, intentProjects),
     snapshotTimestamp,
+    changePeriod: 'last24h',
   }
 }
 
@@ -187,5 +190,6 @@ function getMockIntentBridgesData(): IntentBridgesData {
     table: { entries: [], zeroTransferProtocols: [] },
     transferSizeChartData: undefined,
     snapshotTimestamp: UnixTime.now(),
+    changePeriod: 'last24h',
   }
 }

@@ -11,7 +11,7 @@ import type { Manifest } from '~/utils/Manifest'
 import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
 
 export async function getInteropProtocolPageData(
-  req: Request<{ slug: string }, unknown, unknown, unknown>,
+  req: Request<{ slug: string }, unknown, unknown, { update?: string }>,
   manifest: Manifest,
   cache: InMemoryCache,
 ): Promise<RenderData | undefined> {
@@ -48,6 +48,7 @@ export async function getInteropProtocolPageData(
         projectEntry: data.projectEntry,
         protocolData: data.protocolData,
         apiSelection: data.apiSelection,
+        selectedUpdateId: req.query.update,
       },
     },
   }

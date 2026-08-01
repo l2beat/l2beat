@@ -1,7 +1,7 @@
 {
   "name": "starknet",
   "timestamp": 1784036617,
-  "configHash": "0xae977e3db9220e228674be34897a37d1cca9030b01c2fc8777d7710e9b714112",
+  "configHash": "0x519f98739942fa6ae8414e3346e034c87a31a2b5781a37af7efb9dc58bc703de",
   "entries": [
     {
       "name": "Starkware Multisig 2",
@@ -970,9 +970,64 @@
     },
     {
       "address": "eth:0x59232aC80E6d403b6381393e52f4665ECA328558",
-      "type": "Reference",
-      "targetType": "EOA",
-      "targetProject": "shared-sharp-verifier"
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
+          "via": [
+            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
+          "via": [
+            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
+          "via": [
+            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
+          "via": [
+            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
+          "via": [
+            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
+          "via": [
+            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
+          ]
+        }
+      ]
     },
     {
       "address": "eth:0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F",
@@ -5046,5 +5101,5 @@
     "starknet/StarknetMultiBridge_haltable": "0xe8353adf6ac366e8437be00a65d081e1d14c386d2b59bbfc9f50dcc2d80299b9"
   },
   "usedBlockNumbers": { "ethereum": 25531259 },
-  "permissionsConfigHash": "0x01527bea1efb5cd8417a8e38d119e0816098d2a25aca03466b54fdaf6a6fe9b3"
+  "permissionsConfigHash": "0x8d7e07bdf23362ed999fa6b9521fb6f1214328b6851e693ccb9805ebe31ff9d2"
 }

@@ -1,0 +1,200 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "The standard role-based management interface for a StakingVault. It owns the underlying vault, routes funding, withdrawals, stETH minting and burning through VaultHub, controls validator operations, and accounts for the node operator fee.",
+  "category": "core",
+  "ignoreMethods": ["remainingMintingCapacityShares", "withdrawableValue"],
+  "ignoreRelatives": ["feeRecipient", "stakingVault", "vaultConnection"],
+  "ignoreInWatchMode": [
+    "accruedFee",
+    "feeLeftover",
+    "healthShortfallShares",
+    "latestCorrectionTimestamp",
+    "latestReport",
+    "liabilityShares",
+    "locked",
+    "maxLockableValue",
+    "minimalReserve",
+    "obligations",
+    "obligationsShortfallValue",
+    "settledGrowth",
+    "totalMintingCapacityShares",
+    "totalValue"
+  ],
+  "fields": {
+    "accessControl": {
+      "handler": { "type": "accessControl", "includeEmptyRoles": true }
+    },
+    "vaultOwnerAdmins": {
+      "copy": "accessControl",
+      "edit": ["get", "DEFAULT_ADMIN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke vault-owner roles, transfer factual vault ownership, and exercise every operation controlled by those roles."
+        }
+      ]
+    },
+    "nodeOperatorManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "NODE_OPERATOR_MANAGER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke node-operator roles and manage the node operator fee recipient, fee rate, and accounting corrections."
+        }
+      ]
+    },
+    "funders": {
+      "copy": "accessControl",
+      "edit": ["get", "FUND_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "fund the staking vault with ETH."
+        }
+      ]
+    },
+    "withdrawers": {
+      "copy": "accessControl",
+      "edit": ["get", "WITHDRAW_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "withdraw available ETH from the staking vault to an arbitrary recipient."
+        }
+      ]
+    },
+    "minters": {
+      "copy": "accessControl",
+      "edit": ["get", "MINT_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "mint stETH or wstETH against the vault's available minting capacity to an arbitrary recipient."
+        }
+      ]
+    },
+    "burners": {
+      "copy": "accessControl",
+      "edit": ["get", "BURN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "burn stETH or wstETH supplied to the Dashboard to reduce the vault's liability."
+        }
+      ]
+    },
+    "rebalancers": {
+      "copy": "accessControl",
+      "edit": ["get", "REBALANCE_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "voluntarily rebalance the vault by burning stETH shares or using vault ETH."
+        }
+      ]
+    },
+    "depositPausers": {
+      "copy": "accessControl",
+      "edit": ["get", "PAUSE_BEACON_CHAIN_DEPOSITS_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause the vault's Beacon Chain deposits."
+        }
+      ]
+    },
+    "depositResumers": {
+      "copy": "accessControl",
+      "edit": ["get", "RESUME_BEACON_CHAIN_DEPOSITS_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "resume the vault's Beacon Chain deposits."
+        }
+      ]
+    },
+    "validatorExitRequesters": {
+      "copy": "accessControl",
+      "edit": ["get", "REQUEST_VALIDATOR_EXIT_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "emit voluntary exit requests for the vault's validators."
+        }
+      ]
+    },
+    "validatorWithdrawalTriggerers": {
+      "copy": "accessControl",
+      "edit": ["get", "TRIGGER_VALIDATOR_WITHDRAWAL_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "trigger partial or full EIP-7002 withdrawals for the vault's validators."
+        }
+      ]
+    },
+    "disconnectors": {
+      "copy": "accessControl",
+      "edit": ["get", "VOLUNTARY_DISCONNECT_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "voluntarily disconnect the vault from VaultHub once its liabilities and fees permit it."
+        }
+      ]
+    },
+    "vaultConfigManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "VAULT_CONFIGURATION_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "request or confirm tier changes, synchronize tier parameters, and decrease the vault share limit."
+        }
+      ]
+    },
+    "vaultTokenRecoverers": {
+      "copy": "accessControl",
+      "edit": ["get", "COLLECT_VAULT_ERC20_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "transfer arbitrary ERC-20 tokens held by the staking vault to an arbitrary recipient."
+        }
+      ]
+    },
+    "unguaranteedDepositors": {
+      "copy": "accessControl",
+      "edit": ["get", "NODE_OPERATOR_UNGUARANTEED_DEPOSIT_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "condition": "the Dashboard PDG policy allows unguaranteed deposits",
+          "description": "deposit vault ETH directly to validators without the PredepositGuarantee flow."
+        }
+      ]
+    },
+    "unknownValidatorProvers": {
+      "copy": "accessControl",
+      "edit": ["get", "NODE_OPERATOR_PROVE_UNKNOWN_VALIDATOR_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "condition": "the Dashboard PDG policy permits proofs",
+          "description": "prove an already active validator to PredepositGuarantee and associate it with the vault."
+        }
+      ]
+    },
+    "feeExemptionManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "NODE_OPERATOR_FEE_EXEMPT_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "exclude specified vault growth from the node operator fee calculation."
+        }
+      ]
+    }
+  }
+}

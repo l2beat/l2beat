@@ -1,0 +1,59 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Validates consensus-layer proofs and submits EIP-7251 validator top-ups for staking modules. It limits top-up batch size, proof age, and call frequency.",
+  "category": "core",
+  "ignoreRelatives": ["BEACON_ROOTS"],
+  "ignoreInWatchMode": ["getLastTopUpTimestamp", "isBlockDistancePassed"],
+  "fields": {
+    "accessControl": {
+      "handler": { "type": "accessControl", "includeEmptyRoles": true }
+    },
+    "defaultAdmins": {
+      "copy": "accessControl",
+      "edit": ["get", "DEFAULT_ADMIN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke TopUpGateway roles."
+        }
+      ]
+    },
+    "topUpSubmitters": {
+      "copy": "accessControl",
+      "edit": ["get", "TOP_UP_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit validator top-ups backed by consensus-layer proofs."
+        }
+      ]
+    },
+    "limitManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "MANAGE_LIMITS_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change top-up batch size, block-distance, proof-age, and per-validator limits."
+        }
+      ]
+    },
+    "pausers": {
+      "copy": "accessControl",
+      "edit": ["get", "PAUSE_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause validator top-ups for a chosen duration."
+        }
+      ]
+    },
+    "resumers": {
+      "copy": "accessControl",
+      "edit": ["get", "RESUME_ROLE", "members"],
+      "permissions": [
+        { "type": "interact", "description": "resume validator top-ups." }
+      ]
+    }
+  }
+}

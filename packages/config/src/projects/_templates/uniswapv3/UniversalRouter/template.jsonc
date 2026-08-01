@@ -1,0 +1,11 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "UniversalRouter",
+  "description": "Command-based router that executes caller-supplied operations such as v2/v3/v4 swaps, Permit2 transfers, WETH wrapping, and token sweeps in one transaction. Immutable and unprivileged; routes are computed off-chain by the caller.",
+  "fields": {
+    "msgSender": {
+      "ignoreInWatchMode": true,
+      "description": "Transient storage of the current caller during execution; zero at rest."
+    }
+  }
+}

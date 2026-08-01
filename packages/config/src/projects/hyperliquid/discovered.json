@@ -1,7 +1,7 @@
 {
   "name": "hyperliquid",
   "timestamp": 1781171322,
-  "configHash": "0xe88b75becc7c8a8387b1196db56fd74c2c9b3d7095fda9ba721a593eae078c82",
+  "configHash": "0x0d0e84ba447c1c02df6804495e91e3d6ff33e4a0e7527faf191dcafdc653249f",
   "entries": [
     {
       "address": "arb1:0x263294039413B96D25E4173a5F7599F8b3801504",

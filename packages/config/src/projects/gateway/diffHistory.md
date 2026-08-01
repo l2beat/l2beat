@@ -1,3 +1,126 @@
+Generated with discovered.json: 0x7377b74ec0bb01a51a928031f9c540ac2c2a7afe
+
+# Diff at Mon, 27 Jul 2026 11:01:23 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@887150af6d3edad6e5fde92995bb5ecc5e48cfde block: 1770639543
+- current timestamp: 1770639543
+
+## Description
+
+shared-zk-stack now uses entrypoints rediscovery
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1770639543 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-zk-stack"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    EOA  (eth:0x3F0009D00cc78979d00Eb635490F23E8d6aCc481) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-zk-stack"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    EOA  (eth:0x4A333c167Ce76C46149c6B0197977ae02aaeC929) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-zk-stack"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    EOA  (eth:0x5C7E59Dba6557C7dAB3B69ccd3E309d1965Cf1B1) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-zk-stack"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    EOA  (eth:0x7408A268e5E6e8F08917c5b71015F4B9044970C7) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-zk-stack"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    EOA  (eth:0xAf0B2B58289857e9A6Cf91Fd30410dDcad9D9B28) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-zk-stack"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    EOA  (eth:0xFAdb20191Ab38362C50f52909817B74214CA79AE) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-zk-stack"
+      proxyType:
++        "EOA"
+    }
+```
+
 Generated with discovered.json: 0xeb5470477e880b2f766e462456b6b9c4a86b57ab
 
 # Diff at Fri, 08 May 2026 07:51:22 GMT:

@@ -1,8 +1,7 @@
 {
   "name": "gateway",
   "timestamp": 1770639543,
-  "configHash": "0xa50f184bc2cbe73277a7d7cfe575038aa2ccccec6a4e700010ccbc5268aad9ad",
-  "sharedModules": ["shared-zk-stack"],
+  "configHash": "0xe08bf65db7a24ffd0560000cabd8199efad7cf8d76c36e82021c97a7fad7ce83",
   "entries": [
     {
       "address": "eth:0x14F19299476664665eDa17DBb7dA7e62E3253aa8",
@@ -126,21 +125,18 @@
     },
     {
       "address": "eth:0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc",
-      "type": "Reference",
-      "targetType": "EOA",
-      "targetProject": "shared-zk-stack"
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x3F0009D00cc78979d00Eb635490F23E8d6aCc481",
-      "type": "Reference",
-      "targetType": "EOA",
-      "targetProject": "shared-zk-stack"
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x4A333c167Ce76C46149c6B0197977ae02aaeC929",
-      "type": "Reference",
-      "targetType": "EOA",
-      "targetProject": "shared-zk-stack"
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Matter Labs Multisig",
@@ -228,9 +224,8 @@
     },
     {
       "address": "eth:0x5C7E59Dba6557C7dAB3B69ccd3E309d1965Cf1B1",
-      "type": "Reference",
-      "targetType": "EOA",
-      "targetProject": "shared-zk-stack"
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x64E2AfcFE648201b2F4a749aF0B7229ecfa44281",
@@ -597,9 +592,8 @@
     },
     {
       "address": "eth:0x7408A268e5E6e8F08917c5b71015F4B9044970C7",
-      "type": "Reference",
-      "targetType": "EOA",
-      "targetProject": "shared-zk-stack"
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x7d95f0B9D3383D58E39a75a67760aA2153D355A2",
@@ -677,9 +671,8 @@
     },
     {
       "address": "eth:0xAf0B2B58289857e9A6Cf91Fd30410dDcad9D9B28",
-      "type": "Reference",
-      "targetType": "EOA",
-      "targetProject": "shared-zk-stack"
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "ProxyAdmin",
@@ -833,9 +826,8 @@
     },
     {
       "address": "eth:0xFAdb20191Ab38362C50f52909817B74214CA79AE",
-      "type": "Reference",
-      "targetType": "EOA",
-      "targetProject": "shared-zk-stack"
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xFC0cB5F27C8d27E9Ddf76b8A0adA9806227bA6a9",
@@ -1510,5 +1502,5 @@
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
   "usedBlockNumbers": { "ethereum": 24419160, "gateway": 158294 },
-  "permissionsConfigHash": "0x675283e38620773b1e00419f12be8864bf8d0ab03c2a1b588fb4b2b70e808851"
+  "permissionsConfigHash": "0x3779501a3abcde6cd064bb001e37109b009060d57f85434ce8a72c31a140da79"
 }

@@ -1,7 +1,7 @@
 {
   "name": "educhain",
   "timestamp": 1777390972,
-  "configHash": "0x5d04e5f10c6092328e7836a79c6dcdfd732f44182e86912b72fddca3beb3bcac",
+  "configHash": "0x18a19cc5cb2d58a79ad55543005523953cbc0e44aa2340b0c101f5315d33c8b3",
   "entries": [
     {
       "address": "arb1:0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",

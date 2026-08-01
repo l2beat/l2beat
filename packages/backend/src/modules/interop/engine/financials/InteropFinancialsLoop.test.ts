@@ -1,5 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
-import type { Database, InteropTransferUpdate } from '@l2beat/database'
+import type {
+  Database,
+  InteropRecentPriceRequest,
+  InteropTransferUpdate,
+} from '@l2beat/database'
 import { Address32, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import type { TokenDbClient } from '@l2beat/token-backend'
 import { expect, mockFn, mockObject } from 'earl'
@@ -10,15 +14,32 @@ import { InteropFinancialsLoop } from './InteropFinancialsLoop'
 
 describe(InteropFinancialsLoop.name, () => {
   describe(InteropFinancialsLoop.prototype.run.name, () => {
-    it('skips when hasAnyPrices === false', async () => {
+    it('processes transfers with empty financials when no prices are found', async () => {
       const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
-        hasAnyPrices: mockFn().resolvesTo(false),
+        getClosestPricesAtOrBefore: mockPrices(new Map()),
       })
       const interopTransfer = mockObject<Database['interopTransfer']>({
-        getUnprocessed: mockFn().resolvesTo([]),
+        getUnprocessed: mockFn().resolvesTo([
+          {
+            transferId: 'msg1',
+            timestamp: UnixTime(100),
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+          },
+        ]),
+        updateFinancials: mockFn().resolvesTo(undefined),
       })
-      const db = mockObject<Database>({ interopRecentPrices, interopTransfer })
-      const tokenDb = mockObject<TokenDbClient>({} as any)
+      const transaction = mockFn(async (fn) => await fn())
+      const db = mockObject<Database>({
+        interopRecentPrices,
+        interopTransfer,
+        transaction,
+      })
+      const tokenDb = mockObject<TokenDbClient>({
+        deployedTokens: {
+          getByChainAndAddress: { query: mockFn().resolvesTo([]) },
+        },
+      } as any)
       const service = new InteropFinancialsLoop(
         [],
         db,
@@ -29,14 +50,24 @@ describe(InteropFinancialsLoop.name, () => {
 
       await service.run()
 
-      expect(interopRecentPrices.hasAnyPrices).toHaveBeenCalledTimes(1)
-      expect(interopTransfer.getUnprocessed).not.toHaveBeenCalled()
+      expect(interopTransfer.updateFinancials).toHaveBeenCalledWith('msg1', {
+        srcAbstractTokenId: null,
+        srcSymbol: null,
+        srcPrice: null,
+        srcAmount: null,
+        srcValueUsd: null,
+        dstAbstractTokenId: null,
+        dstSymbol: null,
+        dstPrice: null,
+        dstAmount: null,
+        dstValueUsd: null,
+      })
     })
 
     it('skips when unprocessed length === 0', async () => {
-      const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
-        hasAnyPrices: mockFn().resolvesTo(true),
-      })
+      const interopRecentPrices = mockObject<Database['interopRecentPrices']>(
+        {},
+      )
       const interopTransfer = mockObject<Database['interopTransfer']>({
         getUnprocessed: mockFn().resolvesTo([]),
       })
@@ -57,7 +88,6 @@ describe(InteropFinancialsLoop.name, () => {
 
       await service.run()
 
-      expect(interopRecentPrices.hasAnyPrices).toHaveBeenCalledTimes(1)
       expect(interopTransfer.getUnprocessed).toHaveBeenCalledTimes(1)
     })
 
@@ -79,15 +109,19 @@ describe(InteropFinancialsLoop.name, () => {
       const mockTransfers = [
         {
           transferId: 'msg1',
+          timestamp: UnixTime(100),
+          srcTime: UnixTime(99),
           srcChain: 'ethereum',
           srcTokenAddress: Address32.from(DeployedTokenId.address(srcToken1)),
           srcRawAmount: BigInt('1000000000000000000'),
           dstChain: 'arbitrum',
+          dstTime: UnixTime(100),
           dstTokenAddress: Address32.from(DeployedTokenId.address(dstToken1)),
           dstRawAmount: BigInt('2000000000000000000'),
         },
         {
           transferId: 'msg2',
+          timestamp: UnixTime(101),
           srcChain: 'ethereum',
           srcTokenAddress: 'native',
           srcRawAmount: BigInt('500000000000000000'),
@@ -97,6 +131,7 @@ describe(InteropFinancialsLoop.name, () => {
         },
         {
           transferId: 'msg3',
+          timestamp: UnixTime(102),
           srcChain: 'unsupported',
           dstChain: 'ethereum',
           dstTokenAddress: Address32.from(DeployedTokenId.address(dstToken3)),
@@ -112,8 +147,7 @@ describe(InteropFinancialsLoop.name, () => {
       ])
 
       const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
-        hasAnyPrices: mockFn().resolvesTo(true),
-        getClosestPrices: mockFn().resolvesTo(pricesMap),
+        getClosestPricesAtOrBefore: mockPrices(pricesMap),
       })
       const interopTransfer = mockObject<Database['interopTransfer']>({
         getUnprocessed: mockFn().resolvesTo(mockTransfers),
@@ -216,7 +250,6 @@ describe(InteropFinancialsLoop.name, () => {
 
       await service.run()
 
-      expect(interopRecentPrices.hasAnyPrices).toHaveBeenCalledTimes(1)
       expect(interopTransfer.getUnprocessed).toHaveBeenCalledTimes(1)
 
       expect(mockQuery).toHaveBeenCalledWith([
@@ -227,10 +260,17 @@ describe(InteropFinancialsLoop.name, () => {
         { chain: 'ethereum', address: DeployedTokenId.address(dstToken3) },
       ])
 
-      expect(interopRecentPrices.getClosestPrices).toHaveBeenNthCalledWith(
+      expect(
+        interopRecentPrices.getClosestPricesAtOrBefore,
+      ).toHaveBeenNthCalledWith(
         1,
-        ['ethereum', 'arbitrum', 'base', 'token'],
-        expect.anything(),
+        [
+          { requestId: 0, coingeckoId: 'ethereum', timestamp: UnixTime(99) },
+          { requestId: 1, coingeckoId: 'arbitrum', timestamp: UnixTime(100) },
+          { requestId: 2, coingeckoId: 'ethereum', timestamp: UnixTime(101) },
+          { requestId: 3, coingeckoId: 'base', timestamp: UnixTime(101) },
+          { requestId: 4, coingeckoId: 'token', timestamp: UnixTime(102) },
+        ],
         UnixTime.DAY,
       )
 
@@ -314,8 +354,7 @@ describe(InteropFinancialsLoop.name, () => {
       ]
 
       const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
-        hasAnyPrices: mockFn().resolvesTo(true),
-        getClosestPrices: mockFn().resolvesTo(new Map()),
+        getClosestPricesAtOrBefore: mockPrices(new Map()),
       })
       const interopTransfer = mockObject<Database['interopTransfer']>({
         getUnprocessed: mockFn().resolvesTo(mockTransfers),
@@ -381,8 +420,7 @@ describe(InteropFinancialsLoop.name, () => {
       )
 
       const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
-        hasAnyPrices: mockFn().resolvesTo(true),
-        getClosestPrices: mockFn().resolvesTo(
+        getClosestPricesAtOrBefore: mockPrices(
           new Map([
             ['unreliable-token', 3000],
             ['reliable-token', 2],
@@ -480,8 +518,7 @@ describe(InteropFinancialsLoop.name, () => {
       )
 
       const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
-        hasAnyPrices: mockFn().resolvesTo(true),
-        getClosestPrices: mockFn().resolvesTo(
+        getClosestPricesAtOrBefore: mockPrices(
           new Map([['mega-token', 1_500_000]]),
         ),
       })
@@ -591,8 +628,7 @@ describe(InteropFinancialsLoop.name, () => {
       )
 
       const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
-        hasAnyPrices: mockFn().resolvesTo(true),
-        getClosestPrices: mockFn().resolvesTo(
+        getClosestPricesAtOrBefore: mockPrices(
           new Map([['whale-token', 20_000]]),
         ),
       })
@@ -741,8 +777,7 @@ describe(InteropFinancialsLoop.name, () => {
       ]
 
       const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
-        hasAnyPrices: mockFn().resolvesTo(true),
-        getClosestPrices: mockFn().resolvesTo(new Map([['token', 1]])),
+        getClosestPricesAtOrBefore: mockPrices(new Map([['token', 1]])),
       })
       const interopTransfer = mockObject<Database['interopTransfer']>({
         getUnprocessed: mockFn().resolvesTo(mockTransfers),
@@ -818,6 +853,15 @@ describe(InteropFinancialsLoop.name, () => {
       expect(processedTransfers?.[0]?.srcValueUsd).toEqual(600)
       expect(processedTransfers?.[0]?.dstValueUsd).toEqual(100)
       expect(processedTransfers?.[1]?.transferId).toEqual('msg2')
+      expect(
+        interopRecentPrices.getClosestPricesAtOrBefore,
+      ).toHaveBeenCalledWith(
+        [
+          { requestId: 0, coingeckoId: 'token', timestamp: UnixTime(100) },
+          { requestId: 1, coingeckoId: 'token', timestamp: UnixTime(101) },
+        ],
+        UnixTime.DAY,
+      )
     })
 
     it('propagates analyzer errors after financials are updated', async () => {
@@ -831,8 +875,7 @@ describe(InteropFinancialsLoop.name, () => {
       )
 
       const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
-        hasAnyPrices: mockFn().resolvesTo(true),
-        getClosestPrices: mockFn().resolvesTo(new Map([['token', 1]])),
+        getClosestPricesAtOrBefore: mockPrices(new Map([['token', 1]])),
       })
       const interopTransfer = mockObject<Database['interopTransfer']>({
         getUnprocessed: mockFn().resolvesTo([
@@ -917,3 +960,16 @@ describe(InteropFinancialsLoop.name, () => {
     })
   })
 })
+
+function mockPrices(pricesByCoin: Map<string, number>) {
+  return mockFn((requests: InteropRecentPriceRequest[]) =>
+    Promise.resolve(
+      new Map(
+        requests.map((request) => [
+          request.requestId,
+          pricesByCoin.get(request.coingeckoId),
+        ]),
+      ),
+    ),
+  )
+}

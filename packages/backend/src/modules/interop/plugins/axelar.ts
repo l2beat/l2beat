@@ -3,12 +3,8 @@
  * this token bridge is confusingly branded under 'Squid'
  */
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
-import type { TokenMap } from '../engine/match/TokenMap'
 import { findBestTransferLogByExactAmount, findParsedAround } from './logScan'
-import {
-  getBestEffortTokenFrameworkBridgeType,
-  getTokenFrameworkBridgeType,
-} from './tokenFrameworkBridgeTyping'
+import { getBestEffortBridgeTypeFromPartialSupplyAction } from './partialSupplyActionBridgeType'
 import {
   createEventParser,
   createInteropEventType,
@@ -272,13 +268,9 @@ export class AxelarPlugin implements InteropPlugin {
   */
 
   matchTypes = [ContractCallExecuted, ContractCallWithToken]
-  match(
-    event: InteropEvent,
-    db: InteropEventDb,
-    tokenMap: TokenMap,
-  ): MatchResult | undefined {
+  match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (ContractCallExecuted.checkType(event)) {
-      return this.matchExecuted(event, db, tokenMap)
+      return this.matchExecuted(event, db)
     }
 
     if (ContractCallWithToken.checkType(event)) {
@@ -295,7 +287,6 @@ export class AxelarPlugin implements InteropPlugin {
       dstWasMinted?: boolean
     }>,
     db: InteropEventDb,
-    tokenMap: TokenMap,
   ): MatchResult | undefined {
     const contractCallApproved = db.find(ContractCallApproved, {
       commandId: contractCallExecuted.args.commandId,
@@ -349,7 +340,7 @@ export class AxelarPlugin implements InteropPlugin {
             ? contractCallApprovedWithMint.args.amount
             : undefined,
           dstWasMinted: contractCallExecuted.args.dstWasMinted,
-          bridgeType: getBestEffortTokenFrameworkBridgeType({
+          bridgeType: getBestEffortBridgeTypeFromPartialSupplyAction({
             srcWasBurned: undefined,
             dstWasMinted: contractCallExecuted.args.dstWasMinted,
           }),
@@ -364,19 +355,6 @@ export class AxelarPlugin implements InteropPlugin {
       : undefined
     const srcWasBurned = contractCallWithToken.args.srcWasBurned
     const dstWasMinted = contractCallExecuted.args.dstWasMinted
-    // Axelar token bridge is not a token framework, but the local supply-action
-    // model is the same. We use the helper out of context, with the implicit
-    // defaultBridgeType = 'burnAndMint' because Axelar has axlUSDC.
-    const bridgeType = getTokenFrameworkBridgeType({
-      srcTokenAddress,
-      dstTokenAddress,
-      srcWasBurned,
-      dstWasMinted,
-      srcChain: contractCallWithToken.ctx.chain,
-      dstChain: contractCallExecuted.ctx.chain,
-      tokenMap,
-    })
-
     return [
       Result.Message('axelar.Message', {
         app: 'axelar-tokenbridge',
@@ -395,7 +373,6 @@ export class AxelarPlugin implements InteropPlugin {
           ? contractCallApprovedWithMint.args.amount
           : undefined,
         dstWasMinted,
-        bridgeType,
       }),
     ]
   }
@@ -428,7 +405,7 @@ export class AxelarPlugin implements InteropPlugin {
         srcTokenAddress: contractCallWithToken.args.tokenAddress,
         srcAmount: contractCallWithToken.args.amount,
         srcWasBurned: contractCallWithToken.args.srcWasBurned,
-        bridgeType: getBestEffortTokenFrameworkBridgeType({
+        bridgeType: getBestEffortBridgeTypeFromPartialSupplyAction({
           srcWasBurned: contractCallWithToken.args.srcWasBurned,
           dstWasMinted: undefined,
         }),

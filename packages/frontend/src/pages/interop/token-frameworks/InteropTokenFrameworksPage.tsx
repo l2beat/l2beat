@@ -131,6 +131,7 @@ function TokenFrameworksContent({
             <FrameworkDominanceContent
               tokenFrameworks={tokenFrameworks}
               frameworkDominance={data?.frameworkDominance}
+              changePeriod={data?.changePeriod}
               isLoading={isLoading}
             />
           }

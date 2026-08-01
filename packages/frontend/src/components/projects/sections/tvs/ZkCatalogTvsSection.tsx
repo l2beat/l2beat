@@ -305,6 +305,7 @@ function getStats(
       btc: calculatePercentageChange(latest.btc, oldest.btc),
       other: calculatePercentageChange(latest.other, oldest.other),
     },
+    changePeriod: data.changePeriod,
   }
 }
 

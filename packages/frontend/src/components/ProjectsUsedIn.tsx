@@ -17,12 +17,18 @@ import {
   CommandList,
 } from './core/Command'
 
-export interface UsedInProjectWithIcon extends UsedInProject {
+export interface ProjectWithIcon {
+  name: string
+  slug: string
   icon: string
+  url?: string
+}
+
+export interface UsedInProjectWithIcon extends UsedInProject, ProjectWithIcon {
   url: string
 }
 interface Props {
-  usedIn: UsedInProjectWithIcon[]
+  usedIn: ProjectWithIcon[]
   className?: string
   noL2ClassName?: string
   maxProjects?: number
@@ -53,7 +59,8 @@ export function ProjectsUsedIn({
 
   const rest = usedIn.slice(maxProjects)
 
-  function onItemSelect(item: UsedInProjectWithIcon) {
+  function onItemSelect(item: ProjectWithIcon) {
+    if (!item.url || noLink) return
     setOpen(false)
     router.push(item.url)
   }
@@ -67,6 +74,7 @@ export function ProjectsUsedIn({
     >
       <div className="-space-x-1.5 flex shrink-0 flex-row flex-nowrap items-center">
         {cappedProjects.map((project, index) => {
+          const hasLink = !!project.url && !noLink
           const image = (
             <img
               width={20}
@@ -80,7 +88,7 @@ export function ProjectsUsedIn({
 
           return (
             <Tooltip key={project.slug}>
-              {noLink ? (
+              {!hasLink ? (
                 <TooltipTrigger>{image}</TooltipTrigger>
               ) : (
                 <TooltipTrigger asChild disabledOnMobile>
@@ -91,7 +99,7 @@ export function ProjectsUsedIn({
               )}
               <TooltipContent>
                 <p className="font-bold">{project.name}</p>
-                {!noLink && (
+                {hasLink && (
                   <p className="text-secondary text-xs">
                     Click to view project page
                   </p>

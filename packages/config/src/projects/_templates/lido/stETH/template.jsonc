@@ -1,0 +1,141 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "stETH",
+  "description": "The rebasing stETH token and Lido protocol accounting entrypoint. It accepts stake, accounts for consensus- and execution-layer balances, mints and burns shares, and applies oracle reports. Version 3 adds external stake-backed shares and balance-based validator accounting.",
+  "category": "core",
+  "ignoreRelatives": ["getRecoveryVault"],
+  "ignoreMethods": [
+    "getPooledEthByShares",
+    "getSharesByPooledEth",
+    "getTotalELRewardsCollected",
+    "getPooledEthBySharesRoundUp"
+  ],
+  "ignoreInWatchMode": [
+    "getBalanceStats",
+    "totalSupply",
+    "getBeaconStat",
+    "getBufferedEther",
+    "getDepositableEther",
+    "getDepositsReserve",
+    "getStakeLimitFullInfo",
+    "getTotalPooledEther",
+    "getTotalShares",
+    "getCurrentStakeLimit",
+    "getExternalEther",
+    "getExternalShares",
+    "getMaxMintableExternalShares",
+    "getWithdrawalsReserve"
+  ],
+  "fields": {
+    "stakeLimitConfiguration": {
+      "description": "Configured staking limit, excluding its continuously replenishing current capacity.",
+      "copy": "getStakeLimitFullInfo",
+      "edit": [
+        "pick",
+        "isStakingLimitSet",
+        "maxStakeLimit",
+        "maxStakeLimitGrowthBlocks"
+      ]
+    },
+    "aragonPermissions": {
+      "handler": { "type": "aragonPermissions" }
+    },
+    "pausers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "PAUSE_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "stop all stETH transfers, approvals, staking, and protocol accounting operations."
+        }
+      ]
+    },
+    "pausePermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "PAUSE_ROLE", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the stETH pause permission."
+        }
+      ]
+    },
+    "resumers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "RESUME_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "resume stETH and protocol operations."
+        }
+      ]
+    },
+    "resumePermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "RESUME_ROLE", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the stETH resume permission."
+        }
+      ]
+    },
+    "stakingPausers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "STAKING_PAUSE_ROLE", "members"],
+      "permissions": [
+        { "type": "interact", "description": "pause new ETH staking deposits." }
+      ]
+    },
+    "stakingPausePermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "STAKING_PAUSE_ROLE", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the staking-pause permission."
+        }
+      ]
+    },
+    "stakingControllers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "STAKING_CONTROL_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "resume staking, configure or remove the staking limit, and change the maximum external-share ratio."
+        }
+      ]
+    },
+    "stakingControlPermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "STAKING_CONTROL_ROLE", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the staking-control permission."
+        }
+      ]
+    },
+    "bufferReserveManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "BUFFER_RESERVE_MANAGER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the ETH deposit-reserve target retained in the stETH buffer."
+        }
+      ]
+    },
+    "bufferReservePermissionManagers": {
+      "copy": "aragonPermissions",
+      "edit": ["get", "BUFFER_RESERVE_MANAGER_ROLE", "managers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant, revoke, parameterize, or transfer management of the buffer-reserve permission."
+        }
+      ]
+    }
+  }
+}

@@ -214,6 +214,11 @@ export const InteropProtocolsByVolumeParams = v.object({
   protocolIds: v.array(v.string()),
 })
 
+export type InteropTransferBridge = {
+  name: string
+  href: string
+}
+
 export type InteropProtocolTransferDetailsItem = {
   transferId: string
   timestamp: number
@@ -228,6 +233,7 @@ export type InteropProtocolTransferDetailsItem = {
   dstTokenIssuer: string | null
   dstTokenIconUrl: string
   valueUsd: number | undefined
+  bridge: InteropTransferBridge
   duration: number | undefined
   srcChain: string
   srcChainIconUrl: string | undefined

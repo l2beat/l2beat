@@ -1,7 +1,7 @@
 {
   "name": "bobanetwork",
   "timestamp": 1782210040,
-  "configHash": "0xb67442595ad211d2c979d1a8592a13bfb74609e4db1098252b4b22c03786874b",
+  "configHash": "0x9a3c281b0821418dc646eb179dd11b55f2d682e6d5894eb43d16741936affc90",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

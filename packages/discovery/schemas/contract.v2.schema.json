@@ -11,6 +11,7 @@
         "call implementation proxy",
         "zkSync Lite proxy",
         "zkLighter proxy",
+        "ZkLink proxy",
         "zkSpace proxy",
         "Eternal Storage proxy",
         "Polygon Extension proxy",
@@ -24,6 +25,7 @@
       ]
     },
     "ignoreInWatchMode": { "type": "array", "items": { "type": "string" } },
+    "ignoreInCoverage": { "type": "array", "items": { "type": "string" } },
     "ignoreMethods": { "type": "array", "items": { "type": "string" } },
     "ignoreRelatives": {
       "anyOf": [
@@ -362,6 +364,22 @@
                     "propertyNames": { "type": "string" },
                     "additionalProperties": { "type": "string" }
                   },
+                  "includeEmptyRoles": { "type": "boolean" },
+                  "pickRoleMembers": { "type": "string" },
+                  "ignoreRelative": { "type": "boolean" }
+                },
+                "additionalProperties": false,
+                "required": ["type"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "aragonPermissions" },
+                  "roleNames": {
+                    "type": "object",
+                    "propertyNames": { "type": "string" },
+                    "additionalProperties": { "type": "string" }
+                  },
                   "pickRoleMembers": { "type": "string" },
                   "ignoreRelative": { "type": "boolean" }
                 },
@@ -414,7 +432,8 @@
                 "type": "object",
                 "properties": {
                   "type": { "const": "constructorArgs" },
-                  "nameArgs": { "type": "boolean" }
+                  "nameArgs": { "type": "boolean" },
+                  "ignoreRelative": { "type": "boolean" }
                 },
                 "additionalProperties": false,
                 "required": ["type"]

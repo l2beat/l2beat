@@ -23,10 +23,6 @@ import {
 } from './parseUltimatePermissionFact'
 import { runClingo } from './runClingo'
 
-export type DiscoveryTimestamps = {
-  [project: string]: { timestamp: number }
-}
-
 export class DiscoveryRegistry {
   discoveries: {
     [name: string]: {
@@ -56,22 +52,6 @@ export class DiscoveryRegistry {
     }
     return result
   }
-
-  getTimestamps(options: { skip?: { project: string } } = {}) {
-    const result: DiscoveryTimestamps = {}
-    const skip = options.skip
-
-    for (const [project, discovery] of Object.entries(this.discoveries)) {
-      if (skip && skip.project === project) {
-        continue
-      }
-      result[project] = {
-        timestamp: discovery.discoveryOutput.timestamp,
-      }
-    }
-
-    return result
-  }
 }
 
 export async function modelPermissions(
@@ -93,17 +73,12 @@ export async function modelPermissions(
       paths,
       options,
     )
-  return buildPermissionsOutput(
-    permissionFacts,
-    permissionsConfigHash,
-    discoveries,
-  )
+  return buildPermissionsOutput(permissionFacts, permissionsConfigHash)
 }
 
 export function buildPermissionsOutput(
   permissionFacts: ClingoFact[],
   permissionsConfigHash: Hash256,
-  discoveries: DiscoveryRegistry,
 ): PermissionsOutput {
   const kb = new KnowledgeBase(permissionFacts)
   const modelIdRegistry = new ModelIdRegistry(kb)
@@ -119,7 +94,6 @@ export function buildPermissionsOutput(
     permissionsConfigHash,
     permissions: ultimatePermissions,
     eoasWithUpgradePermissions,
-    dependentTimestamps: discoveries.getTimestamps(),
   }
 }
 

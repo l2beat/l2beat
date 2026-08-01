@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x18c5d216631e16a6220dabe1874aa49d73b040b5
+
+# Diff at Mon, 27 Jul 2026 10:16:47 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@4683097a102db212f2168de1647931e7c0ef98e8 block: 1780646255
+- current timestamp: 1780646255
+
+## Description
+
+shared-sharp-verifier changes rediscover
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780646255 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x0405107a60391Eb51821be373ff978115Ee58488) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-sharp-verifier"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    EOA  (eth:0x59232aC80E6d403b6381393e52f4665ECA328558) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-sharp-verifier"
+      proxyType:
++        "EOA"
+    }
+```
+
 Generated with discovered.json: 0xc6d846c81d9db0374e0cd5811740ff7d039977ed
 
 # Diff at Fri, 12 Jun 2026 12:07:50 GMT:

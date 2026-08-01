@@ -26,7 +26,7 @@ export function getPreview(
     contracts: ProjectContract[]
   }[] = []
 
-  const meta = getMeta(discoveries)
+  const meta = getMeta(discoveries.flatMap((x) => x.entries))
   const processor = new ProjectDiscovery(projectId)
   const wholePermissions = processor.getDiscoveredPermissions()
   const wholeContracts = processor.getDiscoveredContracts()

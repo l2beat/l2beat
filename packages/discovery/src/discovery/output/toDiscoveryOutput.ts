@@ -90,6 +90,7 @@ export function sortEntry(e: EntryParameters): EntryParameters {
     receivedPermissions: e.receivedPermissions,
     directlyReceivedPermissions: e.directlyReceivedPermissions,
     ignoreInWatchMode: e.ignoreInWatchMode,
+    ignoreInCoverage: e.ignoreInCoverage,
     deployerAddress: e.deployerAddress,
     sinceTimestamp: e.sinceTimestamp,
     sinceBlock: e.sinceBlock,

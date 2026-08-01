@@ -10,6 +10,7 @@ type Common = {
   layerName: string
   layerSlug: string
   layerId: ProjectId
+  layerHref: string
   bridgeName: string
   bridgeSlug: string
   hostChainName: string
@@ -28,6 +29,7 @@ export async function getScalingDaSolutions(
       ids: project.scalingDa
         ?.map((da) => da?.layer.projectId)
         .filter(notUndefined),
+      optional: ['scalingInfo'],
     }),
     ps.getProjects({
       ids: project.scalingDa
@@ -56,13 +58,19 @@ export async function getScalingDaSolutions(
         const daBridgePermissions = daBridge?.permissions?.[hostChainSelector]
         const daBridgeContracts =
           daBridge?.contracts?.addresses[hostChainSelector]
+        const bridgeSlug = daBridge?.slug ?? 'no-bridge'
 
         return {
           layerName: daLayer.name,
           layerSlug: daLayer.slug,
           layerId: daLayer.id,
+          layerHref: getDaSolutionHref({
+            layerSlug: daLayer.slug,
+            bridgeSlug,
+            isScalingProject: daLayer.scalingInfo !== undefined,
+          }),
           bridgeName: daBridge?.name ?? 'No bridge',
-          bridgeSlug: daBridge?.slug ?? 'no-bridge',
+          bridgeSlug,
           hostChainName: project.scalingInfo.hostChain.name,
           permissions: daBridgePermissions,
           contracts: daBridgeContracts,
@@ -70,4 +78,18 @@ export async function getScalingDaSolutions(
       })
       .filter(notUndefined) ?? []
   )
+}
+
+export function getDaSolutionHref({
+  layerSlug,
+  bridgeSlug,
+  isScalingProject,
+}: {
+  layerSlug: string
+  bridgeSlug: string
+  isScalingProject: boolean
+}) {
+  return isScalingProject
+    ? `/scaling/projects/${layerSlug}`
+    : `/data-availability/projects/${layerSlug}/${bridgeSlug}`
 }

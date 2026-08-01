@@ -10,7 +10,9 @@
     "eth:0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0",
     "eth:0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B",
     "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09",
-    "robinhood:0x0000000000000000000000000000000000000074"
+    "robinhood:0x0000000000000000000000000000000000000074",
+    "robinhood:0xd0601CE157Db5bdC3162BbaC2a2C8aF5320D9EEC", // nvidia token
+    "robinhood:0xe10b6f6B275de231345c20D14Ab812db62151b00" // token registry
   ],
   "names": {
     "eth:0xDf8755334ce7A73cCF6b581C02eA649AE3E864b3": "Bridge",
@@ -103,7 +105,10 @@
         // beacon-node dependency; swap to { "type": "arbitrumSequencerVersion" }
         // with ETHEREUM_BEACON_API_URL_FOR_DISCOVERY set to derive it from blobs.
         "sequencerVersion": {
-          "handler": { "type": "hardcoded", "value": "0x00" }
+          "handler": {
+            "type": "hardcoded",
+            "value": "0x00"
+          }
         }
       }
     },

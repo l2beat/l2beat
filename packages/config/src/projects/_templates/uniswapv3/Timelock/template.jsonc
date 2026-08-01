@@ -1,0 +1,53 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Timelock",
+  "description": "Compound-style timelock. Its admin can queue, cancel, and execute transactions. A queued transaction becomes executable after {{ delayFormatted }} and remains executable for a {{ gracePeriodFormatted }} grace period. The delay can be changed only through the timelock itself and must remain between {{ minimumDelayFormatted }} and {{ maximumDelayFormatted }}. After the one-time admin initialization path has been used, changing the admin requires a timelocked self-call; there is no emergency bypass.",
+  "fields": {
+    "delayFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "function delay() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "gracePeriodFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "function GRACE_PERIOD() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "minimumDelayFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "function MINIMUM_DELAY() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "maximumDelayFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "function MAXIMUM_DELAY() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "admin": {
+      "permissions": [
+        { "type": "act", "delay": "{{delay}}" },
+        {
+          "type": "interact",
+          "description": "can queue, cancel, and execute timelocked transactions, and change the delay or admin (through the timelock itself)."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "delay": {
+      "description": "Seconds every queued transaction must wait before execution.",
+      "severity": "HIGH"
+    }
+  }
+}

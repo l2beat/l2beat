@@ -1,3 +1,317 @@
+Generated with discovered.json: 0x7109cbe412b5e0d3545f4f49932ee2a61712359f
+
+# Diff at Mon, 27 Jul 2026 17:02:05 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@e4bae6c708e972febd09837213f50ce9cdf09201 block: 1784714153
+- current timestamp: 1785166634
+
+## Description
+
+shared-zk-stack now uses entrypoints rediscovery.
+
+Upgraded boojum verifier to v29.11 (same version as zksync era was using).
+
+Configured validator timelock to show correct zero network validators.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract DualVerifier (eth:0x4f06ef57618b16959879fC86E65eda0bd629A12B) [shared-zk-stack/DualVerifier]
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xE3743181a4b0A0C1260826105c6BBA4b6e18D79d or eth:0xB3f4396C2040e502d0556Cbb16C0B22fE777A026 depending on the supplied proof type.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierPlonk (eth:0xB3f4396C2040e502d0556Cbb16C0B22fE777A026) [shared-zk-stack/L1VerifierPlonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
+    contract ZeroNetworkZkEvmAdmin (eth:0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9 act through it.
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.6:
++        {"_protocolVersion":124554051588,"_upgradeTimestamp":1784885400}
+    }
+```
+
+```diff
+    contract Diamond (eth:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.$pastUpgrades.9:
++        ["2026-07-27T13:41:23.000Z","0xe6c3d543918e5e42d671bcca1152f81ced607086eb7740a62ef2b072094114b4",["eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253","eth:0x1666124221622eb6154306Ea9BA87043e8be88B2","eth:0x1e34aB39a9682149165ddeCc0583d238A5448B45","eth:0x0597CaA8A823A699d7CD9E62B5E5d4153FF82691"]]
+      values.$upgradeCount:
+-        9
++        10
++++ description: Protocol version, increments with each protocol upgrade.
++++ severity: HIGH
+      values.getProtocolVersion:
+-        124554051587
++        124554051588
+      values.getSemverProtocolVersion.2:
+-        3
++        4
+      values.getVerifier:
+-        "eth:0x4f06ef57618b16959879fC86E65eda0bd629A12B"
++        "eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierFflonk (eth:0xE3743181a4b0A0C1260826105c6BBA4b6e18D79d) [shared-zk-stack/L1VerifierFflonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierPlonk (eth:0x7f33D100f482093182111d69a4a457289e99f4ec) [shared-zk-stack/L1VerifierPlonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierFflonk (eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442) [shared-zk-stack/L1VerifierFflonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
++   Status: CREATED
+    contract DualVerifier (eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45) [shared-zk-stack/DualVerifier]
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442 or eth:0x7f33D100f482093182111d69a4a457289e99f4ec depending on the supplied proof type.
+```
+
+## Source code changes
+
+```diff
+.../{.flat@1784714153 => .flat}/L1VerifierFflonk.sol           |  6 +++---
+ .../{.flat@1784714153 => .flat}/L1VerifierPlonk.sol            | 10 +++++-----
+ 2 files changed, 8 insertions(+), 8 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784714153 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Safe (eth:0x0807C9f0247084cf1C5aB86A8fb00e7c70Cd27eB) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    EOA  (eth:0x277D26a45Add5775F21256159F089769892CEa5B)
+    +++ description: None
+```
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.validatorsVTL.0:
++        "eth:0xef854E09fa6e281268e1051D4d5465d8c92862ee"
+      values.validatorsVTL.0:
+-        "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83"
++        "eth:0x7b55c1D9b75Fa35793157aD674b0a1aEF7b8DdE0"
+      values.validatorsVTLFullAC.PRECOMMITTER_ROLE.members.0:
++        "eth:0xef854E09fa6e281268e1051D4d5465d8c92862ee"
+      values.validatorsVTLFullAC.PRECOMMITTER_ROLE.members.0:
+-        "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83"
++        "eth:0x7b55c1D9b75Fa35793157aD674b0a1aEF7b8DdE0"
+      values.validatorsVTLFullAC.COMMITTER_ROLE.members.0:
++        "eth:0xef854E09fa6e281268e1051D4d5465d8c92862ee"
+      values.validatorsVTLFullAC.COMMITTER_ROLE.members.0:
+-        "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83"
++        "eth:0x7b55c1D9b75Fa35793157aD674b0a1aEF7b8DdE0"
+      values.validatorsVTLFullAC.REVERTER_ROLE.members.0:
++        "eth:0xef854E09fa6e281268e1051D4d5465d8c92862ee"
+      values.validatorsVTLFullAC.REVERTER_ROLE.members.0:
+-        "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83"
++        "eth:0x7b55c1D9b75Fa35793157aD674b0a1aEF7b8DdE0"
+      values.validatorsVTLFullAC.PROVER_ROLE.members.0:
++        "eth:0xef854E09fa6e281268e1051D4d5465d8c92862ee"
+      values.validatorsVTLFullAC.PROVER_ROLE.members.0:
+-        "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83"
++        "eth:0x7b55c1D9b75Fa35793157aD674b0a1aEF7b8DdE0"
+      values.validatorsVTLFullAC.EXECUTOR_ROLE.members.0:
++        "eth:0xef854E09fa6e281268e1051D4d5465d8c92862ee"
+      values.validatorsVTLFullAC.EXECUTOR_ROLE.members.0:
+-        "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83"
++        "eth:0x7b55c1D9b75Fa35793157aD674b0a1aEF7b8DdE0"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (eth:0x325407EEC948b97429068AF0cd8A8D95F06315a4) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    reference  (eth:0x3846c3A30E62075Fa916216b35EF04B8F53931f6)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (eth:0x57533344e91d29f927AAEBee364A33633Bd205Ab) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (eth:0x58536761C97F5037931b56efeE922471add0eEe8) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (eth:0x79CF3eCF9Bbfd793d8Be62ED44D98d9AfA657892) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Abstract Multisig (eth:0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (eth:0x9B9256E7D5b696F7BD7525F42238Ba3d9BBD9cDA) [global/ProxyAdmin]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    reference  (eth:0xafc7805c640C4A9E5D28f6A5Eae23b50e59B831c)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EraMultisigValidator (eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83) [shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable]
+    +++ description: A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.
+```
+
+```diff
+-   Status: DELETED
+    reference  (eth:0xCe20135Ac0253650E28Ea14911c69F1fADD8b06f)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    reference  (eth:0xd757D6A02cD5af9AEF163D7eB8034f75ac22B553)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    reference  (eth:0xdF28907A6A272fa06333a197d7F0379A0f8f00aa)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    reference  (eth:0xe2eB80C72Fa12Ba50B3bD6545709DC153D5b26D2)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x2819ba70dccb0c7cdd86916952ede2df60dcf3e7
+
+# Diff at Wed, 22 Jul 2026 09:56:58 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@0fd88e8637e7f933fd36577548a83f1ac175841b block: 1783938613
+- current timestamp: 1784714153
+
+## Description
+
+Upgraded boojum verifier version to v29.3. All verifiers are known and reproduceable.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract DualVerifier (eth:0x4d335C5C08FEc91a39965351AbB6E315ad2e9ff3) [shared-zk-stack/DualVerifier]
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xD324a7c8556A059371B207fB96FD77bE24E2042c or eth:0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7 depending on the supplied proof type.
+```
+
+```diff
+    contract ZeroNetworkZkEvmAdmin (eth:0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9 act through it.
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.5:
++        {"_protocolVersion":124554051587,"_upgradeTimestamp":1784107800}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierFflonk (eth:0xD324a7c8556A059371B207fB96FD77bE24E2042c) [shared-zk-stack/L1VerifierFflonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
+    contract Diamond (eth:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.$pastUpgrades.8:
++        ["2026-07-21T17:49:35.000Z","0x59cfcb9ad5e4607c8ec96b65d374f77e356fea442ef7eca801151067616efdf1",["eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253","eth:0x1666124221622eb6154306Ea9BA87043e8be88B2","eth:0x1e34aB39a9682149165ddeCc0583d238A5448B45","eth:0x0597CaA8A823A699d7CD9E62B5E5d4153FF82691"]]
+      values.$upgradeCount:
+-        8
++        9
++++ description: Protocol version, increments with each protocol upgrade.
++++ severity: HIGH
+      values.getProtocolVersion:
+-        124554051586
++        124554051587
+      values.getSemverProtocolVersion.2:
+-        2
++        3
+      values.getVerifier:
+-        "eth:0x4d335C5C08FEc91a39965351AbB6E315ad2e9ff3"
++        "eth:0x4f06ef57618b16959879fC86E65eda0bd629A12B"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierPlonk (eth:0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7) [shared-zk-stack/L1VerifierPlonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
++   Status: CREATED
+    contract DualVerifier (eth:0x4f06ef57618b16959879fC86E65eda0bd629A12B) [shared-zk-stack/DualVerifier]
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xE3743181a4b0A0C1260826105c6BBA4b6e18D79d or eth:0xB3f4396C2040e502d0556Cbb16C0B22fE777A026 depending on the supplied proof type.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierPlonk (eth:0xB3f4396C2040e502d0556Cbb16C0B22fE777A026) [shared-zk-stack/L1VerifierPlonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierFflonk (eth:0xE3743181a4b0A0C1260826105c6BBA4b6e18D79d) [shared-zk-stack/L1VerifierFflonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+## Source code changes
+
+```diff
+.../{.flat@1783938613 => .flat}/L1VerifierFflonk.sol           |  6 +++---
+ .../{.flat@1783938613 => .flat}/L1VerifierPlonk.sol            | 10 +++++-----
+ 2 files changed, 8 insertions(+), 8 deletions(-)
+```
+
 Generated with discovered.json: 0xf805c3bbbea2b1650da46b82b559d06d385bc066
 
 # Diff at Mon, 13 Jul 2026 10:31:18 GMT:

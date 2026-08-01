@@ -1,3 +1,128 @@
+Generated with discovered.json: 0x0aaa80cd7dc793823d93225b2d91424ac98fafda
+
+# Diff at Mon, 27 Jul 2026 11:02:46 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@887150af6d3edad6e5fde92995bb5ecc5e48cfde block: 1784806565
+- current timestamp: 1784806565
+
+## Description
+
+shared-zk-stack now uses entrypoints rediscovery
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784806565 (main branch discovery), not current.
+
+```diff
+    reference Matter Labs Multisig (eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: None
+      type:
+-        "Contract"
++        "Reference"
+      template:
+-        "GnosisSafe"
+      sourceHashes:
+-        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"]
+      proxyType:
+-        "gnosis safe"
+      deployerAddress:
+-        "eth:0xC301f8B2a2C08958E6e7a286AB49A986c1f7ef6A"
+      sinceTimestamp:
+-        1666872275
+      sinceBlock:
+-        15839298
+      values:
+-        {"$immutable":false,"$implementation":"eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552","$members":["eth:0xEE7d66B84175cc423900595d1807A0371D66dE46","eth:0x3F0009D00cc78979d00Eb635490F23E8d6aCc481","eth:0xC9A814A4dFE108A4d2b0C01abb4c196Ed7FB3D83","eth:0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc","eth:0xFAdb20191Ab38362C50f52909817B74214CA79AE","eth:0xAf0B2B58289857e9A6Cf91Fd30410dDcad9D9B28","eth:0x7408A268e5E6e8F08917c5b71015F4B9044970C7"],"$threshold":4,"domainSeparator":"0xd3e32b4e9e95656dc35c609ae0fbcc0cea466ebecc8227025a2d3edc728b79fb","getChainId":1,"GnosisSafe_modules":[],"multisigThreshold":"4 of 7 (57%)","nonce":279,"VERSION":"1.3.0"}
+      targetType:
++        "Contract"
+      targetProject:
++        "shared-zk-stack"
+    }
+```
+
+Generated with discovered.json: 0x3ae3d586cac7869065fe582ac88fdcf2283e6392
+
+# Diff at Thu, 23 Jul 2026 11:37:10 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@efd03446560a8d585747f124c71622cbfa33fca4 block: 1784715153
+- current timestamp: 1784806565
+
+## Description
+
+Rotated one Matter Labs ms member.
+
+## Watched changes
+
+```diff
+    contract Matter Labs Multisig (eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828) [GnosisSafe] {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x5C7E59Dba6557C7dAB3B69ccd3E309d1965Cf1B1"
++        "eth:0xC9A814A4dFE108A4d2b0C01abb4c196Ed7FB3D83"
+    }
+```
+
+Generated with discovered.json: 0x5dd9c22b64864cbdcda142ecfe8cfa6a86e87546
+
+# Diff at Wed, 22 Jul 2026 10:13:42 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@0fd88e8637e7f933fd36577548a83f1ac175841b block: 1778580426
+- current timestamp: 1784715153
+
+## Description
+
+Downgraded 5/8 owner multisig to 1/1. Note that the project is already sunset and entered the shutdown phase. 
+
+## Watched changes
+
+```diff
+    contract ZkSync Multisig (eth:0xE24f4870Ab85DE8E356C5fC56138587206c70d99) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x4964D00fA975a7346ee6196a94b07c01ed1cD3CE"
+      values.$members.1:
+-        "eth:0x050b37a12451F188c7bA53D48b8A1adE6D138E71"
+      values.$members.2:
+-        "eth:0xeF4CcBDf8f91A001164149558106737A568e4912"
+      values.$members.3:
+-        "eth:0xC9474de11503D63D892cEDD12d6B93f6A25a9cbF"
+      values.$members.4:
+-        "eth:0x45F9AfCf9565051344aFb36e665f4d7bb2d18415"
+      values.$members.5:
+-        "eth:0x702caCafA54B88e9c54449563Fb2e496e85c78b7"
+      values.$members.6:
+-        "eth:0xD613b3a3924D0dE9B4a352ca0669e743cBC3C4AA"
+      values.$members.7:
+-        "eth:0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc"
++        "eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828"
+      values.$threshold:
+-        5
++        1
+      values.multisigThreshold:
+-        "5 of 8 (63%)"
++        "1 of 1 (100%)"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Matter Labs Multisig (eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828) [GnosisSafe]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat/Matter Labs Multisig/GnosisSafe.sol      | 1026 ++++++++++++++++++++
+ .../Matter Labs Multisig/GnosisSafeProxy.p.sol     |   38 +
+ 2 files changed, 1064 insertions(+)
+```
+
 Generated with discovered.json: 0xeae73c8612b79d421883088639904b20981a6a7d
 
 # Diff at Tue, 12 May 2026 11:06:10 GMT:

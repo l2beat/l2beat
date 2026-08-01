@@ -1,7 +1,7 @@
 {
   "name": "base",
-  "timestamp": 1784122559,
-  "configHash": "0x201da71a82b49559128b2b47d577a98484991839ba4837420f827e63ea6f7ce3",
+  "timestamp": 1785226129,
+  "configHash": "0x4c29a94b56fd452d6b9b5c964f2255fcc38f17a3dc5c7e8c284b24253d18dc68",
   "entries": [
     {
       "name": "FeeDisburser",
@@ -41,7 +41,7 @@
         "$upgradeCount": 3,
         "FEE_DISBURSEMENT_INTERVAL": 86400,
         "L1_WALLET": "base:0x23B597f33f6f2621F77DA117523Dffd634cDf4ea",
-        "lastDisbursementTime": 1783935965,
+        "lastDisbursementTime": 1785024007,
         "netFeeRevenue": 0,
         "version": "1.0.0+fee-vault-withdraw-compat",
         "WITHDRAWAL_MIN_GAS": 35000
@@ -79,7 +79,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "base:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292677373",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292677640",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -302,10 +302,10 @@
           ]
         ],
         "$upgradeCount": 3,
-        "basefee": 253408259,
+        "basefee": 70511911,
         "baseFeeScalar": 2269,
         "batcherHash": "0x0000000000000000000000005050f69a9786f081509234f1a7f4684b5e5b76c9",
-        "blobBaseFee": 16579786,
+        "blobBaseFee": 4421209,
         "blobBaseFeeScalar": 1055762,
         "daFootprintGasScalar": 148,
         "DEPOSITOR_ACCOUNT": "base:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -315,15 +315,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0x4449ace85f2f9250d5b13fcfb674a0bc9e6020f8cb63d1ee1ae628bc88c38630",
+        "hash": "0xd7e230bfcc0b1420f8450306ab6056a3d4bfddfdda7dd4d9262ad2ca4120cf21",
         "isCustomGasToken": false,
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 25538386,
+        "number": 25630018,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 2,
-        "timestamp": 1784122499,
+        "sequenceNumber": 4,
+        "timestamp": 1785226067,
         "version": "1.7.0"
       },
       "implementationNames": {
@@ -1082,6 +1082,7 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0x7eA56fBD8320F032014C8889C4F6cDC86796Db04",
           "eth:0xD56C6462DC3A943596c7a54d6B0Dba404490E206",
           "eth:0x8faB0B6b31A0b50A2c3d1FFBE6C0e1125699aE9d",
           "eth:0x0c1Ea3aCA9fc2cFa3640fec98a3214A849715b43",
@@ -1092,16 +1093,14 @@
           "eth:0xB37B2D42cb0C10ebf96279CcECa2cBFc47C6f236",
           "eth:0x644e3DedB0e4F83Bfcf8F9992964d240224B74dc",
           "eth:0x7Ad8E6B7B1f6D66F49559f20053Cef8a7b6c488E",
-          "eth:0x26c72586FB396325F58718152FEFA94E93Cf177b",
-          "eth:0xa3D3c103442F162856163d564b983ae538c6202D",
-          "eth:0x49243DcE94e0f5A1B08b9556bBEc5a84363c3839"
+          "eth:0x26c72586FB396325F58718152FEFA94E93Cf177b"
         ],
         "$threshold": 3,
         "domainSeparator": "0xf3474c66ee08325b410c3f442c878d01ec97dd55a415a307e9d7d2ea24336289",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 13 (23%)",
-        "nonce": 107,
+        "multisigThreshold": "3 of 12 (25%)",
+        "nonce": 108,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1130,6 +1129,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a Risc0 ZK proof of a valid AWS Nitro attestation document verified by the NITRO_VERIFIER.",
+      "ignoreInWatchMode": ["getRegisteredSigners"],
       "deployerAddress": "eth:0x7Ad8E6B7B1f6D66F49559f20053Cef8a7b6c488E",
       "sinceTimestamp": 1779394811,
       "sinceBlock": 25145975,
@@ -1148,8 +1148,8 @@
         "gameType": 621,
         "getExpectedImageHash": "0x58557c709e93357a135041297107aecc4bc6ba616509098a4aa8dbef774d212a",
         "getRegisteredSigners": [
-          "eth:0x3354226FDDD041367AE68F7245Cd5166e11013f3",
-          "eth:0xE32f95a9c06159c3cB3DC39f7573215ddAB86E59"
+          "eth:0x24bd1a46bdDC9Ac29d73b078c34cB0Bb5Dc72446",
+          "eth:0x8527A1412634266EAd35F76Ca84DA357847C0917"
         ],
         "manager": "eth:0xd87488Dbb5b6F47cc6c15Dd95Bb60c83D3031b04",
         "MAX_AGE": 3600,
@@ -1167,115 +1167,6 @@
       "implementationNames": {
         "eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA": "Proxy",
         "eth:0xeaB9b34BDD26Ad451B381B0934a30fAa6ED5E316": "TEEProverRegistry"
-      }
-    },
-    {
-      "name": "AggregateVerifier",
-      "address": "eth:0x1bd8db5139Ba7aC9277684650c15e6E341761919",
-      "type": "Contract",
-      "template": "opstack/AggregateVerifier",
-      "sourceHashes": [
-        "0x3fb3f2905c51272c4f77809543c14a5e40084d66a8e0251aef45516674940a64"
-      ],
-      "proxyType": "immutable",
-      "description": "Game type implementation that combines a TEE attestation arm and a ZK proof arm. A single un-nullified proof of either type can resolve a game (PROOF_THRESHOLD = 1). When both arms commit, the finalization window collapses from SLOW_FINALIZATION_DELAY (5d) to FAST_FINALIZATION_DELAY (1d).",
-      "ignoreInWatchMode": [
-        "bondAmount",
-        "bondClaimed",
-        "bondRecipient",
-        "bondUnlocked",
-        "counteredByIntermediateRootIndexPlusOne",
-        "createdAt",
-        "expectedResolution",
-        "extraData",
-        "gameCreator",
-        "gameData",
-        "gameOver",
-        "l1Head",
-        "l2SequenceNumber",
-        "parentAddress",
-        "proofCount",
-        "resolvedAt",
-        "rootClaim",
-        "startingBlockNumber",
-        "startingOutputRoot",
-        "startingRootHash",
-        "status",
-        "teeProver",
-        "wasRespectedGameTypeWhenCreated",
-        "zkProver"
-      ],
-      "deployerAddress": "eth:0x1841CB3C2ce6870D0417844C817849da64E6e937",
-      "sinceTimestamp": 1781824415,
-      "sinceBlock": 25347661,
-      "values": {
-        "$immutable": true,
-        "anchorStateRegistry": "eth:0x909f6cf47ed12f010A796527f562bFc26C7F4E72",
-        "BLOCK_INTERVAL": 600,
-        "BLOCKHASH_WINDOW": 256,
-        "bondAmount": 0,
-        "bondClaimed": false,
-        "bondRecipient": "eth:0x0000000000000000000000000000000000000000",
-        "bondUnlocked": false,
-        "CONFIG_HASH": "0x1607709d90d40904f790574404e2ad614eac858f6162faa0ec34c6bf5e5f3c57",
-        "counteredByIntermediateRootIndexPlusOne": 0,
-        "createdAt": 0,
-        "DELAYED_WETH": "eth:0xd0D07924AdD740a87e41Ca8A0d4CBBf6b074EF71",
-        "DISPUTE_GAME_FACTORY": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
-        "EIP2935_CONTRACT": "eth:0x0000F90827F1C53a10cb7A02335B175320002935",
-        "EIP2935_WINDOW": 8191,
-        "expectedResolution": 0,
-        "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-        "FAST_FINALIZATION_DELAY": 86400,
-        "fastFinalizationDelayFmt": "1d",
-        "gameCreator": "eth:0x0000000000000000000000000000000000000000",
-        "gameData": [
-          621,
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
-        ],
-        "gameOver": true,
-        "gameType": 621,
-        "INTERMEDIATE_BLOCK_INTERVAL": 30,
-        "intermediateOutputRootsCount": 20,
-        "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "L2_CHAIN_ID": 8453,
-        "l2SequenceNumber": 0,
-        "parentAddress": "eth:0x0000000000000000000000000000000000000000",
-        "PROOF_THRESHOLD": 1,
-        "proofCount": 0,
-        "resolvedAt": 0,
-        "rootClaim": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "SLOW_FINALIZATION_DELAY": 432000,
-        "slowFinalizationDelayFmt": "5d",
-        "startingBlockNumber": 0,
-        "startingOutputRoot": {
-          "root": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "l2SequenceNumber": 0
-        },
-        "startingRootHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "status": 0,
-        "TEE_IMAGE_HASH": "0x58557c709e93357a135041297107aecc4bc6ba616509098a4aa8dbef774d212a",
-        "TEE_VERIFIER": "eth:0x1FbA0C57b07Af804A9717e51dec9CC27FBC12228",
-        "teeProver": "eth:0x0000000000000000000000000000000000000000",
-        "version": "0.1.0",
-        "wasRespectedGameTypeWhenCreated": false,
-        "ZK_AGGREGATE_HASH": "0x001df6dffb10eebfa70e392bb6a4d0d1e3e5ac48cf07d473b6c244bdd8243a3b",
-        "ZK_RANGE_HASH": "0x505c97f13a996b722a90d54753fb82de5ce1b9e94bd499a46d42b2982188d677",
-        "ZK_VERIFIER": "eth:0xB88D95bDf6972508942d184866890c1834219B75",
-        "zkProver": "eth:0x0000000000000000000000000000000000000000"
-      },
-      "fieldMeta": {
-        "TEE_VERIFIER": { "severity": "HIGH" },
-        "ZK_VERIFIER": { "severity": "HIGH" },
-        "TEE_IMAGE_HASH": { "severity": "HIGH" },
-        "ZK_RANGE_HASH": { "severity": "HIGH" },
-        "ZK_AGGREGATE_HASH": { "severity": "HIGH" },
-        "PROOF_THRESHOLD": { "severity": "HIGH" },
-        "DELAYED_WETH": { "severity": "HIGH" }
-      },
-      "implementationNames": {
-        "eth:0x1bd8db5139Ba7aC9277684650c15e6E341761919": "AggregateVerifier"
       }
     },
     {
@@ -1411,7 +1302,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "8 of 11 (73%)",
-        "nonce": 13,
+        "nonce": 14,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1453,6 +1344,11 @@
     },
     {
       "address": "eth:0x21C7D1e6A81Daca071bA94839ab74C39A25f851F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x24bd1a46bdDC9Ac29d73b078c34cB0Bb5Dc72446",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1645,11 +1541,6 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "address": "eth:0x3354226FDDD041367AE68F7245Cd5166e11013f3",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x3cd692eCE8b6573A2220ae00d0dEb98f0DfFA9a1",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1719,11 +1610,11 @@
         "game1": "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A",
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "game621": "eth:0x1bd8db5139Ba7aC9277684650c15e6E341761919",
+        "game621": "eth:0xeE303bA054c5F1E14A8EF87f1C7E285af45A1ba2",
         "game8": "eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499",
         "game8Args": "0x0323914d3050e80c3d09da528be54794fde60cd26849cd3410dde0da7cd7d4fa6463dee3828677f6270d83d45408044fc5edb908909f6cf47ed12f010a796527f562bfc26c7f4e722453c1216e49704d84ea98a4dacd95738f2fc8ec0000000000000000000000000000000000000000000000000000000000002105",
         "game8Vm": "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908",
-        "gameCount": 17646,
+        "gameCount": 18567,
         "initBondGame0": "80000000000000000",
         "initBondGame1": "80000000000000000",
         "initBondGame42": 0,
@@ -1874,8 +1765,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 516982,
-          "prevBlockNum": 25538382
+          "prevBoughtGas": 1030380,
+          "prevBlockNum": 25630023
         },
         "paused": false,
         "proofMaturityDelaySeconds": 86400,
@@ -1912,11 +1803,6 @@
         }
       ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
-      "address": "eth:0x49243DcE94e0f5A1B08b9556bBEc5a84363c3839",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "RiscZeroSetVerifier",
@@ -2729,13 +2615,18 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 19,
+        "nonce": 20,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
         "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c": "GnosisSafeProxy",
         "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
+    },
+    {
+      "address": "eth:0x7eA56fBD8320F032014C8889C4F6cDC86796Db04",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Escrow",
@@ -2861,6 +2752,11 @@
       }
     },
     {
+      "address": "eth:0x8527A1412634266EAd35F76Ca84DA357847C0917",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "L1CrossDomainMessenger",
       "address": "eth:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
       "type": "Contract",
@@ -2931,7 +2827,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293205926",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293210924",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -3063,12 +2959,12 @@
           ]
         ],
         "$upgradeCount": 3,
-        "anchorGame": "eth:0x8500BCB9a00aC1bF44223f7D840afdcB6453810a",
+        "anchorGame": "eth:0xf40Bf1A70a1Fdb0056AD7B19aAe5664d5F8B195A",
         "disputeGameFactory": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
         "disputeGameFinalityDelaySeconds": 0,
         "getAnchorRoot": [
-          "0xcb79e1d878a91c0db02e9ba2b9bc5514f8285816d30cb8a14d79eb7c37fb7d53",
-          48449160
+          "0xeba209346d85d8f65ca6cf35b8721523f6ddb0fd754104817a22a3f7595a60d1",
+          49000560
         ],
         "getStartingAnchorRoot": {
           "root": "0xc34c9f98b74b2fb85a516e302f86bc9bedcf5623ab078a671d40beac0e120329",
@@ -3137,7 +3033,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 33,
+        "nonce": 34,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -3253,11 +3149,6 @@
       "implementationNames": {
         "eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696": "RiscZeroVerifierEmergencyStop"
       }
-    },
-    {
-      "address": "eth:0xa3D3c103442F162856163d564b983ae538c6202D",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0xA5657B88A0130a626fcDd6aAA59522373438CdFE",
@@ -3402,29 +3293,6 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "SP1Verifier",
-      "address": "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2",
-      "type": "Contract",
-      "template": "succinct/SP1Verifier",
-      "sourceHashes": [
-        "0xaed0a260d9c0355e7e6fcf19f18136f914582d20027b440b0c04b762e521b2d6"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifier contract for SP1 proofs (v6.1.0).",
-      "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
-      "sinceTimestamp": 1776172379,
-      "sinceBlock": 24878255,
-      "values": {
-        "$immutable": true,
-        "VERIFIER_HASH": "0x4388a21c687fdd5f218d7e3d13190cac4c5355818d3605fd5fb811df468ee696",
-        "VERSION": "v6.1.0",
-        "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
-      },
-      "implementationNames": {
-        "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2": "SP1Verifier"
-      }
-    },
-    {
       "name": "ZkVerifier",
       "address": "eth:0xB88D95bDf6972508942d184866890c1834219B75",
       "type": "Contract",
@@ -3464,6 +3332,28 @@
       "proxyType": "EOA"
     },
     {
+      "name": "SP1Verifier",
+      "address": "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A",
+      "type": "Contract",
+      "template": "shared-sp1/SP1Verifier",
+      "sourceHashes": [
+        "0x841e49c8753878bb522d9e0f0d5276aa39929d0cb7d6bd23ca0d5032537b8536"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
+      "sinceTimestamp": 1776172415,
+      "sinceBlock": 24878258,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0x5a093a2fcb46394f5cadfe55c44d4d572fad9cec7aeb38026b0278322ef07fac",
+        "VERSION": "v6.1.0",
+        "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
+      },
+      "implementationNames": {
+        "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A": "SP1Verifier"
+      }
+    },
+    {
       "name": "DelayedWETH",
       "address": "eth:0xd0D07924AdD740a87e41Ca8A0d4CBBf6b074EF71",
       "type": "Contract",
@@ -3498,7 +3388,7 @@
         "proxyAdminOwner": "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
         "symbol": "WETH",
         "systemConfig": "eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072",
-        "totalSupply": "21500000000000000000",
+        "totalSupply": "21650000000000000000",
         "version": "1.5.0"
       },
       "implementationNames": {
@@ -3573,14 +3463,18 @@
         "$immutable": true,
         "activeVerifiers": [
           {
-            "selector": "0x4388a21c",
-            "verifier": "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2"
+            "selector": "0x5a093a2f",
+            "verifier": "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"
           }
         ],
         "allVerifiers": [
           {
             "selector": "0x4388a21c",
             "verifier": "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2"
+          },
+          {
+            "selector": "0x5a093a2f",
+            "verifier": "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"
           }
         ],
         "owner": "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c"
@@ -3598,9 +3492,113 @@
       }
     },
     {
-      "address": "eth:0xE32f95a9c06159c3cB3DC39f7573215ddAB86E59",
-      "type": "EOA",
-      "proxyType": "EOA"
+      "name": "AggregateVerifier",
+      "address": "eth:0xeE303bA054c5F1E14A8EF87f1C7E285af45A1ba2",
+      "type": "Contract",
+      "template": "opstack/AggregateVerifier",
+      "sourceHashes": [
+        "0x3fb3f2905c51272c4f77809543c14a5e40084d66a8e0251aef45516674940a64"
+      ],
+      "proxyType": "immutable",
+      "description": "Game type implementation that combines a TEE attestation arm and a ZK proof arm. A single un-nullified proof of either type can resolve a game (PROOF_THRESHOLD = 1). When both arms commit, the finalization window collapses from SLOW_FINALIZATION_DELAY (5d) to FAST_FINALIZATION_DELAY (1d).",
+      "ignoreInWatchMode": [
+        "bondAmount",
+        "bondClaimed",
+        "bondRecipient",
+        "bondUnlocked",
+        "counteredByIntermediateRootIndexPlusOne",
+        "createdAt",
+        "expectedResolution",
+        "extraData",
+        "gameCreator",
+        "gameData",
+        "gameOver",
+        "l1Head",
+        "l2SequenceNumber",
+        "parentAddress",
+        "proofCount",
+        "resolvedAt",
+        "rootClaim",
+        "startingBlockNumber",
+        "startingOutputRoot",
+        "startingRootHash",
+        "status",
+        "teeProver",
+        "wasRespectedGameTypeWhenCreated",
+        "zkProver"
+      ],
+      "deployerAddress": "eth:0xD56C6462DC3A943596c7a54d6B0Dba404490E206",
+      "sinceTimestamp": 1784748491,
+      "sinceBlock": 25590355,
+      "values": {
+        "$immutable": true,
+        "anchorStateRegistry": "eth:0x909f6cf47ed12f010A796527f562bFc26C7F4E72",
+        "BLOCK_INTERVAL": 600,
+        "BLOCKHASH_WINDOW": 256,
+        "bondAmount": 0,
+        "bondClaimed": false,
+        "bondRecipient": "eth:0x0000000000000000000000000000000000000000",
+        "bondUnlocked": false,
+        "CONFIG_HASH": "0x1607709d90d40904f790574404e2ad614eac858f6162faa0ec34c6bf5e5f3c57",
+        "counteredByIntermediateRootIndexPlusOne": 0,
+        "createdAt": 0,
+        "DELAYED_WETH": "eth:0xd0D07924AdD740a87e41Ca8A0d4CBBf6b074EF71",
+        "DISPUTE_GAME_FACTORY": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
+        "EIP2935_CONTRACT": "eth:0x0000F90827F1C53a10cb7A02335B175320002935",
+        "EIP2935_WINDOW": 8191,
+        "expectedResolution": 0,
+        "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "FAST_FINALIZATION_DELAY": 86400,
+        "fastFinalizationDelayFmt": "1d",
+        "gameCreator": "eth:0x0000000000000000000000000000000000000000",
+        "gameData": [
+          621,
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        ],
+        "gameOver": true,
+        "gameType": 621,
+        "INTERMEDIATE_BLOCK_INTERVAL": 30,
+        "intermediateOutputRootsCount": 20,
+        "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "L2_CHAIN_ID": 8453,
+        "l2SequenceNumber": 0,
+        "parentAddress": "eth:0x0000000000000000000000000000000000000000",
+        "PROOF_THRESHOLD": 1,
+        "proofCount": 0,
+        "resolvedAt": 0,
+        "rootClaim": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "SLOW_FINALIZATION_DELAY": 432000,
+        "slowFinalizationDelayFmt": "5d",
+        "startingBlockNumber": 0,
+        "startingOutputRoot": {
+          "root": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "l2SequenceNumber": 0
+        },
+        "startingRootHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "status": 0,
+        "TEE_IMAGE_HASH": "0x58557c709e93357a135041297107aecc4bc6ba616509098a4aa8dbef774d212a",
+        "TEE_VERIFIER": "eth:0x1FbA0C57b07Af804A9717e51dec9CC27FBC12228",
+        "teeProver": "eth:0x0000000000000000000000000000000000000000",
+        "version": "0.1.0",
+        "wasRespectedGameTypeWhenCreated": false,
+        "ZK_AGGREGATE_HASH": "0x00a147f0c69da81e3d530cca91310f9605f980dc155726bb33fbde0e493a3836",
+        "ZK_RANGE_HASH": "0x5fd09a2f4338ca7063bc37b02f9411645d0ef2784fe644cc71ab48ae64200beb",
+        "ZK_VERIFIER": "eth:0xB88D95bDf6972508942d184866890c1834219B75",
+        "zkProver": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "fieldMeta": {
+        "TEE_VERIFIER": { "severity": "HIGH" },
+        "ZK_VERIFIER": { "severity": "HIGH" },
+        "TEE_IMAGE_HASH": { "severity": "HIGH" },
+        "ZK_RANGE_HASH": { "severity": "HIGH" },
+        "ZK_AGGREGATE_HASH": { "severity": "HIGH" },
+        "PROOF_THRESHOLD": { "severity": "HIGH" },
+        "DELAYED_WETH": { "severity": "HIGH" }
+      },
+      "implementationNames": {
+        "eth:0xeE303bA054c5F1E14A8EF87f1C7E285af45A1ba2": "AggregateVerifier"
+      }
     },
     {
       "address": "eth:0xee44cdb68D618d58F75d9fe0818B640BD7B8A7B7",
@@ -4232,95 +4230,6 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
-    ],
-    "eth:0x1bd8db5139Ba7aC9277684650c15e6E341761919": [
-      "constructor(uint32 gameType_, address anchorStateRegistry_, address delayedWETH, address teeVerifier, address zkVerifier, bytes32 teeImageHash, tuple(bytes32 rangeHash, bytes32 aggregateHash) zkHashes, bytes32 configHash, uint256 l2ChainId, uint256 blockInterval, uint256 intermediateBlockInterval)",
-      "error AlreadyInitialized()",
-      "error AlreadyProven(uint8 proofType)",
-      "error BondTransferFailed()",
-      "error ClaimAlreadyResolved()",
-      "error GameNotFinalized()",
-      "error GameNotInProgress()",
-      "error GameNotOver()",
-      "error GameNotResolved()",
-      "error GameOver()",
-      "error GamePaused()",
-      "error IntermediateRootMismatch(bytes32 intermediateRoot, bytes32 claim)",
-      "error IntermediateRootSameAsProposed()",
-      "error InvalidBlockInterval(uint256 blockInterval, uint256 intermediateBlockInterval)",
-      "error InvalidGame()",
-      "error InvalidIntermediateRootIndex()",
-      "error InvalidParentGame()",
-      "error InvalidProof()",
-      "error InvalidProofType()",
-      "error L1OriginHashMismatch(bytes32 claimed, bytes32 actual)",
-      "error L1OriginInFuture(uint256 l1OriginNumber, uint256 currentBlock)",
-      "error L1OriginTooOld(uint256 l1OriginNumber, uint256 currentBlock)",
-      "error MissingProof(uint8 proofType)",
-      "error NoCreditToClaim()",
-      "error NotEnoughProofs()",
-      "error ParentGameNotResolved()",
-      "error Reentrancy()",
-      "error UnexpectedBlockNumber(uint256 expectedBlockNumber, uint256 actualBlockNumber)",
-      "event Challenged(address indexed challenger, uint256 intermediateRootIndex)",
-      "event CreditClaimed(address indexed recipient, uint256 amount)",
-      "event Nullified(address indexed nullifier, uint256 intermediateRootIndex, bytes32 intermediateRoot)",
-      "event Proved(address indexed proposer, uint8 indexed proofType)",
-      "event Resolved(uint8 status)",
-      "function BLOCKHASH_WINDOW() view returns (uint256)",
-      "function BLOCK_INTERVAL() view returns (uint256)",
-      "function CONFIG_HASH() view returns (bytes32)",
-      "function DELAYED_WETH() view returns (address)",
-      "function DISPUTE_GAME_FACTORY() view returns (address)",
-      "function EIP2935_CONTRACT() view returns (address)",
-      "function EIP2935_WINDOW() view returns (uint256)",
-      "function FAST_FINALIZATION_DELAY() view returns (uint64)",
-      "function INTERMEDIATE_BLOCK_INTERVAL() view returns (uint256)",
-      "function L2_CHAIN_ID() view returns (uint256)",
-      "function PROOF_THRESHOLD() view returns (uint256)",
-      "function SLOW_FINALIZATION_DELAY() view returns (uint64)",
-      "function TEE_IMAGE_HASH() view returns (bytes32)",
-      "function TEE_VERIFIER() view returns (address)",
-      "function ZK_AGGREGATE_HASH() view returns (bytes32)",
-      "function ZK_RANGE_HASH() view returns (bytes32)",
-      "function ZK_VERIFIER() view returns (address)",
-      "function anchorStateRegistry() view returns (address)",
-      "function bondAmount() view returns (uint256)",
-      "function bondClaimed() view returns (bool)",
-      "function bondRecipient() view returns (address)",
-      "function bondUnlocked() view returns (bool)",
-      "function challenge(bytes proofBytes, uint256 intermediateRootIndex, bytes32 intermediateRootToProve)",
-      "function claimCredit()",
-      "function closeGame()",
-      "function counteredByIntermediateRootIndexPlusOne() view returns (uint256)",
-      "function createdAt() view returns (uint64)",
-      "function expectedResolution() view returns (uint64)",
-      "function extraData() view returns (bytes)",
-      "function gameCreator() pure returns (address)",
-      "function gameData() view returns (uint32, bytes32, bytes)",
-      "function gameOver() view returns (bool)",
-      "function gameType() view returns (uint32)",
-      "function initializeWithInitData(bytes proof) payable",
-      "function intermediateOutputRoot(uint256 index) view returns (bytes32)",
-      "function intermediateOutputRoots() view returns (bytes)",
-      "function intermediateOutputRootsCount() view returns (uint256)",
-      "function l1Head() pure returns (bytes32)",
-      "function l2SequenceNumber() pure returns (uint256)",
-      "function nullify(bytes proofBytes, uint256 intermediateRootIndex, bytes32 intermediateRootToProve)",
-      "function parentAddress() pure returns (address)",
-      "function proofCount() view returns (uint8)",
-      "function resolve() returns (uint8)",
-      "function resolvedAt() view returns (uint64)",
-      "function rootClaim() pure returns (bytes32)",
-      "function startingBlockNumber() view returns (uint256)",
-      "function startingOutputRoot() view returns (bytes32 root, uint256 l2SequenceNumber)",
-      "function startingRootHash() view returns (bytes32)",
-      "function status() view returns (uint8)",
-      "function teeProver() view returns (address)",
-      "function verifyProposalProof(bytes proofBytes)",
-      "function version() pure returns (string)",
-      "function wasRespectedGameTypeWhenCreated() view returns (bool)",
-      "function zkProver() view returns (address)"
     ],
     "eth:0x1efDd13f831ceeEa14940806705A53D3211CD698": [
       "constructor(address _verifier, address guardian)",
@@ -5518,22 +5427,6 @@
       "function version() view returns (string)",
       "function xDomainMessageSender() view returns (address)"
     ],
-    "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2": [
-      "error InvalidExitCode()",
-      "error InvalidProof()",
-      "error InvalidVkRoot()",
-      "error ProofInvalid()",
-      "error PublicInputNotInField()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function VK_ROOT() pure returns (bytes32)",
-      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function verifyCompressedProof(uint256[4] compressedProof, uint256[5] input) view",
-      "function verifyProof(uint256[8] proof, uint256[5] input) view",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
-    ],
     "eth:0xB88D95bDf6972508942d184866890c1834219B75": [
       "constructor(address sp1Verifier, address anchorStateRegistry)",
       "error NotProperGame()",
@@ -5545,6 +5438,18 @@
       "function nullify()",
       "function verify(bytes proofBytes, bytes32 imageId, bytes32 journal) view returns (bool)",
       "function version() pure returns (string)"
+    ],
+    "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A": [
+      "error InvalidExitCode()",
+      "error InvalidProof()",
+      "error InvalidVkRoot()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function VK_ROOT() pure returns (bytes32)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "eth:0xc4ceeB264Fa35a022e470aCc3C6A522308f3ec02": [
       "constructor(address _guardian, address _incidentResponder)",
@@ -5718,6 +5623,95 @@
       "function transferOwnership(address newOwner)",
       "function version() pure returns (string)"
     ],
+    "eth:0xeE303bA054c5F1E14A8EF87f1C7E285af45A1ba2": [
+      "constructor(uint32 gameType_, address anchorStateRegistry_, address delayedWETH, address teeVerifier, address zkVerifier, bytes32 teeImageHash, tuple(bytes32 rangeHash, bytes32 aggregateHash) zkHashes, bytes32 configHash, uint256 l2ChainId, uint256 blockInterval, uint256 intermediateBlockInterval)",
+      "error AlreadyInitialized()",
+      "error AlreadyProven(uint8 proofType)",
+      "error BondTransferFailed()",
+      "error ClaimAlreadyResolved()",
+      "error GameNotFinalized()",
+      "error GameNotInProgress()",
+      "error GameNotOver()",
+      "error GameNotResolved()",
+      "error GameOver()",
+      "error GamePaused()",
+      "error IntermediateRootMismatch(bytes32 intermediateRoot, bytes32 claim)",
+      "error IntermediateRootSameAsProposed()",
+      "error InvalidBlockInterval(uint256 blockInterval, uint256 intermediateBlockInterval)",
+      "error InvalidGame()",
+      "error InvalidIntermediateRootIndex()",
+      "error InvalidParentGame()",
+      "error InvalidProof()",
+      "error InvalidProofType()",
+      "error L1OriginHashMismatch(bytes32 claimed, bytes32 actual)",
+      "error L1OriginInFuture(uint256 l1OriginNumber, uint256 currentBlock)",
+      "error L1OriginTooOld(uint256 l1OriginNumber, uint256 currentBlock)",
+      "error MissingProof(uint8 proofType)",
+      "error NoCreditToClaim()",
+      "error NotEnoughProofs()",
+      "error ParentGameNotResolved()",
+      "error Reentrancy()",
+      "error UnexpectedBlockNumber(uint256 expectedBlockNumber, uint256 actualBlockNumber)",
+      "event Challenged(address indexed challenger, uint256 intermediateRootIndex)",
+      "event CreditClaimed(address indexed recipient, uint256 amount)",
+      "event Nullified(address indexed nullifier, uint256 intermediateRootIndex, bytes32 intermediateRoot)",
+      "event Proved(address indexed proposer, uint8 indexed proofType)",
+      "event Resolved(uint8 status)",
+      "function BLOCKHASH_WINDOW() view returns (uint256)",
+      "function BLOCK_INTERVAL() view returns (uint256)",
+      "function CONFIG_HASH() view returns (bytes32)",
+      "function DELAYED_WETH() view returns (address)",
+      "function DISPUTE_GAME_FACTORY() view returns (address)",
+      "function EIP2935_CONTRACT() view returns (address)",
+      "function EIP2935_WINDOW() view returns (uint256)",
+      "function FAST_FINALIZATION_DELAY() view returns (uint64)",
+      "function INTERMEDIATE_BLOCK_INTERVAL() view returns (uint256)",
+      "function L2_CHAIN_ID() view returns (uint256)",
+      "function PROOF_THRESHOLD() view returns (uint256)",
+      "function SLOW_FINALIZATION_DELAY() view returns (uint64)",
+      "function TEE_IMAGE_HASH() view returns (bytes32)",
+      "function TEE_VERIFIER() view returns (address)",
+      "function ZK_AGGREGATE_HASH() view returns (bytes32)",
+      "function ZK_RANGE_HASH() view returns (bytes32)",
+      "function ZK_VERIFIER() view returns (address)",
+      "function anchorStateRegistry() view returns (address)",
+      "function bondAmount() view returns (uint256)",
+      "function bondClaimed() view returns (bool)",
+      "function bondRecipient() view returns (address)",
+      "function bondUnlocked() view returns (bool)",
+      "function challenge(bytes proofBytes, uint256 intermediateRootIndex, bytes32 intermediateRootToProve)",
+      "function claimCredit()",
+      "function closeGame()",
+      "function counteredByIntermediateRootIndexPlusOne() view returns (uint256)",
+      "function createdAt() view returns (uint64)",
+      "function expectedResolution() view returns (uint64)",
+      "function extraData() view returns (bytes)",
+      "function gameCreator() pure returns (address)",
+      "function gameData() view returns (uint32, bytes32, bytes)",
+      "function gameOver() view returns (bool)",
+      "function gameType() view returns (uint32)",
+      "function initializeWithInitData(bytes proof) payable",
+      "function intermediateOutputRoot(uint256 index) view returns (bytes32)",
+      "function intermediateOutputRoots() view returns (bytes)",
+      "function intermediateOutputRootsCount() view returns (uint256)",
+      "function l1Head() pure returns (bytes32)",
+      "function l2SequenceNumber() pure returns (uint256)",
+      "function nullify(bytes proofBytes, uint256 intermediateRootIndex, bytes32 intermediateRootToProve)",
+      "function parentAddress() pure returns (address)",
+      "function proofCount() view returns (uint8)",
+      "function resolve() returns (uint8)",
+      "function resolvedAt() view returns (uint64)",
+      "function rootClaim() pure returns (bytes32)",
+      "function startingBlockNumber() view returns (uint256)",
+      "function startingOutputRoot() view returns (bytes32 root, uint256 l2SequenceNumber)",
+      "function startingRootHash() view returns (bytes32)",
+      "function status() view returns (uint8)",
+      "function teeProver() view returns (address)",
+      "function verifyProposalProof(bytes proofBytes)",
+      "function version() pure returns (string)",
+      "function wasRespectedGameTypeWhenCreated() view returns (bool)",
+      "function zkProver() view returns (address)"
+    ],
     "eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C": [
       "constructor(bytes32 control_root, bytes32 bn254_control_id)",
       "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
@@ -5776,11 +5770,11 @@
     "risc0/RiscZeroSetVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "risc0/RiscZeroVerifierEmergencyStop": "0x51834983916be3dbcb2599e427fff7336cf176a2a5839ac470883eb1d9703763",
     "risc0/RiscZeroVerifierRouter": "0xb74ea20385c8afa507c773dd57793a9fbf10ce64ed9c17b58dff13665aff9f7a",
-    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "shared-sp1/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c",
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/RiscZeroGroth16VerifierLegacy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "base": 48666606, "ethereum": 25538391 },
-  "permissionsConfigHash": "0x4bb5674c53004dc37e3ee4f330ab0a4b3c39116ea48e9c035423c2a87ed39ae4"
+  "usedBlockNumbers": { "base": 49218391, "ethereum": 25630023 },
+  "permissionsConfigHash": "0x5d014891fcd4f706303b0e4dadbdcd12742145b5967b99469437d40fcc14ade6"
 }

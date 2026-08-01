@@ -19,6 +19,7 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { VerticalSeparator } from '~/components/core/VerticalSeparator'
 import { CustomLink } from '~/components/link/CustomLink'
+import { PercentageChangeTooltipContent } from '~/components/PercentChange'
 import { DiscoUiLink } from '~/components/projects/links/DiscoUiLink'
 import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLinks'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
@@ -199,6 +200,13 @@ export function ProjectScalingSummary({ project }: Props) {
                       Click to view TVS breakdown
                     </p>
                   )}
+                  {project.header.tvs?.breakdown && (
+                    <p>
+                      <PercentageChangeTooltipContent
+                        period={project.header.tvs.breakdown.totalChangePeriod}
+                      />
+                    </p>
+                  )}
                 </TooltipContent>
               </Tooltip>
               <CustomLink
@@ -274,21 +282,25 @@ function InteropMetrics({
     <div className="flex flex-col gap-4">
       <div className="grid gap-x-10 gap-y-4 md:grid-cols-2">
         {headlineStats.map((stat) => (
-          <div
+          <a
             key={stat.label}
-            className="flex max-md:items-center max-md:justify-between md:flex-col md:gap-1.5"
+            href="#interop-flows"
+            className="group flex max-md:items-center max-md:justify-between md:flex-col md:gap-1.5"
           >
             <span className="font-medium text-label-value-12 text-secondary">
               {stat.label}
             </span>
-            <span className="font-bold text-label-value-16">{stat.value}</span>
-          </div>
+            <span className="font-bold text-label-value-16 group-hover:underline">
+              {stat.value}
+            </span>
+          </a>
         ))}
       </div>
       <HorizontalSeparator />
       <div className="grid gap-x-10 gap-y-4 md:grid-cols-2">
         <InteropMetric
           title="Interop protocols used"
+          href="#interop-flows"
           items={{
             items: interop.protocols.items.map((protocol) => ({
               id: protocol.id,
@@ -301,6 +313,7 @@ function InteropMetrics({
         />
         <InteropMetric
           title="Tokens by volume"
+          href="#interop-flows"
           items={{
             items: interop.tokens.items.map((token) => ({
               id: token.id,
@@ -319,8 +332,10 @@ function InteropMetrics({
 function InteropMetric({
   title,
   items,
+  href,
 }: {
   title: string
+  href: string
   items: {
     items: {
       id: string
@@ -336,12 +351,12 @@ function InteropMetric({
   }
 
   return (
-    <div>
-      <p className="mb-2 font-medium text-label-value-12 text-secondary">
+    <a href={href} className="group block">
+      <p className="mb-2 font-medium text-label-value-12 text-secondary group-hover:underline">
         {title}
       </p>
       <InteropTopItems topItems={items} hideDialog />
-    </div>
+    </a>
   )
 }
 

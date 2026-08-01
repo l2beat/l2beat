@@ -1,3 +1,38 @@
+Generated with discovered.json: 0x5b3ca8f0e9161b796a9fe463103a36903a9ab10b
+
+# Diff at Mon, 27 Jul 2026 10:17:00 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@4683097a102db212f2168de1647931e7c0ef98e8 block: 1784036617
+- current timestamp: 1784036617
+
+## Description
+
+shared-sharp-verifier changes rediscover
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784036617 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x59232aC80E6d403b6381393e52f4665ECA328558) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-sharp-verifier"
+      proxyType:
++        "EOA"
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4","description":"enable the withdrawal limit.","role":".secAgentAC","via":[{"address":"eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"}]},{"permission":"interact","from":"eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419","description":"enable the withdrawal limit.","role":".secAgentAC","via":[{"address":"eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"}]},{"permission":"interact","from":"eth:0xbb3400F107804DFB482565FF1Ec8D8aE66747605","description":"enable the withdrawal limit.","role":".secAgentAC","via":[{"address":"eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"}]},{"permission":"interact","from":"eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4","description":"enable the withdrawal limit.","role":".secAgentAC","via":[{"address":"eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"}]},{"permission":"interact","from":"eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb","description":"enable the withdrawal limit.","role":".secAgentAC","via":[{"address":"eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"}]},{"permission":"interact","from":"eth:0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816","description":"enable the withdrawal limit.","role":".secAgentAC","via":[{"address":"eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"}]}]
+    }
+```
+
 Generated with discovered.json: 0x8c84eab26da3a2f511f98d64077248c379574bbb
 
 # Diff at Tue, 14 Jul 2026 17:11:36 GMT:

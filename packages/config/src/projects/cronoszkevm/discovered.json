@@ -1,8 +1,7 @@
 {
   "name": "cronoszkevm",
   "timestamp": 1780997809,
-  "configHash": "0xf2c94240e296f9ab587a8a5cd6bae4a49dcc0939d6177e0988490ac3657f6144",
-  "sharedModules": ["shared-zk-stack"],
+  "configHash": "0x2856f5bc93ef634e5dcaa71f3adac71779177c1370bc39e3ec16cf8551ea572a",
   "entries": [
     {
       "address": "eth:0x149f3850AcfC5caa3ecF31dCF922A75eD2944a5e",

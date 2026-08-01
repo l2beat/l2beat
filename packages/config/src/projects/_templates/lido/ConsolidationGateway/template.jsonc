@@ -1,0 +1,72 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Validates validator ownership proofs and submits EIP-7251 consolidation requests through the protocol consolidation-request predeploy. It rate-limits the amount consolidated and preserves its ETH balance across requests.",
+  "category": "core",
+  "ignoreRelatives": ["BEACON_ROOTS"],
+  "ignoreInWatchMode": ["getConsolidationRequestLimitFullInfo"],
+  "fields": {
+    "consolidationRequestLimitConfiguration": {
+      "description": "Configured replenishing limit for validator consolidation requests.",
+      "copy": "getConsolidationRequestLimitFullInfo",
+      "edit": [
+        "pick",
+        "maxConsolidationRequestsLimit",
+        "consolidationsPerFrame",
+        "frameDurationInSec"
+      ]
+    },
+    "accessControl": {
+      "handler": { "type": "accessControl", "includeEmptyRoles": true }
+    },
+    "defaultAdmins": {
+      "copy": "accessControl",
+      "edit": ["get", "DEFAULT_ADMIN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke ConsolidationGateway roles."
+        }
+      ]
+    },
+    "consolidationRequesters": {
+      "copy": "accessControl",
+      "edit": ["get", "ADD_CONSOLIDATION_REQUEST_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit consolidation requests after proving control of the source and target validators."
+        }
+      ]
+    },
+    "exitLimitManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "EXIT_LIMIT_MANAGER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the maximum consolidated balance allowed within the configured time window."
+        }
+      ]
+    },
+    "pausers": {
+      "copy": "accessControl",
+      "edit": ["get", "PAUSE_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause validator consolidation requests for a chosen duration."
+        }
+      ]
+    },
+    "resumers": {
+      "copy": "accessControl",
+      "edit": ["get", "RESUME_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "resume validator consolidation requests."
+        }
+      ]
+    }
+  }
+}

@@ -1,3 +1,100 @@
+Generated with discovered.json: 0x458a5fdd3a413bbc60dcf1a0d27ecfc4b11050bf
+
+# Diff at Mon, 20 Jul 2026 15:36:32 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@ab4290b6bc5b6a34b8b091245cd07a7a94441102 block: 1784282949
+- current timestamp: 1784561683
+
+## Description
+
+SystemConfig `owner` transferred from the Gelato Multisig to the OpFoundationOperationsSafe (`0x9BA6…6b3A`). Ink's sequencer address, batch-submitter address, and gas config are now controlled by OP Foundation instead of Gelato.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.owner:
+-        "eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
++        "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
+    }
+```
+
+```diff
+-   Status: DELETED
+    EOA  (eth:0x6a0A93Cd6d6FB7a36bF6234ef4650Bf9474e7682)
+    +++ description: None
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","role":".owner"}]
+    }
+```
+
+```diff
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a) [gnosisSafeModules/SaferSafes] {
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","role":".owner","via":[{"address":"eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"}]}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Gelato Multisig (eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) [GnosisSafe]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../Gelato Multisig/GnosisSafe.sol => /dev/null    | 1026 --------------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   38 -
+ 2 files changed, 1064 deletions(-)
+```
+
+Generated with discovered.json: 0x59f5be242398f3c27fe429105fd60285c41b39e1
+
+# Diff at Fri, 17 Jul 2026 10:10:49 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@5a5b552776f13efe49c744667945e52e0a8f9718 block: 1784023841
+- current timestamp: 1784282949
+
+## Description
+
+OpFoundation shared Safes (UpgradeSafe + OperationsSafe): 2 members rotated.
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x6419F81580343DF023E68715C6e269aFb00a2cc7"
++        "eth:0xf1EfbdC2C0BDC4554E0f1639D7fe88cD870a4639"
+      values.$members.3:
+-        "eth:0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8"
++        "eth:0x7F1D4FE689B73B628285454667B93cfd09409f27"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x6419F81580343DF023E68715C6e269aFb00a2cc7"
++        "eth:0xf1EfbdC2C0BDC4554E0f1639D7fe88cD870a4639"
+      values.$members.3:
+-        "eth:0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8"
++        "eth:0x7F1D4FE689B73B628285454667B93cfd09409f27"
+    }
+```
+
 Generated with discovered.json: 0x8e7d02be88025091b1b96183f8f3b7a517a3f29c
 
 # Diff at Tue, 14 Jul 2026 10:11:47 GMT:

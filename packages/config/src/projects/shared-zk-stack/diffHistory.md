@@ -1,3 +1,130 @@
+Generated with discovered.json: 0xfc8e0ca06ea7df380bafb96027970bf68f1606f6
+
+# Diff at Mon, 27 Jul 2026 16:12:23 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@e4bae6c708e972febd09837213f50ce9cdf09201 block: 1784804016
+- current timestamp: 1785168665
+
+## Description
+
+Preparation for v31 upgrade:
+
+- Updated chain creation params and chain type manager version via this emergency proposal: https://tools.l2beat.com/decoder-new/?hash=0x0e355ed305d463ae288194d2a5a00c16ea7e10fafbdc2e5b080ee4bbe17aa1bf&data=AwA.
+- Scheduled and executed an upgrade proposal on L2: https://tools.l2beat.com/decoder-new/?hash=0x2c0b7d455d57dbb0e1835ac1ff3ad484205c4e33b2c3025373811fb1ac16425d&data=AwA. For some reason it is not yet live on L1.
+- Removed one member of Chainlight ms.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (eth:0x84BF0Ac41Eeb74373Ddddae8b7055Bf2bD3CE6E0) [GnosisSafe] {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x0F3F84b0aaaA6f577468F6708e7A5E09e59dbfA1"
+      values.multisigThreshold:
+-        "2 of 6 (33%)"
++        "2 of 5 (40%)"
+    }
+```
+
+```diff
+    contract ChainTypeManager (eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) [shared-zk-stack/ChainTypeManager] {
+    +++ description: Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,29,5.
+      description:
+-        "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,29,4."
++        "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,29,5."
+      values.getSemverProtocolVersion.2:
+-        4
++        5
+      values.initialCutHash:
+-        "0x78e697c25f48b4e555813b0fb1baefebb707af0750f634a6d5f5354978765079"
++        "0x08ed3641fe05a42d8eeef971ecfc8bbcce46b97373ed02cd4cb9eb994e4d487a"
+      values.protocolVersion:
+-        124554051588
++        124554051589
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) [shared-zk-stack/ProtocolUpgradeHandler] {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
++++ severity: HIGH
+      values.emergencyUpgradesExecuted.11:
++        "0x03264a5977425fc58cac85729ef3eb6b3c60a6916f1e54ba2cd74b76fb6ba31f"
++++ severity: HIGH
+      values.emergencyUpgradesExecuted.12:
++        "0x5925465d7a8bc46307b7867fcda93e445af7e6479370d34be058639453b4651a"
++++ severity: HIGH
+      values.emergencyUpgradesExecuted.13:
++        "0x42432d865969ab601b7f4016895e1426f224bc02a1250008742443ac89511e8d"
+    }
+```
+
+```diff
+    contract ZkProtocolGovernor (zksync:0x76705327e682F2d96943280D99464Ab61219e34f) [shared-zk-stack/ZkGovernor] {
+    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalQueuedCount:
+-        15
++        16
+    }
+```
+
+Generated with discovered.json: 0x9b1fee98ff85e09ec8f5ed8060fb551d64882121
+
+# Diff at Fri, 24 Jul 2026 07:51:22 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@efe9fb65fe13447fa2102797e0c08f3569e5b554 block: 1784193326
+- current timestamp: 1784804016
+
+## Description
+
+Upgraded ServerNotifier contract that informs offchain node operators about onchain updates without any onchain significance (https://disco.l2beat.com/diff/eth:0x555D040F4A089D1dF14B372a87C5aF8FA37BDB7A/eth:0x260813B0DAf35dda95c41F39c6Cc3F24dc87028A). The new version corresponds to v30: https://github.com/matter-labs/era-contracts/blob/zkos-v0.30.2/l1-contracts/contracts/governance/ServerNotifier.sol.
+
+- Added `setUpgradeTimestamp` function to signal an upcoming upgrade
+- Added checks on announcing upgrades
+
+Also, rotated MS member.
+
+## Watched changes
+
+```diff
+    contract Matter Labs Multisig (eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828) [GnosisSafe] {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x5C7E59Dba6557C7dAB3B69ccd3E309d1965Cf1B1"
++        "eth:0xC9A814A4dFE108A4d2b0C01abb4c196Ed7FB3D83"
+    }
+```
+
+```diff
+    contract ServerNotifier (eth:0xfca808A744735D9919EEBe4660B8Fd897456Ce31) [shared-zk-stack/ServerNotifier] {
+    +++ description: A simple contract that can be called by the ChainAdmin to emit notifications about chain migrations.
+      sourceHashes.1:
+-        "0x1e4d0bfb62cb7162bc9ad0aa55a8bf3d7e735f46b0e32e9886ac236f84f9d28e"
++        "0x3c0e5bd80bc25d2e6f4be57d2f37d84edafd89559cf83a704ad8545a8d5a05c8"
+      values.$implementation:
+-        "eth:0x555D040F4A089D1dF14B372a87C5aF8FA37BDB7A"
++        "eth:0x260813B0DAf35dda95c41F39c6Cc3F24dc87028A"
+      values.$pastUpgrades.1:
++        ["2026-07-22T10:09:59.000Z","0xdbd5285f559e4ae32457b8425f67e1dfe76575c40999499e0b55d5cf985b85d8",["eth:0x260813B0DAf35dda95c41F39c6Cc3F24dc87028A"]]
+      values.$upgradeCount:
+-        1
++        2
+      implementationNames.eth:0x555D040F4A089D1dF14B372a87C5aF8FA37BDB7A:
+-        "ServerNotifier"
+      implementationNames.eth:0x260813B0DAf35dda95c41F39c6Cc3F24dc87028A:
++        "ServerNotifier"
+    }
+```
+
+## Source code changes
+
+```diff
+.../ServerNotifier/ServerNotifier.sol              | 714 ++++++++++++++++++++-
+ 1 file changed, 693 insertions(+), 21 deletions(-)
+```
+
 Generated with discovered.json: 0x84104a4ca3534bd1cf08716c959c78d936191899
 
 # Diff at Thu, 16 Jul 2026 09:16:34 GMT:

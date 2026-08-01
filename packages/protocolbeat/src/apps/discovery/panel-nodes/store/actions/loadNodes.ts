@@ -8,9 +8,14 @@ import {
   NODE_WIDTH,
 } from '../utils/constants'
 import {
+  getGraphProjection,
+  hideItems,
+  mapGraphItems,
+} from '../utils/graphProjection'
+import {
   type NodeLocations,
   recallNodeLayout,
-  reconcileHiddenFields,
+  reconcileNodeHiddenFields,
   type StoredGroup,
   type StoredNodeLayout,
 } from '../utils/storage'
@@ -38,7 +43,18 @@ export function loadNodes(
   )
   const existingRaw: Node[] = state.nodes.map((node) => {
     const newNode = nodes.find((x) => x.id === node.id)
-    return newNode ? { ...newNode, box: node.box, color: node.color } : node
+    if (!newNode) return node
+    // Keep the user's choices for fields that already existed; default hides
+    // (e.g. large arrays) only apply to fields that just appeared.
+    const knownFieldNames = new Set(node.fields.map((field) => field.name))
+    const newDefaults = newNode.hiddenFields.filter(
+      (name) => !knownFieldNames.has(name),
+    )
+    const hiddenFields = reconcileNodeHiddenFields(newNode.fields, [
+      ...node.hiddenFields,
+      ...newDefaults,
+    ])
+    return { ...newNode, box: node.box, color: node.color, hiddenFields }
   })
   const knownIds = new Set([...toAddRaw, ...existingRaw].map((node) => node.id))
   const dropDanglingFields = (node: Node): Node => ({
@@ -86,24 +102,23 @@ export function loadNodes(
   const flatNodes = existing.concat(added)
   // Rebuild user-created groups from the saved layout, re-nesting the freshly
   // loaded contracts. Members live nested, so ids are gathered from the tree.
-  const allNodes = saved?.groups?.length
+  const groupedNodes = saved?.groups?.length
     ? reconstructGroups(flatNodes, saved.groups)
     : flatNodes
-  const allNodeIds = collectAllIds(allNodes)
-
-  const savedHiddenNodes = saved?.hiddenNodes ?? []
-  const shouldReuseCurrentHidden = state.projectId === projectId
-  const baseHiddenNodes = shouldReuseCurrentHidden ? state.hidden : []
-  const hiddenNodes = [
-    ...new Set([...savedHiddenNodes, ...baseHiddenNodes]),
-  ].filter((id) => allNodeIds.has(id))
-  const visibleNodes = allNodes.filter((node) => !hiddenNodes.includes(node.id))
+  const nodesWithSavedGroupFields = restoreSavedGroupFields(groupedNodes, saved)
+  const allNodes = hideItems(
+    nodesWithSavedGroupFields,
+    new Set(saved?.hiddenNodes ?? []),
+  )
+  const projection = getGraphProjection(allNodes)
+  const visibleNodes = allNodes.filter(
+    (node) => !projection.hiddenNodeIds.has(node.id),
+  )
   const hasSavedLayout =
     !!saved && allNodes.some((node) => saved.locations[node.id] !== undefined)
 
   const baseState = {
     ...state,
-    hidden: hiddenNodes,
     nodes: allNodes,
     projectId,
     loaded: true,
@@ -114,7 +129,10 @@ export function loadNodes(
   if (shouldAutoLayoutFromScratch) {
     const laidOut = {
       ...baseState,
-      ...layout(baseState, stackAutoLayout(visibleNodes)),
+      ...layout(
+        baseState,
+        stackAutoLayout(visibleNodes, true, projection.visibleEdges),
+      ),
     }
     return collapseAutoGroups(laidOut, autoGroups)
   }
@@ -143,7 +161,6 @@ export function loadNodes(
         })
 
   return updateNodePositions(state, {
-    hidden: hiddenNodes,
     nodes: nodesWithFallback,
     projectId,
     loaded: true,
@@ -156,23 +173,24 @@ function combinedHiddenFields(
 ): string[] {
   const recalledHiddenFields = saved?.hiddenFields?.[node.id] ?? []
   const defaultHiddenFields = node.hiddenFields
-  const fieldNames = node.fields.map((f) => f.name)
-  return reconcileHiddenFields(fieldNames, [
+  return reconcileNodeHiddenFields(node.fields, [
     ...recalledHiddenFields,
     ...defaultHiddenFields,
   ])
 }
 
-function collectAllIds(nodes: readonly Node[]): Set<string> {
-  const ids = new Set<string>()
-  const walk = (list: readonly Node[]) => {
-    for (const node of list) {
-      ids.add(node.id)
-      walk(node.subnodes)
-    }
-  }
-  walk(nodes)
-  return ids
+function restoreSavedGroupFields(
+  nodes: readonly Node[],
+  saved: StoredNodeLayout | undefined,
+): readonly Node[] {
+  if (saved?.hiddenFields === undefined) return nodes
+  return mapGraphItems(nodes, (node) => {
+    if (node.subnodes.length === 0) return node
+    const imported = saved.hiddenFields?.[node.id]
+    if (imported === undefined) return node
+    const hiddenFields = reconcileNodeHiddenFields(node.fields, imported)
+    return { ...node, hiddenFields }
+  })
 }
 
 function collapseAutoGroups(state: State, autoGroups: AutoGroup[]): State {
@@ -205,7 +223,6 @@ function toStoredGroup(
     members: [...group.memberIds],
   }
 }
-
 // Re-nest the flat contracts into their saved groups. Built bottom-up so a
 // nested group is ready before its parent; a group whose members all vanished
 // (e.g. the contract is gone from the API) is dropped.
@@ -272,7 +289,7 @@ function reconstructGroups(
 }
 
 function placeNewNodes(
-  nodes: Node[],
+  nodes: readonly Node[],
   missingIds: Set<string>,
   saved: StoredNodeLayout,
 ): NodeLocations {

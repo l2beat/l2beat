@@ -1,3 +1,98 @@
+Generated with discovered.json: 0xab98e11ecacb9233d7e359d18c404bde4c52f3bc
+
+# Diff at Thu, 23 Jul 2026 13:53:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@efd03446560a8d585747f124c71622cbfa33fca4 block: 1784623318
+- current timestamp: 1784814637
+
+## Description
+
+One Polygon Labs Engineering/Security Multisig signer was rotated and another removed, changing it from 2-of-8 to 2-of-7.
+
+## Watched changes
+
+```diff
+    contract Polygon Labs Engineering/Security Multisig (eth:0x9d851f8b8751c5FbC09b9E74E6e68E9950949052) [GnosisSafe] {
+    +++ description: None
+      values.$members.1:
+-        "eth:0xe0e8e6bBDef7bbcf8dF1F5Ac0ab9906BFe991d8B"
++        "eth:0xFB2a738AE435610354b132c4a4ee647558f663eb"
+      values.$members.6:
+-        "eth:0xED7cC82235A7757702475c8f77c7830c095FB5a2"
+      values.multisigThreshold:
+-        "2 of 8 (25%)"
++        "2 of 7 (29%)"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784623318 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0xED7cC82235A7757702475c8f77c7830c095FB5a2) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-polygon-cdk"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    reference  (eth:0xf02BE0dA37dB50BEFA5a525158aa94b50F81D4B2) {
+    +++ description: None
+      type:
+-        "EOA"
++        "Reference"
+      proxyType:
+-        "EOA"
+      targetType:
++        "EOA"
+      targetProject:
++        "shared-polygon-cdk"
+    }
+```
+
+Generated with discovered.json: 0x3764918832c27dab005c4d053470bd707a605edd
+
+# Diff at Tue, 21 Jul 2026 08:43:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f20722ea086c21a6e3dedded355fc3e24528daf0 block: 1784270104
+- current timestamp: 1784623318
+
+## Description
+
+4 multisig signers added.
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0xFA58659F64a393A6E1A548ABc70Ad2CfE1e8f9Cb) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x9f02595fBFD199C4cBC02878fc9B2b2E07b0840C"
+      values.$members.1:
++        "eth:0x1319279d6d54dB0883F7bAF822191c7184Db0c3d"
+      values.$members.2:
++        "eth:0x6Ab87a62E250A5EB09a53Fca832B9Bda480c3890"
+      values.$members.3:
++        "eth:0x573D7a729cfcF20B81D70732d625Ae31549B8b91"
+      values.multisigThreshold:
+-        "2 of 6 (33%)"
++        "2 of 10 (20%)"
+    }
+```
+
 Generated with discovered.json: 0x895a031da67f7bef95be8dd5a12869edd4b7c915
 
 # Diff at Fri, 17 Jul 2026 07:35:16 GMT:
@@ -7874,4 +7969,3 @@ initial katana predeposit disco.
     contract GnosisSafe (0xFEB4acf3df3cDEA7399794D0869ef76A6EfAff52)
     +++ description: None
 ```
-

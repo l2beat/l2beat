@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Adapter that lets the governance configured in the EmergencyProtectedTimelock indefinitely extend an existing pause or resume a supported sealable contract.",
+  "category": "gov",
+  "fields": {
+    "governance": {
+      "handler": {
+        "type": "call",
+        "address": "{{ EMERGENCY_PROTECTED_TIMELOCK }}",
+        "method": "function getGovernance() view returns (address)",
+        "args": []
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "reseal an already paused contract indefinitely or resume a paused contract through this adapter."
+        }
+      ]
+    }
+  }
+}

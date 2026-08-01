@@ -5,6 +5,7 @@ import { CostsSection } from './sections/costs/CostsSection'
 import { DaRiskSummarySection } from './sections/DaRiskSummarySection'
 import { DetailedDescriptionSection } from './sections/DetailedDescriptionSection'
 import { DataPostedSection } from './sections/data-posted/DataPostedSection'
+import { ExternalDependenciesSection } from './sections/ExternalDependenciesSection'
 import { GrissiniRiskAnalysisSection } from './sections/GrissiniRiskAnalysisSection'
 import { GroupSection } from './sections/GroupSection'
 import { InteropFlowsSection } from './sections/interop/InteropFlowsSection'
@@ -44,6 +45,7 @@ interface ProjectDetailsProps {
   nested?: boolean
   parentSection?: string
   items: ProjectDetailsSection[]
+  selectedUpdateId?: string
 }
 
 export function ProjectDetails(props: ProjectDetailsProps) {
@@ -115,6 +117,14 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           case 'DetailedDescriptionSection':
             return (
               <DetailedDescriptionSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'ExternalDependenciesSection':
+            return (
+              <ExternalDependenciesSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}
@@ -342,6 +352,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}
+                selectedUpdateId={props.selectedUpdateId}
               />
             )
           case 'PrivacyTvlSection':

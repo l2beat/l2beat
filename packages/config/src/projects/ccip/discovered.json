@@ -1,7 +1,7 @@
 {
   "name": "ccip",
   "timestamp": 1784020316,
-  "configHash": "0xe716058b6c64996f5fdcfc8d19ace3eb5685c8103503ec3f2146ee5120ab6365",
+  "configHash": "0x8a8c768c34effc5762831698f1dbd195cf28df76313c7799d70d1bc046f323b8",
   "entries": [
     {
       "name": "ArbitrumOffRamp_v1_6",

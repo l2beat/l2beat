@@ -103,6 +103,7 @@ export function createInteropRouter(
     '/interop/protocols/:slug',
     validateRoute({
       params: v.object({ slug: v.string() }),
+      query: v.object({ update: v.string().optional() }),
     }),
     async (req, res) => {
       const project = await ps.getProject({

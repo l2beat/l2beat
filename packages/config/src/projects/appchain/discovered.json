@@ -1,7 +1,7 @@
 {
   "name": "appchain",
   "timestamp": 1782746581,
-  "configHash": "0x32d6578be3175471356fc8b6cb4e2830bd55e80217b078499ab6110574e5d200",
+  "configHash": "0x1c9488b87955df250a483828c8961864df4540f733898ff3bfdbab2147d0d5c2",
   "entries": [
     {
       "address": "eth:0x00B96a8454dc757240e475B5e6e7DcAAf401930f",

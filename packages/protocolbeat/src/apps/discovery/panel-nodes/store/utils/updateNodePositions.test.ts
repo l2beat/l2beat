@@ -204,6 +204,30 @@ describe('updateNodePositions', () => {
       HEADER_HEIGHT + BOTTOM_PADDING + HIDDEN_FIELDS_FOOTER_HEIGHT,
     )
   })
+
+  it('recomputes nested node heights when hidden fields change', () => {
+    const member = makeNode('member', 0, 0, [['field', 'target']], ['field'])
+    const group = {
+      ...makeNode('group', 0, 0, []),
+      addressType: 'Group' as const,
+      subnodes: [member],
+    }
+    const state = buildState([group, makeNode('target', 400, 0, [])])
+    const currentGroup = state.nodes[0] as Node
+    const currentMember = currentGroup.subnodes[0] as Node
+    const nextGroup = {
+      ...currentGroup,
+      subnodes: [{ ...currentMember, hiddenFields: [] }],
+    }
+
+    const result = updateNodePositions(state, {
+      nodes: [nextGroup, state.nodes[1] as Node],
+    })
+
+    expect(result.nodes[0]?.subnodes[0]?.box.height).toEqual(
+      HEADER_HEIGHT + FIELD_HEIGHT + BOTTOM_PADDING,
+    )
+  })
 })
 
 function buildState(nodes: Node[]): State {
@@ -211,7 +235,6 @@ function buildState(nodes: Node[]): State {
     projectId: 'test',
     nodes,
     selected: [],
-    hidden: [],
     history: {
       past: [],
       future: [],

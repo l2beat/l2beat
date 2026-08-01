@@ -91,6 +91,10 @@ export const pageLoaders = {
     (await import('./privacy/summary/PrivacySummaryPage')).PrivacySummaryPage,
   PrivacyProjectPage: async () =>
     (await import('./privacy/project/PrivacyProjectPage')).PrivacyProjectPage,
+  DefiSummaryPage: async () =>
+    (await import('./defi/summary/DefiSummaryPage')).DefiSummaryPage,
+  DefiProjectPage: async () =>
+    (await import('./defi/project/DefiProjectPage')).DefiProjectPage,
   ZkCatalogPage: async () =>
     (await import('./zk-catalog/v2/ZkCatalogPage')).ZkCatalogPage,
   ZkCatalogProjectPage: async () =>

@@ -1,8 +1,7 @@
 {
   "name": "zkcandy",
   "timestamp": 1783332265,
-  "configHash": "0xdc1f191238ac73d5fe764039f19514e5cc120f26ee0783407f5c668ada263a87",
-  "sharedModules": ["shared-zk-stack"],
+  "configHash": "0xc88238a92daf55648320cb040d237e3d86c15d9ab620e653dd48c663ba2f6f5f",
   "entries": [
     {
       "name": "ValidatorTimelock",

@@ -4,6 +4,7 @@ import type { CostsSectionProps } from './costs/CostsSection'
 import type { DaRiskSummarySectionProps } from './DaRiskSummarySection'
 import type { DetailedDescriptionSectionProps } from './DetailedDescriptionSection'
 import type { DataPostedSectionProps } from './data-posted/DataPostedSection'
+import type { ExternalDependenciesSectionProps } from './ExternalDependenciesSection'
 import type { GrissiniRiskAnalysisSectionProps } from './GrissiniRiskAnalysisSection'
 import type { GroupSectionProps } from './GroupSection'
 import type { InteropFlowsSectionProps } from './interop/InteropFlowsSection'
@@ -45,6 +46,7 @@ type SectionId =
   | 'onchain-costs'
   | 'liveness'
   | 'detailed-description'
+  | 'external-dependencies'
   | 'milestones-and-incidents'
   | 'risk-summary'
   | 'risk-analysis'
@@ -115,6 +117,11 @@ interface ProjectDetailsActivitySection {
 interface ProjectDetailsDetailedDescriptionSection {
   type: 'DetailedDescriptionSection'
   props: ProjectDetailsProps<DetailedDescriptionSectionProps>
+}
+
+interface ProjectDetailsExternalDependenciesSection {
+  type: 'ExternalDependenciesSection'
+  props: ProjectDetailsProps<ExternalDependenciesSectionProps>
 }
 
 interface ProjectDetailsMilestonesAndIncidentsSection {
@@ -289,6 +296,7 @@ export type ProjectDetailsSection = {
   | ProjectDetailsCostsSection
   | ProjectDetailsLivenessSection
   | ProjectDetailsDetailedDescriptionSection
+  | ProjectDetailsExternalDependenciesSection
   | ProjectDetailsMilestonesAndIncidentsSection
   | ProjectDetailsRiskSummarySection
   | ProjectDetailsDaRiskSummarySection

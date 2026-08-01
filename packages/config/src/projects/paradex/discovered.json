@@ -1,13 +1,12 @@
 {
   "name": "paradex",
   "timestamp": 1784193913,
-  "configHash": "0xbb00111652aefbd1f8cb91f3ad989bd7152c23ee6c7637ab4588e2620a088aab",
+  "configHash": "0x89cf2f51b4e3cce1479952c79acdb70288bfe9a92ef09a08ce92fca2c027e8b7",
   "entries": [
     {
       "address": "eth:0x0405107a60391Eb51821be373ff978115Ee58488",
-      "type": "Reference",
-      "targetType": "EOA",
-      "targetProject": "shared-sharp-verifier"
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x09d1ad25B369A0C48Bdf4CaAb85aFd08a3f07044",
@@ -247,9 +246,8 @@
     },
     {
       "address": "eth:0x59232aC80E6d403b6381393e52f4665ECA328558",
-      "type": "Reference",
-      "targetType": "EOA",
-      "targetProject": "shared-sharp-verifier"
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x64F4396bb0669C72858Cc50C779b48EB25F45770",
@@ -1284,5 +1282,5 @@
     "starknet/StarknetERC20Bridge": "0x823d646295cd3c589fdd26a112b0adb063e5b33a7c751523d6ba995a98d795b6"
   },
   "usedBlockNumbers": { "ethereum": 25544316 },
-  "permissionsConfigHash": "0xc2a41ecb1e1e03c402f8dcd453f42488c4065b23e7b8144c858b92f15c9f710a"
+  "permissionsConfigHash": "0xc3f56e1fee5e2ceb848142e2a14f60abb6615010aa4b22f289617479d33107b3"
 }

@@ -1,0 +1,30 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Permissionless Community Staking Module onboarding contract. Any address can create a node operator using its fixed bond curve by depositing ETH, stETH or wstETH.",
+  "category": "core",
+  "fields": {
+    "accessControl": {
+      "handler": { "type": "accessControl", "includeEmptyRoles": true }
+    },
+    "defaultAdmins": {
+      "copy": "accessControl",
+      "edit": ["get", "DEFAULT_ADMIN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke asset-recovery and administrative roles."
+        }
+      ]
+    },
+    "assetRecoverers": {
+      "copy": "accessControl",
+      "edit": ["get", "RECOVERER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "recover ETH, ERC-20, ERC-721 and ERC-1155 assets accidentally held by this gate."
+        }
+      ]
+    }
+  }
+}
