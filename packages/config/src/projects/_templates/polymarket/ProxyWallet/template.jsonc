@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ProxyWallet",
+  "description": "Per-user proxy wallet implementation that is cloned by its factory. Each clone is initialized once, with the first caller (the factory) becoming its owner; only that owner can execute batches of arbitrary calls and delegatecalls through the wallet. The wallet can receive ERC1155 tokens and holds the user's balances.",
+  "category": "core"
+}

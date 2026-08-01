@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "CtfCollateralAdapter",
+  "description": "Adapter between the wrapped collateral token and the conditional-token ledger: anyone can split wrapped collateral into a pair of outcome positions, merge positions back, or redeem resolved positions. It unwraps into the underlying stablecoin, performs the operation on the ledger, and re-wraps the proceeds. Unwrapped funds are always sent to the contract itself and wrapped proceeds and position tokens to the caller, so it cannot redirect funds to a third party. It keeps a standing maximum allowance of the underlying towards the conditional-token ledger. Holders of the admin role can pause all operations (including redemptions) with no delay and add or remove other admins; the owner grants and revokes roles at will.",
+  "fields": {
+    "roleHolders": {
+      "handler": {
+        "type": "event",
+        "select": ["user", "roles"],
+        "add": { "event": "RolesUpdated" },
+        "dedupBy": "user"
+      },
+      "description": "Role bitmask per address, reconstructed from role-update events. Bit 0 (value 1) is the admin role that can pause splitting, merging and redeeming.",
+      "severity": "HIGH"
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can grant and revoke the admin role that can pause splitting, merging and redeeming through this contract with no delay."
+        }
+      ],
+      "severity": "HIGH"
+    }
+  }
+}

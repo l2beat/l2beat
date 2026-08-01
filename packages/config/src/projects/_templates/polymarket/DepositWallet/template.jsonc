@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "DepositWallet",
+  "description": "Per-user smart wallet implementation shared by all wallets deployed from the wallet factory. Call batches are relayed by the factory, but each batch must be authorised by the wallet owner's (or a time-limited session signer's) EIP-712 signature over a nonce and deadline, verified via ERC-1271; session signers cannot call the wallet itself or its beacon. Direct withdrawals of native, ERC20 and ERC1155 assets and approval revocations are owner-only and only possible while the wallet is paused and the factory's timelock delay has elapsed. Because the implementation is resolved through a shared beacon, the beacon owner can replace the implementation of every wallet at once; a wallet owner can opt out of beacon upgrades by pinning the current implementation (a paused-only operation).",
+  "ignoreMethods": ["factory", "id"]
+}

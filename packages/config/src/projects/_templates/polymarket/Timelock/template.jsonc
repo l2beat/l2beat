@@ -1,0 +1,31 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Timelock",
+  "description": "Timelock with enumerable roles (Solady-style). Proposer role holders queue transaction batches with a delay of at least {{ minDelayFormatted }}, executor role holders execute them once the delay has passed, and canceller role holders can cancel queued batches. Changing the minimum delay can only be done by the timelock calling itself, so it is itself subject to the delay. Role assignments are not delayed: an admin role holder can grant or revoke any role instantly, so an admin can immediately install new proposers, executors or cancellers without waiting.",
+  "fields": {
+    "minDelayFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "function minDelay() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "roleHolders": {
+      "handler": {
+        "type": "array",
+        "method": "function roleHolders(uint256 role) view returns (address[])",
+        "indices": [0, 1, 2, 3]
+      },
+      "severity": "HIGH",
+      "description": "Holders of each role: 0 admin, 1 proposer, 2 executor, 3 canceller."
+    },
+    "roleHolderCount": {
+      "handler": {
+        "type": "array",
+        "method": "function roleHolderCount(uint256 role) view returns (uint256)",
+        "indices": [0, 1, 2, 3]
+      }
+    }
+  }
+}

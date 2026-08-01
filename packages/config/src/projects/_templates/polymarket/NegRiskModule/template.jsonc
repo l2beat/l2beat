@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "NegRiskModule",
+  "description": "Upgradeable outcome module for multi-outcome (negative-risk) markets, registered on the outcome-token ledger. Its split, merge, redeem and event-level operations (horizontal split, horizontal merge, convert) are external with no access control and mint the collateral token or new outcome positions against positions or collateral pre-transferred to the module. Holders of the bridge role can mint positions without any collateral backing, burn positions held by the module, and additionally resolve the synthetic fallback outcome of an event. Holders of the resolver role (and bridge-role holders) can report results for any condition directly, bypassing the oracle-derived resolution path; the module enforces that reported YES results across an event's conditions sum to at most 100% and auto-derives the fallback outcome. Holders of the admin role manage the operator, creator, bridge and resolver roles and can pause individual resolvers or individual conditions. Holders of the creator role register legacy conditions for migration. The owner authorises implementation upgrades.",
+  "ignoreMethods": ["proxiableUUID"],
+  "fields": {
+    "roleHolders": {
+      "handler": {
+        "type": "event",
+        "select": ["user", "roles"],
+        "add": { "event": "RolesUpdated" },
+        "dedupBy": "user"
+      },
+      "severity": "HIGH",
+      "description": "Role bitmask per address, reconstructed from role-update events. Bit 0 (1) admin, bit 1 (2) operator, bit 2 (4) creator, bit 3 (8) bridge, bit 4 (16) resolver."
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "can upgrade the module implementation, and grant or revoke the admin role."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "POSITION_MANAGER": {
+      "description": "The outcome-token ledger this module mints and burns positions on."
+    },
+    "COLLATERAL_TOKEN": {
+      "description": "The collateral token minted and burned by this module on split, merge and redemption."
+    }
+  }
+}

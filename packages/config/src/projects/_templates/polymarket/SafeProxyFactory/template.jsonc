@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SafeProxyFactory",
+  "proxyType": "immutable",
+  "description": "Deterministic factory for single-owner smart-contract wallets. Anyone can submit an EIP-712 signature to deploy a wallet proxy at an address derived solely from the signer's address; the new wallet is set up with the signer as its only owner (threshold 1) and a fixed fallback handler, optionally paying a deployment fee from the wallet. The wallet singleton and fallback handler are set in the constructor and there are no functions to change them. The settlement exchanges use the same address derivation to validate signatures made by wallet owners.",
+  "category": "core",
+  "fields": {
+    "masterCopy": {
+      "description": "Wallet singleton that every deployed proxy delegates to. Set in the constructor, no setter exists."
+    },
+    "fallbackHandler": {
+      "description": "Fallback handler configured on every deployed wallet. Set in the constructor, no setter exists."
+    }
+  }
+}

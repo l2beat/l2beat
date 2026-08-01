@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ConditionalTokens",
+  "description": "Immutable, adminless ERC1155 ledger of conditional outcome tokens. Anyone can prepare a condition naming an oracle, split collateral into a complete set of outcome tokens, merge them back, or redeem winning tokens once the condition is resolved. Only the oracle named at preparation can report the payout vector for its own condition, and payouts are write-once: once set, they can never be changed. The contract has no admin, no upgradeability, and no pause.",
+  "category": "core"
+}

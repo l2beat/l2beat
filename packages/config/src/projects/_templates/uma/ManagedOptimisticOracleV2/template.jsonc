@@ -1,0 +1,100 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ManagedOptimisticOracleV2",
+  "category": "shared",
+  "description": "Managed (permissioned) variant of the UMA Optimistic Oracle V2 that acts as an escalation layer before UMA's DVM. Price requests are restricted to a requester whitelist and proposals to a proposer whitelist. A proposal can be disputed during its liveness window (default {{ defaultLivenessFormatted }}, with a minimum dispute window of {{ minimumDisputeWindowFormatted }}), and settlement is restricted to the resolver role. Because settlement is permissioned, a proposal that outlives its liveness window does not become final on its own and can still be disputed until a resolver settles it. Roles (OpenZeppelin AccessControl): the default admin can upgrade the contract and manage the config admin role; the config admin sets the requester and proposer whitelists, the default liveness, the minimum dispute window and the allowed bond ranges, and manages request managers; request managers set per-request proposer whitelists, bonds and liveness; the self-governing resolver admin manages resolvers.",
+  "ignoreMethods": ["proxiableUUID", "getCurrentTime"],
+  "ignoreRelatives": ["finder"],
+  "fields": {
+    "defaultLivenessFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "function defaultLiveness() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "minimumDisputeWindowFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "function minimumDisputeWindow() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      },
+      "severity": "HIGH"
+    },
+    "configAdmins": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "CONFIG_ADMIN_ROLE"
+      },
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the requester and proposer whitelists, the default liveness, the minimum dispute window and the allowed bond ranges, and add or remove request managers."
+        }
+      ]
+    },
+    "requestManagers": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "REQUEST_MANAGER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set per-request proposer whitelists, bond amounts (within the allowed range) and liveness values."
+        }
+      ]
+    },
+    "resolvers": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "RESOLVER_ROLE"
+      },
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "settle price requests. Settlement is restricted to this role, so no request becomes final without a resolver, and disputes stay possible until a resolver settles."
+        }
+      ]
+    },
+    "resolverAdmins": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "RESOLVER_ADMIN_ROLE"
+      },
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add and remove resolvers and resolver admins."
+        }
+      ]
+    },
+    "defaultAdmin": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "can upgrade the oracle implementation and manage the config admin role."
+        }
+      ]
+    },
+    "requesterWhitelist": {
+      "description": "Whitelist of addresses allowed to make price requests.",
+      "severity": "HIGH"
+    },
+    "defaultProposerWhitelist": {
+      "description": "Default whitelist of addresses allowed to propose answers to price requests.",
+      "severity": "HIGH"
+    }
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "CTFExchange",
+  "description": "Immutable order-settlement exchange for conditional outcome tokens. Trades are EIP-712 signed limit orders that are matched off-chain and settled on-chain exclusively by holders of the operator role, who choose which orders to match and what fee to charge on each fill. The fee is not part of the signed order: it is supplied by the operator at settlement, added on top of the amount a buyer signed for and deducted from a seller's proceeds. It is bounded only by a maximum rate the admins set, currently {{ getMaxFeeRate }} bps; a maximum of zero disables the check entirely rather than forbidding fees, so at that setting the contracts enforce no upper bound on the fee. Operators can also preapprove an order, which itself requires a valid maker signature, so that later fills of that order may omit the signature bytes; no fill is possible without a signature the maker produced. Admins add and remove admins and operators, pause and unpause all trading, and set the fee receiver and the maximum fee rate. Any user can pause trading of their own orders, effective {{ userPauseBlockInterval }} blocks after the request. The authorization mixin grants the admin and operator roles to the address supplied at deployment without emitting an event, so that admin never appears in the added/removed sets; it is instead recovered from the granter recorded on later authorization events.",
+  "category": "core",
+  "fields": {
+    "admins": {
+      "handler": {
+        "type": "event",
+        "select": "member",
+        "add": {
+          "event": "event NewAdmin(address indexed member, address indexed admin)"
+        },
+        "remove": {
+          "event": "event RemovedAdmin(address indexed member, address indexed admin)"
+        }
+      },
+      "description": "Admins added after deployment, reconstructed from authorization events. The admin granted in the constructor emits no event and is therefore not listed here; see adminsObservedActing.",
+      "severity": "HIGH"
+    },
+    "operators": {
+      "handler": {
+        "type": "event",
+        "select": "member",
+        "add": {
+          "event": "event NewOperator(address indexed member, address indexed admin)"
+        },
+        "remove": {
+          "event": "event RemovedOperator(address indexed member, address indexed admin)"
+        },
+        "ignoreRelative": true
+      },
+      "permissions": [
+        {
+          "type": "act",
+          "description": "can match and settle signed orders, choose the fee charged on each fill up to the maximum fee rate, and preapprove or invalidate orders on behalf of makers. Preapproval itself requires a valid maker signature; it only lets later fills of that order omit the signature bytes, so no order can settle that the maker never signed."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "getMaxFeeRate": {
+      "description": "Maximum fee rate in basis points that operators may charge on the proceeds of a fill.",
+      "handler": {
+        "type": "call",
+        "method": "getMaxFeeRate",
+        "args": []
+      }
+    },
+    "getFeeReceiver": {
+      "description": "Address receiving all fees charged on order fills.",
+      "handler": {
+        "type": "call",
+        "method": "getFeeReceiver",
+        "args": []
+      },
+      "severity": "HIGH"
+    },
+    "paused": {
+      "description": "Whether all trading on the exchange is currently paused by an admin.",
+      "handler": {
+        "type": "call",
+        "method": "paused",
+        "args": []
+      },
+      "severity": "HIGH"
+    },
+    "userPauseBlockInterval": {
+      "description": "Number of blocks after which a user's self-requested trading pause takes effect.",
+      "handler": {
+        "type": "call",
+        "method": "userPauseBlockInterval",
+        "args": []
+      }
+    },
+    "adminsEverObserved": {
+      "handler": {
+        "type": "event",
+        "select": "admin",
+        "add": [
+          {
+            "event": "event NewOperator(address indexed member, address indexed admin)"
+          },
+          {
+            "event": "event RemovedOperator(address indexed member, address indexed admin)"
+          },
+          {
+            "event": "event NewAdmin(address indexed member, address indexed admin)"
+          },
+          {
+            "event": "event RemovedAdmin(address indexed member, address indexed admin)"
+          }
+        ]
+      },
+      "description": "Every address ever observed exercising an admin power, taken from the granter recorded in each authorization event. This is how the constructor-granted admin becomes visible at all: the constructor emits no event, so such an admin never appears in the added/removed sets above. The list is historical and not a live permission set - an entry may since have been removed, so current status has to be confirmed with isAdmin().",
+      "severity": "HIGH"
+    }
+  }
+}

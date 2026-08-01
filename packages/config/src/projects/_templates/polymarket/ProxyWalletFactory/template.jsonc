@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ProxyWalletFactory",
+  "ignoreRelatives": ["getHubAddr", "getGSNModule"],
+  "description": "Deterministic per-user proxy-wallet factory. On the first call routed through it, it deploys a minimal-proxy wallet at an address derived from the user's address and then forwards batched calls to that wallet; the settlement exchanges use the same derivation to validate signatures made by wallet owners. Calls can arrive directly or through a gas-relay network, in which case the effective sender is recovered from the relayed data. The wallet implementation being cloned is fixed at deployment; the factory's owner can only replace the gas-relay module, which is executed via delegatecall in this contract's context when processing relayed calls.",
+  "category": "core",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can replace the gas-relay module, whose code is executed via delegatecall in this contract's context when processing relayed calls, and transfer or renounce ownership."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "getImplementation": {
+      "description": "Proxy-wallet implementation cloned for every user. It is deployed by the constructor and cannot be changed."
+    }
+  }
+}

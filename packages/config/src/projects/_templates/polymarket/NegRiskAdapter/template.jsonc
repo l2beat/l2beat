@@ -1,0 +1,57 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "NegRiskAdapter",
+  "description": "Immutable adapter that composes binary conditions on the underlying conditional-token ledger into multi-outcome ('negative risk') markets, acting as the on-ledger oracle for the conditions it creates. Splitting, merging, redeeming, and converting positions is permissionless; converting a set of no-positions into the complementary yes-positions plus collateral can charge a per-market fee that accrues to a fixed vault address. Each market's outcomes are reported exclusively by the oracle address that prepared that market. Admins can relay outcome-token transfers on behalf of a user, but only if the user has independently approved that admin on the token ledger.",
+  "category": "core",
+  "fields": {
+    "admins": {
+      "handler": {
+        "type": "event",
+        "ignoreRelative": true,
+        "select": "member",
+        "add": {
+          "event": "event NewAdmin(address indexed admin, address indexed member)"
+        },
+        "remove": {
+          "event": "event RemovedAdmin(address indexed admin, address indexed member)"
+        }
+      },
+      "permissions": [
+        {
+          "type": "act",
+          "description": "can transfer outcome tokens on behalf of a user through this adapter, but only if the user has independently approved the admin as an operator on the token ledger, and can add or remove admins."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "vault": {
+      "description": "Address receiving the per-market fees charged on position conversions.",
+      "handler": {
+        "type": "call",
+        "method": "vault",
+        "args": []
+      },
+      "severity": "HIGH"
+    },
+    "wcol": {
+      "description": "Wrapped-collateral token deployed and owned by this adapter, used as the collateral asset on the underlying conditional-token ledger."
+    },
+    "adminsEverObserved": {
+      "handler": {
+        "type": "event",
+        "ignoreRelative": true,
+        "select": "admin",
+        "add": [
+          {
+            "event": "event NewAdmin(address indexed admin, address indexed member)"
+          },
+          {
+            "event": "event RemovedAdmin(address indexed admin, address indexed member)"
+          }
+        ]
+      },
+      "description": "Every address ever observed exercising an admin power, taken from the granter recorded in each authorization event. The authorization mixin grants admin in the constructor without emitting an event, so such an admin is invisible in the added/removed sets and only shows up here. The list is historical and not a live permission set - confirm current status with isAdmin().",
+      "severity": "HIGH"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PermissionedRamp",
+  "description": "Wrap/unwrap entrypoint for the collateral token that additionally requires an EIP-712 signature from a holder of the witness role, checked against a per-sender nonce and a deadline. Wrapping deposits the underlying stablecoin and mints the collateral token to a chosen recipient; unwrapping burns collateral tokens and releases the underlying from the vault. The contract holds no balance. Holders of the admin role can pause either direction per asset with no delay and add or remove admins and witnesses; the owner grants and revokes roles at will.",
+  "fields": {
+    "roleHolders": {
+      "handler": {
+        "type": "event",
+        "select": ["user", "roles"],
+        "add": { "event": "RolesUpdated" },
+        "dedupBy": "user"
+      },
+      "description": "Role bitmask per address, reconstructed from role-update events. Bit 0 (value 1) is the admin role that can pause operations and manage witnesses, bit 1 (value 2) the witness role whose signature authorises each wrap and unwrap.",
+      "severity": "HIGH"
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can grant and revoke the admin and witness roles; admins can pause wrapping and unwrapping through this contract with no delay, witnesses co-sign every operation."
+        }
+      ],
+      "severity": "HIGH"
+    }
+  }
+}

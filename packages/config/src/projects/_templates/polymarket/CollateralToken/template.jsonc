@@ -1,0 +1,36 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "CollateralToken",
+  "description": "Upgradeable ERC20 ({{ symbol }}) that wraps a stablecoin one-for-one and serves as the collateral asset of the exchange. Wrapping moves the underlying into a separate vault contract and mints this token; unwrapping burns it and pulls the underlying back out of that vault. Both directions are restricted to holders of the wrapper role, which are the ramp and adapter contracts. Holders of the minter role can additionally mint and burn without any underlying backing. The owner grants and revokes both roles and authorises implementation upgrades; the accepted underlying assets and the vault address are fixed at deployment and can only be changed by upgrading.",
+  "ignoreMethods": ["proxiableUUID"],
+  "fields": {
+    "roleHolders": {
+      "handler": {
+        "type": "event",
+        "select": ["user", "roles"],
+        "add": { "event": "RolesUpdated" },
+        "dedupBy": "user"
+      },
+      "description": "Role bitmask per address, reconstructed from role-update events. Bit 0 (value 1) is the minter role, bit 1 (value 2) the wrapper role.",
+      "severity": "HIGH"
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "can upgrade the token implementation, and grant or revoke the minter and wrapper roles."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "VAULT": {
+      "description": "Contract holding the underlying collateral that backs the circulating supply. It grants this token an allowance so that unwrapping can pull the underlying out.",
+      "severity": "HIGH"
+    },
+    "totalSupply": {
+      "description": "Circulating supply of the wrapped collateral token.",
+      "ignoreInWatchMode": true
+    },
+    "symbol": { "description": "Ticker of the wrapped collateral token." }
+  }
+}

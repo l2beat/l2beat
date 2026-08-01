@@ -1,0 +1,59 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "UmaCtfAdapter",
+  "description": "Resolution adapter that registers market questions with an UMA optimistic oracle and reports the settled answer to the outcome-token ledger. Anyone can initialize a question, which prepares the condition and requests a price from the oracle, and anyone can resolve it once the oracle has settled a price. A first dispute on the oracle automatically resets the question with a fresh price request; a second dispute escalates to UMA's DVM. Admins can pause, unpause and reset any question, and can flag a question -- which pauses it -- and, once {{ safetyPeriodFormatted }} have passed since flagging, resolve it manually with an outcome of their choosing, bypassing the oracle. Flagging can be reverted within the safety period.",
+  "ignoreRelatives": ["collateralWhitelist"],
+  "fields": {
+    "safetyPeriodFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "function SAFETY_PERIOD() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "admins": {
+      "handler": {
+        "type": "event",
+        "select": "member",
+        "add": {
+          "event": "event NewAdmin(address indexed admin, address indexed member)"
+        },
+        "remove": {
+          "event": "event RemovedAdmin(address indexed admin, address indexed member)"
+        }
+      },
+      "severity": "HIGH",
+      "description": "Can pause, unpause, reset and flag any question, and manually resolve a flagged question with an arbitrary outcome after the safety period.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause, unpause, reset and flag questions, and resolve a flagged question manually with an outcome of their choosing after the {{ safetyPeriodFormatted }} safety period."
+        }
+      ]
+    },
+    "ctf": {
+      "description": "Outcome-token ledger that this adapter reports payouts to."
+    },
+    "optimisticOracle": {
+      "description": "UMA optimistic oracle that price requests for questions are sent to."
+    },
+    "adminsEverObserved": {
+      "handler": {
+        "type": "event",
+        "ignoreRelative": true,
+        "select": "admin",
+        "add": [
+          {
+            "event": "event NewAdmin(address indexed admin, address indexed member)"
+          },
+          {
+            "event": "event RemovedAdmin(address indexed admin, address indexed member)"
+          }
+        ]
+      },
+      "description": "Every address ever observed exercising an admin power, taken from the granter recorded in each authorization event. The authorization mixin grants admin in the constructor without emitting an event, so such an admin is invisible in the added/removed sets and only shows up here. The list is historical and not a live permission set - confirm current status with isAdmin().",
+      "severity": "HIGH"
+    }
+  }
+}

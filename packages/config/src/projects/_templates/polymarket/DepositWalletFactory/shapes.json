@@ -1,0 +1,8 @@
+{
+  "DepositWalletFactory": {
+    "hash": "0xea2891010928691dab14eb51443ee7f3beb0c59344048daa886baae374975a52",
+    "address": "matic:0x00000000000Fb5C9ADea0298D729A0CB3823Cc07",
+    "chain": "polygonpos",
+    "blockNumber": 91023912
+  }
+}

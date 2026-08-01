@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "CombinatorialModule",
+  "description": "Upgradeable outcome module for combinatorial positions built as conjunctions of position legs from other outcome modules. It stores no outcomes of its own: payouts are derived on the fly by multiplying the resolved payouts of the referenced legs, with the NO side paying the complement. Preparing a combinatorial condition and all split, merge, refinement, extraction, wrap and redemption operations are external with no access control and mint the collateral token or outcome positions against positions or collateral pre-transferred to the module. Because it must mint and burn the position legs of other modules, it operates with cross-module authorisation on the outcome-token ledger and mint rights on the collateral token. Holders of the bridge role can mint positions without any collateral backing and burn positions held by the module. Holders of the admin role manage the operator, creator and bridge roles. The owner authorises implementation upgrades.",
+  "ignoreMethods": ["proxiableUUID"],
+  "fields": {
+    "roleHolders": {
+      "handler": {
+        "type": "event",
+        "select": ["user", "roles"],
+        "add": { "event": "RolesUpdated" },
+        "dedupBy": "user"
+      },
+      "severity": "HIGH",
+      "description": "Role bitmask per address, reconstructed from role-update events. Bit 0 (1) admin, bit 1 (2) operator, bit 2 (4) creator, bit 3 (8) bridge, bit 4 (16) resolver."
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "can upgrade the module implementation, and grant or revoke the admin role."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "POSITION_MANAGER": {
+      "description": "The outcome-token ledger this module mints and burns positions on."
+    },
+    "COLLATERAL_TOKEN": {
+      "description": "The collateral token minted and burned by this module on split, merge and redemption."
+    }
+  }
+}

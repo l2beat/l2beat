@@ -1,0 +1,51 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "DepositWalletFactory",
+  "description": "Upgradeable CREATE2 factory deploying per-user smart wallets as beacon proxies at deterministic addresses, and relaying signed call batches to them. Holders of the operator role deploy wallets and forward batch executions (each batch is still authorised by the individual wallet owner's signature). Holders of the legacy-deployer role deploy wallets in the older non-beacon proxy shape at the addresses the previous factory version would have assigned. Holders of the admin role manage the operator and legacy-deployer roles and set the user-protection timelock delay of {{ timelockDelay }} (at most {{ maxTimelockDelayFormatted }}) that wallet owners must wait after pausing their wallet before withdrawals become possible. The owner (not the role holders) manages admins, sets and authorises wallet implementations for legacy upgrades, and authorises upgrades of the factory itself.",
+  "ignoreMethods": ["proxiableUUID"],
+  "fields": {
+    "roleHolders": {
+      "handler": {
+        "type": "event",
+        "ignoreRelative": true,
+        "select": ["user", "roles"],
+        "add": {
+          "event": "RolesUpdated"
+        },
+        "dedupBy": "user"
+      },
+      "severity": "HIGH",
+      "description": "Role bitmask per address, reconstructed from role-update events. Bit 0 (1) admin, bit 1 (2) operator, bit 2 (4) legacy deployer."
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "can upgrade the factory implementation, grant or revoke the admin role, and authorise implementations for legacy wallet upgrades."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "timelockDelay": {
+      "handler": {
+        "type": "call",
+        "method": "function timelockDelay() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"],
+      "description": "Delay that must elapse after a wallet owner pauses their wallet before paused-only operations such as withdrawals can be executed."
+    },
+    "BEACON": {
+      "description": "The beacon that resolves the implementation for all wallets deployed by this factory.",
+      "severity": "HIGH"
+    },
+    "maxTimelockDelayFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "function MAX_TIMELOCK_DELAY() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    }
+  }
+}

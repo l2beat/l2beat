@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "NegRiskCtfCollateralAdapter",
+  "description": "Adapter between the wrapped collateral token and the conditional-token ledger for multi-outcome (negative-risk) markets, routing operations through a dedicated market adapter: anyone can split wrapped collateral into outcome positions, merge positions back, redeem resolved positions, or convert positions between outcomes (subject to the fee configured in the market adapter). It unwraps into the underlying stablecoin, performs the operation, and re-wraps the proceeds. Unwrapped funds are always sent to the contract itself and wrapped proceeds and position tokens to the caller, so it cannot redirect funds to a third party. It keeps standing maximum allowances of the underlying towards both the conditional-token ledger and the market adapter. Holders of the admin role can pause all operations (including redemptions) with no delay and add or remove other admins; the owner grants and revokes roles at will.",
+  "fields": {
+    "roleHolders": {
+      "handler": {
+        "type": "event",
+        "select": ["user", "roles"],
+        "add": { "event": "RolesUpdated" },
+        "dedupBy": "user"
+      },
+      "description": "Role bitmask per address, reconstructed from role-update events. Bit 0 (value 1) is the admin role that can pause splitting, merging, redeeming and converting.",
+      "severity": "HIGH"
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can grant and revoke the admin role that can pause splitting, merging, redeeming and converting through this contract with no delay."
+        }
+      ],
+      "severity": "HIGH"
+    }
+  }
+}
