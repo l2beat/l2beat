@@ -1,4 +1,32 @@
-Generated with discovered.json: 0xf704c3228f6a40b431bfe9843954067403a4382d
+Generated with discovered.json: 0x3c56942d40c1842b4ebc5f015f6e9f989140d459
+
+# Diff at Sat, 01 Aug 2026 16:37:52 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@44e2212a46e585fd2ddb21d6755695cf74e1f876 block: 1785249432
+- current timestamp: 1785249432
+
+## Description
+
+Deployer address, timestamp and block resolved for Governance.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784882184 (main branch discovery), not current.
+
+```diff
+    contract Governance (robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7) [lighter/Governance] {
+    +++ description: Manages the list of validators and the network governor.
+      deployerAddress:
++        "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213"
+      sinceTimestamp:
++        1782477747
+      sinceBlock:
++        229410
+    }
+```
 
 # Diff at Tue, 28 Jul 2026 14:38:19 GMT:
 

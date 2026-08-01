@@ -258,6 +258,9 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages the list of validators and the network governor.",
+      "deployerAddress": "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213",
+      "sinceTimestamp": 1782477747,
+      "sinceBlock": 229410,
       "values": {
         "$admin": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
         "$implementation": "robinhood:0x3468Dcab5a2D81Af207B3e301DFA889321989a61",
