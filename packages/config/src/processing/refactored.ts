@@ -42,6 +42,7 @@ import { meson } from '../projects/meson/meson'
 import { monad } from '../projects/monad/monad'
 import { near } from '../projects/near/near-da'
 import { openvmprover } from '../projects/openvmprover/openvmprover'
+import { polymarket } from '../projects/polymarket/polymarket'
 import { privacyPools } from '../projects/privacy-pools/privacy-pools'
 import { railgun } from '../projects/railgun/railgun'
 import { relay } from '../projects/relay/relay'
@@ -132,6 +133,7 @@ export const refactored: BaseProject[] = [
   liquityv2,
   chainlink,
   uniswapv3,
+  polymarket,
   // privacy
   privacyPools,
   railgun,
