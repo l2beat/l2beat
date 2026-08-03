@@ -1076,6 +1076,12 @@ export type PrivacyFlowExtractorConfig =
       }
     }
   | {
+      extractor: 'umbraAmount'
+      params: {
+        tokenAddress: EthereumAddress
+      }
+    }
+  | {
       extractor: 'zamaWrap'
       params: Record<string, never>
     }
