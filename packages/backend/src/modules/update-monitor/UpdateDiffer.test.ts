@@ -164,6 +164,32 @@ describe(UpdateDiffer.name, () => {
       expect(inserted[0]?.address).toEqual(ADDRESS_A)
     })
 
+    // forknet references 4 of shared-polygon-cdk's 34 entries, so the other 30
+    // must not be able to raise an update for it.
+    it('ignores changes to entries it does not reference', async () => {
+      const unreferenced = mockContract(NAME_B, ADDRESS_B)
+      const updateDiffer = referencingUpdateDiffer({
+        onDisk: {
+          [PROJECT_A]: discoveryOf(PROJECT_A, [reference(PROVIDER, ADDRESS_A)]),
+          [PROVIDER]: discoveryOf(PROVIDER, [
+            mockContract(NAME_A, ADDRESS_A),
+            unreferenced,
+          ]),
+        },
+        latest: {
+          [PROJECT_A]: discoveryOf(PROJECT_A, [reference(PROVIDER, ADDRESS_A)]),
+          [PROVIDER]: discoveryOf(PROVIDER, [
+            mockContract(NAME_A, ADDRESS_A),
+            { ...unreferenced, values: { $implementation: ADDRESS_C } },
+          ]),
+        },
+      })
+
+      await updateDiffer.runForProject(PROJECT_A, UnixTime.now())
+
+      expect(updateDiffer.inserted).toEqual([])
+    })
+
     // The referenced project may not have been discovered yet in this shuffled
     // run, which must stay silent rather than look like a mass deletion.
     it('reports nothing when a referenced project has not run yet', async () => {
