@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database, UpdateDiffRecord } from '@l2beat/database'
-import type { UpdateDiffRepository } from '@l2beat/database/dist/repositories/UpdateDiffRepository'
 import type {
   ConfigReader,
   DiscoveryDiff,
@@ -16,7 +15,7 @@ import { UpdateDiffer } from './UpdateDiffer'
 describe(UpdateDiffer.name, () => {
   describe(UpdateDiffer.prototype.runForProject.name, () => {
     it('should insert update diffs', async () => {
-      const updateDiffRepository = mockObject<UpdateDiffRepository>({
+      const updateDiffRepository = mockObject<Database['updateDiff']>({
         insertMany: async () => 0,
         deleteByProjectAndChain: async () => {},
       })
@@ -73,7 +72,7 @@ describe(UpdateDiffer.name, () => {
     })
 
     it('should not insert update diffs if there are no changes', async () => {
-      const updateDiffRepository = mockObject<UpdateDiffRepository>({
+      const updateDiffRepository = mockObject<Database['updateDiff']>({
         insertMany: async () => 0,
         deleteByProjectAndChain: async () => {},
       })
@@ -101,7 +100,7 @@ describe(UpdateDiffer.name, () => {
     })
 
     it('should skip if on disk discovery is newer', async () => {
-      const updateDiffRepository = mockObject<UpdateDiffRepository>({
+      const updateDiffRepository = mockObject<Database['updateDiff']>({
         insertMany: async () => 0,
         deleteByProjectAndChain: async () => {},
       })
@@ -137,8 +136,8 @@ describe(UpdateDiffer.name, () => {
       expect(updateDiffRepository.insertMany).not.toHaveBeenCalled()
     })
 
-    // A consumer only holds an immutable Reference stub, so without folding the
-    // referenced project in, an upgrade there produces no diff for the consumer.
+    // A consumer only holds a stub, so unless it resolves to the entry it names,
+    // an upgrade in the owning project produces no diff for the consumer.
     it('reports a change inside a referenced project as its own', async () => {
       const changed = {
         ...mockContract(NAME_A, ADDRESS_A),
@@ -392,7 +391,7 @@ function referencingUpdateDiffer(discoveries: {
     }),
     mockObject<Database>({
       transaction: async (fun) => await fun(),
-      updateDiff: mockObject<UpdateDiffRepository>({
+      updateDiff: mockObject<Database['updateDiff']>({
         insertMany: async (records) => {
           inserted.push(...records)
           return records.length
