@@ -57,7 +57,7 @@ export async function getHomeData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Home - L2BEAT',
+        title: 'L2BEAT',
         description:
           'Bird-eye view of the Ethereum scaling ecosystem: total value secured, activity, interoperability, recent additions and what L2BEAT is currently tracking.',
         url: req.originalUrl,
