@@ -6,10 +6,14 @@ import {
   type StarknetCallParameters,
   StarknetCallResponse,
   StarknetErrorResponse,
+  type StarknetEvent,
   StarknetGetBlockResponse,
   StarknetGetBlockWithTxsResponse,
+  StarknetGetEventsResponse,
   type StarknetTransaction,
 } from './types'
+
+export type { StarknetEvent } from './types'
 
 interface Dependencies extends ClientCoreDependencies {
   url: string
@@ -73,6 +77,17 @@ export class StarknetClient extends ClientCore implements BlockClient {
     }
   }
 
+  async getBlockTimestamps(
+    blockNumbers: number[],
+  ): Promise<Map<number, number>> {
+    const blocks = await Promise.all(
+      blockNumbers.map((blockNumber) =>
+        this.getBlockWithTransactions(blockNumber),
+      ),
+    )
+    return new Map(blocks.map((block) => [block.number, block.timestamp]))
+  }
+
   async call(
     callParams: StarknetCallParameters,
     blockNumber: number | 'latest',
@@ -90,6 +105,41 @@ export class StarknetClient extends ClientCore implements BlockClient {
     }
 
     return callResponse.data.result
+  }
+
+  async getEvents(
+    fromBlock: number,
+    toBlock: number,
+    address: string,
+    eventSelectors: string[],
+  ): Promise<StarknetEvent[]> {
+    const events: StarknetEvent[] = []
+    let continuationToken: string | undefined
+
+    do {
+      const response = await this.query('starknet_getEvents', [
+        {
+          from_block: { block_number: fromBlock },
+          to_block: { block_number: toBlock },
+          address,
+          keys: [eventSelectors],
+          chunk_size: 1_000,
+          ...(continuationToken
+            ? { continuation_token: continuationToken }
+            : {}),
+        },
+      ])
+      const parsed = StarknetGetEventsResponse.safeParse(response)
+
+      if (!parsed.success) {
+        throw new Error('Get events: Error during parsing')
+      }
+
+      events.push(...parsed.data.result.events)
+      continuationToken = parsed.data.result.continuation_token ?? undefined
+    } while (continuationToken)
+
+    return events
   }
 
   async query(method: string, params: unknown) {

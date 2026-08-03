@@ -12,6 +12,7 @@ export interface PrivacyProjectConfig {
 export interface PrivacyConfig {
   projects: PrivacyProjectConfig[]
   flowConfigs: PrivacyFlowIndexerConfig[]
+  starknetFlowConfigs: StarknetPrivacyFlowIndexerConfig[]
   priceConfigs: PrivacyPriceIndexerConfig[]
   blockTimestampConfigs: PrivacyBlockTimestampConfig[]
   chains: string[]
@@ -28,7 +29,35 @@ export type PrivacyFlowIndexerConfig = {
   sinceTimestamp: UnixTime
   priceId: string
   decimals: number
-} & PrivacyFlowExtractorConfig
+} & Exclude<
+  PrivacyFlowExtractorConfig,
+  { extractor: 'strk20Deposit' | 'strk20Withdrawal' }
+>
+
+export type StarknetPrivacyFlowIndexerConfig = {
+  id: string
+  projectId: string
+  bucketId: string
+  direction: 'deposit' | 'withdrawal'
+  chain: string
+  address: string
+  event: string
+  sinceTimestamp: UnixTime
+  priceId: string
+  decimals: number
+} & Extract<
+  PrivacyFlowExtractorConfig,
+  { extractor: 'strk20Deposit' | 'strk20Withdrawal' }
+>
+
+export interface StarknetPrivacyEvent {
+  address: string
+  blockNumber: number
+  transactionHash: string
+  eventIndex: number
+  keys: string[]
+  data: string[]
+}
 
 export interface PrivacyBlockTimestampConfig {
   id: string

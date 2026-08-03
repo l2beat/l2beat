@@ -988,7 +988,7 @@ export interface PrivacyAttribute {
 
 export interface ProjectPrivacyToken {
   token: {
-    address: EthereumAddress
+    address: string
     iconUrl: string | undefined
     symbol: string
     decimals: number
@@ -1002,12 +1002,21 @@ export interface ProjectPrivacyBucket {
   id: string
   type: 'pool' | 'denomination'
   label: string
-  address: ChainSpecificAddress
+  address: PrivacyBucketAddress
   sinceTimestamp: UnixTime
   denomination?: string
   deposit: PrivacyFlowSource
   withdrawal: PrivacyFlowSource
 }
+
+/**
+ * Privacy pools can live on non-EVM chains. Keep EVM addresses in their
+ * existing ERC-3770 representation and use an explicit chain/address pair
+ * where an ERC-3770 address is not applicable.
+ */
+export type PrivacyBucketAddress =
+  | ChainSpecificAddress
+  | { chain: string; address: string }
 
 export type PrivacyFlowSource = {
   event: string
@@ -1044,6 +1053,18 @@ export type PrivacyFlowExtractorConfig =
       extractor: 'zamaUnwrap'
       params: {
         rate: string
+      }
+    }
+  | {
+      extractor: 'strk20Deposit'
+      params: {
+        tokenAddress: string
+      }
+    }
+  | {
+      extractor: 'strk20Withdrawal'
+      params: {
+        tokenAddress: string
       }
     }
 

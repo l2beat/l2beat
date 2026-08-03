@@ -3,12 +3,22 @@ import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 
+const STRK20_POOL = {
+  chain: 'starknet',
+  address: '0x040337b1af3c663e86e333bab5a4b28da8d4652a15a69beee2b677776ffe812a',
+}
+const STRK20_DEPOSIT_EVENT =
+  '0x9149d2123147c5f43d258257fef0b7b969db78269369ebcf5ebb9eef8592f2'
+const STRK20_WITHDRAWAL_EVENT =
+  '0x2eed7e29b3502a726faf503ac4316b7101f3da813654e8df02c13449e03da8'
+const STRK20_SINCE = UnixTime.fromDate(new Date('2026-06-17'))
+
 export const strk20: BaseProject = {
   id: ProjectId('strk20'),
   slug: 'strk20',
   name: 'STRK-20',
   shortName: undefined,
-  addedAt: UnixTime.fromDate(new Date('2026-06-17')),
+  addedAt: STRK20_SINCE,
   statuses: {
     yellowWarning:
       'The proven program is not made available so it is unknown what logic is verified by the smart contract. Furthermore, real-time monitoring for this project is not supported.',
@@ -34,7 +44,82 @@ export const strk20: BaseProject = {
     badges: [],
   },
   privacyInfo: {
-    tokens: [],
+    tokens: [
+      {
+        token: {
+          address:
+            '0x04718f5a0fc34cc1af16a1cdee98ffb20c31f5cd61d6ab07201858f4287c938d',
+          iconUrl:
+            'https://assets.coingecko.com/coins/images/26433/large/starknet.png?1696525507',
+          symbol: 'STRK',
+          decimals: 18,
+          priceId: 'starknet',
+          sinceTimestamp: STRK20_SINCE,
+        },
+        buckets: [
+          {
+            id: 'strk20-STRK',
+            type: 'pool',
+            label: 'STRK pool',
+            address: STRK20_POOL,
+            sinceTimestamp: STRK20_SINCE,
+            deposit: {
+              event: STRK20_DEPOSIT_EVENT,
+              extractor: 'strk20Deposit',
+              params: {
+                tokenAddress:
+                  '0x04718f5a0fc34cc1af16a1cdee98ffb20c31f5cd61d6ab07201858f4287c938d',
+              },
+            },
+            withdrawal: {
+              event: STRK20_WITHDRAWAL_EVENT,
+              extractor: 'strk20Withdrawal',
+              params: {
+                tokenAddress:
+                  '0x04718f5a0fc34cc1af16a1cdee98ffb20c31f5cd61d6ab07201858f4287c938d',
+              },
+            },
+          },
+        ],
+      },
+      {
+        token: {
+          address:
+            '0x033068f6539f8e6e6b131e6b2b814e6c34a5224bc66947c47dab9dfee93b35fb',
+          iconUrl:
+            'https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696501661',
+          symbol: 'USDC',
+          decimals: 6,
+          priceId: 'usd-coin',
+          sinceTimestamp: STRK20_SINCE,
+        },
+        buckets: [
+          {
+            id: 'strk20-USDC',
+            type: 'pool',
+            label: 'USDC pool',
+            address: STRK20_POOL,
+            sinceTimestamp: STRK20_SINCE,
+            deposit: {
+              event: STRK20_DEPOSIT_EVENT,
+              extractor: 'strk20Deposit',
+              params: {
+                tokenAddress:
+                  '0x033068f6539f8e6e6b131e6b2b814e6c34a5224bc66947c47dab9dfee93b35fb',
+              },
+            },
+            withdrawal: {
+              event: STRK20_WITHDRAWAL_EVENT,
+              extractor: 'strk20Withdrawal',
+              params: {
+                tokenAddress:
+                  '0x033068f6539f8e6e6b131e6b2b814e6c34a5224bc66947c47dab9dfee93b35fb',
+              },
+            },
+          },
+        ],
+      },
+    ],
     exitWindow: {
       value: 'None',
       sentiment: 'bad',

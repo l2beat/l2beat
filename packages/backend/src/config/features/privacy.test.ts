@@ -8,12 +8,21 @@ const ps = new ProjectService()
 const env = new Env({})
 
 describe(getPrivacyConfig.name, () => {
-  it('returns false if enabled privacy projects have no tracked buckets', async () => {
+  it('creates Starknet flow configs for STRK-20', async () => {
     const flags = new FeatureFlags('privacy,!privacy.*,privacy.strk20')
 
     const config = await getPrivacyConfig(ps, env, flags)
 
-    expect(config).toEqual(false)
+    expect(config === false).toEqual(false)
+    if (config === false) return
+
+    expect(config.flowConfigs).toEqual([])
+    expect(config.starknetFlowConfigs.map((x) => x.extractor)).toEqual([
+      'strk20Deposit',
+      'strk20Withdrawal',
+      'strk20Deposit',
+      'strk20Withdrawal',
+    ])
   })
 
   describe('price is tracked no later than flows', () => {
