@@ -49,23 +49,31 @@ export class UpdateDiffer {
       discovery: this.getOnDiskDiscovery(project),
     }))
     const referencedBy = referencedByIndex(onDisk)
-    const records = onDisk.flatMap((entry) =>
-      this.diffProject(entry, timestamp, referencedBy),
-    )
 
-    // Attribution writes rows for projects other than the one being diffed, so
-    // every project this run could have touched is replaced in one go.
-    const touched = new Set([...projects, ...records.map((r) => r.projectId)])
+    // A project's rows are rebuilt only once its own comparison completed.
+    // Anything else leaves them untouched, so a missing or stale cache entry
+    // cannot drop a warning without producing a replacement for it.
+    const completed = new Set<string>()
+    const diffed: UpdateDiffRecord[] = []
+    for (const entry of onDisk) {
+      const records = this.diffProject(entry, timestamp, referencedBy)
+      if (records === undefined) {
+        continue
+      }
+      completed.add(entry.project)
+      diffed.push(...records)
+    }
+    const records = diffed.filter((record) => completed.has(record.projectId))
 
     await this.db.transaction(async () => {
-      for (const projectId of touched) {
-        await this.db.updateDiff.deleteByProjectAndChain(projectId)
+      for (const project of completed) {
+        await this.db.updateDiff.deleteByProjectAndChain(project)
       }
       await this.db.updateDiff.insertMany(records)
     })
 
     this.logger.info('Replaced update diffs', {
-      projects: projects.length,
+      projects: completed.size,
       updateDiffs: records.length,
     })
   }
@@ -74,14 +82,14 @@ export class UpdateDiffer {
     { project, discovery }: OnDiskDiscovery,
     timestamp: UnixTime,
     referencedBy: Map<string, string[]>,
-  ): UpdateDiffRecord[] {
+  ): UpdateDiffRecord[] | undefined {
     const latestDiscovery = this.discoveryOutputCache.get(project)
     if (!latestDiscovery) {
       this.logger.error(
         'No latest discovery found. This should never happen.',
         { project },
       )
-      return []
+      return undefined
     }
 
     if (discovery.timestamp > latestDiscovery.timestamp) {
@@ -89,7 +97,7 @@ export class UpdateDiffer {
         'On disk discovery is newer than latest discovery. Skipping.',
         { project },
       )
-      return []
+      return undefined
     }
 
     const diff = diffDiscovery(discovery.entries, latestDiscovery.entries)

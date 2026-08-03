@@ -40,7 +40,7 @@ describe(UpdateDiffer.name, () => {
       expect(differ.inserted).toEqual([])
     })
 
-    it('skips a project whose on disk discovery is newer', async () => {
+    it('keeps the rows of a project whose on disk discovery is newer', async () => {
       const differ = differOver({
         onDisk: {
           [PROJECT_A]: {
@@ -59,9 +59,10 @@ describe(UpdateDiffer.name, () => {
       await differ.run([PROJECT_A], UnixTime.now())
 
       expect(differ.inserted).toEqual([])
+      expect(differ.deleted).toEqual([])
     })
 
-    it('skips a project that was not discovered', async () => {
+    it('keeps the rows of a project that was not discovered', async () => {
       const differ = differOver({
         onDisk: { [PROJECT_A]: discoveryOf(PROJECT_A, [contract(ADDRESS_A)]) },
         latest: {},
@@ -70,6 +71,7 @@ describe(UpdateDiffer.name, () => {
       await differ.run([PROJECT_A], UnixTime.now())
 
       expect(differ.inserted).toEqual([])
+      expect(differ.deleted).toEqual([])
     })
 
     it('attributes a change to every project referencing the address', async () => {
