@@ -113,7 +113,7 @@ export class StarknetClient extends ClientCore implements BlockClient {
     address: string,
     eventSelectors: string[],
   ): Promise<StarknetEvent[]> {
-    const events: StarknetEvent[] = []
+    const events: StarknetRpcEvent[] = []
     let continuationToken: string | undefined
 
     do {
@@ -139,7 +139,15 @@ export class StarknetClient extends ClientCore implements BlockClient {
       continuationToken = parsed.data.result.continuation_token ?? undefined
     } while (continuationToken)
 
-    return events
+    const lastEventIndexByTransaction = new Map<string, number>()
+    return events.map((event) => {
+      const previousEventIndex =
+        lastEventIndexByTransaction.get(event.transaction_hash) ?? -1
+      const eventIndex = event.event_index ?? previousEventIndex + 1
+      lastEventIndexByTransaction.set(event.transaction_hash, eventIndex)
+
+      return { ...event, event_index: eventIndex }
+    })
   }
 
   async query(method: string, params: unknown) {
@@ -177,4 +185,8 @@ export class StarknetClient extends ClientCore implements BlockClient {
   get chain() {
     return this.$.sourceName
   }
+}
+
+type StarknetRpcEvent = Omit<StarknetEvent, 'event_index'> & {
+  event_index?: number
 }

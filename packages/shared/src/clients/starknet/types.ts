@@ -23,12 +23,12 @@ export const StarknetGetEventsResponse = v.object({
       v.object({
         block_number: v.number().check(Number.isInteger),
         transaction_hash: v.string(),
-        event_index: v.number().check(Number.isInteger),
+        event_index: v.number().check(Number.isInteger).optional(),
         keys: v.array(v.string().check((v) => HEX_REGEX.test(v))),
         data: v.array(v.string().check((v) => HEX_REGEX.test(v))),
       }),
     ),
-    continuation_token: v.union([v.string(), v.null()]),
+    continuation_token: v.union([v.string(), v.null()]).optional(),
   }),
 })
 

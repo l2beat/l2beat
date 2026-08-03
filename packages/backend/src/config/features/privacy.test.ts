@@ -17,11 +17,19 @@ describe(getPrivacyConfig.name, () => {
     if (config === false) return
 
     expect(config.flowConfigs).toEqual([])
-    expect(config.starknetFlowConfigs.map((x) => x.extractor)).toEqual([
-      'strk20Deposit',
-      'strk20Withdrawal',
-      'strk20Deposit',
-      'strk20Withdrawal',
+    expect(
+      config.starknetFlowConfigs.map((x) => [x.bucketId, x.direction]),
+    ).toEqual([
+      ['strk20-STRK', 'deposit'],
+      ['strk20-STRK', 'withdrawal'],
+      ['strk20-USDC', 'deposit'],
+      ['strk20-USDC', 'withdrawal'],
+      ['strk20-strkBTC', 'deposit'],
+      ['strk20-strkBTC', 'withdrawal'],
+      ['strk20-WBTC', 'deposit'],
+      ['strk20-WBTC', 'withdrawal'],
+      ['strk20-ETH', 'deposit'],
+      ['strk20-ETH', 'withdrawal'],
     ])
   })
 

@@ -9,8 +9,10 @@ export function extractStarknetPrivacyFlow(
   source: StarknetPrivacyFlowIndexerConfig,
   event: StarknetPrivacyEvent,
 ): PrivacyFlowExtractResult | undefined {
+  const tokenAddress = event.keys[2]
   if (
-    event.keys[2]?.toLowerCase() !== source.params.tokenAddress.toLowerCase()
+    tokenAddress === undefined ||
+    BigInt(tokenAddress) !== BigInt(source.params.tokenAddress)
   ) {
     return undefined
   }

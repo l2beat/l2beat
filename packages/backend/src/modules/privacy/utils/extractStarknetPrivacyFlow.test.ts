@@ -8,10 +8,10 @@ import { extractStarknetPrivacyFlow } from './extractStarknetPrivacyFlow'
 const TOKEN = '0x123'
 
 describe(extractStarknetPrivacyFlow.name, () => {
-  it('extracts a STRK-20 deposit amount for the configured token', () => {
+  it('extracts a deposit when the RPC omits leading zeroes from the token address', () => {
     const result = extractStarknetPrivacyFlow(
       config('strk20Deposit'),
-      event(['0xdeposit', '0xuser', TOKEN], ['0x1234']),
+      event(['0xdeposit', '0xuser', '0x0123'], ['0x1234']),
     )
 
     expect(result).toEqual({ count: 1, amount: 0x1234n })

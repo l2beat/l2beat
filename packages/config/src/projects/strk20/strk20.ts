@@ -1,6 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
-import type { BaseProject } from '../../types'
+import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const STRK20_POOL = {
@@ -12,6 +12,53 @@ const STRK20_DEPOSIT_EVENT =
 const STRK20_WITHDRAWAL_EVENT =
   '0x2eed7e29b3502a726faf503ac4316b7101f3da813654e8df02c13449e03da8'
 const STRK20_SINCE = UnixTime.fromDate(new Date('2026-06-17'))
+const STRK20_TOKENS = [
+  {
+    address:
+      '0x04718f5a0fc34cc1af16a1cdee98ffb20c31f5cd61d6ab07201858f4287c938d',
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/26433/large/starknet.png?1696525507',
+    symbol: 'STRK',
+    decimals: 18,
+    priceId: 'starknet',
+  },
+  {
+    address:
+      '0x033068f6539f8e6e6b131e6b2b814e6c34a5224bc66947c47dab9dfee93b35fb',
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696501661',
+    symbol: 'USDC',
+    decimals: 6,
+    priceId: 'usd-coin',
+  },
+  {
+    address:
+      '0x0787150e306e6eae6e3f79dea881770e8bbff2c1b8eb490f969669ee945b3135',
+    iconUrl:
+      'https://coin-images.coingecko.com/coins/images/102173511/large/strkBTC_Logo.png?1779888214',
+    symbol: 'strkBTC',
+    decimals: 8,
+    priceId: 'strkbtc',
+  },
+  {
+    address:
+      '0x03fe2b97c1fd336e750087d68b9b867997fd64a2661ff3ca5a7c771641e8e7ac',
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857',
+    symbol: 'WBTC',
+    decimals: 8,
+    priceId: 'wrapped-bitcoin',
+  },
+  {
+    address:
+      '0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7',
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
+    symbol: 'ETH',
+    decimals: 18,
+    priceId: 'ethereum',
+  },
+] as const
 
 export const strk20: BaseProject = {
   id: ProjectId('strk20'),
@@ -44,82 +91,7 @@ export const strk20: BaseProject = {
     badges: [],
   },
   privacyInfo: {
-    tokens: [
-      {
-        token: {
-          address:
-            '0x04718f5a0fc34cc1af16a1cdee98ffb20c31f5cd61d6ab07201858f4287c938d',
-          iconUrl:
-            'https://assets.coingecko.com/coins/images/26433/large/starknet.png?1696525507',
-          symbol: 'STRK',
-          decimals: 18,
-          priceId: 'starknet',
-          sinceTimestamp: STRK20_SINCE,
-        },
-        buckets: [
-          {
-            id: 'strk20-STRK',
-            type: 'pool',
-            label: 'STRK pool',
-            address: STRK20_POOL,
-            sinceTimestamp: STRK20_SINCE,
-            deposit: {
-              event: STRK20_DEPOSIT_EVENT,
-              extractor: 'strk20Deposit',
-              params: {
-                tokenAddress:
-                  '0x04718f5a0fc34cc1af16a1cdee98ffb20c31f5cd61d6ab07201858f4287c938d',
-              },
-            },
-            withdrawal: {
-              event: STRK20_WITHDRAWAL_EVENT,
-              extractor: 'strk20Withdrawal',
-              params: {
-                tokenAddress:
-                  '0x04718f5a0fc34cc1af16a1cdee98ffb20c31f5cd61d6ab07201858f4287c938d',
-              },
-            },
-          },
-        ],
-      },
-      {
-        token: {
-          address:
-            '0x033068f6539f8e6e6b131e6b2b814e6c34a5224bc66947c47dab9dfee93b35fb',
-          iconUrl:
-            'https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696501661',
-          symbol: 'USDC',
-          decimals: 6,
-          priceId: 'usd-coin',
-          sinceTimestamp: STRK20_SINCE,
-        },
-        buckets: [
-          {
-            id: 'strk20-USDC',
-            type: 'pool',
-            label: 'USDC pool',
-            address: STRK20_POOL,
-            sinceTimestamp: STRK20_SINCE,
-            deposit: {
-              event: STRK20_DEPOSIT_EVENT,
-              extractor: 'strk20Deposit',
-              params: {
-                tokenAddress:
-                  '0x033068f6539f8e6e6b131e6b2b814e6c34a5224bc66947c47dab9dfee93b35fb',
-              },
-            },
-            withdrawal: {
-              event: STRK20_WITHDRAWAL_EVENT,
-              extractor: 'strk20Withdrawal',
-              params: {
-                tokenAddress:
-                  '0x033068f6539f8e6e6b131e6b2b814e6c34a5224bc66947c47dab9dfee93b35fb',
-              },
-            },
-          },
-        ],
-      },
-    ],
+    tokens: getPrivacyTokens(),
     exitWindow: {
       value: 'None',
       sentiment: 'bad',
@@ -157,4 +129,32 @@ export const strk20: BaseProject = {
       'upgradesAndGovernance',
     ),
   },
+}
+
+function getPrivacyTokens(): ProjectPrivacyToken[] {
+  return STRK20_TOKENS.map((token) => ({
+    token: {
+      ...token,
+      sinceTimestamp: STRK20_SINCE,
+    },
+    buckets: [
+      {
+        id: `strk20-${token.symbol}`,
+        type: 'pool',
+        label: `${token.symbol} pool`,
+        address: STRK20_POOL,
+        sinceTimestamp: STRK20_SINCE,
+        deposit: {
+          event: STRK20_DEPOSIT_EVENT,
+          extractor: 'strk20Deposit',
+          params: { tokenAddress: token.address },
+        },
+        withdrawal: {
+          event: STRK20_WITHDRAWAL_EVENT,
+          extractor: 'strk20Withdrawal',
+          params: { tokenAddress: token.address },
+        },
+      },
+    ],
+  }))
 }

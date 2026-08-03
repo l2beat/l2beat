@@ -114,9 +114,7 @@ describe(StarknetClient.name, () => {
         .returnsOnce(
           mockStarknetGetEventsResponse([mockStarknetEvent(1)], 'next'),
         )
-        .returnsOnce(
-          mockStarknetGetEventsResponse([mockStarknetEvent(2)], null),
-        )
+        .returnsOnce(mockStarknetGetEventsResponse([mockStarknetEvent(2)]))
       client.query = query
 
       const result = await client.getEvents(10, 20, '0x1234', [
@@ -144,6 +142,20 @@ describe(StarknetClient.name, () => {
         },
       ])
       expect(result).toEqual([mockStarknetEvent(1), mockStarknetEvent(2)])
+    })
+
+    it('assigns a deterministic index when the RPC omits event_index', async () => {
+      const client = mockClient({})
+      client.query = mockFn().returnsOnce(
+        mockStarknetGetEventsResponse([
+          mockStarknetEventWithoutIndex('0xtx'),
+          mockStarknetEventWithoutIndex('0xtx'),
+        ]),
+      )
+
+      const result = await client.getEvents(10, 20, '0x1234', ['0x5678'])
+
+      expect(result.map((event) => event.event_index)).toEqual([0, 1])
     })
   })
 
@@ -239,16 +251,33 @@ function mockStarknetEvent(eventIndex: number): StarknetEvent {
 }
 
 function mockStarknetGetEventsResponse(
-  events: StarknetEvent[],
-  continuationToken: string | null,
+  events: StarknetRpcEvent[],
+  continuationToken?: string | null,
 ) {
   return {
     jsonrpc: '2.0' as const,
     id: 1,
     result: {
       events,
-      continuation_token: continuationToken,
+      ...(continuationToken === undefined
+        ? {}
+        : { continuation_token: continuationToken }),
     },
+  }
+}
+
+type StarknetRpcEvent = Omit<StarknetEvent, 'event_index'> & {
+  event_index?: number
+}
+
+function mockStarknetEventWithoutIndex(
+  transactionHash: string,
+): StarknetRpcEvent {
+  return {
+    block_number: 100,
+    transaction_hash: transactionHash,
+    keys: ['0x5678'],
+    data: ['0x9abc'],
   }
 }
 

@@ -14,7 +14,7 @@ import type { StarknetPrivacyFlowIndexerConfig } from '../types'
 import { StarknetPrivacyFlowIndexer } from './StarknetPrivacyFlowIndexer'
 
 const POOL = '0xpool'
-const TOKEN = '0xtoken'
+const TOKEN = '0x0123'
 const DEPOSIT = '0xdeposit'
 const WITHDRAWAL = '0xwithdrawal'
 
@@ -45,21 +45,21 @@ describe(StarknetPrivacyFlowIndexer.name, () => {
             block_number: 100,
             transaction_hash: '0xdeposit-tx',
             event_index: 0,
-            keys: [DEPOSIT, '0xuser', TOKEN],
+            keys: [DEPOSIT, '0xuser', '0x123'],
             data: ['0x2625a00'],
           }),
           event({
             block_number: 101,
             transaction_hash: '0xwithdrawal-tx',
             event_index: 1,
-            keys: [WITHDRAWAL, '0xrecipient', TOKEN],
+            keys: [WITHDRAWAL, '0xrecipient', '0x123'],
             data: ['0xencrypted1', '0xencrypted2', '0xencrypted3', '0xf4240'],
           }),
           event({
             block_number: 102,
             transaction_hash: '0xother-token-tx',
             event_index: 0,
-            keys: [DEPOSIT, '0xuser', '0xother-token'],
+            keys: [DEPOSIT, '0xuser', '0x456'],
             data: ['0xf4240'],
           }),
         ]),
