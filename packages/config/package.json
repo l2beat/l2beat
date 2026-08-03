@@ -25,6 +25,7 @@
     "tokens:generate-names": "tsx scripts/tokens/generateTokenNames.ts",
     "coingecko:platforms": "tsx scripts/getCoingeckoPlatforms.ts",
     "compute-anonymity-sets": "tsx scripts/computeAnonymitySets.ts",
+    "compute-anonymity-set-curves": "tsx scripts/computeAnonymitySetCurves.ts",
     "stargatev2-pools": "tsx scripts/stargatev2-pools/index.ts",
     "diff": "./scripts/diff/diff.sh",
     "tvs:update-schema": "tsx ./scripts/tvs/update-schema.ts"

@@ -83,7 +83,14 @@ export interface ChartProject {
   iconUrl: string
 }
 
-function ChartContainer<T extends { timestamp: number }>({
+/**
+ * Most charts plot against time, but some plot against a duration instead
+ * (e.g. anonymity set size by days held), in which case the x value is a day
+ * count rather than a timestamp.
+ */
+type ChartPoint = { timestamp: number } | { days: number }
+
+function ChartContainer<T extends ChartPoint>({
   children,
   meta,
   data,
@@ -178,7 +185,13 @@ function ChartContainer<T extends { timestamp: number }>({
           />
         )}
         {!isLoading && milestones && (
-          <ChartMilestones data={data} milestones={milestones} ref={ref} />
+          // Milestones are dated, so they only make sense on a time axis - the
+          // cast is safe because duration charts never pass them.
+          <ChartMilestones
+            data={data as { timestamp: number }[] | undefined}
+            milestones={milestones}
+            ref={ref}
+          />
         )}
       </div>
     </ChartContext.Provider>

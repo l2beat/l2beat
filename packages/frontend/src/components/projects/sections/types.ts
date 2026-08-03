@@ -20,6 +20,7 @@ import type { MarkdownSectionProps } from './MarkdownSection'
 import type { MilestonesAndIncidentsSectionProps } from './MilestonesAndIncidentsSection'
 import type { ExtendedProjectSectionProps } from './ProjectSection'
 import type { PermissionsSectionProps } from './permissions/PermissionsSection'
+import type { PrivacyAnonymitySetsSectionProps } from './privacy/PrivacyAnonymitySetsSection'
 import type { PrivacyAssetsBreakdownSectionProps } from './privacy/PrivacyAssetsBreakdownSection'
 import type { PrivacyFlowsSectionProps } from './privacy/PrivacyFlowsSection'
 import type { PrivacyTvlSectionProps } from './privacy/PrivacyTvlSection'
@@ -76,6 +77,7 @@ type SectionId =
   | 'privacy-tvl'
   | 'privacy-flows'
   | 'privacy-assets-breakdown'
+  | 'privacy-anonymity-sets'
 type GroupId = 'da-layer' | 'da-bridge'
 
 export type ProjectSectionId = SectionId | GroupId | `${GroupId}-${SectionId}`
@@ -282,6 +284,11 @@ interface ProjectDetailsPrivacyAssetsBreakdownSection {
   props: ProjectDetailsProps<PrivacyAssetsBreakdownSectionProps>
 }
 
+interface ProjectDetailsPrivacyAnonymitySetsSection {
+  type: 'PrivacyAnonymitySetsSection'
+  props: ProjectDetailsProps<PrivacyAnonymitySetsSectionProps>
+}
+
 export type ProjectDetailsSection = {
   excludeFromNavigation?: boolean
   sideNavTitle?: string
@@ -325,4 +332,5 @@ export type ProjectDetailsSection = {
   | ProjectDetailsPrivacyTvlSection
   | ProjectDetailsPrivacyFlowsSection
   | ProjectDetailsPrivacyAssetsBreakdownSection
+  | ProjectDetailsPrivacyAnonymitySetsSection
 )

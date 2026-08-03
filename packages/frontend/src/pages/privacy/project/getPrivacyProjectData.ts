@@ -9,6 +9,7 @@ import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
+import { getAnonymitySetCurves } from '~/server/features/privacy/anonymitySetCurves'
 import { getPrivacyProjectDetails } from '~/server/features/privacy/getPrivacyProjectDetails'
 import {
   getPrivacyTrustedSetup,
@@ -250,6 +251,19 @@ export async function getPrivacyProjectData(
         assets: details.assets,
       },
     })
+
+    const anonymitySetCurves = getAnonymitySetCurves(details.slug)
+    if (anonymitySetCurves) {
+      sections.push({
+        type: 'PrivacyAnonymitySetsSection',
+        props: {
+          id: 'privacy-anonymity-sets',
+          title: 'Anonymity sets',
+          curves: anonymitySetCurves,
+          project: chartProject,
+        },
+      })
+    }
   }
 
   if (details.riskSummary) {

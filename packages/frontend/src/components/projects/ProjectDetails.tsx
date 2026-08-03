@@ -20,6 +20,7 @@ import { LivenessSection } from './sections/liveness/LivenessSection'
 import { MarkdownSection } from './sections/MarkdownSection'
 import { MilestonesAndIncidentsSection } from './sections/MilestonesAndIncidentsSection'
 import { PermissionsSection } from './sections/permissions/PermissionsSection'
+import { PrivacyAnonymitySetsSection } from './sections/privacy/PrivacyAnonymitySetsSection'
 import { PrivacyAssetsBreakdownSection } from './sections/privacy/PrivacyAssetsBreakdownSection'
 import { PrivacyFlowsSection } from './sections/privacy/PrivacyFlowsSection'
 import { PrivacyTvlSection } from './sections/privacy/PrivacyTvlSection'
@@ -365,6 +366,14 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           case 'PrivacyAssetsBreakdownSection':
             return (
               <PrivacyAssetsBreakdownSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'PrivacyAnonymitySetsSection':
+            return (
+              <PrivacyAnonymitySetsSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}
