@@ -461,16 +461,16 @@ There is no user-callable forced-inclusion function. A censored user can post an
           orderHint: Number.MAX_SAFE_INTEGER,
         },
         inclusionMechanics: {
-          value: 'L1 message + state update',
-          secondLine: 'Not the original L2 tx',
-          description: `Logging a message creates an L1-originated L1-handler transaction rather than submitting the original signed L2 transaction. It does not automatically enter the canonical L2 order. The Security Council path must produce normal Starknet OS execution, data availability and an accepted SHARP proof before posting the state update. An unconsumed message can be cancelled through a two-call L1 process after the ${formatSeconds(messageCancellationDelaySeconds, { preventRoundingUp: true, fullUnit: true })} delay.`,
+          value: 'L1 log of intent',
+          secondLine: 'Permissioned inclusion',
+          description: `Logging a message creates an L1-originated L1-handler transaction rather than submitting the original signed L2 transaction. It does not automatically enter the canonical L2 order and has no other effect than recording the intent. The Security Council path must produce Starknet OS execution, data availability and an accepted SHARP proof before posting the state update. An unconsumed message can be cancelled through a two-call L1 process after a ${formatSeconds(messageCancellationDelaySeconds, { preventRoundingUp: true, fullUnit: true })} delay.`,
         },
         exitDelay: {
           value: 'Unbounded',
           secondLine: 'Council response + proving',
           sentiment: 'bad',
           description:
-            'Under sequencer and service-Operator failure, a user cannot independently advance the state needed for an exit. There is no deadline for the Security Council minority to act or for SHARP to produce the required proof. Once an accepted fact and valid state update reach Ethereum, there is no additional state-finalization delay.',
+            'Under operator failure, a user cannot independently advance the state needed for an exit. There is no deadline for the Security Council minority to act or for SHARP to produce the required proof. Once an accepted fact and valid state update reach Ethereum, there is no additional state-finalization delay.',
           orderHint: Number.MAX_SAFE_INTEGER,
         },
         exitEconomics: {
