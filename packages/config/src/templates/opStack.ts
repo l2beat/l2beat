@@ -1395,14 +1395,14 @@ export function getOpStackBondScalingFactor(gameMaxDepth: number): number {
 export function getOpStackFullDisputeGameBondCost(
   initialBond: number | string | bigint,
   gameMaxDepth: number,
-  bondScalingFactor = getOpStackBondScalingFactor(gameMaxDepth),
 ): bigint {
+  const exponentialBondsFactor = getOpStackBondScalingFactor(gameMaxDepth)
   const initialBondNumber = Number(initialBond)
   let cost = 0
   const scaleFactor = 100_000
 
   for (let depth = 0; depth <= gameMaxDepth; depth++) {
-    cost += (initialBondNumber / scaleFactor) * bondScalingFactor ** depth
+    cost += (initialBondNumber / scaleFactor) * exponentialBondsFactor ** depth
   }
 
   return BigInt(cost) * BigInt(scaleFactor)
