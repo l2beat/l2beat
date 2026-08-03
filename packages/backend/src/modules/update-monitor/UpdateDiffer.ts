@@ -10,41 +10,27 @@ import {
 import type { UnixTime } from '@l2beat/shared-pure'
 import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
 
-// A reference is a stub standing in for an entry owned by another project.
-// Swapping it for that entry, rather than appending, keeps one entry per
-// address, which matters because diffDiscovery matches the first one it finds.
-function resolveReference(
-  entry: EntryParameters,
-  resolve: (project: string) => DiscoveryOutput | undefined,
-): EntryParameters | undefined {
-  const visited = new Set<string>()
-  let current = entry
-
-  while (current.type === 'Reference') {
-    if (current.targetProject === undefined) {
-      return undefined
-    }
-    if (visited.has(current.targetProject)) {
-      return undefined
-    }
-    visited.add(current.targetProject)
-
-    const owner = resolve(current.targetProject)
-    const next = owner?.entries.find((e) => e.address === current.address)
-    if (next === undefined) {
-      return undefined
-    }
-    current = next
-  }
-
-  return current
+interface OnDiskDiscovery {
+  project: string
+  discovery: DiscoveryOutput
 }
 
-function resolveReferences(
-  entries: EntryParameters[],
-  resolve: (project: string) => DiscoveryOutput | undefined,
-): EntryParameters[] {
-  return entries.flatMap((entry) => resolveReference(entry, resolve) ?? [])
+// A change at an address belongs to the project that discovered it and to every
+// project referencing it, so one shared contract raises an update for all of its
+// consumers. Chains need no handling of their own: every project along one
+// references the same address, so all of them land here.
+function referencedByIndex(
+  discoveries: OnDiskDiscovery[],
+): Map<string, string[]> {
+  const index = new Map<string, string[]>()
+  for (const { project, discovery } of discoveries) {
+    for (const entry of discovery.entries) {
+      if (entry.type === 'Reference') {
+        index.set(entry.address, [...(index.get(entry.address) ?? []), project])
+      }
+    }
+  }
+  return index
 }
 
 export class UpdateDiffer {
@@ -57,62 +43,71 @@ export class UpdateDiffer {
     this.logger = this.logger.for(this)
   }
 
-  async runForProject(projectId: string, timestamp: UnixTime) {
-    const onDiskDiscovery = this.getOnDiskDiscovery(projectId)
-    const latestDiscovery = this.discoveryOutputCache.get(projectId)
+  async run(projects: string[], timestamp: UnixTime) {
+    const onDisk = projects.map((project) => ({
+      project,
+      discovery: this.getOnDiskDiscovery(project),
+    }))
+    const referencedBy = referencedByIndex(onDisk)
+    const records = onDisk.flatMap((entry) =>
+      this.diffProject(entry, timestamp, referencedBy),
+    )
+
+    // Attribution writes rows for projects other than the one being diffed, so
+    // every project this run could have touched is replaced in one go.
+    const touched = new Set([...projects, ...records.map((r) => r.projectId)])
+
+    await this.db.transaction(async () => {
+      for (const projectId of touched) {
+        await this.db.updateDiff.deleteByProjectAndChain(projectId)
+      }
+      await this.db.updateDiff.insertMany(records)
+    })
+
+    this.logger.info('Replaced update diffs', {
+      projects: projects.length,
+      updateDiffs: records.length,
+    })
+  }
+
+  private diffProject(
+    { project, discovery }: OnDiskDiscovery,
+    timestamp: UnixTime,
+    referencedBy: Map<string, string[]>,
+  ): UpdateDiffRecord[] {
+    const latestDiscovery = this.discoveryOutputCache.get(project)
     if (!latestDiscovery) {
       this.logger.error(
         'No latest discovery found. This should never happen.',
-        { projectId },
+        { project },
       )
-      return
+      return []
     }
 
-    if (onDiskDiscovery.timestamp > latestDiscovery.timestamp) {
+    if (discovery.timestamp > latestDiscovery.timestamp) {
       this.logger.info(
         'On disk discovery is newer than latest discovery. Skipping.',
-        { projectId },
+        { project },
       )
-      return
+      return []
     }
 
-    const onDiskContracts = resolveReferences(onDiskDiscovery.entries, (p) =>
-      this.getOnDiskDiscovery(p),
-    )
-    const latestContracts = resolveReferences(latestDiscovery.entries, (p) =>
-      this.discoveryOutputCache.get(p),
-    )
+    const diff = diffDiscovery(discovery.entries, latestDiscovery.entries)
 
-    const diff = diffDiscovery(onDiskContracts, latestContracts)
-    const diffBaseTimestamp = onDiskDiscovery.timestamp
-    const diffHeadTimestamp = latestDiscovery.timestamp
-
-    const updateDiffs = this.getUpdateDiffs(
+    return this.getUpdateDiffs(
       diff,
-      latestContracts,
-      projectId,
+      latestDiscovery.entries,
+      project,
       timestamp,
-      diffBaseTimestamp,
-      diffHeadTimestamp,
-    )
-
-    if (updateDiffs.length === 0) {
-      this.logger.info('No changes in project', {
+      discovery.timestamp,
+      latestDiscovery.timestamp,
+    ).flatMap((record) => [
+      record,
+      ...(referencedBy.get(record.address) ?? []).map((projectId) => ({
+        ...record,
         projectId,
-      })
-      await this.db.updateDiff.deleteByProjectAndChain(projectId)
-      return
-    }
-
-    await this.db.transaction(async () => {
-      await this.db.updateDiff.deleteByProjectAndChain(projectId)
-      await this.db.updateDiff.insertMany(updateDiffs)
-
-      this.logger.info('Inserted update diffs', {
-        projectId,
-        updateDiffs: updateDiffs.length,
-      })
-    })
+      })),
+    ])
   }
 
   getUpdateDiffs(

@@ -136,7 +136,7 @@ describe(UpdateMonitor.name, () => {
       sendDailyReminder: mockFn().resolvesTo(undefined),
     })
     updateDiffer = mockObject<UpdateDiffer>({
-      runForProject: mockFn().resolvesTo(undefined),
+      run: mockFn().resolvesTo(undefined),
     })
   })
 
@@ -189,7 +189,7 @@ describe(UpdateMonitor.name, () => {
       // runs discovery for every project
       expect(discoveryRunner.run).toHaveBeenCalledTimes(2)
 
-      expect(updateDiffer.runForProject).toHaveBeenCalledTimes(1)
+      expect(updateDiffer.run).toHaveBeenCalledWith([PROJECT_A], timestamp)
 
       expect(updateNotifier.sendDailyReminder).toHaveBeenCalledTimes(1)
       expect(updateNotifier.sendDailyReminder).toHaveBeenCalledWith(
@@ -202,8 +202,7 @@ describe(UpdateMonitor.name, () => {
       )
     })
 
-    // A diff resolves references against other projects' discoveries, so every
-    // discovery has to land before the first diff reads the cache.
+    // Diffs are written as one snapshot, so they run once every discovery lands.
     it('discovers every project before diffing any of them', async () => {
       const calls: string[] = []
       const discoveryRunner = mockObject<DiscoveryRunner>({
@@ -213,7 +212,7 @@ describe(UpdateMonitor.name, () => {
         }),
       })
       updateDiffer = mockObject<UpdateDiffer>({
-        runForProject: mockFn(async () => {
+        run: mockFn(async () => {
           calls.push('diff')
         }),
       })
@@ -247,7 +246,7 @@ describe(UpdateMonitor.name, () => {
       await updateMonitor.update(0)
 
       expect(calls.lastIndexOf('discover')).toBeLessThan(calls.indexOf('diff'))
-      expect(calls.filter((c) => c === 'diff').length).toEqual(2)
+      expect(calls.filter((c) => c === 'diff').length).toEqual(1)
     })
   })
 
