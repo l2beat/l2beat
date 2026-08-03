@@ -229,7 +229,13 @@ async function getEthereumEconomicSecurity(): Promise<number | undefined> {
 }
 
 function getHomeWhatsNewItems(): HomeWhatsNewItem[] {
-  const entry = selectActiveWhatsNewEntry(getChangelogEntries(), new Date())
+  // The card is a permanent part of the desktop layout, so unlike the
+  // floating widget it falls back to the most recent entry when no
+  // campaign is currently active.
+  const entries = getChangelogEntries()
+  const entry =
+    selectActiveWhatsNewEntry(entries, new Date()) ??
+    entries.find((entry) => entry.whatsNew)
   if (!entry?.whatsNew) {
     return []
   }
