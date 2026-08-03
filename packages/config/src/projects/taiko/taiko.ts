@@ -188,7 +188,19 @@ export const taiko: ScalingProject = {
       {
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
-        sinceBlock: 0, // Edge Case: config added @ DA Module start
+        sinceBlock: 19945276, // first proposeBlock on the pre-Shasta inbox
+        untilBlock: 24792175, // Shasta MainnetInbox activation, last BatchProposed @ 24792119
+        inbox: preShastaInboxAddress,
+        sequencers: [],
+        topics: [
+          '0xefe9c6c0b5cbd9c0eed2d1e9c00cfc1a010d6f1aff50f7facd665a639b622b26', // BlockProposedV2
+          '0x9eb7fc80523943f28950bbb71ed6d584effe3e1e02ca4ddc8c86e5ee1558c096', // BatchProposed
+        ],
+      },
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: 24792175, // first Proposed on the Shasta MainnetInbox
         inbox: mainnetInboxAddress,
         sequencers: [],
         topics: [

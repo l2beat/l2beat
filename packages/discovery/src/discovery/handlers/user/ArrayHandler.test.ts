@@ -48,6 +48,20 @@ describe(ArrayHandler.name, () => {
 
       expect(handler.dependencies).toEqual(['foo'])
     })
+
+    it('detects the base field of a nested reference', () => {
+      const handler = new ArrayHandler(
+        'someName',
+        {
+          type: 'array',
+          method: 'function foo(uint i) view returns (uint)',
+          length: '{{ constructorArgs._length }}',
+        },
+        [],
+      )
+
+      expect(handler.dependencies).toEqual(['constructorArgs'])
+    })
   })
 
   describe('getMethod', () => {

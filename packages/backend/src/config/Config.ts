@@ -157,7 +157,6 @@ export interface ChainTvlConfig {
 }
 
 export interface HealthConfig {
-  readonly releasedAt?: string
   readonly startedAt: string
   readonly commitSha: string
 }

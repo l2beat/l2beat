@@ -6,6 +6,7 @@ import { executeHandlers } from './executeHandlers'
 import type { Handler, HandlerResult } from './Handler'
 import { SimpleMethodHandler } from './system/SimpleMethodHandler'
 import { ArrayHandler, getArrayFragment } from './user/ArrayHandler'
+import { CallHandler } from './user/CallHandler'
 import { StorageHandler } from './user/StorageHandler'
 import { toFunctionFragment } from './utils/toFunctionFragment'
 
@@ -264,6 +265,62 @@ describe(executeHandlers.name, () => {
         field: 'bar',
         fragment: arrayFragment,
         value: [0x12345678, 0x12345678, 0x12345678],
+        ignoreRelative: undefined,
+      },
+    ])
+  })
+
+  it('schedules a handler that depends on a nested reference', async () => {
+    const ADDRESS = ChainSpecificAddress.random()
+    const REGISTRY = ChainSpecificAddress.random()
+    const method = 'function owner() view returns (address)'
+    const fragment = toFunctionFragment(method)
+    const provider = mockObject<IProvider>({
+      blockNumber: 123,
+      chain: 'foo',
+      async callMethod<T>(passedAddress: ChainSpecificAddress) {
+        expect(passedAddress).toEqual(REGISTRY)
+        return ADDRESS.toString() as T
+      },
+    })
+    const constructorArgs = mockObject<Handler>({
+      field: 'constructorArgs',
+      dependencies: [],
+      async execute(): Promise<HandlerResult> {
+        return {
+          field: 'constructorArgs',
+          value: { _addressesRegistry: REGISTRY.toString() },
+        }
+      },
+    })
+
+    const values = await executeHandlers(
+      provider,
+      [
+        new CallHandler(
+          'owner',
+          {
+            type: 'call',
+            method,
+            args: [],
+            address: '{{ constructorArgs._addressesRegistry }}',
+          },
+          [],
+        ),
+        constructorArgs,
+      ],
+      ADDRESS,
+    )
+
+    expect(values).toEqual([
+      {
+        field: 'constructorArgs',
+        value: { _addressesRegistry: REGISTRY.toString() },
+      },
+      {
+        field: 'owner',
+        fragment,
+        value: ADDRESS.toString(),
         ignoreRelative: undefined,
       },
     ])

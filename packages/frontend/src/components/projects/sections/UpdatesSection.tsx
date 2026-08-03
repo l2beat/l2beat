@@ -26,6 +26,7 @@ export interface UpdatesSectionProps extends ProjectSectionProps {
 }
 
 const SECTION_TITLES = {
+  'config-related-changes': 'New and verified contracts',
   'initial-discovery': 'Initial discovery',
   'watched-changes': null,
 } satisfies Record<DiscoveryUpdate['sections'][number]['kind'], string | null>

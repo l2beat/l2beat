@@ -85,8 +85,7 @@ describe('discovery config.jsonc', () => {
     }
   })
 
-  // TODO: Enable this test once all .sharedModules are converted to entrypoints
-  it.skip("doesn't reference legacy or not existing entrypoints", () => {
+  it("doesn't reference legacy or not existing entrypoints", () => {
     for (const c of configs ?? []) {
       const discovery = getDiscovery(c.name)
       const entrypoints = c.structure.entrypoints ?? {}
@@ -105,6 +104,17 @@ describe('discovery config.jsonc', () => {
             [
               `In project ${c.name}, contract ${entry.name ?? ''}(${entry.address})`,
               "is a reference but it's a legacy entrypoint",
+            ].join(' '),
+          )
+          // A stale targetProject makes readDiscoveryWithReferences read a
+          // project that does not own the address, or throw when it no longer
+          // exists at all.
+          assert(
+            entry.targetProject === existingEntrypoint.project,
+            [
+              `In project ${c.name}, contract ${entry.name ?? ''}(${entry.address})`,
+              `references project ${entry.targetProject}`,
+              `but the entrypoint is owned by ${existingEntrypoint.project}`,
             ].join(' '),
           )
         }

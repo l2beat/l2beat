@@ -9,7 +9,10 @@ import {
   renderDashboardMarkdown,
   renderProjectMarkdown,
 } from './view/DashboardMarkdown'
-import { renderDashboardPage } from './view/DashboardPage'
+import {
+  type DashboardDeployment,
+  renderDashboardPage,
+} from './view/DashboardPage'
 
 export class UpdateMonitorController {
   private readonly onDiskConfigs: ConfigRegistry[] = []
@@ -21,11 +24,15 @@ export class UpdateMonitorController {
     private readonly db: Database,
     private readonly configReader: ConfigReader,
     private readonly projectService: ProjectService,
+    deployment: DashboardDeployment,
   ) {
+    this.deployment = deployment
     this.onDiskConfigs = this.configReader
       .readAllDiscoveredProjects()
       .map((project) => this.configReader.readConfig(project))
   }
+
+  private readonly deployment: DashboardDeployment
 
   async getDiscoveryDashboard(selectedEmoji?: string): Promise<string> {
     const { projects, projectConfigs, projectsWithHighSeverityChanges } =
@@ -34,6 +41,7 @@ export class UpdateMonitorController {
       projects,
       projectConfigs,
       projectsWithHighSeverityChanges,
+      this.deployment,
       selectedEmoji,
     )
   }

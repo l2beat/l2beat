@@ -10,13 +10,20 @@ import { type Group, groupProjects } from './groupProjects'
 
 const DASHBOARD_PATH = '/status/discovery'
 
+export interface DashboardDeployment {
+  commitSha?: string
+  startedAt: string
+}
+
 interface DashboardPageProps {
+  deployment: DashboardDeployment
   groups: Group[]
   projectsWithHighSeverityChanges: Set<string>
   selectedEmoji?: string
 }
 
 function DashboardPage({
+  deployment,
   groups,
   projectsWithHighSeverityChanges,
   selectedEmoji,
@@ -100,8 +107,59 @@ function DashboardPage({
       </div>
     ) : undefined
 
+  const deploymentPanel = (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '4px',
+        padding: '10px 12px',
+        border: '1px solid #262a35',
+        backgroundColor: '#0c1018',
+        color: '#c6c2b8',
+        fontSize: '11px',
+        letterSpacing: '0.08em',
+        textTransform: 'uppercase',
+      }}
+    >
+      <span>
+        Running since{' '}
+        <time dateTime={deployment.startedAt}>{deployment.startedAt}</time>
+      </span>
+      {deployment.commitSha && (
+        <span>
+          Commit{' '}
+          <a
+            href={`https://github.com/l2beat/l2beat/commit/${deployment.commitSha}`}
+            target="_blank"
+            rel="noreferrer"
+            style={{ color: '#fef4d0' }}
+          >
+            {deployment.commitSha}
+          </a>
+        </span>
+      )}
+    </div>
+  )
+
   return (
-    <Page title="Discovery" headerRight={filtersPanel}>
+    <Page
+      title="Discovery"
+      headerRight={
+        <div
+          style={{
+            display: 'flex',
+            gap: '10px',
+            alignItems: 'stretch',
+            flexWrap: 'wrap',
+            justifyContent: 'flex-end',
+          }}
+        >
+          {deploymentPanel}
+          {filtersPanel}
+        </div>
+      }
+    >
       <div
         style={{
           display: 'flex',
@@ -584,11 +642,13 @@ export function renderDashboardPage(
   projects: DashboardProject[],
   projectConfigs: Project<never, 'scalingInfo' | 'daLayer'>[],
   projectsWithHighSeverityChanges: Set<string>,
+  deployment: DashboardDeployment,
   selectedEmoji?: string,
 ) {
   const groups = groupProjects(projects, projectConfigs)
   return reactToHtml(
     <DashboardPage
+      deployment={deployment}
       groups={groups}
       projectsWithHighSeverityChanges={projectsWithHighSeverityChanges}
       selectedEmoji={selectedEmoji}

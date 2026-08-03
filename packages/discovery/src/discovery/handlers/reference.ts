@@ -7,10 +7,17 @@ import type { HandlerResult } from './Handler'
 const REFERENCE_REGEX = /^\{\{\s*[$a-z_][$.a-z\d_]*\s*\}\}$/i
 export const Reference = v.string().check((v) => REFERENCE_REGEX.test(v))
 
-export function getReferencedName(value: unknown): string | undefined {
+export function getReferencedPath(value: unknown): string | undefined {
   if (typeof value === 'string' && REFERENCE_REGEX.test(value)) {
     return value.slice(2, -2).trim()
   }
+}
+
+// A reference can address a sub-path of a field (`{{ constructorArgs._owner }}`),
+// but only the base field is a field name, so only the base field can be
+// scheduled as a dependency. resolveReference walks the rest of the path.
+export function getReferencedName(value: unknown): string | undefined {
+  return getReferencedPath(value)?.split('.')[0]
 }
 
 export type ReferenceInput = Record<string, ContractValue>
@@ -39,7 +46,7 @@ export function resolveReference<T>(
   value: T,
   input: ReferenceInput,
 ): T | ContractValue {
-  const dependency = getReferencedName(value)
+  const dependency = getReferencedPath(value)
   if (!dependency) {
     return value
   }
@@ -67,7 +74,7 @@ export function resolveReferenceFromValues(
   value: string,
   previousResults: Record<string, ContractValue | undefined>,
 ): ContractValue {
-  const dependency = getReferencedName(value)
+  const dependency = getReferencedPath(value)
   if (dependency === undefined) {
     return value
   }

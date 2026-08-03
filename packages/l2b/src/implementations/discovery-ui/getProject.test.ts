@@ -109,11 +109,7 @@ function mockTemplateService(): TemplateService {
   })
 }
 
-function discovery(
-  name: string,
-  entries: EntryParameters[],
-  sharedModules?: string[],
-): DiscoveryOutput {
+function discovery(name: string, entries: EntryParameters[]): DiscoveryOutput {
   return {
     name,
     timestamp: 0,
@@ -122,7 +118,6 @@ function discovery(
     configHash: Hash256.ZERO,
     usedTemplates: {},
     usedBlockNumbers: {},
-    sharedModules,
   }
 }
 
