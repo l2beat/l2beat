@@ -102,10 +102,7 @@ export class ConfigReader {
     seen.add(projectName)
 
     const discovery = this.readDiscovery(projectName)
-    const references = [
-      ...getReferencedProjects(discovery),
-      ...(discovery.sharedModules ?? []),
-    ]
+    const references = getReferencedProjects(discovery)
 
     return [
       discovery,

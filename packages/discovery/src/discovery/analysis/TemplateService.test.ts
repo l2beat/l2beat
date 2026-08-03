@@ -1,6 +1,10 @@
 import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import { expect, mockFn } from 'earl'
+import { ConfigRegistry } from '../config/ConfigRegistry'
 import { getDiscoveryPaths } from '../config/getDiscoveryPaths'
+import type { Entrypoint } from '../config/StructureConfig'
+import { generateStructureHash } from '../output/structureOutput'
+import type { DiscoveryOutput, EntryParameters } from '../output/types'
 import { type Shape, TemplateService } from './TemplateService'
 
 const CORRECT_SUPERCHAIN_CONFIG_ADDR = ChainSpecificAddress(
@@ -41,6 +45,107 @@ describe(TemplateService.prototype.findMatchingTemplatesByHash.name, () => {
     // even though there is an implementation match. That's because
     // the more specific match (criteria+hash) is found.
     expect(result).toEqual(['opstack/SuperchainConfig'])
+  })
+})
+
+describe(TemplateService.prototype.discoveryNeedsRefresh.name, () => {
+  const OWNER = 'shared-provider'
+  const CONSUMER = 'consumer'
+  const SHARED = ChainSpecificAddress.random()
+
+  function entrypointReasons(
+    entries: EntryParameters[],
+    entrypoints: Record<string, Entrypoint>,
+  ) {
+    const templateService = new TemplateService(getDiscoveryPaths().discovery)
+    templateService.getAllTemplateHashes = mockFn().returns({})
+    templateService.getAllShapes = mockFn().returns({})
+
+    const config = new ConfigRegistry({
+      name: CONSUMER,
+      chain: 'ethereum',
+      initialAddresses: [],
+      entrypoints,
+    })
+    const discovery: DiscoveryOutput = {
+      name: CONSUMER,
+      timestamp: 0,
+      configHash: generateStructureHash(config.structure),
+      entries,
+      abis: {},
+      usedTemplates: {},
+      usedBlockNumbers: {},
+    }
+
+    return templateService
+      .discoveryNeedsRefresh(discovery, config)
+      .filter((reason) => reason.type === 'ENTRYPOINTS_CHANGED')
+  }
+
+  const reference: EntryParameters = {
+    type: 'Reference',
+    address: SHARED,
+    targetProject: OWNER,
+  }
+  const discovered: EntryParameters = {
+    type: 'Contract',
+    address: SHARED,
+    name: 'Shared',
+    values: {},
+  }
+
+  it('is quiet when a reference matches its entrypoint', () => {
+    expect(
+      entrypointReasons([reference], {
+        [SHARED]: { type: 'Contract', project: OWNER },
+      }),
+    ).toEqual([])
+  })
+
+  it('asks for a refresh when the referenced entrypoint is gone', () => {
+    expect(entrypointReasons([reference], {}).length).toEqual(1)
+  })
+
+  it('asks for a refresh when the referenced entrypoint became legacy', () => {
+    expect(
+      entrypointReasons([reference], {
+        [SHARED]: { type: 'Contract', project: OWNER, isLegacy: true },
+      }).length,
+    ).toEqual(1)
+  })
+
+  it('asks for a refresh when the entrypoint owner changed', () => {
+    expect(
+      entrypointReasons([reference], {
+        [SHARED]: { type: 'Contract', project: 'someone-else' },
+      }).length,
+    ).toEqual(1)
+  })
+
+  it("asks for a refresh when a discovered entry became another project's entrypoint", () => {
+    expect(
+      entrypointReasons([discovered], {
+        [SHARED]: { type: 'Contract', project: OWNER },
+      }).length,
+    ).toEqual(1)
+  })
+
+  it("is quiet when a discovered entry is the project's own entrypoint", () => {
+    expect(
+      entrypointReasons([discovered], {
+        [SHARED]: { type: 'Contract', project: CONSUMER },
+      }),
+    ).toEqual([])
+  })
+
+  // Legacy entrypoints exist precisely so that consumers may keep discovering
+  // them until they are converted.
+  it('is quiet when a discovered entry is a legacy entrypoint elsewhere', () => {
+    expect(
+      entrypointReasons([discovered], {
+        [SHARED]: { type: 'Contract', project: OWNER, isLegacy: true },
+      }),
+    ).toEqual([])
   })
 })
 

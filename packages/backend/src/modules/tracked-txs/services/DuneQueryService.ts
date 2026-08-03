@@ -15,6 +15,10 @@ type Dependencies = {
   progressLogIntervalMs?: number
 }
 
+// Dune bills API export per megabyte; L2BEAT is on the Plus plan.
+const DUNE_PLUS_CREDITS_PER_MB = 2
+const BYTES_PER_MB = 1_000_000
+
 export class DuneQueryService {
   private logger: Logger
   private timeoutMs: number
@@ -99,7 +103,8 @@ export class DuneQueryService {
               state: status.state,
               executionCostCredits: status.execution_cost_credits,
               apiExportCostCredits:
-                status.result_metadata.datapoint_count / 5000,
+                (status.result_metadata.total_result_set_bytes / BYTES_PER_MB) *
+                DUNE_PLUS_CREDITS_PER_MB,
               executionTimeMillis: status.result_metadata.execution_time_millis,
             })
           }
