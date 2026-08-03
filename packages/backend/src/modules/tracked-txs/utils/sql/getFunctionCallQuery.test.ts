@@ -3,7 +3,6 @@ import { expect } from 'earl'
 import { getFunctionCallQuery } from './getFunctionCallQuery'
 
 const ADDRESS_1 = EthereumAddress('0x67e002f3a410029501eae397b63ec5f2b1f9fc96')
-const ADDRESS_2 = EthereumAddress('0xe82a80c31a78f25c5dbe7ad7d035801f518653e6')
 const SELECTOR_1 = '0x' + 'A'.repeat(8)
 const SELECTOR_2 = '0x' + 'B'.repeat(8)
 const FROM = UnixTime.fromDate(new Date('2021-01-01Z'))
@@ -16,7 +15,7 @@ const CONFIGURATIONS = [
     getFullInput: false,
   },
   {
-    address: ADDRESS_2,
+    address: ADDRESS_1,
     selector: SELECTOR_2,
     getFullInput: true,
   },
@@ -34,11 +33,11 @@ describe(getFunctionCallQuery.name, () => {
       ),
       allowed_calls(to_addr, selector) AS (
         VALUES
-          (0x67e002f3a410029501eae397b63ec5f2b1f9fc96, 0xaaaaaaaa),(0xe82a80c31a78f25c5dbe7ad7d035801f518653e6, 0xbbbbbbbb)
+          (0x67e002f3a410029501eae397b63ec5f2b1f9fc96, 0xaaaaaaaa),(0x67e002f3a410029501eae397b63ec5f2b1f9fc96, 0xbbbbbbbb)
       ),
-      full_input_to(to_addr) AS (
+      full_input_calls(to_addr, selector) AS (
         VALUES
-          (0xe82a80c31a78f25c5dbe7ad7d035801f518653e6)
+          (0x67e002f3a410029501eae397b63ec5f2b1f9fc96, 0xbbbbbbbb)
       ),
       traces_filtered AS (
         SELECT
@@ -87,7 +86,12 @@ describe(getFunctionCallQuery.name, () => {
       length(tx.data) AS data_length,
       length(replace(regexp_replace(to_hex(tx.data), '([0-9A-Fa-f]{2})', '$1x'), '00x', '')) / 3 AS non_zero_bytes,
       CASE
-        WHEN tr.to IN (SELECT to_addr FROM full_input_to) THEN tr.input
+        WHEN EXISTS (
+          SELECT 1
+          FROM full_input_calls fic
+          WHERE tr.to = fic.to_addr
+            AND tr.selector = fic.selector
+        ) THEN tr.input
         ELSE tr.selector
       END AS input
     FROM txs_filtered tx
@@ -112,11 +116,11 @@ describe(getFunctionCallQuery.name, () => {
       ),
       allowed_calls(to_addr, selector) AS (
         VALUES
-          (0x67e002f3a410029501eae397b63ec5f2b1f9fc96, 0xaaaaaaaa),(0xe82a80c31a78f25c5dbe7ad7d035801f518653e6, 0xbbbbbbbb)
+          (0x67e002f3a410029501eae397b63ec5f2b1f9fc96, 0xaaaaaaaa),(0x67e002f3a410029501eae397b63ec5f2b1f9fc96, 0xbbbbbbbb)
       ),
-      full_input_to(to_addr) AS (
+      full_input_calls(to_addr, selector) AS (
         VALUES
-          (0xe82a80c31a78f25c5dbe7ad7d035801f518653e6)
+          (0x67e002f3a410029501eae397b63ec5f2b1f9fc96, 0xbbbbbbbb)
       ),
       traces_filtered AS (
         SELECT
@@ -165,7 +169,12 @@ describe(getFunctionCallQuery.name, () => {
       length(tx.data) AS data_length,
       length(replace(regexp_replace(to_hex(tx.data), '([0-9A-Fa-f]{2})', '$1x'), '00x', '')) / 3 AS non_zero_bytes,
       CASE
-        WHEN tr.to IN (SELECT to_addr FROM full_input_to) THEN tr.input
+        WHEN EXISTS (
+          SELECT 1
+          FROM full_input_calls fic
+          WHERE tr.to = fic.to_addr
+            AND tr.selector = fic.selector
+        ) THEN tr.input
         ELSE tr.selector
       END AS input
     FROM txs_filtered tx
@@ -188,9 +197,9 @@ describe(getFunctionCallQuery.name, () => {
         VALUES
           (NULL, NULL)
       ),
-      full_input_to(to_addr) AS (
+      full_input_calls(to_addr, selector) AS (
         VALUES
-          (NULL)
+          (NULL, NULL)
       ),
       traces_filtered AS (
         SELECT
@@ -239,7 +248,12 @@ describe(getFunctionCallQuery.name, () => {
       length(tx.data) AS data_length,
       length(replace(regexp_replace(to_hex(tx.data), '([0-9A-Fa-f]{2})', '$1x'), '00x', '')) / 3 AS non_zero_bytes,
       CASE
-        WHEN tr.to IN (SELECT to_addr FROM full_input_to) THEN tr.input
+        WHEN EXISTS (
+          SELECT 1
+          FROM full_input_calls fic
+          WHERE tr.to = fic.to_addr
+            AND tr.selector = fic.selector
+        ) THEN tr.input
         ELSE tr.selector
       END AS input
     FROM txs_filtered tx

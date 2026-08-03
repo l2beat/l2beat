@@ -9,8 +9,9 @@ export function getFunctionCallQuery(
   from: UnixTime,
   to: UnixTime,
 ): string {
-  const fullInputAddresses = unique(
-    configs.filter((c) => c.getFullInput).map((c) => c.address.toLowerCase()),
+  const fullInputCalls = unique(
+    configs.filter((c) => c.getFullInput),
+    (c) => `${c.address.toLowerCase()}-${c.selector.toLowerCase()}`,
   )
   const fromDate = UnixTime.toDate(from).toISOString()
   const toDate = UnixTime.toDate(to).toISOString()
@@ -41,12 +42,17 @@ export function getFunctionCallQuery(
               : '(NULL, NULL)'
           }
       ),
-      full_input_to(to_addr) AS (
+      full_input_calls(to_addr, selector) AS (
         VALUES
           ${
-            fullInputAddresses.length > 0
-              ? fullInputAddresses.map((a) => `(${a})`).join(',')
-              : '(NULL)'
+            fullInputCalls.length > 0
+              ? fullInputCalls
+                  .map(
+                    (c) =>
+                      `(${c.address.toLowerCase()}, ${c.selector.toLowerCase()})`,
+                  )
+                  .join(',')
+              : '(NULL, NULL)'
           }
       ),
       traces_filtered AS (
@@ -96,7 +102,12 @@ export function getFunctionCallQuery(
       length(tx.data) AS data_length,
       length(replace(regexp_replace(to_hex(tx.data), '([0-9A-Fa-f]{2})', '$1x'), '00x', '')) / 3 AS non_zero_bytes,
       CASE
-        WHEN tr.to IN (SELECT to_addr FROM full_input_to) THEN tr.input
+        WHEN EXISTS (
+          SELECT 1
+          FROM full_input_calls fic
+          WHERE tr.to = fic.to_addr
+            AND tr.selector = fic.selector
+        ) THEN tr.input
         ELSE tr.selector
       END AS input
     FROM txs_filtered tx
