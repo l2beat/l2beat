@@ -112,7 +112,6 @@ export const _StructureConfig = {
       StructureContract,
     )
     .optional(),
-  sharedModules: v.array(v.string()).default([]),
   types: v.record(v.string(), DiscoveryCustomType).optional(),
   ..._EntrypointsFile,
 }
