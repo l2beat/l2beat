@@ -13,6 +13,7 @@ const STRK20_WITHDRAWAL_EVENT =
   '0x2eed7e29b3502a726faf503ac4316b7101f3da813654e8df02c13449e03da8'
 const STRK20_SINCE = UnixTime.fromDate(new Date('2026-06-17'))
 const STRK20_POOL_SINCE = UnixTime.fromDate(new Date('2026-04-20T10:08:48Z'))
+const STRK20_STRKBTC_SINCE = UnixTime(1777893725)
 const STRK20_TOKENS = [
   {
     address:
@@ -22,6 +23,7 @@ const STRK20_TOKENS = [
     symbol: 'STRK',
     decimals: 18,
     priceId: 'starknet',
+    sinceTimestamp: STRK20_POOL_SINCE,
   },
   {
     address:
@@ -31,6 +33,7 @@ const STRK20_TOKENS = [
     symbol: 'USDC',
     decimals: 6,
     priceId: 'usd-coin',
+    sinceTimestamp: STRK20_POOL_SINCE,
   },
   {
     address:
@@ -40,6 +43,7 @@ const STRK20_TOKENS = [
     symbol: 'strkBTC',
     decimals: 8,
     priceId: 'strkbtc',
+    sinceTimestamp: STRK20_STRKBTC_SINCE,
   },
   {
     address:
@@ -49,6 +53,7 @@ const STRK20_TOKENS = [
     symbol: 'WBTC',
     decimals: 8,
     priceId: 'wrapped-bitcoin',
+    sinceTimestamp: STRK20_POOL_SINCE,
   },
   {
     address:
@@ -58,6 +63,7 @@ const STRK20_TOKENS = [
     symbol: 'ETH',
     decimals: 18,
     priceId: 'ethereum',
+    sinceTimestamp: STRK20_POOL_SINCE,
   },
   {
     address:
@@ -67,6 +73,7 @@ const STRK20_TOKENS = [
     symbol: 'XSTRK',
     decimals: 18,
     priceId: 'endur-fi-staked-strk',
+    sinceTimestamp: STRK20_POOL_SINCE,
   },
   {
     address:
@@ -76,6 +83,7 @@ const STRK20_TOKENS = [
     decimals: 6,
     symbol: 'USDT',
     priceId: 'tether',
+    sinceTimestamp: STRK20_POOL_SINCE,
   },
 ] as const
 
@@ -152,17 +160,14 @@ export const strk20: BaseProject = {
 
 function getPrivacyTokens(): ProjectPrivacyToken[] {
   return STRK20_TOKENS.map((token) => ({
-    token: {
-      ...token,
-      sinceTimestamp: STRK20_SINCE,
-    },
+    token,
     buckets: [
       {
         id: `strk20-${token.symbol}`,
         type: 'pool',
         label: `${token.symbol} pool`,
         address: STRK20_POOL,
-        sinceTimestamp: STRK20_POOL_SINCE,
+        sinceTimestamp: token.sinceTimestamp,
         deposit: {
           event: STRK20_DEPOSIT_EVENT,
           extractor: 'strk20Deposit',
