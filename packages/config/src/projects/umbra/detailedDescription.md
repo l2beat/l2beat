@@ -2,4 +2,6 @@ Umbra Cash is a stealth-address payment protocol. A recipient registers separate
 
 ### Privacy considerations
 
-Umbra is not a mixer and does not use zero-knowledge proofs or an anonymity pool. The sender, amount, token, and fresh receiving address remain public. Privacy comes from hiding the identity of the person controlling that address, although most likely it is one of the addresses that registered stealth keys on StealthKeyRegistry. 
+Umbra is not a mixer and does not use zero-knowledge proofs or an anonymity pool. The sender, amount, token, and fresh receiving address remain public. Privacy comes from hiding the identity of the person controlling that address.
+
+Although not enforced by the protocol, Umbra Cash users register their public keys on StealthKeyRegistry. On one hand, this allows stealth transfers between the sender and the recipient without exchanging any data offchain. On the other hand, stealth transfer recipients are very likely to be among the registered addresses, which reduces recipient anonymity set.

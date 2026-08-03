@@ -1,6 +1,5 @@
 ## Funds can be lost if
-1. a recipient loses the keys needed to identify and spend payments sent to their stealth addresses.
-2. an unsupported ERC-20, such as a fee-on-transfer or rebasing token, causes the Umbra contract's internal accounting to diverge from its token balance.
+1. an unsupported ERC-20, such as a fee-on-transfer or rebasing token, causes the Umbra contract's internal accounting to diverge from its token balance.
 <br>
 ## Privacy can be lost if
 1. a recipient sends funds from a stealth address to a publicly linked address or consolidates payments in a recognizable way.
