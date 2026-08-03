@@ -136,8 +136,6 @@ describe(UpdateDiffer.name, () => {
       expect(updateDiffRepository.insertMany).not.toHaveBeenCalled()
     })
 
-    // A consumer only holds a stub, so unless it resolves to the entry it names,
-    // an upgrade in the owning project produces no diff for the consumer.
     it('reports a change inside a referenced project as its own', async () => {
       const changed = {
         ...mockContract(NAME_A, ADDRESS_A),
@@ -189,8 +187,77 @@ describe(UpdateDiffer.name, () => {
       expect(updateDiffer.inserted).toEqual([])
     })
 
-    // The referenced project may not have been discovered yet in this shuffled
-    // run, which must stay silent rather than look like a mass deletion.
+    it('follows a chain of references to the entry that owns the address', async () => {
+      const updateDiffer = referencingUpdateDiffer({
+        onDisk: {
+          [PROJECT_A]: discoveryOf(PROJECT_A, [reference(PROVIDER, ADDRESS_A)]),
+          [PROVIDER]: discoveryOf(PROVIDER, [
+            reference(SECOND_PROVIDER, ADDRESS_A),
+          ]),
+          [SECOND_PROVIDER]: discoveryOf(SECOND_PROVIDER, [
+            mockContract(NAME_A, ADDRESS_A),
+          ]),
+        },
+        latest: {
+          [PROJECT_A]: discoveryOf(PROJECT_A, [reference(PROVIDER, ADDRESS_A)]),
+          [PROVIDER]: discoveryOf(PROVIDER, [
+            reference(SECOND_PROVIDER, ADDRESS_A),
+          ]),
+          [SECOND_PROVIDER]: discoveryOf(SECOND_PROVIDER, [
+            {
+              ...mockContract(NAME_A, ADDRESS_A),
+              values: { $implementation: ADDRESS_C },
+            },
+          ]),
+        },
+      })
+
+      await updateDiffer.runForProject(PROJECT_A, UnixTime.now())
+
+      expect(updateDiffer.inserted.length).toEqual(1)
+      expect(updateDiffer.inserted[0]?.projectId).toEqual(PROJECT_A)
+      expect(updateDiffer.inserted[0]?.address).toEqual(ADDRESS_A)
+    })
+
+    it('reports nothing when references form a cycle', async () => {
+      const cycle = {
+        [PROJECT_A]: discoveryOf(PROJECT_A, [reference(PROVIDER, ADDRESS_A)]),
+        [PROVIDER]: discoveryOf(PROVIDER, [
+          reference(SECOND_PROVIDER, ADDRESS_A),
+        ]),
+        [SECOND_PROVIDER]: discoveryOf(SECOND_PROVIDER, [
+          reference(PROVIDER, ADDRESS_A),
+        ]),
+      }
+      const updateDiffer = referencingUpdateDiffer({
+        onDisk: cycle,
+        latest: cycle,
+      })
+
+      await updateDiffer.runForProject(PROJECT_A, UnixTime.now())
+
+      expect(updateDiffer.inserted).toEqual([])
+    })
+
+    it('reports nothing when a reference resolves only to another stub', async () => {
+      const updateDiffer = referencingUpdateDiffer({
+        onDisk: {
+          [PROJECT_A]: discoveryOf(PROJECT_A, [reference(PROVIDER, ADDRESS_A)]),
+          [PROVIDER]: discoveryOf(PROVIDER, [mockContract(NAME_A, ADDRESS_A)]),
+        },
+        latest: {
+          [PROJECT_A]: discoveryOf(PROJECT_A, [reference(PROVIDER, ADDRESS_A)]),
+          [PROVIDER]: discoveryOf(PROVIDER, [
+            reference(SECOND_PROVIDER, ADDRESS_A),
+          ]),
+        },
+      })
+
+      await updateDiffer.runForProject(PROJECT_A, UnixTime.now())
+
+      expect(updateDiffer.inserted).toEqual([])
+    })
+
     it('reports nothing when a referenced project has not run yet', async () => {
       const updateDiffer = referencingUpdateDiffer({
         onDisk: {
@@ -422,6 +489,7 @@ function reference(
 }
 
 const PROVIDER = 'shared-provider'
+const SECOND_PROVIDER = 'shared-second-provider'
 const PROJECT_A = 'project-a'
 const NAME_A = 'contract-a'
 const ADDRESS_A = ChainSpecificAddress.random()

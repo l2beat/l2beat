@@ -10,21 +10,41 @@ import {
 import type { UnixTime } from '@l2beat/shared-pure'
 import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
 
-// A reference is a stub standing in for an entry owned by another project, so a
-// change inside that project is invisible until the stub is swapped for the
-// entry it names. Swapping rather than appending keeps one entry per address,
-// which matters because diffDiscovery matches on the first entry it finds.
+// A reference is a stub standing in for an entry owned by another project.
+// Swapping it for that entry, rather than appending, keeps one entry per
+// address, which matters because diffDiscovery matches the first one it finds.
+function resolveReference(
+  entry: EntryParameters,
+  resolve: (project: string) => DiscoveryOutput | undefined,
+): EntryParameters | undefined {
+  const visited = new Set<string>()
+  let current = entry
+
+  while (current.type === 'Reference') {
+    if (current.targetProject === undefined) {
+      return undefined
+    }
+    if (visited.has(current.targetProject)) {
+      return undefined
+    }
+    visited.add(current.targetProject)
+
+    const owner = resolve(current.targetProject)
+    const next = owner?.entries.find((e) => e.address === current.address)
+    if (next === undefined) {
+      return undefined
+    }
+    current = next
+  }
+
+  return current
+}
+
 function resolveReferences(
   entries: EntryParameters[],
   resolve: (project: string) => DiscoveryOutput | undefined,
 ): EntryParameters[] {
-  return entries.flatMap((entry) => {
-    if (entry.type !== 'Reference' || entry.targetProject === undefined) {
-      return entry
-    }
-    const owner = resolve(entry.targetProject)
-    return owner?.entries.find((e) => e.address === entry.address) ?? []
-  })
+  return entries.flatMap((entry) => resolveReference(entry, resolve) ?? [])
 }
 
 export class UpdateDiffer {
