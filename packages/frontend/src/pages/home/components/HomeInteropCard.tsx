@@ -3,7 +3,6 @@ import { type ReactNode, useMemo } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { EM_DASH } from '~/consts/characters'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
-import { CursorClickIcon } from '~/icons/CursorClick'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import {
   MIN_SELECTED_CHAINS,
@@ -21,7 +20,6 @@ import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'
-import { HomeInteropSelectedPath } from './HomeInteropSelectedPath'
 
 interface Props {
   interopChains: InteropChainWithIcon[]
@@ -51,8 +49,7 @@ function HomeInteropCardContent({
   interopChains: InteropChainWithIcon[]
 }) {
   const trpc = useTRPC()
-  const { selectedChains, allChains, selectedProtocols, highlightedChains } =
-    useInteropFlows()
+  const { selectedChains, allChains, selectedProtocols } = useInteropFlows()
   const hasEnoughChains = selectedChains.length >= MIN_SELECTED_CHAINS
   const hasEnoughProtocols = selectedProtocols.length >= MIN_SELECTED_PROTOCOLS
 
@@ -75,11 +72,6 @@ function HomeInteropCardContent({
       ),
     [data?.chainData],
   )
-
-  const visibleHighlightedChains = isLoading
-    ? highlightedChains
-    : highlightedChains.filter((chainId) => activeIds.has(chainId))
-  const hasSelection = visibleHighlightedChains.length > 0
 
   const activeChains = useMemo(
     () =>
@@ -197,20 +189,9 @@ function HomeInteropCardContent({
           }
         />
       </div>
-      <div
-        className={cn(
-          'mt-6 flex @min-[900px]:grid min-h-0 flex-1 flex-col @min-[900px]:gap-4 @min-[900px]:transition-[grid-template-columns] @min-[900px]:duration-300 @min-[900px]:ease-in-out motion-reduce:transition-none',
-          hasSelection
-            ? '@min-[900px]:grid-cols-[1fr_280px]'
-            : '@min-[900px]:grid-cols-[1fr_0px]',
-        )}
-      >
-        <div className="-mx-2 flex min-h-0 min-w-0 flex-1 flex-col overflow-x-clip">
-          <div className="mb-3 flex justify-center">
-            <SelectInfo
-              highlightedChainsNumber={visibleHighlightedChains.length}
-            />
-          </div>
+      <div className="mt-6 flex min-h-0 flex-1 flex-col">
+        {/* Static preview: interactions happen on the interop page */}
+        <div className="-mx-2 pointer-events-none flex min-h-0 min-w-0 flex-1 flex-col overflow-x-clip">
           <FlowsGraphPanel
             activeChains={activeChains}
             data={data}
@@ -220,44 +201,8 @@ function HomeInteropCardContent({
             className="pb-2"
           />
         </div>
-        <div
-          className={cn(
-            'flex min-h-0 min-w-0 @min-[900px]:translate-x-3 flex-col @min-[900px]:overflow-hidden @min-[900px]:opacity-0 @min-[900px]:transition-[transform,opacity] @min-[900px]:duration-300 @min-[900px]:ease-out motion-reduce:transition-none',
-            hasSelection &&
-              '@min-[900px]:translate-x-0 @min-[900px]:opacity-100',
-          )}
-        >
-          {hasSelection && data && (
-            <HomeInteropSelectedPath
-              data={data}
-              allChains={allChains}
-              selectedChains={selectedChains}
-              visibleHighlightedChains={visibleHighlightedChains}
-              className="@min-[900px]:mt-0 mt-4 @min-[900px]:h-full @min-[900px]:w-[280px]"
-            />
-          )}
-        </div>
       </div>
     </HomeCard>
-  )
-}
-
-function SelectInfo({
-  highlightedChainsNumber,
-}: {
-  highlightedChainsNumber: number
-}) {
-  const text =
-    highlightedChainsNumber === 1
-      ? 'Select second chain to view detailed data'
-      : 'Select chain or pair of chains to view detailed data'
-  return (
-    <div className="flex items-center gap-0.5">
-      <CursorClickIcon className="size-3.5 shrink-0 fill-brand" />
-      <p className="font-medium text-brand text-label-value-13 italic leading-none">
-        {text}
-      </p>
-    </div>
   )
 }
 
