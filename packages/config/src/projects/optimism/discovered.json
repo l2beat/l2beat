@@ -1,6 +1,6 @@
 {
   "name": "optimism",
-  "timestamp": 1784283055,
+  "timestamp": 1785740830,
   "configHash": "0x6336cfa4c477fafd7a9d7c014a4d4d4a78c4395fde8bb205f519c2b4ba9061dc",
   "entries": [
     {
@@ -167,7 +167,7 @@
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "symbol": "WETH",
         "systemConfig": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
-        "totalSupply": "20415188000000000000",
+        "totalSupply": "20247594000000000000",
         "version": "1.5.1"
       },
       "implementationNames": {
@@ -442,12 +442,12 @@
           ]
         ],
         "$upgradeCount": 5,
-        "anchorGame": "eth:0x1408352C90e48c5B509d6646995EEE7997b1e898",
+        "anchorGame": "eth:0x87aDB8515f0AeD2F0B94d98A75d20493f1aD80bD",
         "disputeGameFactory": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0xea1cb19d905c64a66a0e7eb997d3b7dec9f872c31ed3159786cc6f7b72b98bf1",
-          154038930
+          "0xc7e16d6e87bde4e17cd2d9241c82eb10469381e52d3b69254d6104f78626f968",
+          154766382
         ],
         "getStartingAnchorRoot": {
           "root": "0xfce6d556d11e1662f316ed1408782a3227b1c1dcd8f643c1f563043298822e62",
@@ -511,7 +511,7 @@
       "values": {
         "$immutable": true,
         "safe": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "21d 13h",
+        "timeSinceLastL2beatInteraction": "1mo 8d",
         "version": "1.0.0"
       },
       "implementationNames": {
@@ -634,7 +634,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292864081",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292867927",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1728,7 +1728,7 @@
           "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
         ],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 120,
+        "nonce": 121,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1958,7 +1958,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 516982,
-          "prevBlockNum": 25551715
+          "prevBlockNum": 25672756
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -2283,7 +2283,7 @@
         "game8": "eth:0x2DDA3584b51eF5236f7726Dea5A0FB6B3cA94AeC",
         "game8Args": "0x0337ecb3604c0b40c352e0c7711beb17a212d583f4fe956fd8d66e29ad5f9025acc005dcd857b401e4732e6f7837135a22825cfa23b2c62946350f4246f9f9d027e071f0264fd1131b6dbf05eaf22d4e70dc993e8a19dd9f3dcb3162000000000000000000000000000000000000000000000000000000000000000a",
         "game8Vm": "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA",
-        "gameCount": 18420,
+        "gameCount": 18825,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xe1dFFCBE4e22B813F26d2106D943C102e7cAb87e",
@@ -2452,7 +2452,7 @@
           "oeth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
         ],
         "multisigThreshold": "6 of 9 (67%)",
-        "nonce": 12,
+        "nonce": 14,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2521,7 +2521,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "l1CrossDomainMessenger": "oeth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292653736",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292653884",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2590,7 +2590,7 @@
         "$upgradeCount": 5,
         "baseFee": 0,
         "baseFeeScalar": 5227,
-        "blobBaseFee": 3421260,
+        "blobBaseFee": 9832555,
         "blobBaseFeeScalar": 1014213,
         "decimals": 6,
         "DECIMALS": 6,
@@ -2599,7 +2599,7 @@
         "isFjord": true,
         "isIsthmus": true,
         "isJovian": true,
-        "l1BaseFee": 64670620,
+        "l1BaseFee": 173134365,
         "version": "1.6.0"
       },
       "implementationNames": {
@@ -2865,10 +2865,10 @@
           ]
         ],
         "$upgradeCount": 4,
-        "basefee": 64670620,
+        "basefee": 173134365,
         "baseFeeScalar": 5227,
         "batcherHash": "0x0000000000000000000000006887246668a3b87f54deb3b94ba47a6f63f32985",
-        "blobBaseFee": 3421260,
+        "blobBaseFee": 9832555,
         "blobBaseFeeScalar": 1014213,
         "daFootprintGasScalar": 400,
         "DEPOSITOR_ACCOUNT": "oeth:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -2878,17 +2878,17 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0x7af97034002187309be400bb80e986d3645b4873ae594887de0bc869991a4273",
+        "hash": "0x9d3b618db5955c5b2228d0c94b81b1b136d19623b7f8953e46ed9a5c2b357a9c",
         "isCustomGasToken": false,
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 25551715,
+        "number": 25672760,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
         "proxyAdmin": "oeth:0x4200000000000000000000000000000000000018",
         "proxyAdminOwner": "oeth:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-        "sequenceNumber": 1,
-        "timestamp": 1784282975,
+        "sequenceNumber": 3,
+        "timestamp": 1785740747,
         "version": "1.9.0"
       },
       "implementationNames": {
@@ -5742,6 +5742,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 25551721, "optimism": 154342139 },
+  "usedBlockNumbers": { "ethereum": 25672766, "optimism": 155071026 },
   "permissionsConfigHash": "0x18aded7cc450f3aed4000071c50d417eb8f3cd1e06808e21ed53a1190819c1f0"
 }
