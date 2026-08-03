@@ -272,7 +272,7 @@ export const base: ScalingProject = opStackL2({
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,
         fraudProofSystemIsPermissionless: true,
-        delayWith30DExitWindow: false,
+        delayWith30DExitWindow: true,
       },
     },
     {
