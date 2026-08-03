@@ -375,26 +375,26 @@ export const aztecnetwork: ScalingProject = {
           sinceTimestamp: v5ActivationTimestamp,
         },
       },
-      // {
-      //   uses: [
-      //     {
-      //       type: 'liveness',
-      //       subtype: 'stateUpdates',
-      //       // All proof submissions targeting an epoch share its first
-      //       // checkpoint as `args.start`.
-      //       groupBy: { type: 'functionCallParameter', path: [0, 0] },
-      //     },
-      //     { type: 'l2costs', subtype: 'stateUpdates' },
-      //   ],
-      //   query: {
-      //     formula: 'functionCall',
-      //     address: rollupAddress,
-      //     selector: '0x069d1525',
-      //     functionSignature:
-      //       'function submitEpochRootProof((uint256,uint256,(bytes32,bytes32,bytes32,address),(bytes32,bytes32,bytes32,bytes32,bytes32,uint256,uint256,address,bytes32,(uint128,uint128),uint256,uint256)[],(bytes,bytes),bytes,bytes))',
-      //     sinceTimestamp: v5ActivationTimestamp,
-      //   },
-      // },
+      {
+        uses: [
+          {
+            type: 'liveness',
+            subtype: 'stateUpdates',
+            // All proof submissions targeting an epoch share its first
+            // checkpoint as `args.start`.
+            groupBy: { type: 'functionCallParameter', path: [0, 0] },
+          },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: rollupAddress,
+          selector: '0x069d1525',
+          functionSignature:
+            'function submitEpochRootProof((uint256,uint256,(bytes32,bytes32,bytes32,address),(bytes32,bytes32,bytes32,bytes32,bytes32,uint256,uint256,address,bytes32,(uint128,uint128),uint256,uint256)[],(bytes,bytes),bytes,bytes))',
+          sinceTimestamp: v5ActivationTimestamp,
+        },
+      },
     ],
   },
   chainConfig: {
