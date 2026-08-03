@@ -188,8 +188,7 @@ function combineCalls(
 
       return {
         ...c.properties.params,
-        // Kept until transformFunctionCallsQueryResult consumes grouping_value.
-        getFullInput: groupingProjection !== undefined,
+        getFullInput: false,
         groupingProjection,
       }
     }),

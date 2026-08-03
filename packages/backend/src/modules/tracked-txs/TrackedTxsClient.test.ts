@@ -99,7 +99,7 @@ describe(TrackedTxsClient.name, () => {
       expect(duneQueryService.query).not.toHaveBeenCalled()
     })
 
-    it('requests grouping projection for grouped liveness calls', async () => {
+    it('requests grouping projection without full input', async () => {
       const duneQueryService = getMockDuneQueryService([[]])
       const trackedTxsClient = new TrackedTxsClient(
         duneQueryService,
@@ -135,7 +135,7 @@ describe(TrackedTxsClient.name, () => {
           [
             {
               ...config.properties.params,
-              getFullInput: true,
+              getFullInput: false,
               groupingProjection: {
                 start: 5,
                 length: 32,

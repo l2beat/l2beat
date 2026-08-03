@@ -64,8 +64,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
     const iface = new utils.Interface([signature])
     const selector = iface.getSighash('submit')
     const address = EthereumAddress.random()
-    const firstInput = iface.encodeFunctionData('submit', [[123, 456]])
-    const secondInput = iface.encodeFunctionData('submit', [[123, 789]])
+    const groupingValue = utils.defaultAbiCoder.encode(['uint256'], [123])
     const livenessId = createTrackedTxId.random()
     const costsId = createTrackedTxId.random()
     const warn = mockFn().returns(undefined)
@@ -116,8 +115,8 @@ describe(transformFunctionCallsQueryResult.name, () => {
           hash: txHashes[0],
           block_number: block,
           block_time: timestamp,
-          input: firstInput,
-          grouping_value: null,
+          input: selector,
+          grouping_value: groupingValue,
           to: address,
           gas_price: 10n,
           gas_used: 100,
@@ -129,8 +128,8 @@ describe(transformFunctionCallsQueryResult.name, () => {
           hash: txHashes[1],
           block_number: block + 1,
           block_time: timestamp + 1,
-          input: secondInput,
-          grouping_value: null,
+          input: selector,
+          grouping_value: groupingValue,
           to: address,
           gas_price: 10n,
           gas_used: 100,
@@ -159,6 +158,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
     const costs = result.filter((entry) => entry.type === 'l2costs')
 
     expect(liveness.map((entry) => entry.groupingKey)).toEqual(['123', '123'])
+    expect(liveness.map((entry) => entry.input)).toEqual([selector, selector])
     expect(costs).toHaveLength(3)
     expect(warn).toHaveBeenCalledWith(
       'Failed to derive liveness grouping key',

@@ -12,8 +12,9 @@ import type {
   TrackedTxFunctionCallResult,
 } from '../types/model'
 import { calculateCalldataGasUsed } from './calculateCalldataGasUsed'
+import { getFunctionCallParameterProjection } from './getFunctionCallParameterProjection'
 import {
-  getLivenessGroupingKey,
+  getLivenessGroupingKeyFromProjectedValue,
   hasLivenessGrouping,
 } from './getLivenessGroupingKey'
 import { isFistParameterMatching } from './isFirstParameterMatching'
@@ -32,6 +33,22 @@ export function transformFunctionCallsQueryResult(
   queryResults: DuneFunctionCallResult[],
   logger: Logger,
 ): TrackedTxFunctionCallResult[] {
+  const groupingProjections = new Map(
+    functionCalls.flatMap((config) => {
+      if (!hasLivenessGrouping(config.properties)) return []
+
+      return [
+        [
+          config.id,
+          getFunctionCallParameterProjection(
+            config.properties.params.signature,
+            config.properties.groupBy.path,
+          ),
+        ] as const,
+      ]
+    }),
+  )
+
   return queryResults.flatMap((r) => {
     const selector = r.input.slice(0, 10)
 
@@ -97,14 +114,17 @@ export function transformFunctionCallsQueryResult(
 
       if (hasLivenessGrouping(config.properties)) {
         try {
+          const projection = groupingProjections.get(config.id)
+          assert(projection !== undefined, 'Grouping projection is missing')
+          assert(r.grouping_value !== null, 'Grouping value is missing')
+
           return [
             {
               ...common,
               type: 'liveness',
-              groupingKey: getLivenessGroupingKey(
-                r.input,
-                config.properties.params,
-                config.properties.groupBy,
+              groupingKey: getLivenessGroupingKeyFromProjectedValue(
+                r.grouping_value,
+                projection.abiType,
               ),
             },
           ]
