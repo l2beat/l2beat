@@ -12,6 +12,7 @@ const SPEC_ROWS = [
   { key: 'trustedPreconfirmation', label: 'Trusted preconfirmation' },
   { key: 'trustedOrdering', label: 'Trusted ordering' },
   { key: 'sequencer', label: 'Sequencer' },
+  { key: 'proverAndStateProposer', label: 'Prover and state proposer' },
   {
     key: 'realtimeCensorshipResistance',
     label: 'Real-time censorship resistance',

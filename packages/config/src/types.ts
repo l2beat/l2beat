@@ -81,6 +81,7 @@ export interface ProjectCentralizedSequencingSpec {
   trustedPreconfirmation: TableReadyValue
   trustedOrdering: TableReadyValue
   sequencer: TableReadyValue
+  proverAndStateProposer: TableReadyValue
   realtimeCensorshipResistance: TableReadyValue
   forcedInclusion: TableReadyValue
   inclusionDelay: TableReadyValue

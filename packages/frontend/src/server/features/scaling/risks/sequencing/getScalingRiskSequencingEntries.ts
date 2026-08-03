@@ -38,6 +38,7 @@ export interface ScalingRiskCentralizedSequencingEntry
   trustedPreconfirmation: TableReadyValue
   trustedOrdering: TableReadyValue
   sequencer: TableReadyValue
+  proverAndStateProposer: TableReadyValue
   realtimeCensorshipResistance: TableReadyValue
   forcedInclusion: TableReadyValue
   inclusionDelay: TableReadyValue
@@ -208,6 +209,7 @@ function getScalingRiskCentralizedSequencingEntry(
     trustedPreconfirmation: spec.trustedPreconfirmation,
     trustedOrdering: spec.trustedOrdering,
     sequencer: spec.sequencer,
+    proverAndStateProposer: spec.proverAndStateProposer,
     realtimeCensorshipResistance: spec.realtimeCensorshipResistance,
     forcedInclusion: spec.forcedInclusion,
     inclusionDelay: spec.inclusionDelay,

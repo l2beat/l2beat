@@ -40,7 +40,7 @@ export function CentralizedSequencingTable({ entries }: Props) {
             A centralized operator can censor in real time. Live inclusion
             measures how a user bypasses it while the chain continues to
             operate. Exit covers the worst case where state proposers also stop
-            and a user must permissionlessly advance and defend the state.
+            and shows whether and how a user can advance and defend the state.
             Delays assume Ethereum includes the required L1 transactions.
           </p>
         </div>

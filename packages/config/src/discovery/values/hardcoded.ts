@@ -67,6 +67,22 @@ export const HARDCODED = {
     // https://etherscan.io/address/0x66d94ee8f529b683ed6013729784e8bb44697a64#code
     MAX_DEPOSIT_CALLDATA_BYTES: 120_000,
   },
+  STARKNET: {
+    // These are offchain operational parameters of Starknet v0.14.3. The
+    // tagged Apollo deployment config has five equal-weight, proposing
+    // sequencers, and SNIP-40 sets the typical execution slot to 1.5 seconds.
+    // https://github.com/starkware-libs/sequencer/blob/5114457ad4b5d6d1764b520dfa40b9e826f48854/deployments/sequencer/configs/overlays/hybrid/mainnet/services/core.yaml#L13
+    // https://github.com/starkware-libs/sequencer/blob/5114457ad4b5d6d1764b520dfa40b9e826f48854/crates/apollo_deployments/resources/app_configs/consensus_manager_config.json#L2-L2
+    // https://github.com/starkware-libs/sequencer/blob/5114457ad4b5d6d1764b520dfa40b9e826f48854/crates/apollo_consensus/src/votes_threshold.rs#L24-L29
+    // https://community.starknet.io/t/snip-40-more-frequent-blocks/116203
+    CONSENSUS_SEQUENCER_COUNT: 5,
+    CONSENSUS_QUORUM: 3,
+    L2_BLOCK_TIME_MILLISECONDS: 1_500,
+    // The documented normal-case target for PRE_CONFIRMED status. It is a
+    // trusted promise by the current block proposer, not a protocol deadline.
+    // https://community.starknet.io/t/snip-30-v0-14-0/115756
+    PRECONFIRMATION_TIME_MILLISECONDS: 500,
+  },
   PUBLICGOODSNETWORK: {
     // https://github.com/ethereum-optimism/optimism/pull/6261/files
     SEQUENCING_WINDOW_SECONDS: 3_600 * ETHEREUM_BLOCK_TIME_SECONDS,

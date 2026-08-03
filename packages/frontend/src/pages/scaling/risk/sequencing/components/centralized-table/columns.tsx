@@ -17,6 +17,7 @@ type CentralizedSequencingTableValueKey =
   | 'trustedPreconfirmation'
   | 'trustedOrdering'
   | 'sequencer'
+  | 'proverAndStateProposer'
   | 'realtimeCensorshipResistance'
   | 'forcedInclusion'
   | 'inclusionDelay'
@@ -41,6 +42,12 @@ const tableValueColumns = [
     key: 'sequencer',
     header: 'Sequencer',
     tooltip: 'Operators controlling real-time transaction ordering.',
+  },
+  {
+    key: 'proverAndStateProposer',
+    header: 'Prover & state\nproposer',
+    tooltip:
+      'Who produces the proof or dispute claim, and who can advance the canonical state on the host chain.',
   },
   {
     key: 'realtimeCensorshipResistance',
