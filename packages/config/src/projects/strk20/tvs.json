@@ -53,7 +53,7 @@
         "escrowAddress": "0x040337b1af3c663e86e333bab5a4b28da8d4652a15a69beee2b677776ffe812a",
         "chain": "starknet",
         "decimals": 8,
-        "sinceTimestamp": 1776679728
+        "sinceTimestamp": 1777893725
       },
       "category": "btc",
       "source": "canonical",
