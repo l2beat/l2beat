@@ -14,6 +14,7 @@ import {
   InteropFlowsProvider,
   useInteropFlows,
 } from '~/pages/interop/components/flows/utils/InteropFlowsContext'
+import { getInteropTokenUrl } from '~/pages/interop/utils/getInteropTokenUrl'
 import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
@@ -129,6 +130,7 @@ function HomeInteropCardContent({
         <StatTile
           title="Top chain"
           isLoading={statsLoading}
+          href={topChainData?.href}
           primary={topChainData?.name ?? EM_DASH}
           secondary={
             topChain
@@ -148,6 +150,7 @@ function HomeInteropCardContent({
         <StatTile
           title="Top token"
           isLoading={statsLoading}
+          href={topToken ? getInteropTokenUrl(topToken) : undefined}
           primary={topToken?.symbol ?? EM_DASH}
           secondary={
             topToken ? formatCurrency(topToken.volume, 'usd') : undefined
@@ -165,6 +168,7 @@ function HomeInteropCardContent({
         <StatTile
           title="Top chain path"
           isLoading={statsLoading}
+          href={srcChain && dstChain ? '/interop/summary' : undefined}
           primary={
             srcChain && dstChain ? (
               <div className="flex items-center gap-1.5">
@@ -213,6 +217,7 @@ function StatTile({
   icon,
   isLoading,
   emphasized,
+  href,
   className,
 }: {
   title: string
@@ -221,8 +226,10 @@ function StatTile({
   icon?: ReactNode
   isLoading: boolean
   emphasized?: boolean
+  href?: string
   className?: string
 }) {
+  const ValueWrapper = href ? 'a' : 'div'
   return (
     <div
       className={cn(
@@ -240,15 +247,17 @@ function StatTile({
         </>
       ) : (
         <>
-          <div
+          <ValueWrapper
+            href={href}
             className={cn(
               'flex min-w-0 items-center justify-center gap-1.5 font-bold',
               emphasized ? 'flex-1 text-label-value-20' : 'text-label-value-15',
+              href && 'hover:underline',
             )}
           >
             {icon}
             <span className="min-w-0 truncate">{primary}</span>
-          </div>
+          </ValueWrapper>
           {secondary !== undefined && (
             <span className="truncate font-medium text-label-value-12 text-secondary">
               {secondary}

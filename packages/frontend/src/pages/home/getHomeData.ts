@@ -25,6 +25,7 @@ import {
   MIN_SELECTED_CHAINS,
   MIN_SELECTED_PROTOCOLS,
 } from '../interop/components/flows/consts'
+import { getInteropChainHref } from '../interop/utils/getInteropChainHref'
 import type { HomeScalingCategoryCounts } from './components/HomeScalingCard'
 import type { HomeWhatsNewItem } from './components/HomeWhatsNewCard'
 import { getHomeProjectCounts } from './getHomeProjectCounts'
@@ -78,11 +79,19 @@ export async function getHomeData(
 async function getCachedData(manifest: Manifest) {
   const helpers = getSsrHelpers()
 
+  const scalingProjects = await ps.getProjects({
+    select: ['scalingInfo'],
+  })
+  const scalingProjectSlugById = new Map(
+    scalingProjects.map((p) => [p.id, p.slug]),
+  )
+
   const interopChainsRaw = getInteropChains()
   const interopChains: InteropChainWithIcon[] = interopChainsRaw.map(
     (chain) => ({
       ...chain,
       iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
+      href: getInteropChainHref(chain.id, scalingProjectSlugById),
     }),
   )
   const activeInteropChains = interopChains.filter((chain) => !chain.isUpcoming)
