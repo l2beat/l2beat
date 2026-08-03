@@ -136,6 +136,51 @@ describe(UpdateDiffer.name, () => {
       ).not.toHaveBeenCalled()
       expect(updateDiffRepository.insertMany).not.toHaveBeenCalled()
     })
+
+    // A consumer only holds an immutable Reference stub, so without folding the
+    // referenced project in, an upgrade there produces no diff for the consumer.
+    it('reports a change inside a referenced project as its own', async () => {
+      const changed = {
+        ...mockContract(NAME_A, ADDRESS_A),
+        values: { $implementation: ADDRESS_C },
+      }
+      const updateDiffer = referencingUpdateDiffer({
+        onDisk: {
+          [PROJECT_A]: discoveryOf(PROJECT_A, [reference(PROVIDER, ADDRESS_A)]),
+          [PROVIDER]: discoveryOf(PROVIDER, [mockContract(NAME_A, ADDRESS_A)]),
+        },
+        latest: {
+          [PROJECT_A]: discoveryOf(PROJECT_A, [reference(PROVIDER, ADDRESS_A)]),
+          [PROVIDER]: discoveryOf(PROVIDER, [changed]),
+        },
+      })
+
+      await updateDiffer.runForProject(PROJECT_A, UnixTime.now())
+
+      const inserted = updateDiffer.inserted
+      expect(inserted.length).toEqual(1)
+      expect(inserted[0]?.projectId).toEqual(PROJECT_A)
+      expect(inserted[0]?.type).toEqual('implementationChange')
+      expect(inserted[0]?.address).toEqual(ADDRESS_A)
+    })
+
+    // The referenced project may not have been discovered yet in this shuffled
+    // run, which must stay silent rather than look like a mass deletion.
+    it('reports nothing when a referenced project has not run yet', async () => {
+      const updateDiffer = referencingUpdateDiffer({
+        onDisk: {
+          [PROJECT_A]: discoveryOf(PROJECT_A, [reference(PROVIDER, ADDRESS_A)]),
+          [PROVIDER]: discoveryOf(PROVIDER, [mockContract(NAME_A, ADDRESS_A)]),
+        },
+        latest: {
+          [PROJECT_A]: discoveryOf(PROJECT_A, [reference(PROVIDER, ADDRESS_A)]),
+        },
+      })
+
+      await updateDiffer.runForProject(PROJECT_A, UnixTime.now())
+
+      expect(updateDiffer.inserted).toEqual([])
+    })
   })
 
   describe(UpdateDiffer.prototype.getUpdateDiffs.name, () => {
@@ -306,6 +351,52 @@ describe(UpdateDiffer.name, () => {
   })
 })
 
+function referencingUpdateDiffer(discoveries: {
+  onDisk: Record<string, DiscoveryOutput>
+  latest: Record<string, DiscoveryOutput>
+}) {
+  const inserted: UpdateDiffRecord[] = []
+  const updateDiffer = new UpdateDiffer(
+    mockObject<ConfigReader>({
+      readDiscovery: (name: string) => {
+        const found = discoveries.onDisk[name]
+        if (found === undefined) throw new Error(`Unknown project ${name}`)
+        return found
+      },
+    }),
+    mockObject<Database>({
+      transaction: async (fun) => await fun(),
+      updateDiff: mockObject<UpdateDiffRepository>({
+        insertMany: async (records) => {
+          inserted.push(...records)
+          return records.length
+        },
+        deleteByProjectAndChain: async () => {},
+      }),
+    }),
+    mockObject<DiscoveryOutputCache>({
+      get: (name: string) => discoveries.latest[name],
+    }),
+    Logger.SILENT,
+  )
+  return Object.assign(updateDiffer, { inserted })
+}
+
+function discoveryOf(
+  name: string,
+  entries: EntryParameters[],
+): DiscoveryOutput {
+  return { ...mockProject, name, entries }
+}
+
+function reference(
+  targetProject: string,
+  address: ChainSpecificAddress,
+): EntryParameters {
+  return { type: 'Reference', address, targetProject }
+}
+
+const PROVIDER = 'shared-provider'
 const PROJECT_A = 'project-a'
 const NAME_A = 'contract-a'
 const ADDRESS_A = ChainSpecificAddress.random()

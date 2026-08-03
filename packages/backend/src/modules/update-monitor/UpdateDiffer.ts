@@ -7,8 +7,17 @@ import {
   diffDiscovery,
   type EntryParameters,
 } from '@l2beat/discovery'
-import type { UnixTime } from '@l2beat/shared-pure'
+import { notUndefined, type UnixTime } from '@l2beat/shared-pure'
+import uniq from 'lodash/uniq'
 import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
+
+function discoveredEntries(
+  discovery: DiscoveryOutput | undefined,
+): EntryParameters[] {
+  return (discovery?.entries ?? []).filter(
+    (entry) => entry.type !== 'Reference',
+  )
+}
 
 export class UpdateDiffer {
   constructor(
@@ -39,8 +48,36 @@ export class UpdateDiffer {
       return
     }
 
-    const onDiskContracts = onDiskDiscovery.entries
-    const latestContracts = latestDiscovery.entries
+    // A reference is an immutable stub, so a change inside the project that
+    // owns it would otherwise be invisible here. The owner's real entries are
+    // folded into both sides so that consumers report the change as their own.
+    // Stubs are dropped because they carry the very address they stand for and
+    // diffDiscovery matches on the first entry with a given address.
+    const referenced = this.getReferencedProjects(
+      onDiskDiscovery,
+      latestDiscovery,
+    )
+
+    const onDiskContracts = [
+      ...discoveredEntries(onDiskDiscovery),
+      ...referenced.flatMap((project) =>
+        discoveredEntries(this.tryGetOnDiskDiscovery(project)),
+      ),
+    ]
+
+    // Projects are discovered concurrently in a shuffled order, so a referenced
+    // project may not have run yet. Falling back to its on-disk state keeps both
+    // sides equal instead of reporting every entry of it as deleted, and the
+    // next update picks the change up.
+    const latestContracts = [
+      ...discoveredEntries(latestDiscovery),
+      ...referenced.flatMap((project) =>
+        discoveredEntries(
+          this.discoveryOutputCache.get(project) ??
+            this.tryGetOnDiskDiscovery(project),
+        ),
+      ),
+    ]
 
     const diff = diffDiscovery(onDiskContracts, latestContracts)
     const diffBaseTimestamp = onDiskDiscovery.timestamp
@@ -179,5 +216,28 @@ export class UpdateDiffer {
 
   getOnDiskDiscovery(name: string): DiscoveryOutput {
     return this.configReader.readDiscovery(name)
+  }
+
+  getReferencedProjects(...discoveries: DiscoveryOutput[]): string[] {
+    return uniq(
+      discoveries.flatMap((discovery) =>
+        discovery.entries
+          .filter((entry) => entry.type === 'Reference')
+          .map((entry) => entry.targetProject)
+          .filter(notUndefined),
+      ),
+    )
+  }
+
+  tryGetOnDiskDiscovery(name: string): DiscoveryOutput | undefined {
+    try {
+      return this.getOnDiskDiscovery(name)
+    } catch (error) {
+      this.logger.error('Cannot read discovery of a referenced project', {
+        project: name,
+        error,
+      })
+      return undefined
+    }
   }
 }
