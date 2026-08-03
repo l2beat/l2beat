@@ -18,6 +18,11 @@ const CONFIGURATIONS = [
     address: ADDRESS_1,
     selector: SELECTOR_2,
     getFullInput: true,
+    groupingProjection: {
+      start: 37,
+      length: 32,
+      abiType: 'uint256',
+    },
   },
 ]
 
@@ -38,6 +43,10 @@ describe(getFunctionCallQuery.name, () => {
       full_input_calls(to_addr, selector) AS (
         VALUES
           (0x67e002f3a410029501eae397b63ec5f2b1f9fc96, 0xbbbbbbbb)
+      ),
+      grouping_calls(to_addr, selector, grouping_start, grouping_length) AS (
+        VALUES
+          (0x67e002f3a410029501eae397b63ec5f2b1f9fc96, 0xbbbbbbbb, 37, 32)
       ),
       traces_filtered AS (
         SELECT
@@ -93,10 +102,22 @@ describe(getFunctionCallQuery.name, () => {
             AND tr.selector = fic.selector
         ) THEN tr.input
         ELSE tr.selector
-      END AS input
+      END AS input,
+      CASE
+        WHEN gc.grouping_start IS NOT NULL
+        THEN varbinary_substring(
+          tr.input,
+          gc.grouping_start,
+          gc.grouping_length
+        )
+        ELSE NULL
+      END AS grouping_value
     FROM txs_filtered tx
     JOIN traces_allowed tr
-      ON tx.hash = tr.tx_hash;
+      ON tx.hash = tr.tx_hash
+    LEFT JOIN grouping_calls gc
+      ON tr.to = gc.to_addr
+      AND tr.selector = gc.selector;
   `)
   })
 
@@ -122,6 +143,10 @@ describe(getFunctionCallQuery.name, () => {
         VALUES
           (0x67e002f3a410029501eae397b63ec5f2b1f9fc96, 0xbbbbbbbb)
       ),
+      grouping_calls(to_addr, selector, grouping_start, grouping_length) AS (
+        VALUES
+          (0x67e002f3a410029501eae397b63ec5f2b1f9fc96, 0xbbbbbbbb, 37, 32)
+      ),
       traces_filtered AS (
         SELECT
           tr.tx_hash,
@@ -176,11 +201,43 @@ describe(getFunctionCallQuery.name, () => {
             AND tr.selector = fic.selector
         ) THEN tr.input
         ELSE tr.selector
-      END AS input
+      END AS input,
+      CASE
+        WHEN gc.grouping_start IS NOT NULL
+        THEN varbinary_substring(
+          tr.input,
+          gc.grouping_start,
+          gc.grouping_length
+        )
+        ELSE NULL
+      END AS grouping_value
     FROM txs_filtered tx
     JOIN traces_allowed tr
-      ON tx.hash = tr.tx_hash;
+      ON tx.hash = tr.tx_hash
+    LEFT JOIN grouping_calls gc
+      ON tr.to = gc.to_addr
+      AND tr.selector = gc.selector;
   `)
+  })
+
+  it('rejects conflicting projections for the same call', () => {
+    expect(() =>
+      getFunctionCallQuery(
+        [
+          CONFIGURATIONS[1],
+          {
+            ...CONFIGURATIONS[1],
+            groupingProjection: {
+              start: 69,
+              length: 32,
+              abiType: 'uint256',
+            },
+          },
+        ],
+        FROM,
+        TO,
+      ),
+    ).toThrow('Conflicting grouping projections for the same function call')
   })
 
   it('handles empty helper tables', () => {
@@ -201,6 +258,10 @@ describe(getFunctionCallQuery.name, () => {
         VALUES
           (NULL, NULL)
       ),
+      grouping_calls(to_addr, selector, grouping_start, grouping_length) AS (
+        VALUES
+          (NULL, NULL, NULL, NULL)
+      ),
       traces_filtered AS (
         SELECT
           tr.tx_hash,
@@ -255,10 +316,22 @@ describe(getFunctionCallQuery.name, () => {
             AND tr.selector = fic.selector
         ) THEN tr.input
         ELSE tr.selector
-      END AS input
+      END AS input,
+      CASE
+        WHEN gc.grouping_start IS NOT NULL
+        THEN varbinary_substring(
+          tr.input,
+          gc.grouping_start,
+          gc.grouping_length
+        )
+        ELSE NULL
+      END AS grouping_value
     FROM txs_filtered tx
     JOIN traces_allowed tr
-      ON tx.hash = tr.tx_hash;
+      ON tx.hash = tr.tx_hash
+    LEFT JOIN grouping_calls gc
+      ON tr.to = gc.to_addr
+      AND tr.selector = gc.selector;
   `)
   })
 })

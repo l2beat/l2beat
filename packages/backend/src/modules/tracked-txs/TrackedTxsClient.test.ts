@@ -99,7 +99,7 @@ describe(TrackedTxsClient.name, () => {
       expect(duneQueryService.query).not.toHaveBeenCalled()
     })
 
-    it('requests full input for grouped liveness calls', async () => {
+    it('requests grouping projection for grouped liveness calls', async () => {
       const duneQueryService = getMockDuneQueryService([[]])
       const trackedTxsClient = new TrackedTxsClient(
         duneQueryService,
@@ -136,6 +136,11 @@ describe(TrackedTxsClient.name, () => {
             {
               ...config.properties.params,
               getFullInput: true,
+              groupingProjection: {
+                start: 5,
+                length: 32,
+                abiType: 'uint256',
+              },
             },
           ],
           FROM,
@@ -321,6 +326,7 @@ const FUNCTIONS_RESPONSE: DuneFunctionCallResult[] = [
     gas_price: 1000n,
     gas_used: 200000,
     input: CONFIGURATIONS[1].properties.params.selector,
+    grouping_value: null,
     data_length: 100,
     non_zero_bytes: 60,
     blob_versioned_hashes: ['0x1'],
@@ -333,6 +339,7 @@ const FUNCTIONS_RESPONSE: DuneFunctionCallResult[] = [
     gas_price: 1500n,
     gas_used: 200000,
     input: sharpInput,
+    grouping_value: null,
     data_length: 0,
     non_zero_bytes: 0,
     blob_versioned_hashes: ['0x1'],
@@ -345,6 +352,7 @@ const FUNCTIONS_RESPONSE: DuneFunctionCallResult[] = [
     gas_price: 1500n,
     gas_used: 200000,
     input: elasticChainSharedBridgeCommitBatchesInput,
+    grouping_value: null,
     data_length: 0,
     non_zero_bytes: 0,
     blob_versioned_hashes: ['0x1'],
@@ -357,6 +365,7 @@ const FUNCTIONS_RESPONSE: DuneFunctionCallResult[] = [
     gas_price: 1500n,
     gas_used: 200000,
     input: agglayerSharedBridgeVerifyBatchesInput,
+    grouping_value: null,
     data_length: 0,
     non_zero_bytes: 0,
     blob_versioned_hashes: ['0x1'],
@@ -369,6 +378,7 @@ const FUNCTIONS_RESPONSE: DuneFunctionCallResult[] = [
     gas_price: 1500n,
     gas_used: 200000,
     input: elasticChainSharedBridgeExecuteBatchesPost29Input,
+    grouping_value: null,
     data_length: 0,
     non_zero_bytes: 0,
     blob_versioned_hashes: ['0x1'],

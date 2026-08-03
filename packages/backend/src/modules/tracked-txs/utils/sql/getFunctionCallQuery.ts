@@ -1,24 +1,52 @@
-import { type EthereumAddress, UnixTime, unique } from '@l2beat/shared-pure'
+import {
+  assert,
+  type EthereumAddress,
+  UnixTime,
+  unique,
+} from '@l2beat/shared-pure'
+import type { FunctionCallParameterProjection } from '../getFunctionCallParameterProjection'
+
+interface FunctionCallQueryConfig {
+  address: EthereumAddress
+  selector: string
+  getFullInput: boolean
+  groupingProjection?: FunctionCallParameterProjection
+}
+
+interface ProjectedFunctionCallQueryConfig extends FunctionCallQueryConfig {
+  groupingProjection: FunctionCallParameterProjection
+}
 
 export function getFunctionCallQuery(
-  configs: {
-    address: EthereumAddress
-    selector: string
-    getFullInput: boolean
-  }[],
+  configs: FunctionCallQueryConfig[],
   from: UnixTime,
   to: UnixTime,
 ): string {
   const fullInputCalls = unique(
     configs.filter((c) => c.getFullInput),
-    (c) => `${c.address.toLowerCase()}-${c.selector.toLowerCase()}`,
+    getCallKey,
   )
+  const groupingCalls = unique(
+    configs.filter(hasGroupingProjection),
+    getCallKey,
+  )
+
+  for (const config of configs) {
+    if (config.groupingProjection === undefined) continue
+
+    const matching = groupingCalls.find(
+      (c) => getCallKey(c) === getCallKey(config),
+    )
+    assert(matching !== undefined)
+    assert(
+      matching.groupingProjection.start === config.groupingProjection.start &&
+        matching.groupingProjection.length === config.groupingProjection.length,
+      'Conflicting grouping projections for the same function call',
+    )
+  }
   const fromDate = UnixTime.toDate(from).toISOString()
   const toDate = UnixTime.toDate(to).toISOString()
-  const uniqueConfigs = unique(
-    configs,
-    (c) => `${c.address.toLowerCase()}-${c.selector.toLowerCase()}`,
-  )
+  const uniqueConfigs = unique(configs, getCallKey)
 
   // To calculate the non-zero bytes we are grouping bytes by adding 'x' sign between each byte
   // and then removing all '00x' sequences. Next step is to divide length of result by 3 as this is length of '00x' sequence.
@@ -53,6 +81,19 @@ export function getFunctionCallQuery(
                   )
                   .join(',')
               : '(NULL, NULL)'
+          }
+      ),
+      grouping_calls(to_addr, selector, grouping_start, grouping_length) AS (
+        VALUES
+          ${
+            groupingCalls.length > 0
+              ? groupingCalls
+                  .map(
+                    (c) =>
+                      `(${c.address.toLowerCase()}, ${c.selector.toLowerCase()}, ${c.groupingProjection.start}, ${c.groupingProjection.length})`,
+                  )
+                  .join(',')
+              : '(NULL, NULL, NULL, NULL)'
           }
       ),
       traces_filtered AS (
@@ -109,11 +150,33 @@ export function getFunctionCallQuery(
             AND tr.selector = fic.selector
         ) THEN tr.input
         ELSE tr.selector
-      END AS input
+      END AS input,
+      CASE
+        WHEN gc.grouping_start IS NOT NULL
+        THEN varbinary_substring(
+          tr.input,
+          gc.grouping_start,
+          gc.grouping_length
+        )
+        ELSE NULL
+      END AS grouping_value
     FROM txs_filtered tx
     JOIN traces_allowed tr
-      ON tx.hash = tr.tx_hash;
+      ON tx.hash = tr.tx_hash
+    LEFT JOIN grouping_calls gc
+      ON tr.to = gc.to_addr
+      AND tr.selector = gc.selector;
   `
 
   return query
+}
+
+function hasGroupingProjection(
+  config: FunctionCallQueryConfig,
+): config is ProjectedFunctionCallQueryConfig {
+  return config.groupingProjection !== undefined
+}
+
+function getCallKey(config: FunctionCallQueryConfig): string {
+  return `${config.address.toLowerCase()}-${config.selector.toLowerCase()}`
 }

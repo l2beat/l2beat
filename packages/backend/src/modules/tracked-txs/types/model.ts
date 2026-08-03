@@ -24,6 +24,7 @@ export const DuneFunctionCallResult = v.object({
   data_length: v.number(),
   non_zero_bytes: v.number(),
   input: v.string(),
+  grouping_value: v.union([v.string(), v.null()]),
 })
 
 type TrackedTxFunctionCallResultBase = {

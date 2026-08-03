@@ -17,6 +17,7 @@ import {
   type TrackedTxResult,
   type TrackedTxTransferResult,
 } from './types/model'
+import { getFunctionCallParameterProjection } from './utils/getFunctionCallParameterProjection'
 import { hasLivenessGrouping } from './utils/getLivenessGroupingKey'
 import { getFunctionCallQuery, getTransferQuery } from './utils/sql'
 import { transformFunctionCallsQueryResult } from './utils/transformFunctionCallsQueryResult'
@@ -177,10 +178,21 @@ function combineCalls(
 ) {
   // TODO: unique
   return [
-    ...functionCallsConfig.map((c) => ({
-      ...c.properties.params,
-      getFullInput: hasLivenessGrouping(c.properties),
-    })),
+    ...functionCallsConfig.map((c) => {
+      const groupingProjection = hasLivenessGrouping(c.properties)
+        ? getFunctionCallParameterProjection(
+            c.properties.params.signature,
+            c.properties.groupBy.path,
+          )
+        : undefined
+
+      return {
+        ...c.properties.params,
+        // Kept until transformFunctionCallsQueryResult consumes grouping_value.
+        getFullInput: groupingProjection !== undefined,
+        groupingProjection,
+      }
+    }),
     ...sharpSubmissionsConfig.map((c) => ({ ...c, getFullInput: true })),
     ...sharedBridgesConfig.map((c) => ({ ...c, getFullInput: true })),
   ]
