@@ -52,6 +52,7 @@ describe(DuneClient.name, () => {
         result_metadata: {
           datapoint_count: 100,
           execution_time_millis: 500,
+          total_result_set_bytes: 1000,
         },
         execution_cost_credits: 10,
       }
