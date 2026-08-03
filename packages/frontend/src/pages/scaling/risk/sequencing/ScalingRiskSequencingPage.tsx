@@ -1,5 +1,6 @@
 import { Callout } from '~/components/Callout'
 import { MainPageHeader } from '~/components/MainPageHeader'
+import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
 import { InfoIcon } from '~/icons/Info'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
@@ -32,14 +33,16 @@ export function ScalingRiskSequencingPage({
         <MainPageHeader description="Decentralized sequencing provides real-time censorship resistance, while deterministic host-chain inclusion provides eventual censorship resistance. No system shown here combines both guarantees today.">
           Sequencing
         </MainPageHeader>
-        <TableSortingProvider initialSort={{ id: '#', desc: false }}>
-          <ScalingRiskSequencingTable entries={decentralizedEntries} />
-        </TableSortingProvider>
-        {inclusionDelayComparison && (
-          <InclusionDelayComparisonChart
-            comparison={inclusionDelayComparison}
-          />
-        )}
+        <PrimaryCard className="mt-4">
+          <TableSortingProvider initialSort={{ id: '#', desc: false }}>
+            <ScalingRiskSequencingTable entries={decentralizedEntries} />
+          </TableSortingProvider>
+          {inclusionDelayComparison && (
+            <InclusionDelayComparisonChart
+              comparison={inclusionDelayComparison}
+            />
+          )}
+        </PrimaryCard>
         <TableSortingProvider initialSort={{ id: '#', desc: false }}>
           <CentralizedSequencingTable entries={centralizedEntries} />
         </TableSortingProvider>

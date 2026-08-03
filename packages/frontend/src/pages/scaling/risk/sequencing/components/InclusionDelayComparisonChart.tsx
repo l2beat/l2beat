@@ -2,7 +2,6 @@ import { useMemo, useState } from 'react'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
-import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import {
   InclusionDelayChart,
   type InclusionDelayYAxisScale,
@@ -26,12 +25,12 @@ export function InclusionDelayComparisonChart({ comparison }: Props) {
   )
 
   return (
-    <PrimaryCard className="border-divider max-md:border-t md:mt-6">
+    <div className="mt-6 border-divider border-t pt-5">
       <ChartControlsWrapper>
         <div className="flex min-w-0 flex-col">
-          <h2 className="font-bold text-heading-16 md:text-heading-20">
+          <h3 className="font-bold text-heading-16 md:text-heading-20">
             Inclusion delay by censorship fraction
-          </h2>
+          </h3>
           <p className="text-paragraph-13 text-secondary md:text-paragraph-14">
             T99 inclusion delay in a static sequencer set by censoring fraction
             of sequencers/validators
@@ -62,7 +61,7 @@ export function InclusionDelayComparisonChart({ comparison }: Props) {
         network's consensus mechanism stopping block production at that
         threshold.
       </p>
-    </PrimaryCard>
+    </div>
   )
 }
 
