@@ -1,0 +1,52 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ChainlinkOCR2Aggregator",
+  "description": "A Chainlink OCR2 aggregator producing a price feed. Each update is the median of a report signed by a quorum (f+1) of its signers and relayed onchain by one of its transmitters, accepted only within a fixed min/max band. A colluding signer quorum can move the reported price anywhere within that band, while a transmitter only relays an already-signed report. Its owner sets the signer and transmitter sets and the quorum size, so it controls who can report the price.",
+  "ignoreRelatives": [
+    "getBillingAccessController",
+    "getRequesterAccessController",
+    "getLinkToken"
+  ],
+  "ignoreMethods": [
+    "description",
+    "latestAnswer",
+    "latestRound",
+    "latestRoundData",
+    "latestTimestamp",
+    "latestTransmissionDetails"
+  ],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "act",
+          "description": "reconfigure the oracle: replace the signer and transmitter sets and the number of signatures required per update, and set the payees and access controllers."
+        }
+      ]
+    },
+    "getTransmitters": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted."
+        }
+      ]
+    },
+    "ocrConfig": {
+      "description": "The oracle set from the last reconfiguration: the signing keys and f, the number of faulty oracles the config tolerates, so f+1 of them must sign each price update.",
+      "handler": {
+        "type": "event",
+        "select": ["configCount", "signers", "f"],
+        "set": {
+          "event": "event ConfigSet(uint32 previousConfigBlockNumber, bytes32 configDigest, uint64 configCount, address[] signers, address[] transmitters, uint8 f, bytes onchainConfig, uint64 offchainConfigVersion, bytes offchainConfig)"
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price."
+        }
+      ]
+    }
+  }
+}

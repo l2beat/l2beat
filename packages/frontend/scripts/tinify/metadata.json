@@ -1592,5 +1592,9 @@
   "static/meta-images/publications/governance-review-102.png": "8ebbf794fa69d700588738f812a0bdbc",
   "static/images/architecture/apex-omni.png": "d24246d6f8be0773cd2911dfbe3b0443",
   "static/meta-images/scaling/projects/apex-pro/opengraph-image.png": "e349fff4994ec3258f71e520b8d432c5",
-  "static/meta-images/interop/projects/gnosis/opengraph-image.png": "7b779dc5fea13cdb3e67c34ee0d36903"
+  "static/meta-images/interop/projects/gnosis/opengraph-image.png": "7b779dc5fea13cdb3e67c34ee0d36903",
+  "static/icons/liquityv2.png": "9d525c5aefb927c8cc76d03056470bba",
+  "static/icons/chainlink.png": "890c97f4493564b96eccc5a60b5ad0f4",
+  "static/icons/reth.png": "ef8bb5fbe2af6f590a49302cbd7a0de8",
+  "static/icons/wsteth.png": "47f165c9f65a4cea3dc81cdb1fa4b7a3"
 }
