@@ -29,19 +29,18 @@ const tableValueColumns = [
     key: 'trustedPreconfirmation',
     header: 'Trusted\npreconfirmation',
     tooltip:
-      'Target latency of the trusted sequencer preconfirmation. The second line shows the regular L2 block time.',
+      'Target latency of the trusted sequencer preconfirmation. The second line shows the regular L2 block time (another preconfirmation in most protocols).',
   },
   {
     key: 'trustedOrdering',
     header: 'Trusted\nordering',
     tooltip:
-      'Policy the centralized sequencer claims to use for ordering transactions. It is not enforced by the host chain.',
+      'Policy the centralized sequencer claims to use for ordering transactions. Not enforced by the host chain.',
   },
   {
     key: 'sequencer',
     header: 'Sequencer',
-    tooltip:
-      'Number of independent operators controlling real-time transaction ordering.',
+    tooltip: 'Operators controlling real-time transaction ordering.',
   },
   {
     key: 'realtimeCensorshipResistance',
@@ -53,13 +52,13 @@ const tableValueColumns = [
     key: 'forcedInclusion',
     header: 'Forced\ninclusion',
     tooltip:
-      'How users bypass the sequencer while the chain is otherwise live, and how many L1 transactions this inclusion path requires.',
+      'How users bypass the sequencer while the chain is otherwise live (selective censorship), and how many L1 transactions this inclusion path requires.',
   },
   {
     key: 'inclusionDelay',
     header: 'Inclusion\ndelay',
     tooltip:
-      'Protocol delay after the first L1 transaction is included until the transaction enters the canonical L2 order while the chain otherwise remains live.',
+      'Protocol delay after the first L1 transaction is included until the transaction enters the canonical L2 order while the chain otherwise remains live (selective censorship).',
   },
   {
     key: 'inclusionMechanics',
@@ -71,13 +70,13 @@ const tableValueColumns = [
     key: 'exitDelay',
     header: 'Exit\ndelay',
     tooltip:
-      'Worst-case protocol delay to force inclusion, self-propose the resulting state, resolve any challenge and finalize an L1 exit after operator walkaway or blanket censorship.',
+      'Worst-case protocol delay to force inclusion (sequencer failure), self-propose the resulting state (proposer failure), resolve any challenge and finalize an L1 exit under blanket censorship or operator walkaway.',
   },
   {
     key: 'exitEconomics',
     header: 'Exit\neconomics',
     tooltip:
-      'Capital and proof or dispute work required to self-propose and defend one state update needed for an exit after operator walkaway or blanket censorship.',
+      'Capital and proof or dispute work required to self-propose and defend one state update needed for an exit under blanket censorship or operator walkaway.',
   },
 ] satisfies {
   key: CentralizedSequencingTableValueKey
