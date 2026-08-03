@@ -201,6 +201,54 @@ describe(UpdateMonitor.name, () => {
         [],
       )
     })
+
+    // A diff resolves references against other projects' discoveries, so every
+    // discovery has to land before the first diff reads the cache.
+    it('discovers every project before diffing any of them', async () => {
+      const calls: string[] = []
+      const discoveryRunner = mockObject<DiscoveryRunner>({
+        run: mockFn(async () => {
+          calls.push('discover')
+          return { discovery: DISCOVERY_RESULT, flatSources: {} }
+        }),
+      })
+      updateDiffer = mockObject<UpdateDiffer>({
+        runForProject: mockFn(async () => {
+          calls.push('diff')
+        }),
+      })
+
+      const updateMonitor = new UpdateMonitor(
+        discoveryRunner,
+        updateNotifier,
+        updateDiffer,
+        mockObject<ConfigReader>({
+          readDiscovery: () => ({ ...mockProject, entries: COMMITTED }),
+          readAllDiscoveredProjects: () => [PROJECT_A, PROJECT_B],
+          readConfig: mockFn((name: string) => mockConfig(name)),
+        }),
+        mockObject<Database>({
+          updateMonitor: mockObject<Database['updateMonitor']>({
+            findLatest: async () => undefined,
+            upsert: async () => undefined,
+          }),
+          flatSources: flatSourcesRepository,
+          updateDiff: mockObject<Database['updateDiff']>({
+            deleteAll: async () => 0,
+          }),
+        }),
+        mockObject<Clock>(),
+        discoveryOutputCache,
+        Logger.SILENT,
+        false,
+        instantWorkerPool,
+      )
+
+      await updateMonitor.update(0)
+
+      expect(calls.lastIndexOf('discover')).toBeLessThan(calls.indexOf('diff'))
+      expect(calls.filter((c) => c === 'diff').length).toEqual(2)
+    })
   })
 
   describe(UpdateMonitor.prototype.getPreviousDiscovery.name, () => {

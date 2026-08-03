@@ -87,13 +87,17 @@ export class UpdateMonitor {
         id: project,
         name: `Update project ${project}`,
       },
-      job: async () => {
-        await this.updateProject(this.runner, project, timestamp)
-        await this.updateDiffer?.runForProject(project, timestamp)
-      },
+      job: () => this.updateProject(this.runner, project, timestamp),
     }))
 
     const results = await this.workerPool.runInPool(tasks)
+    const failedProjects = results.errors.map((error) => error.identity.id)
+
+    // A diff resolves references against the discoveries of other projects, so
+    // every project has to be discovered before any of them is diffed. Projects
+    // run in a shuffled order, which would otherwise leave a consumer comparing
+    // against whatever its referenced projects happened to hold at the time.
+    await this.runDiffs(enabledProjects, failedProjects, timestamp)
 
     const updateEnd = UnixTime.now()
     const updateDuration = updateEnd - updateStart
@@ -109,7 +113,6 @@ export class UpdateMonitor {
       failedCount: results.errors.length,
       totalCount: tasks.length,
     })
-    const failedProjects = results.errors.map((error) => error.identity.id)
 
     const reminders = this.generateDailyReminder()
     await this.updateNotifier.sendDailyReminder(
@@ -118,6 +121,36 @@ export class UpdateMonitor {
       this.disabledProjects,
       failedProjects,
     )
+  }
+
+  private async runDiffs(
+    projects: string[],
+    failedProjects: string[],
+    timestamp: UnixTime,
+  ) {
+    const updateDiffer = this.updateDiffer
+    if (updateDiffer === undefined) {
+      return
+    }
+
+    const tasks = projects
+      .filter((project) => !failedProjects.includes(project))
+      .map((project) => ({
+        identity: {
+          id: project,
+          name: `Diff project ${project}`,
+        },
+        job: () => updateDiffer.runForProject(project, timestamp),
+      }))
+
+    const results = await this.workerPool.runInPool(tasks)
+
+    this.logger.info('Diffing finished', {
+      timedOut: results.timedOut,
+      successCount: results.results.length,
+      failedCount: results.errors.length,
+      totalCount: tasks.length,
+    })
   }
 
   generateDailyReminder(): Record<string, DailyReminderChainEntry> {
