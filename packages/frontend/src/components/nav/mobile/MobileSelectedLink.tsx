@@ -1,5 +1,4 @@
 import { usePathname } from '~/hooks/usePathname'
-import { cn } from '~/utils/cn'
 import { isLinkActive } from '~/utils/isLinkActive'
 import { VerticalSeparator } from '../../core/VerticalSeparator'
 import type { NavGroup, NavLink } from '../types'
@@ -7,11 +6,9 @@ import type { NavGroup, NavLink } from '../types'
 export function MobileSelectedLink({
   groups,
   sideLinks,
-  className,
 }: {
   groups: NavGroup[]
   sideLinks: NavLink[]
-  className?: string
 }) {
   const pathname = usePathname()
 
@@ -33,7 +30,7 @@ export function MobileSelectedLink({
   return (
     <>
       <VerticalSeparator className="h-10" />
-      <span className={cn('font-bold text-base', className)}>
+      <span className="font-bold text-base">
         {selectedGroup?.title ?? selectedSideLink?.title}
       </span>
     </>

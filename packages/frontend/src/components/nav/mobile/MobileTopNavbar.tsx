@@ -37,11 +37,7 @@ export function MobileTopNavbar({
             </a>
           </div>
           <div className="flex min-w-0 items-center gap-3">
-            <MobileSelectedLink
-              groups={groups}
-              sideLinks={sideLinks}
-              className={showOnDesktop ? 'text-brand' : undefined}
-            />
+            <MobileSelectedLink groups={groups} sideLinks={sideLinks} />
           </div>
         </div>
         {/* Right side */}
