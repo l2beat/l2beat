@@ -16,6 +16,7 @@ import {
   PriceProvider,
   RpcClientCompat,
   StarknetClient,
+  StarknetBalanceProvider,
   StarknetTotalSupplyProvider,
   TotalSupplyProvider,
 } from '@l2beat/shared'
@@ -104,6 +105,10 @@ export class LocalExecutor {
       starknetClients,
       logger,
     )
+    const starknetBalanceProvider = new StarknetBalanceProvider(
+      starknetClients,
+      logger,
+    )
     const balanceProvider = new BalanceProvider(rpcs, logger)
 
     return new DataFormulaExecutor(
@@ -115,6 +120,7 @@ export class LocalExecutor {
       blockTimestampProvider,
       totalSupplyProvider,
       starknetTotalSupplyProvider,
+      starknetBalanceProvider,
       balanceProvider,
       this.logger,
     )

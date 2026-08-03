@@ -12,9 +12,7 @@ const STRK20_DEPOSIT_EVENT =
 const STRK20_WITHDRAWAL_EVENT =
   '0x2eed7e29b3502a726faf503ac4316b7101f3da813654e8df02c13449e03da8'
 const STRK20_SINCE = UnixTime.fromDate(new Date('2026-06-17'))
-const STRK20_POOL_SINCE = UnixTime.fromDate(
-  new Date('2026-04-20T10:08:48Z'),
-)
+const STRK20_POOL_SINCE = UnixTime.fromDate(new Date('2026-04-20T10:08:48Z'))
 const STRK20_TOKENS = [
   {
     address:
