@@ -12,16 +12,12 @@
         {
           "title": "Arbitrum DAO Ratifies Security Council Election Process Improvements",
           "content": "Arbitrum DAO [passed a Snapshot](https://snapshot.box/#/s:arbitrumfoundation.eth/proposal/0xe9373b2226ab14005ae14075953e5755448d7ac7dc61a21a9c1d51dcae427e42) temperature check ratifying structural election process improvements for the Arbitrum Security Council ahead of an upcoming constitutional on-chain vote. The approved proposal extends Security Council cohort terms from one year to two years, shifting elections from twice yearly cycles to an annual cadence held every March. To encourage broader community participation and reduce voter fatigue, the framework lowers the nominee qualification threshold from 0.2 percent to 0.1 percent of votable ARB.\n\nThe approved upgrade also establishes formal key rotation procedures, enabling candidates to update security keys during the election compliance phase and allowing active members to self rotate keys during their term subject to an eighteen day timelock. Following delegate feedback, the DAO omitted a proposed rule that would have allowed incumbents to bypass the nomination phase, reinforcing the requirement for fresh community endorsement. The measures retroactively adjust current member terms, positioning the next Security Council election for March 2027.",
-          "tags": [
-            "governance"
-          ]
+          "tags": ["governance"]
         },
         {
           "title": "Arbitrum DAO Concludes Oversight and Transparency Committee Elections",
           "content": "Arbitrum DAO [finalized the election](https://snapshot.box/#/s:arbitrumfoundation.eth/proposal/0xf2ca6637ad74a993354006def22c1e2a64468c269883616353e0c9fe8b4f4fd4) process for its Oversight and Transparency Committee (OAT), utilizing a shutterized weighted voting mechanism. Following the conclusion of the voting period, candidates A.J. Warner, Patrick McCorry, and Pedro Breuer secured top delegate support to fill the open committee seats.\n\nThe OAT serves a vital role within the Arbitrum ecosystem by providing operational oversight and governance transparency for the DAO's Operation Company (OpCo). In their capacity, the newly elected committee members will be responsible for ratifying annual budgets, supervising project execution, and supporting key staffing decisions. Arbitrum positioned the election as a crucial step to strengthen institutional accountability and streamline cross-organizational initiatives across the broader network.",
-          "tags": [
-            "governance"
-          ]
+          "tags": ["governance"]
         },
         {
           "title": "Arbitrum Nova Reaches Halfway Mark of 90 Day Migration Window to Arbitrum One",
@@ -50,9 +46,7 @@
         {
           "title": "Arbitrum DAO Approves Constitutional AIP for ArbOS 61 Elara Upgrade",
           "content": "Arbitrum DAO [approved](https://alt.gov.arbitrum.foundation/proposal/7191014407719621170610709569285477750369874509305441081488686529382763374426?govId=eip155:42161:0xf07ded9dc292157749b6fd268e37df6ea38395b9) a constitutional governance proposal to activate ArbOS 61 Elara on Arbitrum One and Arbitrum Nova, marking a major technical milestone across the ecosystem. The upgrade quadruples the code size limit for Stylus smart contracts from 24 KB to 96 KB through an automated contract fragmenting mechanism. By expanding code capacity specifically for WebAssembly and Rust applications, the update unblocks advanced developer tooling without altering core EVM parameters for Solidity contracts.\n\nThe upgrade also grants Offchain Labs delegated authority over base fee management via a new BaseFeeManager smart contract, allowing dynamic adjustments to minimum L2 base fees between 0.01 gwei and 0.10 gwei over a two-year period to balance network revenue with spam mitigation. Additionally, following joint performance assessments with Entropy Advisors, the DAO elected to keep Dynamic Pricing disabled on mainnet chains to preserve execution speed and align future gas accounting with Ethereum’s planned EIP-8037 specification. Overall, ArbOS 61 Elara expands execution capacity and streamlines administrative controls for ongoing protocol upgrades across the network.",
-          "tags": [
-            "governance"
-          ]
+          "tags": ["governance"]
         },
         {
           "title": "CROPR Integrates Arbitrum to Enable Unified Multi-Chain Portfolio Management",
@@ -109,44 +103,32 @@
         {
           "title": "Optimism Governance Approves Dissolution of Key Councils to Streamline Operations",
           "content": "Optimism governance has approved proposals to dissolve three major governance bodies following Season 9, marking a structural shift toward leaner operations and faster execution. The ecosystem voted to sunset the [Grants Council](https://vote.optimism.io/proposals/17610825935142917870367542494361266033681870435033393450622576978064079317264), the [Milestones and Metrics Council](https://vote.optimism.io/proposals/94653586928704829987664319556957069435634532914401865187521227109996000544034), and the [Developer Advisory Board](https://vote.optimism.io/proposals/114332514722678161000009089501863184518036788418963577823562001135984030208552) after assessing that persistent formal bodies created significant governance overhead without proportional benefits for grantees or the broader network.\n\nUnder the updated framework, the dissolution eliminates administrative friction in grant management and technical evaluation. Oversight for existing milestones will transition to Optimism Foundation management through third party contractor agreements. Meanwhile, developer feedback for core technical updates will move away from a rigid board structure toward flexible working groups, request for comment processes, and direct community consultation to support decentralized protocol upgrades.\n\nThe strategic reorganization enables the Optimism Foundation to focus capital allocation directly on the OP Enterprise strategy while reducing operational bottlenecks. By streamlining decision making, Optimism aligns its governance framework with its evolving ecosystem needs, ensuring faster deployment of resources while maintaining open participation across community delegates.",
-          "tags": [
-            "governance"
-          ]
+          "tags": ["governance"]
         },
         {
           "title": "Optimism Governance Approves Operating Manual Update Following Citizens House Pause",
           "content": "Optimism governance [approved](https://vote.optimism.io/proposals/52279585228711683139994867226626537890640289086801310015986428088919427604597) a proposal to update the Optimism Collective Operating Manual via Pull Request 70, introduced by the Optimism Foundation. The revision officially adjusts the network governance framework by reflecting the pause on Citizens House operations. As a direct result, all joint governance voting procedures have been suspended, granting full voting authority exclusively to the Token House during this interim period.\n\nThe updated Operating Manual also formalizes key election policies and operational guidelines previously outlined across governance forum discussions. By consolidating these rules into the core documentation repository, the Optimism Collective improved transparency and administrative clarity for all delegates. Optimism positioned the structural update as a necessary realignment of its governance architecture, optimizing voting procedures to maintain efficient decision making across the Token House while long-term civic participation models undergo evaluation.",
-          "tags": [
-            "governance"
-          ]
+          "tags": ["governance"]
         },
         {
           "title": "Optimism Governance Approves Sequencer ETH Staking Renewal and Treasury Optimization",
           "content": "Optimism governance [executed](https://vote.optimism.io/proposals/17074702586937926119121483757540636273817379522480745477026492886022316183707) a proposal renewing the Optimism Foundation's authorization to manage and stake the Collective's sequencer ETH treasury for an additional 12 months. The approved framework optimizes the allocation of approximately 19.3K ETH by consolidating holdings across two qualified custodians at 33 percent each, while keeping the remaining 33 percent in liquid staked weETH via EtherFi.\n\nThe mandate introduces conservative options strategies to increase treasury yield, authorizing covered calls and collar positions on up to two thirds of the total ETH balance. These yield optimization strategies operate under strict tri party arrangements where asset collateral remains in institutional custody at all times. Furthermore, cash proceeds and option premiums generated through the program will be recycled directly into short duration real world assets on OP Mainnet, boosting productive liquidity and financial utility across the Superchain ecosystem.",
-          "tags": [
-            "governance"
-          ]
+          "tags": ["governance"]
         },
         {
           "title": "Optimism Governance Approves Security Council Operating Budget for Seasons 10 and 11",
           "content": "Optimism governance [approved](https://vote.optimism.io/proposals/11016722315079092316541525436963784553487811157319342152041523932758691863591) an operating budget proposal of 5,040,000 OP tokens to fund the Optimism Security Council across Seasons 10 and 11, spanning from July 1, 2026 to June 30, 2027. Submitted by council lead Alisha, the approved budget outlines predictable financial allocations for 14 council members, comprising 13 signers and one lead, with each designated to receive a monthly stipend of 30,000 OP tokens.\n\nThe funding sustains high operational uptime, secure key management, and rapid emergency response capabilities across all deployment environments in the ecosystem. Under the defined charter, council members oversee critical protocol upgrades, participate in liveness monitoring, and execute operational ceremonies across the OP Stack. Optimism positioned the approval as a vital milestone to streamline governance operations while maintaining institutional grade security controls across the Security Council framework.",
-          "tags": [
-            "governance"
-          ]
+          "tags": ["governance"]
         },
         {
           "title": "Optimism Governance Approves Swell Ownership Transfer to AltLayer for Chain Wind Down",
           "content": "Optimism governance [approved](https://vote.optimism.io/proposals/55157120062626112833592164692393784963640643805353175342472662837980214398880) a maintenance upgrade proposal to transfer administrative ownership of the Swell chain (chain ID 1923) to chain operator AltLayer. As Swell completes its orderly wind down, the execution transfers L1 ProxyAdmin rights and aliased L2 ProxyAdmin ownership away from standard Optimism governed keys and directly to AltLayer's designated institutional Safe.\n\nThe ownership migration provides AltLayer with full administrative authority to execute necessary smart contract cleanup and independently manage final protocol operations. The update strictly targets Swell infrastructure without modifying core protocol code or impacting active operational networks across the ecosystem. Optimism positioned the transaction as a routine procedure in administrative ownership transfer, facilitating an organized chain wind down while maintaining secure governance maintenance protocols across the Superchain.",
-          "tags": [
-            "governance"
-          ]
+          "tags": ["governance"]
         },
         {
           "title": "Optimism Governance Approves Ink Mainnet Fee Vault Configuration and Proposer Rotation",
           "content": "Optimism governance [approved](https://vote.optimism.io/proposals/98596515698156453044551125843803184999481750957062514239597457651661195220288) a maintenance upgrade proposal for Ink Mainnet, finalizing administrative updates following the chain's operational transition to OP Enterprise fully managed infrastructure. The execution completes two fast follow configuration actions authorized by the ProxyAdmin owner role without altering protocol behavior, bridge security, or end user functionality.\n\nThe approved proposal updates Ink's fee vault predeploys by redirecting cost covering fee allocations to a standardized L1 cost recipient while setting a minimum withdrawal threshold of 0.15 ETH for efficient fee sweeps. Simultaneously, the upgrade executes a proposer key rotation for Ink's fallback permissioned dispute game, replacing the outgoing operator keys with designated OP Enterprise addresses.",
-          "tags": [
-            "governance"
-          ]
+          "tags": ["governance"]
         }
       ]
     },
