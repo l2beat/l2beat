@@ -36,7 +36,6 @@ describe(DuneQueryService.name, () => {
           result_metadata: {
             datapoint_count: 100,
             execution_time_millis: 500,
-            result_set_bytes: 1000,
             total_result_set_bytes: 1000,
           },
           execution_cost_credits: 10,
@@ -95,7 +94,6 @@ describe(DuneQueryService.name, () => {
             result_metadata: {
               datapoint_count: 50,
               execution_time_millis: 300,
-              result_set_bytes: 1000,
               total_result_set_bytes: 1000,
             },
             execution_cost_credits: 10,
@@ -303,7 +301,6 @@ describe(DuneQueryService.name, () => {
           result_metadata: {
             datapoint_count: 1,
             execution_time_millis: 100,
-            result_set_bytes: 1000,
             total_result_set_bytes: 1000,
           },
           execution_cost_credits: 1,

@@ -102,7 +102,6 @@ export class DuneQueryService {
               executionId: status.execution_id,
               state: status.state,
               executionCostCredits: status.execution_cost_credits,
-              exportBytes: status.result_metadata.total_result_set_bytes,
               apiExportCostCredits:
                 (status.result_metadata.total_result_set_bytes / BYTES_PER_MB) *
                 DUNE_PLUS_CREDITS_PER_MB,
