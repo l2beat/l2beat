@@ -16,6 +16,7 @@
         "0xb9c99bb5f3a66ecab2d7cf945eedf4ccc3c3d5e2ecba8cbba4afec18b84ad4a7"
       ],
       "proxyType": "immutable",
+      "description": "Public registry that maps an Ethereum address to its two secp256k1 stealth public keys: a spending key used to derive a fresh stealth address, and a viewing key used to encrypt the transfer metadata for the recipient.",
       "ignoreInWatchMode": ["registeredAddresses"],
       "deployerAddress": "eth:0x5777Aa6F437399Af6cef2Fce0BE8D4B4eD7C7232",
       "sinceTimestamp": 1629943007,
@@ -61,6 +62,7 @@
         "0x6e3d0905ee09aa55ec4a8f64cedf4106e30ada95cf2583911ef9952695eea8d2"
       ],
       "proxyType": "immutable",
+      "description": "Main entry point of the Umbra protocol, routing all ETH and ERC-20 stealth payments. On send, it emits an Announcement event that the recipient scans to detect the payment. ETH is forwarded directly to a fresh stealth address, ERC-20s are escrowed in this smart contract.",
       "ignoreInWatchMode": [
         "totalTransfers",
         "totalERC20Deposits",
