@@ -16,6 +16,7 @@ UNDERSTAND WHAT YOU ARE DOING BEFORE YOU UPDATE THIS FILE
 // which should be used inside project's hardcoded tests
 const ETHEREUM_BLOCK_TIME_SECONDS = 12
 const OP_MAINNET_SEQUENCING_WINDOW_BLOCKS = 3_600
+const BASE_SEQUENCING_WINDOW_BLOCKS = 3_600
 
 export const HARDCODED = {
   ETHEREUM: {
@@ -51,6 +52,20 @@ export const HARDCODED = {
     // https://specs.optimism.io/fault-proof/stage-one/bond-incentives.html#bond-scaling
     FAULT_PROOF_BASE_GAS_CHARGED: 400_000,
     FAULT_PROOF_HIGH_GAS_CHARGED: 300_000_000,
+  },
+  BASE: {
+    // These values are part of Base's node configuration rather than its
+    // historical L1 state.
+    // https://github.com/base/base/blob/5761d838af8ae52e4904a74af2f3d8b490f56fec/crates/common/chains/src/config.rs#L402-L409
+    L2_BLOCK_TIME_SECONDS: 2,
+    SEQUENCING_WINDOW_BLOCKS: BASE_SEQUENCING_WINDOW_BLOCKS,
+    SEQUENCING_WINDOW_SECONDS:
+      BASE_SEQUENCING_WINDOW_BLOCKS * ETHEREUM_BLOCK_TIME_SECONDS,
+    // https://docs.base.org/base-chain/flashblocks/faq
+    FLASHBLOCK_INTERVAL_MILLISECONDS: 200,
+    // This limit is a literal in OptimismPortal2.depositTransaction and has no getter.
+    // https://etherscan.io/address/0x66d94ee8f529b683ed6013729784e8bb44697a64#code
+    MAX_DEPOSIT_CALLDATA_BYTES: 120_000,
   },
   PUBLICGOODSNETWORK: {
     // https://github.com/ethereum-optimism/optimism/pull/6261/files
