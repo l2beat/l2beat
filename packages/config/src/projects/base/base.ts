@@ -18,7 +18,6 @@ import { getSP1Verifiers, opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('base')
 const genesisTimestamp = UnixTime(1686074603)
 const chainId = 8453
-const assumedL1BlockTimeSeconds = HARDCODED.ETHEREUM.BLOCK_TIME_SECONDS
 const l2BlockTimeSeconds = HARDCODED.BASE.L2_BLOCK_TIME_SECONDS
 const flashblockIntervalMilliseconds =
   HARDCODED.BASE.FLASHBLOCK_INTERVAL_MILLISECONDS
@@ -79,7 +78,7 @@ const stateFinalizationDelaySeconds = Math.max(
   proofMaturityDelaySeconds,
   aggregateVerifierFinalizationDelaySeconds,
 )
-const worstCaseFallbackFinalizationDelaySeconds =
+const worstCaseExitDelaySeconds =
   sequencingWindowSeconds +
   aggregateVerifierCheckpointIntervalSeconds +
   stateFinalizationDelaySeconds
@@ -335,7 +334,7 @@ export const base: ScalingProject = opStackL2({
           secondLine: 'Fee order per Flashblock',
           description: `For each ${flashblockIntervalMilliseconds} ms build loop, the centralized builder selects available transactions by priority fee. Transactions committed to an earlier Flashblock are not reordered when a higher-fee transaction arrives later, so arrival time also affects ordering. This policy is not enforced by the derivation rules.`,
         },
-        sequencerCount: {
+        sequencer: {
           value: 'Centralized',
           secondLine: '5-instance Raft HA',
           sentiment: 'bad',
@@ -356,30 +355,31 @@ export const base: ScalingProject = opStackL2({
           description:
             'The user submits one Ethereum transaction to the OptimismPortal which is automatically derived by conforming nodes.',
         },
-        forcedInclusionDelay: {
+        inclusionDelay: {
           value: formatSeconds(sequencingWindowSeconds, { fullUnit: true }),
           secondLine: `${sequencingWindowBlocks.toLocaleString('en-US')} L1 blocks`,
           sentiment: 'good',
-          description: 'The static sequencing window is measured in Ethereum blocks.',
+          description:
+            'The static sequencing window is measured in Ethereum blocks.',
           orderHint: sequencingWindowBlocks,
         },
-        fallbackFinalizationDelay: {
-          value: formatSeconds(worstCaseFallbackFinalizationDelaySeconds, {
+        inclusionMechanics: {
+          value: 'Deposit transaction',
+          secondLine: 'Address alias',
+          description: `Forced inclusion creates an L1-originated deposit transaction rather than submitting the original signed L2 transaction. Its calldata is capped at ${maxDepositCalldataBytes.toLocaleString('en-US')} bytes, its minimum L2 gas limit is ${minimumDepositGasWithoutData.toLocaleString('en-US')} plus ${minimumDepositGasPerByte.toLocaleString('en-US')} gas per calldata byte, and deposits share a metered ${depositResourceLimit.toLocaleString('en-US')} gas resource limit per Ethereum block. L1 contract callers use an aliased address on L2.`,
+        },
+        exitDelay: {
+          value: formatSeconds(worstCaseExitDelaySeconds, {
             fullUnit: true,
           }),
           secondLine: `${formatSeconds(sequencingWindowSeconds)} inclusion + ${formatSeconds(aggregateVerifierCheckpointIntervalSeconds)} proposal + ${formatSeconds(stateFinalizationDelaySeconds)} exit`,
           description: `After successful L2 inclusion (forced or sequencer), a permissionless ZK proof is needed to finalize the state and exit on L1. Without the centralized TEE proof, the game waits ${formatSeconds(aggregateVerifierSlowFinalizationDelaySeconds, { fullUnit: true })}, followed by the currently ${formatSeconds(disputeGameFinalityDelaySeconds, { fullUnit: true })} finality air gap. The ${formatSeconds(proofMaturityDelaySeconds, { fullUnit: true })} withdrawal-proof maturity period runs concurrently.`,
-          orderHint: worstCaseFallbackFinalizationDelaySeconds,
-        },
-        forcedInclusionConstraints: {
-          value: 'Deposit transaction',
-          secondLine: 'Address alias',
-          description: `Live inclusion creates an L1-originated deposit transaction rather than submitting the original signed L2 transaction. Its calldata is capped at ${maxDepositCalldataBytes.toLocaleString('en-US')} bytes, its minimum L2 gas limit is ${minimumDepositGasWithoutData.toLocaleString('en-US')} plus ${minimumDepositGasPerByte.toLocaleString('en-US')} gas per calldata byte, and deposits share a metered ${depositResourceLimit.toLocaleString('en-US')} gas resource limit per Ethereum block. L1 contract callers use an aliased address on L2.`,
+          orderHint: worstCaseExitDelaySeconds,
         },
         exitEconomics: {
           value: `${aggregateVerifierInitialBondEther.toLocaleString('en-US')} ETH`,
           secondLine: 'ZK proof required',
-          description: `The permissionless proposal fallback requires a valid ZK proof and a ${aggregateVerifierInitialBondEther.toLocaleString('en-US')} ETH bond for a ${aggregateVerifierBlockInterval.toLocaleString('en-US')}-block checkpoint.`,
+          description: `Self-proposing the state needed for an exit requires a valid ZK proof and a ${aggregateVerifierInitialBondEther.toLocaleString('en-US')} ETH bond for one ${aggregateVerifierBlockInterval.toLocaleString('en-US')}-block checkpoint.`,
         },
       },
       censorshipResistance:

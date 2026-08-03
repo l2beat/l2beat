@@ -80,12 +80,12 @@ export interface ProjectSequencerSetSpec {
 export interface ProjectCentralizedSequencingSpec {
   trustedPreconfirmation: TableReadyValue
   trustedOrdering: TableReadyValue
-  sequencerCount: TableReadyValue
+  sequencer: TableReadyValue
   realtimeCensorshipResistance: TableReadyValue
   forcedInclusion: TableReadyValue
-  forcedInclusionDelay: TableReadyValue
-  fallbackFinalizationDelay: TableReadyValue
-  forcedInclusionConstraints: TableReadyValue
+  inclusionDelay: TableReadyValue
+  inclusionMechanics: TableReadyValue
+  exitDelay: TableReadyValue
   exitEconomics: TableReadyValue
 }
 

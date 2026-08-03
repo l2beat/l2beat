@@ -37,12 +37,12 @@ export interface ScalingRiskCentralizedSequencingEntry
   extends CommonScalingEntry {
   trustedPreconfirmation: TableReadyValue
   trustedOrdering: TableReadyValue
-  sequencerCount: TableReadyValue
+  sequencer: TableReadyValue
   realtimeCensorshipResistance: TableReadyValue
   forcedInclusion: TableReadyValue
-  forcedInclusionDelay: TableReadyValue
-  fallbackFinalizationDelay: TableReadyValue
-  forcedInclusionConstraints: TableReadyValue
+  inclusionDelay: TableReadyValue
+  inclusionMechanics: TableReadyValue
+  exitDelay: TableReadyValue
   exitEconomics: TableReadyValue
 }
 
@@ -207,12 +207,12 @@ function getScalingRiskCentralizedSequencingEntry(
     ...getCommonScalingEntry({ project, changes }),
     trustedPreconfirmation: spec.trustedPreconfirmation,
     trustedOrdering: spec.trustedOrdering,
-    sequencerCount: spec.sequencerCount,
+    sequencer: spec.sequencer,
     realtimeCensorshipResistance: spec.realtimeCensorshipResistance,
     forcedInclusion: spec.forcedInclusion,
-    forcedInclusionDelay: spec.forcedInclusionDelay,
-    fallbackFinalizationDelay: spec.fallbackFinalizationDelay,
-    forcedInclusionConstraints: spec.forcedInclusionConstraints,
+    inclusionDelay: spec.inclusionDelay,
+    inclusionMechanics: spec.inclusionMechanics,
+    exitDelay: spec.exitDelay,
     exitEconomics: spec.exitEconomics,
   }
 }

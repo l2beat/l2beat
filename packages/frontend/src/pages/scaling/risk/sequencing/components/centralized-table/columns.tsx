@@ -16,12 +16,12 @@ function getSequencingHref(entry: ScalingRiskCentralizedSequencingEntry) {
 type CentralizedSequencingTableValueKey =
   | 'trustedPreconfirmation'
   | 'trustedOrdering'
-  | 'sequencerCount'
+  | 'sequencer'
   | 'realtimeCensorshipResistance'
   | 'forcedInclusion'
-  | 'forcedInclusionDelay'
-  | 'fallbackFinalizationDelay'
-  | 'forcedInclusionConstraints'
+  | 'inclusionDelay'
+  | 'inclusionMechanics'
+  | 'exitDelay'
   | 'exitEconomics'
 
 const tableValueColumns = [
@@ -38,7 +38,7 @@ const tableValueColumns = [
       'Policy the centralized sequencer claims to use for ordering transactions. It is not enforced by the host chain.',
   },
   {
-    key: 'sequencerCount',
+    key: 'sequencer',
     header: 'Sequencer',
     tooltip:
       'Number of independent operators controlling real-time transaction ordering.',
@@ -56,28 +56,28 @@ const tableValueColumns = [
       'How users bypass the sequencer while the chain is otherwise live, and how many L1 transactions this inclusion path requires.',
   },
   {
-    key: 'forcedInclusionDelay',
+    key: 'inclusionDelay',
     header: 'Inclusion\ndelay',
     tooltip:
-      'Protocol delay after the first L1 transaction is included until the transaction enters the canonical L2 order. Wall-clock values are nominal.',
+      'Protocol delay after the first L1 transaction is included until the transaction enters the canonical L2 order while the chain otherwise remains live.',
   },
   {
-    key: 'forcedInclusionConstraints',
-    header: 'Inclusion\nconstraints',
+    key: 'inclusionMechanics',
+    header: 'Inclusion\nmechanics',
     tooltip:
-      'Transaction format, size, address-aliasing, resource and permission constraints of the live-inclusion path.',
+      'How forced inclusion works, including transaction format, size, address aliasing, resource limits and permission controls.',
   },
   {
-    key: 'fallbackFinalizationDelay',
+    key: 'exitDelay',
     header: 'Exit\ndelay',
     tooltip:
-      'Worst-case protocol delay from the first L1 inclusion transaction until its resulting state can support an L1 exit, including permissionless state proposal and challenges. Assumes all required L1 transactions are included.',
+      'Worst-case protocol delay to force inclusion, self-propose the resulting state, resolve any challenge and finalize an L1 exit after operator walkaway or blanket censorship.',
   },
   {
     key: 'exitEconomics',
     header: 'Exit\neconomics',
     tooltip:
-      'Capital required to self-propose and defend the state needed for an exit after operator walkaway. The second line shows which side has the advantage in a resource-exhaustion attack.',
+      'Capital and proof or dispute work required to self-propose and defend one state update needed for an exit after operator walkaway or blanket censorship.',
   },
 ] satisfies {
   key: CentralizedSequencingTableValueKey

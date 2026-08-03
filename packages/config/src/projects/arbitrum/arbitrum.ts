@@ -172,35 +172,16 @@ const boldDefenderAdvantage = computeBoldDefenderAdvantage(
   boldAssertionBond,
   boldChallengeBonds,
 )
-const boldBisectionHeights = [
-  discovery.getContractValue<number>(
-    'EdgeChallengeManager',
-    'LAYERZERO_BLOCKEDGE_HEIGHT',
-  ),
-  discovery.getContractValue<number>(
-    'EdgeChallengeManager',
-    'LAYERZERO_BIGSTEPEDGE_HEIGHT',
-  ),
-  discovery.getContractValue<number>(
-    'EdgeChallengeManager',
-    'LAYERZERO_SMALLSTEPEDGE_HEIGHT',
-  ),
-]
-const boldBisectionCount = boldBisectionHeights.reduce((sum, height) => {
-  const depth = Math.log2(height)
-  assert(Number.isInteger(depth), 'BoLD bisection height must be a power of 2')
-  return sum + depth
-}, 0)
 const edgeChallengePeriodSeconds = edgeChallengePeriodBlocks * assumedBlockTime
 const worstCaseStateFinalizationDelaySeconds =
   minimumAssertionPeriodSeconds +
   edgeChallengePeriodSeconds * 2 +
   challengeGracePeriodSeconds
-const worstCaseFallbackFinalizationDelaySeconds =
+const worstCaseExitDelaySeconds =
   currentForceInclusionDelayBlocks * assumedBlockTime +
   worstCaseStateFinalizationDelaySeconds
-const worstCaseFallbackFinalizationDisplaySeconds =
-  Math.ceil(worstCaseFallbackFinalizationDelaySeconds / 3_600) * 3_600
+const worstCaseExitDelayDisplaySeconds =
+  Math.ceil(worstCaseExitDelaySeconds / 3_600) * 3_600
 const worstCaseStateFinalizationDisplaySeconds =
   Math.ceil(worstCaseStateFinalizationDelaySeconds / 3_600) * 3_600
 
@@ -579,12 +560,12 @@ export const arbitrum: ScalingProject = orbitStackL2({
           secondLine: 'Auctioned express lane',
           description: `The express lane controller, selected by auction for each round, receives a ${timeboostExpressLaneAdvantageMilliseconds} ms advantage over regular transactions. Transactions are otherwise ordered based on arrival time. This policy is operated by the centralized sequencer and is not enforced by the L1 contracts.`,
         },
-        sequencerCount: {
+        sequencer: {
           value: 'Centralized',
           secondLine: 'Redis-coordinated HA',
           sentiment: 'bad',
           description:
-            "One organization controls the real-time sequencer feed. Arbitrum's documented production HA architecture runs redundant sequencer replicas and selects one active instance through shared Redis state. This improves availability but is not BFT consensus and does not create independent operators or censorship resistance.",
+            'The Arbitrum operator controls the real-time sequencer feed. Their documented production HA architecture runs redundant sequencer replicas and selects one active instance through shared Redis state. This improves availability but is not BFT consensus and does not create independent operators or censorship resistance.',
           orderHint: 1,
         },
         realtimeCensorshipResistance: {
@@ -600,7 +581,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
           description:
             'The first Ethereum transaction enqueues the message in the delayed inbox. After the delay expires, anyone can submit a second transaction calling forceInclusion, which advances all delayed messages through the selected message.',
         },
-        forcedInclusionDelay: {
+        inclusionDelay: {
           value: `${formatSeconds(currentForceInclusionDelayBlocks * assumedBlockTime, { fullUnit: true })}`,
           secondLine: `${currentForceInclusionDelayBlocks.toLocaleString('en-US')} L1 blocks (${delayBuffer.threshold.toLocaleString('en-US')}–${maxTimeVariation.delayBlocks.toLocaleString('en-US')}, dynamic)`,
           sentiment: 'good',
@@ -608,29 +589,27 @@ export const arbitrum: ScalingProject = orbitStackL2({
             'The message-specific delay is the lower of delayBlocks and the delay buffer. The current buffer gives the maximum delay. The force call becomes valid in the following Ethereum block.',
           orderHint: currentForceInclusionDelayBlocks,
         },
-        fallbackFinalizationDelay: {
-          value: formatSeconds(worstCaseFallbackFinalizationDisplaySeconds, {
+        inclusionMechanics: {
+          value: 'Delayed-inbox message',
+          secondLine: 'Address alias',
+          description: `Forced inclusion creates an L1-originated L2 message rather than submitting the original signed L2 transaction. The full delayed-inbox message is capped at ${inboxMaxDataSize.toLocaleString('en-US')} bytes, so the available call data is slightly smaller. L1 contract callers use an aliased address on L2. The rollup owner can pause the Inbox or enable its allowlist, preventing new submissions.`,
+        },
+        exitDelay: {
+          value: formatSeconds(worstCaseExitDelayDisplaySeconds, {
             fullUnit: true,
           }),
           secondLine: `${formatSeconds(currentForceInclusionDelayBlocks * assumedBlockTime)} inclusion + ${formatSeconds(
             worstCaseStateFinalizationDisplaySeconds,
           )} exit`,
-          description: `After live inclusion, anyone with the required bond can self-propose the assertion needed to exit. The assertion cadence can add up to ${formatSeconds(minimumAssertionPeriodSeconds, { fullUnit: true })}. In a maximally delayed BoLD challenge, confirming the winning edge can take up to twice the ${edgeChallengePeriodBlocks.toLocaleString('en-US')}-block edge challenge period, followed by a ${(
+          description: `After successful L2 inclusion (forced or sequencer), the user can propose the assertion needed to exit by posting the assertion bond. The assertion cadence can add up to ${formatSeconds(minimumAssertionPeriodSeconds, { fullUnit: true })}. A maximally delayed BoLD challenge can take up to twice the ${edgeChallengePeriodBlocks.toLocaleString('en-US')}-block edge challenge period, followed by a ${(
             challengeGracePeriodSeconds / assumedBlockTime
-          ).toLocaleString(
-            'en-US',
-          )}-block grace period. The total assumes ${assumedBlockTime}-second Ethereum blocks and that Ethereum includes the proposal, challenge and confirmation transactions.`,
-          orderHint: worstCaseFallbackFinalizationDelaySeconds,
-        },
-        forcedInclusionConstraints: {
-          value: 'Delayed-inbox message',
-          secondLine: 'Address alias',
-          description: `Live inclusion creates an L1-originated L2 message rather than submitting the original signed L2 transaction. The full delayed-inbox message is capped at ${inboxMaxDataSize.toLocaleString('en-US')} bytes, so the available call data is slightly smaller. L1 contract callers use an aliased address on L2. The rollup owner can pause the Inbox or enable its allowlist, preventing new submissions.`,
+          ).toLocaleString('en-US')}-block grace period.`,
+          orderHint: worstCaseExitDelaySeconds,
         },
         exitEconomics: {
           value: formatWethAmount(boldAssertionBond),
           secondLine: `Favors defender ${boldDefenderAdvantage.multiplier.toFixed(2)}×`,
-          description: `If state proposers also stop, an exiting user needs a ${formatWethAmount(boldAssertionBond)} assertion bond. BoLD commits to intermediate execution histories, so bisections can be checked against the claimed history and shared across challenges instead of requiring a new bond for every move. A fully contested path performs about ${boldBisectionCount} bisections across three levels before one-step execution; entering the lower levels requires additional refundable bonds of ${formatWethAmount(boldBigStepBond)} and ${formatWethAmount(boldSmallStepBond)}. The worst adjacent bond ratio means an attacker needs ${boldDefenderAdvantage.multiplier.toFixed(2)} times the honest side's capital to exhaust it.`,
+          description: `Self-proposing the assertion needed for an exit requires a ${formatWethAmount(boldAssertionBond)} bond. If challenged, the user must defend it through BoLD and post additional refundable bonds of ${formatWethAmount(boldBigStepBond)} and ${formatWethAmount(boldSmallStepBond)} to enter the lower challenge levels.`,
         },
       },
       censorshipResistance:

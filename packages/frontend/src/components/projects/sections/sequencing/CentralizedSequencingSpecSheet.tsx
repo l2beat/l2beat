@@ -11,18 +11,15 @@ interface Props {
 const SPEC_ROWS = [
   { key: 'trustedPreconfirmation', label: 'Trusted preconfirmation' },
   { key: 'trustedOrdering', label: 'Trusted ordering' },
-  { key: 'sequencerCount', label: 'Sequencer' },
+  { key: 'sequencer', label: 'Sequencer' },
   {
     key: 'realtimeCensorshipResistance',
     label: 'Real-time censorship resistance',
   },
   { key: 'forcedInclusion', label: 'Forced inclusion' },
-  { key: 'forcedInclusionDelay', label: 'Live inclusion delay' },
-  { key: 'forcedInclusionConstraints', label: 'Live inclusion constraints' },
-  {
-    key: 'fallbackFinalizationDelay',
-    label: 'Exit delay',
-  },
+  { key: 'inclusionDelay', label: 'Inclusion delay' },
+  { key: 'inclusionMechanics', label: 'Inclusion mechanics' },
+  { key: 'exitDelay', label: 'Exit delay' },
   { key: 'exitEconomics', label: 'Exit economics' },
 ] satisfies {
   key: keyof ProjectCentralizedSequencingSpec
