@@ -342,13 +342,6 @@ export const base: ScalingProject = opStackL2({
             'The Base operator controls real-time ordering. They document five sequencer instances coordinated by op-conductor using Raft leader election, with only the leader producing blocks. The replicas improve availability but do not create independent operators or censorship resistance.',
           orderHint: 1,
         },
-        proverAndStateProposer: {
-          value: 'Permissionless',
-          secondLine: 'TEE or SP1 proof + bond',
-          sentiment: 'good',
-          description:
-            'Anyone can post the bond and create an AggregateVerifier dispute game with a valid TEE attestation or SP1 ZK proof. Base operates the fast TEE path, while the ZK path remains available without its cooperation.',
-        },
         realtimeCensorshipResistance: {
           value: 'No',
           sentiment: 'bad',

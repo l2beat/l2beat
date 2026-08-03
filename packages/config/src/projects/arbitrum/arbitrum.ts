@@ -568,13 +568,6 @@ export const arbitrum: ScalingProject = orbitStackL2({
             'The Arbitrum operator controls the real-time sequencer feed. Their documented production HA architecture runs redundant sequencer replicas and selects one active instance through shared Redis state. This improves availability but is not BFT consensus and does not create independent operators or censorship resistance.',
           orderHint: 1,
         },
-        proverAndStateProposer: {
-          value: 'Permissionless',
-          secondLine: 'Bonded BoLD assertion',
-          sentiment: 'good',
-          description:
-            'Anyone can post the bond and propose the assertion needed to advance the L1 state. If challenged, the assertion is resolved through permissionless BoLD interactive proofs.',
-        },
         realtimeCensorshipResistance: {
           value: 'No',
           sentiment: 'bad',

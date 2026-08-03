@@ -249,13 +249,6 @@ export const optimism: ScalingProject = opStackL2({
             'The OP Mainnet operator controls real-time ordering. They run redundant sequencer instances coordinated by op-conductor using Raft leader election, with only the leader producing blocks. op-conductor explicitly assumes all nodes are honest and is not Byzantine fault tolerant, so the replicas do not create independent operators or censorship resistance.',
           orderHint: 1,
         },
-        proverAndStateProposer: {
-          value: 'Permissionless',
-          secondLine: 'Bonded dispute game',
-          sentiment: 'good',
-          description:
-            'Anyone can post the bond and create the fault dispute game that proposes an output root. Permissionless challengers can dispute an invalid proposal through the interactive fault proof.',
-        },
         realtimeCensorshipResistance: {
           value: 'No',
           sentiment: 'bad',

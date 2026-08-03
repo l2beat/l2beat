@@ -416,19 +416,19 @@ export const starknet: ScalingProject = {
       name: 'Transactions are ordered by centralized sequencers',
       description: `Starknet v0.14.3 uses ${consensusSequencerCount} equal-weight, permissioned consensus sequencers controlled by StarkWare. A proposer is selected in deterministic round-robin order and builds from its own peer-to-peer synchronized mempool. The current deployment uses an honest-majority Tendermint configuration, requiring ${consensusQuorum}/${consensusSequencerCount} votes to decide a block. This provides process-level redundancy, but no independence from StarkWare for ordering or preconfirmations.
 
-State advancement on Ethereum is a separate, also permissioned pipeline. Starknet OS execution tasks are proved and recursively aggregated through StarkWare's SHARP service, using Stwo for proving tasks and Stone for the roots of the recursive tree. After the resulting proof fact is registered on Ethereum, only the ${stateUpdateOperators.length} Starknet Operators can update the canonical state: the service Operator and the ${scMinorityStats} Starkware SCMinority Multisig.
+State advancement on Ethereum is a separate, also permissioned pipeline. Starknet OS execution tasks are proved and recursively aggregated through StarkWare's SHARP service, using Stwo for proving tasks and Stone for the roots of the recursive tree. After the resulting proof fact is registered on Ethereum, only the ${stateUpdateOperators.length} Starknet Operators can update the canonical state: the service Operator and the Security Council minority.
 
-There is no user-callable forced-inclusion function. A censored user can post an L1-to-L2 message and ask the SCMinority Multisig to bypass consensus by including it in a valid, proven state update, but the contact and response process has no protocol deadline.`,
+There is no user-callable forced-inclusion function. A censored user can post an L1-to-L2 message and ask the Security Council minority to bypass consensus by including it in a valid, proven state update, but the contact and response process has no protocol deadline.`,
       centralizedSequencingSpec: {
         trustedPreconfirmation: {
           value: `${preconfirmationTimeMilliseconds} ms`,
-          secondLine: `${l2BlockTimeMilliseconds / 1_000} s typical L2 block time`,
-          description: `The current proposer targets a PRE_CONFIRMED receipt in about ${preconfirmationTimeMilliseconds} ms. It is a trusted promise before consensus decides the block, with no onchain enforcement or slashing, and can be reverted if the proposal does not become the consensus block.`,
+          secondLine: `${l2BlockTimeMilliseconds / 1_000}s L2 block time`,
+          description: `The current proposer targets a PRE_CONFIRMED receipt in about ${preconfirmationTimeMilliseconds} ms. It is a trusted promise before consensus decides the block, with no onchain enforcement or slashing, and can be reverted if the proposal does not become the consensus block. The ${l2BlockTimeMilliseconds / 1_000}-second L2 block time is a target: a block can close earlier when it reaches a resource limit or later while transactions are still executing or consensus takes longer.`,
           orderHint: preconfirmationTimeMilliseconds / 1_000,
         },
         trustedOrdering: {
-          value: 'Tip priority',
-          secondLine: 'Per-proposer mempool',
+          value: 'Priority gas auction',
+          secondLine: 'Higher explicit tips first',
           description:
             'The active proposer selects eligible transactions from its peer-to-peer synchronized mempool in descending tip order, with the transaction hash breaking equal-tip ties. Transactions whose gas-price bound is below the current threshold remain pending. This offchain policy is not enforced by Ethereum.',
         },
@@ -439,12 +439,6 @@ There is no user-callable forced-inclusion function. A censored user can post an
           description: `StarkWare controls ${consensusSequencerCount} equal-weight, permissioned proposers selected in deterministic round-robin order. The deployment assumes no malicious validators and requires more than half of the voting weight (${consensusQuorum}/${consensusSequencerCount}). The replicas can tolerate process outages, but do not create independent operators or censorship resistance.`,
           orderHint: 1,
         },
-        proverAndStateProposer: {
-          value: 'Centralized + whitelisted',
-          secondLine: `SHARP + ${stateUpdateOperators.length} L1 Operators`,
-          sentiment: 'bad',
-          description: `StarkWare operates the SHARP proving and recursive aggregation pipeline used in normal operation. Even if someone independently registers an accepted proof fact, the Starknet core contract permits only the ${stateUpdateOperators.length} Operators—the service Operator and the ${scMinorityStats} SCMinority Multisig—to submit the corresponding state update.`,
-        },
         realtimeCensorshipResistance: {
           value: 'No',
           sentiment: 'bad',
@@ -453,42 +447,42 @@ There is no user-callable forced-inclusion function. A censored user can post an
         },
         forcedInclusion: {
           value: 'Discretionary fallback',
-          secondLine: `${scMinorityStats} Security Council`,
+          secondLine: 'Security Council minority',
           sentiment: 'bad',
           description:
-            'There is no user-callable forced-inclusion function. A user can log an L1-to-L2 message with one Ethereum transaction and contact the SCMinority Multisig. The council can then bypass sequencer consensus by participating in a valid, proven state update, but whether and when it does so is discretionary.',
+            'There is no user-callable forced-inclusion function. A user can log an L1-to-L2 message with one Ethereum transaction and contact the Security Council minority. The council can then bypass sequencer consensus by participating in a valid, proven state update, but whether and when it does so is discretionary.',
         },
         inclusionDelay: {
           value: 'Unbounded',
           secondLine: 'No protocol deadline',
           sentiment: 'bad',
           description:
-            'The contracts impose no deadline for the SCMinority Multisig to respond, for SHARP to prove the state transition, or for an Operator to post the state update.',
+            'The contracts impose no deadline for the Security Council minority to respond, for SHARP to prove the state transition, or for an Operator to post the state update.',
           orderHint: Number.MAX_SAFE_INTEGER,
         },
         inclusionMechanics: {
           value: 'L1 message + state update',
           secondLine: 'Not the original L2 tx',
-          description: `Logging a message creates an L1-originated L1-handler transaction rather than submitting the original signed L2 transaction. It does not automatically enter the canonical L2 order. The SCMinority path must produce normal Starknet OS execution, data availability and an accepted SHARP proof before posting the state update. An unconsumed message can be cancelled through a two-call L1 process after the ${formatSeconds(messageCancellationDelaySeconds, { preventRoundingUp: true, fullUnit: true })} delay.`,
+          description: `Logging a message creates an L1-originated L1-handler transaction rather than submitting the original signed L2 transaction. It does not automatically enter the canonical L2 order. The Security Council path must produce normal Starknet OS execution, data availability and an accepted SHARP proof before posting the state update. An unconsumed message can be cancelled through a two-call L1 process after the ${formatSeconds(messageCancellationDelaySeconds, { preventRoundingUp: true, fullUnit: true })} delay.`,
         },
         exitDelay: {
           value: 'Unbounded',
           secondLine: 'Council response + proving',
           sentiment: 'bad',
           description:
-            'Under sequencer and service-Operator failure, a user cannot independently advance the state needed for an exit. There is no deadline for the SCMinority Multisig to act or for SHARP to produce the required proof. Once an accepted fact and valid state update reach Ethereum, there is no additional state-finalization delay.',
+            'Under sequencer and service-Operator failure, a user cannot independently advance the state needed for an exit. There is no deadline for the Security Council minority to act or for SHARP to produce the required proof. Once an accepted fact and valid state update reach Ethereum, there is no additional state-finalization delay.',
           orderHint: Number.MAX_SAFE_INTEGER,
         },
         exitEconomics: {
-          value: 'Not self-service',
-          secondLine: `STARK proof + ${scMinorityStats} council`,
+          value: 'No self-service',
+          secondLine: 'STARK proof + council action',
           sentiment: 'bad',
           description:
-            'The Starknet core contract requires no proposer bond, but a user cannot self-propose an exit state. Progress requires the recursive STARK proving pipeline and cooperation from a whitelisted Operator, specifically the SCMinority Multisig when the service Operator is unavailable.',
+            'A user cannot self-propose state. Progress requires the recursive STARK proving pipeline and cooperation from a whitelisted Operator or the Security Council minority.',
         },
       },
       censorshipResistance:
-        'The permissioned sequencer committee provides no real-time censorship resistance. The SCMinority Multisig can conditionally bypass consensus with a valid, proven state update, but because users cannot invoke this path and it has no deadline, Starknet provides no deterministic eventual censorship-resistance guarantee.',
+        'The permissioned sequencer committee provides no real-time censorship resistance. The Security Council minority can conditionally bypass consensus with a valid, proven state update, but because users cannot invoke this path and it has no deadline, Starknet provides no deterministic eventual censorship-resistance guarantee.',
       references: [
         {
           title: 'Starknet documentation - Transaction lifecycle',
@@ -517,6 +511,10 @@ There is no user-callable forced-inclusion function. A censored user can post an
         {
           title: 'Apollo - Consensus runtime configuration',
           url: 'https://github.com/starkware-libs/sequencer/blob/5114457ad4b5d6d1764b520dfa40b9e826f48854/crates/apollo_deployments/resources/app_configs/consensus_manager_config.json#L1-L3',
+        },
+        {
+          title: 'Apollo - L2 block-time target',
+          url: 'https://github.com/starkware-libs/sequencer/blob/5114457ad4b5d6d1764b520dfa40b9e826f48854/crates/apollo_batcher_config/src/config.rs#L318-L344',
         },
         {
           title: 'Apollo - Deterministic proposer rotation',
