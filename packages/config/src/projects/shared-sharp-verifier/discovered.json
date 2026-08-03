@@ -1,6 +1,6 @@
 {
   "name": "shared-sharp-verifier",
-  "timestamp": 1784211561,
+  "timestamp": 1785756243,
   "configHash": "0x7e82a31b3272a4c93d87617c93d0f46c05a6f3c3ffd5c7ccbb2af36117be597a",
   "entries": [
     {
@@ -3946,7 +3946,7 @@
         "PAGE_INFO_SIZE_OFFSET": 1,
         "referenceFactRegistry": "eth:0xE67515a751291445B85b2F176c1eCdf08e86b406",
         "referralExpirationTime": 1785589607,
-        "referralHasExpired": false
+        "referralHasExpired": true
       },
       "fieldMeta": {
         "bootloaderProgramContractAddress": {
@@ -11072,6 +11072,6 @@
     "shared-sharp-verifier/SHARPVerifier": "0xbb0dfd8f13e81dfc49e293cbb37baaa66b2d014583c195e1c0934d68a92ae178",
     "shared-sharp-verifier/SHARPVerifierCallProxy": "0xd6abe3c01cd750925365115c44550fef728ff685bfa5f1c7971181b2e375a918"
   },
-  "usedBlockNumbers": { "ethereum": 25545781 },
+  "usedBlockNumbers": { "ethereum": 25674047 },
   "permissionsConfigHash": "0x8537b691fa6f869162e2df71fe8b88c8a0e8668684852275d37d73b9c1d4d1f8"
 }

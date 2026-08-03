@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x7a53e001e361197e6b2ffdef37e2bef5fc7885d6
+
+# Diff at Mon, 03 Aug 2026 11:09:18 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@44e2212a46e585fd2ddb21d6755695cf74e1f876 block: 1781602943
+- current timestamp: 1785755292
+
+## Description
+
+One member of Lens ms 7702 delegation.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1781602943 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x7CBba07e31Dc7b12bB69a1209C5B11A8aC50acf5) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x39d3c680bc45b2c9a848f9ffcd0355b99f65f6a6cd626699fdb311dec621e134"
++        "0xdddaab1d0ccad17e0578e5dad9eab7bf81a90144cf89b5f4d5714c407dd2c9c5"
+    }
+```
+
 Generated with discovered.json: 0x0619f584d90ec6a7d70783fbb6eb6c12aa214d20
 
 # Diff at Wed, 29 Jul 2026 12:10:39 GMT:

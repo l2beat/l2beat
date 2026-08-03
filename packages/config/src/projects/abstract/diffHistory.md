@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xe309760007c2aea11093a9c67f6ed74a47be61af
+
+# Diff at Mon, 03 Aug 2026 10:41:25 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@44e2212a46e585fd2ddb21d6755695cf74e1f876 block: 1782810164
+- current timestamp: 1785753622
+
+## Description
+
+Removed one ms member.
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0x325407EEC948b97429068AF0cd8A8D95F06315a4) [GnosisSafe] {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x23F48e7BF163941Ebeb7a6106B8ac712a8c54f75"
+      values.multisigThreshold:
+-        "2 of 6 (33%)"
++        "2 of 5 (40%)"
+    }
+```
+
 Generated with discovered.json: 0xafcdf28d1d9d327ba0fe5378271ce747cc037205
 
 # Diff at Fri, 31 Jul 2026 10:00:40 GMT:
