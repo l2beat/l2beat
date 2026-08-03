@@ -106,6 +106,17 @@ describe('discovery config.jsonc', () => {
               "is a reference but it's a legacy entrypoint",
             ].join(' '),
           )
+          // A stale targetProject makes readDiscoveryWithReferences read a
+          // project that does not own the address, or throw when it no longer
+          // exists at all.
+          assert(
+            entry.targetProject === existingEntrypoint.project,
+            [
+              `In project ${c.name}, contract ${entry.name ?? ''}(${entry.address})`,
+              `references project ${entry.targetProject}`,
+              `but the entrypoint is owned by ${existingEntrypoint.project}`,
+            ].join(' '),
+          )
         }
       }
     }
