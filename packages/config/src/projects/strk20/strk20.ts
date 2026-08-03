@@ -12,6 +12,9 @@ const STRK20_DEPOSIT_EVENT =
 const STRK20_WITHDRAWAL_EVENT =
   '0x2eed7e29b3502a726faf503ac4316b7101f3da813654e8df02c13449e03da8'
 const STRK20_SINCE = UnixTime.fromDate(new Date('2026-06-17'))
+const STRK20_POOL_SINCE = UnixTime.fromDate(
+  new Date('2026-04-20T10:08:48Z'),
+)
 const STRK20_TOKENS = [
   {
     address:
@@ -57,6 +60,24 @@ const STRK20_TOKENS = [
     symbol: 'ETH',
     decimals: 18,
     priceId: 'ethereum',
+  },
+  {
+    address:
+      '0x028d709c875c0ceac3dce7065bec5328186dc89fe254527084d1689910954b0a',
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/54172/standard/logo200x200.png?1738561141',
+    symbol: 'XSTRK',
+    decimals: 18,
+    priceId: 'endur-fi-staked-strk',
+  },
+  {
+    address:
+      '0x068f5c6a61780768455de69077e07e89787839bf8166decfbf92b645209c0fb8',
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661',
+    decimals: 6,
+    symbol: 'USDT',
+    priceId: 'tether',
   },
 ] as const
 
@@ -143,7 +164,7 @@ function getPrivacyTokens(): ProjectPrivacyToken[] {
         type: 'pool',
         label: `${token.symbol} pool`,
         address: STRK20_POOL,
-        sinceTimestamp: STRK20_SINCE,
+        sinceTimestamp: STRK20_POOL_SINCE,
         deposit: {
           event: STRK20_DEPOSIT_EVENT,
           extractor: 'strk20Deposit',
