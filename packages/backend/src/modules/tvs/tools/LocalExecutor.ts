@@ -15,8 +15,8 @@ import {
   MulticallV3Client,
   PriceProvider,
   RpcClientCompat,
-  StarknetClient,
   StarknetBalanceProvider,
+  StarknetClient,
   StarknetTotalSupplyProvider,
   TotalSupplyProvider,
 } from '@l2beat/shared'
