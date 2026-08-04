@@ -103,6 +103,7 @@ export async function getScalingRiskSequencingEntries(): Promise<ScalingRiskSequ
   assert(ethereumEntry, 'Ethereum sequencer set specification not found')
 
   const decentralizedEntries = [
+    ethereumEntry,
     ...projects
       .map((project) =>
         getScalingRiskSequencingEntry(
@@ -110,9 +111,9 @@ export async function getScalingRiskSequencingEntries(): Promise<ScalingRiskSequ
           projectsChangeReport.getChanges(project.id),
         ),
       )
-      .filter(notUndefined),
-    ethereumEntry,
-  ].sort((a, b) => a.name.localeCompare(b.name))
+      .filter(notUndefined)
+      .sort((a, b) => a.name.localeCompare(b.name)),
+  ]
 
   const centralizedEntries = projects
     .map((project) =>
