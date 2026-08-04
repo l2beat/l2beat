@@ -419,7 +419,7 @@ export const taiko: ScalingProject = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
-      description: `Every proposal range is verified by exactly two proofs chosen from SGX (Geth), SGX (Reth), SP1 and RISC0, with at least one SP1 or RISC0 proof required. Proof submission is gated by ProverWhitelist, which has ${whitelistedProverCount} whitelisted prover${proverPlural}. This can affect liveness but does allow finalizing invalid state.`,
+      description: `Every proposal range is verified by exactly two proofs chosen from SGX (Geth), SGX (Reth), SP1 and RISC0, with at least one SP1 or RISC0 proof required. Proof submission is gated by ProverWhitelist, which has ${whitelistedProverCount} whitelisted prover${proverPlural}. This can affect liveness but does not allow finalizing invalid state.`,
       value: 'Validity proofs',
       executionDelay: 0,
     },
