@@ -39,7 +39,12 @@ export async function getTvsConfig(
   if (sinceTimestamp) {
     projects = projects.map((p) => ({
       projectId: p.projectId,
-      tokens: getEffectiveConfig(p.tokens, sinceTimestamp),
+      // Temporary filter for Marlin token
+      // Coingecko started returning wrong response just for this token
+      // which results in halting all TVS sync. We should investigate this issue and remove this filter once it's fixed.
+      tokens: getEffectiveConfig(p.tokens, sinceTimestamp).filter(
+        (p) => p.priceId !== 'marlin',
+      ),
     }))
   }
 
