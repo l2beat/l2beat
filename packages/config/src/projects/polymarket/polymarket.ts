@@ -128,6 +128,45 @@ export const polymarket: BaseProject = {
     ],
     badges: [],
   },
+  // Both the bridged and the native stablecoin are registered under the
+  // symbol USDC on this chain, so one entry covers both; empty balances are
+  // dropped when the value config is generated.
+  // The three pools that hold user collateral are disjoint, so summing them
+  // does not double count: wrapping parks the underlying in the vault, and
+  // splitting into outcome shares moves it back out of the vault into either
+  // the outcome-token ledger (binary markets) or the wrapper that backs
+  // multi-outcome positions. The circulating collateral token is therefore
+  // exactly the vault balance and is deliberately not counted on top.
+  escrows: [
+    discovery.getEscrowDetails({
+      address: discovery.getContract('CollateralVault').address,
+      tokens: ['USDC'],
+      description:
+        'Holds the stablecoin backing every unit of the collateral token that has not been converted into outcome shares.',
+    }),
+    discovery.getEscrowDetails({
+      address: discovery.getContract('ConditionalTokens').address,
+      tokens: ['USDC'],
+      description:
+        'Holds the collateral locked behind outcome shares of binary markets.',
+    }),
+    discovery.getEscrowDetails({
+      address: discovery.getContract('WrappedCollateral').address,
+      tokens: ['USDC'],
+      description:
+        'Holds the collateral locked behind outcome shares of multi-outcome markets.',
+    }),
+  ],
+  tvsInfo: {
+    associatedTokens: [],
+    warnings: [
+      {
+        sentiment: 'warning',
+        value:
+          'The outcome-token ledger is shared infrastructure, so its balance can include markets run by other protocols.',
+      },
+    ],
+  },
   defiInfo: {
     category: 'Prediction market',
   },
@@ -139,15 +178,43 @@ export const polymarket: BaseProject = {
         'Supplies the optimistic oracle that answers each market question. Proposals and disputes are bonded and settlement is performed by permissioned resolvers, so a stalled or captured oracle leaves markets unresolved or resolves them wrongly.',
     },
     {
-      name: 'Circle USDC',
+      project: ProjectId('polygon-pos'),
+      description:
+        'Its bridge mints the stablecoin that backs essentially all of the collateral token. The bridge contract holding the depositor role can mint that stablecoin without a corresponding deposit, and the token’s proxy admin, also controlled from this chain’s governance, can replace its implementation, which would allow the freeze and pause powers that are currently unset to be reinstated.',
+    },
+    {
+      name: 'Circle',
       icon: 'usdc',
       description:
-        'Backs the collateral token one-for-one. Issuer freeze powers over the vault, or over a user address, would block wrapping and redemption of the affected balance.',
+        'Issues the reserves held on the token’s home chain that give the bridged stablecoin its value, so a depeg or an action against the escrow there devalues the collateral. Circle holds no role on the bridged token itself: its blacklister, pauser and rescuer roles are empty and there is no admin able to repopulate them.',
     },
   ],
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
-    risks: [],
+    risks: [
+      {
+        category: 'Funds can be stolen if',
+        text: `the ${adminSafe} multisig upgrades the collateral token, its vault or the combination-market contracts after the ${timelockDelay} timelock, since the vault can be made to execute any call on the stablecoin backing every balance.`,
+        isCritical: true,
+      },
+      {
+        category: 'Funds can be stolen if',
+        text: `the collateral token's owner, the timelock, grants the minter role to an address of its choosing after the ${timelockDelay} delay, since a minter can create units that no deposit backs and redeem them against the vault. The role is held today only by the outcome modules.`,
+      },
+      {
+        category: 'Funds can be frozen if',
+        text: 'the admins pause either collateral ramp, which takes effect immediately and with no timelock and blocks redemption of the collateral token back into the underlying stablecoin.',
+      },
+      {
+        category: 'Funds can lose value if',
+        text: `the admins impose an outcome on a market instead of the oracle: after ${adapterSafetyPeriod} on binary markets, and with ${negRiskOperatorDelay} on multi-outcome markets, where flagging a market and forcing its result can happen in a single transaction.`,
+        isCritical: true,
+      },
+      {
+        category: 'Funds can lose value if',
+        text: 'the permissioned oracle stalls, since settlement requires a resolver role and a proposal never becomes final on its own, leaving positions unredeemable.',
+      },
+    ],
   },
 }
