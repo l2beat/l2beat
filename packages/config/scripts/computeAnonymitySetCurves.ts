@@ -1,14 +1,23 @@
 /**
- * Computes the "anonymity set vs. holding duration" curves rendered by the
- * Anonymity sets section on the privacy project pages.
+ * Computes the two charts rendered by the Anonymity sets section on the privacy
+ * project pages. Both count the same thing - unique qualifying depositors in a
+ * trailing window - and differ only in which end of the window moves.
  *
- * For every holding duration `x` between 7 and 365 days, a curve value is the
- * number of unique addresses that made a qualifying deposit in the trailing
- * window `[NOW - x days, NOW]`. This is the same metric as
- * `computeAnonymitySets.ts` (see that file for the full list of caveats),
- * generalized from the fixed 30 day window to an arbitrary one: if you deposit
- * and withdraw within `x` days, the depositors of that window are the crowd you
- * blend into.
+ * CURVES ("anonymity set vs. holding duration"). For every holding duration `x`
+ * between 7 and 365 days, a curve value is the number of unique addresses that
+ * made a qualifying deposit in the trailing window `[NOW - x days, NOW]`. This
+ * is the same metric as `computeAnonymitySets.ts` (see that file for the full
+ * list of caveats), generalized from the fixed 30 day window to an arbitrary
+ * one: if you deposit and withdraw within `x` days, the depositors of that
+ * window are the crowd you blend into.
+ *
+ * HISTORY ("trailing 30 day anonymity set over time"). The window length is
+ * pinned back to 30 days and its end slides across the last HISTORY_DAYS days:
+ * the value at date `d` is the number of unique addresses that deposited in the
+ * 30 calendar days ending on `d`. It answers "how much of a crowd would I have
+ * had, had I withdrawn on this day after holding for up to a month", and shows
+ * whether a pool's anonymity is growing, flat or collapsing. The last point of
+ * the history equals the 30 day point of the curve by construction.
  *
  * What counts as "qualifying" depends on how the protocol accepts deposits:
  * - Tornado Cash has fixed denominations, so every tracked pool is one curve.
@@ -49,6 +58,12 @@
  * 5. Tracked buckets with no deposits at all in the source CSVs still produce a
  *    (flat zero) curve, and the script prints a coverage report so gaps between
  *    what the config tracks and what the snapshot contains stay visible.
+ *
+ * 5b. The history buckets deposits by UTC calendar day, so its oldest point
+ *    needs data from `HISTORY_DAYS + HISTORY_WINDOW_DAYS` days before `NOW` -
+ *    further back than the curves ever reach. BLOCK_ANCHORS is sized for that
+ *    longer reach, and the script asserts the coverage rather than silently
+ *    dropping the deposits that fall off the end.
  *
  * 6. The script makes no network calls. Block timestamps and token prices are
  *    frozen tables captured once (see each table for provenance), because the
@@ -93,14 +108,20 @@ const MAX_DAYS = 365
 const DAY_SECONDS = 24 * 60 * 60
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
+/** Days of history the sliding-window chart covers, ending on `NOW`. */
+const HISTORY_DAYS = 365
+/** Length of the window whose end slides across those days. */
+const HISTORY_WINDOW_DAYS = 30
+
 /** ~7 days of Ethereum blocks at 12s per block. */
 const ANCHOR_STEP_BLOCKS = 50_400
 
 /**
  * `[blockNumber, unixTimestamp]` pairs used to date a deposit - see assumptions
  * #2 and #6. Evenly spaced by ANCHOR_STEP_BLOCKS and newest first, starting at
- * the highest block present in the CSV snapshots and reaching ~400 days back,
- * which is comfortably past MAX_DAYS.
+ * the highest block present in the CSV snapshots and reaching ~440 days back -
+ * comfortably past both MAX_DAYS and the longer reach the history needs (see
+ * assumption #5b), which `assertAnchorReach` checks on every run.
  *
  * Captured once from an Ethereum RPC node on 2026-08-04. Block timestamps are
  * immutable, so these never need refreshing unless the CSV snapshot is
@@ -166,6 +187,12 @@ const BLOCK_ANCHORS: [block: number, timestamp: number][] = [
   [22866016, 1751875571],
   [22815616, 1751267027],
   [22765216, 1750658567],
+  [22714816, 1750049483],
+  [22664416, 1749440651],
+  [22614016, 1748831279],
+  [22563616, 1748221871],
+  [22513216, 1747611743],
+  [22462816, 1746999587],
 ]
 
 /**
@@ -529,6 +556,99 @@ function computeCurves(entries: Entry[], series: Series[], anchors: Anchor[]) {
   return curves
 }
 
+/**
+ * For each series, the number of unique depositors in the HISTORY_WINDOW_DAYS
+ * long window ending at each of the last HISTORY_DAYS daily timestamps.
+ *
+ * A point sits at UTC midnight of its day and looks strictly backwards, exactly
+ * like `computeCurves` does at `NOW`: the point at day `d` covers the
+ * HISTORY_WINDOW_DAYS whole days `[d - 30, d - 1]`, the ones that had already
+ * finished when the window closed. Anchoring both to an instant rather than to
+ * a calendar day is what makes the last history point equal the 30 day point of
+ * the curve.
+ */
+function computeHistory(entries: Entry[], series: Series[], anchors: Anchor[]) {
+  const lastDay = Math.floor(NOW_SECONDS / DAY_SECONDS)
+  const firstDay = lastDay - (HISTORY_DAYS - 1)
+  // The oldest window reaches back past the oldest point it produces.
+  const oldestDay = firstDay - HISTORY_WINDOW_DAYS
+
+  const bySeries = new Map<string, Map<number, string[]>>()
+  for (const s of series) {
+    bySeries.set(s.id, new Map())
+  }
+
+  for (const entry of entries) {
+    const timestamp = interpolateTimestamp(anchors, entry.blockNum)
+    if (timestamp === undefined || timestamp > NOW_SECONDS) continue
+    const day = Math.floor(timestamp / DAY_SECONDS)
+    if (day < oldestDay || day > lastDay) continue
+
+    const byDay = bySeries.get(entry.seriesId)
+    if (!byDay) continue
+    const senders = byDay.get(day) ?? []
+    senders.push(entry.sender)
+    byDay.set(day, senders)
+  }
+
+  // Consecutive windows overlap in all but two days, so one multiset of
+  // addresses is carried across the sweep, adding the day that enters the
+  // window and dropping the one that leaves it. Its size is the answer.
+  const histories = new Map<string, number[]>()
+  for (const s of series) {
+    const byDay = bySeries.get(s.id)
+    const counts = new Map<string, number>()
+
+    const add = (day: number) => {
+      for (const sender of byDay?.get(day) ?? []) {
+        counts.set(sender, (counts.get(sender) ?? 0) + 1)
+      }
+    }
+    const remove = (day: number) => {
+      for (const sender of byDay?.get(day) ?? []) {
+        const count = (counts.get(sender) ?? 0) - 1
+        if (count > 0) counts.set(sender, count)
+        else counts.delete(sender)
+      }
+    }
+
+    // Seed the window of the first point: days [firstDay - 30, firstDay - 1].
+    for (let day = oldestDay; day < firstDay; day++) add(day)
+
+    const sizes = [counts.size]
+    for (let day = firstDay + 1; day <= lastDay; day++) {
+      add(day - 1)
+      remove(day - 1 - HISTORY_WINDOW_DAYS)
+      sizes.push(counts.size)
+    }
+
+    histories.set(s.id, sizes)
+  }
+
+  return { histories, firstDay, lastDay }
+}
+
+/**
+ * The anchors must reach back past the oldest day any chart looks at, or
+ * `interpolateTimestamp` silently drops deposits and the oldest points come out
+ * too low. Cheaper to fail loudly here than to notice a sagging tail on the
+ * chart.
+ */
+function assertAnchorReach(anchors: Anchor[]) {
+  const oldest = anchors[anchors.length - 1]
+  if (!oldest) throw new Error('No block anchors')
+
+  const neededDays = Math.max(MAX_DAYS, HISTORY_DAYS + HISTORY_WINDOW_DAYS)
+  const needed = NOW_SECONDS - neededDays * DAY_SECONDS
+  if (oldest.timestamp > needed) {
+    throw new Error(
+      `BLOCK_ANCHORS only reach ${new Date(oldest.timestamp * 1000).toISOString()}, ` +
+        `but the charts need ${neededDays} days of history back to ${new Date(needed * 1000).toISOString()}. ` +
+        'Extend the table by stepping further back from its oldest block.',
+    )
+  }
+}
+
 /** Where the config and the CSV snapshot disagree about what exists. */
 function reportCoverage(
   tokens: TokenSpec[],
@@ -565,6 +685,7 @@ function main() {
 
   const prices = getPrices()
   const anchors = getAnchors()
+  assertAnchorReach(anchors)
 
   const trxRows = parseTrxsWithAmounts(TRXS_WITH_AMOUNTS_FILE)
   const ppRows = parsePrivacyPoolsCsv(PRIVACY_POOLS_FILE)
@@ -656,17 +777,34 @@ function main() {
       ])
     }
 
+    const { histories, firstDay, lastDay } = computeHistory(
+      project.entries,
+      project.series,
+      anchors,
+    )
+
+    const historyPoints: number[][] = []
+    for (let day = firstDay; day <= lastDay; day++) {
+      const index = day - firstDay
+      historyPoints.push([
+        day * DAY_SECONDS,
+        ...project.series.map((s) => histories.get(s.id)?.[index] ?? 0),
+      ])
+    }
+
     output[project.slug] = {
       description: project.description,
       buckets: project.series,
       points,
+      history: historyPoints,
     }
 
     console.log(`\n=== ${project.slug}: ${project.series.length} series`)
     for (const s of project.series) {
       const sizes = curves.get(s.id)
+      const history = histories.get(s.id) ?? []
       console.log(
-        `  ${s.label.padEnd(22)} 30d: ${String(sizes?.[30 - MIN_DAYS] ?? 0).padStart(5)}   365d: ${String(sizes?.[MAX_DAYS - MIN_DAYS] ?? 0).padStart(5)}`,
+        `  ${s.label.padEnd(22)} 30d: ${String(sizes?.[30 - MIN_DAYS] ?? 0).padStart(5)}   365d: ${String(sizes?.[MAX_DAYS - MIN_DAYS] ?? 0).padStart(5)}   30d a year ago: ${String(history[0] ?? 0).padStart(5)}   peak 30d: ${String(Math.max(0, ...history)).padStart(5)}`,
       )
     }
   }
@@ -676,6 +814,8 @@ function main() {
     asOf: NOW_ISO,
     minDays: MIN_DAYS,
     maxDays: MAX_DAYS,
+    historyDays: HISTORY_DAYS,
+    historyWindowDays: HISTORY_WINDOW_DAYS,
     pricesUsd: Object.fromEntries(prices),
     projects: output,
   }

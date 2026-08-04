@@ -12,7 +12,9 @@ import {
   ChartTooltip,
 } from '~/components/core/chart/Chart'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import { getXAxisProps } from '~/components/core/chart/utils/getXAxisProps'
 import type { AnonymitySetCurves } from '~/server/features/privacy/anonymitySetCurves'
+import { formatTimestamp } from '~/utils/dates'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { AnonymitySetTooltip } from './AnonymitySetTooltip'
 import { getLegendHeight, getLogTicks } from './getAnonymitySetChartLayout'
@@ -24,10 +26,15 @@ interface Props {
   project?: ChartProject
 }
 
-/** Ticks that read well on a 7 to 365 day axis. */
-const X_AXIS_TICKS = [7, 30, 90, 180, 270, 365]
-
-export function AnonymitySetChart({
+/**
+ * The trailing `windowDays` anonymity set over time: the value at a date is how
+ * many unique addresses had deposited in the preceding month, i.e. the crowd
+ * you would have blended into had you withdrawn on that day.
+ *
+ * Plots the same buckets in the same colors as `AnonymitySetChart`, so the two
+ * can be read against each other.
+ */
+export function AnonymitySetHistoryChart({
   curves,
   scale = 'linear',
   project,
@@ -36,12 +43,12 @@ export function AnonymitySetChart({
 
   const chartData = useMemo(
     () =>
-      curves.points.map(([days, ...setSizes]) => {
-        const point: Record<string, number> = { days: days ?? 0 }
+      curves.history.map(([timestamp, ...setSizes]) => {
+        const point: Record<string, number> = { timestamp: timestamp ?? 0 }
         curves.buckets.forEach((bucket, index) => {
           point[bucket.id] = setSizes[index] ?? 0
         })
-        return point as { days: number } & Record<string, number>
+        return point as { timestamp: number } & Record<string, number>
       }),
     [curves],
   )
@@ -69,8 +76,6 @@ export function AnonymitySetChart({
         margin={{ top: 20, right: project ? 0 : 1 }}
       >
         <ChartLegend
-          // These charts carry far more series than a single legend row fits,
-          // and the legend is the only place a series is named.
           content={
             <ChartLegendContent className="h-auto w-full flex-wrap justify-center gap-x-3 gap-y-1" />
           }
@@ -88,20 +93,7 @@ export function AnonymitySetChart({
             hide={!dataKeys.includes(bucket.id)}
           />
         ))}
-        <XAxis
-          dataKey="days"
-          type="number"
-          domain={[
-            curves.points[0]?.[0] ?? 7,
-            curves.points.at(-1)?.[0] ?? 365,
-          ]}
-          ticks={X_AXIS_TICKS}
-          // Without padding the first and last tick labels get clipped.
-          padding={{ left: 10, right: 10 }}
-          tickLine={false}
-          axisLine={false}
-          tickFormatter={(value: number) => `${value}d`}
-        />
+        <XAxis {...getXAxisProps(chartData)} />
         <YAxis
           tickLine={false}
           axisLine={false}
@@ -110,25 +102,32 @@ export function AnonymitySetChart({
           dy={-10}
           tick={{ width: 350 }}
           scale={scale === 'linear' ? 'auto' : scale}
-          // A log axis anchored at zero squeezes every curve into the top of
+          // A log axis anchored at zero squeezes every series into the top of
           // the chart, so let it fit the data instead.
           domain={scale === 'linear' ? undefined : ['auto', 'auto']}
           ticks={scale === 'linear' ? undefined : logTicks}
           tickFormatter={(value: number) => formatInteger(Number(value))}
         />
-        <ChartTooltip filterNull={false} content={<HoldingDurationTooltip />} />
+        <ChartTooltip
+          filterNull={false}
+          content={<HistoryTooltip windowDays={curves.historyWindowDays} />}
+        />
       </LineChart>
     </ChartContainer>
   )
 }
 
-function HoldingDurationTooltip({ payload, label }: CustomChartTooltipProps) {
+function HistoryTooltip({
+  payload,
+  label,
+  windowDays,
+}: CustomChartTooltipProps & { windowDays?: number }) {
   if (typeof label !== 'number') return null
 
   return (
     <AnonymitySetTooltip
       payload={payload}
-      title={`Held for up to ${formatInteger(label)} days`}
+      title={`${windowDays ?? 30} days before ${formatTimestamp(label, { mode: 'date', longMonthName: true })}`}
     />
   )
 }
