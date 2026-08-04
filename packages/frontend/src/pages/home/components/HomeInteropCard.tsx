@@ -8,6 +8,7 @@ import {
   MIN_SELECTED_CHAINS,
   MIN_SELECTED_PROTOCOLS,
 } from '~/pages/interop/components/flows/consts'
+import { FlowsGeneralStats } from '~/pages/interop/components/flows/FlowsGeneralStats'
 import { FlowsGraphPanel } from '~/pages/interop/components/flows/graph/FlowsGraphPanel'
 import {
   type InteropFlowsProtocol,
@@ -27,11 +28,6 @@ interface Props {
   interopProtocols: InteropFlowsProtocol[]
   defaultSelectedFlowChains: string[]
 }
-
-// Inside the wide-card side panel the tiles render as separator-divided
-// rows instead of bordered boxes.
-const SIDE_PANEL_TILE_CLASS =
-  '@min-[900px]:justify-center @min-[900px]:rounded-none @min-[900px]:border-0 @min-[900px]:bg-transparent @min-[900px]:py-4'
 
 export function HomeInteropCard({
   interopChains,
@@ -121,13 +117,12 @@ function HomeInteropCardContent({
         href="/interop/summary"
         timeframe="Last 24h"
       />
-      {/* On wide cards (full-width row between lg and xl) the tiles move
-          from a top row to a full-height stats panel right of the graph,
-          styled like the General stats panel on the interop summary page. */}
-      <div className="flex @min-[900px]:grid min-h-0 flex-1 @min-[900px]:grid-cols-[minmax(0,1fr)_300px] @min-[900px]:grid-rows-[minmax(0,1fr)] flex-col @min-[900px]:gap-6">
-        <div className="@min-[900px]:col-start-2 @min-[900px]:row-start-1 @min-[900px]:mt-0 mt-2.5 grid @min-[900px]:auto-rows-fr @min-[440px]:grid-cols-4 @min-[900px]:grid-cols-1 grid-cols-2 @min-[900px]:gap-0 gap-2 @min-[900px]:divide-y @min-[900px]:divide-divider @min-[900px]:rounded-lg @min-[900px]:bg-surface-secondary @min-[900px]:p-4 @min-[900px]:dark:bg-header-secondary">
+      {/* On wide cards (full-width row between lg and xl) the compact tile
+          row is replaced by the same General stats panel the interop
+          summary page shows, placed left of the graph. */}
+      <div className="flex @min-[900px]:grid min-h-0 flex-1 @min-[900px]:grid-cols-[240px_minmax(0,1fr)] flex-col @min-[900px]:gap-4">
+        <div className="mt-2.5 grid @min-[900px]:hidden @min-[440px]:grid-cols-4 grid-cols-2 gap-2">
           <StatTile
-            className={SIDE_PANEL_TILE_CLASS}
             title="Volume"
             isLoading={statsLoading}
             emphasized
@@ -138,7 +133,6 @@ function HomeInteropCardContent({
             }
           />
           <StatTile
-            className={SIDE_PANEL_TILE_CLASS}
             title="Top chain"
             isLoading={statsLoading}
             href={topChainData?.href}
@@ -159,7 +153,6 @@ function HomeInteropCardContent({
             }
           />
           <StatTile
-            className={SIDE_PANEL_TILE_CLASS}
             title="Top token"
             isLoading={statsLoading}
             href={topToken ? getInteropTokenUrl(topToken) : undefined}
@@ -178,7 +171,6 @@ function HomeInteropCardContent({
             }
           />
           <StatTile
-            className={SIDE_PANEL_TILE_CLASS}
             title="Top chain path"
             isLoading={statsLoading}
             href={srcChain && dstChain ? '/interop/summary' : undefined}
@@ -206,7 +198,10 @@ function HomeInteropCardContent({
             }
           />
         </div>
-        <div className="@min-[900px]:col-start-1 @min-[900px]:row-start-1 @min-[900px]:mt-0 mt-6 flex min-h-0 flex-1 flex-col">
+        <div className="@min-[900px]:block hidden h-full">
+          <FlowsGeneralStats />
+        </div>
+        <div className="@min-[900px]:mt-0 mt-6 flex min-h-0 flex-1 flex-col">
           {/* Static preview: interactions happen on the interop page */}
           <div className="-mx-2 pointer-events-none flex min-h-0 min-w-0 flex-1 flex-col overflow-x-clip">
             <FlowsGraphPanel
