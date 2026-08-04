@@ -28,6 +28,11 @@ interface Props {
   defaultSelectedFlowChains: string[]
 }
 
+// Inside the wide-card side panel the tiles render as separator-divided
+// rows instead of bordered boxes.
+const SIDE_PANEL_TILE_CLASS =
+  '@min-[900px]:justify-center @min-[900px]:rounded-none @min-[900px]:border-0 @min-[900px]:bg-transparent @min-[900px]:py-4'
+
 export function HomeInteropCard({
   interopChains,
   interopProtocols,
@@ -117,11 +122,12 @@ function HomeInteropCardContent({
         timeframe="Last 24h"
       />
       {/* On wide cards (full-width row between lg and xl) the tiles move
-          from a top row to a vertical stack right of the graph, filling
-          the whitespace around the circular layout. */}
-      <div className="flex @min-[900px]:grid min-h-0 flex-1 @min-[900px]:grid-cols-[minmax(0,1fr)_280px] @min-[900px]:grid-rows-[minmax(0,1fr)] flex-col @min-[900px]:gap-6">
-        <div className="@min-[900px]:col-start-2 @min-[900px]:row-start-1 @min-[900px]:mt-0 mt-2.5 grid @min-[440px]:grid-cols-4 @min-[900px]:grid-cols-1 grid-cols-2 @min-[900px]:content-center @min-[900px]:gap-3 gap-2">
+          from a top row to a full-height stats panel right of the graph,
+          styled like the General stats panel on the interop summary page. */}
+      <div className="flex @min-[900px]:grid min-h-0 flex-1 @min-[900px]:grid-cols-[minmax(0,1fr)_300px] @min-[900px]:grid-rows-[minmax(0,1fr)] flex-col @min-[900px]:gap-6">
+        <div className="@min-[900px]:col-start-2 @min-[900px]:row-start-1 @min-[900px]:mt-0 mt-2.5 grid @min-[900px]:auto-rows-fr @min-[440px]:grid-cols-4 @min-[900px]:grid-cols-1 grid-cols-2 @min-[900px]:gap-0 gap-2 @min-[900px]:divide-y @min-[900px]:divide-divider @min-[900px]:rounded-lg @min-[900px]:bg-surface-secondary @min-[900px]:p-4 @min-[900px]:dark:bg-header-secondary">
           <StatTile
+            className={SIDE_PANEL_TILE_CLASS}
             title="Volume"
             isLoading={statsLoading}
             emphasized
@@ -132,6 +138,7 @@ function HomeInteropCardContent({
             }
           />
           <StatTile
+            className={SIDE_PANEL_TILE_CLASS}
             title="Top chain"
             isLoading={statsLoading}
             href={topChainData?.href}
@@ -152,6 +159,7 @@ function HomeInteropCardContent({
             }
           />
           <StatTile
+            className={SIDE_PANEL_TILE_CLASS}
             title="Top token"
             isLoading={statsLoading}
             href={topToken ? getInteropTokenUrl(topToken) : undefined}
@@ -170,6 +178,7 @@ function HomeInteropCardContent({
             }
           />
           <StatTile
+            className={SIDE_PANEL_TILE_CLASS}
             title="Top chain path"
             isLoading={statsLoading}
             href={srcChain && dstChain ? '/interop/summary' : undefined}
