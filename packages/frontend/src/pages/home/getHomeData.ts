@@ -28,6 +28,7 @@ import {
   MIN_SELECTED_CHAINS,
   MIN_SELECTED_PROTOCOLS,
 } from '../interop/components/flows/consts'
+import { getInteropChainHref } from '../interop/utils/getInteropChainHref'
 import type { HomeScalingCategoryCounts } from './components/HomeScalingCard'
 import type { HomeWhatsNewItem } from './components/HomeWhatsNewCard'
 import { getHomeProjectCounts } from './getHomeProjectCounts'
@@ -59,7 +60,7 @@ export async function getHomeData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Home - L2BEAT',
+        title: 'L2BEAT',
         description:
           'Bird-eye view of the Ethereum scaling ecosystem: total value secured, activity, interoperability, recent additions and what L2BEAT is currently tracking.',
         url: req.originalUrl,
@@ -81,11 +82,19 @@ export async function getHomeData(
 async function getCachedData(manifest: Manifest) {
   const helpers = getSsrHelpers()
 
+  const scalingProjects = await ps.getProjects({
+    select: ['scalingInfo'],
+  })
+  const scalingProjectSlugById = new Map(
+    scalingProjects.map((p) => [p.id, p.slug]),
+  )
+
   const interopChainsRaw = getInteropChains()
   const interopChains: InteropChainWithIcon[] = interopChainsRaw.map(
     (chain) => ({
       ...chain,
       iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
+      href: getInteropChainHref(chain.id, scalingProjectSlugById),
     }),
   )
   const activeInteropChains = interopChains.filter((chain) => !chain.isUpcoming)
