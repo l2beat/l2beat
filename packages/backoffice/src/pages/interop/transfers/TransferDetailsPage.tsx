@@ -7,6 +7,8 @@ import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { TablePageLayout } from '~/components/table/TablePageLayout'
 import { useBackendTrpc } from '~/react-query/trpc'
+import { TransferDataRangeSelect } from '../TransferDataRangeSelect'
+import { parseInteropTransferDataRange } from '../transferDataRange'
 import { TransferDetailsTable } from './table/details/TransferDetailsTable'
 import type {
   ChainMetadata,
@@ -18,11 +20,12 @@ import { decodeRouteParam, parseOptionalSearchParam } from './utils'
 export function TransferDetailsPage() {
   const trpc = useBackendTrpc()
   const params = useParams<{ type: string }>()
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const type = decodeRouteParam(params.type)
   const plugin = parseOptionalSearchParam(searchParams.get('plugin'))
   const srcChain = parseOptionalSearchParam(searchParams.get('srcChain'))
   const dstChain = parseOptionalSearchParam(searchParams.get('dstChain'))
+  const range = parseInteropTransferDataRange(searchParams.get('range'))
   const hasValidParams = type !== undefined
 
   const detailsInput: TransferDetailsInput = hasValidParams
@@ -31,6 +34,7 @@ export function TransferDetailsPage() {
         plugin,
         srcChain,
         dstChain,
+        range,
       }
     : { type: '' }
 
@@ -74,11 +78,20 @@ export function TransferDetailsPage() {
       actions={
         <>
           <Button asChild variant="outline" size="sm">
-            <Link to="/interop/transfers">
+            <Link to={`/interop/transfers?range=${range}`}>
               <ChevronLeftIcon />
               Back to transfers
             </Link>
           </Button>
+          <TransferDataRangeSelect
+            value={range}
+            onValueChange={(nextRange) => {
+              const nextParams = new URLSearchParams(searchParams)
+              nextParams.set('range', nextRange)
+              setSearchParams(nextParams)
+            }}
+            disabled={!hasValidParams || isTransfersFetching}
+          />
           <Button
             variant="outline"
             size="sm"
@@ -102,6 +115,7 @@ export function TransferDetailsPage() {
             Type: {type ?? 'invalid route'}
           </Badge>
           <Badge variant="secondary">Plugin: {plugin ?? 'all'}</Badge>
+          <Badge variant="secondary">Range: {range}</Badge>
           <Badge variant="secondary">Source chain: {srcChain ?? 'all'}</Badge>
           <Badge variant="secondary">
             Destination chain: {dstChain ?? 'all'}

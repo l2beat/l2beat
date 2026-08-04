@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { RefreshCwIcon } from 'lucide-react'
+import { useState } from 'react'
 import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
 import { ErrorState } from '~/components/ErrorState'
@@ -8,6 +9,11 @@ import { TablePageLayout } from '~/components/table/TablePageLayout'
 import { useHashTarget } from '~/hooks/useHashTarget'
 import { formatDollars } from '~/pages/interop/transfers/utils'
 import { useBackendTrpc } from '~/react-query/trpc'
+import { TransferDataRangeSelect } from '../TransferDataRangeSelect'
+import {
+  DEFAULT_INTEROP_TRANSFER_DATA_RANGE,
+  type InteropTransferDataRange,
+} from '../transferDataRange'
 import { SuspiciousTransfersTable } from './table/SuspiciousTransfersTable'
 import type {
   SuspiciousTransferRow,
@@ -16,6 +22,9 @@ import type {
 
 export function SuspiciousTransfersPage() {
   const trpc = useBackendTrpc()
+  const [range, setRange] = useState<InteropTransferDataRange>(
+    DEFAULT_INTEROP_TRANSFER_DATA_RANGE,
+  )
   const highlightTransferId = useHashTarget()
   const {
     data: suspiciousTransfersData,
@@ -24,7 +33,9 @@ export function SuspiciousTransfersPage() {
     isLoading: isSuspiciousTransfersLoading,
     isFetching: isSuspiciousTransfersFetching,
     refetch: refetchSuspiciousTransfers,
-  } = useQuery(trpc.interop.activity.suspiciousTransfers.queryOptions())
+  } = useQuery(
+    trpc.interop.activity.suspiciousTransfers.queryOptions({ range }),
+  )
 
   const {
     data: chainsData,
@@ -65,21 +76,28 @@ export function SuspiciousTransfersPage() {
       title="Suspicious transfers"
       description="Value-mismatch transfers migrated from the legacy anomalies page."
       actions={
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => void refetchAll()}
-          disabled={isSuspiciousTransfersFetching || isChainsFetching}
-        >
-          <RefreshCwIcon
-            className={
-              isSuspiciousTransfersFetching || isChainsFetching
-                ? 'animate-spin'
-                : ''
-            }
+        <>
+          <TransferDataRangeSelect
+            value={range}
+            onValueChange={setRange}
+            disabled={isSuspiciousTransfersFetching}
           />
-          Refresh
-        </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => void refetchAll()}
+            disabled={isSuspiciousTransfersFetching || isChainsFetching}
+          >
+            <RefreshCwIcon
+              className={
+                isSuspiciousTransfersFetching || isChainsFetching
+                  ? 'animate-spin'
+                  : ''
+              }
+            />
+            Refresh
+          </Button>
+        </>
       }
       summary={
         <>

@@ -98,6 +98,12 @@ export interface InteropTransferFinancialsFilter {
   to?: UnixTime
 }
 
+/** Transfer timestamp interval with an exclusive lower and inclusive upper bound. */
+export interface InteropTransferTimeRange {
+  from: UnixTime
+  to: UnixTime
+}
+
 export interface InteropTransferFinancialsStats {
   totalCount: number
   unprocessedCount: number
@@ -438,6 +444,7 @@ export class InteropTransferRepository extends BaseRepository {
       plugin?: string
       srcChain?: string
       dstChain?: string
+      timeRange?: InteropTransferTimeRange
     } = {},
   ): Promise<InteropTransferRecord[]> {
     let query = this.db.selectFrom('InteropTransfer').where('type', '=', type)
@@ -454,6 +461,12 @@ export class InteropTransferRepository extends BaseRepository {
       query = query.where('dstChain', '=', options.dstChain)
     }
 
+    if (options.timeRange !== undefined) {
+      query = query
+        .where('timestamp', '>', UnixTime.toDate(options.timeRange.from))
+        .where('timestamp', '<=', UnixTime.toDate(options.timeRange.to))
+    }
+
     const rows = await query.orderBy('timestamp', 'desc').selectAll().execute()
 
     return rows.map(toRecord)
@@ -462,6 +475,7 @@ export class InteropTransferRepository extends BaseRepository {
   async getValueMismatchTransfers(
     valueDifferencePercentThreshold: number,
     minimumSideValueUsdThreshold = 0,
+    timeRange?: InteropTransferTimeRange,
   ): Promise<InteropSuspiciousTransferRecord[]> {
     assert(
       valueDifferencePercentThreshold > 0,
@@ -485,7 +499,7 @@ export class InteropTransferRepository extends BaseRepository {
       END
     `
 
-    const rows = await this.db
+    let query = this.db
       .selectFrom('InteropTransfer')
       .selectAll()
       .select(valueDifferencePercent.as('valueDifferencePercent'))
@@ -499,6 +513,14 @@ export class InteropTransferRepository extends BaseRepository {
           AND (${absoluteValueDifferenceUsd} * 100) > (${valueDifferencePercentThreshold} * ${maxSideValueUsd})
         `,
       )
+
+    if (timeRange !== undefined) {
+      query = query
+        .where('timestamp', '>', UnixTime.toDate(timeRange.from))
+        .where('timestamp', '<=', UnixTime.toDate(timeRange.to))
+    }
+
+    const rows = await query
       .orderBy(valueDifferencePercent, 'desc')
       .orderBy('timestamp', 'desc')
       .orderBy('transferId', 'desc')
@@ -867,8 +889,10 @@ export class InteropTransferRepository extends BaseRepository {
     return Number(result.numUpdatedRows)
   }
 
-  async getStats(): Promise<InteropTransfersStatsRecord[]> {
-    const overallStats = await this.db
+  async getStats(
+    timeRange?: InteropTransferTimeRange,
+  ): Promise<InteropTransfersStatsRecord[]> {
+    let query = this.db
       .selectFrom('InteropTransfer')
       .select((eb) => [
         'plugin',
@@ -878,8 +902,14 @@ export class InteropTransferRepository extends BaseRepository {
         eb.fn.sum('srcValueUsd').as('srcValueSum'),
         eb.fn.sum('dstValueUsd').as('dstValueSum'),
       ])
-      .groupBy(['plugin', 'type'])
-      .execute()
+
+    if (timeRange !== undefined) {
+      query = query
+        .where('timestamp', '>', UnixTime.toDate(timeRange.from))
+        .where('timestamp', '<=', UnixTime.toDate(timeRange.to))
+    }
+
+    const overallStats = await query.groupBy(['plugin', 'type']).execute()
 
     return overallStats.map((overall) => ({
       plugin: overall.plugin,
@@ -891,8 +921,10 @@ export class InteropTransferRepository extends BaseRepository {
     }))
   }
 
-  async getDetailedStats(): Promise<InteropTransfersDetailedStatsRecord[]> {
-    const chainStats = await this.db
+  async getDetailedStats(
+    timeRange?: InteropTransferTimeRange,
+  ): Promise<InteropTransfersDetailedStatsRecord[]> {
+    let query = this.db
       .selectFrom('InteropTransfer')
       .select((eb) => [
         'plugin',
@@ -906,6 +938,14 @@ export class InteropTransferRepository extends BaseRepository {
       ])
       .where('srcChain', 'is not', null)
       .where('dstChain', 'is not', null)
+
+    if (timeRange !== undefined) {
+      query = query
+        .where('timestamp', '>', UnixTime.toDate(timeRange.from))
+        .where('timestamp', '<=', UnixTime.toDate(timeRange.to))
+    }
+
+    const chainStats = await query
       .groupBy(['plugin', 'type', 'srcChain', 'dstChain'])
       .execute()
 
@@ -969,8 +1009,10 @@ export class InteropTransferRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
-  async getMissingTokensInfo(): Promise<InteropMissingTokenInfo[]> {
-    const rows = await this.db
+  async getMissingTokensInfo(
+    timeRange?: InteropTransferTimeRange,
+  ): Promise<InteropMissingTokenInfo[]> {
+    let query = this.db
       .selectFrom('InteropTransfer')
       .select([
         'plugin',
@@ -985,7 +1027,14 @@ export class InteropTransferRepository extends BaseRepository {
       .where((eb) =>
         eb.or([eb('srcValueUsd', 'is', null), eb('dstValueUsd', 'is', null)]),
       )
-      .execute()
+
+    if (timeRange !== undefined) {
+      query = query
+        .where('timestamp', '>', UnixTime.toDate(timeRange.from))
+        .where('timestamp', '<=', UnixTime.toDate(timeRange.to))
+    }
+
+    const rows = await query.execute()
 
     const chainAddressCounts = new Map<string, number>()
     const chainAddressPlugins = new Map<string, Set<string>>()

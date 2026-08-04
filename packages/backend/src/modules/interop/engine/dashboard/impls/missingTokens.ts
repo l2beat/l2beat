@@ -1,4 +1,8 @@
-import type { Database, InteropMissingTokenInfo } from '@l2beat/database'
+import type {
+  Database,
+  InteropMissingTokenInfo,
+  InteropTransferTimeRange,
+} from '@l2beat/database'
 import type { TokenDbClient } from '@l2beat/token-backend'
 import { DeployedTokenId } from '../../financials/DeployedTokenId'
 import { toDeployedId } from '../../financials/InteropFinancialsLoop'
@@ -38,8 +42,9 @@ export function dedupeMissingTokens<T extends MissingTokenSelection>(
 export async function getMissingTokens(
   db: Database,
   deps: MissingTokensDeps,
+  timeRange?: InteropTransferTimeRange,
 ): Promise<MissingTokenRecord[]> {
-  const rows = await db.interopTransfer.getMissingTokensInfo()
+  const rows = await db.interopTransfer.getMissingTokensInfo(timeRange)
   return mapMissingTokensWithStatus(rows, deps)
 }
 

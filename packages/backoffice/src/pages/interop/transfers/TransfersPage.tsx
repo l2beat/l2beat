@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { RefreshCwIcon } from 'lucide-react'
+import { useSearchParams } from 'react-router-dom'
 import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
 import { Card, CardContent } from '~/components/core/Card'
@@ -8,14 +9,18 @@ import { LoadingState } from '~/components/LoadingState'
 import { TablePageSummaryCard } from '~/components/table/TablePageSummaryCard'
 import { AppLayout } from '~/layouts/AppLayout'
 import { useBackendTrpc } from '~/react-query/trpc'
+import { TransferDataRangeSelect } from '../TransferDataRangeSelect'
+import { parseInteropTransferDataRange } from '../transferDataRange'
 import { TransfersTable } from './table/TransfersTable'
 import type { TransferStatsRow } from './types'
 import { formatDollars } from './utils'
 
 export function TransfersPage() {
   const trpc = useBackendTrpc()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const range = parseInteropTransferDataRange(searchParams.get('range'))
   const { data, error, isError, isLoading, isFetching, refetch } = useQuery(
-    trpc.interop.transfers.stats.queryOptions(),
+    trpc.interop.transfers.stats.queryOptions({ range }),
   )
 
   const rows: TransferStatsRow[] = data ?? []
@@ -30,15 +35,24 @@ export function TransfersPage() {
         <TablePageSummaryCard
           title="Transfers"
           actions={
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => void refetch()}
-              disabled={isFetching}
-            >
-              <RefreshCwIcon className={isFetching ? 'animate-spin' : ''} />
-              Refresh
-            </Button>
+            <>
+              <TransferDataRangeSelect
+                value={range}
+                onValueChange={(nextRange) =>
+                  setSearchParams({ range: nextRange })
+                }
+                disabled={isFetching}
+              />
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => void refetch()}
+                disabled={isFetching}
+              >
+                <RefreshCwIcon className={isFetching ? 'animate-spin' : ''} />
+                Refresh
+              </Button>
+            </>
           }
           summary={
             <>
@@ -66,6 +80,7 @@ export function TransfersPage() {
             {!isLoading && !isError ? (
               <TransfersTable
                 data={rows}
+                range={range}
                 enableCsvExport
                 enablePairsCsvExport
               />
