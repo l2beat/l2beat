@@ -1,3 +1,46 @@
+Generated with discovered.json: 0x35f0856968b5f4f51e2907a834580fee7fb666c4
+
+# Diff at Mon, 03 Aug 2026 14:32:34 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@44e2212a46e585fd2ddb21d6755695cf74e1f876 block: 1785249432
+- current timestamp: 1785767480
+
+## Description
+
+Verified the source code of desert verifier. It is equivalent to the one in Lighter deployment on Ethereum.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1785249432 (main branch discovery), not current.
+
+```diff
+    contract DesertVerifier (robinhood:0x56aeED6920DBB9E198C2C0072147A45684A06E10) [N/A] {
+    +++ description: None
+      unverified:
+-        true
+      implementationNames.robinhood:0x56aeED6920DBB9E198C2C0072147A45684A06E10:
+-        ""
++        "DesertVerifier"
+      sourceHashes:
++        ["0xcedbddf6ef097d451ba200328780c0cc492b65383f8dc44e760ec70eee4f8850"]
+    }
+```
+
+```diff
+    contract Governance (robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7) [lighter/Governance] {
+    +++ description: Manages the list of validators and the network governor.
+      deployerAddress:
++        "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213"
+      sinceTimestamp:
++        1782477747
+      sinceBlock:
++        229410
+    }
+```
+
 Generated with discovered.json: 0xf704c3228f6a40b431bfe9843954067403a4382d
 
 # Diff at Tue, 28 Jul 2026 14:38:19 GMT:

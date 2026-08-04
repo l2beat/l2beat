@@ -1,6 +1,6 @@
 {
   "name": "abstract",
-  "timestamp": 1782810164,
+  "timestamp": 1785753622,
   "configHash": "0x0d413093225db7d84e677f805c484621f3776cef96b7c732cd167e182c8979ab",
   "entries": [
     {
@@ -42,11 +42,6 @@
     },
     {
       "address": "eth:0x1CdfBDED92D46261837827607e674110Ca5a0575",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x23F48e7BF163941Ebeb7a6106B8ac712a8c54f75",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -432,7 +427,7 @@
           "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119",
           "eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731"
         ],
-        "getFirstUnprocessedPriorityTx": 26517,
+        "getFirstUnprocessedPriorityTx": 26847,
         "getL2BootloaderBytecodeHash": "0x01000911c4db4fe62c98e180cfa7e9b3a22fb15f505905d4bf36192f481551e6",
         "getL2DefaultAccountBytecodeHash": "0x010005f73e7c299ed73db937843643bdc276cbc2cc8596287e1e0cf3afc60252",
         "getL2EvmEmulatorBytecodeHash": "0x01000d8bae37b82f311186426184866498b357f41d7a02ced11f3e3fbfbacd63",
@@ -440,8 +435,8 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 0,
-        "getPriorityTreeRoot": "0xc8926769be799958aa25562be4c397168dd28721e2dd2cf287640d5487afaf9b",
+        "getPriorityQueueSize": 1,
+        "getPriorityTreeRoot": "0x73ab7a682373550cba88768b0235a270d744d02d0740c51bd27885d4bb8bf7bb",
         "getPriorityTreeStartIndex": 17183,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 124554051588,
@@ -449,13 +444,13 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 29, 4],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 87051,
-        "getTotalBatchesExecuted": 87040,
-        "getTotalBatchesVerified": 87050,
-        "getTotalBlocksCommitted": 87051,
-        "getTotalBlocksExecuted": 87040,
-        "getTotalBlocksVerified": 87050,
-        "getTotalPriorityTxs": 26517,
+        "getTotalBatchesCommitted": 89021,
+        "getTotalBatchesExecuted": 89013,
+        "getTotalBatchesVerified": 89019,
+        "getTotalBlocksCommitted": 89021,
+        "getTotalBlocksExecuted": 89013,
+        "getTotalBlocksVerified": 89019,
+        "getTotalPriorityTxs": 26848,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45",
         "getVerifierParams": {
@@ -546,7 +541,6 @@
         "$members": [
           "eth:0x392C009a49E9368Fc2bDd8B1e5520E62DEB8276c",
           "eth:0xfBbBa4FbAA3A99bA842924d4c47C14d6d61D9615",
-          "eth:0x23F48e7BF163941Ebeb7a6106B8ac712a8c54f75",
           "eth:0x4d64Ff9c7aB6F4Dc6dD7D9438BCBA70e3E094e3E",
           "eth:0xa925fac7B26C2959b5d55173B21CAc5729372459",
           "eth:0xFa700392b4B2223356401eDb1AA51665CC4bD9A4"
@@ -555,8 +549,8 @@
         "domainSeparator": "0x6bd5d176dc3e359b9e03bf0149c82e26ee9a80a970d54f4b7713ef1027771bec",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 6 (33%)",
-        "nonce": 13,
+        "multisigThreshold": "2 of 5 (40%)",
+        "nonce": 17,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -612,7 +606,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 3 (33%)",
-        "nonce": 17,
+        "nonce": 19,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1774,6 +1768,6 @@
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
-  "usedBlockNumbers": { "ethereum": 25429469 },
-  "permissionsConfigHash": "0x4f71e72637efc8e83a4105c0aaba86d545bf2c5a99c17ee0217453b4812d38b2"
+  "usedBlockNumbers": { "ethereum": 25673829 },
+  "permissionsConfigHash": "0xfb70cb7811d6ebfafe14fd9884c2fc4bc9feba64c7d608ac02421b722a02a6dc"
 }
