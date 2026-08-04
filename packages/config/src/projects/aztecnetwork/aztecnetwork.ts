@@ -573,7 +573,11 @@ export const aztecnetwork: ScalingProject = {
       censorshipResistance: readProjectMarkdown(
         'aztecnetwork',
         'censorshipResistance',
-        { escapeHatchBondString, escapeHatchFrequencyString },
+        {
+          escapeHatchBondString,
+          escapeHatchFailedPunishmentString,
+          escapeHatchFrequencyString,
+        },
       ),
       references: [
         {
