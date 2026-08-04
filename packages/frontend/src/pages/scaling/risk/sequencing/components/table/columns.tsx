@@ -10,6 +10,7 @@ import type { ScalingRiskSequencingEntry } from '~/server/features/scaling/risks
 const columnHelper = createColumnHelper<ScalingRiskSequencingEntry>()
 
 function getSequencingHref(entry: ScalingRiskSequencingEntry) {
+  if (entry.slug === 'ethereum') return undefined
   return `/scaling/projects/${entry.slug}#sequencing`
 }
 
@@ -22,6 +23,7 @@ type SequencingTableValueKey =
   | 'blockProduction'
   | 'deterministicCrGadget'
   | 'additionalCrGadgets'
+  | 'exitDelay'
   | 'exitEconomics'
 
 const tableValueColumns = [
@@ -40,8 +42,8 @@ const tableValueColumns = [
   },
   {
     key: 'blockTime',
-    header: 'L2 block\ntime',
-    tooltip: 'Interval between successive L2 blocks.',
+    header: 'Block\ntime',
+    tooltip: 'Interval between successive blocks.',
   },
   {
     key: 'rotation',
@@ -53,19 +55,25 @@ const tableValueColumns = [
     key: 'blockProduction',
     header: 'Block\nproduction',
     tooltip:
-      'The model used to estimate inclusion under partial live-chain censorship.',
+      'Who controls inclusion and transaction ordering for a block.',
   },
   {
     key: 'deterministicCrGadget',
     header: 'Deterministic\nCR',
     tooltip:
-      'Whether there is a deterministic censorship-resistance gadget, such as a bounded forced-inclusion path.',
+      'Whether there is a deterministic censorship-resistance gadget, such as a forced-inclusion path.',
   },
   {
     key: 'additionalCrGadgets',
     header: 'Additional\nCR',
     tooltip:
       'Additional censorship-resistance aids beyond the normal sequencer rotation.',
+  },
+  {
+    key: 'exitDelay',
+    header: 'Exit\ndelay',
+    tooltip:
+      'Worst-case delay to make enough state progress to exit after the normal sequencers and state proposers stop.',
   },
   {
     key: 'exitEconomics',

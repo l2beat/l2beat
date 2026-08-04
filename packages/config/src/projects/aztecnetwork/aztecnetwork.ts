@@ -546,7 +546,7 @@ export const aztecnetwork: ScalingProject = {
         blockProductionAccess: { value: 'Open', sentiment: 'good' },
         stakePerValidator: { value: activationThresholdString + ', constant' },
         rateLimit: {
-          value: `Up to ${entryQueueFlushSize} sequencers per epoch (current)`,
+          value: `${entryQueueFlushSize} sequencers / epoch`,
           description:
             'Can be changed by onchain Governance, but the contract requires nonzero minimum, divisor, and maximum queue-flush parameters.',
         },
@@ -555,11 +555,18 @@ export const aztecnetwork: ScalingProject = {
           value: 'Bonded escape hatch, private transactions',
           sentiment: 'good',
         },
+        exitDelay: {
+          value: 'Unbounded',
+          secondLine: `${escapeHatchFrequencyString} hatch cycle`,
+          sentiment: 'warning',
+          description:
+            'The escape hatch creates periodic recovery opportunities, but enrollment, candidate-set snapshots, random selection, proposal, and proving can each add delay or fail. The protocol therefore provides no deterministic maximum exit delay.',
+        },
         exitEconomics: {
           value: escapeHatchBondString,
           secondLine: `${escapeHatchWithdrawalTaxString} exit tax`,
           sentiment: 'neutral',
-          description: `The escape hatch combines live inclusion and exit: bonding does not grant immediate proposal rights, but enters a candidate set from which one proposer is periodically selected to bypass the committee, include transactions and prove the resulting checkpoints. Every candidate eventually loses the ${escapeHatchWithdrawalTaxString} exit tax. A selected candidate that fails to propose and prove loses another ${escapeHatchFailedPunishmentString}. The latest discovery scan reports ${escapeHatchCandidateCount} bonded candidates.`,
+          description: `The escape hatch combines live inclusion and exit: bonding does not grant immediate proposal rights, but enters a candidate set from which one proposer is periodically selected to bypass the committee, include transactions and prove the resulting checkpoints. Every candidate eventually loses the ${escapeHatchWithdrawalTaxString} exit tax. A selected candidate that fails to propose and prove loses another ${escapeHatchFailedPunishmentString}.`,
         },
       },
       inclusionDelayChart: {

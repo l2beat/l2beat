@@ -7,6 +7,9 @@ import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const chainId = 1
 const ethereumBlockTimeSeconds = HARDCODED.ETHEREUM.BLOCK_TIME_SECONDS
+// ETHEREUM_BEACON_API_URL at finalized epoch 465994 on 2026-08-03.
+const activeValidatorCount = 893_112
+const activeEffectiveStake = 41_487_813
 
 // Deployment of the first L2
 export const MIN_TIMESTAMP_FOR_TVL = UnixTime.fromDate(
@@ -50,6 +53,108 @@ export const ethereum: BaseProject = {
       ],
     },
     badges: [],
+  },
+  scalingTechnology: {
+    sequencing: {
+      name: 'Transactions are ordered by Ethereum validators and builders',
+      description: readProjectMarkdown('ethereum', 'technologySequencing'),
+      sequencerSetSpec: {
+        blockTime: { value: `${ethereumBlockTimeSeconds} seconds` },
+        proposerRotationTime: {
+          value: `${ethereumBlockTimeSeconds} seconds`,
+          description:
+            'One validator index is selected for every slot with probability proportional to its effective balance. A missed proposal leaves the slot empty.',
+        },
+        sequencerCount: {
+          value: `${activeValidatorCount.toLocaleString('en-US')} validator indices`,
+          secondLine: `${(activeEffectiveStake / 1_000_000).toFixed(2)}M ETH effective stake`,
+          description: `Snapshot at finalized epoch 465994 on 2026-08-03: ${activeValidatorCount.toLocaleString('en-US')} active validator indices with ${activeEffectiveStake.toLocaleString('en-US')} ETH of effective stake. Validator indices are not independent operators, and compounding validators can have different effective balances.`,
+        },
+        blockProductionAccess: {
+          value: 'Open',
+          sentiment: 'good',
+          description:
+            'Anyone can deposit the minimum stake and join the activation queue without governance approval. Activation remains subject to protocol churn limits.',
+        },
+        stakePerValidator: {
+          value: '32 ETH minimum, variable',
+          description:
+            'Compounding validators can have an effective balance of up to 2,048 ETH. Proposal probability is weighted by effective balance.',
+        },
+        rateLimit: {
+          value: '256 ETH per epoch',
+          description:
+            'Validator activation is limited by an effective-balance churn cap. An epoch contains 32 slots and lasts 6 minutes 24 seconds.',
+        },
+        deterministicCrGadget: {
+          value: 'No',
+          sentiment: 'warning',
+          description:
+            'Ethereum mainnet does not currently enforce a forced-transaction queue or inclusion list. Inclusion-list proposals such as FOCIL are not live on mainnet.',
+        },
+        additionalCrGadgets: {
+          value: 'Local block building fallback',
+          sentiment: 'warning',
+          description:
+            'A proposer can build locally and include public-mempool transactions instead of accepting an external builder bid. This lets an honest proposer bypass censoring builders and relays, but users cannot compel the proposer to use the fallback.',
+        },
+        exitDelay: {
+          value: 'Unbounded',
+          secondLine: 'No recovery bound after a full halt',
+          sentiment: 'bad',
+          description:
+            'If part of the validator set goes offline, the inactivity leak can eventually restore finality for the remaining validators. If all block production stops, new deposits and activations cannot be processed and recovery requires social coordination.',
+        },
+        exitEconomics: {
+          value: 'No external exit',
+          secondLine: '32 ETH to join while live',
+          sentiment: 'neutral',
+          description:
+            'Ethereum is the settlement endpoint rather than a rollup with a host-chain exit. A 32 ETH deposit can join consensus only while the chain can process and activate it; it is not a post-halt escape path.',
+        },
+      },
+      inclusionDelayChart: {
+        type: 'ethereumlike',
+        validatorCount: activeValidatorCount,
+        slotSeconds: ethereumBlockTimeSeconds,
+        target: 0.99,
+        maxCensorFraction: 0.5,
+      },
+      inclusionDelayChartDescription:
+        'The chart models live-chain selective censorship as independent stake-weighted proposer opportunities. It assumes an honest proposer can include the transaction, whether through an external builder or local block production. It excludes validator and builder concentration, finality, validator-set changes, inactivity leaks, and a full halt.',
+      censorshipResistance: readProjectMarkdown(
+        'ethereum',
+        'censorshipResistance',
+      ),
+      references: [
+        {
+          title: 'Ethereum.org - Block proposal',
+          url: 'https://ethereum.org/developers/docs/consensus-mechanisms/pos/block-proposal/',
+        },
+        {
+          title: 'Ethereum consensus specifications - Electra',
+          url: 'https://ethereum.github.io/consensus-specs/electra/beacon-chain/',
+        },
+        {
+          title: 'EIP-7251 - Increase the MAX_EFFECTIVE_BALANCE',
+          url: 'https://eips.ethereum.org/EIPS/eip-7251',
+        },
+        {
+          title: 'MEV-Boost',
+          url: 'https://github.com/flashbots/mev-boost',
+        },
+        {
+          title: 'Ethereum.org - Proof-of-stake rewards and penalties',
+          url: 'https://ethereum.org/developers/docs/consensus-mechanisms/pos/rewards-and-penalties/',
+        },
+      ],
+      risks: [
+        {
+          category: 'Users can be censored if',
+          text: 'proposers or their selected builders keep excluding their transactions, or block production halts and requires social recovery.',
+        },
+      ],
+    },
   },
   daLayer: {
     type: 'Public Blockchain',

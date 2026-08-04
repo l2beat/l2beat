@@ -261,6 +261,13 @@ export const gnosis: ScalingProject = {
           value: 'Shutter encrypted mempool beta',
           sentiment: 'warning',
         },
+        exitDelay: {
+          value: 'Unbounded',
+          secondLine: 'Social recovery after a full halt',
+          sentiment: 'bad',
+          description:
+            'There is no protocol path with a bounded delay around a censoring majority. New validators can help while the chain still processes validator entries, but if all validators stop, recovery requires social coordination and a hard fork.',
+        },
         exitEconomics: {
           value: 'No protocol exit',
           secondLine: 'Normal validator stake only',

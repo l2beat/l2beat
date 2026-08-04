@@ -33,7 +33,7 @@ export function InclusionDelayComparisonChart({ comparison }: Props) {
           </h3>
           <p className="text-paragraph-13 text-secondary md:text-paragraph-14">
             T99 inclusion delay in a static sequencer set by censoring fraction
-            of sequencers/validators
+            of sequencer/validator stake
           </p>
         </div>
         <RadioGroup

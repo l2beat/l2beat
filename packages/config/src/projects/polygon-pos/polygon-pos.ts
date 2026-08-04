@@ -305,6 +305,13 @@ export const polygonpos: ScalingProject = {
         rateLimit: { value: 'No (permissioned)' },
         deterministicCrGadget: { value: 'No', sentiment: 'warning' },
         additionalCrGadgets: { value: 'No', sentiment: 'bad' },
+        exitDelay: {
+          value: 'Unbounded',
+          secondLine: 'Social recovery after a full halt',
+          sentiment: 'bad',
+          description:
+            'There is no protocol path with a bounded delay around an unavailable or censoring validator set. Since joining the capped set is permissioned, a full halt requires social coordination and a hard fork.',
+        },
         exitEconomics: {
           value: 'No protocol exit',
           secondLine: 'Normal validator stake only',

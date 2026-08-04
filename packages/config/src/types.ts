@@ -74,6 +74,7 @@ export interface ProjectSequencerSetSpec {
   rateLimit?: TableReadyValue
   deterministicCrGadget?: TableReadyValue
   additionalCrGadgets?: TableReadyValue
+  exitDelay: TableReadyValue
   exitEconomics: TableReadyValue
 }
 
