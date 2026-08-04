@@ -105,14 +105,14 @@ export function transformFunctionCallsQueryResult(
             },
           ]
         } catch (error) {
-          logger.warn('Failed to derive liveness grouping key', {
+          logger.error('Failed to derive liveness grouping key', {
             error,
             configurationId: config.id,
             projectId: config.properties.projectId,
             transactionHash: r.hash,
             blockNumber: r.block_number,
           })
-          return []
+          throw error
         }
       }
 

@@ -3,6 +3,7 @@ import {
   createTrackedTxId,
   type TrackedTxConfigEntry,
   type TrackedTxFunctionCallConfig,
+  type TrackedTxFunctionCallGrouping,
   type TrackedTxId,
   type TrackedTxSharedBridgeConfig,
   type TrackedTxSharpSubmissionConfig,
@@ -13,7 +14,7 @@ import {
   type TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { expect } from 'earl'
 import { utils } from 'ethers'
 import { readFileSync } from 'fs'
 import {
@@ -68,8 +69,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
     const groupingValue = utils.defaultAbiCoder.encode(['uint256'], [123])
     const livenessId = createTrackedTxId.random()
     const costsId = createTrackedTxId.random()
-    const warn = mockFn().returns(undefined)
-    const logger = mockObject<Logger>({ warn })
     const common = {
       projectId: ProjectId('project'),
       subtype: 'stateUpdates' as const,
@@ -138,21 +137,8 @@ describe(transformFunctionCallsQueryResult.name, () => {
           non_zero_bytes: 100,
           blob_versioned_hashes: null,
         },
-        {
-          hash: txHashes[2],
-          block_number: block + 2,
-          block_time: timestamp + 2,
-          input: selector,
-          grouping_value: null,
-          to: address,
-          gas_price: 10n,
-          gas_used: 100,
-          data_length: 4,
-          non_zero_bytes: 4,
-          blob_versioned_hashes: null,
-        },
       ],
-      logger,
+      Logger.SILENT,
     )
 
     const liveness = result.filter((entry) => entry.type === 'liveness')
@@ -160,17 +146,49 @@ describe(transformFunctionCallsQueryResult.name, () => {
 
     expect(liveness.map((entry) => entry.groupingKey)).toEqual(['123', '123'])
     expect(liveness.map((entry) => entry.input)).toEqual([selector, selector])
-    expect(costs).toHaveLength(3)
-    expect(warn).toHaveBeenCalledWith(
-      'Failed to derive liveness grouping key',
-      {
-        error: expect.anything(),
-        configurationId: livenessId,
-        projectId: common.projectId,
-        transactionHash: txHashes[2],
-        blockNumber: block + 2,
-      },
-    )
+    expect(costs).toHaveLength(2)
+  })
+
+  it('throws when a grouped call has no projected value', () => {
+    const signature = 'function submit((uint256 start,uint256 end))' as const
+    const iface = new utils.Interface([signature])
+    const selector = iface.getSighash('submit')
+    const address = EthereumAddress.random()
+    const configuration = mockFunctionCall({
+      id: createTrackedTxId.random(),
+      projectId: ProjectId('project'),
+      address,
+      selector,
+      formula: 'functionCall',
+      sinceTimestamp: SINCE_TIMESTAMP,
+      subtype: 'stateUpdates',
+      signature,
+      groupBy: { type: 'functionCallParameter', path: [0, 0] },
+    })
+
+    expect(() =>
+      transformFunctionCalls(
+        [configuration],
+        [],
+        [],
+        [
+          {
+            hash: txHashes[0],
+            block_number: block,
+            block_time: timestamp,
+            input: selector,
+            grouping_value: null,
+            to: address,
+            gas_price: 10n,
+            gas_used: 100,
+            data_length: 4,
+            non_zero_bytes: 4,
+            blob_versioned_hashes: null,
+          },
+        ],
+        Logger.SILENT,
+      ),
+    ).toThrow('Grouping value is missing')
   })
 
   it('should transform results', () => {
@@ -812,6 +830,8 @@ function mockFunctionCall({
   selector,
   sinceTimestamp,
   formula,
+  signature = 'function foo()',
+  groupBy,
 }: {
   id: TrackedTxId
   projectId: ProjectId
@@ -820,6 +840,8 @@ function mockFunctionCall({
   selector: string
   sinceTimestamp: number
   formula: TrackedTxFunctionCallConfig['formula']
+  signature?: `function ${string}`
+  groupBy?: TrackedTxFunctionCallGrouping
 }): Configuration<
   TrackedTxConfigEntry & {
     params: TrackedTxFunctionCallConfig
@@ -835,11 +857,12 @@ function mockFunctionCall({
       type: 'liveness',
       subtype,
       sinceTimestamp,
+      ...(groupBy !== undefined ? { groupBy } : {}),
       params: {
         formula,
         address,
         selector,
-        signature: 'function foo()',
+        signature,
       },
     },
   }

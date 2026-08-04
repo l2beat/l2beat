@@ -69,7 +69,7 @@ export function getFunctionCallQuery(
                       `(${c.address.toLowerCase()}, ${c.selector.toLowerCase()}, ${c.groupingProjection.start}, ${c.groupingProjection.length})`,
                   )
                   .join(',')
-              : '(NULL, NULL, NULL, NULL)'
+              : '(CAST(NULL AS varbinary), CAST(NULL AS varbinary), CAST(NULL AS bigint), CAST(NULL AS bigint))'
           }
       ),
       traces_filtered AS (

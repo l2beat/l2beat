@@ -135,7 +135,7 @@ describe(getFunctionCallQuery.name, () => {
     expect(query).toInclude(
       `grouping_calls(to_addr, selector, grouping_start, grouping_length) AS (
         VALUES
-          (NULL, NULL, NULL, NULL)
+          (CAST(NULL AS varbinary), CAST(NULL AS varbinary), CAST(NULL AS bigint), CAST(NULL AS bigint))
       )`,
     )
   })
