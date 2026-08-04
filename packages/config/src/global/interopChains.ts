@@ -254,6 +254,14 @@ export const INTEROP_CHAINS: InteropChain[] = [
     color: '#1E88E5',
     explorerUrl: 'https://app.lighter.xyz',
   },
+  {
+    id: 'gnosis',
+    name: 'Gnosis',
+    type: 'evm',
+    display: 'GNO',
+    color: '#07795B',
+    explorerUrl: 'https://gnosisscan.io/',
+  },
 ] as const
 
 export const INTEROP_ONE_SIDED_CHAINS = [
