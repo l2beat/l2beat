@@ -116,94 +116,99 @@ function HomeInteropCardContent({
         href="/interop/summary"
         timeframe="Last 24h"
       />
-      <div className="mt-2.5 grid @min-[440px]:grid-cols-4 grid-cols-2 gap-2">
-        <StatTile
-          title="Volume"
-          isLoading={statsLoading}
-          emphasized
-          primary={
-            totalVolume !== undefined
-              ? formatCurrency(totalVolume, 'usd')
-              : EM_DASH
-          }
-        />
-        <StatTile
-          title="Top chain"
-          isLoading={statsLoading}
-          href={topChainData?.href}
-          primary={topChainData?.name ?? EM_DASH}
-          secondary={
-            topChain
-              ? `${formatPercent(topChainShare)} · ${formatCurrency(topChain.totalVolume, 'usd')}`
-              : undefined
-          }
-          icon={
-            topChainData ? (
-              <img
-                src={topChainData.iconUrl}
-                alt={topChainData.name}
-                className="size-5 shrink-0 rounded-full"
-              />
-            ) : undefined
-          }
-        />
-        <StatTile
-          title="Top token"
-          isLoading={statsLoading}
-          href={topToken ? getInteropTokenUrl(topToken) : undefined}
-          primary={topToken?.symbol ?? EM_DASH}
-          secondary={
-            topToken ? formatCurrency(topToken.volume, 'usd') : undefined
-          }
-          icon={
-            topToken ? (
-              <img
-                src={topToken.iconUrl}
-                alt={topToken.symbol}
-                className="size-5 shrink-0 rounded-full"
-              />
-            ) : undefined
-          }
-        />
-        <StatTile
-          title="Top chain path"
-          isLoading={statsLoading}
-          href={srcChain && dstChain ? '/interop/summary' : undefined}
-          primary={
-            srcChain && dstChain ? (
-              <div className="flex items-center gap-1.5">
-                <img
-                  src={srcChain.iconUrl}
-                  alt={srcChain.name}
-                  className="size-5 shrink-0 rounded-full"
-                />
-                <ArrowRightIcon className="size-3 fill-brand" />
-                <img
-                  src={dstChain.iconUrl}
-                  alt={dstChain.name}
-                  className="size-5 shrink-0 rounded-full"
-                />
-              </div>
-            ) : (
-              EM_DASH
-            )
-          }
-          secondary={
-            topRoute ? formatCurrency(topRoute.volume, 'usd') : undefined
-          }
-        />
-      </div>
-      <div className="mt-6 flex min-h-0 flex-1 flex-col">
-        {/* Static preview: interactions happen on the interop page */}
-        <div className="-mx-2 pointer-events-none flex min-h-0 min-w-0 flex-1 flex-col overflow-x-clip">
-          <FlowsGraphPanel
-            activeChains={activeChains}
-            data={data}
-            hasEnoughChains={hasEnoughChains}
-            hasEnoughProtocols={hasEnoughProtocols}
-            isLoading={isLoading}
-            className="pb-2"
+      {/* On wide cards (full-width row between lg and xl) the tiles move
+          from a top row to a vertical stack right of the graph, filling
+          the whitespace around the circular layout. */}
+      <div className="flex @min-[900px]:grid min-h-0 flex-1 @min-[900px]:grid-cols-[minmax(0,1fr)_280px] @min-[900px]:grid-rows-[minmax(0,1fr)] flex-col @min-[900px]:gap-6">
+        <div className="@min-[900px]:col-start-2 @min-[900px]:row-start-1 @min-[900px]:mt-0 mt-2.5 grid @min-[440px]:grid-cols-4 @min-[900px]:grid-cols-1 grid-cols-2 @min-[900px]:content-center @min-[900px]:gap-3 gap-2">
+          <StatTile
+            title="Volume"
+            isLoading={statsLoading}
+            emphasized
+            primary={
+              totalVolume !== undefined
+                ? formatCurrency(totalVolume, 'usd')
+                : EM_DASH
+            }
           />
+          <StatTile
+            title="Top chain"
+            isLoading={statsLoading}
+            href={topChainData?.href}
+            primary={topChainData?.name ?? EM_DASH}
+            secondary={
+              topChain
+                ? `${formatPercent(topChainShare)} · ${formatCurrency(topChain.totalVolume, 'usd')}`
+                : undefined
+            }
+            icon={
+              topChainData ? (
+                <img
+                  src={topChainData.iconUrl}
+                  alt={topChainData.name}
+                  className="size-5 shrink-0 rounded-full"
+                />
+              ) : undefined
+            }
+          />
+          <StatTile
+            title="Top token"
+            isLoading={statsLoading}
+            href={topToken ? getInteropTokenUrl(topToken) : undefined}
+            primary={topToken?.symbol ?? EM_DASH}
+            secondary={
+              topToken ? formatCurrency(topToken.volume, 'usd') : undefined
+            }
+            icon={
+              topToken ? (
+                <img
+                  src={topToken.iconUrl}
+                  alt={topToken.symbol}
+                  className="size-5 shrink-0 rounded-full"
+                />
+              ) : undefined
+            }
+          />
+          <StatTile
+            title="Top chain path"
+            isLoading={statsLoading}
+            href={srcChain && dstChain ? '/interop/summary' : undefined}
+            primary={
+              srcChain && dstChain ? (
+                <div className="flex items-center gap-1.5">
+                  <img
+                    src={srcChain.iconUrl}
+                    alt={srcChain.name}
+                    className="size-5 shrink-0 rounded-full"
+                  />
+                  <ArrowRightIcon className="size-3 fill-brand" />
+                  <img
+                    src={dstChain.iconUrl}
+                    alt={dstChain.name}
+                    className="size-5 shrink-0 rounded-full"
+                  />
+                </div>
+              ) : (
+                EM_DASH
+              )
+            }
+            secondary={
+              topRoute ? formatCurrency(topRoute.volume, 'usd') : undefined
+            }
+          />
+        </div>
+        <div className="@min-[900px]:col-start-1 @min-[900px]:row-start-1 @min-[900px]:mt-0 mt-6 flex min-h-0 flex-1 flex-col">
+          {/* Static preview: interactions happen on the interop page */}
+          <div className="-mx-2 pointer-events-none flex min-h-0 min-w-0 flex-1 flex-col overflow-x-clip">
+            <FlowsGraphPanel
+              activeChains={activeChains}
+              data={data}
+              hasEnoughChains={hasEnoughChains}
+              hasEnoughProtocols={hasEnoughProtocols}
+              isLoading={isLoading}
+              className="pb-2"
+            />
+          </div>
         </div>
       </div>
     </HomeCard>
