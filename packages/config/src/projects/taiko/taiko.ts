@@ -626,6 +626,14 @@ export const taiko: ScalingProject = {
   permissions: discovery.getDiscoveredPermissions(),
   milestones: [
     {
+      title: 'Unzen upgrade: validity rollup',
+      url: 'https://etherscan.io/tx/0x64875b5b84b41b520551854696c0ce408fb3e0aa2ede604cc95a5919b6140ea7',
+      date: '2026-08-03T00:00:00Z',
+      description:
+        'Every proven proposal range now requires at least one SP1 or RISC0 validity proof.',
+      type: 'general',
+    },
+    {
       title: 'Proof system exploit',
       url: 'https://x.com/taikoxyz/status/2068857506718515320',
       date: '2026-06-22T00:00:00.00Z',
