@@ -17,7 +17,6 @@ import {
   DATA_ON_CHAIN,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
-  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
 } from '../../common'
 import { BADGES } from '../../common/badges'
@@ -49,6 +48,10 @@ interface MainnetInboxConfig extends Record<string, ContractValue> {
   minBond: number
   livenessBond: number
   provingWindow: number
+  forcedInclusionDelay: number
+  forcedInclusionFeeInGwei: number
+  forcedInclusionFeeDoubleThreshold: number
+  permissionlessInclusionMultiplier: number
 }
 
 interface MultisigConfig extends Record<string, ContractValue> {
@@ -62,6 +65,18 @@ interface OptimisticGovernanceConfig extends Record<string, ContractValue> {
 const mainnetInboxConfig = discovery.getContractValue<MainnetInboxConfig>(
   'MainnetInbox',
   'getConfig',
+)
+const forcedInclusionDelay = formatSeconds(
+  mainnetInboxConfig.forcedInclusionDelay,
+)
+const forcedInclusionBaseFee = `${formatUnits(
+  mainnetInboxConfig.forcedInclusionFeeInGwei,
+  'gwei',
+)} ETH`
+const configuredPermissionlessInclusionDelay = formatSeconds(
+  mainnetInboxConfig.forcedInclusionDelay *
+    mainnetInboxConfig.permissionlessInclusionMultiplier,
+  { preventRoundingUp: true },
 )
 
 const whitelistedOperatorsCount = discovery.getContractValue<number>(
@@ -130,14 +145,16 @@ export const taiko: ScalingProject = {
     BADGES.DA.EthereumBlobs,
     // BADGES.Other.BasedSequencing, // NOTE: add this back when preconfs whitelist is removed
   ],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
-  proofSystem: undefined,
+  proofSystem: {
+    type: 'Validity',
+    name: 'SP1 / RISC0',
+  },
   display: {
     name: 'Taiko Alethia',
     slug: 'taiko',
     stacks: ['Taiko'],
     description:
-      'Taiko Alethia is an Ethereum-equivalent rollup on the Ethereum network. Taiko aims at combining based sequencing and a multi-proof system through SP1, RISC0 and TEEs.',
+      'Taiko Alethia is an Ethereum-equivalent rollup on the Ethereum network. Taiko combines a preconfirmation-based sequencing mechanism with a multi-proof system using SP1, RISC0 and TEEs.',
     purposes: ['Universal'],
     links: {
       websites: ['https://taiko.xyz'],
@@ -401,9 +418,9 @@ export const taiko: ScalingProject = {
   type: 'layer2',
   riskView: {
     stateValidation: {
-      description: `A multi-proof system is used. There are four verifiers available: SGX (Geth), SGX (Reth), SP1 and RISC0. Two of them must be used to prove a proposal range, and SGX (Geth) is mandatory. The end state root is supplied during the \`prove\` call and is checked against the accompanying SGX/zkVM proof. Proving is currently gated by ProverWhitelist, which has ${whitelistedProverCount} whitelisted prover${proverPlural} in discovery. While the whitelist is non-empty, non-whitelisted actors cannot submit proofs.`,
-      sentiment: 'bad',
-      value: 'Multi-proofs',
+      ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
+      description: `Every proposal range is verified by exactly two proofs chosen from SGX (Geth), SGX (Reth), SP1 and RISC0, with at least one SP1 or RISC0 proof required. Accepted combinations are SGX plus either ZK proof, or SP1 plus RISC0. The end state root is supplied during the \`prove\` call and checked against both proofs. Proof submission is gated by ProverWhitelist, which has ${whitelistedProverCount} whitelisted prover${proverPlural}; this can affect liveness but does not let the provers finalize a state without a valid ZK proof.`,
+      value: 'Validity proofs',
       executionDelay: 0,
     },
     dataAvailability: {
@@ -416,16 +433,16 @@ export const taiko: ScalingProject = {
       value: 'None',
     },
     sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_NO_MECHANISM(true),
+      ...RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
       description:
-        RISK_VIEW.SEQUENCER_NO_MECHANISM(true).description +
-        ' Forced inclusions are disabled in the current MainnetInbox implementation, so sequencer failure or censorship leads to non-inclusion.',
+        RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1').description +
+        ` An inclusion becomes due after ${forcedInclusionDelay}. From then on, a whitelisted proposer cannot publish another proposal without processing up to ten due inclusions.`,
     },
     proposerFailure: {
       ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
       description:
         RISK_VIEW.PROPOSER_CANNOT_WITHDRAW.description +
-        ' Proposing is gated by PreconfWhitelist, which selects a single active operator for the current epoch and has no fallback proposer path.',
+        ' Proposing is gated by PreconfWhitelist, which selects a single active operator for the current epoch and has no permissionless fallback.',
     },
   },
   stage: getRollupStage(
@@ -435,7 +452,7 @@ export const taiko: ScalingProject = {
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
-        stateVerificationOnL1: false,
+        stateVerificationOnL1: true,
         fraudProofSystemAtLeast5Outsiders: null,
       },
       stage1: {
@@ -487,13 +504,12 @@ export const taiko: ScalingProject = {
             title: 'ProverWhitelist.sol - Etherscan source code',
             url: proverWhitelistSourceUrl,
           },
-        ],
-        risks: [
           {
-            category: 'Funds can be stolen if',
-            text: 'a malicious block is proven by compromised SGX instances.',
+            title: 'ZkRequiredVerifier.sol - Etherscan source code',
+            url: 'https://etherscan.io/address/0x7284aaC05555Ae6559bdAd8B4221eC9584254Eec#code',
           },
         ],
+        risks: [],
       },
     ],
   },
@@ -570,8 +586,14 @@ export const taiko: ScalingProject = {
       risks: [FRONTRUNNING_RISK],
     },
     forceTransactions: {
-      ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
-      description: readProjectMarkdown('taiko', 'technologyForceTransactions'),
+      ...FORCE_TRANSACTIONS.ENQUEUE,
+      description: readProjectMarkdown('taiko', 'technologyForceTransactions', {
+        forcedInclusionDelay,
+        forcedInclusionBaseFee,
+        forcedInclusionFeeDoubleThreshold:
+          mainnetInboxConfig.forcedInclusionFeeDoubleThreshold,
+        configuredPermissionlessInclusionDelay,
+      }),
       references: [
         {
           title:
