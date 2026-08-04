@@ -16,8 +16,10 @@ order is (`resolveDaTracking` in
 `packages/config/src/templates/daTrackingHistory.ts`):
 
 1. `nonTemplateDaTracking` - full manual override, for projects whose
-   tracking cannot be derived from discovery (custom topics, archived
-   projects, hand-maintained histories).
+   tracking cannot be derived from discovery (custom topics, hand-maintained
+   histories, and archived projects whose history is fully closed while
+   discovery still derives an open era - the guard would reject the
+   mismatch, so they stay on the override).
 2. `src/projects/<name>/daTracking.json` - the committed, machine-maintained
    era store. Written ONLY by `pnpm da:history`, never by hand.
 3. A single era derived from current discovery values (`SystemConfig`
