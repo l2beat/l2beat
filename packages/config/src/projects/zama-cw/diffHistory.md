@@ -1,3 +1,49 @@
+Generated with discovered.json: 0xc20ac24b3edc3828052271cdd51f43b296273f8d
+
+# Diff at Tue, 04 Aug 2026 13:19:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@36c0588f2e6fd433fcb60f558353b75cea40247d block: 1784815701
+- current timestamp: 1785844532
+
+## Description
+
+ZamaGovMultisigB executed a proposal rotating two ZamaGovMultisigA members while preserving its 9-of-17 threshold.
+
+## Watched changes
+
+```diff
+    contract ZamaGovMultisigA (eth:0xE43c73aAb2b6aBBad6d0461997ce1cfea5ABe66f) [zama/Multisig] {
+    +++ description: Aragon multisig plugin for creating proposals and collecting approvals against a configurable threshold.
++++ description: Current multisig members reconstructed from MembersAdded and MembersRemoved events.
+      values.$members.5:
+-        "eth:0x32f3D0D7E20Ca11Cad21f32Dad91506ea89f5897"
++++ description: Current multisig members reconstructed from MembersAdded and MembersRemoved events.
+      values.$members.6:
+-        "eth:0xE53e32a669357Ab0360103d8f294812B914AF9e4"
++++ description: Current multisig members reconstructed from MembersAdded and MembersRemoved events.
+      values.$members.15:
++        "eth:0xc49376C4D044011eEce6eE69eFAe06f0Cc2bd008"
++++ description: Current multisig members reconstructed from MembersAdded and MembersRemoved events.
+      values.$members.16:
++        "eth:0x27B1c34F2aeEc91F9704BD1CE288E5c667F29045"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (eth:0xE53e32a669357Ab0360103d8f294812B914AF9e4) [GnosisSafe]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../Safe.sol => /dev/null                          | 1216 --------------------
+ .../SafeProxy.p.sol => /dev/null                   |   42 -
+ 2 files changed, 1258 deletions(-)
+```
+
 Generated with discovered.json: 0xb4c2e2ca4fa6219d510415bfc0f6ea329ea208dd
 
 # Diff at Thu, 23 Jul 2026 14:09:37 GMT:
