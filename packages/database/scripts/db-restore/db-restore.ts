@@ -134,32 +134,30 @@ function main() {
   clearTables(urls.localDbUrl, tables)
   migrateDb(urls.localDbUrl)
 
-  if (since) {
-    // Split tables by whether they have a "timestamp" column on the remote
-    const timestamped = getTimestampedTables(urls.remoteDbUrl, tables)
-    const fullTables = tables.filter(
-      (table) =>
-        FULL_COPY_OVERRIDES.includes(table) || !timestamped.includes(table),
-    )
-    const sinceTables = tables.filter((table) => !fullTables.includes(table))
+  // With SINCE, tables with a "timestamp" column on the remote are copied
+  // row-by-row from the cutoff; everything else is dumped in full
+  const timestamped = since
+    ? getTimestampedTables(urls.remoteDbUrl, tables)
+    : []
+  const sinceTables = tables.filter(
+    (table) =>
+      timestamped.includes(table) && !FULL_COPY_OVERRIDES.includes(table),
+  )
+  const fullTables = tables.filter((table) => !sinceTables.includes(table))
 
-    if (fullTables.length > 0) {
-      dumpTables(urls.remoteDbUrl, fullTables)
-      restoreTables(urls.localDbUrl)
-      removeDump()
-    }
-
-    if (sinceTables.length > 0) {
-      copyTablesSince(urls, since, sinceTables)
-    }
-
-    console.log(`✅ DB data restored for feature '${feature}' (since ${since})`)
-  } else {
-    dumpTables(urls.remoteDbUrl, tables)
+  if (fullTables.length > 0) {
+    dumpTables(urls.remoteDbUrl, fullTables)
     restoreTables(urls.localDbUrl)
     removeDump()
-    console.log(`✅ DB data restored for feature '${feature}'`)
   }
+
+  if (since && sinceTables.length > 0) {
+    copyTablesSince(urls, since, sinceTables)
+  }
+
+  console.log(
+    `✅ DB data restored for feature '${feature}'${since ? ` (since ${since})` : ''}`,
+  )
 }
 
 runScript(main)

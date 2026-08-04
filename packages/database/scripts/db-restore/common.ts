@@ -31,7 +31,7 @@ export function quoteLiteral(value: string): string {
 }
 
 // Runs a query and returns the result rows, one line per row
-export function psqlQuery(dbUrl: string, sql: string): string[] {
+function psqlQuery(dbUrl: string, sql: string): string[] {
   const output = execFileSync('psql', [dbUrl, '-tAc', sql], {
     encoding: 'utf-8',
     stdio: ['ignore', 'pipe', 'inherit'],
@@ -43,26 +43,21 @@ function psqlExec(dbUrl: string, sql: string): void {
   execFileSync('psql', [dbUrl, '-c', sql], { stdio: 'inherit' })
 }
 
-export function canConnect(dbUrl: string): boolean {
+function psqlSucceeds(dbUrl: string, sql: string): boolean {
   try {
-    execFileSync('psql', [dbUrl, '-tAc', 'SELECT 1'], { stdio: 'ignore' })
+    execFileSync('psql', [dbUrl, '-tAc', sql], { stdio: 'ignore' })
     return true
   } catch {
     return false
   }
 }
 
+export function canConnect(dbUrl: string): boolean {
+  return psqlSucceeds(dbUrl, 'SELECT 1')
+}
+
 export function isValidTimestamp(dbUrl: string, value: string): boolean {
-  try {
-    execFileSync(
-      'psql',
-      [dbUrl, '-tAc', `SELECT ${quoteLiteral(value)}::timestamp`],
-      { stdio: 'ignore' },
-    )
-    return true
-  } catch {
-    return false
-  }
+  return psqlSucceeds(dbUrl, `SELECT ${quoteLiteral(value)}::timestamp`)
 }
 
 export function clearTables(localDbUrl: string, tables: string[]): void {
@@ -166,7 +161,7 @@ export function syncSequences(localDbUrl: string, table: string): void {
   const tableRef = quoteLiteral(quoteIdent(table))
   const sequences = psqlQuery(
     localDbUrl,
-    `SELECT a.attname || '|' || pg_get_serial_sequence(${tableRef}, a.attname)
+    `SELECT a.attname, pg_get_serial_sequence(${tableRef}, a.attname)
      FROM pg_attribute a
      WHERE a.attrelid = ${tableRef}::regclass
        AND a.attnum > 0
@@ -174,20 +169,18 @@ export function syncSequences(localDbUrl: string, table: string): void {
        AND pg_get_serial_sequence(${tableRef}, a.attname) IS NOT NULL`,
   )
   for (const line of sequences) {
+    // psql -A separates columns with '|'
     const [column, sequence] = line.split('|')
     if (!column || !sequence) {
       continue
     }
-    const [maxValue] = psqlQuery(
+    // No row matches when the table is empty (max is NULL), skipping the bump
+    psqlQuery(
       localDbUrl,
-      `SELECT COALESCE(MAX(${quoteIdent(column)}), 0) FROM ${quoteIdent(table)}`,
+      `SELECT setval(${quoteLiteral(sequence)}, max_val)
+       FROM (SELECT MAX(${quoteIdent(column)})::bigint AS max_val FROM ${quoteIdent(table)}) m
+       WHERE max_val > 0`,
     )
-    if (BigInt(maxValue ?? '0') > 0n) {
-      psqlQuery(
-        localDbUrl,
-        `SELECT setval(${quoteLiteral(sequence)}, ${BigInt(maxValue ?? '0')})`,
-      )
-    }
   }
 }
 
@@ -200,9 +193,11 @@ export function runScript(main: () => void): void {
         'Error: a required tool was not found. Make sure psql, pg_dump and pg_restore are on your PATH.',
       )
     } else if (error instanceof Error && !('status' in error)) {
+      // Only echo messages from our own throws — child-process failures
+      // ('status' present) already printed their error via inherited stderr,
+      // and their message embeds the full command line including the DB URL
       console.error(error.message)
     }
-    // Failed child commands print their own error via inherited stderr
     console.error('❌ Restore failed.')
     process.exit(1)
   }
