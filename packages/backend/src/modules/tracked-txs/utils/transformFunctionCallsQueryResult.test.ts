@@ -35,6 +35,7 @@ import type {
   DuneFunctionCallResult,
   TrackedTxFunctionCallResult,
 } from '../types/model'
+import { prepareFunctionCalls } from './prepareFunctionCalls'
 import { transformFunctionCallsQueryResult } from './transformFunctionCallsQueryResult'
 
 const ADDRESS_1 = EthereumAddress.random()
@@ -106,7 +107,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       },
     ]
 
-    const result = transformFunctionCallsQueryResult(
+    const result = transformFunctionCalls(
       configurations,
       [],
       [],
@@ -316,7 +317,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       },
     ]
 
-    const result = transformFunctionCallsQueryResult(
+    const result = transformFunctionCalls(
       functionCalls,
       sharpSubmissions,
       sharedBridgeCalls,
@@ -358,7 +359,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
     ]
 
     expect(() =>
-      transformFunctionCallsQueryResult(
+      transformFunctionCalls(
         functionCalls,
         [],
         [],
@@ -430,7 +431,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       },
     ]
 
-    const result = transformFunctionCallsQueryResult(
+    const result = transformFunctionCalls(
       [],
       sharpSubmissions,
       [],
@@ -548,7 +549,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       },
     ]
 
-    const result = transformFunctionCallsQueryResult(
+    const result = transformFunctionCalls(
       [],
       [],
       sharedBridgeCalls,
@@ -625,7 +626,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       },
     ]
 
-    const result = transformFunctionCallsQueryResult(
+    const result = transformFunctionCalls(
       [],
       [],
       sharedBridgeCalls,
@@ -771,7 +772,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       },
     ]
 
-    const result = transformFunctionCallsQueryResult(
+    const result = transformFunctionCalls(
       functionCalls,
       [],
       [],
@@ -782,6 +783,26 @@ describe(transformFunctionCallsQueryResult.name, () => {
     expect(result).toEqual(expected)
   })
 })
+
+function transformFunctionCalls(
+  functionCalls: Configuration<
+    TrackedTxConfigEntry & { params: TrackedTxFunctionCallConfig }
+  >[],
+  sharpSubmissions: Configuration<
+    TrackedTxConfigEntry & { params: TrackedTxSharpSubmissionConfig }
+  >[],
+  sharedBridges: Configuration<
+    TrackedTxConfigEntry & { params: TrackedTxSharedBridgeConfig }
+  >[],
+  queryResults: DuneFunctionCallResult[],
+  logger: Logger,
+): TrackedTxFunctionCallResult[] {
+  return transformFunctionCallsQueryResult(
+    prepareFunctionCalls(functionCalls, sharpSubmissions, sharedBridges),
+    queryResults,
+    logger,
+  )
+}
 
 function mockFunctionCall({
   id,

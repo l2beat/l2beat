@@ -27,6 +27,7 @@ import type { Configuration } from '../../tools/uif/multi/types'
 import type { DuneQueryService } from './services/DuneQueryService'
 import { TrackedTxsClient } from './TrackedTxsClient'
 import type { DuneFunctionCallResult, DuneTransferResult } from './types/model'
+import { prepareFunctionCalls } from './utils/prepareFunctionCalls'
 import { getFunctionCallQuery, getTransferQuery } from './utils/sql'
 import { transformFunctionCallsQueryResult } from './utils/transformFunctionCallsQueryResult'
 import { transformTransfersQueryResult } from './utils/transformTransfersQueryResult'
@@ -134,8 +135,9 @@ describe(TrackedTxsClient.name, () => {
         getFunctionCallQuery(
           [
             {
-              ...config.properties.params,
-              getFullInput: false,
+              address,
+              selector: config.properties.params.selector,
+              input: 'selector',
               groupingProjection: {
                 start: 5,
                 length: 32,
@@ -385,10 +387,14 @@ const FUNCTIONS_RESPONSE: DuneFunctionCallResult[] = [
   },
 ]
 
-const FUNCTIONS_RESULT = transformFunctionCallsQueryResult(
+const FUNCTION_CALL_PLAN = prepareFunctionCalls(
   [CONFIGURATIONS[1]],
   [CONFIGURATIONS[2]],
   [CONFIGURATIONS[3], CONFIGURATIONS[4], CONFIGURATIONS[5]],
+)
+
+const FUNCTIONS_RESULT = transformFunctionCallsQueryResult(
+  FUNCTION_CALL_PLAN,
   FUNCTIONS_RESPONSE,
   Logger.SILENT,
 )
@@ -399,22 +405,7 @@ const TRANSFERS_SQL = getTransferQuery(
   TO,
 )
 const FUNCTIONS_SQL = getFunctionCallQuery(
-  (
-    CONFIGURATIONS.slice(1) as Configuration<
-      TrackedTxConfigEntry & {
-        params:
-          | TrackedTxSharpSubmissionConfig
-          | TrackedTxFunctionCallConfig
-          | TrackedTxSharedBridgeConfig
-      }
-    >[]
-  ).map((c) => ({
-    address: c.properties.params.address,
-    selector: c.properties.params.selector,
-    getFullInput:
-      c.properties.params.formula === 'sharpSubmission' ||
-      c.properties.params.formula === 'sharedBridge',
-  })),
+  FUNCTION_CALL_PLAN.queryTargets,
   FROM,
   TO,
 )

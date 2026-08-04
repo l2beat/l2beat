@@ -1,53 +1,29 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type {
-  TrackedTxConfigEntry,
-  TrackedTxFunctionCallConfig,
-  TrackedTxSharedBridgeConfig,
-  TrackedTxSharpSubmissionConfig,
-} from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
-import type { Configuration } from '../../../tools/uif/multi/types'
 import type {
   DuneFunctionCallResult,
   TrackedTxFunctionCallResult,
 } from '../types/model'
 import { calculateCalldataGasUsed } from './calculateCalldataGasUsed'
-import { getFunctionCallParameterProjection } from './getFunctionCallParameterProjection'
 import {
   getLivenessGroupingKeyFromProjectedValue,
   hasLivenessGrouping,
 } from './getLivenessGroupingKey'
 import { isFistParameterMatching } from './isFirstParameterMatching'
 import { isProgramHashProven } from './isProgramHashProven'
+import type { PreparedFunctionCalls } from './prepareFunctionCalls'
 
 export function transformFunctionCallsQueryResult(
-  functionCalls: Configuration<
-    TrackedTxConfigEntry & { params: TrackedTxFunctionCallConfig }
-  >[],
-  sharpSubmissions: Configuration<
-    TrackedTxConfigEntry & { params: TrackedTxSharpSubmissionConfig }
-  >[],
-  sharedBridgesConfig: Configuration<
-    TrackedTxConfigEntry & { params: TrackedTxSharedBridgeConfig }
-  >[],
+  plan: PreparedFunctionCalls,
   queryResults: DuneFunctionCallResult[],
   logger: Logger,
 ): TrackedTxFunctionCallResult[] {
-  const groupingProjections = new Map(
-    functionCalls.flatMap((config) => {
-      if (!hasLivenessGrouping(config.properties)) return []
-
-      return [
-        [
-          config.id,
-          getFunctionCallParameterProjection(
-            config.properties.params.signature,
-            config.properties.groupBy.path,
-          ),
-        ] as const,
-      ]
-    }),
-  )
+  const {
+    functionCalls,
+    sharpSubmissions,
+    sharedBridges,
+    groupingProjections,
+  } = plan
 
   return queryResults.flatMap((r) => {
     const selector = r.input.slice(0, 10)
@@ -64,7 +40,7 @@ export function transformFunctionCallsQueryResult(
         c.properties.params.address === r.to,
     )
 
-    const matchingSharedBridgeCalls = sharedBridgesConfig.filter(
+    const matchingSharedBridgeCalls = sharedBridges.filter(
       (c) =>
         c.properties.params.selector === selector &&
         c.properties.params.address === r.to,

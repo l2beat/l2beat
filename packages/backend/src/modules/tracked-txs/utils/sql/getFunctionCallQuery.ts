@@ -1,52 +1,28 @@
-import {
-  assert,
-  type EthereumAddress,
-  UnixTime,
-  unique,
-} from '@l2beat/shared-pure'
+import { type EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import type { FunctionCallParameterProjection } from '../getFunctionCallParameterProjection'
 
-interface FunctionCallQueryConfig {
+export interface FunctionCallQueryTarget {
   address: EthereumAddress
   selector: string
-  getFullInput: boolean
+  input: 'selector' | 'full'
   groupingProjection?: FunctionCallParameterProjection
 }
 
-interface ProjectedFunctionCallQueryConfig extends FunctionCallQueryConfig {
-  groupingProjection: FunctionCallParameterProjection
-}
-
 export function getFunctionCallQuery(
-  configs: FunctionCallQueryConfig[],
+  targets: readonly FunctionCallQueryTarget[],
   from: UnixTime,
   to: UnixTime,
 ): string {
-  const fullInputCalls = unique(
-    configs.filter((c) => c.getFullInput),
-    getCallKey,
+  const fullInputCalls = targets.filter((c) => c.input === 'full')
+  const groupingCalls = targets.filter(
+    (
+      c,
+    ): c is FunctionCallQueryTarget & {
+      groupingProjection: FunctionCallParameterProjection
+    } => c.groupingProjection !== undefined,
   )
-  const groupingCalls = unique(
-    configs.filter(hasGroupingProjection),
-    getCallKey,
-  )
-
-  for (const config of configs) {
-    if (config.groupingProjection === undefined) continue
-
-    const matching = groupingCalls.find(
-      (c) => getCallKey(c) === getCallKey(config),
-    )
-    assert(matching !== undefined)
-    assert(
-      matching.groupingProjection.start === config.groupingProjection.start &&
-        matching.groupingProjection.length === config.groupingProjection.length,
-      'Conflicting grouping projections for the same function call',
-    )
-  }
   const fromDate = UnixTime.toDate(from).toISOString()
   const toDate = UnixTime.toDate(to).toISOString()
-  const uniqueConfigs = unique(configs, getCallKey)
 
   // To calculate the non-zero bytes we are grouping bytes by adding 'x' sign between each byte
   // and then removing all '00x' sequences. Next step is to divide length of result by 3 as this is length of '00x' sequence.
@@ -60,8 +36,8 @@ export function getFunctionCallQuery(
       allowed_calls(to_addr, selector) AS (
         VALUES
           ${
-            uniqueConfigs.length > 0
-              ? uniqueConfigs
+            targets.length > 0
+              ? targets
                   .map(
                     (c) =>
                       `(${c.address.toLowerCase()}, ${c.selector.toLowerCase()})`,
@@ -169,14 +145,4 @@ export function getFunctionCallQuery(
   `
 
   return query
-}
-
-function hasGroupingProjection(
-  config: FunctionCallQueryConfig,
-): config is ProjectedFunctionCallQueryConfig {
-  return config.groupingProjection !== undefined
-}
-
-function getCallKey(config: FunctionCallQueryConfig): string {
-  return `${config.address.toLowerCase()}-${config.selector.toLowerCase()}`
 }
