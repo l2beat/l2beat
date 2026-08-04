@@ -1,7 +1,14 @@
 import type { InteropBridgeType } from '@l2beat/shared-pure'
-import type { Insertable, Selectable, Updateable } from 'kysely'
+import type {
+  Expression,
+  ExpressionBuilder,
+  Insertable,
+  Selectable,
+  SqlBool,
+  Updateable,
+} from 'kysely'
 import { BaseRepository } from '../BaseRepository'
-import type { TokenRelation } from '../kysely/generated/types'
+import type { DB, TokenRelation } from '../kysely/generated/types'
 import type { DeployedTokenPrimaryKey } from './DeployedTokenRepository'
 
 export type JsonValue =
@@ -13,30 +20,45 @@ export type JsonValue =
   | { [key: string]: JsonValue }
 
 /**
- * TRANSITIONAL: the endpoint columns are now named `tokenA*`/`tokenB*`, but the
- * record this repository hands out still uses the old `tokenFrom*`/`tokenTo*`
- * names, so every caller keeps compiling and keeps working across the column
- * rename. The follow-up release renames the record fields too and this mismatch
- * disappears — do not build anything on the old names.
+ * Which endpoint of a `lockAndMint` relation holds the locked (escrowed) token;
+ * the other endpoint holds the minted representation.
+ *
+ * `null` for a `burnAndMint` relation, which is symmetric — nothing is locked —
+ * and for a `lockAndMint` relation whose evidence has not identified a side.
+ */
+export type TokenRelationLockedToken = 'A' | 'B' | null
+
+/**
+ * A relation is a fact about an unordered pair of tokens. The endpoints are
+ * named A and B rather than from/to because there is no direction between them:
+ * which one is A is decided by lexicographic order (see
+ * `normalizeTokenRelation`), and what distinguishes the two tokens is their
+ * role, carried by `lockedToken`.
  */
 export type TokenRelationRecord = {
-  tokenFromChain: string
-  tokenFromAddress: string
-  tokenToChain: string
-  tokenToAddress: string
+  tokenAChain: string
+  tokenAAddress: string
+  tokenBChain: string
+  tokenBAddress: string
   plugin: string
   bridgeType: InteropBridgeType
+  lockedToken: TokenRelationLockedToken
   transfer: JsonValue
 }
 
 export type TokenRelationRoute = Omit<TokenRelationRecord, 'transfer'>
 
+// The identity and role columns come back re-derived, so their literal types
+// widen; anything else the caller passed in (e.g. `transfer`) is preserved.
+type NormalizedTokenRelation<T> = Omit<T, keyof TokenRelationRoute> &
+  TokenRelationRoute
+
 export type TokenRelationPrimaryKey = Pick<
   TokenRelationRecord,
-  | 'tokenFromChain'
-  | 'tokenFromAddress'
-  | 'tokenToChain'
-  | 'tokenToAddress'
+  | 'tokenAChain'
+  | 'tokenAAddress'
+  | 'tokenBChain'
+  | 'tokenBAddress'
   | 'plugin'
   | 'bridgeType'
 >
@@ -46,31 +68,78 @@ export type TokenRelationUpdateable = Omit<
   keyof TokenRelationPrimaryKey
 >
 
-// Columns are listed explicitly rather than spread, both because the record
-// names differ from the column names for now and so that a column the record
-// type does not model yet — `lockedToken` — cannot leak into API responses and
-// history snapshots.
+/**
+ * Puts a relation's endpoints in the lexicographic order the table stores them
+ * in, moving `lockedToken` with them so the role assignment survives the swap.
+ *
+ * Every write path must call this before handing a relation to the repository.
+ * It is deliberately explicit rather than hidden inside the repository: the
+ * command that lands in `TokenDbHistory` and the ingestion log line have to
+ * describe the row exactly as stored. A `CHECK` constraint on the table turns a
+ * missed call into a loud failure instead of a silently duplicated pair.
+ */
+export function normalizeTokenRelation<T extends TokenRelationRoute>(
+  relation: T,
+): NormalizedTokenRelation<T> {
+  const a = {
+    chain: relation.tokenAChain,
+    address: relation.tokenAAddress.toLowerCase(),
+  }
+  const b = {
+    chain: relation.tokenBChain,
+    address: relation.tokenBAddress.toLowerCase(),
+  }
+  if (isOrdered(a, b)) {
+    return {
+      ...relation,
+      tokenAAddress: a.address,
+      tokenBAddress: b.address,
+    }
+  }
+
+  return {
+    ...relation,
+    tokenAChain: b.chain,
+    tokenAAddress: b.address,
+    tokenBChain: a.chain,
+    tokenBAddress: a.address,
+    lockedToken:
+      relation.lockedToken === null
+        ? null
+        : relation.lockedToken === 'A'
+          ? 'B'
+          : 'A',
+  }
+}
+
+// Same order as the table's `CHECK` constraint, which compares the endpoints as
+// `(chain, address)` rows under the `C` collation — byte order, like JavaScript.
+function isOrdered(
+  a: { chain: string; address: string },
+  b: { chain: string; address: string },
+): boolean {
+  if (a.chain !== b.chain) return a.chain < b.chain
+  return a.address <= b.address
+}
+
 function toRecord(row: Selectable<TokenRelation>): TokenRelationRecord {
   return {
-    tokenFromChain: row.tokenAChain,
-    tokenFromAddress: row.tokenAAddress,
-    tokenToChain: row.tokenBChain,
-    tokenToAddress: row.tokenBAddress,
+    tokenAChain: row.tokenAChain,
+    tokenAAddress: row.tokenAAddress,
+    tokenBChain: row.tokenBChain,
+    tokenBAddress: row.tokenBAddress,
     plugin: row.plugin,
     bridgeType: row.bridgeType as InteropBridgeType,
+    lockedToken: row.lockedToken as TokenRelationLockedToken,
     transfer: row.transfer as JsonValue,
   }
 }
 
 function toRow(record: TokenRelationRecord): Insertable<TokenRelation> {
   return {
-    tokenAChain: record.tokenFromChain,
-    tokenAAddress: record.tokenFromAddress.toLowerCase(),
-    tokenBChain: record.tokenToChain,
-    tokenBAddress: record.tokenToAddress.toLowerCase(),
-    plugin: record.plugin,
-    bridgeType: record.bridgeType,
-    transfer: record.transfer,
+    ...record,
+    tokenAAddress: record.tokenAAddress.toLowerCase(),
+    tokenBAddress: record.tokenBAddress.toLowerCase(),
   }
 }
 
@@ -89,10 +158,10 @@ export class TokenRelationRepository extends BaseRepository {
     const row = await this.db
       .selectFrom('TokenRelation')
       .selectAll()
-      .where('tokenAChain', '=', pk.tokenFromChain)
-      .where('tokenAAddress', '=', pk.tokenFromAddress.toLowerCase())
-      .where('tokenBChain', '=', pk.tokenToChain)
-      .where('tokenBAddress', '=', pk.tokenToAddress.toLowerCase())
+      .where('tokenAChain', '=', pk.tokenAChain)
+      .where('tokenAAddress', '=', pk.tokenAAddress.toLowerCase())
+      .where('tokenBChain', '=', pk.tokenBChain)
+      .where('tokenBAddress', '=', pk.tokenBAddress.toLowerCase())
       .where('plugin', '=', pk.plugin)
       .where('bridgeType', '=', pk.bridgeType)
       .executeTakeFirst()
@@ -135,10 +204,10 @@ export class TokenRelationRepository extends BaseRepository {
                     'in',
                     matchingKeys.map((key) =>
                       eb.tuple(
-                        key.tokenFromChain,
-                        key.tokenFromAddress.toLowerCase(),
-                        key.tokenToChain,
-                        key.tokenToAddress.toLowerCase(),
+                        key.tokenAChain,
+                        key.tokenAAddress.toLowerCase(),
+                        key.tokenBChain,
+                        key.tokenBAddress.toLowerCase(),
                         key.plugin,
                       ),
                     ),
@@ -161,10 +230,10 @@ export class TokenRelationRepository extends BaseRepository {
     const result = await this.db
       .updateTable('TokenRelation')
       .set(patch)
-      .where('tokenAChain', '=', pk.tokenFromChain)
-      .where('tokenAAddress', '=', pk.tokenFromAddress.toLowerCase())
-      .where('tokenBChain', '=', pk.tokenToChain)
-      .where('tokenBAddress', '=', pk.tokenToAddress.toLowerCase())
+      .where('tokenAChain', '=', pk.tokenAChain)
+      .where('tokenAAddress', '=', pk.tokenAAddress.toLowerCase())
+      .where('tokenBChain', '=', pk.tokenBChain)
+      .where('tokenBAddress', '=', pk.tokenBAddress.toLowerCase())
       .where('plugin', '=', pk.plugin)
       .where('bridgeType', '=', pk.bridgeType)
       .executeTakeFirst()
@@ -187,52 +256,106 @@ export class TokenRelationRepository extends BaseRepository {
         'tokenBAddress',
         'plugin',
         'bridgeType',
+        'lockedToken',
       ])
       .execute()
 
     return rows.map((row) => ({
-      tokenFromChain: row.tokenAChain,
-      tokenFromAddress: row.tokenAAddress,
-      tokenToChain: row.tokenBChain,
-      tokenToAddress: row.tokenBAddress,
-      plugin: row.plugin,
+      ...row,
       bridgeType: row.bridgeType as InteropBridgeType,
+      lockedToken: row.lockedToken as TokenRelationLockedToken,
     }))
   }
 
-  async getRelationsFrom(
+  /**
+   * Every relation mentioning this token, on either endpoint. Endpoint order is
+   * lexicographic rather than a direction, so there is nothing to split into
+   * inbound and outbound — `lockedToken` tells the caller the token's role.
+   */
+  async getRelationsFor(
     token: DeployedTokenPrimaryKey,
   ): Promise<TokenRelationRecord[]> {
+    const address = token.address.toLowerCase()
     const rows = await this.db
       .selectFrom('TokenRelation')
       .selectAll()
-      .where('tokenAChain', '=', token.chain)
-      .where('tokenAAddress', '=', token.address.toLowerCase())
+      .where((eb) =>
+        eb.or([
+          eb.and([
+            eb('tokenAChain', '=', token.chain),
+            eb('tokenAAddress', '=', address),
+          ]),
+          eb.and([
+            eb('tokenBChain', '=', token.chain),
+            eb('tokenBAddress', '=', address),
+          ]),
+        ]),
+      )
       .execute()
 
     return rows.map(toRecord)
   }
 
-  async getRelationsTo(
+  /**
+   * Distinct names of the plugins observed minting this token — the plugins
+   * of every relation in which this token is minted:
+   *
+   * - a `lockAndMint` relation whose locked endpoint is the *other* one,
+   *   making this token the minted representation, or
+   * - a `burnAndMint` relation mentioning the token — the pair is symmetric,
+   *   so both endpoints are minted.
+   *
+   * A `lockAndMint` relation whose locked endpoint is not identified
+   * (`lockedToken` null) names no minter: one of its endpoints is minted, but
+   * nothing says it is this one.
+   */
+  async getMintingPluginsFor(
     token: DeployedTokenPrimaryKey,
-  ): Promise<TokenRelationRecord[]> {
+  ): Promise<string[]> {
+    const address = token.address.toLowerCase()
     const rows = await this.db
       .selectFrom('TokenRelation')
-      .selectAll()
-      .where('tokenBChain', '=', token.chain)
-      .where('tokenBAddress', '=', token.address.toLowerCase())
+      .select('plugin')
+      .distinct()
+      .where((eb) =>
+        eb.or([
+          this.mintedAtEndpoint(eb, { chain: token.chain, address }, 'A'),
+          this.mintedAtEndpoint(eb, { chain: token.chain, address }, 'B'),
+        ]),
+      )
+      .orderBy('plugin')
       .execute()
 
-    return rows.map(toRecord)
+    return rows.map((row) => row.plugin)
+  }
+
+  // The token occupies the given endpoint slot and is minted there.
+  private mintedAtEndpoint(
+    eb: ExpressionBuilder<DB, 'TokenRelation'>,
+    token: DeployedTokenPrimaryKey,
+    slot: 'A' | 'B',
+  ): Expression<SqlBool> {
+    const otherSlot = slot === 'A' ? 'B' : 'A'
+    return eb.and([
+      eb(`token${slot}Chain`, '=', token.chain),
+      eb(`token${slot}Address`, '=', token.address),
+      eb.or([
+        eb('bridgeType', '=', 'burnAndMint' satisfies InteropBridgeType),
+        eb.and([
+          eb('bridgeType', '=', 'lockAndMint' satisfies InteropBridgeType),
+          eb('lockedToken', '=', otherSlot),
+        ]),
+      ]),
+    ])
   }
 
   async deleteByPrimaryKey(pk: TokenRelationPrimaryKey): Promise<number> {
     const result = await this.db
       .deleteFrom('TokenRelation')
-      .where('tokenAChain', '=', pk.tokenFromChain)
-      .where('tokenAAddress', '=', pk.tokenFromAddress.toLowerCase())
-      .where('tokenBChain', '=', pk.tokenToChain)
-      .where('tokenBAddress', '=', pk.tokenToAddress.toLowerCase())
+      .where('tokenAChain', '=', pk.tokenAChain)
+      .where('tokenAAddress', '=', pk.tokenAAddress.toLowerCase())
+      .where('tokenBChain', '=', pk.tokenBChain)
+      .where('tokenBAddress', '=', pk.tokenBAddress.toLowerCase())
       .where('plugin', '=', pk.plugin)
       .where('bridgeType', '=', pk.bridgeType)
       .executeTakeFirst()

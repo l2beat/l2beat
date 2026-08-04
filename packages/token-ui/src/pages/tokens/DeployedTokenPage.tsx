@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
+import { Badge } from '~/components/core/Badge'
 import {
   Card,
   CardContent,
@@ -98,6 +99,13 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
       address: token.address,
     }),
   )
+  const { data: mintingPlugins, isLoading: areMintingPluginsLoading } =
+    useQuery(
+      trpc.deployedTokens.getMintingPlugins.queryOptions({
+        chain: token.chain,
+        address: token.address,
+      }),
+    )
 
   useEffect(() => {
     if (abstractTokenId) {
@@ -273,20 +281,12 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
         </TabsContent>
         <TabsContent value="relations">
           <div className="space-y-4">
-            <TokenRelationsSection
-              title="Outgoing relations"
-              description="This token is the source/from token."
-              otherTokenHeader="To token"
-              direction="outgoing"
-              entries={relations?.outgoing ?? []}
-              loading={areRelationsLoading}
+            <MintingPluginsSection
+              plugins={mintingPlugins ?? []}
+              loading={areMintingPluginsLoading}
             />
             <TokenRelationsSection
-              title="Incoming relations"
-              description="This token is the target/to token."
-              otherTokenHeader="From token"
-              direction="incoming"
-              entries={relations?.incoming ?? []}
+              entries={relations ?? []}
               loading={areRelationsLoading}
             />
           </div>
@@ -297,28 +297,74 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
 }
 
 type TokenRelationsResponse = RouterOutputs['deployedTokens']['getRelations']
-type TokenRelationEntry = TokenRelationsResponse['incoming'][number]
+type TokenRelationEntry = TokenRelationsResponse[number]
 
+// A symmetric (burnAndMint) pair also shows as minted — both of its endpoints
+// are — so the minted description must not claim anything about the other
+// side; the Bridge type column is where the mechanism shows.
+const RELATION_ROLE_DESCRIPTIONS: Record<TokenRelationEntry['role'], string> = {
+  locked: 'Locked here, minted there',
+  minted: 'Minted on this side',
+  unknown: 'Locked side not observed',
+}
+
+// The same answer the Role column gives one relation at a time, summarized by
+// `getMintingPluginsFor`: seeing both agree is a cheap correctness check.
+function MintingPluginsSection({
+  plugins,
+  loading,
+}: {
+  plugins: string[]
+  loading: boolean
+}) {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Minting plugins</CardTitle>
+        <CardDescription>
+          Plugins observed minting this token — the relations below in which
+          this token's role is minted.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        {loading ? (
+          <LoadingState className="h-10" />
+        ) : plugins.length === 0 ? (
+          <div className="text-muted-foreground text-sm">
+            No plugin has been observed minting this token.
+          </div>
+        ) : (
+          <div className="flex flex-wrap gap-2">
+            {plugins.map((plugin) => (
+              <Badge key={plugin} variant="secondary">
+                {plugin}
+              </Badge>
+            ))}
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  )
+}
+
+// A single list: relations are facts about a pair of tokens, not directed
+// edges, so there is no inbound/outbound split. What differs per relation is
+// this token's role, which the Role column states.
 function TokenRelationsSection({
-  title,
-  description,
-  otherTokenHeader,
-  direction,
   entries,
   loading,
 }: {
-  title: string
-  description: string
-  otherTokenHeader: string
-  direction: 'outgoing' | 'incoming'
   entries: TokenRelationEntry[]
   loading: boolean
 }) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
+        <CardTitle>Relations</CardTitle>
+        <CardDescription>
+          Non-swapping interop transfers observed between this token and another
+          one.
+        </CardDescription>
       </CardHeader>
       <CardContent>
         {loading ? (
@@ -329,20 +375,21 @@ function TokenRelationsSection({
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>{otherTokenHeader}</TableHead>
+                <TableHead>Other token</TableHead>
+                <TableHead>This token's role</TableHead>
                 <TableHead>Plugin</TableHead>
                 <TableHead>Bridge type</TableHead>
                 <TableHead>Transfer</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {entries.map(({ relation, otherToken }) => (
+              {entries.map(({ relation, role, otherEndpoint, otherToken }) => (
                 <TableRow
                   key={[
-                    relation.tokenFromChain,
-                    relation.tokenFromAddress,
-                    relation.tokenToChain,
-                    relation.tokenToAddress,
+                    relation.tokenAChain,
+                    relation.tokenAAddress,
+                    relation.tokenBChain,
+                    relation.tokenBAddress,
                     relation.plugin,
                     relation.bridgeType,
                   ].join(':')}
@@ -361,7 +408,13 @@ function TokenRelationsSection({
                     <div className="break-all text-muted-foreground text-xs">
                       {otherToken
                         ? otherToken.address
-                        : formatRelationEndpoint(relation, direction)}
+                        : `${otherEndpoint.chain}:${otherEndpoint.address}`}
+                    </div>
+                  </TableCell>
+                  <TableCell className="align-top">
+                    <div className="font-medium">{role}</div>
+                    <div className="text-muted-foreground text-xs">
+                      {RELATION_ROLE_DESCRIPTIONS[role]}
                     </div>
                   </TableCell>
                   <TableCell className="align-top">{relation.plugin}</TableCell>
@@ -386,14 +439,4 @@ function TokenRelationsSection({
       </CardContent>
     </Card>
   )
-}
-
-function formatRelationEndpoint(
-  relation: TokenRelationEntry['relation'],
-  direction: 'outgoing' | 'incoming',
-) {
-  if (direction === 'outgoing') {
-    return `${relation.tokenToChain}:${relation.tokenToAddress}`
-  }
-  return `${relation.tokenFromChain}:${relation.tokenFromAddress}`
 }

@@ -19,25 +19,32 @@ const JsonValue: Validator<JsonValue> = v.lazy(() =>
   ]),
 )
 
+const TokenRelationLockedToken = v.union([
+  v.literal('A'),
+  v.literal('B'),
+  v.null(),
+])
+
 type _ = Expect<Equal<TokenRelationRecord, DbTokenRelationRecord>>
 export type TokenRelationRecord = v.infer<typeof TokenRelationRecord>
 export const TokenRelationRecord = v.object({
-  tokenFromChain: v.string(),
-  tokenFromAddress: v.string(),
-  tokenToChain: v.string(),
-  tokenToAddress: v.string(),
+  tokenAChain: v.string(),
+  tokenAAddress: v.string(),
+  tokenBChain: v.string(),
+  tokenBAddress: v.string(),
   plugin: v.string(),
   bridgeType: v.enum(InteropBridgeTypeValues),
+  lockedToken: TokenRelationLockedToken,
   transfer: JsonValue,
 })
 
 type __ = Expect<Equal<TokenRelationPrimaryKey, DbTokenRelationPrimaryKey>>
 export type TokenRelationPrimaryKey = v.infer<typeof TokenRelationPrimaryKey>
 export const TokenRelationPrimaryKey = v.object({
-  tokenFromChain: v.string(),
-  tokenFromAddress: v.string(),
-  tokenToChain: v.string(),
-  tokenToAddress: v.string(),
+  tokenAChain: v.string(),
+  tokenAAddress: v.string(),
+  tokenBChain: v.string(),
+  tokenBAddress: v.string(),
   plugin: v.string(),
   bridgeType: v.enum(InteropBridgeTypeValues),
 })
@@ -45,5 +52,6 @@ export const TokenRelationPrimaryKey = v.object({
 type ___ = Expect<Equal<TokenRelationUpdateable, DbTokenRelationUpdateable>>
 export type TokenRelationUpdateable = v.infer<typeof TokenRelationUpdateable>
 export const TokenRelationUpdateable = v.object({
+  lockedToken: TokenRelationLockedToken.optional(),
   transfer: JsonValue.optional(),
 })

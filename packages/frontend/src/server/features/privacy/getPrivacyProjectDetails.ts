@@ -6,6 +6,7 @@ import type {
   ProjectDisplay,
   ProjectPermissions,
   ProjectStatuses,
+  ProjectUpgradesAndGovernance,
   ProjectZkCatalogInfo,
 } from '@l2beat/config'
 import type {
@@ -41,7 +42,7 @@ export interface PrivacyProjectDetails {
   privacy: PrivacySummaryValue
   reproducibility: PrivacySummaryValue
   riskSummary?: string
-  upgradesAndGovernance?: string
+  upgradesAndGovernance?: ProjectUpgradesAndGovernance
   attributes: PrivacyAttribute[]
   assets: PrivacyAsset[]
   summary: {

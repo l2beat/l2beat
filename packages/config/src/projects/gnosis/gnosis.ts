@@ -75,7 +75,7 @@ export const gnosis: ScalingProject = {
       "Gnosis chain in its current form does not derive or benefit from Ethereum's decentralisation apart from being developed as a close fork to re-use Ethereum tooling and infrastructure. Its censorship resistance relies on an open validator set with over 100 thousand diverse validators, although the clustering and stake distribution among entities is intransparent. Users who are censored selectively on an otherwise live network benefit from the fast 5s block time and non-committee-gated, stake-weighted proposer rotation, resulting in an inclusion probability of 99% in less than a minute even if up to 50% of the Gnosis stake is censoring them. There are also a few thousand validators who run custom 'shutter network' nodes that support threshold-encrypted transactions. For a case of active blanket censorship (>50% stake) by all current validators, users have no way apart from a hardfork to get their transactions included or save the chain. In the operator walkaway scenario, new sequencers could stake and join the set permissionlessly.",
     links: {
       websites: ['https://gnosis.io/chain'],
-      explorers: ['https://gnosisscan.io/', 'https://gnosis.blockscout.com/'],
+      explorers: ['https://gnosis.blockscout.com/'],
       bridges: ['https://bridge.gnosischain.com'],
       repositories: ['https://github.com/gnosischain'],
       documentation: ['https://docs.gnosischain.com/'],
@@ -87,6 +87,42 @@ export const gnosis: ScalingProject = {
         'https://gnosis.io/blog',
       ],
     },
+  },
+  interopConfig: {
+    name: 'Gnosis Bridge',
+    description:
+      'The canonical bridge between Ethereum and Gnosis Chain. It includes arbitrary message passing, Omnibridge ERC20 transfers, and the native xDAI bridge.',
+    durationSplit: {
+      lockAndMint: [
+        {
+          label: 'L1 -> L2',
+          transferTypes: ['gnosisbridge.L1ToL2Transfer'],
+        },
+        {
+          label: 'L2 -> L1',
+          transferTypes: ['gnosisbridge.L2ToL1Transfer'],
+        },
+      ],
+      burnAndMint: [
+        {
+          label: 'L2 -> L1',
+          transferTypes: ['gnosisbridge.L2ToL1Transfer'],
+        },
+      ],
+    },
+    plugins: [
+      {
+        chain: 'gnosis',
+        plugin: 'gnosisbridge',
+        bridgeType: 'lockAndMint',
+      },
+      {
+        chain: 'gnosis',
+        plugin: 'gnosisbridge',
+        bridgeType: 'burnAndMint',
+      },
+    ],
+    type: 'canonical',
   },
   proofSystem: undefined,
   stage: {
@@ -123,7 +159,7 @@ export const gnosis: ScalingProject = {
     name: 'gnosis',
     chainId,
     gasTokens: ['XDAI'],
-    explorerUrl: 'https://gnosisscan.io',
+    explorerUrl: 'https://gnosis.blockscout.com',
     sinceTimestamp: UnixTime(1539028166),
     coingeckoPlatform: 'xdai',
     multicallContracts: [

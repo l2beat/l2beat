@@ -164,6 +164,32 @@ export class InteropTransferClassifier {
     return 'unknown'
   }
 
+  /**
+   * Which side of a `lockAndMint` transfer holds the locked (escrowed) token.
+   * The other side holds the minted representation, so this one answer covers
+   * the whole role assignment.
+   *
+   * `undefined` means the observed flags do not identify a side: either neither
+   * was observed, or they contradict the `lockAndMint` classification (both
+   * sides look locked, or both look supply-changing) — which a plugin-declared
+   * bridge type can produce. Both cases are the same thing to a caller: no
+   * usable evidence.
+   */
+  static inferLockedTransferSide(
+    transfer: Pick<
+      InteropTransferForClassification,
+      'srcWasBurned' | 'dstWasMinted'
+    >,
+  ): 'src' | 'dst' | undefined {
+    const srcIsLocked =
+      transfer.srcWasBurned === false || transfer.dstWasMinted === true
+    const dstIsLocked =
+      transfer.srcWasBurned === true || transfer.dstWasMinted === false
+
+    if (srcIsLocked === dstIsLocked) return undefined
+    return srcIsLocked ? 'src' : 'dst'
+  }
+
   static isOneSided(
     transfer: Pick<
       InteropTransferForClassification,

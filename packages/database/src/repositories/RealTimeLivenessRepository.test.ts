@@ -2,7 +2,32 @@ import { createTrackedTxId } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
-import { RealTimeLivenessRepository } from './RealTimeLivenessRepository'
+import {
+  RealTimeLivenessRepository,
+  toRecord,
+} from './RealTimeLivenessRepository'
+
+describe(toRecord.name, () => {
+  it('maps a null grouping key to undefined', () => {
+    const timestamp = UnixTime(1)
+
+    expect(
+      toRecord({
+        timestamp: UnixTime.toDate(timestamp),
+        blockNumber: 1,
+        txHash: '0x1234',
+        configurationId: 'config-id',
+        groupingKey: null,
+      }),
+    ).toEqual({
+      timestamp,
+      blockNumber: 1,
+      txHash: '0x1234',
+      configurationId: 'config-id',
+      groupingKey: undefined,
+    })
+  })
+})
 
 describeDatabase(RealTimeLivenessRepository.name, (db) => {
   const repository = db.realTimeLiveness
@@ -18,24 +43,28 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
       blockNumber: 12345,
       txHash: '0x1234567890abcdef',
       configurationId: txIdA,
+      groupingKey: undefined,
     },
     {
       timestamp: START - 2 * UnixTime.HOUR,
       blockNumber: 12340,
       txHash: '0xabcdef1234567890',
       configurationId: txIdA,
+      groupingKey: undefined,
     },
     {
       timestamp: START - 3 * UnixTime.HOUR,
       blockNumber: 12346,
       txHash: '0xabcdef1234567890',
       configurationId: txIdB,
+      groupingKey: undefined,
     },
     {
       timestamp: START - 3 * UnixTime.HOUR,
       blockNumber: 12347,
       txHash: '0x12345678901abcdef',
       configurationId: txIdC,
+      groupingKey: undefined,
     },
   ]
 
@@ -54,12 +83,14 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
           blockNumber: 12349,
           txHash: '0x1234567890abcdef1',
           configurationId: txIdA,
+          groupingKey: undefined,
         },
         {
           timestamp: START - 6 * UnixTime.HOUR,
           blockNumber: 12350,
           txHash: '0xabcdef1234567892',
           configurationId: txIdA,
+          groupingKey: undefined,
         },
       ]
       await repository.upsertMany(newRows)
@@ -80,12 +111,14 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
           blockNumber: 12348,
           txHash: '0xabcdef1234567890',
           configurationId: txIdB,
+          groupingKey: undefined,
         },
         {
           timestamp: START - 4 * UnixTime.HOUR,
           blockNumber: 12349,
           txHash: '0x12345678901abcdef',
           configurationId: txIdC,
+          groupingKey: undefined,
         },
       ]
       await repository.upsertMany(newRows)
@@ -96,6 +129,66 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
 
     it('empty array', async () => {
       await expect(repository.upsertMany([])).not.toBeRejected()
+    })
+
+    it('keeps the earliest transaction for each grouping key', async () => {
+      const grouped = [
+        {
+          timestamp: START - 4 * UnixTime.MINUTE,
+          blockNumber: 20,
+          txHash: '0xgrouped-later',
+          configurationId: txIdA,
+          groupingKey: 'epoch-1',
+        },
+        {
+          timestamp: START - 5 * UnixTime.MINUTE,
+          blockNumber: 10,
+          txHash: '0xgrouped-earlier',
+          configurationId: txIdA,
+          groupingKey: 'epoch-1',
+        },
+        {
+          timestamp: START - 3 * UnixTime.MINUTE,
+          blockNumber: 30,
+          txHash: '0xgrouped-other-config',
+          configurationId: txIdB,
+          groupingKey: 'epoch-1',
+        },
+      ]
+
+      await repository.upsertMany(grouped)
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([...DATA, grouped[1]!, grouped[2]!])
+    })
+
+    it('replaces a grouped transaction only when an earlier one arrives', async () => {
+      const first = {
+        timestamp: START - 4 * UnixTime.MINUTE,
+        blockNumber: 20,
+        txHash: '0xgrouped-first',
+        configurationId: txIdA,
+        groupingKey: 'epoch-1',
+      }
+      const earlier = {
+        ...first,
+        timestamp: START - 5 * UnixTime.MINUTE,
+        blockNumber: 10,
+        txHash: '0xgrouped-earlier',
+      }
+      const later = {
+        ...first,
+        timestamp: START - 3 * UnixTime.MINUTE,
+        blockNumber: 30,
+        txHash: '0xgrouped-later',
+      }
+
+      await repository.upsertMany([first])
+      await repository.upsertMany([earlier])
+      await repository.upsertMany([later])
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([...DATA, earlier])
     })
   })
 

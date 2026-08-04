@@ -19,6 +19,7 @@ import {
   type RelationGraphRelation,
   type RelationGraphSelection,
   relationColor,
+  relationDirectionLabel,
   relationId,
   relationIsDirectional,
   relationTypeLabel,
@@ -53,12 +54,14 @@ export function TokenRelationsGraph({
   selection,
   zoomTarget,
   highlightAnomalies,
+  deletedRelationIds,
   onSelectionChange,
 }: {
   graph: RelationGraph
   selection: RelationGraphSelection | undefined
   zoomTarget: { nodeId: string } | undefined
   highlightAnomalies: boolean
+  deletedRelationIds: ReadonlySet<string>
   onSelectionChange: (selection: RelationGraphSelection | undefined) => void
 }) {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -73,9 +76,14 @@ export function TokenRelationsGraph({
   // Hover styling touches every SVG node and edge. Build the selected
   // neighborhood only when the selection changes so that pass stays linear.
   const focus = useMemo(
-    () => getRelationGraphFocus(graph, selection),
-    [graph, selection],
+    () => getRelationGraphFocus(graph, selection, deletedRelationIds),
+    [graph, selection, deletedRelationIds],
   )
+  // Read by the rebuild effect through a ref: a deletion must not re-run the
+  // layout (see the removal effect below), but a rebuild that happens later
+  // for its own reasons (e.g. a resize) must not resurrect deleted edges.
+  const deletedRelationIdsRef = useRef(deletedRelationIds)
+  deletedRelationIdsRef.current = deletedRelationIds
   const styleStateRef = useRef<GraphStyleState>({
     focus,
     highlightAnomalies,
@@ -99,7 +107,10 @@ export function TokenRelationsGraph({
 
     const nodes = graph.nodes.map((node): NodeDatum => ({ ...node }))
     const nodeById = new Map(nodes.map((node) => [node.id, node]))
-    const visualLinks = buildVisualLinks(graph.relations, nodeById)
+    const relations = graph.relations.filter(
+      (relation) => !deletedRelationIdsRef.current.has(relationId(relation)),
+    )
+    const visualLinks = buildVisualLinks(relations, nodeById)
     const layout = layoutRelationGraph(nodes, buildSimulationLinks(visualLinks))
     const clusterLabelData = layout.clusters.flatMap((cluster) => {
       const text = mostCommonDeployedSymbol(cluster.nodes)
@@ -143,7 +154,8 @@ export function TokenRelationsGraph({
 
     links.append('title').text((link) => {
       const relation = link.relation
-      return `${relation.tokenFromChain}:${relation.tokenFromAddress} -> ${relation.tokenToChain}:${relation.tokenToAddress}\n${relationTypeLabel(relation)} via ${relation.plugin}`
+      const arrow = relationIsDirectional(relation) ? '->' : '<->'
+      return `${sourceId(relation)} ${arrow} ${targetId(relation)}\n${relationTypeLabel(relation)} via ${relation.plugin}\n${relationDirectionLabel(relation)}`
     })
 
     const linkHits = linksLayer
@@ -358,6 +370,21 @@ export function TokenRelationsGraph({
       zoomToNodeRef.current = undefined
     }
   }, [graph, size.height, size.width])
+
+  // A deleted relation only disappears from the drawing. Deliberately no
+  // re-layout: removing an edge can split a cluster, and re-running the
+  // simulation would move every node under the user. Refreshing the page is
+  // how one sees the re-clustered graph.
+  useEffect(() => {
+    const svgElement = svgRef.current
+    if (!svgElement || deletedRelationIds.size === 0) return
+    d3.select(svgElement)
+      .selectAll<SVGElement, VisualLink>(
+        '.relation-link, .relation-hit, .relation-label',
+      )
+      .filter((link) => deletedRelationIds.has(relationId(link.relation)))
+      .remove()
+  }, [deletedRelationIds])
 
   useEffect(() => {
     if (zoomTarget === undefined) return

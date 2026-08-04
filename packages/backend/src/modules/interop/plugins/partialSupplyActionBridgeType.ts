@@ -1,12 +1,20 @@
 import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
 
+// At least one side must be undefined
+type PartialSupplyActionInfo =
+  | {
+      srcWasBurned: boolean | undefined
+      dstWasMinted: undefined
+    }
+  | {
+      srcWasBurned: undefined
+      dstWasMinted: boolean | undefined
+    }
+
 export function getBestEffortBridgeTypeFromPartialSupplyAction({
   srcWasBurned,
   dstWasMinted,
-}: {
-  srcWasBurned: boolean | undefined
-  dstWasMinted: boolean | undefined
-}): KnownInteropBridgeType | undefined {
+}: PartialSupplyActionInfo): KnownInteropBridgeType | undefined {
   const supplyChanged = srcWasBurned ?? dstWasMinted
   if (supplyChanged === undefined) return
 

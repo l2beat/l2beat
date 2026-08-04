@@ -615,6 +615,18 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       'common/programHashes/0x0057b7de6dcd8ff25e7b41089f4b5fa586067fbb107756d1f66d92fe71dd6ad1.md',
     ),
   },
+  '0x005f3914526e9f0d261b56a3613985801d3060584f95874548c70fda5f81efdb': {
+    title: 'Avail VectorX DA bridge program',
+    description:
+      'ZK-friendly implementation of Avail Vector DA bridge that proves that a given data root was finalized on Avail.',
+    programUrl:
+      'https://github.com/availproject/sp1-vector/tree/c649310e79de376926863504d49eddbf09532980/program',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0x005f3914526e9f0d261b56a3613985801d3060584f95874548c70fda5f81efdb.md',
+    ),
+  },
   '0x00bca7947ba758bd6f539f480c6d983cca4bd4387a411a41a71fb953d5df3de7': {
     ...OP_SUCCINCT_AGG_EIGENDA,
     proverSystemProject: ProjectId('sp1turbo'),

@@ -1,3 +1,45 @@
+Generated with discovered.json: 0xbf857739583eb3a6a00036e9ebf59d6db984d374
+
+# Diff at Fri, 31 Jul 2026 09:46:31 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@9c7afc831acca40d9607f700039fb75c4976ec78 block: 1785170172
+- current timestamp: 1785170172
+
+## Description
+
+Added committers to era validator multisig template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1785170172 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x28942E6870612893B96F77De0F485fcE3497AAA8) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d","description":"submit batches on L1 if approved by enough Validator Multisig members.","role":".committers"}
+    }
+```
+
+```diff
+    EOA  (eth:0xa90c7CDB553332948E2943431436117eCFb1e781) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d","description":"submit batches on L1 if approved by enough Validator Multisig members.","role":".committers"}
+    }
+```
+
+```diff
+    contract EraMultisigValidator (eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d) [shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable] {
+    +++ description: A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.
+      values.committers:
++        {"eth:0x32400084C286CF3E17e7B677ea9583e60a000324":["eth:0xa90c7CDB553332948E2943431436117eCFb1e781","eth:0x28942E6870612893B96F77De0F485fcE3497AAA8"]}
+    }
+```
+
 Generated with discovered.json: 0x4de6802ba35025b5546d9aeda6e12da752e7a2c8
 
 # Diff at Mon, 27 Jul 2026 16:43:20 GMT:

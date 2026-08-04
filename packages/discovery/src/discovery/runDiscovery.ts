@@ -7,7 +7,11 @@ import type {
   DiscoveryChainConfig,
   DiscoveryModuleConfig,
 } from '../config/types'
-import { printSharedModuleInfo } from '../utils/printSharedModuleInfo'
+import {
+  findEntrypointConsumers,
+  ownsEntrypoints,
+  printEntrypointConsumers,
+} from '../utils/printEntrypointConsumers'
 import type { Analysis } from './analysis/AddressAnalyzer'
 import { TEMPLATES_PATH, TemplateService } from './analysis/TemplateService'
 import type { ConfigReader } from './config/ConfigReader'
@@ -91,17 +95,11 @@ export async function runDiscovery(
     },
   )
 
-  // TODO(radomski): This is a disaster from the point of view of separation of
-  // concerns. We should agree on what even is a shared module and how to
-  // handle them cleanly.
-  if (config.project.startsWith('shared-')) {
-    const allConfigs = configReader
-      .readAllDiscoveredProjects()
-      .map((p) => configReader.readConfig(p))
-    const backrefConfigs = allConfigs
-      .filter((c) => c.structure.sharedModules.includes(config.project))
-      .map((c) => c.structure)
-    printSharedModuleInfo(logger, backrefConfigs)
+  if (ownsEntrypoints(projectConfig.structure)) {
+    printEntrypointConsumers(
+      logger,
+      findEntrypointConsumers(configReader, config.project),
+    )
   }
 
   if (config.printStats) {

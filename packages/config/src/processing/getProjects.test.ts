@@ -556,6 +556,24 @@ describe('getProjects', () => {
   })
 
   describe('Tracked transactions', () => {
+    // Temporarily disabled together with Aztec state update tracking.
+    // it('groups only Aztec liveness state updates', () => {
+    //   const aztec = projects.find((project) => project.id === 'aztecnetwork')
+    //   const stateUpdates = aztec?.trackedTxsConfig?.filter(
+    //     (config) => config.subtype === 'stateUpdates',
+    //   )
+
+    //   const liveness = stateUpdates?.find(
+    //     (config) => config.type === 'liveness',
+    //   )
+
+    //   assert(liveness !== undefined)
+    //   expect(liveness.groupBy).toEqual({
+    //     type: 'functionCallParameter',
+    //     path: [0, 0],
+    //   })
+    // })
+
     it('every TrackedTxId is unique', () => {
       const ids = new Set<string>()
       for (const project of projects) {

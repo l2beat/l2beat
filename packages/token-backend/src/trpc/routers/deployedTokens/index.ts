@@ -1,3 +1,4 @@
+import type { TokenRelationRoute } from '@l2beat/database'
 import { v } from '@l2beat/validate'
 import { TokenRelationPrimaryKey } from '../../../schemas/TokenRelation'
 import { readOnlyProcedure } from '../../procedures'
@@ -35,50 +36,39 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) =>
     getRelations: readOnlyProcedure
       .input(v.object({ chain: v.string(), address: v.string() }))
       .query(async ({ ctx, input }) => {
-        const [outgoing, incoming] = await Promise.all([
-          ctx.tokenDb.tokenRelation.getRelationsFrom(input),
-          ctx.tokenDb.tokenRelation.getRelationsTo(input),
-        ])
-
-        const otherTokenKeys = uniqueTokenKeys([
-          ...outgoing.map((relation) => ({
-            chain: relation.tokenToChain,
-            address: relation.tokenToAddress,
-          })),
-          ...incoming.map((relation) => ({
-            chain: relation.tokenFromChain,
-            address: relation.tokenFromAddress,
-          })),
-        ])
+        // One list, not an inbound/outbound split: endpoint order is not a
+        // direction. What differs between relations is this token's role, which
+        // `lockedToken` answers.
+        const relations = sortRelations(
+          await ctx.tokenDb.tokenRelation.getRelationsFor(input),
+        )
+        const otherTokenKeys = uniqueTokenKeys(
+          relations.map((relation) => otherEndpoint(relation, input)),
+        )
         const otherTokens =
           await ctx.tokenDb.deployedToken.getByPrimaryKeys(otherTokenKeys)
         const otherTokenMap = new Map(
           otherTokens.map((token) => [tokenKey(token), token]),
         )
 
-        return {
-          outgoing: sortRelations(outgoing).map((relation) => ({
+        return relations.map((relation) => {
+          const other = otherEndpoint(relation, input)
+          return {
             relation,
-            otherToken:
-              otherTokenMap.get(
-                tokenKey({
-                  chain: relation.tokenToChain,
-                  address: relation.tokenToAddress,
-                }),
-              ) ?? null,
-          })),
-          incoming: sortRelations(incoming).map((relation) => ({
-            relation,
-            otherToken:
-              otherTokenMap.get(
-                tokenKey({
-                  chain: relation.tokenFromChain,
-                  address: relation.tokenFromAddress,
-                }),
-              ) ?? null,
-          })),
-        }
+            role: tokenRelationRole(relation, input),
+            otherEndpoint: other,
+            otherToken: otherTokenMap.get(tokenKey(other)) ?? null,
+          }
+        })
       }),
+
+    // The same answer the Relations tab's role column gives, summarized: the
+    // distinct plugins of the relations whose role for this token is `minted`.
+    getMintingPlugins: readOnlyProcedure
+      .input(v.object({ chain: v.string(), address: v.string() }))
+      .query(({ ctx, input }) =>
+        ctx.tokenDb.tokenRelation.getMintingPluginsFor(input),
+      ),
 
     getRelationsGraphNodeDetails: readOnlyProcedure
       .input(v.object({ chain: v.string(), address: v.string() }))
@@ -124,37 +114,37 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) =>
       const tokenKeys = uniqueTokenKeys(
         relations.flatMap((relation) => [
           {
-            chain: relation.tokenFromChain,
-            address: relation.tokenFromAddress,
+            chain: relation.tokenAChain,
+            address: relation.tokenAAddress,
           },
           {
-            chain: relation.tokenToChain,
-            address: relation.tokenToAddress,
+            chain: relation.tokenBChain,
+            address: relation.tokenBAddress,
           },
         ]),
       )
       const tokens = await ctx.tokenDb.deployedToken.getByPrimaryKeys(tokenKeys)
       const tokenMap = new Map(tokens.map((token) => [tokenKey(token), token]))
       const graphRelations = relations.map((relation) => {
-        const tokenFrom = tokenMap.get(
+        const tokenA = tokenMap.get(
           tokenKey({
-            chain: relation.tokenFromChain,
-            address: relation.tokenFromAddress,
+            chain: relation.tokenAChain,
+            address: relation.tokenAAddress,
           }),
         )
-        const tokenTo = tokenMap.get(
+        const tokenB = tokenMap.get(
           tokenKey({
-            chain: relation.tokenToChain,
-            address: relation.tokenToAddress,
+            chain: relation.tokenBChain,
+            address: relation.tokenBAddress,
           }),
         )
 
         return {
           ...relation,
           isConflict:
-            tokenFrom?.abstractTokenId != null &&
-            tokenTo?.abstractTokenId != null &&
-            tokenFrom.abstractTokenId !== tokenTo.abstractTokenId,
+            tokenA?.abstractTokenId != null &&
+            tokenB?.abstractTokenId != null &&
+            tokenA.abstractTokenId !== tokenB.abstractTokenId,
         }
       })
 
@@ -196,29 +186,23 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) =>
 
 function sortRelations<
   T extends {
-    tokenFromChain: string
-    tokenFromAddress: string
-    tokenToChain: string
-    tokenToAddress: string
+    tokenAChain: string
+    tokenAAddress: string
+    tokenBChain: string
+    tokenBAddress: string
     plugin: string
   },
 >(relations: T[]) {
   return [...relations].sort((a, b) =>
-    [
-      a.plugin,
-      a.tokenFromChain,
-      a.tokenFromAddress,
-      a.tokenToChain,
-      a.tokenToAddress,
-    ]
+    [a.plugin, a.tokenAChain, a.tokenAAddress, a.tokenBChain, a.tokenBAddress]
       .join(':')
       .localeCompare(
         [
           b.plugin,
-          b.tokenFromChain,
-          b.tokenFromAddress,
-          b.tokenToChain,
-          b.tokenToAddress,
+          b.tokenAChain,
+          b.tokenAAddress,
+          b.tokenBChain,
+          b.tokenBAddress,
         ].join(':'),
       ),
   )
@@ -229,6 +213,47 @@ function isGraphRelation(relation: { bridgeType: string }): boolean {
     relation.bridgeType === 'burnAndMint' ||
     relation.bridgeType === 'lockAndMint'
   )
+}
+
+/**
+ * What one endpoint of a relation is to the other:
+ *
+ * - `locked` — this token is escrowed, the other is its minted representation
+ * - `minted` — this token is minted by the relation's plugin: the
+ *   representation side of a lock-and-mint pair, or either side of a
+ *   burn-and-mint pair. A burn-and-mint pair is symmetric, but as a role that
+ *   fact reads "minted" from each endpoint's point of view — the bridge type
+ *   is what shows the symmetry, so the role does not repeat it.
+ * - `unknown` — a lock-and-mint pair whose locked endpoint is not identified
+ */
+function tokenRelationRole(
+  relation: TokenRelationRoute,
+  token: { chain: string; address: string },
+): 'locked' | 'minted' | 'unknown' {
+  if (relation.bridgeType === 'burnAndMint') return 'minted'
+  // Anything that is neither burnAndMint nor lockAndMint (a human-added
+  // nonMinting relation) mints nothing and has no locked side to name — it
+  // must not claim a minter, consistently with `getMintingPluginsFor`.
+  if (relation.bridgeType !== 'lockAndMint') return 'unknown'
+  if (relation.lockedToken === null) return 'unknown'
+
+  const locked =
+    relation.lockedToken === 'A'
+      ? { chain: relation.tokenAChain, address: relation.tokenAAddress }
+      : { chain: relation.tokenBChain, address: relation.tokenBAddress }
+  return tokenKey(locked) === tokenKey(token) ? 'locked' : 'minted'
+}
+
+function otherEndpoint(
+  relation: TokenRelationRoute,
+  token: { chain: string; address: string },
+) {
+  const a = {
+    chain: relation.tokenAChain,
+    address: relation.tokenAAddress,
+  }
+  if (tokenKey(a) !== tokenKey(token)) return a
+  return { chain: relation.tokenBChain, address: relation.tokenBAddress }
 }
 
 function uniqueTokenKeys(tokens: { chain: string; address: string }[]) {
@@ -244,5 +269,5 @@ function tokenKey(token: { chain: string; address: string }) {
 function formatTokenRelationPrimaryKey(
   relation: v.infer<typeof TokenRelationPrimaryKey>,
 ) {
-  return `${relation.tokenFromChain}:${relation.tokenFromAddress} -> ${relation.tokenToChain}:${relation.tokenToAddress} via ${relation.plugin} (${relation.bridgeType})`
+  return `${relation.tokenAChain}:${relation.tokenAAddress} <-> ${relation.tokenBChain}:${relation.tokenBAddress} via ${relation.plugin} (${relation.bridgeType})`
 }
