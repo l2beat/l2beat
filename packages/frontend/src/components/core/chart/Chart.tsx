@@ -5,6 +5,7 @@ import * as React from 'react'
 import * as RechartsPrimitive from 'recharts'
 import { Logo } from '~/components/Logo'
 import { useIsClient } from '~/hooks/useIsClient'
+import { useResizeObserver } from '~/hooks/useResizeObserver'
 import { CursorClickIcon } from '~/icons/CursorClick'
 import { cn } from '~/utils/cn'
 import { OverflowWrapper } from '../OverflowWrapper'
@@ -76,6 +77,43 @@ const chartContainerClassNames = cn(
   "[&_.recharts-reference-line_[stroke='#ccc']]:stroke-primary/25 dark:[&_.recharts-reference-line_[stroke='#ccc']]:stroke-primary/40",
 )
 
+const RESIZE_DEBOUNCE_MS = 150
+
+/**
+ * Recharts' `responsive` prop re-renders the whole chart on every
+ * ResizeObserver tick, which makes window resizing drop frames (especially in
+ * dev mode with DevTools attached). Returns the container width updated only
+ * after resizing has settled, so the chart re-renders once per resize instead
+ * of once per frame. The first measurement is applied immediately to avoid a
+ * blank chart on mount.
+ */
+function useDebouncedElementWidth(ref: React.RefObject<HTMLDivElement | null>) {
+  const [width, setWidth] = React.useState<number | undefined>(undefined)
+  const timeout = React.useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined,
+  )
+  const hasMeasured = React.useRef(false)
+
+  useResizeObserver({
+    ref,
+    onResize: (size) => {
+      if (size.width === undefined) return
+      const newWidth = size.width
+      if (!hasMeasured.current) {
+        hasMeasured.current = true
+        setWidth(newWidth)
+        return
+      }
+      clearTimeout(timeout.current)
+      timeout.current = setTimeout(() => setWidth(newWidth), RESIZE_DEBOUNCE_MS)
+    },
+  })
+
+  React.useEffect(() => () => clearTimeout(timeout.current), [])
+
+  return width
+}
+
 export interface ChartProject {
   id: ProjectId
   name: string
@@ -112,6 +150,7 @@ function ChartContainer<T extends { timestamp: number }>({
 }) {
   const ref = React.useRef<HTMLDivElement>(null)
   const isClient = useIsClient()
+  const debouncedWidth = useDebouncedElementWidth(ref)
 
   const hasData = data && data.length > 1
 
@@ -121,22 +160,28 @@ function ChartContainer<T extends { timestamp: number }>({
   const { hasFinishedOnboardingInitial } = useChartLegendOnboarding()
   return (
     <ChartContext.Provider value={{ meta, interactiveLegend }}>
-      <div ref={ref} className="group relative">
-        <Slot
-          className={cn(
-            chartContainerClassNames,
-            size === 'regular' &&
-              'h-[188px] min-h-[188px] w-full group-data-project-page/section-wrapper:max-md:h-[50vh] group-data-project-page/section-wrapper:max-md:min-h-[50vh] md:h-[228px] md:min-h-[228px] group-data-project-page/section-wrapper:md:h-[300px] 2xl:h-[258px] 2xl:min-h-[258px]',
-            size === 'small' && 'h-[114px] min-h-[114px] w-full',
-            noDataSourcesSelected && [
-              '[&_.recharts-tooltip-cursor]:hidden [&_.recharts-tooltip-wrapper]:hidden',
-              '[&_.recharts-reference-area]:hidden',
-            ],
-            (isLoading || !hasData) && 'pointer-events-none',
-          )}
+      <div ref={ref} className="group relative overflow-x-clip">
+        <div
+          style={
+            debouncedWidth !== undefined ? { width: debouncedWidth } : undefined
+          }
         >
-          {children}
-        </Slot>
+          <Slot
+            className={cn(
+              chartContainerClassNames,
+              size === 'regular' &&
+                'h-[188px] min-h-[188px] w-full group-data-project-page/section-wrapper:max-md:h-[50vh] group-data-project-page/section-wrapper:max-md:min-h-[50vh] md:h-[228px] md:min-h-[228px] group-data-project-page/section-wrapper:md:h-[300px] 2xl:h-[258px] 2xl:min-h-[258px]',
+              size === 'small' && 'h-[114px] min-h-[114px] w-full',
+              noDataSourcesSelected && [
+                '[&_.recharts-tooltip-cursor]:hidden [&_.recharts-tooltip-wrapper]:hidden',
+                '[&_.recharts-reference-area]:hidden',
+              ],
+              (isLoading || !hasData) && 'pointer-events-none',
+            )}
+          >
+            {children}
+          </Slot>
+        </div>
         {(!!isLoading || !isClient) && (
           <ChartLoader
             className={cn(

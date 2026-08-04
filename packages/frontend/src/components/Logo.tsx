@@ -1,3 +1,5 @@
+import { useId } from 'react'
+import { usePrefersReducedMotion } from '~/hooks/usePrefersReducedMotion'
 import type { SvgIconProps } from '~/icons/SvgIcon'
 import { cn } from '~/utils/cn'
 
@@ -12,6 +14,9 @@ export function Logo({
   small = false,
   ...props
 }: LogoProps) {
+  const prefersReducedMotion = usePrefersReducedMotion()
+  // SMIL ids must be valid XML names; useId output contains punctuation.
+  const beatId = `logo-beat-${useId().replace(/[^a-zA-Z0-9]/g, '')}`
   return (
     <svg
       className={cn('-mt-0.5 overflow-visible', className)}
@@ -26,17 +31,23 @@ export function Logo({
       {/* The beat scales around the icon's bbox centre (18.71, 18). Using an SVG
           animateTransform rather than a CSS transform keeps the mark crisp: the
           vector is re-rendered each frame instead of being composited to a bitmap
-          and rescaled (which softens edges on non-retina displays). */}
+          and rescaled (which softens edges on non-retina displays).
+          The animation is a finite 1s beat that re-triggers itself 4s after it
+          ends (instead of one indefinite 5s loop that is 80% idle), because the
+          browser samples an *active* SMIL animation on every frame — this way
+          style recalc only runs during the beat itself. */}
       <g transform="translate(18.71 18)">
         <g>
-          {animated && (
+          {animated && !prefersReducedMotion && (
             <animateTransform
+              id={beatId}
               attributeName="transform"
               type="scale"
-              values="1;1;1.05;1;1.05;1"
-              keyTimes="0;0.8;0.85;0.9;0.95;1"
-              dur="5s"
-              repeatCount="indefinite"
+              values="1;1.05;1;1.05;1"
+              keyTimes="0;0.25;0.5;0.75;1"
+              dur="1s"
+              begin={`4s;${beatId}.end+4s`}
+              repeatCount="1"
             />
           )}
           <g transform="translate(-18.71 -18)">
