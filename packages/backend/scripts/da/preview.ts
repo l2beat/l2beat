@@ -239,6 +239,10 @@ function printSnapshotDiff(logger: Logger): SnapshotDiff {
   }
   if (diff.removed.length > 0) {
     logger.warn(daTrackingDomain.wipeWarning)
+    logger.warn(
+      "If this is a template project after an on-chain rotation, run 'pnpm da:history <project>' " +
+        'in packages/config to close the old era instead of losing it (see docs/da-tracking.md)',
+    )
   }
   logger.info(
     `Identity diff vs committed snapshot: ${diff.added.length} added, ${diff.removed.length} removed, ${diff.unchanged} unchanged`,

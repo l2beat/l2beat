@@ -1226,6 +1226,10 @@ export interface EthereumDaTrackingConfig {
   topics?: string[]
   sinceBlock: number
   untilBlock?: number
+  /** Breaks the id collision between two eras with identical identity
+   * fields (a value that rotated A -> B -> A). Part of the backend
+   * configuration id - see createDaTrackingId in @l2beat/shared. */
+  discriminator?: string
 }
 
 export interface CelestiaDaTrackingConfig {
@@ -1234,6 +1238,8 @@ export interface CelestiaDaTrackingConfig {
   namespace: string
   sinceBlock: number
   untilBlock?: number
+  /** See EthereumDaTrackingConfig.discriminator */
+  discriminator?: string
 }
 
 export interface AvailDaTrackingConfig {
@@ -1242,6 +1248,8 @@ export interface AvailDaTrackingConfig {
   appIds: string[]
   sinceBlock: number
   untilBlock?: number
+  /** See EthereumDaTrackingConfig.discriminator */
+  discriminator?: string
 }
 
 export interface EigenDaTrackingConfig {
@@ -1250,6 +1258,8 @@ export interface EigenDaTrackingConfig {
   customerId: string
   sinceTimestamp: UnixTime
   untilTimestamp?: UnixTime
+  /** See EthereumDaTrackingConfig.discriminator */
+  discriminator?: string
 }
 
 export interface ProjectEcosystemInfo {

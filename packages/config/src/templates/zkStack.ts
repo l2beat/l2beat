@@ -55,6 +55,7 @@ import type {
 } from '../types'
 import { readMarkdown } from '../utils/readMarkdown'
 import { getActivityConfig } from './activity'
+import { resolveDaTracking } from './daTrackingHistory'
 import { getDiscoveryInfo } from './getDiscoveryInfo'
 import { getSP1Verifiers } from './opStack'
 import { mergeBadges, mergePermissions } from './utils'
@@ -699,11 +700,19 @@ function technologyDA(DA: DAProvider | undefined): ProjectTechnologyChoice {
 function getDaTracking(
   templateVars: ZkStackConfigCommon,
 ): ProjectDaTrackingConfig[] | undefined {
-  // Return non-template tracking if it exists
-  if (templateVars.nonTemplateDaTracking) {
-    return templateVars.nonTemplateDaTracking
-  }
+  return resolveDaTracking(
+    templateVars.discovery.projectName,
+    templateVars.nonTemplateDaTracking,
+    () => deriveDaTracking(templateVars),
+  )
+}
 
+/** Derives the current DA era from discovery values - discovery holds only
+ * current chain state, so this can never know about past rotations. History
+ * lives in the project's daTracking.json (see resolveDaTracking). */
+function deriveDaTracking(
+  templateVars: ZkStackConfigCommon,
+): ProjectDaTrackingConfig[] | undefined {
   if (templateVars.usesEthereumBlobs) {
     const validatorTimelock = ChainSpecificAddress.address(
       templateVars.discovery.getContractDetails('ValidatorTimelock').address,

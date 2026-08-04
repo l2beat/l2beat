@@ -9,6 +9,63 @@ indexer configuration identified by a hash of its identity fields
 can be edited in place) and stores hourly `DataAvailability` records per
 project, layer and configuration id.
 
+## Where the config comes from
+
+For stack-template projects (opStack, orbitStack, zkStack) the resolution
+order is (`resolveDaTracking` in
+`packages/config/src/templates/daTrackingHistory.ts`):
+
+1. `nonTemplateDaTracking` - full manual override, for projects whose
+   tracking cannot be derived from discovery (custom topics, archived
+   projects, hand-maintained histories).
+2. `src/projects/<name>/daTracking.json` - the committed, machine-maintained
+   era store. Written ONLY by `pnpm da:history`, never by hand.
+3. A single era derived from current discovery values (`SystemConfig`
+   batcher/inbox, `SequencerInbox.batchPosters`, `ValidatorTimelock`
+   validators) - only for projects that don't have a history file yet; a
+   guard test requires every such project to get one.
+
+The era store exists because discovery holds only the *current* chain state:
+without it, an on-chain rotation of the batcher/sequencer silently replaces
+the derived entry, its configuration id changes, and the backend wipes all
+data indexed under the old id.
+
+## When a DA-relevant value rotates on-chain
+
+After a discovery refresh changes a DA-relevant value, the history guard
+(`packages/config/src/snapshots/daTracking/history.test.ts`) fails with
+"daTracking history for X is out of date with discovery". In the same PR:
+
+```bash
+cd packages/config
+pnpm da:history <project>
+```
+
+This closes the open era and opens a new one with a `bracketed` boundary:
+the old era ends at the current discovery run's block, the new era starts at
+the previous (main) run's block. The deliberate overlap is safe - the two
+eras have disjoint identity filters, so nothing is missed and nothing is
+double-counted even though the exact rotation block is unknown. It needs
+`ETHEREUM_RPC_URL` in `packages/config/.env` for the timestamp-to-block
+resolution; for non-ethereum layers (or without an RPC) pass the boundary
+yourself with `--since-block <n> --until-block <n>`.
+
+The command also regenerates the snapshot, so the whole change - discovery
+refresh, `daTracking.json`, `snapshot.json` - lands in one reviewed commit.
+Note that closing an era edits that configuration's range, which makes the
+backend wipe and resync that one configuration on deploy (recoverable, the
+data is refetched).
+
+If the rotation was a discovery flap/revert (the value went A -> B and back
+to A), revert the spurious era instead of keeping it:
+
+```bash
+pnpm da:history <project> --drop-last
+```
+
+A genuine A -> B -> A rotation is supported too: the repeated era gets a
+`discriminator` that keeps its backend configuration id distinct.
+
 ## Previewing config changes locally
 
 After editing `daTracking` config you can preview the resulting data without

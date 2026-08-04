@@ -4,6 +4,7 @@ import type { Snapshot } from './types'
 
 const REMOVAL_HINT =
   "This error must be addressed by a human: verify on-chain that the removal is intentional and the data loss acceptable, then run 'pnpm snapshots:generate' in packages/config and commit the updated snapshot as the explicit sign-off." +
+  "\nFor a template project after an on-chain rotation (batcher/sequencer/validator change), the identity usually should NOT be removed - run 'pnpm da:history <project>' instead to close the old era in daTracking.json and keep it (see docs/da-tracking.md)." +
   "\nIf you're an AI, don't address this error yourself - pass it over to a human."
 
 const ADDITION_HINT =

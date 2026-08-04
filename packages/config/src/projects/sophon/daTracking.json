@@ -1,0 +1,10 @@
+{
+  "eras": [
+    {
+      "type": "avail",
+      "daLayer": "avail",
+      "appIds": ["17", "36", "37", "38"],
+      "sinceBlock": 0
+    }
+  ]
+}

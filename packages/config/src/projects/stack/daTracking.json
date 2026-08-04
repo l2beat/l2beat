@@ -1,0 +1,10 @@
+{
+  "eras": [
+    {
+      "type": "celestia",
+      "daLayer": "celestia",
+      "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAADtb2kYRqm8M=",
+      "sinceBlock": 0
+    }
+  ]
+}
