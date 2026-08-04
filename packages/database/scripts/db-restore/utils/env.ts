@@ -6,7 +6,9 @@ export interface DbUrls {
 }
 
 export function loadDbUrls(): DbUrls {
-  dotenv()
+  // Override ambient variables so .env stays authoritative for which
+  // databases get truncated and restored, like `source .env` did
+  dotenv({ override: true })
   const localDbUrl = process.env.DEV_LOCAL_DB_URL
   const remoteDbUrl = process.env.DEV_REMOTE_DB_URL_READ_ONLY
   if (!localDbUrl || !remoteDbUrl) {
