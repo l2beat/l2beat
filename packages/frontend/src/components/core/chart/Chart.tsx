@@ -77,41 +77,55 @@ const chartContainerClassNames = cn(
   "[&_.recharts-reference-line_[stroke='#ccc']]:stroke-primary/25 dark:[&_.recharts-reference-line_[stroke='#ccc']]:stroke-primary/40",
 )
 
-const RESIZE_DEBOUNCE_MS = 150
+const RESIZE_SETTLE_MS = 150
 
 /**
  * Recharts' `responsive` prop re-renders the whole chart on every
  * ResizeObserver tick, which makes window resizing drop frames (especially in
- * dev mode with DevTools attached). Returns the container width updated only
- * after resizing has settled, so the chart re-renders once per resize instead
- * of once per frame. The first measurement is applied immediately to avoid a
- * blank chart on mount.
+ * dev mode with DevTools attached). While the container width is actively
+ * changing this returns the last settled width so the chart can be frozen at
+ * that size (silencing recharts' own ResizeObserver); once the size has
+ * settled it returns undefined again and the chart reflows once. Steady state
+ * is completely unaffected — no inline width is applied at all.
  */
-function useDebouncedElementWidth(ref: React.RefObject<HTMLDivElement | null>) {
-  const [width, setWidth] = React.useState<number | undefined>(undefined)
+function useFrozenWidthDuringResize(
+  ref: React.RefObject<HTMLDivElement | null>,
+) {
+  const [frozenWidth, setFrozenWidth] = React.useState<number | undefined>(
+    undefined,
+  )
+  const settledWidth = React.useRef<number | undefined>(undefined)
   const timeout = React.useRef<ReturnType<typeof setTimeout> | undefined>(
     undefined,
   )
-  const hasMeasured = React.useRef(false)
 
   useResizeObserver({
     ref,
-    onResize: (size) => {
-      if (size.width === undefined) return
-      const newWidth = size.width
-      if (!hasMeasured.current) {
-        hasMeasured.current = true
-        setWidth(newWidth)
+    onResize: ({ width }) => {
+      if (!width) return
+      const resizeInProgress = timeout.current !== undefined
+      if (
+        !resizeInProgress &&
+        (settledWidth.current === undefined || width === settledWidth.current)
+      ) {
+        settledWidth.current = width
         return
       }
+      if (settledWidth.current !== undefined) {
+        setFrozenWidth(settledWidth.current)
+      }
       clearTimeout(timeout.current)
-      timeout.current = setTimeout(() => setWidth(newWidth), RESIZE_DEBOUNCE_MS)
+      timeout.current = setTimeout(() => {
+        timeout.current = undefined
+        settledWidth.current = width
+        setFrozenWidth(undefined)
+      }, RESIZE_SETTLE_MS)
     },
   })
 
   React.useEffect(() => () => clearTimeout(timeout.current), [])
 
-  return width
+  return frozenWidth
 }
 
 export interface ChartProject {
@@ -150,7 +164,7 @@ function ChartContainer<T extends { timestamp: number }>({
 }) {
   const ref = React.useRef<HTMLDivElement>(null)
   const isClient = useIsClient()
-  const debouncedWidth = useDebouncedElementWidth(ref)
+  const frozenWidth = useFrozenWidthDuringResize(ref)
 
   const hasData = data && data.length > 1
 
@@ -162,9 +176,7 @@ function ChartContainer<T extends { timestamp: number }>({
     <ChartContext.Provider value={{ meta, interactiveLegend }}>
       <div ref={ref} className="group relative overflow-x-clip">
         <div
-          style={
-            debouncedWidth !== undefined ? { width: debouncedWidth } : undefined
-          }
+          style={frozenWidth !== undefined ? { width: frozenWidth } : undefined}
         >
           <Slot
             className={cn(
