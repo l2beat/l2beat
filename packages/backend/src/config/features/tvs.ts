@@ -32,19 +32,17 @@ export async function getTvsConfig(
 
   let projects = enabledProjects.map((p) => ({
     projectId: p.id,
-    tokens: p.tvsConfig,
+    // Temporary filter for Marlin token
+    // Coingecko started returning wrong response just for this token
+    // which results in halting all TVS sync. We should investigate this issue and remove this filter once it's fixed.
+    tokens: p.tvsConfig.filter((t) => t.priceId !== 'marlin'),
   }))
 
   // sinceTimestamp override for local development
   if (sinceTimestamp) {
     projects = projects.map((p) => ({
       projectId: p.projectId,
-      // Temporary filter for Marlin token
-      // Coingecko started returning wrong response just for this token
-      // which results in halting all TVS sync. We should investigate this issue and remove this filter once it's fixed.
-      tokens: getEffectiveConfig(p.tokens, sinceTimestamp).filter(
-        (p) => p.priceId !== 'marlin',
-      ),
+      tokens: getEffectiveConfig(p.tokens, sinceTimestamp),
     }))
   }
 
