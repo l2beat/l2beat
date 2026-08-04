@@ -251,10 +251,9 @@ export const optimism: ScalingProject = opStackL2({
           orderHint: flashblockIntervalMilliseconds / 1_000,
         },
         trustedOrdering: {
-          value: 'Priority gas auction',
-          secondLine: 'Higher priority fees first',
-          description:
-            "The centralized sequencer prioritizes transactions that pay higher priority fees. The policy is not enforced by the derivation rules, and Flashblocks only expose the builder's ordering decisions earlier.",
+          value: 'Dynamic priority auction',
+          secondLine: 'Fee order per Flashblock',
+          description: `For each ${flashblockIntervalMilliseconds} ms build loop, the centralized builder selects available transactions by priority fee. Transactions committed to an earlier Flashblock are not reordered when a higher-fee transaction arrives later, so arrival time also affects ordering. This policy is not enforced by the derivation rules.`,
         },
         sequencer: {
           value: 'Centralized',
