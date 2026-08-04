@@ -12,7 +12,7 @@ import type { StateValidationSectionProps } from './StateValidationSection'
 export function ProverInfo({
   proverInfo,
 }: {
-  proverInfo: NonNullable<StateValidationSectionProps['proverInfo']>
+  proverInfo: NonNullable<StateValidationSectionProps['proverInfos']>[number]
 }) {
   return (
     <div className="mt-6 grid grid-cols-1 gap-2 rounded-lg border border-divider p-6 [@media(min-width:1000px)]:grid-cols-[180px_1fr] [@media(min-width:1200px)]:grid-cols-1 [@media(min-width:1360px)]:grid-cols-[180px_1fr]">

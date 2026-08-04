@@ -6,36 +6,41 @@ import { getTrustedSetupsWithVerifiersAndAttesters } from '~/server/features/zk-
 import { manifest } from '~/utils/Manifest'
 import type { ContractUtils } from '../../contracts-and-permissions/getContractUtils'
 import type { ProjectWithPageMetadata } from '../../getProjectUrl'
+import { getZkCatalogIds } from '../../getZkCatalogIds'
 
-export function getProverInfo(
+export function getProverInfos(
   project: Project<'scalingInfo', 'contracts'>,
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
   contractUtils: ContractUtils,
   tvs: SevenDayTvsBreakdown,
   allProjects: ProjectWithPageMetadata[],
-): StateValidationSectionProps['proverInfo'] {
-  const zkCatalogProject = zkCatalogProjects.find(
-    (x) => x.id === project.scalingInfo.proofSystem?.zkCatalogId,
-  )
-  if (!zkCatalogProject) return undefined
+): StateValidationSectionProps['proverInfos'] {
+  return getZkCatalogIds(project.scalingInfo.proofSystem).flatMap(
+    (zkCatalogId) => {
+      const zkCatalogProject = zkCatalogProjects.find(
+        (project) => project.id === zkCatalogId,
+      )
+      if (!zkCatalogProject) return []
 
-  const trustedSetups = getTrustedSetupsWithVerifiersAndAttesters(
-    zkCatalogProject,
-    contractUtils,
-    tvs,
-    allProjects,
-    {
-      id: project.id,
-      contracts: project.contracts,
+      const trustedSetups = getTrustedSetupsWithVerifiersAndAttesters(
+        zkCatalogProject,
+        contractUtils,
+        tvs,
+        allProjects,
+        {
+          id: project.id,
+          contracts: project.contracts,
+        },
+      )
+      if (isEmpty(trustedSetups)) return []
+
+      return {
+        name: zkCatalogProject.name,
+        icon: manifest.getUrl(`/icons/${zkCatalogProject.slug}.png`),
+        href: `/zk-catalog/${zkCatalogProject.slug}`,
+        quantumResistant: zkCatalogProject.zkCatalogInfo.quantumResistant,
+        trustedSetups,
+      }
     },
   )
-  if (isEmpty(trustedSetups)) return undefined
-
-  return {
-    name: zkCatalogProject.name,
-    icon: manifest.getUrl(`/icons/${zkCatalogProject.slug}.png`),
-    href: `/zk-catalog/${zkCatalogProject.slug}`,
-    quantumResistant: zkCatalogProject.zkCatalogInfo.quantumResistant,
-    trustedSetups,
-  }
 }

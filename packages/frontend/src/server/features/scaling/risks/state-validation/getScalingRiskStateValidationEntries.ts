@@ -27,6 +27,7 @@ import {
   getContractUtils,
 } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import type { ProjectWithPageMetadata } from '~/utils/project/getProjectUrl'
+import { getZkCatalogIds } from '~/utils/project/getZkCatalogIds'
 import {
   type CommonScalingEntry,
   getCommonScalingEntry,
@@ -143,21 +144,40 @@ function getScalingRiskStateValidationValidityEntry(
   const proofSystem = project.scalingInfo?.proofSystem
   assert(proofSystem, 'Proof system is required')
 
-  const zkCatalogProject = zkCatalogProjects.find(
-    (p) => p.id === proofSystem.zkCatalogId,
+  const usedZkCatalogProjects = getZkCatalogIds(proofSystem).map(
+    (zkCatalogId) => {
+      const zkCatalogProject = zkCatalogProjects.find(
+        (p) => p.id === zkCatalogId,
+      )
+      assert(
+        zkCatalogProject,
+        `zkCatalogProject not found: ${zkCatalogId} (used by ${project.id})`,
+      )
+      return zkCatalogProject
+    },
   )
-  assert(zkCatalogProject, `zkCatalogProject not found: ${project.id}`)
 
-  const isa = zkCatalogProject.zkCatalogInfo.techStack.zkVM?.find(
-    (tag) => tag.type === 'ISA',
+  const isas = uniq(
+    usedZkCatalogProjects.flatMap(
+      (zkCatalogProject) =>
+        zkCatalogProject.zkCatalogInfo.techStack.zkVM
+          ?.filter((tag) => tag.type === 'ISA')
+          .map((tag) => tag.name) ?? [],
+    ),
   )
 
-  const trustedSetupsByProofSystem = getTrustedSetupsWithVerifiersAndAttesters(
-    zkCatalogProject,
-    contractUtils,
-    tvs,
-    allProjects,
-    { id: project.id, contracts: project.contracts },
+  const trustedSetupsByProofSystem = Object.fromEntries(
+    usedZkCatalogProjects.flatMap((zkCatalogProject) =>
+      Object.entries(
+        getTrustedSetupsWithVerifiersAndAttesters(
+          zkCatalogProject,
+          contractUtils,
+          tvs,
+          allProjects,
+          { id: project.id, contracts: project.contracts },
+        ),
+      ).map(([key, value]) => [`${zkCatalogProject.id}-${key}`, value]),
+    ),
   )
 
   const projectTvs = tvs.projects[project.id.toString()]
@@ -166,9 +186,11 @@ function getScalingRiskStateValidationValidityEntry(
     tvsOrder: projectTvs?.breakdown?.total ?? -1,
     proofSystem: {
       ...proofSystem,
-      name: proofSystem.name ?? zkCatalogProject?.name,
+      name:
+        proofSystem.name ??
+        usedZkCatalogProjects.map((project) => project.name).join(' / '),
     },
-    isa: isa?.name,
+    isa: isas.join(' / ') || undefined,
     trustedSetupsByProofSystem,
     executionDelay: project.scalingRisks.self.stateValidation?.executionDelay,
     executionDelayMode:
