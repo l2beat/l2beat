@@ -373,7 +373,7 @@ export const base: ScalingProject = opStackL2({
           value: formatSeconds(worstCaseExitDelaySeconds, {
             fullUnit: true,
           }),
-          secondLine: `${formatSeconds(sequencingWindowSeconds)} inclusion + ${formatSeconds(aggregateVerifierCheckpointIntervalSeconds)} proposal + ${formatSeconds(stateFinalizationDelaySeconds)} exit`,
+          secondLine: `${formatSeconds(sequencingWindowSeconds)} inclusion + ${formatSeconds(aggregateVerifierCheckpointIntervalSeconds)} + ${formatSeconds(stateFinalizationDelaySeconds)} state`,
           description: `After successful L2 inclusion (forced or sequencer), a permissionless ZK proof is needed to finalize the state and exit on L1. Without the centralized TEE proof, the game waits ${formatSeconds(aggregateVerifierSlowFinalizationDelaySeconds, { fullUnit: true })}, followed by the currently ${formatSeconds(disputeGameFinalityDelaySeconds, { fullUnit: true })} finality air gap. The ${formatSeconds(proofMaturityDelaySeconds, { fullUnit: true })} withdrawal-proof maturity period runs concurrently.`,
           orderHint: worstCaseExitDelaySeconds,
         },

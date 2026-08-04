@@ -297,7 +297,7 @@ export const optimism: ScalingProject = opStackL2({
           value: formatSeconds(faultDisputeGameWorstCaseExitDelaySeconds, {
             fullUnit: true,
           }),
-          secondLine: `${formatSeconds(sequencingWindowSeconds)} inclusion + ${formatSeconds(faultDisputeGameStateFinalizationDelaySeconds)} exit`,
+          secondLine: `${formatSeconds(sequencingWindowSeconds)} inclusion + ${formatSeconds(faultDisputeGameStateFinalizationDelaySeconds)} state`,
           description: `After successful L2 inclusion (forced or sequencer), the user can propose the state needed to exit by creating a permissionless fault dispute game. A maximally delayed challenge path can take up to ${formatSeconds(faultDisputeGameMaxDuration, { fullUnit: true })}: both teams' ${formatSeconds(maxClockDuration, { fullUnit: true })} chess clocks plus up to ${formatSeconds(faultDisputeGameMaxClockExtension, { fullUnit: true })} of cumulative clock extensions. This is followed by the ${formatSeconds(disputeGameFinalityDelaySeconds, { fullUnit: true })} finality air gap. Parallel branches increase the transactions and gas needed to defend and resolve the game. The ${formatSeconds(proofMaturityDelaySeconds, { fullUnit: true })} withdrawal-proof maturity period runs concurrently.`,
           orderHint: faultDisputeGameWorstCaseExitDelaySeconds,
         },
