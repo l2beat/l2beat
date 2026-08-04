@@ -7,10 +7,7 @@ import type {
   Analysis,
 } from '../analysis/AddressAnalyzer'
 import type { StructureConfig } from '../config/StructureConfig'
-import {
-  buildSharedModuleIndex,
-  makeEntryStructureConfig,
-} from '../config/structureUtils'
+import { makeEntryStructureConfig } from '../config/structureUtils'
 import type { AllProviders } from '../provider/AllProviders'
 import {
   type DiscoveryCounter,
@@ -37,7 +34,6 @@ export class DiscoveryEngine {
     timestamp: UnixTime,
     counter: DiscoveryCounter = new SimpleDiscoveryCounter(),
   ): Promise<{ analyses: Analysis[]; stats: AddressStats }> {
-    const sharedModuleIndex = buildSharedModuleIndex(config)
     const resolved: Record<string, Analysis> = {}
     let toAnalyze: AddressesWithTemplates = {}
     let depth = 0
@@ -95,17 +91,6 @@ export class DiscoveryEngine {
 
       await Promise.all(
         leftToAnalyze.map(async ({ address, templates }) => {
-          const sharedItem = sharedModuleIndex[address]
-          if (sharedItem) {
-            resolved[address.toString()] = {
-              name: sharedItem.name,
-              type: 'Reference',
-              address: sharedItem.address,
-              targetType: sharedItem.type,
-              targetProject: sharedItem.project,
-            }
-            return
-          }
           if (config.entrypoints?.[address] !== undefined) {
             const entrypoint = config.entrypoints[address]
             if (entrypoint.project !== config.name) {
@@ -122,7 +107,6 @@ export class DiscoveryEngine {
           const skipReason = shouldSkip(
             address,
             config,
-            sharedModuleIndex,
             depth,
             counter.getCount(),
           )

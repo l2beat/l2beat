@@ -18,7 +18,6 @@ export interface StructureOutput {
   entries: StructureEntry[]
   abis: Record<string, string[]>
   configHash: Hash256
-  sharedModules?: string[]
   usedTemplates: Record<string, Hash256>
   usedBlockNumbers: Record<string, number>
 }
@@ -30,7 +29,6 @@ export interface DiscoveryOutput {
   entries: EntryParameters[]
   abis: Record<string, string[]>
   configHash: Hash256
-  sharedModules?: string[]
   usedTemplates: Record<string, Hash256>
   usedBlockNumbers: Record<string, number>
   permissionsConfigHash?: Hash256

@@ -53,7 +53,7 @@ export const hemi: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.hemi.network/rpc',
-        callsPerMinute: 1000,
+        callsPerMinute: 300,
       },
       {
         type: 'blockscoutV2',

@@ -1,9 +1,7 @@
-import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
-import type { ConfigReader } from '../config/ConfigReader'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import { expect } from 'earl'
 import { ConfigRegistry } from '../config/ConfigRegistry'
 import { StructureContract } from '../config/StructureConfig'
-import { buildSharedModuleIndex } from '../config/structureUtils'
 import { shouldSkip } from './shouldSkip'
 
 describe(shouldSkip.name, () => {
@@ -19,44 +17,7 @@ describe(shouldSkip.name, () => {
         }),
       },
     })
-    const index = buildSharedModuleIndex(config.structure)
-    const result = shouldSkip(address, config.structure, index, 0, 1)
-    expect(result).not.toEqual(undefined)
-  })
-
-  it('skips addresses from a shared module', () => {
-    const address = ChainSpecificAddress.random()
-    const configReader = mockObject<ConfigReader>({
-      readDiscovery: () => ({
-        name: 'SharedFoo',
-        chain: 'ethereum',
-        timestamp: 1234,
-        entries: [
-          {
-            type: 'Contract',
-            name: 'Foo',
-            address: address,
-            upgradeability: { type: 'immutable' },
-          },
-        ],
-        abis: {},
-        fieldMeta: {},
-        configHash: Hash256.random(),
-        version: 123,
-        usedTemplates: {},
-        usedBlockNumbers: {},
-        shapeFilesHash: Hash256.random(),
-      }),
-    })
-
-    const config = new ConfigRegistry({
-      name: 'Test',
-      chain: 'ethereum',
-      initialAddresses: [],
-      sharedModules: ['SharedFoo'],
-    })
-    const index = buildSharedModuleIndex(config.structure, configReader)
-    const result = shouldSkip(address, config.structure, index, 0, 1)
+    const result = shouldSkip(address, config.structure, 0, 1)
     expect(result).not.toEqual(undefined)
   })
 
@@ -68,8 +29,7 @@ describe(shouldSkip.name, () => {
       initialAddresses: [],
       maxDepth: 1,
     })
-    const index = buildSharedModuleIndex(config.structure)
-    const result = shouldSkip(address, config.structure, index, 2, 1)
+    const result = shouldSkip(address, config.structure, 2, 1)
     expect(result).not.toEqual(undefined)
   })
 
@@ -81,8 +41,7 @@ describe(shouldSkip.name, () => {
       initialAddresses: [],
       maxAddresses: 1,
     })
-    const index = buildSharedModuleIndex(config.structure)
-    const result = shouldSkip(address, config.structure, index, 0, 2)
+    const result = shouldSkip(address, config.structure, 0, 2)
     expect(result).not.toEqual(undefined)
   })
 
@@ -93,8 +52,7 @@ describe(shouldSkip.name, () => {
       chain: 'ethereum',
       initialAddresses: [],
     })
-    const index = buildSharedModuleIndex(config.structure)
-    const result = shouldSkip(address, config.structure, index, 0, 1)
+    const result = shouldSkip(address, config.structure, 0, 1)
     expect(result).toEqual(undefined)
   })
 })
