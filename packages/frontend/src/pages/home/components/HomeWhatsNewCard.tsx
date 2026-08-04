@@ -32,7 +32,7 @@ export function HomeWhatsNewCard({
       <HomeCard
         className={cn(
           'flex flex-col gap-3 overflow-hidden p-0 xl:gap-0 xl:p-0',
-          '[[data-whats-new-dismissed]_&]:max-lg:hidden',
+          '[[data-whats-new-dismissed]_&]:max-xl:hidden',
           className,
         )}
       >
@@ -88,7 +88,7 @@ function WhatsNewItemCard({ item }: { item: HomeWhatsNewItem }) {
             />
           </picture>
         </div>
-        <div className="absolute inset-x-0 bottom-0 flex min-w-0 flex-col gap-0.5 bg-linear-to-t from-black/85 via-black/60 to-transparent p-2.5 pt-8 md:static md:flex-1 md:justify-center md:gap-1 md:bg-none md:p-3 md:pr-8 lg:pr-3 xl:absolute xl:inset-x-0 xl:bottom-0 xl:bg-linear-to-t xl:p-4 xl:pt-12">
+        <div className="absolute inset-x-0 bottom-0 flex min-w-0 flex-col gap-0.5 bg-linear-to-t from-black/85 via-black/60 to-transparent p-2.5 pt-8 md:static md:flex-1 md:justify-center md:gap-1 md:bg-none md:p-3 md:pr-8 xl:absolute xl:inset-x-0 xl:bottom-0 xl:bg-linear-to-t xl:p-4 xl:pt-12 xl:pr-4">
           <span
             aria-hidden
             className="font-bold text-white/70 text-xs uppercase tracking-wide md:hidden xl:block"
@@ -113,7 +113,7 @@ function WhatsNewItemCard({ item }: { item: HomeWhatsNewItem }) {
         type="button"
         aria-label="Dismiss"
         onClick={dismiss}
-        className="absolute top-2 right-2 z-10 flex size-6 cursor-pointer items-center justify-center rounded-full bg-black/40 transition-colors hover:bg-black/60 md:bg-transparent md:hover:bg-surface-tertiary lg:hidden"
+        className="absolute top-2 right-2 z-10 flex size-6 cursor-pointer items-center justify-center rounded-full bg-black/40 transition-colors hover:bg-black/60 md:bg-transparent md:hover:bg-surface-tertiary xl:hidden"
       >
         <CloseIcon className="size-[10px] fill-white md:fill-secondary" />
       </button>
