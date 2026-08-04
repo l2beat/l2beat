@@ -76,31 +76,16 @@ function SidebarProvider({
 function Sidebar({
   className,
   children,
-  forceSheet = false,
   ...props
-}: React.ComponentProps<'div'> & {
-  /**
-   * Always render as an overlay sheet, even on desktop. Used on pages
-   * without a persistent side nav (e.g. home).
-   */
-  forceSheet?: boolean
-}) {
+}: React.ComponentProps<'div'>) {
   const breakpoint = useBreakpoint()
   const { openMobile, setOpenMobile } = useSidebar()
 
-  if (
-    forceSheet ||
-    breakpoint === 'xs' ||
-    breakpoint === 'sm' ||
-    breakpoint === 'md'
-  ) {
+  if (breakpoint === 'xs' || breakpoint === 'sm' || breakpoint === 'md') {
     return (
       <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
         <SheetContent
-          className={cn(
-            'z-999 w-(--sidebar-width) border-none bg-background p-0 text-primary [&>button]:hidden',
-            forceSheet && 'lg:max-w-90',
-          )}
+          className="z-999 w-(--sidebar-width) border-none bg-background p-0 text-primary [&>button]:hidden"
           style={
             {
               '--sidebar-width': SIDEBAR_WIDTH_MOBILE,

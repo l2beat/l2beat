@@ -96,7 +96,7 @@ export function FlowsGeneralStats({
       <div className={cn('space-y-2', (!!title || !!description) && 'mt-1.5')}>
         {/* Sized by the panel itself (container query) so it works both as
             a full-width strip (summary below lg) and a narrow side column */}
-        <div className="grid grid-cols-1 gap-2 @min-[400px]:grid-cols-3">
+        <div className="grid @min-[400px]:grid-cols-3 grid-cols-1 gap-2">
           <Card
             title="Volume"
             value={formatCurrency(data?.stats.totalVolume ?? 0, 'usd')}

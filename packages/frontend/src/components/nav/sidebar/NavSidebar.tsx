@@ -33,15 +33,14 @@ interface Props {
   groups: NavGroup[]
   logoLink: string
   sideLinks: NavLink[]
-  forceSheet?: boolean
 }
 
-export function NavSidebar({ groups, logoLink, sideLinks, forceSheet }: Props) {
+export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
   const pathname = usePathname()
   const { setOpenMobile } = useSidebar()
   const closeMobileSidebar = () => setOpenMobile(false)
   return (
-    <Sidebar forceSheet={forceSheet}>
+    <Sidebar>
       <SidebarHeader>
         <div className="flex h-[38px] flex-row items-center justify-between">
           <a href={logoLink} onClick={closeMobileSidebar}>
@@ -49,7 +48,7 @@ export function NavSidebar({ groups, logoLink, sideLinks, forceSheet }: Props) {
           </a>
           <div className="flex flex-row items-center gap-4">
             <DarkThemeToggle />
-            <div className={cn('size-6', !forceSheet && 'lg:hidden')}>
+            <div className="size-6 lg:hidden">
               <MobileNavTriggerClose />
             </div>
           </div>

@@ -73,7 +73,7 @@ export function HomeStatsStrip({ counts }: { counts: HomeProjectCounts }) {
 
   return (
     <HomeCard>
-      <ul className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-1 lg:gap-0 lg:divide-y lg:divide-divider">
+      <ul className="grid grid-cols-2 gap-2 md:grid-cols-3 xl:grid-cols-1 xl:gap-0 xl:divide-y xl:divide-divider">
         {tiles.map((tile) => (
           <li key={tile.label}>
             <StatTile tile={tile} />
@@ -91,22 +91,22 @@ function StatTile({ tile }: { tile: Tile }) {
       className={cn(
         'group flex h-full items-center gap-2.5 rounded-lg border border-divider px-2.5 py-2',
         'transition-colors duration-200 hover:border-link-stroke',
-        'lg:-mx-3 lg:gap-2 lg:rounded-md lg:border-0 lg:px-3 lg:py-2 lg:hover:border-transparent',
+        'xl:-mx-3 xl:gap-2 xl:rounded-md xl:border-0 xl:px-3 xl:py-2 xl:hover:border-transparent',
       )}
     >
       <div
         className={cn(
-          'flex size-6 shrink-0 items-center justify-center rounded-md transition-transform duration-200 group-hover:scale-110 lg:size-7 lg:rounded [&>svg]:lg:size-4',
+          'flex size-6 shrink-0 items-center justify-center rounded-md transition-transform duration-200 group-hover:scale-110 xl:size-7 xl:rounded [&>svg]:xl:size-4',
           tile.iconBgClassName,
         )}
       >
         {tile.icon}
       </div>
-      <div className="flex min-w-0 flex-1 flex-col justify-center lg:flex-row lg:items-baseline lg:gap-2 xl:gap-3">
-        <span className="truncate font-medium text-label-value-12 text-secondary leading-tight transition-colors group-hover:text-link lg:flex-1 lg:text-label-value-14 lg:text-primary lg:group-hover:text-link">
+      <div className="flex min-w-0 flex-1 flex-col justify-center xl:flex-row xl:items-baseline xl:gap-2 2xl:gap-3">
+        <span className="truncate font-medium text-label-value-12 text-secondary leading-tight transition-colors group-hover:text-link xl:flex-1 xl:text-label-value-14 xl:text-primary xl:group-hover:text-link">
           {tile.label}
         </span>
-        <span className="flex flex-wrap items-baseline gap-x-1 font-bold text-label-value-16 leading-tight lg:text-label-value-14">
+        <span className="flex flex-wrap items-baseline gap-x-1 font-bold text-label-value-16 leading-tight xl:text-label-value-14">
           <TileMetricValue
             metric={tile.metric}
             className={tile.secondaryMetric ? 'hidden sm:inline' : undefined}

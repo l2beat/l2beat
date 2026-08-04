@@ -69,7 +69,7 @@ export function HomeScalingCard({ charts, scalingCategoryCounts }: Props) {
   )
 
   return (
-    <HomeCard className="flex h-full flex-col pb-4 lg:py-4">
+    <HomeCard className="flex h-full flex-col pb-4 xl:py-4">
       <div className="flex flex-col gap-2.5">
         <HomeCardHeader title="Layer 2s" href="/scaling/summary" />
         <CountsLine counts={scalingCategoryCounts} />
