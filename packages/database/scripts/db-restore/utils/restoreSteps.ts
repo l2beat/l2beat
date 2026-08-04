@@ -1,64 +1,9 @@
 import { execFileSync } from 'child_process'
-import { config as dotenv } from 'dotenv'
 import fs from 'fs'
+import type { DbUrls } from './env'
+import { psqlExec, psqlQuery, quoteIdent, quoteLiteral } from './psql'
 
 const DUMP_FILE = './db.pgdump'
-
-export interface DbUrls {
-  localDbUrl: string
-  remoteDbUrl: string
-}
-
-export function loadDbUrls(): DbUrls {
-  dotenv()
-  const localDbUrl = process.env.DEV_LOCAL_DB_URL
-  const remoteDbUrl = process.env.DEV_REMOTE_DB_URL_READ_ONLY
-  if (!localDbUrl || !remoteDbUrl) {
-    console.error(
-      'Error: DEV_LOCAL_DB_URL and DEV_REMOTE_DB_URL_READ_ONLY must be set in .env',
-    )
-    process.exit(1)
-  }
-  return { localDbUrl, remoteDbUrl }
-}
-
-export function quoteIdent(name: string): string {
-  return `"${name.replaceAll('"', '""')}"`
-}
-
-export function quoteLiteral(value: string): string {
-  return `'${value.replaceAll("'", "''")}'`
-}
-
-// Runs a query and returns the result rows, one line per row
-function psqlQuery(dbUrl: string, sql: string): string[] {
-  const output = execFileSync('psql', [dbUrl, '-tAc', sql], {
-    encoding: 'utf-8',
-    stdio: ['ignore', 'pipe', 'inherit'],
-  })
-  return output.split('\n').filter((line) => line !== '')
-}
-
-function psqlExec(dbUrl: string, sql: string): void {
-  execFileSync('psql', [dbUrl, '-c', sql], { stdio: 'inherit' })
-}
-
-function psqlSucceeds(dbUrl: string, sql: string): boolean {
-  try {
-    execFileSync('psql', [dbUrl, '-tAc', sql], { stdio: 'ignore' })
-    return true
-  } catch {
-    return false
-  }
-}
-
-export function canConnect(dbUrl: string): boolean {
-  return psqlSucceeds(dbUrl, 'SELECT 1')
-}
-
-export function isValidTimestamp(dbUrl: string, value: string): boolean {
-  return psqlSucceeds(dbUrl, `SELECT ${quoteLiteral(value)}::timestamp`)
-}
 
 export function clearTables(localDbUrl: string, tables: string[]): void {
   console.log(`Clearing local tables: ${tables.join(' ')}`)
@@ -181,24 +126,5 @@ export function syncSequences(localDbUrl: string, table: string): void {
        FROM (SELECT MAX(${quoteIdent(column)})::bigint AS max_val FROM ${quoteIdent(table)}) m
        WHERE max_val > 0`,
     )
-  }
-}
-
-export function runScript(main: () => void): void {
-  try {
-    main()
-  } catch (error) {
-    if (error instanceof Error && 'code' in error && error.code === 'ENOENT') {
-      console.error(
-        'Error: a required tool was not found. Make sure psql, pg_dump and pg_restore are on your PATH.',
-      )
-    } else if (error instanceof Error && !('status' in error)) {
-      // Only echo messages from our own throws — child-process failures
-      // ('status' present) already printed their error via inherited stderr,
-      // and their message embeds the full command line including the DB URL
-      console.error(error.message)
-    }
-    console.error('❌ Restore failed.')
-    process.exit(1)
   }
 }

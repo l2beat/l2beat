@@ -1,16 +1,15 @@
+import { loadDbUrls } from './utils/env'
+import { canConnect, isValidTimestamp } from './utils/psql'
 import {
-  canConnect,
   clearTables,
   copyTablesSince,
   dumpTables,
   getTimestampedTables,
-  isValidTimestamp,
-  loadDbUrls,
   migrateDb,
   removeDump,
   restoreTables,
-  runScript,
-} from './common'
+} from './utils/restoreSteps'
+import { runScript } from './utils/runScript'
 
 const FEATURES: Record<string, string[]> = {
   da: [

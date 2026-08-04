@@ -1,12 +1,12 @@
+import { loadDbUrls } from './utils/env'
 import {
   clearTables,
   dumpTables,
-  loadDbUrls,
   migrateDb,
   removeDump,
   restoreTables,
-  runScript,
-} from './common'
+} from './utils/restoreSteps'
+import { runScript } from './utils/runScript'
 
 function main() {
   const tables = process.argv.slice(2)
