@@ -87,11 +87,13 @@ export function FlowsGeneralStats({
         className,
       )}
     >
-      <div className="font-bold text-heading-20">{title}</div>
-      <div className="mt-1 font-medium text-label-value-14 text-secondary">
-        {description}
-      </div>
-      <div className="mt-1.5 space-y-2">
+      {!!title && <div className="font-bold text-heading-20">{title}</div>}
+      {!!description && (
+        <div className="mt-1 font-medium text-label-value-14 text-secondary">
+          {description}
+        </div>
+      )}
+      <div className={cn('space-y-2', (!!title || !!description) && 'mt-1.5')}>
         <div className="grid grid-cols-1 gap-2 md:max-lg:grid-cols-3">
           <Card
             title="Volume"

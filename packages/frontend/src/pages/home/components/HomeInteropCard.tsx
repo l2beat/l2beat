@@ -173,7 +173,11 @@ function HomeInteropCardContent({
           <StatTile
             title="Top chain path"
             isLoading={statsLoading}
-            href={srcChain && dstChain ? '/interop/summary' : undefined}
+            href={
+              srcChain && dstChain
+                ? '/interop/summary?from=' + srcChain.id + '&to=' + dstChain.id
+                : undefined
+            }
             primary={
               srcChain && dstChain ? (
                 <div className="flex items-center gap-1.5">
