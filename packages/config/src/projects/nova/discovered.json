@@ -1,7 +1,7 @@
 {
   "name": "nova",
   "timestamp": 1785506691,
-  "configHash": "0x80a48877decbf9302917955c86276a3e275519ff508343d7233cbe847f71163b",
+  "configHash": "0xb587b25d667b9408840755ada76858cd1cbb1a66b935f11c1e0bdcd5357abc5b",
   "entries": [
     {
       "name": "ArbFilteredTransactionsManager",
@@ -14,7 +14,13 @@
         "filteredTransactionsAdded": 0,
         "filteredTransactionsDeleted": 0,
         "transactionFilterers": "EXPECT_REVERT"
-      }
+      },
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://github.com/OffchainLabs/nitro/blob/v3.11.0/precompiles/ArbFilteredTransactionsManager.go"
+        }
+      ]
     },
     {
       "name": "bartek.eth-L2BEAT",

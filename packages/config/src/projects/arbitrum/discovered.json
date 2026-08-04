@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "timestamp": 1785506585,
-  "configHash": "0x595611041aa6411c64434e7f69c5902e7b6a438448aae9b35272ec5c337aca66",
+  "configHash": "0xf65f7cb5e27064d51eceab69eb8038092a980068b2ac5735fb7cc5723d5e3b34",
   "entries": [
     {
       "address": "arb1:0x0000000000000000000000000000000000000001",
@@ -19,7 +19,13 @@
         "filteredTransactionsAdded": 0,
         "filteredTransactionsDeleted": 0,
         "transactionFilterers": "EXPECT_REVERT"
-      }
+      },
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://github.com/OffchainLabs/nitro/blob/v3.11.0/precompiles/ArbFilteredTransactionsManager.go"
+        }
+      ]
     },
     {
       "address": "arb1:0x00000000000000000000000000000000000A4B86",

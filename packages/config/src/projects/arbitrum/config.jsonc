@@ -89,6 +89,17 @@
         }
       }
     },
+    "arb1:0x0000000000000000000000000000000000000074": {
+      // The precompile is a 0xfe stub once ArbOS 61 activates (no code before
+      // then), so discovery cannot fetch its source and would flag it unverified.
+      // Point at the Nitro implementation. This is a manual label, NOT an
+      // integrity check: divergence of the actual precompile logic is caught by
+      // the RollupProxy wasmModuleRoot (One/Nova activate the reproduced v61 root
+      // 0xc10cd7ec..., identical to Robinhood), not by this source hash.
+      "manualSourcePaths": {
+        "arb1:0x0000000000000000000000000000000000000074": "https://github.com/OffchainLabs/nitro/blob/v3.11.0/precompiles/ArbFilteredTransactionsManager.go"
+      }
+    },
     "arb1:0xF06E95eF589D9c38af242a8AAee8375f14023F85": {
       "ignoreDiscovery": true
     },
