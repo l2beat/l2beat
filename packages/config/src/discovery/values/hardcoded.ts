@@ -21,6 +21,25 @@ const BASE_SEQUENCING_WINDOW_BLOCKS = 3_600
 export const HARDCODED = {
   ETHEREUM: {
     BLOCK_TIME_SECONDS: ETHEREUM_BLOCK_TIME_SECONDS,
+    // These constants are part of the consensus specification rather than
+    // historical execution-layer state available to discovery.
+    // https://ethereum.github.io/consensus-specs/specs/electra/beacon-chain/
+    SLOTS_PER_EPOCH: 32,
+    MIN_ACTIVATION_BALANCE_ETH: 32,
+    MAX_EFFECTIVE_BALANCE_ETH: 2_048,
+    MAX_ACTIVATION_CHURN_ETH_PER_EPOCH: 256,
+  },
+  GNOSIS: {
+    // https://docs.gnosischain.com/about/networks/mainnet#key-parameters
+    BLOCK_TIME_SECONDS: 5,
+    MIN_VALIDATOR_STAKE_GNO: 1,
+  },
+  POLYGON_POS: {
+    // These values are part of Polygon's node configuration rather than
+    // historical Ethereum state available to discovery.
+    // https://docs.polygon.technology/pos/architecture/heimdall_v2/span/
+    BLOCK_TIME_SECONDS: 2,
+    SPAN_BLOCKS: 6_400,
   },
   ARBITRUM: {
     SET_SEQUENCER_COUNT: 3,

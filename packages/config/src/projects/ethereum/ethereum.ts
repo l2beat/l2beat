@@ -1,15 +1,21 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  formatLargeNumber,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { EthereumDaBridgeRisks, EthereumDaLayerRisks } from '../../common'
 import { linkByDA } from '../../common/linkByDA'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
+import stakeDistribution from './stake-distribution.json'
 
 const chainId = 1
 const ethereumBlockTimeSeconds = HARDCODED.ETHEREUM.BLOCK_TIME_SECONDS
-// ETHEREUM_BEACON_API_URL at finalized epoch 465994 on 2026-08-03.
-const activeValidatorCount = 893_112
-const activeEffectiveStake = 41_487_813
+const ethereumEpochSeconds =
+  HARDCODED.ETHEREUM.SLOTS_PER_EPOCH * ethereumBlockTimeSeconds
 
 // Deployment of the first L2
 export const MIN_TIMESTAMP_FOR_TVL = UnixTime.fromDate(
@@ -66,9 +72,10 @@ export const ethereum: BaseProject = {
             'One validator index is selected for every slot with probability proportional to its effective balance. A missed proposal leaves the slot empty.',
         },
         sequencerCount: {
-          value: `${activeValidatorCount.toLocaleString('en-US')} validator indices`,
-          secondLine: `${(activeEffectiveStake / 1_000_000).toFixed(2)}M ETH effective stake`,
-          description: `Snapshot at finalized epoch 465994 on 2026-08-03: ${activeValidatorCount.toLocaleString('en-US')} active validator indices with ${activeEffectiveStake.toLocaleString('en-US')} ETH of effective stake. Validator indices are not independent operators, and compounding validators can have different effective balances.`,
+          value: `${stakeDistribution.validatorCount.toLocaleString('en-US')} validator indices`,
+          secondLine: `${formatLargeNumber(stakeDistribution.totalStake)} ${stakeDistribution.stakeToken}`,
+          description:
+            'This snapshot is generated from Dune validator-day summaries and curated staking attribution. Lido stake is split among its node operators. Validator indices are not independent operators, and compounding validators can have different effective balances.',
         },
         blockProductionAccess: {
           value: 'Open',
@@ -77,14 +84,12 @@ export const ethereum: BaseProject = {
             'Anyone can deposit the minimum stake and join the activation queue without governance approval. Activation remains subject to protocol churn limits.',
         },
         stakePerValidator: {
-          value: '32 ETH minimum, variable',
-          description:
-            'Compounding validators can have an effective balance of up to 2,048 ETH. Proposal probability is weighted by effective balance.',
+          value: `${HARDCODED.ETHEREUM.MIN_ACTIVATION_BALANCE_ETH} ETH minimum, variable`,
+          description: `Compounding validators can have an effective balance of up to ${HARDCODED.ETHEREUM.MAX_EFFECTIVE_BALANCE_ETH.toLocaleString('en-US')} ETH. Proposal probability is weighted by effective balance.`,
         },
         rateLimit: {
-          value: '256 ETH per epoch',
-          description:
-            'Validator activation is limited by an effective-balance churn cap. An epoch contains 32 slots and lasts 6 minutes 24 seconds.',
+          value: `${HARDCODED.ETHEREUM.MAX_ACTIVATION_CHURN_ETH_PER_EPOCH} ETH per epoch`,
+          description: `Validator activation is limited by an effective-balance churn cap. An epoch contains ${HARDCODED.ETHEREUM.SLOTS_PER_EPOCH} slots and lasts ${formatSeconds(ethereumEpochSeconds)}.`,
         },
         deterministicCrGadget: {
           value: 'No',
@@ -93,32 +98,19 @@ export const ethereum: BaseProject = {
             'Ethereum mainnet does not currently enforce a forced-transaction queue or inclusion list. Inclusion-list proposals such as FOCIL are not live on mainnet.',
         },
         additionalCrGadgets: {
-          value: 'Local block building fallback',
+          value: 'Local block building, diverse operators',
           sentiment: 'warning',
           description:
-            'A proposer can build locally and include public-mempool transactions instead of accepting an external builder bid. This lets an honest proposer bypass censoring builders and relays, but users cannot compel the proposer to use the fallback.',
-        },
-        exitDelay: {
-          value: 'Unbounded',
-          secondLine: 'No recovery bound after a full halt',
-          sentiment: 'bad',
-          description:
-            'If part of the validator set goes offline, the inactivity leak can eventually restore finality for the remaining validators. If all block production stops, new deposits and activations cannot be processed and recovery requires social coordination.',
-        },
-        exitEconomics: {
-          value: 'No external exit',
-          secondLine: '32 ETH to join while live',
-          sentiment: 'neutral',
-          description:
-            'Ethereum is the settlement endpoint rather than a rollup with a host-chain exit. A 32 ETH deposit can join consensus only while the chain can process and activate it; it is not a post-halt escape path.',
+            'A proposer can build locally to include public-mempool transactions instead of accepting an external builder bid. This bypasses censoring builders and relays, but users cannot compel the proposer to use the fallback. Combining a highly decentralized operator set with per-slot proposer rotation results in short inclusion delays under selective censorship.',
         },
       },
       inclusionDelayChart: {
         type: 'ethereumlike',
-        validatorCount: activeValidatorCount,
+        validatorCount: stakeDistribution.validatorCount,
         slotSeconds: ethereumBlockTimeSeconds,
         target: 0.99,
         maxCensorFraction: 0.5,
+        stakeDistribution,
       },
       inclusionDelayChartDescription:
         'The chart models live-chain selective censorship as independent stake-weighted proposer opportunities. It assumes an honest proposer can include the transaction, whether through an external builder or local block production. It excludes validator and builder concentration, finality, validator-set changes, inactivity leaks, and a full halt.',
@@ -177,7 +169,8 @@ export const ethereum: BaseProject = {
       name: 'Gasper',
       description: readProjectMarkdown('ethereum', 'daLayerConsensusAlgorithm'),
       blockTime: ethereumBlockTimeSeconds,
-      consensusFinality: ethereumBlockTimeSeconds * 2 * 32, // two epochs of 32 slots each
+      consensusFinality:
+        ethereumBlockTimeSeconds * 2 * HARDCODED.ETHEREUM.SLOTS_PER_EPOCH,
       unbondingPeriod: 777600, // current value from validatorqueue.com. Technically it is the sum of 1) Exit Queue (variable) 2) fixed waiting time (27.3 hours), 3) Validator Sweep (variable).
     },
     throughput: [
@@ -209,7 +202,7 @@ export const ethereum: BaseProject = {
         sinceTimestamp: 1767747671, // 2026-01-07 01:01:11 UTC – epoch 419072
       },
     ],
-    finality: ethereumBlockTimeSeconds * 2 * 32,
+    finality: ethereumBlockTimeSeconds * 2 * HARDCODED.ETHEREUM.SLOTS_PER_EPOCH,
     pruningWindow: 86400 * 18, // 18 days in seconds
     risks: {
       daLayer: EthereumDaLayerRisks.SelfVerify,

@@ -1,30 +1,31 @@
 {
   "stakeToken": "POL",
-  "totalStake": 3578982515,
+  "validatorCount": 105,
+  "totalStake": 3571091010,
   "entities": [
     {
       "name": "Upbit Staking",
-      "stake": 417333126
+      "stake": 416533126
     },
     {
       "name": "Coinbase",
-      "stake": 366375736
+      "stake": 367376071
     },
     {
       "name": "Luganodes",
-      "stake": 258378187
+      "stake": 258364646
     },
     {
       "name": "Anonymous 194",
-      "stake": 244531424
+      "stake": 245101948
     },
     {
       "name": "Binance Node",
-      "stake": 236806959
+      "stake": 228831375
     },
     {
       "name": "Figment",
-      "stake": 226257073
+      "stake": 226257750
     },
     {
       "name": "Matic Power",
@@ -32,15 +33,15 @@
     },
     {
       "name": "Blockdaemon",
-      "stake": 181375563
+      "stake": 181315703
     },
     {
       "name": "Kraken",
-      "stake": 158562769
+      "stake": 166711749
     },
     {
       "name": "Anonymous 95",
-      "stake": 146004660
+      "stake": 150161979
     }
   ]
 }

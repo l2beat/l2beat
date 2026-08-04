@@ -23,8 +23,6 @@ type SequencingTableValueKey =
   | 'blockProduction'
   | 'deterministicCrGadget'
   | 'additionalCrGadgets'
-  | 'exitDelay'
-  | 'exitEconomics'
 
 const tableValueColumns = [
   { key: 'sequencerCount', header: 'Set\nsize' },
@@ -46,16 +44,15 @@ const tableValueColumns = [
     tooltip: 'Interval between successive blocks.',
   },
   {
+    key: 'blockProduction',
+    header: 'Block\nproduction',
+    tooltip: 'Who controls inclusion and transaction ordering for a block.',
+  },
+  {
     key: 'rotation',
     header: 'Proposer / committee\nrotation',
     tooltip:
       'How often block production rights move to another proposer and, where applicable, how often a new committee is selected.',
-  },
-  {
-    key: 'blockProduction',
-    header: 'Block\nproduction',
-    tooltip:
-      'Who controls inclusion and transaction ordering for a block.',
   },
   {
     key: 'deterministicCrGadget',
@@ -68,18 +65,6 @@ const tableValueColumns = [
     header: 'Additional\nCR',
     tooltip:
       'Additional censorship-resistance aids beyond the normal sequencer rotation.',
-  },
-  {
-    key: 'exitDelay',
-    header: 'Exit\ndelay',
-    tooltip:
-      'Worst-case delay to make enough state progress to exit after the normal sequencers and state proposers stop.',
-  },
-  {
-    key: 'exitEconomics',
-    header: 'Exit\neconomics',
-    tooltip:
-      'Capital required to make progress and exit if the normal sequencers and state proposers stop. This is distinct from stake used for normal block production.',
   },
 ] satisfies {
   key: SequencingTableValueKey

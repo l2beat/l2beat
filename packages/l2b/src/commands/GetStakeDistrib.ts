@@ -8,6 +8,7 @@ import {
   optional,
   string,
 } from 'cmd-ts'
+import { config as loadEnv } from 'dotenv'
 import path from 'path'
 import {
   STAKING_PROJECT_IDS,
@@ -35,7 +36,7 @@ const ProjectSelection = oneOf([
 export const GetStakeDistrib = command({
   name: 'getstakedistrib',
   description:
-    'Fetch the largest staking entities from supported staking APIs and write normalized JSON output. Project-specific output can be used directly as inclusionDelayChart.stakeDistribution config.',
+    'Fetch staking-set snapshots from supported APIs and Dune, then write normalized JSON output. Project-specific output can be used directly as inclusionDelayChart.stakeDistribution config.',
   args: {
     project: option({
       type: ProjectSelection,
@@ -58,6 +59,7 @@ export const GetStakeDistrib = command({
     }),
   },
   handler: async (args) => {
+    loadEnv()
     const outputPath =
       args.outputPath !== undefined
         ? path.resolve(process.cwd(), args.outputPath)

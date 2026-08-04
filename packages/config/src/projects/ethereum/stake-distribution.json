@@ -1,0 +1,47 @@
+{
+  "stakeToken": "ETH",
+  "validatorCount": 893926,
+  "totalStake": 41457928,
+  "entities": [
+    {
+      "name": "Binance",
+      "stake": 3286233
+    },
+    {
+      "name": "ether.fi",
+      "stake": 1670580
+    },
+    {
+      "name": "Coinbase",
+      "stake": 1614219
+    },
+    {
+      "name": "Figment",
+      "stake": 1598446
+    },
+    {
+      "name": "Kraken",
+      "stake": 1380570
+    },
+    {
+      "name": "Blockdaemon",
+      "stake": 1290377
+    },
+    {
+      "name": "Everstake",
+      "stake": 941856
+    },
+    {
+      "name": "Kiln",
+      "stake": 724658
+    },
+    {
+      "name": "Upbit",
+      "stake": 609568
+    },
+    {
+      "name": "P2P.org",
+      "stake": 570669
+    }
+  ]
+}

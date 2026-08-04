@@ -74,8 +74,6 @@ export interface ProjectSequencerSetSpec {
   rateLimit?: TableReadyValue
   deterministicCrGadget?: TableReadyValue
   additionalCrGadgets?: TableReadyValue
-  exitDelay: TableReadyValue
-  exitEconomics: TableReadyValue
 }
 
 export interface ProjectCentralizedSequencingSpec {
@@ -103,6 +101,7 @@ interface ProjectInclusionDelayChartBase {
 
 export interface ProjectInclusionDelayChartStakeDistribution {
   stakeToken: string
+  validatorCount?: number
   totalStake: number
   entities: ProjectInclusionDelayChartEntityStake[]
 }

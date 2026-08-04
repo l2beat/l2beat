@@ -12,9 +12,12 @@ import { getCommonScalingEntry } from '~/server/features/scaling/getCommonScalin
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
-import type { InclusionDelayChartDataPoint } from '~/utils/project/technology/inclusion-delay/calculateInclusionDelay'
+import type {
+  InclusionDelayChartDataPoint,
+  InclusionDelayEntityMarker,
+} from '~/utils/project/technology/inclusion-delay/calculateInclusionDelay'
 import {
-  getProjectInclusionDelay,
+  getInclusionDelayData,
   mergeInclusionDelaySeries,
 } from '~/utils/project/technology/inclusion-delay/calculateInclusionDelay'
 
@@ -34,8 +37,6 @@ export interface ScalingRiskSequencingEntry extends CommonProjectEntry {
   blockProduction: TableReadyValue | undefined
   deterministicCrGadget: TableReadyValue | undefined
   additionalCrGadgets: TableReadyValue | undefined
-  exitDelay: TableReadyValue
-  exitEconomics: TableReadyValue
 }
 
 export interface ScalingRiskCentralizedSequencingEntry
@@ -60,7 +61,13 @@ export interface InclusionDelayComparisonSeries {
 export interface InclusionDelayComparison {
   data: InclusionDelayChartDataPoint[]
   series: InclusionDelayComparisonSeries[]
+  entityMarkers: InclusionDelayComparisonEntityMarker[]
   maxCensorFraction: number
+}
+
+export interface InclusionDelayComparisonEntityMarker
+  extends InclusionDelayEntityMarker {
+  seriesKey: string
 }
 
 export interface ScalingRiskSequencingPageData {
@@ -136,10 +143,12 @@ function getInclusionDelayComparison(
       if (!sequencing?.sequencerSetSpec || !chart) {
         return undefined
       }
+      const inclusionDelay = getInclusionDelayData(chart)
       return {
         slug: project.slug,
         name: project.name,
-        points: getProjectInclusionDelay(chart),
+        points: inclusionDelay.projectPoints,
+        entityMarkers: inclusionDelay.entityLegendEntries.filter(hasDelay),
         maxCensorFraction: chart.maxCensorFraction,
       }
     })
@@ -156,7 +165,8 @@ function getInclusionDelayComparison(
     ...projectDelays.map((delay) => delay.maxCensorFraction),
     ethereumChart.maxCensorFraction,
   )
-  const ethereumPoints = getProjectInclusionDelay(ethereumChart)
+  const ethereumDelay = getInclusionDelayData(ethereumChart)
+  const ethereumPoints = ethereumDelay.projectPoints
 
   const data = mergeInclusionDelaySeries([
     ...projectDelays.map((delay) => ({
@@ -175,7 +185,28 @@ function getInclusionDelayComparison(
     { key: ETHEREUM_SERIES_KEY, label: 'Ethereum', type: 'ethereum' as const },
   ]
 
-  return { data, series, maxCensorFraction }
+  const entityMarkers: InclusionDelayComparisonEntityMarker[] = [
+    ...projectDelays.flatMap((delay) =>
+      delay.entityMarkers.map((marker) => ({
+        ...marker,
+        id: `${delay.slug}-${marker.id}`,
+        seriesKey: delay.slug,
+      })),
+    ),
+    ...ethereumDelay.entityLegendEntries.filter(hasDelay).map((marker) => ({
+      ...marker,
+      id: `${ETHEREUM_SERIES_KEY}-${marker.id}`,
+      seriesKey: ETHEREUM_SERIES_KEY,
+    })),
+  ]
+
+  return { data, series, entityMarkers, maxCensorFraction }
+}
+
+function hasDelay<T extends { delayDays: number | null }>(
+  marker: T,
+): marker is T & InclusionDelayEntityMarker {
+  return marker.delayDays !== null
 }
 
 function getScalingRiskSequencingEntry(
@@ -221,8 +252,6 @@ type SequencingValues = Pick<
   | 'blockProduction'
   | 'deterministicCrGadget'
   | 'additionalCrGadgets'
-  | 'exitDelay'
-  | 'exitEconomics'
 >
 
 function getSequencingValues(
@@ -243,8 +272,6 @@ function getSequencingValues(
     blockProduction: getBlockProduction(sequencing.inclusionDelayChart),
     deterministicCrGadget: spec.deterministicCrGadget,
     additionalCrGadgets: spec.additionalCrGadgets,
-    exitDelay: spec.exitDelay,
-    exitEconomics: spec.exitEconomics,
   }
 }
 

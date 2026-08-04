@@ -2,6 +2,7 @@ import {
   assert,
   ChainSpecificAddress,
   EthereumAddress,
+  formatLargeNumber,
   formatSeconds,
   ProjectId,
   UnixTime,
@@ -15,6 +16,7 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
@@ -59,8 +61,8 @@ assert(
   'The far-future replacement cooldown which effectively closed the vali set whenever it was at the cap has changed and the sequencer section and risk rosette should be adjusted if the set is now open+capped with a working replacement auction.',
 )
 
-const polygonSpanBlocks = 6400
-const polygonBlockSeconds = 2
+const polygonSpanBlocks = HARDCODED.POLYGON_POS.SPAN_BLOCKS
+const polygonBlockSeconds = HARDCODED.POLYGON_POS.BLOCK_TIME_SECONDS
 const polygonSpanTimeString = formatSeconds(
   polygonSpanBlocks * polygonBlockSeconds,
 )
@@ -292,7 +294,10 @@ export const polygonpos: ScalingProject = {
           value: `${polygonSpanTimeString}`,
           description: `Randomly sampled validators delegate block production for the duration of a span: ${polygonSpanBlocks} blocks`,
         },
-        sequencerCount: { value: `${currentValidatorSetSize} validators` },
+        sequencerCount: {
+          value: `${currentValidatorSetSize} validators`,
+          secondLine: `${formatLargeNumber(stakeDistribution.totalStake)} ${stakeDistribution.stakeToken}`,
+        },
         blockProductionAccess: {
           value: 'Closed and capped',
           sentiment: 'bad',
@@ -305,19 +310,6 @@ export const polygonpos: ScalingProject = {
         rateLimit: { value: 'No (permissioned)' },
         deterministicCrGadget: { value: 'No', sentiment: 'warning' },
         additionalCrGadgets: { value: 'No', sentiment: 'bad' },
-        exitDelay: {
-          value: 'Unbounded',
-          secondLine: 'Social recovery after a full halt',
-          sentiment: 'bad',
-          description:
-            'There is no protocol path with a bounded delay around an unavailable or censoring validator set. Since joining the capped set is permissioned, a full halt requires social coordination and a hard fork.',
-        },
-        exitEconomics: {
-          value: 'No protocol exit',
-          secondLine: 'Normal validator stake only',
-          sentiment: 'bad',
-          description: `The ${minDeposit} POL validator stake grants normal block-production rights but does not provide a fallback path around a censoring or unavailable validator set. The set is currently full and new validators cannot join without permission, so complete operator walkaway ultimately requires social recovery.`,
-        },
       },
       inclusionDelayChart: {
         type: 'spanlike',

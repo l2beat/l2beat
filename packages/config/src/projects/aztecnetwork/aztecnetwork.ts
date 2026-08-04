@@ -64,10 +64,6 @@ const escapeHatchFailedPunishment = discovery.getContractValueBigInt(
   'EscapeHatch',
   'getFailedHatchPunishment',
 )
-const escapeHatchCandidateCount = discovery.getContractValue<number>(
-  'EscapeHatch',
-  'getCandidateCount',
-)
 const targetCommitteeSize = discovery.getContractValue<number>(
   'Rollup',
   'getTargetCommitteeSize',
@@ -542,7 +538,10 @@ export const aztecnetwork: ScalingProject = {
           description:
             'A random committee is sampled from the sequencer set for each epoch, a random block producer is sampled from the committee for each slot in the epoch',
         },
-        sequencerCount: { value: `${activeSequencerCount} sequencers` },
+        sequencerCount: {
+          value: `${activeSequencerCount} sequencers`,
+          secondLine: `${formatLargeNumber(stakeDistribution.totalStake)} ${stakeDistribution.stakeToken}`,
+        },
         blockProductionAccess: { value: 'Open', sentiment: 'good' },
         stakePerValidator: { value: activationThresholdString + ', constant' },
         rateLimit: {
@@ -553,20 +552,9 @@ export const aztecnetwork: ScalingProject = {
         deterministicCrGadget: { value: 'No', sentiment: 'warning' },
         additionalCrGadgets: {
           value: 'Bonded escape hatch, private transactions',
+          secondLine: `${escapeHatchBondString}; every ${escapeHatchFrequencyString}`,
           sentiment: 'good',
-        },
-        exitDelay: {
-          value: 'Unbounded',
-          secondLine: `${escapeHatchFrequencyString} hatch cycle`,
-          sentiment: 'warning',
-          description:
-            'The escape hatch creates periodic recovery opportunities, but enrollment, candidate-set snapshots, random selection, proposal, and proving can each add delay or fail. The protocol therefore provides no deterministic maximum exit delay.',
-        },
-        exitEconomics: {
-          value: escapeHatchBondString,
-          secondLine: `${escapeHatchWithdrawalTaxString} exit tax`,
-          sentiment: 'neutral',
-          description: `The escape hatch combines live inclusion and exit: bonding does not grant immediate proposal rights, but enters a candidate set from which one proposer is periodically selected to bypass the committee, include transactions and prove the resulting checkpoints. Every candidate eventually loses the ${escapeHatchWithdrawalTaxString} exit tax. A selected candidate that fails to propose and prove loses another ${escapeHatchFailedPunishmentString}.`,
+          description: `Escape hatch: ${escapeHatchBondString} bond to enter a set from which one proposer is periodically selected every ${escapeHatchFrequencyString} to bypass the regular committee, include transactions, and prove the resulting checkpoints. ${escapeHatchWithdrawalTaxString} proposal tax. Private transactions: allow users to cheaply resist censorship based on transaction content while the chain is live.`,
         },
       },
       inclusionDelayChart: {

@@ -23,6 +23,14 @@ export function InclusionDelayComparisonChart({ comparison }: Props) {
     () => getComparisonChartMeta(comparison.series),
     [comparison.series],
   )
+  const entityMarkers = useMemo(
+    () =>
+      comparison.entityMarkers.map((marker) => ({
+        ...marker,
+        color: chartMeta[marker.seriesKey]?.color,
+      })),
+    [chartMeta, comparison.entityMarkers],
+  )
 
   return (
     <div className="mt-6 border-divider border-t pt-5">
@@ -53,13 +61,15 @@ export function InclusionDelayComparisonChart({ comparison }: Props) {
           chartMeta={chartMeta}
           maxCensorFraction={comparison.maxCensorFraction}
           yAxisScale={yAxisScale}
+          entityMarkers={entityMarkers}
+          entityMarkerMode="points"
         />
       </div>
       <p className="mt-3 text-paragraph-13 text-secondary md:text-paragraph-14">
-        A line stopping before the 50% limit indicates that any more censorship
-        will prevent inclusion completely. This is usually due to the sequencer
-        network's consensus mechanism stopping block production at that
-        threshold.
+        Points mark the top entities' cumulative stakes. A line stopping before
+        the 50% limit indicates that any more censorship will prevent inclusion
+        completely. This is usually due to the sequencer network's consensus
+        mechanism stopping block production at that threshold.
       </p>
     </div>
   )

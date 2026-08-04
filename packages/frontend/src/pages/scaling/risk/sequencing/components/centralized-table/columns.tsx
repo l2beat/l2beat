@@ -1,3 +1,4 @@
+import type { TableReadyValue } from '@l2beat/config'
 import { createColumnHelper } from '@tanstack/react-table'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { getScalingCommonProjectColumns } from '~/components/table/common-project-columns/ScalingCommonProjectColumns'
@@ -84,16 +85,37 @@ const tableValueColumns = [
   tooltip: string
 }[]
 
+function getTableValue(
+  entry: ScalingRiskCentralizedSequencingEntry,
+  key: CentralizedSequencingTableValueKey,
+): TableReadyValue {
+  const value = entry[key]
+  if (key !== 'realtimeCensorshipResistance' || value.sentiment !== 'bad') {
+    return value
+  }
+
+  return { ...value, sentiment: 'warning' }
+}
+
 export const scalingCentralizedSequencingColumns = [
   ...getScalingCommonProjectColumns(columnHelper, getSequencingHref),
   ...tableValueColumns.map(({ key, header, tooltip }) =>
-    columnHelper.accessor((entry) => adjustTableValue(entry[key]), {
-      id: key,
-      header,
-      cell: (ctx) => <TableValueCell value={ctx.row.original[key]} />,
-      meta: { tooltip },
-      sortDescFirst: true,
-      sortingFn: (a, b) => sortTableValues(a.original[key], b.original[key]),
-    }),
+    columnHelper.accessor(
+      (entry) => adjustTableValue(getTableValue(entry, key)),
+      {
+        id: key,
+        header,
+        cell: (ctx) => (
+          <TableValueCell value={getTableValue(ctx.row.original, key)} />
+        ),
+        meta: { tooltip },
+        sortDescFirst: true,
+        sortingFn: (a, b) =>
+          sortTableValues(
+            getTableValue(a.original, key),
+            getTableValue(b.original, key),
+          ),
+      },
+    ),
   ),
 ]
