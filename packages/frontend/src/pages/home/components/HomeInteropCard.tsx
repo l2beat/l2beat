@@ -120,8 +120,8 @@ function HomeInteropCardContent({
       {/* On wide cards (full-width row between lg and xl) the compact tile
           row is replaced by the same General stats panel the interop
           summary page shows, placed left of the graph. */}
-      <div className="@min-[900px]:mt-6 flex @min-[900px]:grid min-h-0 flex-1 @min-[900px]:grid-cols-[240px_minmax(0,1fr)] flex-col @min-[900px]:gap-4">
-        <div className="mt-2.5 grid @min-[900px]:hidden @min-[440px]:grid-cols-4 grid-cols-2 gap-2">
+      <div className="@min-[800px]:mt-4 flex @min-[800px]:grid min-h-0 flex-1 @min-[800px]:grid-cols-[240px_minmax(0,1fr)] flex-col @min-[800px]:gap-4">
+        <div className="mt-2.5 grid @min-[800px]:hidden @min-[550px]:grid-cols-4 grid-cols-2 gap-2">
           <StatTile
             title="Volume"
             isLoading={statsLoading}
@@ -171,7 +171,7 @@ function HomeInteropCardContent({
             }
           />
           <StatTile
-            title="Top chain path"
+            title="Top chain"
             isLoading={statsLoading}
             href={
               srcChain && dstChain
@@ -202,10 +202,10 @@ function HomeInteropCardContent({
             }
           />
         </div>
-        <div className="@min-[900px]:block hidden h-full">
+        <div className="@min-[800px]:block hidden h-full">
           <FlowsGeneralStats title="" description="" linkTopRouteToSummary />
         </div>
-        <div className="@min-[900px]:mt-0 mt-6 flex min-h-0 flex-1 flex-col">
+        <div className="@min-[800px]:mt-0 mt-6 flex min-h-0 flex-1 flex-col">
           {/* Static preview: interactions happen on the interop page */}
           <div className="-mx-2 pointer-events-none flex min-h-0 min-w-0 flex-1 flex-col overflow-x-clip">
             <FlowsGraphPanel
