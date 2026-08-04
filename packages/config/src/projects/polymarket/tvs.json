@@ -3,7 +3,7 @@
   "projectId": "polymarket",
   "tokens": [
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "polymarket-USDC",
       "priceId": "usd-coin",
       "symbol": "USDC",
@@ -23,14 +23,6 @@
           },
           {
             "type": "balanceOfEscrow",
-            "address": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
-            "chain": "polygonpos",
-            "escrowAddress": "0xC417fD8E9661c0d2120B64a04Bb3278C17E99DB1",
-            "decimals": 6,
-            "sinceTimestamp": 1771462560
-          },
-          {
-            "type": "balanceOfEscrow",
             "address": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
             "chain": "polygonpos",
             "escrowAddress": "0x4D97DCd97eC945f40cF65F87097ACe5EA0476045",
@@ -39,19 +31,88 @@
           },
           {
             "type": "balanceOfEscrow",
-            "address": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
-            "chain": "polygonpos",
-            "escrowAddress": "0x4D97DCd97eC945f40cF65F87097ACe5EA0476045",
-            "decimals": 6,
-            "sinceTimestamp": 1601199611
-          },
-          {
-            "type": "balanceOfEscrow",
             "address": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
             "chain": "polygonpos",
             "escrowAddress": "0x3A3BD7bb9528E159577F7C2e685CC81A765002E2",
             "decimals": 6,
             "sinceTimestamp": 1701203266
+          }
+        ]
+      },
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1771462560
+            },
+            "priceId": "usd-coin"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1771462560
+            },
+            "priceId": "usd-coin"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1689890042
+            },
+            "priceId": "usd-coin"
+          }
+        ]
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      },
+      "displaySymbol": "USDC"
+    },
+    {
+      "mode": "custom",
+      "id": "polymarket-USDC.e",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+            "chain": "polygonpos",
+            "escrowAddress": "0xC417fD8E9661c0d2120B64a04Bb3278C17E99DB1",
+            "decimals": 6,
+            "sinceTimestamp": 1771462560
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+            "chain": "polygonpos",
+            "escrowAddress": "0x4D97DCd97eC945f40cF65F87097ACe5EA0476045",
+            "decimals": 6,
+            "sinceTimestamp": 1601199611
           },
           {
             "type": "balanceOfEscrow",
@@ -96,36 +157,6 @@
               "sinceTimestamp": 1689890042
             },
             "priceId": "usd-coin"
-          },
-          {
-            "type": "value",
-            "amount": {
-              "type": "const",
-              "value": "0",
-              "decimals": 0,
-              "sinceTimestamp": 1601199611
-            },
-            "priceId": "usd-coin"
-          },
-          {
-            "type": "value",
-            "amount": {
-              "type": "const",
-              "value": "0",
-              "decimals": 0,
-              "sinceTimestamp": 1701203266
-            },
-            "priceId": "usd-coin"
-          },
-          {
-            "type": "value",
-            "amount": {
-              "type": "const",
-              "value": "0",
-              "decimals": 0,
-              "sinceTimestamp": 1701203266
-            },
-            "priceId": "usd-coin"
           }
         ]
       },
@@ -135,10 +166,11 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Circle CCTP"
+            "name": "Polygon PoS"
           }
         ]
-      }
+      },
+      "displaySymbol": "USDC.e"
     }
   ]
 }
