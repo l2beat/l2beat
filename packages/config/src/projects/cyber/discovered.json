@@ -1,6 +1,6 @@
 {
   "name": "cyber",
-  "timestamp": 1784282889,
+  "timestamp": 1785878764,
   "configHash": "0xb18ca1c1797950d9b0698549b192c4d882c91bdacaf2f005eb33e9212f700d93",
   "entries": [
     {
@@ -117,9 +117,19 @@
             "2025-11-18T04:10:11.000Z",
             "0x0cf1741c2a6d18e26d76b053c232622771540d0424dcbd225d4073e794573c0b",
             ["eth:0x795F854562d82b3A051e415f6c48B2766521C855"]
+          ],
+          [
+            "2026-08-04T16:35:47.000Z",
+            "0x7e83c02dfbd4cf29d07626f34579b27937493b4436c3ad495a2b3b7e8b095d71",
+            ["eth:0x8C8a1F23F3AfE6aeF5F0030FaB44D5b17ee97268"]
+          ],
+          [
+            "2026-08-04T16:38:47.000Z",
+            "0x65c4f08365a1298614ba2b61a7ae5cac0c517a405622c41bd2d68b150e5a88b7",
+            ["eth:0x795F854562d82b3A051e415f6c48B2766521C855"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 3,
         "disputeGameFactory": "eth:0xaCc66304d26a01A9bd60d0584dCEdbaCeC8e10e0",
         "superchainConfig": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.0.0"
@@ -275,17 +285,27 @@
             "2025-11-27T02:29:11.000Z",
             "0x540b3710f8fc0ff0dfd8db25f025e0a92c37a90be3af7e2f8bd07f7217d4138b",
             ["eth:0xe2F826324b2faf99E513D16D266c3F80aE87832B"]
+          ],
+          [
+            "2026-08-04T16:43:59.000Z",
+            "0x05ff2cb55118f839a31c2e8ea398c99d0f97dcb0d71535df87f14ece5c130475",
+            ["eth:0xa702D767ef8a7ba06eD0d605Fe584e2C42eeED44"]
+          ],
+          [
+            "2026-08-04T16:45:47.000Z",
+            "0x5bc9e4731a28ac126a9f926e98369d4ddc5ae13adeaa22762f7123d0d15069e3",
+            ["eth:0xe2F826324b2faf99E513D16D266c3F80aE87832B"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 5,
         "disputeGameFactory": "eth:0xaCc66304d26a01A9bd60d0584dCEdbaCeC8e10e0",
         "disputeGameFinalityDelaySeconds": 302400,
         "guardian": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 491310,
-          "prevBlockNum": 25404294
+          "prevBoughtGas": 100000,
+          "prevBlockNum": 25677418
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -650,7 +670,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 36,
+        "nonce": 38,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1085,7 +1105,7 @@
           "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
         ],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 62,
+        "nonce": 64,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1399,7 +1419,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 5530,
+        "gameCount": 5963,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x924B10d37392414b0813190F01DbaF6c3322E906",
@@ -1413,7 +1433,7 @@
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0xc2259E7Fb719411f97aBdCdf449f6Ba3B9D75398",
         "permissionedGameArgs": "EXPECT_REVERT",
-        "permissionedGamesTotal": 5530,
+        "permissionedGamesTotal": 5963,
         "proposerFromDGF": "UNRESOLVED",
         "version": "1.0.0",
         "wethFromDGF": "UNRESOLVED"
@@ -1579,7 +1599,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 26,
+        "nonce": 30,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1637,7 +1657,7 @@
           "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748"
         ],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 60,
+        "nonce": 62,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2622,6 +2642,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 25551707 },
+  "usedBlockNumbers": { "ethereum": 25684235 },
   "permissionsConfigHash": "0x6253c33b76f66be878c46f83595919fe7c4062df2ce285d8f01d65e2e10bac58"
 }
