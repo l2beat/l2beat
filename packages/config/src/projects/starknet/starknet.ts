@@ -419,7 +419,8 @@ export const starknet: ScalingProject = {
 State advancement on Ethereum is a separate, also permissioned pipeline. Starknet OS execution tasks are proved and recursively aggregated through StarkWare's SHARP service, using Stwo for proving tasks and Stone for the roots of the recursive tree. After the resulting proof fact is registered on Ethereum, only the ${stateUpdateOperators.length} Starknet Operators can update the canonical state: the service Operator and the Security Council minority.
 
 There is no user-callable forced-inclusion function. A censored user can post an L1-to-L2 message and ask the Security Council minority to bypass consensus by including it in a valid, proven state update, but the contact and response process has no protocol deadline.`,
-      centralizedSequencingSpec: {
+      sequencingSpec: {
+        type: 'centralized',
         trustedPreconfirmation: {
           value: `${preconfirmationTimeMilliseconds} ms`,
           secondLine: `${l2BlockTimeMilliseconds / 1_000}s L2 block time`,

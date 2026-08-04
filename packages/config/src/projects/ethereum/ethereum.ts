@@ -64,7 +64,8 @@ export const ethereum: BaseProject = {
     sequencing: {
       name: 'Transactions are ordered by Ethereum validators and builders',
       description: readProjectMarkdown('ethereum', 'technologySequencing'),
-      sequencerSetSpec: {
+      sequencingSpec: {
+        type: 'sequencer-set',
         blockTime: { value: `${ethereumBlockTimeSeconds} seconds` },
         proposerRotationTime: {
           value: `${ethereumBlockTimeSeconds} seconds`,

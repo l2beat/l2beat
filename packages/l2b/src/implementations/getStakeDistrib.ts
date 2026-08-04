@@ -1,4 +1,5 @@
 import type { ProjectInclusionDelayChartStakeDistribution } from '@l2beat/config'
+import { DuneClient, HttpClient } from '@l2beat/shared'
 import { formatAsAsciiTable } from '@l2beat/shared-pure'
 import fs from 'fs/promises'
 import fetch from 'node-fetch'
@@ -23,6 +24,7 @@ interface StakingDataset {
   project: StakingProjectId
   displayName: string
   stakeToken: string
+  snapshotDate: string
   stakeDecimals: number
   validatorCount?: number
   totalStakeBaseUnits: number
@@ -32,6 +34,7 @@ interface StakingDataset {
 interface ExtractedStakingProjectData {
   project: StakingProjectId
   stakeToken: string
+  snapshotDate: string
   validatorCount?: number
   totalStake: number
   entities: ProjectInclusionDelayChartStakeDistribution['entities']
@@ -73,20 +76,6 @@ interface GnosisLatestMetric {
   as_of_date: string
 }
 
-interface DuneExecuteResponse {
-  execution_id: string
-}
-
-interface DuneExecutionStatusResponse {
-  state: string
-}
-
-interface DuneExecutionResultsResponse {
-  result?: {
-    rows?: unknown[]
-  }
-}
-
 type StakingApiFetcher = () => Promise<StakingDataset>
 
 const POLYGON_VALIDATORS_URL =
@@ -96,7 +85,6 @@ const GNOSIS_ACTIVE_VALIDATORS_URL =
   'https://api.analytics.gnosis.io/v1/consensus/validators_active_ongoing/latest'
 const GNOSIS_STAKED_GNO_URL =
   'https://api.analytics.gnosis.io/v1/consensus/staked_gno/latest'
-const DUNE_API_URL = 'https://api.dune.com/api/v1'
 const DUNE_API_KEY_ENV_NAME = 'DUNE_API_KEY'
 const DUNE_POLL_INTERVAL_MS = 1_000
 const DUNE_MAX_POLL_ATTEMPTS = 120
@@ -160,7 +148,8 @@ SELECT
   entity_name,
   entity_stake,
   validator_count,
-  total_stake
+  total_stake,
+  (SELECT block_date FROM latest_day) AS snapshot_date
 FROM entity_stakes
 CROSS JOIN totals
 ORDER BY entity_stake DESC
@@ -170,6 +159,7 @@ export class StakeDistributionFetcher {
   constructor(
     private readonly project: StakingProjectSelection,
     private readonly limit: number,
+    private readonly configRoot: string,
     private readonly outputFilePath?: string,
   ) {}
 
@@ -214,6 +204,7 @@ export class StakeDistributionFetcher {
     return {
       project: dataset.project,
       stakeToken: dataset.stakeToken,
+      snapshotDate: dataset.snapshotDate,
       ...(dataset.validatorCount !== undefined
         ? { validatorCount: dataset.validatorCount }
         : {}),
@@ -268,7 +259,10 @@ export class StakeDistributionFetcher {
     }
 
     const outputs = data.map(async (projectData) => {
-      const outputFilePath = getDefaultOutputFilePath(projectData.project)
+      const outputFilePath = getDefaultOutputFilePath(
+        this.configRoot,
+        projectData.project,
+      )
       await writeJsonFile(
         outputFilePath,
         getStakeDistributionOutput(projectData),
@@ -302,9 +296,12 @@ async function writeJsonFile(filePath: string, data: unknown): Promise<void> {
   await fs.writeFile(filePath, `${JSON.stringify(data, null, 2)}\n`)
 }
 
-function getDefaultOutputFilePath(project: StakingProjectId): string {
+function getDefaultOutputFilePath(
+  configRoot: string,
+  project: StakingProjectId,
+): string {
   return path.resolve(
-    process.cwd(),
+    configRoot,
     DEFAULT_OUTPUT_ROOT,
     project,
     STAKE_DISTRIBUTION_FILE_NAME,
@@ -355,6 +352,7 @@ async function fetchPolygonValidators(): Promise<StakingDataset> {
     project: 'polygon-pos',
     displayName: 'Polygon staking',
     stakeToken: 'POL',
+    snapshotDate: getCurrentDate(),
     stakeDecimals: 18,
     validatorCount: response.result.length,
     totalStakeBaseUnits: sumStake(entities),
@@ -404,6 +402,7 @@ async function fetchAztecProviders(): Promise<StakingDataset> {
     project: 'aztecnetwork',
     displayName: 'Aztec staking',
     stakeToken: 'AZTEC',
+    snapshotDate: getCurrentDate(),
     stakeDecimals: 18,
     totalStakeBaseUnits:
       firstPage.aggregates?.totalStaked !== undefined
@@ -428,6 +427,10 @@ async function fetchEthereumValidators(): Promise<StakingDataset> {
     firstRow.total_stake,
     'Ethereum total_stake',
   )
+  const snapshotDate = toSnapshotDate(
+    firstRow.snapshot_date,
+    'Ethereum snapshot_date',
+  )
   const entities = rows.map((row, index) => {
     const record = getRecord(row, `Ethereum Dune row ${index}`)
     if (typeof record.entity_name !== 'string') {
@@ -447,6 +450,7 @@ async function fetchEthereumValidators(): Promise<StakingDataset> {
     project: 'ethereum',
     displayName: 'Ethereum staking',
     stakeToken: 'ETH',
+    snapshotDate,
     stakeDecimals: 0,
     validatorCount,
     totalStakeBaseUnits: totalStake,
@@ -482,6 +486,10 @@ async function fetchGnosisValidators(): Promise<StakingDataset> {
     project: 'gnosis',
     displayName: 'Gnosis staking',
     stakeToken: 'GNO',
+    snapshotDate: toSnapshotDate(
+      validatorSnapshot.as_of_date,
+      'Gnosis as_of_date',
+    ),
     stakeDecimals: 0,
     validatorCount,
     totalStakeBaseUnits: totalStake,
@@ -497,36 +505,24 @@ async function executeDuneSql(sql: string): Promise<unknown[]> {
     )
   }
 
-  const headers = {
-    'Content-Type': 'application/json',
-    'X-Dune-API-Key': apiKey,
-  }
-  const execution = await fetchDuneJson<DuneExecuteResponse>(
-    `${DUNE_API_URL}/sql/execute`,
-    headers,
-    {
-      method: 'POST',
-      body: JSON.stringify({ sql, performance: 'medium' }),
-    },
-  )
+  const duneClient = new DuneClient({ http: new HttpClient(), apiKey })
+  const execution = await duneClient.executeSql(sql, 'medium')
 
   for (let attempt = 0; attempt < DUNE_MAX_POLL_ATTEMPTS; attempt++) {
-    const status = await fetchDuneJson<DuneExecutionStatusResponse>(
-      `${DUNE_API_URL}/execution/${execution.execution_id}/status`,
-      headers,
-    )
+    const status = await duneClient.getExecutionStatus(execution.execution_id)
 
     if (status.state === 'QUERY_STATE_COMPLETED') {
-      const results = await fetchDuneJson<DuneExecutionResultsResponse>(
-        `${DUNE_API_URL}/execution/${execution.execution_id}/results`,
-        headers,
+      const results = await duneClient.getExecutionResult(
+        execution.execution_id,
       )
-      return results.result?.rows ?? []
+      return results.result.rows
     }
 
     if (
       status.state === 'QUERY_STATE_FAILED' ||
-      status.state === 'QUERY_STATE_CANCELLED'
+      status.state === 'QUERY_STATE_CANCELED' ||
+      status.state === 'QUERY_STATE_TIMED_OUT' ||
+      status.state === 'QUERY_STATE_COMPLETED_PARTIAL'
     ) {
       throw new Error(`Dune query ${execution.execution_id} ${status.state}`)
     }
@@ -535,21 +531,6 @@ async function executeDuneSql(sql: string): Promise<unknown[]> {
   }
 
   throw new Error(`Dune query ${execution.execution_id} timed out`)
-}
-
-async function fetchDuneJson<T>(
-  url: string,
-  headers: Record<string, string>,
-  init?: { method: 'POST'; body: string },
-): Promise<T> {
-  const response = await fetch(url, { headers, ...init })
-  if (!response.ok) {
-    throw new Error(
-      `Failed to fetch ${url}: ${response.status} ${await response.text()}`,
-    )
-  }
-
-  return (await response.json()) as T
 }
 
 function getRecord(value: unknown, message: string): Record<string, unknown> {
@@ -630,6 +611,23 @@ function toFiniteNumber(value: unknown, name: string): number {
   }
 
   return numberValue
+}
+
+function toSnapshotDate(value: unknown, name: string): string {
+  if (typeof value !== 'string') {
+    throw new Error(`${name} is not a date string`)
+  }
+
+  const date = value.match(/^\d{4}-\d{2}-\d{2}/)?.[0]
+  if (!date || Number.isNaN(Date.parse(`${date}T00:00:00Z`))) {
+    throw new Error(`${name} is not a valid date`)
+  }
+
+  return date
+}
+
+function getCurrentDate(): string {
+  return new Date().toISOString().slice(0, 10)
 }
 
 function toTokenAmount(stakeBaseUnits: number, decimals: number): number {

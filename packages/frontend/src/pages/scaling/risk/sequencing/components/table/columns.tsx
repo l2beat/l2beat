@@ -5,7 +5,9 @@ import {
   adjustTableValue,
   sortTableValues,
 } from '~/components/table/sorting/sortTableValues'
+import { TableTooltip } from '~/components/table/TableTooltip'
 import type { ScalingRiskSequencingEntry } from '~/server/features/scaling/risks/sequencing/getScalingRiskSequencingEntries'
+import { formatDate } from '~/utils/dates'
 
 const columnHelper = createColumnHelper<ScalingRiskSequencingEntry>()
 
@@ -78,7 +80,20 @@ export const scalingSequencingColumns = [
     columnHelper.accessor((entry) => adjustTableValue(entry[key]), {
       id: key,
       header,
-      cell: (ctx) => <TableValueCell value={ctx.row.original[key]} />,
+      cell: (ctx) =>
+        key === 'sequencerCount' ? (
+          <div className="flex items-center gap-1">
+            <TableValueCell value={ctx.row.original[key]} />
+            {ctx.row.original.stakeDistributionSnapshotDate && (
+              <TableTooltip>
+                Stake distribution snapshot:{' '}
+                {formatDate(ctx.row.original.stakeDistributionSnapshotDate)}.
+              </TableTooltip>
+            )}
+          </div>
+        ) : (
+          <TableValueCell value={ctx.row.original[key]} />
+        ),
       meta: tooltip ? { tooltip } : undefined,
       sortDescFirst: true,
       sortUndefined: 'last',

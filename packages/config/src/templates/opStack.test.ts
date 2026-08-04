@@ -3,6 +3,7 @@ import { formatEther } from 'ethers/lib/utils'
 import {
   getOpStackBondScalingFactor,
   getOpStackFullDisputeGameBondCost,
+  getOpStackMaxCumulativeClockExtension,
 } from './opStack'
 
 describe(getOpStackBondScalingFactor.name, () => {
@@ -19,5 +20,17 @@ describe(getOpStackFullDisputeGameBondCost.name, () => {
     )
 
     expect(Number(formatEther(fullPathCost)).toFixed(2)).toEqual('691.23')
+  })
+})
+
+describe(getOpStackMaxCumulativeClockExtension.name, () => {
+  it('includes every standard extension and both special extensions', () => {
+    const maxExtension = getOpStackMaxCumulativeClockExtension(
+      73,
+      10_800,
+      86_400,
+    )
+
+    expect(maxExtension).toEqual(874_800)
   })
 })

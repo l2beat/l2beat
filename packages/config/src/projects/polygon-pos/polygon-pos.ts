@@ -288,7 +288,8 @@ export const polygonpos: ScalingProject = {
       description: readProjectMarkdown('polygon-pos', 'technologySequencing', {
         currentValidatorSetSize,
       }),
-      sequencerSetSpec: {
+      sequencingSpec: {
+        type: 'sequencer-set',
         blockTime: { value: formatSeconds(polygonBlockSeconds) },
         proposerRotationTime: {
           value: `${polygonSpanTimeString}`,

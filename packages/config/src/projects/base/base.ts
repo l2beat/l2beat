@@ -322,7 +322,8 @@ export const base: ScalingProject = opStackL2({
       name: 'Transactions are ordered by a centralized sequencer',
       description:
         'Base uses a single centralized sequencer for fast confirmations. Users can bypass it with one Ethereum transaction to the OptimismPortal. Base nodes derive the deposited transaction from Ethereum, including it after at most one sequencing window.',
-      centralizedSequencingSpec: {
+      sequencingSpec: {
+        type: 'centralized',
         trustedPreconfirmation: {
           value: `${flashblockIntervalMilliseconds} ms`,
           secondLine: `${l2BlockTimeSeconds} s L2 block time`,

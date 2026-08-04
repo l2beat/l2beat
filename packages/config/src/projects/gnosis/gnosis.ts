@@ -238,7 +238,8 @@ export const gnosis: ScalingProject = {
       name: 'Transactions are ordered by Gnosis Chain validators',
       description:
         'Gnosis Chain uses a permissionless proof-of-stake validator set with stake-weighted proposer rotation and a 5 second slot time. The Ethereum-like committee-free block production architecture combined with the short block time lead to fast theoretical inclusion times, even with high rates of censorship. In contrast to Ethereum, blocks on Gnosis chain are usually built *locally*, meaning that validators do not delegate block production to specialised builders. There is no public information on the decentralisation of the Gnosis validator set.',
-      sequencerSetSpec: {
+      sequencingSpec: {
+        type: 'sequencer-set',
         blockTime: { value: formatSeconds(gnosisSlotSeconds) },
         proposerRotationTime: {
           value: formatSeconds(gnosisSlotSeconds),

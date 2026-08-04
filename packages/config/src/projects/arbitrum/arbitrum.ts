@@ -548,7 +548,8 @@ export const arbitrum: ScalingProject = orbitStackL2({
       name: 'Transactions are ordered by a centralized sequencer',
       description:
         'Arbitrum One uses a single centralized sequencer for fast confirmations. Users can bypass it by first enqueueing a message on Ethereum. If the sequencer does not include it before the message-specific delay expires, anyone can submit a second Ethereum transaction to force the delayed queue into the canonical order.',
-      centralizedSequencingSpec: {
+      sequencingSpec: {
+        type: 'centralized',
         trustedPreconfirmation: {
           value: `${l2BlockTimeMilliseconds} ms`,
           secondLine: `${l2BlockTimeMilliseconds} ms L2 block time`,

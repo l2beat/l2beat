@@ -30,6 +30,7 @@ type EthereumSequencingProject = Project<'display' | 'scalingTechnology'>
 
 export interface ScalingRiskSequencingEntry extends CommonProjectEntry {
   sequencerCount: TableReadyValue | undefined
+  stakeDistributionSnapshotDate: string | undefined
   blockProductionAccess: TableReadyValue | undefined
   entryPolicy: TableReadyValue | undefined
   blockTime: TableReadyValue | undefined
@@ -140,7 +141,7 @@ function getInclusionDelayComparison(
     .map((project) => {
       const sequencing = project.scalingTechnology.sequencing
       const chart = sequencing?.inclusionDelayChart
-      if (!sequencing?.sequencerSetSpec || !chart) {
+      if (sequencing?.sequencingSpec?.type !== 'sequencer-set' || !chart) {
         return undefined
       }
       const inclusionDelay = getInclusionDelayData(chart)
@@ -245,6 +246,7 @@ function getEthereumSequencingEntry(
 type SequencingValues = Pick<
   ScalingRiskSequencingEntry,
   | 'sequencerCount'
+  | 'stakeDistributionSnapshotDate'
   | 'blockProductionAccess'
   | 'entryPolicy'
   | 'blockTime'
@@ -257,11 +259,13 @@ type SequencingValues = Pick<
 function getSequencingValues(
   sequencing: ProjectTechnologyChoice | undefined,
 ): SequencingValues | undefined {
-  const spec = sequencing?.sequencerSetSpec
-  if (!sequencing || !spec) return undefined
+  if (sequencing?.sequencingSpec?.type !== 'sequencer-set') return undefined
+  const spec = sequencing.sequencingSpec
 
   return {
     sequencerCount: spec.sequencerCount,
+    stakeDistributionSnapshotDate:
+      sequencing.inclusionDelayChart?.stakeDistribution?.snapshotDate,
     blockProductionAccess: spec.blockProductionAccess,
     entryPolicy: withSecondLine(spec.stakePerValidator, spec.rateLimit),
     blockTime: spec.blockTime,
@@ -280,10 +284,10 @@ function getScalingRiskCentralizedSequencingEntry(
   changes: ProjectChanges,
 ): ScalingRiskCentralizedSequencingEntry | undefined {
   const sequencing = project.scalingTechnology.sequencing
-  const spec = sequencing?.centralizedSequencingSpec
-  if (!sequencing || !spec) {
+  if (sequencing?.sequencingSpec?.type !== 'centralized') {
     return undefined
   }
+  const spec = sequencing.sequencingSpec
 
   return {
     ...getCommonScalingEntry({ project, changes }),

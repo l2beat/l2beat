@@ -55,14 +55,17 @@ export interface ProjectTechnologyChoice {
   description: string
   references: ReferenceLink[]
   risks: ProjectRisk[]
-  sequencerSetSpec?: ProjectSequencerSetSpec
-  centralizedSequencingSpec?: ProjectCentralizedSequencingSpec
+  sequencingSpec?: ProjectSequencingSpec
   inclusionDelayChart?: ProjectInclusionDelayChart
   inclusionDelayChartDescription?: string
   censorshipResistance?: string
   isIncomplete?: boolean
   isUnderReview?: boolean
 }
+
+export type ProjectSequencingSpec =
+  | (ProjectSequencerSetSpec & { type: 'sequencer-set' })
+  | (ProjectCentralizedSequencingSpec & { type: 'centralized' })
 
 export interface ProjectSequencerSetSpec {
   blockTime?: TableReadyValue
@@ -101,6 +104,7 @@ interface ProjectInclusionDelayChartBase {
 
 export interface ProjectInclusionDelayChartStakeDistribution {
   stakeToken: string
+  snapshotDate: string
   validatorCount?: number
   totalStake: number
   entities: ProjectInclusionDelayChartEntityStake[]

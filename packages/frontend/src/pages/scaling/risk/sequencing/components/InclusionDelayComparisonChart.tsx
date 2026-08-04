@@ -66,10 +66,11 @@ export function InclusionDelayComparisonChart({ comparison }: Props) {
         />
       </div>
       <p className="mt-3 text-paragraph-13 text-secondary md:text-paragraph-14">
-        Points mark the top entities' cumulative stakes. A line stopping before
-        the 50% limit indicates that any more censorship will prevent inclusion
-        completely. This is usually due to the sequencer network's consensus
-        mechanism stopping block production at that threshold.
+        Points mark the largest attributed entities' cumulative stakes. A line
+        stopping before the 50% limit indicates that any more censorship will
+        prevent inclusion completely. This is usually due to the sequencer
+        network's consensus mechanism stopping block production at that
+        threshold.
       </p>
     </div>
   )

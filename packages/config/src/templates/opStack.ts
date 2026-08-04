@@ -1408,6 +1408,22 @@ export function getOpStackFullDisputeGameBondCost(
   return BigInt(cost) * BigInt(scaleFactor)
 }
 
+/**
+ * Maximum time added by clock extensions along a full-depth dispute-game path.
+ *
+ * FaultDisputeGame applies one extension to every claim from depth 1 through
+ * MAX_GAME_DEPTH - 1. The split-boundary claim gets one extra clock extension,
+ * while the final preimage-boundary claim also gets the oracle challenge
+ * period.
+ */
+export function getOpStackMaxCumulativeClockExtension(
+  gameMaxDepth: number,
+  gameClockExtension: number,
+  oracleChallengePeriod: number,
+): number {
+  return gameClockExtension * gameMaxDepth + oracleChallengePeriod
+}
+
 function describeOPFP({
   disputeGameBonds,
   maxClockDuration,
@@ -1427,10 +1443,11 @@ function describeOPFP({
 }): ProjectScalingStateValidation {
   const exponentialBondsFactor = getOpStackBondScalingFactor(gameMaxDepth)
 
-  const gameMaxClockExtension =
-    gameClockExtension * 2 + // at SPLIT_DEPTH - 1
-    oracleChallengePeriod + // at MAX_GAME_DEPTH - 1
-    gameClockExtension * (gameMaxDepth - 3) // the rest, excluding also the last depth
+  const gameMaxClockExtension = getOpStackMaxCumulativeClockExtension(
+    gameMaxDepth,
+    gameClockExtension,
+    oracleChallengePeriod,
+  )
 
   const permissionlessGameFullCost = getOpStackFullDisputeGameBondCost(
     disputeGameBonds,
@@ -1469,6 +1486,9 @@ function describeOPFP({
           maxClockDuration: formatSeconds(maxClockDuration),
           gameClockExtension: formatSeconds(gameClockExtension),
           doubleGameClockExtension: formatSeconds(gameClockExtension * 2),
+          maxGameDepthClockExtension: formatSeconds(
+            gameClockExtension + oracleChallengePeriod,
+          ),
           gameSplitDepth,
           oracleChallengePeriod: formatSeconds(oracleChallengePeriod),
           gameMaxClockExtension: formatSeconds(gameMaxClockExtension),

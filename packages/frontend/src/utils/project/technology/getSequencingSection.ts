@@ -15,8 +15,7 @@ export function getSequencingSection(
       project.scalingTechnology.sequencingImage ?? project.slug,
     ),
     content: sequencing.description,
-    sequencerSetSpec: sequencing.sequencerSetSpec,
-    centralizedSequencingSpec: sequencing.centralizedSequencingSpec,
+    sequencingSpec: sequencing.sequencingSpec,
     inclusionDelay: sequencing.inclusionDelayChart
       ? prepareInclusionDelay(sequencing.inclusionDelayChart)
       : undefined,

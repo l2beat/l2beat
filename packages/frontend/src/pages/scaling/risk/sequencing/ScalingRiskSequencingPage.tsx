@@ -30,7 +30,7 @@ export function ScalingRiskSequencingPage({
   return (
     <AppLayout {...props}>
       <SideNavLayout>
-        <MainPageHeader description="Decentralized sequencing provides real-time censorship resistance, while deterministic host-chain inclusion provides eventual censorship resistance. No system shown here combines both guarantees today.">
+        <MainPageHeader description="Rotating block production across independent operators improves real-time censorship resistance, while deterministic host-chain inclusion provides eventual censorship resistance. No system shown here combines both guarantees today.">
           Sequencing
         </MainPageHeader>
         <PrimaryCard className="mt-4">

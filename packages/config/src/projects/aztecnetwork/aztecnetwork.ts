@@ -526,7 +526,8 @@ export const aztecnetwork: ScalingProject = {
         targetCommitteeSize,
         activeSequencerCount,
       }),
-      sequencerSetSpec: {
+      sequencingSpec: {
+        type: 'sequencer-set',
         blockTime: {
           value: `${formatSeconds(l2BlockTime)}`,
           description:

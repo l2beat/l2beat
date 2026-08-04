@@ -1,4 +1,4 @@
-import type { TableReadyValue } from '@l2beat/config'
+import type { Sentiment, TableReadyValue } from '@l2beat/config'
 import { createColumnHelper } from '@tanstack/react-table'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { getScalingCommonProjectColumns } from '~/components/table/common-project-columns/ScalingCommonProjectColumns'
@@ -25,6 +25,13 @@ type CentralizedSequencingTableValueKey =
   | 'exitDelay'
   | 'exitEconomics'
 
+interface TableValueColumn {
+  key: CentralizedSequencingTableValueKey
+  header: string
+  tooltip: string
+  sentimentOverride?: Sentiment
+}
+
 const tableValueColumns = [
   {
     key: 'trustedPreconfirmation',
@@ -48,6 +55,7 @@ const tableValueColumns = [
     header: 'Real-time\nCR',
     tooltip:
       'Whether the normal low-latency sequencing path resists censorship by the operator.',
+    sentimentOverride: 'warning',
   },
   {
     key: 'forcedInclusion',
@@ -79,41 +87,36 @@ const tableValueColumns = [
     tooltip:
       'Capital and proof or dispute work required to self-propose and defend one state update needed for an exit under blanket censorship or operator walkaway.',
   },
-] satisfies {
-  key: CentralizedSequencingTableValueKey
-  header: string
-  tooltip: string
-}[]
+] satisfies TableValueColumn[]
 
 function getTableValue(
   entry: ScalingRiskCentralizedSequencingEntry,
-  key: CentralizedSequencingTableValueKey,
+  column: TableValueColumn,
 ): TableReadyValue {
-  const value = entry[key]
-  if (key !== 'realtimeCensorshipResistance' || value.sentiment !== 'bad') {
-    return value
-  }
+  const value = entry[column.key]
 
-  return { ...value, sentiment: 'warning' }
+  return column.sentimentOverride
+    ? { ...value, sentiment: column.sentimentOverride }
+    : value
 }
 
 export const scalingCentralizedSequencingColumns = [
   ...getScalingCommonProjectColumns(columnHelper, getSequencingHref),
-  ...tableValueColumns.map(({ key, header, tooltip }) =>
+  ...tableValueColumns.map((column) =>
     columnHelper.accessor(
-      (entry) => adjustTableValue(getTableValue(entry, key)),
+      (entry) => adjustTableValue(getTableValue(entry, column)),
       {
-        id: key,
-        header,
+        id: column.key,
+        header: column.header,
         cell: (ctx) => (
-          <TableValueCell value={getTableValue(ctx.row.original, key)} />
+          <TableValueCell value={getTableValue(ctx.row.original, column)} />
         ),
-        meta: { tooltip },
+        meta: { tooltip: column.tooltip },
         sortDescFirst: true,
         sortingFn: (a, b) =>
           sortTableValues(
-            getTableValue(a.original, key),
-            getTableValue(b.original, key),
+            getTableValue(a.original, column),
+            getTableValue(b.original, column),
           ),
       },
     ),

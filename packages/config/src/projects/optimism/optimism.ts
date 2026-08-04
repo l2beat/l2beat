@@ -12,7 +12,11 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
-import { getOpStackBondScalingFactor, opStackL2 } from '../../templates/opStack'
+import {
+  getOpStackBondScalingFactor,
+  getOpStackMaxCumulativeClockExtension,
+  opStackL2,
+} from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('optimism')
 const genesisTimestamp = UnixTime(1636665399)
@@ -48,6 +52,10 @@ const maxClockDuration = discovery.getContractValue<number>(
   'FaultDisputeGame',
   'maxClockDuration',
 )
+const clockExtension = discovery.getContractValue<number>(
+  'FaultDisputeGame',
+  'clockExtension',
+)
 const respectedGameType = discovery.getContractValue<number>(
   'OptimismPortal2',
   'respectedGameType',
@@ -64,18 +72,24 @@ const faultDisputeGameMaxDepth = discovery.getContractValue<number>(
   'FaultDisputeGame',
   'maxGameDepth',
 )
+const preimageOracleChallengePeriod = discovery.getContractValue<number>(
+  'PreimageOracle',
+  'challengePeriod',
+)
+const faultDisputeGameMaxClockExtension = getOpStackMaxCumulativeClockExtension(
+  faultDisputeGameMaxDepth,
+  clockExtension,
+  preimageOracleChallengePeriod,
+)
+// MAX_CLOCK_DURATION caps each team's chess clock, not the whole game.
+const faultDisputeGameMaxDuration =
+  maxClockDuration * 2 + faultDisputeGameMaxClockExtension
 const faultDisputeGameBondScalingFactor = getOpStackBondScalingFactor(
   faultDisputeGameMaxDepth,
 )
 const faultDisputeGameInitialBondEther = Number(
   formatEther(faultDisputeGameInitialBond),
 )
-const stateFinalizationDelaySeconds = Math.max(
-  proofMaturityDelaySeconds,
-  maxClockDuration + disputeGameFinalityDelaySeconds,
-)
-const worstCaseExitDelaySeconds =
-  sequencingWindowSeconds + stateFinalizationDelaySeconds
 
 const securityCouncilStats = discovery.getMultisigStats(
   'Optimism Security Council',
@@ -228,7 +242,8 @@ export const optimism: ScalingProject = opStackL2({
       name: 'Transactions are ordered by a centralized sequencer',
       description:
         'OP Mainnet uses a single centralized sequencer for fast confirmations. Users can bypass it with one Ethereum transaction to the OptimismPortal. Rollup nodes derive the deposited transaction from Ethereum, including it after at most one sequencing window.',
-      centralizedSequencingSpec: {
+      sequencingSpec: {
+        type: 'centralized',
         trustedPreconfirmation: {
           value: `${flashblockIntervalMilliseconds} ms`,
           secondLine: `${l2BlockTimeSeconds} s L2 block time`,
@@ -276,12 +291,11 @@ export const optimism: ScalingProject = opStackL2({
           description: `Forced inclusion creates an L1-originated deposit transaction rather than submitting the original signed L2 transaction. Its calldata is capped at ${maxDepositCalldataBytes.toLocaleString('en-US')} bytes, its minimum L2 gas limit is ${minimumDepositGasWithoutData.toLocaleString('en-US')} plus ${minimumDepositGasPerByte.toLocaleString('en-US')} gas per calldata byte, and deposits share a metered ${depositResourceLimit.toLocaleString('en-US')} gas resource limit per Ethereum block. L1 contract callers use an aliased address on L2.`,
         },
         exitDelay: {
-          value: formatSeconds(worstCaseExitDelaySeconds, {
-            fullUnit: true,
-          }),
-          secondLine: `${formatSeconds(sequencingWindowSeconds)} inclusion + ${formatSeconds(stateFinalizationDelaySeconds)} exit`,
-          description: `After successful L2 inclusion (forced or sequencer), the user can propose the state needed to exit by creating a permissionless fault dispute game. A maximally delayed game uses the ${formatSeconds(maxClockDuration, { fullUnit: true })} game clock and then waits the ${formatSeconds(disputeGameFinalityDelaySeconds, { fullUnit: true })} finality air gap. The ${formatSeconds(proofMaturityDelaySeconds, { fullUnit: true })} withdrawal-proof maturity period runs concurrently.`,
-          orderHint: worstCaseExitDelaySeconds,
+          value: 'Unbounded',
+          secondLine: `${formatSeconds(sequencingWindowSeconds)} inclusion + uncapped resolution`,
+          sentiment: 'bad',
+          description: `After successful L2 inclusion (forced or sequencer), the user can propose the state needed to exit by creating a permissionless fault dispute game. Each challenge path has a bounded clock budget of ${formatSeconds(faultDisputeGameMaxDuration, { fullUnit: true })}: both teams' ${formatSeconds(maxClockDuration, { fullUnit: true })} chess clocks plus up to ${formatSeconds(faultDisputeGameMaxClockExtension, { fullUnit: true })} of cumulative clock extensions. However, attackers can create many parallel branches. All branches must be processed bottom-up before the game finishes, and the protocol sets no deadline for this work. Therefore, the overall exit delay is unbounded. If resolution were immediate, the fixed waits would total ${formatSeconds(sequencingWindowSeconds + faultDisputeGameMaxDuration + disputeGameFinalityDelaySeconds, { fullUnit: true })}, including the ${formatSeconds(disputeGameFinalityDelaySeconds, { fullUnit: true })} finality air gap. The ${formatSeconds(proofMaturityDelaySeconds, { fullUnit: true })} withdrawal-proof maturity period runs concurrently.`,
+          orderHint: Number.MAX_SAFE_INTEGER,
         },
         exitEconomics: {
           value: `${faultDisputeGameInitialBondEther.toLocaleString('en-US')} ETH`,
@@ -311,6 +325,10 @@ export const optimism: ScalingProject = opStackL2({
         {
           title: 'OptimismPortal2 - source code',
           url: 'https://etherscan.io/address/0xe89F13c5ee4033B2D3cD76C9d6958eFBfe26D3C2#code',
+        },
+        {
+          title: 'OP Stack specification - fault dispute game resolution',
+          url: 'https://specs.optimism.io/fault-proof/stage-one/honest-challenger-fdg.html#resolution',
         },
       ],
       risks: [],

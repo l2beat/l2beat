@@ -1,11 +1,12 @@
 {
   "stakeToken": "POL",
+  "snapshotDate": "2026-08-04",
   "validatorCount": 105,
-  "totalStake": 3571091010,
+  "totalStake": 3571095287,
   "entities": [
     {
       "name": "Upbit Staking",
-      "stake": 416533126
+      "stake": 416573126
     },
     {
       "name": "Coinbase",
@@ -33,11 +34,11 @@
     },
     {
       "name": "Blockdaemon",
-      "stake": 181315703
+      "stake": 181175703
     },
     {
       "name": "Kraken",
-      "stake": 166711749
+      "stake": 166815921
     },
     {
       "name": "Anonymous 95",

@@ -83,7 +83,7 @@ export function InclusionDelayChart({
                     backgroundColor={INCLUSION_DELAY_ENTITY_MARKER_COLOR}
                   />
                   <ChartLegendItemLabel>
-                    Largest staking entities
+                    Largest attributed entities
                   </ChartLegendItemLabel>
                 </div>
               )}
