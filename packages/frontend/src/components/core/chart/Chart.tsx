@@ -175,7 +175,11 @@ function ChartContainer<T extends { timestamp: number }>({
   return (
     <ChartContext.Provider value={{ meta, interactiveLegend }}>
       <div ref={ref} className="group relative overflow-x-clip">
+        {/* h-full keeps this wrapper transparent to percentage-height chains
+            (e.g. cards that size charts via [&>div]:h-full + h-full! on the
+            recharts wrapper); with height:auto it would collapse them to 0. */}
         <div
+          className="h-full"
           style={frozenWidth !== undefined ? { width: frozenWidth } : undefined}
         >
           <Slot
