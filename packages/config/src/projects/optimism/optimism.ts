@@ -84,6 +84,10 @@ const faultDisputeGameMaxClockExtension = getOpStackMaxCumulativeClockExtension(
 // MAX_CLOCK_DURATION caps each team's chess clock, not the whole game.
 const faultDisputeGameMaxDuration =
   maxClockDuration * 2 + faultDisputeGameMaxClockExtension
+const faultDisputeGameStateFinalizationDelaySeconds =
+  faultDisputeGameMaxDuration + disputeGameFinalityDelaySeconds
+const faultDisputeGameWorstCaseExitDelaySeconds =
+  sequencingWindowSeconds + faultDisputeGameStateFinalizationDelaySeconds
 const faultDisputeGameBondScalingFactor = getOpStackBondScalingFactor(
   faultDisputeGameMaxDepth,
 )
@@ -290,11 +294,12 @@ export const optimism: ScalingProject = opStackL2({
           description: `Forced inclusion creates an L1-originated deposit transaction rather than submitting the original signed L2 transaction. Its calldata is capped at ${maxDepositCalldataBytes.toLocaleString('en-US')} bytes, its minimum L2 gas limit is ${minimumDepositGasWithoutData.toLocaleString('en-US')} plus ${minimumDepositGasPerByte.toLocaleString('en-US')} gas per calldata byte, and deposits share a metered ${depositResourceLimit.toLocaleString('en-US')} gas resource limit per Ethereum block. L1 contract callers use an aliased address on L2.`,
         },
         exitDelay: {
-          value: 'Unbounded',
-          secondLine: `${formatSeconds(sequencingWindowSeconds)} inclusion + uncapped resolution`,
-          sentiment: 'bad',
-          description: `After successful L2 inclusion (forced or sequencer), the user can propose the state needed to exit by creating a permissionless fault dispute game. Each challenge path has a bounded clock budget of ${formatSeconds(faultDisputeGameMaxDuration, { fullUnit: true })}: both teams' ${formatSeconds(maxClockDuration, { fullUnit: true })} chess clocks plus up to ${formatSeconds(faultDisputeGameMaxClockExtension, { fullUnit: true })} of cumulative clock extensions. However, attackers can create many parallel branches. All branches must be processed bottom-up before the game finishes, and the protocol sets no deadline for this work. Therefore, the overall exit delay is unbounded. If resolution were immediate, the fixed waits would total ${formatSeconds(sequencingWindowSeconds + faultDisputeGameMaxDuration + disputeGameFinalityDelaySeconds, { fullUnit: true })}, including the ${formatSeconds(disputeGameFinalityDelaySeconds, { fullUnit: true })} finality air gap. The ${formatSeconds(proofMaturityDelaySeconds, { fullUnit: true })} withdrawal-proof maturity period runs concurrently.`,
-          orderHint: Number.MAX_SAFE_INTEGER,
+          value: formatSeconds(faultDisputeGameWorstCaseExitDelaySeconds, {
+            fullUnit: true,
+          }),
+          secondLine: `${formatSeconds(sequencingWindowSeconds)} inclusion + ${formatSeconds(faultDisputeGameStateFinalizationDelaySeconds)} exit`,
+          description: `After successful L2 inclusion (forced or sequencer), the user can propose the state needed to exit by creating a permissionless fault dispute game. A maximally delayed challenge path can take up to ${formatSeconds(faultDisputeGameMaxDuration, { fullUnit: true })}: both teams' ${formatSeconds(maxClockDuration, { fullUnit: true })} chess clocks plus up to ${formatSeconds(faultDisputeGameMaxClockExtension, { fullUnit: true })} of cumulative clock extensions. This is followed by the ${formatSeconds(disputeGameFinalityDelaySeconds, { fullUnit: true })} finality air gap. Parallel branches increase the transactions and gas needed to defend and resolve the game. The ${formatSeconds(proofMaturityDelaySeconds, { fullUnit: true })} withdrawal-proof maturity period runs concurrently.`,
+          orderHint: faultDisputeGameWorstCaseExitDelaySeconds,
         },
         exitEconomics: {
           value: `${faultDisputeGameInitialBondEther.toLocaleString('en-US')} ETH`,
