@@ -25,9 +25,10 @@
  *    truncate the most recent window.
  *
  * 2. The input data has block numbers but no timestamps. Instead of resolving a
- *    cutoff block per data point (~360 binary searches), this script fetches
- *    real timestamps for ~60 evenly spaced anchor blocks and linearly
- *    interpolates between them. Post-merge block times are stable enough that
+ *    cutoff block per data point (~360 binary searches), it linearly
+ *    interpolates between the ~60 evenly spaced anchor blocks in BLOCK_ANCHORS,
+ *    whose real timestamps are frozen below. Post-merge block times are stable
+ *    enough that
  *    the error inside a ~7 day anchor gap stays well under an hour, which is
  *    invisible at day granularity. As a consequence the 30 day values here can
  *    differ by a few addresses from `anonymity_sets.json`, which used an exact
@@ -38,9 +39,9 @@
  *    since withdrawn. A depositor's real anonymity also depends on deposits
  *    arriving after theirs, which is not observable here.
  *
- * 4. The ETH-equivalent thresholds are priced with *today's* spot prices from
- *    Coingecko and rounded to one significant digit, then applied to the whole
- *    year of history. A token that moved sharply against ETH during the window
+ * 4. The ETH-equivalent thresholds are priced with the frozen PRICES_USD table
+ *    below and rounded to one significant digit, then applied to the whole year
+ *    of history. A token that moved sharply against ETH during the window
  *    therefore gets a threshold that was worth more or less than 0.1/10 ETH at
  *    the time of the older deposits. The tiers are meant as order-of-magnitude
  *    buckets, not exact valuations. Prices used are recorded in the output.
@@ -48,13 +49,15 @@
  * 5. Tracked buckets with no deposits at all in the source CSVs still produce a
  *    (flat zero) curve, and the script prints a coverage report so gaps between
  *    what the config tracks and what the snapshot contains stay visible.
+ *
+ * 6. The script makes no network calls. Block timestamps and token prices are
+ *    frozen tables captured once (see each table for provenance), because the
+ *    input CSVs are a frozen snapshot: reading live prices or a live chain tip
+ *    would silently change every curve on a re-run without any new data. To
+ *    refresh them you need a new CSV export anyway.
  */
 
-import { getEnv, Logger } from '@l2beat/backend-tools'
-import { CoingeckoClient, HttpClient } from '@l2beat/shared'
-import type { CoingeckoId } from '@l2beat/shared-pure'
 import dotenv from 'dotenv'
-import { providers } from 'ethers'
 import { readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
 import { privacyPools } from '../src/projects/privacy-pools/privacy-pools'
@@ -92,8 +95,108 @@ const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
 /** ~7 days of Ethereum blocks at 12s per block. */
 const ANCHOR_STEP_BLOCKS = 50_400
-/** Enough anchors to reach ~400 days back, leaving margin over MAX_DAYS. */
-const ANCHOR_COUNT = 58
+
+/**
+ * `[blockNumber, unixTimestamp]` pairs used to date a deposit - see assumptions
+ * #2 and #6. Evenly spaced by ANCHOR_STEP_BLOCKS and newest first, starting at
+ * the highest block present in the CSV snapshots and reaching ~400 days back,
+ * which is comfortably past MAX_DAYS.
+ *
+ * Captured once from an Ethereum RPC node on 2026-08-04. Block timestamps are
+ * immutable, so these never need refreshing unless the CSV snapshot is
+ * re-exported with newer blocks - in which case re-capture from the new highest
+ * block, stepping back by ANCHOR_STEP_BLOCKS.
+ */
+const BLOCK_ANCHORS: [block: number, timestamp: number][] = [
+  [25638016, 1785322403],
+  [25587616, 1784715359],
+  [25537216, 1784108399],
+  [25486816, 1783501247],
+  [25436416, 1782893843],
+  [25386016, 1782286499],
+  [25335616, 1781679419],
+  [25285216, 1781072435],
+  [25234816, 1780465019],
+  [25184416, 1779857711],
+  [25134016, 1779250847],
+  [25083616, 1778644007],
+  [25033216, 1778037191],
+  [24982816, 1777430471],
+  [24932416, 1776824135],
+  [24882016, 1776217667],
+  [24831616, 1775610755],
+  [24781216, 1775003879],
+  [24730816, 1774396511],
+  [24680416, 1773789203],
+  [24630016, 1773181307],
+  [24579616, 1772573291],
+  [24529216, 1771965695],
+  [24478816, 1771358591],
+  [24428416, 1770751163],
+  [24378016, 1770142067],
+  [24327616, 1769534327],
+  [24277216, 1768926863],
+  [24226816, 1768319711],
+  [24176416, 1767711923],
+  [24126016, 1767104567],
+  [24075616, 1766496563],
+  [24025216, 1765888679],
+  [23974816, 1765278407],
+  [23924416, 1764661979],
+  [23874016, 1764051839],
+  [23823616, 1763439923],
+  [23773216, 1762830479],
+  [23722816, 1762221407],
+  [23672416, 1761612083],
+  [23622016, 1761002123],
+  [23571616, 1760392655],
+  [23521216, 1759783775],
+  [23470816, 1759175051],
+  [23420416, 1758566435],
+  [23370016, 1757957903],
+  [23319616, 1757349503],
+  [23269216, 1756740947],
+  [23218816, 1756133267],
+  [23168416, 1755525827],
+  [23118016, 1754917823],
+  [23067616, 1754309483],
+  [23017216, 1753700519],
+  [22966816, 1753091855],
+  [22916416, 1752483995],
+  [22866016, 1751875571],
+  [22815616, 1751267027],
+  [22765216, 1750658567],
+]
+
+/**
+ * Spot prices in USD, used only to size the ETH-equivalent tiers - see
+ * assumptions #4 and #6. Keyed by the Coingecko id the l2beat config assigns to
+ * each token.
+ *
+ * Captured once on 2026-08-04. Thresholds are rounded to one significant digit,
+ * so these only need updating if a price moves far enough to change that digit.
+ * A tracked token missing from this table is skipped with a warning.
+ */
+const PRICES_USD: Record<string, number> = {
+  ethereum: 1869.07,
+  tether: 0.999123,
+  'usd-coin': 0.999545,
+  usds: 0.999906,
+  'wrapped-steth': 2320.26,
+  'wrapped-bitcoin': 63848,
+  susds: 1.11,
+  dai: 0.999895,
+  weth: 1869.9,
+  'usd1-wlfi': 0.999246,
+  'ethena-usde': 0.999472,
+  'frax-usd': 0.999773,
+  instadapp: 1.26,
+  railgun: 1.48,
+  'f-x-protocol-fxusd': 0.999956,
+  'liquity-bold-2': 1.001,
+  'wrapped-oeth': 2167.75,
+  'rainbow-bridged-near-ethereum': 1.75,
+}
 
 /** The two ETH-equivalent sizes every arbitrary-amount token is measured at. */
 const ETH_TIERS = [0.1, 10]
@@ -148,14 +251,6 @@ interface TokenSpec {
   decimals: number
   priceId: string
   buckets: { id: string; denomination: string | undefined }[]
-}
-
-function getEthereumRpcUrl(): string {
-  const rpcUrl = process.env.ETHEREUM_RPC_URL
-  if (!rpcUrl) {
-    throw new Error('ETHEREUM_RPC_URL not found in environment/.env file')
-  }
-  return rpcUrl
 }
 
 /** The tokens and buckets the l2beat config actually tracks for a project. */
@@ -347,42 +442,15 @@ function formatAmount(amount: number): string {
 }
 
 // Evenly spaced (block, timestamp) pairs, newest first - see assumption #2.
-async function fetchAnchors(
-  provider: providers.JsonRpcProvider,
-  latestBlockNumber: number,
-): Promise<Anchor[]> {
-  const anchors: Anchor[] = []
-  for (let i = 0; i < ANCHOR_COUNT; i++) {
-    const blockNumber = latestBlockNumber - i * ANCHOR_STEP_BLOCKS
-    if (blockNumber < 0) break
-    const block = await provider.getBlock(blockNumber)
-    anchors.push({ blockNumber, timestamp: block.timestamp })
-  }
-  return anchors
+function getAnchors(): Anchor[] {
+  return BLOCK_ANCHORS.map(([blockNumber, timestamp]) => ({
+    blockNumber,
+    timestamp,
+  }))
 }
 
-async function fetchPrices(priceIds: string[]): Promise<Map<string, number>> {
-  const env = getEnv()
-  const apiKey = env.optionalString('COINGECKO_API_KEY')
-  const client = new CoingeckoClient({
-    apiKey,
-    http: new HttpClient(),
-    retryStrategy: 'SCRIPT',
-    callsPerMinute: apiKey ? 400 : 10,
-    sourceName: 'coingeckoAPI',
-    logger: Logger.SILENT,
-  })
-
-  const ids = [...new Set([ETH_PRICE_ID, ...priceIds])].filter(Boolean)
-  const results = await client.getCoinsMarket(ids as CoingeckoId[], 'usd')
-
-  const prices = new Map<string, number>()
-  for (const result of results) {
-    if (result.current_price !== null) {
-      prices.set(result.id, result.current_price)
-    }
-  }
-  return prices
+function getPrices(): Map<string, number> {
+  return new Map(Object.entries(PRICES_USD))
 }
 
 /**
@@ -490,19 +558,13 @@ function reportCoverage(
   }
 }
 
-async function main() {
+function main() {
   const tornadoTokens = getTrackedTokens(tornadoCash)
   const railgunTokens = getTrackedTokens(railgun)
   const privacyPoolsTokens = getTrackedTokens(privacyPools)
 
-  const prices = await fetchPrices([
-    ...railgunTokens.map((token) => token.priceId),
-    ...privacyPoolsTokens.map((token) => token.priceId),
-  ])
-
-  const provider = new providers.JsonRpcProvider(getEthereumRpcUrl())
-  const latestBlockNumber = await provider.getBlockNumber()
-  const anchors = await fetchAnchors(provider, latestBlockNumber)
+  const prices = getPrices()
+  const anchors = getAnchors()
 
   const trxRows = parseTrxsWithAmounts(TRXS_WITH_AMOUNTS_FILE)
   const ppRows = parsePrivacyPoolsCsv(PRIVACY_POOLS_FILE)
@@ -621,13 +683,15 @@ async function main() {
   writeFileSync(OUTPUT_FILE, `${JSON.stringify(result, null, 2)}\n`)
 
   console.log(
-    `\nAnchors: ${anchors.length}, latest block: ${latestBlockNumber}`,
+    `\nAnchors: ${anchors.length}, newest block: ${anchors[0]?.blockNumber}`,
   )
   console.log(`Wrote ${OUTPUT_FILE}`)
   console.log('Run `biome format --write` on it before committing.')
 }
 
-main().catch((e: unknown) => {
+try {
+  main()
+} catch (e: unknown) {
   console.error(e)
   process.exit(1)
-})
+}
