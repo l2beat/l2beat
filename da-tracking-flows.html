@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DA Tracking — The Era Ledger</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f3eee3;
+    --paper-deep: #ece5d5;
+    --ink: #221d14;
+    --ink-soft: #55503f;
+    --ink-faint: #8b8470;
+    --rule: #d5cbb4;
+    --rule-strong: #b7ab8e;
+    --red: #b23c22;       /* oxide — new era / danger */
+    --red-soft: #e8c9be;
+    --teal: #1d6a63;      /* verdigris — old era / safe */
+    --teal-soft: #c6ddd8;
+    --gold: #8f701f;
+    --code-bg: #262117;
+    --code-ink: #e8dfc8;
+    --code-dim: #97907b;
+    --code-red: #e78b6f;
+    --code-teal: #7fc4ba;
+    --code-gold: #d9b45c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Spectral', serif;
+    font-size: 16.5px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* paper grain */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 999;
+  }
+  .sheet { max-width: 1060px; margin: 0 auto; padding: 0 40px 140px; }
+
+  /* ───────── masthead ───────── */
+  header { padding: 64px 0 0; }
+  .stamp-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-family: 'IBM Plex Mono', monospace; font-size: 11.5px;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft);
+    border-bottom: 1px solid var(--ink); padding-bottom: 10px;
+  }
+  .stamp-row .no { color: var(--red); font-weight: 600; }
+  h1 {
+    font-family: 'Fraunces', serif; font-weight: 900;
+    font-size: clamp(52px, 8.5vw, 96px); line-height: 0.98;
+    letter-spacing: -0.02em; margin: 34px 0 8px;
+  }
+  h1 .thin { font-weight: 300; font-style: italic; color: var(--teal); }
+  .dek {
+    font-size: 20px; font-weight: 300; color: var(--ink-soft);
+    max-width: 620px; margin: 18px 0 44px; line-height: 1.5;
+  }
+  .dek strong { font-weight: 600; color: var(--ink); }
+
+  /* census strip */
+  .census {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 2px solid var(--ink); border-bottom: 1px solid var(--rule-strong);
+  }
+  .census > div { padding: 18px 18px 20px; border-right: 1px solid var(--rule); }
+  .census > div:last-child { border-right: none; }
+  .census .num {
+    font-family: 'Fraunces', serif; font-size: 46px; font-weight: 600; line-height: 1;
+  }
+  .census .lbl {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10.5px;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft);
+    margin-top: 8px; line-height: 1.6;
+  }
+  .census .c-hist .num { color: var(--teal); }
+  .census .c-over .num { color: var(--gold); }
+  .census .c-zero .num { color: var(--red); }
+
+  /* ───────── sections ───────── */
+  section { margin-top: 96px; position: relative; }
+  .sec-head { display: flex; align-items: baseline; gap: 22px; border-bottom: 2px solid var(--ink); padding-bottom: 12px; margin-bottom: 34px; }
+  .sec-head .sig {
+    font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 600;
+    color: var(--paper); background: var(--ink); padding: 4px 10px 3px;
+    letter-spacing: 0.08em; white-space: nowrap;
+  }
+  h2 { font-family: 'Fraunces', serif; font-weight: 700; font-size: clamp(28px, 4vw, 40px); letter-spacing: -0.015em; line-height: 1.05; }
+  h3 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 21px; margin: 34px 0 10px; }
+  p { margin: 12px 0; max-width: 74ch; }
+  p.wide { max-width: none; }
+  a { color: var(--teal); }
+  strong { font-weight: 600; }
+  em { font-style: italic; }
+
+  code, .mono {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.86em;
+    background: var(--paper-deep); border: 1px solid var(--rule);
+    padding: 1px 5px; border-radius: 2px; white-space: nowrap;
+  }
+  pre {
+    background: var(--code-bg); color: var(--code-ink);
+    font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.65;
+    padding: 22px 26px; overflow-x: auto; margin: 18px 0;
+    border-radius: 3px; box-shadow: 4px 4px 0 var(--rule-strong);
+  }
+  pre code { background: none; border: none; padding: 0; font-size: inherit; white-space: pre; }
+  pre .c { color: var(--code-dim); font-style: italic; }
+  pre .r { color: var(--code-red); }
+  pre .t { color: var(--code-teal); }
+  pre .g { color: var(--code-gold); }
+  pre .k { color: #b9b0d8; }
+
+  .marginal {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--ink-faint); margin: 26px 0 8px;
+  }
+
+  /* callout */
+  .callout {
+    border-left: 3px solid var(--red); background: linear-gradient(90deg, rgba(178,60,34,0.07), transparent 70%);
+    padding: 14px 20px; margin: 22px 0; max-width: 80ch;
+  }
+  .callout.safe { border-left-color: var(--teal); background: linear-gradient(90deg, rgba(29,106,99,0.08), transparent 70%); }
+  .callout .tag {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--red); display: block; margin-bottom: 4px;
+  }
+  .callout.safe .tag { color: var(--teal); }
+  .callout p { margin: 4px 0; }
+
+  /* tables */
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 15px; }
+  th {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft);
+    text-align: left; border-bottom: 2px solid var(--ink); padding: 8px 14px 8px 0;
+  }
+  td { border-bottom: 1px solid var(--rule); padding: 11px 14px 11px 0; vertical-align: top; }
+  td:first-child, th:first-child { padding-left: 2px; }
+  tr:hover td { background: rgba(0,0,0,0.018); }
+
+  /* precedence ladder */
+  .ladder { counter-reset: step; margin: 30px 0; }
+  .rung {
+    display: grid; grid-template-columns: 74px 1fr 150px; gap: 24px;
+    padding: 22px 0; border-bottom: 1px solid var(--rule); align-items: start;
+    position: relative;
+  }
+  .rung:first-child { border-top: 2px solid var(--ink); }
+  .rung .ord {
+    font-family: 'Fraunces', serif; font-weight: 900; font-size: 44px; line-height: 1;
+    color: var(--paper); -webkit-text-stroke: 1.4px var(--ink);
+  }
+  .rung.active .ord { color: var(--teal); -webkit-text-stroke: 0; }
+  .rung h4 { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 700; margin-bottom: 5px; }
+  .rung h4 code { font-size: 15px; vertical-align: 1px; }
+  .rung p { font-size: 15px; margin: 4px 0; color: var(--ink-soft); max-width: 62ch; }
+  .rung .count {
+    font-family: 'IBM Plex Mono', monospace; font-size: 12px; text-align: right;
+    color: var(--ink-soft); line-height: 1.7;
+  }
+  .rung .count b { font-family: 'Fraunces', serif; font-size: 30px; font-weight: 600; color: var(--ink); display: block; }
+  .pill {
+    display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+    letter-spacing: 0.1em; text-transform: uppercase; padding: 2px 8px; border-radius: 20px;
+    border: 1px solid currentColor; margin-left: 8px; vertical-align: 2px;
+  }
+  .pill.teal { color: var(--teal); } .pill.gold { color: var(--gold); } .pill.red { color: var(--red); }
+
+  /* flow cards */
+  .flow {
+    border: 1px solid var(--rule-strong); background: rgba(255,255,255,0.35);
+    margin: 30px 0; box-shadow: 6px 6px 0 rgba(34,29,20,0.08);
+  }
+  .flow-head {
+    display: flex; align-items: baseline; gap: 16px; padding: 16px 24px;
+    border-bottom: 1px solid var(--rule-strong); background: var(--paper-deep);
+  }
+  .flow-head .fno {
+    font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 12px;
+    color: var(--paper); background: var(--red); padding: 3px 8px 2px; letter-spacing: 0.08em;
+  }
+  .flow-head .fno.t { background: var(--teal); }
+  .flow-head .fno.g { background: var(--gold); }
+  .flow-head h4 { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 700; flex: 1; }
+  .flow-head .trigger { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.08em; }
+  .flow-body { padding: 20px 24px 24px; }
+  .flow-body p { font-size: 15.5px; }
+  .steps { list-style: none; margin: 14px 0 6px; }
+  .steps li {
+    position: relative; padding: 9px 0 9px 40px; font-size: 15.5px;
+    border-bottom: 1px dashed var(--rule);
+  }
+  .steps li:last-child { border-bottom: none; }
+  .steps li::before {
+    content: counter(sc); counter-increment: sc;
+    position: absolute; left: 0; top: 9px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600;
+    width: 24px; height: 24px; display: grid; place-items: center;
+    border: 1.4px solid var(--ink); border-radius: 50%;
+  }
+  .steps { counter-reset: sc; }
+  .steps li.fail::before { border-color: var(--red); color: var(--red); }
+  .steps li.ok::before { border-color: var(--teal); color: var(--teal); background: var(--teal-soft); }
+  .verdict {
+    margin-top: 16px; padding: 10px 16px; font-size: 14px;
+    font-family: 'IBM Plex Mono', monospace; border: 1px dashed var(--rule-strong);
+    color: var(--ink-soft); background: rgba(255,255,255,0.4);
+  }
+  .verdict b { color: var(--ink); }
+
+  /* svg diagrams */
+  figure { margin: 30px 0; }
+  figure svg { width: 100%; height: auto; display: block; }
+  figcaption {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: var(--ink-soft);
+    margin-top: 10px; letter-spacing: 0.03em; line-height: 1.7; max-width: 84ch;
+  }
+  figcaption b { color: var(--ink); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+  @media (max-width: 880px) {
+    .two-col { grid-template-columns: 1fr; }
+    .census { grid-template-columns: 1fr 1fr; }
+    .census > div:nth-child(2) { border-right: none; }
+    .rung { grid-template-columns: 54px 1fr; }
+    .rung .count { grid-column: 2; text-align: left; }
+    .rung .count b { display: inline; margin-right: 8px; }
+    .sheet { padding: 0 22px 100px; }
+  }
+
+  /* toc */
+  nav.toc {
+    margin: 56px 0 0; border: 1px solid var(--rule-strong);
+    background: rgba(255,255,255,0.3); padding: 22px 28px;
+    columns: 2; column-gap: 40px; font-size: 15px;
+  }
+  nav.toc a {
+    display: flex; justify-content: space-between; gap: 10px;
+    text-decoration: none; color: var(--ink); padding: 5px 0;
+    border-bottom: 1px dotted var(--rule); break-inside: avoid;
+  }
+  nav.toc a:hover { color: var(--red); }
+  nav.toc .n { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink-faint); }
+  @media (max-width: 720px) { nav.toc { columns: 1; } }
+
+  footer {
+    margin-top: 110px; border-top: 2px solid var(--ink); padding-top: 16px;
+    display: flex; justify-content: space-between; font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft);
+  }
+
+  /* reveal animation */
+  header, section { animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+  section { animation-timeline: view(); animation-range: entry 0% entry 26%; animation-duration: auto; }
+  @keyframes rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { header, section { animation: none; } }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<header>
+  <div class="stamp-row">
+    <span>L2BEAT · packages/config · internal reference</span>
+    <span class="no">LEDGER No. DA-01 · 2026-08</span>
+  </div>
+  <h1>The Era<br><span class="thin">Ledger</span></h1>
+  <p class="dek">How DA tracking configs <strong>resolve</strong>, how they <strong>rotate</strong>, and why they can no longer <strong>vanish</strong>. Every source, every flow, every edge case — as implemented on <code>t3code/preserve-da-tracking-configs</code>.</p>
+
+  <div class="census">
+    <div class="c-hist"><div class="num">48</div><div class="lbl">projects on daTracking.json<br>(machine-kept history)</div></div>
+    <div class="c-over"><div class="num">20</div><div class="lbl">projects on nonTemplate-<br>DaTracking (manual override)</div></div>
+    <div class="c-none"><div class="num">57</div><div class="lbl">template projects deriving<br>nothing (DAC &amp; friends)</div></div>
+    <div class="c-zero"><div class="num">0</div><div class="lbl">projects on bare derivation<br>(guard makes this a CI failure)</div></div>
+  </div>
+
+  <nav class="toc">
+    <a href="#s1"><span>Why this exists — the wipe mechanic</span><span class="n">§1</span></a>
+    <a href="#s2"><span>Identity: what is hashed, what is not</span><span class="n">§2</span></a>
+    <a href="#s3"><span>Resolution order — the three sources</span><span class="n">§3</span></a>
+    <a href="#s4"><span>The era file &amp; its invariants</span><span class="n">§4</span></a>
+    <a href="#s5"><span>All flows, F1–F9</span><span class="n">§5</span></a>
+    <a href="#s6"><span>Boundary semantics — the bracket</span><span class="n">§6</span></a>
+    <a href="#s7"><span>The guard rails — every CI check</span><span class="n">§7</span></a>
+    <a href="#s8"><span>CLI &amp; deploy consequences</span><span class="n">§8</span></a>
+  </nav>
+</header>
+
+<!-- ═══════════════════════ §1 ═══════════════════════ -->
+<section id="s1">
+  <div class="sec-head"><span class="sig">§1</span><h2>Why this exists — the wipe mechanic</h2></div>
+  <div class="two-col">
+    <div>
+      <p>Every <code>daTracking</code> entry becomes a backend indexer configuration keyed by a <strong>content hash of its identity fields</strong> (<code>createDaTrackingId</code>, <code>@l2beat/shared</code>). The backend diffs stored configurations against the config by id only (<code>mergeConfigurations.ts</code>):</p>
+      <p>· id <strong>appears</strong> → new configuration, syncs from scratch.<br>
+         · id <strong>disappears</strong> → configuration deleted, <strong style="color:var(--red)">all its indexed data wiped</strong>.<br>
+         · id kept but <strong>range edited</strong> → wipe + resync of that one config (<code>DaIndexer</code> has no <code>trimData</code>).</p>
+      <p>Stack templates used to derive the single tracking entry from <em>current</em> discovery values (<code>discovered.json</code> has no history). One on-chain batcher rotation ⇒ new identity ⇒ new id ⇒ the old era silently ceased to exist ⇒ wipe on deploy.</p>
+    </div>
+    <div>
+      <pre><code><span class="c">// the old failure, step by step</span>
+discovery run
+  batcherHash: <span class="t">0xOld…</span> → <span class="r">0xNew…</span>
+
+template re-derives daTracking
+  [{ inbox, sequencers: [<span class="r">0xNew…</span>] }]
+  <span class="c">// the 0xOld… era is GONE from config</span>
+
+deploy
+  id(<span class="t">0xOld era</span>) not found
+  → deleteConfigurations + <span class="r">wipeData</span>
+  <span class="c">// months of DA data destroyed</span></code></pre>
+      <p style="font-size:14.5px;color:var(--ink-soft)">The snapshot guard (PR #12380) turned this into a CI failure. The era ledger turns it into a <em>one-command, non-event</em>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ §2 ═══════════════════════ -->
+<section id="s2">
+  <div class="sec-head"><span class="sig">§2</span><h2>Identity: what is hashed, what is not</h2></div>
+  <p><code>id = sha1( type + daLayer + 'v2' + identity fields [+ discriminator] ).slice(0, 12)</code></p>
+  <table>
+    <thead><tr><th style="width:14%">type</th><th style="width:44%">hashed (identity — changing any of these re-keys the data)</th><th>not hashed (freely editable in place*)</th></tr></thead>
+    <tbody>
+      <tr><td><code>ethereum</code></td><td><code>inbox</code> · <code>sequencers</code> (sorted) · <code>topics</code> (sorted)</td><td rowspan="4"><code>sinceBlock</code> / <code>untilBlock</code> (or timestamps for eigen-da).<br><br>*“freely” = no re-key, but any range edit still costs a wipe + resync of that config on deploy (§8).</td></tr>
+      <tr><td><code>celestia</code></td><td><code>namespace</code></td></tr>
+      <tr><td><code>avail</code></td><td><code>appIds</code> (sorted)</td></tr>
+      <tr><td><code>eigen-da</code></td><td><code>customerId</code></td></tr>
+    </tbody>
+  </table>
+  <p>The optional <code>discriminator</code> is new. It participates in the hash <em>only when set</em>, so every pre-existing production id is untouched. Its single purpose: give the third era of an A→B→A rotation a distinct id (§5·F5) — previously inexpressible, since two eras with identical identity fields collide on one id.</p>
+  <p>Inbox strings are hashed <strong>verbatim</strong> — zksync2's old eras use <code>eth:</code>-prefixed addresses and must never be normalized.</p>
+</section>
+
+<!-- ═══════════════════════ §3 ═══════════════════════ -->
+<section id="s3">
+  <div class="sec-head"><span class="sig">§3</span><h2>Resolution order — the three sources</h2></div>
+  <p>Every opStack / orbitStack / zkStack project funnels through one entry point — <code>resolveDaTracking()</code> in <code>packages/config/src/templates/daTrackingHistory.ts</code>. First match wins. (agglayer passes <code>nonTemplateDaTracking</code> through and derives nothing; non-template projects set <code>daTracking</code> directly and are outside this mechanism.)</p>
+
+  <div class="ladder">
+    <div class="rung">
+      <div class="ord">1</div>
+      <div>
+        <h4><code>nonTemplateDaTracking</code><span class="pill gold">manual override</span></h4>
+        <p>Full escape hatch, returned verbatim. For configs that can't be derived: custom <code>topics</code> (taiko), archived projects whose eras are all closed (arenaz), hand-maintained specials (base, optimism, …). If it's set, the file and the derivation are both ignored.</p>
+      </div>
+      <div class="count"><b>20</b>projects</div>
+    </div>
+    <div class="rung active">
+      <div class="ord">2</div>
+      <div>
+        <h4><code>src/projects/&lt;name&gt;/daTracking.json</code><span class="pill teal">the era ledger</span></h4>
+        <p>Committed, machine-maintained era store — written <strong>only</strong> by <code>pnpm da:history</code>, never by hand. Holds the full history: closed eras (with <code>untilBlock</code> + provenance metadata) chained to the one open era. This is what the backend actually consumes for these projects.</p>
+      </div>
+      <div class="count"><b>48</b>projects</div>
+    </div>
+    <div class="rung">
+      <div class="ord">3</div>
+      <div>
+        <h4>Live derivation from discovery<span class="pill red">bootstrap only</span></h4>
+        <p>Today's single-era logic, unchanged: opStack reads <code>SystemConfig</code> (sequencerInbox / batcherHash / startBlock), orbitStack reads <code>SequencerInbox.batchPosters</code>, zkStack reads <code>ValidatorTimelock</code> + <code>validatorsVTL</code>; <code>celestiaDa</code>/<code>availDa</code> template vars for alt layers. A guard test fails any project serving this bare — so it only ever feeds <em>new</em> projects until <code>da:history</code> creates their file.</p>
+      </div>
+      <div class="count"><b>0</b>projects<br>(by construction)</div>
+    </div>
+  </div>
+
+  <div class="callout safe">
+    <span class="tag">The trick that makes the guard cheap</span>
+    <p>The derivation <em>always runs</em>, even when the file wins — <code>resolveDaTracking</code> records <code>{ source, derived }</code> per project in a registry filled as a side effect of evaluating the templates. The staleness guard and the generator just call <code>getProjects()</code> and read the registry; nobody has to rebuild <code>templateVars</code>.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════ §4 ═══════════════════════ -->
+<section id="s4">
+  <div class="sec-head"><span class="sig">§4</span><h2>The era file &amp; its invariants</h2></div>
+  <div class="two-col">
+    <div>
+<pre><code>{
+  "eras": [
+    {
+      "type": <span class="g">"ethereum"</span>,
+      "daLayer": <span class="g">"ethereum"</span>,
+      "inbox": <span class="t">"0x00f9…EEd0"</span>,
+      "sequencers": [<span class="t">"0x2b87…AC8c"</span>],
+      "sinceBlock": <span class="k">21169100</span>,
+      "untilBlock": <span class="k">24776391</span>,   <span class="c">← closed era</span>
+      "closed": {
+        "reason": <span class="g">"sequencers changed"</span>,
+        "observedAtTimestamp": <span class="k">1784282781</span>,
+        "precision": <span class="g">"bracketed"</span>
+      }
+    },
+    {
+      "type": <span class="g">"ethereum"</span>,
+      "daLayer": <span class="g">"ethereum"</span>,
+      "inbox": <span class="t">"0x00f9…EEd0"</span>,
+      "sequencers": [<span class="r">"0x4782…894B"</span>],
+      "sinceBlock": <span class="k">24776391</span>    <span class="c">← open era, no until</span>
+    }
+  ]
+}</code></pre>
+      <p style="font-size:14.5px;color:var(--ink-soft)"><code>closed</code> is provenance only — stripped by <code>eraToConfig()</code> before the backend sees anything. <code>precision</code> ∈ <code>bracketed</code> (from discovery-run timestamps) · <code>exact</code> (reserved for a future event-scan mode) · <code>manual</code> (CLI flags).</p>
+    </div>
+    <div>
+      <p class="marginal">Parser invariants — parseDaTrackingHistory()</p>
+      <p style="font-size:15px">Violating any of these throws at config build. The file is generator-written, so a violation means a hand edit or a generator bug:</p>
+      <table style="font-size:14px">
+        <tbody>
+          <tr><td><b>I1</b></td><td><code>eras</code> is non-empty</td></tr>
+          <tr><td><b>I2</b></td><td>closed era ⇒ has <code>untilBlock ≥ sinceBlock</code> <em>and</em> a <code>closed</code> block; open era ⇒ has neither</td></tr>
+          <tr><td><b>I3</b></td><td>within a <code>(type, daLayer)</code> group: <code>sinceBlock</code> ascending, and only the <em>last</em> era may be open</td></tr>
+          <tr><td><b>I4</b></td><td>no two eras share a configuration id — identical identity fields require a <code>discriminator</code> on the later era</td></tr>
+          <tr><td><b>I5</b></td><td>same-identity eras (ignoring discriminator) must have strictly <strong>disjoint</strong> ranges — they'd match the same data and double-count the shared blocks</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:15px">Note what is <em>not</em> an invariant: consecutive eras of <strong>different</strong> identities may overlap or share a boundary block. That's deliberate — it's what makes bracketed boundaries (§6) legal.</p>
+      <p style="font-size:15px">Schema covers <code>ethereum</code> / <code>celestia</code> / <code>avail</code> only. <code>eigen-da</code> is timestamp-based and never template-derived, so it cannot live in an era file — the generator rejects it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ §5 ═══════════════════════ -->
+<section id="s5">
+  <div class="sec-head"><span class="sig">§5</span><h2>All flows</h2></div>
+
+  <div class="flow">
+    <div class="flow-head"><span class="fno t">F1</span><h4>New project (or DA tracking newly derivable)</h4><span class="trigger">trigger: new listing / DA mode switch to blobs·celestia·avail</span></div>
+    <div class="flow-body">
+      <ol class="steps">
+        <li>Project lands using a stack template; derivation produces an entry; no file exists → registry source = <code>derived</code>.</li>
+        <li class="fail">Guard <em>“every template-derived project has a history file”</em> fails CI, naming the project.</li>
+        <li>Author runs <code>pnpm da:history &lt;project&gt;</code> → <strong>init</strong>: file written with one open era, <code>sinceBlock</code> = the template-derived value (inbox deployment block / SystemConfig startBlock). No boundary resolution, no RPC needed.</li>
+        <li class="ok">Snapshot regenerated (new id registered). Commit file + snapshot with the project PR.</li>
+      </ol>
+      <div class="verdict">ids: <b>+1 new</b> · data: syncs from scratch · human input: <b>zero decisions</b></div>
+    </div>
+  </div>
+
+  <div class="flow">
+    <div class="flow-head"><span class="fno t">F2</span><h4>Steady state</h4><span class="trigger">trigger: routine discovery refresh, nothing DA-relevant changed</span></div>
+    <div class="flow-body">
+      <ol class="steps">
+        <li>Template derivation matches the file's open era by <strong>identity</strong> (ranges are ignored in the comparison — derived <code>sinceBlock</code> is the deployment block, stored <code>sinceBlock</code> may be a later rotation boundary; that mismatch is expected and fine).</li>
+        <li class="ok">Guard green. <code>pnpm da:history</code> would report “already up to date”. Nothing to do.</li>
+      </ol>
+      <div class="verdict">ids: <b>unchanged</b> · file: <b>untouched</b> — this is the whole point: discovery refreshes no longer touch DA tracking at all</div>
+    </div>
+  </div>
+
+  <div class="flow">
+    <div class="flow-head"><span class="fno">F3</span><h4>On-chain rotation, same layer — the main event</h4><span class="trigger">trigger: batcherHash / batchPosters / validatorsVTL / inbox rotates</span></div>
+    <div class="flow-body">
+      <ol class="steps">
+        <li>Discovery refresh updates <code>discovered.json</code>; the derivation now yields a new identity.</li>
+        <li class="fail">Staleness guard fails: <em>“daTracking history for X is out of date with discovery”</em> — in the same PR as the discovery change, by construction.</li>
+        <li>Author runs <code>pnpm da:history &lt;project&gt;</code> (needs <code>ETHEREUM_RPC_URL</code> in <code>packages/config/.env</code>).</li>
+        <li>Old era gets <code>untilBlock</code> = block at the <em>local</em> discovery run's timestamp; new era opens with <code>sinceBlock</code> = block at <em>main's</em> discovery run timestamp (<code>git show main:…/discovered.json</code>) — the bracket, §6. <code>closed.reason</code> records what changed (e.g. <code>"sequencers changed"</code>, <code>"inbox 0xA → 0xB"</code>).</li>
+        <li class="ok">Snapshot regenerated: <b>additions only</b> — the old id lives on inside the closed era. Commit discovery + file + snapshot together.</li>
+      </ol>
+      <div class="verdict">ids: <b>+1 new, 0 removed</b> · data: old era's history preserved forever; old config wiped+resynced once (range edit, §8) · human input: <b>run one command</b></div>
+    </div>
+  </div>
+
+  <div class="flow">
+    <div class="flow-head"><span class="fno g">F4</span><h4>Spurious flap / discovery revert</h4><span class="trigger">trigger: F3 happened, but the “rotation” was noise and the value came back</span></div>
+    <div class="flow-body">
+      <ol class="steps">
+        <li>Next refresh: derivation matches the <em>previous</em> era again, not the open one → staleness guard fails again.</li>
+        <li>Author runs <code>pnpm da:history &lt;project&gt; --drop-last</code>: the flap era is deleted and the previous era of its group is <strong>reopened</strong> (untilBlock and <code>closed</code> removed).</li>
+        <li class="ok">Snapshot regenerated (the flap id disappears — that removal is the explicit sign-off; its short-lived data is expendable).</li>
+      </ol>
+      <div class="verdict">the generator also nudges you here: appending an era whose identity repeats an earlier one prints <i>“if the previous era was a spurious flap, revert with --drop-last instead”</i></div>
+    </div>
+  </div>
+
+  <div class="flow">
+    <div class="flow-head"><span class="fno">F5</span><h4>Genuine A → B → A</h4><span class="trigger">trigger: a value really rotated away and later rotated back</span></div>
+    <div class="flow-body">
+      <ol class="steps">
+        <li>F3 runs for A→B, then later for B→A.</li>
+        <li>The generator sees the new era's identity equals era №1, so it stamps <code>discriminator: "1"</code> (count of prior same-identity eras) — distinct id, no collision (I4), and I5 verifies the two A-eras don't overlap.</li>
+        <li class="ok">Both A-eras coexist with separate backend configurations; each syncs exactly its own range.</li>
+      </ol>
+      <div class="verdict">before this mechanism, a pause/resume of the same identity was <b>inexpressible</b> — it tripped the duplicate-id guard and the backend's assertUniqueConfigId</div>
+    </div>
+  </div>
+
+  <div class="flow">
+    <div class="flow-head"><span class="fno">F6</span><h4>Layer switch (e.g. ethereum blobs → celestia)</h4><span class="trigger">trigger: derivation moves to a different (type, daLayer) group</span></div>
+    <div class="flow-body">
+      <ol class="steps">
+        <li class="fail">Staleness guard fails (open-era identity set ≠ derived set).</li>
+        <li><code>pnpm da:history &lt;project&gt;</code>: the abandoned group's open era is closed (<code>reason: "no longer derived from discovery"</code>); a fresh era opens in the new group.</li>
+        <li>Block numbers live on different chains, so no chaining across groups: the new era keeps the template-derived <code>sinceBlock</code> (the <code>celestiaDa.sinceBlock</code> template var), and closing the <em>ethereum</em> era resolves its boundary on ethereum as usual.</li>
+        <li class="ok">If the abandoned layer isn't ethereum, automatic boundary resolution is refused → F7's manual flags.</li>
+      </ol>
+      <div class="verdict">the file now permanently documents both chapters: the ethereum chapter (closed) and the celestia chapter (open)</div>
+    </div>
+  </div>
+
+  <div class="flow">
+    <div class="flow-head"><span class="fno g">F7</span><h4>Manual boundary</h4><span class="trigger">trigger: non-ethereum layer rotation · no RPC · no readable main ref</span></div>
+    <div class="flow-body">
+      <p>Automatic bracketing only works for <code>ethereum/ethereum</code> (timestamp→block via <code>ETHEREUM_RPC_URL</code> + main's <code>discovered.json</code>). Everything else — a celestia namespace change, avail appIds change, or a machine without RPC/git context — takes the boundary explicitly:</p>
+      <pre style="margin:12px 0"><code>pnpm da:history &lt;project&gt; --since-block &lt;n&gt; --until-block &lt;n&gt;  <span class="c"># blocks on the DA layer's own chain</span></code></pre>
+      <ol class="steps">
+        <li>Supply blocks bracketing the change on the era's chain (since = safely before, until = safely after; overlap is fine, gap is not).</li>
+        <li class="ok">Era closes with <code>precision: "manual"</code>; single-project only, so a bad flag can't spray across the fleet.</li>
+      </ol>
+      <div class="verdict">celestia/avail identities are still manual template vars today (<code>// TODO: update to value from discovery</code>) — their rotations start with a human editing the var, so a manual boundary is consistent</div>
+    </div>
+  </div>
+
+  <div class="flow">
+    <div class="flow-head"><span class="fno g">F8</span><h4>Manual override territory (and its orphans)</h4><span class="trigger">trigger: config not derivable — custom topics, archived, hand-maintained</span></div>
+    <div class="flow-body">
+      <ol class="steps">
+        <li><code>nonTemplateDaTracking</code> set → file and derivation both ignored; the project is protected only by the classic snapshot guard.</li>
+        <li class="fail">If a <code>daTracking.json</code> <em>also</em> exists (or belongs to a renamed/removed project), the <strong>orphan guard</strong> fails: a file nobody reads is a lie waiting to be believed. Delete one of the two.</li>
+        <li>One structural nuance: a <em>fully-closed</em> file (archived project, zero open eras) can only pass staleness if the template derives nothing. Archived projects whose template still derives an entry (arenaz) therefore stay on <code>nonTemplateDaTracking</code> until an “archived” affordance exists.</li>
+      </ol>
+      <div class="verdict">migration of the 20 override projects into era files is the designated follow-up — see /tmp/handoff-datracking-migration.md</div>
+    </div>
+  </div>
+
+  <div class="flow">
+    <div class="flow-head"><span class="fno t">F9</span><h4>Rotation attempted the old way — defense in depth</h4><span class="trigger">trigger: someone edits identities by hand / deletes an era / bypasses da:history</span></div>
+    <div class="flow-body">
+      <ol class="steps">
+        <li class="fail">Hand-edited file violating an invariant → config build throws (parser, §4).</li>
+        <li class="fail">Era deleted or identity mutated in place → snapshot guard: <em>“identities disappeared … must be addressed by a human”</em> — now with the extra hint to run <code>da:history</code> instead of signing off a removal.</li>
+        <li class="fail">Same wipe about to ship anyway → <code>pnpm da:preview</code> prints the identity diff with the same warning before deploy.</li>
+      </ol>
+      <div class="verdict">three independent tripwires; the AI-facing message in the snapshot guard still says: <b>hand removals to a human</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ §6 ═══════════════════════ -->
+<section id="s6">
+  <div class="sec-head"><span class="sig">§6</span><h2>Boundary semantics — the bracket</h2></div>
+  <p>Nobody knows the exact rotation block at generation time — only that it happened between two discovery runs. The generator doesn't guess; it <strong>brackets</strong>:</p>
+
+  <figure>
+    <svg viewBox="0 0 960 300" font-family="'IBM Plex Mono', monospace">
+      <!-- axis -->
+      <line x1="40" y1="230" x2="920" y2="230" stroke="#221d14" stroke-width="1.5"/>
+      <polygon points="920,230 908,225 908,235" fill="#221d14"/>
+      <text x="922" y="252" font-size="11" fill="#55503f" text-anchor="end">ethereum blocks →</text>
+
+      <!-- run markers -->
+      <line x1="330" y1="70" x2="330" y2="230" stroke="#8b8470" stroke-width="1" stroke-dasharray="4 4"/>
+      <text x="330" y="58" font-size="11" fill="#55503f" text-anchor="middle">discovery run on main</text>
+      <text x="330" y="250" font-size="10.5" fill="#8b8470" text-anchor="middle">block @ prev timestamp</text>
+
+      <line x1="640" y1="70" x2="640" y2="230" stroke="#8b8470" stroke-width="1" stroke-dasharray="4 4"/>
+      <text x="640" y="58" font-size="11" fill="#55503f" text-anchor="middle">discovery run in this PR</text>
+      <text x="640" y="250" font-size="10.5" fill="#8b8470" text-anchor="middle">block @ curr timestamp</text>
+
+      <!-- rotation somewhere -->
+      <text x="485" y="285" font-size="11" fill="#b23c22" text-anchor="middle">actual rotation: somewhere in here — unknown, and it does not matter</text>
+      <line x1="336" y1="272" x2="404" y2="281" stroke="#b23c22" stroke-width="0.8"/>
+      <line x1="634" y1="272" x2="566" y2="281" stroke="#b23c22" stroke-width="0.8"/>
+
+      <!-- old era bar -->
+      <rect x="40" y="110" width="600" height="34" fill="#1d6a63" opacity="0.88" rx="2"/>
+      <text x="52" y="132" font-size="12.5" fill="#f3eee3">ERA A · sequencers [0xOld…]</text>
+      <text x="640" y="103" font-size="10.5" fill="#1d6a63" text-anchor="end">untilBlock = curr ↑</text>
+
+      <!-- new era bar -->
+      <rect x="330" y="158" width="590" height="34" fill="#b23c22" opacity="0.88" rx="2"/>
+      <text x="342" y="180" font-size="12.5" fill="#f3eee3">ERA B · sequencers [0xNew…]</text>
+      <text x="330" y="207" font-size="10.5" fill="#b23c22">↑ sinceBlock = prev</text>
+
+      <!-- overlap hatch -->
+      <defs>
+        <pattern id="hatch" width="7" height="7" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+          <line x1="0" y1="0" x2="0" y2="7" stroke="#221d14" stroke-width="1.6" opacity="0.35"/>
+        </pattern>
+      </defs>
+      <rect x="330" y="110" width="310" height="82" fill="url(#hatch)"/>
+      <text x="485" y="97" font-size="11.5" fill="#221d14" text-anchor="middle" font-weight="600">deliberate overlap</text>
+    </svg>
+    <figcaption><b>Why the overlap is safe:</b> the two eras filter by <i>disjoint identities</i> (different sequencer sets). In the shared window, era A's config matches only old-sequencer blobs, era B's only new-sequencer blobs — <b>nothing is double-counted</b>. And because B starts <i>before</i> the rotation while A ends <i>after</i> it, <b>nothing is missed</b> either. A single guessed boundary block could never promise both. (Same reasoning made the hand-restored shared-boundary eras of f85e8592a0 correct.)</figcaption>
+  </figure>
+
+  <table>
+    <thead><tr><th style="width:16%">precision</th><th>boundary comes from</th><th>when</th></tr></thead>
+    <tbody>
+      <tr><td><code>bracketed</code></td><td>timestamp→block over RPC for main's and the local <code>discovered.json</code> timestamps (interpolating binary search, <code>getBlockNumberAtOrBefore</code>)</td><td>default for <code>ethereum/ethereum</code> eras</td></tr>
+      <tr><td><code>manual</code></td><td><code>--since-block / --until-block</code> flags</td><td>celestia · avail · no RPC · no main ref</td></tr>
+      <tr><td><code>exact</code></td><td><em>reserved</em> — a future <code>--exact</code> mode scanning rotation events (SystemConfig.ConfigUpdate etc.) to shrink the bracket to zero width</td><td>follow-up</td></tr>
+    </tbody>
+  </table>
+  <div class="callout">
+    <span class="tag">Known edge</span>
+    <p>The bracket's lower bound is main's run timestamp. If main <em>already</em> holds the rotated value (someone merged a discovery refresh past a red guard and healed later), the lower bound sits after the true rotation and the gap is invisible to the tool — that's the one case to bracket by hand with <code>--since-block</code> further back.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════ §7 ═══════════════════════ -->
+<section id="s7">
+  <div class="sec-head"><span class="sig">§7</span><h2>The guard rails — every CI check</h2></div>
+  <p class="wide">Two independent test families, both in <code>pnpm test</code> (packages/config), plus build-time parsing. What each failure means and its fix:</p>
+  <table>
+    <thead><tr><th style="width:26%">check</th><th style="width:37%">fails when</th><th>fix</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><b>history · staleness</b><br><span class="mono" style="font-size:11px">history.test.ts</span></td>
+        <td>a file's open-era identity set ≠ the current template derivation's identity set (rotation F3, flap F4, layer switch F6)</td>
+        <td><code>pnpm da:history &lt;project&gt;</code> (or <code>--drop-last</code> for a flap)</td>
+      </tr>
+      <tr>
+        <td><b>history · file required</b></td>
+        <td>a template project derives tracking but has no <code>daTracking.json</code> (new project F1)</td>
+        <td><code>pnpm da:history &lt;project&gt;</code> — init</td>
+      </tr>
+      <tr>
+        <td><b>history · orphans</b></td>
+        <td>a <code>daTracking.json</code> exists that no template reads (override also set, or project renamed/removed)</td>
+        <td>delete the file or the override — never keep both</td>
+      </tr>
+      <tr>
+        <td><b>parser invariants</b><br><span class="mono" style="font-size:11px">build-time throw</span></td>
+        <td>hand edit or generator bug produced an illegal era list (I1–I5, §4)</td>
+        <td>regenerate; don't hand-edit</td>
+      </tr>
+      <tr>
+        <td><b>snapshot · disappeared</b><br><span class="mono" style="font-size:11px">guard.test.ts</span></td>
+        <td>any production id (all 202+, template or not, incl. sovereign configs) vanished from the built config</td>
+        <td>human decision; hint now points to <code>da:history</code> for template rotations. Removal sign-off = <code>pnpm snapshots:generate</code></td>
+      </tr>
+      <tr>
+        <td><b>snapshot · stale</b></td>
+        <td>new ids exist that aren't registered yet</td>
+        <td><code>pnpm snapshots:generate</code> (auto-run by <code>da:history</code>)</td>
+      </tr>
+      <tr>
+        <td><b>snapshot · duplicates</b></td>
+        <td>two configs anywhere hash to one id</td>
+        <td>discriminator (template path) or fix the config</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>The two families are deliberately redundant: the history guard understands <em>intent</em> (what should the open era be?), the snapshot guard understands <em>consequence</em> (which ids does production depend on?). The history file is the record; the snapshot is the tripwire — it also covers everything the era ledger doesn't (overrides, sovereign configs, eigen-da).</p>
+</section>
+
+<!-- ═══════════════════════ §8 ═══════════════════════ -->
+<section id="s8">
+  <div class="sec-head"><span class="sig">§8</span><h2>CLI &amp; deploy consequences</h2></div>
+  <div class="two-col">
+    <div>
+      <p class="marginal">Command card — packages/config</p>
+<pre><code><span class="c"># update/init every template project</span>
+pnpm da:history
+
+<span class="c"># just these projects</span>
+pnpm da:history zora mint
+
+<span class="c"># revert a spurious rotation (flap)</span>
+pnpm da:history zora <span class="g">--drop-last</span>
+
+<span class="c"># explicit boundary (celestia/avail/no RPC)</span>
+pnpm da:history rari <span class="g">--since-block</span> N <span class="g">--until-block</span> M
+
+<span class="c"># every run ends by regenerating the</span>
+<span class="c"># snapshot in a child process (fresh</span>
+<span class="c"># module cache sees the new files)</span></code></pre>
+      <p style="font-size:14.5px;color:var(--ink-soft)">Env: <code>ETHEREUM_RPC_URL</code> in <code>packages/config/.env</code> (only needed when a rotation must be bracketed). Preview data effects before deploy: <code>pnpm da:preview</code> in packages/backend.</p>
+    </div>
+    <div>
+      <p class="marginal">What deploy does per change</p>
+      <table style="font-size:14px">
+        <thead><tr><th>change shipped</th><th>backend reaction</th></tr></thead>
+        <tbody>
+          <tr><td>new era (new id)</td><td>new configuration, syncs its range from scratch</td></tr>
+          <tr><td>era closed (<code>untilBlock</code> set)</td><td>range edit → that one config is <strong>wiped &amp; resynced</strong> (recoverable, refetched; <code>DaIndexer</code> lacks <code>trimData</code> — implementing it is a known follow-up)</td></tr>
+          <tr><td>era deleted (id gone)</td><td><strong style="color:var(--red)">permanent wipe</strong> of its data — only reachable past a red snapshot guard + human sign-off</td></tr>
+          <tr><td>range untouched, ids equal</td><td>nothing; steady state F2</td></tr>
+        </tbody>
+      </table>
+      <p class="marginal" style="margin-top:26px">Reviewer's checklist for a rotation PR</p>
+      <p style="font-size:14.5px">① discovery diff + <code>daTracking.json</code> diff + <code>snapshot.json</code> diff travel together · ② snapshot diff is <strong>additions only</strong> · ③ closed era's identity matches what discovery <em>used to</em> say, open era matches what it says <em>now</em> · ④ <code>closed.reason</code> is plausible against <code>diffHistory.md</code>.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>era ledger · da-tracking reference</span>
+  <span>docs/da-tracking.md · templates/daTrackingHistory.ts · scripts/daHistory</span>
+</footer>
+
+</div>
+</body>
+</html>
