@@ -12,6 +12,8 @@ import curves from './anonymitySetCurves.json'
 export interface AnonymitySetCurveBucket {
   id: string
   label: string
+  /** Token symbol. Buckets of one token are colored as shades of one hue. */
+  family: string
 }
 
 /** `[days, ...setSizes]`, one size per bucket, in `buckets` order. */

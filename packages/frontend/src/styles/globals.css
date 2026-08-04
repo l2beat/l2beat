@@ -77,6 +77,13 @@
   --chart-stacked-purple: #9576d1;
   --chart-stacked-blue: #3385ff;
 
+  /*
+   * Lightness offset for charts that derive a shade ramp from a chart color
+   * (see getShadeRamp). Dark surfaces need the whole ramp lifted to keep its
+   * darkest step legible.
+   */
+  --chart-shade-shift: 0;
+
   /* Chart gradients */
 
   --chart-ethereum-fill-gradient: #3482f6;
@@ -110,6 +117,7 @@
   --negative: #ff0000;
   --brand: #db8bf7;
   --background: #000000;
+  --chart-shade-shift: 0.14;
   --surface-primary: #17191f;
   --surface-primary-hover: #2b303b;
   --surface-secondary: #3b3f45;

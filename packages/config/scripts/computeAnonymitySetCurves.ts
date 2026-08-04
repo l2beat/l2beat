@@ -10,12 +10,12 @@
  * and withdraw within `x` days, the depositors of that window are the crowd you
  * blend into.
  *
- * Every protocol gets three curves at the 0.1 / 1 / 10 ETH scale, so the charts
- * can be read against each other:
- * - Tornado Cash has fixed denominations, so a curve is one ETH pool.
- * - Railgun and Privacy Pools take arbitrary amounts, so a curve counts
- *   addresses that deposited *at least* that much WETH/ETH - the same "at
- *   least" filter `computeAnonymitySets.ts` applies at 0.1.
+ * What counts as "qualifying" depends on how the protocol accepts deposits:
+ * - Tornado Cash has fixed denominations, so every tracked pool is one curve.
+ * - Railgun and Privacy Pools take arbitrary amounts, so every tracked token
+ *   gets two curves at "at least 0.1 ETH worth" and "at least 10 ETH worth" -
+ *   the same "at least" filter `computeAnonymitySets.ts` applies at 0.1, at two
+ *   sizes that line up with Tornado's ladder.
  *
  * ASSUMPTIONS / SHORTCUTS specific to this script (on top of the ones listed in
  * `computeAnonymitySets.ts`, all of which still apply):
@@ -38,15 +38,28 @@
  *    since withdrawn. A depositor's real anonymity also depends on deposits
  *    arriving after theirs, which is not observable here.
  *
- * 4. Non-ETH denominated activity is ignored everywhere. Railgun's and Privacy
- *    Pools' stablecoin pools are not scanned, so these curves describe the ETH
- *    slice of each protocol, not the protocol as a whole.
+ * 4. The ETH-equivalent thresholds are priced with *today's* spot prices from
+ *    Coingecko and rounded to one significant digit, then applied to the whole
+ *    year of history. A token that moved sharply against ETH during the window
+ *    therefore gets a threshold that was worth more or less than 0.1/10 ETH at
+ *    the time of the older deposits. The tiers are meant as order-of-magnitude
+ *    buckets, not exact valuations. Prices used are recorded in the output.
+ *
+ * 5. Tracked buckets with no deposits at all in the source CSVs still produce a
+ *    (flat zero) curve, and the script prints a coverage report so gaps between
+ *    what the config tracks and what the snapshot contains stay visible.
  */
 
+import { getEnv, Logger } from '@l2beat/backend-tools'
+import { CoingeckoClient, HttpClient } from '@l2beat/shared'
+import type { CoingeckoId } from '@l2beat/shared-pure'
 import dotenv from 'dotenv'
 import { providers } from 'ethers'
 import { readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
+import { privacyPools } from '../src/projects/privacy-pools/privacy-pools'
+import { railgun } from '../src/projects/railgun/railgun'
+import { tornadoCash } from '../src/projects/tornado-cash/tornado-cash'
 
 dotenv.config()
 
@@ -82,19 +95,16 @@ const ANCHOR_STEP_BLOCKS = 50_400
 /** Enough anchors to reach ~400 days back, leaving margin over MAX_DAYS. */
 const ANCHOR_COUNT = 58
 
-const ETHER = 10n ** 18n
-
-/** The 0.1 / 1 / 10 ETH scale shared by every protocol. */
-const TIERS = [
-  { suffix: '0.1', minimumRaw: ETHER / 10n },
-  { suffix: '1', minimumRaw: ETHER },
-  { suffix: '10', minimumRaw: ETHER * 10n },
-]
+/** The two ETH-equivalent sizes every arbitrary-amount token is measured at. */
+const ETH_TIERS = [0.1, 10]
+const ETH_PRICE_ID = 'ethereum'
 
 /** A single line on the chart. */
 interface Series {
   id: string
   label: string
+  /** Token symbol - the frontend colors one hue per family. */
+  family: string
 }
 
 /** A qualifying deposit, already assigned to the series it belongs to. */
@@ -119,10 +129,25 @@ interface TrxRow {
 
 interface PrivacyPoolsRow {
   action: string
+  bucket: string
   address: string
   amountRaw: bigint
-  token: string
   blockNumber: number
+}
+
+/** A deposit stripped down to what every protocol has in common. */
+interface Deposit {
+  bucket: string
+  blockNum: number
+  sender: string
+  amountRaw: bigint
+}
+
+interface TokenSpec {
+  symbol: string
+  decimals: number
+  priceId: string
+  buckets: { id: string; denomination: string | undefined }[]
 }
 
 function getEthereumRpcUrl(): string {
@@ -131,6 +156,26 @@ function getEthereumRpcUrl(): string {
     throw new Error('ETHEREUM_RPC_URL not found in environment/.env file')
   }
   return rpcUrl
+}
+
+/** The tokens and buckets the l2beat config actually tracks for a project. */
+function getTrackedTokens(project: {
+  privacyInfo?: {
+    tokens: {
+      token: { symbol: string; decimals: number; priceId?: string }
+      buckets: { id: string; denomination?: string }[]
+    }[]
+  }
+}): TokenSpec[] {
+  return (project.privacyInfo?.tokens ?? []).map((token) => ({
+    symbol: token.token.symbol,
+    decimals: token.token.decimals,
+    priceId: token.token.priceId ?? '',
+    buckets: token.buckets.map((bucket) => ({
+      id: bucket.id,
+      denomination: bucket.denomination,
+    })),
+  }))
 }
 
 // `PrivacyFlowTrxs_with_amounts.csv` has no header row - the column order
@@ -162,122 +207,143 @@ function parsePrivacyPoolsCsv(path: string): PrivacyPoolsRow[] {
   const [, ...dataLines] = lines // first line is a header
   const rows: PrivacyPoolsRow[] = []
   for (const line of dataLines) {
-    const [, action, , address, amountRaw, token, , blockNumber] =
+    const [, action, bucket, address, amountRaw, , , blockNumber] =
       line.split(',')
-    if (!action || !address || !amountRaw || !blockNumber) continue
+    if (!action || !bucket || !address || !amountRaw || !blockNumber) continue
     const lowercasedAddress = address.toLowerCase()
     if (lowercasedAddress === ZERO_ADDRESS) continue
 
     rows.push({
       action,
+      bucket,
       address: lowercasedAddress,
       amountRaw: BigInt(amountRaw),
-      token: token ?? '',
       blockNumber: Number(blockNumber),
     })
   }
   return rows
 }
 
-/** Tornado Cash: one curve per fixed ETH denomination. */
-function tornadoCash(rows: TrxRow[]) {
-  const series = TIERS.map((tier) => ({
-    id: `tornado-ETH-${tier.suffix}`,
-    label: `${tier.suffix} ETH`,
-  }))
-  const seriesIds = new Set(series.map((s) => s.id))
-
+/** One curve per fixed-denomination pool. */
+function fromDenominations(deposits: Deposit[], tokens: TokenSpec[]) {
+  const series: Series[] = []
   const entries: Entry[] = []
-  for (const row of rows) {
-    if (row.protocol !== 'tornado-cash') continue
-    if (!seriesIds.has(row.bucket)) continue
-    entries.push({
-      seriesId: row.bucket,
-      blockNum: row.blockNum,
-      sender: row.sender,
-    })
+
+  const byBucket = new Map<string, Deposit[]>()
+  for (const deposit of deposits) {
+    const existing = byBucket.get(deposit.bucket) ?? []
+    existing.push(deposit)
+    byBucket.set(deposit.bucket, existing)
   }
 
-  return {
-    slug: 'tornado-cash',
-    description:
-      'Each line is one of the fixed-denomination ETH pools, counting the addresses that deposited into it.',
-    series,
-    entries,
+  for (const token of sortByActivity(tokens, byBucket)) {
+    for (const bucket of token.buckets) {
+      series.push({
+        id: bucket.id,
+        label: `${bucket.denomination ?? '?'} ${token.symbol}`,
+        family: token.symbol,
+      })
+      for (const deposit of byBucket.get(bucket.id) ?? []) {
+        entries.push({
+          seriesId: bucket.id,
+          blockNum: deposit.blockNum,
+          sender: deposit.sender,
+        })
+      }
+    }
   }
-}
 
-/** Railgun: one curve per minimum WETH deposit size. */
-function railgun(rows: TrxRow[]) {
-  return fromThresholds({
-    slug: 'railgun',
-    symbol: 'WETH',
-    description:
-      'Railgun deposits are arbitrary amounts, so each line counts the addresses that deposited at least that much WETH.',
-    deposits: rows
-      .filter(
-        (row) => row.protocol === 'railgun' && row.bucket === 'railgun-WETH',
-      )
-      .map((row) => ({
-        blockNum: row.blockNum,
-        sender: row.sender,
-        amountRaw: row.amountRaw,
-      })),
-  })
-}
-
-/** Privacy Pools: one curve per minimum ETH deposit size. */
-function privacyPools(rows: PrivacyPoolsRow[]) {
-  return fromThresholds({
-    slug: 'privacy-pools',
-    symbol: 'ETH',
-    description:
-      'Privacy Pools deposits are arbitrary amounts, so each line counts the addresses that deposited at least that much ETH.',
-    deposits: rows
-      .filter((row) => row.action === 'deposit' && row.token === 'ethereum')
-      .map((row) => ({
-        blockNum: row.blockNumber,
-        sender: row.address,
-        amountRaw: row.amountRaw,
-      })),
-  })
+  return { series, entries }
 }
 
 /**
- * Turns arbitrary-amount deposits into one series per tier. Tiers are minimums,
- * not ranges: a 10 ETH deposit also covers someone hiding 0.1 ETH.
+ * Two curves per token, at "at least 0.1 ETH worth" and "at least 10 ETH
+ * worth". Tiers are minimums, not ranges: a 10 ETH deposit also covers someone
+ * hiding 0.1 ETH.
  */
-function fromThresholds({
-  slug,
-  symbol,
-  description,
-  deposits,
-}: {
-  slug: string
-  symbol: string
-  description: string
-  deposits: { blockNum: number; sender: string; amountRaw: bigint }[]
-}) {
-  const series = TIERS.map((tier) => ({
-    id: `${slug}-min-${tier.suffix}`,
-    label: `≥ ${tier.suffix} ${symbol}`,
-  }))
-
+function fromEthEquivalentTiers(
+  deposits: Deposit[],
+  tokens: TokenSpec[],
+  prices: Map<string, number>,
+) {
+  const series: Series[] = []
   const entries: Entry[] = []
+  const thresholds: Record<string, string> = {}
+
+  const byBucket = new Map<string, Deposit[]>()
   for (const deposit of deposits) {
-    TIERS.forEach((tier, index) => {
-      const seriesId = series[index]?.id
-      if (!seriesId) return
-      if (deposit.amountRaw < tier.minimumRaw) return
-      entries.push({
-        seriesId,
-        blockNum: deposit.blockNum,
-        sender: deposit.sender,
-      })
-    })
+    const existing = byBucket.get(deposit.bucket) ?? []
+    existing.push(deposit)
+    byBucket.set(deposit.bucket, existing)
   }
 
-  return { slug, description, series, entries }
+  const ethPrice = prices.get(ETH_PRICE_ID)
+  if (!ethPrice) throw new Error('Missing ETH price')
+
+  for (const token of sortByActivity(tokens, byBucket)) {
+    const price = prices.get(token.priceId)
+    if (!price) {
+      console.warn(
+        `  ! no price for ${token.symbol} (${token.priceId}), skipped`,
+      )
+      continue
+    }
+
+    for (const ethTier of ETH_TIERS) {
+      const amount = roundToOneSignificantDigit((ethTier * ethPrice) / price)
+      const minimumRaw = toRawAmount(amount, token.decimals)
+      const id = `${token.symbol}-min-${ethTier}eth`
+
+      series.push({
+        id,
+        label: `≥ ${formatAmount(amount)} ${token.symbol}`,
+        family: token.symbol,
+      })
+      thresholds[id] =
+        `${formatAmount(amount)} ${token.symbol} ≈ ${ethTier} ETH`
+
+      for (const bucket of token.buckets) {
+        for (const deposit of byBucket.get(bucket.id) ?? []) {
+          if (deposit.amountRaw < minimumRaw) continue
+          entries.push({
+            seriesId: id,
+            blockNum: deposit.blockNum,
+            sender: deposit.sender,
+          })
+        }
+      }
+    }
+  }
+
+  return { series, entries, thresholds }
+}
+
+/** Busiest tokens first, so the chart hands its strongest hues to real data. */
+function sortByActivity(tokens: TokenSpec[], byBucket: Map<string, Deposit[]>) {
+  const depositCount = (token: TokenSpec) =>
+    token.buckets.reduce(
+      (sum, bucket) => sum + (byBucket.get(bucket.id)?.length ?? 0),
+      0,
+    )
+  return [...tokens].sort((a, b) => depositCount(b) - depositCount(a))
+}
+
+function roundToOneSignificantDigit(value: number): number {
+  if (value === 0) return 0
+  // toPrecision keeps the result free of binary float noise, so a threshold
+  // comes out as 0.3 rather than 0.30000000000000004.
+  return Number(value.toPrecision(1))
+}
+
+function toRawAmount(amount: number, decimals: number): bigint {
+  // Amounts are already rounded to one significant digit, so a string round
+  // trip avoids float noise in the raw integer.
+  const [whole, fraction = ''] = amount.toFixed(decimals).split('.')
+  return BigInt(`${whole}${fraction.padEnd(decimals, '0')}`)
+}
+
+function formatAmount(amount: number): string {
+  return amount >= 1 ? amount.toLocaleString('en-US') : amount.toString()
 }
 
 // Evenly spaced (block, timestamp) pairs, newest first - see assumption #2.
@@ -293,6 +359,30 @@ async function fetchAnchors(
     anchors.push({ blockNumber, timestamp: block.timestamp })
   }
   return anchors
+}
+
+async function fetchPrices(priceIds: string[]): Promise<Map<string, number>> {
+  const env = getEnv()
+  const apiKey = env.optionalString('COINGECKO_API_KEY')
+  const client = new CoingeckoClient({
+    apiKey,
+    http: new HttpClient(),
+    retryStrategy: 'SCRIPT',
+    callsPerMinute: apiKey ? 400 : 10,
+    sourceName: 'coingeckoAPI',
+    logger: Logger.SILENT,
+  })
+
+  const ids = [...new Set([ETH_PRICE_ID, ...priceIds])].filter(Boolean)
+  const results = await client.getCoinsMarket(ids as CoingeckoId[], 'usd')
+
+  const prices = new Map<string, number>()
+  for (const result of results) {
+    if (result.current_price !== null) {
+      prices.set(result.id, result.current_price)
+    }
+  }
+  return prices
 }
 
 /**
@@ -371,18 +461,124 @@ function computeCurves(entries: Entry[], series: Series[], anchors: Anchor[]) {
   return curves
 }
 
+/** Where the config and the CSV snapshot disagree about what exists. */
+function reportCoverage(
+  tokens: TokenSpec[],
+  deposits: Deposit[],
+  matchesBucket: (csvBucket: string, trackedId: string) => boolean,
+) {
+  const trackedIds = tokens.flatMap((token) =>
+    token.buckets.map((bucket) => bucket.id),
+  )
+  const csvBuckets = new Set(deposits.map((deposit) => deposit.bucket))
+
+  const empty = trackedIds.filter(
+    (id) => ![...csvBuckets].some((csv) => matchesBucket(csv, id)),
+  )
+  const untracked = [...csvBuckets].filter(
+    (csv) => !trackedIds.some((id) => matchesBucket(csv, id)),
+  )
+
+  if (empty.length > 0) {
+    console.log(`  tracked but absent from snapshot: ${empty.join(', ')}`)
+  }
+  if (untracked.length > 0) {
+    console.log(`  in snapshot but not tracked: ${untracked.join(', ')}`)
+  }
+  if (empty.length === 0 && untracked.length === 0) {
+    console.log('  snapshot and config agree on every bucket')
+  }
+}
+
 async function main() {
+  const tornadoTokens = getTrackedTokens(tornadoCash)
+  const railgunTokens = getTrackedTokens(railgun)
+  const privacyPoolsTokens = getTrackedTokens(privacyPools)
+
+  const prices = await fetchPrices([
+    ...railgunTokens.map((token) => token.priceId),
+    ...privacyPoolsTokens.map((token) => token.priceId),
+  ])
+
   const provider = new providers.JsonRpcProvider(getEthereumRpcUrl())
   const latestBlockNumber = await provider.getBlockNumber()
   const anchors = await fetchAnchors(provider, latestBlockNumber)
 
   const trxRows = parseTrxsWithAmounts(TRXS_WITH_AMOUNTS_FILE)
-  const privacyPoolsRows = parsePrivacyPoolsCsv(PRIVACY_POOLS_FILE)
+  const ppRows = parsePrivacyPoolsCsv(PRIVACY_POOLS_FILE)
+
+  const toDeposit = (row: TrxRow): Deposit => ({
+    bucket: row.bucket,
+    blockNum: row.blockNum,
+    sender: row.sender,
+    amountRaw: row.amountRaw,
+  })
+
+  const tornadoDeposits = trxRows
+    .filter((row) => row.protocol === 'tornado-cash')
+    .map(toDeposit)
+  const railgunDeposits = trxRows
+    .filter((row) => row.protocol === 'railgun')
+    .map(toDeposit)
+  // Privacy Pools bucket ids in the CSV carry a pool address suffix that the
+  // config ids do not have, so they are matched by prefix.
+  const ppDeposits = ppRows
+    .filter((row) => row.action === 'deposit')
+    .map((row) => ({
+      bucket: row.bucket,
+      blockNum: row.blockNumber,
+      sender: row.address,
+      amountRaw: row.amountRaw,
+    }))
+
+  const exact = (csv: string, tracked: string) => csv === tracked
+  // Privacy Pools ids differ from the config ones in the pool address suffix
+  // and, for wOETH, in capitalisation.
+  const prefix = (csv: string, tracked: string) => {
+    const a = csv.toLowerCase()
+    const b = tracked.toLowerCase()
+    return a === b || a.startsWith(`${b}-`)
+  }
+
+  console.log('\n=== coverage')
+  console.log('tornado-cash')
+  reportCoverage(tornadoTokens, tornadoDeposits, exact)
+  console.log('railgun')
+  reportCoverage(railgunTokens, railgunDeposits, exact)
+  console.log('privacy-pools')
+  reportCoverage(privacyPoolsTokens, ppDeposits, prefix)
+
+  // Privacy Pools deposits are re-keyed onto the tracked bucket ids so the
+  // per-token grouping below can look them up directly.
+  const ppTrackedIds = privacyPoolsTokens.flatMap((token) =>
+    token.buckets.map((bucket) => bucket.id),
+  )
+  const ppRekeyed = ppDeposits.map((deposit) => ({
+    ...deposit,
+    bucket:
+      ppTrackedIds.find((id) => prefix(deposit.bucket, id)) ?? deposit.bucket,
+  }))
 
   const projects = [
-    tornadoCash(trxRows),
-    railgun(trxRows),
-    privacyPools(privacyPoolsRows),
+    {
+      slug: 'tornado-cash',
+      description:
+        'Each line is one fixed-denomination pool, counting the addresses that deposited into it.',
+      ...fromDenominations(tornadoDeposits, tornadoTokens),
+      thresholds: undefined,
+    },
+    {
+      slug: 'railgun',
+      description:
+        'Railgun deposits are arbitrary amounts, so each line counts the addresses that deposited at least that much of a token - two sizes per token, worth roughly 0.1 and 10 ETH.',
+      ...fromEthEquivalentTiers(railgunDeposits, railgunTokens, prices),
+    },
+    {
+      slug: 'privacy-pools',
+      description:
+        'Privacy Pools deposits are arbitrary amounts, so each line counts the addresses that deposited at least that much of a token - two sizes per token, worth roughly 0.1 and 10 ETH.',
+      ...fromEthEquivalentTiers(ppRekeyed, privacyPoolsTokens, prices),
+    },
   ]
 
   const output: Record<string, unknown> = {}
@@ -404,15 +600,13 @@ async function main() {
       points,
     }
 
-    const at = (days: number) =>
-      project.series
-        .map((s) => `${s.label}: ${curves.get(s.id)?.[days - MIN_DAYS]}`)
-        .join(', ')
-
-    console.log(`\n${project.slug} (${project.entries.length} deposits)`)
-    console.log(`    7 days -> ${at(7)}`)
-    console.log(`   30 days -> ${at(30)}`)
-    console.log(`  365 days -> ${at(365)}`)
+    console.log(`\n=== ${project.slug}: ${project.series.length} series`)
+    for (const s of project.series) {
+      const sizes = curves.get(s.id)
+      console.log(
+        `  ${s.label.padEnd(22)} 30d: ${String(sizes?.[30 - MIN_DAYS] ?? 0).padStart(5)}   365d: ${String(sizes?.[MAX_DAYS - MIN_DAYS] ?? 0).padStart(5)}`,
+      )
+    }
   }
 
   const result = {
@@ -420,6 +614,7 @@ async function main() {
     asOf: NOW_ISO,
     minDays: MIN_DAYS,
     maxDays: MAX_DAYS,
+    pricesUsd: Object.fromEntries(prices),
     projects: output,
   }
 
