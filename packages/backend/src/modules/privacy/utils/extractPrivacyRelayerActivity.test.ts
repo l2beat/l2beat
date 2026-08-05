@@ -75,6 +75,22 @@ describe(extractPrivacyRelayerActivity.name, () => {
 
     expect(result).toEqual(undefined)
   })
+
+  it('ignores a Tornado Cash self-withdrawal with the zero relayer address', () => {
+    const log = encodeLog(tornadoCashInterface, 'Withdrawal', [
+      RECIPIENT,
+      `0x${'11'.repeat(32)}`,
+      EthereumAddress.ZERO,
+      0n,
+    ])
+
+    const result = extractPrivacyRelayerActivity(
+      config('tornadoCashWithdrawal'),
+      log,
+    )
+
+    expect(result).toEqual(undefined)
+  })
 })
 
 function config(

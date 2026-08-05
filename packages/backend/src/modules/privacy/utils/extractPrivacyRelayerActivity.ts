@@ -43,7 +43,10 @@ function toRelayerActivity(
   const relayerAddress = EthereumAddress(relayer)
   const recipientAddress = EthereumAddress(recipient)
 
-  if (relayerAddress === recipientAddress) {
+  if (
+    relayerAddress === EthereumAddress.ZERO ||
+    relayerAddress === recipientAddress
+  ) {
     return undefined
   }
 

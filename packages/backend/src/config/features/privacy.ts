@@ -10,6 +10,7 @@ import { createHash } from 'crypto'
 import { PrivacyBlockTimestampIndexer } from '../../modules/privacy/indexers/PrivacyBlockTimestampIndexer'
 import { PrivacyFlowIndexer } from '../../modules/privacy/indexers/PrivacyFlowIndexer'
 import { PrivacyPriceIndexer } from '../../modules/privacy/indexers/PrivacyPriceIndexer'
+import { PrivacyRelayerActivityIndexer } from '../../modules/privacy/indexers/PrivacyRelayerActivityIndexer'
 import type {
   PrivacyBlockTimestampConfig,
   PrivacyConfig,
@@ -146,14 +147,7 @@ function toRelayerConfig(
   }
 
   return {
-    id: createPrivacyConfigurationId([
-      'privacy-relayer-activity',
-      base.projectId,
-      base.chain,
-      base.address.toString(),
-      base.event,
-      base.extractor,
-    ]),
+    id: PrivacyRelayerActivityIndexer.idToConfigurationId(base),
     ...base,
   }
 }
