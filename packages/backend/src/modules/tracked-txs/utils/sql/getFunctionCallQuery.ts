@@ -1,23 +1,43 @@
-import { type EthereumAddress, UnixTime, unique } from '@l2beat/shared-pure'
+import { assert, type EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 export function getFunctionCallQuery(
   configs: {
     address: EthereumAddress
     selector: string
-    getFullInput: boolean
+    /** How many bytes of the input to fetch, or all of them. */
+    inputBytes: number | 'full'
   }[],
   from: UnixTime,
   to: UnixTime,
 ): string {
-  const fullInputAddresses = unique(
-    configs.filter((c) => c.getFullInput).map((c) => c.address.toLowerCase()),
-  )
   const fromDate = UnixTime.toDate(from).toISOString()
   const toDate = UnixTime.toDate(to).toISOString()
-  const uniqueConfigs = unique(
-    configs,
-    (c) => `${c.address.toLowerCase()}-${c.selector.toLowerCase()}`,
-  )
+  const uniqueConfigs = new Map<
+    string,
+    { address: string; selector: string; inputBytes: number | 'full' }
+  >()
+  for (const config of configs) {
+    assert(
+      config.inputBytes === 'full' ||
+        (Number.isInteger(config.inputBytes) && config.inputBytes >= 4),
+      'inputBytes must cover at least the selector',
+    )
+    const address = config.address.toLowerCase()
+    const selector = config.selector.toLowerCase()
+    const existing = uniqueConfigs.get(`${address}-${selector}`)
+    if (existing === undefined) {
+      uniqueConfigs.set(`${address}-${selector}`, {
+        address,
+        selector,
+        inputBytes: config.inputBytes,
+      })
+    } else if (existing.inputBytes !== 'full') {
+      existing.inputBytes =
+        config.inputBytes === 'full'
+          ? 'full'
+          : Math.max(existing.inputBytes, config.inputBytes)
+    }
+  }
 
   // To calculate the non-zero bytes we are grouping bytes by adding 'x' sign between each byte
   // and then removing all '00x' sequences. Next step is to divide length of result by 3 as this is length of '00x' sequence.
@@ -28,25 +48,18 @@ export function getFunctionCallQuery(
           from_iso8601_timestamp('${fromDate}') AS t_start,
           from_iso8601_timestamp('${toDate}') AS t_end
       ),
-      allowed_calls(to_addr, selector) AS (
+      allowed_calls(to_addr, selector, input_bytes) AS (
         VALUES
           ${
-            uniqueConfigs.length > 0
-              ? uniqueConfigs
+            uniqueConfigs.size > 0
+              ? [...uniqueConfigs.values()]
+                  // NULL input_bytes selects the full input in the CASE below.
                   .map(
                     (c) =>
-                      `(${c.address.toLowerCase()}, ${c.selector.toLowerCase()})`,
+                      `(${c.address}, ${c.selector}, ${c.inputBytes === 'full' ? 'NULL' : c.inputBytes})`,
                   )
                   .join(',')
-              : '(NULL, NULL)'
-          }
-      ),
-      full_input_to(to_addr) AS (
-        VALUES
-          ${
-            fullInputAddresses.length > 0
-              ? fullInputAddresses.map((a) => `(${a})`).join(',')
-              : '(NULL)'
+              : '(NULL, NULL, NULL)'
           }
       ),
       traces_filtered AS (
@@ -64,7 +77,7 @@ export function getFunctionCallQuery(
           AND tr.block_time <=  p.t_end
       ),
       traces_allowed AS (
-        SELECT tr.*
+        SELECT tr.*, ac.input_bytes
         FROM traces_filtered tr
         JOIN allowed_calls ac
           ON tr.to = ac.to_addr
@@ -96,8 +109,8 @@ export function getFunctionCallQuery(
       length(tx.data) AS data_length,
       length(replace(regexp_replace(to_hex(tx.data), '([0-9A-Fa-f]{2})', '$1x'), '00x', '')) / 3 AS non_zero_bytes,
       CASE
-        WHEN tr.to IN (SELECT to_addr FROM full_input_to) THEN tr.input
-        ELSE tr.selector
+        WHEN tr.input_bytes IS NULL THEN tr.input
+        ELSE substr(tr.input, 1, tr.input_bytes)
       END AS input
     FROM txs_filtered tx
     JOIN traces_allowed tr

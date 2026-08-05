@@ -13,32 +13,25 @@ const CONFIGURATIONS = [
   {
     address: ADDRESS_1,
     selector: SELECTOR_1,
-    getFullInput: false,
+    inputBytes: 4,
   },
   {
     address: ADDRESS_2,
     selector: SELECTOR_2,
-    getFullInput: true,
+    inputBytes: 'full' as const,
   },
 ]
 
-describe(getFunctionCallQuery.name, () => {
-  it('returns valid SQL', () => {
-    const query = getFunctionCallQuery(CONFIGURATIONS, FROM, TO)
-    expect(query).toEqual(`
+const EXPECTED_SQL = `
     WITH
       params AS (
         SELECT
           from_iso8601_timestamp('2021-01-01T00:00:00.000Z') AS t_start,
           from_iso8601_timestamp('2021-01-02T00:00:00.000Z') AS t_end
       ),
-      allowed_calls(to_addr, selector) AS (
+      allowed_calls(to_addr, selector, input_bytes) AS (
         VALUES
-          (0x67e002f3a410029501eae397b63ec5f2b1f9fc96, 0xaaaaaaaa),(0xe82a80c31a78f25c5dbe7ad7d035801f518653e6, 0xbbbbbbbb)
-      ),
-      full_input_to(to_addr) AS (
-        VALUES
-          (0xe82a80c31a78f25c5dbe7ad7d035801f518653e6)
+          (0x67e002f3a410029501eae397b63ec5f2b1f9fc96, 0xaaaaaaaa, 4),(0xe82a80c31a78f25c5dbe7ad7d035801f518653e6, 0xbbbbbbbb, NULL)
       ),
       traces_filtered AS (
         SELECT
@@ -55,7 +48,7 @@ describe(getFunctionCallQuery.name, () => {
           AND tr.block_time <=  p.t_end
       ),
       traces_allowed AS (
-        SELECT tr.*
+        SELECT tr.*, ac.input_bytes
         FROM traces_filtered tr
         JOIN allowed_calls ac
           ON tr.to = ac.to_addr
@@ -87,13 +80,18 @@ describe(getFunctionCallQuery.name, () => {
       length(tx.data) AS data_length,
       length(replace(regexp_replace(to_hex(tx.data), '([0-9A-Fa-f]{2})', '$1x'), '00x', '')) / 3 AS non_zero_bytes,
       CASE
-        WHEN tr.to IN (SELECT to_addr FROM full_input_to) THEN tr.input
-        ELSE tr.selector
+        WHEN tr.input_bytes IS NULL THEN tr.input
+        ELSE substr(tr.input, 1, tr.input_bytes)
       END AS input
     FROM txs_filtered tx
     JOIN traces_allowed tr
       ON tx.hash = tr.tx_hash;
-  `)
+  `
+
+describe(getFunctionCallQuery.name, () => {
+  it('returns valid SQL', () => {
+    const query = getFunctionCallQuery(CONFIGURATIONS, FROM, TO)
+    expect(query).toEqual(EXPECTED_SQL)
   })
 
   it('returns valid SQL with duplicate configurations', () => {
@@ -103,75 +101,39 @@ describe(getFunctionCallQuery.name, () => {
       TO,
     )
 
-    expect(query).toEqual(`
-    WITH
-      params AS (
-        SELECT
-          from_iso8601_timestamp('2021-01-01T00:00:00.000Z') AS t_start,
-          from_iso8601_timestamp('2021-01-02T00:00:00.000Z') AS t_end
-      ),
-      allowed_calls(to_addr, selector) AS (
-        VALUES
-          (0x67e002f3a410029501eae397b63ec5f2b1f9fc96, 0xaaaaaaaa),(0xe82a80c31a78f25c5dbe7ad7d035801f518653e6, 0xbbbbbbbb)
-      ),
-      full_input_to(to_addr) AS (
-        VALUES
-          (0xe82a80c31a78f25c5dbe7ad7d035801f518653e6)
-      ),
-      traces_filtered AS (
-        SELECT
-          tr.tx_hash,
-          tr.to,
-          tr.block_time,
-          tr.input,
-          substr(tr.input, 1, 4) AS selector
-        FROM ethereum.traces tr
-        CROSS JOIN params p
-        WHERE tr.call_type = 'call'
-          AND tr.success = true
-          AND tr.block_time >= p.t_start
-          AND tr.block_time <=  p.t_end
-      ),
-      traces_allowed AS (
-        SELECT tr.*
-        FROM traces_filtered tr
-        JOIN allowed_calls ac
-          ON tr.to = ac.to_addr
-        AND tr.selector = ac.selector
-      ),
-      txs_filtered AS (
-        SELECT
-          tx.hash,
-          tx.block_number,
-          tx.block_time,
-          tx.gas_used,
-          tx.gas_price,
-          tx.blob_versioned_hashes,
-          tx.data
-        FROM ethereum.transactions tx
-        CROSS JOIN params p
-        WHERE tx.block_time >= p.t_start
-          AND tx.block_time <=  p.t_end
-      )
+    expect(query).toEqual(EXPECTED_SQL)
+  })
 
-    SELECT DISTINCT
-      tx.hash,
-      tr.to,
-      tx.block_number,
-      tx.block_time,
-      tx.gas_used,
-      tx.gas_price,
-      tx.blob_versioned_hashes,
-      length(tx.data) AS data_length,
-      length(replace(regexp_replace(to_hex(tx.data), '([0-9A-Fa-f]{2})', '$1x'), '00x', '')) / 3 AS non_zero_bytes,
-      CASE
-        WHEN tr.to IN (SELECT to_addr FROM full_input_to) THEN tr.input
-        ELSE tr.selector
-      END AS input
-    FROM txs_filtered tx
-    JOIN traces_allowed tr
-      ON tx.hash = tr.tx_hash;
-  `)
+  it('merges duplicates to the widest input request', () => {
+    const query = getFunctionCallQuery(
+      [
+        { address: ADDRESS_1, selector: SELECTOR_1, inputBytes: 4 },
+        { address: ADDRESS_1, selector: SELECTOR_1, inputBytes: 68 },
+        {
+          address: ADDRESS_2,
+          selector: SELECTOR_2,
+          inputBytes: 'full' as const,
+        },
+        { address: ADDRESS_2, selector: SELECTOR_2, inputBytes: 4 },
+      ],
+      FROM,
+      TO,
+    )
+
+    expect(query).toEqual(
+      getFunctionCallQuery(
+        [
+          { address: ADDRESS_1, selector: SELECTOR_1, inputBytes: 68 },
+          {
+            address: ADDRESS_2,
+            selector: SELECTOR_2,
+            inputBytes: 'full' as const,
+          },
+        ],
+        FROM,
+        TO,
+      ),
+    )
   })
 
   it('handles empty helper tables', () => {
@@ -184,13 +146,9 @@ describe(getFunctionCallQuery.name, () => {
           from_iso8601_timestamp('2021-01-01T00:00:00.000Z') AS t_start,
           from_iso8601_timestamp('2021-01-02T00:00:00.000Z') AS t_end
       ),
-      allowed_calls(to_addr, selector) AS (
+      allowed_calls(to_addr, selector, input_bytes) AS (
         VALUES
-          (NULL, NULL)
-      ),
-      full_input_to(to_addr) AS (
-        VALUES
-          (NULL)
+          (NULL, NULL, NULL)
       ),
       traces_filtered AS (
         SELECT
@@ -207,7 +165,7 @@ describe(getFunctionCallQuery.name, () => {
           AND tr.block_time <=  p.t_end
       ),
       traces_allowed AS (
-        SELECT tr.*
+        SELECT tr.*, ac.input_bytes
         FROM traces_filtered tr
         JOIN allowed_calls ac
           ON tr.to = ac.to_addr
@@ -239,8 +197,8 @@ describe(getFunctionCallQuery.name, () => {
       length(tx.data) AS data_length,
       length(replace(regexp_replace(to_hex(tx.data), '([0-9A-Fa-f]{2})', '$1x'), '00x', '')) / 3 AS non_zero_bytes,
       CASE
-        WHEN tr.to IN (SELECT to_addr FROM full_input_to) THEN tr.input
-        ELSE tr.selector
+        WHEN tr.input_bytes IS NULL THEN tr.input
+        ELSE substr(tr.input, 1, tr.input_bytes)
       END AS input
     FROM txs_filtered tx
     JOIN traces_allowed tr

@@ -17,6 +17,7 @@ import {
   type TrackedTxResult,
   type TrackedTxTransferResult,
 } from './types/model'
+import { getFunctionCallParameterPrefix } from './utils/functionCallParameter'
 import { hasLivenessGrouping } from './utils/getLivenessGroupingKey'
 import { getFunctionCallQuery, getTransferQuery } from './utils/sql'
 import { transformFunctionCallsQueryResult } from './utils/transformFunctionCallsQueryResult'
@@ -175,13 +176,26 @@ function combineCalls(
   sharpSubmissionsConfig: TrackedTxSharpSubmissionConfig[],
   sharedBridgesConfig: TrackedTxSharedBridgeConfig[],
 ) {
-  // TODO: unique
   return [
     ...functionCallsConfig.map((c) => ({
       ...c.properties.params,
-      getFullInput: hasLivenessGrouping(c.properties),
+      // Grouped liveness reads a single parameter from the input, so fetch
+      // only the calldata prefix containing it whenever its position is
+      // statically known. Everything else needs just the selector.
+      inputBytes: hasLivenessGrouping(c.properties)
+        ? (getFunctionCallParameterPrefix(
+            c.properties.params.signature,
+            c.properties.groupBy.path,
+          ) ?? ('full' as const))
+        : SELECTOR_BYTES,
     })),
-    ...sharpSubmissionsConfig.map((c) => ({ ...c, getFullInput: true })),
-    ...sharedBridgesConfig.map((c) => ({ ...c, getFullInput: true })),
+    // These formulas filter by decoding the input, so they need all of it.
+    ...sharpSubmissionsConfig.map((c) => ({
+      ...c,
+      inputBytes: 'full' as const,
+    })),
+    ...sharedBridgesConfig.map((c) => ({ ...c, inputBytes: 'full' as const })),
   ]
 }
+
+const SELECTOR_BYTES = 4
