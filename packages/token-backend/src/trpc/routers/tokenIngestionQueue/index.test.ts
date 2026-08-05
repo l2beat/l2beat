@@ -37,6 +37,125 @@ describe('tokenIngestionQueueRouter', () => {
     })
   })
 
+  describe('getCoingeckoAvailability', () => {
+    it('plans each unique address against one transfer index', async () => {
+      const first = { chain: 'ethereum', address: '0x111' }
+      const second = { chain: 'base', address: '0x222' }
+      const transferIndex = { findInvolving: mockFn().returns([]) }
+      const getInteropTransferIndex = mockFn().resolvesTo(transferIndex)
+      const plan = mockFn()
+        .resolvesToOnce({
+          id: 'ing_first',
+          address: first,
+          existingDeployedToken: undefined,
+          steps: [{ kind: 'coingecko-coin-not-found' }],
+          outcome: {
+            kind: 'skip',
+            reason: 'No abstract token could be resolved',
+          },
+        })
+        .resolvesToOnce({
+          id: 'ing_second',
+          address: second,
+          existingDeployedToken: undefined,
+          steps: [
+            {
+              kind: 'resolved-from-transfers',
+              abstractToken: { id: 'USDC', symbol: 'USDC' },
+            },
+          ],
+          outcome: {
+            kind: 'noop',
+            deployedToken: mockObject<DeployedTokenRecord>({}),
+          },
+        })
+
+      const caller = createRouter({
+        tokenDb: mockObject<TokenDatabase>({}),
+        processor: mockObject<TokenIngestionProcessor>({
+          getInteropTransferIndex,
+          plan,
+        }),
+      })
+
+      const result = await caller.getCoingeckoAvailability([
+        first,
+        first,
+        second,
+      ])
+
+      expect(result).toEqual([
+        { ...first, availability: 'not-found' },
+        { ...second, availability: 'not-checked' },
+      ])
+      expect(getInteropTransferIndex).toHaveBeenCalledWith()
+      expect(plan).toHaveBeenCalledTimes(2)
+      expect(plan.calls[0]?.args[0]).toHaveSubset({
+        ...first,
+        state: 'pending',
+      })
+      expect(plan.calls[0]?.args[1]).toEqual(transferIndex)
+      expect(plan.calls[1]?.args[0]).toHaveSubset({
+        ...second,
+        state: 'pending',
+      })
+      expect(plan.calls[1]?.args[1]).toEqual(transferIndex)
+    })
+
+    it('plans at most ten addresses concurrently', async () => {
+      const addresses = Array.from({ length: 11 }, (_, index) => ({
+        chain: 'ethereum',
+        address: `0x${index}`,
+      }))
+      const transferIndex = { findInvolving: mockFn().returns([]) }
+      const getInteropTransferIndex = mockFn().resolvesTo(transferIndex)
+      let started = 0
+      let releaseFirstBatch: (() => void) | undefined
+      let signalFirstBatchStarted: (() => void) | undefined
+      const firstBatchCanFinish = new Promise<void>((resolve) => {
+        releaseFirstBatch = resolve
+      })
+      const firstBatchStarted = new Promise<void>((resolve) => {
+        signalFirstBatchStarted = resolve
+      })
+      const plan = mockFn().executes(
+        async (entry: TokenIngestionQueueRecord) => {
+          started++
+          if (started === 10) {
+            signalFirstBatchStarted?.()
+          }
+          if (started <= 10) {
+            await firstBatchCanFinish
+          }
+
+          return {
+            id: `ing_${entry.address}`,
+            address: { chain: entry.chain, address: entry.address },
+            existingDeployedToken: undefined,
+            steps: [],
+            outcome: { kind: 'skip' as const, reason: 'test' },
+          }
+        },
+      )
+      const caller = createRouter({
+        tokenDb: mockObject<TokenDatabase>({}),
+        processor: mockObject<TokenIngestionProcessor>({
+          getInteropTransferIndex,
+          plan,
+        }),
+      })
+
+      const resultPromise = caller.getCoingeckoAvailability(addresses)
+      await firstBatchStarted
+
+      expect(plan).toHaveBeenCalledTimes(10)
+      releaseFirstBatch?.()
+
+      const result = await resultPromise
+      expect(result).toHaveLength(11)
+    })
+  })
+
   describe('getPage', () => {
     it('returns one page of queue entries with predicted outcomes', async () => {
       const existingEntry = queueEntry({

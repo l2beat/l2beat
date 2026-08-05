@@ -6,7 +6,10 @@ import {
   toIngestionOutcomeView,
   toIngestionTraceView,
 } from '../../../ingestion/formatIngestionTrace'
-import type { IngestionOutcomeView } from '../../../ingestion/IngestionTrace'
+import type {
+  IngestionOutcomeView,
+  IngestionTrace,
+} from '../../../ingestion/IngestionTrace'
 import { readOnlyProcedure, readWriteProcedure } from '../../procedures'
 import { router } from '../../trpc'
 
@@ -14,6 +17,10 @@ const QueueEntryAddress = v.object({
   chain: v.string(),
   address: v.string(),
 })
+
+export type CoingeckoAvailability = 'found' | 'not-found' | 'not-checked'
+
+const COINGECKO_AVAILABILITY_BATCH_SIZE = 10
 
 const QueuePageInput = v.object({
   page: v.number(),
@@ -28,6 +35,44 @@ export interface QueuePageRow {
 }
 
 export const tokenIngestionQueueRouter = router({
+  getCoingeckoAvailability: readOnlyProcedure
+    .input(v.array(QueueEntryAddress))
+    .query(async ({ ctx, input }) => {
+      const transferIndex =
+        await ctx.tokenIngestionProcessor.getInteropTransferIndex()
+
+      const results: {
+        chain: string
+        address: string
+        availability: CoingeckoAvailability
+      }[] = []
+
+      const addresses = dedupeAddresses(input)
+      for (
+        let start = 0;
+        start < addresses.length;
+        start += COINGECKO_AVAILABILITY_BATCH_SIZE
+      ) {
+        const batch = await Promise.all(
+          addresses
+            .slice(start, start + COINGECKO_AVAILABILITY_BATCH_SIZE)
+            .map(async (address) => {
+              const trace = await ctx.tokenIngestionProcessor.plan(
+                toPendingEntry(address),
+                transferIndex,
+              )
+
+              return {
+                ...address,
+                availability: getCoingeckoAvailability(trace),
+              }
+            }),
+        )
+        results.push(...batch)
+      }
+
+      return results
+    }),
   getAll: readOnlyProcedure.query(({ ctx }) => {
     return ctx.tokenDb.tokenIngestionQueue.getAll()
   }),
@@ -117,3 +162,39 @@ export const tokenIngestionQueueRouter = router({
       return toIngestionTraceView(trace)
     }),
 })
+
+function dedupeAddresses(addresses: { chain: string; address: string }[]) {
+  return Array.from(
+    new Map(
+      addresses.map((address) => [
+        `${address.chain}:${address.address.toLowerCase()}`,
+        address,
+      ]),
+    ).values(),
+  )
+}
+
+function toPendingEntry(address: { chain: string; address: string }) {
+  const now = UnixTime.now()
+  return {
+    ...address,
+    state: 'pending' as const,
+    message: null,
+    createdAt: now,
+    updatedAt: now,
+  }
+}
+
+function getCoingeckoAvailability(
+  trace: Pick<IngestionTrace, 'steps'>,
+): CoingeckoAvailability {
+  if (trace.steps.some((step) => step.kind === 'coingecko-coin-not-found')) {
+    return 'not-found'
+  }
+
+  if (trace.steps.some((step) => step.kind === 'coingecko-coin-found')) {
+    return 'found'
+  }
+
+  return 'not-checked'
+}

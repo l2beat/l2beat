@@ -119,9 +119,14 @@ export function createMissingTokensColumns(options: {
     }),
     columnHelper.accessor('tokenDbStatus', {
       header: 'TokenDB status',
-      cell: ({ getValue }) => {
+      cell: ({ getValue, row }) => {
         const status = getValue()
-        return <MissingTokenStatusBadge status={status} />
+        return (
+          <MissingTokenStatusBadge
+            status={status}
+            ingestionStatus={row.original.ingestionStatus}
+          />
+        )
       },
       meta: {
         csvHeader: 'TokenDB status',
@@ -163,6 +168,7 @@ export function createMissingTokensColumns(options: {
           chain: row.original.chain,
           address: row.original.tokenAddress,
           tokenDbStatus: row.original.tokenDbStatus,
+          ingestionStatus: row.original.ingestionStatus,
         })
 
         if (!action) {
@@ -192,6 +198,7 @@ export function createMissingTokensColumns(options: {
             chain: row.original.chain,
             address: row.original.tokenAddress,
             tokenDbStatus: row.original.tokenDbStatus,
+            ingestionStatus: row.original.ingestionStatus,
           })
 
           return action?.href ?? ''
