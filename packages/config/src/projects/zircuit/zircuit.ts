@@ -349,18 +349,8 @@ export const zircuit: ScalingProject = {
     apis: [
       {
         type: 'rpc',
-        url: 'https://zircuit1-mainnet.p2pify.com/',
-        callsPerMinute: 300,
-      },
-      {
-        type: 'rpc',
-        url: 'https://zircuit1-mainnet.liquify.com/',
-        callsPerMinute: 300,
-      },
-      {
-        type: 'rpc',
-        url: 'https://zircuit-mainnet.drpc.org/',
-        callsPerMinute: 300,
+        url: 'https://zircuit.rpc.sentio.xyz',
+        callsPerMinute: 3000,
       },
       {
         type: 'sourcify',
