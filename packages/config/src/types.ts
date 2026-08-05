@@ -58,13 +58,17 @@ export interface ProjectTechnologyChoice {
   description: string
   references: ReferenceLink[]
   risks: ProjectRisk[]
-  sequencerSetSpec?: ProjectSequencerSetSpec
+  sequencingSpec?: ProjectSequencingSpec
   inclusionDelayChart?: ProjectInclusionDelayChart
   inclusionDelayChartDescription?: string
   censorshipResistance?: string
   isIncomplete?: boolean
   isUnderReview?: boolean
 }
+
+export type ProjectSequencingSpec =
+  | (ProjectSequencerSetSpec & { type: 'sequencer-set' })
+  | (ProjectCentralizedSequencingSpec & { type: 'centralized' })
 
 export interface ProjectSequencerSetSpec {
   blockTime?: TableReadyValue
@@ -76,6 +80,18 @@ export interface ProjectSequencerSetSpec {
   rateLimit?: TableReadyValue
   deterministicCrGadget?: TableReadyValue
   additionalCrGadgets?: TableReadyValue
+}
+
+export interface ProjectCentralizedSequencingSpec {
+  trustedPreconfirmation: TableReadyValue
+  trustedOrdering: TableReadyValue
+  sequencer: TableReadyValue
+  realtimeCensorshipResistance: TableReadyValue
+  forcedInclusion: TableReadyValue
+  inclusionDelay: TableReadyValue
+  inclusionMechanics: TableReadyValue
+  exitDelay: TableReadyValue
+  exitEconomics: TableReadyValue
 }
 
 export type ProjectInclusionDelayChart =
@@ -91,6 +107,8 @@ interface ProjectInclusionDelayChartBase {
 
 export interface ProjectInclusionDelayChartStakeDistribution {
   stakeToken: string
+  snapshotDate: string
+  validatorCount?: number
   totalStake: number
   entities: ProjectInclusionDelayChartEntityStake[]
 }

@@ -1,18 +1,99 @@
 import {
+  assert,
   ChainSpecificAddress,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { formatEther } from 'ethers/lib/utils'
 import { DERIVATION, SOA } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import {
+  getOpStackBondScalingFactor,
+  getOpStackMaxCumulativeClockExtension,
+  opStackL2,
+} from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('optimism')
 const genesisTimestamp = UnixTime(1636665399)
 const chainId = 10
+const l2BlockTimeSeconds = HARDCODED.OPTIMISM.L2_BLOCK_TIME_SECONDS
+const flashblockIntervalMilliseconds =
+  HARDCODED.OPTIMISM.FLASHBLOCK_INTERVAL_MILLISECONDS
+const sequencingWindowSeconds = HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS
+const sequencingWindowBlocks = HARDCODED.OPTIMISM.SEQUENCING_WINDOW_BLOCKS
+const maxDepositCalldataBytes = HARDCODED.OPTIMISM.MAX_DEPOSIT_CALLDATA_BYTES
+const depositResourceLimit = discovery.getContractValue<{
+  maxResourceLimit: number
+}>('SystemConfig', 'resourceConfig').maxResourceLimit
+const minimumDepositGasWithoutData = discovery.getContractValue<number>(
+  'OptimismPortal2',
+  'minimumGasLimitZeroBytes',
+)
+const minimumDepositGasWithOneByte = discovery.getContractValue<number>(
+  'OptimismPortal2',
+  'minimumGasLimitOneByte',
+)
+const minimumDepositGasPerByte =
+  minimumDepositGasWithOneByte - minimumDepositGasWithoutData
+const proofMaturityDelaySeconds = discovery.getContractValue<number>(
+  'OptimismPortal2',
+  'proofMaturityDelaySeconds',
+)
+const disputeGameFinalityDelaySeconds = discovery.getContractValue<number>(
+  'OptimismPortal2',
+  'disputeGameFinalityDelaySeconds',
+)
+const maxClockDuration = discovery.getContractValue<number>(
+  'FaultDisputeGame',
+  'maxClockDuration',
+)
+const clockExtension = discovery.getContractValue<number>(
+  'FaultDisputeGame',
+  'clockExtension',
+)
+const respectedGameType = discovery.getContractValue<number>(
+  'OptimismPortal2',
+  'respectedGameType',
+)
+assert(
+  respectedGameType === 8,
+  'Update OP Mainnet exit economics for the new respected game type',
+)
+const faultDisputeGameInitialBond = discovery.getContractValue<string>(
+  'DisputeGameFactory',
+  `initBondGame${respectedGameType}`,
+)
+const faultDisputeGameMaxDepth = discovery.getContractValue<number>(
+  'FaultDisputeGame',
+  'maxGameDepth',
+)
+const preimageOracleChallengePeriod = discovery.getContractValue<number>(
+  'PreimageOracle',
+  'challengePeriod',
+)
+const faultDisputeGameMaxClockExtension = getOpStackMaxCumulativeClockExtension(
+  faultDisputeGameMaxDepth,
+  clockExtension,
+  preimageOracleChallengePeriod,
+)
+// MAX_CLOCK_DURATION caps each team's chess clock, not the whole game.
+const faultDisputeGameMaxDuration =
+  maxClockDuration * 2 + faultDisputeGameMaxClockExtension
+const faultDisputeGameStateFinalizationDelaySeconds =
+  faultDisputeGameMaxDuration + disputeGameFinalityDelaySeconds
+const faultDisputeGameWorstCaseExitDelaySeconds =
+  sequencingWindowSeconds + faultDisputeGameStateFinalizationDelaySeconds
+const faultDisputeGameBondScalingFactor = getOpStackBondScalingFactor(
+  faultDisputeGameMaxDepth,
+)
+const faultDisputeGameInitialBondEther = Number(
+  formatEther(faultDisputeGameInitialBond),
+)
 
 const securityCouncilStats = discovery.getMultisigStats(
   'Optimism Security Council',
@@ -160,6 +241,103 @@ export const optimism: ScalingProject = opStackL2({
   },
   hasSuperchainScUpgrades: true,
   associatedTokens: ['OP'],
+  nonTemplateTechnology: {
+    sequencing: {
+      name: 'Transactions are ordered by a centralized sequencer',
+      description:
+        'OP Mainnet uses a single centralized sequencer for fast confirmations. Users can bypass it with one Ethereum transaction to the OptimismPortal. Rollup nodes derive the deposited transaction from Ethereum, including it after at most one sequencing window.',
+      sequencingSpec: {
+        type: 'centralized',
+        trustedPreconfirmation: {
+          value: `${flashblockIntervalMilliseconds} ms`,
+          secondLine: `${l2BlockTimeSeconds} s L2 block time`,
+          description: `The centralized sequencer streams cumulative Flashblock preconfirmations every ${flashblockIntervalMilliseconds} ms while sealing regular L2 blocks every ${l2BlockTimeSeconds} seconds. Flashblocks are out of protocol: the promise has no protocol enforcement or slashing, and ${flashblockIntervalMilliseconds} ms is a target that can vary with execution load.`,
+          orderHint: flashblockIntervalMilliseconds / 1_000,
+        },
+        trustedOrdering: {
+          value: 'Dynamic priority auction',
+          secondLine: 'Fee order per Flashblock',
+          description: `For each ${flashblockIntervalMilliseconds} ms build loop, the centralized builder selects available transactions by priority fee. Transactions committed to an earlier Flashblock are not reordered when a higher-fee transaction arrives later, so arrival time also affects ordering. This policy is not enforced by the derivation rules.`,
+        },
+        sequencer: {
+          value: 'Centralized',
+          secondLine: 'Raft HA',
+          sentiment: 'bad',
+          description:
+            'The OP Mainnet operator controls real-time ordering. They run redundant sequencer instances coordinated by op-conductor using Raft leader election, with only the leader producing blocks. op-conductor explicitly assumes all nodes are honest and is not Byzantine fault tolerant, so the replicas do not create independent operators or censorship resistance.',
+          orderHint: 1,
+        },
+        realtimeCensorshipResistance: {
+          value: 'No',
+          sentiment: 'bad',
+          description:
+            'The centralized sequencer can censor transactions submitted through the normal L2 path.',
+        },
+        forcedInclusion: {
+          value: 'Automatic derivation',
+          secondLine: '1 L1 tx: portal deposit',
+          sentiment: 'good',
+          description:
+            'The user submits one Ethereum transaction to the OptimismPortal which is automatically derived by conforming nodes.',
+        },
+        inclusionDelay: {
+          value: formatSeconds(sequencingWindowSeconds, { fullUnit: true }),
+          secondLine: `${sequencingWindowBlocks.toLocaleString('en-US')} L1 blocks`,
+          sentiment: 'good',
+          description:
+            'The static sequencing window is measured in Ethereum blocks.',
+          orderHint: sequencingWindowBlocks,
+        },
+        inclusionMechanics: {
+          value: '1 L1 Tx',
+          secondLine: 'Address alias',
+          description: `Forced inclusion creates an L1-originated deposit transaction rather than submitting the original signed L2 transaction. Its calldata is capped at ${maxDepositCalldataBytes.toLocaleString('en-US')} bytes, its minimum L2 gas limit is ${minimumDepositGasWithoutData.toLocaleString('en-US')} plus ${minimumDepositGasPerByte.toLocaleString('en-US')} gas per calldata byte, and deposits share a metered ${depositResourceLimit.toLocaleString('en-US')} gas resource limit per Ethereum block. L1 contract callers use an aliased address on L2.`,
+        },
+        exitDelay: {
+          value: formatSeconds(faultDisputeGameWorstCaseExitDelaySeconds, {
+            fullUnit: true,
+          }),
+          secondLine: `${formatSeconds(sequencingWindowSeconds)} inclusion + ${formatSeconds(faultDisputeGameStateFinalizationDelaySeconds)} state`,
+          description: `After successful L2 inclusion (forced or sequencer), the user can propose the state needed to exit by creating a permissionless fault dispute game. A maximally delayed challenge path can take up to ${formatSeconds(faultDisputeGameMaxDuration, { fullUnit: true })}: both teams' ${formatSeconds(maxClockDuration, { fullUnit: true })} chess clocks plus up to ${formatSeconds(faultDisputeGameMaxClockExtension, { fullUnit: true })} of cumulative clock extensions. This is followed by the ${formatSeconds(disputeGameFinalityDelaySeconds, { fullUnit: true })} finality air gap. Parallel branches increase the transactions and gas needed to defend and resolve the game. The ${formatSeconds(proofMaturityDelaySeconds, { fullUnit: true })} withdrawal-proof maturity period runs concurrently.`,
+          orderHint: faultDisputeGameWorstCaseExitDelaySeconds,
+        },
+        exitEconomics: {
+          value: `${faultDisputeGameInitialBondEther.toLocaleString('en-US')} ETH`,
+          secondLine: `Favors attacker ${faultDisputeGameBondScalingFactor.toFixed(2)}×`,
+          description: `Self-proposing the state needed for an exit starts with a ${faultDisputeGameInitialBondEther.toLocaleString('en-US')} ETH bond. If challenged, the user must defend it with progressively larger bonds: each counterclaim costs ${faultDisputeGameBondScalingFactor.toFixed(2)} times the claim it counters, favoring the attacker in a capital-exhaustion attack.`,
+        },
+      },
+      censorshipResistance:
+        'The centralized sequencer provides no real-time censorship resistance. The Ethereum deposit path provides eventual censorship resistance, assuming the deposit is included on Ethereum.',
+      references: [
+        {
+          title: 'OP Stack specification - sequencing window',
+          url: 'https://specs.optimism.io/protocol/overview.html#epochs-and-the-sequencing-window',
+        },
+        {
+          title: 'OP Mainnet documentation - Flashblocks',
+          url: 'https://docs.optimism.io/op-stack/features/flashblocks',
+        },
+        {
+          title: 'OP Stack documentation - Conductor',
+          url: 'https://docs.optimism.io/chain-operators/tools/op-conductor',
+        },
+        {
+          title: 'OP Mainnet documentation - transaction fees',
+          url: 'https://docs.optimism.io/op-stack/transactions/fees',
+        },
+        {
+          title: 'OptimismPortal2 - source code',
+          url: 'https://etherscan.io/address/0xe89F13c5ee4033B2D3cD76C9d6958eFBfe26D3C2#code',
+        },
+        {
+          title: 'OP Stack specification - fault dispute game resolution',
+          url: 'https://specs.optimism.io/fault-proof/stage-one/honest-challenger-fdg.html#resolution',
+        },
+      ],
+      risks: [],
+    },
+  },
   nonTemplateExcludedTokens: ['rsETH'],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({

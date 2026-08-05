@@ -1,18 +1,23 @@
 import type {
   Project,
   ProjectInclusionDelayChart,
+  ProjectTechnologyChoice,
   TableReadyValue,
 } from '@l2beat/config'
-import { notUndefined } from '@l2beat/shared-pure'
+import { assert, notUndefined, ProjectId } from '@l2beat/shared-pure'
 import type { ProjectChanges } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import { getProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import type { CommonScalingEntry } from '~/server/features/scaling/getCommonScalingEntry'
 import { getCommonScalingEntry } from '~/server/features/scaling/getCommonScalingEntry'
+import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
 import { ps } from '~/server/projects'
-import type { InclusionDelayChartDataPoint } from '~/utils/project/technology/inclusion-delay/calculateInclusionDelay'
+import { manifest } from '~/utils/Manifest'
+import type {
+  InclusionDelayChartDataPoint,
+  InclusionDelayEntityMarker,
+} from '~/utils/project/technology/inclusion-delay/calculateInclusionDelay'
 import {
-  getEthereumComparisonDelay,
-  getProjectInclusionDelay,
+  getInclusionDelayData,
   mergeInclusionDelaySeries,
 } from '~/utils/project/technology/inclusion-delay/calculateInclusionDelay'
 
@@ -21,8 +26,11 @@ type ScalingRiskSequencingProject = Project<
   'contracts'
 >
 
-export interface ScalingRiskSequencingEntry extends CommonScalingEntry {
+type EthereumSequencingProject = Project<'display' | 'scalingTechnology'>
+
+export interface ScalingRiskSequencingEntry extends CommonProjectEntry {
   sequencerCount: TableReadyValue | undefined
+  stakeDistributionSnapshotDate: string | undefined
   blockProductionAccess: TableReadyValue | undefined
   entryPolicy: TableReadyValue | undefined
   blockTime: TableReadyValue | undefined
@@ -30,6 +38,19 @@ export interface ScalingRiskSequencingEntry extends CommonScalingEntry {
   blockProduction: TableReadyValue | undefined
   deterministicCrGadget: TableReadyValue | undefined
   additionalCrGadgets: TableReadyValue | undefined
+}
+
+export interface ScalingRiskCentralizedSequencingEntry
+  extends CommonScalingEntry {
+  trustedPreconfirmation: TableReadyValue
+  trustedOrdering: TableReadyValue
+  sequencer: TableReadyValue
+  realtimeCensorshipResistance: TableReadyValue
+  forcedInclusion: TableReadyValue
+  inclusionDelay: TableReadyValue
+  inclusionMechanics: TableReadyValue
+  exitDelay: TableReadyValue
+  exitEconomics: TableReadyValue
 }
 
 export interface InclusionDelayComparisonSeries {
@@ -41,16 +62,23 @@ export interface InclusionDelayComparisonSeries {
 export interface InclusionDelayComparison {
   data: InclusionDelayChartDataPoint[]
   series: InclusionDelayComparisonSeries[]
+  entityMarkers: InclusionDelayComparisonEntityMarker[]
   maxCensorFraction: number
 }
 
+export interface InclusionDelayComparisonEntityMarker
+  extends InclusionDelayEntityMarker {
+  seriesKey: string
+}
+
 export interface ScalingRiskSequencingPageData {
-  entries: ScalingRiskSequencingEntry[]
+  decentralizedEntries: ScalingRiskSequencingEntry[]
+  centralizedEntries: ScalingRiskCentralizedSequencingEntry[]
   inclusionDelayComparison: InclusionDelayComparison | undefined
 }
 
 export async function getScalingRiskSequencingEntries(): Promise<ScalingRiskSequencingPageData> {
-  const [projectsChangeReport, projects] = await Promise.all([
+  const [projectsChangeReport, projects, ethereum] = await Promise.all([
     getProjectsChangeReport(),
     ps.getProjects({
       select: [
@@ -64,11 +92,32 @@ export async function getScalingRiskSequencingEntries(): Promise<ScalingRiskSequ
       where: ['scalingInfo'],
       whereNot: ['archivedAt'],
     }),
+    ps.getProject({
+      id: ProjectId.ETHEREUM,
+      select: ['display', 'scalingTechnology'],
+    }),
   ])
 
-  const entries = projects
+  assert(ethereum, 'Ethereum sequencing configuration not found')
+  const ethereumEntry = getEthereumSequencingEntry(ethereum)
+  assert(ethereumEntry, 'Ethereum sequencer set specification not found')
+
+  const decentralizedEntries = [
+    ethereumEntry,
+    ...projects
+      .map((project) =>
+        getScalingRiskSequencingEntry(
+          project,
+          projectsChangeReport.getChanges(project.id),
+        ),
+      )
+      .filter(notUndefined)
+      .sort((a, b) => a.name.localeCompare(b.name)),
+  ]
+
+  const centralizedEntries = projects
     .map((project) =>
-      getScalingRiskSequencingEntry(
+      getScalingRiskCentralizedSequencingEntry(
         project,
         projectsChangeReport.getChanges(project.id),
       ),
@@ -77,8 +126,9 @@ export async function getScalingRiskSequencingEntries(): Promise<ScalingRiskSequ
     .sort((a, b) => a.name.localeCompare(b.name))
 
   return {
-    entries,
-    inclusionDelayComparison: getInclusionDelayComparison(projects),
+    decentralizedEntries,
+    centralizedEntries,
+    inclusionDelayComparison: getInclusionDelayComparison(projects, ethereum),
   }
 }
 
@@ -86,39 +136,39 @@ const ETHEREUM_SERIES_KEY = 'ethereum'
 
 function getInclusionDelayComparison(
   projects: ScalingRiskSequencingProject[],
+  ethereum: EthereumSequencingProject,
 ): InclusionDelayComparison | undefined {
   const projectDelays = projects
     .map((project) => {
       const sequencing = project.scalingTechnology.sequencing
       const chart = sequencing?.inclusionDelayChart
-      if (!sequencing?.sequencerSetSpec || !chart) {
+      if (sequencing?.sequencingSpec?.type !== 'sequencer-set' || !chart) {
         return undefined
       }
+      const inclusionDelay = getInclusionDelayData(chart)
       return {
         slug: project.slug,
         name: project.name,
-        points: getProjectInclusionDelay(chart),
+        points: inclusionDelay.projectPoints,
+        entityMarkers: inclusionDelay.entityLegendEntries.filter(hasDelay),
         maxCensorFraction: chart.maxCensorFraction,
-        target: chart.target,
       }
     })
     .filter(notUndefined)
     .sort((a, b) => a.name.localeCompare(b.name))
 
-  const [first] = projectDelays
-  if (!first) {
+  const ethereumChart =
+    ethereum.scalingTechnology.sequencing?.inclusionDelayChart
+  if (projectDelays.length === 0 || !ethereumChart) {
     return undefined
   }
 
   const maxCensorFraction = Math.max(
     ...projectDelays.map((delay) => delay.maxCensorFraction),
+    ethereumChart.maxCensorFraction,
   )
-  // All sequencing projects compare against the same confidence target, so a
-  // single Ethereum reference spanning the widest range serves every line.
-  const ethereumPoints = getEthereumComparisonDelay(
-    maxCensorFraction,
-    first.target,
-  )
+  const ethereumDelay = getInclusionDelayData(ethereumChart)
+  const ethereumPoints = ethereumDelay.projectPoints
 
   const data = mergeInclusionDelaySeries([
     ...projectDelays.map((delay) => ({
@@ -137,7 +187,28 @@ function getInclusionDelayComparison(
     { key: ETHEREUM_SERIES_KEY, label: 'Ethereum', type: 'ethereum' as const },
   ]
 
-  return { data, series, maxCensorFraction }
+  const entityMarkers: InclusionDelayComparisonEntityMarker[] = [
+    ...projectDelays.flatMap((delay) =>
+      delay.entityMarkers.map((marker) => ({
+        ...marker,
+        id: `${delay.slug}-${marker.id}`,
+        seriesKey: delay.slug,
+      })),
+    ),
+    ...ethereumDelay.entityLegendEntries.filter(hasDelay).map((marker) => ({
+      ...marker,
+      id: `${ETHEREUM_SERIES_KEY}-${marker.id}`,
+      seriesKey: ETHEREUM_SERIES_KEY,
+    })),
+  ]
+
+  return { data, series, entityMarkers, maxCensorFraction }
+}
+
+function hasDelay<T extends { delayDays: number | null }>(
+  marker: T,
+): marker is T & InclusionDelayEntityMarker {
+  return marker.delayDays !== null
 }
 
 function getScalingRiskSequencingEntry(
@@ -145,14 +216,57 @@ function getScalingRiskSequencingEntry(
   changes: ProjectChanges,
 ): ScalingRiskSequencingEntry | undefined {
   const sequencing = project.scalingTechnology.sequencing
-  const spec = sequencing?.sequencerSetSpec
-  if (!sequencing || !spec) {
-    return undefined
-  }
+  const values = getSequencingValues(sequencing)
+  if (!values) return undefined
 
   return {
     ...getCommonScalingEntry({ project, changes }),
+    ...values,
+  }
+}
+
+function getEthereumSequencingEntry(
+  project: EthereumSequencingProject,
+): ScalingRiskSequencingEntry | undefined {
+  const values = getSequencingValues(project.scalingTechnology.sequencing)
+  if (!values) return undefined
+
+  return {
+    id: project.id,
+    slug: project.slug,
+    icon: manifest.getUrl('/icons/ethereum.png'),
+    name: project.name,
+    shortName: project.shortName,
+    backgroundColor: 'blue',
+    statuses: undefined,
+    description: project.display.description,
+    ...values,
+  }
+}
+
+type SequencingValues = Pick<
+  ScalingRiskSequencingEntry,
+  | 'sequencerCount'
+  | 'stakeDistributionSnapshotDate'
+  | 'blockProductionAccess'
+  | 'entryPolicy'
+  | 'blockTime'
+  | 'rotation'
+  | 'blockProduction'
+  | 'deterministicCrGadget'
+  | 'additionalCrGadgets'
+>
+
+function getSequencingValues(
+  sequencing: ProjectTechnologyChoice | undefined,
+): SequencingValues | undefined {
+  if (sequencing?.sequencingSpec?.type !== 'sequencer-set') return undefined
+  const spec = sequencing.sequencingSpec
+
+  return {
     sequencerCount: spec.sequencerCount,
+    stakeDistributionSnapshotDate:
+      sequencing.inclusionDelayChart?.stakeDistribution?.snapshotDate,
     blockProductionAccess: spec.blockProductionAccess,
     entryPolicy: withSecondLine(spec.stakePerValidator, spec.rateLimit),
     blockTime: spec.blockTime,
@@ -163,6 +277,30 @@ function getScalingRiskSequencingEntry(
     blockProduction: getBlockProduction(sequencing.inclusionDelayChart),
     deterministicCrGadget: spec.deterministicCrGadget,
     additionalCrGadgets: spec.additionalCrGadgets,
+  }
+}
+
+function getScalingRiskCentralizedSequencingEntry(
+  project: ScalingRiskSequencingProject,
+  changes: ProjectChanges,
+): ScalingRiskCentralizedSequencingEntry | undefined {
+  const sequencing = project.scalingTechnology.sequencing
+  if (sequencing?.sequencingSpec?.type !== 'centralized') {
+    return undefined
+  }
+  const spec = sequencing.sequencingSpec
+
+  return {
+    ...getCommonScalingEntry({ project, changes }),
+    trustedPreconfirmation: spec.trustedPreconfirmation,
+    trustedOrdering: spec.trustedOrdering,
+    sequencer: spec.sequencer,
+    realtimeCensorshipResistance: spec.realtimeCensorshipResistance,
+    forcedInclusion: spec.forcedInclusion,
+    inclusionDelay: spec.inclusionDelay,
+    inclusionMechanics: spec.inclusionMechanics,
+    exitDelay: spec.exitDelay,
+    exitEconomics: spec.exitEconomics,
   }
 }
 
@@ -197,7 +335,7 @@ function getBlockProduction(
     value: 'Single proposer rotation',
     secondLine: `${chart.slotSeconds}s slots`,
     description:
-      'A single proposer is randomly selected for each slot from the proof-of-stake validator set.',
+      'A single proposer is selected for each slot from the proof-of-stake validator set. The proposer controls the final payload choice and can order transactions locally or through a builder.',
     sentiment: 'good',
   }
 }

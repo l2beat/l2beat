@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x0917223b130193ccdb19f9fc74862483db5f05ed
+
+# Diff at Mon, 03 Aug 2026 07:36:04 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@44e2212a46e585fd2ddb21d6755695cf74e1f876 block: 1785226129
+- current timestamp: 1785741083
+
+## Description
+
+Expose the portal's minimum deposit gas formula for Base sequencing research.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1785226129 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0x49048044D57e1C92A77f79988d21Fa8fAF74E97e) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the AggregateVerifier.
+      values.minimumGasLimitOneByte:
++        21040
+      values.minimumGasLimitZeroBytes:
++        21000
+    }
+```
+
 Generated with discovered.json: 0x66456466d7bb3ed886781d0a211593297478287e
 
 # Diff at Thu, 30 Jul 2026 14:35:25 GMT:

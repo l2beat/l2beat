@@ -40,7 +40,13 @@ interface Props {
   maxCensorFraction: number
   yAxisScale: InclusionDelayYAxisScale
   thresholdMarkers?: InclusionDelayThresholdMarker[]
-  entityMarkers?: InclusionDelayEntityMarker[]
+  entityMarkers?: InclusionDelayChartEntityMarker[]
+  entityMarkerMode?: 'detailed' | 'points'
+}
+
+export interface InclusionDelayChartEntityMarker
+  extends InclusionDelayEntityMarker {
+  color?: string
 }
 
 export function InclusionDelayChart({
@@ -50,6 +56,7 @@ export function InclusionDelayChart({
   yAxisScale,
   thresholdMarkers = [],
   entityMarkers = [],
+  entityMarkerMode = 'detailed',
 }: Props) {
   const dataKeys = Object.keys(chartMeta)
   const yDomain = getInclusionDelayYDomain(
@@ -69,14 +76,14 @@ export function InclusionDelayChart({
         <ChartLegend
           content={
             <ChartLegendContent>
-              {entityMarkers.length > 0 && (
+              {entityMarkerMode === 'detailed' && entityMarkers.length > 0 && (
                 <div className="order-last flex shrink-0 items-center gap-[3px] pl-2">
                   <ChartDataIndicator
                     type={{ shape: 'square' }}
                     backgroundColor={INCLUSION_DELAY_ENTITY_MARKER_COLOR}
                   />
                   <ChartLegendItemLabel>
-                    Largest staking entities
+                    Largest attributed entities
                   </ChartLegendItemLabel>
                 </div>
               )}
@@ -143,17 +150,21 @@ export function InclusionDelayChart({
             x={marker.stakeFraction}
             y={marker.delayDays}
             r={4.5}
-            fill={INCLUSION_DELAY_ENTITY_MARKER_COLOR}
+            fill={marker.color ?? INCLUSION_DELAY_ENTITY_MARKER_COLOR}
             stroke="var(--background)"
             strokeWidth={2}
-            label={{
-              value: marker.label,
-              position: 'top',
-              fill: 'var(--primary)',
-              fontSize: 11,
-              fontWeight: 500,
-              offset: 8,
-            }}
+            label={
+              entityMarkerMode === 'detailed'
+                ? {
+                    value: marker.label,
+                    position: 'top',
+                    fill: 'var(--primary)',
+                    fontSize: 11,
+                    fontWeight: 500,
+                    offset: 8,
+                  }
+                : undefined
+            }
             ifOverflow="discard"
           />
         ))}
