@@ -15,7 +15,7 @@ FEATURES_TABLES=(
     "IndexerState IndexerConfiguration AggregatedInteropTransfer AggregatedInteropToken InteropAggregateStatus"
     "AbstractToken DeployedToken TokenRelation Chain TokenDbSettings TokenIngestionQueue TokenDbHistory"
     "IndexerState IndexerConfiguration L2Cost Liveness AggregatedL2Cost AggregatedLiveness"
-    "IndexerState IndexerConfiguration PrivacyBlockTimestamp PrivacyFlowEvent PrivacyPrice"
+    "IndexerState IndexerConfiguration PrivacyBlockTimestamp PrivacyFlowEvent PrivacyPrice PrivacyRelayerActivity"
 )
 
 clear_tables() {
