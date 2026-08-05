@@ -1,41 +1,33 @@
 import {
   createContext,
   type ReactNode,
-  useCallback,
   useContext,
   useEffect,
   useState,
 } from 'react'
+import { parseHighlightedIds } from './utils/parseHighlightedIds'
 
 interface HighlightedTableRowContextType {
-  highlightedId: string | undefined
+  highlightedIds: string[]
 }
 
 const HighlightedTableRowContext = createContext<
   HighlightedTableRowContextType | undefined
 >(undefined)
 
-interface HighlightedTableRowProviderProps {
-  children: ReactNode
-  defaultValue?: string
-}
-
 export function HighlightedTableRowProvider({
   children,
-  defaultValue,
-}: HighlightedTableRowProviderProps) {
-  const [highlightedId, setHighlightedId] = useState(defaultValue)
+}: {
+  children: ReactNode
+}) {
+  const [highlightedIds, setHighlightedIds] = useState<string[]>([])
 
-  const handleHighlightChange = useCallback(() => {
-    const params = new URLSearchParams(window.location.search)
-    const highlight = params.get('highlight')
-    setHighlightedId(highlight ?? undefined)
+  useEffect(() => {
+    setHighlightedIds(parseHighlightedIds(window.location.search))
   }, [])
 
-  useEffect(handleHighlightChange, [])
-
   return (
-    <HighlightedTableRowContext.Provider value={{ highlightedId }}>
+    <HighlightedTableRowContext.Provider value={{ highlightedIds }}>
       {children}
     </HighlightedTableRowContext.Provider>
   )
