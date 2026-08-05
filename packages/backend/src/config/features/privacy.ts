@@ -18,6 +18,7 @@ import type {
   PrivacyPriceIndexerConfig,
   PrivacyRelayerActivityIndexerConfig,
 } from '../../modules/privacy/types'
+import { getPrivacyRelayerExtractor } from '../../modules/privacy/utils/extractPrivacyRelayerActivity'
 import type { FeatureFlags } from '../FeatureFlags'
 
 export async function getPrivacyConfig(
@@ -33,8 +34,10 @@ export async function getPrivacyConfig(
 
   const projects = projectsWithPrivacy
     .filter((project) => flags.isEnabled('privacy', project.id))
-    .filter((project) =>
-      project.privacyInfo.tokens.some((token) => token.buckets.length > 0),
+    .filter(
+      (project) =>
+        project.privacyInfo.tokens.some((token) => token.buckets.length > 0) ||
+        (project.privacyInfo.relayerTracking?.length ?? 0) > 0,
     )
     .map((project) => ({
       projectId: project.id.toString(),
@@ -79,6 +82,8 @@ export async function getPrivacyConfig(
   const priceIdMap = new Map<string, UnixTime>()
   for (const project of projects) {
     for (const token of project.privacyInfo.tokens) {
+      if (token.buckets.length === 0) continue
+
       const priceId = token.token.priceId
       const sinceTimestamp = token.token.sinceTimestamp
       if (!priceId || !sinceTimestamp) continue
@@ -142,7 +147,7 @@ function toRelayerConfig(
     chain: ChainSpecificAddress.longChain(source.address),
     address: ChainSpecificAddress.address(source.address),
     sinceTimestamp: Math.max(source.sinceTimestamp, minTimestamp),
-    event: source.event,
+    event: getPrivacyRelayerExtractor(source.extractor).event,
     extractor: source.extractor,
   }
 

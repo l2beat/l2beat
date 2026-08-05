@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { Indexer } from '@l2beat/uif'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
@@ -29,21 +29,24 @@ export function createPrivacyModule({
   const indexers: Indexer[] = []
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
-  const priceIndexer = new PrivacyPriceIndexer(
-    {
-      parents: [hourlyIndexer],
-      indexerService,
-      configurations: config.privacy.priceConfigs.map((priceConfig) => ({
-        id: priceConfig.id,
-        minHeight: UnixTime.toStartOf(priceConfig.sinceTimestamp, 'hour'),
-        maxHeight: null,
-        properties: priceConfig,
-      })),
-      priceProvider: providers.price,
-      db,
-    },
-    logger,
-  )
+  const priceIndexer =
+    config.privacy.priceConfigs.length > 0
+      ? new PrivacyPriceIndexer(
+          {
+            parents: [hourlyIndexer],
+            indexerService,
+            configurations: config.privacy.priceConfigs.map((priceConfig) => ({
+              id: priceConfig.id,
+              minHeight: UnixTime.toStartOf(priceConfig.sinceTimestamp, 'hour'),
+              maxHeight: null,
+              properties: priceConfig,
+            })),
+            priceProvider: providers.price,
+            db,
+          },
+          logger,
+        )
+      : undefined
 
   const flowConfigsByChain = new Map<string, PrivacyFlowIndexerConfig[]>()
   for (const flowConfig of config.privacy.flowConfigs) {
@@ -100,6 +103,7 @@ export function createPrivacyModule({
     indexers.push(blockTimestampIndexer)
 
     if (flowConfigs.length > 0) {
+      assert(priceIndexer, 'Privacy flow configs require a price indexer')
       const flowIndexer = new PrivacyFlowIndexer(
         {
           chain: blockTimestampConfig.chain,
@@ -155,7 +159,7 @@ export function createPrivacyModule({
       logger = logger.for('PrivacyModule')
       logger.info('Starting...')
       await hourlyIndexer.start()
-      await priceIndexer.start()
+      await priceIndexer?.start()
       for (const indexer of indexers) {
         await indexer.start()
       }

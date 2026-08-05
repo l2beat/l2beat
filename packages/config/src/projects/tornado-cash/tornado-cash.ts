@@ -181,7 +181,6 @@ export const tornadoCash: BaseProject = {
     relayerTracking: BUCKETS.map((bucket) => ({
       address: bucket.address,
       sinceTimestamp: bucket.sinceTimestamp,
-      event: TORNADO_WITHDRAWAL_EVENT,
       extractor: 'tornadoCashWithdrawal',
     })),
     exitWindow: {

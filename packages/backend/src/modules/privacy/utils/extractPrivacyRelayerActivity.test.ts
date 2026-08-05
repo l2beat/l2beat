@@ -5,7 +5,10 @@ import type {
   PrivacyRelayerActivityIndexerConfig,
   PrivacyRpcLog,
 } from '../types'
-import { extractPrivacyRelayerActivity } from './extractPrivacyRelayerActivity'
+import {
+  extractPrivacyRelayerActivity,
+  getPrivacyRelayerExtractor,
+} from './extractPrivacyRelayerActivity'
 
 const privacyPoolsInterface = new utils.Interface([
   'event WithdrawalRelayed(address indexed _relayer, address indexed _recipient, address indexed _asset, uint256 _amount, uint256 _feeAmount)',
@@ -20,6 +23,15 @@ const RELAYER = EthereumAddress('0x2222222222222222222222222222222222222222')
 const RECIPIENT = EthereumAddress('0x3333333333333333333333333333333333333333')
 
 describe(extractPrivacyRelayerActivity.name, () => {
+  it('derives event topics from the extractor definitions', () => {
+    expect(
+      getPrivacyRelayerExtractor('privacyPoolsWithdrawalRelayed').event,
+    ).toEqual(privacyPoolsInterface.getEventTopic('WithdrawalRelayed'))
+    expect(getPrivacyRelayerExtractor('tornadoCashWithdrawal').event).toEqual(
+      tornadoCashInterface.getEventTopic('Withdrawal'),
+    )
+  })
+
   it('extracts Privacy Pools relayer and recipient', () => {
     const log = encodeLog(privacyPoolsInterface, 'WithdrawalRelayed', [
       RELAYER,
@@ -102,7 +114,7 @@ function config(
     chain: 'ethereum',
     address: CONTRACT,
     sinceTimestamp: UnixTime(0),
-    event: 'test-event',
+    event: getPrivacyRelayerExtractor(extractor).event,
     extractor,
   }
 }

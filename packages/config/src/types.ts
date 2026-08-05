@@ -1010,7 +1010,6 @@ export interface ProjectPrivacyInfo {
 export type ProjectPrivacyRelayerSource = {
   address: ChainSpecificAddress
   sinceTimestamp: UnixTime
-  event: string
   extractor: 'privacyPoolsWithdrawalRelayed' | 'tornadoCashWithdrawal'
 }
 

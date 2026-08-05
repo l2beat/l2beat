@@ -8,6 +8,7 @@ import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import type { Configuration } from '../../../tools/uif/multi/types'
 import type { PrivacyRelayerActivityIndexerConfig } from '../types'
+import { getPrivacyRelayerExtractor } from '../utils/extractPrivacyRelayerActivity'
 import { PrivacyRelayerActivityIndexer } from './PrivacyRelayerActivityIndexer'
 
 const CONTRACT = EthereumAddress('0x1111111111111111111111111111111111111111')
@@ -124,6 +125,7 @@ describe(PrivacyRelayerActivityIndexer.name, () => {
       ).not.toEqual(
         PrivacyRelayerActivityIndexer.idToConfigurationId({
           ...properties,
+          event: getPrivacyRelayerExtractor('tornadoCashWithdrawal').event,
           extractor: 'tornadoCashWithdrawal',
         }),
       )

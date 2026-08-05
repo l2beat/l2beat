@@ -44,6 +44,22 @@ describe(PrivacyProjectStats.name, () => {
 
     expect(html).not.toInclude('Active Relayers 30D')
   })
+
+  it('shows relayers when flow tracking is not configured', () => {
+    const html = render(
+      createElement(PrivacyProjectStats, {
+        ...BASE_PROPS,
+        assetsCount: 1,
+        bucketsCount: 0,
+        activeRelayers30d: 3,
+      }),
+    )
+
+    expect(html).toInclude('Live asset metrics')
+    expect(html).toInclude('Not tracked')
+    expect(html).toInclude('Active Relayers 30D')
+    expect(html).toInclude('>3</span>')
+  })
 })
 
 function render(children: ReactNode): string {
