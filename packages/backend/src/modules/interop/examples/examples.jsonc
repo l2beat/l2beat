@@ -1118,6 +1118,37 @@
       "transfers": ["celer.Transfer"]
     }
   },
+  "butternetwork": {
+    "description": "Butter V3 token bridge, Base to Polygon PoS",
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x8dfc50a50a573514d0fc1d8f3c008b2b074972fdc812bb35aaac3377144f633d"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0x622bc3a75845f7fed4b5507b74555d08cfb1873a87d9baa3fa1ffef24ccf7a13"
+      }
+    ],
+    "expects": {
+      "events": ["butternetwork.MessageOut", "butternetwork.MessageIn"],
+      "messages": [{ "type": "butternetwork.Message", "app": "butternetwork" }],
+      "transfers": [
+        {
+          "type": "butternetwork.Transfer",
+          "bridgeType": "nonMinting",
+          "src": {
+            "event": { "ctx": { "chain": "base" } },
+            "wasBurned": false
+          },
+          "dst": {
+            "event": { "ctx": { "chain": "polygonpos" } },
+            "wasMinted": false
+          }
+        }
+      ]
+    }
+  },
   "mayan-forwarder": {
     "txs": [
       {
@@ -6084,6 +6115,18 @@
         }
       ]
     }
+  },
+  "gnosisbridge-xdai": {
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x60eac581dea5e871ad9ac3ce28caa24e5aafa4077a8271c07b8266c6df1afb9b"
+      },
+      {
+        "chain": "gnosis",
+        "tx": "0x55ccfb00b43c14a4a83cbc83114d6beb82628c271ef5e95c176eb2284080b544"
+      }
+    ]
   },
   "maker-bridge": {
     "txs": [

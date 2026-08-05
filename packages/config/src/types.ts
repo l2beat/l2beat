@@ -1451,6 +1451,7 @@ export type InteropPluginName =
   | 'cctp-v1'
   | 'cctp-v2'
   | 'celer'
+  | 'butternetwork'
   | 'centrifuge'
   | 'circle-gateway'
   | 'debridge'
