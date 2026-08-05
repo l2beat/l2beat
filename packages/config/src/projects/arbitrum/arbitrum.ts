@@ -591,7 +591,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
           orderHint: currentForceInclusionDelayBlocks,
         },
         inclusionMechanics: {
-          value: 'Delayed-inbox message',
+          value: '2 L1 Tx',
           secondLine: 'Address alias',
           description: `Forced inclusion creates an L1-originated L2 message rather than submitting the original signed L2 transaction. The full delayed-inbox message is capped at ${inboxMaxDataSize.toLocaleString('en-US')} bytes, so the available call data is slightly smaller. L1 contract callers use an aliased address on L2. The rollup owner can pause the Inbox or enable its allowlist, preventing new submissions.`,
         },

@@ -464,6 +464,7 @@ There is no user-callable forced-inclusion function. A censored user can post an
         inclusionMechanics: {
           value: 'L1 log of intent',
           secondLine: 'Permissioned inclusion',
+          sentiment: 'warning',
           description: `Logging a message creates an L1-originated L1-handler transaction rather than submitting the original signed L2 transaction. It does not automatically enter the canonical L2 order and has no other effect than recording the intent. The Security Council path must produce Starknet OS execution, data availability and an accepted SHARP proof before posting the state update. An unconsumed message can be cancelled through a two-call L1 process after a ${formatSeconds(messageCancellationDelaySeconds, { preventRoundingUp: true, fullUnit: true })} delay.`,
         },
         exitDelay: {

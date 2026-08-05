@@ -365,7 +365,7 @@ export const base: ScalingProject = opStackL2({
           orderHint: sequencingWindowBlocks,
         },
         inclusionMechanics: {
-          value: 'Deposit transaction',
+          value: '1 L1 Tx',
           secondLine: 'Address alias',
           description: `Forced inclusion creates an L1-originated deposit transaction rather than submitting the original signed L2 transaction. Its calldata is capped at ${maxDepositCalldataBytes.toLocaleString('en-US')} bytes, its minimum L2 gas limit is ${minimumDepositGasWithoutData.toLocaleString('en-US')} plus ${minimumDepositGasPerByte.toLocaleString('en-US')} gas per calldata byte, and deposits share a metered ${depositResourceLimit.toLocaleString('en-US')} gas resource limit per Ethereum block. L1 contract callers use an aliased address on L2.`,
         },
