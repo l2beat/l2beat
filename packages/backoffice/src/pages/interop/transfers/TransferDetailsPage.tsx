@@ -7,6 +7,8 @@ import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { TablePageLayout } from '~/components/table/TablePageLayout'
 import { useBackendTrpc } from '~/react-query/trpc'
+import { TransferDataRangeSelect } from '../TransferDataRangeSelect'
+import { useTransferDataRange } from '../transferDataRange'
 import { TransferDetailsTable } from './table/details/TransferDetailsTable'
 import type {
   ChainMetadata,
@@ -23,6 +25,7 @@ export function TransferDetailsPage() {
   const plugin = parseOptionalSearchParam(searchParams.get('plugin'))
   const srcChain = parseOptionalSearchParam(searchParams.get('srcChain'))
   const dstChain = parseOptionalSearchParam(searchParams.get('dstChain'))
+  const [range, setRange] = useTransferDataRange()
   const hasValidParams = type !== undefined
 
   const detailsInput: TransferDetailsInput = hasValidParams
@@ -31,8 +34,9 @@ export function TransferDetailsPage() {
         plugin,
         srcChain,
         dstChain,
+        range,
       }
-    : { type: '' }
+    : { type: '', range }
 
   const {
     data: transfersData,
@@ -74,11 +78,16 @@ export function TransferDetailsPage() {
       actions={
         <>
           <Button asChild variant="outline" size="sm">
-            <Link to="/interop/transfers">
+            <Link to={`/interop/transfers?range=${range}`}>
               <ChevronLeftIcon />
               Back to transfers
             </Link>
           </Button>
+          <TransferDataRangeSelect
+            value={range}
+            onValueChange={setRange}
+            disabled={!hasValidParams || isTransfersFetching}
+          />
           <Button
             variant="outline"
             size="sm"
@@ -102,6 +111,7 @@ export function TransferDetailsPage() {
             Type: {type ?? 'invalid route'}
           </Badge>
           <Badge variant="secondary">Plugin: {plugin ?? 'all'}</Badge>
+          <Badge variant="secondary">Range: {range}</Badge>
           <Badge variant="secondary">Source chain: {srcChain ?? 'all'}</Badge>
           <Badge variant="secondary">
             Destination chain: {dstChain ?? 'all'}

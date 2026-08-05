@@ -8,6 +8,10 @@ import {
   getMissingTokenStatuses,
   getMissingTokens,
 } from '../../impls/missingTokens'
+import {
+  InteropTransferDataRangeRequest,
+  resolveInteropTransferTimeRange,
+} from '../transferDataRange'
 
 type Dependencies = {
   chains: readonly { id: string; type: 'evm' }[]
@@ -21,7 +25,15 @@ const MissingTokenSelection = v.object({
 
 export function createMissingTokensRouter(deps: Dependencies) {
   return router({
-    list: protectedProcedure.query(({ ctx }) => getMissingTokens(ctx.db, deps)),
+    list: protectedProcedure
+      .input(InteropTransferDataRangeRequest)
+      .query(async ({ ctx, input }) =>
+        getMissingTokens(
+          ctx.db,
+          deps,
+          await resolveInteropTransferTimeRange(ctx.db, input.range),
+        ),
+      ),
     requeue: protectedProcedure
       .input(v.array(MissingTokenSelection))
       .mutation(async ({ ctx, input }) => {

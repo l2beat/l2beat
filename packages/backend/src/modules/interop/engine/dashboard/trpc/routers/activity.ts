@@ -11,6 +11,10 @@ import {
   VALUE_DIFF_THRESHOLD_PERCENT,
 } from '../../activity/constants'
 import { explore } from '../../stats'
+import {
+  InteropTransferDataRangeRequest,
+  resolveInteropTransferTimeRange,
+} from '../transferDataRange'
 
 export interface SuspiciousTransferDto {
   plugin: string
@@ -119,18 +123,27 @@ export function createActivityRouter() {
         aggregatedItems,
       }
     }),
-    suspiciousTransfers: protectedProcedure.query(async ({ ctx }) => {
-      const transfers = await ctx.db.interopTransfer.getValueMismatchTransfers(
-        VALUE_DIFF_THRESHOLD_PERCENT,
-        MINIMUM_SIDE_VALUE_USD_THRESHOLD,
-      )
+    suspiciousTransfers: protectedProcedure
+      .input(InteropTransferDataRangeRequest)
+      .query(async ({ ctx, input }) => {
+        const transfers =
+          await ctx.db.interopTransfer.getValueMismatchTransfers(
+            VALUE_DIFF_THRESHOLD_PERCENT,
+            {
+              minimumSideValueUsdThreshold: MINIMUM_SIDE_VALUE_USD_THRESHOLD,
+              timeRange: await resolveInteropTransferTimeRange(
+                ctx.db,
+                input.range,
+              ),
+            },
+          )
 
-      return {
-        valueDiffThresholdPercent: VALUE_DIFF_THRESHOLD_PERCENT,
-        minimumSideValueUsdThreshold: MINIMUM_SIDE_VALUE_USD_THRESHOLD,
-        items: transfers.map(toSuspiciousTransferDto),
-      }
-    }),
+        return {
+          valueDiffThresholdPercent: VALUE_DIFF_THRESHOLD_PERCENT,
+          minimumSideValueUsdThreshold: MINIMUM_SIDE_VALUE_USD_THRESHOLD,
+          items: transfers.map(toSuspiciousTransferDto),
+        }
+      }),
     aggregateDetails: protectedProcedure
       .input(AggregateDetailsRequest)
       .query(async ({ ctx, input }) => {
