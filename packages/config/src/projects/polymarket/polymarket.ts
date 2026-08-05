@@ -36,6 +36,19 @@ const timelockDelay = formatDelay(
 
 // Emergency-resolution windows. The binary and neg-risk adapters share a
 // constant; the operator that fronts multi-outcome markets has its own.
+// The fee is passed in at settlement and is not a field of the signed Order,
+// so it is bounded only by this rate. A rate of zero disables the check rather
+// than forbidding fees: `if (maxFeeRate == 0) return;` in
+// Fees._validateFeeWithMaxFeeRate, commented "No limit enforced if rate is 0".
+const maxFeeRateBps = discovery.getContractValue<number>(
+  'CTFExchange',
+  'getMaxFeeRate',
+)
+const feeCeiling =
+  maxFeeRateBps === 0
+    ? 'a maximum rate the admins set, which is currently zero — a value that disables the check rather than forbidding fees, so no on-chain ceiling applies today'
+    : `a maximum rate the admins set, currently ${maxFeeRateBps / 100}%`
+
 const adapterSafetyPeriod = formatDelay(
   discovery.getContractValue<number>('UmaCtfAdapterBinary', 'SAFETY_PERIOD'),
 )
@@ -210,6 +223,10 @@ export const polymarket: BaseProject = {
       {
         category: 'Funds can lose value if',
         text: 'the permissioned oracle stalls, since settlement requires a resolver role and a proposal never becomes final on its own, leaving positions unredeemable.',
+      },
+      {
+        category: 'Funds can lose value if',
+        text: `the operator charges a fee that makes the all-in price worse than the limit price the user signed, since the fee is supplied at settlement rather than being part of the signed order and is bounded only by ${feeCeiling}.`,
       },
     ],
   },
