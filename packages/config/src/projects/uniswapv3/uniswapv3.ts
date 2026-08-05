@@ -160,6 +160,26 @@ export const uniswapv3: BaseProject = {
   // contract its operation depends on. The section renders an explicit
   // "none" message instead of being omitted.
   externalDependencies: [],
+  crops: {
+    censorshipResistance: {
+      sentiment: 'good',
+      description:
+        'Pools are immutable and adminless: anyone can deploy a pool for any token pair at an enabled fee tier, and swapping or withdrawing liquidity needs no permission and passes through no operator. Nothing can be paused or upgraded. UNI tokenholder governance, acting through a 2d timelock, holds only two bounded powers over v3 pools - enabling new fee tiers and setting a protocol fee capped at 1/4 of LP fees per side - so it cannot block a swap, freeze a position, or reach LP funds.',
+    },
+    openSource: {
+      sentiment: 'good',
+      description:
+        'The v3 core and periphery contracts are GPL licensed - the business-source grant on the core expired in 2023 - verified onchain, and can be built and run locally alongside a self-hosted interface.',
+    },
+    privacy: {
+      status: 'notReviewed',
+    },
+    security: {
+      sentiment: 'good',
+      description:
+        'Every contract that holds or routes user funds is immutable, with no upgrade path and no external dependency - no oracle, no bridge - and the core has been battle-tested at very high volume since 2021. What remains is a governance-set protocol fee (currently 1/4 of LP fees per side, 1/6 on the 0.3% tier, with proceeds burned as UNI through the Firepit), per-pool token and liquidity risk, and the router and approval contracts that sit outside the pools.',
+    },
+  },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),

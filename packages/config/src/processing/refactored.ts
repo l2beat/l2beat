@@ -140,4 +140,6 @@ export const refactored: BaseProject[] = [
   tornadoCash,
   umbra,
   zamaCw,
+  // defi
+  uniswapv3,
 ]

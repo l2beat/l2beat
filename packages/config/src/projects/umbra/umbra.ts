@@ -134,6 +134,29 @@ export const umbra: BaseProject = {
       content: readProjectMarkdown('umbra', 'upgradesAndGovernance'),
     },
   },
+  crops: {
+    censorshipResistance: {
+      sentiment: 'good',
+      description:
+        'The core contracts are immutable, cannot be paused, and have no upgrade path, so the exit window is infinite and the protocol passes the walkaway test: nobody can stop a recipient from claiming a payment already sent to them, and withdrawals can always be self-relayed instead of going through a relayer. Nobody can censor an individual user either - the owner can only raise the ETH toll on contract-routed payments, which applies to everyone equally and cannot touch payment or withdrawal logic.',
+    },
+    openSource: {
+      sentiment: 'good',
+      description:
+        'The immutable core contracts, the cryptographic library, and the frontend are published and can be built and run locally.',
+    },
+    privacy: {
+      sentiment: 'good',
+      description:
+        'Recipient privacy with no protocol-level compliance mechanism, no privileged view key, and no way for anyone to retroactively deanonymize a payment. Umbra hides who controls the receiving address; the sender, amount, and stealth address stay public, so privacy still depends on the recipient practising good withdrawal hygiene and avoiding recognizable timing or amount patterns.',
+    },
+    security: {
+      sentiment: 'good',
+      status: 'partiallyReviewed',
+      description:
+        'A small, immutable, externally audited contract set with no proof system and no trusted setup. Stealth addresses rely on elliptic-curve key agreement, so they are not quantum-resistant, and immutability means the unsupported-token accounting caveat cannot be patched.',
+    },
+  },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
