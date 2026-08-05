@@ -5,7 +5,11 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { decodeAbiParameters, parseAbiParameters } from 'viem'
-import { findTransferLogAround, findTransferLogBefore } from './logScan'
+import {
+  findParsedBefore,
+  findTransferLogAround,
+  findTransferLogBefore,
+} from './logScan'
 import {
   createEventParser,
   createInteropEventType,
@@ -25,10 +29,12 @@ const messageInLog =
   'event MessageIn(bytes32 indexed orderId, uint256 indexed chainAndGasLimit, address token, uint256 amount, address to, bytes from, bytes payload, bool result, bytes reason)'
 const transferLog =
   'event Transfer(address indexed from, address indexed to, uint256 value)'
+const nativeDepositLog = 'event Deposit(address indexed dst, uint256 wad)'
 
 const parseMessageOut = createEventParser(messageOutLog)
 const parseMessageIn = createEventParser(messageInLog)
 const parseTransfer = createEventParser(transferLog)
+const parseNativeDeposit = createEventParser(nativeDepositLog)
 
 const MESSAGE_OUT_PAYLOAD = parseAbiParameters(
   'uint256, address, address, uint256, address, address, bytes, bytes',
@@ -76,6 +82,61 @@ type MessageOutPayload = {
   amount: bigint
 }
 
+function toTokenAddress(token: EthereumAddress): Address32 {
+  const address = Address32.from(token)
+  return address === Address32.ZERO ? Address32.NATIVE : address
+}
+
+function hasNativeDeposit(
+  input: LogToCapture,
+  token: Address32,
+  amount: bigint,
+): boolean {
+  if (token === Address32.ZERO || token === Address32.NATIVE) return false
+
+  // Butter emits the wrapped token after native input is wrapped. A router or
+  // smart account may be the Deposit recipient, so correlate it with the
+  // subsequent transfer into Butter instead of relying on tx.value.
+  const bridge = Address32.from(input.log.address)
+  const logIndex = input.log.logIndex ?? -1
+  const deposit = findParsedBefore(input.txLogs, logIndex, (log) => {
+    const event = parseNativeDeposit(log, null)
+    if (!event) return
+
+    if (event.wad < amount || Address32.from(log.address) !== token) {
+      return
+    }
+
+    return {
+      dst: Address32.from(event.dst),
+      index: log.logIndex ?? -1,
+    }
+  })
+
+  if (!deposit) return false
+  if (deposit.dst === bridge) return true
+
+  const transfer = findParsedBefore(input.txLogs, logIndex, (log) => {
+    if ((log.logIndex ?? -1) <= deposit.index) return
+
+    const event = parseTransfer(log, null)
+    if (!event) return
+
+    if (
+      Address32.from(log.address) !== token ||
+      event.value !== amount ||
+      Address32.from(event.from) !== deposit.dst ||
+      Address32.from(event.to) !== bridge
+    ) {
+      return
+    }
+
+    return event
+  })
+
+  return transfer !== undefined
+}
+
 function decodeMessageOutPayload(
   payload: `0x${string}`,
 ): MessageOutPayload | undefined {
@@ -87,7 +148,7 @@ function decodeMessageOutPayload(
 
     return {
       messageType: Number(header & 0xffn),
-      token: Address32.from(EthereumAddress(token)),
+      token: toTokenAddress(EthereumAddress(token)),
       amount,
     }
   } catch {
@@ -150,6 +211,8 @@ function resolveDestinationMint(
   token: Address32,
   amount: bigint,
 ): boolean | undefined {
+  if (token === Address32.NATIVE) return false
+
   const bridge = Address32.from(input.log.address)
   const logIndex = input.log.logIndex ?? -1
   const mint = findTransferLogAround(
@@ -209,7 +272,7 @@ export class ButterNetworkPlugin implements InteropPluginResyncable {
       {
         type: 'event',
         signature: messageOutLog,
-        includeTxEvents: [transferLog],
+        includeTxEvents: [transferLog, nativeDepositLog],
         addresses: BUTTER_NETWORKS.map((network) =>
           ChainSpecificAddress.fromLong(
             network.chain,
@@ -240,14 +303,18 @@ export class ButterNetworkPlugin implements InteropPluginResyncable {
         return
       }
 
+      const nativeInput = hasNativeDeposit(input, payload.token, payload.amount)
+
       return [
         ButterMessageOut.create(input, {
           orderId: messageOut.orderId,
           $dstChain: route.dstNetwork.chain,
           messageType: payload.messageType,
-          token: payload.token,
+          token: nativeInput ? Address32.NATIVE : payload.token,
           amount: payload.amount,
-          srcWasBurned: resolveSourceBurn(input, payload.token, payload.amount),
+          srcWasBurned: nativeInput
+            ? false
+            : resolveSourceBurn(input, payload.token, payload.amount),
         }),
       ]
     }
@@ -259,7 +326,7 @@ export class ButterNetworkPlugin implements InteropPluginResyncable {
         return
       }
 
-      const token = Address32.from(EthereumAddress(messageIn.token))
+      const token = toTokenAddress(EthereumAddress(messageIn.token))
       return [
         ButterMessageIn.create(input, {
           orderId: messageIn.orderId,

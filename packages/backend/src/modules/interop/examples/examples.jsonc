@@ -1119,7 +1119,7 @@
     }
   },
   "butternetwork": {
-    "description": "Butter V3 token bridge, Base to Polygon PoS",
+    "description": "Butter V3 token bridge, including native input and Base to Polygon PoS",
     "txs": [
       {
         "chain": "base",
@@ -1128,11 +1128,28 @@
       {
         "chain": "polygonpos",
         "tx": "0x622bc3a75845f7fed4b5507b74555d08cfb1873a87d9baa3fa1ffef24ccf7a13"
+      },
+      // Native ETH input, swapped to USDT on BSC.
+      {
+        "chain": "base",
+        "tx": "0x54c5a20ef0a5c1c559d0c21136a79e31b8d2011acb420aef140660c4a8ce7bde"
+      },
+      {
+        "chain": "bsc",
+        "tx": "0xc816c7391f696bbb6549df5b33cf239d1d65f5016664006bdb1dcb2228d19a1a"
       }
     ],
     "expects": {
-      "events": ["butternetwork.MessageOut", "butternetwork.MessageIn"],
-      "messages": [{ "type": "butternetwork.Message", "app": "butternetwork" }],
+      "events": [
+        "butternetwork.MessageOut",
+        "butternetwork.MessageIn",
+        "butternetwork.MessageOut",
+        "butternetwork.MessageIn"
+      ],
+      "messages": [
+        { "type": "butternetwork.Message", "app": "butternetwork" },
+        { "type": "butternetwork.Message", "app": "butternetwork" }
+      ],
       "transfers": [
         {
           "type": "butternetwork.Transfer",
@@ -1142,6 +1159,19 @@
           },
           "dst": {
             "event": { "ctx": { "chain": "polygonpos" } },
+            "wasMinted": false
+          }
+        },
+        {
+          "type": "butternetwork.Transfer",
+          "src": {
+            "event": { "ctx": { "chain": "base" } },
+            "tokenAddress": "native",
+            "wasBurned": false
+          },
+          "dst": {
+            "event": { "ctx": { "chain": "bsc" } },
+            "tokenAddress": "0x00000000000000000000000055d398326f99059ff775485246999027b3197955",
             "wasMinted": false
           }
         }
@@ -6114,18 +6144,6 @@
         }
       ]
     }
-  },
-  "gnosisbridge-xdai": {
-    "txs": [
-      {
-        "chain": "ethereum",
-        "tx": "0x60eac581dea5e871ad9ac3ce28caa24e5aafa4077a8271c07b8266c6df1afb9b"
-      },
-      {
-        "chain": "gnosis",
-        "tx": "0x55ccfb00b43c14a4a83cbc83114d6beb82628c271ef5e95c176eb2284080b544"
-      }
-    ]
   },
   "maker-bridge": {
     "txs": [
