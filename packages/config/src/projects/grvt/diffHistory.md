@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x07dd2adef2076b01d1d9b0ff7273d70daea68b47
+Generated with discovered.json: 0xacb6852061d92f6b80e4b97b2a0192aefa4855fa
 
-# Diff at Mon, 03 Aug 2026 11:08:27 GMT:
+# Diff at Wed, 05 Aug 2026 10:28:03 GMT:
 
 - author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
-- comparing to: main@44e2212a46e585fd2ddb21d6755695cf74e1f876 block: 1783332198
-- current timestamp: 1785753715
+- comparing to: main@352ff1eba99519e3c6090fccec5796e0475edcfa block: 1783332198
+- current timestamp: 1785925620
 
 ## Description
 
-Executed gov proposal with several upgrade transactions going to L2: https://tools.l2beat.com/decoder-new/?hash=0x12872dd4becaa4cfd45173bad5b49b2d7d005450ce47e57d05e6346ca4039227&data=AwA.
+Executed 2 gov proposal with several upgrade transactions going to L2: https://tools.l2beat.com/decoder-new/?hash=0x12872dd4becaa4cfd45173bad5b49b2d7d005450ce47e57d05e6346ca4039227&data=AwA and https://tools.l2beat.com/decoder-new/?hash=0xc479b923d2614903ef0405eff70a31859ff0b516993d8d7872e93c4d2c14d2ee&data=AwA.
 
 Also updated permissions and ownership of various contracts:
 - Expanded admin ms with 4 addresses 2/3 -> 4/7.
@@ -55,7 +55,7 @@ Also updated permissions and ownership of various contracts:
 +++ description: Number of executed proposals
       values.executedCount:
 -        48
-+        49
++        50
 +++ severity: HIGH
       values.owner:
 -        "eth:0xF29bFff344c7ef0186432fE30C39fda0cca0550b"
@@ -63,7 +63,7 @@ Also updated permissions and ownership of various contracts:
 +++ description: Number of scheduled transparent proposals
       values.scheduledTransparentCount:
 -        48
-+        49
++        50
     }
 ```
 
