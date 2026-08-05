@@ -22,42 +22,42 @@
 
 import type { UnixTime } from '@l2beat/shared-pure'
 
-export interface GetBlockNumberAtOrBeforeOptions {
-  // Non-archive nodes prune old blocks and report them as missing, which
-  // would otherwise abort the search as soon as a probe lands below the
-  // pruning horizon. With this flag a failed probe is treated as "below the
-  // horizon" and the search continues above it. The result stays exact: a
-  // block number is only returned when both final neighbors were actually
-  // fetched, and if the boundary block itself is unavailable the search
-  // throws because the requested timestamp precedes the available history.
-  tolerateMissingBlocks?: boolean
-}
-
+// getBlock may resolve to undefined to mark a block as unavailable, e.g.
+// pruned by a non-archive node. Such a block is assumed to be below the
+// pruning horizon and the search continues above it. The result stays exact:
+// a block number is only returned when both final neighbors were actually
+// fetched, and if the boundary block itself is unavailable the search throws
+// because the requested timestamp precedes the available history. Errors
+// thrown by getBlock abort the search as usual.
 export async function getBlockNumberAtOrBefore(
   timestamp: UnixTime,
   lhsBlock: number,
   rhsBlock: number,
-  getBlock: (number: number) => Promise<{ timestamp: number }>,
-  options?: GetBlockNumberAtOrBeforeOptions,
+  getBlock: (number: number) => Promise<{ timestamp: number } | undefined>,
 ): Promise<number> {
-  const getTimestamp = async (block: number): Promise<number | undefined> => {
-    if (!options?.tolerateMissingBlocks) {
-      return (await getBlock(block)).timestamp
-    }
-    try {
-      return (await getBlock(block)).timestamp
-    } catch {
-      return undefined
-    }
-  }
-
-  let [lhsTimestamp, { timestamp: rhsTimestamp }] = await Promise.all([
-    getTimestamp(lhsBlock),
+  const [lhsResult, rhsResult] = await Promise.all([
+    getBlock(lhsBlock),
     getBlock(rhsBlock),
   ])
+  if (rhsResult === undefined) {
+    throw new Error(`Block ${rhsBlock} is unavailable on this RPC`)
+  }
+  let lhsTimestamp = lhsResult?.timestamp
+  let rhsTimestamp = rhsResult.timestamp
 
   if (lhsTimestamp !== undefined && timestamp <= lhsTimestamp) return lhsBlock
   if (timestamp >= rhsTimestamp) return rhsBlock
+
+  const probe = async (block: number) => {
+    const blockTimestamp = (await getBlock(block))?.timestamp
+    if (blockTimestamp === undefined || blockTimestamp <= timestamp) {
+      lhsBlock = block
+      lhsTimestamp = blockTimestamp
+    } else {
+      rhsBlock = block
+      rhsTimestamp = blockTimestamp
+    }
+  }
 
   while (lhsBlock + 1 < rhsBlock) {
     const rangeBefore = rhsBlock - lhsBlock
@@ -66,33 +66,18 @@ export async function getBlockNumberAtOrBefore(
     if (lhsTimestamp !== undefined) {
       const blockTime = (rhsTimestamp - lhsTimestamp) / (rhsBlock - lhsBlock)
       const blocksFromStart = Math.round((timestamp - lhsTimestamp) / blockTime)
-      const guess = Math.max(
-        lhsBlock + 1,
-        Math.min(rhsBlock - 1, lhsBlock + blocksFromStart),
+      await probe(
+        Math.max(
+          lhsBlock + 1,
+          Math.min(rhsBlock - 1, lhsBlock + blocksFromStart),
+        ),
       )
-      const guessTs = await getTimestamp(guess)
-
-      if (guessTs === undefined || guessTs <= timestamp) {
-        lhsBlock = guess
-        lhsTimestamp = guessTs
-      } else {
-        rhsBlock = guess
-        rhsTimestamp = guessTs
-      }
     }
 
     // Safety net: only pay for a binary step if interpolation failed to halve
     // the range (or could not run because the lhs timestamp is unknown)
     if (rhsBlock - lhsBlock > rangeBefore / 2 && lhsBlock + 1 < rhsBlock) {
-      const mid = lhsBlock + Math.floor((rhsBlock - lhsBlock) / 2)
-      const midTs = await getTimestamp(mid)
-      if (midTs === undefined || midTs <= timestamp) {
-        lhsBlock = mid
-        lhsTimestamp = midTs
-      } else {
-        rhsBlock = mid
-        rhsTimestamp = midTs
-      }
+      await probe(lhsBlock + Math.floor((rhsBlock - lhsBlock) / 2))
     }
   }
 

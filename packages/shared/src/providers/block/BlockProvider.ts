@@ -78,11 +78,11 @@ export class BlockProvider {
           timestamp,
           effectiveStart,
           end,
-          (number: number) => client.getBlockWithTransactions(number),
           // Some production RPCs (e.g. Zircuit's) are non-archive nodes that
-          // only retain recent blocks, a search probing pruned history must
-          // not get stuck on them.
-          { tolerateMissingBlocks: true },
+          // only retain recent blocks, report a block the client cannot
+          // return as unavailable instead of aborting the search.
+          (number: number) =>
+            client.getBlockWithTransactions(number).catch(() => undefined),
         )
       } catch (error) {
         if (index === this.clients.length - 1) throw error
