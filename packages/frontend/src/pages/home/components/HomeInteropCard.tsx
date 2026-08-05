@@ -210,11 +210,12 @@ function HomeInteropCardContent({
               hasEnoughProtocols={hasEnoughProtocols}
               isLoading={isLoading}
               className="pb-2"
-              // From xl the card sits next to the stack of cards, so the graph
-              // is capped near that stack's height: overshooting it only leaves
-              // the stack with empty space to spread around. Below xl the
+              // The graph is capped near the height of the column beside it -
+              // overshooting only leaves that column with empty space to spread
+              // around. On the widest screens the card is one of three columns
+              // and has less width to fill, so the cap goes up. Below xl the
               // default, viewport-safe cap stays.
-              graphClassName="xl:max-w-[min(72svh,38rem)]"
+              graphClassName="xl:max-w-[min(72svh,38rem)] min-[2200px]:max-w-[min(80svh,44rem)]"
             />
           </div>
         </div>

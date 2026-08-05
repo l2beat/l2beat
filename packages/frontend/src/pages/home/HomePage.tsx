@@ -95,7 +95,7 @@ export function HomePage({
           sidebarColorfulIcons
         >
           <MainPageHeader>Home</MainPageHeader>
-          <div className="grid grid-cols-1 items-stretch md:gap-6 xl:grid-cols-[minmax(320px,440px)_minmax(0,1fr)] xl:gap-x-4 2xl:grid-cols-[minmax(360px,480px)_minmax(0,1fr)] 2xl:gap-x-6 [&_.primary-card]:max-md:rounded-none [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b">
+          <div className="grid grid-cols-1 items-stretch md:gap-6 xl:grid-cols-[minmax(320px,440px)_minmax(0,1fr)] xl:gap-x-4 2xl:grid-cols-[minmax(360px,480px)_minmax(0,1fr)] 2xl:gap-x-6 min-[2200px]:grid-cols-[minmax(340px,460px)_minmax(360px,1fr)_minmax(560px,1.1fr)] [&_.primary-card]:max-md:rounded-none [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b">
             {/* The side nav carries these counts from xl up, but below that the
                 nav sits behind the menu button, so the card takes over. */}
             <HomeStatsStrip
@@ -114,13 +114,15 @@ export function HomePage({
                 projects={recentProjects}
               />
               {/* From xl this is the tall image-with-overlay card and the one
-                  item that absorbs the leftover height. The bounds keep it from
-                  being squeezed into an unreadable strip on a short window, or
-                  turning into the loudest thing on the page on a tall one -
-                  past the ceiling the surplus goes to the gaps instead. */}
+                  item that absorbs the leftover height, so the column ends level
+                  with the ones beside it. The floor keeps it from being squeezed
+                  into an unreadable strip on a short window; the ceiling keeps it
+                  from becoming the loudest thing on the page in the two column
+                  hero, where the interop card can run much taller than the rest
+                  of the stack. */}
               <HomeWhatsNewCard
                 items={whatsNewItems}
-                className="min-h-0 max-xl:order-2 xl:max-h-72 xl:min-h-52 xl:flex-1"
+                className="min-h-0 max-xl:order-2 xl:max-h-72 xl:min-h-52 xl:flex-1 min-[2200px]:max-h-none"
               />
               <div className="max-xl:hidden">
                 <HomeAnomaliesTile ongoingAnomalies={ongoingAnomalies} />
@@ -132,21 +134,21 @@ export function HomePage({
                 />
               </div>
             </div>
-            <div className="flex min-h-0 min-w-0 flex-col max-xl:order-4 xl:h-full">
+            <div className="flex min-h-0 min-w-0 flex-col max-xl:order-4 xl:col-start-2 xl:row-start-1 xl:h-full min-[2200px]:col-start-3">
               <HomeInteropCard
                 interopChains={interopChains}
                 interopProtocols={interopProtocols}
                 defaultSelectedFlowChains={defaultSelectedFlowChains}
               />
             </div>
-            <div className="grid grid-cols-1 items-stretch max-xl:order-3 md:grid-cols-2 md:gap-4 xl:col-span-2 xl:gap-4 2xl:gap-6">
-              <div className="flex min-h-0 min-w-0 flex-col">
+            <div className="grid grid-cols-1 items-stretch max-xl:order-3 md:grid-cols-2 md:gap-4 xl:col-span-2 xl:row-start-2 xl:gap-4 2xl:gap-6 min-[2200px]:col-span-1 min-[2200px]:col-start-2 min-[2200px]:row-start-1 min-[2200px]:flex min-[2200px]:flex-col">
+              <div className="flex min-h-0 min-w-0 flex-col min-[2200px]:flex-1">
                 <HomeScalingCard
                   charts={scalingCharts}
                   scalingCategoryCounts={scalingCategoryCounts}
                 />
               </div>
-              <div className="flex min-h-0 min-w-0 flex-col">
+              <div className="flex min-h-0 min-w-0 flex-col min-[2200px]:flex-1">
                 <HomeEthereumCard
                   charts={ethereumCharts}
                   economicSecurity={ethereumEconomicSecurity}
@@ -163,7 +165,7 @@ export function HomePage({
                 recentChangesProjects={recentChangesProjects}
               />
             </div>
-            <div className="grid grid-cols-1 items-stretch max-xl:order-7 md:gap-4 lg:grid-cols-2 xl:col-span-2 xl:gap-6">
+            <div className="grid grid-cols-1 items-stretch max-xl:order-7 md:gap-4 lg:grid-cols-2 xl:col-span-2 xl:row-start-3 xl:gap-6 min-[2200px]:col-span-3 min-[2200px]:row-start-2">
               <HomeTopInteropProtocolsCard
                 interopChains={interopChains}
                 defaultSelectedFlowChains={defaultSelectedFlowChains}
