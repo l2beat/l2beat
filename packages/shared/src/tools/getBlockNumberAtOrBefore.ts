@@ -40,7 +40,11 @@ export async function getBlockNumberAtOrBefore(
     getBlock(rhsBlock),
   ])
   if (rhsResult === undefined) {
-    throw new Error(`Block ${rhsBlock} is unavailable on this RPC`)
+    throw new Error('Block is unavailable on this RPC', {
+      cause: {
+        blockNumber: rhsBlock,
+      },
+    })
   }
   let lhsTimestamp = lhsResult?.timestamp
   let rhsTimestamp = rhsResult.timestamp
@@ -88,8 +92,13 @@ export async function getBlockNumberAtOrBefore(
 
   if (lhsTimestamp === undefined) {
     throw new Error(
-      `Block ${lhsBlock} is unavailable on this RPC, ` +
-        `timestamp ${timestamp} precedes its available history`,
+      'Block is unavailable on this RPC, timestamp precedes its available history',
+      {
+        cause: {
+          blockNumber: lhsBlock,
+          timestamp,
+        },
+      },
     )
   }
   return lhsBlock
