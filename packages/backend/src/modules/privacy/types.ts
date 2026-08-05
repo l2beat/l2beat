@@ -64,3 +64,8 @@ export interface PrivacyFlowExtractResult {
   count: number
   amount: bigint
 }
+
+export interface PrivacyRelayerActivityExtractResult {
+  relayerAddress: EthereumAddress
+  recipientAddress: EthereumAddress
+}
