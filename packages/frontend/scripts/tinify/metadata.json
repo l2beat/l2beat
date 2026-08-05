@@ -1598,5 +1598,7 @@
   "static/images/architecture/apex-omni.png": "d24246d6f8be0773cd2911dfbe3b0443",
   "static/meta-images/scaling/projects/apex-pro/opengraph-image.png": "e349fff4994ec3258f71e520b8d432c5",
   "static/images/architecture/polymarket.png": "fd756f3fd9bef6d6a7d608cb2fab9434",
-  "static/icons/polymarket.png": "0d44b64a030886f704f358647d945caf"
+  "static/icons/polymarket.png": "0d44b64a030886f704f358647d945caf",
+  "static/icons/uma.png": "0cee9dfea1f7e8eb169667a43dd8fc03",
+  "static/icons/usdc.png": "71c0be809f67c2ce08f95647f5fe8d0a"
 }
