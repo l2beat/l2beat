@@ -22,6 +22,8 @@ const PRIVACY_POOLS_DEPOSIT_EVENT =
   '0xe3b53cd1a44fbf11535e145d80b8ef1ed6d57a73bf5daa7e939b6b01657d6549'
 const PRIVACY_POOLS_WITHDRAWAL_EVENT =
   '0x75e161b3e824b114fc1a33274bd7091918dd4e639cede50b78b15a4eea956a21'
+const PRIVACY_POOLS_WITHDRAWAL_RELAYED_EVENT =
+  '0xe9b67844a7bb6e6ac95e8a0de02e4448dbb0c9460be9194348e4bbac6d13c2cf'
 
 function formatBasisPoints(value: number): string {
   return `${Number((value / 100).toFixed(4))}%`
@@ -50,6 +52,11 @@ interface PrivacyPoolBucket {
 }
 
 const BUCKETS = getPrivacyPoolBuckets()
+const ENTRYPOINT = discovery.getContract('PrivacyPoolsEntrypoint')
+assert(
+  ENTRYPOINT.sinceTimestamp !== undefined,
+  'PrivacyPoolsEntrypoint must have a sinceTimestamp',
+)
 const PRIVACY_POOLS_SINCE_TIMESTAMP = UnixTime(
   Math.min(...BUCKETS.map((bucket) => bucket.sinceTimestamp)),
 )
@@ -144,6 +151,14 @@ export const privacyPools: BaseProject = {
   },
   privacyInfo: {
     tokens: getPrivacyTokens(),
+    relayerTracking: [
+      {
+        address: ENTRYPOINT.address,
+        sinceTimestamp: UnixTime(ENTRYPOINT.sinceTimestamp),
+        event: PRIVACY_POOLS_WITHDRAWAL_RELAYED_EVENT,
+        extractor: 'privacyPoolsWithdrawalRelayed',
+      },
+    ],
     exitWindow: {
       value: 'Infinite',
       sentiment: 'good',
