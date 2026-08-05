@@ -1,3 +1,4 @@
+import { navSectionColors } from '~/consts/navSectionColors'
 import { ChevronIcon } from '~/icons/Chevron'
 import { BridgesIcon } from '~/icons/pages/Bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/DataAvailability'
@@ -24,56 +25,94 @@ interface Tile {
   iconBgClassName: string
 }
 
-export function HomeStatsStrip({ counts }: { counts: HomeProjectCounts }) {
+/**
+ * Sections and their project counts. Shown below `xl` only: from there up the
+ * same counts sit in the side nav, which is always visible, while on smaller
+ * screens the nav hides behind the menu button.
+ */
+export function HomeStatsStrip({
+  counts,
+  className,
+}: {
+  counts: HomeProjectCounts
+  className?: string
+}) {
   const tiles: Tile[] = [
     {
       label: 'Layer 2s',
       metric: { count: counts.scaling, unit: 'projects' },
       href: '/scaling/summary',
-      icon: <ScalingIcon className="size-5 stroke-pink-100" />,
-      iconBgClassName: 'bg-pink-100/10',
+      icon: (
+        <ScalingIcon
+          className={cn('size-5', navSectionColors.scaling.iconClassName)}
+        />
+      ),
+      iconBgClassName: navSectionColors.scaling.bgClassName,
     },
     {
       label: 'Interop',
       metric: { count: counts.interop, unit: 'chains' },
       secondaryMetric: { count: counts.interopProtocols, unit: 'protocols' },
       href: '/interop/summary',
-      icon: <BridgesIcon className="size-5 stroke-orange-500" />,
-      iconBgClassName: 'bg-orange-500/10',
+      icon: (
+        <BridgesIcon
+          className={cn('size-5', navSectionColors.interop.iconClassName)}
+        />
+      ),
+      iconBgClassName: navSectionColors.interop.bgClassName,
     },
     {
       label: 'Privacy',
       metric: { count: counts.privacy, unit: 'projects' },
       href: '/privacy',
-      icon: <PrivacyIcon className="size-5 stroke-green-450" />,
-      iconBgClassName: 'bg-green-450/10',
+      icon: (
+        <PrivacyIcon
+          className={cn('size-5', navSectionColors.privacy.iconClassName)}
+        />
+      ),
+      iconBgClassName: navSectionColors.privacy.bgClassName,
     },
     {
       label: 'Data Availability',
       metric: { count: counts.dataAvailability, unit: 'projects' },
       href: '/data-availability/summary',
-      icon: <DataAvailabilityIcon className="size-5 fill-blue-500" />,
-      iconBgClassName: 'bg-blue-500/10',
+      icon: (
+        <DataAvailabilityIcon
+          className={cn(
+            'size-5',
+            navSectionColors['data-availability'].iconClassName,
+          )}
+        />
+      ),
+      iconBgClassName: navSectionColors['data-availability'].bgClassName,
     },
     {
       label: 'ZK Catalog',
       metric: { count: counts.zkCatalog, unit: 'projects' },
       href: '/zk-catalog',
-      icon: <ZkCatalogIcon className="size-5 stroke-purple-500" />,
-      iconBgClassName: 'bg-purple-500/10',
+      icon: (
+        <ZkCatalogIcon
+          className={cn('size-5', navSectionColors['zk-catalog'].iconClassName)}
+        />
+      ),
+      iconBgClassName: navSectionColors['zk-catalog'].bgClassName,
     },
     {
       label: 'Ecosystems',
       metric: { count: counts.ecosystems, unit: 'ecosystems' },
       href: '/ecosystems/agglayer',
-      icon: <EcosystemsIcon className="size-5 stroke-teal-500" />,
-      iconBgClassName: 'bg-teal-500/10',
+      icon: (
+        <EcosystemsIcon
+          className={cn('size-5', navSectionColors.ecosystems.iconClassName)}
+        />
+      ),
+      iconBgClassName: navSectionColors.ecosystems.bgClassName,
     },
   ]
 
   return (
-    <HomeCard>
-      <ul className="grid grid-cols-2 gap-2 md:grid-cols-3 xl:grid-cols-1 xl:gap-0 xl:divide-y xl:divide-divider">
+    <HomeCard className={className}>
+      <ul className="grid grid-cols-2 gap-2 md:grid-cols-3">
         {tiles.map((tile) => (
           <li key={tile.label}>
             <StatTile tile={tile} />
@@ -91,22 +130,21 @@ function StatTile({ tile }: { tile: Tile }) {
       className={cn(
         'group flex h-full items-center gap-2.5 rounded-lg border border-divider px-2.5 py-2',
         'transition-colors duration-200 hover:border-link-stroke',
-        'xl:-mx-3 xl:gap-2 xl:rounded-md xl:border-0 xl:px-3 xl:py-2 xl:hover:border-transparent',
       )}
     >
       <div
         className={cn(
-          'flex size-6 shrink-0 items-center justify-center rounded-md transition-transform duration-200 group-hover:scale-110 xl:size-7 xl:rounded [&>svg]:xl:size-4',
+          'flex size-6 shrink-0 items-center justify-center rounded-md transition-transform duration-200 group-hover:scale-110',
           tile.iconBgClassName,
         )}
       >
         {tile.icon}
       </div>
-      <div className="flex min-w-0 flex-1 flex-col justify-center xl:flex-row xl:items-baseline xl:gap-2 2xl:gap-3">
-        <span className="truncate font-medium text-label-value-12 text-secondary leading-tight transition-colors group-hover:text-link xl:flex-1 xl:text-label-value-14 xl:text-primary xl:group-hover:text-link">
+      <div className="flex min-w-0 flex-1 flex-col justify-center">
+        <span className="truncate font-medium text-label-value-12 text-secondary leading-tight transition-colors group-hover:text-link">
           {tile.label}
         </span>
-        <span className="flex flex-wrap items-baseline gap-x-1 font-bold text-label-value-16 leading-tight xl:text-label-value-14">
+        <span className="flex flex-wrap items-baseline gap-x-1 font-bold text-label-value-16 leading-tight">
           <TileMetricValue
             metric={tile.metric}
             className={tile.secondaryMetric ? 'hidden sm:inline' : undefined}
