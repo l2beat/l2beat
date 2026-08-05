@@ -1,11 +1,7 @@
 /**
- * Parses the `highlight` search params into row ids to highlight.
- * Supports both comma-separated values (`?highlight=a,b`) and repeated
- * params (`?highlight=a&highlight=b`).
+ * Parses the `highlight` query param value into row ids to highlight,
+ * e.g. `sp1hypercube,risc0`.
  */
-export function parseHighlightedIds(search: string): string[] {
-  return new URLSearchParams(search)
-    .getAll('highlight')
-    .flatMap((value) => value.split(','))
-    .filter((id) => id.length > 0)
+export function parseHighlightedIds(value: string): string[] {
+  return value.split(',').filter((id) => id.length > 0)
 }

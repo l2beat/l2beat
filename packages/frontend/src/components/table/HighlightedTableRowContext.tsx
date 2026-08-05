@@ -1,10 +1,5 @@
-import {
-  createContext,
-  type ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from 'react'
+import { createContext, type ReactNode, useContext, useMemo } from 'react'
+import { useQueryParam } from '~/hooks/useQueryParam'
 import { parseHighlightedIds } from './utils/parseHighlightedIds'
 
 interface HighlightedTableRowContextType {
@@ -20,14 +15,14 @@ export function HighlightedTableRowProvider({
 }: {
   children: ReactNode
 }) {
-  const [highlightedIds, setHighlightedIds] = useState<string[]>([])
-
-  useEffect(() => {
-    setHighlightedIds(parseHighlightedIds(window.location.search))
-  }, [])
+  const [highlight] = useQueryParam('highlight', '')
+  const value = useMemo(
+    () => ({ highlightedIds: parseHighlightedIds(highlight) }),
+    [highlight],
+  )
 
   return (
-    <HighlightedTableRowContext.Provider value={{ highlightedIds }}>
+    <HighlightedTableRowContext.Provider value={value}>
       {children}
     </HighlightedTableRowContext.Provider>
   )
