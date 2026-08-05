@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xc277b900434c614e6891b764348bbdae5597788e
+
+# Diff at Tue, 04 Aug 2026 13:19:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@36c0588f2e6fd433fcb60f558353b75cea40247d block: 1785325389
+- current timestamp: 1785844480
+
+## Description
+
+The increased address limit lets discovery reach the two enabled CCTP V2 attesters. The transitive USDC minting permission now resolves through MessageTransmitterV2 to those attesters instead of stopping at the transmitter.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1785325389 (main branch discovery), not current.
+
+```diff
+    contract MessageTransmitterV2 (eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64) [tokens/circle/MessageTransmitter] {
+    +++ description: Part of CCTP
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48","description":"mint the token in the bounds of a preset minting allowance","role":".minters","via":[{"address":"eth:0xfd78EE919681417d192449715b2594ab58f5D002"},{"address":"eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d"}]}]
+    }
+```
+
 Generated with discovered.json: 0x30eaac3c7e667993bac9dbd203174b79f87eea0a
 
 # Diff at Wed, 29 Jul 2026 12:10:59 GMT:

@@ -49,13 +49,24 @@ export class CoingeckoClient extends ClientCore {
       },
     )
 
-    const parsedData = CoinMarketChartRangeResult.parse(data)
+    const parsed = CoinMarketChartRangeResult.safeParse(data)
+
+    if (!parsed.success) {
+      throw new Error('Failed to parse CoinMarketChartRangeResult', {
+        cause: {
+          coinId: coinId.toString(),
+          message: parsed.message,
+          path: parsed.path,
+        },
+      })
+    }
+
     return {
-      prices: parsedData.prices.map(([timestamp, price]) => ({
+      prices: parsed.data.prices.map(([timestamp, price]) => ({
         date: new Date(timestamp),
         value: price,
       })),
-      marketCaps: parsedData.market_caps.map(([timestamp, marketCap]) => ({
+      marketCaps: parsed.data.market_caps.map(([timestamp, marketCap]) => ({
         date: new Date(timestamp),
         value: marketCap,
       })),

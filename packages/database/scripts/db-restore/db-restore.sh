@@ -154,9 +154,15 @@ fi
 TABLES=(${FEATURES_TABLES[$FEATURE_INDEX]})
 
 # Fail on an invalid cutoff before any local data is wiped
-if [ -n "$SINCE" ] && ! psql "$DEV_LOCAL_DB_URL" -tAc "SELECT '$SINCE'::timestamp" > /dev/null 2>&1; then
-  echo "Error: SINCE value '$SINCE' is not a valid timestamp."
-  exit 1
+if [ -n "$SINCE" ]; then
+  if ! psql "$DEV_LOCAL_DB_URL" -tAc "SELECT 1" > /dev/null 2>&1; then
+    echo "Error: cannot connect to the local database (DEV_LOCAL_DB_URL). Is it running?"
+    exit 1
+  fi
+  if ! psql "$DEV_LOCAL_DB_URL" -tAc "SELECT '$SINCE'::timestamp" > /dev/null 2>&1; then
+    echo "Error: SINCE value '$SINCE' is not a valid timestamp."
+    exit 1
+  fi
 fi
 
 clear_tables "${TABLES[@]}"

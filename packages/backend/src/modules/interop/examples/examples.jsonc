@@ -6026,6 +6026,65 @@
       ]
     }
   },
+  "gnosisbridge-paid-interest": {
+    "description": "xDAI bridge payInterest() uses PaidInterest to identify the source token",
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xccc6ceb72ca864017fc1523860f5e418011fbab5073730ef2445b81bcffc389c"
+      },
+      {
+        "chain": "gnosis",
+        "tx": "0xd66f4cb6039e221a263878d58f5cccafc623216c4cfd0513b0090c7a991dc91e"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "gnosisbridge.XdaiTransferInitiated",
+          "ctx": { "chain": "ethereum" },
+          "args": {
+            "token": "0x000000000000000000000000dc035d45d973e3ec169d2276ddab16f1e407384f",
+            "amount": "18899257185396495213246"
+          }
+        },
+        {
+          "type": "gnosisbridge.XdaiTransferFinalized",
+          "ctx": { "chain": "gnosis" },
+          "args": { "amount": "18899257185396495213246" }
+        }
+      ],
+      "messages": [
+        {
+          "type": "gnosisbridge.Message",
+          "app": "xdai-bridge",
+          "src": { "ctx": { "chain": "ethereum" } },
+          "dst": { "ctx": { "chain": "gnosis" } }
+        }
+      ],
+      "transfers": [
+        {
+          "type": "gnosisbridge.L1ToL2Transfer",
+          "src": {
+            "tokenAddress": "0x000000000000000000000000dc035d45d973e3ec169d2276ddab16f1e407384f",
+            "tokenAmount": "18899257185396495213246",
+            "event": {
+              "type": "gnosisbridge.XdaiTransferInitiated",
+              "ctx": { "chain": "ethereum" }
+            }
+          },
+          "dst": {
+            "tokenAddress": "native",
+            "tokenAmount": "18899257185396495213246",
+            "event": {
+              "type": "gnosisbridge.XdaiTransferFinalized",
+              "ctx": { "chain": "gnosis" }
+            }
+          }
+        }
+      ]
+    }
+  },
   "maker-bridge": {
     "txs": [
       // L1 -> L2 deposit

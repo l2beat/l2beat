@@ -1,7 +1,10 @@
 import { type InMemoryCache, ProjectId } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getChangelogEntries } from '~/server/features/changelog/getChangelogEntries'
+import {
+  getChangelogEntries,
+  selectActiveWhatsNewEntry,
+} from '~/server/features/changelog/getChangelogEntries'
 import { getDaProjectEconomicSecurity } from '~/server/features/data-availability/project/utils/getDaProjectEconomicSecurity'
 import { getHomeEthereumCharts } from '~/server/features/home/getHomeEthereumCharts'
 import { getHomeScalingCharts } from '~/server/features/home/getHomeScalingCharts'
@@ -25,6 +28,7 @@ import {
   MIN_SELECTED_CHAINS,
   MIN_SELECTED_PROTOCOLS,
 } from '../interop/components/flows/consts'
+import { getInteropChainHref } from '../interop/utils/getInteropChainHref'
 import type { HomeScalingCategoryCounts } from './components/HomeScalingCard'
 import type { HomeWhatsNewItem } from './components/HomeWhatsNewCard'
 import { getHomeProjectCounts } from './getHomeProjectCounts'
@@ -56,7 +60,7 @@ export async function getHomeData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Home - L2BEAT',
+        title: 'L2BEAT',
         description:
           'Bird-eye view of the Ethereum scaling ecosystem: total value secured, activity, interoperability, recent additions and what L2BEAT is currently tracking.',
         url: req.originalUrl,
@@ -78,11 +82,19 @@ export async function getHomeData(
 async function getCachedData(manifest: Manifest) {
   const helpers = getSsrHelpers()
 
+  const scalingProjects = await ps.getProjects({
+    select: ['scalingInfo'],
+  })
+  const scalingProjectSlugById = new Map(
+    scalingProjects.map((p) => [p.id, p.slug]),
+  )
+
   const interopChainsRaw = getInteropChains()
   const interopChains: InteropChainWithIcon[] = interopChainsRaw.map(
     (chain) => ({
       ...chain,
       iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
+      href: getInteropChainHref(chain.id, scalingProjectSlugById),
     }),
   )
   const activeInteropChains = interopChains.filter((chain) => !chain.isUpcoming)
@@ -226,7 +238,13 @@ async function getEthereumEconomicSecurity(): Promise<number | undefined> {
 }
 
 function getHomeWhatsNewItems(): HomeWhatsNewItem[] {
-  const entry = getChangelogEntries().find((entry) => entry.whatsNew)
+  // The card is a permanent part of the desktop layout, so unlike the
+  // floating widget it falls back to the most recent entry when no
+  // campaign is currently active.
+  const entries = getChangelogEntries()
+  const entry =
+    selectActiveWhatsNewEntry(entries, new Date()) ??
+    entries.find((entry) => entry.whatsNew)
   if (!entry?.whatsNew) {
     return []
   }

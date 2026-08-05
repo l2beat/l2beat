@@ -1,6 +1,6 @@
 {
   "name": "zama-cw",
-  "timestamp": 1784815701,
+  "timestamp": 1785844532,
   "configHash": "0x9966c7120d6e80774741b8e28cd70224af776aa48ce73e46d22e41344c8dadd2",
   "entries": [
     {
@@ -30,6 +30,11 @@
     },
     {
       "address": "eth:0x23Cd5e0f3bd1543CBCc5d05bB55e5446be4AD96b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x27B1c34F2aeEc91F9704BD1CE288E5c667F29045",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -214,11 +219,6 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "address": "eth:0x32f3D0D7E20Ca11Cad21f32Dad91506ea89f5897",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x373E36A8684A3344E177C5894179845Cbe57AE44",
       "type": "EOA",
       "proxyType": "EOA",
@@ -270,7 +270,7 @@
         "aclAddress": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
         "aclOwner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
         "blockHCUWhitelist": [],
-        "getBlockMeter": { "blockNumber": 25595925, "usedHCU": 0 },
+        "getBlockMeter": { "blockNumber": 25681386, "usedHCU": 0 },
         "getFHEVMExecutorAddress": "eth:0xD82385dADa1ae3E969447f20A3164F6213100e75",
         "getGlobalHCUCapPerBlock": 281474976710655,
         "getMaxHCUDepthPerTx": 5000000,
@@ -374,7 +374,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 280,
+        "nonce": 283,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -430,22 +430,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x6681101780Fb503591535B36bB3F15781f01EAAF",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xbBfE1680b4a63ED05f7F80CE330BED7C992A586C",
-          "description": "pause the ACL.",
-          "role": ".pausers",
-          "via": [
-            { "address": "eth:0xE53e32a669357Ab0360103d8f294812B914AF9e4" }
-          ]
-        }
-      ]
-    },
-    {
       "name": "ConfidentialSteakcUSDCWrapper",
       "address": "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458",
       "type": "Contract",
@@ -478,7 +462,7 @@
         "$upgradeCount": 2,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0x811963cda2ce7a2e8e1e530718cb4e321f75aa0e5bff00000000000000010500",
+        "confidentialTotalSupply": "0xdd205087be15b5aeb301b63ea62c318b776246f8b0ff00000000000000010500",
         "constructorArgs": [
           "eth:0xAea1d2cc69aF93CA0fdd34426E74Ad7cB19E9745",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000beef00a59b577423653a1526c7009bde103f542b000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000017436f6e666964656e7469616c20737465616b6355534443000000000000000000000000000000000000000000000000000000000000000000000000000000000b63737465616b635553444300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000ae646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c20737465616b6355534443222c2273796d626f6c223a2263737465616b6355534443222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f6620737465616b635553444320736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d000000000000000000000000000000000000"
@@ -492,7 +476,7 @@
           "isSet": false,
           "selector": "0x00000000"
         },
-        "inferredTotalSupply": 18449539524241,
+        "inferredTotalSupply": 22263696202199,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential steakcUSDC",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -571,7 +555,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 24,
+        "nonce": 26,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -675,7 +659,7 @@
             ]
           }
         },
-        "clock": 25595925,
+        "clock": 25681386,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -711,8 +695,8 @@
         "rewardRate": "6970000000000000000",
         "stakingToken": "eth:0xA12CC123ba206d4031D1c7f6223D1C2Ec249f4f3",
         "symbol": "stZAMA-Coprocessor",
-        "totalStakedWeight": 56742941172867,
-        "totalSupply": "643984645061875161337008252",
+        "totalStakedWeight": 56702372301388,
+        "totalSupply": "643047991301524669628657221",
         "unstakeCooldownPeriod": 604800,
         "unstakeCooldownPeriod_fmt": "7d",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -1107,7 +1091,7 @@
         "$upgradeCount": 3,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0xdb484e837d517b659e610756964b8719886156d584ff00000000000000010500",
+        "confidentialTotalSupply": "0x7fa8b61fd1e1f1dc844fcaede6de4f7404534c025fff00000000000000010500",
         "constructorArgs": [
           "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000a12cc123ba206d4031d1c7f6223d1c2ec249f4f3000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205a414d410000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005635a414d41000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c205a414d41222c2273796d626f6c223a22635a414d41222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205a414d4120736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -1121,7 +1105,7 @@
           "isSet": false,
           "selector": "0x00000000"
         },
-        "inferredTotalSupply": 181147984009034,
+        "inferredTotalSupply": 153141060201722,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential ZAMA",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -1214,7 +1198,7 @@
         "$upgradeCount": 3,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0x4c2cdee317708d01e4e60338c1bd40f3ba2b6081cdff00000000000000010500",
+        "confidentialTotalSupply": "0x252f7867dbe37adae3fe14567eb443aa951667a0f2ff00000000000000010500",
         "constructorArgs": [
           "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000ba2c598e11ed093079cc324fca5bbba99f616e83000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c2042524f4e00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056342524f4e000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2042524f4e222c2273796d626f6c223a226342524f4e222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f662042524f4e20736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -1228,7 +1212,7 @@
           "isSet": false,
           "selector": "0x00000000"
         },
-        "inferredTotalSupply": 10609146191145,
+        "inferredTotalSupply": 10565258524717,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential BRON",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -1311,7 +1295,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 24,
+        "nonce": 26,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1394,7 +1378,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 320,
+        "nonce": 322,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1581,7 +1565,7 @@
         "$upgradeCount": 3,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0x7beff19ecf950a1a4755f72dbfedc956f14dd0623fff00000000000000010500",
+        "confidentialTotalSupply": "0x74f70b39a0ee792c06180235b2adc2515a50a18bdaff00000000000000010500",
         "constructorArgs": [
           "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000dac17f958d2ee523a2206206994597c13d831ec7000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205553445400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056355534454000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2055534454222c2273796d626f6c223a226355534454222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205553445420736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -1595,7 +1579,7 @@
           "isSet": true,
           "selector": "0x59bf1abe"
         },
-        "inferredTotalSupply": 7970017582360,
+        "inferredTotalSupply": 7907110847290,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential USDT",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -2723,22 +2707,6 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "address": "eth:0xBdBA7b00A4b2dd3d3382a4217e82C5930791E2aA",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xbBfE1680b4a63ED05f7F80CE330BED7C992A586C",
-          "description": "pause the ACL.",
-          "role": ".pausers",
-          "via": [
-            { "address": "eth:0xE53e32a669357Ab0360103d8f294812B914AF9e4" }
-          ]
-        }
-      ]
-    },
-    {
       "address": "eth:0xBe8b485D4029253375b11dEaAF506eEA781Bb192",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2758,6 +2726,11 @@
     },
     {
       "address": "eth:0xc2e5960EDa1E8D801b19e96D886B946Dfb4bE709",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xc49376C4D044011eEce6eE69eFAe06f0Cc2bd008",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -3062,7 +3035,7 @@
         "$upgradeCount": 3,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0xb3166966dd302d6efac954feffb6f9c8ae8325a01eff00000000000000010500",
+        "confidentialTotalSupply": "0x351d2c89b4896ab54a7a5ff8237f7974f35030565dff00000000000000010500",
         "constructorArgs": [
           "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205745544800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056357455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2057455448222c2273796d626f6c223a226357455448222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205745544820736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -3076,7 +3049,7 @@
           "isSet": false,
           "selector": "0x00000000"
         },
-        "inferredTotalSupply": 21686368,
+        "inferredTotalSupply": 21265068,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential WETH",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -3544,8 +3517,6 @@
           "eth:0x0321a4Ee7E843A83Fa314f4e76E756864CBdE62e",
           "eth:0x0f81fd435d44Cc49f90BB74bF4BdE0e9A0554ae6",
           "eth:0x931FB6Ec104dDc9bc556983032b5b85b671db000",
-          "eth:0x32f3D0D7E20Ca11Cad21f32Dad91506ea89f5897",
-          "eth:0xE53e32a669357Ab0360103d8f294812B914AF9e4",
           "eth:0xc2e5960EDa1E8D801b19e96D886B946Dfb4bE709",
           "eth:0x8c0E2c46F96756C49DBd6723F4C57a03a254B4B0",
           "eth:0x23Cd5e0f3bd1543CBCc5d05bB55e5446be4AD96b",
@@ -3555,7 +3526,9 @@
           "eth:0x705380c013c13B4ce62338ab1F012036BAC802b3",
           "eth:0x97E18544e156724E4076945F10c288ecBBC94e54",
           "eth:0xE9AAc45091bF5d52AD7BC109497DAA7cD0245BdB",
-          "eth:0xD92e1C1Ec65aBe6C6891EcE56a00c6b79A09C8AE"
+          "eth:0xD92e1C1Ec65aBe6C6891EcE56a00c6b79A09C8AE",
+          "eth:0xc49376C4D044011eEce6eE69eFAe06f0Cc2bd008",
+          "eth:0x27B1c34F2aeEc91F9704BD1CE288E5c667F29045"
         ],
         "$pastUpgrades": [
           [
@@ -3616,49 +3589,6 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "name": "Safe",
-      "address": "eth:0xE53e32a669357Ab0360103d8f294812B914AF9e4",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
-      ],
-      "proxyType": "gnosis safe",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xbBfE1680b4a63ED05f7F80CE330BED7C992A586C",
-          "description": "pause the ACL.",
-          "role": ".pausers"
-        }
-      ],
-      "ignoreInWatchMode": ["nonce"],
-      "deployerAddress": "eth:0xBdBA7b00A4b2dd3d3382a4217e82C5930791E2aA",
-      "sinceTimestamp": 1766445107,
-      "sinceBlock": 24071353,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
-        "$members": [
-          "eth:0xBdBA7b00A4b2dd3d3382a4217e82C5930791E2aA",
-          "eth:0x6681101780Fb503591535B36bB3F15781f01EAAF"
-        ],
-        "$threshold": 1,
-        "domainSeparator": "0xbc40a6a59cd8833004026551796d8fe8a1a37729789a54f9b60983bb0abafa63",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 8,
-        "VERSION": "1.4.1"
-      },
-      "implementationNames": {
-        "eth:0xE53e32a669357Ab0360103d8f294812B914AF9e4": "SafeProxy",
-        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
       "name": "ConfidentialUSDCWrapper",
       "address": "eth:0xe978F22157048E5DB8E5d07971376e86671672B2",
       "type": "Contract",
@@ -3696,7 +3626,7 @@
         "$upgradeCount": 3,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0xd860770c07cad7492065d5edbc1572d853b41af79bff00000000000000010500",
+        "confidentialTotalSupply": "0xac02f5261155be34eb83fcef4371d37bd5f74371f6ff00000000000000010500",
         "constructorArgs": [
           "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205553444300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056355534443000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2055534443222c2273796d626f6c223a226355534443222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205553444320736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -3710,7 +3640,7 @@
           "isSet": true,
           "selector": "0xfe575a87"
         },
-        "inferredTotalSupply": 5292202968856,
+        "inferredTotalSupply": 4687303608619,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential USDC",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -3824,7 +3754,7 @@
             ]
           }
         },
-        "clock": 25595925,
+        "clock": 25681386,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -3868,8 +3798,8 @@
         "rewardRate": "10460000000000000000",
         "stakingToken": "eth:0xA12CC123ba206d4031D1c7f6223D1C2Ec249f4f3",
         "symbol": "stZAMA-KMS",
-        "totalStakedWeight": 111481181229864,
-        "totalSupply": "967589111057656002771952041",
+        "totalStakedWeight": 122438365393474,
+        "totalSupply": "1361175508924937733214095327",
         "unstakeCooldownPeriod": 604800,
         "unstakeCooldownPeriod_fmt": "7d",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -6875,9 +6805,6 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "eth:0xE53e32a669357Ab0360103d8f294812B914AF9e4": [
-      "constructor(address _singleton)"
-    ],
     "eth:0xe978F22157048E5DB8E5d07971376e86671672B2": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
@@ -7617,6 +7544,6 @@
     "zama/ZamaKMSVerifier_v0_2_0": "0x7fc4e3ae2be7d94f782720d3adb57b48f46f25266cbde808b3ce285721e9f7e4",
     "zama/ZamaPauserSet": "0x1af56cc25e42342b2f464add26e41d36787603eb96bf24f0923abdf7caf5d35f"
   },
-  "usedBlockNumbers": { "ethereum": 25595925, "zama": 2004406 },
-  "permissionsConfigHash": "0xc9fb44b7283796989e0c254403579db8a8ac467aad5a0370a1d6a964fc7df888"
+  "usedBlockNumbers": { "ethereum": 25681386, "zama": 2097983 },
+  "permissionsConfigHash": "0xe58c0796a9526c2d07915c93de84eb96b09e734bc2e08ccb88cba2c26a62ddcc"
 }

@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x30713a2864cfaa779560f0948ff8201be89cc2c3
+
+# Diff at Mon, 03 Aug 2026 11:25:19 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@44e2212a46e585fd2ddb21d6755695cf74e1f876 block: 1784211561
+- current timestamp: 1785756243
+
+## Description
+
+Reference to an older verifier contract has expired.
+
+## Watched changes
+
+```diff
+    contract SHARPVerifier (eth:0x4956bda1d23F75B988644329c5B06BD1494a72b6) [shared-sharp-verifier/SHARPVerifier] {
+    +++ description: Immutable GPS statement verifier shared by Starknet and other StarkWare systems. It verifies a STARK proof of the exact Cairo bootloader stored onchain, forces the bootloader configuration into public memory, and registers a fact for every bootloader task. A fact is also considered valid when it exists in the time-limited reference fact registry.
++++ description: Once a referral to a verifier expires, its entry has to be removed from the all Starkware verifiers' zk catalog pages. Note that if an upstream verifier is already expired, then the current one is not reachable and could be ignored.
++++ severity: HIGH
+      values.referralHasExpired:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0xb1feb73af872a79cad2b942d1b43384c28afaa94
 
 # Diff at Thu, 16 Jul 2026 14:36:06 GMT:

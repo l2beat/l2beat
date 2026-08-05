@@ -1,3 +1,112 @@
+Generated with discovered.json: 0x07dd2adef2076b01d1d9b0ff7273d70daea68b47
+
+# Diff at Mon, 03 Aug 2026 11:08:27 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@44e2212a46e585fd2ddb21d6755695cf74e1f876 block: 1783332198
+- current timestamp: 1785753715
+
+## Description
+
+Executed gov proposal with several upgrade transactions going to L2: https://tools.l2beat.com/decoder-new/?hash=0x12872dd4becaa4cfd45173bad5b49b2d7d005450ce47e57d05e6346ca4039227&data=AwA.
+
+Also updated permissions and ownership of various contracts:
+- Expanded admin ms with 4 addresses 2/3 -> 4/7.
+- Created another ms with the same members as the admin for bridge-related contracts.
+- Governance, bridge and trx filterer ownership changed from EOA to 4/7 ms.
+
+## Watched changes
+
+```diff
+    contract GrvtChainAdminMultisig (eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x293d3512083507664Ee5EDe44c0477f600e3A3BE"
+      values.$members.1:
++        "eth:0xe224125147fB0a3d0e1eC30Ed1573ed0632727CC"
+      values.$members.2:
++        "eth:0x79BfE9868a2613F3327FB2B9e3a39959165118F4"
+      values.$members.3:
++        "eth:0xC8552d52A6a8e92Ea37f3a305dE5e8dDbeB6e490"
+      values.$threshold:
+-        2
++        4
+      values.multisigThreshold:
+-        "2 of 3 (67%)"
++        "4 of 7 (57%)"
+    }
+```
+
+```diff
+    contract GRVTTransactionFilterer (eth:0x3Cd52B238Ac856600b22756133eEb31ECb25109a) [N/A] {
+    +++ description: None
+      values.acAdmin.0:
+-        "eth:0xF29bFff344c7ef0186432fE30C39fda0cca0550b"
++        "eth:0x5CC33778d3aFa0979e6C59efEE27b73496c1B65c"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "eth:0xF29bFff344c7ef0186432fE30C39fda0cca0550b"
++        "eth:0x5CC33778d3aFa0979e6C59efEE27b73496c1B65c"
+    }
+```
+
+```diff
+    contract Governance (eth:0xbdC07D62fA117B195E579c2e299f037b158E7335) [adi/Governance] {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of executed proposals
+      values.executedCount:
+-        48
++        49
++++ severity: HIGH
+      values.owner:
+-        "eth:0xF29bFff344c7ef0186432fE30C39fda0cca0550b"
++        "eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
+-        48
++        49
+    }
+```
+
+```diff
+    contract GRVTBridgeProxy (eth:0xE17aeD2fC55f4A876315376ffA49FE6358113a65) [N/A] {
+    +++ description: Checks the signature of the DepositApprover for each deposit and, on succeeding, forwards the user's funds and bridging request to the L1SharedBridge contract to deposit to GRVT.
+      values.owner:
+-        "eth:0xF29bFff344c7ef0186432fE30C39fda0cca0550b"
++        "eth:0x5CC33778d3aFa0979e6C59efEE27b73496c1B65c"
+    }
+```
+
+```diff
+    contract Governance (eth:0xe81d64195072e4d09639b31Abb257d0096FEa9d1) [N/A] {
+    +++ description: None
+      values.owner:
+-        "eth:0xF29bFff344c7ef0186432fE30C39fda0cca0550b"
++        "eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"
+    }
+```
+
+```diff
+    EOA  (eth:0xF29bFff344c7ef0186432fE30C39fda0cca0550b) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"eth:0x3Cd52B238Ac856600b22756133eEb31ECb25109a","description":"manage the whitelist of addresses.","role":".acAdmin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GrvtBridgeAdminMultisig (eth:0x5CC33778d3aFa0979e6C59efEE27b73496c1B65c) [GnosisSafe]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../grvt/.flat/GrvtBridgeAdminMultisig/Safe.sol    | 1216 ++++++++++++++++++++
+ .../.flat/GrvtBridgeAdminMultisig/SafeProxy.p.sol  |   42 +
+ 2 files changed, 1258 insertions(+)
+```
+
 Generated with discovered.json: 0x5301558b47db00477f90ee54305bbe4cc68a6c1e
 
 # Diff at Mon, 06 Jul 2026 10:04:22 GMT:

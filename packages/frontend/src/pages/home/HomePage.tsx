@@ -123,6 +123,10 @@ export function HomePage({
                 recentChangesProjects={recentChangesProjects}
               />
             </div>
+            <HomeRecentProjectsCard
+              className="xl:hidden"
+              projects={recentProjects}
+            />
             <div className="grid grid-cols-1 items-stretch md:gap-4 lg:grid-cols-2 xl:gap-6">
               <HomeTopInteropProtocolsCard
                 interopChains={interopChains}
@@ -135,10 +139,6 @@ export function HomePage({
               />
               <HomeTopZkProversCard entries={topZkProvers} />
             </div>
-            <HomeRecentProjectsCard
-              className="max-md:border-b-0! xl:hidden"
-              projects={recentProjects}
-            />
           </div>
         </SideNavLayout>
       </HydrationBoundary>
