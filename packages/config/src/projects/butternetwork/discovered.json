@@ -146,6 +146,7 @@
         "maxEpochs": 30,
         "nodeType": 1,
         "pendingAdmin": "base:0x0000000000000000000000000000000000000000",
+        "quorum": 16,
         "startHeight": 10950000,
         "verifiableHeaderRange": [23900000, 25450000],
         "verifyTool": "base:0xc3393567DC2F1d071254E880c9f501641491471f"
@@ -169,6 +170,11 @@
         "epochSummary": {
           "severity": "HIGH",
           "description": "Latest epoch stats (vali set size). Complicated handler because of the ring buffer.",
+          "type": "RISK_PARAMETER"
+        },
+        "quorum": {
+          "severity": "HIGH",
+          "description": "Signature threshold for the latest initialized LightNode epoch.",
           "type": "RISK_PARAMETER"
         },
         "verifiableHeaderRange": {
@@ -773,7 +779,7 @@
     "butternetwork/AuthorityManager": "0xa4c470ba2f3262d908355b674e1d56033f18be227db78211a73ad371610ed19b",
     "butternetwork/Bridge": "0xdfb450db687c8f1827054517610bd8bb34a0db0253fa5dfca93958a284734778",
     "butternetwork/FeeService": "0x59bc080e41feb8a5a9cb198f05d18a1246b160883c5a7b58f8978eaa6577ba7e",
-    "butternetwork/LightNode": "0x9c4bff912b3f228bd92f03d7d00b41f099ff44394358ae96fa635294d6b5ae54",
+    "butternetwork/LightNode": "0xe94bd1007f296edbbe577ee32f623a3644536ecc06a5e921a8ba7ad4ce8e981d",
     "butternetwork/VerifyTool": "0x6f2371af8e7f8af4e383d97b7ac36a626827fbe25be6bd42613bed29ed5b9df2",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },

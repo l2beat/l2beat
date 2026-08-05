@@ -42,6 +42,20 @@
       },
       "edit": ["pipe", ["sort", ["get", "epoch"]], ["get", 29]]
     },
+    "quorum": {
+      "description": "Signature threshold for the latest initialized LightNode epoch.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "handler": {
+        "type": "array",
+        "method": "function epochs(uint256 id) view returns (uint256 epoch, uint256 quorum)",
+        "indices": [
+          0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+          20, 21, 22, 23, 24, 25, 26, 27, 28, 29
+        ]
+      },
+      "edit": ["pipe", ["sort", ["get", "epoch"]], ["get", 29, "quorum"]]
+    },
     "verifiableHeaderRange": {
       "description": "Current range of MAP relay-chain block heights accepted by the LightNode. The range is derived from the last accepted header and the configured epoch retention window.",
       "severity": "HIGH",
