@@ -25,13 +25,11 @@ export const NODE_COLORS = {
   missing: '#f97316',
 } as const
 
-const CLUSTER_LABEL_MIN_SCALE = 1
 const CLUSTER_LABEL_FADE_OUT_SCALE = 0.05
 const CLUSTER_LABEL_FULL_OPACITY_SCALE = 0.2
 const CLUSTER_LABEL_MAX_OPACITY = 0.8
 const SEARCH_RESULT_LIMIT = 5
 const NODE_VISUAL_MAX_SCALE = 1.2
-const RELATION_LABEL_MIN_SCALE = 2.5
 
 export function relationId(relation: RelationGraphRelation) {
   return [
@@ -168,30 +166,31 @@ export function mostCommonDeployedSymbol(nodes: RelationGraphNode[]) {
     .at(0)?.[0]
 }
 
-export function getClusterLabelStyle(scale: number) {
+/**
+ * Cluster labels take over when the graph is zoomed out too far for node
+ * labels: invisible when zoomed in past 1x, fully visible in the overview
+ * range, and fading away again at extreme zoom-out where even clusters are
+ * specks.
+ */
+export function getClusterLabelOpacity(scale: number) {
   assertGraphScale(scale)
-
-  const clampedScale = Math.max(scale, CLUSTER_LABEL_MIN_SCALE)
-  return {
-    fontSize: 18 / clampedScale,
-    strokeWidth: 4 / clampedScale,
-    opacity: clusterLabelOpacity(scale),
+  if (scale <= CLUSTER_LABEL_FADE_OUT_SCALE) return 0
+  if (scale < CLUSTER_LABEL_FULL_OPACITY_SCALE) {
+    const fadeRange =
+      CLUSTER_LABEL_FULL_OPACITY_SCALE - CLUSTER_LABEL_FADE_OUT_SCALE
+    return (
+      CLUSTER_LABEL_MAX_OPACITY *
+      ((scale - CLUSTER_LABEL_FADE_OUT_SCALE) / fadeRange)
+    )
   }
+  if (scale <= 0.6) return CLUSTER_LABEL_MAX_OPACITY
+  if (scale >= 1) return 0
+  return CLUSTER_LABEL_MAX_OPACITY * ((1 - scale) / 0.4)
 }
 
 export function getNodeVisualScale(scale: number) {
   assertGraphScale(scale)
   return Math.min(1, NODE_VISUAL_MAX_SCALE / scale)
-}
-
-export function getRelationLabelStyle(scale: number) {
-  assertGraphScale(scale)
-  return {
-    visible: scale > RELATION_LABEL_MIN_SCALE,
-    fontSize: 10 / scale,
-    strokeWidth: 3 / scale,
-    offset: -5 / scale,
-  }
 }
 
 export function getExistingRelationGraphSelection(
@@ -253,21 +252,6 @@ function assertGraphScale(scale: number) {
   if (!Number.isFinite(scale) || scale <= 0) {
     throw new Error('Graph scale must be a positive finite number')
   }
-}
-
-function clusterLabelOpacity(scale: number) {
-  if (scale <= CLUSTER_LABEL_FADE_OUT_SCALE) return 0
-  if (scale < CLUSTER_LABEL_FULL_OPACITY_SCALE) {
-    const fadeRange =
-      CLUSTER_LABEL_FULL_OPACITY_SCALE - CLUSTER_LABEL_FADE_OUT_SCALE
-    return (
-      CLUSTER_LABEL_MAX_OPACITY *
-      ((scale - CLUSTER_LABEL_FADE_OUT_SCALE) / fadeRange)
-    )
-  }
-  if (scale <= 0.6) return CLUSTER_LABEL_MAX_OPACITY
-  if (scale >= 1) return 0
-  return CLUSTER_LABEL_MAX_OPACITY * ((1 - scale) / 0.4)
 }
 
 export function getRelationGraphFocus(

@@ -1,10 +1,9 @@
 import { expect } from 'earl'
 import {
-  getClusterLabelStyle,
+  getClusterLabelOpacity,
   getExistingRelationGraphSelection,
   getNodeVisualScale,
   getRelationGraphFocus,
-  getRelationLabelStyle,
   mostCommonDeployedSymbol,
   type RelationGraph,
   type RelationGraphFocus,
@@ -47,20 +46,19 @@ describe(mostCommonDeployedSymbol.name, () => {
   })
 })
 
-describe(getClusterLabelStyle.name, () => {
-  it('stops increasing labels below the minimum scale', () => {
-    expect(getClusterLabelStyle(1).fontSize).toEqual(18)
-    expect(getClusterLabelStyle(1).strokeWidth).toEqual(4)
-    expect(getClusterLabelStyle(0.1).fontSize).toEqual(18)
-    expect(getClusterLabelStyle(0.1).strokeWidth).toEqual(4)
+describe(getClusterLabelOpacity.name, () => {
+  it('shows labels only in the zoomed-out overview range', () => {
+    expect(getClusterLabelOpacity(0.3)).toEqual(0.8)
+    expect(getClusterLabelOpacity(1)).toEqual(0)
+    expect(getClusterLabelOpacity(2)).toEqual(0)
   })
 
   it('hides labels at extreme zoom-out', () => {
-    expect(getClusterLabelStyle(0.05).opacity).toEqual(0)
+    expect(getClusterLabelOpacity(0.05)).toEqual(0)
   })
 
   it('rejects invalid scales', () => {
-    expect(() => getClusterLabelStyle(0)).toThrow(
+    expect(() => getClusterLabelOpacity(0)).toThrow(
       'Graph scale must be a positive finite number',
     )
   })
@@ -71,16 +69,6 @@ describe(getNodeVisualScale.name, () => {
     expect(getNodeVisualScale(0.5)).toEqual(1)
     expect(getNodeVisualScale(1.2)).toEqual(1)
     expect(getNodeVisualScale(2.4)).toEqual(0.5)
-  })
-})
-
-describe(getRelationLabelStyle.name, () => {
-  it('shows constant-size labels above 2.5x zoom', () => {
-    expect(getRelationLabelStyle(2.5).visible).toEqual(false)
-    const style = getRelationLabelStyle(4)
-    expect(style.visible).toEqual(true)
-    expect(style.fontSize * 4).toEqual(10)
-    expect(style.strokeWidth * 4).toEqual(3)
   })
 })
 
