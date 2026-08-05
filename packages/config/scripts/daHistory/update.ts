@@ -1,5 +1,15 @@
 import { getBlockNumberAtOrBefore } from '@l2beat/shared'
 import { execSync } from 'child_process'
+import {
+  command,
+  flag,
+  number,
+  option,
+  optional,
+  restPositionals,
+  run,
+  string,
+} from 'cmd-ts'
 import dotenv from 'dotenv'
 import { providers } from 'ethers'
 import { existsSync, readFileSync, unlinkSync, writeFileSync } from 'fs'
@@ -24,14 +34,6 @@ import {
  * The only writer of src/projects/<name>/daTracking.json - the committed,
  * machine-maintained DA tracking era store the stack templates read.
  *
- * Usage (in packages/config):
- *   pnpm da:history                          update/init every template project
- *   pnpm da:history <project...>             only the given projects
- *   pnpm da:history <project> --drop-last    revert a spurious era (flap)
- *   pnpm da:history <project> --since-block N --until-block N
- *                                            manual boundary (non-ethereum
- *                                            layers, or no RPC available)
- *
  * On a rotation the old era is closed and the new one opened with a
  * deliberately overlapping 'bracketed' boundary derived from the discovery
  * run timestamps (previous run = new era start, current run = old era end).
@@ -44,6 +46,47 @@ dotenv.config()
 const CONFIG_DIR = join(__dirname, '../..')
 const REPO_ROOT = join(CONFIG_DIR, '../..')
 
+const args = {
+  projects: restPositionals({
+    type: string,
+    displayName: 'project',
+    description:
+      'Discovery project names to update (default: every template project)',
+  }),
+  dropLast: flag({
+    long: 'drop-last',
+    description:
+      'Revert the most recently appended era (spurious rotation/flap) and reopen the previous one',
+  }),
+  sinceBlock: option({
+    type: optional(number),
+    long: 'since-block',
+    description:
+      'Manual boundary: first block of the new era, on the DA layer chain (use with --until-block)',
+  }),
+  untilBlock: option({
+    type: optional(number),
+    long: 'until-block',
+    description:
+      'Manual boundary: last block of the old era, on the DA layer chain (use with --since-block)',
+  }),
+}
+
+const cmd = command({
+  name: 'da:history',
+  description:
+    'Update or initialize the committed daTracking.json era stores from the current template derivation',
+  args,
+  handler: async (args) => {
+    try {
+      await main(args)
+    } catch (e) {
+      console.error(e instanceof Error ? e.message : e)
+      process.exit(1)
+    }
+  },
+})
+
 interface CliArgs {
   projects: string[]
   dropLast: boolean
@@ -51,29 +94,8 @@ interface CliArgs {
   untilBlock?: number
 }
 
-function parseArgs(argv: string[]): CliArgs {
-  const args: CliArgs = { projects: [], dropLast: false }
-  const queue = [...argv]
-  while (queue.length > 0) {
-    const arg = queue.shift()
-    if (arg === undefined) break
-    if (arg === '--drop-last') {
-      args.dropLast = true
-    } else if (arg === '--since-block') {
-      args.sinceBlock = Number(queue.shift())
-    } else if (arg === '--until-block') {
-      args.untilBlock = Number(queue.shift())
-    } else if (arg.startsWith('--')) {
-      throw new Error(`Unknown flag: ${arg}`)
-    } else {
-      args.projects.push(arg)
-    }
-  }
-  if (
-    (args.sinceBlock === undefined) !== (args.untilBlock === undefined) ||
-    Number.isNaN(args.sinceBlock) ||
-    Number.isNaN(args.untilBlock)
-  ) {
+async function main(args: CliArgs) {
+  if ((args.sinceBlock === undefined) !== (args.untilBlock === undefined)) {
     throw new Error('--since-block and --until-block must be given together')
   }
   const manual = args.sinceBlock !== undefined
@@ -82,7 +104,83 @@ function parseArgs(argv: string[]): CliArgs {
       '--drop-last and manual boundaries operate on exactly one project',
     )
   }
-  return args
+
+  if (args.dropLast) {
+    const projectName = args.projects[0]
+    const existing = readDaTrackingHistoryFile(projectName)
+    if (!existing) {
+      throw new Error(`${projectName} has no daTracking.json`)
+    }
+    const result = dropLastEra(existing)
+    if (writeResult(projectName, result.file, result.changes)) {
+      regenerateSnapshot()
+    }
+    return
+  }
+
+  // Evaluates all templates and fills the daTracking resolutions registry
+  getProjects()
+  const resolutions = getDaTrackingResolutions()
+
+  const requested =
+    args.projects.length > 0 ? args.projects : [...resolutions.keys()]
+  const unknown = requested.filter((name) => !resolutions.has(name))
+  if (unknown.length > 0) {
+    throw new Error(
+      `Not a template project with DA tracking: ${unknown.join(', ')}`,
+    )
+  }
+
+  let ethereumBlockAt: ((timestamp: number) => Promise<number>) | undefined
+  let anythingChanged = false
+  let upToDate = 0
+
+  for (const projectName of requested) {
+    const resolution = resolutions.get(projectName)
+    if (!resolution) continue
+
+    if (resolution.source === 'nonTemplate') {
+      if (existsSync(daTrackingHistoryPath(projectName))) {
+        console.warn(
+          `${projectName}: WARNING - has both nonTemplateDaTracking and a daTracking.json; ` +
+            'the file is ignored, delete it or drop the override',
+        )
+      }
+      continue
+    }
+
+    const existing = readDaTrackingHistoryFile(projectName)
+    if (!existing && (resolution.derived ?? []).length === 0) {
+      continue
+    }
+
+    const resolveBoundary = makeBoundaryResolver(projectName, args, (ts) => {
+      ethereumBlockAt ??= makeEthereumBlockResolver()
+      return ethereumBlockAt(ts)
+    })
+    const result = await updateDaTrackingHistory(
+      projectName,
+      existing,
+      resolution.derived ?? [],
+      resolveBoundary,
+    )
+    if (writeResult(projectName, result.file, result.changes)) {
+      anythingChanged = true
+      if (result.changes.some((c) => c.includes('closed era'))) {
+        console.log(
+          `${projectName}: NOTE - closing an era changes that configuration's range; ` +
+            'on deploy the backend wipes and resyncs it (DaIndexer has no trimData)',
+        )
+      }
+    } else {
+      upToDate++
+    }
+  }
+
+  console.log(`${upToDate} project(s) already up to date`)
+  if (anythingChanged) {
+    regenerateSnapshot()
+  }
 }
 
 function discoveredTimestamp(projectName: string): number {
@@ -198,87 +296,6 @@ function writeResult(
   return true
 }
 
-async function main() {
-  const args = parseArgs(process.argv.slice(2))
-
-  if (args.dropLast) {
-    const projectName = args.projects[0]
-    const existing = readDaTrackingHistoryFile(projectName)
-    if (!existing) {
-      throw new Error(`${projectName} has no daTracking.json`)
-    }
-    const result = dropLastEra(existing)
-    if (writeResult(projectName, result.file, result.changes)) {
-      regenerateSnapshot()
-    }
-    return
-  }
-
-  // Evaluates all templates and fills the daTracking resolutions registry
-  getProjects()
-  const resolutions = getDaTrackingResolutions()
-
-  const requested =
-    args.projects.length > 0 ? args.projects : [...resolutions.keys()]
-  const unknown = requested.filter((name) => !resolutions.has(name))
-  if (unknown.length > 0) {
-    throw new Error(
-      `Not a template project with DA tracking: ${unknown.join(', ')}`,
-    )
-  }
-
-  let ethereumBlockAt: ((timestamp: number) => Promise<number>) | undefined
-  let anythingChanged = false
-  let upToDate = 0
-
-  for (const projectName of requested) {
-    const resolution = resolutions.get(projectName)
-    if (!resolution) continue
-
-    if (resolution.source === 'nonTemplate') {
-      if (existsSync(daTrackingHistoryPath(projectName))) {
-        console.warn(
-          `${projectName}: WARNING - has both nonTemplateDaTracking and a daTracking.json; ` +
-            'the file is ignored, delete it or drop the override',
-        )
-      }
-      continue
-    }
-
-    const existing = readDaTrackingHistoryFile(projectName)
-    if (!existing && (resolution.derived ?? []).length === 0) {
-      continue
-    }
-
-    const resolveBoundary = makeBoundaryResolver(projectName, args, (ts) => {
-      ethereumBlockAt ??= makeEthereumBlockResolver()
-      return ethereumBlockAt(ts)
-    })
-    const result = await updateDaTrackingHistory(
-      projectName,
-      existing,
-      resolution.derived ?? [],
-      resolveBoundary,
-    )
-    if (writeResult(projectName, result.file, result.changes)) {
-      anythingChanged = true
-      if (result.changes.some((c) => c.includes('closed era'))) {
-        console.log(
-          `${projectName}: NOTE - closing an era changes that configuration's range; ` +
-            'on deploy the backend wipes and resyncs it (DaIndexer has no trimData)',
-        )
-      }
-    } else {
-      upToDate++
-    }
-  }
-
-  console.log(`${upToDate} project(s) already up to date`)
-  if (anythingChanged) {
-    regenerateSnapshot()
-  }
-}
-
 function regenerateSnapshot() {
   // Child process on purpose: this process already evaluated the templates
   // with the OLD files (module cache), the snapshot must see the new ones.
@@ -289,7 +306,4 @@ function regenerateSnapshot() {
   })
 }
 
-main().catch((e) => {
-  console.error(e instanceof Error ? e.message : e)
-  process.exit(1)
-})
+run(cmd, process.argv.slice(2))
