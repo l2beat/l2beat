@@ -176,6 +176,29 @@ export const privacyPools: BaseProject = {
       }),
     },
   },
+  crops: {
+    censorshipResistance: {
+      sentiment: 'warning',
+      description:
+        'Ragequit lives in the immutable pool contracts, so a depositor can always withdraw to their original address no matter what the Entrypoint or the ASP does - the assets are never custodial. Private withdrawals are a different story: the ASP postman can remove any deposit from the whitelist at any time, which forces the user to exit publicly and lose their privacy.',
+    },
+    openSource: {
+      sentiment: 'good',
+      description:
+        'The contracts, circuits, and supporting software needed to participate in Privacy Pools are publicly available and can be run locally.',
+    },
+    privacy: {
+      sentiment: 'warning',
+      description:
+        'Deposits and private withdrawals are unlinkable through zk proofs and the protocol cannot retroactively deanonymize past withdrawals, but compliance is gated by centralized association set providers that decide which deposits may ever be withdrawn privately. Privacy also depends on relayer availability - with no relayer, the withdrawal has to come from a linkable address.',
+    },
+    security: {
+      sentiment: 'warning',
+      status: 'partiallyReviewed',
+      description:
+        'Withdrawals are protected by a zk proof system that depends on a trusted setup, and the multisig can instantly swap the Entrypoint implementation and the ASP root with no delay, so a malicious upgrade could steal new deposits. Existing deposits stay recoverable through the immutable pool-level ragequit.',
+    },
+  },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),

@@ -1,3 +1,4 @@
+import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { PercentChange } from '~/components/PercentChange'
 import { IndexCell } from '~/components/table/cells/IndexCell'
 import {
@@ -11,15 +12,19 @@ import {
 } from '~/components/table/Table'
 import { cn } from '~/utils/cn'
 import { formatDollarValueNumber } from '~/utils/number-format/formatDollarValueNumber'
+import { formatInteger } from '~/utils/number-format/formatInteger'
 import { CROP_COLUMNS } from '../crops'
 import type { GardenEntry, GardenProjectType } from '../getGardenData'
 import { CropBadge } from './CropBadge'
-import { FreshCropsBadge } from './FreshCropsBadge'
 
 const TYPE_TAG: Record<
   GardenProjectType,
   { label: string; className: string }
 > = {
+  l1: {
+    label: 'L1',
+    className: 'text-[#2B2F3A] bg-[#DDE1EA] border-[#98A2B6]',
+  },
   l2: {
     label: 'L2',
     className: 'text-[#0C3D66] bg-[#BEDBFF] border-[#4E94D9]',
@@ -31,6 +36,10 @@ const TYPE_TAG: Record<
   privacy: {
     label: 'Privacy',
     className: 'text-[#3F1E6D] bg-[#C7B8FF] border-[#8D78D9]',
+  },
+  defi: {
+    label: 'DeFi',
+    className: 'text-[#5C1F45] bg-[#FFC7E8] border-[#D978B4]',
   },
 }
 
@@ -67,12 +76,9 @@ export function GardenTable({ entries }: { entries: GardenEntry[] }) {
                   className="size-[34px] rounded-lg"
                 />
                 <div className="flex flex-col leading-tight">
-                  <div className="flex items-center gap-2">
-                    <span className="font-semibold text-primary text-sm">
-                      {entry.name}
-                    </span>
-                    {isFullBloom(entry) && <FreshCropsBadge />}
-                  </div>
+                  <span className="font-semibold text-primary text-sm">
+                    {entry.name}
+                  </span>
                   <span className="text-secondary text-xs">
                     {entry.subtitle}
                   </span>
@@ -108,33 +114,35 @@ export function GardenTable({ entries }: { entries: GardenEntry[] }) {
               </div>
             </TableCell>
             <TableCell align="right">
-              {entry.tvs ? (
+              {entry.tvs === undefined ? (
+                <span className="text-secondary">&mdash;</span>
+              ) : entry.tvs.kind === 'notApplicable' ? (
+                <NotApplicableBadge />
+              ) : (
                 <div className="inline-flex flex-col items-end gap-px">
                   <span className="font-semibold text-[10px] text-secondary uppercase tracking-wider">
                     {entry.tvs.label}
                   </span>
                   <span className="font-semibold text-primary text-sm tabular-nums">
-                    {formatDollarValueNumber(entry.tvs.value)}{' '}
-                    <PercentChange
-                      value={entry.tvs.change}
-                      textClassName="text-xs"
-                    />
+                    {entry.tvs.kind === 'usd'
+                      ? formatDollarValueNumber(entry.tvs.value)
+                      : formatInteger(entry.tvs.value)}
+                    {entry.tvs.change !== undefined && (
+                      <>
+                        {' '}
+                        <PercentChange
+                          value={entry.tvs.change}
+                          textClassName="text-xs"
+                        />
+                      </>
+                    )}
                   </span>
                 </div>
-              ) : (
-                <span className="text-secondary">&mdash;</span>
               )}
             </TableCell>
           </TableRow>
         ))}
       </TableBody>
     </Table>
-  )
-}
-
-function isFullBloom(entry: GardenEntry): boolean {
-  // All crops are green, regardless of how thoroughly they were reviewed.
-  return CROP_COLUMNS.every(
-    (column) => entry.crops[column.key].sentiment === 'good',
   )
 }

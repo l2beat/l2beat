@@ -318,6 +318,29 @@ export const ethscriptions: ScalingProject = {
       },
     ],
   },
+  crops: {
+    censorshipResistance: {
+      sentiment: 'good',
+      description:
+        'Ethscriptions is a based rollup with no sequencer: L2 state is derived deterministically from ethscription activity on Ethereum, so ordering is decided by L1 and any user can force a transaction there. The Rollup contract is not upgradeable and cannot be paused, so the exit window is infinite, and state proposing falls back to permissionless after a timeout.',
+    },
+    openSource: {
+      sentiment: 'good',
+      description:
+        'The node, the modified geth, the zk fault proof stack, and the onchain verifier are all published, and both the verifier contracts and the program hashes can be independently regenerated from source.',
+    },
+    privacy: {
+      sentiment: 'bad',
+      description:
+        'The chain derives its entire state from public Ethereum calldata, so every inscription and transfer is public by construction. There are no protocol-level privacy features.',
+    },
+    security: {
+      sentiment: 'good',
+      status: 'partiallyReviewed',
+      description:
+        'State is validated on L1 with SP1 validity proofs and the Rollup contract is immutable, putting it at Stage 2. It is an application-specific chain with no general-purpose contract deployment and no canonical bridge, which keeps the surface small but also means asset movement depends on third-party bridges assessed separately.',
+    },
+  },
   milestones: [
     {
       title: 'Rollup contract deployed',
