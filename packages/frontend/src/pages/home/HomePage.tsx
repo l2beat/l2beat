@@ -92,7 +92,6 @@ export function HomePage({
           variant="home"
           childrenWrapperClassName="max-md:bg-surface-primary"
           sidebarCounts={getNavSectionCounts(projectCounts)}
-          sidebarColorfulIcons
         >
           <MainPageHeader>Home</MainPageHeader>
           <div className="grid grid-cols-1 items-stretch md:gap-6 xl:grid-cols-[minmax(320px,440px)_minmax(0,1fr)] xl:gap-x-4 2xl:grid-cols-[minmax(360px,480px)_minmax(0,1fr)] 2xl:gap-x-6 min-[2200px]:grid-cols-[minmax(340px,460px)_minmax(360px,1fr)_minmax(560px,1.1fr)] [&_.primary-card]:max-md:rounded-none [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b">

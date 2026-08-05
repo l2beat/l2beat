@@ -1,5 +1,4 @@
 import { Fragment, useMemo, useState } from 'react'
-import { getNavSectionColor } from '~/consts/navSectionColors'
 import { usePathname } from '~/hooks/usePathname'
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
@@ -41,17 +40,9 @@ interface Props {
   sideLinks: NavLink[]
   /** Per-section metrics, keyed by `NavGroup.match`. */
   counts?: NavSectionCounts
-  /** Tints each section icon with its accent color. */
-  colorfulIcons?: boolean
 }
 
-export function NavSidebar({
-  groups,
-  logoLink,
-  sideLinks,
-  counts,
-  colorfulIcons = false,
-}: Props) {
+export function NavSidebar({ groups, logoLink, sideLinks, counts }: Props) {
   const pathname = usePathname()
   const { setOpenMobile } = useSidebar()
   const closeMobileSidebar = () => setOpenMobile(false)
@@ -80,7 +71,6 @@ export function NavSidebar({
                   <NavCollapsibleItem
                     group={group}
                     count={count}
-                    colorfulIcons={colorfulIcons}
                     closeMobileSidebar={closeMobileSidebar}
                   />
                 </SidebarGroupItem>
@@ -92,11 +82,7 @@ export function NavSidebar({
                     isActive={isLinkActive({ href: group.href, pathname })}
                     onClick={closeMobileSidebar}
                   >
-                    <NavSectionIcon
-                      match={group.match}
-                      icon={group.icon}
-                      colorfulIcons={colorfulIcons}
-                    />
+                    {group.icon}
                     <span className="min-w-0 flex-1 truncate">
                       {group.title}
                     </span>
@@ -132,36 +118,6 @@ export function NavSidebar({
 }
 
 /**
- * Wraps a section icon in its accent-tinted square. Without `colorfulIcons` the
- * icon is passed through untouched.
- */
-function NavSectionIcon({
-  match,
-  icon,
-  colorfulIcons,
-}: {
-  match: string
-  icon: React.ReactNode
-  colorfulIcons: boolean
-}) {
-  const color = colorfulIcons ? getNavSectionColor(match) : undefined
-  if (!color) {
-    return <>{icon}</>
-  }
-  return (
-    <span
-      className={cn(
-        'flex size-6 shrink-0 items-center justify-center rounded-md [&>svg]:size-4',
-        color.bgClassName,
-        color.svgClassName,
-      )}
-    >
-      {icon}
-    </span>
-  )
-}
-
-/**
  * Right-aligned, so a long section title truncates instead of pushing the
  * number out - the sidebar width never depends on the counts.
  */
@@ -179,12 +135,10 @@ function NavCountBadge({ count }: { count: NavSectionCount }) {
 function NavCollapsibleItem({
   group,
   count,
-  colorfulIcons,
   closeMobileSidebar,
 }: {
   group: Extract<NavGroup, { type: 'multiple' }>
   count: NavSectionCount | undefined
-  colorfulIcons: boolean
   closeMobileSidebar: () => void
 }) {
   const pathname = usePathname()
@@ -208,11 +162,7 @@ function NavCollapsibleItem({
         data-active={isGroupActive}
       >
         <div className="flex min-w-0 items-center gap-2">
-          <NavSectionIcon
-            match={group.match}
-            icon={group.icon}
-            colorfulIcons={colorfulIcons}
-          />
+          <div>{group.icon}</div>
           <span className="truncate font-medium text-base text-primary tracking-tight transition-colors duration-300 group-data-[active=true]:text-brand">
             {group.title}
           </span>

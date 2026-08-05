@@ -76,8 +76,6 @@ export interface SideNavLayoutProps {
   variant?: SideNavLayoutVariant
   /** Per-section metrics rendered in the side nav, keyed by `NavGroup.match`. */
   sidebarCounts?: NavSectionCounts
-  /** Tints the side nav section icons with their accent colors. */
-  sidebarColorfulIcons?: boolean
 }
 
 export function SideNavLayout({
@@ -85,7 +83,6 @@ export function SideNavLayout({
   childrenWrapperClassName,
   variant = 'default',
   sidebarCounts,
-  sidebarColorfulIcons,
 }: SideNavLayoutProps) {
   const whatsNew = useWhatsNewContext()
   const topChildren = <TopBanner className={topBannerVariants({ variant })} />
@@ -104,7 +101,6 @@ export function SideNavLayout({
           groups={navGroups}
           sideLinks={navSecondaryLinks}
           counts={sidebarCounts}
-          colorfulIcons={sidebarColorfulIcons}
         />
         <div
           className={cn(

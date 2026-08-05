@@ -1,4 +1,3 @@
-import { navSectionColors } from '~/consts/navSectionColors'
 import { ChevronIcon } from '~/icons/Chevron'
 import { BridgesIcon } from '~/icons/pages/Bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/DataAvailability'
@@ -22,7 +21,6 @@ interface Tile {
   secondaryMetric?: TileMetric
   href: string
   icon: React.ReactNode
-  iconBgClassName: string
 }
 
 /**
@@ -42,71 +40,38 @@ export function HomeStatsStrip({
       label: 'Layer 2s',
       metric: { count: counts.scaling, unit: 'projects' },
       href: '/scaling/summary',
-      icon: (
-        <ScalingIcon
-          className={cn('size-5', navSectionColors.scaling.iconClassName)}
-        />
-      ),
-      iconBgClassName: navSectionColors.scaling.bgClassName,
+      icon: <ScalingIcon className="size-5" />,
     },
     {
       label: 'Interop',
       metric: { count: counts.interop, unit: 'chains' },
       secondaryMetric: { count: counts.interopProtocols, unit: 'protocols' },
       href: '/interop/summary',
-      icon: (
-        <BridgesIcon
-          className={cn('size-5', navSectionColors.interop.iconClassName)}
-        />
-      ),
-      iconBgClassName: navSectionColors.interop.bgClassName,
+      icon: <BridgesIcon className="size-5" />,
     },
     {
       label: 'Privacy',
       metric: { count: counts.privacy, unit: 'projects' },
       href: '/privacy',
-      icon: (
-        <PrivacyIcon
-          className={cn('size-5', navSectionColors.privacy.iconClassName)}
-        />
-      ),
-      iconBgClassName: navSectionColors.privacy.bgClassName,
+      icon: <PrivacyIcon className="size-5" />,
     },
     {
       label: 'Data Availability',
       metric: { count: counts.dataAvailability, unit: 'projects' },
       href: '/data-availability/summary',
-      icon: (
-        <DataAvailabilityIcon
-          className={cn(
-            'size-5',
-            navSectionColors['data-availability'].iconClassName,
-          )}
-        />
-      ),
-      iconBgClassName: navSectionColors['data-availability'].bgClassName,
+      icon: <DataAvailabilityIcon className="size-5" />,
     },
     {
       label: 'ZK Catalog',
       metric: { count: counts.zkCatalog, unit: 'projects' },
       href: '/zk-catalog',
-      icon: (
-        <ZkCatalogIcon
-          className={cn('size-5', navSectionColors['zk-catalog'].iconClassName)}
-        />
-      ),
-      iconBgClassName: navSectionColors['zk-catalog'].bgClassName,
+      icon: <ZkCatalogIcon className="size-5" />,
     },
     {
       label: 'Ecosystems',
       metric: { count: counts.ecosystems, unit: 'ecosystems' },
       href: '/ecosystems/agglayer',
-      icon: (
-        <EcosystemsIcon
-          className={cn('size-5', navSectionColors.ecosystems.iconClassName)}
-        />
-      ),
-      iconBgClassName: navSectionColors.ecosystems.bgClassName,
+      icon: <EcosystemsIcon className="size-5" />,
     },
   ]
 
@@ -132,12 +97,7 @@ function StatTile({ tile }: { tile: Tile }) {
         'transition-colors duration-200 hover:border-link-stroke',
       )}
     >
-      <div
-        className={cn(
-          'flex size-6 shrink-0 items-center justify-center rounded-md transition-transform duration-200 group-hover:scale-110',
-          tile.iconBgClassName,
-        )}
-      >
+      <div className="flex size-6 shrink-0 items-center justify-center transition-transform duration-200 group-hover:scale-110">
         {tile.icon}
       </div>
       <div className="flex min-w-0 flex-1 flex-col justify-center">
