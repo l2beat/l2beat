@@ -48,17 +48,6 @@ export async function getBlockNumberAtOrBefore(
   if (lhsTimestamp !== undefined && timestamp <= lhsTimestamp) return lhsBlock
   if (timestamp >= rhsTimestamp) return rhsBlock
 
-  const probe = async (block: number) => {
-    const blockTimestamp = (await getBlock(block))?.timestamp
-    if (blockTimestamp === undefined || blockTimestamp <= timestamp) {
-      lhsBlock = block
-      lhsTimestamp = blockTimestamp
-    } else {
-      rhsBlock = block
-      rhsTimestamp = blockTimestamp
-    }
-  }
-
   while (lhsBlock + 1 < rhsBlock) {
     const rangeBefore = rhsBlock - lhsBlock
 
@@ -66,18 +55,34 @@ export async function getBlockNumberAtOrBefore(
     if (lhsTimestamp !== undefined) {
       const blockTime = (rhsTimestamp - lhsTimestamp) / (rhsBlock - lhsBlock)
       const blocksFromStart = Math.round((timestamp - lhsTimestamp) / blockTime)
-      await probe(
-        Math.max(
-          lhsBlock + 1,
-          Math.min(rhsBlock - 1, lhsBlock + blocksFromStart),
-        ),
+      const guess = Math.max(
+        lhsBlock + 1,
+        Math.min(rhsBlock - 1, lhsBlock + blocksFromStart),
       )
+      const guessTs = (await getBlock(guess))?.timestamp
+
+      if (guessTs === undefined || guessTs <= timestamp) {
+        lhsBlock = guess
+        lhsTimestamp = guessTs
+      } else {
+        rhsBlock = guess
+        rhsTimestamp = guessTs
+      }
     }
 
     // Safety net: only pay for a binary step if interpolation failed to halve
     // the range (or could not run because the lhs timestamp is unknown)
     if (rhsBlock - lhsBlock > rangeBefore / 2 && lhsBlock + 1 < rhsBlock) {
-      await probe(lhsBlock + Math.floor((rhsBlock - lhsBlock) / 2))
+      const mid = lhsBlock + Math.floor((rhsBlock - lhsBlock) / 2)
+      const midTs = (await getBlock(mid))?.timestamp
+
+      if (midTs === undefined || midTs <= timestamp) {
+        lhsBlock = mid
+        lhsTimestamp = midTs
+      } else {
+        rhsBlock = mid
+        rhsTimestamp = midTs
+      }
     }
   }
 
