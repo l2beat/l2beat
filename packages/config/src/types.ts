@@ -483,12 +483,10 @@ export type ProjectScalingCategory =
 export interface ProjectScalingProofSystem {
   /** Type of proof system */
   type: 'Optimistic' | 'Validity'
-  /** Custom display name of the proof system. */
+  /** Custom display name of the proof system. Derived from the ZK Catalog projects' names when not set. */
   name?: string
-  /** Id of the ZK Catalog project describing the proof system. Configure either this or zkCatalogIds. */
-  zkCatalogId?: string
-  /** Ids of ZK Catalog projects used by a multi-proof system. Configure either this or zkCatalogId. */
-  zkCatalogIds?: [string, string, ...string[]]
+  /** Ids of the ZK Catalog projects describing the proof system. */
+  zkCatalogIds?: ProjectId[]
   /** Challenge protocol of the proof system. Configured only for optimistic proof systems. */
   challengeProtocol?: 'Interactive' | 'Single-step'
 }

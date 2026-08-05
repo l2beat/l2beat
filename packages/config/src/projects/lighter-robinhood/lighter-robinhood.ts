@@ -87,7 +87,7 @@ export const lighterRobinhood: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('lighterprover'),
+    zkCatalogIds: [ProjectId('lighterprover')],
   },
   dataAvailability: {
     layer: {

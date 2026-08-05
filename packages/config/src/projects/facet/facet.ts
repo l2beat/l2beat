@@ -74,7 +74,7 @@ export const facet: ScalingProject = {
   proofSystem: {
     type: 'Optimistic',
     name: 'SP1',
-    zkCatalogId: ProjectId('sp1turbo'),
+    zkCatalogIds: [ProjectId('sp1turbo')],
     challengeProtocol: 'Single-step',
   },
   stage: getRollupStage(

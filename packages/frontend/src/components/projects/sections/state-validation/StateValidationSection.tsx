@@ -11,16 +11,18 @@ import type { ProjectSectionProps } from '../types'
 import { Category } from './Category'
 import { ProverInfo } from './ProverInfo'
 
+export interface ProverInfoData {
+  name: string
+  icon: string
+  href: string
+  quantumResistant?: boolean
+  trustedSetups: TrustedSetupsByProofSystem
+}
+
 export interface StateValidationSectionProps extends ProjectSectionProps {
   diagram: DiagramParams | undefined
   stateValidation: ProjectScalingStateValidation
-  proverInfos?: {
-    name: string
-    icon: string
-    href: string
-    quantumResistant?: boolean
-    trustedSetups: TrustedSetupsByProofSystem
-  }[]
+  proverInfos?: ProverInfoData[]
   programHashes?: StateValidationProgramHashData[]
   programHashesDescription?: string
 }
