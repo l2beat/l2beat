@@ -445,7 +445,9 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           zeroValues,
         ])
 
-        const result = await repository.getValueMismatchTransfers(5, 50)
+        const result = await repository.getValueMismatchTransfers(5, {
+          minimumSideValueUsdThreshold: 50,
+        })
 
         expect(result.map((x) => x.transferId)).toEqual([
           'msg4',
@@ -460,7 +462,11 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       })
 
       it('throws for negative value threshold', async () => {
-        await expect(repository.getValueMismatchTransfers(5, -1)).toBeRejected()
+        await expect(
+          repository.getValueMismatchTransfers(5, {
+            minimumSideValueUsdThreshold: -1,
+          }),
+        ).toBeRejected()
       })
     },
   )

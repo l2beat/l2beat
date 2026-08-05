@@ -52,7 +52,7 @@ describe(createMissingTokensRouter.name, () => {
       query,
     )
 
-    const result = await caller.list()
+    const result = await caller.list({ range: 'all' })
 
     expect(getMissingTokensInfo).toHaveBeenCalledTimes(1)
     expect(query).toHaveBeenCalledWith([

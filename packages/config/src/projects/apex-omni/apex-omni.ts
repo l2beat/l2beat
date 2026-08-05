@@ -30,7 +30,7 @@ export const apexOmni: ScalingProject = {
   badges: [BADGES.VM.AppChain, BADGES.L3ParentChain.Arbitrum],
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('zksyncprover'),
+    zkCatalogIds: [ProjectId('zksyncprover')],
   },
   reasonsForBeingOther: [
     {

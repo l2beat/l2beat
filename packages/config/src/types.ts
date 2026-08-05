@@ -483,10 +483,10 @@ export type ProjectScalingCategory =
 export interface ProjectScalingProofSystem {
   /** Type of proof system */
   type: 'Optimistic' | 'Validity'
-  /** Name of the proof system. Only one of name or zkCatalogId should be provided. */
+  /** Custom display name of the proof system. Derived from the ZK Catalog projects' names when not set. */
   name?: string
-  /** Id for ZkCatalog project to link to. Only one of name or zkCatalogId should be provided. */
-  zkCatalogId?: string
+  /** Ids of the ZK Catalog projects describing the proof system. */
+  zkCatalogIds?: ProjectId[]
   /** Challenge protocol of the proof system. Configured only for optimistic proof systems. */
   challengeProtocol?: 'Interactive' | 'Single-step'
 }
@@ -1458,6 +1458,7 @@ export type InteropPluginName =
   | 'cctp-v1'
   | 'cctp-v2'
   | 'celer'
+  | 'butternetwork'
   | 'centrifuge'
   | 'circle-gateway'
   | 'debridge'

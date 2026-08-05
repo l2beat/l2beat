@@ -1118,6 +1118,66 @@
       "transfers": ["celer.Transfer"]
     }
   },
+  "butternetwork": {
+    "description": "Butter V3 token bridge, including native input and Base to Polygon PoS",
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x8dfc50a50a573514d0fc1d8f3c008b2b074972fdc812bb35aaac3377144f633d"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0x622bc3a75845f7fed4b5507b74555d08cfb1873a87d9baa3fa1ffef24ccf7a13"
+      },
+      // Native ETH input, swapped to USDT on BSC.
+      {
+        "chain": "base",
+        "tx": "0x54c5a20ef0a5c1c559d0c21136a79e31b8d2011acb420aef140660c4a8ce7bde"
+      },
+      {
+        "chain": "bsc",
+        "tx": "0xc816c7391f696bbb6549df5b33cf239d1d65f5016664006bdb1dcb2228d19a1a"
+      }
+    ],
+    "expects": {
+      "events": [
+        "butternetwork.MessageOut",
+        "butternetwork.MessageIn",
+        "butternetwork.MessageOut",
+        "butternetwork.MessageIn"
+      ],
+      "messages": [
+        { "type": "butternetwork.Message", "app": "butternetwork" },
+        { "type": "butternetwork.Message", "app": "butternetwork" }
+      ],
+      "transfers": [
+        {
+          "type": "butternetwork.Transfer",
+          "src": {
+            "event": { "ctx": { "chain": "base" } },
+            "wasBurned": false
+          },
+          "dst": {
+            "event": { "ctx": { "chain": "polygonpos" } },
+            "wasMinted": false
+          }
+        },
+        {
+          "type": "butternetwork.Transfer",
+          "src": {
+            "event": { "ctx": { "chain": "base" } },
+            "tokenAddress": "native",
+            "wasBurned": false
+          },
+          "dst": {
+            "event": { "ctx": { "chain": "bsc" } },
+            "tokenAddress": "0x00000000000000000000000055d398326f99059ff775485246999027b3197955",
+            "wasMinted": false
+          }
+        }
+      ]
+    }
+  },
   "mayan-forwarder": {
     "txs": [
       {
@@ -6021,6 +6081,65 @@
             "tokenAmount": "120000000000000000000",
             "wasMinted": true,
             "event": { "type": "gnosisbridge.XdaiWithdrawalFinalized" }
+          }
+        }
+      ]
+    }
+  },
+  "gnosisbridge-paid-interest": {
+    "description": "xDAI bridge payInterest() uses PaidInterest to identify the source token",
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xccc6ceb72ca864017fc1523860f5e418011fbab5073730ef2445b81bcffc389c"
+      },
+      {
+        "chain": "gnosis",
+        "tx": "0xd66f4cb6039e221a263878d58f5cccafc623216c4cfd0513b0090c7a991dc91e"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "gnosisbridge.XdaiTransferInitiated",
+          "ctx": { "chain": "ethereum" },
+          "args": {
+            "token": "0x000000000000000000000000dc035d45d973e3ec169d2276ddab16f1e407384f",
+            "amount": "18899257185396495213246"
+          }
+        },
+        {
+          "type": "gnosisbridge.XdaiTransferFinalized",
+          "ctx": { "chain": "gnosis" },
+          "args": { "amount": "18899257185396495213246" }
+        }
+      ],
+      "messages": [
+        {
+          "type": "gnosisbridge.Message",
+          "app": "xdai-bridge",
+          "src": { "ctx": { "chain": "ethereum" } },
+          "dst": { "ctx": { "chain": "gnosis" } }
+        }
+      ],
+      "transfers": [
+        {
+          "type": "gnosisbridge.L1ToL2Transfer",
+          "src": {
+            "tokenAddress": "0x000000000000000000000000dc035d45d973e3ec169d2276ddab16f1e407384f",
+            "tokenAmount": "18899257185396495213246",
+            "event": {
+              "type": "gnosisbridge.XdaiTransferInitiated",
+              "ctx": { "chain": "ethereum" }
+            }
+          },
+          "dst": {
+            "tokenAddress": "native",
+            "tokenAmount": "18899257185396495213246",
+            "event": {
+              "type": "gnosisbridge.XdaiTransferFinalized",
+              "ctx": { "chain": "gnosis" }
+            }
           }
         }
       ]

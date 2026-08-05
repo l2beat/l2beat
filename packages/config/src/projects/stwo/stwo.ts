@@ -83,28 +83,6 @@ export const stwo: BaseProject = {
         description:
           "Custom verifier ID: SHA256 hash of the address of the immutable GPS statement verifier in hex string format '0x...'.",
       },
-      {
-        hash: '0x5c74473c5450f2d4ad933e8862bd570a5743b88fdf8a8c19bc42d04768b042af',
-        name: 'Stwo GPS statement verifier 2026_13_3',
-        sourceLink:
-          'https://etherscan.io/address/0xE67515a751291445B85b2F176c1eCdf08e86b406#code',
-        proofSystem: ZK_CATALOG_TAGS.STARK.Stwo,
-        knownDeployments: [
-          {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0xE67515a751291445B85b2F176c1eCdf08e86b406',
-            ),
-            // TODO: Remove after the current GPS referral expires on 2026-08-01.
-            overrideUsedIn: [ProjectId('starknet'), ProjectId('paradex')],
-          },
-        ],
-        verificationStatus: 'successful',
-        verificationSteps:
-          'The immutable Solidity sources are verified on Etherscan and expose every selected CPU verifier, memory-page registry, outer bootloader contract, and bootloader configuration word. Source verification of the Solidity contracts does not by itself reproduce the Cairo programs hidden behind the recursive-verifier allowlist commitment.',
-        description:
-          "This registry remains in Starknet's accepted fact chain only until the current verifier's referral expires. The custom verifier ID is the SHA256 hash of this address in checksummed hex-string format.",
-      },
     ],
   },
 }

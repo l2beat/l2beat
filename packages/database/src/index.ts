@@ -85,6 +85,7 @@ export {
   type InteropTransferRecord,
   type InteropTransfersDetailedStatsRecord,
   type InteropTransfersStatsRecord,
+  type InteropTransferTimeRange,
   type InteropTransferTokenInfo,
   type InteropTransferUpdate,
 } from './repositories/InteropTransferRepository'

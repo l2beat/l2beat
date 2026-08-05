@@ -29,13 +29,14 @@ export function ProofSystemCell({
       : proofSystem?.name && !hideType
         ? proofSystem.name
         : undefined
+  const zkCatalogIds = proofSystem?.zkCatalogIds ?? []
   return (
     <TableLink
       href={
         !proofSystem?.type
           ? undefined
-          : proofSystem?.zkCatalogId
-            ? `/zk-catalog?highlight=${proofSystem?.zkCatalogId}`
+          : zkCatalogIds.length > 0
+            ? `/zk-catalog?highlight=${zkCatalogIds.join(',')}`
             : `/scaling/projects/${slug}#state-validation`
       }
     >

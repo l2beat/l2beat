@@ -1,0 +1,788 @@
+{
+  "name": "butternetwork",
+  "timestamp": 1785915246,
+  "configHash": "0x2969824de38e03386498803e0085e6eee0ced93e12fbd813d1d0899f0eda765a",
+  "entries": [
+    {
+      "name": "Butter Bridge",
+      "address": "base:0x0000317Bec33Af037b5fAb2028f52d14658F6A56",
+      "type": "Contract",
+      "template": "butternetwork/Bridge",
+      "sourceHashes": [
+        "0x353ca5e876d7f4a0b0e5305b3f7163b06c65eae2ec374192d82fa9a023b2f316",
+        "0x4fbfa6dffeb7b0631c9754128ce823ee45e589dc9d6a230e444db8381a124cd6"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Butter's Base bridge endpoint. Outbound transfers lock or burn assets and emit messages for the MAP relay chain; inbound transfers execute only after a LightNode-validated receipt proof for the configured MAP relay contract. The bridge can mint configured mintable tokens, release escrowed assets, and invoke receiver callbacks, so compromise of validation, relay configuration, or management authority can lead to loss of bridged funds.",
+      "deployerAddress": "base:0xBBcfBbECC798ae9941104B0F6991134439c1c426",
+      "sinceTimestamp": 1730533685,
+      "sinceBlock": 21872169,
+      "values": {
+        "$admin": "base:0x0000000000000000000000000000000000000000",
+        "$implementation": "base:0x862761D6D52E9e812A8c22E6e6A39E186e59a33d",
+        "$pastUpgrades": [
+          [
+            "2024-11-02T07:48:05.000Z",
+            "0x78c19b4c6a8113d02f4ef7fa4c9a9c8bb64cec8f7094d42043a9e4f826b103a6",
+            ["base:0xA8E357C8d4B4EC766E63bd1b73ECD4734eC3AAA4"]
+          ],
+          [
+            "2024-11-12T04:53:49.000Z",
+            "0x0f790ff23e57c687aceeecc9922c677cf5b8c6c8883b5ba254e59757c90b6b43",
+            ["base:0x1FbC14ea7F2B6bf8DCaAF7eA3484E5C6F003dF0d"]
+          ],
+          [
+            "2025-08-07T02:03:57.000Z",
+            "0x2419922339020bb0a82ba64dc820b3add2f4244fcdb8c87e17ace5649fb7f89c",
+            ["base:0x85E0d15EA312F999ad038e7f8E921D4743C12D43"]
+          ],
+          [
+            "2026-05-21T05:46:03.000Z",
+            "0x1c21e691416e2adb3017aa56b4d21e434d6ad541124cd08ac85be6acd80fd784",
+            ["base:0x862761D6D52E9e812A8c22E6e6A39E186e59a33d"]
+          ],
+          [
+            "2026-05-21T05:48:01.000Z",
+            "0x2d56c8102ef3cff82ebce01f64b4f33d299712db723c2992e5421b5bd12f72fa",
+            ["base:0x862761D6D52E9e812A8c22E6e6A39E186e59a33d"]
+          ]
+        ],
+        "$upgradeCount": 5,
+        "authority": "base:0xACC31A6756B60304C03d6626fc98c062E4539CCA",
+        "feeService": "base:0xfeE31a1FD7FcA0E05428ff751242e46F6D5769a6",
+        "getImplementation": "base:0x862761D6D52E9e812A8c22E6e6A39E186e59a33d",
+        "getRelay": [22776, "base:0x0000317Bec33Af037b5fAb2028f52d14658F6A56"],
+        "getTransferOutFailedReceiver": "base:0x0000000000000000000000000000000000000000",
+        "isConsumingScheduledOp": "0x00000000",
+        "lightNode": "base:0x0001805c0B57DBd48B5c5c26E237a135dDC678ae",
+        "paused": false,
+        "selfChainId": 8453,
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "fieldMeta": {
+        "$implementation": {
+          "severity": "HIGH",
+          "description": "Current implementation of the upgradeable Butter Bridge proxy.",
+          "type": "CODE_CHANGE"
+        },
+        "authority": {
+          "severity": "HIGH",
+          "description": "Authority contract consulted by all Bridge management functions marked restricted. Its role members can pause the bridge, change supported tokens and service contracts, change the relay, configure trust-list entries, and upgrade the Bridge implementation.",
+          "type": "PERMISSION"
+        },
+        "getRelay": {
+          "severity": "HIGH",
+          "description": "MAP relay contract whose MessageRelay events are accepted by this Bridge. A malicious or incorrectly configured relay address could make otherwise valid proofs execute the wrong messages."
+        },
+        "lightNode": {
+          "severity": "HIGH",
+          "description": "LightNode used to validate MAP relay-chain headers and receipt proofs before Bridge messages are executed."
+        },
+        "feeService": {
+          "severity": "HIGH",
+          "description": "FeeService used to calculate and route message fees. Its authority can change gas prices, base gas values, token decimals, and the fee receiver."
+        },
+        "paused": {
+          "severity": "HIGH",
+          "description": "Whether bridge transfers and message execution are paused. The authority can toggle this circuit breaker.",
+          "type": "RISK_PARAMETER"
+        },
+        "getTransferOutFailedReceiver": {
+          "severity": "HIGH",
+          "description": "Fallback recipient for assets when a destination-side receiver or swap callback fails. The configured authority can change where such recovered assets are sent."
+        }
+      },
+      "implementationNames": {
+        "base:0x0000317Bec33Af037b5fAb2028f52d14658F6A56": "OmniServiceProxy",
+        "base:0x862761D6D52E9e812A8c22E6e6A39E186e59a33d": "Bridge"
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
+    },
+    {
+      "name": "Butter MAP LightNode",
+      "address": "base:0x0001805c0B57DBd48B5c5c26E237a135dDC678ae",
+      "type": "Contract",
+      "template": "butternetwork/LightNode",
+      "sourceHashes": [
+        "0x140d4fbab1ba74357fe0bb5885fbd5a2cb22952c940373bc18c861dc1185f9d7",
+        "0x5710873b8edac54aa50af2ae5147ad05d99b11fb770594e72a33f8c7445b506a"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Upgradeable MAP relay-chain light client used by Butter bridges. It verifies relay-chain headers with the stored BLS validator set and verifies receipt Merkle proofs against accepted headers. It is the destination-chain validation boundary for bridged messages.",
+      "deployerAddress": "base:0x7F4cBa3D7f20bF5146e4e5F8929b676CA05a5545",
+      "sinceTimestamp": 1712739617,
+      "sinceBlock": 12975135,
+      "values": {
+        "$admin": "base:0x7F4cBa3D7f20bF5146e4e5F8929b676CA05a5545",
+        "$implementation": "base:0xF6366aD2361Df88E8815258948093C33d93d5374",
+        "$pastUpgrades": [
+          [
+            "2024-04-10T09:00:17.000Z",
+            "0xd3f44ff09982171f62d0c4bfd3513db8d49dd6d5012d81c51f45055e0ba89df4",
+            ["base:0x92649181CcF7775bE3b212fF2e02f8F57366bFF3"]
+          ],
+          [
+            "2024-09-06T14:53:03.000Z",
+            "0x704ad684abf8327381ba478f02972d0af2b8d5a9c4c32eeab53e4c2e76a03814",
+            ["base:0xd5C45b145594a142605825DB3a4Df35450eDa901"]
+          ],
+          [
+            "2024-09-16T04:20:59.000Z",
+            "0xe4fb346381ce69967553f7e83bc9cfef954c13ea62c4233bf538daffe233b733",
+            ["base:0x2C77024B4D7E2549C9303B46C0F95607472AbFCe"]
+          ],
+          [
+            "2024-09-23T00:33:13.000Z",
+            "0x53838b8cb5bc53dc0fe72a902f3b51bbbdae31d23509e03657a28e90170c1495",
+            ["base:0xF6366aD2361Df88E8815258948093C33d93d5374"]
+          ]
+        ],
+        "$upgradeCount": 4,
+        "epochSize": 50000,
+        "epochSummary": { "epoch": 509, "length": 24 },
+        "getAdmin": "base:0x7F4cBa3D7f20bF5146e4e5F8929b676CA05a5545",
+        "getImplementation": "base:0xF6366aD2361Df88E8815258948093C33d93d5374",
+        "headerHeight": 25400000,
+        "maxEpochs": 30,
+        "nodeType": 1,
+        "pendingAdmin": "base:0x0000000000000000000000000000000000000000",
+        "quorum": 16,
+        "startHeight": 10950000,
+        "verifiableHeaderRange": [23900000, 25450000],
+        "verifyTool": "base:0xc3393567DC2F1d071254E880c9f501641491471f"
+      },
+      "fieldMeta": {
+        "verifyTool": {
+          "severity": "HIGH",
+          "description": "VerifyTool contract used for header-signature and receipt Merkle-proof primitives. Replacing it changes the cryptographic validation logic used by the LightNode.",
+          "type": "CODE_CHANGE"
+        },
+        "headerHeight": {
+          "severity": "HIGH",
+          "description": "Highest MAP relay-chain header accepted by this LightNode. Receipt proofs outside the rolling verifiable range cannot be used by the Bridge.",
+          "type": "RISK_PARAMETER"
+        },
+        "epochSize": {
+          "severity": "HIGH",
+          "description": "Number of MAP relay-chain blocks in one LightNode epoch. It determines the required spacing between accepted validator-set checkpoints and the block-height boundaries used for header validation.",
+          "type": "RISK_PARAMETER"
+        },
+        "epochSummary": {
+          "severity": "HIGH",
+          "description": "Latest epoch stats (vali set size). Complicated handler because of the ring buffer.",
+          "type": "RISK_PARAMETER"
+        },
+        "quorum": {
+          "severity": "HIGH",
+          "description": "Signature threshold for the latest initialized LightNode epoch.",
+          "type": "RISK_PARAMETER"
+        },
+        "verifiableHeaderRange": {
+          "severity": "HIGH",
+          "description": "Current range of MAP relay-chain block heights accepted by the LightNode. The range is derived from the last accepted header and the configured epoch retention window.",
+          "type": "RISK_PARAMETER"
+        },
+        "getValidators": {
+          "severity": "HIGH",
+          "description": "Stored BLS validator public keys used to authenticate MAP relay-chain headers. The active set and its 2/3-style threshold determine which relay-chain history the Bridge accepts.",
+          "type": "RISK_PARAMETER"
+        }
+      },
+      "implementationNames": {
+        "base:0x0001805c0B57DBd48B5c5c26E237a135dDC678ae": "LightNodeProxy",
+        "base:0xF6366aD2361Df88E8815258948093C33d93d5374": "LightNode"
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
+    },
+    {
+      "address": "base:0x0cDAe5da23b64bFeCD421d6487FFEABF6558828d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "base:0x378F2eC828DB2fD49D238c91e5A278cF30aBeb66",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "base:0x386ce1a187eC7329CFb8E467EB02FB07c698256A",
+      "type": "EOA",
+      "unverified": true,
+      "proxyType": "EIP7702 EOA",
+      "values": {
+        "$implementation": "base:0xa845C74344Fc9405b1Fcf712f04668979573c1bf"
+      }
+    },
+    {
+      "address": "base:0x7F4cBa3D7f20bF5146e4e5F8929b676CA05a5545",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "eoaWithUpgradePermissions": true,
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x0001805c0B57DBd48B5c5c26E237a135dDC678ae",
+          "description": "change the pending LightNode administrator or the VerifyTool used by proof verification.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "base:0x0001805c0B57DBd48B5c5c26E237a135dDC678ae",
+          "role": "admin"
+        }
+      ]
+    },
+    {
+      "name": "SafeL2",
+      "address": "base:0x9987463102993e177b107e0cE97a0420428D1999",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0xACC31A6756B60304C03d6626fc98c062E4539CCA",
+          "description": "change AuthorityManager permissions and execute restricted Bridge and FeeService management operations.",
+          "role": ".adminRole"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "base:0x386ce1a187eC7329CFb8E467EB02FB07c698256A",
+      "sinceTimestamp": 1779355507,
+      "sinceBlock": 46283080,
+      "values": {
+        "$immutable": false,
+        "$implementation": "base:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
+        "$members": [
+          "base:0xe8D95c201c20d759ed9429195F20767684Ebdf62",
+          "base:0xe875f05e42ccFAFA8B64CA6344687E5cC60005Be",
+          "base:0x378F2eC828DB2fD49D238c91e5A278cF30aBeb66",
+          "base:0xEc624b9A64Be03E2DBAc8B78613A45955C855A87",
+          "base:0xCE148A96B191C05414c9282c2C57e537100b40FE"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x36920abb43de7302655252f2ebcb383a77baebafd5be5dbfd162943c29816d39",
+        "getChainId": 8453,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 1,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "base:0x9987463102993e177b107e0cE97a0420428D1999": "SafeProxy",
+        "base:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
+      }
+    },
+    {
+      "name": "SafeL2",
+      "address": "base:0xAAAaEE7549a61282F2B4Ca1766f46249D9e71aaA",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0xACC31A6756B60304C03d6626fc98c062E4539CCA",
+          "description": "change AuthorityManager permissions and execute restricted Bridge and FeeService management operations.",
+          "role": ".adminRole"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "base:0x386ce1a187eC7329CFb8E467EB02FB07c698256A",
+      "sinceTimestamp": 1779356273,
+      "sinceBlock": 46283463,
+      "values": {
+        "$immutable": false,
+        "$implementation": "base:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
+        "$members": [
+          "base:0xCE148A96B191C05414c9282c2C57e537100b40FE",
+          "base:0x0cDAe5da23b64bFeCD421d6487FFEABF6558828d",
+          "base:0x386ce1a187eC7329CFb8E467EB02FB07c698256A"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x73c66c4557513a5e879124fa136f869745e0c50c0a030fe7a88e550111830954",
+        "getChainId": 8453,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 4,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "base:0xAAAaEE7549a61282F2B4Ca1766f46249D9e71aaA": "SafeProxy",
+        "base:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
+      }
+    },
+    {
+      "name": "Butter AuthorityManager",
+      "address": "base:0xACC31A6756B60304C03d6626fc98c062E4539CCA",
+      "type": "Contract",
+      "template": "butternetwork/AuthorityManager",
+      "sourceHashes": [
+        "0xbc2edf39643ff62e7164e71ac67755ef9b429c6e5be94c29e77efa0c0bf09741"
+      ],
+      "proxyType": "immutable",
+      "description": "OpenZeppelin AccessManager-derived authority for Butter's restricted Bridge and FeeService functions. Its role configuration controls who can change bridge validation dependencies, relay and token settings, fee parameters, pause state, and implementation upgrades.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "base:0x0000317Bec33Af037b5fAb2028f52d14658F6A56",
+          "role": ".authority"
+        },
+        {
+          "permission": "act",
+          "from": "base:0xfeE31a1FD7FcA0E05428ff751242e46F6D5769a6",
+          "role": ".authority"
+        }
+      ],
+      "deployerAddress": "base:0xBBcfBbECC798ae9941104B0F6991134439c1c426",
+      "sinceTimestamp": 1730533487,
+      "sinceBlock": 21872070,
+      "values": {
+        "$immutable": true,
+        "ADMIN_ROLE": 0,
+        "adminRole": [
+          "base:0x9987463102993e177b107e0cE97a0420428D1999",
+          "base:0xAAAaEE7549a61282F2B4Ca1766f46249D9e71aaA"
+        ],
+        "expiration": 604800,
+        "minSetback": 432000,
+        "PUBLIC_ROLE": "18446744073709551615"
+      },
+      "fieldMeta": {
+        "adminRole": {
+          "severity": "HIGH",
+          "description": "Current ADMIN_ROLE members of the AuthorityManager. They control the role and target-function configuration used to authorize Butter Bridge and FeeService management calls.",
+          "type": "PERMISSION"
+        }
+      },
+      "implementationNames": {
+        "base:0xACC31A6756B60304C03d6626fc98c062E4539CCA": "AuthorityManager"
+      },
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "Butter VerifyTool",
+      "address": "base:0xc3393567DC2F1d071254E880c9f501641491471f",
+      "type": "Contract",
+      "template": "butternetwork/VerifyTool",
+      "sourceHashes": [
+        "0xc03d8e67ab5487abf98a569d8dd5c20534022db0a4696e9922cb49dbdc8c5469"
+      ],
+      "proxyType": "immutable",
+      "description": "Cryptographic and RLP/Merkle-proof helper contract called by the Butter MAP LightNode to validate relay-chain headers and transaction receipts.",
+      "deployerAddress": "base:0x7F4cBa3D7f20bF5146e4e5F8929b676CA05a5545",
+      "sinceTimestamp": 1727054181,
+      "sinceBlock": 20132417,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "base:0xc3393567DC2F1d071254E880c9f501641491471f": "VerifyTool"
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
+    },
+    {
+      "address": "base:0xCE148A96B191C05414c9282c2C57e537100b40FE",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "base:0xe875f05e42ccFAFA8B64CA6344687E5cC60005Be",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "base:0xe8D95c201c20d759ed9429195F20767684Ebdf62",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "base:0xEc624b9A64Be03E2DBAc8B78613A45955C855A87",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "base:0xfc8d54a80e0Facc51D6cB8Dd2Df61851932f8DeF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Butter FeeService",
+      "address": "base:0xfeE31a1FD7FcA0E05428ff751242e46F6D5769a6",
+      "type": "Contract",
+      "template": "butternetwork/FeeService",
+      "sourceHashes": [
+        "0x6b9972b3233320fede58d076495f60aa6415bff545b2d3b3587743ce127ad363"
+      ],
+      "proxyType": "immutable",
+      "description": "Fee configuration contract used by Butter Bridge to calculate cross-chain message fees and select the fee recipient.",
+      "deployerAddress": "base:0xBBcfBbECC798ae9941104B0F6991134439c1c426",
+      "sinceTimestamp": 1730533597,
+      "sinceBlock": 21872125,
+      "values": {
+        "$immutable": true,
+        "authority": "base:0xACC31A6756B60304C03d6626fc98c062E4539CCA",
+        "baseFeeInfo": {
+          "_base": 0,
+          "_gasPrice": 0,
+          "_receiverAddress": "base:0xfc8d54a80e0Facc51D6cB8Dd2Df61851932f8DeF"
+        },
+        "baseGasBase": 0,
+        "feeReceiver": "base:0xfc8d54a80e0Facc51D6cB8Dd2Df61851932f8DeF",
+        "isConsumingScheduledOp": "0x00000000"
+      },
+      "fieldMeta": {
+        "authority": {
+          "severity": "HIGH",
+          "description": "Authority contract consulted by FeeService management functions. Its role members can change fee parameters and the fee receiver.",
+          "type": "PERMISSION"
+        },
+        "feeReceiver": {
+          "severity": "HIGH",
+          "description": "Current recipient returned by FeeService for message fees collected by the Bridge."
+        },
+        "baseGasBase": {
+          "severity": "HIGH",
+          "description": "Base gas component used by FeeService when pricing messages to Base. Authority members can change this value.",
+          "type": "RISK_PARAMETER"
+        },
+        "baseFeeInfo": {
+          "severity": "HIGH",
+          "description": "FeeService's current Base/WETH pricing tuple: base gas, gas price, and fee receiver. Authority members can change the pricing inputs and receiver.",
+          "type": "RISK_PARAMETER"
+        }
+      },
+      "implementationNames": {
+        "base:0xfeE31a1FD7FcA0E05428ff751242e46F6D5769a6": "FeeService"
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
+    }
+  ],
+  "abis": {
+    "base:0x0000317Bec33Af037b5fAb2028f52d14658F6A56": [
+      "constructor(address _logic, bytes _data)",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "base:0x0001805c0B57DBd48B5c5c26E237a135dDC678ae": [
+      "constructor(address _logic, bytes _data)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "base:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": [
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "base:0x862761D6D52E9e812A8c22E6e6A39E186e59a33d": [
+      "error AccessManagedInvalidAuthority(address authority)",
+      "error AccessManagedRequiredDelay(address caller, uint32 delay)",
+      "error AccessManagedUnauthorized(address caller)",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error FailedCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error ReentrancyGuardReentrantCall()",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "error bridge_same_chain()",
+      "error bubbling(bytes e)",
+      "error call_on_received_gas_too_low()",
+      "error failed_receiver_not_set()",
+      "error in_amount_low()",
+      "error insufficient_liquidity()",
+      "error insufficient_token()",
+      "error invalid_bridge_log()",
+      "error invalid_mos_contract()",
+      "error invalid_order_Id()",
+      "error invalid_pack_version()",
+      "error invalid_relay_chain()",
+      "error invalid_relay_contract()",
+      "error invalid_to_chain()",
+      "error length_mismatching()",
+      "error not_contract()",
+      "error not_support_target_chain()",
+      "error not_support_value()",
+      "error order_exist()",
+      "error retry_verify_fail()",
+      "error token_call_failed()",
+      "error token_not_registered()",
+      "error token_transfer_fail()",
+      "error unsupported_message_type()",
+      "error zero_address()",
+      "error zero_amount()",
+      "event AuthorityUpdated(address authority)",
+      "event GasInfo(bytes32 indexed orderId, uint256 indexed executingGas, uint256 indexed executedGas)",
+      "event Initialized(uint64 version)",
+      "event MessageIn(bytes32 indexed orderId, uint256 indexed chainAndGasLimit, address token, uint256 amount, address to, bytes from, bytes payload, bool result, bytes reason)",
+      "event MessageOut(bytes32 indexed orderId, uint256 indexed chainAndGasLimit, bytes payload)",
+      "event MessageRelay(bytes32 indexed orderId, uint256 indexed chainAndGasLimit, bytes payload)",
+      "event MessageTransfer(address initiator, address referrer, address sender, bytes32 orderId, bytes32 transferId, address feeToken, uint256 fee)",
+      "event Paused(address account)",
+      "event RegisterToken(address token, uint256 toChain, bool enable)",
+      "event SetContract(uint256 t, address addr)",
+      "event SetFailedReceiver(address _failedreceiver)",
+      "event SetRelay(uint256 _chainId, address _relay)",
+      "event Unpaused(address account)",
+      "event UpdateToken(address token, uint256 feature)",
+      "event UpdateTrust(address trustAddress, bool enable)",
+      "event Upgraded(address indexed implementation)",
+      "event WithdrawFee(address receiver, address token, uint256 amount)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function authority() view returns (address)",
+      "function depositToken(address _token, address _to, uint256 _amount) payable returns (bytes32 orderId)",
+      "function feeList(address, address) view returns (uint256)",
+      "function getImplementation() view returns (address)",
+      "function getMessageFee(uint256 _toChain, address _feeToken, uint256 _gasLimit) view returns (uint256 fee, address receiver)",
+      "function getOrderStatus(uint256, uint256 _blockNum, bytes32 _orderId) view returns (bool exists, bool verifiable, uint256 nodeType)",
+      "function getRelay() view returns (uint256, address)",
+      "function getServiceContract(uint256 _type) view returns (address)",
+      "function getTransferOutFailedReceiver() view returns (address)",
+      "function initialize(address _wToken, address _defaultAdmin)",
+      "function isBridgeable(address _token, uint256 _toChain) view returns (bool)",
+      "function isConsumingScheduledOp() view returns (bytes4)",
+      "function isMintable(address _token) view returns (bool)",
+      "function messageIn(uint256 _chainId, uint256 _logParam, bytes32 _orderId, bytes _receiptProof)",
+      "function orderList(bytes32) view returns (uint256)",
+      "function paused() view returns (bool)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function registerTokenChains(address _token, uint256[] _toChains, bool _enable)",
+      "function retryMessageIn(uint256 _chainAndGas, bytes32 _orderId, address _token, uint256 _amount, bytes _fromAddress, bytes _payload, bytes)",
+      "function selfChainId() view returns (uint256)",
+      "function setAuthority(address newAuthority)",
+      "function setFailedReceiver(address _failedReceiver)",
+      "function setRelay(uint256 _chainId, address _relay)",
+      "function setServiceContract(uint256 _t, address _addr)",
+      "function setTrustAddress(address _addr, bool _enable)",
+      "function swapOutToken(address _initiator, address _token, bytes _to, uint256 _amount, uint256 _toChain, bytes _bridgeData) payable returns (bytes32 orderId)",
+      "function tokenFeatureList(address) view returns (uint256)",
+      "function tokenMappingList(uint256, address) view returns (uint256)",
+      "function transferOut(uint256 _toChain, bytes _messageData, address _feeToken) payable returns (bytes32 orderId)",
+      "function trigger()",
+      "function trustList(address) view returns (uint256)",
+      "function updateTokens(address[] _tokens, uint256 _feature)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function withdrawFee(address receiver, address token) payable"
+    ],
+    "base:0x9987463102993e177b107e0cE97a0420428D1999": [
+      "constructor(address _singleton)"
+    ],
+    "base:0xAAAaEE7549a61282F2B4Ca1766f46249D9e71aaA": [
+      "constructor(address _singleton)"
+    ],
+    "base:0xACC31A6756B60304C03d6626fc98c062E4539CCA": [
+      "constructor(address default_admin)",
+      "error AccessManagerAlreadyScheduled(bytes32 operationId)",
+      "error AccessManagerBadConfirmation()",
+      "error AccessManagerExpired(bytes32 operationId)",
+      "error AccessManagerInvalidInitialAdmin(address initialAdmin)",
+      "error AccessManagerLockedRole(uint64 roleId)",
+      "error AccessManagerNotReady(bytes32 operationId)",
+      "error AccessManagerNotScheduled(bytes32 operationId)",
+      "error AccessManagerUnauthorizedAccount(address msgsender, uint64 roleId)",
+      "error AccessManagerUnauthorizedCall(address caller, address target, bytes4 selector)",
+      "error AccessManagerUnauthorizedCancel(address msgsender, address caller, address target, bytes4 selector)",
+      "error AccessManagerUnauthorizedConsume(address target)",
+      "error AddressEmptyCode(address target)",
+      "error FailedCall()",
+      "error InsufficientBalance(uint256 balance, uint256 needed)",
+      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
+      "event OperationCanceled(bytes32 indexed operationId, uint32 indexed nonce)",
+      "event OperationExecuted(bytes32 indexed operationId, uint32 indexed nonce)",
+      "event OperationScheduled(bytes32 indexed operationId, uint32 indexed nonce, uint48 schedule, address caller, address target, bytes data)",
+      "event RoleAdminChanged(uint64 indexed roleId, uint64 indexed admin)",
+      "event RoleGrantDelayChanged(uint64 indexed roleId, uint32 delay, uint48 since)",
+      "event RoleGranted(uint64 indexed roleId, address indexed account, uint32 delay, uint48 since, bool newMember)",
+      "event RoleGuardianChanged(uint64 indexed roleId, uint64 indexed guardian)",
+      "event RoleLabel(uint64 indexed roleId, string label)",
+      "event RoleRevoked(uint64 indexed roleId, address indexed account)",
+      "event TargetAdminDelayUpdated(address indexed target, uint32 delay, uint48 since)",
+      "event TargetClosed(address indexed target, bool closed)",
+      "event TargetFunctionRoleUpdated(address indexed target, bytes4 selector, uint64 indexed roleId)",
+      "function ADMIN_ROLE() view returns (uint64)",
+      "function PUBLIC_ROLE() view returns (uint64)",
+      "function canCall(address caller, address target, bytes4 selector) view returns (bool immediate, uint32 delay)",
+      "function cancel(address caller, address target, bytes data) returns (uint32)",
+      "function consumeScheduledOp(address caller, bytes data)",
+      "function execute(address target, bytes data) payable returns (uint32)",
+      "function expiration() view returns (uint32)",
+      "function getAccess(uint64 roleId, address account) view returns (uint48 since, uint32 currentDelay, uint32 pendingDelay, uint48 effect)",
+      "function getNonce(bytes32 id) view returns (uint32)",
+      "function getRoleAdmin(uint64 roleId) view returns (uint64)",
+      "function getRoleGrantDelay(uint64 roleId) view returns (uint32)",
+      "function getRoleGuardian(uint64 roleId) view returns (uint64)",
+      "function getRoleMember(uint64 role, uint256 index) view returns (address)",
+      "function getRoleMemberCount(uint64 role) view returns (uint256)",
+      "function getRoleMembers(uint64 role) view returns (address[])",
+      "function getSchedule(bytes32 id) view returns (uint48)",
+      "function getTargetAdminDelay(address target) view returns (uint32)",
+      "function getTargetFunctionRole(address target, bytes4 selector) view returns (uint64)",
+      "function grantRole(uint64 roleId, address account, uint32 executionDelay)",
+      "function hasRole(uint64 roleId, address account) view returns (bool isMember, uint32 executionDelay)",
+      "function hashOperation(address caller, address target, bytes data) view returns (bytes32)",
+      "function isTargetClosed(address target) view returns (bool)",
+      "function labelRole(uint64 roleId, string label)",
+      "function minSetback() view returns (uint32)",
+      "function multicall(bytes[] data) returns (bytes[] results)",
+      "function renounceRole(uint64 roleId, address callerConfirmation)",
+      "function revokeRole(uint64 roleId, address account)",
+      "function schedule(address target, bytes data, uint48 when) returns (bytes32 operationId, uint32 nonce)",
+      "function setGrantDelay(uint64 roleId, uint32 newDelay)",
+      "function setRoleAdmin(uint64 roleId, uint64 admin)",
+      "function setRoleGuardian(uint64 roleId, uint64 guardian)",
+      "function setTargetAdminDelay(address target, uint32 newDelay)",
+      "function setTargetClosed(address target, bool closed)",
+      "function setTargetFunctionRole(address target, bytes4[] selectors, uint64 roleId)",
+      "function updateAuthority(address target, address newAuthority)"
+    ],
+    "base:0xc3393567DC2F1d071254E880c9f501641491471f": [
+      "function decodeHeader(bytes rlpBytes) pure returns (tuple(bytes parentHash, address coinbase, bytes root, bytes txHash, bytes receiptHash, bytes bloom, uint256 number, uint256 gasLimit, uint256 gasUsed, uint256 time, bytes extraData, bytes mixDigest, bytes nonce, uint256 baseFee) bh)",
+      "function decodeTxReceipt(bytes _receiptRlp) pure returns (bytes logHash)",
+      "function encodeHeader(tuple(bytes parentHash, address coinbase, bytes root, bytes txHash, bytes receiptHash, bytes bloom, uint256 number, uint256 gasLimit, uint256 gasUsed, uint256 time, bytes extraData, bytes mixDigest, bytes nonce, uint256 baseFee) _bh, bytes _deleteAggBytes, bytes _deleteSealAndAggBytes) pure returns (bytes deleteAggHeaderBytes, bytes deleteSealAndAggHeaderBytes)",
+      "function getVerifyTrieProof(bytes32 _receiptHash, bytes _keyIndex, bytes[] _proof, bytes _receiptRlp, uint256 _receiptType) pure returns (bool success, string message)",
+      "function manageAgg(tuple(address[] validators, bytes[] addedPubKey, bytes[] addedG1PubKey, uint256 removeList, bytes seal, tuple(uint256 bitmap, bytes signature, uint256 round) aggregatedSeal, tuple(uint256 bitmap, bytes signature, uint256 round) parentAggregatedSeal) ist) pure returns (bytes deleteAggBytes, bytes deleteSealAndAggBytes)",
+      "function unsafeDecodeTxReceipt(bytes _receiptRlp) pure returns (bytes logHash)",
+      "function verifyHeader(address _coinbase, bytes _seal, bytes _headerWithoutSealAndAgg) pure returns (bool ret, bytes32 headerHash)",
+      "function verifyHeaderHash(address _coinbase, bytes _seal, bytes32 headerBytesHash) pure returns (bool ret, bytes32 headerHash)",
+      "function verifyTrieProof(bytes32 _receiptHash, bytes _keyIndex, bytes[] _proof, bytes _receiptRlp, uint256 _receiptType) pure returns (bool success, bytes logs)",
+      "function verifyTrieProofWithLog(uint256 _logIndex, bytes32 _receiptHash, bytes _keyIndex, bytes[] _proof, bytes _receiptRlp, uint256 _receiptType) pure returns (bool success, tuple(address addr, bytes32[] topics, bytes data) log)"
+    ],
+    "base:0xF6366aD2361Df88E8815258948093C33d93d5374": [
+      "constructor()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event AdminTransferred(address indexed previous, address indexed newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event ChangePendingAdmin(address indexed previousPending, address indexed newPending)",
+      "event ClientNotifySend(address indexed sender, uint256 indexed blockHeight, bytes notifyData)",
+      "event Initialized(uint8 version)",
+      "event MapInitializeValidators(uint256 _threshold, tuple(uint256 x, uint256 y)[] _pairKeys, uint256[] _weights, uint256 epoch)",
+      "event MapUpdateValidators(bytes[] _pairKeysAdd, uint256 epoch, uint256 bits)",
+      "event NewVerifyTool(address newVerifyTool)",
+      "event UpdateBlockHeader(address indexed account, uint256 indexed blockHeight)",
+      "event Upgraded(address indexed implementation)",
+      "function changeAdmin()",
+      "function epochSize() view returns (uint256)",
+      "function epochs(uint256) view returns (uint256 epoch, uint256 threshold)",
+      "function getAdmin() view returns (address)",
+      "function getBytes(tuple(tuple(bytes parentHash, address coinbase, bytes root, bytes txHash, bytes receiptHash, bytes bloom, uint256 number, uint256 gasLimit, uint256 gasUsed, uint256 time, bytes extraData, bytes mixDigest, bytes nonce, uint256 baseFee) header, tuple(address[] validators, bytes[] addedPubKey, bytes[] addedG1PubKey, uint256 removeList, bytes seal, tuple(uint256 bitmap, bytes signature, uint256 round) aggregatedSeal, tuple(uint256 bitmap, bytes signature, uint256 round) parentAggregatedSeal) ist, tuple(uint256 xr, uint256 xi, uint256 yr, uint256 yi) aggPk, tuple(uint256 receiptType, bytes receiptRlp) txReceiptRlp, bytes keyIndex, bytes[] proof) _receiptProof) pure returns (bytes)",
+      "function getData(bytes _receiptProofBytes) pure returns (tuple(tuple(bytes parentHash, address coinbase, bytes root, bytes txHash, bytes receiptHash, bytes bloom, uint256 number, uint256 gasLimit, uint256 gasUsed, uint256 time, bytes extraData, bytes mixDigest, bytes nonce, uint256 baseFee) header, tuple(address[] validators, bytes[] addedPubKey, bytes[] addedG1PubKey, uint256 removeList, bytes seal, tuple(uint256 bitmap, bytes signature, uint256 round) aggregatedSeal, tuple(uint256 bitmap, bytes signature, uint256 round) parentAggregatedSeal) ist, tuple(uint256 xr, uint256 xi, uint256 yr, uint256 yi) aggPk, tuple(uint256 receiptType, bytes receiptRlp) txReceiptRlp, bytes keyIndex, bytes[] proof))",
+      "function getEpoch(uint256 id) view returns (uint256 epoch, uint256 length, uint256 aggX, uint256 aggY)",
+      "function getImplementation() view returns (address)",
+      "function getValidators(uint256 id) view returns (uint256[])",
+      "function headerHeight() view returns (uint256)",
+      "function initialize(uint256 _threshold, address[] _validatorAddress, tuple(uint256 x, uint256 y)[] _pairKeys, uint256[] _weights, uint256 _epoch, uint256 _epochSize, address _verifyTool, address _owner)",
+      "function isVerifiable(uint256 _blockHeight, bytes32) view returns (bool)",
+      "function maxEpochs() view returns (uint256)",
+      "function nodeType() view returns (uint256)",
+      "function notifyLightClient(address _from, bytes _data)",
+      "function pendingAdmin() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function setPendingAdmin(address pendingAdmin_)",
+      "function setVerifyTool(address _verifyTool)",
+      "function startHeight() view returns (uint256)",
+      "function updateBlockHeader(tuple(bytes parentHash, address coinbase, bytes root, bytes txHash, bytes receiptHash, bytes bloom, uint256 number, uint256 gasLimit, uint256 gasUsed, uint256 time, bytes extraData, bytes mixDigest, bytes nonce, uint256 baseFee) bh, tuple(address[] validators, bytes[] addedPubKey, bytes[] addedG1PubKey, uint256 removeList, bytes seal, tuple(uint256 bitmap, bytes signature, uint256 round) aggregatedSeal, tuple(uint256 bitmap, bytes signature, uint256 round) parentAggregatedSeal) ist, tuple(uint256 xr, uint256 xi, uint256 yr, uint256 yi) aggPk)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function verifiableHeaderRange() view returns (uint256, uint256)",
+      "function verifyProofData(bytes _receiptProofBytes) view returns (bool success, string message, bytes logsHash)",
+      "function verifyProofData(uint256 _logIndex, bytes _receiptProofBytes) view returns (bool success, string message, tuple(address addr, bytes32[] topics, bytes data) log)",
+      "function verifyProofDataWithCache(bool _cache, uint256 _logIndex, bytes _receiptProofBytes) returns (bool success, string message, tuple(address addr, bytes32[] topics, bytes data) log)",
+      "function verifyProofDataWithCache(bytes _receiptProofBytes) returns (bool success, string message, bytes logsHash)",
+      "function verifyTool() view returns (address)"
+    ],
+    "base:0xfeE31a1FD7FcA0E05428ff751242e46F6D5769a6": [
+      "constructor(address _authority)",
+      "error AccessManagedInvalidAuthority(address authority)",
+      "error AccessManagedRequiredDelay(address caller, uint32 delay)",
+      "error AccessManagedUnauthorized(address caller)",
+      "event AuthorityUpdated(address authority)",
+      "event SetBaseGas(uint256 chainId, uint256 baseLimit)",
+      "event SetChainGasPrice(address token, uint256 chainId, uint256 chainPrice)",
+      "event SetFeeReceiver(address receiver)",
+      "event SetTokenDecimals(address token, uint256 decimals)",
+      "function authority() view returns (address)",
+      "function baseGas(uint256) view returns (uint256)",
+      "function chainGasPrice(uint256, address) view returns (uint256)",
+      "function feeReceiver() view returns (address)",
+      "function getFeeInfo(uint256 _chainId, address _feeToken) view returns (uint256 _base, uint256 _gasPrice, address _receiverAddress)",
+      "function getServiceMessageFee(uint256 _toChain, address _feeToken, uint256 _gasLimit) view returns (uint256 amount, address receiverAddress)",
+      "function isConsumingScheduledOp() view returns (bytes4)",
+      "function setAuthority(address newAuthority)",
+      "function setBaseGas(uint256 _chainId, uint256 _baseGas)",
+      "function setChainGasPrice(uint256 _chainId, address _token, uint256 _chainPrice)",
+      "function setFeeReceiver(address _receiver)",
+      "function setMultiBaseGas(uint256[] _chainList, uint256[] _baseList)",
+      "function setMultiChainGasPrice(address _token, uint256[] _chainList, uint256[] _priceList)",
+      "function setTokenDecimals(address _token, uint256 _decimal)",
+      "function tokenDecimals(address) view returns (uint256)"
+    ]
+  },
+  "usedTemplates": {
+    "butternetwork/AuthorityManager": "0xa4c470ba2f3262d908355b674e1d56033f18be227db78211a73ad371610ed19b",
+    "butternetwork/Bridge": "0xdfb450db687c8f1827054517610bd8bb34a0db0253fa5dfca93958a284734778",
+    "butternetwork/FeeService": "0x59bc080e41feb8a5a9cb198f05d18a1246b160883c5a7b58f8978eaa6577ba7e",
+    "butternetwork/LightNode": "0xe94bd1007f296edbbe577ee32f623a3644536ecc06a5e921a8ba7ad4ce8e981d",
+    "butternetwork/VerifyTool": "0x6f2371af8e7f8af4e383d97b7ac36a626827fbe25be6bd42613bed29ed5b9df2",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
+  },
+  "usedBlockNumbers": { "base": 49562949 },
+  "permissionsConfigHash": "0xa504b4d5d6aa34229e70df987237ac1f644b4af890d46bd83e7384abed74cb16"
+}

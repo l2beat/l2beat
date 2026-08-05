@@ -85,7 +85,7 @@ export const adi: ScalingProject = {
     },
     // Do we need upgradesAndGovernanceImage? architectureImage? liveness?
   },
-  proofSystem: { type: 'Validity', zkCatalogId: ProjectId('airbender') },
+  proofSystem: { type: 'Validity', zkCatalogIds: [ProjectId('airbender')] },
   config: {
     associatedTokens: ['ADI'],
     escrows: [
