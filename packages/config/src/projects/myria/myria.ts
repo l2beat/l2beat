@@ -92,7 +92,7 @@ export const myria: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('stone'),
+    zkCatalogIds: [ProjectId('stone')],
   },
   stage: getAltDaStage(
     {

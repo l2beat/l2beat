@@ -36,7 +36,13 @@ export function OptimisticProofSystemCell({
           {zkCatalog && (
             <Tooltip>
               <TooltipTrigger>
-                <a href={`/zk-catalog?highlight=${zkCatalog.id}`}>
+                <a
+                  href={
+                    zkCatalog.ids.length === 1
+                      ? `/zk-catalog?highlight=${zkCatalog.ids[0]}`
+                      : '/zk-catalog'
+                  }
+                >
                   <Badge
                     type={
                       isMixed || hasNotVerified

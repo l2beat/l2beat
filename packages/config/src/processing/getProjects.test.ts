@@ -317,6 +317,26 @@ describe('getProjects', () => {
     }
   })
 
+  describe('every proofSystem zkCatalogIds entry references a zk catalog project', () => {
+    for (const project of projects) {
+      const zkCatalogIds = project.scalingInfo?.proofSystem?.zkCatalogIds
+      if (!zkCatalogIds || zkCatalogIds.length === 0) continue
+
+      it(project.id, () => {
+        assert(
+          new Set(zkCatalogIds).size === zkCatalogIds.length,
+          `${project.id} proofSystem.zkCatalogIds has duplicates`,
+        )
+        for (const zkCatalogId of zkCatalogIds) {
+          assert(
+            projectsById.get(zkCatalogId)?.zkCatalogInfo !== undefined,
+            `${project.id} proofSystem references unknown zk catalog project: ${zkCatalogId}`,
+          )
+        }
+      })
+    }
+  })
+
   describe('scaling project zkVerifiers are configured in zk catalog', () => {
     const zkCatalogAddresses = new Set<ChainSpecificAddress>()
     for (const project of projects) {

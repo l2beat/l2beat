@@ -147,7 +147,6 @@ export const taiko: ScalingProject = {
   ],
   proofSystem: {
     type: 'Validity',
-    name: 'SP1 / RISC0',
     zkCatalogIds: [ProjectId('sp1hypercube'), ProjectId('risc0')],
   },
   display: {

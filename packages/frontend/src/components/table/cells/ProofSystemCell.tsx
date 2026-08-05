@@ -29,13 +29,17 @@ export function ProofSystemCell({
       : proofSystem?.name && !hideType
         ? proofSystem.name
         : undefined
+  // A single ZK Catalog project can be highlighted directly; multi-proof
+  // systems link to the project's state validation section, which lists all
+  // of them.
+  const zkCatalogIds = proofSystem?.zkCatalogIds ?? []
   return (
     <TableLink
       href={
         !proofSystem?.type
           ? undefined
-          : proofSystem?.zkCatalogId
-            ? `/zk-catalog?highlight=${proofSystem?.zkCatalogId}`
+          : zkCatalogIds.length === 1
+            ? `/zk-catalog?highlight=${zkCatalogIds[0]}`
             : `/scaling/projects/${slug}#state-validation`
       }
     >

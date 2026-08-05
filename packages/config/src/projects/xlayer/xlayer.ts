@@ -170,7 +170,7 @@ export const xlayer: ScalingProject = agglayer({
   nonTemplateProofSystem: {
     type: 'Optimistic',
     name: 'OP Succinct Lite',
-    zkCatalogId: ProjectId('sp1hypercube'),
+    zkCatalogIds: [ProjectId('sp1hypercube')],
     challengeProtocol: 'Single-step',
   },
   nonTemplateRiskView: {
