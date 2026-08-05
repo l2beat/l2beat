@@ -10,6 +10,7 @@ const discovery = new ProjectDiscovery('capx')
 
 export const capx: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1692958606), // '2023-08-25T10:16:46Z'
+  archivedAt: UnixTime(1785971449), // Wed, 06 Aug 2026
   additionalBadges: [BADGES.RaaS.Caldera],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
@@ -50,6 +51,7 @@ export const capx: ScalingProject = orbitStackL2({
       },
     ],
     gasTokens: ['CAPX'],
+    untilTimestamp: UnixTime(1785971449), // Wed, 06 Aug 2026
   },
   customDa: AnytrustDAC({ discovery, hostChain: 'ethereum' }),
 })
