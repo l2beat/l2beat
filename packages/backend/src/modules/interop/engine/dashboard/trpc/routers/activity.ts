@@ -129,8 +129,13 @@ export function createActivityRouter() {
         const transfers =
           await ctx.db.interopTransfer.getValueMismatchTransfers(
             VALUE_DIFF_THRESHOLD_PERCENT,
-            MINIMUM_SIDE_VALUE_USD_THRESHOLD,
-            await resolveInteropTransferTimeRange(ctx.db, input?.range),
+            {
+              minimumSideValueUsdThreshold: MINIMUM_SIDE_VALUE_USD_THRESHOLD,
+              timeRange: await resolveInteropTransferTimeRange(
+                ctx.db,
+                input.range,
+              ),
+            },
           )
 
         return {

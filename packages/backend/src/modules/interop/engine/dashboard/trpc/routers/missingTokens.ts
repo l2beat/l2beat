@@ -31,7 +31,7 @@ export function createMissingTokensRouter(deps: Dependencies) {
         getMissingTokens(
           ctx.db,
           deps,
-          await resolveInteropTransferTimeRange(ctx.db, input?.range),
+          await resolveInteropTransferTimeRange(ctx.db, input.range),
         ),
       ),
     requeue: protectedProcedure

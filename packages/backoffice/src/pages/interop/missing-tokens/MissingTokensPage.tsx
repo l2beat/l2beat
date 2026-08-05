@@ -1,6 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { RefreshCwIcon } from 'lucide-react'
-import { useState } from 'react'
 import { toast } from 'sonner'
 import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
@@ -9,10 +8,7 @@ import { LoadingState } from '~/components/LoadingState'
 import { TablePageLayout } from '~/components/table/TablePageLayout'
 import { useBackendTrpc } from '~/react-query/trpc'
 import { TransferDataRangeSelect } from '../TransferDataRangeSelect'
-import {
-  DEFAULT_INTEROP_TRANSFER_DATA_RANGE,
-  type InteropTransferDataRange,
-} from '../transferDataRange'
+import { useTransferDataRange } from '../transferDataRange'
 import { MissingTokenStatusBadge } from './MissingTokenStatusBadge'
 import { MissingTokenStatusGuide } from './MissingTokenStatusGuide'
 import { MissingTokensTable } from './table/MissingTokensTable'
@@ -20,9 +16,7 @@ import type { ChainMetadata, MissingTokenRow } from './types'
 
 export function MissingTokensPage() {
   const trpc = useBackendTrpc()
-  const [range, setRange] = useState<InteropTransferDataRange>(
-    DEFAULT_INTEROP_TRANSFER_DATA_RANGE,
-  )
+  const [range, setRange] = useTransferDataRange()
   const {
     data: missingTokensData,
     error: missingTokensError,

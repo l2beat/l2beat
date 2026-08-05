@@ -14,17 +14,15 @@ export const InteropTransferDataRange = v.enum(INTEROP_TRANSFER_DATA_RANGES)
 export type InteropTransferDataRange =
   (typeof INTEROP_TRANSFER_DATA_RANGES)[number]
 
-export const InteropTransferDataRangeRequest = v
-  .object({
-    range: InteropTransferDataRange.optional(),
-  })
-  .optional()
+export const InteropTransferDataRangeRequest = v.object({
+  range: InteropTransferDataRange,
+})
 
 export async function resolveInteropTransferTimeRange(
   db: Database,
-  range: InteropTransferDataRange | undefined,
+  range: InteropTransferDataRange,
 ): Promise<InteropTransferTimeRange | undefined> {
-  switch (range ?? 'last24h') {
+  switch (range) {
     case 'all':
       return undefined
     case 'last24h': {

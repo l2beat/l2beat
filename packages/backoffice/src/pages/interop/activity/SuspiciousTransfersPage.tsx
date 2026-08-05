@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
 import { RefreshCwIcon } from 'lucide-react'
-import { useState } from 'react'
 import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
 import { ErrorState } from '~/components/ErrorState'
@@ -10,10 +9,7 @@ import { useHashTarget } from '~/hooks/useHashTarget'
 import { formatDollars } from '~/pages/interop/transfers/utils'
 import { useBackendTrpc } from '~/react-query/trpc'
 import { TransferDataRangeSelect } from '../TransferDataRangeSelect'
-import {
-  DEFAULT_INTEROP_TRANSFER_DATA_RANGE,
-  type InteropTransferDataRange,
-} from '../transferDataRange'
+import { useTransferDataRange } from '../transferDataRange'
 import { SuspiciousTransfersTable } from './table/SuspiciousTransfersTable'
 import type {
   SuspiciousTransferRow,
@@ -22,9 +18,7 @@ import type {
 
 export function SuspiciousTransfersPage() {
   const trpc = useBackendTrpc()
-  const [range, setRange] = useState<InteropTransferDataRange>(
-    DEFAULT_INTEROP_TRANSFER_DATA_RANGE,
-  )
+  const [range, setRange] = useTransferDataRange()
   const highlightTransferId = useHashTarget()
   const {
     data: suspiciousTransfersData,

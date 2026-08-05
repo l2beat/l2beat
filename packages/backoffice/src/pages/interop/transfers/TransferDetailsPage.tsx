@@ -8,7 +8,7 @@ import { LoadingState } from '~/components/LoadingState'
 import { TablePageLayout } from '~/components/table/TablePageLayout'
 import { useBackendTrpc } from '~/react-query/trpc'
 import { TransferDataRangeSelect } from '../TransferDataRangeSelect'
-import { parseInteropTransferDataRange } from '../transferDataRange'
+import { useTransferDataRange } from '../transferDataRange'
 import { TransferDetailsTable } from './table/details/TransferDetailsTable'
 import type {
   ChainMetadata,
@@ -20,12 +20,12 @@ import { decodeRouteParam, parseOptionalSearchParam } from './utils'
 export function TransferDetailsPage() {
   const trpc = useBackendTrpc()
   const params = useParams<{ type: string }>()
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
   const type = decodeRouteParam(params.type)
   const plugin = parseOptionalSearchParam(searchParams.get('plugin'))
   const srcChain = parseOptionalSearchParam(searchParams.get('srcChain'))
   const dstChain = parseOptionalSearchParam(searchParams.get('dstChain'))
-  const range = parseInteropTransferDataRange(searchParams.get('range'))
+  const [range, setRange] = useTransferDataRange()
   const hasValidParams = type !== undefined
 
   const detailsInput: TransferDetailsInput = hasValidParams
@@ -36,7 +36,7 @@ export function TransferDetailsPage() {
         dstChain,
         range,
       }
-    : { type: '' }
+    : { type: '', range }
 
   const {
     data: transfersData,
@@ -85,11 +85,7 @@ export function TransferDetailsPage() {
           </Button>
           <TransferDataRangeSelect
             value={range}
-            onValueChange={(nextRange) => {
-              const nextParams = new URLSearchParams(searchParams)
-              nextParams.set('range', nextRange)
-              setSearchParams(nextParams)
-            }}
+            onValueChange={setRange}
             disabled={!hasValidParams || isTransfersFetching}
           />
           <Button

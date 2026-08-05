@@ -16,7 +16,7 @@ const InteropTransferDetailsRequest = v.object({
   plugin: v.string().optional(),
   srcChain: v.string().optional(),
   dstChain: v.string().optional(),
-  range: InteropTransferDataRange.optional(),
+  range: InteropTransferDataRange,
 })
 
 export function createTransfersRouter() {
@@ -26,7 +26,7 @@ export function createTransfersRouter() {
       .query(async ({ ctx, input }) =>
         getInteropTransferStats(
           ctx.db,
-          await resolveInteropTransferTimeRange(ctx.db, input?.range),
+          await resolveInteropTransferTimeRange(ctx.db, input.range),
         ),
       ),
     details: protectedProcedure

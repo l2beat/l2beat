@@ -6,7 +6,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/core/Select'
-import type { InteropTransferDataRange } from './transferDataRange'
+import {
+  type InteropTransferDataRange,
+  parseInteropTransferDataRange,
+} from './transferDataRange'
 
 interface TransferDataRangeSelectProps {
   value: InteropTransferDataRange
@@ -27,7 +30,7 @@ export function TransferDataRangeSelect({
       <Select
         value={value}
         onValueChange={(nextValue) =>
-          onValueChange(nextValue as InteropTransferDataRange)
+          onValueChange(parseInteropTransferDataRange(nextValue))
         }
         disabled={disabled}
       >

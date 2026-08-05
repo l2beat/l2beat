@@ -474,9 +474,13 @@ export class InteropTransferRepository extends BaseRepository {
 
   async getValueMismatchTransfers(
     valueDifferencePercentThreshold: number,
-    minimumSideValueUsdThreshold = 0,
-    timeRange?: InteropTransferTimeRange,
+    options: {
+      minimumSideValueUsdThreshold?: number
+      timeRange?: InteropTransferTimeRange
+    } = {},
   ): Promise<InteropSuspiciousTransferRecord[]> {
+    const minimumSideValueUsdThreshold =
+      options.minimumSideValueUsdThreshold ?? 0
     assert(
       valueDifferencePercentThreshold > 0,
       'valueDifferencePercentThreshold must be a positive number',
@@ -514,10 +518,10 @@ export class InteropTransferRepository extends BaseRepository {
         `,
       )
 
-    if (timeRange !== undefined) {
+    if (options.timeRange !== undefined) {
       query = query
-        .where('timestamp', '>', UnixTime.toDate(timeRange.from))
-        .where('timestamp', '<=', UnixTime.toDate(timeRange.to))
+        .where('timestamp', '>', UnixTime.toDate(options.timeRange.from))
+        .where('timestamp', '<=', UnixTime.toDate(options.timeRange.to))
     }
 
     const rows = await query

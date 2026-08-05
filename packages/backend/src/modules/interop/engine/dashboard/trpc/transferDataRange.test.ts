@@ -4,10 +4,10 @@ import { expect, mockFn, mockObject } from 'earl'
 import { resolveInteropTransferTimeRange } from './transferDataRange'
 
 describe(resolveInteropTransferTimeRange.name, () => {
-  it('uses a rolling 24-hour window by default', async () => {
+  it('uses a rolling 24-hour window', async () => {
     const range = await resolveInteropTransferTimeRange(
       mockObject<Database>({}),
-      undefined,
+      'last24h',
     )
 
     if (range === undefined) {
