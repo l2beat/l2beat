@@ -6,7 +6,11 @@ import type { ApplicationModule, ModuleDependencies } from '../types'
 import { PrivacyBlockTimestampIndexer } from './indexers/PrivacyBlockTimestampIndexer'
 import { PrivacyFlowIndexer } from './indexers/PrivacyFlowIndexer'
 import { PrivacyPriceIndexer } from './indexers/PrivacyPriceIndexer'
-import type { PrivacyFlowIndexerConfig } from './types'
+import { PrivacyRelayerActivityIndexer } from './indexers/PrivacyRelayerActivityIndexer'
+import type {
+  PrivacyFlowIndexerConfig,
+  PrivacyRelayerActivityIndexerConfig,
+} from './types'
 
 export function createPrivacyModule({
   config,
@@ -49,12 +53,31 @@ export function createPrivacyModule({
     ])
   }
 
+  const relayerConfigsByChain = new Map<
+    string,
+    PrivacyRelayerActivityIndexerConfig[]
+  >()
+  for (const relayerConfig of config.privacy.relayerConfigs) {
+    relayerConfigsByChain.set(relayerConfig.chain, [
+      ...(relayerConfigsByChain.get(relayerConfig.chain) ?? []),
+      relayerConfig,
+    ])
+  }
+
   for (const blockTimestampConfig of config.privacy.blockTimestampConfigs) {
     const sinceTimestamp = UnixTime.toStartOf(
       blockTimestampConfig.sinceTimestamp,
       'hour',
     )
     const flowConfigs = flowConfigsByChain.get(blockTimestampConfig.chain) ?? []
+    const relayerConfigs =
+      relayerConfigsByChain.get(blockTimestampConfig.chain) ?? []
+    const blockProvider = providers.block.getBlockProvider(
+      blockTimestampConfig.chain,
+    )
+    const logsProvider = providers.logs.getLogsProvider(
+      blockTimestampConfig.chain,
+    )
 
     const blockTimestampIndexer = new PrivacyBlockTimestampIndexer(
       {
@@ -74,34 +97,55 @@ export function createPrivacyModule({
       logger,
     )
 
-    const flowIndexer = new PrivacyFlowIndexer(
-      {
-        chain: blockTimestampConfig.chain,
-        parents: [priceIndexer, blockTimestampIndexer],
-        indexerService,
-        blockProvider: providers.block.getBlockProvider(
-          blockTimestampConfig.chain,
-        ),
-        logsProvider: providers.logs.getLogsProvider(
-          blockTimestampConfig.chain,
-        ),
-        configurations: flowConfigs.map((flowConfig) => ({
-          id: flowConfig.id,
-          minHeight: flowConfig.sinceTimestamp,
-          maxHeight: null,
-          properties: flowConfig,
-        })),
-        db,
-      },
-      logger,
-    )
+    indexers.push(blockTimestampIndexer)
 
-    indexers.push(blockTimestampIndexer, flowIndexer)
+    if (flowConfigs.length > 0) {
+      const flowIndexer = new PrivacyFlowIndexer(
+        {
+          chain: blockTimestampConfig.chain,
+          parents: [priceIndexer, blockTimestampIndexer],
+          indexerService,
+          blockProvider,
+          logsProvider,
+          configurations: flowConfigs.map((flowConfig) => ({
+            id: flowConfig.id,
+            minHeight: flowConfig.sinceTimestamp,
+            maxHeight: null,
+            properties: flowConfig,
+          })),
+          db,
+        },
+        logger,
+      )
+      indexers.push(flowIndexer)
+    }
+
+    if (relayerConfigs.length > 0) {
+      const relayerActivityIndexer = new PrivacyRelayerActivityIndexer(
+        {
+          chain: blockTimestampConfig.chain,
+          parents: [blockTimestampIndexer],
+          indexerService,
+          blockProvider,
+          logsProvider,
+          configurations: relayerConfigs.map((relayerConfig) => ({
+            id: relayerConfig.id,
+            minHeight: relayerConfig.sinceTimestamp,
+            maxHeight: null,
+            properties: relayerConfig,
+          })),
+          db,
+        },
+        logger,
+      )
+      indexers.push(relayerActivityIndexer)
+    }
   }
 
   logger.info('Privacy config loaded', {
     projects: config.privacy.projects.length,
     flowConfigs: config.privacy.flowConfigs.length,
+    relayerConfigs: config.privacy.relayerConfigs.length,
     priceConfigs: config.privacy.priceConfigs.length,
     chains: config.privacy.chains.length,
   })
