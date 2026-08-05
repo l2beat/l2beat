@@ -9,6 +9,7 @@ import { barretenberg } from '../projects/barretenberg/barretenberg'
 import { blobstream } from '../projects/blobstream/blobstream'
 import { boojum } from '../projects/boojum/boojum'
 import { bsc } from '../projects/bsc/bsc'
+import { butternetwork } from '../projects/butternetwork/butternetwork'
 import { cbridge } from '../projects/cbridge/cbridge'
 import { ccip } from '../projects/ccip/ccip'
 import { cctpv1 } from '../projects/cctpv1/cctpv1'
@@ -124,6 +125,7 @@ export const refactored: BaseProject[] = [
   debridge,
   stargate,
   cbridge,
+  butternetwork,
   hyperevm,
   freetunnel,
   // defi

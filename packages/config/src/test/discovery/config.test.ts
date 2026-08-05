@@ -45,6 +45,7 @@ export const onChainProjects: string[] = [
   'privacy-pools',
   'railgun',
   'tornado-cash',
+  'butternetwork',
 ]
 
 describe('discovery config.jsonc', () => {
