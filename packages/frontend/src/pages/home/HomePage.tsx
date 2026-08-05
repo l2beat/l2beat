@@ -113,12 +113,14 @@ export function HomePage({
                 className="h-auto shrink-0 max-xl:order-6"
                 projects={recentProjects}
               />
-              {/* From xl this is the tall image-with-overlay card, which is what
-                  the leftover height suits; min-h keeps it from being squeezed
-                  into an unreadable strip on a short window. */}
+              {/* From xl this is the tall image-with-overlay card and the one
+                  item that absorbs the leftover height. The bounds keep it from
+                  being squeezed into an unreadable strip on a short window, or
+                  turning into the loudest thing on the page on a tall one -
+                  past the ceiling the surplus goes to the gaps instead. */}
               <HomeWhatsNewCard
                 items={whatsNewItems}
-                className="min-h-0 max-xl:order-2 xl:min-h-52 xl:flex-1"
+                className="min-h-0 max-xl:order-2 xl:max-h-72 xl:min-h-52 xl:flex-1"
               />
               <div className="max-xl:hidden">
                 <HomeAnomaliesTile ongoingAnomalies={ongoingAnomalies} />

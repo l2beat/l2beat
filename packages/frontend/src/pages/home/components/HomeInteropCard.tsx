@@ -119,7 +119,7 @@ function HomeInteropCardContent({
       {/* The tile row stays on top at every card width - it is the same summary
           on a phone and on a 1920px screen, and only the graph below it grows. */}
       <div className="flex min-h-0 flex-1 flex-col">
-        <div className="mt-2.5 grid @min-[550px]:grid-cols-4 grid-cols-2 gap-2">
+        <div className="mt-2.5 grid @min-[550px]:grid-cols-4 grid-cols-2 gap-2 xl:@min-[860px]:gap-3">
           <StatTile
             title="Volume"
             isLoading={statsLoading}
@@ -145,7 +145,7 @@ function HomeInteropCardContent({
                 <img
                   src={topChainData.iconUrl}
                   alt={topChainData.name}
-                  className="size-5 shrink-0 rounded-full"
+                  className="size-5 shrink-0 rounded-full xl:@min-[860px]:size-6"
                 />
               ) : undefined
             }
@@ -163,7 +163,7 @@ function HomeInteropCardContent({
                 <img
                   src={topToken.iconUrl}
                   alt={topToken.symbol}
-                  className="size-5 shrink-0 rounded-full"
+                  className="size-5 shrink-0 rounded-full xl:@min-[860px]:size-6"
                 />
               ) : undefined
             }
@@ -182,13 +182,13 @@ function HomeInteropCardContent({
                   <img
                     src={srcChain.iconUrl}
                     alt={srcChain.name}
-                    className="size-5 shrink-0 rounded-full"
+                    className="size-5 shrink-0 rounded-full xl:@min-[860px]:size-6"
                   />
-                  <ArrowRightIcon className="size-3 fill-brand" />
+                  <ArrowRightIcon className="size-3 fill-brand xl:@min-[860px]:size-3.5" />
                   <img
                     src={dstChain.iconUrl}
                     alt={dstChain.name}
-                    className="size-5 shrink-0 rounded-full"
+                    className="size-5 shrink-0 rounded-full xl:@min-[860px]:size-6"
                   />
                 </div>
               ) : (
@@ -210,11 +210,11 @@ function HomeInteropCardContent({
               hasEnoughProtocols={hasEnoughProtocols}
               isLoading={isLoading}
               className="pb-2"
-              // From xl the card owns its row height, so the graph grows past
-              // the default 70svh cap - up to the column width, or 46rem on a
-              // very wide screen, where a bigger square would dwarf the stack
-              // of cards beside it. Below xl the viewport-safe cap stays.
-              graphClassName="xl:max-w-[min(78svh,46rem)]"
+              // From xl the card sits next to the stack of cards, so the graph
+              // is capped near that stack's height: overshooting it only leaves
+              // the stack with empty space to spread around. Below xl the
+              // default, viewport-safe cap stays.
+              graphClassName="xl:max-w-[min(72svh,38rem)]"
             />
           </div>
         </div>
@@ -250,12 +250,12 @@ function StatTile({
         className,
       )}
     >
-      <span className="font-medium text-2xs text-secondary uppercase tracking-wider">
+      <span className="font-medium text-2xs text-secondary uppercase tracking-wider xl:@min-[860px]:text-xs">
         {title}
       </span>
       {/* Fixed row heights, and the secondary line is reserved even when a tile
           has none, so titles, values and captions line up across the row. */}
-      <div className="flex h-7 w-full min-w-0 items-center justify-center">
+      <div className="flex h-7 w-full min-w-0 items-center justify-center xl:@min-[860px]:h-8">
         {isLoading ? (
           <Skeleton className="h-5 w-20" />
         ) : (
@@ -263,7 +263,9 @@ function StatTile({
             href={href}
             className={cn(
               'flex min-w-0 items-center justify-center gap-1.5 font-bold',
-              emphasized ? 'text-label-value-20' : 'text-label-value-16',
+              emphasized
+                ? 'text-label-value-20 xl:@min-[860px]:text-label-value-24'
+                : 'text-label-value-16 xl:@min-[860px]:text-label-value-20',
               href && 'hover:underline',
             )}
           >
@@ -277,7 +279,7 @@ function StatTile({
           <Skeleton className="h-3 w-16" />
         ) : (
           secondary !== undefined && (
-            <span className="truncate font-medium text-label-value-12 text-secondary">
+            <span className="truncate font-medium text-label-value-12 text-secondary xl:@min-[860px]:text-label-value-13">
               {secondary}
             </span>
           )
