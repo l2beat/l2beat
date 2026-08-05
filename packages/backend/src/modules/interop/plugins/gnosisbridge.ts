@@ -34,6 +34,8 @@ const xdaiUserRequestForSignatureLog =
   'event UserRequestForSignature(address recipient, uint256 value, bytes32 nonce, address token)'
 const xdaiRelayedMessageLog =
   'event RelayedMessage(address recipient, uint256 value, bytes32 transactionHash)'
+const paidInterestLog =
+  'event PaidInterest(address indexed token, address to, uint256 value)'
 
 const transferLog =
   'event Transfer(address indexed from, address indexed to, uint256 value)'
@@ -177,6 +179,7 @@ const parseXdaiUserRequestForSignature = createEventParser(
   xdaiUserRequestForSignatureLog,
 )
 const parseXdaiRelayedMessage = createEventParser(xdaiRelayedMessageLog)
+const parsePaidInterest = createEventParser(paidInterestLog)
 const parseTransfer = createEventParser(transferLog)
 
 export class GnosisBridgePlugin implements InteropPluginResyncable {
@@ -219,7 +222,7 @@ export class GnosisBridgePlugin implements InteropPluginResyncable {
       {
         type: 'event',
         signature: xdaiUserRequestForAffirmationLog,
-        includeTxEvents: [transferLog],
+        includeTxEvents: [transferLog, paidInterestLog],
         addresses: [FOREIGN_XDAI_BRIDGE],
       },
       {
@@ -278,10 +281,26 @@ export class GnosisBridgePlugin implements InteropPluginResyncable {
           boundary: (log) =>
             parseXdaiUserRequestForAffirmation(log, null) !== undefined,
         })
+        // payInterest() emits the regular bridge request without moving an
+        // ERC-20 in the same transaction. Its following PaidInterest event is
+        // the only source of the bridged token address.
+        const paidInterest = input.txLogs
+          .map((log) =>
+            parsePaidInterest(log, [
+              ChainSpecificAddress.address(FOREIGN_XDAI_BRIDGE),
+            ]),
+          )
+          .find(
+            (event) =>
+              event?.value === xdaiInitiated.value &&
+              event.to === xdaiInitiated.recipient,
+          )
         return [
           XdaiTransferInitiated.create(input, {
             nonce: xdaiInitiated.nonce,
-            token: transfer?.token,
+            token:
+              transfer?.token ??
+              (paidInterest ? Address32.from(paidInterest.token) : undefined),
             amount: xdaiInitiated.value,
             wasBurned: transfer?.wasBurned,
           }),
