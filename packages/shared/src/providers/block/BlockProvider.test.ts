@@ -101,6 +101,44 @@ describe(BlockProvider.name, () => {
       expect(client2.getLatestBlockNumber).toHaveBeenCalledTimes(1)
     })
 
+    it('finds the closest block number when the client pruned old blocks', async () => {
+      const client = mockObject<BlockClient>({
+        getLatestBlockNumber: async () => 1000,
+        getBlockWithTransactions: async (n) => {
+          if (typeof n === 'number' && n < 700) {
+            throw new Error(`Block ${n} not found`)
+          }
+          return block(n as number)
+        },
+      })
+
+      const provider = new BlockProvider('chain', [client])
+
+      const blockNumber = await provider.getBlockNumberAtOrBefore(
+        UnixTime(800 * 100),
+      )
+
+      expect(blockNumber).toEqual(800)
+    })
+
+    it('throws when the timestamp precedes the pruned history of every client', async () => {
+      const client = mockObject<BlockClient>({
+        getLatestBlockNumber: async () => 1000,
+        getBlockWithTransactions: async (n) => {
+          if (typeof n === 'number' && n < 700) {
+            throw new Error(`Block ${n} not found`)
+          }
+          return block(n as number)
+        },
+      })
+
+      const provider = new BlockProvider('chain', [client])
+
+      await expect(
+        provider.getBlockNumberAtOrBefore(UnixTime(300 * 100)),
+      ).toBeRejectedWith('precedes its available history')
+    })
+
     it('falls back to 0 when start is above client latest', async () => {
       const client = mockObject<BlockClient>({
         getLatestBlockNumber: async () => 500,

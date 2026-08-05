@@ -22,44 +22,71 @@
 
 import type { UnixTime } from '@l2beat/shared-pure'
 
+export interface GetBlockNumberAtOrBeforeOptions {
+  // Non-archive nodes prune old blocks and report them as missing, which
+  // would otherwise abort the search as soon as a probe lands below the
+  // pruning horizon. With this flag a failed probe is treated as "below the
+  // horizon" and the search continues above it. The result stays exact: a
+  // block number is only returned when both final neighbors were actually
+  // fetched, and if the boundary block itself is unavailable the search
+  // throws because the requested timestamp precedes the available history.
+  tolerateMissingBlocks?: boolean
+}
+
 export async function getBlockNumberAtOrBefore(
   timestamp: UnixTime,
   lhsBlock: number,
   rhsBlock: number,
   getBlock: (number: number) => Promise<{ timestamp: number }>,
+  options?: GetBlockNumberAtOrBeforeOptions,
 ): Promise<number> {
-  let [{ timestamp: lhsTimestamp }, { timestamp: rhsTimestamp }] =
-    await Promise.all([getBlock(lhsBlock), getBlock(rhsBlock)])
+  const getTimestamp = async (block: number): Promise<number | undefined> => {
+    if (!options?.tolerateMissingBlocks) {
+      return (await getBlock(block)).timestamp
+    }
+    try {
+      return (await getBlock(block)).timestamp
+    } catch {
+      return undefined
+    }
+  }
 
-  if (timestamp <= lhsTimestamp) return lhsBlock
+  let [lhsTimestamp, { timestamp: rhsTimestamp }] = await Promise.all([
+    getTimestamp(lhsBlock),
+    getBlock(rhsBlock),
+  ])
+
+  if (lhsTimestamp !== undefined && timestamp <= lhsTimestamp) return lhsBlock
   if (timestamp >= rhsTimestamp) return rhsBlock
 
   while (lhsBlock + 1 < rhsBlock) {
     const rangeBefore = rhsBlock - lhsBlock
 
-    // Interpolation step
-    const blockTime = (rhsTimestamp - lhsTimestamp) / (rhsBlock - lhsBlock)
-    const blocksFromStart = Math.round((timestamp - lhsTimestamp) / blockTime)
-    const guess = Math.max(
-      lhsBlock + 1,
-      Math.min(rhsBlock - 1, lhsBlock + blocksFromStart),
-    )
-    const { timestamp: guessTs } = await getBlock(guess)
+    // Interpolation step, requires a known lhs timestamp
+    if (lhsTimestamp !== undefined) {
+      const blockTime = (rhsTimestamp - lhsTimestamp) / (rhsBlock - lhsBlock)
+      const blocksFromStart = Math.round((timestamp - lhsTimestamp) / blockTime)
+      const guess = Math.max(
+        lhsBlock + 1,
+        Math.min(rhsBlock - 1, lhsBlock + blocksFromStart),
+      )
+      const guessTs = await getTimestamp(guess)
 
-    if (guessTs <= timestamp) {
-      lhsBlock = guess
-      lhsTimestamp = guessTs
-    } else {
-      rhsBlock = guess
-      rhsTimestamp = guessTs
+      if (guessTs === undefined || guessTs <= timestamp) {
+        lhsBlock = guess
+        lhsTimestamp = guessTs
+      } else {
+        rhsBlock = guess
+        rhsTimestamp = guessTs
+      }
     }
 
     // Safety net: only pay for a binary step if interpolation failed to halve
-    // the range
+    // the range (or could not run because the lhs timestamp is unknown)
     if (rhsBlock - lhsBlock > rangeBefore / 2 && lhsBlock + 1 < rhsBlock) {
       const mid = lhsBlock + Math.floor((rhsBlock - lhsBlock) / 2)
-      const { timestamp: midTs } = await getBlock(mid)
-      if (midTs <= timestamp) {
+      const midTs = await getTimestamp(mid)
+      if (midTs === undefined || midTs <= timestamp) {
         lhsBlock = mid
         lhsTimestamp = midTs
       } else {
@@ -67,6 +94,13 @@ export async function getBlockNumberAtOrBefore(
         rhsTimestamp = midTs
       }
     }
+  }
+
+  if (lhsTimestamp === undefined) {
+    throw new Error(
+      `Block ${lhsBlock} is unavailable on this RPC, ` +
+        `timestamp ${timestamp} precedes its available history`,
+    )
   }
   return lhsBlock
 }

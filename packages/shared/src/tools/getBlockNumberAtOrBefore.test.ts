@@ -143,4 +143,83 @@ describe(getBlockNumberAtOrBefore.name, async () => {
     const res = await getBlockNumberAtOrBefore(UnixTime(50), 42, 42, getBlock)
     expect(res).toEqual(42)
   })
+
+  it('rejects when a probed block is missing and tolerateMissingBlocks is off', async () => {
+    const getBlock = async (n: number): Promise<{ timestamp: number }> => {
+      if (n < 600) throw new Error(`Block ${n} not found`)
+      return { timestamp: n * 10 }
+    }
+    await expect(
+      getBlockNumberAtOrBefore(UnixTime(7_500), 0, 1_000, getBlock),
+    ).toBeRejectedWith('not found')
+  })
+
+  describe('tolerateMissingBlocks', () => {
+    const pruned =
+      (horizon: number, slope: number) =>
+      async (n: number): Promise<{ timestamp: number }> => {
+        if (n < horizon) throw new Error(`Block ${n} not found`)
+        return { timestamp: n * slope }
+      }
+
+    it('finds the exact block on a pruned node when the target is within retained history', async () => {
+      // Mirrors a non-archive node: only the most recent blocks are available
+      const getBlock = pruned(990_000, 2)
+      const res = await getBlockNumberAtOrBefore(
+        UnixTime(995_000 * 2 + 1),
+        1,
+        1_000_000,
+        getBlock,
+        { tolerateMissingBlocks: true },
+      )
+      expect(res).toEqual(995_000)
+    })
+
+    it('throws a descriptive error when the target timestamp precedes retained history', async () => {
+      const getBlock = pruned(990_000, 2)
+      await expect(
+        getBlockNumberAtOrBefore(
+          UnixTime(500_000 * 2),
+          1,
+          1_000_000,
+          getBlock,
+          {
+            tolerateMissingBlocks: true,
+          },
+        ),
+      ).toBeRejectedWith('precedes its available history')
+    })
+
+    it('throws instead of returning a wrong block when the boundary block itself is missing', async () => {
+      // A single hole exactly at the true answer, the search must not
+      // silently return a neighbor it could not verify
+      const getBlock = async (n: number): Promise<{ timestamp: number }> => {
+        if (n === 500) throw new Error(`Block ${n} not found`)
+        return { timestamp: n * 10 }
+      }
+      await expect(
+        getBlockNumberAtOrBefore(UnixTime(5_005), 0, 1_000, getBlock, {
+          tolerateMissingBlocks: true,
+        }),
+      ).toBeRejectedWith('Block 500 is unavailable')
+    })
+
+    it('keeps the number of queries logarithmic on a pruned node', async () => {
+      const calls: number[] = []
+      const getBlock = async (n: number): Promise<{ timestamp: number }> => {
+        calls.push(n)
+        if (n < 32_900_000) throw new Error(`Block ${n} not found`)
+        return { timestamp: n * 2 }
+      }
+      const res = await getBlockNumberAtOrBefore(
+        UnixTime(32_950_000 * 2),
+        1,
+        33_000_000,
+        getBlock,
+        { tolerateMissingBlocks: true },
+      )
+      expect(res).toEqual(32_950_000)
+      expect(calls.length).toBeLessThanOrEqual(60)
+    })
+  })
 })
