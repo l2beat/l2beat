@@ -46,8 +46,8 @@ const maxFeeRateBps = discovery.getContractValue<number>(
 )
 const feeCeiling =
   maxFeeRateBps === 0
-    ? 'a maximum rate the admins set, which is currently zero — a value that disables the check rather than forbidding fees, so no on-chain ceiling applies today'
-    : `a maximum rate the admins set, currently ${maxFeeRateBps / 100}%`
+    ? 'the on-chain cap is disabled'
+    : `the on-chain cap is ${maxFeeRateBps / 100}%`
 
 const adapterSafetyPeriod = formatDelay(
   discovery.getContractValue<number>('UmaCtfAdapterBinary', 'SAFETY_PERIOD'),
@@ -204,29 +204,29 @@ export const polymarket: BaseProject = {
     risks: [
       {
         category: 'Funds can be stolen if',
-        text: `the ${adminSafe} multisig upgrades the collateral token, its vault or the combination-market contracts after the ${timelockDelay} timelock, since the vault can be made to execute any call on the stablecoin backing every balance.`,
+        text: `the ${adminSafe} multisig upgrades the collateral token or its vault after the ${timelockDelay} timelock and moves the stablecoin backing every balance.`,
         isCritical: true,
       },
       {
         category: 'Funds can be stolen if',
-        text: `the collateral token's owner, the timelock, grants the minter role to an address of its choosing after the ${timelockDelay} delay, since a minter can create units that no deposit backs and redeem them against the vault. The role is held today only by the outcome modules.`,
+        text: `the timelock grants the minter role after the ${timelockDelay} delay, since a minter can create collateral that no deposit backs and redeem it against the vault.`,
       },
       {
         category: 'Funds can be frozen if',
-        text: 'the admins pause either collateral ramp, which takes effect immediately and with no timelock and blocks redemption of the collateral token back into the underlying stablecoin.',
+        text: 'the admins pause either collateral ramp with no delay, blocking redemption of the collateral token into the underlying stablecoin.',
       },
       {
         category: 'Funds can lose value if',
-        text: `the admins impose an outcome on a market instead of the oracle: after ${adapterSafetyPeriod} on binary markets, and with ${negRiskOperatorDelay} on multi-outcome markets, where flagging a market and forcing its result can happen in a single transaction.`,
+        text: `the admins impose an outcome instead of the oracle: after ${adapterSafetyPeriod} on binary markets, and with ${negRiskOperatorDelay} on multi-outcome ones.`,
         isCritical: true,
       },
       {
         category: 'Funds can lose value if',
-        text: 'the permissioned oracle stalls, since settlement requires a resolver role and a proposal never becomes final on its own, leaving positions unredeemable.',
+        text: 'the permissioned oracle stalls, since settlement needs a resolver role and positions stay unredeemable until it acts.',
       },
       {
         category: 'Funds can lose value if',
-        text: `the operator charges a fee that makes the all-in price worse than the limit price the user signed, since the fee is supplied at settlement rather than being part of the signed order and is bounded only by ${feeCeiling}.`,
+        text: `the operator charges a fee that pushes the all-in price past the signed limit, since the fee is not part of the signed order and ${feeCeiling}.`,
       },
     ],
   },
