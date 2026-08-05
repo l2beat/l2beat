@@ -314,7 +314,7 @@ export const starknet: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('stwo'),
+    zkCatalogIds: [ProjectId('stwo')],
   },
   chainConfig: {
     name: 'starknet',

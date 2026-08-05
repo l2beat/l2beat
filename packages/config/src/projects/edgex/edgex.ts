@@ -116,7 +116,7 @@ export const edgex: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('stone'),
+    zkCatalogIds: [ProjectId('stone')],
   },
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD],
   stage: {

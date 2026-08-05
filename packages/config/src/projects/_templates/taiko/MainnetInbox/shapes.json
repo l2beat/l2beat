@@ -3,5 +3,10 @@
     "hash": "0xa362200444c4acb7197c44886acc6eb7d90bb3933f19c339e94239e413f132d1",
     "address": "eth:0x0680c84378FA6A7D2F46ADa5A70637Fa2A938d42",
     "blockNumber": 24840827
+  },
+  "MainnetInbox.sol_unzen": {
+    "hash": "0xa0a8e3ebc196ae2703fc2c0dc5bc16012644bbcd103c34bf6241389ccadc0fd0",
+    "address": "eth:0x5253D4C91e80b880DdB54B78E74082Abe066F6b9",
+    "blockNumber": 25500995
   }
 }

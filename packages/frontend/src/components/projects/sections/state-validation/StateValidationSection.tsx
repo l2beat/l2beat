@@ -11,16 +11,18 @@ import type { ProjectSectionProps } from '../types'
 import { Category } from './Category'
 import { ProverInfo } from './ProverInfo'
 
+export interface ProverInfoData {
+  name: string
+  icon: string
+  href: string
+  quantumResistant?: boolean
+  trustedSetups: TrustedSetupsByProofSystem
+}
+
 export interface StateValidationSectionProps extends ProjectSectionProps {
   diagram: DiagramParams | undefined
   stateValidation: ProjectScalingStateValidation
-  proverInfo?: {
-    name: string
-    icon: string
-    href: string
-    quantumResistant?: boolean
-    trustedSetups: TrustedSetupsByProofSystem
-  }
+  proverInfos?: ProverInfoData[]
   programHashes?: StateValidationProgramHashData[]
   programHashesDescription?: string
 }
@@ -28,7 +30,7 @@ export interface StateValidationSectionProps extends ProjectSectionProps {
 export function StateValidationSection({
   diagram,
   stateValidation,
-  proverInfo,
+  proverInfos,
   programHashes,
   programHashesDescription,
   ...sectionProps
@@ -56,7 +58,9 @@ export function StateValidationSection({
           <Category key={category.title} category={category} />
         ))}
       </div>
-      {proverInfo && <ProverInfo proverInfo={proverInfo} />}
+      {proverInfos?.map((proverInfo) => (
+        <ProverInfo key={proverInfo.href} proverInfo={proverInfo} />
+      ))}
       {programHashes && programHashes.length > 0 && (
         <div className="mt-4 space-y-2 md:mt-6">
           <div className="flex items-baseline gap-3">

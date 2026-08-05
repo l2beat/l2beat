@@ -199,7 +199,7 @@ export const zircuit: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('sp1turbo'),
+    zkCatalogIds: [ProjectId('sp1turbo')],
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
