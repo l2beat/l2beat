@@ -17,7 +17,7 @@ export const butternetwork: BaseProject = {
   addedAt: UnixTime(1785915246),
   interopConfig: {
     description:
-      'Multichain bridge and messaging protocol using the MAP relay chain and its light-client network to verify cross-chain messages. Butter supports both lock/release and token burn/mint flows depending on the configured asset.',
+      'Multichain bridge and messaging protocol using the MAP relay chain and its light-client network to verify cross-chain messages.',
     plugins: [
       { plugin: 'butternetwork', bridgeType: 'lockAndMint' },
       { plugin: 'butternetwork', bridgeType: 'burnAndMint' },
