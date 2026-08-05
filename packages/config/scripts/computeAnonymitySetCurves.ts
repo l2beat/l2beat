@@ -12,7 +12,8 @@
  * window are the crowd you blend into.
  *
  * HISTORY ("trailing 30 day anonymity set over time"). The window length is
- * pinned back to 30 days and its end slides across the last HISTORY_DAYS days:
+ * pinned back to 30 days and its end slides across the project's whole life,
+ * from the day of its first qualifying deposit up to `NOW`:
  * the value at date `d` is the number of unique addresses that deposited in the
  * 30 calendar days ending on `d`. It answers "how much of a crowd would I have
  * had, had I withdrawn on this day after holding for up to a month", and shows
@@ -35,11 +36,11 @@
  *
  * 2. The input data has block numbers but no timestamps. Instead of resolving a
  *    cutoff block per data point (~360 binary searches), it linearly
- *    interpolates between the ~60 evenly spaced anchor blocks in BLOCK_ANCHORS,
- *    whose real timestamps are frozen below. Post-merge block times are stable
- *    enough that
- *    the error inside a ~7 day anchor gap stays well under an hour, which is
- *    invisible at day granularity. As a consequence the 30 day values here can
+ *    interpolates between the ~330 evenly spaced anchor blocks in BLOCK_ANCHORS,
+ *    whose real timestamps are frozen below. Block times are stable enough,
+ *    before and after the merge, that the error inside a ~7 day anchor gap stays
+ *    within a few hours, which is invisible at day granularity. As a
+ *    consequence the 30 day values here can
  *    differ by a few addresses from `anonymity_sets.json`, which used an exact
  *    cutoff block.
  *
@@ -49,21 +50,24 @@
  *    arriving after theirs, which is not observable here.
  *
  * 4. The ETH-equivalent thresholds are priced with the frozen PRICES_USD table
- *    below and rounded to one significant digit, then applied to the whole year
- *    of history. A token that moved sharply against ETH during the window
- *    therefore gets a threshold that was worth more or less than 0.1/10 ETH at
- *    the time of the older deposits. The tiers are meant as order-of-magnitude
- *    buckets, not exact valuations. Prices used are recorded in the output.
+ *    below and rounded to one significant digit, then applied to the project's
+ *    entire history - which now reaches back to 2019 rather than one year. A
+ *    token that moved sharply against ETH over that span gets a threshold that
+ *    was worth substantially more or less than 0.1/10 ETH at the time of the
+ *    older deposits, so the early years of the tiered charts (Railgun, Privacy
+ *    Pools) are coarser than the recent ones. The tiers are meant as
+ *    order-of-magnitude buckets, not exact valuations. Prices used are recorded
+ *    in the output.
  *
  * 5. Tracked buckets with no deposits at all in the source CSVs still produce a
  *    (flat zero) curve, and the script prints a coverage report so gaps between
  *    what the config tracks and what the snapshot contains stay visible.
  *
- * 5b. The history buckets deposits by UTC calendar day, so its oldest point
- *    needs data from `HISTORY_DAYS + HISTORY_WINDOW_DAYS` days before `NOW` -
- *    further back than the curves ever reach. BLOCK_ANCHORS is sized for that
- *    longer reach, and the script asserts the coverage rather than silently
- *    dropping the deposits that fall off the end.
+ * 5b. The history spans each project's whole life, so it needs every deposit in
+ *    the snapshot dated - far further back than the curves ever reach.
+ *    BLOCK_ANCHORS is sized to cover the snapshot's oldest deposit block, and
+ *    `assertAnchorReach` checks that against the parsed data rather than
+ *    silently dropping the deposits that fall off the end.
  *
  * 6. The script makes no network calls. Block timestamps and token prices are
  *    frozen tables captured once (see each table for provenance), because the
@@ -108,9 +112,7 @@ const MAX_DAYS = 365
 const DAY_SECONDS = 24 * 60 * 60
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
-/** Days of history the sliding-window chart covers, ending on `NOW`. */
-const HISTORY_DAYS = 365
-/** Length of the window whose end slides across those days. */
+/** Length of the window whose end slides across a project's whole history. */
 const HISTORY_WINDOW_DAYS = 30
 
 /** ~7 days of Ethereum blocks at 12s per block. */
@@ -119,14 +121,20 @@ const ANCHOR_STEP_BLOCKS = 50_400
 /**
  * `[blockNumber, unixTimestamp]` pairs used to date a deposit - see assumptions
  * #2 and #6. Evenly spaced by ANCHOR_STEP_BLOCKS and newest first, starting at
- * the highest block present in the CSV snapshots and reaching ~440 days back -
- * comfortably past both MAX_DAYS and the longer reach the history needs (see
- * assumption #5b), which `assertAnchorReach` checks on every run.
+ * the highest block present in the CSV snapshots and reaching back past the
+ * oldest deposit in them (block 9117019, late 2019), because the history now
+ * covers each project's full lifetime. `assertAnchorReach` checks that on every
+ * run against the actual data rather than against a fixed day count.
  *
- * Captured once from an Ethereum RPC node on 2026-08-04. Block timestamps are
- * immutable, so these never need refreshing unless the CSV snapshot is
- * re-exported with newer blocks - in which case re-capture from the new highest
- * block, stepping back by ANCHOR_STEP_BLOCKS.
+ * The step is ~7 days at post-Merge block times and ~7.7 days before it, so
+ * interpolating inside an interval can be off by a few hours at most - well
+ * inside the daily buckets everything here is counted in.
+ *
+ * Captured from an Ethereum RPC node on 2026-08-04 (newest ~440 days) and
+ * 2026-08-05 (the rest). Block timestamps are immutable, so these never need
+ * refreshing unless the CSV snapshot is re-exported with newer blocks - in which
+ * case re-capture from the new highest block, stepping back by
+ * ANCHOR_STEP_BLOCKS.
  */
 const BLOCK_ANCHORS: [block: number, timestamp: number][] = [
   [25638016, 1785322403],
@@ -193,6 +201,273 @@ const BLOCK_ANCHORS: [block: number, timestamp: number][] = [
   [22563616, 1748221871],
   [22513216, 1747611743],
   [22462816, 1746999587],
+  [22412416, 1746386123],
+  [22362016, 1745776451],
+  [22311616, 1745169035],
+  [22261216, 1744561331],
+  [22210816, 1743953927],
+  [22160416, 1743346043],
+  [22110016, 1742737991],
+  [22059616, 1742130179],
+  [22009216, 1741522151],
+  [21958816, 1740914039],
+  [21908416, 1740306359],
+  [21858016, 1739697467],
+  [21807616, 1739087939],
+  [21757216, 1738479839],
+  [21706816, 1737871871],
+  [21656416, 1737264167],
+  [21606016, 1736656067],
+  [21555616, 1736047955],
+  [21505216, 1735440203],
+  [21454816, 1734831659],
+  [21404416, 1734223439],
+  [21354016, 1733615627],
+  [21303616, 1733007383],
+  [21253216, 1732398407],
+  [21202816, 1731790919],
+  [21152416, 1731183263],
+  [21102016, 1730575355],
+  [21051616, 1729967651],
+  [21001216, 1729360187],
+  [20950816, 1728751739],
+  [20900416, 1728144335],
+  [20850016, 1727537135],
+  [20799616, 1726929707],
+  [20749216, 1726321343],
+  [20698816, 1725713231],
+  [20648416, 1725105635],
+  [20598016, 1724497151],
+  [20547616, 1723888919],
+  [20497216, 1723280903],
+  [20446816, 1722673667],
+  [20396416, 1722065639],
+  [20346016, 1721457659],
+  [20295616, 1720849943],
+  [20245216, 1720241675],
+  [20194816, 1719633599],
+  [20144416, 1719025091],
+  [20094016, 1718415971],
+  [20043616, 1717807535],
+  [19993216, 1717199603],
+  [19942816, 1716590843],
+  [19892416, 1715981879],
+  [19842016, 1715372807],
+  [19791616, 1714763795],
+  [19741216, 1714154963],
+  [19690816, 1713545855],
+  [19640416, 1712935619],
+  [19590016, 1712325875],
+  [19539616, 1711714775],
+  [19489216, 1711098995],
+  [19438816, 1710487211],
+  [19388416, 1709876363],
+  [19338016, 1709268215],
+  [19287616, 1708658891],
+  [19237216, 1708047167],
+  [19186816, 1707436199],
+  [19136416, 1706824775],
+  [19086016, 1706214503],
+  [19035616, 1705603487],
+  [18985216, 1704994703],
+  [18934816, 1704381575],
+  [18884416, 1703770247],
+  [18834016, 1703159003],
+  [18783616, 1702547615],
+  [18733216, 1701937583],
+  [18682816, 1701327851],
+  [18632416, 1700718179],
+  [18582016, 1700108399],
+  [18531616, 1699499375],
+  [18481216, 1698889511],
+  [18430816, 1698280079],
+  [18380416, 1697670491],
+  [18330016, 1697061455],
+  [18279616, 1696452227],
+  [18229216, 1695843347],
+  [18178816, 1695233555],
+  [18128416, 1694620619],
+  [18078016, 1694010731],
+  [18027616, 1693400951],
+  [17977216, 1692791399],
+  [17926816, 1692181967],
+  [17876416, 1691572847],
+  [17826016, 1690963643],
+  [17775616, 1690354715],
+  [17725216, 1689745199],
+  [17674816, 1689132431],
+  [17624416, 1688520527],
+  [17574016, 1687909271],
+  [17523616, 1687296995],
+  [17473216, 1686685343],
+  [17422816, 1686071663],
+  [17372416, 1685457899],
+  [17322016, 1684845887],
+  [17271616, 1684232159],
+  [17221216, 1683614927],
+  [17170816, 1683002843],
+  [17120416, 1682391023],
+  [17070016, 1681777475],
+  [17019616, 1681152083],
+  [16969216, 1680533687],
+  [16918816, 1679921315],
+  [16868416, 1679309615],
+  [16818016, 1678697699],
+  [16767616, 1678085063],
+  [16717216, 1677472847],
+  [16666816, 1676860439],
+  [16616416, 1676250047],
+  [16566016, 1675641527],
+  [16515616, 1675033187],
+  [16465216, 1674425195],
+  [16414816, 1673817311],
+  [16364416, 1673209199],
+  [16314016, 1672601399],
+  [16263616, 1671993683],
+  [16213216, 1671386231],
+  [16162816, 1670777951],
+  [16112416, 1670168627],
+  [16062016, 1669560455],
+  [16011616, 1668952031],
+  [15961216, 1668343883],
+  [15910816, 1667735759],
+  [15860416, 1667127347],
+  [15810016, 1666518503],
+  [15759616, 1665910511],
+  [15709216, 1665302555],
+  [15658816, 1664693891],
+  [15608416, 1664085131],
+  [15558016, 1663474835],
+  [15507616, 1662795902],
+  [15457216, 1662094763],
+  [15406816, 1661398147],
+  [15356416, 1660708328],
+  [15306016, 1660021135],
+  [15255616, 1659343326],
+  [15205216, 1658664496],
+  [15154816, 1657989139],
+  [15104416, 1657316080],
+  [15054016, 1656643999],
+  [15003616, 1655836065],
+  [14953216, 1655082218],
+  [14902816, 1654339501],
+  [14852416, 1653630174],
+  [14802016, 1652921554],
+  [14751616, 1652228021],
+  [14701216, 1651534090],
+  [14650816, 1650848880],
+  [14600416, 1650165856],
+  [14550016, 1649486893],
+  [14499616, 1648806465],
+  [14449216, 1648128113],
+  [14398816, 1647449702],
+  [14348416, 1646772879],
+  [14298016, 1646096302],
+  [14247616, 1645421997],
+  [14197216, 1644747596],
+  [14146816, 1644075207],
+  [14096416, 1643402893],
+  [14046016, 1642728930],
+  [13995616, 1642056026],
+  [13945216, 1641382680],
+  [13894816, 1640709090],
+  [13844416, 1640034284],
+  [13794016, 1639360727],
+  [13743616, 1638674211],
+  [13693216, 1637977594],
+  [13642816, 1637285636],
+  [13592416, 1636599169],
+  [13542016, 1635916655],
+  [13491616, 1635232971],
+  [13441216, 1634552151],
+  [13390816, 1633867829],
+  [13340416, 1633185598],
+  [13290016, 1632507297],
+  [13239616, 1631833338],
+  [13189216, 1631159313],
+  [13138816, 1630486699],
+  [13088416, 1629813208],
+  [13038016, 1629140510],
+  [12987616, 1628467863],
+  [12937216, 1627787546],
+  [12886816, 1627100074],
+  [12836416, 1626418486],
+  [12786016, 1625737872],
+  [12735616, 1625059735],
+  [12685216, 1624381030],
+  [12634816, 1623703451],
+  [12584416, 1623028187],
+  [12534016, 1622354604],
+  [12483616, 1621680060],
+  [12433216, 1621005035],
+  [12382816, 1620331741],
+  [12332416, 1619659645],
+  [12282016, 1618987093],
+  [12231616, 1618315338],
+  [12181216, 1617646567],
+  [12130816, 1616976634],
+  [12080416, 1616306596],
+  [12030016, 1615635787],
+  [11979616, 1614964325],
+  [11929216, 1614294454],
+  [11878816, 1613624532],
+  [11828416, 1612955577],
+  [11778016, 1612285049],
+  [11727616, 1611613768],
+  [11677216, 1610946216],
+  [11626816, 1610277910],
+  [11576416, 1609609487],
+  [11526016, 1608942818],
+  [11475616, 1608273898],
+  [11425216, 1607603718],
+  [11374816, 1606934994],
+  [11324416, 1606265705],
+  [11274016, 1605597441],
+  [11223616, 1604929126],
+  [11173216, 1604260789],
+  [11122816, 1603592104],
+  [11072416, 1602924240],
+  [11022016, 1602256332],
+  [10971616, 1601574686],
+  [10921216, 1600896054],
+  [10870816, 1600228135],
+  [10820416, 1599560620],
+  [10770016, 1598894446],
+  [10719616, 1598225608],
+  [10669216, 1597555615],
+  [10618816, 1596885027],
+  [10568416, 1596212262],
+  [10518016, 1595538171],
+  [10467616, 1594863423],
+  [10417216, 1594189393],
+  [10366816, 1593516333],
+  [10316416, 1592840135],
+  [10266016, 1592166490],
+  [10215616, 1591492498],
+  [10165216, 1590816278],
+  [10114816, 1590138454],
+  [10064416, 1589461140],
+  [10014016, 1588785723],
+  [9963616, 1588112324],
+  [9913216, 1587437215],
+  [9862816, 1586764943],
+  [9812416, 1586095167],
+  [9762016, 1585425074],
+  [9711616, 1584748062],
+  [9661216, 1584076085],
+  [9610816, 1583405949],
+  [9560416, 1582736982],
+  [9510016, 1582067792],
+  [9459616, 1581396871],
+  [9409216, 1580728259],
+  [9358816, 1580059366],
+  [9308416, 1579392274],
+  [9258016, 1578724896],
+  [9207616, 1578059058],
+  [9157216, 1577215838],
+  [9106816, 1576351722],
+  [9056416, 1575571813],
+  [9006016, 1574799121],
 ]
 
 /**
@@ -558,7 +833,8 @@ function computeCurves(entries: Entry[], series: Series[], anchors: Anchor[]) {
 
 /**
  * For each series, the number of unique depositors in the HISTORY_WINDOW_DAYS
- * long window ending at each of the last HISTORY_DAYS daily timestamps.
+ * long window ending at each daily timestamp of the project's whole life - from
+ * the day of its first qualifying deposit up to `NOW`.
  *
  * A point sits at UTC midnight of its day and looks strictly backwards, exactly
  * like `computeCurves` does at `NOW`: the point at day `d` covers the
@@ -566,23 +842,28 @@ function computeCurves(entries: Entry[], series: Series[], anchors: Anchor[]) {
  * finished when the window closed. Anchoring both to an instant rather than to
  * a calendar day is what makes the last history point equal the 30 day point of
  * the curve.
+ *
+ * The first point therefore reads zero by construction - its window ends where
+ * the first deposit lands - which is the right baseline for a pool opening.
  */
 function computeHistory(entries: Entry[], series: Series[], anchors: Anchor[]) {
   const lastDay = Math.floor(NOW_SECONDS / DAY_SECONDS)
-  const firstDay = lastDay - (HISTORY_DAYS - 1)
-  // The oldest window reaches back past the oldest point it produces.
-  const oldestDay = firstDay - HISTORY_WINDOW_DAYS
 
   const bySeries = new Map<string, Map<number, string[]>>()
   for (const s of series) {
     bySeries.set(s.id, new Map())
   }
 
+  // The project's history starts at its first qualifying deposit. A project
+  // with no deposits at all still gets a single point, so the chart has an
+  // x axis to draw.
+  let firstDay = lastDay
+
   for (const entry of entries) {
     const timestamp = interpolateTimestamp(anchors, entry.blockNum)
     if (timestamp === undefined || timestamp > NOW_SECONDS) continue
     const day = Math.floor(timestamp / DAY_SECONDS)
-    if (day < oldestDay || day > lastDay) continue
+    if (day < firstDay) firstDay = day
 
     const byDay = bySeries.get(entry.seriesId)
     if (!byDay) continue
@@ -590,6 +871,9 @@ function computeHistory(entries: Entry[], series: Series[], anchors: Anchor[]) {
     senders.push(entry.sender)
     byDay.set(day, senders)
   }
+
+  // The oldest window reaches back past the oldest point it produces.
+  const oldestDay = firstDay - HISTORY_WINDOW_DAYS
 
   // Consecutive windows overlap in all but two days, so one multiset of
   // addresses is carried across the sweep, adding the day that enters the
@@ -634,16 +918,14 @@ function computeHistory(entries: Entry[], series: Series[], anchors: Anchor[]) {
  * too low. Cheaper to fail loudly here than to notice a sagging tail on the
  * chart.
  */
-function assertAnchorReach(anchors: Anchor[]) {
+function assertAnchorReach(anchors: Anchor[], oldestDepositBlock: number) {
   const oldest = anchors[anchors.length - 1]
   if (!oldest) throw new Error('No block anchors')
 
-  const neededDays = Math.max(MAX_DAYS, HISTORY_DAYS + HISTORY_WINDOW_DAYS)
-  const needed = NOW_SECONDS - neededDays * DAY_SECONDS
-  if (oldest.timestamp > needed) {
+  if (oldest.blockNumber > oldestDepositBlock) {
     throw new Error(
-      `BLOCK_ANCHORS only reach ${new Date(oldest.timestamp * 1000).toISOString()}, ` +
-        `but the charts need ${neededDays} days of history back to ${new Date(needed * 1000).toISOString()}. ` +
+      `BLOCK_ANCHORS only reach block ${oldest.blockNumber} (${new Date(oldest.timestamp * 1000).toISOString()}), ` +
+        `but the snapshot's oldest deposit is at block ${oldestDepositBlock}. ` +
         'Extend the table by stepping further back from its oldest block.',
     )
   }
@@ -685,10 +967,21 @@ function main() {
 
   const prices = getPrices()
   const anchors = getAnchors()
-  assertAnchorReach(anchors)
 
   const trxRows = parseTrxsWithAmounts(TRXS_WITH_AMOUNTS_FILE)
   const ppRows = parsePrivacyPoolsCsv(PRIVACY_POOLS_FILE)
+
+  const oldestDepositBlock = Math.min(
+    trxRows.reduce(
+      (min, row) => Math.min(min, row.blockNum),
+      Number.POSITIVE_INFINITY,
+    ),
+    ppRows.reduce(
+      (min, row) => Math.min(min, row.blockNumber),
+      Number.POSITIVE_INFINITY,
+    ),
+  )
+  assertAnchorReach(anchors, oldestDepositBlock)
 
   const toDeposit = (row: TrxRow): Deposit => ({
     bucket: row.bucket,
@@ -799,12 +1092,16 @@ function main() {
       history: historyPoints,
     }
 
-    console.log(`\n=== ${project.slug}: ${project.series.length} series`)
+    console.log(
+      `\n=== ${project.slug}: ${project.series.length} series, ` +
+        `${historyPoints.length} history points from ` +
+        `${new Date(firstDay * DAY_SECONDS * 1000).toISOString().slice(0, 10)}`,
+    )
     for (const s of project.series) {
       const sizes = curves.get(s.id)
       const history = histories.get(s.id) ?? []
       console.log(
-        `  ${s.label.padEnd(22)} 30d: ${String(sizes?.[30 - MIN_DAYS] ?? 0).padStart(5)}   365d: ${String(sizes?.[MAX_DAYS - MIN_DAYS] ?? 0).padStart(5)}   30d a year ago: ${String(history[0] ?? 0).padStart(5)}   peak 30d: ${String(Math.max(0, ...history)).padStart(5)}`,
+        `  ${s.label.padEnd(22)} 30d: ${String(sizes?.[30 - MIN_DAYS] ?? 0).padStart(5)}   365d: ${String(sizes?.[MAX_DAYS - MIN_DAYS] ?? 0).padStart(5)}   peak 30d: ${String(Math.max(0, ...history)).padStart(5)}`,
       )
     }
   }
@@ -814,7 +1111,6 @@ function main() {
     asOf: NOW_ISO,
     minDays: MIN_DAYS,
     maxDays: MAX_DAYS,
-    historyDays: HISTORY_DAYS,
     historyWindowDays: HISTORY_WINDOW_DAYS,
     pricesUsd: Object.fromEntries(prices),
     projects: output,

@@ -31,10 +31,22 @@ export function rangeToResolution(range: ChartRange): ChartResolution {
 
 // Default offset is 75 minutes, cuz this is more or less how much time we need to wait for the data to be fully synced.
 const BACKEND_OFFSET = -1 * (UnixTime.HOUR + 15 * UnixTime.MINUTE)
-export function optionToRange(option: ChartRangePredefinedOption): ChartRange {
+/**
+ * `anchor` is the instant the range ends at, defaulting to now. Charts backed by
+ * a frozen snapshot rather than by live data pass the snapshot's date, so that
+ * "30D" means the last 30 days of the data instead of 30 days that are mostly
+ * empty. An explicit anchor is used as given: BACKEND_OFFSET exists to let live
+ * data finish syncing, and applying it to a snapshot would cut off its last
+ * point.
+ */
+export function optionToRange(
+  option: ChartRangePredefinedOption,
+  anchor?: number,
+): ChartRange {
   const days = optionToDays(option)
 
-  const end = UnixTime.toStartOf(UnixTime.now() + BACKEND_OFFSET, 'hour')
+  const end =
+    anchor ?? UnixTime.toStartOf(UnixTime.now() + BACKEND_OFFSET, 'hour')
 
   return [
     days === null ? null : UnixTime.toStartOf(end, 'day') - days * UnixTime.DAY,

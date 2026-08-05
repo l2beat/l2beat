@@ -46,9 +46,21 @@ interface Props {
   value: ChartRange
   setValue: (range: ChartRange) => void
   options: ChartRangeOption[]
+  /**
+   * The instant the presets end at, defaulting to now. Charts backed by a frozen
+   * snapshot pass its date, so the presets cover data rather than the empty gap
+   * between the snapshot and today.
+   */
+  anchor?: number
 }
 
-export function ChartRangeControls({ name, value, setValue, options }: Props) {
+export function ChartRangeControls({
+  name,
+  value,
+  setValue,
+  options,
+  anchor,
+}: Props) {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [internalValue, setInternalValue] = useState<DateRange | undefined>(
     undefined,
@@ -63,7 +75,8 @@ export function ChartRangeControls({ name, value, setValue, options }: Props) {
   if (!isClient) {
     return <Skeleton className={cn('h-8 w-14 md:w-[320px]')} />
   }
-  const selectedOption = rangeToOption(value, options)
+  const end = anchor ?? UnixTime.now()
+  const selectedOption = rangeToOption(value, options, end)
 
   function onDateRangeChange(dateRange: DateRange | undefined) {
     setInternalValue(dateRange)
@@ -72,7 +85,7 @@ export function ChartRangeControls({ name, value, setValue, options }: Props) {
       setValue([
         UnixTime.fromDate(dateRange.from),
         Math.min(
-          UnixTime.toStartOf(UnixTime.now(), 'hour'),
+          UnixTime.toStartOf(end, 'hour'),
           UnixTime.fromDate(dateRange.to) +
             23 * UnixTime.HOUR +
             59 * UnixTime.MINUTE +
@@ -122,6 +135,7 @@ export function ChartRangeControls({ name, value, setValue, options }: Props) {
             }}
             setInternalValue={setInternalValue}
             selectedOption={selectedOption}
+            anchor={end}
           />
           <p className="mt-4 font-medium text-label-value-12 text-secondary">
             Custom
@@ -131,6 +145,7 @@ export function ChartRangeControls({ name, value, setValue, options }: Props) {
             value={value}
             internalValue={internalValue}
             onDateRangeChange={onDateRangeChange}
+            anchor={end}
           />
         </DrawerContent>
       </Drawer>
@@ -145,6 +160,7 @@ export function ChartRangeControls({ name, value, setValue, options }: Props) {
         setValue={setValue}
         setInternalValue={setInternalValue}
         selectedOption={selectedOption}
+        anchor={end}
       >
         <VerticalSeparator />
         <PopoverTrigger
@@ -166,6 +182,7 @@ export function ChartRangeControls({ name, value, setValue, options }: Props) {
         <CalendarComponent
           value={value}
           internalValue={internalValue}
+          anchor={end}
           onDateRangeChange={(dateRange) => {
             onDateRangeChange(dateRange)
             if (dateRange?.from && dateRange?.to) {
@@ -184,6 +201,7 @@ function PredefinedOptions({
   setValue,
   setInternalValue,
   selectedOption,
+  anchor,
   children,
 }: {
   name: string
@@ -191,6 +209,7 @@ function PredefinedOptions({
   setValue: (range: ChartRange) => void
   setInternalValue: (dateRange: DateRange | undefined) => void
   selectedOption: ChartRangeOptionValue | 'custom'
+  anchor: number
   children?: React.ReactNode
 }) {
   const { track } = useTracking()
@@ -205,7 +224,7 @@ function PredefinedOptions({
         <button
           key={option.value}
           onClick={() => {
-            const range = optionToRange(option.value)
+            const range = optionToRange(option.value, anchor)
             setValue(range)
             setInternalValue(undefined)
             track('chartRangeSelected', { name, value: option.value })
@@ -231,11 +250,13 @@ function CalendarComponent({
   className,
   value,
   internalValue,
+  anchor,
   onDateRangeChange,
 }: {
   className?: string
   value: ChartRange
   internalValue: DateRange | undefined
+  anchor: number
   onDateRangeChange: (dateRange: DateRange | undefined) => void
 }) {
   const [month, setMonth] = useState<Date>(UnixTime.toDate(value[1]))
@@ -247,12 +268,12 @@ function CalendarComponent({
       onMonthChange={setMonth}
       // 2020-01-01
       startMonth={UnixTime.toDate(1577836800)}
-      endMonth={UnixTime.toDate(UnixTime.toStartOf(UnixTime.now(), 'day'))}
+      endMonth={UnixTime.toDate(UnixTime.toStartOf(anchor, 'day'))}
       selected={internalValue}
       min={1}
       timeZone="UTC"
       disabled={(date) =>
-        date.getTime() > UnixTime.toStartOf(UnixTime.now(), 'day') * 1000
+        date.getTime() > UnixTime.toStartOf(anchor, 'day') * 1000
       }
       onSelect={onDateRangeChange}
       captionLayout="dropdown"
@@ -264,10 +285,9 @@ function CalendarComponent({
 function rangeToOption(
   [from, to]: ChartRange,
   options: { value: ChartRangeOptionValue }[],
+  anchor: number,
 ): ChartRangeOptionValue | 'custom' {
-  if (
-    UnixTime.toStartOf(to, 'day') !== UnixTime.toStartOf(UnixTime.now(), 'day')
-  ) {
+  if (UnixTime.toStartOf(to, 'day') !== UnixTime.toStartOf(anchor, 'day')) {
     return 'custom'
   }
   if (from === null) return 'max'

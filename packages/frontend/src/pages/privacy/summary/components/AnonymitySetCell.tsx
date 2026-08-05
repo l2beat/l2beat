@@ -23,8 +23,16 @@ export function AnonymitySetCell({
 
   return (
     <Tooltip>
-      <TooltipTrigger className="font-medium text-sm" aria-label={displayValue}>
-        {displayValue}
+      <TooltipTrigger
+        className="inline-flex flex-col items-center justify-center"
+        aria-label={displayValue}
+      >
+        <span className="font-medium text-sm">{displayValue}</span>
+        {anonymitySet.bucket && (
+          <span className="font-medium text-2xs text-secondary">
+            {anonymitySet.bucket}
+          </span>
+        )}
       </TooltipTrigger>
       <TooltipContent className="max-w-[320px]">
         <span className="font-medium text-base">{displayValue}</span>

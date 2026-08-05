@@ -1,6 +1,5 @@
 import { useMemo } from 'react'
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from 'recharts'
-import type { ChartScale } from '~/components/chart/types'
 import type {
   ChartProject,
   CustomChartTooltipProps,
@@ -15,23 +14,18 @@ import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys
 import type { AnonymitySetCurves } from '~/server/features/privacy/anonymitySetCurves'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { AnonymitySetTooltip } from './AnonymitySetTooltip'
-import { getLegendHeight, getLogTicks } from './getAnonymitySetChartLayout'
+import { getLegendHeight } from './getAnonymitySetChartLayout'
 import { useAnonymitySetChartMeta } from './useAnonymitySetChartMeta'
 
 interface Props {
   curves: AnonymitySetCurves
-  scale?: ChartScale
   project?: ChartProject
 }
 
 /** Ticks that read well on a 7 to 365 day axis. */
 const X_AXIS_TICKS = [7, 30, 90, 180, 270, 365]
 
-export function AnonymitySetChart({
-  curves,
-  scale = 'linear',
-  project,
-}: Props) {
+export function AnonymitySetChart({ curves, project }: Props) {
   const chartMeta = useAnonymitySetChartMeta(curves.buckets)
 
   const chartData = useMemo(
@@ -47,11 +41,6 @@ export function AnonymitySetChart({
   )
 
   const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
-
-  const logTicks = useMemo(
-    () => getLogTicks(chartData, dataKeys),
-    [chartData, dataKeys],
-  )
 
   return (
     <ChartContainer
@@ -109,11 +98,6 @@ export function AnonymitySetChart({
           tickCount={4}
           dy={-10}
           tick={{ width: 350 }}
-          scale={scale === 'linear' ? 'auto' : scale}
-          // A log axis anchored at zero squeezes every curve into the top of
-          // the chart, so let it fit the data instead.
-          domain={scale === 'linear' ? undefined : ['auto', 'auto']}
-          ticks={scale === 'linear' ? undefined : logTicks}
           tickFormatter={(value: number) => formatInteger(Number(value))}
         />
         <ChartTooltip filterNull={false} content={<HoldingDurationTooltip />} />

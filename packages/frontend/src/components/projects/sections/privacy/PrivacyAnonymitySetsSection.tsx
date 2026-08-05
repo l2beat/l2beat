@@ -1,11 +1,14 @@
-import { useState } from 'react'
-import type { ChartScale } from '~/components/chart/types'
+import { UnixTime } from '@l2beat/shared-pure'
+import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
-import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
+import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
+import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { AnonymitySetChart } from '~/pages/privacy/project/components/AnonymitySetChart'
 import { AnonymitySetHistoryChart } from '~/pages/privacy/project/components/AnonymitySetHistoryChart'
+import { AnonymitySetRangeControls } from '~/pages/privacy/project/components/AnonymitySetRangeControls'
 import type { AnonymitySetCurves } from '~/server/features/privacy/anonymitySetCurves'
 import { formatDate } from '~/utils/dates'
+import { type ChartRange, optionToRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 
@@ -19,59 +22,49 @@ export function PrivacyAnonymitySetsSection({
   project,
   ...projectSectionProps
 }: PrivacyAnonymitySetsSectionProps) {
-  const [curveScale, setCurveScale] = useState<ChartScale>('linear')
-  const [historyScale, setHistoryScale] = useState<ChartScale>('linear')
-
   const asOf = formatDate(curves.asOf.slice(0, 10))
+  // The data is a frozen snapshot, so every range ends at its export date rather
+  // than at today - see `optionToRange`.
+  const anchor = UnixTime.fromDate(new Date(curves.asOf))
+
+  const [historyRange, setHistoryRange] = useState<ChartRange>(() =>
+    optionToRange('1y', anchor),
+  )
+
+  const visibleTimeRange = useMemo((): [number, number] | undefined => {
+    const first = curves.history[0]?.[0]
+    const last = curves.history.at(-1)?.[0]
+    if (first === undefined || last === undefined) return undefined
+
+    const [from, to] = historyRange
+    return [Math.max(first, from ?? first), Math.min(last, to)]
+  }, [curves.history, historyRange])
 
   return (
     <ProjectSection {...projectSectionProps}>
-      <h3 className="mb-2 font-bold text-heading-16">By holding duration</h3>
-      <p className="mb-4 text-paragraph-15 text-secondary">
-        How many unique addresses you blend in with, depending on how long you
-        leave your deposit in the pool. Each point counts the depositors of the
-        preceding period, so holding for up to 30 days means blending in with
-        everyone who deposited in the last 30 days. {curves.description} Counted
-        over deposits up to {asOf}.
-      </p>
-      <AnonymitySetChart curves={curves} scale={curveScale} project={project} />
-      <div className="mt-2 flex items-center justify-end">
-        <RadioGroup
-          name="anonymitySetScale"
-          value={curveScale}
-          onValueChange={(value) => setCurveScale(value as ChartScale)}
-        >
-          <RadioGroupItem value="symlog">LOG</RadioGroupItem>
-          <RadioGroupItem value="linear">LIN</RadioGroupItem>
-        </RadioGroup>
-      </div>
-
       <h3 className="mt-8 mb-2 font-bold text-heading-16">
-        {curves.historyWindowDays} day anonymity set over time
+        {curves.historyWindowDays} day historic anonymity set
       </h3>
       <p className="mb-4 text-paragraph-15 text-secondary">
-        The same {curves.historyWindowDays} day measurement, taken on every day
-        of the year up to {asOf}: how large a crowd you would have blended into
-        had you withdrawn on that day, after holding for up to{' '}
-        {curves.historyWindowDays} days. It shows whether a pool is drawing more
-        depositors over time or emptying out - its last point is the{' '}
-        {curves.historyWindowDays} day mark of the chart above.
+        How many unique addresses you could have blend in with, if you withdrew
+        on a particular day after depositing within {curves.historyWindowDays}{' '}
+        days prior. This metric serves as a proxy for historic anonymity set and
+        shows its development over time. Dev note: the demo data only goes up to{' '}
+        {asOf}.
       </p>
+      <ChartControlsWrapper>
+        <ProjectChartTimeRange timeRange={visibleTimeRange} />
+        <AnonymitySetRangeControls
+          range={historyRange}
+          setRange={setHistoryRange}
+          anchor={anchor}
+        />
+      </ChartControlsWrapper>
       <AnonymitySetHistoryChart
         curves={curves}
-        scale={historyScale}
         project={project}
+        range={historyRange}
       />
-      <div className="mt-2 flex items-center justify-end">
-        <RadioGroup
-          name="anonymitySetHistoryScale"
-          value={historyScale}
-          onValueChange={(value) => setHistoryScale(value as ChartScale)}
-        >
-          <RadioGroupItem value="symlog">LOG</RadioGroupItem>
-          <RadioGroupItem value="linear">LIN</RadioGroupItem>
-        </RadioGroup>
-      </div>
 
       <p className="mt-4 text-paragraph-13 text-secondary">
         The metric looks backwards: it counts deposits that already happened,
@@ -79,6 +72,20 @@ export function PrivacyAnonymitySetsSection({
         also depends on deposits made after yours, which cannot be known in
         advance.
       </p>
+
+      <br />
+      <h3 className="mb-2 font-bold text-heading-16">
+        Estimated anonymity set by hodling duration
+      </h3>
+      <p className="mb-4 text-paragraph-15 text-secondary">
+        An estimate of how many unique addresses you blend in with, depending on
+        how long you leave your deposit in the pool. It is based on historic
+        data of past deposits: each point counts the depositors of the preceding
+        period, so holding for up to 30 days effectively means blending in with
+        everyone who deposited in the last 30 days. Counted over deposits up to{' '}
+        {asOf}.
+      </p>
+      <AnonymitySetChart curves={curves} project={project} />
     </ProjectSection>
   )
 }

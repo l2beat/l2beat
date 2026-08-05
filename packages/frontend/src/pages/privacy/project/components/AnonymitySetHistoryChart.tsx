@@ -1,6 +1,5 @@
 import { useMemo } from 'react'
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from 'recharts'
-import type { ChartScale } from '~/components/chart/types'
 import type {
   ChartProject,
   CustomChartTooltipProps,
@@ -16,14 +15,16 @@ import { getXAxisProps } from '~/components/core/chart/utils/getXAxisProps'
 import type { AnonymitySetCurves } from '~/server/features/privacy/anonymitySetCurves'
 import { formatTimestamp } from '~/utils/dates'
 import { formatInteger } from '~/utils/number-format/formatInteger'
+import type { ChartRange } from '~/utils/range/range'
 import { AnonymitySetTooltip } from './AnonymitySetTooltip'
-import { getLegendHeight, getLogTicks } from './getAnonymitySetChartLayout'
+import { getLegendHeight } from './getAnonymitySetChartLayout'
 import { useAnonymitySetChartMeta } from './useAnonymitySetChartMeta'
 
 interface Props {
   curves: AnonymitySetCurves
-  scale?: ChartScale
   project?: ChartProject
+  /** Which slice of the history to draw. Defaults to all of it. */
+  range?: ChartRange
 }
 
 /**
@@ -31,34 +32,31 @@ interface Props {
  * many unique addresses had deposited in the preceding month, i.e. the crowd
  * you would have blended into had you withdrawn on that day.
  *
- * Plots the same buckets in the same colors as `AnonymitySetChart`, so the two
- * can be read against each other.
+ * Covers the project's whole life, from its first deposit up to the snapshot
+ * date, and plots the same buckets in the same colors as `AnonymitySetChart`,
+ * so the two can be read against each other.
  */
-export function AnonymitySetHistoryChart({
-  curves,
-  scale = 'linear',
-  project,
-}: Props) {
+export function AnonymitySetHistoryChart({ curves, project, range }: Props) {
   const chartMeta = useAnonymitySetChartMeta(curves.buckets)
 
-  const chartData = useMemo(
-    () =>
-      curves.history.map(([timestamp, ...setSizes]) => {
+  const chartData = useMemo(() => {
+    const [from, to] = range ?? [null, Number.POSITIVE_INFINITY]
+
+    return curves.history
+      .filter(
+        ([timestamp = 0]) =>
+          (from === null || timestamp >= from) && timestamp <= to,
+      )
+      .map(([timestamp, ...setSizes]) => {
         const point: Record<string, number> = { timestamp: timestamp ?? 0 }
         curves.buckets.forEach((bucket, index) => {
           point[bucket.id] = setSizes[index] ?? 0
         })
         return point as { timestamp: number } & Record<string, number>
-      }),
-    [curves],
-  )
+      })
+  }, [curves, range])
 
   const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
-
-  const logTicks = useMemo(
-    () => getLogTicks(chartData, dataKeys),
-    [chartData, dataKeys],
-  )
 
   return (
     <ChartContainer
@@ -101,11 +99,6 @@ export function AnonymitySetHistoryChart({
           tickCount={4}
           dy={-10}
           tick={{ width: 350 }}
-          scale={scale === 'linear' ? 'auto' : scale}
-          // A log axis anchored at zero squeezes every series into the top of
-          // the chart, so let it fit the data instead.
-          domain={scale === 'linear' ? undefined : ['auto', 'auto']}
-          ticks={scale === 'linear' ? undefined : logTicks}
           tickFormatter={(value: number) => formatInteger(Number(value))}
         />
         <ChartTooltip
