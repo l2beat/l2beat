@@ -1136,7 +1136,6 @@
       "transfers": [
         {
           "type": "butternetwork.Transfer",
-          "bridgeType": "nonMinting",
           "src": {
             "event": { "ctx": { "chain": "base" } },
             "wasBurned": false

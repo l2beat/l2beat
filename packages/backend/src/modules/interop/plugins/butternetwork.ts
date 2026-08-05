@@ -39,70 +39,36 @@ const UINT64_MASK = (1n << 64n) - 1n
 type ButterNetwork = {
   chain: string
   chainId: number
-  bridge: EthereumAddress
 }
 
 // https://github.com/butternetwork/butter-mos-contracts/blob/main/evmv3/constants/chains.json
 // https://github.com/butternetwork/butter-mos-contracts/blob/main/evmv3/deployments/deploy.json
+const BUTTER_BRIDGE = EthereumAddress(
+  '0x0000317Bec33Af037b5fAb2028f52d14658F6A56',
+)
+const BUTTER_ZKSYNC_BRIDGE = EthereumAddress(
+  '0xdeF84C4B412361E3A98A5277C108D7F0Df02fA3d',
+)
+
 const BUTTER_NETWORKS = defineNetworks<ButterNetwork>('butternetwork', [
-  {
-    chain: 'ethereum',
-    chainId: 1,
-    bridge: EthereumAddress('0x0000317Bec33Af037b5fAb2028f52d14658F6A56'),
-  },
-  {
-    chain: 'arbitrum',
-    chainId: 42161,
-    bridge: EthereumAddress('0x0000317Bec33Af037b5fAb2028f52d14658F6A56'),
-  },
-  {
-    chain: 'base',
-    chainId: 8453,
-    bridge: EthereumAddress('0x0000317Bec33Af037b5fAb2028f52d14658F6A56'),
-  },
-  {
-    chain: 'optimism',
-    chainId: 10,
-    bridge: EthereumAddress('0x0000317Bec33Af037b5fAb2028f52d14658F6A56'),
-  },
-  {
-    chain: 'polygonpos',
-    chainId: 137,
-    bridge: EthereumAddress('0x0000317Bec33Af037b5fAb2028f52d14658F6A56'),
-  },
-  {
-    chain: 'zksync2',
-    chainId: 324,
-    bridge: EthereumAddress('0xdeF84C4B412361E3A98A5277C108D7F0Df02fA3d'),
-  },
-  {
-    chain: 'bsc',
-    chainId: 56,
-    bridge: EthereumAddress('0x0000317Bec33Af037b5fAb2028f52d14658F6A56'),
-  },
-  {
-    chain: 'linea',
-    chainId: 59144,
-    bridge: EthereumAddress('0x0000317Bec33Af037b5fAb2028f52d14658F6A56'),
-  },
-  {
-    chain: 'xlayer',
-    chainId: 196,
-    bridge: EthereumAddress('0x0000317Bec33Af037b5fAb2028f52d14658F6A56'),
-  },
-  {
-    chain: 'unichain',
-    chainId: 130,
-    bridge: EthereumAddress('0x0000317Bec33Af037b5fAb2028f52d14658F6A56'),
-  },
-  {
-    chain: 'avalanche',
-    chainId: 43114,
-    bridge: EthereumAddress('0x0000317Bec33Af037b5fAb2028f52d14658F6A56'),
-  },
+  { chain: 'ethereum', chainId: 1 },
+  { chain: 'arbitrum', chainId: 42161 },
+  { chain: 'base', chainId: 8453 },
+  { chain: 'optimism', chainId: 10 },
+  { chain: 'polygonpos', chainId: 137 },
+  { chain: 'zksync2', chainId: 324 },
+  { chain: 'bsc', chainId: 56 },
+  { chain: 'linea', chainId: 59144 },
+  { chain: 'xlayer', chainId: 196 },
+  { chain: 'unichain', chainId: 130 },
+  { chain: 'avalanche', chainId: 43114 },
 ])
 
-const BUTTER_BRIDGES = BUTTER_NETWORKS.map((network) => network.bridge)
+function getBridgeAddress(network: ButterNetwork) {
+  return network.chain === 'zksync2' ? BUTTER_ZKSYNC_BRIDGE : BUTTER_BRIDGE
+}
+
+const BUTTER_BRIDGES = [BUTTER_BRIDGE, BUTTER_ZKSYNC_BRIDGE]
 
 type MessageOutPayload = {
   messageType: number
@@ -211,22 +177,6 @@ function resolveDestinationMint(
   return release.transfer ? false : undefined
 }
 
-function getBridgeType(
-  srcWasBurned: boolean | undefined,
-  dstWasMinted: boolean | undefined,
-) {
-  if (srcWasBurned === true && dstWasMinted === true) {
-    return 'burnAndMint' as const
-  }
-  if (srcWasBurned === false && dstWasMinted === true) {
-    return 'lockAndMint' as const
-  }
-  if (srcWasBurned === false && dstWasMinted === false) {
-    return 'nonMinting' as const
-  }
-  return undefined
-}
-
 export const ButterMessageOut = createInteropEventType<{
   orderId: `0x${string}`
   $dstChain: string
@@ -261,7 +211,10 @@ export class ButterNetworkPlugin implements InteropPluginResyncable {
         signature: messageOutLog,
         includeTxEvents: [transferLog],
         addresses: BUTTER_NETWORKS.map((network) =>
-          ChainSpecificAddress.fromLong(network.chain, network.bridge),
+          ChainSpecificAddress.fromLong(
+            network.chain,
+            getBridgeAddress(network),
+          ),
         ),
       },
       {
@@ -269,7 +222,10 @@ export class ButterNetworkPlugin implements InteropPluginResyncable {
         signature: messageInLog,
         includeTxEvents: [transferLog],
         addresses: BUTTER_NETWORKS.map((network) =>
-          ChainSpecificAddress.fromLong(network.chain, network.bridge),
+          ChainSpecificAddress.fromLong(
+            network.chain,
+            getBridgeAddress(network),
+          ),
         ),
       },
     ]
@@ -351,10 +307,6 @@ export class ButterNetworkPlugin implements InteropPluginResyncable {
           dstTokenAddress: event.args.token,
           dstAmount: event.args.amount,
           dstWasMinted: event.args.dstWasMinted,
-          bridgeType: getBridgeType(
-            messageOut.args.srcWasBurned,
-            event.args.dstWasMinted,
-          ),
         }),
       )
     }
