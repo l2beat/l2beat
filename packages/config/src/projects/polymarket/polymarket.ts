@@ -40,14 +40,18 @@ const timelockDelay = formatDelay(
 // so it is bounded only by this rate. A rate of zero disables the check rather
 // than forbidding fees: `if (maxFeeRate == 0) return;` in
 // Fees._validateFeeWithMaxFeeRate, commented "No limit enforced if rate is 0".
-const maxFeeRateBps = discovery.getContractValue<number>(
-  'CTFExchange',
-  'getMaxFeeRate',
+const maxFeeRateBps = Math.max(
+  discovery.getContractValue<number>('CTFExchange', 'getMaxFeeRate'),
+  discovery.getContractValue<number>('NegRiskCtfExchange', 'getMaxFeeRate'),
 )
 const feeCeiling =
   maxFeeRateBps === 0
     ? 'the on-chain cap is disabled'
     : `the on-chain cap is ${maxFeeRateBps / 100}%`
+const feeCeilingClause =
+  maxFeeRateBps === 0
+    ? 'currently zero, a setting that disables the check rather than forbidding fees, so the all-in price can be worse than the signed limit'
+    : `currently ${maxFeeRateBps / 100}%`
 
 const adapterSafetyPeriod = formatDelay(
   discovery.getContractValue<number>('UmaCtfAdapterBinary', 'SAFETY_PERIOD'),
@@ -107,6 +111,7 @@ export const polymarket: BaseProject = {
           'CollateralToken',
           'symbol',
         ),
+        feeCeilingClause,
         userPauseBlocks: discovery.getContractValue<number>(
           'CTFExchange',
           'userPauseBlockInterval',
