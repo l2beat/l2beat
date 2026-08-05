@@ -52,9 +52,9 @@ const tableValueColumns = [
   },
   {
     key: 'realtimeCensorshipResistance',
-    header: 'Real-time\nCR',
+    header: 'RT\nCR',
     tooltip:
-      'Whether the normal low-latency sequencing path resists censorship by the operator.',
+      'Realtime CR: Whether the normal low-latency sequencing path resists censorship by the operator.',
     sentimentOverride: 'warning',
   },
   {

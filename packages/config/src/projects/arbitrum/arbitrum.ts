@@ -563,7 +563,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
         },
         sequencer: {
           value: 'Centralized',
-          secondLine: 'Redis-coordinated HA',
+          secondLine: 'Redis HA',
           sentiment: 'bad',
           description:
             'The Arbitrum operator controls the real-time sequencer feed. Their documented production HA architecture runs redundant sequencer replicas and selects one active instance through shared Redis state. This improves availability but is not BFT consensus and does not create independent operators or censorship resistance.',
@@ -584,7 +584,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
         },
         inclusionDelay: {
           value: `${formatSeconds(currentForceInclusionDelayBlocks * assumedBlockTime, { fullUnit: true })}`,
-          secondLine: `${currentForceInclusionDelayBlocks.toLocaleString('en-US')} L1 blocks (${delayBuffer.threshold.toLocaleString('en-US')}–${maxTimeVariation.delayBlocks.toLocaleString('en-US')}, dynamic)`,
+          secondLine: `${delayBuffer.threshold.toLocaleString('en-US')}-${maxTimeVariation.delayBlocks.toLocaleString('en-US')} L1 blocks`,
           sentiment: 'good',
           description:
             'The message-specific delay is the lower of delayBlocks and the delay buffer. The current buffer gives the maximum delay. The force call becomes valid in the following Ethereum block.',

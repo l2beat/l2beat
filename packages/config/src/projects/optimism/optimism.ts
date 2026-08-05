@@ -261,7 +261,7 @@ export const optimism: ScalingProject = opStackL2({
         },
         sequencer: {
           value: 'Centralized',
-          secondLine: 'Raft-coordinated HA',
+          secondLine: 'Raft HA',
           sentiment: 'bad',
           description:
             'The OP Mainnet operator controls real-time ordering. They run redundant sequencer instances coordinated by op-conductor using Raft leader election, with only the leader producing blocks. op-conductor explicitly assumes all nodes are honest and is not Byzantine fault tolerant, so the replicas do not create independent operators or censorship resistance.',
