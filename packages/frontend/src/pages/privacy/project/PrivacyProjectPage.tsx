@@ -94,6 +94,7 @@ export function PrivacyProjectPage({ entry, queryState, ...props }: Props) {
                         assetsCount={entry.assetsCount}
                         bucketsCount={entry.bucketCount}
                         deposits={entry.summary.deposits}
+                        activeRelayers30d={entry.summary.activeRelayers30d}
                       />
 
                       <PrivacyProjectRiskProfile

@@ -1,4 +1,5 @@
 import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
+import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 
@@ -11,6 +12,7 @@ interface Props {
     last7d: number
     last30d: number
   }
+  activeRelayers30d?: number
 }
 
 export function PrivacyProjectStats({
@@ -18,8 +20,10 @@ export function PrivacyProjectStats({
   assetsCount,
   bucketsCount,
   deposits,
+  activeRelayers30d,
 }: Props) {
   const hasTrackedAssets = assetsCount > 0
+  const hasRelayerTracking = activeRelayers30d !== undefined
 
   if (!hasTrackedAssets) {
     return (
@@ -41,7 +45,12 @@ export function PrivacyProjectStats({
   }
 
   return (
-    <div className="grid gap-4 md:grid-cols-4">
+    <div
+      className={cn(
+        'grid gap-4',
+        hasRelayerTracking ? 'md:grid-cols-5' : 'md:grid-cols-4',
+      )}
+    >
       <ProjectSummaryStat
         className="max-md:hidden"
         title="Total Value Locked"
@@ -82,6 +91,13 @@ export function PrivacyProjectStats({
         title="Deposits Total"
         value={formatInteger(deposits.total ?? 0)}
       />
+      {hasRelayerTracking && (
+        <ProjectSummaryStat
+          title="Active Relayers 30D"
+          value={formatInteger(activeRelayers30d)}
+          tooltip="The number of unique relayer addresses observed in relayed withdrawals over the past 30 days."
+        />
+      )}
     </div>
   )
 }
