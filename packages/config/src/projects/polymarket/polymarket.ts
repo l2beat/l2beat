@@ -15,10 +15,6 @@ const discovery = new ProjectDiscovery('polymarket')
 const formatDelay = (seconds: number): string =>
   seconds === 0 ? 'no delay' : formatSeconds(seconds, { fullUnit: true })
 
-// "12 hours" -> "12-hour", so a delay can be used as an adjective in prose.
-const asAdjective = (delay: string): string =>
-  delay.replace(/^(\d+) (\w+?)s?$/, '$1-$2')
-
 // "3 of 6 (50%)" -> "3/6", so the prose stays readable if the Safe is resized.
 const multisigRatio = (contract: string): string => {
   const threshold = discovery.getContractValue<string>(
@@ -67,7 +63,7 @@ export const polymarket: BaseProject = {
     ],
   },
   display: {
-    description: `Polymarket is a prediction market where users trade outcome shares backed one-for-one by collateral: a complete set of a market's outcomes always redeems for one unit, and resolution decides how that unit is split between them. Orders are matched off-chain by a permissioned operator and settled on-chain by exchange contracts that check every order's signature, so the operator cannot invent a trade — but it does choose the fee charged on each fill, which is not part of what the user signs and is capped only by a rate the admins set, so the all-in price can be worse than the signed limit. Collateral is a wrapped stablecoin whose backing sits in a vault the protocol controls. Outcomes come from an UMA optimistic oracle, but adapter admins can override any market: after a ${asAdjective(adapterSafetyPeriod)} safety period on binary markets, and with ${negRiskOperatorDelay} on multi-outcome ones. A ${adminSafe} multisig holds most admin roles, alongside a few operational addresses including an EOA on the multi-outcome operator, and through a ${asAdjective(timelockDelay)} timelock it can upgrade the collateral, wallet and combination-market contracts.`,
+    description: `Polymarket is a prediction market where users trade outcome shares backed one-for-one by collateral: a complete set of a market's outcomes always redeems for one unit, and resolution decides how that unit is split between them. Orders are matched off-chain by a permissioned operator and settled on-chain by exchange contracts that check every order's signature. Collateral is a wrapped stablecoin held in a protocol-controlled vault, and outcomes are reported by an UMA optimistic oracle.`,
     detailedDescription: readProjectMarkdown(
       'polymarket',
       'detailedDescription',
