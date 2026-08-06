@@ -147,12 +147,13 @@ describe(transformFunctionCallsQueryResult.name, () => {
     expect(logger.error).not.toHaveBeenCalled()
   })
 
-  it('fails the batch instead of silently dropping grouped liveness', () => {
+  it('drops undecodable grouped liveness without dropping costs', () => {
     const signature = 'function submit((uint256 start,uint256 end))' as const
     const iface = new utils.Interface([signature])
     const selector = iface.getSighash('submit')
     const address = EthereumAddress.random()
     const id = createTrackedTxId.random()
+    const costsId = createTrackedTxId.random()
     const logger = mockObject<Logger>({ error: mockFn().returns(undefined) })
     const config: Configuration<
       TrackedTxConfigEntry & { params: TrackedTxFunctionCallConfig }
@@ -170,29 +171,46 @@ describe(transformFunctionCallsQueryResult.name, () => {
         params: { formula: 'functionCall', address, selector, signature },
       },
     }
+    const costsConfig: Configuration<
+      TrackedTxConfigEntry & { params: TrackedTxFunctionCallConfig }
+    > = {
+      id: costsId,
+      minHeight: 0,
+      maxHeight: null,
+      properties: {
+        id: costsId,
+        projectId: ProjectId('project'),
+        type: 'l2costs',
+        subtype: 'stateUpdates',
+        sinceTimestamp: SINCE_TIMESTAMP,
+        params: { formula: 'functionCall', address, selector, signature },
+      },
+    }
 
-    expect(() =>
-      transformFunctionCallsQueryResult(
-        [config],
-        [],
-        [],
-        [
-          {
-            hash: txHashes[2],
-            block_number: block,
-            block_time: timestamp,
-            input: selector,
-            to: address,
-            gas_price: 10n,
-            gas_used: 100,
-            data_length: 4,
-            non_zero_bytes: 4,
-            blob_versioned_hashes: null,
-          },
-        ],
-        logger,
-      ),
-    ).toThrow('Unexpected end of function call input')
+    const result = transformFunctionCallsQueryResult(
+      [config, costsConfig],
+      [],
+      [],
+      [
+        {
+          hash: txHashes[2],
+          block_number: block,
+          block_time: timestamp,
+          input: selector,
+          to: address,
+          gas_price: 10n,
+          gas_used: 100,
+          data_length: 4,
+          non_zero_bytes: 4,
+          blob_versioned_hashes: null,
+        },
+      ],
+      logger,
+    )
+
+    expect(result).toHaveLength(1)
+    expect(result[0]?.id).toEqual(costsId)
+    expect(result[0]?.type).toEqual('l2costs')
     expect(logger.error).toHaveBeenCalledWith(
       'Failed to derive liveness grouping key',
       {

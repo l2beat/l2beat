@@ -1,3 +1,5 @@
+import { ProjectService } from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { utils } from 'ethers'
 import {
@@ -18,13 +20,31 @@ describe(getFunctionCallParameterPrefix.name, () => {
     ).toEqual(68)
   })
 
-  it('returns 68 bytes for Aztec args.start', () => {
-    expect(
-      getFunctionCallParameterPrefix(
-        'function submitEpochRootProof((uint256,uint256,(bytes32,bytes32,bytes32,address),(bytes32,bytes32,bytes32,bytes32,bytes32,uint256,uint256,address,bytes32,(uint128,uint128),uint256,uint256)[],(bytes,bytes),bytes,bytes))',
-        [0, 0],
-      ),
-    ).toEqual(68)
+  it('accepts configured grouping paths and keeps Aztec at 68 bytes', async () => {
+    const projects = await new ProjectService().getProjects({
+      select: ['trackedTxsConfig'],
+    })
+    let aztecPrefix: number | undefined
+
+    for (const project of projects) {
+      for (const config of project.trackedTxsConfig) {
+        if (config.type !== 'liveness' || config.groupBy === undefined) continue
+        assert(config.params.formula === 'functionCall')
+
+        const prefix = getFunctionCallParameterPrefix(
+          config.params.signature,
+          config.groupBy.path,
+        )
+        if (
+          project.id === 'aztecnetwork' &&
+          config.subtype === 'stateUpdates'
+        ) {
+          aztecPrefix = prefix
+        }
+      }
+    }
+
+    expect(aztecPrefix).toEqual(68)
   })
 
   it('falls back to full input for paths without a static prefix', () => {

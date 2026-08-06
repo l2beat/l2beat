@@ -116,7 +116,7 @@ export function transformFunctionCallsQueryResult(
             transactionHash: r.hash,
             blockNumber: r.block_number,
           })
-          throw error
+          return []
         }
       }
 
