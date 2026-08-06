@@ -204,7 +204,7 @@ async function getCachedData(manifest: Manifest) {
       iconUrl: group.iconUrl,
     })),
     ongoingAnomalies,
-    whatsNewItems: getHomeWhatsNewItems(),
+    whatsNewItem: getHomeWhatsNewItem(),
   }
 }
 
@@ -237,7 +237,7 @@ async function getEthereumEconomicSecurity(): Promise<number | undefined> {
   )
 }
 
-function getHomeWhatsNewItems(): HomeWhatsNewItem[] {
+function getHomeWhatsNewItem(): HomeWhatsNewItem | undefined {
   // The card is a permanent part of the desktop layout, so unlike the
   // floating widget it falls back to the most recent entry when no
   // campaign is currently active.
@@ -246,19 +246,17 @@ function getHomeWhatsNewItems(): HomeWhatsNewItem[] {
     selectActiveWhatsNewEntry(entries, new Date()) ??
     entries.find((entry) => entry.whatsNew)
   if (!entry?.whatsNew) {
-    return []
+    return undefined
   }
-  return [
-    {
-      id: `changelog-${entry.id}`,
-      title: entry.title,
-      description: entry.summary,
-      href: entry.whatsNew.href ?? `/changelog#${entry.id}`,
-      imageSrc: entry.whatsNew.image,
-      verticalImageSrc: entry.whatsNew.verticalImage,
-      imageAlt: entry.whatsNew.alt,
-    },
-  ]
+  return {
+    id: `changelog-${entry.id}`,
+    title: entry.title,
+    description: entry.summary,
+    href: entry.whatsNew.href ?? `/changelog#${entry.id}`,
+    imageSrc: entry.whatsNew.image,
+    verticalImageSrc: entry.whatsNew.verticalImage,
+    imageAlt: entry.whatsNew.alt,
+  }
 }
 
 export interface HomeRecentProject {

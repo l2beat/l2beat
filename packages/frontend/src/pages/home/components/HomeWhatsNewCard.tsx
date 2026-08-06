@@ -15,19 +15,20 @@ export interface HomeWhatsNewItem {
 }
 
 export function HomeWhatsNewCard({
-  items,
+  item,
   className,
 }: {
-  items: HomeWhatsNewItem[]
+  item: HomeWhatsNewItem | undefined
   className?: string
 }) {
-  if (items.length === 0) {
+  if (!item) {
     return null
   }
+  console.log(item)
   return (
     <>
       <script
-        dangerouslySetInnerHTML={{ __html: getDismissedCheckScript(items) }}
+        dangerouslySetInnerHTML={{ __html: getDismissedCheckScript(item) }}
       />
       <HomeCard
         className={cn(
@@ -39,13 +40,9 @@ export function HomeWhatsNewCard({
         <h2 className="sr-only font-bold text-xl md:not-sr-only xl:sr-only">
           What's new
         </h2>
-        <ul className="flex flex-1 flex-col gap-2 xl:gap-0">
-          {items.map((item) => (
-            <li key={item.id} className="relative flex flex-1">
-              <WhatsNewItemCard item={item} />
-            </li>
-          ))}
-        </ul>
+        <div className="relative flex flex-1">
+          <WhatsNewItemCard item={item} />
+        </div>
       </HomeCard>
     </>
   )
@@ -56,9 +53,9 @@ export function HomeWhatsNewCard({
  * already dismissed the card never see it flash on small screens. The attribute
  * lives on <html> (outside the React root) to keep hydration untouched.
  */
-function getDismissedCheckScript(items: HomeWhatsNewItem[]): string {
-  const keys = JSON.stringify(items.map((item) => `whats-new-${item.id}`))
-  return `try{if(${keys}.every(function(k){return localStorage.getItem(k)==='true'}))document.documentElement.dataset.whatsNewDismissed='true'}catch{}`
+function getDismissedCheckScript(item: HomeWhatsNewItem): string {
+  const key = JSON.stringify(`whats-new-${item.id}`)
+  return `try{if(localStorage.getItem(${key})==='true')document.documentElement.dataset.whatsNewDismissed='true'}catch{}`
 }
 
 function WhatsNewItemCard({ item }: { item: HomeWhatsNewItem }) {
@@ -74,19 +71,24 @@ function WhatsNewItemCard({ item }: { item: HomeWhatsNewItem }) {
         onClick={() => setWidgetClosed(true)}
         className="group relative block flex-1 overflow-hidden md:flex md:flex-row md:rounded-lg md:border-2 md:border-divider xl:block xl:min-h-40 xl:rounded-none xl:border-0"
       >
-        <div className="relative aspect-video w-full overflow-hidden md:aspect-auto md:w-32 md:shrink-0 xl:absolute xl:inset-0 xl:w-full">
-          <picture className="contents">
-            <source
-              media="(min-width: 1440px)"
-              srcSet={item.verticalImageSrc ?? item.imageSrc}
-            />
+        <div className="relative aspect-video w-full overflow-hidden [container-type:size] md:aspect-auto md:min-h-[5.5rem] md:w-32 md:shrink-0 xl:absolute xl:inset-0 xl:min-h-0 xl:w-full">
+          <img
+            src={item.imageSrc}
+            alt={item.imageAlt}
+            loading="lazy"
+            className={cn(
+              'size-full object-cover object-top-left transition-transform duration-300 group-hover:scale-[1.02]',
+              item.verticalImageSrc && '[@container_(aspect-ratio<1)]:hidden',
+            )}
+          />
+          {item.verticalImageSrc && (
             <img
-              src={item.imageSrc}
+              src={item.verticalImageSrc}
               alt={item.imageAlt}
               loading="lazy"
-              className="size-full object-cover object-top-left transition-transform duration-300 group-hover:scale-[1.02] md:min-h-[5.5rem] xl:min-h-0"
+              className="size-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.02] [@container_(aspect-ratio>=1)]:hidden"
             />
-          </picture>
+          )}
         </div>
         <div className="absolute inset-x-0 bottom-0 flex min-w-0 flex-col gap-0.5 bg-linear-to-t from-black/85 via-black/60 to-transparent p-2.5 pt-8 md:static md:flex-1 md:justify-center md:gap-1 md:bg-none md:p-3 md:pr-8 xl:absolute xl:inset-x-0 xl:bottom-0 xl:bg-linear-to-t xl:p-4 xl:pt-12 xl:pr-4">
           <span

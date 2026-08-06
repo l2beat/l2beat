@@ -49,7 +49,7 @@ interface Props extends AppLayoutProps {
   recentChangesCount: number
   recentChangesProjects: HomeRecentChangesProject[]
   ongoingAnomalies: OngoingAnomaliesOverview
-  whatsNewItems: HomeWhatsNewItem[]
+  whatsNewItem: HomeWhatsNewItem | undefined
 }
 
 export function HomePage({
@@ -70,7 +70,7 @@ export function HomePage({
   recentChangesCount,
   recentChangesProjects,
   ongoingAnomalies,
-  whatsNewItems,
+  whatsNewItem,
   ...props
 }: Props) {
   return (
@@ -83,17 +83,14 @@ export function HomePage({
           <MainPageHeader>Home</MainPageHeader>
           <div className="flex flex-col md:gap-4 xl:gap-6 [&_.primary-card]:max-md:rounded-none [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b">
             <div className="grid grid-cols-1 items-stretch md:gap-4 xl:grid-cols-[minmax(260px,340px)_minmax(340px,1fr)] xl:gap-6 2xl:grid-cols-[minmax(260px,340px)_minmax(340px,1fr)_minmax(400px,1.35fr)]">
-              {/* Between lg and xl the What's new card is this column's only
-                  visible child, so the whole column has to go when dismissed —
-                  otherwise it leaves an empty grid row above the interop card. */}
-              <div className="flex h-full min-w-0 flex-col md:gap-4 [[data-whats-new-dismissed]_&]:lg:max-xl:hidden">
+              <div className="flex h-full min-w-0 flex-col md:gap-4 lg:max-xl:hidden">
                 <HomeStatsStrip counts={projectCounts} className="lg:hidden" />
                 <HomeRecentProjectsCard
                   className="hidden h-auto xl:flex"
                   projects={recentProjects}
                 />
                 <HomeWhatsNewCard
-                  items={whatsNewItems}
+                  item={whatsNewItem}
                   className="min-h-0 xl:flex-1"
                 />
                 <HomeAnomaliesTile
@@ -135,17 +132,24 @@ export function HomePage({
                 />
               </div>
             </div>
-            <div className="grid grid-cols-1 gap-4 max-md:contents sm:grid-cols-2 xl:hidden xl:gap-6">
-              <HomeAnomaliesTile ongoingAnomalies={ongoingAnomalies} />
-              <HomeRecentChangesTile
-                recentChangesCount={recentChangesCount}
-                recentChangesProjects={recentChangesProjects}
+            <div className="grid grid-cols-1 gap-4 max-md:contents xl:hidden">
+              <div className="grid gap-4 sm:grid-cols-2">
+                <HomeAnomaliesTile ongoingAnomalies={ongoingAnomalies} />
+                <HomeRecentChangesTile
+                  recentChangesCount={recentChangesCount}
+                  recentChangesProjects={recentChangesProjects}
+                />
+              </div>
+              <HomeWhatsNewCard
+                item={whatsNewItem}
+                className="h-full flex-1 xl:hidden"
+              />
+              <HomeRecentProjectsCard
+                className="xl:hidden"
+                projects={recentProjects}
               />
             </div>
-            <HomeRecentProjectsCard
-              className="xl:hidden"
-              projects={recentProjects}
-            />
+
             <div className="grid grid-cols-1 items-stretch md:gap-4 lg:grid-cols-2 xl:gap-6">
               <HomeTopInteropProtocolsCard
                 interopChains={interopChains}
