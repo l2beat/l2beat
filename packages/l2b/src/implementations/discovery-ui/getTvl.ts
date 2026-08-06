@@ -1,14 +1,27 @@
+import { getChainConfig } from '@l2beat/discovery'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import { getProvider } from '../common/GetProvider'
+import { getPlainLogger } from '../common/getPlainLogger'
+import { estimateTVL } from '../estimateTVL'
 import type { ApiTvlResponse } from './types'
 
-const USDC_ICON_URL =
-  'https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694'
+const USD_CENTS_IN_DOLLAR = 100
 
-export function getTvl(_projectId: string): ApiTvlResponse {
-  return [
-    {
-      tvl: Math.random() * 1_000_000_000,
-      ticker: 'USDC',
-      iconURL: USDC_ICON_URL,
-    },
-  ]
+export async function getTvl(
+  holder: ChainSpecificAddress,
+): Promise<ApiTvlResponse> {
+  const chainName = ChainSpecificAddress.longChain(holder)
+  const chain = getChainConfig(chainName)
+  const provider = await getProvider(chain.rpcUrl, chain.explorer, chainName)
+
+  const values = await estimateTVL(getPlainLogger(), provider, holder)
+  if (!values) return []
+
+  return values
+    .map((value) => ({
+      tvl: Number(value.value) / USD_CENTS_IN_DOLLAR,
+      ticker: value.symbol,
+      iconURL: value.iconUrl,
+    }))
+    .sort((a, b) => b.tvl - a.tvl)
 }

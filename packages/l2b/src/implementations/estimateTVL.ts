@@ -6,12 +6,14 @@ import { type BigNumber, utils } from 'ethers'
 export interface TokenValue {
   symbol: string
   value: bigint
+  iconUrl: string | undefined
 }
 
 interface Token {
   symbol: string
   coingeckoId: CoingeckoId
   decimals: number
+  iconUrl: string | undefined
   /** undefined for the native token of the chain */
   address: ChainSpecificAddress | undefined
 }
@@ -53,6 +55,7 @@ export async function estimateTVL(
     return {
       symbol: entry.symbol,
       value: price ? calculateValue(entry.balance, price, entry.decimals) : 0n,
+      iconUrl: entry.iconUrl,
     }
   })
 }
@@ -61,6 +64,7 @@ const ETHER: Token = {
   symbol: 'ETH',
   coingeckoId: CoingeckoId('ethereum'),
   decimals: 18,
+  iconUrl: undefined,
   address: undefined,
 }
 
@@ -75,6 +79,7 @@ async function getTokensOnChain(
       symbol: token.symbol,
       coingeckoId: token.coingeckoId,
       decimals: token.decimals,
+      iconUrl: token.iconUrl,
       address:
         token.address === undefined
           ? undefined

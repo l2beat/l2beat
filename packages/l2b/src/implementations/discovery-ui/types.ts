@@ -19,7 +19,7 @@ export type ApiTvlResponse = ApiTvlEntry[]
 export interface ApiTvlEntry {
   tvl: number
   ticker: string
-  iconURL: string
+  iconURL: string | undefined
 }
 
 export interface ApiPreviewResponse {
