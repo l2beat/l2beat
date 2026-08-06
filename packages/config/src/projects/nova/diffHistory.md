@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x6a0c436102f21ff090fce802835b3ea48855197e
+
+# Diff at Fri, 31 Jul 2026 14:05:58 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@a3c051e775d3ff28bddb26800fc0b8049d20228a block: 1784846743
+- current timestamp: 1785506691
+
+## Description
+
+Track the ArbOS 61 transaction-filtering precompile (`0x..74`) via the new shared `orbitstack/ArbFilteredTransactionsManager` template, seeded as a relative off the L2UpgradeExecutor. The feature is not enabled on Arbitrum Nova, so it yields no results today (0 filtered txs; `getAllTransactionFilterers` reverts, rendered as `EXPECT_REVERT`); it auto-populates if ever activated.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784846743 (main branch discovery), not current.
+
+```diff
+    contract L2UpgradeExecutor (arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.transactionFilteringPrecompile:
++        "arb-nova:0x0000000000000000000000000000000000000074"
+    }
+```
+
 Generated with discovered.json: 0xa0b4e02be74fa715b567682b0032c71f6d7f57da
 
 # Diff at Tue, 21 Jul 2026 15:41:13 GMT:

@@ -1,12 +1,31 @@
 {
   "name": "arbitrum",
-  "timestamp": 1784846673,
-  "configHash": "0xe1750ee9589de599e177e1f45c318cef0784455485d9a7af1c0830738e9a366c",
+  "timestamp": 1785506585,
+  "configHash": "0xf65f7cb5e27064d51eceab69eb8038092a980068b2ac5735fb7cc5723d5e3b34",
   "entries": [
     {
       "address": "arb1:0x0000000000000000000000000000000000000001",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "ArbFilteredTransactionsManager",
+      "address": "arb1:0x0000000000000000000000000000000000000074",
+      "type": "EOA",
+      "template": "orbitstack/ArbFilteredTransactionsManager",
+      "proxyType": "EOA",
+      "description": "ArbOS 61 transaction-filtering precompile (0x..74). An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay. Available from ArbOS 61 onwards. On chains where the feature is not enabled (e.g. Arbitrum One and Nova) it has no filterers and no filtered transactions, but is tracked so any future activation is caught immediately. Compare Robinhood, where this precompile is active.",
+      "values": {
+        "filteredTransactionsAdded": 0,
+        "filteredTransactionsDeleted": 0,
+        "transactionFilterers": "EXPECT_REVERT"
+      },
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://github.com/OffchainLabs/nitro/blob/v3.11.0/precompiles/ArbFilteredTransactionsManager.go"
+        }
+      ]
     },
     {
       "address": "arb1:0x00000000000000000000000000000000000A4B86",
@@ -69,7 +88,7 @@
         "beaconProxyFactory": "arb1:0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
         "counterpartGateway": "arb1:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "exitNum": 44536,
+        "exitNum": 44614,
         "router": "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "implementationNames": {
@@ -958,7 +977,7 @@
         "$upgradeCount": 2,
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x81e28e6f37e32d4756bbeaf3c057b82178ac53398af819adfc680fad31b2ecd5",
-        "getTotalDelegation": "5403822972590208936115254191",
+        "getTotalDelegation": "5387830990496001459097108603",
         "l1Address": "arb1:0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
         "MIN_MINT_INTERVAL": 31536000,
         "MINT_CAP_DENOMINATOR": 10000,
@@ -1488,7 +1507,7 @@
           "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
         ],
         "multisigThreshold": "9 of 12 (75%)",
-        "nonce": 10,
+        "nonce": 11,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1678,7 +1697,7 @@
         ],
         "$upgradeCount": 1,
         "counterpartGateway": "arb1:0xbbcE8aA77782F13D4202a230d978F361B011dB27",
-        "exitNum": 2366,
+        "exitNum": 2368,
         "router": "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "implementationNames": {
@@ -1765,7 +1784,8 @@
         "executors": [
           "arb1:0xf7951D92B0C345144506576eC13Ecf5103aC905a",
           "arb1:0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
-        ]
+        ],
+        "transactionFilteringPrecompile": "arb1:0x0000000000000000000000000000000000000074"
       },
       "implementationNames": {
         "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827": "TransparentUpgradeableProxy",
@@ -2970,7 +2990,7 @@
           ]
         ],
         "$upgradeCount": 6,
-        "batchCount": 1301503,
+        "batchCount": 1306820,
         "batchPosterManager": "eth:0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "eth:0x0237e0EA0d86D53aF18dCf4CbE8182037b44ef1A",
@@ -2983,9 +3003,9 @@
           "bufferBlocks": 14400,
           "max": 14400,
           "threshold": 150,
-          "prevBlockNumber": 25598415,
+          "prevBlockNumber": 25653183,
           "replenishRateInBasis": 500,
-          "prevSequencedBlockNumber": 25598478
+          "prevSequencedBlockNumber": 25653247
         },
         "dacKeyset": {
           "requiredSignatures": 0,
@@ -3011,7 +3031,7 @@
         "rollup": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 4,
-        "totalDelayedMessagesRead": 2515288,
+        "totalDelayedMessagesRead": 2522978,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -3379,7 +3399,7 @@
         "getValidators": [],
         "inbox": "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isPostBoLD": true,
-        "latestConfirmed": "0x68a6c10aaddbb495bfdf6f04d68ccb18559b43c9d02f2c2a5bb8fce95d5b382e",
+        "latestConfirmed": "0x375a6a5d07442d0d48be01e656fa7668b8e5b586bb72db35722e30c9ce895e33",
         "loserStakeEscrow": "eth:0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -3850,7 +3870,7 @@
           "eth:0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "eth:0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 2515294,
+        "delayedMessageCount": 2522985,
         "inboxHistory": [
           "eth:0x1c9DbddC9C2f1B29d4613E45BD5F35C0b1FBA8d6",
           "eth:0x57Bd336d579A51938619271a7Cc137a46D0501B1",
@@ -3864,8 +3884,8 @@
         ],
         "rollup": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerInbox": "eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 1301503,
-        "sequencerReportedSubMessageCount": 464813538
+        "sequencerMessageCount": 1306820,
+        "sequencerReportedSubMessageCount": 467451633
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -10370,6 +10390,7 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "maker/L1Escrow": "0x98107b0558e4626b48569fdbbad9fba978047c3875c34b905adaa25d98e63d2a",
+    "orbitstack/ArbFilteredTransactionsManager": "0xd7b28d473b33601181ef2584f528fc110014a0b547c299eb5f3371658188d6c3",
     "orbitstack/Bridge": "0x021d1c558348a8ac876fad0f0af08c828492fdfc313056db0a923dec120b1f09",
     "orbitstack/CustomGateway2": "0x7c2c31bb9c6a7014043668aec6a82ae07a8b750c9ba8dcc2afdc3935438608d7",
     "orbitstack/EdgeChallengeManager": "0xd8e4b2504241a40841671a287c90ff46798a14ac1394c9f496ffb3d6b0495c08",
@@ -10414,6 +10435,6 @@
     "orbitstack/Timelock": "0xeaf0991ebe464d6bb8f93bff88d69db8d55c9b58d68eed9e71d6f74f223d351c",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "arbitrum": 487021656, "ethereum": 25598495 },
-  "permissionsConfigHash": "0x526a4c389c2af4ea764bd4d743238b7b380f946a022cadd3ab6c3e7bf0deaf33"
+  "usedBlockNumbers": { "arbitrum": 489659537, "ethereum": 25653313 },
+  "permissionsConfigHash": "0x63fd6a059eab8b5c4a038df0ef4103b6c41e22dc19ef4e7dead22f1542372af8"
 }

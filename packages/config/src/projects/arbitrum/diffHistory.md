@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x8f122b01debb6210e22c0932685bc06c56b60a92
+
+# Diff at Fri, 31 Jul 2026 14:04:20 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@a3c051e775d3ff28bddb26800fc0b8049d20228a block: 1784846673
+- current timestamp: 1785506585
+
+## Description
+
+Track the ArbOS 61 transaction-filtering precompile (`0x..74`) via the new shared `orbitstack/ArbFilteredTransactionsManager` template, seeded as a relative off the L2UpgradeExecutor. The feature is not enabled on Arbitrum One, so it yields no results today (0 filtered txs; `getAllTransactionFilterers` reverts, rendered as `EXPECT_REVERT`); it auto-populates if ever activated.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784846673 (main branch discovery), not current.
+
+```diff
+    contract L2UpgradeExecutor (arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827) [orbitstack/layer2/L2UpgradeExecutor] {
+    +++ description: This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).
+      values.transactionFilteringPrecompile:
++        "arb1:0x0000000000000000000000000000000000000074"
+    }
+```
+
 Generated with discovered.json: 0xf84e630bbca7dbc90b7b20a80781a7819544e808
 
 # Diff at Tue, 21 Jul 2026 15:40:47 GMT:
