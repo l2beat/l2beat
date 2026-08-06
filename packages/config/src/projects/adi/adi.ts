@@ -21,7 +21,6 @@ import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
-import { getZKStackVerifiers } from '../../templates/zkStack'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('adi')
@@ -282,7 +281,12 @@ export const adi: ScalingProject = {
       CONTRACTS.UPGRADE_NO_DELAY_RISK, // There is a Governance minDelay, but it is set to 0 now. This should be updated if minDelay increases
     ],
     // zkProgramHashes: [ZK_PROGRAM_HASHES(l2BootloaderHash)],  still need to check how this actually works with Airbender
-    zkVerifiers: getZKStackVerifiers(discovery, false),
+    zkVerifiers: [
+      discovery.getContractValue<ChainSpecificAddress>(
+        'ZKsyncOSDualVerifier',
+        'plonkVerifier0',
+      ),
+    ],
   },
   stateValidation: {
     description:
