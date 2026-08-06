@@ -83,7 +83,10 @@ export function HomePage({
           <MainPageHeader>Home</MainPageHeader>
           <div className="flex flex-col md:gap-4 xl:gap-6 [&_.primary-card]:max-md:rounded-none [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b">
             <div className="grid grid-cols-1 items-stretch md:gap-4 xl:grid-cols-[minmax(260px,340px)_minmax(340px,1fr)] xl:gap-6 2xl:grid-cols-[minmax(260px,340px)_minmax(340px,1fr)_minmax(400px,1.35fr)]">
-              <div className="flex h-full min-w-0 flex-col md:gap-4">
+              {/* Between lg and xl the What's new card is this column's only
+                  visible child, so the whole column has to go when dismissed —
+                  otherwise it leaves an empty grid row above the interop card. */}
+              <div className="flex h-full min-w-0 flex-col md:gap-4 [[data-whats-new-dismissed]_&]:lg:max-xl:hidden">
                 <HomeStatsStrip counts={projectCounts} className="lg:hidden" />
                 <HomeRecentProjectsCard
                   className="hidden h-auto xl:flex"
