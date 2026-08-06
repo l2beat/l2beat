@@ -163,16 +163,21 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     res.json(response)
   })
 
-  app.get('/api/projects/:project/tvl', (req, res) => {
-    const paramsValidation = projectParamsSchema.safeParse(req.params)
+  app.get('/api/projects/:project/tvl/:address', async (req, res) => {
+    const paramsValidation = projectAddressParamsSchema.safeParse(req.params)
     if (!paramsValidation.success) {
       res.status(400).json({ errors: paramsValidation.message })
       return
     }
-    const { project } = paramsValidation.data
+    const { address } = paramsValidation.data
 
-    const response = getTvl(project)
-    res.json(response)
+    try {
+      const response = await getTvl(address)
+      res.json(response)
+    } catch (e) {
+      console.error(e)
+      res.status(500).json({ error: 'Failed to estimate TVL' })
+    }
   })
 
   app.get('/api/projects/:project/code/:address', async (req, res) => {

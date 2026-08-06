@@ -92,8 +92,11 @@ export async function getPreview(project: string): Promise<ApiPreviewResponse> {
   return data as ApiPreviewResponse
 }
 
-export async function getTvl(project: string): Promise<ApiTvlResponse> {
-  const res = await fetch(`/api/projects/${project}/tvl`)
+export async function getTvl(
+  project: string,
+  address: string,
+): Promise<ApiTvlResponse> {
+  const res = await fetch(`/api/projects/${project}/tvl/${address}`)
   if (!res.ok) {
     throw new Error(res.statusText)
   }
