@@ -1,16 +1,23 @@
-import { formatLargeNumber } from '@l2beat/shared-pure'
+import { getChainConfig } from '@l2beat/discovery'
+import { ChainSpecificAddress, formatLargeNumber } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { command, flag, positional } from 'cmd-ts'
+import { getProvider } from '../implementations/common/GetProvider'
+import { getPlainLogger } from '../implementations/common/getPlainLogger'
 import { estimateTVL } from '../implementations/estimateTVL'
-import { EthereumAddressValue, HttpUrl } from './types'
+import { ChainSpecificAddressValue } from './types'
 
 export const TVL = command({
   name: 'tvl',
   description: 'Approximates the TVL of an account.',
   version: '1.0.0',
   args: {
-    address: positional({ type: EthereumAddressValue, displayName: 'address' }),
-    rpcUrl: positional({ type: HttpUrl, displayName: 'rpcUrl' }),
+    address: positional({
+      type: ChainSpecificAddressValue,
+      displayName: 'address',
+      description:
+        'Chain-specific account address (e.g. eth:0x123..., arb1:0x456...). See ChainSpecificAddress.ts for valid chain prefixes.',
+    }),
     breakdownByToken: flag({
       description: 'Show breakdown of TVL by token.',
       long: 'breakdown',
@@ -19,7 +26,12 @@ export const TVL = command({
     }),
   },
   handler: async (args) => {
-    const usdValue = await estimateTVL(args.rpcUrl, args.address)
+    const logger = getPlainLogger()
+    const chainName = ChainSpecificAddress.longChain(args.address)
+    const chain = getChainConfig(chainName)
+    const provider = await getProvider(chain.rpcUrl, chain.explorer, chainName)
+
+    const usdValue = await estimateTVL(logger, provider, args.address)
     if (!usdValue) return
 
     if (args.breakdownByToken) {
@@ -34,14 +46,14 @@ export const TVL = command({
           `$${formatLargeNumber(Number(value / 100n))}`,
         )
 
-        console.log(`${formattedSymbol} ${formattedValue}`)
+        logger.info(`${formattedSymbol} ${formattedValue}`)
       }
     }
 
     const totalValue =
       usdValue.reduce((acc, { value }) => acc + Number(value), 0) / 100
 
-    console.log(
+    logger.info(
       `Estimated TVL: ${chalk.green(`$${formatLargeNumber(totalValue)}`)}`,
     )
   },
