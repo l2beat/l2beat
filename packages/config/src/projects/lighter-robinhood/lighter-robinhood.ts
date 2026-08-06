@@ -34,21 +34,6 @@ const upgradeDelay = discovery.getContractValue<number>(
 
 const finalizationPeriod = 0 // state root immediately finalized when proven
 
-const unsafeEscapeHatchRisk = {
-  value: 'Unsafe escape hatch',
-  description:
-    'If operators stop processing priority requests, desert mode can be activated. The deployed DesertVerifier does not validate withdrawal proofs, allowing users to claim balances that are not part of the last verified state.',
-  sentiment: 'bad',
-  orderHint: Number.NEGATIVE_INFINITY,
-} as const
-
-const forceViaHostChainRisk = {
-  value: 'Force via host chain',
-  description: `Users can submit priority requests directly on Robinhood Chain. If a request remains unprocessed for more than ${formatSeconds(priorityExpiration)}, desert mode can be activated. The deployed DesertVerifier does not validate withdrawal proofs, so this mechanism does not provide a safe escape hatch.`,
-  sentiment: 'warning',
-  orderHint: priorityExpiration,
-} as const
-
 export const lighterRobinhood: ScalingProject = {
   id: ProjectId('lighter-robinhood'),
   type: 'layer3',
@@ -150,15 +135,15 @@ export const lighterRobinhood: ScalingProject = {
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, priorityExpiration),
-    sequencerFailure: forceViaHostChainRisk,
-    proposerFailure: unsafeEscapeHatchRisk,
+    sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(priorityExpiration),
+    proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_ZK,
   },
   stackedRiskView: {
     stateValidation: robinhood.riskView.stateValidation,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN_L3,
     exitWindow: robinhood.riskView.exitWindow,
     sequencerFailure: robinhood.riskView.sequencerFailure,
-    proposerFailure: unsafeEscapeHatchRisk,
+    proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_ZK,
   },
   stage: getRollupStage({
     stage0: {
@@ -175,7 +160,7 @@ export const lighterRobinhood: ScalingProject = {
       usersCanExitWithoutCooperation: false,
       securityCouncilProperlySetUp: false,
       noRedTrustedSetups: true,
-      programHashesReproducible: false,
+      programHashesReproducible: null,
       proverSourcePublished: false,
       verifierContractsReproducible: false,
     },
@@ -211,14 +196,8 @@ export const lighterRobinhood: ScalingProject = {
     },
     forceTransactions: {
       name: 'Priority requests can be submitted on Robinhood Chain',
-      description: `Users can submit priority requests directly to the Lighter contract on Robinhood Chain. If the operators leave the oldest request unprocessed for more than ${formatSeconds(priorityExpiration)}, anyone can activate desert mode. The deployed DesertVerifier does not validate withdrawal proofs, so desert mode does not provide a safe escape hatch.`,
-      risks: [
-        {
-          category: 'Funds can be stolen if',
-          text: 'desert mode is activated, because withdrawals are not constrained by a valid proof.',
-          isCritical: true,
-        },
-      ],
+      description: `Users can submit priority requests directly to the Lighter contract on Robinhood Chain. If the operators leave the oldest request unprocessed for more than ${formatSeconds(priorityExpiration)}, anyone can activate desert mode.`,
+      risks: [],
       references: [
         {
           title: 'Lighter contract on Robinhood Chain',
@@ -229,16 +208,10 @@ export const lighterRobinhood: ScalingProject = {
     exitMechanisms: [
       EXITS.REGULAR_WITHDRAWAL('zk'),
       {
-        name: 'Unsafe desert-mode escape hatch',
+        name: 'Escape hatch through ZK proofs',
         description:
-          'After desert mode is activated, users are expected to exit by proving their balance against the last verified state root. The deployed DesertVerifier does not validate these proofs, so withdrawal balances are not constrained by the last verified state.',
-        risks: [
-          {
-            category: 'Funds can be stolen if',
-            text: 'desert mode is activated and users withdraw balances that are not part of the last verified state.',
-            isCritical: true,
-          },
-        ],
+          'If the centralized operators fail to process forced transactions after the deadline, the system can be frozen (desert mode) and users are expected to exit by reconstructing the latest settled state and providing a ZK proof of balance.',
+        risks: [],
         references: [
           {
             title: 'Deployed DesertVerifier on Robinhood Chain',
@@ -301,14 +274,8 @@ export const lighterRobinhood: ScalingProject = {
       {
         title: 'Validity proofs',
         description:
-          'State updates are verified by the ZkLighterVerifier contract. In desert mode, the DesertVerifier does not validate withdrawal proofs, allowing users to withdraw balances that are not part of the last verified state.',
-        risks: [
-          {
-            category: 'Funds can be stolen if',
-            text: 'desert mode is activated and users withdraw balances that are not part of the last verified state.',
-            isCritical: true,
-          },
-        ],
+          'State updates are verified by the ZkLighterVerifier contract. Desert verifier consists of circuits proving valid L2 -> L1 withdrawals in the desert mode. More details in [ZK Catalog](https://l2beat.com/zk-catalog/lighterprover#proof-system).',
+        risks: [],
         references: [
           {
             title: 'Deployed DesertVerifier implementation',
@@ -326,14 +293,7 @@ export const lighterRobinhood: ScalingProject = {
     addresses: {
       ...discovery.getDiscoveredContracts(),
     },
-    risks: [
-      {
-        category: 'Funds can be stolen if',
-        text: 'desert mode is activated, because withdrawals are not constrained by a valid proof.',
-        isCritical: true,
-      },
-      CONTRACTS.UPGRADE_NO_DELAY_RISK,
-    ],
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
     zkVerifiers: getVerifiers(),
   },
   permissions: {
