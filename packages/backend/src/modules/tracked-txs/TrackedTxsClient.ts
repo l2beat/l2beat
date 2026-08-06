@@ -1,5 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type {
+  DuneQueryService,
   TrackedTxConfigEntry,
   TrackedTxFunctionCallConfig,
   TrackedTxSharedBridgeConfig,
@@ -9,7 +10,6 @@ import type {
 import type { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { Configuration } from '../../tools/uif/multi/types'
-import type { DuneQueryService } from './services/DuneQueryService'
 import {
   DuneFunctionCallResult,
   DuneTransferResult,
