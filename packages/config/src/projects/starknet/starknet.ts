@@ -414,11 +414,11 @@ export const starknet: ScalingProject = {
     },
     sequencing: {
       name: 'Transactions are ordered by centralized sequencers',
-      description: `Starknet v0.14.3 uses ${consensusSequencerCount} equal-weight, permissioned consensus sequencers controlled by StarkWare. A proposer is selected in deterministic round-robin order and builds from its own peer-to-peer synchronized mempool. The current deployment uses an honest-majority Tendermint configuration, requiring ${consensusQuorum}/${consensusSequencerCount} votes to decide a block. This provides process-level redundancy, but no independence from StarkWare for ordering or preconfirmations.
-
-State advancement on Ethereum is a separate, also permissioned pipeline. Starknet OS execution tasks are proved and recursively aggregated through StarkWare's SHARP service, using Stwo for proving tasks and Stone for the roots of the recursive tree. After the resulting proof fact is registered on Ethereum, only the ${stateUpdateOperators.length} Starknet Operators can update the canonical state: the service Operator and the Security Council minority.
-
-There is no user-callable forced-inclusion function. A censored user can post an L1-to-L2 message and ask the Security Council minority to bypass consensus by including it in a valid, proven state update, but the contact and response process has no protocol deadline.`,
+      description: readProjectMarkdown('starknet', 'technologySequencing', {
+        consensusSequencerCount,
+        consensusQuorum,
+        stateUpdateOperatorCount: stateUpdateOperators.length,
+      }),
       sequencingSpec: {
         type: 'centralized',
         trustedPreconfirmation: {

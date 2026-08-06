@@ -27,20 +27,16 @@ interface StakingDataset {
   project: StakingProjectId
   displayName: string
   stakeToken: string
-  snapshotDate: string
+  snapshotDate?: string
   stakeDecimals: number
   validatorCount?: number
   totalStakeBaseUnits: number
-  entities: StakingEntity[]
+  entities?: StakingEntity[]
 }
 
-interface ExtractedStakingProjectData {
+interface ExtractedStakingProjectData
+  extends ProjectInclusionDelayChartStakeDistribution {
   project: StakingProjectId
-  stakeToken: string
-  snapshotDate: string
-  validatorCount?: number
-  totalStake: number
-  entities: ProjectInclusionDelayChartStakeDistribution['entities']
 }
 
 interface PolygonValidator {
@@ -196,7 +192,9 @@ export class StakeDistributionFetcher {
           toTokenAmount(dataset.totalStakeBaseUnits, dataset.stakeDecimals),
         )} ${dataset.stakeToken}`,
       )
-      console.log(this.createConsoleTable(dataset))
+      if (dataset.entities !== undefined) {
+        console.log(this.createConsoleTable(dataset, dataset.entities))
+      }
     }
 
     console.log(
@@ -218,7 +216,9 @@ export class StakeDistributionFetcher {
     return {
       project: dataset.project,
       stakeToken: dataset.stakeToken,
-      snapshotDate: dataset.snapshotDate,
+      ...(dataset.snapshotDate !== undefined
+        ? { snapshotDate: dataset.snapshotDate }
+        : {}),
       ...(dataset.validatorCount !== undefined
         ? { validatorCount: dataset.validatorCount }
         : {}),
@@ -226,19 +226,26 @@ export class StakeDistributionFetcher {
         dataset.totalStakeBaseUnits,
         dataset.stakeDecimals,
       ),
-      entities: getLargestEntities(dataset.entities, this.limit).map(
-        (entity) => ({
-          name: entity.name,
-          stake: toRoundedTokenAmount(
-            entity.stakeBaseUnits,
-            dataset.stakeDecimals,
-          ),
-        }),
-      ),
+      ...(dataset.entities !== undefined
+        ? {
+            entities: getLargestEntities(dataset.entities, this.limit).map(
+              (entity) => ({
+                name: entity.name,
+                stake: toRoundedTokenAmount(
+                  entity.stakeBaseUnits,
+                  dataset.stakeDecimals,
+                ),
+              }),
+            ),
+          }
+        : {}),
     }
   }
 
-  private createConsoleTable(dataset: StakingDataset): string {
+  private createConsoleTable(
+    dataset: StakingDataset,
+    entities: StakingEntity[],
+  ): string {
     const headers = [
       'Entity Name',
       `Stake (${dataset.stakeToken})`,
@@ -246,20 +253,18 @@ export class StakeDistributionFetcher {
       'Cumulative %',
     ]
     let cumulativeStake = 0
-    const rows = getLargestEntities(dataset.entities, this.limit).map(
-      (entity) => {
-        cumulativeStake += entity.stakeBaseUnits
+    const rows = getLargestEntities(entities, this.limit).map((entity) => {
+      cumulativeStake += entity.stakeBaseUnits
 
-        return [
-          entity.name,
-          formatInteger(
-            toRoundedTokenAmount(entity.stakeBaseUnits, dataset.stakeDecimals),
-          ),
-          formatPercentage(entity.stakeBaseUnits, dataset.totalStakeBaseUnits),
-          formatPercentage(cumulativeStake, dataset.totalStakeBaseUnits),
-        ]
-      },
-    )
+      return [
+        entity.name,
+        formatInteger(
+          toRoundedTokenAmount(entity.stakeBaseUnits, dataset.stakeDecimals),
+        ),
+        formatPercentage(entity.stakeBaseUnits, dataset.totalStakeBaseUnits),
+        formatPercentage(cumulativeStake, dataset.totalStakeBaseUnits),
+      ]
+    })
 
     return formatAsAsciiTable(headers, rows)
   }
@@ -373,7 +378,6 @@ async function fetchPolygonValidators(): Promise<StakingDataset> {
     project: 'polygon-pos',
     displayName: 'Polygon staking',
     stakeToken: 'POL',
-    snapshotDate: getCurrentDate(),
     stakeDecimals: 18,
     validatorCount: response.result.length,
     totalStakeBaseUnits: sumStake(entities),
@@ -433,7 +437,6 @@ async function fetchAztecProviders(): Promise<StakingDataset> {
     project: 'aztecnetwork',
     displayName: 'Aztec staking',
     stakeToken: 'AZTEC',
-    snapshotDate: getCurrentDate(),
     stakeDecimals: 18,
     totalStakeBaseUnits:
       firstPage.aggregates?.totalStaked !== undefined
@@ -524,7 +527,6 @@ async function fetchGnosisValidators(): Promise<StakingDataset> {
     stakeDecimals: 0,
     validatorCount,
     totalStakeBaseUnits: totalStake,
-    entities: [],
   }
 }
 
@@ -640,10 +642,6 @@ function toSnapshotDate(value: unknown, name: string): string {
   }
 
   return date
-}
-
-function getCurrentDate(): string {
-  return new Date().toISOString().slice(0, 10)
 }
 
 function toTokenAmount(stakeBaseUnits: number, decimals: number): number {

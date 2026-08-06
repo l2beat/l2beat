@@ -104,10 +104,12 @@ interface ProjectInclusionDelayChartBase {
 
 export interface ProjectInclusionDelayChartStakeDistribution {
   stakeToken: string
-  snapshotDate: string
+  /** Date reported by the source. Omitted when the source has no snapshot. */
+  snapshotDate?: string
   validatorCount?: number
   totalStake: number
-  entities: ProjectInclusionDelayChartEntityStake[]
+  /** Entity attribution. Omitted when the source only reports aggregate data. */
+  entities?: ProjectInclusionDelayChartEntityStake[]
 }
 
 export interface ProjectInclusionDelayChartEntityStake {

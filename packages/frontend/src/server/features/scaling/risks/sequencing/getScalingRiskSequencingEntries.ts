@@ -30,7 +30,7 @@ type EthereumSequencingProject = Project<'display' | 'scalingTechnology'>
 
 export interface ScalingRiskSequencingEntry extends CommonProjectEntry {
   sequencerCount: TableReadyValue | undefined
-  stakeDistributionSnapshotDate: string | undefined
+  stakeDistributionInfo: { snapshotDate: string | undefined } | undefined
   blockProductionAccess: TableReadyValue | undefined
   entryPolicy: TableReadyValue | undefined
   blockTime: TableReadyValue | undefined
@@ -247,7 +247,7 @@ function getEthereumSequencingEntry(
 type SequencingValues = Pick<
   ScalingRiskSequencingEntry,
   | 'sequencerCount'
-  | 'stakeDistributionSnapshotDate'
+  | 'stakeDistributionInfo'
   | 'blockProductionAccess'
   | 'entryPolicy'
   | 'blockTime'
@@ -262,11 +262,14 @@ function getSequencingValues(
 ): SequencingValues | undefined {
   if (sequencing?.sequencingSpec?.type !== 'sequencer-set') return undefined
   const spec = sequencing.sequencingSpec
+  const stakeDistribution = sequencing.inclusionDelayChart?.stakeDistribution
 
   return {
     sequencerCount: spec.sequencerCount,
-    stakeDistributionSnapshotDate:
-      sequencing.inclusionDelayChart?.stakeDistribution?.snapshotDate,
+    stakeDistributionInfo:
+      stakeDistribution !== undefined
+        ? { snapshotDate: stakeDistribution.snapshotDate }
+        : undefined,
     blockProductionAccess: spec.blockProductionAccess,
     entryPolicy: withSecondLine(spec.stakePerValidator, spec.rateLimit),
     blockTime: spec.blockTime,

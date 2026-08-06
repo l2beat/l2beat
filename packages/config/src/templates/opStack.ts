@@ -47,6 +47,7 @@ import type {
   InteropConfig,
   Milestone,
   ProjectActivityConfig,
+  ProjectCentralizedSequencingSpec,
   ProjectCustomDa,
   ProjectDaTrackingConfig,
   ProjectEcosystemInfo,
@@ -240,6 +241,11 @@ interface OpStackConfigCommon {
   overridingPurposes?: ProjectScalingPurpose[]
   nonTemplateRiskView?: Partial<ProjectScalingRiskView>
   usingAltVm?: boolean
+  /**
+   * Used by the template risk view and finality text. Sequencing windows are
+   * node configuration and can differ between chains. Defaults to OP Mainnet.
+   */
+  sequencingWindowSeconds?: number
   reasonsForBeingOther?: ReasonForBeingInOther[]
   hasSuperchainScUpgrades?: boolean
   display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
@@ -293,6 +299,81 @@ export interface OpStackConfigL2 extends OpStackConfigCommon {
 export interface OpStackConfigL3 extends OpStackConfigCommon {
   stackedRiskView?: ProjectScalingRiskView
   hostChain: string
+}
+
+export function getOpStackCentralizedSequencingCommon({
+  discovery,
+  l2BlockTimeSeconds,
+  flashblockIntervalMilliseconds,
+  sequencingWindowSeconds,
+  sequencingWindowBlocks,
+  maxDepositCalldataBytes,
+  trustedPreconfirmationDescription,
+  sequencer,
+}: {
+  discovery: ProjectDiscovery
+  l2BlockTimeSeconds: number
+  flashblockIntervalMilliseconds: number
+  sequencingWindowSeconds: number
+  sequencingWindowBlocks: number
+  maxDepositCalldataBytes: number
+  trustedPreconfirmationDescription: string
+  sequencer: TableReadyValue
+}): Omit<ProjectCentralizedSequencingSpec, 'exitDelay' | 'exitEconomics'> {
+  const depositResourceLimit = discovery.getContractValue<{
+    maxResourceLimit: number
+  }>('SystemConfig', 'resourceConfig').maxResourceLimit
+  const minimumDepositGasWithoutData = discovery.getContractValue<number>(
+    'OptimismPortal2',
+    'minimumGasLimitZeroBytes',
+  )
+  const minimumDepositGasWithOneByte = discovery.getContractValue<number>(
+    'OptimismPortal2',
+    'minimumGasLimitOneByte',
+  )
+  const minimumDepositGasPerByte =
+    minimumDepositGasWithOneByte - minimumDepositGasWithoutData
+
+  return {
+    trustedPreconfirmation: {
+      value: `${flashblockIntervalMilliseconds} ms`,
+      secondLine: `${l2BlockTimeSeconds} s L2 block time`,
+      description: trustedPreconfirmationDescription,
+      orderHint: flashblockIntervalMilliseconds / 1_000,
+    },
+    trustedOrdering: {
+      value: 'Dynamic priority auction',
+      secondLine: 'Fee order per Flashblock',
+      description: `For each ${flashblockIntervalMilliseconds} ms build loop, the centralized builder selects available transactions by priority fee. Transactions committed to an earlier Flashblock are not reordered when a higher-fee transaction arrives later, so arrival time also affects ordering. This policy is not enforced by the derivation rules.`,
+    },
+    sequencer,
+    realtimeCensorshipResistance: {
+      value: 'No',
+      sentiment: 'bad',
+      description:
+        'The centralized sequencer can censor transactions submitted through the normal L2 path.',
+    },
+    forcedInclusion: {
+      value: 'Automatic derivation',
+      secondLine: '1 L1 tx: portal deposit',
+      sentiment: 'good',
+      description:
+        'The user submits one Ethereum transaction to the OptimismPortal which is automatically derived by conforming nodes.',
+    },
+    inclusionDelay: {
+      value: formatSeconds(sequencingWindowSeconds, { fullUnit: true }),
+      secondLine: `${sequencingWindowBlocks.toLocaleString('en-US')} L1 blocks`,
+      sentiment: 'good',
+      description:
+        'The static sequencing window is measured in Ethereum blocks.',
+      orderHint: sequencingWindowBlocks,
+    },
+    inclusionMechanics: {
+      value: '1 L1 Tx',
+      secondLine: 'Address alias',
+      description: `Forced inclusion creates an L1-originated deposit transaction rather than submitting the original signed L2 transaction. Its calldata is capped at ${maxDepositCalldataBytes.toLocaleString('en-US')} bytes, its minimum L2 gas limit is ${minimumDepositGasWithoutData.toLocaleString('en-US')} plus ${minimumDepositGasPerByte.toLocaleString('en-US')} gas per calldata byte, and deposits share a metered ${depositResourceLimit.toLocaleString('en-US')} gas resource limit per Ethereum block. L1 contract callers use an aliased address on L2.`,
+    },
+  }
 }
 
 function opStackCommon(
@@ -1478,7 +1559,7 @@ function describeOPFP({
       {
         title: 'Challenges',
         description: readMarkdown('templates/opStack/opfpChallenges.md', {
-          exponentialBondsFactor,
+          exponentialBondsFactor: exponentialBondsFactor.toFixed(5),
           gameMaxDepth,
           fullGameCost: Number.parseFloat(
             formatEther(permissionlessGameFullCost),
@@ -1524,14 +1605,21 @@ function getRiskView(
         : daProvider.riskView),
     },
     sequencerFailure: templateVars.nonTemplateRiskView?.sequencerFailure ?? {
-      // the value is inside the node config, but we have no reference to it
-      // so we assume it to be the same value as in other op stack chains
+      // The value is part of node configuration rather than historical L1
+      // state, so use the chain-specific override when one is available.
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
-        HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
+        getSequencingWindowSeconds(templateVars),
       ),
-      secondLine: formatDelay(HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS),
+      secondLine: formatDelay(getSequencingWindowSeconds(templateVars)),
     },
   }
+}
+
+function getSequencingWindowSeconds(templateVars: OpStackConfigCommon): number {
+  return (
+    templateVars.sequencingWindowSeconds ??
+    HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS
+  )
 }
 
 function getRiskViewStateValidation(
@@ -2304,7 +2392,7 @@ function getLiveness(
       explanation: `${
         templateVars.display.name
       } is ${systemDescription} that posts transaction data ${daDescription}. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
-        HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
+        getSequencingWindowSeconds(templateVars),
       )} or until it gets published. The state root gets confirmed ${formatSeconds(
         finalizationPeriod,
       )} after it has been posted.`,
@@ -2318,7 +2406,7 @@ function getLiveness(
     explanation: `${
       templateVars.display.name
     } is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
-      HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
+      getSequencingWindowSeconds(templateVars),
     )} or until it gets published. The state root is settled ${formatSeconds(
       finalizationPeriod,
     )} after it has been posted.`,

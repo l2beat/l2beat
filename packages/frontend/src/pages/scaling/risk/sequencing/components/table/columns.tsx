@@ -80,20 +80,26 @@ export const scalingSequencingColumns = [
     columnHelper.accessor((entry) => adjustTableValue(entry[key]), {
       id: key,
       header,
-      cell: (ctx) =>
-        key === 'sequencerCount' ? (
+      cell: (ctx) => {
+        if (key !== 'sequencerCount') {
+          return <TableValueCell value={ctx.row.original[key]} />
+        }
+
+        const stakeDistributionInfo = ctx.row.original.stakeDistributionInfo
+
+        return (
           <div className="flex items-center gap-1">
             <TableValueCell value={ctx.row.original[key]} />
-            {ctx.row.original.stakeDistributionSnapshotDate && (
+            {stakeDistributionInfo && (
               <TableTooltip>
-                Stake distribution snapshot:{' '}
-                {formatDate(ctx.row.original.stakeDistributionSnapshotDate)}.
+                {stakeDistributionInfo.snapshotDate
+                  ? `Stake distribution snapshot: ${formatDate(stakeDistributionInfo.snapshotDate)}.`
+                  : 'The stake distribution source does not provide a snapshot date.'}
               </TableTooltip>
             )}
           </div>
-        ) : (
-          <TableValueCell value={ctx.row.original[key]} />
-        ),
+        )
+      },
       meta: tooltip ? { tooltip } : undefined,
       sortDescFirst: true,
       sortUndefined: 'last',

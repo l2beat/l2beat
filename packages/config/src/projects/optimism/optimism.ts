@@ -14,6 +14,7 @@ import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
 import {
   getOpStackBondScalingFactor,
+  getOpStackCentralizedSequencingCommon,
   getOpStackMaxCumulativeClockExtension,
   opStackL2,
 } from '../../templates/opStack'
@@ -27,19 +28,6 @@ const flashblockIntervalMilliseconds =
 const sequencingWindowSeconds = HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS
 const sequencingWindowBlocks = HARDCODED.OPTIMISM.SEQUENCING_WINDOW_BLOCKS
 const maxDepositCalldataBytes = HARDCODED.OPTIMISM.MAX_DEPOSIT_CALLDATA_BYTES
-const depositResourceLimit = discovery.getContractValue<{
-  maxResourceLimit: number
-}>('SystemConfig', 'resourceConfig').maxResourceLimit
-const minimumDepositGasWithoutData = discovery.getContractValue<number>(
-  'OptimismPortal2',
-  'minimumGasLimitZeroBytes',
-)
-const minimumDepositGasWithOneByte = discovery.getContractValue<number>(
-  'OptimismPortal2',
-  'minimumGasLimitOneByte',
-)
-const minimumDepositGasPerByte =
-  minimumDepositGasWithOneByte - minimumDepositGasWithoutData
 const proofMaturityDelaySeconds = discovery.getContractValue<number>(
   'OptimismPortal2',
   'proofMaturityDelaySeconds',
@@ -241,6 +229,7 @@ export const optimism: ScalingProject = opStackL2({
   },
   hasSuperchainScUpgrades: true,
   associatedTokens: ['OP'],
+  sequencingWindowSeconds,
   nonTemplateTechnology: {
     sequencing: {
       name: 'Transactions are ordered by a centralized sequencer',
@@ -248,51 +237,23 @@ export const optimism: ScalingProject = opStackL2({
         'OP Mainnet uses a single centralized sequencer for fast confirmations. Users can bypass it with one Ethereum transaction to the OptimismPortal. Rollup nodes derive the deposited transaction from Ethereum, including it after at most one sequencing window.',
       sequencingSpec: {
         type: 'centralized',
-        trustedPreconfirmation: {
-          value: `${flashblockIntervalMilliseconds} ms`,
-          secondLine: `${l2BlockTimeSeconds} s L2 block time`,
-          description: `The centralized sequencer streams cumulative Flashblock preconfirmations every ${flashblockIntervalMilliseconds} ms while sealing regular L2 blocks every ${l2BlockTimeSeconds} seconds. Flashblocks are out of protocol: the promise has no protocol enforcement or slashing, and ${flashblockIntervalMilliseconds} ms is a target that can vary with execution load.`,
-          orderHint: flashblockIntervalMilliseconds / 1_000,
-        },
-        trustedOrdering: {
-          value: 'Dynamic priority auction',
-          secondLine: 'Fee order per Flashblock',
-          description: `For each ${flashblockIntervalMilliseconds} ms build loop, the centralized builder selects available transactions by priority fee. Transactions committed to an earlier Flashblock are not reordered when a higher-fee transaction arrives later, so arrival time also affects ordering. This policy is not enforced by the derivation rules.`,
-        },
-        sequencer: {
-          value: 'Centralized',
-          secondLine: 'Raft HA',
-          sentiment: 'bad',
-          description:
-            'The OP Mainnet operator controls real-time ordering. They run redundant sequencer instances coordinated by op-conductor using Raft leader election, with only the leader producing blocks. op-conductor explicitly assumes all nodes are honest and is not Byzantine fault tolerant, so the replicas do not create independent operators or censorship resistance.',
-          orderHint: 1,
-        },
-        realtimeCensorshipResistance: {
-          value: 'No',
-          sentiment: 'bad',
-          description:
-            'The centralized sequencer can censor transactions submitted through the normal L2 path.',
-        },
-        forcedInclusion: {
-          value: 'Automatic derivation',
-          secondLine: '1 L1 tx: portal deposit',
-          sentiment: 'good',
-          description:
-            'The user submits one Ethereum transaction to the OptimismPortal which is automatically derived by conforming nodes.',
-        },
-        inclusionDelay: {
-          value: formatSeconds(sequencingWindowSeconds, { fullUnit: true }),
-          secondLine: `${sequencingWindowBlocks.toLocaleString('en-US')} L1 blocks`,
-          sentiment: 'good',
-          description:
-            'The static sequencing window is measured in Ethereum blocks.',
-          orderHint: sequencingWindowBlocks,
-        },
-        inclusionMechanics: {
-          value: '1 L1 Tx',
-          secondLine: 'Address alias',
-          description: `Forced inclusion creates an L1-originated deposit transaction rather than submitting the original signed L2 transaction. Its calldata is capped at ${maxDepositCalldataBytes.toLocaleString('en-US')} bytes, its minimum L2 gas limit is ${minimumDepositGasWithoutData.toLocaleString('en-US')} plus ${minimumDepositGasPerByte.toLocaleString('en-US')} gas per calldata byte, and deposits share a metered ${depositResourceLimit.toLocaleString('en-US')} gas resource limit per Ethereum block. L1 contract callers use an aliased address on L2.`,
-        },
+        ...getOpStackCentralizedSequencingCommon({
+          discovery,
+          l2BlockTimeSeconds,
+          flashblockIntervalMilliseconds,
+          sequencingWindowSeconds,
+          sequencingWindowBlocks,
+          maxDepositCalldataBytes,
+          trustedPreconfirmationDescription: `The centralized sequencer streams cumulative Flashblock preconfirmations every ${flashblockIntervalMilliseconds} ms while sealing regular L2 blocks every ${l2BlockTimeSeconds} seconds. Flashblocks are out of protocol: the promise has no protocol enforcement or slashing, and ${flashblockIntervalMilliseconds} ms is a target that can vary with execution load.`,
+          sequencer: {
+            value: 'Centralized',
+            secondLine: 'Raft HA',
+            sentiment: 'bad',
+            description:
+              'The OP Mainnet operator controls real-time ordering. They run redundant sequencer instances coordinated by op-conductor using Raft leader election, with only the leader producing blocks. op-conductor explicitly assumes all nodes are honest and is not Byzantine fault tolerant, so the replicas do not create independent operators or censorship resistance.',
+            orderHint: 1,
+          },
+        }),
         exitDelay: {
           value: formatSeconds(faultDisputeGameWorstCaseExitDelaySeconds, {
             fullUnit: true,
