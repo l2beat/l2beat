@@ -215,7 +215,7 @@ export const lighterRobinhood: ScalingProject = {
         references: [
           {
             title: 'Deployed DesertVerifier on Robinhood Chain',
-            url: 'https://robinhoodchain.blockscout.com/address/0x443cc0c7f773d0955e3bd8da393b708152cfa5bc',
+            url: 'https://robinhoodchain.blockscout.com/address/0x56aeED6920DBB9E198C2C0072147A45684A06E10',
           },
         ],
       },
@@ -258,7 +258,7 @@ export const lighterRobinhood: ScalingProject = {
   },
   stateValidation: {
     description:
-      'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid transactions to the previous state. These proofs are verified on Robinhood Chain by a smart contract. In desert mode, users are expected to provide proofs of their balances to exit, but the deployed DesertVerifier does not validate them.',
+      'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid transactions to the previous state. These proofs are verified on Robinhood Chain by a smart contract. In desert mode, users can provide proofs of their balances to exit, which is validate by the DesertVerifier.',
     categories: [
       {
         title: 'Verification Keys Generation',
@@ -279,7 +279,7 @@ export const lighterRobinhood: ScalingProject = {
         references: [
           {
             title: 'Deployed DesertVerifier implementation',
-            url: 'https://robinhoodchain.blockscout.com/address/0x443cc0c7f773d0955e3bd8da393b708152cfa5bc',
+            url: 'https://robinhoodchain.blockscout.com/address/0x56aeED6920DBB9E198C2C0072147A45684A06E10',
           },
         ],
       },
@@ -324,7 +324,7 @@ function getVerifiers(): ChainSpecificAddress[] {
     'Lighter',
     'verifier',
   )
+  const desertVerifier = discovery.getContract('DesertVerifier').address
 
-  // DesertVerifier is not included because it does not verify proofs.
-  return discovery.get$Implementations(verifierProxy)
+  return discovery.get$Implementations(verifierProxy).concat(desertVerifier)
 }
