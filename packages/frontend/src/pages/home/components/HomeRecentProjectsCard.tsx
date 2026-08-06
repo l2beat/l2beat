@@ -3,8 +3,6 @@ import { cn } from '~/utils/cn'
 import type { HomeRecentProject } from '../getHomeData'
 import { HomeCard } from './HomeCard'
 
-const VISIBLE_RECENT_PROJECTS_COUNT = 5
-
 const CATEGORY_LABEL: Record<HomeRecentProject['category'], string> = {
   scaling: 'Scaling project',
   da: 'Data Availability',
@@ -18,16 +16,14 @@ interface Props {
 }
 
 export function HomeRecentProjectsCard({ projects, className }: Props) {
-  const visibleProjects = projects.slice(0, VISIBLE_RECENT_PROJECTS_COUNT)
-
-  if (visibleProjects.length === 0) {
+  if (projects.length === 0) {
     return null
   }
   return (
     <HomeCard className={cn('flex h-full flex-col', className)}>
       <h2 className="font-bold text-xl">Recently added projects</h2>
       <ul className="mt-2 grid grid-cols-1 gap-1.5 md:grid-cols-3 xl:grid-cols-1">
-        {visibleProjects.map((project) => (
+        {projects.map((project) => (
           <li key={project.id}>
             <RecentProjectCard project={project} />
           </li>

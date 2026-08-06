@@ -24,7 +24,13 @@ interface Tile {
   iconBgClassName: string
 }
 
-export function HomeStatsStrip({ counts }: { counts: HomeProjectCounts }) {
+export function HomeStatsStrip({
+  counts,
+  className,
+}: {
+  counts: HomeProjectCounts
+  className?: string
+}) {
   const tiles: Tile[] = [
     {
       label: 'Layer 2s',
@@ -72,7 +78,7 @@ export function HomeStatsStrip({ counts }: { counts: HomeProjectCounts }) {
   ]
 
   return (
-    <HomeCard>
+    <HomeCard className={className}>
       <ul className="grid grid-cols-2 gap-2 md:grid-cols-3 xl:grid-cols-1 xl:gap-0 xl:divide-y xl:divide-divider">
         {tiles.map((tile) => (
           <li key={tile.label}>

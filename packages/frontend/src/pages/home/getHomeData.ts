@@ -37,7 +37,7 @@ import { HOME_CHART_RANGE } from './homeChartRanges'
 const TOP_CHAINS_COUNT = 5
 const TOP_PRIVACY_PROTOCOLS_COUNT = 5
 const TOP_ZK_PROVERS_COUNT = 5
-const RECENT_PROJECTS_COUNT = 5
+const RECENT_PROJECTS_COUNT = 6
 
 export async function getHomeData(
   req: Request,

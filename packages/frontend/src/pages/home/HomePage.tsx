@@ -81,10 +81,10 @@ export function HomePage({
           childrenWrapperClassName="max-md:bg-surface-primary"
         >
           <MainPageHeader>Home</MainPageHeader>
-          <div className="flex flex-col md:gap-6 [&_.primary-card]:max-md:rounded-none [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b">
-            <div className="grid grid-cols-1 items-stretch md:gap-4 xl:gap-6 2xl:grid-cols-[minmax(260px,340px)_minmax(340px,1fr)_minmax(400px,1.35fr)]">
-              <div className="flex h-full min-w-0 flex-col md:gap-4 xl:grid xl:grid-cols-3 xl:gap-6 2xl:flex">
-                <HomeStatsStrip counts={projectCounts} />
+          <div className="flex flex-col md:gap-4 xl:gap-6 [&_.primary-card]:max-md:rounded-none [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b">
+            <div className="grid grid-cols-1 items-stretch md:gap-4 xl:grid-cols-[minmax(260px,340px)_minmax(340px,1fr)] xl:gap-6 2xl:grid-cols-[minmax(260px,340px)_minmax(340px,1fr)_minmax(400px,1.35fr)]">
+              <div className="flex h-full min-w-0 flex-col md:gap-4">
+                <HomeStatsStrip counts={projectCounts} className="lg:hidden" />
                 <HomeRecentProjectsCard
                   className="hidden h-auto xl:flex"
                   projects={recentProjects}
@@ -93,8 +93,24 @@ export function HomePage({
                   items={whatsNewItems}
                   className="min-h-0 xl:flex-1"
                 />
+                <HomeAnomaliesTile
+                  ongoingAnomalies={ongoingAnomalies}
+                  className="max-xl:hidden"
+                />
+                <HomeRecentChangesTile
+                  recentChangesCount={recentChangesCount}
+                  recentChangesProjects={recentChangesProjects}
+                  className="max-xl:hidden"
+                />
               </div>
-              <div className="flex h-full min-h-0 min-w-0 flex-col md:grid md:grid-cols-2 md:gap-4 xl:gap-6 2xl:flex 2xl:flex-col">
+              <div className="flex h-full min-h-0 min-w-0 flex-col 2xl:hidden">
+                <HomeInteropCard
+                  interopChains={interopChains}
+                  interopProtocols={interopProtocols}
+                  defaultSelectedFlowChains={defaultSelectedFlowChains}
+                />
+              </div>
+              <div className="flex h-full min-h-0 min-w-0 flex-col md:grid md:grid-cols-2 md:gap-4 xl:gap-6 xl:max-2xl:col-span-full 2xl:flex 2xl:flex-col">
                 <div className="flex min-h-0 min-w-0 flex-col xl:flex-1">
                   <HomeScalingCard
                     charts={scalingCharts}
@@ -108,7 +124,7 @@ export function HomePage({
                   />
                 </div>
               </div>
-              <div className="flex h-full min-h-0 min-w-0 flex-col">
+              <div className="flex h-full min-h-0 min-w-0 flex-col max-2xl:hidden">
                 <HomeInteropCard
                   interopChains={interopChains}
                   interopProtocols={interopProtocols}
@@ -116,7 +132,7 @@ export function HomePage({
                 />
               </div>
             </div>
-            <div className="grid grid-cols-1 gap-4 max-md:contents sm:grid-cols-2 xl:gap-6">
+            <div className="grid grid-cols-1 gap-4 max-md:contents sm:grid-cols-2 xl:hidden xl:gap-6">
               <HomeAnomaliesTile ongoingAnomalies={ongoingAnomalies} />
               <HomeRecentChangesTile
                 recentChangesCount={recentChangesCount}

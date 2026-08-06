@@ -14,9 +14,11 @@ export interface HomeRecentChangesProject {
 export function HomeRecentChangesTile({
   recentChangesCount,
   recentChangesProjects,
+  className,
 }: {
   recentChangesCount: number
   recentChangesProjects: HomeRecentChangesProject[]
+  className?: string
 }) {
   const [dialogOpen, setDialogOpen] = useState(false)
   const disabled = recentChangesCount === 0
@@ -28,7 +30,7 @@ export function HomeRecentChangesTile({
   const restCount = recentChangesProjects.length - visibleProjects.length
 
   return (
-    <HomeCard className="p-0 md:p-1">
+    <HomeCard className={cn('p-0 md:p-1', className)}>
       <button
         type="button"
         onClick={() => setDialogOpen(true)}
@@ -42,17 +44,23 @@ export function HomeRecentChangesTile({
         <div className="flex min-w-0 flex-1 flex-col">
           <span
             className={cn(
-              'truncate font-bold text-label-value-14 leading-tight transition-colors',
+              'font-bold text-label-value-14 leading-tight transition-colors xl:truncate',
               !disabled && 'group-hover:text-link',
             )}
           >
             Recent changes{' '}
-            <span className="font-medium text-secondary">(past 7 days)</span>
+            <span className="font-medium text-secondary xl:hidden">
+              (last 7 days)
+            </span>
           </span>
+
           <span className="mt-0.5 truncate font-medium text-label-value-12 text-secondary">
-            {disabled
-              ? 'No project changes handled this week'
-              : `${recentChangesCount} project ${recentChangesCount === 1 ? 'change' : 'changes'} handled by the L2BEAT team`}
+            <span className="xl:hidden">
+              {disabled
+                ? 'No project changes handled this week'
+                : `${recentChangesCount} project ${recentChangesCount === 1 ? 'change' : 'changes'} handled by the L2BEAT team`}
+            </span>
+            <span className="max-xl:hidden">Last 7 days</span>
           </span>
         </div>
         {!disabled && (

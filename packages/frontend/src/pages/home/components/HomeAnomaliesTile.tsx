@@ -3,20 +3,23 @@ import { LiveIndicator } from '~/components/LiveIndicator'
 import { ChevronIcon } from '~/icons/Chevron'
 import { anomalySubtypeToLabel } from '~/pages/scaling/liveness/components/AnomalyIndicator'
 import type { OngoingAnomaliesOverview } from '~/server/features/scaling/liveness/getOngoingAnomaliesOverview'
+import { cn } from '~/utils/cn'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { HomeCard } from './HomeCard'
 
 export function HomeAnomaliesTile({
   ongoingAnomalies,
+  className,
 }: {
   ongoingAnomalies: OngoingAnomaliesOverview
+  className?: string
 }) {
   const { count, items } = ongoingAnomalies
   const isOngoing = count > 0
   const first = items[0]
 
   return (
-    <HomeCard className="p-0 md:p-1">
+    <HomeCard className={cn('p-0 md:p-1', className)}>
       <a
         href="/scaling/liveness"
         className="group flex items-center gap-3 px-4 py-3 transition-colors hover:bg-surface-secondary/50 md:rounded-lg md:px-7 md:py-5"
@@ -26,7 +29,7 @@ export function HomeAnomaliesTile({
           <span className="truncate font-bold text-label-value-14 leading-tight transition-colors group-hover:text-link">
             Ongoing major anomalies
           </span>
-          <span className="mt-0.5 flex min-w-0 items-center gap-1.5 font-medium text-label-value-12 text-secondary">
+          <span className="mt-0.5 flex min-w-0 items-center gap-1.5 font-medium text-label-value-12 text-secondary xl:hidden">
             {isOngoing && first ? (
               <>
                 <img
