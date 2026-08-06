@@ -20,6 +20,7 @@ import { IconNodes } from '../../../icons/IconNodes'
 import { IconSigma } from '../../../icons/IconSigma'
 import { IconStamp } from '../../../icons/IconStamp'
 import { IconTerminal } from '../../../icons/IconTerminal'
+import { IconToken } from '../../../icons/IconToken'
 import { IconWebApp } from '../../../icons/IconWebApp'
 import { AnalyzePanel } from '../panel-analyze/AnalyzePanel'
 import { CodePanel } from '../panel-code/CodePanel'
@@ -30,6 +31,7 @@ import { NodesPanel } from '../panel-nodes/NodesPanel'
 import { PreviewPanel } from '../panel-preview/PreviewPanel'
 import { TemplatePanel } from '../panel-template/TemplatePanel'
 import { TerminalPanel } from '../panel-terminal/TerminalPanel'
+import { TvlPanel } from '../panel-tvl/TvlPanel'
 import { ValuesPanel } from '../panel-values/ValuesPanel'
 import { TabExtras } from './TabExtras'
 
@@ -44,6 +46,7 @@ export const PANEL_IDS = [
   'template',
   'config',
   'diffHistory',
+  'tvl',
 ] as const
 
 export type PanelId = (typeof PANEL_IDS)[number]
@@ -64,6 +67,7 @@ const PANELS: Record<PanelId, Panel> = {
   template: { icon: IconStamp, body: TemplatePanel },
   config: { icon: IconGear, body: ConfigPanel },
   diffHistory: { icon: IconFileDiff, body: DiffHistoryPanel },
+  tvl: { icon: IconToken, body: TvlPanel },
 }
 
 export function isAllowedPanel(id: PanelId): boolean {

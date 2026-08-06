@@ -14,6 +14,14 @@ export interface ApiProjectResponse {
   entries: ApiProjectChain[]
 }
 
+export type ApiTvlResponse = ApiTvlEntry[]
+
+export interface ApiTvlEntry {
+  tvl: number
+  ticker: string
+  iconURL: string
+}
+
 export interface ApiPreviewResponse {
   permissionsPerChain: { chain: string; permissions: ApiPreviewPermissions }[]
   contractsPerChain: { chain: string; contracts: ApiPreviewContract[] }[]

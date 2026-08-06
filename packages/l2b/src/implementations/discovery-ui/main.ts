@@ -30,6 +30,7 @@ import { getConfigHealth } from './getConfigHealth'
 import { getPreview } from './getPreview'
 import { getProject } from './getProject'
 import { getProjects } from './getProjects'
+import { getTvl } from './getTvl'
 import { attachLayoutRouter } from './layouts/router'
 import { searchCode } from './searchCode'
 import {
@@ -159,6 +160,18 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     const { project } = paramsValidation.data
 
     const response = getPreview(configReader, project)
+    res.json(response)
+  })
+
+  app.get('/api/projects/:project/tvl', (req, res) => {
+    const paramsValidation = projectParamsSchema.safeParse(req.params)
+    if (!paramsValidation.success) {
+      res.status(400).json({ errors: paramsValidation.message })
+      return
+    }
+    const { project } = paramsValidation.data
+
+    const response = getTvl(project)
     res.json(response)
   })
 

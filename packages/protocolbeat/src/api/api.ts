@@ -20,6 +20,7 @@ import type {
   ApiProjectResponse,
   ApiProjectsResponse,
   ApiTemplateFileResponse,
+  ApiTvlResponse,
 } from './types'
 
 export async function getProjects(): Promise<ApiProjectsResponse> {
@@ -89,6 +90,15 @@ export async function getPreview(project: string): Promise<ApiPreviewResponse> {
   }
   const data = await res.json()
   return data as ApiPreviewResponse
+}
+
+export async function getTvl(project: string): Promise<ApiTvlResponse> {
+  const res = await fetch(`/api/projects/${project}/tvl`)
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  const data = await res.json()
+  return data as ApiTvlResponse
 }
 
 export function executeDiscover(
