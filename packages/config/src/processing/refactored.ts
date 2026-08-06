@@ -56,6 +56,7 @@ import { teeBridge } from '../projects/tee-bridge/tee-bridge'
 import { tempo } from '../projects/tempo/tempo'
 import { tornadoCash } from '../projects/tornado-cash/tornado-cash'
 import { umbra } from '../projects/umbra/umbra'
+import { uniswapv3 } from '../projects/uniswapv3/uniswapv3'
 import { vector } from '../projects/vector/vector'
 import { wormholeNtt } from '../projects/wormhole-ntt/wormhole-ntt'
 import { wormholeWtt } from '../projects/wormhole-wtt/wormhole-wtt'
@@ -131,6 +132,7 @@ export const refactored: BaseProject[] = [
   // defi
   liquityv2,
   chainlink,
+  uniswapv3,
   // privacy
   privacyPools,
   railgun,
