@@ -294,7 +294,9 @@ export const STARGATE_NETWORKS = defineNetworks('stargate', [
       tokenAddress: Address32.from(
         '0x6A023CCd1ff6F2045C3309768eAd9E68F978f6e1',
       ),
-      token: 'WETH',
+      // This is Stargate's native-ETH asset. It is represented by WETH on
+      // Gnosis, but the cross-chain asset key must match the other pools.
+      token: 'ETH',
     },
     usdcPool: {
       address: EthereumAddress('0xB1EeAD6959cb5bB9B20417d6689922523B2B86C3'),

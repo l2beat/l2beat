@@ -2951,6 +2951,86 @@
       }
     ]
   },
+  "stargatev2bus-gnosis": {
+    "description": "Stargate bus maps Gnosis WETH to native ETH on Base",
+    "loadConfigs": ["layerzero-v2"],
+    "txs": [
+      {
+        "chain": "gnosis",
+        "tx": "0xf72cf180885f3807d1104c2ec710cab1fd01c702b0722c1e6d9986e16b93c7b5"
+      },
+      {
+        "chain": "gnosis",
+        "tx": "0x6191fb41ce33580616bb9cf2d94e1996d32d5bcb49cc5f708e498ce0c424fcfa"
+      },
+      {
+        "chain": "base",
+        "tx": "0x2c0f5bd84720034214710b0054808b7752bc97493663dd33298b3df749a1824a"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "stargate-v2.OFTSentBus",
+          "ctx": { "chain": "gnosis" },
+          "args": {
+            "token": "ETH",
+            "ticketId": 6252,
+            "$dstChain": "base"
+          }
+        },
+        {
+          "type": "stargate-v2.BusDriven",
+          "ctx": { "chain": "gnosis" },
+          "args": {
+            "startTicketId": 6252,
+            "numPassengers": 1,
+            "$dstChain": "base"
+          }
+        },
+        {
+          "type": "stargate-v2.OFTReceived",
+          "ctx": { "chain": "base" },
+          "args": {
+            "token": "ETH",
+            "$srcChain": "gnosis"
+          }
+        }
+      ],
+      "messages": [
+        {
+          "type": "layerzero-v2.Message",
+          "app": "stargate-v2-bus",
+          "src": { "ctx": { "chain": "gnosis" } },
+          "dst": { "ctx": { "chain": "base" } }
+        }
+      ],
+      "transfers": [
+        {
+          "type": "stargate-v2-bus.Transfer",
+          "bridgeType": "nonMinting",
+          "src": {
+            "tokenAddress": "0x0000000000000000000000006a023ccd1ff6f2045c3309768ead9e68f978f6e1",
+            "tokenAmount": "2964000000000000",
+            "wasBurned": false,
+            "event": {
+              "type": "stargate-v2.OFTSentBus",
+              "ctx": { "chain": "gnosis" }
+            }
+          },
+          "dst": {
+            "tokenAddress": "native",
+            "tokenAmount": "2962000000000000",
+            "wasMinted": false,
+            "event": {
+              "type": "stargate-v2.OFTReceived",
+              "ctx": { "chain": "base" }
+            }
+          }
+        }
+      ]
+    }
+  },
   "layerzeromix": {
     "loadConfigs": ["layerzero-v2"],
     // Messages:
@@ -5393,6 +5473,69 @@
           "plugin": "gaszip",
           "src": { "event": { "ctx": { "chain": "ethereum" } } },
           "dst": { "chain": "solana" }
+        }
+      ]
+    }
+  },
+  "gaszip-gnosis": {
+    "description": "Gas.zip native transfer from Base to Gnosis",
+    "loadConfigs": ["gaszip"],
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0xda244e1831e6bbb7488110f9d78ee61f6786f4fcaf957a4773b8c9963dddf371"
+      },
+      {
+        "chain": "gnosis",
+        "tx": "0x4054200528ba6f3f37639ee1799984703880f6156a4224792671e97d7076b98c"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "gaszip.Deposit",
+          "ctx": { "chain": "base" },
+          "args": {
+            "$dstChain": "gnosis",
+            "depositor": "0x000000000000000000000000568e7100ffe233e9407f38e055b644adece378b7",
+            "amount": "16944210094908512",
+            "tokenAddress": "native",
+            "destinationAddress": "0x000000000000000000000000479a93170b595572ae9b6cea47a191c2bdea5646"
+          }
+        },
+        {
+          "type": "gaszip.Fill",
+          "ctx": { "chain": "gnosis" },
+          "args": {
+            "receiver": "0x000000000000000000000000479a93170b595572ae9b6cea47a191c2bdea5646",
+            "amount": "32059445221933136640",
+            "tokenAddress": "native"
+          }
+        }
+      ],
+      "messages": [
+        {
+          "type": "gaszip.Message",
+          "app": "gaszip",
+          "src": { "ctx": { "chain": "base" } },
+          "dst": { "ctx": { "chain": "gnosis" } }
+        }
+      ],
+      "transfers": [
+        {
+          "type": "gaszip.Transfer",
+          "src": {
+            "tokenAddress": "native",
+            "tokenAmount": "16944210094908512",
+            "wasBurned": false,
+            "event": { "ctx": { "chain": "base" } }
+          },
+          "dst": {
+            "tokenAddress": "native",
+            "tokenAmount": "32059445221933136640",
+            "wasMinted": false,
+            "event": { "ctx": { "chain": "gnosis" } }
+          }
         }
       ]
     }
