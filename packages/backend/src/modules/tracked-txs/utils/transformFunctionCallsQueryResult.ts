@@ -1,30 +1,37 @@
 import type { Logger } from '@l2beat/backend-tools'
+import type {
+  TrackedTxConfigEntry,
+  TrackedTxFunctionCallConfig,
+  TrackedTxSharedBridgeConfig,
+  TrackedTxSharpSubmissionConfig,
+} from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
+import type { Configuration } from '../../../tools/uif/multi/types'
 import type {
   DuneFunctionCallResult,
   TrackedTxFunctionCallResult,
 } from '../types/model'
 import { calculateCalldataGasUsed } from './calculateCalldataGasUsed'
 import {
-  getLivenessGroupingKeyFromProjectedValue,
+  getLivenessGroupingKey,
   hasLivenessGrouping,
 } from './getLivenessGroupingKey'
 import { isFistParameterMatching } from './isFirstParameterMatching'
 import { isProgramHashProven } from './isProgramHashProven'
-import type { PreparedFunctionCalls } from './prepareFunctionCalls'
 
 export function transformFunctionCallsQueryResult(
-  plan: PreparedFunctionCalls,
+  functionCalls: Configuration<
+    TrackedTxConfigEntry & { params: TrackedTxFunctionCallConfig }
+  >[],
+  sharpSubmissions: Configuration<
+    TrackedTxConfigEntry & { params: TrackedTxSharpSubmissionConfig }
+  >[],
+  sharedBridges: Configuration<
+    TrackedTxConfigEntry & { params: TrackedTxSharedBridgeConfig }
+  >[],
   queryResults: DuneFunctionCallResult[],
   logger: Logger,
 ): TrackedTxFunctionCallResult[] {
-  const {
-    functionCalls,
-    sharpSubmissions,
-    sharedBridges,
-    groupingProjections,
-  } = plan
-
   return queryResults.flatMap((r) => {
     const selector = r.input.slice(0, 10)
 
@@ -90,17 +97,14 @@ export function transformFunctionCallsQueryResult(
 
       if (hasLivenessGrouping(config.properties)) {
         try {
-          const projection = groupingProjections.get(config.id)
-          assert(projection !== undefined, 'Grouping projection is missing')
-          assert(r.grouping_value !== null, 'Grouping value is missing')
-
           return [
             {
               ...common,
               type: 'liveness',
-              groupingKey: getLivenessGroupingKeyFromProjectedValue(
-                r.grouping_value,
-                projection.abiType,
+              groupingKey: getLivenessGroupingKey(
+                r.input,
+                config.properties.params,
+                config.properties.groupBy,
               ),
             },
           ]

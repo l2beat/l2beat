@@ -1,4 +1,3 @@
-export * from './getFunctionCallParameterProjection'
 export * from './getLivenessGroupingKey'
 export * from './sql/index'
 export * from './transformFunctionCallsQueryResult'

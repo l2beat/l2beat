@@ -27,7 +27,6 @@ import type { Configuration } from '../../tools/uif/multi/types'
 import type { DuneQueryService } from './services/DuneQueryService'
 import { TrackedTxsClient } from './TrackedTxsClient'
 import type { DuneFunctionCallResult, DuneTransferResult } from './types/model'
-import { prepareFunctionCalls } from './utils/prepareFunctionCalls'
 import { getFunctionCallQuery, getTransferQuery } from './utils/sql'
 import { transformFunctionCallsQueryResult } from './utils/transformFunctionCallsQueryResult'
 import { transformTransfersQueryResult } from './utils/transformTransfersQueryResult'
@@ -100,7 +99,7 @@ describe(TrackedTxsClient.name, () => {
       expect(duneQueryService.query).not.toHaveBeenCalled()
     })
 
-    it('requests grouping projection without full input', async () => {
+    it('requests a calldata prefix for grouped liveness calls', async () => {
       const duneQueryService = getMockDuneQueryService([[]])
       const trackedTxsClient = new TrackedTxsClient(
         duneQueryService,
@@ -135,14 +134,9 @@ describe(TrackedTxsClient.name, () => {
         getFunctionCallQuery(
           [
             {
-              address,
-              selector: config.properties.params.selector,
-              input: 'selector',
-              groupingProjection: {
-                start: 5,
-                length: 32,
-                abiType: 'uint256',
-              },
+              ...config.properties.params,
+              // 4 selector bytes + the first member of the static tuple
+              inputBytes: 36,
             },
           ],
           FROM,
@@ -328,7 +322,6 @@ const FUNCTIONS_RESPONSE: DuneFunctionCallResult[] = [
     gas_price: 1000n,
     gas_used: 200000,
     input: CONFIGURATIONS[1].properties.params.selector,
-    grouping_value: null,
     data_length: 100,
     non_zero_bytes: 60,
     blob_versioned_hashes: ['0x1'],
@@ -341,7 +334,6 @@ const FUNCTIONS_RESPONSE: DuneFunctionCallResult[] = [
     gas_price: 1500n,
     gas_used: 200000,
     input: sharpInput,
-    grouping_value: null,
     data_length: 0,
     non_zero_bytes: 0,
     blob_versioned_hashes: ['0x1'],
@@ -354,7 +346,6 @@ const FUNCTIONS_RESPONSE: DuneFunctionCallResult[] = [
     gas_price: 1500n,
     gas_used: 200000,
     input: elasticChainSharedBridgeCommitBatchesInput,
-    grouping_value: null,
     data_length: 0,
     non_zero_bytes: 0,
     blob_versioned_hashes: ['0x1'],
@@ -367,7 +358,6 @@ const FUNCTIONS_RESPONSE: DuneFunctionCallResult[] = [
     gas_price: 1500n,
     gas_used: 200000,
     input: agglayerSharedBridgeVerifyBatchesInput,
-    grouping_value: null,
     data_length: 0,
     non_zero_bytes: 0,
     blob_versioned_hashes: ['0x1'],
@@ -380,21 +370,16 @@ const FUNCTIONS_RESPONSE: DuneFunctionCallResult[] = [
     gas_price: 1500n,
     gas_used: 200000,
     input: elasticChainSharedBridgeExecuteBatchesPost29Input,
-    grouping_value: null,
     data_length: 0,
     non_zero_bytes: 0,
     blob_versioned_hashes: ['0x1'],
   },
 ]
 
-const FUNCTION_CALL_PLAN = prepareFunctionCalls(
+const FUNCTIONS_RESULT = transformFunctionCallsQueryResult(
   [CONFIGURATIONS[1]],
   [CONFIGURATIONS[2]],
   [CONFIGURATIONS[3], CONFIGURATIONS[4], CONFIGURATIONS[5]],
-)
-
-const FUNCTIONS_RESULT = transformFunctionCallsQueryResult(
-  FUNCTION_CALL_PLAN,
   FUNCTIONS_RESPONSE,
   Logger.SILENT,
 )
@@ -405,7 +390,24 @@ const TRANSFERS_SQL = getTransferQuery(
   TO,
 )
 const FUNCTIONS_SQL = getFunctionCallQuery(
-  FUNCTION_CALL_PLAN.queryTargets,
+  (
+    CONFIGURATIONS.slice(1) as Configuration<
+      TrackedTxConfigEntry & {
+        params:
+          | TrackedTxSharpSubmissionConfig
+          | TrackedTxFunctionCallConfig
+          | TrackedTxSharedBridgeConfig
+      }
+    >[]
+  ).map((c) => ({
+    address: c.properties.params.address,
+    selector: c.properties.params.selector,
+    inputBytes:
+      c.properties.params.formula === 'sharpSubmission' ||
+      c.properties.params.formula === 'sharedBridge'
+        ? ('full' as const)
+        : 4,
+  })),
   FROM,
   TO,
 )

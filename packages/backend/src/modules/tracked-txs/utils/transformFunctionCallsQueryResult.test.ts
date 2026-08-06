@@ -3,7 +3,6 @@ import {
   createTrackedTxId,
   type TrackedTxConfigEntry,
   type TrackedTxFunctionCallConfig,
-  type TrackedTxFunctionCallGrouping,
   type TrackedTxId,
   type TrackedTxSharedBridgeConfig,
   type TrackedTxSharpSubmissionConfig,
@@ -14,7 +13,7 @@ import {
   type TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
 import { readFileSync } from 'fs'
 import {
@@ -36,7 +35,6 @@ import type {
   DuneFunctionCallResult,
   TrackedTxFunctionCallResult,
 } from '../types/model'
-import { prepareFunctionCalls } from './prepareFunctionCalls'
 import { transformFunctionCallsQueryResult } from './transformFunctionCallsQueryResult'
 
 const ADDRESS_1 = EthereumAddress.random()
@@ -66,9 +64,11 @@ describe(transformFunctionCallsQueryResult.name, () => {
     const iface = new utils.Interface([signature])
     const selector = iface.getSighash('submit')
     const address = EthereumAddress.random()
-    const groupingValue = utils.defaultAbiCoder.encode(['uint256'], [123])
+    const firstInput = iface.encodeFunctionData('submit', [[123, 456]])
+    const secondInput = iface.encodeFunctionData('submit', [[123, 789]])
     const livenessId = createTrackedTxId.random()
     const costsId = createTrackedTxId.random()
+    const logger = mockObject<Logger>({ error: mockFn().returns(undefined) })
     const common = {
       projectId: ProjectId('project'),
       subtype: 'stateUpdates' as const,
@@ -106,7 +106,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       },
     ]
 
-    const result = transformFunctionCalls(
+    const result = transformFunctionCallsQueryResult(
       configurations,
       [],
       [],
@@ -115,8 +115,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
           hash: txHashes[0],
           block_number: block,
           block_time: timestamp,
-          input: selector,
-          grouping_value: groupingValue,
+          input: firstInput,
           to: address,
           gas_price: 10n,
           gas_used: 100,
@@ -128,8 +127,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
           hash: txHashes[1],
           block_number: block + 1,
           block_time: timestamp + 1,
-          input: selector,
-          grouping_value: groupingValue,
+          input: secondInput,
           to: address,
           gas_price: 10n,
           gas_used: 100,
@@ -138,46 +136,52 @@ describe(transformFunctionCallsQueryResult.name, () => {
           blob_versioned_hashes: null,
         },
       ],
-      Logger.SILENT,
+      logger,
     )
 
     const liveness = result.filter((entry) => entry.type === 'liveness')
     const costs = result.filter((entry) => entry.type === 'l2costs')
 
     expect(liveness.map((entry) => entry.groupingKey)).toEqual(['123', '123'])
-    expect(liveness.map((entry) => entry.input)).toEqual([selector, selector])
     expect(costs).toHaveLength(2)
+    expect(logger.error).not.toHaveBeenCalled()
   })
 
-  it('throws when a grouped call has no projected value', () => {
+  it('fails the batch instead of silently dropping grouped liveness', () => {
     const signature = 'function submit((uint256 start,uint256 end))' as const
     const iface = new utils.Interface([signature])
     const selector = iface.getSighash('submit')
     const address = EthereumAddress.random()
-    const configuration = mockFunctionCall({
-      id: createTrackedTxId.random(),
-      projectId: ProjectId('project'),
-      address,
-      selector,
-      formula: 'functionCall',
-      sinceTimestamp: SINCE_TIMESTAMP,
-      subtype: 'stateUpdates',
-      signature,
-      groupBy: { type: 'functionCallParameter', path: [0, 0] },
-    })
+    const id = createTrackedTxId.random()
+    const logger = mockObject<Logger>({ error: mockFn().returns(undefined) })
+    const config: Configuration<
+      TrackedTxConfigEntry & { params: TrackedTxFunctionCallConfig }
+    > = {
+      id,
+      minHeight: 0,
+      maxHeight: null,
+      properties: {
+        id,
+        projectId: ProjectId('project'),
+        type: 'liveness',
+        subtype: 'stateUpdates',
+        sinceTimestamp: SINCE_TIMESTAMP,
+        groupBy: { type: 'functionCallParameter', path: [0, 0] },
+        params: { formula: 'functionCall', address, selector, signature },
+      },
+    }
 
     expect(() =>
-      transformFunctionCalls(
-        [configuration],
+      transformFunctionCallsQueryResult(
+        [config],
         [],
         [],
         [
           {
-            hash: txHashes[0],
+            hash: txHashes[2],
             block_number: block,
             block_time: timestamp,
             input: selector,
-            grouping_value: null,
             to: address,
             gas_price: 10n,
             gas_used: 100,
@@ -186,9 +190,19 @@ describe(transformFunctionCallsQueryResult.name, () => {
             blob_versioned_hashes: null,
           },
         ],
-        Logger.SILENT,
+        logger,
       ),
-    ).toThrow('Grouping value is missing')
+    ).toThrow('Unexpected end of function call input')
+    expect(logger.error).toHaveBeenCalledWith(
+      'Failed to derive liveness grouping key',
+      {
+        error: expect.anything(),
+        configurationId: id,
+        projectId: config.properties.projectId,
+        transactionHash: txHashes[2],
+        blockNumber: block,
+      },
+    )
   })
 
   it('should transform results', () => {
@@ -246,7 +260,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
         block_number: block,
         block_time: timestamp,
         input: SELECTOR_1,
-        grouping_value: null,
         to: ADDRESS_1,
         gas_price: 10n,
         gas_used: 100,
@@ -259,7 +272,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
         block_number: block,
         block_time: timestamp,
         input: SELECTOR_2,
-        grouping_value: null,
         to: ADDRESS_2,
         gas_price: 20n,
         gas_used: 200,
@@ -272,7 +284,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
         block_number: block,
         block_time: timestamp,
         input: sharpInput,
-        grouping_value: null,
         to: sharpSubmissions[0].properties.params.address,
         gas_price: 30n,
         gas_used: 300,
@@ -335,7 +346,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       },
     ]
 
-    const result = transformFunctionCalls(
+    const result = transformFunctionCallsQueryResult(
       functionCalls,
       sharpSubmissions,
       sharedBridgeCalls,
@@ -364,7 +375,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
         hash: txHashes[0],
         to: EthereumAddress.random(),
         input: 'random-string',
-        grouping_value: null,
         block_number: block,
         block_time: timestamp,
         gas_price: 10n,
@@ -377,7 +387,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
     ]
 
     expect(() =>
-      transformFunctionCalls(
+      transformFunctionCallsQueryResult(
         functionCalls,
         [],
         [],
@@ -416,7 +426,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
         hash: txHashes[0],
         to: sharpSubmissions[0].properties.params.address,
         input: sharpInput,
-        grouping_value: null,
         block_number: block,
         block_time: timestamp,
         gas_price: 10n,
@@ -449,7 +458,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       },
     ]
 
-    const result = transformFunctionCalls(
+    const result = transformFunctionCallsQueryResult(
       [],
       sharpSubmissions,
       [],
@@ -502,7 +511,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
         hash: txHashes[0],
         to: sharedBridgeCalls[0].properties.params.address,
         input: elasticChainSharedBridgeCommitBatchesInput,
-        grouping_value: null,
         block_number: block,
         block_time: timestamp,
         gas_price: 10n,
@@ -516,7 +524,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
         hash: txHashes[1],
         to: sharedBridgeCalls[2].properties.params.address,
         input: agglayerSharedBridgeVerifyBatchesInput,
-        grouping_value: null,
         block_number: block,
         block_time: timestamp,
         gas_price: 10n,
@@ -567,7 +574,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       },
     ]
 
-    const result = transformFunctionCalls(
+    const result = transformFunctionCallsQueryResult(
       [],
       [],
       sharedBridgeCalls,
@@ -611,7 +618,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
         hash: txHashes[0],
         to: sharedBridgeCalls[0].properties.params.address,
         input: elasticChainSharedBridgeExecuteBatchesPost29Input,
-        grouping_value: null,
         block_number: block,
         block_time: timestamp,
         gas_price: 10n,
@@ -644,7 +650,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       },
     ]
 
-    const result = transformFunctionCalls(
+    const result = transformFunctionCallsQueryResult(
       [],
       [],
       sharedBridgeCalls,
@@ -693,7 +699,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
         block_number: block,
         block_time: timestamp,
         input: SELECTOR_1,
-        grouping_value: null,
         to: ADDRESS_1,
         gas_price: 10n,
         gas_used: 100,
@@ -708,7 +713,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
         block_number: 22431085,
         block_time: timestamp,
         input: SELECTOR_2,
-        grouping_value: null,
         to: ADDRESS_2,
         gas_price: 20n,
         gas_used: 200,
@@ -723,7 +727,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
         block_number: 22431085,
         block_time: timestamp,
         input: SELECTOR_3,
-        grouping_value: null,
         to: ADDRESS_3,
         gas_price: 30n,
         gas_used: 300,
@@ -790,7 +793,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       },
     ]
 
-    const result = transformFunctionCalls(
+    const result = transformFunctionCallsQueryResult(
       functionCalls,
       [],
       [],
@@ -802,26 +805,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
   })
 })
 
-function transformFunctionCalls(
-  functionCalls: Configuration<
-    TrackedTxConfigEntry & { params: TrackedTxFunctionCallConfig }
-  >[],
-  sharpSubmissions: Configuration<
-    TrackedTxConfigEntry & { params: TrackedTxSharpSubmissionConfig }
-  >[],
-  sharedBridges: Configuration<
-    TrackedTxConfigEntry & { params: TrackedTxSharedBridgeConfig }
-  >[],
-  queryResults: DuneFunctionCallResult[],
-  logger: Logger,
-): TrackedTxFunctionCallResult[] {
-  return transformFunctionCallsQueryResult(
-    prepareFunctionCalls(functionCalls, sharpSubmissions, sharedBridges),
-    queryResults,
-    logger,
-  )
-}
-
 function mockFunctionCall({
   id,
   projectId,
@@ -830,8 +813,6 @@ function mockFunctionCall({
   selector,
   sinceTimestamp,
   formula,
-  signature = 'function foo()',
-  groupBy,
 }: {
   id: TrackedTxId
   projectId: ProjectId
@@ -840,8 +821,6 @@ function mockFunctionCall({
   selector: string
   sinceTimestamp: number
   formula: TrackedTxFunctionCallConfig['formula']
-  signature?: `function ${string}`
-  groupBy?: TrackedTxFunctionCallGrouping
 }): Configuration<
   TrackedTxConfigEntry & {
     params: TrackedTxFunctionCallConfig
@@ -857,12 +836,11 @@ function mockFunctionCall({
       type: 'liveness',
       subtype,
       sinceTimestamp,
-      ...(groupBy !== undefined ? { groupBy } : {}),
       params: {
         formula,
         address,
         selector,
-        signature,
+        signature: 'function foo()',
       },
     },
   }

@@ -1,75 +1,40 @@
-import { type EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import type { FunctionCallParameterProjection } from '../getFunctionCallParameterProjection'
+import { assert, type EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
-export interface FunctionCallQueryTarget {
+interface FunctionCallQueryConfig {
   address: EthereumAddress
   selector: string
-  input: 'selector' | 'full'
-  groupingProjection?: FunctionCallParameterProjection
+  inputBytes: number | 'full'
 }
 
 export function getFunctionCallQuery(
-  targets: readonly FunctionCallQueryTarget[],
+  configs: readonly FunctionCallQueryConfig[],
   from: UnixTime,
   to: UnixTime,
 ): string {
-  const fullInputCalls = targets.filter((c) => c.input === 'full')
-  const groupingCalls = targets.filter(
-    (
-      c,
-    ): c is FunctionCallQueryTarget & {
-      groupingProjection: FunctionCallParameterProjection
-    } => c.groupingProjection !== undefined,
-  )
+  const calls = mergeCalls(configs)
   const fromDate = UnixTime.toDate(from).toISOString()
   const toDate = UnixTime.toDate(to).toISOString()
 
   // To calculate the non-zero bytes we are grouping bytes by adding 'x' sign between each byte
   // and then removing all '00x' sequences. Next step is to divide length of result by 3 as this is length of '00x' sequence.
-  const query = `
+  return `
     WITH
       params AS (
         SELECT
           from_iso8601_timestamp('${fromDate}') AS t_start,
           from_iso8601_timestamp('${toDate}') AS t_end
       ),
-      allowed_calls(to_addr, selector) AS (
+      allowed_calls(to_addr, selector, input_bytes) AS (
         VALUES
           ${
-            targets.length > 0
-              ? targets
+            calls.length > 0
+              ? calls
                   .map(
-                    (c) =>
-                      `(${c.address.toLowerCase()}, ${c.selector.toLowerCase()})`,
+                    (call) =>
+                      `(${call.address.toLowerCase()}, ${call.selector}, ${call.inputBytes === 'full' ? 'CAST(NULL AS bigint)' : call.inputBytes})`,
                   )
                   .join(',')
-              : '(NULL, NULL)'
-          }
-      ),
-      full_input_calls(to_addr, selector) AS (
-        VALUES
-          ${
-            fullInputCalls.length > 0
-              ? fullInputCalls
-                  .map(
-                    (c) =>
-                      `(${c.address.toLowerCase()}, ${c.selector.toLowerCase()})`,
-                  )
-                  .join(',')
-              : '(NULL, NULL)'
-          }
-      ),
-      grouping_calls(to_addr, selector, grouping_start, grouping_length) AS (
-        VALUES
-          ${
-            groupingCalls.length > 0
-              ? groupingCalls
-                  .map(
-                    (c) =>
-                      `(${c.address.toLowerCase()}, ${c.selector.toLowerCase()}, ${c.groupingProjection.start}, ${c.groupingProjection.length})`,
-                  )
-                  .join(',')
-              : '(CAST(NULL AS varbinary), CAST(NULL AS varbinary), CAST(NULL AS bigint), CAST(NULL AS bigint))'
+              : '(CAST(NULL AS varbinary), CAST(NULL AS varbinary), CAST(NULL AS bigint))'
           }
       ),
       traces_filtered AS (
@@ -87,7 +52,7 @@ export function getFunctionCallQuery(
           AND tr.block_time <=  p.t_end
       ),
       traces_allowed AS (
-        SELECT tr.*
+        SELECT tr.*, ac.input_bytes
         FROM traces_filtered tr
         JOIN allowed_calls ac
           ON tr.to = ac.to_addr
@@ -119,30 +84,46 @@ export function getFunctionCallQuery(
       length(tx.data) AS data_length,
       length(replace(regexp_replace(to_hex(tx.data), '([0-9A-Fa-f]{2})', '$1x'), '00x', '')) / 3 AS non_zero_bytes,
       CASE
-        WHEN EXISTS (
-          SELECT 1
-          FROM full_input_calls fic
-          WHERE tr.to = fic.to_addr
-            AND tr.selector = fic.selector
-        ) THEN tr.input
-        ELSE tr.selector
-      END AS input,
-      CASE
-        WHEN gc.grouping_start IS NOT NULL
-        THEN varbinary_substring(
-          tr.input,
-          gc.grouping_start,
-          gc.grouping_length
-        )
-        ELSE NULL
-      END AS grouping_value
+        WHEN tr.input_bytes IS NULL THEN tr.input
+        ELSE substr(tr.input, 1, tr.input_bytes)
+      END AS input
     FROM txs_filtered tx
     JOIN traces_allowed tr
-      ON tx.hash = tr.tx_hash
-    LEFT JOIN grouping_calls gc
-      ON tr.to = gc.to_addr
-      AND tr.selector = gc.selector;
+      ON tx.hash = tr.tx_hash;
   `
+}
 
-  return query
+function mergeCalls(configs: readonly FunctionCallQueryConfig[]) {
+  const calls = new Map<string, FunctionCallQueryConfig>()
+
+  for (const config of configs) {
+    assert(
+      config.inputBytes === 'full' ||
+        (Number.isInteger(config.inputBytes) && config.inputBytes >= 4),
+      'inputBytes must cover at least the selector',
+    )
+
+    const address = config.address.toLowerCase()
+    const selector = config.selector.toLowerCase()
+    const key = `${address}-${selector}`
+    const previous = calls.get(key)
+
+    calls.set(key, {
+      address: config.address,
+      selector,
+      inputBytes:
+        previous === undefined
+          ? config.inputBytes
+          : widestInput(previous.inputBytes, config.inputBytes),
+    })
+  }
+
+  return [...calls.values()]
+}
+
+function widestInput(
+  left: number | 'full',
+  right: number | 'full',
+): number | 'full' {
+  return left === 'full' || right === 'full' ? 'full' : Math.max(left, right)
 }

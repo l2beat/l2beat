@@ -17,12 +17,8 @@ import {
   type TrackedTxResult,
   type TrackedTxTransferResult,
 } from './types/model'
-import {
-  type FunctionCallConfiguration,
-  prepareFunctionCalls,
-  type SharedBridgeConfiguration,
-  type SharpSubmissionConfiguration,
-} from './utils/prepareFunctionCalls'
+import { getFunctionCallParameterPrefix } from './utils/functionCallParameter'
+import { hasLivenessGrouping } from './utils/getLivenessGroupingKey'
 import { getFunctionCallQuery, getTransferQuery } from './utils/sql'
 import { transformFunctionCallsQueryResult } from './utils/transformFunctionCallsQueryResult'
 import { transformTransfersQueryResult } from './utils/transformTransfersQueryResult'
@@ -125,9 +121,15 @@ export class TrackedTxsClient {
   }
 
   async getFunctionCalls(
-    functionCallsConfig: FunctionCallConfiguration[],
-    sharpSubmissionsConfig: SharpSubmissionConfiguration[],
-    sharedBridgesConfig: SharedBridgeConfiguration[],
+    functionCallsConfig: Configuration<
+      TrackedTxConfigEntry & { params: TrackedTxFunctionCallConfig }
+    >[],
+    sharpSubmissionsConfig: Configuration<
+      TrackedTxConfigEntry & { params: TrackedTxSharpSubmissionConfig }
+    >[],
+    sharedBridgesConfig: Configuration<
+      TrackedTxConfigEntry & { params: TrackedTxSharedBridgeConfig }
+    >[],
     from: UnixTime,
     to: UnixTime,
   ): Promise<TrackedTxFunctionCallResult[]> {
@@ -138,13 +140,16 @@ export class TrackedTxsClient {
     )
       return Promise.resolve([])
 
-    const plan = prepareFunctionCalls(
-      functionCallsConfig,
-      sharpSubmissionsConfig,
-      sharedBridgesConfig,
-    )
     // Function calls, SHARP submissions and shared bridges are batched to save costs.
-    const query = getFunctionCallQuery(plan.queryTargets, from, to)
+    const query = getFunctionCallQuery(
+      combineCalls(
+        functionCallsConfig,
+        sharpSubmissionsConfig.map((c) => c.properties.params),
+        sharedBridgesConfig.map((c) => c.properties.params),
+      ),
+      from,
+      to,
+    )
 
     const queryResult = await this.duneQueryService.query(
       query,
@@ -154,6 +159,45 @@ export class TrackedTxsClient {
 
     // this will find matching configs based on different criteria for function calls and sharp submissions
     // hence this is the place where "unbatching" happens
-    return transformFunctionCallsQueryResult(plan, queryResult, this.logger)
+    return transformFunctionCallsQueryResult(
+      functionCallsConfig,
+      sharpSubmissionsConfig,
+      sharedBridgesConfig,
+      queryResult,
+      this.logger,
+    )
   }
 }
+
+function combineCalls(
+  functionCallsConfig: Configuration<
+    TrackedTxConfigEntry & { params: TrackedTxFunctionCallConfig }
+  >[],
+  sharpSubmissionsConfig: TrackedTxSharpSubmissionConfig[],
+  sharedBridgesConfig: TrackedTxSharedBridgeConfig[],
+) {
+  return [
+    ...functionCallsConfig.map((config) => ({
+      address: config.properties.params.address,
+      selector: config.properties.params.selector,
+      inputBytes: hasLivenessGrouping(config.properties)
+        ? (getFunctionCallParameterPrefix(
+            config.properties.params.signature,
+            config.properties.groupBy.path,
+          ) ?? ('full' as const))
+        : SELECTOR_BYTES,
+    })),
+    ...sharpSubmissionsConfig.map((config) => ({
+      address: config.address,
+      selector: config.selector,
+      inputBytes: 'full' as const,
+    })),
+    ...sharedBridgesConfig.map((config) => ({
+      address: config.address,
+      selector: config.selector,
+      inputBytes: 'full' as const,
+    })),
+  ]
+}
+
+const SELECTOR_BYTES = 4
