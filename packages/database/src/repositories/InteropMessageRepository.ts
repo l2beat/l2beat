@@ -92,6 +92,42 @@ export interface InteropMessageUniqueAppsRecord {
   apps: string[]
 }
 
+/**
+ * Keyset pagination position. Rows are totally ordered by
+ * `(timestamp, messageId)`, so this identifies an exact position in the result.
+ */
+export interface InteropMessagePageCursor {
+  timestamp: UnixTime
+  messageId: string
+}
+
+export interface InteropMessagePageFilter {
+  plugin: string
+  type?: string
+  app?: string
+  srcChain?: string
+  dstChain?: string
+  /** Inclusive lower bound for the message timestamp. */
+  from?: UnixTime
+  /** Exclusive upper bound for the message timestamp. */
+  to?: UnixTime
+}
+
+export interface InteropMessagePageOptions {
+  filter: InteropMessagePageFilter
+  order: 'asc' | 'desc'
+  limit: number
+  cursor?: InteropMessagePageCursor
+}
+
+export interface InteropMessageTypeSummaryRecord {
+  plugin: string
+  type: string
+  count: number
+  oldestTimestamp: UnixTime
+  newestTimestamp: UnixTime
+}
+
 export class InteropMessageRepository extends BaseRepository {
   async insertMany(records: InteropMessageRecord[]): Promise<number> {
     if (records.length === 0) return 0
@@ -270,4 +306,105 @@ export class InteropMessageRepository extends BaseRepository {
       apps,
     }))
   }
+
+  // #region Public API
+
+  /**
+   * Returns a single keyset-paginated page ordered by `(timestamp, messageId)`.
+   * `plugin` is required to bound the result set, but no index leads with
+   * `plugin`, so the scan and sort cover the whole table - which stays small
+   * only because messages are retained for a single day.
+   */
+  async getPage(
+    options: InteropMessagePageOptions,
+  ): Promise<InteropMessageRecord[]> {
+    assert(options.limit > 0, 'limit must be a positive number')
+
+    const { filter, order, cursor } = options
+    let query = this.db
+      .selectFrom('InteropMessage')
+      .selectAll()
+      .where('plugin', '=', filter.plugin)
+
+    if (filter.type !== undefined) {
+      query = query.where('type', '=', filter.type)
+    }
+    if (filter.app !== undefined) {
+      query = query.where('app', '=', filter.app)
+    }
+    if (filter.srcChain !== undefined) {
+      query = query.where('srcChain', '=', filter.srcChain)
+    }
+    if (filter.dstChain !== undefined) {
+      query = query.where('dstChain', '=', filter.dstChain)
+    }
+    if (filter.from !== undefined) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(filter.from))
+    }
+    if (filter.to !== undefined) {
+      query = query.where('timestamp', '<', UnixTime.toDate(filter.to))
+    }
+
+    if (cursor) {
+      const cursorDate = UnixTime.toDate(cursor.timestamp)
+      const comparison = order === 'desc' ? '<' : '>'
+      query = query.where((eb) =>
+        eb.or([
+          eb('timestamp', comparison, cursorDate),
+          eb.and([
+            eb('timestamp', '=', cursorDate),
+            eb('messageId', comparison, cursor.messageId),
+          ]),
+        ]),
+      )
+    }
+
+    const rows = await query
+      .orderBy('timestamp', order)
+      .orderBy('messageId', order)
+      .limit(options.limit)
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
+  /** Returns true when the plugin has at least one retained message. */
+  async hasPlugin(plugin: string): Promise<boolean> {
+    const row = await this.db
+      .selectFrom('InteropMessage')
+      .select('messageId')
+      .where('plugin', '=', plugin)
+      .limit(1)
+      .executeTakeFirst()
+
+    return row !== undefined
+  }
+
+  /**
+   * Per `(plugin, type)` counts and the retained timestamp span. Full scan -
+   * callers are expected to cache the result.
+   */
+  async getTypeSummary(): Promise<InteropMessageTypeSummaryRecord[]> {
+    const rows = await this.db
+      .selectFrom('InteropMessage')
+      .select((eb) => [
+        'plugin',
+        'type',
+        eb.fn.countAll().as('count'),
+        eb.fn.min('timestamp').as('oldestTimestamp'),
+        eb.fn.max('timestamp').as('newestTimestamp'),
+      ])
+      .groupBy(['plugin', 'type'])
+      .execute()
+
+    return rows.map((row) => ({
+      plugin: row.plugin,
+      type: row.type,
+      count: Number(row.count),
+      oldestTimestamp: UnixTime.fromDate(row.oldestTimestamp),
+      newestTimestamp: UnixTime.fromDate(row.newestTimestamp),
+    }))
+  }
+
+  // #endregion
 }

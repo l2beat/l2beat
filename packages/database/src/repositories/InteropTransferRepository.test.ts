@@ -1,10 +1,16 @@
-import { Address32, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  Address32,
+  assert,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { Selectable } from 'kysely'
 import type { InteropTransfer } from '../kysely/generated/types'
 import { describeDatabase } from '../test/database'
 import {
   hasAnyInteropTransferFinancialsFilter,
+  type InteropTransferCursor,
   type InteropTransferRecord,
   InteropTransferRepository,
   type InteropTransferUpdate,
@@ -1918,6 +1924,191 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       })
     },
   )
+
+  describe(InteropTransferRepository.prototype.getPage.name, () => {
+    const base = UnixTime(1_700_000_000)
+
+    beforeEach(async () => {
+      await repository.insertMany([
+        transfer('across', 'b', 'across.Transfer', base),
+        // Same timestamp as 'b' - transferId decides the order.
+        transfer('across', 'a', 'across.Transfer', base),
+        transfer(
+          'across',
+          'c',
+          'across.Transfer',
+          base + 100,
+          'base',
+          'optimism',
+        ),
+        transfer('cctp', 'd', 'cctp.Transfer', base + 200),
+      ])
+    })
+
+    it('orders by timestamp then transferId, descending', async () => {
+      const result = await repository.getPage({
+        filter: { plugin: 'across' },
+        order: 'desc',
+        limit: 10,
+      })
+
+      expect(result.map((r) => r.transferId)).toEqual(['c', 'b', 'a'])
+    })
+
+    it('orders by timestamp then transferId, ascending', async () => {
+      const result = await repository.getPage({
+        filter: { plugin: 'across' },
+        order: 'asc',
+        limit: 10,
+      })
+
+      expect(result.map((r) => r.transferId)).toEqual(['a', 'b', 'c'])
+    })
+
+    it('walks every row exactly once across pages, breaking timestamp ties', async () => {
+      const seen: string[] = []
+      let cursor: InteropTransferCursor | undefined
+
+      for (let page = 0; page < 5; page++) {
+        const rows = await repository.getPage({
+          filter: { plugin: 'across' },
+          order: 'desc',
+          limit: 1,
+          cursor,
+        })
+        if (rows.length === 0) break
+
+        const last = rows[rows.length - 1]
+        assert(last)
+        seen.push(last.transferId)
+        cursor = { timestamp: last.timestamp, transferId: last.transferId }
+      }
+
+      expect(seen).toEqual(['c', 'b', 'a'])
+    })
+
+    it('resumes ascending walks from the cursor', async () => {
+      const result = await repository.getPage({
+        filter: { plugin: 'across' },
+        order: 'asc',
+        limit: 10,
+        cursor: { timestamp: base, transferId: 'a' },
+      })
+
+      expect(result.map((r) => r.transferId)).toEqual(['b', 'c'])
+    })
+
+    it('respects the limit', async () => {
+      const result = await repository.getPage({
+        filter: { plugin: 'across' },
+        order: 'desc',
+        limit: 2,
+      })
+
+      expect(result.map((r) => r.transferId)).toEqual(['c', 'b'])
+    })
+
+    it('scopes results to the plugin', async () => {
+      const result = await repository.getPage({
+        filter: { plugin: 'cctp' },
+        order: 'desc',
+        limit: 10,
+      })
+
+      expect(result.map((r) => r.transferId)).toEqual(['d'])
+    })
+
+    it('filters by type and chains', async () => {
+      expect(
+        (
+          await repository.getPage({
+            filter: { plugin: 'across', type: 'cctp.Transfer' },
+            order: 'desc',
+            limit: 10,
+          })
+        ).map((r) => r.transferId),
+      ).toEqual([])
+
+      expect(
+        (
+          await repository.getPage({
+            filter: {
+              plugin: 'across',
+              srcChain: 'base',
+              dstChain: 'optimism',
+            },
+            order: 'desc',
+            limit: 10,
+          })
+        ).map((r) => r.transferId),
+      ).toEqual(['c'])
+    })
+
+    it('treats from as inclusive and to as exclusive', async () => {
+      const result = await repository.getPage({
+        filter: { plugin: 'across', from: base, to: base + 100 },
+        order: 'asc',
+        limit: 10,
+      })
+
+      expect(result.map((r) => r.transferId)).toEqual(['a', 'b'])
+    })
+
+    it('rejects a non-positive limit', async () => {
+      await expect(
+        repository.getPage({
+          filter: { plugin: 'across' },
+          order: 'desc',
+          limit: 0,
+        }),
+      ).toBeRejectedWith('limit must be a positive number')
+    })
+  })
+
+  describe(InteropTransferRepository.prototype.hasPlugin.name, () => {
+    it('distinguishes a plugin with data from one without', async () => {
+      await repository.insertMany([
+        transfer('across', 'msg1', 'across.Transfer', UnixTime(1_700_000_000)),
+      ])
+
+      expect(await repository.hasPlugin('across')).toEqual(true)
+      expect(await repository.hasPlugin('acros')).toEqual(false)
+    })
+  })
+
+  describe(InteropTransferRepository.prototype.getTypeSummary.name, () => {
+    it('returns counts and the retained timestamp span per plugin and type', async () => {
+      const base = UnixTime(1_700_000_000)
+      await repository.insertMany([
+        transfer('across', 'msg1', 'across.Transfer', base),
+        transfer('across', 'msg2', 'across.Transfer', base + 500),
+        transfer('cctp', 'msg3', 'cctp.Transfer', base + 700),
+      ])
+
+      const result = await repository.getTypeSummary()
+
+      expect(result).toEqualUnsorted([
+        {
+          plugin: 'across',
+          type: 'across.Transfer',
+          count: 2,
+          oldestTimestamp: base,
+          newestTimestamp: base + 500,
+        },
+        {
+          plugin: 'cctp',
+          type: 'cctp.Transfer',
+          count: 1,
+          oldestTimestamp: base + 700,
+          newestTimestamp: base + 700,
+        },
+      ])
+    })
+
+    it('returns an empty array when there is no data', async () => {
+      expect(await repository.getTypeSummary()).toEqual([])
+    })
+  })
 
   afterEach(async () => {
     await repository.deleteAll()

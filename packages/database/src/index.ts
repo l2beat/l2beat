@@ -65,8 +65,12 @@ export type {
 } from './repositories/InteropEventRepository'
 export type {
   InteropMessageDetailedStatsRecord,
+  InteropMessagePageCursor,
+  InteropMessagePageFilter,
+  InteropMessagePageOptions,
   InteropMessageRecord,
   InteropMessageStatsRecord,
+  InteropMessageTypeSummaryRecord,
   InteropMessageUniqueAppsRecord,
 } from './repositories/InteropMessageRepository'
 export type {
@@ -80,13 +84,17 @@ export {
   type InteropMissingTokenInfo,
   type InteropSuspiciousTransferRecord,
   type InteropTokenRouteRecord,
+  type InteropTransferCursor,
   type InteropTransferFinancialsFilter,
   type InteropTransferFinancialsStats,
+  type InteropTransferPageFilter,
+  type InteropTransferPageOptions,
   type InteropTransferRecord,
   type InteropTransfersDetailedStatsRecord,
   type InteropTransfersStatsRecord,
   type InteropTransferTimeRange,
   type InteropTransferTokenInfo,
+  type InteropTransferTypeSummaryRecord,
   type InteropTransferUpdate,
 } from './repositories/InteropTransferRepository'
 export type {

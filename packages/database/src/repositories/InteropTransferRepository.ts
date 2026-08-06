@@ -298,6 +298,32 @@ export interface InteropTransferCursor {
   transferId: string
 }
 
+export interface InteropTransferPageFilter {
+  plugin: string
+  type?: string
+  srcChain?: string
+  dstChain?: string
+  /** Inclusive lower bound for the transfer timestamp. */
+  from?: UnixTime
+  /** Exclusive upper bound for the transfer timestamp. */
+  to?: UnixTime
+}
+
+export interface InteropTransferPageOptions {
+  filter: InteropTransferPageFilter
+  order: 'asc' | 'desc'
+  limit: number
+  cursor?: InteropTransferCursor
+}
+
+export interface InteropTransferTypeSummaryRecord {
+  plugin: string
+  type: string
+  count: number
+  oldestTimestamp: UnixTime
+  newestTimestamp: UnixTime
+}
+
 export class InteropTransferRepository extends BaseRepository {
   async insertMany(records: InteropTransferRecord[]): Promise<number> {
     if (records.length === 0) return 0
@@ -1082,4 +1108,103 @@ export class InteropTransferRepository extends BaseRepository {
 
     return result
   }
+
+  // #region Public API
+
+  /**
+   * Returns a single keyset-paginated page ordered by `(timestamp, transferId)`.
+   * `plugin` is required so that the scan is bounded to one plugin's rows: the
+   * `(plugin, srcChain, dstChain, timestamp, transferId)` index provides the
+   * plugin prefix, but ordered output from it needs both chains bound too, so
+   * anything less is sorted per call.
+   */
+  async getPage(
+    options: InteropTransferPageOptions,
+  ): Promise<InteropTransferRecord[]> {
+    assert(options.limit > 0, 'limit must be a positive number')
+
+    const { filter, order, cursor } = options
+    let query = this.db
+      .selectFrom('InteropTransfer')
+      .selectAll()
+      .where('plugin', '=', filter.plugin)
+
+    if (filter.type !== undefined) {
+      query = query.where('type', '=', filter.type)
+    }
+    if (filter.srcChain !== undefined) {
+      query = query.where('srcChain', '=', filter.srcChain)
+    }
+    if (filter.dstChain !== undefined) {
+      query = query.where('dstChain', '=', filter.dstChain)
+    }
+    if (filter.from !== undefined) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(filter.from))
+    }
+    if (filter.to !== undefined) {
+      query = query.where('timestamp', '<', UnixTime.toDate(filter.to))
+    }
+
+    if (cursor) {
+      const cursorDate = UnixTime.toDate(cursor.timestamp)
+      const comparison = order === 'desc' ? '<' : '>'
+      query = query.where((eb) =>
+        eb.or([
+          eb('timestamp', comparison, cursorDate),
+          eb.and([
+            eb('timestamp', '=', cursorDate),
+            eb('transferId', comparison, cursor.transferId),
+          ]),
+        ]),
+      )
+    }
+
+    const rows = await query
+      .orderBy('timestamp', order)
+      .orderBy('transferId', order)
+      .limit(options.limit)
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
+  /** Returns true when the plugin has at least one retained transfer. */
+  async hasPlugin(plugin: string): Promise<boolean> {
+    const row = await this.db
+      .selectFrom('InteropTransfer')
+      .select('transferId')
+      .where('plugin', '=', plugin)
+      .limit(1)
+      .executeTakeFirst()
+
+    return row !== undefined
+  }
+
+  /**
+   * Per `(plugin, type)` counts and the retained timestamp span. Full scan -
+   * callers are expected to cache the result.
+   */
+  async getTypeSummary(): Promise<InteropTransferTypeSummaryRecord[]> {
+    const rows = await this.db
+      .selectFrom('InteropTransfer')
+      .select((eb) => [
+        'plugin',
+        'type',
+        eb.fn.countAll().as('count'),
+        eb.fn.min('timestamp').as('oldestTimestamp'),
+        eb.fn.max('timestamp').as('newestTimestamp'),
+      ])
+      .groupBy(['plugin', 'type'])
+      .execute()
+
+    return rows.map((row) => ({
+      plugin: row.plugin,
+      type: row.type,
+      count: Number(row.count),
+      oldestTimestamp: UnixTime.fromDate(row.oldestTimestamp),
+      newestTimestamp: UnixTime.fromDate(row.newestTimestamp),
+    }))
+  }
+
+  // #endregion
 }
