@@ -68,7 +68,8 @@ describe(transformFunctionCallsQueryResult.name, () => {
     const secondInput = iface.encodeFunctionData('submit', [[123, 789]])
     const livenessId = createTrackedTxId.random()
     const costsId = createTrackedTxId.random()
-    const logger = mockObject<Logger>({ error: mockFn().returns(undefined) })
+    const warn = mockFn().returns(undefined)
+    const logger = mockObject<Logger>({ warn })
     const common = {
       projectId: ProjectId('project'),
       subtype: 'stateUpdates' as const,
@@ -135,67 +136,10 @@ describe(transformFunctionCallsQueryResult.name, () => {
           non_zero_bytes: 100,
           blob_versioned_hashes: null,
         },
-      ],
-      logger,
-    )
-
-    const liveness = result.filter((entry) => entry.type === 'liveness')
-    const costs = result.filter((entry) => entry.type === 'l2costs')
-
-    expect(liveness.map((entry) => entry.groupingKey)).toEqual(['123', '123'])
-    expect(costs).toHaveLength(2)
-    expect(logger.error).not.toHaveBeenCalled()
-  })
-
-  it('drops undecodable grouped liveness without dropping costs', () => {
-    const signature = 'function submit((uint256 start,uint256 end))' as const
-    const iface = new utils.Interface([signature])
-    const selector = iface.getSighash('submit')
-    const address = EthereumAddress.random()
-    const id = createTrackedTxId.random()
-    const costsId = createTrackedTxId.random()
-    const logger = mockObject<Logger>({ error: mockFn().returns(undefined) })
-    const config: Configuration<
-      TrackedTxConfigEntry & { params: TrackedTxFunctionCallConfig }
-    > = {
-      id,
-      minHeight: 0,
-      maxHeight: null,
-      properties: {
-        id,
-        projectId: ProjectId('project'),
-        type: 'liveness',
-        subtype: 'stateUpdates',
-        sinceTimestamp: SINCE_TIMESTAMP,
-        groupBy: { type: 'functionCallParameter', path: [0, 0] },
-        params: { formula: 'functionCall', address, selector, signature },
-      },
-    }
-    const costsConfig: Configuration<
-      TrackedTxConfigEntry & { params: TrackedTxFunctionCallConfig }
-    > = {
-      id: costsId,
-      minHeight: 0,
-      maxHeight: null,
-      properties: {
-        id: costsId,
-        projectId: ProjectId('project'),
-        type: 'l2costs',
-        subtype: 'stateUpdates',
-        sinceTimestamp: SINCE_TIMESTAMP,
-        params: { formula: 'functionCall', address, selector, signature },
-      },
-    }
-
-    const result = transformFunctionCallsQueryResult(
-      [config, costsConfig],
-      [],
-      [],
-      [
         {
           hash: txHashes[2],
-          block_number: block,
-          block_time: timestamp,
+          block_number: block + 2,
+          block_time: timestamp + 2,
           input: selector,
           to: address,
           gas_price: 10n,
@@ -208,17 +152,19 @@ describe(transformFunctionCallsQueryResult.name, () => {
       logger,
     )
 
-    expect(result).toHaveLength(1)
-    expect(result[0]?.id).toEqual(costsId)
-    expect(result[0]?.type).toEqual('l2costs')
-    expect(logger.error).toHaveBeenCalledWith(
+    const liveness = result.filter((entry) => entry.type === 'liveness')
+    const costs = result.filter((entry) => entry.type === 'l2costs')
+
+    expect(liveness.map((entry) => entry.groupingKey)).toEqual(['123', '123'])
+    expect(costs).toHaveLength(3)
+    expect(warn).toHaveBeenCalledWith(
       'Failed to derive liveness grouping key',
       {
         error: expect.anything(),
-        configurationId: id,
-        projectId: config.properties.projectId,
+        configurationId: livenessId,
+        projectId: common.projectId,
         transactionHash: txHashes[2],
-        blockNumber: block,
+        blockNumber: block + 2,
       },
     )
   })

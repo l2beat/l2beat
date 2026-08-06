@@ -26,7 +26,7 @@ export function transformFunctionCallsQueryResult(
   sharpSubmissions: Configuration<
     TrackedTxConfigEntry & { params: TrackedTxSharpSubmissionConfig }
   >[],
-  sharedBridges: Configuration<
+  sharedBridgesConfig: Configuration<
     TrackedTxConfigEntry & { params: TrackedTxSharedBridgeConfig }
   >[],
   queryResults: DuneFunctionCallResult[],
@@ -47,7 +47,7 @@ export function transformFunctionCallsQueryResult(
         c.properties.params.address === r.to,
     )
 
-    const matchingSharedBridgeCalls = sharedBridges.filter(
+    const matchingSharedBridgeCalls = sharedBridgesConfig.filter(
       (c) =>
         c.properties.params.selector === selector &&
         c.properties.params.address === r.to,
@@ -109,7 +109,7 @@ export function transformFunctionCallsQueryResult(
             },
           ]
         } catch (error) {
-          logger.error('Failed to derive liveness grouping key', {
+          logger.warn('Failed to derive liveness grouping key', {
             error,
             configurationId: config.id,
             projectId: config.properties.projectId,
