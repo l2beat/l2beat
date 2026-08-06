@@ -15,6 +15,7 @@ const SHARED = 'shared-zk-stack'
 const PROJECT_CONTRACT = ChainSpecificAddress.random()
 const SHARED_CONTRACT = ChainSpecificAddress.random()
 const SHARED_EOA = ChainSpecificAddress.random()
+const UNLINKED_CONTRACT = ChainSpecificAddress.random()
 
 describe(getProject.name, () => {
   it('scopes an EOA discovered by both to the project, not the shared module', () => {
@@ -42,7 +43,9 @@ describe(getProject.name, () => {
   it('scopes an EOA shared by two modules to the first of them', () => {
     const other = 'shared-sp1'
     const configReader = mockConfigReader([
-      discovery(PROJECT, [contract('ProjectContract', PROJECT_CONTRACT)]),
+      discovery(PROJECT, [
+        contract('ProjectContract', PROJECT_CONTRACT, [SHARED_EOA]),
+      ]),
       discovery(SHARED, [eoa('Operator', SHARED_EOA)]),
       discovery(other, [eoa('Operator', SHARED_EOA)]),
     ])
@@ -50,7 +53,59 @@ describe(getProject.name, () => {
     const response = getProject(configReader, mockTemplateService(), PROJECT)
 
     expect(addressesOf(response.entries[1])).toEqual([SHARED_EOA])
-    expect(addressesOf(response.entries[2])).toEqual([])
+    expect(response.entries.length).toEqual(2)
+  })
+
+  it('drops entries nothing in the project references', () => {
+    const configReader = mockConfigReader([
+      discovery(PROJECT, [
+        contract('ProjectContract', PROJECT_CONTRACT, [SHARED_CONTRACT]),
+        reference(SHARED_CONTRACT, SHARED),
+      ]),
+      discovery(SHARED, [
+        contract('SharedContract', SHARED_CONTRACT),
+        contract('UnlinkedContract', UNLINKED_CONTRACT),
+        eoa('UnlinkedOperator', SHARED_EOA),
+      ]),
+    ])
+
+    const response = getProject(configReader, mockTemplateService(), PROJECT)
+
+    expect(addressesOf(response.entries[1])).toEqual([SHARED_CONTRACT])
+  })
+
+  it('dims entries past maxDepth instead of dropping them', () => {
+    const configReader = mockConfigReader([
+      discovery(PROJECT, [
+        contract('ProjectContract', PROJECT_CONTRACT, [SHARED_CONTRACT]),
+        reference(SHARED_CONTRACT, SHARED),
+      ]),
+      discovery(SHARED, [
+        contract('SharedContract', SHARED_CONTRACT, [UNLINKED_CONTRACT]),
+        contract('DeepContract', UNLINKED_CONTRACT),
+      ]),
+    ])
+
+    const response = getProject(configReader, mockTemplateService(), PROJECT, 0)
+
+    const shared = response.entries[1]
+    expect(addressesOf(shared)).toEqual([UNLINKED_CONTRACT, SHARED_CONTRACT])
+    expect(shared.discoveredContracts.map((x) => x.isReachable)).toEqual([
+      false,
+      true,
+    ])
+  })
+
+  it('omits a module the project reaches nothing of', () => {
+    const configReader = mockConfigReader([
+      discovery(PROJECT, [contract('ProjectContract', PROJECT_CONTRACT)]),
+      discovery(SHARED, [contract('UnlinkedContract', UNLINKED_CONTRACT)]),
+    ])
+
+    const response = getProject(configReader, mockTemplateService(), PROJECT)
+
+    expect(response.entries.length).toEqual(1)
+    expect(addressesOf(response.entries[0])).toEqual([PROJECT_CONTRACT])
   })
 
   it('never returns the same address twice', () => {
@@ -124,8 +179,9 @@ function discovery(name: string, entries: EntryParameters[]): DiscoveryOutput {
 function contract(
   name: string,
   address: ChainSpecificAddress,
+  references: ChainSpecificAddress[] = [],
 ): EntryParameters {
-  return { type: 'Contract', name, address, values: {} }
+  return { type: 'Contract', name, address, values: { references } }
 }
 
 function eoa(name: string, address: ChainSpecificAddress): EntryParameters {
