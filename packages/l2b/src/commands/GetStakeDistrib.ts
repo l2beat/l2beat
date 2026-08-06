@@ -1,3 +1,4 @@
+import { getDiscoveryPaths } from '@l2beat/discovery'
 import { assert } from '@l2beat/shared-pure'
 import {
   command,
@@ -9,7 +10,6 @@ import {
   string,
 } from 'cmd-ts'
 import { config as loadEnv } from 'dotenv'
-import fs from 'fs'
 import path from 'path'
 import {
   STAKING_PROJECT_IDS,
@@ -60,8 +60,7 @@ export const GetStakeDistrib = command({
     }),
   },
   handler: async (args) => {
-    const configRoot = resolveConfigRoot(process.cwd())
-    loadEnv({ path: path.join(configRoot, '.env') })
+    loadDotenvFiles()
     const outputPath =
       args.outputPath !== undefined
         ? path.resolve(process.cwd(), args.outputPath)
@@ -69,43 +68,20 @@ export const GetStakeDistrib = command({
     const fetcher = new StakeDistributionFetcher(
       args.project,
       args.limit,
-      configRoot,
       outputPath,
     )
     await fetcher.fetchAndDisplay()
   },
 })
 
-export function resolveConfigRoot(startPath: string): string {
-  let current = path.resolve(startPath)
-
-  while (true) {
-    if (isConfigRoot(current)) {
-      return current
-    }
-
-    const nestedConfigRoot = path.join(current, 'packages', 'config')
-    if (isConfigRoot(nestedConfigRoot)) {
-      return nestedConfigRoot
-    }
-
-    const parent = path.dirname(current)
-    if (parent === current) {
-      throw new Error(
-        `Could not find packages/config from ${startPath}. Run this command from inside the l2beat repository.`,
-      )
-    }
-    current = parent
-  }
-}
-
-function isConfigRoot(directory: string): boolean {
+// DUNE_API_KEY conventionally lives in packages/backend/.env. Existing
+// environment variables always take precedence over .env files.
+function loadDotenvFiles(): void {
   try {
-    const packageJson = JSON.parse(
-      fs.readFileSync(path.join(directory, 'package.json'), 'utf8'),
-    ) as { name?: unknown }
-    return packageJson.name === '@l2beat/config'
+    const { root } = getDiscoveryPaths()
+    loadEnv({ path: path.join(root, 'packages/backend/.env') })
+    loadEnv({ path: path.join(root, '.env') })
   } catch {
-    return false
+    loadEnv()
   }
 }

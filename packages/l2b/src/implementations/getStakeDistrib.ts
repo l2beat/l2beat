@@ -1,9 +1,12 @@
 import type { ProjectInclusionDelayChartStakeDistribution } from '@l2beat/config'
-import { DuneClient, HttpClient } from '@l2beat/shared'
-import { formatAsAsciiTable } from '@l2beat/shared-pure'
+import { getDiscoveryPaths } from '@l2beat/discovery'
+import { DuneClient, DuneQueryService, HttpClient } from '@l2beat/shared'
+import { assert, formatAsAsciiTable } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import fs from 'fs/promises'
 import fetch from 'node-fetch'
 import path from 'path'
+import { getPlainLogger } from './common/getPlainLogger'
 
 export const STAKING_PROJECT_IDS = [
   'aztecnetwork',
@@ -86,10 +89,11 @@ const GNOSIS_ACTIVE_VALIDATORS_URL =
 const GNOSIS_STAKED_GNO_URL =
   'https://api.analytics.gnosis.io/v1/consensus/staked_gno/latest'
 const DUNE_API_KEY_ENV_NAME = 'DUNE_API_KEY'
-const DUNE_POLL_INTERVAL_MS = 1_000
-const DUNE_MAX_POLL_ATTEMPTS = 120
+const DUNE_TIMEOUT_MS = 10 * 60 * 1000
+const MISSING_DUNE_API_KEY_MESSAGE = `${DUNE_API_KEY_ENV_NAME} is required to fetch Ethereum staking data. Set it in packages/backend/.env or the environment, or pass --project to fetch only projects that do not need it.`
 const DEFAULT_AZTEC_PAGE_SIZE = 200
-const DEFAULT_OUTPUT_ROOT = 'src/projects'
+const AZTEC_MAX_PAGES = 100
+const AZTEC_PAGE_CONCURRENCY = 5
 const STAKE_DISTRIBUTION_FILE_NAME = 'stake-distribution.json'
 
 const ETHEREUM_STAKING_DISTRIBUTION_QUERY = `
@@ -159,12 +163,19 @@ export class StakeDistributionFetcher {
   constructor(
     private readonly project: StakingProjectSelection,
     private readonly limit: number,
-    private readonly configRoot: string,
     private readonly outputFilePath?: string,
   ) {}
 
   async fetchAndDisplay(): Promise<void> {
     const projects = this.getProjectsToFetch()
+    // Resolve prerequisites (Dune credentials, output location) upfront so a
+    // misconfigured environment fails before any network work is done.
+    if (projects.includes('ethereum')) {
+      assert(process.env[DUNE_API_KEY_ENV_NAME], MISSING_DUNE_API_KEY_MESSAGE)
+    }
+    const defaultOutputRoot =
+      this.outputFilePath === undefined ? getDefaultOutputRoot() : undefined
+
     const datasets = await Promise.all(
       projects.map((project) => stakingApiFetchers[project]()),
     )
@@ -173,7 +184,10 @@ export class StakeDistributionFetcher {
       this.extractProjectData(dataset),
     )
 
-    const outputFilePaths = await this.writeJsonOutput(extracted)
+    const outputFilePaths = await this.writeJsonOutput(
+      extracted,
+      defaultOutputRoot,
+    )
 
     for (const dataset of datasets) {
       console.log(`\n${dataset.displayName}`)
@@ -252,15 +266,17 @@ export class StakeDistributionFetcher {
 
   private async writeJsonOutput(
     data: ExtractedStakingProjectData[],
+    defaultOutputRoot: string | undefined,
   ): Promise<string[]> {
     if (this.outputFilePath !== undefined) {
       await writeJsonFile(this.outputFilePath, this.getJsonOutput(data))
       return [this.outputFilePath]
     }
 
+    assert(defaultOutputRoot !== undefined, 'Default output root not resolved')
     const outputs = data.map(async (projectData) => {
       const outputFilePath = getDefaultOutputFilePath(
-        this.configRoot,
+        defaultOutputRoot,
         projectData.project,
       )
       await writeJsonFile(
@@ -296,16 +312,21 @@ async function writeJsonFile(filePath: string, data: unknown): Promise<void> {
   await fs.writeFile(filePath, `${JSON.stringify(data, null, 2)}\n`)
 }
 
+function getDefaultOutputRoot(): string {
+  try {
+    return getDiscoveryPaths().discovery
+  } catch {
+    throw new Error(
+      'Could not locate the l2beat repository for the default output location. Run the command from inside the repository or pass --output-path.',
+    )
+  }
+}
+
 function getDefaultOutputFilePath(
-  configRoot: string,
+  outputRoot: string,
   project: StakingProjectId,
 ): string {
-  return path.resolve(
-    configRoot,
-    DEFAULT_OUTPUT_ROOT,
-    project,
-    STAKE_DISTRIBUTION_FILE_NAME,
-  )
+  return path.join(outputRoot, project, STAKE_DISTRIBUTION_FILE_NAME)
 }
 
 function getStakeDistributionOutput(
@@ -371,19 +392,29 @@ async function fetchAztecProviders(): Promise<StakingDataset> {
   assertArray(firstPage.data, 'Aztec providers response is missing data')
 
   const totalPages = firstPage.pagination?.totalPages ?? 1
+  if (
+    !Number.isInteger(totalPages) ||
+    totalPages < 1 ||
+    totalPages > AZTEC_MAX_PAGES
+  ) {
+    throw new Error(
+      `Aztec providers response reports an unreasonable totalPages: ${totalPages}`,
+    )
+  }
   const remainingPages = Array.from(
-    { length: Math.max(totalPages - 1, 0) },
+    { length: totalPages - 1 },
     (_, index) => index + 2,
   )
-  const remainingResponses = await Promise.all(
-    remainingPages.map((page) =>
+  const remainingResponses = await fetchInBatches(
+    remainingPages,
+    AZTEC_PAGE_CONCURRENCY,
+    (page) =>
       fetchJson<AztecProvidersResponse>(
         getUrlWithParams(AZTEC_PROVIDERS_URL, {
           page: String(page),
           limit: String(DEFAULT_AZTEC_PAGE_SIZE),
         }),
       ),
-    ),
   )
 
   const providers = [firstPage, ...remainingResponses].flatMap((response) => {
@@ -499,38 +530,14 @@ async function fetchGnosisValidators(): Promise<StakingDataset> {
 
 async function executeDuneSql(sql: string): Promise<unknown[]> {
   const apiKey = process.env[DUNE_API_KEY_ENV_NAME]
-  if (!apiKey) {
-    throw new Error(
-      `${DUNE_API_KEY_ENV_NAME} is required to fetch Ethereum staking data`,
-    )
-  }
+  assert(apiKey, MISSING_DUNE_API_KEY_MESSAGE)
 
-  const duneClient = new DuneClient({ http: new HttpClient(), apiKey })
-  const execution = await duneClient.executeSql(sql, 'medium')
-
-  for (let attempt = 0; attempt < DUNE_MAX_POLL_ATTEMPTS; attempt++) {
-    const status = await duneClient.getExecutionStatus(execution.execution_id)
-
-    if (status.state === 'QUERY_STATE_COMPLETED') {
-      const results = await duneClient.getExecutionResult(
-        execution.execution_id,
-      )
-      return results.result.rows
-    }
-
-    if (
-      status.state === 'QUERY_STATE_FAILED' ||
-      status.state === 'QUERY_STATE_CANCELED' ||
-      status.state === 'QUERY_STATE_TIMED_OUT' ||
-      status.state === 'QUERY_STATE_COMPLETED_PARTIAL'
-    ) {
-      throw new Error(`Dune query ${execution.execution_id} ${status.state}`)
-    }
-
-    await wait(DUNE_POLL_INTERVAL_MS)
-  }
-
-  throw new Error(`Dune query ${execution.execution_id} timed out`)
+  const duneQueryService = new DuneQueryService({
+    logger: getPlainLogger(),
+    duneClient: new DuneClient({ http: new HttpClient(), apiKey }),
+    timeoutMs: DUNE_TIMEOUT_MS,
+  })
+  return await duneQueryService.query(sql, 'medium', v.array(v.unknown()))
 }
 
 function getRecord(value: unknown, message: string): Record<string, unknown> {
@@ -541,8 +548,17 @@ function getRecord(value: unknown, message: string): Record<string, unknown> {
   return value as Record<string, unknown>
 }
 
-async function wait(milliseconds: number): Promise<void> {
-  await new Promise((resolve) => setTimeout(resolve, milliseconds))
+async function fetchInBatches<T, R>(
+  items: T[],
+  batchSize: number,
+  fetchItem: (item: T) => Promise<R>,
+): Promise<R[]> {
+  const results: R[] = []
+  for (let index = 0; index < items.length; index += batchSize) {
+    const batch = items.slice(index, index + batchSize)
+    results.push(...(await Promise.all(batch.map(fetchItem))))
+  }
+  return results
 }
 
 async function fetchJson<T>(url: string): Promise<T> {
