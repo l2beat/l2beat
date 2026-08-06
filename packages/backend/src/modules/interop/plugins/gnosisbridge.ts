@@ -284,17 +284,11 @@ export class GnosisBridgePlugin implements InteropPluginResyncable {
         // payInterest() emits the regular bridge request without moving an
         // ERC-20 in the same transaction. Its following PaidInterest event is
         // the only source of the bridged token address.
-        const paidInterest = input.txLogs
-          .map((log) =>
-            parsePaidInterest(log, [
-              ChainSpecificAddress.address(FOREIGN_XDAI_BRIDGE),
-            ]),
-          )
-          .find(
-            (event) =>
-              event?.value === xdaiInitiated.value &&
-              event.to === xdaiInitiated.recipient,
-          )
+        const paidInterest = findPaidInterestAfter(
+          input,
+          xdaiInitiated.value,
+          xdaiInitiated.recipient,
+        )
         return [
           XdaiTransferInitiated.create(input, {
             nonce: xdaiInitiated.nonce,
@@ -587,4 +581,27 @@ function findTokenTransferBefore(
 
   if (!found || !token) return
   return { token, wasBurned, wasMinted }
+}
+
+function findPaidInterestAfter(
+  input: LogToCapture,
+  amount: bigint,
+  recipient: string,
+) {
+  // payInterest() emits PaidInterest after its bridge request. Limit the scan
+  // to this request so a batched equal-amount payment cannot provide its token.
+  for (const [log] of iterateLogs(
+    input.txLogs,
+    input.log.logIndex ?? -1,
+    'after',
+  )) {
+    if (parseXdaiUserRequestForAffirmation(log, null)) break
+
+    const paidInterest = parsePaidInterest(log, [
+      ChainSpecificAddress.address(FOREIGN_XDAI_BRIDGE),
+    ])
+    if (paidInterest?.value === amount && paidInterest.to === recipient) {
+      return paidInterest
+    }
+  }
 }
