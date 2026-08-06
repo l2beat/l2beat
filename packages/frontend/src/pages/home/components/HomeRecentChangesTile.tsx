@@ -44,23 +44,25 @@ export function HomeRecentChangesTile({
         <div className="flex min-w-0 flex-1 flex-col">
           <span
             className={cn(
-              'font-bold text-label-value-14 leading-tight transition-colors xl:truncate',
+              'font-bold text-label-value-14 leading-tight transition-colors lg:truncate',
               !disabled && 'group-hover:text-link',
             )}
           >
-            Recent changes{' '}
-            <span className="font-medium text-secondary xl:hidden">
+            <span className="max-xl:hidden">Recent changes</span>
+            <span className="hidden lg:max-xl:inline">Updates</span>
+            <span className="font-medium text-secondary lg:hidden">
+              {' '}
               (last 7 days)
             </span>
           </span>
 
           <span className="mt-0.5 truncate font-medium text-label-value-12 text-secondary">
-            <span className="xl:hidden">
+            <span className="lg:hidden">
               {disabled
                 ? 'No project changes handled this week'
                 : `${recentChangesCount} project ${recentChangesCount === 1 ? 'change' : 'changes'} handled by the L2BEAT team`}
             </span>
-            <span className="max-xl:hidden">Last 7 days</span>
+            <span className="max-lg:hidden">Last 7 days</span>
           </span>
         </div>
         {!disabled && (

@@ -4,7 +4,7 @@ export function LiveIndicator({
   size = 'sm',
   disabled,
 }: {
-  size?: 'sm' | 'md'
+  size?: 'sm' | 'md' | 'xl'
   disabled?: boolean
 }) {
   return (
@@ -13,6 +13,7 @@ export function LiveIndicator({
         'relative flex',
         size === 'sm' && 'ml-0.5 size-2',
         size === 'md' && 'ml-[3px] size-3',
+        size === 'xl' && 'ml-1 size-6',
       )}
     >
       <span
@@ -27,6 +28,7 @@ export function LiveIndicator({
           disabled && 'bg-secondary',
           size === 'sm' && 'size-2',
           size === 'md' && 'size-3',
+          size === 'xl' && 'size-6',
         )}
       />
     </span>

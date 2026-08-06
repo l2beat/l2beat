@@ -117,11 +117,13 @@ function HomeInteropCardContent({
         href="/interop/summary"
         timeframe="Last 24h"
       />
-      {/* On wide cards (full-width row between lg and xl) the compact tile
-          row is replaced by the same General stats panel the interop
-          summary page shows, placed left of the graph. */}
+      {/* On wide cards (the full-width card below lg) the compact tile row is
+          replaced by the same General stats panel the interop summary page
+          shows, placed left of the graph. */}
       <div className="@min-[800px]:mt-4 flex @min-[800px]:grid min-h-0 flex-1 @min-[800px]:grid-cols-[minmax(0,1fr)_240px] flex-col @min-[800px]:gap-4 max-sm:flex-col-reverse">
-        <div className="mt-2.5 grid @min-[800px]:hidden @min-[550px]:grid-cols-4 grid-cols-2 gap-2">
+        {/* Four across as soon as the card can hold them - a 2x2 block steals
+            too much height from the graph in the narrow lg column. */}
+        <div className="mt-2.5 grid @min-[800px]:hidden grid-cols-2 gap-2 sm:@min-[460px]:grid-cols-4">
           <StatTile
             title="Volume"
             isLoading={statsLoading}
@@ -247,6 +249,9 @@ function StatTile({
     <div
       className={cn(
         'flex flex-col items-center gap-1 rounded-lg border border-divider bg-surface-primary px-3 py-2 text-center',
+        // Four tiles in a row on a ~460-620px card leaves ~90px of text per
+        // tile, so trade side padding for value width before it truncates.
+        'sm:@min-[460px]:@max-[620px]:px-2',
         className,
       )}
     >
