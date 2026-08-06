@@ -82,75 +82,57 @@ export function HomePage({
         >
           <MainPageHeader>Home</MainPageHeader>
           <div className="flex flex-col md:gap-4 xl:gap-6 [&_.primary-card]:max-md:rounded-none [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b">
-            <div className="grid grid-cols-1 items-stretch md:gap-4 xl:grid-cols-[minmax(260px,340px)_minmax(340px,1fr)] xl:gap-6 2xl:grid-cols-[minmax(260px,340px)_minmax(340px,1fr)_minmax(400px,1.35fr)]">
-              <div className="flex h-full min-w-0 flex-col md:gap-4 lg:max-xl:hidden">
-                <HomeStatsStrip counts={projectCounts} className="lg:hidden" />
+            <div className="grid grid-cols-1 md:gap-4 xl:grid-cols-[minmax(260px,340px)_minmax(340px,1fr)] xl:gap-6 2xl:grid-cols-[minmax(260px,340px)_minmax(340px,1fr)_minmax(400px,1.35fr)]">
+              <HomeStatsStrip counts={projectCounts} className="lg:hidden" />
+              <div className="flex min-w-0 flex-col gap-4 max-xl:hidden">
                 <HomeRecentProjectsCard
-                  className="hidden h-auto xl:flex"
+                  className="h-auto"
                   projects={recentProjects}
                 />
                 <HomeWhatsNewCard
                   item={whatsNewItem}
-                  className="min-h-0 xl:flex-1"
+                  className="min-h-0 flex-1"
                 />
-                <HomeAnomaliesTile
-                  ongoingAnomalies={ongoingAnomalies}
-                  className="max-xl:hidden"
-                />
-                <HomeRecentChangesTile
-                  recentChangesCount={recentChangesCount}
-                  recentChangesProjects={recentChangesProjects}
-                  className="max-xl:hidden"
-                />
-              </div>
-              <div className="flex h-full min-h-0 min-w-0 flex-col 2xl:hidden">
-                <HomeInteropCard
-                  interopChains={interopChains}
-                  interopProtocols={interopProtocols}
-                  defaultSelectedFlowChains={defaultSelectedFlowChains}
-                />
-              </div>
-              <div className="flex h-full min-h-0 min-w-0 flex-col md:grid md:grid-cols-2 md:gap-4 xl:gap-6 xl:max-2xl:col-span-full 2xl:flex 2xl:flex-col">
-                <div className="flex min-h-0 min-w-0 flex-col xl:flex-1">
-                  <HomeScalingCard
-                    charts={scalingCharts}
-                    scalingCategoryCounts={scalingCategoryCounts}
-                  />
-                </div>
-                <div className="flex min-h-0 min-w-0 flex-col xl:flex-1">
-                  <HomeEthereumCard
-                    charts={ethereumCharts}
-                    economicSecurity={ethereumEconomicSecurity}
-                  />
-                </div>
-              </div>
-              <div className="flex h-full min-h-0 min-w-0 flex-col max-2xl:hidden">
-                <HomeInteropCard
-                  interopChains={interopChains}
-                  interopProtocols={interopProtocols}
-                  defaultSelectedFlowChains={defaultSelectedFlowChains}
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-1 gap-4 max-md:contents xl:hidden">
-              <div className="grid gap-4 sm:grid-cols-2">
                 <HomeAnomaliesTile ongoingAnomalies={ongoingAnomalies} />
                 <HomeRecentChangesTile
                   recentChangesCount={recentChangesCount}
                   recentChangesProjects={recentChangesProjects}
                 />
               </div>
-              <HomeWhatsNewCard
-                item={whatsNewItem}
-                className="h-full flex-1 xl:hidden"
-              />
-              <HomeRecentProjectsCard
-                className="xl:hidden"
-                projects={recentProjects}
-              />
+              <div className="flex min-h-0 min-w-0 flex-col 2xl:order-last">
+                <HomeInteropCard
+                  interopChains={interopChains}
+                  interopProtocols={interopProtocols}
+                  defaultSelectedFlowChains={defaultSelectedFlowChains}
+                />
+              </div>
+              <div className="flex min-h-0 min-w-0 flex-col md:grid md:grid-cols-2 md:gap-4 xl:gap-6 xl:max-2xl:col-span-full 2xl:flex">
+                <div className="flex min-h-0 min-w-0 flex-col 2xl:flex-1">
+                  <HomeScalingCard
+                    charts={scalingCharts}
+                    scalingCategoryCounts={scalingCategoryCounts}
+                  />
+                </div>
+                <div className="flex min-h-0 min-w-0 flex-col 2xl:flex-1">
+                  <HomeEthereumCard
+                    charts={ethereumCharts}
+                    economicSecurity={ethereumEconomicSecurity}
+                  />
+                </div>
+              </div>
             </div>
-
-            <div className="grid grid-cols-1 items-stretch md:gap-4 lg:grid-cols-2 xl:gap-6">
+            <div className="grid grid-cols-1 gap-4 max-md:contents xl:hidden">
+              <div className="grid gap-4 max-md:contents md:grid-cols-2">
+                <HomeAnomaliesTile ongoingAnomalies={ongoingAnomalies} />
+                <HomeRecentChangesTile
+                  recentChangesCount={recentChangesCount}
+                  recentChangesProjects={recentChangesProjects}
+                />
+              </div>
+              <HomeWhatsNewCard item={whatsNewItem} />
+              <HomeRecentProjectsCard projects={recentProjects} />
+            </div>
+            <div className="grid grid-cols-1 md:gap-4 lg:grid-cols-2 xl:gap-6">
               <HomeTopInteropProtocolsCard
                 interopChains={interopChains}
                 defaultSelectedFlowChains={defaultSelectedFlowChains}

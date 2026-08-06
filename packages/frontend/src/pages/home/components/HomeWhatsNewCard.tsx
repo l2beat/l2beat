@@ -24,7 +24,6 @@ export function HomeWhatsNewCard({
   if (!item) {
     return null
   }
-  console.log(item)
   return (
     <>
       <script
