@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { getScalingCommonProjectColumns } from '~/components/table/common-project-columns/ScalingCommonProjectColumns'
@@ -7,9 +8,24 @@ import {
 } from '~/components/table/sorting/sortTableValues'
 import { TableTooltip } from '~/components/table/TableTooltip'
 import type { ScalingRiskSequencingEntry } from '~/server/features/scaling/risks/sequencing/getScalingRiskSequencingEntries'
-import { formatDate } from '~/utils/dates'
+import { formatDate, formatTimestamp } from '~/utils/dates'
 
 const columnHelper = createColumnHelper<ScalingRiskSequencingEntry>()
+
+function getStakeDistributionTooltip(
+  info: NonNullable<ScalingRiskSequencingEntry['stakeDistributionInfo']>,
+): string {
+  if (info.date?.type === 'snapshot') {
+    return `Stake distribution snapshot: ${formatDate(info.date.value)}.`
+  }
+  if (info.date?.type === 'fetched') {
+    return `Stake distribution fetched: ${formatTimestamp(
+      UnixTime.fromDate(new Date(info.date.value)),
+      { mode: 'datetime' },
+    )}.`
+  }
+  return 'Stake distribution data is available, but it has no date metadata.'
+}
 
 function getSequencingHref(entry: ScalingRiskSequencingEntry) {
   if (entry.slug === 'ethereum') return undefined
@@ -92,9 +108,7 @@ export const scalingSequencingColumns = [
             <TableValueCell value={ctx.row.original[key]} />
             {stakeDistributionInfo && (
               <TableTooltip>
-                {stakeDistributionInfo.snapshotDate
-                  ? `Stake distribution snapshot: ${formatDate(stakeDistributionInfo.snapshotDate)}.`
-                  : 'The stake distribution source does not provide a snapshot date.'}
+                {getStakeDistributionTooltip(stakeDistributionInfo)}
               </TableTooltip>
             )}
           </div>

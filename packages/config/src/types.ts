@@ -106,6 +106,8 @@ export interface ProjectInclusionDelayChartStakeDistribution {
   stakeToken: string
   /** Date reported by the source. Omitted when the source has no snapshot. */
   snapshotDate?: string
+  /** Fetch completion time. Emitted when the source has no snapshot date. */
+  fetchedAt?: string
   validatorCount?: number
   totalStake: number
   /** Entity attribution. Omitted when the source only reports aggregate data. */

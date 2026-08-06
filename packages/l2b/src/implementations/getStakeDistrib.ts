@@ -172,12 +172,15 @@ export class StakeDistributionFetcher {
     const defaultOutputRoot =
       this.outputFilePath === undefined ? getDefaultOutputRoot() : undefined
 
-    const datasets = await Promise.all(
-      projects.map((project) => stakingApiFetchers[project]()),
+    const fetchResults = await Promise.all(
+      projects.map(async (project) => {
+        const dataset = await stakingApiFetchers[project]()
+        return { dataset, fetchedAt: new Date().toISOString() }
+      }),
     )
 
-    const extracted = datasets.map((dataset) =>
-      this.extractProjectData(dataset),
+    const extracted = fetchResults.map(({ dataset, fetchedAt }) =>
+      this.extractProjectData(dataset, fetchedAt),
     )
 
     const outputFilePaths = await this.writeJsonOutput(
@@ -185,7 +188,7 @@ export class StakeDistributionFetcher {
       defaultOutputRoot,
     )
 
-    for (const dataset of datasets) {
+    for (const { dataset } of fetchResults) {
       console.log(`\n${dataset.displayName}`)
       console.log(
         `Total stake: ${formatInteger(
@@ -212,13 +215,14 @@ export class StakeDistributionFetcher {
 
   private extractProjectData(
     dataset: StakingDataset,
+    fetchedAt: string,
   ): ExtractedStakingProjectData {
     return {
       project: dataset.project,
       stakeToken: dataset.stakeToken,
       ...(dataset.snapshotDate !== undefined
         ? { snapshotDate: dataset.snapshotDate }
-        : {}),
+        : { fetchedAt }),
       ...(dataset.validatorCount !== undefined
         ? { validatorCount: dataset.validatorCount }
         : {}),

@@ -28,9 +28,13 @@ type ScalingRiskSequencingProject = Project<
 
 type EthereumSequencingProject = Project<'display' | 'scalingTechnology'>
 
+type StakeDistributionDate =
+  | { type: 'snapshot'; value: string }
+  | { type: 'fetched'; value: string }
+
 export interface ScalingRiskSequencingEntry extends CommonProjectEntry {
   sequencerCount: TableReadyValue | undefined
-  stakeDistributionInfo: { snapshotDate: string | undefined } | undefined
+  stakeDistributionInfo: { date: StakeDistributionDate | undefined } | undefined
   blockProductionAccess: TableReadyValue | undefined
   entryPolicy: TableReadyValue | undefined
   blockTime: TableReadyValue | undefined
@@ -268,7 +272,7 @@ function getSequencingValues(
     sequencerCount: spec.sequencerCount,
     stakeDistributionInfo:
       stakeDistribution !== undefined
-        ? { snapshotDate: stakeDistribution.snapshotDate }
+        ? { date: getStakeDistributionDate(stakeDistribution) }
         : undefined,
     blockProductionAccess: spec.blockProductionAccess,
     entryPolicy: withSecondLine(spec.stakePerValidator, spec.rateLimit),
@@ -281,6 +285,18 @@ function getSequencingValues(
     deterministicCrGadget: spec.deterministicCrGadget,
     additionalCrGadgets: spec.additionalCrGadgets,
   }
+}
+
+function getStakeDistributionDate(
+  distribution: NonNullable<ProjectInclusionDelayChart['stakeDistribution']>,
+): StakeDistributionDate | undefined {
+  if (distribution.snapshotDate !== undefined) {
+    return { type: 'snapshot', value: distribution.snapshotDate }
+  }
+  if (distribution.fetchedAt !== undefined) {
+    return { type: 'fetched', value: distribution.fetchedAt }
+  }
+  return undefined
 }
 
 function getScalingRiskCentralizedSequencingEntry(
