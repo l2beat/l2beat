@@ -40,6 +40,7 @@ export function makeConfig(env: Env, options: MakeConfigOptions): Config {
             agglayer: env.string('API_KEY_AGGLAYER'),
             theElasticNetwork: env.string('API_KEY_THE_ELASTIC_NETWORK'),
             pulseKit: env.string('API_KEY_PULSEKIT'),
+            fcr: env.string('API_KEY_FCR'),
           },
         },
     openapi: {
