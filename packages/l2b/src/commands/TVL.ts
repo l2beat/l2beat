@@ -29,7 +29,12 @@ export const TVL = command({
     const logger = getPlainLogger()
     const chainName = ChainSpecificAddress.longChain(args.address)
     const chain = getChainConfig(chainName)
-    const provider = await getProvider(chain.rpcUrl, chain.explorer, chainName)
+    const provider = await getProvider(
+      chain.rpcUrl,
+      chain.explorer,
+      chainName,
+      chain.multicall,
+    )
 
     const usdValue = await estimateTVL(logger, provider, args.address)
     if (!usdValue) return

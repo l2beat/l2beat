@@ -12,7 +12,12 @@ export async function getTvl(
 ): Promise<ApiTvlResponse> {
   const chainName = ChainSpecificAddress.longChain(holder)
   const chain = getChainConfig(chainName)
-  const provider = await getProvider(chain.rpcUrl, chain.explorer, chainName)
+  const provider = await getProvider(
+    chain.rpcUrl,
+    chain.explorer,
+    chainName,
+    chain.multicall,
+  )
 
   const values = await estimateTVL(getPlainLogger(), provider, holder)
   if (!values) return []
