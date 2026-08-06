@@ -1,6 +1,6 @@
 {
   "name": "uniswapv3",
-  "timestamp": 1785227424,
+  "timestamp": 1786035958,
   "configHash": "0x469126aa326e4d3811bfff3c098bbad7217f1fa442d5000289857c6fff2591ca",
   "entries": [
     {
@@ -45,7 +45,7 @@
       "values": {
         "$immutable": true,
         "MAX_RELEASE_LENGTH": 20,
-        "nonce": 1106,
+        "nonce": 1139,
         "owner": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
         "RESOURCE": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
         "RESOURCE_RECIPIENT": "eth:0x000000000000000000000000000000000000dEaD",
@@ -99,6 +99,12 @@
           "from": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
           "description": "can mint up to 2% of the token supply per mint after the minimum 1y interval, and set a new minter.",
           "role": ".minter"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
+          "description": "can set the voting delay, the voting period, and the proposal threshold.",
+          "role": ".admin"
         },
         {
           "permission": "interact",
@@ -242,7 +248,6 @@
           "via": [
             {
               "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
-              "permission": "act",
               "delay": 172800
             }
           ]
@@ -255,7 +260,6 @@
           "via": [
             {
               "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
-              "permission": "act",
               "delay": 172800
             }
           ]
@@ -274,7 +278,6 @@
           "via": [
             {
               "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
-              "permission": "act",
               "delay": 172800
             }
           ]
@@ -285,13 +288,21 @@
           "description": "can enable new fee tiers, set the protocol fee share (up to 1/4 of LP fees per side) on any pool, collect accrued protocol fees, and transfer factory ownership.",
           "role": ".owner",
           "via": [
-            {
-              "address": "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A",
-              "permission": "act"
-            },
+            { "address": "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A" },
             {
               "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
-              "permission": "act",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
+          "description": "can set the voting delay, the voting period, and the proposal threshold.",
+          "role": ".admin",
+          "via": [
+            {
+              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
               "delay": 172800
             }
           ]
@@ -304,7 +315,6 @@
           "via": [
             {
               "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
-              "permission": "act",
               "delay": 172800
             }
           ]
@@ -317,7 +327,6 @@
           "via": [
             {
               "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
-              "permission": "act",
               "delay": 172800
             }
           ]
@@ -330,7 +339,6 @@
           "via": [
             {
               "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
-              "permission": "act",
               "delay": 172800
             }
           ]
@@ -343,7 +351,6 @@
           "via": [
             {
               "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
-              "permission": "act",
               "delay": 172800
             }
           ]
@@ -485,18 +492,18 @@
         "$immutable": true,
         "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
         "fee": 500,
-        "feeGrowthGlobal0X128": "4804732016291691331839146541097306",
-        "feeGrowthGlobal1X128": "2047117780727158834793069851161764329578607",
-        "liquidity": "5906233198697616223",
+        "feeGrowthGlobal0X128": "4809766876325577623444161924740372",
+        "feeGrowthGlobal1X128": "2049764010738564783489371816110931167415453",
+        "liquidity": "19515195866008585335",
         "maxLiquidityPerTick": "1917569901783203986719870431555990",
         "protocolFees": {
-          "token0": 1065352326,
-          "token1": "549274364973130579"
+          "token0": 2225619554,
+          "token1": "952740202884203647"
         },
         "slot0": {
-          "sqrtPriceX96": "1826009543649909257280507619497951",
-          "tick": 200916,
-          "observationIndex": 117,
+          "sqrtPriceX96": "1810264098045065826899509721134156",
+          "tick": 200743,
+          "observationIndex": 513,
           "observationCardinality": 723,
           "observationCardinalityNext": 723,
           "feeProtocol": 68,
@@ -539,7 +546,7 @@
         "name": "Uniswap V3 Positions NFT-V1",
         "PERMIT_TYPEHASH": "0x49ecf333e5b8c95c40fdafc95c1ad136e8914a8fb55e9dc8bb01eaa83a2df9ad",
         "symbol": "UNI-V3-POS",
-        "totalSupply": 1206015,
+        "totalSupply": 1209977,
         "WETH9": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "fieldMeta": {
@@ -568,15 +575,15 @@
         "$immutable": true,
         "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
         "fee": 3000,
-        "feeGrowthGlobal0X128": "69313857179636762292083465648659",
-        "feeGrowthGlobal1X128": "15583624840996987300338690406217423379123368",
-        "liquidity": "30220394541582389",
+        "feeGrowthGlobal0X128": "69375506650974112592261509054869",
+        "feeGrowthGlobal1X128": "15605412439886503149816652875868229698287324",
+        "liquidity": "31850473362115192",
         "maxLiquidityPerTick": "11505743598341114571880798222544994",
-        "protocolFees": { "token0": 29, "token1": 204023074164946 },
+        "protocolFees": { "token0": 31202, "token1": 1 },
         "slot0": {
-          "sqrtPriceX96": "46013645101785915742290391417967809",
-          "tick": 265455,
-          "observationIndex": 10,
+          "sqrtPriceX96": "46102876706731114089453668011700756",
+          "tick": 265494,
+          "observationIndex": 247,
           "observationCardinality": 360,
           "observationCardinalityNext": 360,
           "feeProtocol": 102,
@@ -1190,6 +1197,6 @@
     "uniswapv3/UniversalRouter": "0x7599293166769ce170829e381d4f80616e6cf1b2c5977c3816b0dd5618c2810a",
     "uniswapv3/V3OpenFeeAdapter": "0x663a4d61a27c76fffa2178a403a1d500998b8922f9ad258ad0b509adecd838c3"
   },
-  "usedBlockNumbers": { "ethereum": 25630131 },
-  "permissionsConfigHash": "0x3cbf97e4db05819017002aa75e6edeaadef6326c224eab0a203ef01006cd4cad"
+  "usedBlockNumbers": { "ethereum": 25697294 },
+  "permissionsConfigHash": "0xa221a7891d7ef42ba2d32756bf84e8da45e8e9226a73845a6cefc8bece66ff9e"
 }

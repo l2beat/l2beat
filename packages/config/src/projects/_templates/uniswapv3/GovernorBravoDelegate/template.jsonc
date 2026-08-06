@@ -48,6 +48,10 @@
         {
           "type": "upgrade",
           "description": "can replace the governor implementation or nominate a new proxy admin; the nominee can accept and thereafter control upgrades."
+        },
+        {
+          "type": "interact",
+          "description": "can set the voting delay, the voting period, and the proposal threshold."
         }
       ],
       "severity": "HIGH"
