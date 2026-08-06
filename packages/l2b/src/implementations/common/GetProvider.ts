@@ -6,6 +6,7 @@ import {
   getDiscoveryPaths,
   getMulticall3Config,
   type IProvider,
+  type MulticallConfig,
   SQLiteCache,
 } from '@l2beat/discovery'
 import { HttpClient } from '@l2beat/shared'
@@ -14,10 +15,15 @@ import { dirname } from 'path'
 
 const UNKNOWN_CHAIN_NAME = 'UnknownChainName'
 
+// We cannot know when multicall3 was deployed on a chain we have no config
+// for, so callers that do have one are expected to pass it in.
+const MULTICALL_DISABLED = getMulticall3Config(Number.MAX_SAFE_INTEGER)
+
 export async function getProvider(
   rpcUrl: string,
   explorer?: ExplorerConfig[],
   chainName?: string,
+  multicall: MulticallConfig = MULTICALL_DISABLED,
 ): Promise<IProvider> {
   const httpClient = new HttpClient()
   const paths = getDiscoveryPaths()
@@ -31,7 +37,7 @@ export async function getProvider(
     {
       name: effectiveChainName,
       rpcUrl,
-      multicall: getMulticall3Config(Number.MAX_SAFE_INTEGER),
+      multicall,
       explorer: explorer ?? [
         {
           type: 'etherscan',
