@@ -29,7 +29,13 @@ export async function getTvl(
         tvl: Number(value) / USD_CENTS_IN_DOLLAR,
         ticker: balance.symbol,
         iconURL: balance.iconUrl,
+        balance: toTokenAmount(balance.balance, balance.decimals),
+        price,
       }
     })
     .sort((a, b) => b.tvl - a.tvl)
+}
+
+function toTokenAmount(amount: bigint, decimals: number): number {
+  return Number(amount) / 10 ** decimals
 }
