@@ -9,6 +9,7 @@ import { isLimitExceededError } from '../../clients/rpc/RpcClient'
 import type { RpcMetricsAggregator } from '../../clients/rpc/RpcMetricsAggregator'
 import type {
   CallParameters,
+  CallResult,
   EVMBlock,
   EVMBlockWithTransactions,
   EVMFeeHistory,
@@ -72,10 +73,19 @@ export interface IRpcClient extends BlockClient, LogsClient {
     newestBlock: number,
     rewardPercentiles: number[],
   ): Promise<EVMFeeHistory>
+  /** Throws on revert. Prefer tryCall, which makes the revert case explicit. */
   call(
     callParams: CallParameters,
     blockNumber: number | 'latest',
   ): Promise<Bytes>
+  /**
+   * Resolves with `{ reverted: true }` when the call fails on-chain.
+   * Rejects only on transport or node errors.
+   */
+  tryCall(
+    callParams: CallParameters,
+    blockNumber: number | 'latest',
+  ): Promise<CallResult>
   isMulticallDeployed(blockNumber: number): boolean
   multicall(
     calls: CallParameters[],
@@ -234,6 +244,17 @@ export class RpcClientCompat implements IRpcClient {
     callParams: CallParameters,
     blockNumber: number | 'latest',
   ): Promise<Bytes> {
+    const result = await this.tryCall(callParams, blockNumber)
+    if (result.reverted) {
+      throw new Error('Call reverted')
+    }
+    return result.data
+  }
+
+  async tryCall(
+    callParams: CallParameters,
+    blockNumber: number | 'latest',
+  ): Promise<CallResult> {
     const result = await this.ethRpcClient.call(
       {
         to: callParams.to,
@@ -242,9 +263,9 @@ export class RpcClientCompat implements IRpcClient {
       blockNumber === 'latest' ? 'latest' : BigInt(blockNumber),
     )
     if (result.reverted) {
-      throw new Error('Call reverted')
+      return { reverted: true }
     }
-    return Bytes.fromHex(result.data)
+    return { reverted: false, data: Bytes.fromHex(result.data) }
   }
 
   isMulticallDeployed(blockNumber: number): boolean {

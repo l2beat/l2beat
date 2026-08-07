@@ -36,43 +36,38 @@ export class BalanceProvider {
           const res = await client.multicall(calls, blockNumber)
           return res.map((r, i) => {
             if (r.success === false) {
-              this.logger.tag({ chain }).warn('Issue with balance fetching', {
-                token: queries[i].token,
-                blockNumber,
-              })
+              this.logger
+                .tag({ chain })
+                .warn('balance call reverted, assuming 0', {
+                  token: queries[i].token,
+                  blockNumber,
+                })
               return 0n
             }
             return BigInt(r.data.toString())
           })
         }
-        return Promise.all(
+        return await Promise.all(
           queries.map(async (q) => {
             if (q.token === 'native') {
-              try {
-                const res = await client.getBalance(q.holder, blockNumber)
-                return res.toString() === '0x' ? 0n : BigInt(res.toString())
-              } catch {
-                this.logger.tag({ chain }).warn('Issue with balance fetching', {
-                  token: q.token,
-                  blockNumber,
-                })
-                return 0n
-              }
-            } else {
-              try {
-                const res = await client.call(
-                  encodeErc20Balance(q.token, q.holder),
-                  blockNumber,
-                )
-                return res.toString() === '0x' ? 0n : BigInt(res.toString())
-              } catch {
-                this.logger.tag({ chain }).warn('Issue with balance fetching', {
-                  token: q.token,
-                  blockNumber,
-                })
-                return 0n
-              }
+              const res = await client.getBalance(q.holder, blockNumber)
+              return res.toString() === '0x' ? 0n : BigInt(res.toString())
             }
+            const res = await client.tryCall(
+              encodeErc20Balance(q.token, q.holder),
+              blockNumber,
+            )
+            if (res.reverted) {
+              this.logger
+                .tag({ chain })
+                .warn('balanceOf call reverted, assuming 0', {
+                  token: q.token,
+                  blockNumber,
+                })
+              return 0n
+            }
+            const data = res.data.toString()
+            return data === '0x' ? 0n : BigInt(data)
           }),
         )
       } catch (error) {
