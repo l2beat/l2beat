@@ -26,6 +26,8 @@ export interface ApiTvlEntry {
   tvl: number
   ticker: string
   iconURL: string | undefined
+  balance: number
+  price: number | undefined
 }
 
 export interface ApiPreviewResponse {
