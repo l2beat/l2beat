@@ -1,3 +1,95 @@
+Generated with discovered.json: 0xf99265f6322c3c25c47a37d1c0c06fe9e4a749fb
+
+# Diff at Thu, 06 Aug 2026 06:04:01 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c6a2ea4e2580ecbcf392fb46cb610962936e71cb block: 1779719731
+- current timestamp: 1785996153
+
+## Description
+
+Migrated from Gelato to Conduit as RaaS provider: the UpgradeExecutor `EXECUTOR_ROLE` moved from Gelato Multisig to Conduit Multisig 1, and the batch poster and one validator were rotated. The DA committee shrank from 2 to 1 member and `minimumAssertionPeriod` dropped 75 → 10 Ethereum blocks.
+
+## Watched changes
+
+```diff
+    contract UpgradeExecutor (eth:0x07390626b8Bc2C04b1D93c7D246A0629198D7868) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
++        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      values.executors.0:
+-        "eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
++        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+    }
+```
+
+```diff
+    contract RollupProxy (eth:0x448Bbd134dE1B23976073aB4F2915849b2dcD73A) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
++++ description: Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. 
+      values.minimumAssertionPeriod:
+-        75
++        10
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        3
++        5
+      values.validators.0:
+-        "eth:0xC3D92d18c9CcD418A5547C28a5c3be60E694EA3c"
++        "eth:0x3ec947F2A6690a4a82E0AC59Ff0837474572CEE5"
+    }
+```
+
+```diff
+-   Status: DELETED
+    EOA  (eth:0x6a0A93Cd6d6FB7a36bF6234ef4650Bf9474e7682)
+    +++ description: None
+```
+
+```diff
+    contract SequencerInbox (eth:0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.batchPosters.0:
+-        "eth:0x29156F8dFfE8979F49E3a085dbb10477373a6051"
++        "eth:0x312F51C032ea949b824381acb7B3f2C712593802"
+      values.dacKeyset.membersCount:
+-        2
++        1
+      values.dacKeyset.blsSignatures.0:
+-        "YAfz7xTJCh4W2eYRm14dHI9/MzmE4XpACAD8kSdGPQR9hYj0KVfOfn84xCnXxPRLoBOUCU4l4rzz0HSU3joV5kuBxKQh46L3yZ0h0oP4MXFOG8cbV5oIs2WFjP6s4sPZpRVYhGBPsMSEuD/52l2fMMZTaAQ2p9Vb8VDlSCad3tigl9luWtLItup5DuAS6ixUVBDajyKu9RIGApJwPgtr5dtorAuQ01M6DUhcLM5EPOafuzwvqMywUVmv5YEBJZ96JweOpBJHh7Vs3FKnaR/aDewkrnJBUAlOmW/O09NsbrAGovEQboyn/j17TLfkJVOriQllp0SQJtD/L6somLazwnkbGpN1e0pFod/jqIPI/fetEu6KvteYLX37lzjJQ4l8pA=="
+      values.dacKeyset.blsSignatures.1:
+-        "YAbEnnI/RpbGv0lwkp7I0JhTwGaPz8lEVjkr8SE9LlTrPiEeRegjYymNY2doPnin1hOQfpQuGBRjgxaw3h8lIoBxn31tIMbc3I2pjRBuZhF14klu+I1bkluXRJO9ZYmC9BACIIohozMTWRXI/ej0MFQytyvZsXN2PWKKky0Yy+RzUP7Y7982vn4X81IwuZ4FdhIbogTvc6RSDzgPhiH2ejRB6XPlRT/f76KeNWZogD299lBrYySIceH/aA98cp3ixA7/ryLG6sD2VddYDdfsoSQbTbWuUQrO5/DK3SlMtbMv+vKqMNgCjstJ2DJXPKhiOhQ5nsnOZg9cSalU6LbPPFDdSO/0h09HXno290Iw0yxS20SGmx51lO6q/vEgX0OVvw=="
++        "YBhPN6Tq6nXoJS041bPwKYcDeU1Y84s1URBM4MJHKup49TzNB/23scWwhETSvpAl1RnMwh0S/Z+LZ8UGFWlLYmquyJi5weYTsMF6rChTnuZnqY4I1zQZPemy5hK0sIJDlQaqb/llv/8ujT5q3p4DhBLXZ3eIUMcXs4j7F+QMNZyO87mbTnrulLiPfZbAno1SKg8k2Q76fbNPQs76GK4aseCPeA5hPguvjijDIqDVK5Ffz/PhQ6nap8K6UlApBm+CMBIOmAP9IdMyAVs+wirhgMvR88+JVhoMW9kU3F90bWks78tHYqASrw/lXBFI8TgiGhlvvsmUJAC3dyzjccjMyO0M05JjmM1i8bkAdYuCWRF0KV63rABVXUAFGtKAzrLPpw=="
+      values.keySetUpdates:
+-        2
++        3
+      values.setIsBatchPosterCount:
+-        3
++        5
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Gelato Multisig (eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../Gelato Multisig => .flat/Conduit Multisig 1}/GnosisSafe.sol           | 0
+ .../Gelato Multisig => .flat/Conduit Multisig 1}/GnosisSafeProxy.p.sol    | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+```
+
 Generated with discovered.json: 0x1ded0acb1cc68504e22100f1582e0f31d6eaf30f
 
 # Diff at Tue, 09 Jun 2026 12:43:38 GMT:
