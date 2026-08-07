@@ -26,33 +26,13 @@ describe(getLivenessGroupingKey.name, () => {
     expect(result).toEqual('123')
   })
 
-  it('falls back to full decoding for dynamic parameters', () => {
-    const dynamicSignature = 'function submit(string value)' as const
-    const dynamicInterface = new utils.Interface([dynamicSignature])
-    const dynamicInput = dynamicInterface.encodeFunctionData('submit', [
-      'epoch-123',
-    ])
-
-    const result = getLivenessGroupingKey(
-      dynamicInput,
-      {
-        ...config,
-        selector: dynamicInterface.getSighash('submit'),
-        signature: dynamicSignature,
-      },
-      { type: 'functionCallParameter', path: [0] },
-    )
-
-    expect(result).toEqual('epoch-123')
-  })
-
   it('rejects a path ending at a tuple', () => {
     expect(() =>
       getLivenessGroupingKey(input, config, {
         type: 'functionCallParameter',
         path: [0],
       }),
-    ).toThrow('Grouping parameter must be a scalar')
+    ).toThrow('Grouping parameter cannot be extracted from a bounded prefix')
   })
 
   it('rejects a missing parameter', () => {

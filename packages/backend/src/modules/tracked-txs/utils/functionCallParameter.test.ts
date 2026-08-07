@@ -53,13 +53,13 @@ describe(getFunctionCallParameterPrefix.name, () => {
         'function submit(bytes,(uint256,bytes))',
         [1, 0],
       ),
-    ).toThrow('Grouping parameter requires full calldata')
+    ).toThrow('Grouping parameter cannot be extracted from a bounded prefix')
     expect(() =>
       getFunctionCallParameterPrefix('function submit(bytes)', [0]),
-    ).toThrow('Grouping parameter requires full calldata')
+    ).toThrow('Grouping parameter cannot be extracted from a bounded prefix')
     expect(() =>
       getFunctionCallParameterPrefix('function submit(uint256[])', [0, 0]),
-    ).toThrow('Grouping parameter requires full calldata')
+    ).toThrow('Grouping parameter cannot be extracted from a bounded prefix')
   })
 
   it('rejects invalid configuration instead of falling back', () => {
@@ -102,10 +102,6 @@ describe(getFunctionCallParameter.name, () => {
         [0, 0],
       ),
     ).toThrow('Input does not match the function selector')
-  })
-
-  it('uses the full decoder for unsupported paths', () => {
-    expect(getFunctionCallParameter(signature, input, [0, 2])).toEqual('0x1234')
   })
 
   it('follows the actual tuple pointer and fails outside the prefix', () => {

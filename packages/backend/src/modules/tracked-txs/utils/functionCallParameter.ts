@@ -1,7 +1,6 @@
 import { assert } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { SELECTOR_BYTES } from './const'
-import { decodeFunctionCallInput } from './decodeFunctionCallInput'
 
 const WORD_BYTES = 32
 
@@ -25,13 +24,15 @@ export function getFunctionCallParameterPrefix(
     path,
     canonicalTupleOffset,
   )
-  assert(target !== undefined, 'Grouping parameter requires full calldata')
+  assert(
+    target !== undefined,
+    'Grouping parameter cannot be extracted from a bounded prefix',
+  )
   return SELECTOR_BYTES + target.position + WORD_BYTES
 }
 
 /**
- * Gets one scalar function parameter. Fixed-width tuple paths work with a
- * calldata prefix; all other paths use the complete ABI decoder.
+ * Gets one fixed-width scalar function parameter from a calldata prefix.
  */
 export function getFunctionCallParameter(
   signature: `function ${string}`,
@@ -39,18 +40,11 @@ export function getFunctionCallParameter(
   path: readonly [number, ...number[]],
 ): string {
   const extracted = extractFixedWidthScalar(signature, input, path)
-  if (extracted !== undefined) return extracted
-
-  let value: unknown = decodeFunctionCallInput(signature, input)
-  for (const index of path) {
-    assert(Number.isInteger(index) && index >= 0, 'Invalid parameter path')
-    assert(Array.isArray(value), 'Parameter path does not exist')
-    value = value[index]
-  }
-
-  assert(value !== undefined && value !== null, 'Parameter path does not exist')
-  assert(!Array.isArray(value), 'Grouping parameter must be a scalar')
-  return String(value)
+  assert(
+    extracted !== undefined,
+    'Grouping parameter cannot be extracted from a bounded prefix',
+  )
+  return extracted
 }
 
 function extractFixedWidthScalar(
