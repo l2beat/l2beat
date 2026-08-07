@@ -248,4 +248,233 @@ describeDatabase(InteropMessageRepository.name, (database) => {
       expect(remaining[0]?.messageId).toEqual('msg3')
     })
   })
+
+  describe(InteropMessageRepository.prototype.getPage.name, () => {
+    const base = UnixTime(1_700_000_000)
+
+    beforeEach(async () => {
+      await repository.insertMany([
+        makeRecord(base, {
+          messageId: 'b',
+          timestamp: base,
+          plugin: 'across',
+          type: 'across.Message',
+        }),
+        // Same timestamp as 'b' - messageId decides the order.
+        makeRecord(base, {
+          messageId: 'a',
+          timestamp: base,
+          plugin: 'across',
+          type: 'across.Message',
+        }),
+        makeRecord(base, {
+          messageId: 'c',
+          timestamp: base + 100,
+          plugin: 'across',
+          type: 'across.Message',
+          app: 'other-app',
+          srcChain: 'base',
+          dstChain: 'optimism',
+        }),
+        makeRecord(base, {
+          messageId: 'd',
+          timestamp: base + 200,
+          plugin: 'cctp',
+          type: 'cctp.Message',
+        }),
+      ])
+    })
+
+    it('orders by timestamp then messageId, descending', async () => {
+      const result = await repository.getPage({
+        filter: { plugin: 'across' },
+        order: 'desc',
+        limit: 10,
+      })
+
+      expect(result.map((r) => r.messageId)).toEqual(['c', 'b', 'a'])
+    })
+
+    it('orders by timestamp then messageId, ascending', async () => {
+      const result = await repository.getPage({
+        filter: { plugin: 'across' },
+        order: 'asc',
+        limit: 10,
+      })
+
+      expect(result.map((r) => r.messageId)).toEqual(['a', 'b', 'c'])
+    })
+
+    it('walks every row exactly once across pages, breaking timestamp ties', async () => {
+      const seen: string[] = []
+      let cursor: { timestamp: UnixTime; messageId: string } | undefined
+
+      for (let page = 0; page < 5; page++) {
+        const rows = await repository.getPage({
+          filter: { plugin: 'across' },
+          order: 'desc',
+          limit: 1,
+          cursor,
+        })
+        if (rows.length === 0) break
+
+        const last = rows[rows.length - 1]
+        assert(last)
+        seen.push(last.messageId)
+        cursor = { timestamp: last.timestamp, messageId: last.messageId }
+      }
+
+      expect(seen).toEqual(['c', 'b', 'a'])
+    })
+
+    it('resumes ascending walks from the cursor', async () => {
+      const result = await repository.getPage({
+        filter: { plugin: 'across' },
+        order: 'asc',
+        limit: 10,
+        cursor: { timestamp: base, messageId: 'a' },
+      })
+
+      expect(result.map((r) => r.messageId)).toEqual(['b', 'c'])
+    })
+
+    it('respects the limit', async () => {
+      const result = await repository.getPage({
+        filter: { plugin: 'across' },
+        order: 'desc',
+        limit: 2,
+      })
+
+      expect(result.map((r) => r.messageId)).toEqual(['c', 'b'])
+    })
+
+    it('scopes results to the plugin', async () => {
+      const result = await repository.getPage({
+        filter: { plugin: 'cctp' },
+        order: 'desc',
+        limit: 10,
+      })
+
+      expect(result.map((r) => r.messageId)).toEqual(['d'])
+    })
+
+    it('filters by type, app and chains', async () => {
+      expect(
+        (
+          await repository.getPage({
+            filter: { plugin: 'across', type: 'cctp.Message' },
+            order: 'desc',
+            limit: 10,
+          })
+        ).map((r) => r.messageId),
+      ).toEqual([])
+
+      expect(
+        (
+          await repository.getPage({
+            filter: { plugin: 'across', app: 'other-app' },
+            order: 'desc',
+            limit: 10,
+          })
+        ).map((r) => r.messageId),
+      ).toEqual(['c'])
+
+      expect(
+        (
+          await repository.getPage({
+            filter: {
+              plugin: 'across',
+              srcChain: 'base',
+              dstChain: 'optimism',
+            },
+            order: 'desc',
+            limit: 10,
+          })
+        ).map((r) => r.messageId),
+      ).toEqual(['c'])
+    })
+
+    it('treats from as inclusive and to as exclusive', async () => {
+      const result = await repository.getPage({
+        filter: { plugin: 'across', from: base, to: base + 100 },
+        order: 'asc',
+        limit: 10,
+      })
+
+      expect(result.map((r) => r.messageId)).toEqual(['a', 'b'])
+    })
+
+    it('rejects a non-positive limit', async () => {
+      await expect(
+        repository.getPage({
+          filter: { plugin: 'across' },
+          order: 'desc',
+          limit: 0,
+        }),
+      ).toBeRejectedWith('limit must be a positive number')
+    })
+  })
+
+  describe(InteropMessageRepository.prototype.hasPlugin.name, () => {
+    it('distinguishes a plugin with data from one without', async () => {
+      await repository.insertMany([
+        makeRecord(UnixTime(1_700_000_000), {
+          messageId: 'msg1',
+          plugin: 'across',
+        }),
+      ])
+
+      expect(await repository.hasPlugin('across')).toEqual(true)
+      expect(await repository.hasPlugin('acros')).toEqual(false)
+    })
+  })
+
+  describe(InteropMessageRepository.prototype.getTypeSummary.name, () => {
+    it('returns counts and the retained timestamp span per plugin and type', async () => {
+      const base = UnixTime(1_700_000_000)
+      await repository.insertMany([
+        makeRecord(base, {
+          messageId: 'msg1',
+          plugin: 'across',
+          type: 'across.Message',
+          timestamp: base,
+        }),
+        makeRecord(base, {
+          messageId: 'msg2',
+          plugin: 'across',
+          type: 'across.Message',
+          timestamp: base + 500,
+        }),
+        makeRecord(base, {
+          messageId: 'msg3',
+          plugin: 'cctp',
+          type: 'cctp.Message',
+          timestamp: base + 700,
+        }),
+      ])
+
+      const result = await repository.getTypeSummary()
+
+      expect(result).toEqualUnsorted([
+        {
+          plugin: 'across',
+          type: 'across.Message',
+          count: 2,
+          oldestTimestamp: base,
+          newestTimestamp: base + 500,
+        },
+        {
+          plugin: 'cctp',
+          type: 'cctp.Message',
+          count: 1,
+          oldestTimestamp: base + 700,
+          newestTimestamp: base + 700,
+        },
+      ])
+    })
+
+    it('returns an empty array when there is no data', async () => {
+      expect(await repository.getTypeSummary()).toEqual([])
+    })
+  })
 })

@@ -1,6 +1,7 @@
-import type {
-  InteropBridgeType,
-  KnownInteropBridgeType,
+import {
+  type InteropBridgeType,
+  inferInteropBridgeType,
+  type KnownInteropBridgeType,
 } from '@l2beat/shared-pure'
 
 export interface InteropTransferForClassification {
@@ -149,19 +150,7 @@ export class InteropTransferClassifier {
       'srcWasBurned' | 'dstWasMinted'
     >,
   ): InteropBridgeType {
-    if (
-      (transfer.srcWasBurned === false && transfer.dstWasMinted === true) ||
-      (transfer.srcWasBurned === true && transfer.dstWasMinted === false)
-    ) {
-      return 'lockAndMint'
-    }
-    if (transfer.srcWasBurned === true && transfer.dstWasMinted === true) {
-      return 'burnAndMint'
-    }
-    if (transfer.srcWasBurned === false && transfer.dstWasMinted === false) {
-      return 'nonMinting'
-    }
-    return 'unknown'
+    return inferInteropBridgeType(transfer)
   }
 
   /**

@@ -42,7 +42,7 @@ type OpenApiResponse = {
 
 type Tags = 'projects' | 'tvs' | 'activity' | 'interop'
 
-const BadRequestResponse = v
+export const BadRequestResponse = v
   .object({
     path: v.string(),
     message: v.string(),
