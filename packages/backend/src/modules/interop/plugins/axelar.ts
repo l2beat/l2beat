@@ -45,6 +45,14 @@ const parsePayloadVerified = createEventParser(
   'event PayloadVerified(address dvn, bytes header, uint256 confirmations, bytes32 proofHash)',
 )
 
+// Known apps riding the Axelar AMB, identified by the ContractCall sender
+// (the app's Axelar adapter, deployed at the same address on every chain).
+// https://docs.centrifuge.io/developer/protocol/deployments/
+// chainconfeeg
+const AXELAR_APP_BY_SENDER: Record<string, string> = {
+  '0x34e904237341c3de02d4447c3ff0ca8880ca6484': 'centrifuge',
+}
+
 // https://docs.axelar.dev/resources/contract-addresses/mainnet/
 // chainconfeeg
 export const AXELAR_NETWORKS = defineNetworks('axelar', [
@@ -300,9 +308,11 @@ export class AxelarPlugin implements InteropPlugin {
       if (!contractCall) return
       return [
         Result.Message('axelar.Message', {
-          app: contractCallExecuted.args.isLayerZeroApp
-            ? 'layerzero-wrapper'
-            : 'unknown',
+          app:
+            AXELAR_APP_BY_SENDER[contractCall.args.sender.toLowerCase()] ??
+            (contractCallExecuted.args.isLayerZeroApp
+              ? 'layerzero-wrapper'
+              : 'unknown'),
           srcEvent: contractCall,
           dstEvent: contractCallExecuted,
           extraEvents: [contractCallApproved],
