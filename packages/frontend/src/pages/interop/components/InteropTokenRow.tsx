@@ -1,3 +1,4 @@
+import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
 import {
   Tooltip,
   TooltipContent,
@@ -6,8 +7,6 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import type { InteropScope } from '~/server/features/scaling/interop/types'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatInteger } from '~/utils/number-format/formatInteger'
 import { ChainIcon } from './ChainIcon'
 import { InteropNoDataBadge } from './InteropNoDataBadge'
 import { InteropTransferDetailsTrigger } from './InteropTransferDetailsTrigger'

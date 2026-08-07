@@ -1,3 +1,4 @@
+import { formatCurrency } from '@l2beat/shared-pure'
 import {
   flexRender,
   getCoreRowModel,
@@ -16,7 +17,6 @@ import {
 import { useTable } from '~/hooks/useTable'
 import type { PrivacyAsset } from '~/server/features/privacy/types'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { privacyAssetsBreakdownColumns } from './columns'
 import { PrivacyDepositsMetric } from './components/PrivacyDepositsMetric'
 

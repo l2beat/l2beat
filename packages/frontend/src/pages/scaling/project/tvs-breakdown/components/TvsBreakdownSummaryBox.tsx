@@ -1,4 +1,5 @@
 import type { WarningWithSentiment } from '@l2beat/config'
+import { formatCurrency } from '@l2beat/shared-pure'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import {
   ChartStats,
@@ -15,7 +16,6 @@ import {
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 export type TvsData = {
   breakdown: {

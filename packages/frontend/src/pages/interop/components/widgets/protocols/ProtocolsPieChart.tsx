@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert, formatCurrency } from '@l2beat/shared-pure'
 import { Label, Pie, PieChart } from 'recharts'
 import type {
   ChartMeta,
@@ -14,7 +14,6 @@ import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { Skeleton } from '~/components/core/Skeleton'
 import { useIsClient } from '~/hooks/useIsClient'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 export function ProtocolsPieChart({
   chartMeta,

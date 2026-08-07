@@ -1,4 +1,4 @@
-import { formatNumber } from './formatNumber'
+import { formatNumber } from './formatNumber.js'
 
 export function formatInteger(value: number): string {
   if (value >= 1000) {

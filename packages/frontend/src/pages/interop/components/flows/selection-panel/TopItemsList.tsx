@@ -1,4 +1,4 @@
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import { formatCurrency } from '@l2beat/shared-pure'
 
 interface TopItem {
   title: string

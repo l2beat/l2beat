@@ -1,7 +1,7 @@
+import { formatActivityCount } from '@l2beat/shared-pure'
 import { NumberCell } from '~/components/table/cells/NumberCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { formatTimestamp } from '~/utils/dates'
-import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 
 interface Props {
   maxCount: number

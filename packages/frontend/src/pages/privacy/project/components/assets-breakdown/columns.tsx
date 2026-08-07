@@ -1,6 +1,6 @@
+import { formatCurrency } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import type { PrivacyAsset } from '~/server/features/privacy/types'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { AssetCell } from './components/AssetCell'
 import { PrivacyDepositsMetric } from './components/PrivacyDepositsMetric'
 

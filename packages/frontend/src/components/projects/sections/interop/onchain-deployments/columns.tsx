@@ -1,11 +1,14 @@
-import { formatAddress, formatSeconds } from '@l2beat/shared-pure'
+import {
+  formatAddress,
+  formatCurrency,
+  formatSeconds,
+} from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { CopyButton } from '~/components/CopyButton'
 import { CustomLink } from '~/components/link/CustomLink'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { IndexCell } from '~/components/table/cells/IndexCell'
 import { InteropNoDataBadge } from '~/pages/interop/components/InteropNoDataBadge'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { InteropTokenOnchainDeploymentsRow } from './InteropTokenOnchainDeploymentsSection'
 
 const UNSUPPORTED_CHAIN_TOOLTIP =

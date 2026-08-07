@@ -1,11 +1,13 @@
+import {
+  formatActivityCount,
+  formatInteger,
+  formatUopsRatio,
+} from '@l2beat/shared-pure'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import type { ActivityMetric } from '~/pages/scaling/activity/components/ActivityMetricContext'
 import type { ActivityProjectChartStats } from '~/server/features/scaling/activity/buildActivityProjectChartStats'
 import { formatTimestamp } from '~/utils/dates'
-import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
-import { formatInteger } from '~/utils/number-format/formatInteger'
-import { formatUopsRatio } from '~/utils/number-format/formatUopsRatio'
 
 interface Props {
   stats: ActivityProjectChartStats | undefined

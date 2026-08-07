@@ -1,5 +1,5 @@
 import type { Stage } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
+import { assert, formatCurrency } from '@l2beat/shared-pure'
 import { Label, Pie, PieChart } from 'recharts'
 import { StageBadge } from '~/components/badge/StageBadge'
 import { CssVariables } from '~/components/CssVariables'
@@ -18,7 +18,6 @@ import { useEcosystemDisplayControlsContext } from '~/components/table/display/c
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import type { EcosystemEntry } from '~/server/features/ecosystems/getEcosystemEntry'
 import { formatPercent } from '~/utils/calculatePercentageChange'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { EcosystemWidget, EcosystemWidgetTitle } from './EcosystemWidget'
 
 const chartMeta = {

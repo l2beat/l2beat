@@ -1,4 +1,4 @@
-import { pluralize } from '@l2beat/shared-pure'
+import { formatCurrency, formatInteger, pluralize } from '@l2beat/shared-pure'
 import type { ReactNode } from 'react'
 import { Button } from '~/components/core/Button'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
@@ -16,8 +16,6 @@ import type {
   InteropFlowsData,
 } from '~/server/features/scaling/interop/getInteropFlows'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatInteger } from '~/utils/number-format/formatInteger'
 
 interface StatRow {
   label: string

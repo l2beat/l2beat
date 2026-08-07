@@ -3,9 +3,9 @@ import type {
   ProjectZkCatalogInfo,
   TrustedSetup,
 } from '@l2beat/config'
+import { formatInteger } from '@l2beat/shared-pure'
 import type { TrustedSetupSectionProps } from '~/components/projects/sections/TrustedSetupsSection'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
-import { formatInteger } from '~/utils/number-format/formatInteger'
 import { getTrustedSetupsSectionFromTrustedSetups } from '~/utils/project/getTrustedSetupsSection'
 
 const TRUSTED_SETUP_RISK_TO_SENTIMENT = {

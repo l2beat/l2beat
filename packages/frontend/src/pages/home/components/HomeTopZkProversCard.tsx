@@ -1,4 +1,5 @@
 import type { TrustedSetup, ZkCatalogTag } from '@l2beat/config'
+import { formatCurrency } from '@l2beat/shared-pure'
 import { createColumnHelper, getCoreRowModel } from '@tanstack/react-table'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import {
@@ -22,7 +23,6 @@ import {
   VERIFIER_STATUS_ORDER,
 } from '~/pages/zk-catalog/v2/components/VerifiedCountWithDetails'
 import type { ZkCatalogEntry } from '~/server/features/zk-catalog/getZkCatalogEntries'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'
 

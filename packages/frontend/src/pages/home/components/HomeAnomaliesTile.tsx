@@ -1,10 +1,10 @@
+import { formatInteger } from '@l2beat/shared-pure'
 import { formatDuration } from '~/components/chart/liveness/LivenessChart'
 import { LiveIndicator } from '~/components/LiveIndicator'
 import { ChevronIcon } from '~/icons/Chevron'
 import { anomalySubtypeToLabel } from '~/pages/scaling/liveness/components/AnomalyIndicator'
 import type { OngoingAnomaliesOverview } from '~/server/features/scaling/liveness/getOngoingAnomaliesOverview'
 import { cn } from '~/utils/cn'
-import { formatInteger } from '~/utils/number-format/formatInteger'
 import { HomeCard } from './HomeCard'
 
 export function HomeAnomaliesTile({

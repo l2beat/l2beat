@@ -1,3 +1,4 @@
+import { formatBpsToMbps, formatBytes } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { Badge } from '~/components/badge/Badge'
 import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
@@ -11,7 +12,6 @@ import { getDaCommonProjectColumns } from '~/components/table/common-project-col
 import { TableLink } from '~/components/table/TableLink'
 import type { DaThroughputEntry } from '~/server/features/data-availability/throughput/getDaThroughputEntries'
 import { formatTimestamp } from '~/utils/dates'
-import { formatBpsToMbps, formatBytes } from '~/utils/number-format/formatBytes'
 
 export type DaThroughputTableData = Omit<DaThroughputEntry, 'scalingOnlyData'>
 

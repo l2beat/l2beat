@@ -1,4 +1,5 @@
 import type { TrustedSetup } from '@l2beat/config'
+import { formatCurrency } from '@l2beat/shared-pure'
 import { createColumnHelper, getCoreRowModel } from '@tanstack/react-table'
 import type { ReactNode } from 'react'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
@@ -22,7 +23,6 @@ import { PRIVACY_ASSESSMENT } from '~/pages/privacy/privacyAssessment'
 import { sentimentToRiskDot } from '~/pages/privacy/sentimentToRiskDot'
 import { TrustedSetupRiskDot } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'
 

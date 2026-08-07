@@ -1,8 +1,7 @@
+import { formatCurrency, formatNumber } from '@l2beat/shared-pure'
 import { StageBadge } from '~/components/badge/StageBadge'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
 import type { EcosystemMonthlyUpdateEntry } from '~/server/features/monthly-reports/getEcosystemEntries'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatNumber } from '~/utils/number-format/formatNumber'
 
 interface Props {
   newProjects: EcosystemMonthlyUpdateEntry['newProjects']

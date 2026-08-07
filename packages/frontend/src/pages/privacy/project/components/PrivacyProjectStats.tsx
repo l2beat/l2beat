@@ -1,6 +1,5 @@
+import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
 import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatInteger } from '~/utils/number-format/formatInteger'
 
 interface Props {
   totalValueLockedUsd: number

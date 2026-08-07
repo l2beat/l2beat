@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 
-import { formatNumber, formatNumberWithCommas } from './formatNumber'
+import { formatNumber, formatNumberWithCommas } from './formatNumber.js'
 
 describe(formatNumber.name, () => {
   describe('default decimals', () => {

@@ -1,3 +1,4 @@
+import { formatDollarValueNumber } from '@l2beat/shared-pure'
 import {
   createColumnHelper,
   getCoreRowModel,
@@ -21,7 +22,6 @@ import { TopNBadge } from '~/pages/interop/summary/components/TopNBadge'
 import { toTableRows } from '~/pages/scaling/summary/utils/toTableRows'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
 import type { TvsTableData } from '~/server/features/scaling/tvs/getTvsTableData'
-import { formatDollarValueNumber } from '~/utils/number-format/formatDollarValueNumber'
 import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'
 

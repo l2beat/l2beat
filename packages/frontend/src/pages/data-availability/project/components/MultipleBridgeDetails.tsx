@@ -1,3 +1,4 @@
+import { formatCurrency } from '@l2beat/shared-pure'
 import { Button, buttonVariants } from '~/components/core/Button'
 import {
   Drawer,
@@ -22,7 +23,6 @@ import { UnderReviewIcon } from '~/icons/UnderReview'
 import { UnverifiedIcon } from '~/icons/Unverified'
 import type { DaProjectPageEntry } from '~/server/features/data-availability/project/getDaProjectEntry'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { getUnderReviewText } from '~/utils/project/underReview'
 
 interface Props {

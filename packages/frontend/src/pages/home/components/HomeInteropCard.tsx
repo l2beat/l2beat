@@ -1,3 +1,4 @@
+import { formatCurrency } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { type ReactNode, useMemo } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
@@ -19,7 +20,6 @@ import { getInteropTokenUrl } from '~/pages/interop/utils/getInteropTokenUrl'
 import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'
 
