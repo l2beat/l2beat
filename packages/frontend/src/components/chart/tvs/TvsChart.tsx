@@ -1,5 +1,5 @@
 import type { Milestone } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
+import { assert, formatCurrency } from '@l2beat/shared-pure'
 import { Area, AreaChart } from 'recharts'
 import type {
   ChartMeta,
@@ -19,7 +19,6 @@ import {
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/PinkGradientDef'
 import { formatTimestamp } from '~/utils/dates'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ChartUnit } from '../types'
 
 export interface TvsChartDataPoint {

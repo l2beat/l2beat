@@ -1,5 +1,11 @@
 import type { Milestone } from '@l2beat/config'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  formatBytes,
+  formatCurrency,
+  formatNumber,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import isNumber from 'lodash/isNumber'
 import { useMemo } from 'react'
 import { Area, ComposedChart, Line, YAxis } from 'recharts'
@@ -22,9 +28,6 @@ import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatCostValue } from '~/pages/scaling/costs/utils/formatCostValue'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
 import { formatRange } from '~/utils/dates'
-import { formatBytes } from '~/utils/number-format/formatBytes'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatNumber } from '~/utils/number-format/formatNumber'
 import {
   type ChartRange,
   type ChartResolution,

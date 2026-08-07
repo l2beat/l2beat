@@ -1,5 +1,5 @@
+import { formatCurrency } from '@l2beat/shared-pure'
 import { BidirectionalArrowIcon } from '~/icons/BidirectionalArrow'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 export function InteropTopPathValue({
   path,

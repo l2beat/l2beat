@@ -1,4 +1,8 @@
-import { formatSeconds } from '@l2beat/shared-pure'
+import {
+  formatCurrency,
+  formatNumberWithCommas,
+  formatSeconds,
+} from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import {
   Tooltip,
@@ -15,8 +19,6 @@ import { getInteropTokenUrl } from '~/pages/interop/utils/getInteropTokenUrl'
 import type { InteropSelection } from '~/pages/interop/utils/types'
 import type { InteropProtocolTransferDetailsItem } from '~/server/features/scaling/interop/types'
 import { formatTimestamp } from '~/utils/dates'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatNumberWithCommas } from '~/utils/number-format/formatNumber'
 
 export type TransferRow = InteropProtocolTransferDetailsItem & BasicTableRow
 

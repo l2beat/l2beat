@@ -1,3 +1,4 @@
+import { formatCurrency } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import { Area, AreaChart } from 'recharts'
 import type {
@@ -17,7 +18,6 @@ import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatTimestamp } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generateColors'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 export interface PrivacyTvlBreakdownProject {
   id: string

@@ -1,3 +1,4 @@
+import { formatDollarValueNumber } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/PizzaRosetteCell'
@@ -6,7 +7,6 @@ import { TypeInfo } from '~/components/table/cells/TypeInfo'
 import { getScalingCommonProjectColumns } from '~/components/table/common-project-columns/ScalingCommonProjectColumns'
 import { EM_DASH } from '~/consts/characters'
 import type { ScalingArchivedEntry } from '~/server/features/scaling/archived/getScalingArchivedEntries'
-import { formatDollarValueNumber } from '~/utils/number-format/formatDollarValueNumber'
 
 const columnHelper = createColumnHelper<ScalingArchivedEntry>()
 

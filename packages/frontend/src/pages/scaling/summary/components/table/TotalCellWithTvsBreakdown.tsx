@@ -2,6 +2,7 @@ import type {
   ProjectAssociatedToken,
   WarningWithSentiment,
 } from '@l2beat/config'
+import { formatDollarValueNumber } from '@l2beat/shared-pure'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import {
   AdditionalTrustAssumptionsBanner,
@@ -23,7 +24,6 @@ import { TableLink } from '~/components/table/TableLink'
 import { sentimentToWarningBarColor, WarningBar } from '~/components/WarningBar'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
-import { formatDollarValueNumber } from '~/utils/number-format/formatDollarValueNumber'
 
 interface TotalCellProps {
   breakdown:

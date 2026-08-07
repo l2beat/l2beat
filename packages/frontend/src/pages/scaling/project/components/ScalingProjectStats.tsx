@@ -1,4 +1,8 @@
-import { pluralize } from '@l2beat/shared-pure'
+import {
+  formatActivityCount,
+  formatCurrency,
+  pluralize,
+} from '@l2beat/shared-pure'
 import chunk from 'lodash/chunk'
 import compact from 'lodash/compact'
 import isEmpty from 'lodash/isEmpty'
@@ -21,8 +25,6 @@ import {
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import type { ProjectScalingEntry } from '~/server/features/scaling/project/getScalingProjectEntry'
 import { cn } from '~/utils/cn'
-import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 interface Props {
   project: ProjectScalingEntry

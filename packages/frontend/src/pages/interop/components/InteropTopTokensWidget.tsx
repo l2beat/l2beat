@@ -1,3 +1,4 @@
+import { formatInteger } from '@l2beat/shared-pure'
 import { useState } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import {
@@ -8,7 +9,6 @@ import {
 } from '~/components/core/Tabs'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { cn } from '~/utils/cn'
-import { formatInteger } from '~/utils/number-format/formatInteger'
 import { InteropTokenRow, type InteropTokenRowData } from './InteropTokenRow'
 import type { InteropTransferDefaults } from './InteropTransferTrigger'
 import { Last24HoursBadge } from './Last24HoursBadge'

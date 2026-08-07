@@ -1,5 +1,6 @@
 import type { DaLayerThroughput, Milestone } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
+import { formatBpsToMbps, formatBytes } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { ThroughputSectionChart } from '~/components/chart/data-availability/ThroughputSectionChart'
@@ -12,7 +13,6 @@ import {
   useIncludeScalingOnly,
 } from '~/pages/data-availability/throughput/components/DaThroughputContext'
 import { useTRPC } from '~/trpc/React'
-import { formatBpsToMbps, formatBytes } from '~/utils/number-format/formatBytes'
 import { optionToRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'

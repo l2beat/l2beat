@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { formatBpsToMbps, UnixTime } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { useId, useMemo } from 'react'
 import { Area, AreaChart } from 'recharts'
@@ -17,7 +17,6 @@ import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChar
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { EcosystemChartTimeRange } from '~/pages/ecosystems/project/components/charts/EcosystemsChartTimeRange'
 import { useTRPC } from '~/trpc/React'
-import { formatBpsToMbps } from '~/utils/number-format/formatBytes'
 import { rangeToResolution } from '~/utils/range/range'
 import { MarketShare } from './MonthlyUpdateMarketShare'
 

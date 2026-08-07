@@ -2,10 +2,10 @@ import type {
   ProjectAssociatedToken,
   WarningWithSentiment,
 } from '@l2beat/config'
+import { formatCurrency } from '@l2beat/shared-pure'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { HorizontalSeparator } from '../core/HorizontalSeparator'
 import { Square } from '../Square'
 import { sentimentToWarningBarColor, WarningBar } from '../WarningBar'

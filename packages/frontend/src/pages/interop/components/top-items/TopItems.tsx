@@ -1,3 +1,4 @@
+import { formatCurrency } from '@l2beat/shared-pure'
 import { cva, type VariantProps } from 'class-variance-authority'
 import {
   Tooltip,
@@ -8,7 +9,6 @@ import {
 import { EM_DASH } from '~/consts/characters'
 import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 export type TopItem = {
   id?: string

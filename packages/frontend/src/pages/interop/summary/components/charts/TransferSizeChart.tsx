@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert, formatCurrency, formatInteger } from '@l2beat/shared-pure'
 import {
   Bar,
   BarChart,
@@ -27,8 +27,6 @@ import { EM_DASH } from '~/consts/characters'
 import { useIsClient } from '~/hooks/useIsClient'
 import type { TransferSizeDataPoint } from '~/server/features/scaling/interop/utils/getTransferSizeChartData'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatInteger } from '~/utils/number-format/formatInteger'
 import { transferSizeBuckets } from '../../../utils/transferSizeBuckets'
 
 interface Props {

@@ -1,3 +1,4 @@
+import { formatActivityCount } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { Skeleton } from '~/components/core/Skeleton'
 import {
@@ -12,7 +13,6 @@ import {
 } from '~/pages/scaling/activity/components/ActivityMetricContext'
 import type { ScalingActivityEntry } from '~/server/features/scaling/activity/getScalingActivityEntries'
 import { useTRPC } from '~/trpc/React'
-import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { StatCard } from '../stats/StatCard'
 import { StatsGrid } from '../stats/StatsGrid'
 

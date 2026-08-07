@@ -1,6 +1,6 @@
+import { formatBytes } from '@l2beat/shared-pure'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import type { ScalingProjectDaThroughputChart } from '~/server/features/data-availability/throughput/getScalingProjectDaThroughtputChart'
-import { formatBytes } from '~/utils/number-format/formatBytes'
 
 export function ProjectDataPostedChartStats({
   isLoading,

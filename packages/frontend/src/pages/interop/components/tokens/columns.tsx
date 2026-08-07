@@ -1,3 +1,4 @@
+import { formatCurrency } from '@l2beat/shared-pure'
 import { type ColumnHelper, createColumnHelper } from '@tanstack/react-table'
 import compact from 'lodash/compact'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -18,7 +19,6 @@ import type {
   TokenFlowData,
   TokensPairData,
 } from '~/server/features/scaling/interop/types'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
 import type { InteropSelection } from '../../utils/types'
 import { InteropNoDataBadge } from '../InteropNoDataBadge'

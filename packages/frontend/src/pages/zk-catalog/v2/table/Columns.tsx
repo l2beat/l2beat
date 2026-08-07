@@ -1,4 +1,4 @@
-import { pluralize } from '@l2beat/shared-pure'
+import { formatCurrency, pluralize } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import {
   ProjectNameCell,
@@ -8,7 +8,6 @@ import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
 import { TableLink } from '~/components/table/TableLink'
 import { FilledArrowIcon } from '~/icons/FilledArrow'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ZkCatalogEntry } from '../../../../server/features/zk-catalog/getZkCatalogEntries'
 import { ProjectsUsedInByStatus } from '../components/ProjectsUsedInByStatus'
 import { TechStackCell } from '../components/TechStackCell'

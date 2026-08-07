@@ -1,3 +1,4 @@
+import { formatCurrency } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { StatCard } from '~/components/chart/stats/StatCard'
 import { StatsGrid } from '~/components/chart/stats/StatsGrid'
@@ -6,7 +7,6 @@ import { useTvsDisplayControlsContext } from '~/components/table/display/context
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
 import { useTRPC } from '~/trpc/React'
 import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 type StatType = 'total' | 'rollups' | 'validiumsAndOptimiums' | 'others'
 const statsMeta: Record<StatType, { label: string; color: string }> = {

@@ -1,3 +1,4 @@
+import { formatCurrency } from '@l2beat/shared-pure'
 import { Area, AreaChart } from 'recharts'
 import type {
   ChartMeta,
@@ -19,7 +20,6 @@ import {
 } from '~/components/core/chart/defs/PinkGradientDef'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatTimestamp } from '~/utils/dates'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 interface PrivacyTvlChartDataPoint {
   timestamp: number
