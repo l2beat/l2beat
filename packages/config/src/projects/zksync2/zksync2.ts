@@ -118,15 +118,6 @@ const zkTotalSupply = formatLargeNumber(
     discovery.getContractValueBigInt('ZkToken', 'totalSupply') / 10n ** 18n,
   ),
 )
-const securityCouncilAddress = ChainSpecificAddress.address(
-  discovery.getContract('SecurityCouncil').address,
-)
-const guardiansAddress = ChainSpecificAddress.address(
-  discovery.getContract('Guardians').address,
-)
-const zkFoundationAddress = ChainSpecificAddress.address(
-  discovery.getContract('ZK Foundation Multisig').address,
-)
 // wall-clock timelines for the governance profile (excluding cross-chain
 // message latency and the ValidatorTimelock batch execution delay)
 const fastestNormalUpgradeD = Math.round(
@@ -232,10 +223,6 @@ export const zksync2: ScalingProject = zkStackL2({
     ],
   },
   associatedTokens: ['ZK'],
-  // TODO(sergey): open research items for the governance profile:
-  // 1. ZK token distribution: circulating/votable supply, capped-minter
-  //    structure, Matter Labs / investor allocations (29.3% Token Assembly
-  //    figure is from the ZK Nation docs).
   governanceInfo: {
     securityCouncil: {
       Composition: `**${scApprovalThreshold}/${scMemberCount}** to approve upgrades · **${scSoftFreezeThreshold}/${scMemberCount}** soft freeze · **${scHardFreezeThreshold}/${scMemberCount}** hard freeze, unfreeze and emergency approval. No fixed terms: members serve until replaced via Protocol Governor proposal.`,

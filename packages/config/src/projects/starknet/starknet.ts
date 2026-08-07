@@ -454,21 +454,6 @@ export const starknet: ScalingProject = {
       sharpUpgradeDelay,
       scMinorityStats,
     }),
-    // TODO(sergey): open research items for the governance profile:
-    // 1. Identities of the 12 Security Council signers (addresses are onchain,
-    //    but no canonical public mapping to names/orgs was found).
-    // 2. Quorum/majority configuration of the Snapshot X space on
-    //    governance.starknet.io (no protocol-wide quorum rule is published).
-    // 3. STRK minting curve details: current total/circulating supply and
-    //    realistically votable supply.
-    // 4. Signer identities of Starkware Multisig 1 (2/6, owns the
-    //    DelayedExecutor - the "SW" proposer of SNIP-25's vetted flow) and
-    //    Starkware Multisig 2 (2/4, secondary escrows). Both attributed to
-    //    StarkWare, 2 shared signers, no public docs found. Verify whether
-    //    SNIP-25's SC-vetting gate will be enforced onchain for the
-    //    DelayedExecutor path (Phase 2?).
-    // 5. Whether the 7d/5d post-vote freezes are binding anywhere (they are
-    //    not enforced onchain - the SC Safe upgrades with zero delay).
     governanceInfo: {
       securityCouncil: {
         Composition: `**${scThreshold}** onchain Safe multisig — 12 members, geographically and organizationally diverse (<50% from one country, <4 from one organization). The Starknet Foundation appoints and can administratively remove members. No fixed term length and no live tokenholder election mechanism.`,
@@ -476,20 +461,17 @@ export const starknet: ScalingProject = {
           '**Not mapped**, SNIP-25 and Foundation announcements publish only composition criteria (technical reputation, KYC/AML, diversity limits, conflict-of-interest rules).',
         Charter:
           '[SNIP-25](https://github.com/starknet-io/SNIPs/blob/main/SNIPS/snip-25.md) defines duties (security-only mandate), vetting-failure reports, eligibility and the code of conduct.',
-        'Can bypass DAO?': `**Yes** — ${scThreshold} can approve and execute an emergency upgrade immediately.`,
+        'Can bypass DAO?': `**Yes** — ${scThreshold} can approve and execute an emergency upgrade immediately. The same instant rights let it counteract a malicious action queued in the DelayedExecutor during its ${executionDelay} window.`,
         'DAO can override SC?':
           '**No**, the community can only dispute the emergency upgrades after the fact in advisory way.',
       },
       upgrades: {
-        'Major upgrade path':
-          'Release announcement (≥1 SNIP + specific GitHub commit) → 2-week community deliberation → 1-week final review → 1-week STRK vote on the [Governance Hub](https://governance.starknet.io/) → Security Council vetting → ≥7-day freeze → deployment by the operating entities. Minimum wall-clock ≈ **5 weeks**.',
-        'Minor upgrade path':
-          'Announcement (SNIP may be submitted in parallel) → 1-week review → 1-week vote → ≥5-day freeze → deployment. No Security Council approval required. Minimum wall-clock ≈ **19 days**.',
+        'DelayedExecutor timelock': `The standard deployment vehicle for the core contracts, controlled by the Starkware Foundation. Owned by the ${starkwareMultisig1Stats} Starkware Multisig 1, has the immutable ${executionDelay} delay, after which anyone can execute a matured action.`,
+        'Major upgrade path': `Release announcement (≥1 SNIP + specific GitHub commit) → 2-week community deliberation → 1-week final review → 1-week STRK vote on the [Governance Hub](https://governance.starknet.io/) → Security Council vetting → deployment queued in the DelayedExecutor by the ${starkwareMultisig1Stats} Starkware Multisig 1, whose ${executionDelay} onchain delay covers the procedural ≥7-day freeze → execution. Minimum wall-clock ≈ **5 weeks**.`,
+        'Minor upgrade path': `Announcement (SNIP may be submitted in parallel) → 1-week review → 1-week vote → deployment queued in the DelayedExecutor, whose ${executionDelay} onchain delay covers the procedural ≥5-day freeze → execution. No Security Council approval required. Minimum wall-clock ≈ **22 days**.`,
         'Emergency upgrade path': `**${scThreshold} Security Council, instant**.`,
-        'StarkWare upgrade path': `The ${starkwareMultisig1Stats} Starkware Multisig 1 is the second governor of the core contracts (Starknet, ETH/STRK escrows) — the \`SW\` proposer of SNIP-25's vetted flow. It acts only via the DelayedExecutor timelock: register → wait ${executionDelay} → execute (expires after another ~56d). Only it can cancel its own queue; the Security Council has no onchain veto but can counteract with its instant rights during the ${executionDelay}. This delayed path replaced StarkWare's instant governor rights on 2025-03-02 (Stage 1).`,
-        'Offchain enforcement': `**None of the voting or freeze periods are enforced onchain.** The ${scThreshold} Security Council Safe upgrades the core contracts with zero delay, all procedural freezes are assumed to be honored by the deploying entities. The only onchain-enforced delay is the ${executionDelay} on the StarkWare path.`,
-        'Exit window':
-          '**≥7 days** after the vote for major releases, **≥5 days** for minor, **0** for emergency if deploying entities are trusted. **0** when pure onchain logic is considered.',
+        'Offchain enforcement': `**None of the voting or freeze periods are enforced onchain.** All procedural freezes are assumed to be honored by the deploying entities; the only onchain-enforced delay is the ${executionDelay} DelayedExecutor timelock on the normal path, and the ${scThreshold} Security Council Safe can upgrade the core contracts with zero delay at any time.`,
+        'Exit window': `**${executionDelay}** enforced onchain by the DelayedExecutor on the normal upgrade path (procedurally ≥7 days after the vote for major releases, ≥5 days for minor). **0** for emergency upgrades by the Security Council.`,
       },
       tokenGovernance: {
         'Governance token':
@@ -500,7 +482,7 @@ export const starknet: ScalingProject = {
           '**None**, but proposal admission is curated, not triggered permissionlessly by an onchain token threshold.',
         Quorum:
           '**No protocol-wide quorum rule published.** Historical votes used a simple majority with no minimum quorum.',
-        'Execution model': `**Vote as onchain record, manual deployment.**`,
+        'Execution model': `**Vote as onchain record, manual deployment** — passed proposals are queued in the DelayedExecutor by the ${starkwareMultisig1Stats} Starkware Multisig 1 and execute after ${executionDelay}.`,
       },
     },
   },
