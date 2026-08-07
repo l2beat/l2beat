@@ -226,42 +226,47 @@ export class CentriFugePlugin implements InteropPluginResyncable {
       executeTransferShares,
       db,
     )
-    if (!forwardTransferShares) return
 
-    const initiateTransferShares = findBestInitiateForForward(
-      forwardTransferShares,
+    // Correlate directly with the initiate event. The forward event on the
+    // pool's hub chain is attached when captured, but not required - the hub
+    // may live on a chain we do not index.
+    const initiateTransferShares = findBestInitiateForExecute(
+      executeTransferShares,
       db,
     )
-    if (!initiateTransferShares) {
-      const srcChain = forwardTransferShares.args.$srcChain
-      if (!this.oneSidedChains.includes(srcChain)) return
-
+    if (initiateTransferShares) {
       return [
         Result.Transfer('centrifuge.Transfer', {
-          srcChain,
+          srcEvent: initiateTransferShares,
+          srcAmount: initiateTransferShares.args.amount,
+          srcTokenAddress: initiateTransferShares.args.srcTokenAddress,
+          srcWasBurned: initiateTransferShares.args.srcWasBurned,
           dstEvent: executeTransferShares,
           dstAmount: executeTransferShares.args.amount,
           dstTokenAddress: executeTransferShares.args.dstTokenAddress,
           dstWasMinted: executeTransferShares.args.dstWasMinted,
-          bridgeType: getBestEffortBridgeTypeFromPartialSupplyAction({
-            srcWasBurned: undefined,
-            dstWasMinted: executeTransferShares.args.dstWasMinted,
-          }),
-          extraEvents: [forwardTransferShares],
+          extraEvents: forwardTransferShares ? [forwardTransferShares] : [],
         }),
       ]
     }
 
+    // Without an initiate event only the hub's forward event knows the source
+    // chain, so one-sided sources (e.g. solana) depend on it.
+    if (!forwardTransferShares) return
+    const srcChain = forwardTransferShares.args.$srcChain
+    if (!this.oneSidedChains.includes(srcChain)) return
+
     return [
       Result.Transfer('centrifuge.Transfer', {
-        srcEvent: initiateTransferShares,
-        srcAmount: initiateTransferShares.args.amount,
-        srcTokenAddress: initiateTransferShares.args.srcTokenAddress,
-        srcWasBurned: initiateTransferShares.args.srcWasBurned,
+        srcChain,
         dstEvent: executeTransferShares,
         dstAmount: executeTransferShares.args.amount,
         dstTokenAddress: executeTransferShares.args.dstTokenAddress,
         dstWasMinted: executeTransferShares.args.dstWasMinted,
+        bridgeType: getBestEffortBridgeTypeFromPartialSupplyAction({
+          srcWasBurned: undefined,
+          dstWasMinted: executeTransferShares.args.dstWasMinted,
+        }),
         extraEvents: [forwardTransferShares],
       }),
     ]
@@ -336,11 +341,8 @@ function findBestForwardForExecute(
   )
 }
 
-function findBestInitiateForForward(
-  forwardTransferShares: InteropEvent<{
-    $srcChain: string
-    $dstChain: string
-    dstCentrifugeId: number
+function findBestInitiateForExecute(
+  executeTransferShares: InteropEvent<{
     poolId: bigint
     scId: string
     receiver: string
@@ -350,15 +352,13 @@ function findBestInitiateForForward(
 ) {
   return closestByTimestamp(
     db.findAll(InitiateTransferShares, {
-      $dstChain: forwardTransferShares.args.$dstChain,
-      dstCentrifugeId: forwardTransferShares.args.dstCentrifugeId,
-      poolId: forwardTransferShares.args.poolId,
-      scId: forwardTransferShares.args.scId,
-      receiver: forwardTransferShares.args.receiver,
-      amount: forwardTransferShares.args.amount,
-      ctx: { chain: forwardTransferShares.args.$srcChain },
+      $dstChain: executeTransferShares.ctx.chain,
+      poolId: executeTransferShares.args.poolId,
+      scId: executeTransferShares.args.scId,
+      receiver: executeTransferShares.args.receiver,
+      amount: executeTransferShares.args.amount,
     }),
-    forwardTransferShares.ctx.timestamp,
+    executeTransferShares.ctx.timestamp,
   )
 }
 

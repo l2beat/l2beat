@@ -63,10 +63,8 @@ export function getWormholeCoreAddresses(
   return addresses
 }
 
-const DOCS_URL =
-  'https://wormhole.com/docs/products/reference/contract-addresses/'
-const CHAIN_IDS_DOCS_URL =
-  'https://wormhole.com/docs/products/reference/chain-ids/'
+const DOCS_URL = 'https://wormhole.com/docs/reference/contract-addresses/'
+const CHAIN_IDS_DOCS_URL = 'https://wormhole.com/docs/reference/chain-ids/'
 
 // Wormhole Standard Relayer — same address on all EVM chains (CREATE2 deployment).
 // No longer listed on the Wormhole docs page, so we hardcode it.
@@ -253,6 +251,14 @@ export class WormholeConfigPlugin
         })
       }
     })
+
+    // The docs pages are scraped, so parsing zero contracts means the page
+    // structure (or URL) changed - fail loudly instead of emptying the config.
+    if (evmContracts.length === 0 || chainIdNetworks.length === 0) {
+      throw new Error(
+        'Failed to parse Wormhole networks from docs, the page structure or URLs likely changed',
+      )
+    }
 
     const abi = parseAbi(['function chainId() view returns (uint16)'])
     const data = encodeFunctionData({
