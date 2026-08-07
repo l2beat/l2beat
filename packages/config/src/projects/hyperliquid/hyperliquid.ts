@@ -1,4 +1,9 @@
-import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -84,6 +89,23 @@ export const hyperliquid: ScalingProject = {
         tokens: ['USDC'],
         description: 'Hyperliquid bridge escrow on HyperEVM.',
       }),
+      // Coinbase-operated EOAs ('USDC treasury wallets', AQAv2) holding native
+      // USDC that backs USDC on HyperCore. Rebalanced 9:1 with the
+      // CoreDepositWallet on every deposit/withdrawal.
+      {
+        chain: 'hyperevm',
+        includeInTotal: false,
+        address: EthereumAddress('0xc20699185c15D0a2fD65779BB5d69f5b0B113c00'),
+        sinceTimestamp: UnixTime(1781236750),
+        tokens: ['USDC'],
+      },
+      {
+        chain: 'hyperevm',
+        includeInTotal: false,
+        address: EthereumAddress('0x4E5319dEb1072B01439EE674db5C321d11fd96F8'),
+        sinceTimestamp: UnixTime(1781236750),
+        tokens: ['USDC'],
+      },
     ],
   },
   dataAvailability: {
