@@ -19,23 +19,19 @@ export function HomeAnomaliesTile({
   const first = items[0]
 
   return (
-    <HomeCard className={cn('relative overflow-hidden p-0 md:p-1', className)}>
+    <HomeCard className={cn('overflow-hidden p-0 md:p-1', className)}>
       <a
         href="/scaling/liveness"
         className="group flex items-center gap-3 px-4 py-3 transition-colors hover:bg-surface-secondary/50 md:rounded-lg md:px-7 md:py-5"
       >
-        {isOngoing && (
-          <div className="-translate-y-1/4 absolute top-0 right-0 hidden translate-x-1/4 lg:block">
-            <LiveIndicator size="xl" />
-          </div>
-        )}
         <div className="lg:hidden">
           <LiveIndicator size="md" disabled={!isOngoing} />
         </div>
 
         <div className="flex min-w-0 flex-1 flex-col">
           <span className="truncate font-bold text-label-value-14 leading-tight transition-colors group-hover:text-link">
-            Ongoing major anomalies
+            <span className="lg:hidden">Ongoing major anomalies</span>
+            <span className="max-lg:hidden">Ongoing anomalies</span>
           </span>
           <span className="mt-0.5 flex min-w-0 items-center gap-1.5 font-medium text-label-value-12 text-secondary lg:hidden">
             {isOngoing && first ? (
@@ -60,6 +56,9 @@ export function HomeAnomaliesTile({
               </span>
             )}
           </span>
+        </div>
+        <div className="max-lg:hidden">
+          <LiveIndicator size="md" disabled={!isOngoing} />
         </div>
         <span className="shrink-0 font-bold text-heading-20 tabular-nums leading-none">
           {formatInteger(count)}

@@ -208,7 +208,7 @@ function HomeInteropCardContent({
               hasEnoughProtocols={hasEnoughProtocols}
               isLoading={isLoading}
               className="pb-2"
-              maxSizeClassName="lg:max-w-[min(70svh,calc(100svh-20rem))] xl:max-w-[min(75svh,calc(100svh-4rem))]"
+              maxSizeClassName="lg:max-w-[min(70dvh,calc(100dvh-20rem))] xl:max-w-[min(75dvh,calc(100dvh-4rem))]"
             />
           </div>
         </div>

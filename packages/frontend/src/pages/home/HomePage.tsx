@@ -122,13 +122,11 @@ export function HomePage({
               </div>
             </div>
             <div className="grid grid-cols-1 gap-4 max-md:contents lg:hidden">
-              <div className="grid gap-4 max-md:contents md:grid-cols-2">
-                <HomeAnomaliesTile ongoingAnomalies={ongoingAnomalies} />
-                <HomeRecentChangesTile
-                  recentChangesCount={recentChangesCount}
-                  recentChangesProjects={recentChangesProjects}
-                />
-              </div>
+              <HomeAnomaliesTile ongoingAnomalies={ongoingAnomalies} />
+              <HomeRecentChangesTile
+                recentChangesCount={recentChangesCount}
+                recentChangesProjects={recentChangesProjects}
+              />
               <HomeWhatsNewCard item={whatsNewItem} />
               <HomeRecentProjectsCard projects={recentProjects} />
             </div>

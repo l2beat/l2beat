@@ -48,7 +48,8 @@ export function HomeRecentChangesTile({
               !disabled && 'group-hover:text-link',
             )}
           >
-            <span className="hidden lg:inline">Updates</span>
+            <span className="lg:hidden">Recent changes</span>
+            <span className="max-lg:hidden">Updates</span>
             <span className="font-medium text-secondary lg:hidden">
               {' '}
               (last 7 days)
