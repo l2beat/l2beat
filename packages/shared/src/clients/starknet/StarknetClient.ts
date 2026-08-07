@@ -6,10 +6,14 @@ import {
   type StarknetCallParameters,
   StarknetCallResponse,
   StarknetErrorResponse,
+  type StarknetEvent,
   StarknetGetBlockResponse,
   StarknetGetBlockWithTxsResponse,
+  StarknetGetEventsResponse,
   type StarknetTransaction,
 } from './types'
+
+export type { StarknetEvent } from './types'
 
 interface Dependencies extends ClientCoreDependencies {
   url: string
@@ -73,6 +77,17 @@ export class StarknetClient extends ClientCore implements BlockClient {
     }
   }
 
+  async getBlockTimestamps(
+    blockNumbers: number[],
+  ): Promise<Map<number, number>> {
+    const blocks = await Promise.all(
+      blockNumbers.map((blockNumber) =>
+        this.getBlockWithTransactions(blockNumber),
+      ),
+    )
+    return new Map(blocks.map((block) => [block.number, block.timestamp]))
+  }
+
   async call(
     callParams: StarknetCallParameters,
     blockNumber: number | 'latest',
@@ -90,6 +105,49 @@ export class StarknetClient extends ClientCore implements BlockClient {
     }
 
     return callResponse.data.result
+  }
+
+  async getEvents(
+    fromBlock: number,
+    toBlock: number,
+    address: string,
+    eventSelectors: string[],
+  ): Promise<StarknetEvent[]> {
+    const events: StarknetRpcEvent[] = []
+    let continuationToken: string | undefined
+
+    do {
+      const response = await this.query('starknet_getEvents', [
+        {
+          from_block: { block_number: fromBlock },
+          to_block: { block_number: toBlock },
+          address,
+          keys: [eventSelectors],
+          chunk_size: 1_000,
+          ...(continuationToken
+            ? { continuation_token: continuationToken }
+            : {}),
+        },
+      ])
+      const parsed = StarknetGetEventsResponse.safeParse(response)
+
+      if (!parsed.success) {
+        throw new Error('Get events: Error during parsing')
+      }
+
+      events.push(...parsed.data.result.events)
+      continuationToken = parsed.data.result.continuation_token ?? undefined
+    } while (continuationToken)
+
+    const lastEventIndexByTransaction = new Map<string, number>()
+    return events.map((event) => {
+      const previousEventIndex =
+        lastEventIndexByTransaction.get(event.transaction_hash) ?? -1
+      const eventIndex = event.event_index ?? previousEventIndex + 1
+      lastEventIndexByTransaction.set(event.transaction_hash, eventIndex)
+
+      return { ...event, event_index: eventIndex }
+    })
   }
 
   async query(method: string, params: unknown) {
@@ -127,4 +185,8 @@ export class StarknetClient extends ClientCore implements BlockClient {
   get chain() {
     return this.$.sourceName
   }
+}
+
+type StarknetRpcEvent = Omit<StarknetEvent, 'event_index'> & {
+  event_index?: number
 }

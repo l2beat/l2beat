@@ -183,6 +183,7 @@ function collectAddressesFromFormula(
       })
       break
     case 'balanceOfEscrow':
+    case 'starknetBalanceOf':
       if (formula.address !== 'native') {
         addresses.push({
           address: formula.address,

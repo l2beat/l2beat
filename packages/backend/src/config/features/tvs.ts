@@ -77,6 +77,7 @@ export async function getTvsConfig(
           case 'balanceOfEscrow':
           case 'totalSupply':
           case 'starknetTotalSupply':
+          case 'starknetBalanceOf':
             return a.chain
           case 'const':
             return undefined
