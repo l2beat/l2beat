@@ -34,6 +34,7 @@ export const TVL = command({
       chain.explorer,
       chainName,
       chain.multicall,
+      chain.coingeckoApiKey,
     )
 
     const usdValue = await estimateTVL(logger, provider, args.address)

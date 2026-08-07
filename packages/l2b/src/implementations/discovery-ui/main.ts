@@ -32,7 +32,9 @@ import { getProject } from './getProject'
 import { getProjects } from './getProjects'
 import { getTvl } from './getTvl'
 import { attachLayoutRouter } from './layouts/router'
+import { ProviderCache } from './ProviderCache'
 import { searchCode } from './searchCode'
+import { TvlCache } from './TvlCache'
 import {
   attachTemplateRouter,
   listTemplateFilesSchema,
@@ -113,6 +115,9 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   const templateService = new TemplateService(paths.discovery)
   const configHealthService = new ConfigHealthService()
 
+  const providerCache = new ProviderCache()
+  const tvlCache = new TvlCache()
+
   const diffHistoryParser = new DiffHistoryParser()
   const flatSourceClient = new FlatSourceClient()
   const diffoveryController = new DiffoveryController(flatSourceClient)
@@ -172,7 +177,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     const { address } = paramsValidation.data
 
     try {
-      const response = await getTvl(address)
+      const response = await getTvl(providerCache, tvlCache, address)
       res.json(response)
     } catch (e) {
       console.error(e)
