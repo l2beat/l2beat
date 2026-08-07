@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert } from '../tools/assert.js'
 
 const units = ['', 'K', 'M', 'B', 'T']
 

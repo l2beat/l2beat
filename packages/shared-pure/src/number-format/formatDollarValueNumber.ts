@@ -1,5 +1,5 @@
-import { formatCurrency } from './formatCurrency'
-import { formatNumber } from './formatNumber'
+import { formatCurrency } from './formatCurrency.js'
+import { formatNumber } from './formatNumber.js'
 
 export function formatDollarValueNumber(value: number): string {
   return formatCurrency(value, 'usd', { formatFn: formatValue })

@@ -1,4 +1,4 @@
-import { formatNumber } from './formatNumber'
+import { formatNumber } from './formatNumber.js'
 
 export function formatUopsRatio(ratio: number): string {
   if (ratio === 1) {

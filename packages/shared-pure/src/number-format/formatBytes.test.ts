@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { formatBytes } from './formatBytes'
+import { formatBytes } from './formatBytes.js'
 
 describe(formatBytes.name, () => {
   describe('automatic unit scaling', () => {
