@@ -1,4 +1,5 @@
 import { assert, type EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { SELECTOR_BYTES } from '../const'
 
 interface FunctionCallQueryConfig {
   address: EthereumAddress
@@ -43,7 +44,7 @@ export function getFunctionCallQuery(
           tr.to,
           tr.block_time,
           tr.input,
-          substr(tr.input, 1, 4) AS selector
+          substr(tr.input, 1, ${SELECTOR_BYTES}) AS selector
         FROM ethereum.traces tr
         CROSS JOIN params p
         WHERE tr.call_type = 'call'
@@ -99,7 +100,8 @@ function mergeCalls(configs: readonly FunctionCallQueryConfig[]) {
   for (const config of configs) {
     assert(
       config.inputBytes === 'full' ||
-        (Number.isInteger(config.inputBytes) && config.inputBytes >= 4),
+        (Number.isInteger(config.inputBytes) &&
+          config.inputBytes >= SELECTOR_BYTES),
       'inputBytes must cover at least the selector',
     )
 

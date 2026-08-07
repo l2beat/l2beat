@@ -17,6 +17,7 @@ import {
   type TrackedTxResult,
   type TrackedTxTransferResult,
 } from './types/model'
+import { SELECTOR_BYTES } from './utils/const'
 import { getFunctionCallParameterPrefix } from './utils/functionCallParameter'
 import { hasLivenessGrouping } from './utils/getLivenessGroupingKey'
 import { getFunctionCallQuery, getTransferQuery } from './utils/sql'
@@ -199,5 +200,3 @@ function combineCalls(
     })),
   ]
 }
-
-const SELECTOR_BYTES = 4

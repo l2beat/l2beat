@@ -1,8 +1,8 @@
 import { assert } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
+import { SELECTOR_BYTES } from './const'
 import { decodeFunctionCallInput } from './decodeFunctionCallInput'
 
-const SELECTOR_BYTES = 4
 const WORD_BYTES = 32
 
 type ParsedSignature = {
