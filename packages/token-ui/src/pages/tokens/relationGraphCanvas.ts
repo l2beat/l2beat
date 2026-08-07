@@ -77,6 +77,19 @@ const RELATION_LABEL_MIN_SCALE = 2.5
 const RELATION_LABEL_FONT_SIZE = 10
 const RELATION_LABEL_OFFSET_Y = -5
 const CLUSTER_LABEL_FONT_SIZE = 16
+/**
+ * Zoomed in past this scale the cluster label grows with the world, so it
+ * keeps reading as a heading over the cluster instead of blending in with the
+ * node labels, which max out at a smaller constant size.
+ */
+const CLUSTER_LABEL_GROWTH_START_SCALE = 0.7
+const CLUSTER_LABEL_MAX_GROWTH = 3
+/**
+ * Screen distance from the topmost node's center up to the cluster label.
+ * Scaled like node geometry, it clears the node disc and its label (which
+ * both scale the same way) at every zoom level.
+ */
+const CLUSTER_LABEL_CLEARANCE = 34
 /** Where along a directional link its arrow sits. */
 const ARROW_POSITION = 0.65
 const ARROW_LENGTH = 6
@@ -286,23 +299,32 @@ function drawClusterLabels(
   const opacity = getClusterLabelOpacity(camera.k)
   if (opacity === 0) return
 
-  ctx.font = `700 ${CLUSTER_LABEL_FONT_SIZE}px ${theme.fontFamily}`
+  const clearance = CLUSTER_LABEL_CLEARANCE * nodeVisualScreenScale(camera.k)
+  const fontSize =
+    CLUSTER_LABEL_FONT_SIZE *
+    Math.min(
+      Math.max(camera.k / CLUSTER_LABEL_GROWTH_START_SCALE, 1),
+      CLUSTER_LABEL_MAX_GROWTH,
+    )
+  ctx.font = `700 ${fontSize}px ${theme.fontFamily}`
   ctx.textAlign = 'center'
-  ctx.textBaseline = 'middle'
+  ctx.textBaseline = 'bottom'
   ctx.lineJoin = 'round'
-  ctx.lineWidth = 4
+  ctx.lineWidth = fontSize / 4
   ctx.strokeStyle = theme.background
   ctx.fillStyle = theme.foreground
   ctx.globalAlpha = opacity
   for (const label of scene.clusterLabels) {
+    // The label hangs above the cluster — horizontally centered, just clear
+    // of the topmost node — so it never covers what it names.
     let sumX = 0
-    let sumY = 0
+    let topY = Number.POSITIVE_INFINITY
     for (const node of label.nodes) {
       sumX += node.x
-      sumY += node.y
+      topY = Math.min(topY, node.y)
     }
     const x = (sumX / label.nodes.length) * camera.k + camera.x
-    const y = (sumY / label.nodes.length) * camera.k + camera.y
+    const y = topY * camera.k + camera.y - clearance
     if (isPointOutsideViewport(x, y, view)) continue
 
     ctx.strokeText(label.text, x, y)

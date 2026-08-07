@@ -61,7 +61,8 @@ export interface SceneLink {
 
 export interface SceneClusterLabel {
   readonly text: string
-  /** The label sits at the live centroid of these nodes, so it follows drags. */
+  /** The label is anchored to the live positions of these nodes each frame,
+   * so it follows drags. */
   readonly nodes: SceneNode[]
 }
 

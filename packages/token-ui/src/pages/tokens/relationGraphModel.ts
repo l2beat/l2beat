@@ -25,7 +25,13 @@ export const NODE_COLORS = {
   missing: '#f97316',
 } as const
 
-const CLUSTER_LABEL_FADE_OUT_SCALE = 0.05
+/** Zoomed out to this scale or further, cluster labels are gone entirely. */
+const CLUSTER_LABEL_FADE_OUT_SCALE = 0.15
+/**
+ * At this scale and closer, cluster labels are fully shown; between the two
+ * scales they fade linearly. Raise both to make labels vanish sooner when
+ * zooming out.
+ */
 const CLUSTER_LABEL_FULL_OPACITY_SCALE = 0.2
 const CLUSTER_LABEL_MAX_OPACITY = 0.8
 const SEARCH_RESULT_LIMIT = 5
@@ -167,10 +173,10 @@ export function mostCommonDeployedSymbol(nodes: RelationGraphNode[]) {
 }
 
 /**
- * Cluster labels take over when the graph is zoomed out too far for node
- * labels: invisible when zoomed in past 1x, fully visible in the overview
- * range, and fading away again at extreme zoom-out where even clusters are
- * specks.
+ * Cluster labels hang above their cluster, so they never cover nodes and can
+ * stay visible at any zoom-in level. They only fade away at extreme zoom-out,
+ * where clusters shrink to specks and neighboring labels would pile up into
+ * unreadable overlap.
  */
 export function getClusterLabelOpacity(scale: number) {
   assertGraphScale(scale)
@@ -183,9 +189,7 @@ export function getClusterLabelOpacity(scale: number) {
       ((scale - CLUSTER_LABEL_FADE_OUT_SCALE) / fadeRange)
     )
   }
-  if (scale <= 0.6) return CLUSTER_LABEL_MAX_OPACITY
-  if (scale >= 1) return 0
-  return CLUSTER_LABEL_MAX_OPACITY * ((1 - scale) / 0.4)
+  return CLUSTER_LABEL_MAX_OPACITY
 }
 
 export function getNodeVisualScale(scale: number) {

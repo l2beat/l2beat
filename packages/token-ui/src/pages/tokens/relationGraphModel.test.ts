@@ -47,14 +47,16 @@ describe(mostCommonDeployedSymbol.name, () => {
 })
 
 describe(getClusterLabelOpacity.name, () => {
-  it('shows labels only in the zoomed-out overview range', () => {
+  it('keeps labels visible at overview and zoomed-in scales', () => {
     expect(getClusterLabelOpacity(0.3)).toEqual(0.8)
-    expect(getClusterLabelOpacity(1)).toEqual(0)
-    expect(getClusterLabelOpacity(2)).toEqual(0)
+    expect(getClusterLabelOpacity(1)).toEqual(0.8)
+    expect(getClusterLabelOpacity(2)).toEqual(0.8)
   })
 
-  it('hides labels at extreme zoom-out', () => {
-    expect(getClusterLabelOpacity(0.05)).toEqual(0)
+  it('fades labels away at extreme zoom-out', () => {
+    // The exact fade thresholds are tuning knobs; the contract is only that
+    // labels are gone once the zoom-out is extreme enough.
+    expect(getClusterLabelOpacity(0.01)).toEqual(0)
   })
 
   it('rejects invalid scales', () => {
