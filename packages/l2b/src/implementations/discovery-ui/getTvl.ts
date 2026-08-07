@@ -1,32 +1,35 @@
-import { getChainConfig } from '@l2beat/discovery'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { getProvider } from '../common/GetProvider'
 import { getPlainLogger } from '../common/getPlainLogger'
-import { estimateTVL } from '../estimateTVL'
+import { calculateValue, getBalances } from '../estimateTVL'
+import type { ProviderCache } from './ProviderCache'
+import type { TvlCache } from './TvlCache'
 import type { ApiTvlResponse } from './types'
 
 const USD_CENTS_IN_DOLLAR = 100
 
 export async function getTvl(
+  providerCache: ProviderCache,
+  tvlCache: TvlCache,
   holder: ChainSpecificAddress,
 ): Promise<ApiTvlResponse> {
   const chainName = ChainSpecificAddress.longChain(holder)
-  const chain = getChainConfig(chainName)
-  const provider = await getProvider(
-    chain.rpcUrl,
-    chain.explorer,
-    chainName,
-    chain.multicall,
-  )
+  const provider = await providerCache.get(chainName)
 
-  const values = await estimateTVL(getPlainLogger(), provider, holder)
-  if (!values) return []
+  const tokens = await tvlCache.getTokens(getPlainLogger(), chainName)
+  const prices = await tvlCache.getPrices(provider, tokens)
+  const balances = await getBalances(provider, holder, tokens)
 
-  return values
-    .map((value) => ({
-      tvl: Number(value.value) / USD_CENTS_IN_DOLLAR,
-      ticker: value.symbol,
-      iconURL: value.iconUrl,
-    }))
+  return balances
+    .map((balance) => {
+      const price = prices[balance.coingeckoId.toString()]
+      const value = price
+        ? calculateValue(balance.balance, price, balance.decimals)
+        : 0n
+      return {
+        tvl: Number(value) / USD_CENTS_IN_DOLLAR,
+        ticker: balance.symbol,
+        iconURL: balance.iconUrl,
+      }
+    })
     .sort((a, b) => b.tvl - a.tvl)
 }

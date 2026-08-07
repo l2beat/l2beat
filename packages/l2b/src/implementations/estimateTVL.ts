@@ -9,7 +9,7 @@ export interface TokenValue {
   iconUrl: string | undefined
 }
 
-interface Token {
+export interface Token {
   symbol: string
   coingeckoId: CoingeckoId
   decimals: number
@@ -18,7 +18,7 @@ interface Token {
   address: ChainSpecificAddress | undefined
 }
 
-interface TokenBalance extends Token {
+export interface TokenBalance extends Token {
   balance: bigint
 }
 
@@ -68,7 +68,7 @@ const ETHER: Token = {
   address: undefined,
 }
 
-async function getTokensOnChain(
+export async function getTokensOnChain(
   logger: Logger,
   chain: string,
 ): Promise<Token[]> {
@@ -94,7 +94,7 @@ async function getTokensOnChain(
   return tokens
 }
 
-async function getBalances(
+export async function getBalances(
   provider: IProvider,
   holder: ChainSpecificAddress,
   tokens: Token[],
@@ -153,7 +153,11 @@ function getCoinsMarket(provider: IProvider, coingeckoIds: CoingeckoId[]) {
 
 const PRICE_PRECISION = 18
 const USD_DECIMALS = 2n
-function calculateValue(amount: bigint, priceUsd: number, decimals: number) {
+export function calculateValue(
+  amount: bigint,
+  priceUsd: number,
+  decimals: number,
+) {
   const bigintPriceUsd = getBigIntPrice(priceUsd, PRICE_PRECISION)
   const usdBalance = (amount * bigintPriceUsd) / 10n ** BigInt(decimals)
   const usdValue = usdBalance / 10n ** (18n - USD_DECIMALS)
