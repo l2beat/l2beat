@@ -5055,6 +5055,43 @@
       ]
     }
   },
+  "hwr-xerc20-lockbox": {
+    // oUSDT Base → Ethereum: the Ethereum warp route (HypXERC20Lockbox) mints
+    // oUSDT to itself and immediately unwraps it via the xERC20 lockbox, so the
+    // recipient receives USDT released from escrow (not a minted token). The
+    // intermediate oUSDT mint+burn pair is cancelled out by findBestTransferLog,
+    // making this a lockAndMint transfer with the locked side on Ethereum.
+    "loadConfigs": ["hyperlane"],
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x2112e87f49039b6908dbe4e2fb28516150ef2bf6f11e2243a0259d0d79f32a21"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xbd870a6a42b05dba90f84d34e747b428ed84ee5fe1114e19b57fe3c78a6ebc74"
+      }
+    ],
+    "expects": {
+      "messages": [{ "type": "hyperlane.Message", "app": "hwr" }],
+      "transfers": [
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": {
+            "tokenAddress": "0x0000000000000000000000001217bfe6c773eec6cc4a38b5dc45b92292b6e189",
+            "wasBurned": true,
+            "financials": { "symbol": "oUSDT", "amount": 1000 }
+          },
+          "dst": {
+            "tokenAddress": "0x000000000000000000000000dac17f958d2ee523a2206206994597c13d831ec7",
+            "wasMinted": false,
+            "financials": { "symbol": "USDT", "amount": 1000 }
+          }
+        }
+      ]
+    }
+  },
   "hwr-onesided": {
     "loadConfigs": ["hyperlane"],
     "txs": [
