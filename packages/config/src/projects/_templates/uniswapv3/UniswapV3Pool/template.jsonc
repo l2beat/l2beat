@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "UniswapV3Pool",
+  "description": "A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on tick ranges; swap fees accrue to in-range positions. The factory owner can divert up to 1/4 of the swap fee per side as protocol fee. Also a TWAP oracle whose observation buffer anyone can grow.",
+  "ignoreMethods": ["observations", "ticks", "tickBitmap", "positions"],
+  "ignoreRelatives": [
+    "token0",
+    "token1",
+    "feeGrowthGlobal0X128",
+    "feeGrowthGlobal1X128"
+  ],
+  "fields": {
+    "slot0": {
+      "ignoreInWatchMode": true,
+      "description": "Current sqrtPriceX96, tick, oracle observation index/cardinality, protocol fee setting, and the reentrancy lock; changes with every swap."
+    },
+    "liquidity": { "ignoreInWatchMode": true },
+    // Q128.128 accumulators; large uints in the 160-bit range get misread as
+    // addresses by the relative detector.
+    "feeGrowthGlobal0X128": {
+      "ignoreInWatchMode": true,
+      "ignoreRelative": true
+    },
+    "feeGrowthGlobal1X128": {
+      "ignoreInWatchMode": true,
+      "ignoreRelative": true
+    },
+    "protocolFees": {
+      "ignoreInWatchMode": true,
+      "description": "Protocol fees accrued and not yet collected by the factory owner."
+    }
+  }
+}

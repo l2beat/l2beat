@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TokenJar",
+  "description": "Token escrow whose releaser can transfer held balances. The owner can replace the releaser, changing who controls accumulated and future deposits.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can replace the releaser and thereby redirect all held and future token balances."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "releaser": {
+      "description": "The only address authorized to move held tokens out.",
+      "severity": "HIGH"
+    }
+  }
+}
