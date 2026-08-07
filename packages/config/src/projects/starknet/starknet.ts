@@ -247,6 +247,9 @@ starknetProgramHashes.push(...acceptedSHARPVerifierChain.programPins)
 const starkwareMultisig2Stats = discovery.getMultisigStats(
   'Starkware Multisig 2',
 )
+const starkwareMultisig1Stats = discovery.getMultisigStats(
+  'Starkware Multisig 1',
+)
 const scMinorityStats = discovery.getMultisigStats(
   'Starkware SCMinority Multisig',
 )
@@ -444,12 +447,44 @@ export const starknet: ScalingProject = {
   upgradesAndGovernance: {
     content: readProjectMarkdown('starknet', 'upgradesAndGovernance', {
       scThreshold,
+      starkwareMultisig1Stats,
       starkwareMultisig2Stats,
       executionDelay,
       sharpMsThreshold,
       sharpUpgradeDelay,
       scMinorityStats,
     }),
+    governanceInfo: {
+      securityCouncil: {
+        Composition: `**${scThreshold}** onchain Safe multisig — 12 members, geographically and organizationally diverse (<50% from one country, <4 from one organization). The Starknet Foundation appoints and can administratively remove members. No fixed term length and no live tokenholder election mechanism.`,
+        'Members public':
+          '**Not mapped**, SNIP-25 and Foundation announcements publish only composition criteria (technical reputation, KYC/AML, diversity limits, conflict-of-interest rules).',
+        Charter:
+          '[SNIP-25](https://github.com/starknet-io/SNIPs/blob/main/SNIPS/snip-25.md) defines duties (security-only mandate), vetting-failure reports, eligibility and the code of conduct.',
+        'Can bypass DAO?': `**Yes** — ${scThreshold} can approve and execute an emergency upgrade immediately. The same instant rights let it counteract a malicious action queued in the DelayedExecutor during its ${executionDelay} window.`,
+        'DAO can override SC?':
+          '**No**, the community can only dispute the emergency upgrades after the fact in advisory way.',
+      },
+      upgrades: {
+        'DelayedExecutor timelock': `The standard deployment vehicle for the core contracts, controlled by the Starkware Foundation. Owned by the ${starkwareMultisig1Stats} Starkware Multisig 1, has the immutable ${executionDelay} delay, after which anyone can execute a matured action.`,
+        'Major upgrade path': `Release announcement (≥1 SNIP + specific GitHub commit) → 2-week community deliberation → 1-week final review → 1-week STRK vote on the [Governance Hub](https://governance.starknet.io/) → Security Council vetting → deployment queued in the DelayedExecutor by the ${starkwareMultisig1Stats} Starkware Multisig 1, whose ${executionDelay} onchain delay covers the procedural ≥7-day freeze → execution. Minimum wall-clock ≈ **5 weeks**.`,
+        'Minor upgrade path': `Announcement (SNIP may be submitted in parallel) → 1-week review → 1-week vote → deployment queued in the DelayedExecutor, whose ${executionDelay} onchain delay covers the procedural ≥5-day freeze → execution. No Security Council approval required. Minimum wall-clock ≈ **22 days**.`,
+        'Emergency upgrade path': `**${scThreshold} Security Council, instant**.`,
+        'Offchain enforcement': `**None of the voting or freeze periods are enforced onchain.** All procedural freezes are assumed to be honored by the deploying entities; the only onchain-enforced delay is the ${executionDelay} DelayedExecutor timelock on the normal path, and the ${scThreshold} Security Council Safe can upgrade the core contracts with zero delay at any time.`,
+        'Exit window': `**${executionDelay}** enforced onchain by the DelayedExecutor on the normal upgrade path (procedurally ≥7 days after the vote for major releases, ≥5 days for minor). **0** for emergency upgrades by the Security Council.`,
+      },
+      tokenGovernance: {
+        'Governance token':
+          '\`STRK\` — ~10.15B total supply, not permanently capped. Users can vote with L1 STRK, natively staked STRK or L2 vSTRK tokens, each gives 1 vote. In 2025 the Starknet Foundation [delegated ~1.7B STRK](https://www.starknet.io/blog/starknet-foundation-delegation-program/) to ~180 ecosystem delegates.',
+        'Voting venue':
+          '[Starknet Governance Hub](https://governance.starknet.io/) using Snapshot X — proposals, space configuration and results are recorded and verified on Starknet, with relayed gasless signed votes.',
+        'Proposal threshold':
+          '**None**, but proposal admission is curated, not triggered permissionlessly by an onchain token threshold.',
+        Quorum:
+          '**No protocol-wide quorum rule published.** Historical votes used a simple majority with no minimum quorum.',
+        'Execution model': `**Vote as onchain record, manual deployment** — passed proposals are queued in the DelayedExecutor by the ${starkwareMultisig1Stats} Starkware Multisig 1 and execute after ${executionDelay}.`,
+      },
+    },
   },
   milestones: [
     {
