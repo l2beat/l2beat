@@ -47,7 +47,6 @@ export const butternetwork: BaseProject = {
     // as of 2026-08, MAPO (on ethereum and bsc) is the only token the bridge
     // actually burns/mints, everything else is lock&release
     plugins: [
-      { plugin: 'butternetwork', bridgeType: 'lockAndMint' },
       { plugin: 'butternetwork', bridgeType: 'burnAndMint' },
       { plugin: 'butternetwork', bridgeType: 'nonMinting' },
     ],
