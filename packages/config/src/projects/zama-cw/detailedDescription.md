@@ -16,7 +16,7 @@ The (T)KMS is the threshold key-management service used for private and public d
 
 The onchain KMS signer addresses are ECDSA credentials used to attest KMS outputs; they are not the FHE key shares. [Zama states](https://docs.zama.org/protocol/protocol/overview/kms) that KMS MPC nodes run inside AWS Nitro Enclaves, and its offchain software maps node signing keys to MPC parties, but the contracts do not verify Nitro attestations or prove that a configured signer runs inside a TEE, holds an FHE key share, or participated in the threshold computation. Changing an onchain KMS context only changes which signatures are accepted; it neither triggers nor verifies redistribution or destruction of FHE key shares.
 
-There are many moving parts and offchain components in the Zama FHE protocol on which Zama Confidential Tokens is built. The Zama Gateway, an L3 on Arbitrum, is currently used for coordination/aggregation, ciphertext-metadata, and key-lifecycles. Ethereum does not trust its state directly and independently verifies operator signatures before accepting inputs or withdrawals, but current relayer and operator workflows depend on Gateway availability to produce those proofs.
+There are many moving parts and offchain components in the Zama FHE protocol on which Zama Confidential Tokens is built. The Zama Gateway, an L3 on Arbitrum, is currently used for coordination/aggregation and ciphertext-metadata. FHE key- and CRS-generation is currently not orchestrated onchain. Ethereum does not trust the Gateway's state directly and independently verifies operator signatures before accepting inputs or withdrawals, but current relayer and operator workflows depend on Gateway availability to produce those proofs.
 
 ### Privacy considerations
 
