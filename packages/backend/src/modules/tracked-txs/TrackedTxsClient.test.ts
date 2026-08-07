@@ -99,7 +99,7 @@ describe(TrackedTxsClient.name, () => {
       expect(duneQueryService.query).not.toHaveBeenCalled()
     })
 
-    it('requests full input for grouped liveness calls', async () => {
+    it('requests a calldata prefix for grouped liveness calls', async () => {
       const duneQueryService = getMockDuneQueryService([[]])
       const trackedTxsClient = new TrackedTxsClient(
         duneQueryService,
@@ -135,7 +135,8 @@ describe(TrackedTxsClient.name, () => {
           [
             {
               ...config.properties.params,
-              getFullInput: true,
+              // 4 selector bytes + the first member of the static tuple
+              inputBytes: 36,
             },
           ],
           FROM,
@@ -401,9 +402,11 @@ const FUNCTIONS_SQL = getFunctionCallQuery(
   ).map((c) => ({
     address: c.properties.params.address,
     selector: c.properties.params.selector,
-    getFullInput:
+    inputBytes:
       c.properties.params.formula === 'sharpSubmission' ||
-      c.properties.params.formula === 'sharedBridge',
+      c.properties.params.formula === 'sharedBridge'
+        ? ('full' as const)
+        : 4,
   })),
   FROM,
   TO,

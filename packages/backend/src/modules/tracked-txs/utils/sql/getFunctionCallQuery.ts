@@ -1,52 +1,41 @@
-import { type EthereumAddress, UnixTime, unique } from '@l2beat/shared-pure'
+import { assert, type EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { SELECTOR_BYTES } from '../const'
+
+interface FunctionCallQueryConfig {
+  address: EthereumAddress
+  selector: string
+  inputBytes: number | 'full'
+}
 
 export function getFunctionCallQuery(
-  configs: {
-    address: EthereumAddress
-    selector: string
-    getFullInput: boolean
-  }[],
+  configs: readonly FunctionCallQueryConfig[],
   from: UnixTime,
   to: UnixTime,
 ): string {
-  const fullInputAddresses = unique(
-    configs.filter((c) => c.getFullInput).map((c) => c.address.toLowerCase()),
-  )
+  const calls = mergeCalls(configs)
   const fromDate = UnixTime.toDate(from).toISOString()
   const toDate = UnixTime.toDate(to).toISOString()
-  const uniqueConfigs = unique(
-    configs,
-    (c) => `${c.address.toLowerCase()}-${c.selector.toLowerCase()}`,
-  )
 
   // To calculate the non-zero bytes we are grouping bytes by adding 'x' sign between each byte
   // and then removing all '00x' sequences. Next step is to divide length of result by 3 as this is length of '00x' sequence.
-  const query = `
+  return `
     WITH
       params AS (
         SELECT
           from_iso8601_timestamp('${fromDate}') AS t_start,
           from_iso8601_timestamp('${toDate}') AS t_end
       ),
-      allowed_calls(to_addr, selector) AS (
+      allowed_calls(to_addr, selector, input_bytes) AS (
         VALUES
           ${
-            uniqueConfigs.length > 0
-              ? uniqueConfigs
+            calls.length > 0
+              ? calls
                   .map(
-                    (c) =>
-                      `(${c.address.toLowerCase()}, ${c.selector.toLowerCase()})`,
+                    (call) =>
+                      `(${call.address.toLowerCase()}, ${call.selector}, ${call.inputBytes === 'full' ? 'CAST(NULL AS bigint)' : call.inputBytes})`,
                   )
                   .join(',')
-              : '(NULL, NULL)'
-          }
-      ),
-      full_input_to(to_addr) AS (
-        VALUES
-          ${
-            fullInputAddresses.length > 0
-              ? fullInputAddresses.map((a) => `(${a})`).join(',')
-              : '(NULL)'
+              : '(CAST(NULL AS varbinary), CAST(NULL AS varbinary), CAST(NULL AS bigint))'
           }
       ),
       traces_filtered AS (
@@ -55,7 +44,7 @@ export function getFunctionCallQuery(
           tr.to,
           tr.block_time,
           tr.input,
-          substr(tr.input, 1, 4) AS selector
+          substr(tr.input, 1, ${SELECTOR_BYTES}) AS selector
         FROM ethereum.traces tr
         CROSS JOIN params p
         WHERE tr.call_type = 'call'
@@ -64,7 +53,7 @@ export function getFunctionCallQuery(
           AND tr.block_time <=  p.t_end
       ),
       traces_allowed AS (
-        SELECT tr.*
+        SELECT tr.*, ac.input_bytes
         FROM traces_filtered tr
         JOIN allowed_calls ac
           ON tr.to = ac.to_addr
@@ -96,13 +85,47 @@ export function getFunctionCallQuery(
       length(tx.data) AS data_length,
       length(replace(regexp_replace(to_hex(tx.data), '([0-9A-Fa-f]{2})', '$1x'), '00x', '')) / 3 AS non_zero_bytes,
       CASE
-        WHEN tr.to IN (SELECT to_addr FROM full_input_to) THEN tr.input
-        ELSE tr.selector
+        WHEN tr.input_bytes IS NULL THEN tr.input
+        ELSE substr(tr.input, 1, tr.input_bytes)
       END AS input
     FROM txs_filtered tx
     JOIN traces_allowed tr
       ON tx.hash = tr.tx_hash;
   `
+}
 
-  return query
+function mergeCalls(configs: readonly FunctionCallQueryConfig[]) {
+  const calls = new Map<string, FunctionCallQueryConfig>()
+
+  for (const config of configs) {
+    assert(
+      config.inputBytes === 'full' ||
+        (Number.isInteger(config.inputBytes) &&
+          config.inputBytes >= SELECTOR_BYTES),
+      'inputBytes must cover at least the selector',
+    )
+
+    const address = config.address.toLowerCase()
+    const selector = config.selector.toLowerCase()
+    const key = `${address}-${selector}`
+    const previous = calls.get(key)
+
+    calls.set(key, {
+      address: config.address,
+      selector,
+      inputBytes:
+        previous === undefined
+          ? config.inputBytes
+          : widestInput(previous.inputBytes, config.inputBytes),
+    })
+  }
+
+  return [...calls.values()]
+}
+
+function widestInput(
+  left: number | 'full',
+  right: number | 'full',
+): number | 'full' {
+  return left === 'full' || right === 'full' ? 'full' : Math.max(left, right)
 }
