@@ -144,6 +144,16 @@ export function TokenRelationsGraph({
     }
     requestDrawRef.current = requestDraw
 
+    function eventPoint(event: Event): [number, number] {
+      // d3.pointer reads clientX/clientY, which a TouchEvent itself lacks —
+      // it expects the individual Touch, as d3-zoom passes internally.
+      const source =
+        'changedTouches' in event
+          ? (event as TouchEvent).changedTouches[0]
+          : event
+      return d3.pointer(source, canvas)
+    }
+
     function toWorld(pointer: [number, number]): [number, number] {
       return cameraTransform.invert(pointer)
     }
@@ -227,7 +237,9 @@ export function TokenRelationsGraph({
         if (event.type !== 'mousedown' && event.type !== 'touchstart') {
           return allowed
         }
-        return allowed && pickNode(d3.pointer(event, canvas)) === undefined
+        // No pan while a node drag is active (a later touch joining it) or
+        // when the gesture itself grabs a node (the primary pointer).
+        return allowed && !drag && pickNode(eventPoint(event)) === undefined
       })
       .on('start', (event: d3.D3ZoomEvent<HTMLCanvasElement, unknown>) => {
         if (event.sourceEvent && !hovered) canvas.style.cursor = 'grabbing'
@@ -237,7 +249,7 @@ export function TokenRelationsGraph({
         // The world moves under a stationary pointer, so what is hovered can
         // change without a pointer event.
         if (event.sourceEvent instanceof Event) {
-          refreshHover(d3.pointer(event.sourceEvent, canvas))
+          refreshHover(eventPoint(event.sourceEvent))
         }
         requestDraw()
       })
@@ -249,9 +261,9 @@ export function TokenRelationsGraph({
       .on('pointerdown.graph', (event: PointerEvent) => {
         suppressNextClick = false
         if (!event.isPrimary || event.button !== 0) return
-        const node = pickNode(d3.pointer(event, canvas))
+        const node = pickNode(eventPoint(event))
         if (node === undefined) return
-        const [x, y] = toWorld(d3.pointer(event, canvas))
+        const [x, y] = toWorld(eventPoint(event))
         drag = { node, offsetX: node.x - x, offsetY: node.y - y, moved: false }
         canvas.setPointerCapture(event.pointerId)
         // Also stops the compatibility mousedown, so d3-zoom cannot start a
@@ -260,7 +272,7 @@ export function TokenRelationsGraph({
         updateCursor()
       })
       .on('pointermove.graph', (event: PointerEvent) => {
-        const pointer = d3.pointer(event, canvas)
+        const pointer = eventPoint(event)
         if (drag) {
           drag.moved = true
           const [x, y] = toWorld(pointer)
@@ -278,7 +290,7 @@ export function TokenRelationsGraph({
         suppressNextClick = drag.moved && event.type === 'pointerup'
         drag = undefined
         updateCursor()
-        refreshHover(d3.pointer(event, canvas))
+        refreshHover(eventPoint(event))
       })
       .on('pointerleave.graph', () => {
         if (!drag) clearHover()
@@ -288,7 +300,7 @@ export function TokenRelationsGraph({
           suppressNextClick = false
           return
         }
-        const pointer = d3.pointer(event, canvas)
+        const pointer = eventPoint(event)
         const node = pickNode(pointer)
         if (node !== undefined) {
           onSelectionChangeRef.current({ type: 'node', id: node.data.id })
