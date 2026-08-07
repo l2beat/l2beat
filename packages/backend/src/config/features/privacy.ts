@@ -1,6 +1,7 @@
 import type { Env } from '@l2beat/backend-tools'
 import type {
   ProjectPrivacyBucket,
+  ProjectPrivacyRelayerSource,
   ProjectPrivacyToken,
   ProjectService,
 } from '@l2beat/config'
@@ -9,12 +10,15 @@ import { createHash } from 'crypto'
 import { PrivacyBlockTimestampIndexer } from '../../modules/privacy/indexers/PrivacyBlockTimestampIndexer'
 import { PrivacyFlowIndexer } from '../../modules/privacy/indexers/PrivacyFlowIndexer'
 import { PrivacyPriceIndexer } from '../../modules/privacy/indexers/PrivacyPriceIndexer'
+import { PrivacyRelayerActivityIndexer } from '../../modules/privacy/indexers/PrivacyRelayerActivityIndexer'
 import type {
   PrivacyBlockTimestampConfig,
   PrivacyConfig,
   PrivacyFlowIndexerConfig,
   PrivacyPriceIndexerConfig,
+  PrivacyRelayerActivityIndexerConfig,
 } from '../../modules/privacy/types'
+import { getPrivacyRelayerExtractor } from '../../modules/privacy/utils/extractPrivacyRelayerActivity'
 import type { FeatureFlags } from '../FeatureFlags'
 
 export async function getPrivacyConfig(
@@ -30,8 +34,10 @@ export async function getPrivacyConfig(
 
   const projects = projectsWithPrivacy
     .filter((project) => flags.isEnabled('privacy', project.id))
-    .filter((project) =>
-      project.privacyInfo.tokens.some((token) => token.buckets.length > 0),
+    .filter(
+      (project) =>
+        project.privacyInfo.tokens.some((token) => token.buckets.length > 0) ||
+        (project.privacyInfo.relayerTracking?.length ?? 0) > 0,
     )
     .map((project) => ({
       projectId: project.id.toString(),
@@ -43,6 +49,7 @@ export async function getPrivacyConfig(
   }
 
   const flowConfigs: PrivacyFlowIndexerConfig[] = []
+  const relayerConfigs: PrivacyRelayerActivityIndexerConfig[] = []
   for (const project of projects) {
     for (const token of project.privacyInfo.tokens) {
       for (const bucket of token.buckets) {
@@ -64,11 +71,19 @@ export async function getPrivacyConfig(
         )
       }
     }
+
+    for (const source of project.privacyInfo.relayerTracking ?? []) {
+      relayerConfigs.push(
+        toRelayerConfig(project.projectId, source, minTimestamp),
+      )
+    }
   }
 
   const priceIdMap = new Map<string, UnixTime>()
   for (const project of projects) {
     for (const token of project.privacyInfo.tokens) {
+      if (token.buckets.length === 0) continue
+
       const priceId = token.token.priceId
       const sinceTimestamp = token.token.sinceTimestamp
       if (!priceId || !sinceTimestamp) continue
@@ -92,12 +107,15 @@ export async function getPrivacyConfig(
     }
   })
 
-  const chains = Array.from(new Set(flowConfigs.map((config) => config.chain)))
+  const onchainConfigs = [...flowConfigs, ...relayerConfigs]
+  const chains = Array.from(
+    new Set(onchainConfigs.map((config) => config.chain)),
+  )
 
   const blockTimestampConfigs: PrivacyBlockTimestampConfig[] = chains.map(
     (chain) => {
       const sinceTimestamp = Math.min(
-        ...flowConfigs
+        ...onchainConfigs
           .filter((c) => c.chain === chain)
           .map((c) => c.sinceTimestamp),
       )
@@ -112,9 +130,30 @@ export async function getPrivacyConfig(
   return {
     projects,
     flowConfigs,
+    relayerConfigs,
     priceConfigs,
     blockTimestampConfigs,
     chains,
+  }
+}
+
+function toRelayerConfig(
+  projectId: string,
+  source: ProjectPrivacyRelayerSource,
+  minTimestamp: UnixTime,
+): PrivacyRelayerActivityIndexerConfig {
+  const base = {
+    projectId,
+    chain: ChainSpecificAddress.longChain(source.address),
+    address: ChainSpecificAddress.address(source.address),
+    sinceTimestamp: Math.max(source.sinceTimestamp, minTimestamp),
+    event: getPrivacyRelayerExtractor(source.extractor).event,
+    extractor: source.extractor,
+  }
+
+  return {
+    id: PrivacyRelayerActivityIndexer.idToConfigurationId(base),
+    ...base,
   }
 }
 

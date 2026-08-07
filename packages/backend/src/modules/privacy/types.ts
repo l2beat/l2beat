@@ -1,6 +1,7 @@
 import type {
   PrivacyFlowExtractorConfig,
   ProjectPrivacyInfo,
+  ProjectPrivacyRelayerSource,
 } from '@l2beat/config'
 import type { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
@@ -12,6 +13,7 @@ export interface PrivacyProjectConfig {
 export interface PrivacyConfig {
   projects: PrivacyProjectConfig[]
   flowConfigs: PrivacyFlowIndexerConfig[]
+  relayerConfigs: PrivacyRelayerActivityIndexerConfig[]
   priceConfigs: PrivacyPriceIndexerConfig[]
   blockTimestampConfigs: PrivacyBlockTimestampConfig[]
   chains: string[]
@@ -29,6 +31,16 @@ export type PrivacyFlowIndexerConfig = {
   priceId: string
   decimals: number
 } & PrivacyFlowExtractorConfig
+
+export type PrivacyRelayerActivityIndexerConfig = {
+  id: string
+  projectId: string
+  chain: string
+  address: EthereumAddress
+  sinceTimestamp: UnixTime
+  event: string
+  extractor: ProjectPrivacyRelayerSource['extractor']
+}
 
 export interface PrivacyBlockTimestampConfig {
   id: string
@@ -51,4 +63,9 @@ export interface PrivacyRpcLog {
 export interface PrivacyFlowExtractResult {
   count: number
   amount: bigint
+}
+
+export interface PrivacyRelayerActivityExtractResult {
+  relayerAddress: EthereumAddress
+  recipientAddress: EthereumAddress
 }

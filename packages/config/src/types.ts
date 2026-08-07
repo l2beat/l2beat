@@ -992,6 +992,7 @@ export type ProjectExternalDependency =
 
 export interface ProjectPrivacyInfo {
   tokens: ProjectPrivacyToken[]
+  relayerTracking?: ProjectPrivacyRelayerSource[]
   summaryTrackedItemName?: string
   exitWindow: PrivacyExitWindow
   reproducibility: PrivacySummaryValue
@@ -1004,6 +1005,12 @@ export interface ProjectPrivacyInfo {
   quantumResistant?: true
   riskSummary?: string
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
+}
+
+export type ProjectPrivacyRelayerSource = {
+  address: ChainSpecificAddress
+  sinceTimestamp: UnixTime
+  extractor: 'privacyPoolsWithdrawalRelayed' | 'tornadoCashWithdrawal'
 }
 
 export interface PrivacyExitWindow extends ExitWindowRisk {

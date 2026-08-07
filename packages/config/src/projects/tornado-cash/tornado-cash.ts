@@ -178,6 +178,11 @@ export const tornadoCash: BaseProject = {
   },
   privacyInfo: {
     tokens: getPrivacyTokens(),
+    relayerTracking: BUCKETS.map((bucket) => ({
+      address: bucket.address,
+      sinceTimestamp: bucket.sinceTimestamp,
+      extractor: 'tornadoCashWithdrawal',
+    })),
     exitWindow: {
       value: 'Infinite',
       sentiment: 'good',
