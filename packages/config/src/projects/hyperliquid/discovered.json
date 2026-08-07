@@ -1,7 +1,7 @@
 {
   "name": "hyperliquid",
-  "timestamp": 1781171322,
-  "configHash": "0xe88b75becc7c8a8387b1196db56fd74c2c9b3d7095fda9ba721a593eae078c82",
+  "timestamp": 1786097827,
+  "configHash": "0x23211caeb0f58c59af9d0940d0859be6b7bfe1fbe341268b427874177bdb53cd",
   "entries": [
     {
       "address": "arb1:0x263294039413B96D25E4173a5F7599F8b3801504",
@@ -323,6 +323,13 @@
       "proxyType": "EOA"
     },
     {
+      "name": "USDCTreasury2",
+      "address": "hyperevm:0x4E5319dEb1072B01439EE674db5C321d11fd96F8",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "description": "Second Coinbase-operated EOA announced for AQAv2 USDC treasury operations, unused so far."
+    },
+    {
       "name": "CoreDepositWallet",
       "address": "hyperevm:0x6B9E773128f453f5c2C60935Ee2DE2CBc5390A24",
       "type": "Contract",
@@ -394,6 +401,13 @@
       "address": "hyperevm:0xa56fA84d6B417b0aE968AAc312E57214473BEDE4",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "USDCTreasury1",
+      "address": "hyperevm:0xc20699185c15D0a2fD65779BB5d69f5b0B113c00",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "description": "Coinbase-operated EOA ('USDC treasury wallet', AQAv2) holding the bulk of the native USDC reserves that back USDC on HyperCore. It is continuously rebalanced with the CoreDepositWallet at a 9:1 ratio (this wallet holds 90% of the HyperEVM-side reserves, the CoreDepositWallet keeps 10% as a hot buffer)."
     }
   ],
   "abis": {
@@ -529,6 +543,6 @@
     "hyperliquid/CoreDepositWallet": "0xd86a7c64543a55e4e31a698585edcdff3196ac1256c3d368760f74a8b720a818",
     "hyperliquid/HyperliquidBridge": "0x6349c4d94e64347ff4aa348ac6cfad812936cdf0f3ba72b0e7f12d0caf1574c3"
   },
-  "usedBlockNumbers": { "arbitrum": 472336072, "hyperevm": 37531278 },
-  "permissionsConfigHash": "0x2a0fe419d5c20afff8254ad943300fcc72f727adb802473e6613d8d86e1b7896"
+  "usedBlockNumbers": { "arbitrum": 492017408, "hyperevm": 42539214 },
+  "permissionsConfigHash": "0xcfb0b8bf963d6efe7243ad107a247b46390ad9cb260c9e419548cbf82edb2c65"
 }
