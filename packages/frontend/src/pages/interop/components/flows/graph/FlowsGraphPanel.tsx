@@ -19,6 +19,7 @@ interface FlowsGraphPanelProps {
   baseDollarsPerParticle?: number
   topChainId?: string
   className?: string
+  maxSizeClassName?: string
 }
 
 export function FlowsGraphPanel({
@@ -30,6 +31,7 @@ export function FlowsGraphPanel({
   baseDollarsPerParticle,
   topChainId,
   className,
+  maxSizeClassName = 'max-w-[min(70svh,calc(100svh-20rem))]',
 }: FlowsGraphPanelProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const { width, height } = useResizeObserver({ ref: containerRef })
@@ -48,7 +50,10 @@ export function FlowsGraphPanel({
       <div className="flex min-h-0 w-full min-w-0 flex-1 items-center justify-center">
         <div
           id="flows-graph"
-          className="flex aspect-square max-h-full min-h-0 w-full min-w-0 max-w-[min(70svh,calc(100svh-20rem))] items-center justify-center"
+          className={cn(
+            'flex aspect-square max-h-full min-h-0 w-full min-w-0 items-center justify-center',
+            maxSizeClassName,
+          )}
           ref={containerRef}
         >
           {!size ? (
