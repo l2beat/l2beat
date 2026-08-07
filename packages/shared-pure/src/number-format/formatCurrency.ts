@@ -1,5 +1,5 @@
-import type { StringWithAutocomplete } from '../types/StringWithAutocomplete.js'
 import { assert } from '../tools/assert.js'
+import type { StringWithAutocomplete } from '../types/StringWithAutocomplete.js'
 import { formatNumber } from './formatNumber.js'
 
 const currencyToSymbol: Record<string, string> = {
