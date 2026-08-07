@@ -1277,6 +1277,40 @@
       }
     ]
   },
+  "cctpv2-usyc": {
+    "description": "USYC bridged via CCTP v2 (USDC is swapped to USYC by Circle's CrossChainTeller at the source before the burn)",
+    "loadConfigs": ["cctp-v2"],
+    "txs": [
+      // Ethereum -> BSC: CrossChainTeller takes USDC, mints USYC via the USYC
+      // Teller, then burns USYC via CCTP v2. The bridged token is USYC on both
+      // sides, not USDC (the USDC->USYC swap happens before depositForBurn).
+      {
+        "chain": "ethereum",
+        "tx": "0x447e7b59367544e16b2e45514b8d0056d6d447ff154c70903668aa92557bb5da"
+      },
+      {
+        "chain": "bsc",
+        "tx": "0x2ffaad21f883b573b5b76471d6e3c29ceab6a4cdbe4f12673f3aa5c6daca65ad"
+      }
+    ],
+    "expects": {
+      "events": ["cctp-v2.MessageSent", "cctp-v2.MessageReceived"],
+      "messages": [{ "type": "cctp-v2.SlowMessage", "app": "cctp-v2" }],
+      "transfers": [
+        {
+          "type": "cctp-v2.Transfer",
+          "src": {
+            "tokenAddress": "0x000000000000000000000000136471a34f6ef19fe571effc1ca711fdb8e49f2b",
+            "financials": { "symbol": "USYC", "amount": 39752925.879469 }
+          },
+          "dst": {
+            "tokenAddress": "0x0000000000000000000000008d0fa28f221eb5735bc71d3a0da67ee5bc821311",
+            "financials": { "symbol": "USYC", "amount": 39752925.879469 }
+          }
+        }
+      ]
+    }
+  },
   "cctponesided": {
     "loadConfigs": ["cctp-v1", "cctp-v2"],
     "txs": [
