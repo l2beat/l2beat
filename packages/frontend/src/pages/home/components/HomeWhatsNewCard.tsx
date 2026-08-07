@@ -68,7 +68,7 @@ function WhatsNewItemCard({ item }: { item: HomeWhatsNewItem }) {
       <a
         href={item.href}
         onClick={() => setWidgetClosed(true)}
-        className="group relative block flex-1 overflow-hidden md:flex md:flex-row md:rounded-lg md:border-2 md:border-divider lg:block lg:min-h-40 lg:rounded-none lg:border-0"
+        className="group relative block flex-1 overflow-hidden md:flex md:flex-row md:rounded-lg md:border-2 md:border-divider lg:block lg:min-h-52 lg:rounded-none lg:border-0"
       >
         <div className="relative aspect-video w-full overflow-hidden [container-type:size] md:aspect-auto md:min-h-[5.5rem] md:w-32 md:shrink-0 lg:absolute lg:inset-0 lg:min-h-0 lg:w-full">
           <img

@@ -117,12 +117,7 @@ function HomeInteropCardContent({
         href="/interop/summary"
         timeframe="Last 24h"
       />
-      {/* On wide cards (the full-width card below lg) the compact tile row is
-          replaced by the same General stats panel the interop summary page
-          shows, placed left of the graph. */}
       <div className="@min-[800px]:mt-4 flex @min-[800px]:grid min-h-0 flex-1 @min-[800px]:grid-cols-[minmax(0,1fr)_240px] flex-col @min-[800px]:gap-4 max-sm:flex-col-reverse">
-        {/* Four across as soon as the card can hold them - a 2x2 block steals
-            too much height from the graph in the narrow lg column. */}
         <div className="mt-2.5 grid @min-[800px]:hidden grid-cols-2 gap-2 sm:@min-[460px]:grid-cols-4">
           <StatTile
             title="Volume"
@@ -204,8 +199,7 @@ function HomeInteropCardContent({
             }
           />
         </div>
-        <div className="@min-[800px]:mt-0 mt-6 flex min-h-0 flex-1 flex-col">
-          {/* Static preview: interactions happen on the interop page */}
+        <div className="@min-[800px]:order-1 @min-[800px]:mt-0 mt-6 flex min-h-0 flex-1 flex-col">
           <div className="-mx-2 pointer-events-none flex min-h-0 min-w-0 flex-1 flex-col overflow-x-clip">
             <FlowsGraphPanel
               activeChains={activeChains}
@@ -214,10 +208,11 @@ function HomeInteropCardContent({
               hasEnoughProtocols={hasEnoughProtocols}
               isLoading={isLoading}
               className="pb-2"
+              maxSizeClassName="lg:max-w-[min(70svh,calc(100svh-20rem))] xl:max-w-[min(75svh,calc(100svh-4rem))]"
             />
           </div>
         </div>
-        <div className="@min-[800px]:block hidden h-full">
+        <div className="@min-[800px]:order-3 @min-[800px]:block hidden h-full">
           <FlowsGeneralStats title="" description="" linkTopRouteToSummary />
         </div>
       </div>
