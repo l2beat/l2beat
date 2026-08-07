@@ -27,15 +27,22 @@ import { DarkThemeToggle } from '../../DarkThemeToggle'
 import { Logo } from '../../Logo'
 import { SocialLinks } from '../../SocialLinks'
 import { MobileNavTriggerClose } from '../mobile/MobileNavTrigger'
-import type { NavGroup, NavLink } from '../types'
+import type {
+  NavGroup,
+  NavLink,
+  NavSectionCount,
+  NavSectionCounts,
+} from '../types'
 
 interface Props {
   groups: NavGroup[]
   logoLink: string
   sideLinks: NavLink[]
+  /** Per-section metrics, keyed by `NavGroup.match`. */
+  counts?: NavSectionCounts
 }
 
-export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
+export function NavSidebar({ groups, logoLink, sideLinks, counts }: Props) {
   const pathname = usePathname()
   const { setOpenMobile } = useSidebar()
   const closeMobileSidebar = () => setOpenMobile(false)
@@ -56,12 +63,14 @@ export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
       </SidebarHeader>
       <SidebarContent>
         {groups.map((group) => {
+          const count = counts?.[group.match]
           return (
             <SidebarGroup key={group.title}>
               {group.type === 'multiple' && (
                 <SidebarGroupItem>
                   <NavCollapsibleItem
                     group={group}
+                    count={count}
                     closeMobileSidebar={closeMobileSidebar}
                   />
                 </SidebarGroupItem>
@@ -74,7 +83,10 @@ export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
                     onClick={closeMobileSidebar}
                   >
                     {group.icon}
-                    <span>{group.title}</span>
+                    <span className="min-w-0 flex-1 truncate">
+                      {group.title}
+                    </span>
+                    {count && <NavCountBadge count={count} />}
                   </SidebarGroupLink>
                 </SidebarGroupItem>
               )}
@@ -105,11 +117,28 @@ export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
   )
 }
 
+/**
+ * Right-aligned, so a long section title truncates instead of pushing the
+ * number out - the sidebar width never depends on the counts.
+ */
+function NavCountBadge({ count }: { count: NavSectionCount }) {
+  return (
+    <span
+      aria-label={count.label}
+      className="ml-auto shrink-0 whitespace-nowrap font-semibold text-2xs text-secondary tabular-nums"
+    >
+      {count.value}
+    </span>
+  )
+}
+
 function NavCollapsibleItem({
   group,
+  count,
   closeMobileSidebar,
 }: {
   group: Extract<NavGroup, { type: 'multiple' }>
+  count: NavSectionCount | undefined
   closeMobileSidebar: () => void
 }) {
   const pathname = usePathname()
@@ -129,20 +158,21 @@ function NavCollapsibleItem({
   return (
     <Collapsible className="flex flex-col" open={open} onOpenChange={setOpen}>
       <CollapsibleTrigger
-        className="group flex items-center gap-1.5 p-1.5"
+        className="group flex w-full items-center gap-1.5 p-1.5"
         data-active={isGroupActive}
       >
-        <div className="flex items-center gap-2">
+        <div className="flex min-w-0 items-center gap-2">
           <div>{group.icon}</div>
-          <span className="font-medium text-base text-primary tracking-tight transition-colors duration-300 group-data-[active=true]:text-brand">
+          <span className="truncate font-medium text-base text-primary tracking-tight transition-colors duration-300 group-data-[active=true]:text-brand">
             {group.title}
           </span>
         </div>
         <ChevronIcon
           className={cn(
-            '-rotate-90 size-3 fill-primary transition-[rotate,color,fill] duration-300 group-data-[state=open]:rotate-0 group-data-[active=true]:fill-brand',
+            '-rotate-90 size-3 shrink-0 fill-primary transition-[rotate,color,fill] duration-300 group-data-[state=open]:rotate-0 group-data-[active=true]:fill-brand',
           )}
         />
+        {count && <NavCountBadge count={count} />}
       </CollapsibleTrigger>
       <CollapsibleContent>
         <SidebarGroupSub>

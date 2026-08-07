@@ -22,7 +22,9 @@ import type { RecentChangesProjectGroup } from '~/server/features/projects/recen
 import { useTRPC } from '~/trpc/React'
 
 const TITLE = 'Recent changes'
-const DESCRIPTION = 'Project changes handled over the past 7 days'
+// The tile shows only the count, so the full sentence lives here
+const DESCRIPTION =
+  'Project changes handled by the L2BEAT team over the past 7 days'
 
 interface Props {
   open: boolean

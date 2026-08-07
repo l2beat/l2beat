@@ -51,8 +51,8 @@ export function HomeRecentChangesTile({
           </span>
           <span className="mt-0.5 truncate font-medium text-label-value-12 text-secondary">
             {disabled
-              ? 'No project changes handled this week'
-              : `${recentChangesCount} project ${recentChangesCount === 1 ? 'change' : 'changes'} handled by the L2BEAT team`}
+              ? 'No project changes'
+              : `${recentChangesCount} project ${recentChangesCount === 1 ? 'change' : 'changes'}`}
           </span>
         </div>
         {!disabled && (

@@ -19,6 +19,12 @@ interface FlowsGraphPanelProps {
   baseDollarsPerParticle?: number
   topChainId?: string
   className?: string
+  /**
+   * Overrides the size cap of the square graph area. The default keeps the
+   * graph inside the viewport on the interop page; a card that owns its own
+   * height can afford a bigger one.
+   */
+  graphClassName?: string
 }
 
 export function FlowsGraphPanel({
@@ -30,6 +36,7 @@ export function FlowsGraphPanel({
   baseDollarsPerParticle,
   topChainId,
   className,
+  graphClassName,
 }: FlowsGraphPanelProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const { width, height } = useResizeObserver({ ref: containerRef })
@@ -48,7 +55,10 @@ export function FlowsGraphPanel({
       <div className="flex min-h-0 w-full min-w-0 flex-1 items-center justify-center">
         <div
           id="flows-graph"
-          className="flex aspect-square max-h-full min-h-0 w-full min-w-0 max-w-[min(70svh,calc(100svh-20rem))] items-center justify-center"
+          className={cn(
+            'flex aspect-square max-h-full min-h-0 w-full min-w-0 max-w-[min(70svh,calc(100svh-20rem))] items-center justify-center',
+            graphClassName,
+          )}
           ref={containerRef}
         >
           {!size ? (

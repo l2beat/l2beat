@@ -23,3 +23,15 @@ export interface NavLink {
   subLinks?: NavLink[]
   exactMatch?: boolean
 }
+
+/**
+ * Optional per-section metric shown in the side nav, keyed by `NavGroup.match`.
+ */
+export interface NavSectionCount {
+  /** Right-aligned value, e.g. "110" or "28 · 41". Kept short on purpose. */
+  value: React.ReactNode
+  /** Spelled out for tooltips and screen readers, e.g. "110 projects". */
+  label: string
+}
+
+export type NavSectionCounts = Record<string, NavSectionCount | undefined>

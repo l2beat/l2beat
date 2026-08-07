@@ -3,6 +3,7 @@ import { SidebarProvider } from '~/components/core/Sidebar'
 import { Footer } from '~/components/Footer'
 import { MobileTopNavbar } from '~/components/nav/mobile/MobileTopNavbar'
 import { NavSidebar } from '~/components/nav/sidebar/NavSidebar'
+import type { NavSectionCounts } from '~/components/nav/types'
 import { TopBanner } from '~/components/TopBanner'
 import { useWhatsNewContext } from '~/components/whats-new/WhatsNewContext'
 import { WhatsNewWidgetCloseable } from '~/components/whats-new/WhatsNewWidgetCloseable'
@@ -40,7 +41,11 @@ const contentAreaVariants = cva('mx-auto flex w-full min-w-0 grow flex-col', {
     variant: {
       default: 'max-w-(--breakpoint-lg) md:px-5 lg:pl-0',
       wide: 'max-w-412 md:px-5 lg:pl-0',
-      home: 'max-w-none px-4 pb-6 max-md:px-0 md:px-6 lg:px-8 xl:px-10 2xl:max-w-[1840px]',
+      // Slightly tighter gutters than the other pages, so the interop graph
+      // gets the width back on a laptop screen, and a higher ceiling than the
+      // article-shaped pages: the home grid keeps reading well wide, so a very
+      // large screen should not be mostly background.
+      home: 'max-w-none px-4 pb-6 max-md:px-0 md:px-6 lg:px-6 xl:px-8 2xl:max-w-[2100px] 2xl:px-10',
     },
   },
 })
@@ -69,12 +74,15 @@ export interface SideNavLayoutProps {
   children: React.ReactNode
   childrenWrapperClassName?: string
   variant?: SideNavLayoutVariant
+  /** Per-section metrics rendered in the side nav, keyed by `NavGroup.match`. */
+  sidebarCounts?: NavSectionCounts
 }
 
 export function SideNavLayout({
   children,
   childrenWrapperClassName,
   variant = 'default',
+  sidebarCounts,
 }: SideNavLayoutProps) {
   const whatsNew = useWhatsNewContext()
   const topChildren = <TopBanner className={topBannerVariants({ variant })} />
@@ -92,6 +100,7 @@ export function SideNavLayout({
           logoLink={LOGO_LINK}
           groups={navGroups}
           sideLinks={navSecondaryLinks}
+          counts={sidebarCounts}
         />
         <div
           className={cn(

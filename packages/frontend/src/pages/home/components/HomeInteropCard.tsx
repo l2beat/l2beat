@@ -8,7 +8,6 @@ import {
   MIN_SELECTED_CHAINS,
   MIN_SELECTED_PROTOCOLS,
 } from '~/pages/interop/components/flows/consts'
-import { FlowsGeneralStats } from '~/pages/interop/components/flows/FlowsGeneralStats'
 import { FlowsGraphPanel } from '~/pages/interop/components/flows/graph/FlowsGraphPanel'
 import {
   type InteropFlowsProtocol,
@@ -117,11 +116,10 @@ function HomeInteropCardContent({
         href="/interop/summary"
         timeframe="Last 24h"
       />
-      {/* On wide cards (full-width row between lg and xl) the compact tile
-          row is replaced by the same General stats panel the interop
-          summary page shows, placed left of the graph. */}
-      <div className="@min-[800px]:mt-4 flex @min-[800px]:grid min-h-0 flex-1 @min-[800px]:grid-cols-[240px_minmax(0,1fr)] flex-col @min-[800px]:gap-4">
-        <div className="mt-2.5 grid @min-[800px]:hidden @min-[550px]:grid-cols-4 grid-cols-2 gap-2">
+      {/* The tile row stays on top at every card width - it is the same summary
+          on a phone and on a 1920px screen, and only the graph below it grows. */}
+      <div className="flex min-h-0 flex-1 flex-col">
+        <div className="mt-2.5 grid @min-[550px]:grid-cols-4 grid-cols-2 gap-2 xl:@min-[860px]:gap-3">
           <StatTile
             title="Volume"
             isLoading={statsLoading}
@@ -147,7 +145,7 @@ function HomeInteropCardContent({
                 <img
                   src={topChainData.iconUrl}
                   alt={topChainData.name}
-                  className="size-5 shrink-0 rounded-full"
+                  className="size-5 shrink-0 rounded-full xl:@min-[860px]:size-6"
                 />
               ) : undefined
             }
@@ -165,13 +163,13 @@ function HomeInteropCardContent({
                 <img
                   src={topToken.iconUrl}
                   alt={topToken.symbol}
-                  className="size-5 shrink-0 rounded-full"
+                  className="size-5 shrink-0 rounded-full xl:@min-[860px]:size-6"
                 />
               ) : undefined
             }
           />
           <StatTile
-            title="Top chain"
+            title="Top route"
             isLoading={statsLoading}
             href={
               srcChain && dstChain
@@ -184,13 +182,13 @@ function HomeInteropCardContent({
                   <img
                     src={srcChain.iconUrl}
                     alt={srcChain.name}
-                    className="size-5 shrink-0 rounded-full"
+                    className="size-5 shrink-0 rounded-full xl:@min-[860px]:size-6"
                   />
-                  <ArrowRightIcon className="size-3 fill-brand" />
+                  <ArrowRightIcon className="size-3 fill-brand xl:@min-[860px]:size-3.5" />
                   <img
                     src={dstChain.iconUrl}
                     alt={dstChain.name}
-                    className="size-5 shrink-0 rounded-full"
+                    className="size-5 shrink-0 rounded-full xl:@min-[860px]:size-6"
                   />
                 </div>
               ) : (
@@ -202,10 +200,7 @@ function HomeInteropCardContent({
             }
           />
         </div>
-        <div className="@min-[800px]:block hidden h-full">
-          <FlowsGeneralStats title="" description="" linkTopRouteToSummary />
-        </div>
-        <div className="@min-[800px]:mt-0 mt-6 flex min-h-0 flex-1 flex-col">
+        <div className="mt-4 flex min-h-0 flex-1 flex-col">
           {/* Static preview: interactions happen on the interop page */}
           <div className="-mx-2 pointer-events-none flex min-h-0 min-w-0 flex-1 flex-col overflow-x-clip">
             <FlowsGraphPanel
@@ -215,6 +210,12 @@ function HomeInteropCardContent({
               hasEnoughProtocols={hasEnoughProtocols}
               isLoading={isLoading}
               className="pb-2"
+              // The graph is capped near the height of the column beside it -
+              // overshooting only leaves that column with empty space to spread
+              // around. On the widest screens the card is one of three columns
+              // and has less width to fill, so the cap goes up. Below xl the
+              // default, viewport-safe cap stays.
+              graphClassName="xl:max-w-[min(72svh,38rem)] min-[2200px]:max-w-[min(80svh,44rem)]"
             />
           </div>
         </div>
@@ -250,34 +251,41 @@ function StatTile({
         className,
       )}
     >
-      <span className="font-medium text-2xs text-secondary uppercase tracking-wider">
+      <span className="font-medium text-2xs text-secondary uppercase tracking-wider xl:@min-[860px]:text-xs">
         {title}
       </span>
-      {isLoading ? (
-        <>
+      {/* Fixed row heights, and the secondary line is reserved even when a tile
+          has none, so titles, values and captions line up across the row. */}
+      <div className="flex h-7 w-full min-w-0 items-center justify-center xl:@min-[860px]:h-8">
+        {isLoading ? (
           <Skeleton className="h-5 w-20" />
-          <Skeleton className="mt-0.5 h-3 w-16" />
-        </>
-      ) : (
-        <>
+        ) : (
           <ValueWrapper
             href={href}
             className={cn(
               'flex min-w-0 items-center justify-center gap-1.5 font-bold',
-              emphasized ? 'flex-1 text-label-value-20' : 'text-label-value-15',
+              emphasized
+                ? 'text-label-value-20 xl:@min-[860px]:text-label-value-24'
+                : 'text-label-value-16 xl:@min-[860px]:text-label-value-20',
               href && 'hover:underline',
             )}
           >
             {icon}
             <span className="min-w-0 truncate">{primary}</span>
           </ValueWrapper>
-          {secondary !== undefined && (
-            <span className="truncate font-medium text-label-value-12 text-secondary">
+        )}
+      </div>
+      <div className="flex h-4 w-full min-w-0 items-center justify-center">
+        {isLoading ? (
+          <Skeleton className="h-3 w-16" />
+        ) : (
+          secondary !== undefined && (
+            <span className="truncate font-medium text-label-value-12 text-secondary xl:@min-[860px]:text-label-value-13">
               {secondary}
             </span>
-          )}
-        </>
-      )}
+          )
+        )}
+      </div>
     </div>
   )
 }
