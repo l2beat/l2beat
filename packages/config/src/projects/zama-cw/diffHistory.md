@@ -1,3 +1,622 @@
+Generated with discovered.json: 0x55d44c4022a34a2b451603062a4b613f2b96a88c
+
+# Diff at Fri, 07 Aug 2026 12:57:23 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3952db2ad8479541c0493e01971033f3859abf91 block: 1785844532
+- current timestamp: 1786107356
+
+## Description
+
+Zama Gateway upgrade: a larger upgrade that touches key generation and is only half deployed.
+
+- Decryption v0.4.0 -> v0.5.0: requests now pin a KMS context at request time and responses must reference the pinned context
+- GatewayConfig v0.5.0 -> v0.6.0: the owner can now destroy non-current KMS contexts (immediately invalidating them for decryption), retune thresholds of any live context (context-scoped events), and disable/enable/remove host chains. Coprocessor updates now require InputVerification to be paused.
+- KMSGeneration v0.4.0 -> v0.5.0: now view-only; all key/CRS/PRSS/resharing workflows were removed from the gateway after their move to Ethereum (getActiveKeyId/getActiveCrsId are gone).
+- InputVerification v0.3.0 -> v0.4.0 and CiphertextCommits v0.3.0 -> v0.4.0: minor; both now reject requests/handles from disabled host chains,  and CiphertextCommits dropped its KMSGeneration reference.
+- a Polygon host chain (chainId 137) is now registered in GatewayConfig.
+
+## Watched changes
+
+```diff
+    EOA  (zama:0x0e25B8DB74c754C8275C0B219ba2A6CD7c59E31D) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3","description":"submit KMS key-generation and CRS-generation responses to KMSGeneration.","role":".gatewayKmsTxSenders"}
+      receivedPermissions.2.description:
+-        "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts."
++        "submit KMS decryption responses to gateway contracts."
+    }
+```
+
+```diff
+    contract Decryption (zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24) [zama/Decryption_v0_5_0] {
+    +++ description: Gateway contract that orchestrates public and user decryption requests and checks committed ciphertext material. Each request pins a KMS context at request time (explicitly through extraData or the then-current context) and rejects unknown or destroyed contexts; responses must reference the pinned context. Requests recorded before v0.5.0 fall back to the context declared by each response. KMS nodes enforce host-chain ACL state offchain, and Ethereum KMSVerifier verifies public results against this contract's EIP-712 domain.
+      template:
+-        "zama/Decryption_v0_4_0"
++        "zama/Decryption_v0_5_0"
+      sourceHashes.1:
+-        "0xcd821ac822a19a355acde1dd7ce435e2a6e16e21017756b899c058ee64552e28"
++        "0x1dd2af26cc2be12ff30232e8df9c95ec66fcbc987f40372ad56a9d8f1073260c"
+      description:
+-        "Gateway contract that orchestrates public and user decryption requests and checks committed ciphertext material. Each response independently selects a KMS context through extraData, or uses the context current when the response executes; requests do not store a context. KMS nodes enforce host-chain ACL state offchain, and Ethereum KMSVerifier verifies public results against this contract's EIP-712 domain."
++        "Gateway contract that orchestrates public and user decryption requests and checks committed ciphertext material. Each request pins a KMS context at request time (explicitly through extraData or the then-current context) and rejects unknown or destroyed contexts; responses must reference the pinned context. Requests recorded before v0.5.0 fall back to the context declared by each response. KMS nodes enforce host-chain ACL state offchain, and Ethereum KMSVerifier verifies public results against this contract's EIP-712 domain."
+      values.$implementation:
+-        "zama:0x943CEfD1A00d3ae5b298bB10D4EddA09B279C8B0"
++        "zama:0x86F8e9626cCff3f2eB3dA248F33DfF43531DBFD8"
+      values.$pastUpgrades.4:
++        ["2026-08-06T17:11:04.000Z","0x350755101263bed64dc377ef6f3ef07f95f97918b689967a60ee625d0d9e025c",["zama:0x86F8e9626cCff3f2eB3dA248F33DfF43531DBFD8"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.getVersion:
+-        "Decryption v0.4.0"
++        "Decryption v0.5.0"
+      fieldMeta.gatewayMultichainACL.description:
+-        "MultichainACL contract containing the gateway-side host-chain ACL mirror. The upgraded Decryption contract no longer checks it onchain and relies on KMS nodes to enforce ACL state."
++        "MultichainACL contract containing the gateway-side host-chain ACL mirror. Decryption does not check it onchain and relies on KMS nodes to enforce ACL state."
+      fieldMeta.gatewayKmsTxSenders.description:
+-        "KMS transaction-sender addresses configured in the current GatewayConfig context. Historical context senders can also submit responses when response extraData explicitly selects their retained context. Post-migration contexts are indexed on GatewayConfig; migration-created membership requires a project override because no creation event was emitted."
++        "KMS transaction-sender addresses configured in the current GatewayConfig context. Senders from other live contexts can still submit responses to requests that pinned their context; destroying a context revokes this. Post-migration contexts are indexed on GatewayConfig; migration-created membership requires a project override because no creation event was emitted."
+      fieldMeta.gatewayKmsSigners.description:
+-        "KMS signer addresses configured in the current GatewayConfig context. Historical context signers can also sign responses when response extraData explicitly selects their retained context. Post-migration contexts are indexed on GatewayConfig; migration-created membership requires a project override because no creation event was emitted."
++        "KMS signer addresses configured in the current GatewayConfig context. Signers from other live contexts can still sign responses to requests that pinned their context; destroying a context revokes this. Post-migration contexts are indexed on GatewayConfig; migration-created membership requires a project override because no creation event was emitted."
+      fieldMeta.gatewayKmsContextId.description:
+-        "Current GatewayConfig KMS context used by responses whose extraData is empty or starts with version 0. Requests do not bind this value, so a rotation can change the context used to answer an already pending request."
++        "Current GatewayConfig KMS context, pinned by new requests whose extraData is empty or starts with version 0. The pin is stored per request, so a later rotation does not change the context or thresholds used to answer a pending request. Requests recorded before v0.5.0 have no pin and fall back to the context declared by each response."
+      fieldMeta.gatewayPublicDecryptionThreshold.description:
+-        "Minimum matching-signature count for the current context. Public responses are grouped by a digest containing raw extraData; identical empty or version 0 extraData can accumulate responses across a context rotation while the last response selects the threshold checked."
++        "Minimum matching-signature count for public decryption consensus in the current context. Each request is answered under the threshold of its pinned context, which the GatewayConfig owner can retune per context."
+      fieldMeta.gatewayUserDecryptionThreshold.description:
+-        "Minimum response count for the current context. User response counts are stored per request rather than per context, so valid shares submitted under different contexts can be combined and the last response selects the threshold checked."
++        "Minimum response count for user decryption consensus in the current context. Each request is answered under the threshold of its pinned context, which the GatewayConfig owner can retune per context."
+      implementationNames.zama:0x943CEfD1A00d3ae5b298bB10D4EddA09B279C8B0:
+-        "Decryption"
+      implementationNames.zama:0x86F8e9626cCff3f2eB3dA248F33DfF43531DBFD8:
++        "Decryption"
+    }
+```
+
+```diff
+    contract KMSGeneration (zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3) [zama/KMSGeneration_v0_5_0] {
+    +++ description: View-only gateway contract retaining historical queries for previously generated FHE keys and CRS materials. All state-changing key-generation, CRS-generation, PRSS, and key-resharing workflows were removed in v0.5.0 after their move to Ethereum.
+      template:
+-        "zama/KMSGeneration"
++        "zama/KMSGeneration_v0_5_0"
+      sourceHashes.1:
+-        "0x24b946dbf9b33a087ddcfba5bef6adfb4fb85c47ee48d0f3d35487b5a76900dc"
++        "0x19abe2dec360556cd7dd3bbf0197f56dcaf76dc5889859f0e18046a971c70498"
+      description:
+-        "Gateway contract that orchestrates FHE key generation, CRS generation, PRSS initialization, and key resharing through threshold KMS responses."
++        "View-only gateway contract retaining historical queries for previously generated FHE keys and CRS materials. All state-changing key-generation, CRS-generation, PRSS, and key-resharing workflows were removed in v0.5.0 after their move to Ethereum."
+      values.$implementation:
+-        "zama:0x3d345DFc156381E6060Cdf652cDf7f92DF94fAFF"
++        "zama:0x68CEb7709aC1bcD60e36c4144a243A445A2cb076"
+      values.$pastUpgrades.3:
++        ["2026-08-06T17:11:04.000Z","0x350755101263bed64dc377ef6f3ef07f95f97918b689967a60ee625d0d9e025c",["zama:0x68CEb7709aC1bcD60e36c4144a243A445A2cb076"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.gatewayKmsGenThreshold:
+-        7
+      values.gatewayKmsSigners:
+-        ["zama:0xe9f7ecfF21a2e0Ca58eA26ae869FEF38ab49ed6f","zama:0xdC472efa1642D5afB684aAaa546E22FB24AAB965","zama:0xbf05c17BEB0BF2F2c78Cd491A53a148e035279C3","zama:0x915055c5F05C0d88BCdf1e3DfBA18aBD2a18350f","zama:0x41b19EB4585450db79ac03ba9503106EC7895905","zama:0x6e5f02Cd4B33f0Cf4ED5326ac9eE25e5aA8c4921","zama:0x966188a1f697F6A1B5cfA51495DD8A8A7b5CdB8D","zama:0x5d0e7033774dD43eE546D49b72Bd0B561E52f7C8","zama:0xDFc9Dcb3D206AA164770874f36a4B5AD2EE5194f","zama:0x7C5Eeb4D8CED0101799B8Cc212eE874097364F58","zama:0x7C17BE232e5968BDa9516478B798b9E90D013fCC","zama:0x6016DCA5e91e62826e3FEA1Fb0a763602dc1E385","zama:0xB7978e602D2AF68258dA614AF949E014BF0DE0eb"]
+      values.gatewayKmsTxSenders:
+-        ["zama:0x711EBE8aA590f9C9904ff279239E89dB2eFbC890","zama:0xB4CE988D382425F64c99A352375F72A5f1cf6FFB","zama:0x4eC7200E392B97913cbD6d8160B011406EB019F1","zama:0xEd1D622bd59d657580aBAc65312b40B4B2dA6236","zama:0x74a1E2e87a4026b7B8b5252c747E514159515e9a","zama:0x0e25B8DB74c754C8275C0B219ba2A6CD7c59E31D","zama:0x577Fd21e4BC7D644A4177C4B89146e1Ab394De04","zama:0xbaac6F9DD84bFB303F05B4DE45A88Eec86855BD0","zama:0x43e4c21cf9d24Dc5b4e00031349EC213A2ba8340","zama:0xC105B5933446658D226582f7A112F49a70b54364","zama:0xbcF4943A856497FB2345409D35f4d1eae9A0363E","zama:0xD227C4B573800EdA3bAdA6DAC872E9134E012e6D","zama:0x487e41623b7FeB464ff79F7326DCa791c9a1c5EC"]
+      values.getActiveCrsId:
+-        "2261564242916331941866620800950935700259179388000792266395655937654553313281"
+      values.getActiveKeyId:
+-        "1809251394333065553493296640760748560207343510400633813116524750123642650625"
+      values.getVersion:
+-        "KMSGeneration v0.4.0"
++        "KMSGeneration v0.5.0"
+      fieldMeta.gatewayConfig.description:
+-        "GatewayConfig contract used as the source of truth for the gateway owner, KMS set, and KMS generation threshold."
++        "GatewayConfig contract used as the source of truth for the gateway owner and for resolving KMS node storage URLs in historical material queries."
+      fieldMeta.gatewayOwner.description:
+-        "Owner of GatewayConfig. This account authorizes KMSGeneration upgrades and can trigger key, CRS, PRSS, and key-resharing workflows."
++        "Owner of GatewayConfig. This account authorizes KMSGeneration upgrades."
+      fieldMeta.gatewayKmsTxSenders:
+-        {"severity":"HIGH","description":"KMS transaction-sender addresses configured in GatewayConfig. These accounts may submit preprocessing keygen, keygen, and CRS generation responses.","type":"PERMISSION"}
+      fieldMeta.gatewayKmsSigners:
+-        {"severity":"HIGH","description":"KMS signer addresses configured in GatewayConfig. Their EIP-712 signatures determine whether key and CRS generation responses reach threshold.","type":"PERMISSION"}
+      fieldMeta.gatewayKmsGenThreshold:
+-        {"severity":"HIGH","description":"Minimum number of matching KMS responses required before key or CRS generation reaches consensus.","type":"RISK_PARAMETER"}
+      fieldMeta.getActiveKeyId:
+-        {"severity":"HIGH","description":"Identifier of the active FHE key generated through KMS consensus.","type":"RISK_PARAMETER"}
+      fieldMeta.getActiveCrsId:
+-        {"severity":"HIGH","description":"Identifier of the active CRS generated through KMS consensus.","type":"RISK_PARAMETER"}
+      fieldMeta.eip712Domain.description:
+-        "EIP-712 domain used when validating KMS signatures over key-generation and CRS-generation responses."
++        "EIP-712 domain retained from the KMS generation workflows removed in v0.5.0."
+      implementationNames.zama:0x3d345DFc156381E6060Cdf652cDf7f92DF94fAFF:
+-        "KMSGeneration"
+      implementationNames.zama:0x68CEb7709aC1bcD60e36c4144a243A445A2cb076:
++        "KMSGeneration"
+    }
+```
+
+```diff
+    EOA  (zama:0x41b19EB4585450db79ac03ba9503106EC7895905) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3","description":"sign KMS key-generation and CRS-generation material accepted by KMSGeneration.","role":".gatewayKmsSigners"}
+      receivedPermissions.2.description:
+-        "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts."
++        "sign KMS decryption material accepted by gateway contracts."
+    }
+```
+
+```diff
+    EOA  (zama:0x43e4c21cf9d24Dc5b4e00031349EC213A2ba8340) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3","description":"submit KMS key-generation and CRS-generation responses to KMSGeneration.","role":".gatewayKmsTxSenders"}
+      receivedPermissions.2.description:
+-        "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts."
++        "submit KMS decryption responses to gateway contracts."
+    }
+```
+
+```diff
+    EOA  (zama:0x487e41623b7FeB464ff79F7326DCa791c9a1c5EC) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3","description":"submit KMS key-generation and CRS-generation responses to KMSGeneration.","role":".gatewayKmsTxSenders"}
+      receivedPermissions.2.description:
+-        "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts."
++        "submit KMS decryption responses to gateway contracts."
+    }
+```
+
+```diff
+    EOA  (zama:0x4eC7200E392B97913cbD6d8160B011406EB019F1) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3","description":"submit KMS key-generation and CRS-generation responses to KMSGeneration.","role":".gatewayKmsTxSenders"}
+      receivedPermissions.2.description:
+-        "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts."
++        "submit KMS decryption responses to gateway contracts."
+    }
+```
+
+```diff
+    EOA  (zama:0x577Fd21e4BC7D644A4177C4B89146e1Ab394De04) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3","description":"submit KMS key-generation and CRS-generation responses to KMSGeneration.","role":".gatewayKmsTxSenders"}
+      receivedPermissions.2.description:
+-        "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts."
++        "submit KMS decryption responses to gateway contracts."
+    }
+```
+
+```diff
+    EOA  (zama:0x5d0e7033774dD43eE546D49b72Bd0B561E52f7C8) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3","description":"sign KMS key-generation and CRS-generation material accepted by KMSGeneration.","role":".gatewayKmsSigners"}
+      receivedPermissions.2.description:
+-        "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts."
++        "sign KMS decryption material accepted by gateway contracts."
+    }
+```
+
+```diff
+    contract SafeL2 (zama:0x5f0F86BcEad6976711C9B131bCa5D30E767fe2bE) [GnosisSafe] {
+    +++ description: Gateway owner Safe. Its LayerZero governance module is outside the Zama Gateway protocol surface covered here.
+      receivedPermissions.1:
+-        {"permission":"interact","from":"zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3","description":"start KMS key generation, CRS generation, PRSS initialization, and key resharing.","role":".gatewayOwner"}
+      receivedPermissions.5.description:
+-        "create KMS contexts that immediately become current, update current thresholds and other gateway configuration, transfer ownership, and unpause gateway workflow contracts. Historical KMS contexts cannot be removed in this version."
++        "create KMS contexts that immediately become current, destroy historical KMS contexts, update thresholds of any live context, manage coprocessors, custodians and host chains, transfer ownership, and unpause gateway workflow contracts."
+    }
+```
+
+```diff
+    EOA  (zama:0x6016DCA5e91e62826e3FEA1Fb0a763602dc1E385) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3","description":"sign KMS key-generation and CRS-generation material accepted by KMSGeneration.","role":".gatewayKmsSigners"}
+      receivedPermissions.2.description:
+-        "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts."
++        "sign KMS decryption material accepted by gateway contracts."
+    }
+```
+
+```diff
+    EOA  (zama:0x6e5f02Cd4B33f0Cf4ED5326ac9eE25e5aA8c4921) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3","description":"sign KMS key-generation and CRS-generation material accepted by KMSGeneration.","role":".gatewayKmsSigners"}
+      receivedPermissions.2.description:
+-        "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts."
++        "sign KMS decryption material accepted by gateway contracts."
+    }
+```
+
+```diff
+    EOA  (zama:0x711EBE8aA590f9C9904ff279239E89dB2eFbC890) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3","description":"submit KMS key-generation and CRS-generation responses to KMSGeneration.","role":".gatewayKmsTxSenders"}
+      receivedPermissions.2.description:
+-        "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts."
++        "submit KMS decryption responses to gateway contracts."
+    }
+```
+
+```diff
+    EOA  (zama:0x74a1E2e87a4026b7B8b5252c747E514159515e9a) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3","description":"submit KMS key-generation and CRS-generation responses to KMSGeneration.","role":".gatewayKmsTxSenders"}
+      receivedPermissions.2.description:
+-        "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts."
++        "submit KMS decryption responses to gateway contracts."
+    }
+```
+
+```diff
+    EOA  (zama:0x7C17BE232e5968BDa9516478B798b9E90D013fCC) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3","description":"sign KMS key-generation and CRS-generation material accepted by KMSGeneration.","role":".gatewayKmsSigners"}
+      receivedPermissions.2.description:
+-        "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts."
++        "sign KMS decryption material accepted by gateway contracts."
+    }
+```
+
+```diff
+    EOA  (zama:0x7C5Eeb4D8CED0101799B8Cc212eE874097364F58) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3","description":"sign KMS key-generation and CRS-generation material accepted by KMSGeneration.","role":".gatewayKmsSigners"}
+      receivedPermissions.2.description:
+-        "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts."
++        "sign KMS decryption material accepted by gateway contracts."
+    }
+```
+
+```diff
+    EOA  (zama:0x915055c5F05C0d88BCdf1e3DfBA18aBD2a18350f) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3","description":"sign KMS key-generation and CRS-generation material accepted by KMSGeneration.","role":".gatewayKmsSigners"}
+      receivedPermissions.2.description:
+-        "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts."
++        "sign KMS decryption material accepted by gateway contracts."
+    }
+```
+
+```diff
+    EOA  (zama:0x966188a1f697F6A1B5cfA51495DD8A8A7b5CdB8D) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3","description":"sign KMS key-generation and CRS-generation material accepted by KMSGeneration.","role":".gatewayKmsSigners"}
+      receivedPermissions.2.description:
+-        "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts."
++        "sign KMS decryption material accepted by gateway contracts."
+    }
+```
+
+```diff
+    EOA  (zama:0xB4CE988D382425F64c99A352375F72A5f1cf6FFB) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3","description":"submit KMS key-generation and CRS-generation responses to KMSGeneration.","role":".gatewayKmsTxSenders"}
+      receivedPermissions.2.description:
+-        "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts."
++        "submit KMS decryption responses to gateway contracts."
+    }
+```
+
+```diff
+    EOA  (zama:0xB7978e602D2AF68258dA614AF949E014BF0DE0eb) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3","description":"sign KMS key-generation and CRS-generation material accepted by KMSGeneration.","role":".gatewayKmsSigners"}
+      receivedPermissions.2.description:
+-        "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts."
++        "sign KMS decryption material accepted by gateway contracts."
+    }
+```
+
+```diff
+    EOA  (zama:0xbaac6F9DD84bFB303F05B4DE45A88Eec86855BD0) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3","description":"submit KMS key-generation and CRS-generation responses to KMSGeneration.","role":".gatewayKmsTxSenders"}
+      receivedPermissions.2.description:
+-        "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts."
++        "submit KMS decryption responses to gateway contracts."
+    }
+```
+
+```diff
+    EOA  (zama:0xbcF4943A856497FB2345409D35f4d1eae9A0363E) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3","description":"submit KMS key-generation and CRS-generation responses to KMSGeneration.","role":".gatewayKmsTxSenders"}
+      receivedPermissions.2.description:
+-        "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts."
++        "submit KMS decryption responses to gateway contracts."
+    }
+```
+
+```diff
+    EOA  (zama:0xbf05c17BEB0BF2F2c78Cd491A53a148e035279C3) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3","description":"sign KMS key-generation and CRS-generation material accepted by KMSGeneration.","role":".gatewayKmsSigners"}
+      receivedPermissions.2.description:
+-        "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts."
++        "sign KMS decryption material accepted by gateway contracts."
+    }
+```
+
+```diff
+    EOA  (zama:0xC105B5933446658D226582f7A112F49a70b54364) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3","description":"submit KMS key-generation and CRS-generation responses to KMSGeneration.","role":".gatewayKmsTxSenders"}
+      receivedPermissions.2.description:
+-        "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts."
++        "submit KMS decryption responses to gateway contracts."
+    }
+```
+
+```diff
+    contract InputVerification (zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287) [zama/InputVerification] {
+    +++ description: Gateway contract that receives encrypted input verification requests from registered and enabled host chains, collects coprocessor responses, and emits a threshold-signed attestation once coprocessor consensus is reached. Ethereum InputVerifier verifies attestations against this contract's EIP-712 domain.
+      sourceHashes.1:
+-        "0x52c38ce781ecef28b118222541c9b079f2ae7d6402452584e620e84ca347875f"
++        "0x58bb055397e294a46ebccbc53c94bb2494bf05acd7ad77f2fb7cc46b3ef1eb92"
+      values.$implementation:
+-        "zama:0xA08c4367eB984945da2dad5BF7d94D1B2863197A"
++        "zama:0xf9f0F5ef8301CF1573EBe0F45E13A4CabB621821"
+      values.$pastUpgrades.3:
++        ["2026-08-06T17:11:04.000Z","0x350755101263bed64dc377ef6f3ef07f95f97918b689967a60ee625d0d9e025c",["zama:0xf9f0F5ef8301CF1573EBe0F45E13A4CabB621821"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.getVersion:
+-        "InputVerification v0.3.0"
++        "InputVerification v0.4.0"
+      implementationNames.zama:0xA08c4367eB984945da2dad5BF7d94D1B2863197A:
+-        "InputVerification"
+      implementationNames.zama:0xf9f0F5ef8301CF1573EBe0F45E13A4CabB621821:
++        "InputVerification"
+    }
+```
+
+```diff
+    EOA  (zama:0xD227C4B573800EdA3bAdA6DAC872E9134E012e6D) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3","description":"submit KMS key-generation and CRS-generation responses to KMSGeneration.","role":".gatewayKmsTxSenders"}
+      receivedPermissions.2.description:
+-        "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts."
++        "submit KMS decryption responses to gateway contracts."
+    }
+```
+
+```diff
+    contract CiphertextCommits (zama:0xd82cF70FC102028cd01acB87D0E107780ae4F41F) [zama/CiphertextCommits] {
+    +++ description: Gateway contract that stores ciphertext and SNS ciphertext digests after coprocessor consensus, allowing decryption requests to reference committed ciphertext material. Digests referencing unregistered or disabled host chains are rejected.
+      sourceHashes.1:
+-        "0x70a834887489420cb7ea7044739bcc74d735be01e262a27ea23132992d21a898"
++        "0xa3aa22a184258ca16a5d83ce495ae0d307d4c5ec9fda8a7622d4f95728f4af03"
+      values.$implementation:
+-        "zama:0xC92f2dc7eF79728ed32e745020EF463270217e78"
++        "zama:0xB373Ae42736E3C266D4A5D090c00c7f0Bda06622"
+      values.$pastUpgrades.3:
++        ["2026-08-06T17:11:04.000Z","0x350755101263bed64dc377ef6f3ef07f95f97918b689967a60ee625d0d9e025c",["zama:0xB373Ae42736E3C266D4A5D090c00c7f0Bda06622"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.getVersion:
+-        "CiphertextCommits v0.3.0"
++        "CiphertextCommits v0.4.0"
+      implementationNames.zama:0xC92f2dc7eF79728ed32e745020EF463270217e78:
+-        "CiphertextCommits"
+      implementationNames.zama:0xB373Ae42736E3C266D4A5D090c00c7f0Bda06622:
++        "CiphertextCommits"
+    }
+```
+
+```diff
+    EOA  (zama:0xdC472efa1642D5afB684aAaa546E22FB24AAB965) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3","description":"sign KMS key-generation and CRS-generation material accepted by KMSGeneration.","role":".gatewayKmsSigners"}
+      receivedPermissions.2.description:
+-        "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts."
++        "sign KMS decryption material accepted by gateway contracts."
+    }
+```
+
+```diff
+    contract GatewayConfig (zama:0xDE537Be194777A56f8B19d14079E6a78249390ab) [zama/GatewayConfig_v0_6_0] {
+    +++ description: Central configuration contract for the Zama Gateway. A KMS context snapshots node transaction senders, signers, and workflow thresholds; the owner can create new contexts, retune the thresholds of any live context, and destroy non-current contexts, which immediately invalidates them for decryption. Registered host chains can be disabled, re-enabled, or removed by the owner.
+      template:
+-        "zama/GatewayConfig_v0_5_0"
++        "zama/GatewayConfig_v0_6_0"
+      sourceHashes.1:
+-        "0x1089121569189032b8cee0dae0c71eedecf7757f712a6d14ef684915093c6747"
++        "0xe903576aaecdd97c5036c6bc029149a11b44484c78d9c6b0d802a882d4744597"
+      description:
+-        "Central configuration contract for the Zama Gateway. A KMS context snapshots node transaction senders, signers, and workflow thresholds; historical contexts remain stored and selectable by Decryption because this version has no context-destruction function."
++        "Central configuration contract for the Zama Gateway. A KMS context snapshots node transaction senders, signers, and workflow thresholds; the owner can create new contexts, retune the thresholds of any live context, and destroy non-current contexts, which immediately invalidates them for decryption. Registered host chains can be disabled, re-enabled, or removed by the owner."
+      values.$implementation:
+-        "zama:0x2294E3C211238Ae31E2824576CCd7f996CC7Dc00"
++        "zama:0x1950aD98e834f6c07553365196d4CddeD179c536"
+      values.$pastUpgrades.4:
++        ["2026-08-06T17:11:04.000Z","0x350755101263bed64dc377ef6f3ef07f95f97918b689967a60ee625d0d9e025c",["zama:0x1950aD98e834f6c07553365196d4CddeD179c536"]]
+      values.$upgradeCount:
+-        4
++        5
++++ description: Registered host chains and their host-chain FHEVMExecutor and ACL endpoints. Returned addresses belong to the listed host chain, not to the gateway chain; Ethereum entries are exposed as formatted cross-chain references in ethereumHostChains.
+      values.getHostChains.1:
++        {"chainId":137,"fhevmExecutorAddress":"zama:0xAB0075E77fe06083f52bdf10e2ccDB3712483057","aclAddress":"zama:0x6737F17e31cf26a1b62fb0362acC5a16CB156F49","name":"polygon","website":"https://polygonscan.com"}
+      values.getVersion:
+-        "GatewayConfig v0.5.0"
++        "GatewayConfig v0.6.0"
++++ description: KMS contexts destroyed by the owner. Destroyed contexts are invalid: their per-context getters revert, new requests cannot pin them, and pending requests pinned to them can no longer reach consensus.
++++ severity: HIGH
+      values.destroyedKmsContexts:
++        []
++++ description: Registered host chains currently disabled by the owner. Gateway workflows reject requests and ciphertext handles referencing disabled chains; a chain must be disabled before it can be removed.
++++ severity: HIGH
+      values.disabledHostChains:
++        []
+      fieldMeta.owner.description:
+-        "Owner of GatewayConfig. This account creates KMS contexts, changes the current context's thresholds, manages coprocessors, custodians and host chains, transfers ownership, and unpauses gateway contracts. A newly created context becomes current immediately, while all older contexts remain selectable by Decryption."
++        "Owner of GatewayConfig. This account creates and destroys KMS contexts, changes the thresholds of any live context, manages coprocessors, custodians and host chains (including disabling and removing them), transfers ownership, and unpauses gateway contracts. A newly created context becomes current immediately; older contexts remain selectable by Decryption requests until destroyed."
+      fieldMeta.inputVerification.description:
+-        "InputVerification workflow contract paused and unpaused by GatewayConfig."
++        "InputVerification workflow contract paused and unpaused by GatewayConfig. Coprocessor set and threshold updates require this contract to be paused first."
+      fieldMeta.ethereumHostChains.description:
+-        "Ethereum host-chain endpoints registered in GatewayConfig, derived from getHostChains entries with chainId 1. These are the L1 FHEVMExecutor and ACL contracts whose state is used by the Gateway workflows."
++        "Ethereum host-chain endpoints registered in GatewayConfig, derived from getHostChains entries with chainId 1. These are the L1 FHEVMExecutor and ACL contracts whose state is used by the Gateway workflows. Disabled-but-not-removed chains still appear here; see disabledHostChains."
+      fieldMeta.getKmsTxSenders.description:
+-        "KMS transaction-sender addresses in the current Gateway context. Historical context senders remain authorized for Decryption responses that explicitly select their context; post-migration contexts are indexed here and the migrated context is indexed on Decryption."
++        "KMS transaction-sender addresses in the current Gateway context. Senders from other live contexts remain authorized for Decryption requests that pinned their context until the context is destroyed; post-migration contexts are indexed here and the migrated context is indexed on Decryption."
+      fieldMeta.getKmsSigners.description:
+-        "KMS signer addresses in the current Gateway context. Historical context signers remain authorized for explicitly selected Decryption responses; post-migration contexts are indexed here and the migrated context is indexed on Decryption."
++        "KMS signer addresses in the current Gateway context. Signers from other live contexts remain authorized for Decryption requests that pinned their context until the context is destroyed; post-migration contexts are indexed here and the migrated context is indexed on Decryption."
+      fieldMeta.createdKmsContexts.description:
+-        "KMS contexts created after migration, reconstructed from UpdateKmsContext events with their node set and creation thresholds. Nodes remain authorized for Decryption indefinitely; later threshold-update events do not identify a context, so final historical thresholds must be read through context-specific getters or project overrides."
++        "KMS contexts created after migration, reconstructed from UpdateKmsContext events with their node set and creation thresholds. Contexts stay selectable by Decryption requests until destroyed (see destroyedKmsContexts). Thresholds can be retuned per context after creation; current values must be read through context-specific getters or project overrides."
+      fieldMeta.createdKmsContextTxSenders.description:
+-        "KMS transaction senders from contexts created after migration. They remain authorized for Decryption responses that select their context because GatewayConfig has no context-destruction function."
++        "KMS transaction senders from contexts created after migration. They remain authorized for Decryption requests that pinned their context until the owner destroys that context."
+      fieldMeta.createdKmsContextSigners.description:
+-        "KMS signers from contexts created after migration. They remain authorized for Decryption responses that select their context because GatewayConfig has no context-destruction function."
++        "KMS signers from contexts created after migration. They remain authorized for Decryption requests that pinned their context until the owner destroys that context."
+      fieldMeta.getMpcThreshold.description:
+-        "MPC threshold for KMS key material generation in the current context."
++        "MPC threshold for KMS key material generation in the current context. The owner can retune it per context."
+      fieldMeta.getCurrentKmsContextId.description:
+-        "Identifier of the context used when a Decryption response has empty or version 0 extraData. Version 1 responses can explicitly select any historical context, and requests do not store or bind a context."
++        "Identifier of the context pinned by new Decryption requests whose extraData is empty or starts with version 0. Version 1 request extraData can explicitly pin any live context; responses must match the pinned context."
+      fieldMeta.getPublicDecryptionThresholdForContext.description:
+-        "Minimum number of KMS signatures required for public decryption consensus in the current context."
++        "Minimum number of KMS signatures required for public decryption consensus in the current context. The owner can retune it per context."
+      fieldMeta.getUserDecryptionThresholdForContext.description:
+-        "Minimum number of KMS shares required for user decryption consensus in the current context."
++        "Minimum number of KMS shares required for user decryption consensus in the current context. The owner can retune it per context."
+      fieldMeta.getKmsGenThreshold.description:
+-        "Minimum number of KMS signatures required for key and CRS generation consensus in the current context."
++        "Minimum number of KMS signatures required for key and CRS generation consensus in the current context. Consumed by the Ethereum-side KMS generation since gateway KMSGeneration v0.5.0."
+      fieldMeta.getCoprocessorMajorityThreshold.description:
+-        "Minimum number of matching coprocessor messages required for gateway coprocessor consensus."
++        "Minimum number of matching coprocessor messages required for gateway coprocessor consensus. Updates require InputVerification to be paused first."
+      fieldMeta.destroyedKmsContexts:
++        {"severity":"HIGH","description":"KMS contexts destroyed by the owner. Destroyed contexts are invalid: their per-context getters revert, new requests cannot pin them, and pending requests pinned to them can no longer reach consensus.","type":"RISK_PARAMETER"}
+      fieldMeta.disabledHostChains:
++        {"severity":"HIGH","description":"Registered host chains currently disabled by the owner. Gateway workflows reject requests and ciphertext handles referencing disabled chains; a chain must be disabled before it can be removed.","type":"RISK_PARAMETER"}
+      implementationNames.zama:0x2294E3C211238Ae31E2824576CCd7f996CC7Dc00:
+-        "GatewayConfig"
+      implementationNames.zama:0x1950aD98e834f6c07553365196d4CddeD179c536:
++        "GatewayConfig"
+    }
+```
+
+```diff
+    EOA  (zama:0xDFc9Dcb3D206AA164770874f36a4B5AD2EE5194f) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3","description":"sign KMS key-generation and CRS-generation material accepted by KMSGeneration.","role":".gatewayKmsSigners"}
+      receivedPermissions.2.description:
+-        "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts."
++        "sign KMS decryption material accepted by gateway contracts."
+    }
+```
+
+```diff
+    EOA  (zama:0xe9f7ecfF21a2e0Ca58eA26ae869FEF38ab49ed6f) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3","description":"sign KMS key-generation and CRS-generation material accepted by KMSGeneration.","role":".gatewayKmsSigners"}
+      receivedPermissions.2.description:
+-        "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts."
++        "sign KMS decryption material accepted by gateway contracts."
+    }
+```
+
+```diff
+    EOA  (zama:0xEd1D622bd59d657580aBAc65312b40B4B2dA6236) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3","description":"submit KMS key-generation and CRS-generation responses to KMSGeneration.","role":".gatewayKmsTxSenders"}
+      receivedPermissions.2.description:
+-        "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts."
++        "submit KMS decryption responses to gateway contracts."
+    }
+```
+
+## Source code changes
+
+```diff
+.../CiphertextCommits/CiphertextCommits.sol        | 1042 ++++++-----
+ .../Decryption/Decryption.sol                      |  424 ++++-
+ .../GatewayConfig/GatewayConfig.sol                |  797 ++++++--
+ .../InputVerification/InputVerification.sol        |  802 +++++---
+ .../KMSGeneration/KMSGeneration.sol                | 1912 ++++++--------------
+ 5 files changed, 2679 insertions(+), 2298 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1785844532 (main branch discovery), not current.
+
+```diff
+    contract Decryption (zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24) [zama/Decryption_v0_4_0] {
+    +++ description: Gateway contract that orchestrates public and user decryption requests and checks committed ciphertext material. Each response independently selects a KMS context through extraData, or uses the context current when the response executes; requests do not store a context. KMS nodes enforce host-chain ACL state offchain, and Ethereum KMSVerifier verifies public results against this contract's EIP-712 domain.
+      fieldMeta.initialMigratedKmsContextId.description:
+-        "Identifier assigned to the Gateway KMS context created by the v0.5 migration. Version 1 Decryption response metadata can continue to select it after later rotations."
++        "Identifier assigned to the Gateway KMS context created by the v0.5 migration. Since Decryption v0.5.0 requests pin a context at request time; this context stays selectable after later rotations until the owner destroys it (only possible once it is no longer current)."
+      fieldMeta.initialMigratedKmsTxSenders.description:
+-        "KMS transaction senders in the Gateway context created by the v0.5 migration. Node membership is immutable and GatewayConfig cannot destroy contexts, so these accounts remain authorized to submit responses to Decryption after future rotations."
++        "KMS transaction senders in the Gateway context created by the v0.5 migration. Node membership is immutable, so these accounts remain authorized to submit responses for requests pinned to this context after future rotations, until the owner destroys the context (only possible once it is no longer current)."
+      fieldMeta.initialMigratedKmsSigners.description:
+-        "KMS signers in the Gateway context created by the v0.5 migration. Node membership is immutable and GatewayConfig cannot destroy contexts, so this signer set remains authorized for Decryption responses after future rotations."
++        "KMS signers in the Gateway context created by the v0.5 migration. Node membership is immutable, so this signer set remains authorized for requests pinned to this context after future rotations, until the owner destroys the context (only possible once it is no longer current)."
+      fieldMeta.initialMigratedPublicDecryptionThreshold.description:
+-        "Snapshot of the public-decryption threshold in the context created by the v0.5 migration. Update this project-specific value if governance changes the initial context while it is current. This value remains security-critical after future context rotations."
++        "Snapshot of the public-decryption threshold in the context created by the v0.5 migration. Update this project-specific value if governance retunes this context's threshold (possible for any live context since GatewayConfig v0.6.0). This value remains security-critical after future context rotations while the context is live."
+      fieldMeta.initialMigratedUserDecryptionThreshold.description:
+-        "Snapshot of the user-decryption threshold in the context created by the v0.5 migration. Update this project-specific value if governance changes the initial context while it is current. This value remains security-critical after future context rotations."
++        "Snapshot of the user-decryption threshold in the context created by the v0.5 migration. Update this project-specific value if governance retunes this context's threshold (possible for any live context since GatewayConfig v0.6.0). This value remains security-critical after future context rotations while the context is live."
+    }
+```
+
+```diff
+    contract InputVerification (zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287) [zama/InputVerification] {
+    +++ description: Gateway contract that receives encrypted input verification requests from registered and enabled host chains, collects coprocessor responses, and emits a threshold-signed attestation once coprocessor consensus is reached. Ethereum InputVerifier verifies attestations against this contract's EIP-712 domain.
+      description:
+-        "Gateway contract that receives encrypted input verification requests from registered host chains, collects coprocessor responses, and emits a threshold-signed attestation once coprocessor consensus is reached. Ethereum InputVerifier verifies attestations against this contract's EIP-712 domain."
++        "Gateway contract that receives encrypted input verification requests from registered and enabled host chains, collects coprocessor responses, and emits a threshold-signed attestation once coprocessor consensus is reached. Ethereum InputVerifier verifies attestations against this contract's EIP-712 domain."
+    }
+```
+
+```diff
+    contract CiphertextCommits (zama:0xd82cF70FC102028cd01acB87D0E107780ae4F41F) [zama/CiphertextCommits] {
+    +++ description: Gateway contract that stores ciphertext and SNS ciphertext digests after coprocessor consensus, allowing decryption requests to reference committed ciphertext material. Digests referencing unregistered or disabled host chains are rejected.
+      description:
+-        "Gateway contract that stores ciphertext and SNS ciphertext digests after coprocessor consensus, allowing decryption requests to reference committed ciphertext material."
++        "Gateway contract that stores ciphertext and SNS ciphertext digests after coprocessor consensus, allowing decryption requests to reference committed ciphertext material. Digests referencing unregistered or disabled host chains are rejected."
+      values.kmsGeneration:
+-        "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3"
+      fieldMeta.kmsGeneration:
+-        {"description":"KMSGeneration contract referenced by the CiphertextCommits implementation for KMS key material context.","type":"EXTERNAL"}
+    }
+```
+
 Generated with discovered.json: 0xc20ac24b3edc3828052271cdd51f43b296273f8d
 
 # Diff at Tue, 04 Aug 2026 13:19:56 GMT:

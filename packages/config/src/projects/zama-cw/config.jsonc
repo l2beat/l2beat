@@ -194,7 +194,7 @@
     "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24": {
       "fields": {
         "initialMigratedKmsContextId": {
-          "description": "Identifier assigned to the Gateway KMS context created by the v0.5 migration. Version 1 Decryption response metadata can continue to select it after later rotations.",
+          "description": "Identifier assigned to the Gateway KMS context created by the v0.5 migration. Since Decryption v0.5.0 requests pin a context at request time; this context stays selectable after later rotations until the owner destroys it (only possible once it is no longer current).",
           "severity": "HIGH",
           "type": "RISK_PARAMETER",
           "handler": {
@@ -203,7 +203,7 @@
           }
         },
         "initialMigratedKmsTxSenders": {
-          "description": "KMS transaction senders in the Gateway context created by the v0.5 migration. Node membership is immutable and GatewayConfig cannot destroy contexts, so these accounts remain authorized to submit responses to Decryption after future rotations.",
+          "description": "KMS transaction senders in the Gateway context created by the v0.5 migration. Node membership is immutable, so these accounts remain authorized to submit responses for requests pinned to this context after future rotations, until the owner destroys the context (only possible once it is no longer current).",
           "severity": "HIGH",
           "type": "PERMISSION",
           "handler": {
@@ -233,7 +233,7 @@
           ]
         },
         "initialMigratedKmsSigners": {
-          "description": "KMS signers in the Gateway context created by the v0.5 migration. Node membership is immutable and GatewayConfig cannot destroy contexts, so this signer set remains authorized for Decryption responses after future rotations.",
+          "description": "KMS signers in the Gateway context created by the v0.5 migration. Node membership is immutable, so this signer set remains authorized for requests pinned to this context after future rotations, until the owner destroys the context (only possible once it is no longer current).",
           "severity": "HIGH",
           "type": "PERMISSION",
           "handler": {
@@ -263,13 +263,13 @@
           ]
         },
         "initialMigratedPublicDecryptionThreshold": {
-          "description": "Snapshot of the public-decryption threshold in the context created by the v0.5 migration. Update this project-specific value if governance changes the initial context while it is current. This value remains security-critical after future context rotations.",
+          "description": "Snapshot of the public-decryption threshold in the context created by the v0.5 migration. Update this project-specific value if governance retunes this context's threshold (possible for any live context since GatewayConfig v0.6.0). This value remains security-critical after future context rotations while the context is live.",
           "severity": "HIGH",
           "type": "RISK_PARAMETER",
           "handler": { "type": "hardcoded", "value": 7 }
         },
         "initialMigratedUserDecryptionThreshold": {
-          "description": "Snapshot of the user-decryption threshold in the context created by the v0.5 migration. Update this project-specific value if governance changes the initial context while it is current. This value remains security-critical after future context rotations.",
+          "description": "Snapshot of the user-decryption threshold in the context created by the v0.5 migration. Update this project-specific value if governance retunes this context's threshold (possible for any live context since GatewayConfig v0.6.0). This value remains security-critical after future context rotations while the context is live.",
           "severity": "HIGH",
           "type": "RISK_PARAMETER",
           "handler": { "type": "hardcoded", "value": 9 }

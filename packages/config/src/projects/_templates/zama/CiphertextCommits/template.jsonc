@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "CiphertextCommits",
-  "description": "Gateway contract that stores ciphertext and SNS ciphertext digests after coprocessor consensus, allowing decryption requests to reference committed ciphertext material.",
+  "description": "Gateway contract that stores ciphertext and SNS ciphertext digests after coprocessor consensus, allowing decryption requests to reference committed ciphertext material. Digests referencing unregistered or disabled host chains are rejected.",
   "category": "core",
   "ignoreMethods": [
     "proxiableUUID",
@@ -35,14 +35,6 @@
           "description": "upgrade the CiphertextCommits implementation."
         }
       ]
-    },
-    "kmsGeneration": {
-      "description": "KMSGeneration contract referenced by the CiphertextCommits implementation for KMS key material context.",
-      "type": "EXTERNAL",
-      "handler": {
-        "type": "hardcoded",
-        "value": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3"
-      }
     },
     "gatewayCoprocessorTxSenders": {
       "description": "Coprocessor transaction-sender addresses configured in GatewayConfig. These accounts may submit ciphertext material commitments.",
