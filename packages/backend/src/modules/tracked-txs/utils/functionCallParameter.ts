@@ -14,20 +14,19 @@ const signatures = new Map<`function ${string}`, ParsedSignature>()
 
 /**
  * Returns the smallest canonical calldata prefix containing a fixed-width
- * scalar reached through tuples. More complex paths fall back to full input.
+ * scalar reached through tuples.
  */
 export function getFunctionCallParameterPrefix(
   signature: `function ${string}`,
   path: readonly [number, ...number[]],
-): number | undefined {
+): number {
   const target = locateScalar(
     parseSignature(signature).inputs,
     path,
     canonicalTupleOffset,
   )
-  return target === undefined
-    ? undefined
-    : SELECTOR_BYTES + target.position + WORD_BYTES
+  assert(target !== undefined, 'Grouping parameter requires full calldata')
+  return SELECTOR_BYTES + target.position + WORD_BYTES
 }
 
 /**

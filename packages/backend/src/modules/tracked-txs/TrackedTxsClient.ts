@@ -181,10 +181,10 @@ function combineCalls(
       address: config.properties.params.address,
       selector: config.properties.params.selector,
       inputBytes: hasLivenessGrouping(config.properties)
-        ? (getFunctionCallParameterPrefix(
+        ? getFunctionCallParameterPrefix(
             config.properties.params.signature,
             config.properties.groupBy.path,
-          ) ?? ('full' as const))
+          )
         : SELECTOR_BYTES,
     })),
     ...sharpSubmissionsConfig.map((config) => ({

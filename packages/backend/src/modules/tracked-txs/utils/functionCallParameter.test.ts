@@ -47,19 +47,19 @@ describe(getFunctionCallParameterPrefix.name, () => {
     expect(aztecPrefix).toEqual(68)
   })
 
-  it('falls back to full input for paths without a static prefix', () => {
-    expect(
+  it('rejects paths without a static prefix', () => {
+    expect(() =>
       getFunctionCallParameterPrefix(
         'function submit(bytes,(uint256,bytes))',
         [1, 0],
       ),
-    ).toEqual(undefined)
-    expect(
+    ).toThrow('Grouping parameter requires full calldata')
+    expect(() =>
       getFunctionCallParameterPrefix('function submit(bytes)', [0]),
-    ).toEqual(undefined)
-    expect(
+    ).toThrow('Grouping parameter requires full calldata')
+    expect(() =>
       getFunctionCallParameterPrefix('function submit(uint256[])', [0, 0]),
-    ).toEqual(undefined)
+    ).toThrow('Grouping parameter requires full calldata')
   })
 
   it('rejects invalid configuration instead of falling back', () => {
