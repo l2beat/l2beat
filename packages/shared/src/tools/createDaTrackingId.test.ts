@@ -131,6 +131,24 @@ describe(createDaTrackingId.name, () => {
     ])
   })
 
+  it('discriminator changes the id, absence preserves pinned ids', () => {
+    const config = {
+      type: 'ethereum' as const,
+      daLayer: 'ethereum',
+      inbox: '0x8c0Bfc04AdA21fd496c55B8C50331f904306F564',
+    }
+    // No discriminator -> pinned production id stays intact.
+    expect(createDaTrackingId(config)).toEqual('158f67fc279d')
+    // A discriminator breaks the A -> B -> A collision: same identity
+    // fields, distinct backend configuration id.
+    expect(createDaTrackingId({ ...config, discriminator: '1' })).not.toEqual(
+      createDaTrackingId(config),
+    )
+    expect(createDaTrackingId({ ...config, discriminator: '1' })).not.toEqual(
+      createDaTrackingId({ ...config, discriminator: '2' }),
+    )
+  })
+
   it('since and until ranges are not part of the identity', () => {
     // The input type has no since/until fields at all - this test documents
     // that ranges can change freely without re-keying indexed data.

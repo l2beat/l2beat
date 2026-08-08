@@ -7,21 +7,25 @@ export type DaTrackingIdInput =
       inbox: string
       sequencers?: string[]
       topics?: string[]
+      discriminator?: string
     }
   | {
       type: 'celestia'
       daLayer: string
       namespace: string
+      discriminator?: string
     }
   | {
       type: 'avail'
       daLayer: string
       appIds: string[]
+      discriminator?: string
     }
   | {
       type: 'eigen-da'
       daLayer: string
       customerId: string
+      discriminator?: string
     }
 
 /**
@@ -30,6 +34,10 @@ export type DaTrackingIdInput =
  * new configuration and WIPES all data indexed under the old id
  * (ManagedMultiIndexer). Since/until ranges are deliberately not part of the
  * id, so they can be updated in place.
+ *
+ * The discriminator exists only to break collisions between two eras with
+ * identical identity fields (a value that rotated A -> B -> A) - it is part
+ * of the hash, so set it only when appending such a repeat era.
  */
 export function createDaTrackingId(config: DaTrackingIdInput): string {
   const input = []
@@ -58,6 +66,10 @@ export function createDaTrackingId(config: DaTrackingIdInput): string {
     case 'eigen-da':
       input.push(config.customerId)
       break
+  }
+
+  if (config.discriminator !== undefined) {
+    input.push(config.discriminator)
   }
 
   const hash = createHash('sha1').update(input.join('')).digest('hex')

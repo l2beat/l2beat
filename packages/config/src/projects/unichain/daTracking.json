@@ -1,0 +1,11 @@
+{
+  "eras": [
+    {
+      "type": "ethereum",
+      "daLayer": "ethereum",
+      "inbox": "0xFf00000000000000000000000000000000000130",
+      "sequencers": ["0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd"],
+      "sinceBlock": 21116363
+    }
+  ]
+}

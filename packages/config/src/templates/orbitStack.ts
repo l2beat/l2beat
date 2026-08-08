@@ -71,6 +71,7 @@ import type {
 } from '../types'
 import { readMarkdown } from '../utils/readMarkdown'
 import { getActivityConfig } from './activity'
+import { resolveDaTracking } from './daTrackingHistory'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
@@ -838,11 +839,19 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): ScalingProject {
 function getDaTracking(
   templateVars: OrbitStackConfigL2 | OrbitStackConfigL3,
 ): ProjectDaTrackingConfig[] | undefined {
-  // Return non-template tracking if it exists
-  if (templateVars.nonTemplateDaTracking) {
-    return templateVars.nonTemplateDaTracking
-  }
+  return resolveDaTracking(
+    templateVars.discovery.projectName,
+    templateVars.nonTemplateDaTracking,
+    () => deriveDaTracking(templateVars),
+  )
+}
 
+/** Derives the current DA era from discovery values - discovery holds only
+ * current chain state, so this can never know about past rotations. History
+ * lives in the project's daTracking.json (see resolveDaTracking). */
+function deriveDaTracking(
+  templateVars: OrbitStackConfigL2 | OrbitStackConfigL3,
+): ProjectDaTrackingConfig[] | undefined {
   if (templateVars.usesEthereumBlobs) {
     const batchPosters = templateVars.discovery
       .getContractValue<ChainSpecificAddress[]>(

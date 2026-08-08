@@ -71,6 +71,7 @@ import type {
 } from '../types'
 import { readMarkdown } from '../utils/readMarkdown'
 import { getActivityConfig } from './activity'
+import { resolveDaTracking } from './daTrackingHistory'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
@@ -522,11 +523,19 @@ function opStackCommon(
 function getDaTracking(
   templateVars: OpStackConfigCommon,
 ): ProjectDaTrackingConfig[] | undefined {
-  // Return non-template tracking if it exists
-  if (templateVars.nonTemplateDaTracking) {
-    return templateVars.nonTemplateDaTracking
-  }
+  return resolveDaTracking(
+    templateVars.discovery.projectName,
+    templateVars.nonTemplateDaTracking,
+    () => deriveDaTracking(templateVars),
+  )
+}
 
+/** Derives the current DA era from discovery values - discovery holds only
+ * current chain state, so this can never know about past rotations. History
+ * lives in the project's daTracking.json (see resolveDaTracking). */
+function deriveDaTracking(
+  templateVars: OpStackConfigCommon,
+): ProjectDaTrackingConfig[] | undefined {
   const discov = templateVars.discovery
 
   const usesBlobs =
