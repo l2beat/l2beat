@@ -51,7 +51,7 @@ export const educhain: ScalingProject = orbitStackL3({
     apis: [
       {
         type: 'rpc',
-        url: 'https://rpc.edu-chain.raas.gelato.cloud',
+        url: 'https://rpc.educhain.xyz',
         callsPerMinute: 300,
       },
     ],
