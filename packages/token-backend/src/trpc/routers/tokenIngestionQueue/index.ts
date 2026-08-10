@@ -22,10 +22,22 @@ const QueuePageInput = v.object({
   chains: v.array(v.string()).optional(),
 })
 
+/** `AbstractToken.symbol` is `VARCHAR(255)` — reject longer input up front
+ * instead of failing inside the write transaction after plan + fetch. */
+const MAX_SYMBOL_LENGTH = 255
+
 const ResolveConflictInput = v.object({
   chain: v.string(),
   address: v.string(),
   symbol: v.string(),
+  /** The conflict the researcher saw when choosing (from the previewed
+   * trace's `symbolConflict`). The resolution is applied only if re-planning
+   * still produces this exact conflict. */
+  expected: v.object({
+    coingeckoId: v.union([v.string(), v.null()]),
+    coingeckoSymbol: v.string(),
+    deployedTokenSymbol: v.string(),
+  }),
 })
 
 export interface QueuePageRow {
@@ -133,6 +145,12 @@ export const tokenIngestionQueueRouter = router({
           message: 'Symbol must not be empty',
         })
       }
+      if (symbol.length > MAX_SYMBOL_LENGTH) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: `Symbol must be at most ${MAX_SYMBOL_LENGTH} characters`,
+        })
+      }
 
       const entry = await ctx.tokenDb.tokenIngestionQueue.findByChainAndAddress(
         { chain: input.chain, address: input.address },
@@ -146,7 +164,11 @@ export const tokenIngestionQueueRouter = router({
 
       const trace = await ctx.tokenIngestionProcessor.resolveSymbolConflict(
         entry,
-        { chosenSymbol: symbol, user: ctx.session.email },
+        {
+          chosenSymbol: symbol,
+          user: ctx.session.email,
+          expected: input.expected,
+        },
       )
       return toIngestionTraceView(trace)
     }),

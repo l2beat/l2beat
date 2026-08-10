@@ -316,10 +316,16 @@ describe('tokenIngestionQueueRouter', () => {
         }),
       })
 
+      const expected = {
+        coingeckoId: 'wrapped-kaspa',
+        coingeckoSymbol: 'WKAS',
+        deployedTokenSymbol: 'KAS',
+      }
       const result = await caller.resolveConflict({
         chain: entry.chain,
         address: entry.address,
         symbol: ' WKAS ',
+        expected,
       })
 
       expect(result.outcome).toHaveSubset({
@@ -334,6 +340,7 @@ describe('tokenIngestionQueueRouter', () => {
       expect(resolveSymbolConflict).toHaveBeenCalledWith(entry, {
         chosenSymbol: 'WKAS',
         user: 'dev@l2beat.com',
+        expected,
       })
     })
 
@@ -360,6 +367,7 @@ describe('tokenIngestionQueueRouter', () => {
           chain: 'ethereum',
           address: '0x111',
           symbol: 'WKAS',
+          expected: resolveExpected(),
         }),
       ).toBeRejectedWith(TRPCError)
     })
@@ -381,6 +389,7 @@ describe('tokenIngestionQueueRouter', () => {
           chain: 'ethereum',
           address: '0x111',
           symbol: 'WKAS',
+          expected: resolveExpected(),
         }),
       ).toBeRejectedWith(TRPCError)
     })
@@ -403,12 +412,45 @@ describe('tokenIngestionQueueRouter', () => {
           chain: 'ethereum',
           address: '0x111',
           symbol: '   ',
+          expected: resolveExpected(),
         }),
       ).toBeRejectedWith(TRPCError)
       expect(findByChainAndAddress).toHaveBeenCalledTimes(0)
     })
+
+    it('fails when the symbol is longer than the database column', async () => {
+      const findByChainAndAddress = mockFn().resolvesTo(undefined)
+      const caller = createRouter({
+        tokenDb: mockObject<TokenDatabase>({
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              findByChainAndAddress,
+            },
+          ),
+        }),
+        processor: mockObject<TokenIngestionProcessor>({}),
+      })
+
+      await expect(
+        caller.resolveConflict({
+          chain: 'ethereum',
+          address: '0x111',
+          symbol: 'A'.repeat(256),
+          expected: resolveExpected(),
+        }),
+      ).toBeRejectedWith(TRPCError, /at most 255 characters/)
+      expect(findByChainAndAddress).toHaveBeenCalledTimes(0)
+    })
   })
 })
+
+function resolveExpected() {
+  return {
+    coingeckoId: 'wrapped-kaspa',
+    coingeckoSymbol: 'WKAS',
+    deployedTokenSymbol: 'KAS',
+  }
+}
 
 function createRouter(
   deps:

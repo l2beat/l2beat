@@ -1030,7 +1030,15 @@ describe(TokenIngestionProcessor.name, () => {
             proof: { kind: 'coingecko' },
           },
         },
-        { chosenSymbol: 'wBEPE', user: 'researcher@l2beat.com' },
+        {
+          chosenSymbol: 'wBEPE',
+          user: 'researcher@l2beat.com',
+          expected: {
+            coingeckoId: 'wrapped-bepe',
+            coingeckoSymbol: 'BEPE',
+            deployedTokenSymbol: 'wBEPE',
+          },
+        },
       )
 
       expect(result.outcome.kind).toEqual('write')
@@ -1049,6 +1057,94 @@ describe(TokenIngestionProcessor.name, () => {
         chosenSymbol: 'wBEPE',
         user: 'researcher@l2beat.com',
       })
+    })
+
+    it('ignores the resolution when the conflict no longer matches the expected one', async () => {
+      const address = token('ethereum', '0xaaa')
+
+      const processor = createProcessor({
+        tokenDb: mockObject<TokenDatabase>({
+          chain: mockObject<TokenDatabase['chain']>({
+            findByName: mockFn().resolvesTo({
+              name: 'ethereum',
+              chainId: 1,
+              explorerUrl: null,
+              aliases: null,
+              apis: null,
+            }),
+          }),
+          abstractToken: mockObject<TokenDatabase['abstractToken']>({
+            findById: mockFn().resolvesTo(undefined),
+          }),
+        }),
+        coingeckoClient: mockObject<CoingeckoClient>({
+          // CoinGecko renamed the coin's symbol after the dialog preview
+          getCoinDataById: mockFn().resolvesTo({
+            id: 'wrapped-bepe',
+            symbol: 'gobepe',
+            image: { large: 'https://example.com/bepe.png' },
+            platforms: {},
+          }),
+          getCoinMarketChartRange: mockFn().resolvesTo({
+            prices: [{ date: new Date('2024-01-01T00:00:00Z'), value: 1 }],
+            marketCaps: [],
+          }),
+        }),
+        fetchDeployedTokenFacts: mockFn().resolvesTo({
+          isContract: true,
+          symbol: 'wBEPE',
+          symbolSource: 'rpc' as const,
+          decimals: 18,
+          deploymentTimestamp: UnixTime(1),
+          warnings: [],
+        }),
+        generateAbstractTokenId: () => 'ABC123',
+      })
+
+      const result = await processor.fetch(
+        {
+          id: 'ing_test',
+          address,
+          existingDeployedToken: undefined,
+          steps: [],
+          outcome: {
+            kind: 'pending',
+            operation: 'insert',
+            existing: undefined,
+            abstract: {
+              kind: 'new-coingecko',
+              coingeckoId: 'wrapped-bepe',
+              symbol: 'gobepe',
+            },
+            symbolFallback: 'GOBEPE',
+            neighborsToEnqueue: [],
+            proof: { kind: 'coingecko' },
+          },
+        },
+        {
+          chosenSymbol: 'wBEPE',
+          user: 'researcher@l2beat.com',
+          expected: {
+            coingeckoId: 'wrapped-bepe',
+            coingeckoSymbol: 'BEPE',
+            deployedTokenSymbol: 'wBEPE',
+          },
+        },
+      )
+
+      expect(result.outcome).toEqual({
+        kind: 'conflict',
+        message:
+          'CoinGecko would create abstract token ABC123:GOBEPE, but the deployed token symbol is wBEPE.',
+        symbolConflict: {
+          coingeckoId: 'wrapped-bepe',
+          coingeckoSymbol: 'GOBEPE',
+          deployedTokenSymbol: 'wBEPE',
+        },
+      })
+      expect(
+        result.steps.some((step) => step.kind === 'resolved-symbol-conflict'),
+      ).toEqual(false)
     })
 
     it('does not let a symbol-conflict resolution suppress a transfer-abstract conflict', async () => {
@@ -1095,7 +1191,15 @@ describe(TokenIngestionProcessor.name, () => {
             proof: nonSwappingProof(),
           },
         },
-        { chosenSymbol: 'WETH', user: 'researcher@l2beat.com' },
+        {
+          chosenSymbol: 'WETH',
+          user: 'researcher@l2beat.com',
+          expected: {
+            coingeckoId: null,
+            coingeckoSymbol: 'USDC',
+            deployedTokenSymbol: 'WETH',
+          },
+        },
       )
 
       expect(result.outcome).toEqual({

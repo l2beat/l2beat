@@ -99,10 +99,22 @@ type NewDeployedTokenResult =
  * `fetch()` where the conflict check normally fires; it only takes effect if
  * the conflict would actually fire — when the symbols agree (or the plan
  * resolved the abstract some other way) the resolution is ignored.
+ *
+ * `expected` is the conflict the researcher saw in the dialog. The entry is
+ * re-planned from scratch on resolution, so if the facts moved in the
+ * meantime (CoinGecko renamed the coin, the address maps to a different
+ * coin, the deployed symbol changed) the decision no longer applies to what
+ * would be written — the resolution is ignored and the fresh conflict is
+ * reported instead.
  */
 export interface SymbolConflictResolution {
   chosenSymbol: string
   user: string
+  expected: {
+    coingeckoId: string | null
+    coingeckoSymbol: string
+    deployedTokenSymbol: string
+  }
 }
 
 type FinalizedAbstractSymbol =
@@ -1053,7 +1065,12 @@ function finalizeNewAbstractTokenSymbol(
     }
   }
 
-  if (resolution) {
+  const resolutionApplies =
+    resolution !== undefined &&
+    resolution.expected.coingeckoId === newAbstractToken.coingeckoId &&
+    resolution.expected.coingeckoSymbol === coingeckoSymbol &&
+    resolution.expected.deployedTokenSymbol === deployedTokenSymbol
+  if (resolution && resolutionApplies) {
     steps.push({
       kind: 'resolved-symbol-conflict',
       coingeckoSymbol,

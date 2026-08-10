@@ -159,6 +159,7 @@ function ResolveSymbolConflictDialogContent({
                   value={customSymbol ?? symbolConflict.coingeckoSymbol}
                   onFocus={() => setChoice('custom')}
                   onChange={(e) => setCustomSymbol(e.target.value)}
+                  maxLength={255}
                   className="mt-1 max-w-60 font-mono"
                   aria-label="Custom symbol"
                 />
@@ -178,7 +179,11 @@ function ResolveSymbolConflictDialogContent({
               disabled={!chosenSymbol || chosenSymbol.trim().length === 0}
               onClick={() => {
                 if (!chosenSymbol) return
-                resolve.mutate({ ...target, symbol: chosenSymbol.trim() })
+                resolve.mutate({
+                  ...target,
+                  symbol: chosenSymbol.trim(),
+                  expected: symbolConflict,
+                })
               }}
             >
               Resolve with &quot;{chosenSymbol?.trim()}&quot;

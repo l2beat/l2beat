@@ -469,13 +469,18 @@ The moving parts:
   this conflict — evidence changed while the entry sat in the queue —
   the dialog says so and offers no resolution.
 - Confirming calls the `resolveConflict` mutation, which re-plans the
-  entry and passes the chosen symbol through `fetch`. The resolution
-  **only suppresses the CoinGecko-symbol conflict check**; it does not
-  override transfer-evidence conflicts, and if the conflict no longer
-  fires the chosen symbol is simply ignored. Whatever outcome results is
-  applied through the normal `apply` path, so the queue entry always
-  ends up reflecting reality (written and removed, re-marked with a
-  fresh conflict, errored, …).
+  entry and passes the chosen symbol through `fetch` together with the
+  previewed conflict tuple (`expected`: CoinGecko id + both symbols).
+  The resolution **only suppresses the CoinGecko-symbol conflict check,
+  and only when re-planning still produces exactly the previewed
+  conflict** — if the facts moved between preview and confirmation
+  (CoinGecko renamed the coin, the deployed symbol changed), the stale
+  decision is ignored and the fresh conflict is reported instead. It
+  never overrides transfer-evidence conflicts, and if the conflict no
+  longer fires at all the chosen symbol is simply ignored. Whatever
+  outcome results is applied through the normal `apply` path, so the
+  queue entry always ends up reflecting reality (written and removed,
+  re-marked with a fresh conflict, errored, …).
 - The decision is recorded three ways: a `resolved-symbol-conflict` step
   (with the user's email) in the trace and thus the persisted ingestion
   log, a `comment` on the new abstract token, and the resolving user's
