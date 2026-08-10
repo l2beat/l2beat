@@ -7,6 +7,7 @@ import {
   DEFAULT_COMPARE_METRIC,
   DEFAULT_COMPARE_RANGE,
   DEFAULT_COMPARE_SCALE,
+  DEFAULT_COMPARE_TVS_FILTER,
   DEFAULT_COMPARE_TVS_UNIT,
   DEFAULT_COMPARE_VIEW_MODE,
 } from './compareChartState'
@@ -54,6 +55,9 @@ export function buildCompareUrl(
   if (state.metric === 'tvs') {
     if (state.tvsUnit !== DEFAULT_COMPARE_TVS_UNIT) {
       params.set('unit', state.tvsUnit)
+    }
+    if (state.tvsFilter !== DEFAULT_COMPARE_TVS_FILTER) {
+      params.set('filter', state.tvsFilter)
     }
     if (
       state.excludeAssociatedTokens !==

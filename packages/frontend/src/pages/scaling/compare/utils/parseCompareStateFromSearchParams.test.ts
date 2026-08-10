@@ -26,6 +26,7 @@ describe(parseCompareStateFromSearchParams.name, () => {
       mode: 'absolute',
       activityUnit: 'tps',
       tvsUnit: 'usd',
+      tvsFilter: 'all',
       costsUnit: 'usd',
       excludeAssociatedTokens: false,
       excludeRwaRestrictedTokens: true,
@@ -43,6 +44,7 @@ describe(parseCompareStateFromSearchParams.name, () => {
       mode: 'absolute',
       activityUnit: 'uops',
       tvsUnit: 'usd',
+      tvsFilter: 'all',
       costsUnit: 'usd',
       excludeAssociatedTokens: false,
       excludeRwaRestrictedTokens: true,
@@ -86,6 +88,12 @@ describe(parseCompareStateFromSearchParams.name, () => {
 
     expect(result.tvsUnit).toEqual('eth')
     expect(result.activityUnit).toEqual('uops')
+  })
+
+  it('parses the tvs filter', () => {
+    const result = parse('filter=canonical')
+
+    expect(result.tvsFilter).toEqual('canonical')
   })
 
   it('applies the shared unit param only to the active metric', () => {
@@ -135,7 +143,7 @@ describe(parseCompareStateFromSearchParams.name, () => {
 
   it('falls back to defaults on garbage values', () => {
     const result = parse(
-      'metric=bogus&range=yesterday&scale=cubic&unit=beans&mode=sideways&excludeAssociated=maybe&excludeRwa=nonsense',
+      'metric=bogus&range=yesterday&scale=cubic&unit=beans&mode=sideways&filter=everything&excludeAssociated=maybe&excludeRwa=nonsense',
     )
 
     expect(result).toEqual({
@@ -146,6 +154,7 @@ describe(parseCompareStateFromSearchParams.name, () => {
       mode: 'absolute',
       activityUnit: 'uops',
       tvsUnit: 'usd',
+      tvsFilter: 'all',
       costsUnit: 'usd',
       excludeAssociatedTokens: false,
       excludeRwaRestrictedTokens: true,
@@ -167,6 +176,7 @@ describe(parseCompareStateFromSearchParams.name, () => {
       mode: 'absolute',
       activityUnit: 'uops',
       tvsUnit: 'usd',
+      tvsFilter: 'all',
       costsUnit: 'usd',
       excludeAssociatedTokens: false,
       excludeRwaRestrictedTokens: true,
@@ -187,6 +197,7 @@ describe(parseCompareStateFromSearchParams.name, () => {
       mode: 'absolute',
       activityUnit: 'uops',
       tvsUnit: 'usd',
+      tvsFilter: 'all',
       costsUnit: 'usd',
       excludeAssociatedTokens: false,
       excludeRwaRestrictedTokens: true,
@@ -207,6 +218,7 @@ describe(parseCompareStateFromSearchParams.name, () => {
       mode: 'absolute',
       activityUnit: 'tps',
       tvsUnit: 'usd',
+      tvsFilter: 'all',
       costsUnit: 'usd',
       excludeAssociatedTokens: false,
       excludeRwaRestrictedTokens: true,
@@ -227,6 +239,7 @@ describe(parseCompareStateFromSearchParams.name, () => {
       mode: 'absolute',
       activityUnit: 'uops',
       tvsUnit: 'usd',
+      tvsFilter: 'all',
       costsUnit: 'gas',
       excludeAssociatedTokens: false,
       excludeRwaRestrictedTokens: true,
@@ -247,6 +260,7 @@ describe(parseCompareStateFromSearchParams.name, () => {
       mode: 'absolute',
       activityUnit: 'uops',
       tvsUnit: 'eth',
+      tvsFilter: 'external',
       costsUnit: 'usd',
       excludeAssociatedTokens: true,
       excludeRwaRestrictedTokens: false,
@@ -267,6 +281,7 @@ describe(parseCompareStateFromSearchParams.name, () => {
       mode: 'indexed',
       activityUnit: 'uops',
       tvsUnit: 'usd',
+      tvsFilter: 'all',
       costsUnit: 'usd',
       excludeAssociatedTokens: false,
       excludeRwaRestrictedTokens: true,
