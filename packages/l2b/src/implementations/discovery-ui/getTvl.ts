@@ -1,5 +1,4 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { getPlainLogger } from '../common/getPlainLogger'
 import { calculateValue, getBalances } from '../estimateTVL'
 import type { ProviderCache } from './ProviderCache'
 import type { TvlCache } from './TvlCache'
@@ -15,7 +14,7 @@ export async function getTvl(
   const chainName = ChainSpecificAddress.longChain(holder)
   const provider = await providerCache.get(chainName)
 
-  const tokens = await tvlCache.getTokens(getPlainLogger(), chainName)
+  const tokens = await tvlCache.getTokens(chainName)
   const prices = await tvlCache.getPrices(provider, tokens)
   const balances = await getBalances(provider, holder, tokens)
 
