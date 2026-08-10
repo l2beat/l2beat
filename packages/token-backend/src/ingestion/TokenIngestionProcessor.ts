@@ -93,30 +93,6 @@ type NewDeployedTokenResult =
   | { type: 'ready'; record: DeployedTokenRecord }
   | { type: 'error'; message: string }
 
-/**
- * A human decision that resolves a CoinGecko-symbol conflict: the symbol the
- * new abstract token should carry, and who made the call. Passed through
- * `fetch()` where the conflict check normally fires; it only takes effect if
- * the conflict would actually fire — when the symbols agree (or the plan
- * resolved the abstract some other way) the resolution is ignored.
- *
- * `expected` is the conflict the researcher saw in the dialog. The entry is
- * re-planned from scratch on resolution, so if the facts moved in the
- * meantime (CoinGecko renamed the coin, the address maps to a different
- * coin, the deployed symbol changed) the decision no longer applies to what
- * would be written — the resolution is ignored and the fresh conflict is
- * reported instead.
- */
-export interface SymbolConflictResolution {
-  chosenSymbol: string
-  user: string
-  expected: {
-    coingeckoId: string | null
-    coingeckoSymbol: string
-    deployedTokenSymbol: string
-  }
-}
-
 type FinalizedAbstractSymbol =
   | { type: 'ok'; abstract: AbstractTokenRecord | undefined }
   | {
@@ -228,30 +204,7 @@ export class TokenIngestionProcessor {
     }
   }
 
-  /**
-   * Reprocesses a queue entry that sits in the `conflict` state, letting a
-   * human decision about the abstract token symbol override the
-   * CoinGecko-symbol conflict check. The entry is re-planned from scratch —
-   * evidence may have changed while it sat in conflict — and whatever the
-   * final outcome is gets applied through the normal path, so the queue
-   * always ends up reflecting reality (including a fresh conflict message if
-   * a *different* conflict now fires).
-   */
-  async resolveSymbolConflict(
-    entry: TokenIngestionQueueRecord,
-    resolution: SymbolConflictResolution,
-  ): Promise<IngestionTrace> {
-    const transferIndex = await this.getInteropTransferIndex()
-    const planned = await this.plan(entry, transferIndex)
-    const trace = await this.fetch(planned, resolution)
-    await this.apply(entry, trace, resolution.user)
-    return trace
-  }
-
-  async fetch(
-    trace: IngestionTrace,
-    resolution?: SymbolConflictResolution,
-  ): Promise<IngestionTrace> {
+  async fetch(trace: IngestionTrace): Promise<IngestionTrace> {
     if (trace.outcome.kind !== 'pending') {
       return trace
     }
@@ -289,7 +242,6 @@ export class TokenIngestionProcessor {
         newAbstractToken,
         pending.existing.symbol,
         steps,
-        resolution,
       )
       if (finalized.type === 'conflict') {
         return {
@@ -350,7 +302,6 @@ export class TokenIngestionProcessor {
       newAbstractToken,
       built.record.symbol,
       steps,
-      resolution,
     )
     if (finalized.type === 'conflict') {
       return {
@@ -381,9 +332,6 @@ export class TokenIngestionProcessor {
   async apply(
     entry: TokenIngestionQueueRecord,
     trace: IngestionTrace,
-    /** Email of the human whose conflict resolution triggered this write;
-     * recorded on the resulting `TokenDbHistory` rows. */
-    resolvedBy?: string,
   ): Promise<void> {
     const { outcome } = trace
     const queue = this.deps.tokenDb.tokenIngestionQueue
@@ -412,7 +360,6 @@ export class TokenIngestionProcessor {
           await commitTokenChanges(this.deps.tokenDb, commands, {
             kind: 'ingestion',
             log,
-            user: resolvedBy,
           })
         }, 'serializable')
 
@@ -1006,23 +953,23 @@ export const COINGECKO_SYMBOL_CONFLICT_MESSAGE_PREFIX =
 /**
  * Decides what symbol a newly materialized CoinGecko abstract token gets,
  * given the deployed-token symbol (the RPC symbol for inserts, the stored one
- * for updates). Three amicable cases and one conflict:
+ * for updates). Two amicable cases and one conflict:
  *
  * - Casing-only difference: never a real mismatch — CoinGecko lower-cases
  *   every symbol — so the deployed-token casing is adopted silently.
  * - Punctuation-only difference (`$PEPE` vs `PEPE`, `VIRTU ` vs `VIRTU`):
  *   also not a real mismatch; the deployed-token symbol is adopted and the
  *   CoinGecko spelling is recorded in the abstract token's comment.
- * - Genuine difference with a human `resolution`: the chosen symbol wins and
- *   the decision is recorded in the comment.
- * - Genuine difference without a resolution: conflict, carrying the
- *   structured `symbolConflict` data the token-UI resolve dialog needs.
+ * - Genuine difference: conflict, carrying the structured `symbolConflict`
+ *   data the token-UI resolve dialog needs. Resolution happens outside the
+ *   pipeline: a human creates the abstract token manually (choosing its
+ *   symbol) and retries the entry, which then takes the existing-abstract
+ *   path and never reaches this check.
  */
 function finalizeNewAbstractTokenSymbol(
   newAbstractToken: AbstractTokenRecord | undefined,
   deployedTokenSymbol: string,
   steps: IngestionStep[],
-  resolution: SymbolConflictResolution | undefined,
 ): FinalizedAbstractSymbol {
   if (!newAbstractToken) return { type: 'ok', abstract: undefined }
 
@@ -1061,29 +1008,6 @@ function finalizeNewAbstractTokenSymbol(
         ...newAbstractToken,
         symbol: adoptedSymbol,
         comment: `CoinGecko symbol "${coingeckoSymbol}" differs only in punctuation from the deployed token symbol "${deployedTokenSymbol}"; automatic ingestion used the deployed token symbol.`,
-      },
-    }
-  }
-
-  const resolutionApplies =
-    resolution !== undefined &&
-    resolution.expected.coingeckoId === newAbstractToken.coingeckoId &&
-    resolution.expected.coingeckoSymbol === coingeckoSymbol &&
-    resolution.expected.deployedTokenSymbol === deployedTokenSymbol
-  if (resolution && resolutionApplies) {
-    steps.push({
-      kind: 'resolved-symbol-conflict',
-      coingeckoSymbol,
-      deployedTokenSymbol,
-      chosenSymbol: resolution.chosenSymbol,
-      user: resolution.user,
-    })
-    return {
-      type: 'ok',
-      abstract: {
-        ...newAbstractToken,
-        symbol: resolution.chosenSymbol,
-        comment: `Symbol conflict resolved by ${resolution.user}: CoinGecko symbol is "${coingeckoSymbol}", the deployed token symbol is "${deployedTokenSymbol}"; chose "${resolution.chosenSymbol}".`,
       },
     }
   }

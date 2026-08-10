@@ -56,20 +56,13 @@ describe(formatIngestionTrace.name, () => {
     )
   })
 
-  it('renders symbol adoption and conflict resolution steps', () => {
+  it('renders the symbol adoption step', () => {
     const trace: IngestionTrace = {
       id: 'ing_test',
       address: { chain: 'ethereum', address: '0xccc' },
       existingDeployedToken: undefined,
       steps: [
         { kind: 'adopted-deployed-token-symbol', from: '$PEPE', to: 'Pepe' },
-        {
-          kind: 'resolved-symbol-conflict',
-          coingeckoSymbol: 'BEPE',
-          deployedTokenSymbol: 'wBEPE',
-          chosenSymbol: 'wBEPE',
-          user: 'researcher@l2beat.com',
-        },
       ],
       outcome: { kind: 'skip', reason: 'test' },
     }
@@ -79,11 +72,6 @@ describe(formatIngestionTrace.name, () => {
     expect(
       log.includes(
         '1. CoinGecko symbol $PEPE differs only in punctuation from the deployed-token symbol; adopted Pepe.',
-      ),
-    ).toEqual(true)
-    expect(
-      log.includes(
-        '2. Symbol conflict (CoinGecko: BEPE, deployed token: wBEPE) resolved by researcher@l2beat.com; using wBEPE.',
       ),
     ).toEqual(true)
   })

@@ -22,31 +22,14 @@ const QueuePageInput = v.object({
   chains: v.array(v.string()).optional(),
 })
 
-/** `AbstractToken.symbol` is `VARCHAR(255)` — reject longer input up front
- * instead of failing inside the write transaction after plan + fetch. */
-const MAX_SYMBOL_LENGTH = 255
-
-const ResolveConflictInput = v.object({
-  chain: v.string(),
-  address: v.string(),
-  symbol: v.string(),
-  /** The conflict the researcher saw when choosing (from the previewed
-   * trace's `symbolConflict`). The resolution is applied only if re-planning
-   * still produces this exact conflict. */
-  expected: v.object({
-    coingeckoId: v.union([v.string(), v.null()]),
-    coingeckoSymbol: v.string(),
-    deployedTokenSymbol: v.string(),
-  }),
-})
-
 export interface QueuePageRow {
   entry: TokenIngestionQueueRecord
   predictedOutcome: IngestionOutcomeView
   deployedTokenExists: boolean
   /** True when this entry is a CoinGecko-symbol conflict that the UI can
-   * offer to resolve via the `resolveConflict` mutation. Computed here so the
-   * UI does not need to know the conflict message format. */
+   * offer to resolve (by creating the abstract token manually and retrying
+   * the entry). Computed here so the UI does not need to know the conflict
+   * message format. */
   resolvableSymbolConflict: boolean
 }
 
@@ -134,43 +117,6 @@ export const tokenIngestionQueueRouter = router({
       }
 
       return { success: true, retried }
-    }),
-  resolveConflict: readWriteProcedure
-    .input(ResolveConflictInput)
-    .mutation(async ({ ctx, input }) => {
-      const symbol = input.symbol.trim()
-      if (symbol.length === 0) {
-        throw new TRPCError({
-          code: 'BAD_REQUEST',
-          message: 'Symbol must not be empty',
-        })
-      }
-      if (symbol.length > MAX_SYMBOL_LENGTH) {
-        throw new TRPCError({
-          code: 'BAD_REQUEST',
-          message: `Symbol must be at most ${MAX_SYMBOL_LENGTH} characters`,
-        })
-      }
-
-      const entry = await ctx.tokenDb.tokenIngestionQueue.findByChainAndAddress(
-        { chain: input.chain, address: input.address },
-      )
-      if (!entry || entry.state !== 'conflict') {
-        throw new TRPCError({
-          code: 'BAD_REQUEST',
-          message: 'Queue entry is not in conflict state',
-        })
-      }
-
-      const trace = await ctx.tokenIngestionProcessor.resolveSymbolConflict(
-        entry,
-        {
-          chosenSymbol: symbol,
-          user: ctx.session.email,
-          expected: input.expected,
-        },
-      )
-      return toIngestionTraceView(trace)
     }),
   preview: readOnlyProcedure
     .input(QueueEntryAddress)

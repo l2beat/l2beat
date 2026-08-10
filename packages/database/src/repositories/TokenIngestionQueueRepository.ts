@@ -78,20 +78,6 @@ export class TokenIngestionQueueRepository extends BaseRepository {
       .execute()
   }
 
-  async findByChainAndAddress(
-    address: TokenIngestionQueueAddress,
-  ): Promise<TokenIngestionQueueRecord | undefined> {
-    const normalized = normalizeAddress(address)
-    const row = await this.db
-      .selectFrom('TokenIngestionQueue')
-      .selectAll()
-      .where('chain', '=', normalized.chain)
-      .where('address', '=', normalized.address)
-      .executeTakeFirst()
-
-    return row ? toRecord(row) : undefined
-  }
-
   async findNextPending(): Promise<TokenIngestionQueueRecord | undefined> {
     const row = await this.db
       .selectFrom('TokenIngestionQueue')

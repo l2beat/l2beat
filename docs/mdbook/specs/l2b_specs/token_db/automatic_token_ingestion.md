@@ -451,6 +451,18 @@ errors (a scam contract mapped onto a real coin) that must *not* be
 written automatically — which is why this stays a human decision instead
 of blindly preferring CoinGecko.
 
+The conflict fires precisely when ingestion is about to **create** the
+abstract token — an existing abstract found by CoinGecko id is linked
+without any symbol comparison (see *Abstract token resolution*). So the
+resolution is not a special ingestion mode; it is simply: **a human
+creates the abstract token, then the entry is retried**. The re-plan
+finds the abstract by its CoinGecko id and links the deployed token
+through the ordinary existing-abstract path, and the conflict never
+fires again. No decision is transported through the pipeline, so there
+is nothing to go stale and nothing to guard — the pipeline keeps its
+core invariant of re-deriving everything from current state on every
+run, and queue entries keep carrying only status, never decisions.
+
 The moving parts:
 
 - The conflict outcome produced by `fetch` carries a structured
@@ -465,33 +477,43 @@ The moving parts:
   structured conflict and offers three choices: the CoinGecko symbol
   (upper-cased — CoinGecko loses casing), the deployed-token symbol, or
   a custom value (pre-filled with the CoinGecko symbol so fixing its
-  casing is a two-keystroke edit). If re-planning no longer produces
-  this conflict — evidence changed while the entry sat in the queue —
-  the dialog says so and offers no resolution.
-- Confirming calls the `resolveConflict` mutation, which re-plans the
-  entry and passes the chosen symbol through `fetch` together with the
-  previewed conflict tuple (`expected`: CoinGecko id + both symbols).
-  The resolution **only suppresses the CoinGecko-symbol conflict check,
-  and only when re-planning still produces exactly the previewed
-  conflict** — if the facts moved between preview and confirmation
-  (CoinGecko renamed the coin, the deployed symbol changed), the stale
-  decision is ignored and the fresh conflict is reported instead. It
-  never overrides transfer-evidence conflicts, and if the conflict no
-  longer fires at all the chosen symbol is simply ignored. Whatever
-  outcome results is applied through the normal `apply` path, so the
-  queue entry always ends up reflecting reality (written and removed,
-  re-marked with a fresh conflict, errored, …).
-- The decision is recorded three ways: a `resolved-symbol-conflict` step
-  (with the user's email) in the trace and thus the persisted ingestion
-  log, a `comment` on the new abstract token, and the resolving user's
-  email on the `TokenDbHistory` rows (`source` stays `ingestion`, with
-  `userEmail` set).
+  casing is a two-keystroke edit). Because the abstract token is shared
+  by every deployment of the coin, the dialog nudges towards a
+  chain-neutral symbol (`aWBTC`, not `aArbWBTC`). If re-planning no
+  longer produces this conflict — evidence changed while the entry sat
+  in the queue, or a sibling chain's entry was already resolved — the
+  dialog says so and points at Preview / Retry instead.
+- Confirming reuses the **ordinary manual write path**: an
+  `AddAbstractTokenIntent` (`plan.generate` + `plan.execute`) creates
+  the abstract token with the chosen symbol, the coin's CoinGecko id,
+  icon and listing timestamp (fetched via the same `checks` route the
+  Add-abstract-token form uses), and a `comment` recording both original
+  symbols and the choice. Then the entry is retried. There is no
+  dedicated resolution endpoint, and the ingestion pipeline knows
+  nothing about resolutions.
+- The audit trail is the ordinary one: the manual insert lands in
+  `TokenDbHistory` with `source = manual`, the researcher's email and
+  the intent; the subsequent link write lands as a normal `ingestion`
+  row with its trace log. The abstract token's `comment` keeps the
+  decision visible on the record itself.
+
+Failure modes degrade to visible, recoverable states instead of wrong
+writes. If the evidence changes before the retry runs (CoinGecko
+remapped the address or delisted the coin), the retry just reports the
+new reality and the manually created abstract sits unlinked —
+reviewable and deletable like any other token. Two researchers racing
+on sibling entries of the same coin can at worst create a spare
+abstract for that coin (the dialog previews on open, so a conflict that
+was already resolved shows as no-longer-resolvable instead of offering
+a second resolution); the spare is equally visible and deletable.
 
 The queue page also has a *Retry conflicts on this page* bulk action
 (`retryMany`): after the punctuation normalization above shipped, a large
 share of the accumulated conflict backlog resolves automatically on
 re-processing, and conflicts whose cause still holds simply come back
-with a refreshed message.
+with a refreshed message. It is also the natural way to clear sibling
+entries after one chain's conflict was resolved — their re-plan now
+finds the abstract token and links to it.
 
 ## Address normalization
 

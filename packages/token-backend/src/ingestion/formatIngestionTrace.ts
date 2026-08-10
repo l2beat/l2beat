@@ -66,8 +66,6 @@ export function describeIngestionStep(step: IngestionStep): string {
       return `Corrected CoinGecko symbol casing ${step.from} → ${step.to} from the deployed-token symbol.`
     case 'adopted-deployed-token-symbol':
       return `CoinGecko symbol ${step.from} differs only in punctuation from the deployed-token symbol; adopted ${step.to}.`
-    case 'resolved-symbol-conflict':
-      return `Symbol conflict (CoinGecko: ${step.coingeckoSymbol}, deployed token: ${step.deployedTokenSymbol}) resolved by ${step.user}; using ${step.chosenSymbol}.`
     case 'fetched-facts': {
       const base = `Fetched deployed-token facts: symbol=${String(step.facts.symbol)}, decimals=${String(step.facts.decimals)}, deploymentTimestamp=${String(step.facts.deploymentTimestamp)}, isContract=${String(step.facts.isContract)}.`
       if (step.facts.warnings.length === 0) return base

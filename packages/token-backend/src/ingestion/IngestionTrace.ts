@@ -47,13 +47,6 @@ export type IngestionStep =
   | { kind: 'fetched-coingecko-abstract'; record: AbstractTokenRecord }
   | { kind: 'corrected-coingecko-symbol-casing'; from: string; to: string }
   | { kind: 'adopted-deployed-token-symbol'; from: string; to: string }
-  | {
-      kind: 'resolved-symbol-conflict'
-      coingeckoSymbol: string
-      deployedTokenSymbol: string
-      chosenSymbol: string
-      user: string
-    }
   | { kind: 'fetched-facts'; facts: DeployedTokenFacts }
 
 export type IngestionOutcome =
@@ -64,7 +57,8 @@ export type IngestionOutcome =
       /** Present only for the resolvable conflict kind: a newly materialized
        * CoinGecko abstract token whose symbol genuinely differs from the
        * deployed token symbol. Carries the data the token-UI resolve dialog
-       * needs to offer symbol choices. */
+       * needs to offer symbol choices and prefill the manual abstract-token
+       * creation that resolves the conflict. */
       symbolConflict?: {
         coingeckoId: string | null
         coingeckoSymbol: string

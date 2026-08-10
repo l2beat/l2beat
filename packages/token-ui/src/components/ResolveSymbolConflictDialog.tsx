@@ -1,9 +1,12 @@
 import type { IngestionTraceView } from '@l2beat/token-backend'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
+import { useInvalidateAbstractTokenQueries } from '~/hooks/useInvalidateAbstractTokenQueries'
 import { useTRPC } from '~/react-query/trpc'
 import { cn } from '~/utils/cn'
+import { generateRandomString } from '~/utils/generateRandomString'
 import { ButtonWithSpinner } from './ButtonWithSpinner'
 import { Button } from './core/Button'
 import {
@@ -27,10 +30,13 @@ type SymbolChoice = 'coingecko' | 'deployed' | 'custom'
 
 /**
  * Lets a researcher resolve a CoinGecko-symbol conflict from the ingestion
- * queue: the dialog re-plans the entry (via `preview`) to get the fresh,
- * structured conflict, offers the CoinGecko symbol, the deployed-token
- * symbol, or a custom value, and applies the choice through the
- * `resolveConflict` mutation.
+ * queue. The dialog re-plans the entry (via `preview`) to get the fresh,
+ * structured conflict and offers the CoinGecko symbol, the deployed-token
+ * symbol, or a custom value. Confirming creates the abstract token through
+ * the ordinary manual write path (`plan.generate` + `plan.execute`) with the
+ * chosen symbol and the coin's CoinGecko data, then retries the queue entry —
+ * the next ingestion run finds the abstract by its CoinGecko id and links the
+ * deployed token to it, so the conflict never fires again.
  */
 export function ResolveSymbolConflictDialog({
   target,
@@ -58,10 +64,12 @@ function ResolveSymbolConflictDialogContent({
 }) {
   const trpc = useTRPC()
   const queryClient = useQueryClient()
+  const invalidateAbstractTokenQueries = useInvalidateAbstractTokenQueries()
   const [trace, setTrace] = useState<IngestionTraceView | undefined>()
   const [previewError, setPreviewError] = useState<string | undefined>()
   const [choice, setChoice] = useState<SymbolChoice>('coingecko')
   const [customSymbol, setCustomSymbol] = useState<string | undefined>()
+  const [isResolving, setIsResolving] = useState(false)
 
   const preview = useMutation(
     trpc.tokenIngestionQueue.preview.mutationOptions({
@@ -74,29 +82,99 @@ function ResolveSymbolConflictDialogContent({
     preview.mutate(target)
   }, [])
 
-  const resolve = useMutation(
-    trpc.tokenIngestionQueue.resolveConflict.mutationOptions({
-      onSuccess: async (result) => {
-        await queryClient.invalidateQueries(
-          trpc.tokenIngestionQueue.getPage.queryFilter(),
-        )
-        showResolutionToast(result)
-        onClose()
-      },
-      onError: (error) => toast.error(error.message),
-    }),
-  )
-
   const symbolConflict =
     trace?.outcome.kind === 'conflict'
       ? trace.outcome.symbolConflict
       : undefined
+
+  // The same CoinGecko lookup the Add abstract token form runs: supplies the
+  // icon and listing timestamp so the created abstract token carries the same
+  // data automatic ingestion would have written.
+  const checks = useQuery(
+    trpc.abstractTokens.checks.queryOptions(symbolConflict?.coingeckoId ?? '', {
+      enabled: !!symbolConflict?.coingeckoId,
+      retry: false,
+    }),
+  )
+
+  const generatePlan = useMutation(trpc.plan.generate.mutationOptions())
+  const executePlan = useMutation(trpc.plan.execute.mutationOptions())
+  const retryEntry = useMutation(
+    trpc.tokenIngestionQueue.retry.mutationOptions(),
+  )
+
   const chosenSymbol =
     choice === 'coingecko'
       ? symbolConflict?.coingeckoSymbol
       : choice === 'deployed'
         ? symbolConflict?.deployedTokenSymbol
         : (customSymbol ?? symbolConflict?.coingeckoSymbol)
+
+  async function resolve() {
+    if (!symbolConflict || !chosenSymbol) return
+    const symbol = chosenSymbol.trim()
+    if (symbol.length === 0) return
+
+    setIsResolving(true)
+    try {
+      const record = {
+        id: generateRandomString(6),
+        issuer: null,
+        symbol,
+        category: null,
+        iconUrl: checks.data?.data?.iconUrl ?? null,
+        coingeckoId: symbolConflict.coingeckoId,
+        coingeckoListingTimestamp: checks.data?.data?.listingTimestamp ?? null,
+        additionalCoingeckoEntries: null,
+        comment: `Symbol conflict resolution: CoinGecko symbol is "${symbolConflict.coingeckoSymbol}", the ${target.chain} deployed token symbol is "${symbolConflict.deployedTokenSymbol}"; chose "${symbol}".`,
+        // Created from CoinGecko data plus a single human decision (the
+        // symbol) — still needs the same review as other ingested tokens.
+        reviewed: false,
+        isPriceUnreliable: false,
+      }
+
+      const generated = await generatePlan.mutateAsync({
+        type: 'AddAbstractTokenIntent',
+        record,
+      })
+      if (generated.outcome === 'error') {
+        toast.error(`Could not create the abstract token: ${generated.error}`)
+        return
+      }
+      const executed = await executePlan.mutateAsync(generated.plan)
+      if (executed.outcome === 'error') {
+        toast.error(`Could not create the abstract token: ${executed.error}`)
+        return
+      }
+
+      invalidateAbstractTokenQueries()
+      queryClient.invalidateQueries(trpc.tokenDbHistory.getPage.queryFilter())
+
+      try {
+        await retryEntry.mutateAsync(target)
+        toast.success(
+          <span>
+            Abstract token created and entry queued for retry.{' '}
+            <Link to={`/tokens/${record.id}`} className="underline">
+              View token
+            </Link>
+          </span>,
+        )
+      } catch (error) {
+        toast.warning(
+          `Abstract token ${record.id} was created, but the queue entry could not be retried: ${error instanceof Error ? error.message : String(error)}`,
+        )
+      }
+      onClose()
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : String(error))
+    } finally {
+      setIsResolving(false)
+      queryClient.invalidateQueries(
+        trpc.tokenIngestionQueue.getPage.queryFilter(),
+      )
+    }
+  }
 
   return (
     <Dialog open={true} onOpenChange={(open) => !open && onClose()}>
@@ -107,9 +185,10 @@ function ResolveSymbolConflictDialogContent({
         <DialogHeader className="min-w-0">
           <DialogTitle>Resolve symbol conflict</DialogTitle>
           <DialogDescription className="break-words pr-6">
-            Choose the symbol the new abstract token for {target.chain}:
-            {target.address} should carry. The decision is recorded in the
-            abstract token&apos;s comment and in the history.
+            Creates the abstract token for {target.chain}:{target.address} with
+            the chosen symbol and retries the entry; ingestion then links the
+            deployed token to it. The abstract token is shared by all
+            deployments of this coin, so prefer a chain-neutral symbol.
           </DialogDescription>
         </DialogHeader>
 
@@ -165,6 +244,14 @@ function ResolveSymbolConflictDialogContent({
                 />
               </SymbolOption>
             </div>
+            {checks.data?.error && (
+              <div className="rounded border border-amber-500/50 bg-amber-500/10 p-3 text-sm">
+                CoinGecko no longer returns coin{' '}
+                {symbolConflict.coingeckoId ?? 'unknown'} — the icon and listing
+                timestamp cannot be fetched, and the retried entry may not link
+                to the new abstract token.
+              </div>
+            )}
             <IngestionLog log={trace.text} />
           </div>
         )}
@@ -175,16 +262,13 @@ function ResolveSymbolConflictDialogContent({
           </Button>
           {symbolConflict && (
             <ButtonWithSpinner
-              isLoading={resolve.isPending}
-              disabled={!chosenSymbol || chosenSymbol.trim().length === 0}
-              onClick={() => {
-                if (!chosenSymbol) return
-                resolve.mutate({
-                  ...target,
-                  symbol: chosenSymbol.trim(),
-                  expected: symbolConflict,
-                })
-              }}
+              isLoading={isResolving}
+              disabled={
+                !chosenSymbol ||
+                chosenSymbol.trim().length === 0 ||
+                checks.isLoading
+              }
+              onClick={resolve}
             >
               Resolve with &quot;{chosenSymbol?.trim()}&quot;
             </ButtonWithSpinner>
@@ -240,26 +324,4 @@ function SymbolOption({
       </span>
     </label>
   )
-}
-
-function showResolutionToast(trace: IngestionTraceView) {
-  switch (trace.outcome.kind) {
-    case 'write':
-      toast.success('Conflict resolved — token written')
-      return
-    case 'noop':
-      toast.success('Nothing to write — the token was already up to date')
-      return
-    case 'skip':
-      toast.info(`Entry skipped: ${trace.outcome.reason}`)
-      return
-    case 'conflict':
-      toast.warning(`Still in conflict: ${trace.outcome.message}`)
-      return
-    case 'error':
-      toast.error(`Processing failed: ${trace.outcome.message}`)
-      return
-    default:
-      toast.info(`Outcome: ${trace.outcome.description}`)
-  }
 }
