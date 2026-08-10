@@ -2,6 +2,7 @@ import { formatCurrency } from '@l2beat/shared-pure'
 import { Area, AreaChart } from 'recharts'
 import type {
   ChartMeta,
+  ChartProject,
   CustomChartTooltipProps,
 } from '~/components/core/chart/Chart'
 import {
@@ -30,6 +31,7 @@ interface Props {
   data: PrivacyTvlChartDataPoint[] | undefined
   syncedUntil: number | undefined
   isLoading: boolean
+  project?: ChartProject
 }
 
 const chartMeta = {
@@ -40,9 +42,19 @@ const chartMeta = {
   },
 } satisfies ChartMeta
 
-export function PrivacyTvlChart({ data, syncedUntil, isLoading }: Props) {
+export function PrivacyTvlChart({
+  data,
+  syncedUntil,
+  isLoading,
+  project,
+}: Props) {
   return (
-    <ChartContainer data={data} meta={chartMeta} isLoading={isLoading}>
+    <ChartContainer
+      data={data}
+      meta={chartMeta}
+      isLoading={isLoading}
+      project={project}
+    >
       <AreaChart responsive data={data} margin={{ top: 20 }}>
         <defs>
           <PinkFillGradientDef id="privacy-tvl-fill" />
