@@ -1,6 +1,7 @@
 import {
   type CompareChartState,
   DEFAULT_COMPARE_ACTIVITY_UNIT,
+  DEFAULT_COMPARE_COSTS_UNIT,
   DEFAULT_COMPARE_EXCLUDE_ASSOCIATED_TOKENS,
   DEFAULT_COMPARE_EXCLUDE_RWA_RESTRICTED_TOKENS,
   DEFAULT_COMPARE_METRIC,
@@ -44,6 +45,12 @@ export function buildCompareUrl(
     state.activityUnit !== DEFAULT_COMPARE_ACTIVITY_UNIT
   ) {
     params.set('unit', state.activityUnit)
+  }
+  if (
+    state.metric === 'costs' &&
+    state.costsUnit !== DEFAULT_COMPARE_COSTS_UNIT
+  ) {
+    params.set('unit', state.costsUnit)
   }
   if (state.metric === 'tvs') {
     if (state.tvsUnit !== DEFAULT_COMPARE_TVS_UNIT) {

@@ -1,6 +1,7 @@
 import type {
   AmountFormula,
   CalculationFormula,
+  Project,
   TvsToken,
   ValueFormula,
 } from '@l2beat/config'
@@ -20,6 +21,11 @@ export interface CompareProjectEntry {
    * Undefined when the project has no TVS tracking.
    */
   tvsSinceTimestamp: number | undefined
+  /**
+   * Earliest onchain costs timestamp derived from the project's tracked
+   * transactions config. Undefined when the project has no costs tracking.
+   */
+  costsSinceTimestamp: number | undefined
   /** Latest total TVS, used to order the picker. 0 when not tracked. */
   tvs: number
 }
@@ -36,7 +42,7 @@ export async function getCompareProjectEntries(): Promise<
   const [projects, tvs] = await Promise.all([
     ps.getProjects({
       select: ['scalingInfo'],
-      optional: ['tvsConfig'],
+      optional: ['tvsConfig', 'trackedTxsConfig'],
       where: ['scalingInfo'],
       whereNot: ['archivedAt'],
     }),
@@ -51,9 +57,21 @@ export async function getCompareProjectEntries(): Promise<
       shortName: project.shortName,
       iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
       tvsSinceTimestamp: getTvsSinceTimestamp(project.tvsConfig),
+      costsSinceTimestamp: getCostsSinceTimestamp(project.trackedTxsConfig),
       tvs: tvs.projects[project.id.toString()]?.breakdown.total ?? 0,
     }))
     .sort((a, b) => b.tvs - a.tvs || a.name.localeCompare(b.name))
+}
+
+function getCostsSinceTimestamp(
+  trackedTxsConfig: Project<never, 'trackedTxsConfig'>['trackedTxsConfig'],
+): number | undefined {
+  const timestamps =
+    trackedTxsConfig
+      ?.filter((entry) => entry.type === 'l2costs')
+      .map((entry) => entry.sinceTimestamp) ?? []
+  if (timestamps.length === 0) return undefined
+  return Math.min(...timestamps)
 }
 
 function getTvsSinceTimestamp(

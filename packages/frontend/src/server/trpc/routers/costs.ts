@@ -5,6 +5,10 @@ import {
 } from '~/server/features/scaling/costs/getCostsChart'
 import { getCostsTable } from '~/server/features/scaling/costs/getCostsTableData'
 import {
+  CostsChartWithProjectsRangesDataParams,
+  getDetailedCostsChartWithProjectsRanges,
+} from '~/server/features/scaling/costs/getDetailedCostsChartWithProjectsRanges'
+import {
   getProjectCostsChart,
   ProjectCostsChartParams,
 } from '~/server/features/scaling/costs/getProjectCostsChart'
@@ -15,6 +19,9 @@ export const costsRouter = router({
   chart: procedure
     .input(CostsChartParams)
     .query(async ({ input }) => getCostsChart(input)),
+  detailedChartWithProjectsRanges: procedure
+    .input(CostsChartWithProjectsRangesDataParams)
+    .query(({ input }) => getDetailedCostsChartWithProjectsRanges(input)),
   projectChart: procedure
     .input(ProjectCostsChartParams)
     .query(async ({ input }) => getProjectCostsChart(input)),

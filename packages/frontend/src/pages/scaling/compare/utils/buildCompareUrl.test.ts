@@ -13,6 +13,7 @@ const DEFAULT_STATE: CompareChartState = {
   activityUnit: 'uops',
   tvsUnit: 'usd',
   tvsFilter: 'all',
+  costsUnit: 'usd',
   excludeAssociatedTokens: false,
   excludeRwaRestrictedTokens: true,
 }
@@ -97,6 +98,34 @@ describe(buildCompareUrl.name, () => {
     const url = buildCompareUrl(PATH, {
       ...DEFAULT_STATE,
       activityUnit: 'tps',
+    })
+
+    expect(url).toEqual(PATH)
+  })
+
+  it('serializes the costs metric with its non-default unit', () => {
+    const url = buildCompareUrl(PATH, {
+      ...DEFAULT_STATE,
+      metric: 'costs',
+      costsUnit: 'gas',
+    })
+
+    expect(url).toEqual('/scaling/compare?metric=costs&unit=gas')
+  })
+
+  it('omits the default costs unit', () => {
+    const url = buildCompareUrl(PATH, {
+      ...DEFAULT_STATE,
+      metric: 'costs',
+    })
+
+    expect(url).toEqual('/scaling/compare?metric=costs')
+  })
+
+  it('omits the costs unit for other metrics', () => {
+    const url = buildCompareUrl(PATH, {
+      ...DEFAULT_STATE,
+      costsUnit: 'gas',
     })
 
     expect(url).toEqual(PATH)
