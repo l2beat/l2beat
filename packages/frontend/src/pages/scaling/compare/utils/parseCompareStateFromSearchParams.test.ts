@@ -23,6 +23,7 @@ describe(parseCompareStateFromSearchParams.name, () => {
       projects: ['arbitrum', 'base'],
       range: '30d',
       scale: 'symlog',
+      mode: 'absolute',
       activityUnit: 'tps',
     })
   })
@@ -35,8 +36,15 @@ describe(parseCompareStateFromSearchParams.name, () => {
       projects: [],
       range: '1y',
       scale: 'linear',
+      mode: 'absolute',
       activityUnit: 'uops',
     })
+  })
+
+  it('parses the indexed view mode', () => {
+    const result = parse('mode=indexed')
+
+    expect(result.mode).toEqual('indexed')
   })
 
   it('drops unknown slugs and deduplicates', () => {
@@ -62,13 +70,16 @@ describe(parseCompareStateFromSearchParams.name, () => {
   })
 
   it('falls back to defaults on garbage values', () => {
-    const result = parse('metric=bogus&range=yesterday&scale=cubic&unit=gas')
+    const result = parse(
+      'metric=bogus&range=yesterday&scale=cubic&unit=gas&mode=sideways',
+    )
 
     expect(result).toEqual({
       metric: 'tvs',
       projects: [],
       range: '1y',
       scale: 'linear',
+      mode: 'absolute',
       activityUnit: 'uops',
     })
   })
@@ -85,6 +96,7 @@ describe(parseCompareStateFromSearchParams.name, () => {
       projects: ['base', 'arbitrum'],
       range: '90d',
       scale: 'symlog',
+      mode: 'absolute',
       activityUnit: 'uops',
     }
 
@@ -100,6 +112,7 @@ describe(parseCompareStateFromSearchParams.name, () => {
       projects: [],
       range: { from: 1700000000, to: 1710000000 },
       scale: 'linear',
+      mode: 'absolute',
       activityUnit: 'uops',
     }
 
@@ -115,7 +128,24 @@ describe(parseCompareStateFromSearchParams.name, () => {
       projects: ['optimism'],
       range: '7d',
       scale: 'linear',
+      mode: 'absolute',
       activityUnit: 'tps',
+    }
+
+    const url = buildCompareUrl('/scaling/compare', state)
+    const search = url.split('?')[1] ?? ''
+
+    expect(parse(search)).toEqual(state)
+  })
+
+  it('round-trips the indexed mode through buildCompareUrl', () => {
+    const state: CompareChartState = {
+      metric: 'tvs',
+      projects: ['arbitrum'],
+      range: '30d',
+      scale: 'linear',
+      mode: 'indexed',
+      activityUnit: 'uops',
     }
 
     const url = buildCompareUrl('/scaling/compare', state)

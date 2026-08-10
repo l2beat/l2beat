@@ -10,6 +10,7 @@ describe(buildCompareUrl.name, () => {
       projects: [],
       range: '1y',
       scale: 'linear',
+      mode: 'absolute',
       activityUnit: 'uops',
     })
 
@@ -22,6 +23,7 @@ describe(buildCompareUrl.name, () => {
       projects: ['arbitrum', 'base'],
       range: '1y',
       scale: 'linear',
+      mode: 'absolute',
       activityUnit: 'uops',
     })
 
@@ -34,6 +36,7 @@ describe(buildCompareUrl.name, () => {
       projects: ['arbitrum'],
       range: '30d',
       scale: 'symlog',
+      mode: 'absolute',
       activityUnit: 'uops',
     })
 
@@ -48,10 +51,37 @@ describe(buildCompareUrl.name, () => {
       projects: [],
       range: { from: 1700000000, to: 1710000000 },
       scale: 'linear',
+      mode: 'absolute',
       activityUnit: 'uops',
     })
 
     expect(url).toEqual('/scaling/compare?range=1700000000-1710000000')
+  })
+
+  it('serializes the indexed mode', () => {
+    const url = buildCompareUrl(PATH, {
+      metric: 'tvs',
+      projects: [],
+      range: '1y',
+      scale: 'linear',
+      mode: 'indexed',
+      activityUnit: 'uops',
+    })
+
+    expect(url).toEqual('/scaling/compare?mode=indexed')
+  })
+
+  it('omits the scale in indexed mode where its toggle is hidden', () => {
+    const url = buildCompareUrl(PATH, {
+      metric: 'tvs',
+      projects: [],
+      range: '1y',
+      scale: 'symlog',
+      mode: 'indexed',
+      activityUnit: 'uops',
+    })
+
+    expect(url).toEqual('/scaling/compare?mode=indexed')
   })
 
   it('serializes a non-default metric with its non-default unit', () => {
@@ -60,6 +90,7 @@ describe(buildCompareUrl.name, () => {
       projects: [],
       range: '1y',
       scale: 'linear',
+      mode: 'absolute',
       activityUnit: 'tps',
     })
 
@@ -72,6 +103,7 @@ describe(buildCompareUrl.name, () => {
       projects: [],
       range: '1y',
       scale: 'linear',
+      mode: 'absolute',
       activityUnit: 'uops',
     })
 
@@ -84,6 +116,7 @@ describe(buildCompareUrl.name, () => {
       projects: [],
       range: '1y',
       scale: 'linear',
+      mode: 'absolute',
       activityUnit: 'tps',
     })
 
