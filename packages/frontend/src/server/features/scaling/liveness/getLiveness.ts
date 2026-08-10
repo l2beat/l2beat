@@ -287,9 +287,7 @@ export function getAnomalies(
 
   return [
     ...filteredAnomalies.map((a): LivenessAnomaly => {
-      const avgInterval = projectMax.find(
-        (r) => r.subtype === a.subtype,
-      )?.avg
+      const avgInterval = projectMax.find((r) => r.subtype === a.subtype)?.avg
       assert(avgInterval, 'Avg interval must exist')
       const computedEnd = a.timestamp + a.duration
       const isOngoing =
@@ -310,9 +308,7 @@ export function getAnomalies(
       }
     }),
     ...realTimeAnomalies.map((a): LivenessAnomaly => {
-      const avgInterval = projectMax.find(
-        (r) => r.subtype === a.subtype,
-      )?.avg
+      const avgInterval = projectMax.find((r) => r.subtype === a.subtype)?.avg
       assert(avgInterval, 'Avg interval must exist')
 
       return {
