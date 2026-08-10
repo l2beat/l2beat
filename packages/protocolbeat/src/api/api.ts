@@ -20,8 +20,6 @@ import type {
   ApiProjectResponse,
   ApiProjectsResponse,
   ApiTemplateFileResponse,
-  ApiTvlMapProgress,
-  ApiTvlMapResponse,
   ApiTvlResponse,
 } from './types'
 
@@ -94,60 +92,26 @@ export async function getPreview(project: string): Promise<ApiPreviewResponse> {
   return data as ApiPreviewResponse
 }
 
+// `top` bounds the sweep to that many tokens by market cap, so valuing many
+// addresses at once stays affordable.
 export async function getTvl(
   project: string,
   address: string,
+  top?: number,
 ): Promise<ApiTvlResponse> {
-  const res = await fetch(`/api/projects/${project}/tvl/${address}`)
+  const params = new URLSearchParams()
+  if (top !== undefined) {
+    params.set('top', String(top))
+  }
+  const qs = params.toString()
+  const res = await fetch(
+    `/api/projects/${project}/tvl/${address}${qs ? `?${qs}` : ''}`,
+  )
   if (!res.ok) {
     throw new Error(res.statusText)
   }
   const data = await res.json()
   return data as ApiTvlResponse
-}
-
-// The map arrives over an event stream: one `progress` event per address swept,
-// then a single `result` or `failure`.
-export function streamTvlMap(
-  project: string,
-  signal: AbortSignal,
-  onProgress: (progress: ApiTvlMapProgress) => void,
-): Promise<ApiTvlMapResponse> {
-  return new Promise((resolve, reject) => {
-    const source = new EventSource(`/api/projects/${project}/tvl-map`)
-
-    // Every path below closes the source: an open one reconnects on its own and
-    // would start the whole sweep again.
-    signal.addEventListener('abort', () => {
-      source.close()
-      reject(new Error('Aborted'))
-    })
-    onNamedEvent(source, 'progress', (data) => {
-      onProgress(JSON.parse(data) as ApiTvlMapProgress)
-    })
-    onNamedEvent(source, 'result', (data) => {
-      source.close()
-      resolve(JSON.parse(data) as ApiTvlMapResponse)
-    })
-    onNamedEvent(source, 'failure', (data) => {
-      source.close()
-      reject(new Error((JSON.parse(data) as { error: string }).error))
-    })
-    source.onerror = () => {
-      source.close()
-      reject(new Error('Lost connection to the TVL stream'))
-    }
-  })
-}
-
-function onNamedEvent(
-  source: EventSource,
-  name: string,
-  handler: (data: string) => void,
-): void {
-  source.addEventListener(name, (event) =>
-    handler((event as MessageEvent<string>).data),
-  )
 }
 
 export function executeDiscover(

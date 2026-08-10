@@ -3,9 +3,10 @@ import {
   ChainSpecificAddress,
   CoingeckoId,
   InMemoryCache,
+  toBatches,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import type { Token } from '../estimateTVL'
+import { calculateValue, type Token, type TokenBalance } from '../estimateTVL'
 import { type BackendToken, fetchTokens } from './tokenBackend'
 
 const TTL_SECONDS = 60 * 60
@@ -17,6 +18,8 @@ const IDS_PER_REQUEST = 250
 // absent address.
 const NATIVE_ADDRESS = 'native'
 
+const USD_CENTS_IN_DOLLAR = 100
+
 export interface MarketEntry {
   priceUsd: number
   marketCapUsd: number
@@ -24,8 +27,22 @@ export interface MarketEntry {
 
 export type Market = Record<string, MarketEntry>
 
+export interface ChainMarket {
+  tokens: Token[]
+  market: Market
+}
+
 export class TvlCache {
   private readonly cache = new InMemoryCache({})
+
+  // Tokens and market come out together because one belongs to the other: the
+  // market is fetched for every token of the chain and cached under the chain
+  // alone, so it cannot be asked for a narrower set than it holds.
+  async getChainMarket(provider: IProvider): Promise<ChainMarket> {
+    const tokens = await this.getTokens(provider.chain)
+    const market = await this.getMarket(provider, tokens)
+    return { tokens, market }
+  }
 
   // One fetch covers every chain, so it is cached whole and sliced per chain.
   private allTokens(): Promise<BackendToken[]> {
@@ -35,7 +52,7 @@ export class TvlCache {
     )
   }
 
-  getTokens(chainName: string): Promise<Token[]> {
+  private getTokens(chainName: string): Promise<Token[]> {
     return this.cache.get(
       { key: ['tvl-tokens', chainName], ttl: TTL_SECONDS },
       async () => {
@@ -58,9 +75,7 @@ export class TvlCache {
     )
   }
 
-  // Keyed by chain only, so it must always be asked for every token of the
-  // chain. A caller interested in a subset reads that subset out of the result.
-  getMarket(provider: IProvider, tokens: Token[]): Promise<Market> {
+  private getMarket(provider: IProvider, tokens: Token[]): Promise<Market> {
     return this.cache.get(
       { key: ['tvl-market', provider.chain], ttl: TTL_SECONDS },
       () => fetchMarket(provider, tokens),
@@ -68,14 +83,24 @@ export class TvlCache {
   }
 }
 
+// Worth what the market says, or nothing at all when it quotes no price.
+export function toUsdValue(balance: TokenBalance, market: Market): number {
+  const price = market[balance.coingeckoId.toString()]?.priceUsd
+  if (price === undefined) {
+    return 0
+  }
+  const cents = calculateValue(balance.balance, price, balance.decimals)
+  return Number(cents) / USD_CENTS_IN_DOLLAR
+}
+
 async function fetchMarket(
   provider: IProvider,
   tokens: Token[],
 ): Promise<Market> {
   const ids = unique(tokens.map((token) => token.coingeckoId))
-  const chunks = toChunks(ids, IDS_PER_REQUEST)
+  const requests = toBatches(ids, IDS_PER_REQUEST)
   const responses = await Promise.all(
-    chunks.map((chunk) => getCoinsMarket(provider, chunk)),
+    requests.map((request) => getCoinsMarket(provider, request)),
   )
 
   const market: Market = {}
@@ -102,12 +127,4 @@ function getCoinsMarket(provider: IProvider, coingeckoIds: CoingeckoId[]) {
 
 function unique(ids: CoingeckoId[]): CoingeckoId[] {
   return [...new Set(ids.map((id) => id.toString()))] as CoingeckoId[]
-}
-
-function toChunks<T>(items: T[], chunkSize: number): T[][] {
-  const chunks: T[][] = []
-  for (let i = 0; i < items.length; i += chunkSize) {
-    chunks.push(items.slice(i, i + chunkSize))
-  }
-  return chunks
 }

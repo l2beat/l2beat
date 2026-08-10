@@ -10,7 +10,7 @@ import { DiffHistoryParser } from '@l2beat/shared'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { toJsonSchema, v as z } from '@l2beat/validate'
 import { config as dotenv } from 'dotenv'
-import express, { type Response } from 'express'
+import express from 'express'
 import { existsSync, readFileSync } from 'fs'
 import type { Server } from 'http'
 import path, { join } from 'path'
@@ -31,7 +31,6 @@ import { getPreview } from './getPreview'
 import { getProject } from './getProject'
 import { getProjects } from './getProjects'
 import { getTvl } from './getTvl'
-import { getTvlMap } from './getTvlMap'
 import { attachLayoutRouter } from './layouts/router'
 import { ProviderCache } from './ProviderCache'
 import { searchCode } from './searchCode'
@@ -97,6 +96,10 @@ const positiveIntFromString = z
   .string()
   .check((v) => /^\d+$/.test(v) && Number(v) > 0, 'must be a positive integer')
   .transform((v) => Number(v))
+
+const tvlQuerySchema = z.object({
+  top: positiveIntFromString.optional(),
+})
 
 const diffHistoryQuerySchema = z.object({
   offset: nonNegativeIntFromString.optional(),
@@ -175,46 +178,21 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
       res.status(400).json({ errors: paramsValidation.message })
       return
     }
+    const queryValidation = tvlQuerySchema.safeParse(req.query)
+    if (!queryValidation.success) {
+      res.status(400).json({ errors: queryValidation.message })
+      return
+    }
     const { address } = paramsValidation.data
+    const { top } = queryValidation.data
 
     try {
-      const response = await getTvl(providerCache, tvlCache, address)
+      const response = await getTvl(providerCache, tvlCache, address, top)
       res.json(response)
     } catch (e) {
       console.error(e)
       res.status(500).json({ error: 'Failed to estimate TVL' })
     }
-  })
-
-  app.get('/api/projects/:project/tvl-map', async (req, res) => {
-    const paramsValidation = projectParamsSchema.safeParse(req.params)
-    if (!paramsValidation.success) {
-      res.status(400).json({ errors: paramsValidation.message })
-      return
-    }
-    const { project } = paramsValidation.data
-
-    // Streamed, because sweeping a whole project takes long enough that the UI
-    // needs to show how far along it is.
-    res.setHeader('Content-Type', 'text/event-stream')
-    res.setHeader('Cache-Control', 'no-cache')
-    res.setHeader('Connection', 'keep-alive')
-
-    try {
-      const response = await getTvlMap(
-        configReader,
-        templateService,
-        providerCache,
-        tvlCache,
-        project,
-        (progress) => sendEvent(res, 'progress', progress),
-      )
-      sendEvent(res, 'result', response)
-    } catch (e) {
-      console.error(e)
-      sendEvent(res, 'failure', { error: 'Failed to estimate project TVL' })
-    }
-    res.end()
   })
 
   app.get('/api/projects/:project/code/:address', async (req, res) => {
@@ -445,12 +423,6 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   })
 
   attachGracefulShutdown(server)
-}
-
-// JSON never contains a raw newline, so the payload needs no escaping to stay
-// inside one server-sent event.
-function sendEvent(res: Response, event: string, payload: unknown): void {
-  res.write(`event: ${event}\ndata: ${JSON.stringify(payload)}\n\n`)
 }
 
 function shutdown(server: Server) {
