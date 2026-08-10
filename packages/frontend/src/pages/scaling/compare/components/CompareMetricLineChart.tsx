@@ -1,3 +1,4 @@
+import { formatNumber } from '@l2beat/shared-pure'
 import type { ReactNode } from 'react'
 import { useMemo } from 'react'
 import { Line, LineChart } from 'recharts'
@@ -19,7 +20,6 @@ import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import type { CompareProjectEntry } from '~/server/features/scaling/compare/getCompareProjectEntries'
-import { formatNumber } from '~/utils/number-format/formatNumber'
 import type { CompareViewMode } from '../utils/compareChartState'
 import {
   type CompareChartPoint,
