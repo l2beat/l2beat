@@ -143,7 +143,7 @@ export const roninNetwork: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://api.roninchain.com/rpc',
-        callsPerMinute: 300,
+        callsPerMinute: 100,
       },
       {
         type: 'blockscout',
